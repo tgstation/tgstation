@@ -11,14 +11,14 @@
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	set background = 1
-	if (src.monkeyizing)	return
+	if (monkeyizing)	return
 	..()
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
-	if(src.loc)
+	if(loc)
 		environment = loc.return_air()
 
-	if (src.stat != DEAD) //still breathing
+	if (stat != DEAD) //still breathing
 		//First, resolve location and get a breath
 		if(air_master.current_cycle%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
@@ -32,7 +32,7 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
-	src.blinded = null
+	blinded = null
 
 	//Disease Check
 	handle_virus_updates()
@@ -53,12 +53,12 @@
 	//Disabilities
 	handle_disabilities()
 
-	//Status updates, death etc.
+	//Flashlights and such
 	UpdateLuminosity()
+
+	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()
-	clamp_values()
-
 
 	if(client)
 		handle_regular_hud_updates()
@@ -79,33 +79,27 @@
 
 /mob/living/carbon/monkey
 
-
-	proc/clamp_values()
-//		AdjustStunned(0)
-		AdjustParalysis(0)
-//		AdjustWeakened(0)
-
 	proc/handle_disabilities()
 
-		if (src.disabilities & 2)
-			if ((prob(1) && src.paralysis < 10 && src.r_epil < 1))
+		if (disabilities & 2)
+			if ((prob(1) && paralysis < 10 && r_epil < 1))
 				src << "\red You have a seizure!"
 				Paralyse(10)
-		if (src.disabilities & 4)
-			if ((prob(5) && src.paralysis <= 1 && src.r_ch_cou < 1))
-				src.drop_item()
+		if (disabilities & 4)
+			if ((prob(5) && paralysis <= 1 && r_ch_cou < 1))
+				drop_item()
 				spawn( 0 )
 					emote("cough")
 					return
-		if (src.disabilities & 8)
-			if ((prob(10) && src.paralysis <= 1 && src.r_Tourette < 1))
+		if (disabilities & 8)
+			if ((prob(10) && paralysis <= 1 && r_Tourette < 1))
 				Stun(10)
 				spawn( 0 )
 					emote("twitch")
 					return
-		if (src.disabilities & 16)
+		if (disabilities & 16)
 			if (prob(10))
-				src.stuttering = max(10, src.stuttering)
+				stuttering = max(10, stuttering)
 
 	proc/update_mind()
 		if(!mind && client)
@@ -115,59 +109,59 @@
 
 	proc/handle_mutations_and_radiation()
 
-		if(src.getFireLoss())
+		if(getFireLoss())
 			if((COLD_RESISTANCE in mutations) || prob(50))
-				switch(src.getFireLoss())
+				switch(getFireLoss())
 					if(1 to 50)
-						src.adjustFireLoss(-1)
+						adjustFireLoss(-1)
 					if(51 to 100)
-						src.adjustFireLoss(-5)
+						adjustFireLoss(-5)
 
-		if ((HULK in mutations) && src.health <= 25)
-			src.mutations.Remove(HULK)
+		if ((HULK in mutations) && health <= 25)
+			mutations.Remove(HULK)
 			src << "\red You suddenly feel very weak."
 			Weaken(3)
 			emote("collapse")
 
-		if (src.radiation)
-			if (src.radiation > 100)
-				src.radiation = 100
+		if (radiation)
+			if (radiation > 100)
+				radiation = 100
 				Weaken(10)
 				src << "\red You feel weak."
 				emote("collapse")
 
-			switch(src.radiation)
+			switch(radiation)
 				if(1 to 49)
-					src.radiation--
+					radiation--
 					if(prob(25))
-						src.adjustToxLoss(1)
-						src.updatehealth()
+						adjustToxLoss(1)
+						updatehealth()
 
 				if(50 to 74)
-					src.radiation -= 2
-					src.adjustToxLoss(1)
+					radiation -= 2
+					adjustToxLoss(1)
 					if(prob(5))
-						src.radiation -= 5
+						radiation -= 5
 						Weaken(3)
 						src << "\red You feel weak."
 						emote("collapse")
-					src.updatehealth()
+					updatehealth()
 
 				if(75 to 100)
-					src.radiation -= 3
-					src.adjustToxLoss(3)
+					radiation -= 3
+					adjustToxLoss(3)
 					if(prob(1))
 						src << "\red You mutate!"
 						randmutb(src)
 						domutcheck(src,null)
 						emote("gasp")
-					src.updatehealth()
+					updatehealth()
 
 
 	proc/breathe()
-		if(src.reagents)
+		if(reagents)
 
-			if(src.reagents.has_reagent("lexorin")) return
+			if(reagents.has_reagent("lexorin")) return
 
 		if(!loc) return //probably ought to make a proper fix for this, but :effort: --NeoFite
 
@@ -175,7 +169,7 @@
 		var/datum/air_group/breath
 
 		if(losebreath>0) //Suffocating so do not take a breath
-			src.losebreath--
+			losebreath--
 			if (prob(75)) //High chance of gasping for air
 				spawn emote("gasp")
 			if(istype(loc, /obj/))
@@ -224,21 +218,21 @@
 
 	proc/get_breath_from_internal(volume_needed)
 		if(internal)
-			if (!contents.Find(src.internal))
+			if (!contents.Find(internal))
 				internal = null
 			if (!wear_mask || !(wear_mask.flags|MASKINTERNALS) )
 				internal = null
 			if(internal)
-				if (src.internals)
-					src.internals.icon_state = "internal1"
+				if (internals)
+					internals.icon_state = "internal1"
 				return internal.remove_air_volume(volume_needed)
 			else
-				if (src.internals)
-					src.internals.icon_state = "internal0"
+				if (internals)
+					internals.icon_state = "internal0"
 		return null
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if(src.nodamage)
+		if(nodamage)
 			return
 
 		if(!breath || (breath.total_moles() == 0))
@@ -314,7 +308,7 @@
 				if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 					if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-						src.sleeping = max(src.sleeping+2, 10)
+						sleeping = max(sleeping+2, 10)
 				else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 					if(prob(20))
 						spawn(0) emote(pick("giggle", "laugh"))
@@ -361,7 +355,7 @@
 		return //TODO: DEFERRED
 
 	proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-		if(src.nodamage) return
+		if(nodamage) return
 		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
 		//adjustFireLoss(2.5*discomfort)
 
@@ -375,11 +369,11 @@
 
 		if(reagents) reagents.metabolize(src)
 
-		if (src.drowsyness)
-			src.drowsyness--
-			src.eye_blurry = max(2, src.eye_blurry)
+		if (drowsyness)
+			drowsyness--
+			eye_blurry = max(2, eye_blurry)
 			if (prob(5))
-				src.sleeping += 1
+				sleeping += 1
 				Paralyse(5)
 
 		confused = max(0, confused - 1)
@@ -389,130 +383,120 @@
 		else
 			dizziness = max(0, dizziness - 1)
 
-		src.updatehealth()
+		updatehealth()
 
 		return //TODO: DEFERRED
 
 	proc/handle_regular_status_updates()
+		updatehealth()
 
-		health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
+		if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
+			blinded = 1
+			silent = 0
+		else				//ALIVE. LIGHTS ARE ON
+			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+				death()
+				blinded = 1
+				stat = DEAD
+				silent = 0
+				return 1
 
-		if(getOxyLoss() > 25) Paralyse(3)
+			//UNCONSCIOUS. NO-ONE IS HOME
+			if( (getOxyLoss() > 25) || (config.health_threshold_crit > health) )
+				if( health <= 20 && prob(1) )
+					spawn(0)
+						emote("gasp")
+				if(!reagents.has_reagent("inaprovaline"))
+					adjustOxyLoss(1)
+				Paralyse(3)
 
-		if(src.sleeping)
-			Paralyse(5)
-			if (prob(1) && health) spawn(0) emote("snore")
+			if(paralysis)
+				AdjustParalysis(-1)
+				blinded = 1
+				stat = UNCONSCIOUS
+			else if(sleeping)
+				sleeping = max(sleeping-1, 0)
+				blinded = 1
+				stat = UNCONSCIOUS
+				if( prob(10) && health )
+					spawn(0)
+						emote("snore")
+			//CONSCIOUS
+			else
+				stat = CONSCIOUS
 
-		if(src.resting)
-			Weaken(5)
+			//Eyes
+			if(sdisabilities & 1)		//disabled-blind, doesn't get better on its own
+				blinded = 1
+			else if(eye_blind)			//blindness, heals slowly over time
+				eye_blind = max(eye_blind-1,0)
+				blinded = 1
+			else if(eye_blurry)	//blurry eyes heal slowly
+				eye_blurry = max(eye_blurry-1, 0)
 
-		if(health < config.health_threshold_dead && stat != 2)
-			death()
-		else if(src.health < config.health_threshold_crit)
-			if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
+			//Ears
+			if(sdisabilities & 4)		//disabled-deaf, doesn't get better on its own
+				ear_deaf = max(ear_deaf, 1)
+			else if(ear_deaf)			//deafness, heals slowly over time
+				ear_deaf = max(ear_deaf-1, 0)
+			else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
+				ear_damage = max(ear_damage-0.05, 0)
 
-			//if(!src.rejuv) src.oxyloss++	//-Nodrak (I can't believe I thought this should be commented back in)
-			if(!src.reagents.has_reagent("inaprovaline") && src.stat != 2) src.adjustOxyLoss(2)
+			//Other
+			if(stunned)
+				AdjustStunned(-1)
 
-			if(src.stat != 2)	src.stat = 1
-			Paralyse(5)
+			if(weakened)
+				weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
-		if (src.stat != 2) //Alive.
+			if(stuttering)
+				stuttering = max(stuttering-1, 0)
 
-			if (src.paralysis || src.stunned || src.weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
-				if (src.stunned > 0)
-					AdjustStunned(-1)
-					src.stat = 0
-				if (src.weakened > 0)
-					AdjustWeakened(-1)
-					src.lying = 1
-					src.stat = 0
-				if (src.paralysis > 0)
-					AdjustParalysis(-1)
-					src.blinded = 1
-					src.lying = 1
-					src.stat = 1
-				var/h = src.hand
-				src.hand = 0
-				drop_item()
-				src.hand = 1
-				drop_item()
-				src.hand = h
+			if(silent)
+				silent = max(silent-1, 0)
 
-			else	//Not stunned.
-				src.lying = 0
-				src.stat = 0
-
-		else //Dead.
-			src.lying = 1
-			src.blinded = 1
-			src.stat = 2
-
-		if (src.stuttering) src.stuttering--
-
-		if (src.eye_blind)
-			src.eye_blind--
-			src.blinded = 1
-
-		if (src.ear_deaf > 0) src.ear_deaf--
-		if (src.ear_damage < 25)
-			src.ear_damage -= 0.05
-			src.ear_damage = max(src.ear_damage, 0)
-
-		src.density = !( src.lying )
-
-		if (src.sdisabilities & 1)
-			src.blinded = 1
-		if (src.sdisabilities & 4)
-			src.ear_deaf = 1
-
-		if (src.eye_blurry > 0)
-			src.eye_blurry--
-			src.eye_blurry = max(0, src.eye_blurry)
-
-		if (src.druggy > 0)
-			src.druggy--
-			src.druggy = max(0, src.druggy)
-
+			if(druggy)
+				druggy = max(druggy-1, 0)
 		return 1
+
 
 	proc/handle_regular_hud_updates()
 
-		if (src.stat == 2 || (XRAY in mutations))
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-			src.see_in_dark = 8
-			src.see_invisible = 2
-		else if (src.stat != 2)
-			src.sight &= ~SEE_TURFS
-			src.sight &= ~SEE_MOBS
-			src.sight &= ~SEE_OBJS
-			src.see_in_dark = 2
-			src.see_invisible = 0
+		if (stat == 2 || (XRAY in mutations))
+			sight |= SEE_TURFS
+			sight |= SEE_MOBS
+			sight |= SEE_OBJS
+			see_in_dark = 8
+			see_invisible = 2
+		else if (stat != 2)
+			sight &= ~SEE_TURFS
+			sight &= ~SEE_MOBS
+			sight &= ~SEE_OBJS
+			see_in_dark = 2
+			see_invisible = 0
 
-		if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
-		if (src.rest) src.rest.icon_state = text("rest[]", src.resting)
+		if (sleep) sleep.icon_state = text("sleep[]", sleeping)
+		if (rest) rest.icon_state = text("rest[]", resting)
 
-		if (src.healths)
-			if (src.stat != 2)
+		if (healths)
+			if (stat != 2)
 				switch(health)
 					if(100 to INFINITY)
-						src.healths.icon_state = "health0"
+						healths.icon_state = "health0"
 					if(80 to 100)
-						src.healths.icon_state = "health1"
+						healths.icon_state = "health1"
 					if(60 to 80)
-						src.healths.icon_state = "health2"
+						healths.icon_state = "health2"
 					if(40 to 60)
-						src.healths.icon_state = "health3"
+						healths.icon_state = "health3"
 					if(20 to 40)
-						src.healths.icon_state = "health4"
+						healths.icon_state = "health4"
 					if(0 to 20)
-						src.healths.icon_state = "health5"
+						healths.icon_state = "health5"
 					else
-						src.healths.icon_state = "health6"
+						healths.icon_state = "health6"
 			else
-				src.healths.icon_state = "health7"
+				healths.icon_state = "health7"
 
 		if (pressure)
 			var/datum/gas_mixture/environment = loc.return_air()
@@ -530,59 +514,59 @@
 					else
 						pressure.icon_state = "pressure-2"
 
-		if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
+		if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
 
 
-		if (src.toxin)	src.toxin.icon_state = "tox[src.toxins_alert ? 1 : 0]"
-		if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
-		if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
+		if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
+		if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
+		if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
 		//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 		//blame the person who coded them. Temporary fix added.
 
 		if(bodytemp)
-			switch(src.bodytemperature) //310.055 optimal body temp
+			switch(bodytemperature) //310.055 optimal body temp
 				if(345 to INFINITY)
-					src.bodytemp.icon_state = "temp4"
+					bodytemp.icon_state = "temp4"
 				if(335 to 345)
-					src.bodytemp.icon_state = "temp3"
+					bodytemp.icon_state = "temp3"
 				if(327 to 335)
-					src.bodytemp.icon_state = "temp2"
+					bodytemp.icon_state = "temp2"
 				if(316 to 327)
-					src.bodytemp.icon_state = "temp1"
+					bodytemp.icon_state = "temp1"
 				if(300 to 316)
-					src.bodytemp.icon_state = "temp0"
+					bodytemp.icon_state = "temp0"
 				if(295 to 300)
-					src.bodytemp.icon_state = "temp-1"
+					bodytemp.icon_state = "temp-1"
 				if(280 to 295)
-					src.bodytemp.icon_state = "temp-2"
+					bodytemp.icon_state = "temp-2"
 				if(260 to 280)
-					src.bodytemp.icon_state = "temp-3"
+					bodytemp.icon_state = "temp-3"
 				else
-					src.bodytemp.icon_state = "temp-4"
+					bodytemp.icon_state = "temp-4"
 
-		src.client.screen -= src.hud_used.blurry
-		src.client.screen -= src.hud_used.druggy
-		src.client.screen -= src.hud_used.vimpaired
+		client.screen -= hud_used.blurry
+		client.screen -= hud_used.druggy
+		client.screen -= hud_used.vimpaired
 
-		if ((src.blind && src.stat != 2))
-			if ((src.blinded))
-				src.blind.layer = 18
+		if ((blind && stat != 2))
+			if ((blinded))
+				blind.layer = 18
 			else
-				src.blind.layer = 0
+				blind.layer = 0
 
-				if (src.disabilities & 1)
-					src.client.screen += src.hud_used.vimpaired
+				if (disabilities & 1)
+					client.screen += hud_used.vimpaired
 
-				if (src.eye_blurry)
-					src.client.screen += src.hud_used.blurry
+				if (eye_blurry)
+					client.screen += hud_used.blurry
 
-				if (src.druggy)
-					src.client.screen += src.hud_used.druggy
+				if (druggy)
+					client.screen += hud_used.druggy
 
-		if (src.stat != 2)
-			if (src.machine)
-				if (!( src.machine.check_eye(src) ))
-					src.reset_view(null)
+		if (stat != 2)
+			if (machine)
+				if (!( machine.check_eye(src) ))
+					reset_view(null)
 			else
 				if(!client.adminobs)
 					reset_view(null)
@@ -596,7 +580,7 @@
 				return
 
 	proc/handle_virus_updates()
-		if(src.bodytemperature > 406)
+		if(bodytemperature > 406)
 			for(var/datum/disease/D in viruses)
 				D.cure()
 		return

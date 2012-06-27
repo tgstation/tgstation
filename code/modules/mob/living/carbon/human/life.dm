@@ -19,10 +19,14 @@
 
 	..()
 
+	//Apparently, the person who wrote this code designed it so that
+	//blinded get reset each cycle and then get activated later in the
+	//code. Very ugly. I dont care. Moving this stuff here so its easy
+	//to find it.
+	blinded = null
+
 	//TODO: seperate this out
 	var/datum/gas_mixture/environment = loc.return_air()
-
-
 
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD)
@@ -52,15 +56,6 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
-		update_canmove() //TODO: remove from life() if viable ~Carn
-						 //Removed for dead people, that's at least a small step closer to removing it! - Nodrak
-
-	else if(stat == DEAD)
-		canmove = 0 //Since canmove doesn't update if they're dead, force this var 0.
-
-	//These should be updated whether the mob is dead or alive
-	blinded = null
-
 	//Update Mind
 	update_mind()
 
@@ -70,10 +65,12 @@
 	//stuff in the stomach
 	handle_stomach()
 
+	//Flashlights and such
+	UpdateLuminosity()
 
 	//Status updates, death etc.
-	UpdateLuminosity()
 	handle_regular_status_updates()		//TODO: optimise ~Carn
+	update_canmove()
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()	//TODO: this was broken by the dismemberment revert ~Carn
@@ -84,14 +81,6 @@
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
-
-	//TODO: optimise this.
-	if(isturf(loc) && rand(1,1000) == 1) //0.1% chance of playing a scary sound to someone who's in complete darkness
-		var/turf/currentTurf = loc
-		if(!currentTurf.sd_lumcount)
-			playsound_local(src,pick(scarySounds),50, 1, -1)
-
-	clamp_values()		//TODO: finish removing this ~Carn
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
@@ -111,20 +100,6 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human
-
-	//I've rewritten this to do what it was intended to do.
-	//This can probably be removed like Rockdtben suggested, but I'd like to go over the damage procs first just to be safe.
-	//Perhaps code view-vars to be unable to directly edit the damagevariables without using procs
-	proc/clamp_values()
-//		stunned		= max( min(stunned,20), 0 )		// positive and under 20
-		paralysis	= max( min(paralysis,20), 0 )	// positive and under 20
-//		weakened	= max( min(weakened,20), 0 )	// positive and under 20
-		sleeping	= max( min(sleeping, 20), 0 )	// positive and under 20
-		oxyloss		= max(oxyloss,0)				// positive
-		toxloss		= max(toxloss,0)				// positive
-//		bruteloss	= max(bruteloss,0)				// positive
-//		fireloss	= max(fireloss,0)				// positive
-
 	proc/update_mind()
 		if(!mind && client)
 			mind = new
@@ -136,38 +111,6 @@
 
 
 	proc/handle_disabilities()
-		if(hallucination > 0)
-			if(hallucination >= 20 && health > 0)
-				if(prob(3))
-					fake_attack(src)
-			//for(var/atom/a in hallucinations)
-			//	a.hallucinate(src)
-			if(!handling_hal && hallucination > 20)
-				spawn handle_hallucinations() //The not boring kind!
-
-			if(hallucination <= 2)
-				halloss = 0
-				hallucination = 0
-			else
-				hallucination -= 2
-			//if(health < 0)
-			//	for(var/obj/a in hallucinations)
-			//		del a
-		else
-			//halloss = 0
-			for(var/atom/a in hallucinations)
-				del a
-
-			if(halloss > 100)
-				src << "You're too tired to keep going..."
-				for(var/mob/O in viewers(src, null))
-					if(O == src)
-						continue
-					O.show_message(text("\red <B>[src] slumps to the ground panting, too weak to continue fighting."), 1)
-				Paralyse(15)
-				setHalLoss(99)
-
-
 		if (disabilities & 2)
 			if ((prob(1) && paralysis < 1 && r_epil < 1))
 				src << "\red You have a seizure!"
@@ -262,32 +205,33 @@
 			if (radiation < 0)
 				radiation = 0
 
-			switch(radiation)
-				if(1 to 49)
-					radiation--
-					if(prob(25))
+			else
+				switch(radiation)
+					if(1 to 49)
+						radiation--
+						if(prob(25))
+							adjustToxLoss(1)
+							updatehealth()
+
+					if(50 to 74)
+						radiation -= 2
 						adjustToxLoss(1)
+						if(prob(5))
+							radiation -= 5
+							Weaken(3)
+							src << "\red You feel weak."
+							emote("collapse")
 						updatehealth()
 
-				if(50 to 74)
-					radiation -= 2
-					adjustToxLoss(1)
-					if(prob(5))
-						radiation -= 5
-						Weaken(3)
-						src << "\red You feel weak."
-						emote("collapse")
-					updatehealth()
-
-				if(75 to 100)
-					radiation -= 3
-					adjustToxLoss(3)
-					if(prob(1))
-						src << "\red You mutate!"
-						randmutb(src)
-						domutcheck(src,null)
-						emote("gasp")
-					updatehealth()
+					if(75 to 100)
+						radiation -= 3
+						adjustToxLoss(3)
+						if(prob(1))
+							src << "\red You mutate!"
+							randmutb(src)
+							domutcheck(src,null)
+							emote("gasp")
+						updatehealth()
 
 
 	proc/breathe()
@@ -453,7 +397,7 @@
 				if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 					if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-						sleeping = max(src.sleeping+2, 10)
+						sleeping = max(sleeping+2, 10)
 				else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 					if(prob(20))
 						spawn(0) emote(pick("giggle", "laugh"))
@@ -743,59 +687,66 @@
 	proc/handle_regular_status_updates()
 		if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 			blinded = 1
-			stat = DEAD
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
+			updatehealth()	//TODO
 			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 				blinded = 1
-				stat = DEAD
 				silent = 0
 				return 1
 
-			stat = CONSCIOUS
-			if(getOxyLoss() > 50)
-				Paralyse(3)
-
-			if(health < config.health_threshold_crit)	//UNCONSCIOUS. NO-ONE IS HOME
+			//UNCONSCIOUS. NO-ONE IS HOME
+			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
 				if( health <= 20 && prob(1) )
 					spawn(0)
 						emote("gasp")
-
 				if(!reagents.has_reagent("inaprovaline"))
 					adjustOxyLoss(1)
+				Paralyse(3)
 
-				stat = UNCONSCIOUS
-				Paralyse(5)
+			if(hallucination)
+				if(hallucination >= 20)
+					if(prob(3))
+						fake_attack(src)
+					if(!handling_hal)
+						spawn handle_hallucinations() //The not boring kind!
 
-			if(silent)
-				silent = max(silent-1, 0)
+				if(hallucination<=2)
+					hallucination = 0
+					halloss = 0
+				else
+					hallucination -= 2
 
-			if(stunned > 0)
-				AdjustStunned(-1)
-			if(weakened > 0)
-				AdjustWeakened(-1)
+			else
+				for(var/atom/a in hallucinations)
+					del a
 
-			//Incapacitated
-			if(paralysis > 0)
+				if(halloss > 100)
+					src << "<span class='notice'>You're too tired to keep going...</span>"
+					for(var/mob/O in oviewers(src, null))
+						O.show_message("<B>[src]</B> slumps to the ground panting, too weak to continue fighting.", 1)
+					Paralyse(3)
+					setHalLoss(99)
+
+			if(paralysis)
 				AdjustParalysis(-1)
 				blinded = 1
 				stat = UNCONSCIOUS
-
-			if(sleeping > 0)
+			else if(sleeping)
 				handle_dreams()
 				adjustHalLoss(-5)
+				sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS
 				if( prob(10) && health && !hal_crit )
 					spawn(0)
 						emote("snore")
-				sleeping = max(sleeping-1, 0)
+			//CONSCIOUS
+			else
+				stat = CONSCIOUS
 
-			if(stuttering)
-				stuttering = max(stuttering-1, 0)
-
-			//Eyes & Ears
+			//Eyes
 			if(sdisabilities & 1)		//disabled-blind, doesn't get better on its own
 				blinded = 1
 			else if(eye_blind)			//blindness, heals slowly over time
@@ -807,6 +758,7 @@
 			else if(eye_blurry)	//blurry eyes heal slowly
 				eye_blurry = max(eye_blurry-1, 0)
 
+			//Ears
 			if(sdisabilities & 4)		//disabled-deaf, doesn't get better on its own
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_deaf)			//deafness, heals slowly over time
@@ -816,6 +768,19 @@
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
 				ear_damage = max(ear_damage-0.05, 0)
+
+			//Other
+			if(stunned)
+				AdjustStunned(-1)
+
+			if(weakened)
+				weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+
+			if(stuttering)
+				stuttering = max(stuttering-1, 0)
+
+			if(silent)
+				silent = max(silent-1, 0)
 
 			if(druggy)
 				druggy = max(druggy-1, 0)
@@ -925,7 +890,7 @@
 
 
 
-	/* HUD shit goes here, as long as it doesn't modify src.sight flags */
+	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
 		if(istype(glasses, /obj/item/clothing/glasses/hud/health))
 			if(client)
@@ -1055,27 +1020,24 @@
 					bodytemp.icon_state = "temp-4"
 
 		if(!client)	return 0 //Wish we did not need these
-		client.screen -= hud_used.blurry
-		client.screen -= hud_used.druggy
-		client.screen -= hud_used.vimpaired
-		client.screen -= hud_used.darkMask
+		client.screen.Remove(hud_used.blurry, hud_used.druggy, hud_used.vimpaired, hud_used.darkMask)
 
 		if ((blind && stat != 2))
-			if ((blinded))
+			if(blinded)
 				blind.layer = 18
 			else
 				blind.layer = 0
 
-				if (disabilities & 1 && !istype(glasses, /obj/item/clothing/glasses/regular) )
+				if( disabilities & 1 && !istype(glasses, /obj/item/clothing/glasses/regular) )
 					client.screen += hud_used.vimpaired
 
-				if (eye_blurry)
+				if(eye_blurry)
 					client.screen += hud_used.blurry
 
-				if (druggy)
+				if(druggy)
 					client.screen += hud_used.druggy
 
-				if ((istype(head, /obj/item/clothing/head/welding)) )
+				if( istype(head, /obj/item/clothing/head/welding) )
 					if(!head:up && tinted_weldhelh)
 						client.screen += hud_used.darkMask
 
@@ -1114,7 +1076,7 @@
 
 					for(var/mob/O in viewers(world.view, src))
 						O.show_message(text("<b>\red [] throws up!</b>", src), 1)
-					playsound(src.loc, 'splat.ogg', 50, 1)
+					playsound(loc, 'splat.ogg', 50, 1)
 
 					var/turf/location = loc
 					if (istype(location, /turf/simulated))
@@ -1125,6 +1087,12 @@
 
 					// make it so you can only puke so fast
 					lastpuke = 0
+
+		//0.1% chance of playing a scary sound to someone who's in complete darkness
+		if(isturf(loc) && rand(1,1000) == 1)
+			var/turf/currentTurf = loc
+			if(!currentTurf.sd_lumcount)
+				playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	proc/handle_virus_updates()
 		if(bodytemperature > 406)
@@ -1156,3 +1124,4 @@
 				if ((changeling.geneticdamage > 0))
 					changeling.geneticdamage = changeling.geneticdamage-1
 
+#undef HUMAN_MAX_OXYLOSS

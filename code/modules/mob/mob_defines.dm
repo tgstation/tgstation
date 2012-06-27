@@ -89,7 +89,7 @@
 	var/blinded = null
 	var/bhunger = 0			//Carbon
 	var/ajourn = 0
-	var/rejuv = null
+//	var/rejuv = null
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/antitoxs = null

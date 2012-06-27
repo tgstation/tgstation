@@ -23,11 +23,12 @@
 
 
 /mob/living/proc/updatehealth()
-	if(!src.nodamage)
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss() -src.halloss
-	else
+	if(nodamage)
 		src.health = 100
 		src.stat = 0
+	else
+		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss() - src.halloss
+
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -152,21 +153,25 @@
 	src.updatehealth()
 
 /mob/living/proc/revive()
-	//src.fireloss = 0
-	src.setToxLoss(0)
-	//src.bruteloss = 0
-	src.setOxyLoss(0)
+	setToxLoss(0)
+	setOxyLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
-	src.radiation = 0
-	src.nutrition = 400
-	src.bodytemperature = 310
-	//src.health = 100
-	src.heal_overall_damage(1000, 1000)
-	src.buckled = initial(src.buckled)
-	src.handcuffed = initial(src.handcuffed)
-	if(src.stat > 1) src.stat = CONSCIOUS
+	radiation = 0
+	nutrition = 400
+	bodytemperature = 310
+	sdisabilities = 0
+	disabilities = 0
+	blinded = 0
+	eye_blind = 0
+	eye_blurry = 0
+	ear_deaf = 0
+	ear_damage = 0
+	heal_overall_damage(1000, 1000)
+	buckled = initial(src.buckled)
+	handcuffed = initial(src.handcuffed)
+	stat = CONSCIOUS
 	..()
 	return
 

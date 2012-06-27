@@ -533,11 +533,12 @@ In all, this is a lot like the monkey code. /N
 	return
 
 /mob/living/carbon/alien/humanoid/updatehealth()
-	if (nodamage == 0)
-	//oxyloss is only used for suicide
-	//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = 100 - getOxyLoss() - getFireLoss() - getBruteLoss()
-	else
+	if(nodamage)
 		health = 100
 		stat = 0
+	else
+		//oxyloss is only used for suicide
+		//toxloss isn't used for aliens, its actually used as alien powers!!
+		health = 100 - getOxyLoss() - getFireLoss() - getBruteLoss()
+
 
