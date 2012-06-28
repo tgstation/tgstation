@@ -81,6 +81,70 @@
 //		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 
+
+// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
+// Stop! ... Hammertime! ~Carn
+
+/mob/living/proc/getBruteLoss()
+	return bruteloss
+
+/mob/living/proc/adjustBruteLoss(var/amount)
+	bruteloss = max(bruteloss + amount, 0)
+
+/mob/living/proc/getOxyLoss()
+	return oxyloss
+
+/mob/living/proc/adjustOxyLoss(var/amount)
+	oxyloss = max(oxyloss + amount, 0)
+
+/mob/living/proc/setOxyLoss(var/amount)
+	oxyloss = amount
+
+/mob/living/proc/getToxLoss()
+	return toxloss
+
+/mob/living/proc/adjustToxLoss(var/amount)
+	toxloss = max(toxloss + amount, 0)
+
+/mob/living/proc/setToxLoss(var/amount)
+	toxloss = amount
+
+/mob/living/proc/getFireLoss()
+	return fireloss
+
+/mob/living/proc/adjustFireLoss(var/amount)
+	fireloss = max(fireloss + amount, 0)
+
+/mob/living/proc/getCloneLoss()
+	return cloneloss
+
+/mob/living/proc/adjustCloneLoss(var/amount)
+	cloneloss = max(cloneloss + amount, 0)
+
+/mob/living/proc/setCloneLoss(var/amount)
+	cloneloss = amount
+
+/mob/living/proc/getBrainLoss()
+	return brainloss
+
+/mob/living/proc/adjustBrainLoss(var/amount)
+	brainloss = max(brainloss + amount, 0)
+
+/mob/living/proc/setBrainLoss(var/amount)
+	brainloss = amount
+
+/mob/living/proc/getHalLoss()
+	return halloss
+
+/mob/living/proc/adjustHalLoss(var/amount)
+	halloss = max(halloss + amount, 0)
+
+/mob/living/proc/setHalLoss(var/amount)
+	halloss = amount
+
+// ++++ROCKDTBEN++++ MOB PROCS //END
+
+
 /mob/proc/get_contents()
 
 /mob/living/get_contents()

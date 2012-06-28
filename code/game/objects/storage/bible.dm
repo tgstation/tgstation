@@ -15,7 +15,7 @@
 				H.UpdateDamageIcon()
 	return
 
-/obj/item/weapon/storage/bible/attack(mob/M as mob, mob/living/user as mob)
+/obj/item/weapon/storage/bible/attack(mob/living/M as mob, mob/living/user as mob)
 
 	var/chaplain = 0
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))

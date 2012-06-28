@@ -521,7 +521,7 @@
 	return
 
 
-/mob/living/verb/mob_sleep()
+/mob/living/carbon/verb/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
 
@@ -531,7 +531,7 @@
 	else
 		usr.sleeping = 20 //Short nap
 
-/mob/living/verb/lay_down()
+/mob/living/carbon/verb/lay_down()
 	set name = "Lay down / Get up"
 	set category = "IC"
 
@@ -543,14 +543,16 @@
 	set name = "Resist"
 	set category = "IC"
 
-	if(usr.next_move > world.time)
+	if(!isliving(usr) || usr.next_move > world.time)
 		return
 	usr.next_move = world.time + 20
 
+	var/mob/living/L = usr
+
 	//resisting grabs (as if it helps anyone...)
-	if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
+	if ((!( L.stat ) && L.canmove && !( L.restrained() )))
 		var/resisting = 0
-		for(var/obj/O in usr.requests)
+		for(var/obj/O in L.requests)
 			del(O)
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
@@ -560,86 +562,46 @@
 			else
 				if (G.state == 2)
 					if (prob(25))
-						for(var/mob/O in viewers(usr, null))
-							O.show_message(text("\red [] has broken free of []'s grip!", usr, G.assailant), 1)
+						for(var/mob/O in viewers(L, null))
+							O.show_message(text("\red [] has broken free of []'s grip!", L, G.assailant), 1)
 						del(G)
 				else
 					if (G.state == 3)
 						if (prob(5))
 							for(var/mob/O in viewers(usr, null))
-								O.show_message(text("\red [] has broken free of []'s headlock!", usr, G.assailant), 1)
+								O.show_message(text("\red [] has broken free of []'s headlock!", L, G.assailant), 1)
 							del(G)
 		if(resisting)
 			for(var/mob/O in viewers(usr, null))
-				O.show_message(text("\red <B>[] resists!</B>", usr), 1)
+				O.show_message(text("\red <B>[] resists!</B>", L), 1)
 
-
-
-	//breaking out of handcuffs
-	if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
-		usr.next_move = world.time + 100
-		usr.last_special = world.time + 100
-		if(isalienadult(usr) || (HULK in usr.mutations) || (SUPRSTR in usr.augmentations))//Don't want to do a lot of logic gating here.
-			usr << "\green You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
-			for(var/mob/O in viewers(usr))
-				O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", usr), 1)
-			spawn(0)
-				if(do_after(usr, 50))
-					if(!usr:handcuffed || usr:buckled)
-						return
-					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", usr), 1)
-					usr << "\green You successfully break your handcuffs."
-					del(usr:handcuffed)
-					usr:handcuffed = null
-					usr.update_inv_handcuffed()
-		else
-			var/obj/item/weapon/handcuffs/HC = usr:handcuffed
-			var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
-			var/displaytime = 2 //Minutes to display in the "this will take X minutes."
-			if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
-				breakouttime = HC.breakouttime
-				displaytime = breakouttime / 600 //Minutes
-			usr << "\red You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)"
-			for(var/mob/O in viewers(usr))
-				O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
-			spawn(0)
-				if(do_after(usr, breakouttime))
-					if(!usr:handcuffed || usr:buckled)
-						return // time leniency for lag which also might make this whole thing pointless but the server
-					for(var/mob/O in viewers(usr))//                                         lags so hard that 40s isn't lenient enough - Quarxink
-						O.show_message("\red <B>[usr] manages to remove the handcuffs!</B>", 1)
-					usr << "\blue You successfully remove \the [usr:handcuffed]."
-					usr:handcuffed.loc = usr.loc
-					usr:handcuffed = null
-					usr.update_inv_handcuffed()
 
 	//unbuckling yourself
-	else if( usr:buckled && (usr.last_special <= world.time) )
-		if( usr:handcuffed )
-			usr.next_move = world.time + 100
-			usr.last_special = world.time + 100
-			usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
-			for(var/mob/O in viewers(usr))
+	if( L.buckled && (L.last_special <= world.time) )
+		if( L.handcuffed )
+			L.next_move = world.time + 100
+			L.last_special = world.time + 100
+			L << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
+			for(var/mob/O in viewers(L))
 				O.show_message("\red <B>[usr] attempts to unbuckle themself!</B>", 1)
 			spawn(0)
 				if(do_after(usr, 1200))
-					if(!usr:buckled)
+					if(!L.buckled)
 						return
-					for(var/mob/O in viewers(usr))
+					for(var/mob/O in viewers(L))
 						O.show_message("\red <B>[usr] manages to unbuckle themself!</B>", 1)
-					usr << "\blue You successfully unbuckle yourself."
-					usr:buckled.manual_unbuckle(usr)
+					L << "\blue You successfully unbuckle yourself."
+					L.buckled.manual_unbuckle(L)
 		else
-			usr:buckled.manual_unbuckle(usr)
+			L.buckled.manual_unbuckle(L)
 
-
+	//Breaking out of a locker?
 	else if( src.loc && (istype(src.loc, /obj/structure/closet)) )
-		var/obj/structure/closet/C = usr.loc
+		var/obj/structure/closet/C = L.loc
 		if(C.opened)
 			return //Door's open... wait, why are you in it's contents then?
-		if(istype(usr.loc, /obj/structure/closet/secure_closet))
-			var/obj/structure/closet/secure_closet/SC = usr.loc
+		if(istype(L.loc, /obj/structure/closet/secure_closet))
+			var/obj/structure/closet/secure_closet/SC = L.loc
 			if(!SC.locked && !SC.welded)
 				return //It's a secure closet, but isn't locked. Easily escapable from, no need to 'resist'
 		else
@@ -648,18 +610,18 @@
 
 		//okay, so the closet is either welded or locked... resist!!!
 		usr.next_move = world.time + 100
-		usr.last_special = world.time + 100
-		usr << "\red You lean on the back of \the [C] and start pushing the door open. (this will take about 2 minutes)"
+		L.last_special = world.time + 100
+		L << "\red You lean on the back of \the [C] and start pushing the door open. (this will take about 2 minutes)"
 		for(var/mob/O in viewers(usr.loc))
-			O.show_message("\red <B>The [usr.loc] begins to shake violently!</B>", 1)
+			O.show_message("\red <B>The [L.loc] begins to shake violently!</B>", 1)
 		spawn(0)
 			if(do_after(usr, 50))
-				if(!C || !usr || usr.loc != C || C.opened) //User, closet destroyed OR user no longer in closet OR closet opened
+				if(!C || !L || L.loc != C || C.opened) //User, closet destroyed OR user no longer in closet OR closet opened
 					return
 
 				//Perform the same set of checks as above for weld and lock status to determine if there is even still a point in 'resisting'...
-				if(istype(usr.loc, /obj/structure/closet/secure_closet))
-					var/obj/structure/closet/secure_closet/SC = usr.loc
+				if(istype(L.loc, /obj/structure/closet/secure_closet))
+					var/obj/structure/closet/secure_closet/SC = L.loc
 					if(!SC.locked && !SC.welded)
 						return
 				else
@@ -668,7 +630,7 @@
 
 				//Well then break it!
 				if(istype(usr.loc, /obj/structure/closet/secure_closet))
-					var/obj/structure/closet/secure_closet/SC = usr.loc
+					var/obj/structure/closet/secure_closet/SC = L.loc
 					SC.desc = "It appears to be broken."
 					SC.icon_state = SC.icon_off
 					flick(SC.icon_broken, SC)
@@ -678,12 +640,53 @@
 					SC.broken = 1
 					SC.locked = 0
 					usr << "\red You successfully break out!"
-					for(var/mob/O in viewers(usr.loc))
+					for(var/mob/O in viewers(L.loc))
 						O.show_message("\red <B>\the [usr] successfully broke out of \the [SC]!</B>", 1)
 					SC.open()
 				else
 					C.welded = 0
 					usr << "\red You successfully break out!"
-					for(var/mob/O in viewers(usr.loc))
+					for(var/mob/O in viewers(L.loc))
 						O.show_message("\red <B>\the [usr] successfully broke out of \the [C]!</B>", 1)
 					C.open()
+
+	//breaking out of handcuffs
+	else if(iscarbon(L))
+		var/mob/living/carbon/CM = L
+		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
+			CM.next_move = world.time + 100
+			CM.last_special = world.time + 100
+			if(isalienadult(CM) || (HULK in usr.mutations) || (SUPRSTR in CM.augmentations))//Don't want to do a lot of logic gating here.
+				usr << "\green You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
+				for(var/mob/O in viewers(CM))
+					O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", CM), 1)
+				spawn(0)
+					if(do_after(CM, 50))
+						if(!CM.handcuffed || CM.buckled)
+							return
+						for(var/mob/O in viewers(CM))
+							O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", CM), 1)
+						CM << "\green You successfully break your handcuffs."
+						del(CM.handcuffed)
+						CM.handcuffed = null
+						CM.update_inv_handcuffed()
+			else
+				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
+				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
+				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
+					breakouttime = HC.breakouttime
+					displaytime = breakouttime / 600 //Minutes
+				CM << "\red You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)"
+				for(var/mob/O in viewers(CM))
+					O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
+				spawn(0)
+					if(do_after(CM, breakouttime))
+						if(!CM.handcuffed || CM.buckled)
+							return // time leniency for lag which also might make this whole thing pointless but the server
+						for(var/mob/O in viewers(CM))//                                         lags so hard that 40s isn't lenient enough - Quarxink
+							O.show_message("\red <B>[CM] manages to remove the handcuffs!</B>", 1)
+						CM << "\blue You successfully remove \the [CM.handcuffed]."
+						CM.handcuffed.loc = usr.loc
+						CM.handcuffed = null
+						CM.update_inv_handcuffed()

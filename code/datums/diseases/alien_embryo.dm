@@ -1,11 +1,6 @@
 //affected_mob.contract_disease(new /datum/disease/alien_embryo)
 
 
-
-
-
-
-
 /datum/disease/alien_embryo
 	name = "Unidentified Foreign Body"
 	max_stages = 5

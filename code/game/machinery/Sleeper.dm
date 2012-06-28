@@ -48,7 +48,7 @@
 	if(..())
 		return
 	if (src.connected)
-		var/mob/occupant = src.connected.occupant
+		var/mob/living/occupant = src.connected.occupant
 		var/dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>"
 		if (occupant)
 			var/t1
@@ -138,7 +138,7 @@
 	density = 1
 	anchored = 1
 	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
-	var/mob/occupant = null
+	var/mob/living/occupant = null
 
 
 	New()
@@ -267,7 +267,7 @@
 		return
 
 
-	proc/inject_inap(mob/user as mob)
+	proc/inject_inap(mob/living/user as mob)
 		if(src.occupant)
 			if(src.occupant.reagents.get_reagent_amount("inaprovaline") + 30 <= 60)
 				src.occupant.reagents.add_reagent("inaprovaline", 30)
@@ -277,7 +277,7 @@
 		return
 
 
-	proc/inject_stox(mob/user as mob)
+	proc/inject_stox(mob/living/user as mob)
 		if(src.occupant)
 			if(src.occupant.reagents.get_reagent_amount("stoxin") + 20 <= 40)
 				src.occupant.reagents.add_reagent("stoxin", 20)
@@ -287,7 +287,7 @@
 		return
 
 
-	proc/inject_dermaline(mob/user as mob)
+	proc/inject_dermaline(mob/living/user as mob)
 		if (src.occupant)
 			if(src.occupant.reagents.get_reagent_amount("dermaline") + 20 <= 40)
 				src.occupant.reagents.add_reagent("dermaline", 20)
@@ -297,7 +297,7 @@
 		return
 
 
-	proc/inject_bicaridine(mob/user as mob)
+	proc/inject_bicaridine(mob/living/user as mob)
 		if(src.occupant)
 			if(src.occupant.reagents.get_reagent_amount("bicaridine") + 10 <= 20)
 				src.occupant.reagents.add_reagent("bicaridine", 10)
@@ -307,7 +307,7 @@
 		return
 
 
-	proc/inject_dexalin(mob/user as mob)
+	proc/inject_dexalin(mob/living/user as mob)
 		if(src.occupant)
 			if(src.occupant.reagents.get_reagent_amount("dexalin") + 20 <= 40)
 				src.occupant.reagents.add_reagent("dexalin", 20)
@@ -317,7 +317,7 @@
 		return
 
 
-	proc/check(mob/user as mob)
+	proc/check(mob/living/user as mob)
 		if(src.occupant)
 			user << text("\blue <B>Occupant ([]) Statistics:</B>", src.occupant)
 			var/t1

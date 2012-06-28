@@ -327,7 +327,7 @@ About the new airlock wires panel:
 
 
 
-/obj/machinery/door/airlock/bumpopen(mob/user as mob) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
+/obj/machinery/door/airlock/bumpopen(mob/living/user as mob) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!istype(usr, /mob/living/silicon))
 		if(src.isElectrified())
 			if(!src.justzap)
@@ -1270,7 +1270,7 @@ About the new airlock wires panel:
 				close()
 			return
 
-	for(var/mob/M in get_turf(src))
+	for(var/mob/living/M in get_turf(src))
 		if(isrobot(M))
 			M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		else

@@ -920,6 +920,7 @@
 #include "code\modules\mob\living\damage_procs.dm"
 #include "code\modules\mob\living\living.dm"
 #include "code\modules\mob\living\living_defense.dm"
+#include "code\modules\mob\living\living_defines.dm"
 #include "code\modules\mob\living\login.dm"
 #include "code\modules\mob\living\say.dm"
 #include "code\modules\mob\living\blob\blob.dm"

@@ -205,11 +205,12 @@ Class Procs:
 		return 1
 */
 	if (ishuman(user))
-		if(user.getBrainLoss() >= 60)
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60)
 			for(var/mob/M in viewers(src, null))
-				M << "\red [user] stares cluelessly at [src] and drools."
+				M << "\red [H] stares cluelessly at [src] and drools."
 			return 1
-		else if(prob(user.getBrainLoss()))
+		else if(prob(H.getBrainLoss()))
 			user << "\red You momentarily forget how to use [src]."
 			return 1
 

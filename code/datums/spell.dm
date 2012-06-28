@@ -186,7 +186,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	return
 
-/obj/effect/proc_holder/spell/proc/adjust_var(mob/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
+/obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	switch(type)
 		if("bruteloss")
 			target.adjustBruteLoss(amount)

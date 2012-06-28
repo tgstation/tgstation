@@ -528,7 +528,7 @@
 
 	proc/handle_stomach()
 		spawn(0)
-			for(var/mob/M in stomach_contents)
+			for(var/mob/living/M in stomach_contents)
 				if(M.loc != src)
 					stomach_contents.Remove(M)
 					continue

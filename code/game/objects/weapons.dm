@@ -149,7 +149,7 @@
 		target.adjustBruteLoss(100)
 */
 
-/obj/item/weapon/mousetrap/attack_self(mob/user as mob)
+/obj/item/weapon/mousetrap/attack_self(mob/living/user as mob)
 	if(!armed)
 		icon_state = "mousetraparmed"
 		user << "\blue You arm the mousetrap."
@@ -170,7 +170,7 @@
 	armed = !armed
 	playsound(user.loc, 'handcuffs.ogg', 30, 1, -3)
 
-/obj/item/weapon/mousetrap/attack_hand(mob/user as mob)
+/obj/item/weapon/mousetrap/attack_hand(mob/living/user as mob)
 	if(armed)
 		if(( (user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
 			var/which_hand = "l_hand"

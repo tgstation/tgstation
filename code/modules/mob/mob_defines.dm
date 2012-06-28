@@ -5,25 +5,10 @@
 	flags = NOREACT
 	var/datum/mind/mind
 
-	//MOB overhaul
-
 	//Not in use yet
 	var/obj/effect/organstructure/organStructure = null
 
-	//Vars that have been relocated to organStructure
-	//Vars that have been relocated to organStructure ++END
-
-
-
-	//Vars that should only be accessed via procs
-	var/bruteloss = 0.0//Living
-	var/oxyloss = 0.0//Living
-	var/toxloss = 0.0//Living
-	var/fireloss = 0.0//Living
-	var/cloneloss = 0//Carbon
-	var/brainloss = 0//Carbon
-	var/maxHealth = 100 //Living
-	//Vars that should only be accessed via procs ++END
+	var/maxHealth = 100 //Maximum health that should be possible. Used by living, organ and simple_mobs
 
 
 //	var/uses_hud = 0
@@ -57,7 +42,6 @@
 	*/
 	//var/midis = 1 //Check if midis should be played for someone - no, this is something that is tied to clients, not mobs.
 	var/alien_egg_flag = 0//Have you been infected?
-	var/last_special = 0
 	var/obj/screen/zone_sel/zone_sel = null
 
 	var/emote_allowed = 1
@@ -237,11 +221,6 @@
 
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
-
-	//You can guess what these are for.  --SkyMarshal
-	var/list/atom/hallucinations = list()
-	var/halloss = 0
-	var/hallucination = 0
 
 /*For ninjas and others. This variable is checked when a mob moves and I guess it was supposed to allow the mob to move
 through dense areas, such as walls. Setting density to 0 does the same thing. The difference here is that

@@ -194,13 +194,14 @@
 
 			var/damage = rand(melee_damage_lower, melee_damage_upper)
 
-			if(istype(target, /mob/living/carbon/human))
+			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 				var/datum/organ/external/affecting = H.get_organ(ran_zone(dam_zone))
 				H.apply_damage(damage, BRUTE, affecting, H.run_armor_check(affecting, "melee"))
-			else
-				target:adjustBruteLoss(damage)
+			else if(isliving(target))
+				var/mob/living/L = target
+				L.adjustBruteLoss(damage)
 
 			if(attack_sound)
 				playsound(loc, attack_sound, 50, 1, -1)

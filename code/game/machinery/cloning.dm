@@ -91,7 +91,9 @@
 	if (!src.implanted)
 		return "ERROR"
 	else
-		src.healthstring = "[round(src.implanted:getOxyLoss())] - [round(src.implanted:getFireLoss())] - [round(src.implanted:getToxLoss())] - [round(src.implanted:getBruteLoss())]"
+		if(isliving(src.implanted))
+			var/mob/living/L = src.implanted
+			src.healthstring = "[round(L.getOxyLoss())] - [round(L.getFireLoss())] - [round(L.getToxLoss())] - [round(L.getBruteLoss())]"
 		if (!src.healthstring)
 			src.healthstring = "ERROR"
 		return src.healthstring
@@ -114,6 +116,8 @@
 /obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI, var/datum/changeling/changelingClone)
 	if(((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 		return 0
+
+
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1

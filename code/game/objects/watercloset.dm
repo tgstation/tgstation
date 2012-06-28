@@ -10,13 +10,13 @@
 	var/open = 0			//if the lid is up
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
-	var/mob/swirlie = null	//the mob being given a swirlie
+	var/mob/living/swirlie = null	//the mob being given a swirlie
 
 /obj/structure/toilet/New()
 	open = round(rand(0, 1))
 	update_icon()
 
-/obj/structure/toilet/attack_hand(mob/user as mob)
+/obj/structure/toilet/attack_hand(mob/living/user as mob)
 	if(swirlie)
 		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)
@@ -44,7 +44,7 @@
 /obj/structure/toilet/update_icon()
 	icon_state = "toilet[open][cistern]"
 
-/obj/structure/toilet/attackby(obj/item/I as obj, mob/user as mob)
+/obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
 		playsound(loc, 'stonedoor_openclose.ogg', 50, 1)
@@ -56,8 +56,10 @@
 
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
-		var/mob/GM = G.affecting
-		if(ismob(G.affecting))
+
+		if(isliving(G.affecting))
+			var/mob/living/GM = G.affecting
+
 			if(G.state>1)
 				if(!GM.loc == get_turf(src))
 					user << "<span class='notice'>[GM.name] needs to be on the toilet.</span>"
@@ -102,8 +104,8 @@
 /obj/structure/urinal/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
-		var/mob/GM = G.affecting
-		if(ismob(G.affecting))
+		if(isliving(G.affecting))
+			var/mob/living/GM = G.affecting
 			if(G.state>1)
 				if(!GM.loc == get_turf(src))
 					user << "<span class='notice'>[GM.name] needs to be on the urinal.</span>"

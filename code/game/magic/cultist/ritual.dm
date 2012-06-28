@@ -134,14 +134,14 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/living/user as mob)
 		if(!iscultist(user))
 			user << "You can't mouth the arcane scratchings without fumbling over them."
 			return
 		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 			user << "You are unable to speak the words of the rune."
 			return
-		if(!word1 || !word2 || !word3 || prob(usr.getBrainLoss()))
+		if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
 			return fizzle()
 //		if(!src.visibility)
 //			src.visibility=1

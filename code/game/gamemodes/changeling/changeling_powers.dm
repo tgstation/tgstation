@@ -251,25 +251,30 @@
 		usr << "Our genes are still mending themselves!  We cannot transform!"
 		return
 
-	usr.changeling.chem_charges--
+	if(!iscarbon(usr))
+		return //Changelings should only really be carbon as only monkeys/humans have DNA
 
-	usr.remove_changeling_powers()
+	var/mob/living/carbon/C = usr
 
-	usr.visible_message(text("\red <B>[usr] transforms!</B>"))
+	C.changeling.chem_charges--
 
-	usr.changeling.geneticdamage = 30
-	usr << "Our genes cry out!"
+	C.remove_changeling_powers()
+
+	C.visible_message(text("\red <B>[C] transforms!</B>"))
+
+	C.changeling.geneticdamage = 30
+	C << "Our genes cry out!"
 
 	var/list/implants = list() //Try to preserve implants.
-	for(var/obj/item/weapon/implant/W in usr)
+	for(var/obj/item/weapon/implant/W in C)
 		implants += W
 
-	usr.regenerate_icons()
-	usr.monkeyizing = 1
-	usr.canmove = 0
-	usr.icon = null
-	usr.invisibility = 101
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( usr.loc )
+	C.regenerate_icons()
+	C.monkeyizing = 1
+	C.canmove = 0
+	C.icon = null
+	C.invisibility = 101
+	var/atom/movable/overlay/animation = new /atom/movable/overlay( C.loc )
 	animation.icon_state = "blank"
 	animation.icon = 'mob.dmi'
 	animation.master = src
@@ -278,36 +283,36 @@
 	del(animation)
 
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(src)
-	O.dna = usr.dna
-	usr.dna = null
-	O.changeling = usr.changeling
+	O.dna = C.dna
+	C.dna = null
+	O.changeling = C.changeling
 	feedback_add_details("changeling_powers","LF")
 
-	for(var/obj/item/W in usr)
-		usr.drop_from_inventory(W)
+	for(var/obj/item/W in C)
+		C.drop_from_inventory(W)
 
 
-	for(var/obj/T in usr)
+	for(var/obj/T in C)
 		del(T)
 	//for(var/R in usr.organs) //redundant, let's give garbage collector work to do --rastaf0
 	//	del(usr.organs[text("[]", R)])
 
-	O.loc = usr.loc
+	O.loc = C.loc
 
-	O.name = text("monkey ([])",copytext(md5(usr.real_name), 2, 6))
-	O.setToxLoss(usr.getToxLoss())
-	O.adjustBruteLoss(usr.getBruteLoss())
-	O.setOxyLoss(usr.getOxyLoss())
-	O.adjustFireLoss(usr.getFireLoss())
-	O.stat = usr.stat
+	O.name = text("monkey ([])",copytext(md5(C.real_name), 2, 6))
+	O.setToxLoss(C.getToxLoss())
+	O.adjustBruteLoss(C.getBruteLoss())
+	O.setOxyLoss(C.getOxyLoss())
+	O.adjustFireLoss(C.getFireLoss())
+	O.stat = C.stat
 	O.a_intent = "hurt"
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
 		continue
 
-	if(usr.mind)
-		usr.mind.transfer_to(O)
+	if(C.mind)
+		C.mind.transfer_to(O)
 
 	O.make_lesser_changeling()
 	O.verbs += /client/proc/changeling_lesser_transform
@@ -334,29 +339,34 @@
 		usr << "\red We don't have enough stored chemicals to do that!"
 		return
 
+	if(!iscarbon(usr))
+		return //Only humans/monkeys have DNA
+
 	var/S = input("Select the target DNA: ", "Target DNA", null) in usr.changeling.absorbed_dna
 
 	if (S == null)
 		return
 
-	usr.changeling.chem_charges -= 1
+	var/mob/living/carbon/C = usr
 
-	usr.remove_changeling_powers()
+	C.changeling.chem_charges -= 1
 
-	usr.visible_message(text("\red <B>[usr] transforms!</B>"))
+	C.remove_changeling_powers()
 
-	usr.dna = usr.changeling.absorbed_dna[S]
+	C.visible_message(text("\red <B>[C] transforms!</B>"))
+
+	C.dna = C.changeling.absorbed_dna[S]
 
 	var/list/implants = list()
-	for (var/obj/item/weapon/implant/I in usr) //Still preserving implants
+	for (var/obj/item/weapon/implant/I in C) //Still preserving implants
 		implants += I
 
-	usr.regenerate_icons()
-	usr.monkeyizing = 1
-	usr.canmove = 0
-	usr.icon = null
-	usr.invisibility = 101
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( usr.loc )
+	C.regenerate_icons()
+	C.monkeyizing = 1
+	C.canmove = 0
+	C.icon = null
+	C.invisibility = 101
+	var/atom/movable/overlay/animation = new /atom/movable/overlay( C.loc )
 	animation.icon_state = "blank"
 	animation.icon = 'mob.dmi'
 	animation.master = src
@@ -365,44 +375,44 @@
 	del(animation)
 
 	for(var/obj/item/W in usr)
-		usr.u_equip(W)
-		if (usr.client)
-			usr.client.screen -= W
+		C.u_equip(W)
+		if (C.client)
+			C.client.screen -= W
 		if (W)
-			W.loc = usr.loc
-			W.dropped(usr)
+			W.loc = C.loc
+			W.dropped(C)
 			W.layer = initial(W.layer)
 
 	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )
-	if (isblockon(getblock(usr.dna.uni_identity, 11,3),11))
+	if (isblockon(getblock(C.dna.uni_identity, 11,3),11))
 		O.gender = FEMALE
 	else
 		O.gender = MALE
-	O.dna = usr.dna
-	usr.dna = null
-	O.changeling = usr.changeling
+	O.dna = C.dna
+	C.dna = null
+	O.changeling = C.changeling
 	O.real_name = S
 	feedback_add_details("changeling_powers","LFT")
 
-	for(var/obj/T in usr)
+	for(var/obj/T in C)
 		del(T)
 
-	O.loc = usr.loc
+	O.loc = C.loc
 
 	updateappearance(O,O.dna.uni_identity)
 	domutcheck(O, null)
-	O.setToxLoss(usr.getToxLoss())
-	O.adjustBruteLoss(usr.getBruteLoss())
-	O.setOxyLoss(usr.getOxyLoss())
-	O.adjustFireLoss(usr.getFireLoss())
-	O.stat = usr.stat
+	O.setToxLoss(C.getToxLoss())
+	O.adjustBruteLoss(C.getBruteLoss())
+	O.setOxyLoss(C.getOxyLoss())
+	O.adjustFireLoss(C.getFireLoss())
+	O.stat = C.stat
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
 		continue
 
-	if(usr.mind)
-		usr.mind.transfer_to(O)
+	if(C.mind)
+		C.mind.transfer_to(O)
 
 	O.make_changeling()
 
@@ -532,45 +542,48 @@ Tarjan shit, not recoding this -Sieve{R}*/
 	if(usr.changeling.chem_charges < 20)
 		usr << "\red We don't have enough stored chemicals to do that!"
 		return
+	if(!isliving(usr)) return //This should NEVER happen
 
-	usr.changeling.chem_charges -= 20
+	var/mob/living/L = usr
 
-	usr << "\blue We will regenerate our form."
+	L.changeling.chem_charges -= 20
 
-	usr.lying = 1
-	usr.canmove = 0
-	usr.changeling.changeling_fakedeath = 1
-	usr.remove_changeling_powers()
+	L << "\blue We will regenerate our form."
 	feedback_add_details("changeling_powers","FD")
 
-	usr.emote("gasp")
+	L.lying = 1
+	L.canmove = 0
+	L.changeling.changeling_fakedeath = 1
+	L.remove_changeling_powers()
+
+	L.emote("gasp")
 
 	spawn(1200)
-		usr.stat = 0
+		L.stat = 0
 		//usr.fireloss = 0
-		usr.setToxLoss(0)
+		L.setToxLoss(0)
 		//usr.bruteloss = 0
-		usr.setOxyLoss(0)
-		usr.setCloneLoss(0)
-		usr.SetParalysis(0)
-		usr.SetStunned(0)
-		usr.SetWeakened(0)
-		usr.radiation = 0
-		//usr.health = 100
-		//usr.updatehealth()
+		L.setOxyLoss(0)
+		L.setCloneLoss(0)
+		L.SetParalysis(0)
+		L.SetStunned(0)
+		L.SetWeakened(0)
+		L.radiation = 0
+		//L.health = 100
+		//L.updatehealth()
 		var/mob/living/M = src
 		M.heal_overall_damage(M.getBruteLoss(), M.getFireLoss())
-		usr.reagents.clear_reagents()
-		usr.lying = 0
-		usr.canmove = 1
-		usr << "\blue We have regenerated."
-		usr.visible_message(text("\red <B>[usr] appears to wake from the dead, having healed all wounds.</B>"))
+		L.reagents.clear_reagents()
+		L.lying = 0
+		L.canmove = 1
+		L << "\blue We have regenerated."
+		L.visible_message(text("\red <B>[usr] appears to wake from the dead, having healed all wounds.</B>"))
 
-		usr.changeling.changeling_fakedeath = 0
-		if (usr.changeling.changeling_level == 1)
-			usr.make_lesser_changeling()
-		else if (usr.changeling.changeling_level == 2)
-			usr.make_changeling()
+		L.changeling.changeling_fakedeath = 0
+		if (L.changeling.changeling_level == 1)
+			L.make_lesser_changeling()
+		else if (L.changeling.changeling_level == 2)
+			L.make_changeling()
 
 	return
 
@@ -1056,7 +1069,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 	var/list/victims = list()
 	for(var/mob/living/carbon/C in oview(usr.changeling.sting_range))
 		victims += C
-	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+	var/mob/living/T = input(usr, "Who do you wish to sting?") as null | anything in victims
 
 	if(T && T in view(usr.changeling.sting_range))
 

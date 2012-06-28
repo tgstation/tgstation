@@ -167,11 +167,11 @@ client
 
 		if(istype(D,/atom))
 			var/atom/A = D
-			if(ismob(A))
+			if(isliving(A))
 				body += "<a href='byond://?src=\ref[src];rename=\ref[D]'><b>[D]</b></a>"
 				if(A.dir)
 					body += "<br><font size='1'><a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
-				var/mob/M = A
+				var/mob/living/M = A
 				body += "<br><font size='1'><a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 				body += {"
 				<br><font size='1'>
@@ -763,19 +763,22 @@ client
 			var/mob/M = locate(href_list["mobToDamage"])
 			var/Text = locate(href_list["adjustDamage"])
 
+			if(!isliving(M)) return
+			var/mob/living/L = M
+
 			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
 			if(Text == "brute")
-				M.adjustBruteLoss(amount)
+				L.adjustBruteLoss(amount)
 			else if(Text == "fire")
-				M.adjustFireLoss(amount)
+				L.adjustFireLoss(amount)
 			else if(Text == "toxin")
-				M.adjustToxLoss(amount)
+				L.adjustToxLoss(amount)
 			else if(Text == "oxygen")
-				M.adjustOxyLoss(amount)
+				L.adjustOxyLoss(amount)
 			else if(Text == "brain")
-				M.adjustBrainLoss(amount)
+				L.adjustBrainLoss(amount)
 			else if(Text == "clone")
-				M.adjustCloneLoss(amount)
+				L.adjustCloneLoss(amount)
 			else
 				usr << "You caused an error. DEBUG: Text:[Text] Mob:[M]"
 				return

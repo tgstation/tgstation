@@ -235,3 +235,13 @@
 /mob/living/carbon/proc/eyecheck()
 	return 0
 
+// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
+// Stop! ... Hammertime! ~Carn
+
+/mob/living/carbon/proc/getDNA()
+	return dna
+
+/mob/living/carbon/proc/setDNA(var/datum/dna/newDNA)
+	dna = newDNA
+
+// ++++ROCKDTBEN++++ MOB PROCS //END

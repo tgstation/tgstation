@@ -890,7 +890,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			user << "<span class='notify'>You slide \the [C] into \the [src].</span>"
 	return
 
-/obj/item/device/pda/attack(mob/C as mob, mob/user as mob)
+/obj/item/device/pda/attack(mob/living/C as mob, mob/living/user as mob)
 	if (istype(C, /mob/living/carbon))
 		switch(scanmode)
 			if(1)

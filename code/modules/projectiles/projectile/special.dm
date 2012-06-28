@@ -48,7 +48,7 @@
 	flag = "energy"
 
 	on_hit(var/atom/target, var/blocked = 0)
-		var/mob/M = target
+		var/mob/living/M = target
 		if(istype(target, /mob/living) && M:mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
 			var/mob/living/L as mob
 			if(prob(15))

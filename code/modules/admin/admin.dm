@@ -1152,7 +1152,11 @@ var/global/BSACooldown = 0
 				special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
 
 			//Health
-			health_description = "Oxy: [M.oxyloss] - Tox: [M.toxloss] - Fire: [M.fireloss] - Brute: [M.bruteloss] - Clone: [M.cloneloss] - Brain: [M.brainloss]"
+			if(isliving(M))
+				var/mob/living/L
+				health_description = "Oxy: [L.oxyloss] - Tox: [L.toxloss] - Fire: [L.fireloss] - Brute: [L.bruteloss] - Clone: [L.cloneloss] - Brain: [L.brainloss]"
+			else
+				health_description = "This mob type has no health to speak of."
 
 			src.owner << "<b>Info about [M.name]:</b> "
 			src.owner << "Mob type = [M.type]; Damage = [health_description]"
@@ -1191,9 +1195,15 @@ var/global/BSACooldown = 0
 		show_traitor_panel(M)
 
 	if (href_list["BlueSpaceArtillery"])
-		var/mob/M = locate(href_list["BlueSpaceArtillery"])
-		if(!M)
+		var/mob/target = locate(href_list["BlueSpaceArtillery"])
+		if(!target)
 			return
+
+		if(!isliving(target))
+			src.owner << "That is not a valid target."
+			return
+
+		var/mob/living/M = target
 
 		var/choice = alert(src.owner, "Are you sure you wish to hit [key_name(M)] with Blue Space Artillery?",  "Confirm Firing?" , "Yes" , "No")
 		if (choice == "No")

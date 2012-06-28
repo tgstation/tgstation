@@ -470,7 +470,7 @@ ZIPPO
 
 /obj/item/weapon/lighter
 
-	attack_self(mob/user)
+	attack_self(mob/living/user)
 		if(user.r_hand == src || user.l_hand == src)
 			if(!src.lit)
 				src.lit = 1
