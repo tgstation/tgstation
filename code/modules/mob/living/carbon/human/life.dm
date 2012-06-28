@@ -1048,11 +1048,11 @@
 						stat = 1
 
 					if (sleeping > 0)
-						if(stat == 0)
-							// BUG: this doesn't seem to happen ever.. probably when you hit sleep willingly,
-							// it automatically adjusts your stat without calling this proc
+						if(stat == 0 && !resting)
+						// BUG: this doesn't seem to happen ever.. probably when you hit sleep willingly,
+						// it automatically adjusts your stat without calling this proc
 
-							// show them a message so they know what's going on
+						// show them a message so they know what's going on
 							src << "\blue You feel very drowsy.. Your eyelids become heavy..."
 
 						handle_dreams()

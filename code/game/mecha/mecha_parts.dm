@@ -6,7 +6,7 @@
 	name = "mecha part"
 	icon = 'mech_construct.dmi'
 	icon_state = "blank"
-	w_class = 20
+	w_class = 5 //I'm pretty sure that's silly.
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "programming=2;materials=2"
 	var/construction_time = 100
