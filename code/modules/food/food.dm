@@ -1881,8 +1881,8 @@
 	bitesize = 2
 
 /obj/item/pizzabox
-	name = "Pizza Box"
-	desc = "A box suited for pizzas"
+	name = "pizza box"
+	desc = "A box suited for pizzas."
 	icon = 'food.dmi'
 	icon_state = "pizzabox1"
 
