@@ -209,10 +209,10 @@
 			external_pressure_bound = between(0, text2num(signal.data["set_external_pressure"]), ONE_ATMOSPHERE*50)
 
 		if("adjust_internal_pressure" in signal.data)
-			internal_pressure_bound = between(0, text2num(signal.data["adjust_internal_pressure"]), ONE_ATMOSPHERE*50)
+			internal_pressure_bound = between(0, internal_pressure_bound +  text2num(signal.data["adjust_internal_pressure"]), ONE_ATMOSPHERE*50)
 
 		if("adjust_external_pressure" in signal.data)
-			external_pressure_bound = between(0, text2num(signal.data["adjust_external_pressure"]), ONE_ATMOSPHERE*50)
+			external_pressure_bound = between(0, external_pressure_bound +  text2num(signal.data["adjust_external_pressure"]), ONE_ATMOSPHERE*50)
 
 		if("init" in signal.data)
 			name = signal.data["init"]
