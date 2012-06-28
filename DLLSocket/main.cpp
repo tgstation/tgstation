@@ -120,7 +120,7 @@ extern "C" DLL_EXPORT const char* recv_message(int n, char *v[])
             if(sender.sin_addr.s_addr != addr.sin_addr.s_addr) {
                 continue; // not our connection, ignore and try again
             } else {
-                return_buffer[rc] = '0'; // 0-terminate the string
+                return_buffer[rc] = 0; // 0-terminate the string
                 return return_buffer;
             }
         }

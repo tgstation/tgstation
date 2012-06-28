@@ -219,6 +219,10 @@
 				O.loc = P
 				amount -= 1
 				P.w_class = O.w_class
+				if(O.w_class > 5.0)
+					P.w_class = 5.0
+				if(O.w_class < 1.0)
+					P.w_class = 1.0
 				P.icon_state = "deliverycrate[P.w_class]"
 				var/t
 				switch(P.w_class)
@@ -232,9 +236,13 @@
 						t = "bulky"
 					if(5.0)
 						t = "huge"
+				if(P.w_class < 1.0)
+					t = "tiny"
+				if(P.w_class > 5.0)
+					t = "huge"
 				P.name = "[t] package"
 				user.visible_message("\The [user] wraps \a [target] with \a [src], producing \a [P].",\
-				"\blue You wrap \the [target], leaving [amount] units of paper on your [src].",\
+				"\blue You wrap \the [target], leaving [amount] units of paper on \the [src].",\
 				"You hear someone taping paper around a small object.")
 		else if (istype(target, /obj/structure/closet/crate))
 			var/obj/structure/closet/crate/O = target
