@@ -187,11 +187,11 @@ var/const/MAX_ACTIVE_TIME = 600
 
 		stat = CONSCIOUS
 
-		for(var/mob/living/carbon/alien/alien in world)
+/*		for(var/mob/living/carbon/alien/alien in world)
 			var/image/activeIndicator = image('alien.dmi', loc = src, icon_state = "facehugger_active")
 			activeIndicator.override = 1
 			if(alien && alien.client)
-				alien.client.images += activeIndicator
+				alien.client.images += activeIndicator	*/
 
 		spawn(rand(MIN_ACTIVE_TIME,MAX_ACTIVE_TIME))
 			GoIdle()
@@ -202,7 +202,7 @@ var/const/MAX_ACTIVE_TIME = 600
 		if(stat == DEAD || stat == UNCONSCIOUS)
 			return
 
-		RemoveActiveIndicators()
+/*		RemoveActiveIndicators()	*/
 
 		stat = UNCONSCIOUS
 
@@ -212,7 +212,7 @@ var/const/MAX_ACTIVE_TIME = 600
 		if(stat == DEAD)
 			return
 
-		RemoveActiveIndicators()
+/*		RemoveActiveIndicators()	*/
 
 		icon_state = "facehugger_dead"
 		stat = DEAD
@@ -222,14 +222,14 @@ var/const/MAX_ACTIVE_TIME = 600
 
 		return
 
-	proc/RemoveActiveIndicators() //removes the "active" facehugger indicator from all aliens in the world for this hugger
+/*	proc/RemoveActiveIndicators() //removes the "active" facehugger indicator from all aliens in the world for this hugger
 		for(var/mob/living/carbon/alien/alien in world)
 			if(alien.client)
 				for(var/image/image in alien.client.images)
 					if(image.icon_state == "facehugger_active" && image.loc == src)
 						del(image)
 
-		return
+		return	*/
 
 /obj/item/clothing/mask/facehugger/angry
 	stat = CONSCIOUS
