@@ -6,7 +6,7 @@
 	var/obj/item/clothing/head/head = null			//
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
-	var/alien_invis = 0
+//	var/alien_invis = 0
 	var/caste = ""
 	update_icon = 1
 

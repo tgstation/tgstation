@@ -17,14 +17,11 @@
 
 	..()
 
-	if (stat != 2) //still breathing
-
+	if (stat != DEAD) //still breathing
 		//First, resolve location and get a breath
-
 		if(air_master.current_cycle%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			spawn(0) breathe()
-
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
@@ -352,7 +349,7 @@
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_deaf)			//deafness, heals slowly over time
 				ear_deaf = max(ear_deaf-1, 0)
-			else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
+			else if(ear_damage < 25)	//ear damage heals slowly under this threshold.
 				ear_damage = max(ear_damage-0.05, 0)
 
 			//Other

@@ -20,13 +20,8 @@
 		for(var/image/I in overlays_lying)
 			overlays += I
 	else
-		if(alien_invis)
-			icon_state = "alienh_cloak"		//this is such a crude solution. I'm sorry.
-											//indstead of all that fancy icon processing, it just replaces our base icon
-											//Aliens can't wear much anyway :P ~Carn
-		else
-			if(m_intent == "run")		icon_state = "alien[caste]_running"
-			else						icon_state = "alien[caste]_s"
+		if(m_intent == "run")		icon_state = "alien[caste]_running"
+		else						icon_state = "alien[caste]_s"
 		for(var/image/I in overlays_standing)
 			overlays += I
 

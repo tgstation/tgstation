@@ -939,6 +939,10 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					if (istype(usr, /mob/living/carbon/monkey))
 						src.attack_paw(usr, usr.hand)
 					else if (istype(usr, /mob/living/carbon/alien/humanoid))
+						if(usr.m_intent == "walk" && istype(usr, /mob/living/carbon/alien/humanoid/hunter))
+							usr.m_intent = "run"
+							usr.hud_used.move_intent.icon_state = "running"
+							usr.update_icons()
 						src.attack_alien(usr, usr.hand)
 					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
 						src.attack_ai(usr, usr.hand)

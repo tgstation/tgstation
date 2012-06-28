@@ -54,89 +54,6 @@
 				adjustBruteLoss(-5)
 				adjustFireLoss(-5)
 
-	handle_regular_status_updates()
-
-		health = 250 - (getOxyLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
-		if(getOxyLoss() > 50) Paralyse(3)
-
-		if(src.sleeping)
-			Paralyse(3)
-			//if (prob(10) && health) spawn(0) emote("snore") Invalid Emote
-			src.sleeping--
-
-		if(src.resting)
-			Weaken(5)
-
-		if(health < config.health_threshold_dead || src.brain_op_stage == 4.0)
-			death()
-		else if(src.health < config.health_threshold_crit)
-			if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
-
-			//if(!src.rejuv) src.oxyloss++
-			if(!src.reagents.has_reagent("inaprovaline")) src.adjustOxyLoss(1)
-
-			if(src.stat != 2)	src.stat = 1
-			Paralyse(5)
-
-		if (src.stat != 2) //Alive.
-
-			if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
-				if (src.stunned > 0)
-					AdjustStunned(-1)
-					src.stat = 0
-				if (src.weakened > 0)
-					AdjustWeakened(-1)
-					src.lying = 1
-					src.stat = 0
-				if (src.paralysis > 0)
-					AdjustParalysis(-1)
-					src.blinded = 1
-					src.lying = 1
-					src.stat = 1
-				var/h = src.hand
-				src.hand = 0
-				drop_item()
-				src.hand = 1
-				drop_item()
-				src.hand = h
-
-			else	//Not stunned.
-				src.lying = 0
-				src.stat = 0
-
-		else //Dead.
-			src.lying = 1
-			src.blinded = 1
-			src.stat = 2
-
-		if (src.stuttering) src.stuttering--
-
-		if (src.eye_blind)
-			src.eye_blind--
-			src.blinded = 1
-
-		if (src.ear_deaf > 0) src.ear_deaf--
-		if (src.ear_damage < 25)
-			src.ear_damage -= 0.05
-			src.ear_damage = max(src.ear_damage, 0)
-
-		src.density = !( src.lying )
-
-		if ((src.sdisabilities & 1))
-			src.blinded = 1
-		if ((src.sdisabilities & 4))
-			src.ear_deaf = 1
-
-		if (src.eye_blurry > 0)
-			src.eye_blurry--
-			src.eye_blurry = max(0, src.eye_blurry)
-
-		if (src.druggy > 0)
-			src.druggy--
-			src.druggy = max(0, src.druggy)
-
-		return 1
 
 //Queen verbs
 /mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
@@ -155,3 +72,13 @@
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
 		new /obj/effect/alien/egg(loc)
 	return
+
+
+/mob/living/carbon/alien/humanoid/queen/updatehealth()
+	if(nodamage)
+		health = 250
+		stat = CONSCIOUS
+	else
+		//oxyloss is only used for suicide
+		//toxloss isn't used for aliens, its actually used as alien powers!!
+		health = 250 - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
