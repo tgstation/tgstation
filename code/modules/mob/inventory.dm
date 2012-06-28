@@ -14,8 +14,8 @@
 
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(var/obj/item/W)
-	if(!W)		return 0
-	if(lying)	return 0
+	if(lying)			return 0
+	if(!istype(W))		return 0
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
@@ -29,8 +29,8 @@
 
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(var/obj/item/W)
-	if(!W)		return 0
-	if(lying)	return 0
+	if(lying)			return 0
+	if(!istype(W))		return 0
 	if(!r_hand)
 		W.loc = src
 		r_hand = W
