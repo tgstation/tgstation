@@ -173,9 +173,10 @@
 	else if (usr.stat != 0 || usr.restrained())
 		return
 	else
-		for(var/datum/reagent/R in usr.reagents.reagent_list) //I'm trying to avoid using canmove() because there are times where it would return 0 when you should still be able to point
-			if(R.id == "zombiepowder")	//This is to counter people spamming point-to when hit by a para-pen or changling's parasting. -Nodrak..
-				return
+		if(usr.reagents)
+			for(var/datum/reagent/R in usr.reagents.reagent_list) //I'm trying to avoid using canmove() because there are times where it would return 0 when you should still be able to point
+				if(R.id == "zombiepowder")	//This is to counter people spamming point-to when hit by a para-pen or changling's parasting. -Nodrak..
+					return
 
 	var/tile = get_turf(this)
 	if (!tile)
@@ -183,7 +184,7 @@
 
 	var/P = new /obj/effect/decal/point(tile)
 	spawn (20)
-		del(P)
+		if(P)	del(P)
 
 	usr.visible_message("<b>[usr]</b> points to [this]")
 
