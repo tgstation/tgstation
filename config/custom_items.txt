@@ -39,3 +39,5 @@ tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
 vinceluk: Seth Sealis: /obj/item/clothing/suit/storage/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
 whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1
+jamini: Edwin Atweeke: /obj/item/clothing/suit/storage/labcoat/fluff/burnt
+cubejackal: Barry Sharke: /obj/item/clothing/mask/fluff/electriccig
