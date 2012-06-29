@@ -227,19 +227,19 @@
 	mymob.oxygen.icon = 'screen1_alien.dmi'
 	mymob.oxygen.icon_state = "oxy0"
 	mymob.oxygen.name = "oxygen"
-	mymob.oxygen.screen_loc = ui_oxygen
+	mymob.oxygen.screen_loc = ui_alien_oxygen
 
 	mymob.toxin = new /obj/screen( null )
 	mymob.toxin.icon = 'screen1_alien.dmi'
 	mymob.toxin.icon_state = "tox0"
 	mymob.toxin.name = "toxin"
-	mymob.toxin.screen_loc = ui_toxin
+	mymob.toxin.screen_loc = ui_alien_toxin
 
 	mymob.fire = new /obj/screen( null )
 	mymob.fire.icon = 'screen1_alien.dmi'
 	mymob.fire.icon_state = "fire0"
 	mymob.fire.name = "fire"
-	mymob.fire.screen_loc = ui_fire
+	mymob.fire.screen_loc = ui_alien_fire
 
 	mymob.healths = new /obj/screen( null )
 	mymob.healths.icon = 'screen1_alien.dmi'

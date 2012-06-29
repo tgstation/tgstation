@@ -30,7 +30,7 @@
 #define ui_inv1 "6:16,1:5"			//borgs
 #define ui_inv2 "7:16,1:5"			//borgs
 #define ui_inv3 "8:16,1:5"			//borgs
-#define ui_borg_store "9:14,1:5"	//borgs
+#define ui_borg_store "9:16,1:5"	//borgs
 
 #define ui_monkey_mask "5:14,1:5"	//monkey
 #define ui_monkey_back "6:14,1:5"	//monkey
@@ -52,6 +52,11 @@
 #define ui_fire "14:28,12:25"
 #define ui_oxygen "14:28,11:23"
 #define ui_pressure "14:28,10:21"
+
+#define ui_alien_toxin "14:28,13:25"
+#define ui_alien_fire "14:28,12:25"
+#define ui_alien_oxygen "14:28,11:25"
+
 
 //Middle right (status indicators)
 #define ui_nutrition "14:28,5:11"

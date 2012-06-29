@@ -2254,6 +2254,23 @@
 		..()
 		reagents.add_reagent("adminordrazine", 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/capsaicin
+	name = "Capsaicin Bottle"
+	desc = "A small bottle. Contains hot sauce."
+	icon = 'chemical.dmi'
+	icon_state = "bottle3"
+	New()
+		..()
+		reagents.add_reagent("capsaicin", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/frostoil
+	name = "Frost Oil Bottle"
+	desc = "A small bottle. Contains cold sauce."
+	icon = 'chemical.dmi'
+	icon_state = "bottle17"
+	New()
+		..()
+		reagents.add_reagent("frostoil", 30)
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 	name = "beaker"
@@ -2535,6 +2552,7 @@
 	name = "Space Milk"
 	desc = "It's milk. White and nutritious goodness!"
 	icon_state = "milk"
+	item_state = "carton"
 	New()
 		..()
 		reagents.add_reagent("milk", 50)
@@ -2545,6 +2563,7 @@
 	name = "SoyMilk"
 	desc = "It's soy milk. White and nutritious goodness!"
 	icon_state = "soymilk"
+	item_state = "carton"
 	New()
 		..()
 		reagents.add_reagent("soymilk", 50)
@@ -2565,6 +2584,7 @@
 	name = "Duke Purple Tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	icon_state = "tea"
+	item_state = "coffee"
 	New()
 		..()
 		reagents.add_reagent("tea", 30)
@@ -2585,6 +2605,7 @@
 	name = "Dutch Hot Coco"
 	desc = "Made in Space South America."
 	icon_state = "tea"
+	item_state = "coffee"
 	New()
 		..()
 		reagents.add_reagent("hot_coco", 30)
@@ -2625,6 +2646,7 @@
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
+	item_state = "beer"
 	New()
 		..()
 		reagents.add_reagent("ale", 30)
@@ -2714,6 +2736,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
+	item_state = "beer" //Generic held-item sprite until unique ones are made.
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"
@@ -2825,6 +2848,7 @@
 	name = "Orange Juice"
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
+	item_state = "carton"
 	New()
 		..()
 		reagents.add_reagent("orangejuice", 100)
@@ -2833,6 +2857,7 @@
 	name = "Milk Cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
+	item_state = "carton"
 	New()
 		..()
 		reagents.add_reagent("cream", 100)
@@ -2841,6 +2866,7 @@
 	name = "Tomato Juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
+	item_state = "carton"
 	New()
 		..()
 		reagents.add_reagent("tomatojuice", 100)
@@ -2849,6 +2875,7 @@
 	name = "Lime Juice"
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
+	item_state = "carton"
 	New()
 		..()
 		reagents.add_reagent("limejuice", 100)
