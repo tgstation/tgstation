@@ -1448,7 +1448,7 @@ var/global/BSACooldown = 0
 				special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
 
 			//Health
-			health_description = "Oxy: [M.oxyloss] - Tox: [M.toxloss] - Fire: [M.fireloss] - Brute: [M.bruteloss] - Clone: [M.cloneloss] - Brain: [M.brainloss]"
+			health_description = "Oxy: [M.getOxyLoss()] - Tox: [M.getToxLoss()] - Fire: [M:getFireLoss()] - Brute: [M:getBruteLoss()] - Clone: [M.getCloneLoss()] - Brain: [M.getBrainLoss()]"
 
 			src.owner << "<b>Info about [M.name]:</b> "
 			src.owner << "Mob type = [M.type]; Damage = [health_description]"

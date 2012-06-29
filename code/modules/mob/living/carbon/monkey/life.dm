@@ -450,7 +450,7 @@
 								emote("scream")
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-						if(!E.status & SPLINTED)
+						if(!(E.status & SPLINTED))
 							leg_tally--									// let it fail even if just foot&leg
 
 			// can't stand

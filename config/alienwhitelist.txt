@@ -1,9 +1,11 @@
 botanistpower - Tajaran
 bluefishie - Skrell
+deciusreln - Skrell
 densane - Skrell
 dopeghoti - Tajaran
 duntadaman - Skrell
 fenrisian - Tajaran
+firefishie - Skrell
 forsamori - Tajaran
 forsamori - Soghun
 galenus - Soghun
@@ -12,5 +14,8 @@ mangled - Skrell
 searif - Soghun
 searif - Tajaran
 searif - Skrell
+spaceman96 - Tajaran
+spaceman96 - Soghun
+spaceman96 - Skrell
 sparklysheep - Skrell
 watermelonstorm - Tajaran

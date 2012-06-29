@@ -9,5 +9,6 @@
 	canmove = 0
 	blinded = 0
 	anchored = 1	//  don't get pushed around
+	universal_speak = 1	//Ghosts are multi-lingual!
 	var/mob/corpse = null	//	observer mode
 	var/datum/hud/living/carbon/hud = null // hud

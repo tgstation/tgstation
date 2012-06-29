@@ -70,6 +70,12 @@
 				M.show_message(rendered_a, 2)
 			else//If they do not.
 				M.show_message(rendered_b, 2)
+
+		for (var/obj/item/device/taperecorder/O in range(T, 7)) //Puree hack for tap recorder
+			spawn (0)
+				if(O && !istype(O.loc, /obj/item/weapon/storage))
+					O.hear_talk(src, message_a)
+
 		/*Radios "filter out" this conversation channel so we don't need to account for them.
 		This is another way of saying that we won't bother dealing with them.*/
 	else
