@@ -5321,7 +5321,7 @@
 "bYq" = (/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
 "bYr" = (/obj/structure/closet/secure_closet/personal/patient,/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
 "bYs" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/medical/virology)
-"bYt" = (/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/unary/vent_pump{dir = 1; external_pressure_bound = 140; on = 1; pressure_checks = 0},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
+"bYt" = (/obj/machinery/light{dir = 1},/obj/machinery/atmospherics/unary/vent_pump{dir = 1; external_pressure_bound = 101.325; on = 1; pressure_checks = 1},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
 "bYu" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = "90Curve"},/obj/structure/closet/crate,/obj/item/device/multitool,/obj/item/device/assembly/prox_sensor,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bYv" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; tag = "Streight"},/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bYw" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; tag = "Streight"},/obj/machinery/light/small{dir = 1},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
