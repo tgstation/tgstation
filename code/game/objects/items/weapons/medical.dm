@@ -51,7 +51,7 @@ MEDICAL
 			if(!((affecting.name == "l_arm") || (affecting.name == "r_arm") || (affecting.name == "l_leg") || (affecting.name == "r_leg")))
 				user << "\red You can't apply a splint there!"
 				return
-			if(!affecting.status & BROKEN)
+			if(!(affecting.status & BROKEN))
 				user << "\red [M]'s [limb] isn't broken!"
 				return
 			if(affecting.status & SPLINTED)
