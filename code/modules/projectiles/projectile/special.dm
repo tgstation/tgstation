@@ -6,6 +6,10 @@
 	nodamage = 1
 	flag = "energy"
 
+	glowstr = 3
+	sd_ColorBlue = 0.9
+	sd_ColorGreen = 0.3
+	sd_ColorRed = 0.1
 
 	on_hit(var/atom/target, var/blocked = 0)
 		empulse(target, 1, 1)
@@ -31,6 +35,11 @@
 	nodamage = 1
 	flag = "energy"
 	var/temperature = 300
+
+	glowstr = 3
+	sd_ColorBlue = 0.9
+	sd_ColorGreen = 0.3
+	sd_ColorRed = 0.1
 
 
 	on_hit(var/atom/target, var/blocked = 0)//These two could likely check temp protection on the mob

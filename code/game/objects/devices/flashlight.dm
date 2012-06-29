@@ -85,12 +85,14 @@
 	if(on)
 		user.total_luminosity += brightness_on
 		src.sd_SetLuminosity(0)
+		sd_Update()
 
 
 /obj/item/device/flashlight/dropped(mob/user)
 	if(on)
 		user.total_luminosity -= brightness_on
 		src.sd_SetLuminosity(brightness_on)
+		sd_Update()
 
 
 /obj/item/device/flashlight/pen

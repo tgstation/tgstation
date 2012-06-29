@@ -46,7 +46,12 @@
 	var/stutter = 0
 	var/eyeblur = 0
 	var/drowsy = 0
+	var/glowstr = 0 // set to nonzero if you want this projectile to emit light (recommend no greater than 4)
 
+	New()
+		..()
+		if(glowstr > 0)
+			sd_SetLuminosity(glowstr)
 
 	proc/on_hit(var/atom/target, var/blocked = 0)
 		if(blocked >= 2)	return 0//Full block

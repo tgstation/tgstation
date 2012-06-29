@@ -6,6 +6,11 @@
 	nodamage = 1
 	flag = "energy"
 
+	glowstr = 3
+	sd_ColorBlue = 0.9
+	sd_ColorGreen = 0.3
+	sd_ColorRed = 0.1
+
 	on_hit(var/atom/change)
 		wabbajack(change)
 
