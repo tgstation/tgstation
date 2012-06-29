@@ -177,13 +177,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if (fon)
 		sd_SetLuminosity(0)
 		user.total_luminosity += f_lum
-		sd_Update()
 
 /obj/item/device/pda/dropped(mob/user)
 	if (fon)
 		user.total_luminosity -= f_lum
 		sd_SetLuminosity(f_lum)
-		sd_Update()
 
 /obj/item/device/pda/New()
 	..()

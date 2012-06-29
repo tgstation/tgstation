@@ -94,8 +94,8 @@
 		if(client)	client.screen -= l_hand
 		l_hand.layer = initial(l_hand.layer)
 
-		if(Target)	l_hand.Move(Target.loc)
-		else		l_hand.Move(loc)
+		if(Target)	l_hand.loc = Target.loc
+		else		l_hand.loc = loc
 
 		var/turf/T = get_turf(loc)
 		if(isturf(T))
@@ -113,8 +113,8 @@
 		if(client)	client.screen -= r_hand
 		r_hand.layer = initial(r_hand.layer)
 
-		if(Target)	r_hand.Move(Target.loc)
-		else		r_hand.Move(loc)
+		if(Target)	r_hand.loc = Target.loc
+		else		r_hand.loc = loc
 
 		var/turf/T = get_turf(Target)
 		if(istype(T))

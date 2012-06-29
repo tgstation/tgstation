@@ -28,11 +28,9 @@
 			requires_power = 1
 			always_unpowered = 1
 			sd_SetLuminosity(1)
-			sd_lighting = 0
 			power_light = 0
 			power_equip = 0
 			power_environ = 0
-			luminosity = 1
 			//has_gravity = 0    // Space has gravity.  Because.. because.
 
 		if(!requires_power)
@@ -42,8 +40,7 @@
 			luminosity = 1
 			sd_lighting = 0			// *DAL*
 		else
-			if(name != "Space")
-				luminosity = 0
+			luminosity = 0
 			area_lights_luminosity = rand(6,9)
 			//sd_SetLuminosity(0)		// *DAL*
 

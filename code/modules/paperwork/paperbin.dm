@@ -46,9 +46,8 @@
 
 			P.loc = user.loc
 			if(ishuman(user))
-				if(!user.get_active_hand())
-					user.put_in_hands(P)
-					user << "You take a paper out of the bin."
+				user.put_in_hands(P)
+				user << "You take a paper out of the bin."
 			else
 				P.loc = get_turf_loc(src)
 				user << "You take a paper out of the bin."

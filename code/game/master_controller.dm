@@ -138,9 +138,6 @@ datum/controller/game_controller
 			sun.calc_position()
 			sun_ready = 1
 
-		spawn(0)
-			sd_Update()
-
 		sleep(-1)
 
 		spawn(0)

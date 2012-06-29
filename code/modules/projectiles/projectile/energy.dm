@@ -14,11 +14,6 @@
 	weaken = 10
 	stutter = 10
 
-	glowstr = 2
-	sd_ColorBlue = 0.1
-	sd_ColorGreen = 0.5
-	sd_ColorRed = 0.5
-
 
 /obj/item/projectile/energy/declone
 	name = "declown"
@@ -26,11 +21,6 @@
 	nodamage = 1
 	damage_type = CLONE
 	irradiate = 40
-
-	glowstr = 3
-	sd_ColorBlue = 0.1
-	sd_ColorGreen = 0.5
-	sd_ColorRed = 0.1
 
 
 /obj/item/projectile/energy/dart

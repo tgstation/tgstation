@@ -144,7 +144,7 @@
 		wash(M)
 		check_heat(M)
 
-/obj/machinery/shower/attackby(var/obj/item/I as obj, var/mob/user as mob)
+/obj/machinery/shower/attackby(obj/item/I as obj, mob/user as mob)
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
@@ -312,7 +312,7 @@
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [M] washes their hands using \the [src].")
 
-/obj/structure/sink/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
 	if(busy)
 		user << "\red Someone's already washing here."
 		return
@@ -383,7 +383,7 @@
 	..()
 	icon_state = "puddle"
 
-/obj/structure/sink/puddle/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/structure/sink/puddle/attackby(obj/item/O as obj, mob/user as mob)
 	icon_state = "puddle-splash"
 	..()
 	icon_state = "puddle"
