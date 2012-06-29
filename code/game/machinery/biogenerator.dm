@@ -185,6 +185,8 @@
 			new/obj/item/nutrient/rh(src.loc)
 			new/obj/item/nutrient/rh(src.loc)
 			new/obj/item/nutrient/rh(src.loc)
+		if("wallet")
+			new/obj/item/weapon/storage/wallet(src.loc)
 		if("gloves")
 			new/obj/item/clothing/gloves/botanic_leather(src.loc)
 		if("tbelt")
