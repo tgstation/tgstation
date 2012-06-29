@@ -167,6 +167,17 @@
 		reagents.add_reagent("stoxin", 5)
 		reagents.add_reagent("sugar", 10)
 		reagents.add_reagent("ethanol", 5)
+
+/obj/item/clothing/mask/fluff/electriccig //CubeJackal: Barry Sharke
+	name = "Electronic cigarette"
+	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
+	icon = 'custom_items.dmi'
+	icon_state = "cigon"
+	throw_speed = 0.5
+	item_state = "ciglit"
+	w_class = 1
+	body_parts_covered = null
+
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////
@@ -260,6 +271,12 @@
 	icon_state = "leatherjack"
 	item_state = "leatherjack"
 	color = "leatherjack"
+
+/obj/item/clothing/suit/storage/labcoat/fluff/burnt //Jamini: Edwin Atweeke
+	name = "burnt labcoat"
+	desc = "This lab coat has clearly seen better, less burnt, days."
+	icon = 'custom_items.dmi'
+	icon_state = "labcoat_burnt_open"
 
 //////////// Uniforms ////////////
 
