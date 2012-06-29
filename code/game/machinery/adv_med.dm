@@ -209,6 +209,9 @@
 /obj/machinery/body_scanconsole/attack_hand(user as mob)
 	if(..())
 		return
+	if(!ishuman(connected.occupant))
+		user << "\red This device can only scan compatible lifeforms."
+		return
 	var/dat
 	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
 		src.delete = src.delete
@@ -216,7 +219,7 @@
 		dat = text("[]<BR><BR><A href='?src=\ref[];clear=1'>Main Menu</A>", src.temphtml, src)
 	else
 		if (src.connected) //Is something connected?
-			var/mob/living/carbon/occupant = src.connected.occupant
+			var/mob/living/carbon/human/occupant = src.connected.occupant
 			dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" //Blah obvious
 			if (istype(occupant)) //is there REALLY someone in there?
 				var/t1
@@ -231,34 +234,68 @@
 					dat += "<font color='red'>This device can only scan human occupants.</FONT>"
 				else
 					dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
-					dat += text("<font color='green'>Radiation Level: []%</FONT><BR><BR>", occupant.radiation)
-					dat += "<table border='1'>"
+
+					dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.getBruteLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getBruteLoss())
+					dat += text("[]\t-Respiratory Damage %: []</FONT><BR>", (occupant.getOxyLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getOxyLoss())
+					dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.getToxLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getToxLoss())
+					dat += text("[]\t-Burn Severity %: []</FONT><BR><BR>", (occupant.getFireLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getFireLoss())
+
+					dat += text("[]\tRadiation Level %: []</FONT><BR>", (occupant.radiation < 10 ?"<font color='blue'>" : "<font color='red'>"), occupant.radiation)
+					dat += text("[]\tGenetic Tissue Damage %: []</FONT><BR>", (occupant.getCloneLoss() < 1 ?"<font color='blue'>" : "<font color='red'>"), occupant.getCloneLoss())
+					dat += text("[]\tApprox. Brain Damage %: []</FONT><BR>", (occupant.getBrainLoss() < 1 ?"<font color='blue'>" : "<font color='red'>"), occupant.getBrainLoss())
+					dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
+					dat += text("Body Temperature: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
+
+					if(occupant.vessel)
+						var/blood_volume = round(occupant.vessel.get_reagent_amount("blood"))
+						var/blood_percent =  blood_volume / 560
+						blood_percent *= 100
+						dat += text("[]\tBlood Level %: [] ([blood_volume] units)</FONT><BR>", (blood_volume > 448 ?"<font color='blue'>" : "<font color='red'>"), blood_volume)
+					if(occupant.reagents)
+						dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
+						dat += text("Soporific (Sleep Toxin): [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
+						dat += text("[]\tDermaline: [] units</FONT><BR>", (occupant.reagents.get_reagent_amount("dermaline") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("dermaline"))
+						dat += text("[]\tBicaridine: [] units<BR>", (occupant.reagents.get_reagent_amount("bicaridine") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("bicaridine"))
+						dat += text("[]\tDexalin: [] units<BR>", (occupant.reagents.get_reagent_amount("dexalin") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("dexalin"))
+
+					for(var/datum/disease/D in occupant.viruses)
+						if(!D.hidden[SCANNER])
+							dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
+
+					if (occupant.virus2 || occupant.reagents.reagent_list.len > 0)
+						dat += text("<font color='red'>Warning: Foreign substances detected in bloodstream.</FONT>")
+
+					dat += "<HR><table border='1'>"
 					dat += "<tr>"
 					dat += "<th>Organ</th>"
 					dat += "<th>Burn Damage</th>"
 					dat += "<th>Brute Damage</th>"
 					dat += "<th>Other Wounds</th>"
 					dat += "</tr>"
-					for(var/name in occupant:organs)
-						var/datum/organ/external/e = occupant:organs[name]
+
+					for(var/name in occupant.organs)
+						var/datum/organ/external/e = occupant.organs[name]
 						dat += "<tr>"
 						var/AN = ""
 						var/open = ""
 						var/infected = ""
 						var/imp = ""
 						var/bled = ""
+						var/splint = ""
+						if(e.status & SPLINTED)
+							splint = "Splinted:"
 						if(e.status & BLEEDING)
 							bled = "Bleeding:"
 						if(e.status & BROKEN)
 							AN = "[e.broken_description]:"
 						if(e.open)
-							open = "OPEN:"
+							open = "Open:"
 						if(e.implant && e.implant.len)
-							imp = "IMPLANT:"
+							imp = "Implanted:"
 						if(!AN && !open && !infected & !imp)
 							AN = "None"
-						if(!e.status & DESTROYED)
-							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[bled][AN][open][infected][imp]</td>"
+						if(!(e.status & DESTROYED))
+							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[bled][AN][splint][open][infected][imp]</td>"
 						else
 							dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"
@@ -268,5 +305,5 @@
 		else
 			dat = "<font color='red'> Error: No Body Scanner connected.</font>"
 	dat += text("<BR><BR><A href='?src=\ref[];mach_close=scanconsole'>Close</A>", user)
-	user << browse(dat, "window=scanconsole;size=500x500")
+	user << browse(dat, "window=scanconsole;size=430x600")
 	return
