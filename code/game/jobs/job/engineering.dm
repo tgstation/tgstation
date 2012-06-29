@@ -76,7 +76,7 @@
 	flag = ATMOSTECH
 	department_flag = ENGSEC
 	faction = "Station"
-	total_positions = 2
+	total_positions = 3
 	spawn_positions = 2
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
@@ -106,7 +106,7 @@
 	flag = ROBOTICIST
 	department_flag = ENGSEC
 	faction = "Station"
-	total_positions = 1
+	total_positions = 2
 	spawn_positions = 1
 	supervisors = "the chief engineer and research director"
 	selection_color = "#fff5cc"
