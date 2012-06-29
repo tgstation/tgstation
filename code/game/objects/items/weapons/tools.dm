@@ -66,7 +66,7 @@ WELDINGTOOOL
 
 // WELDING TOOL
 /obj/item/weapon/weldingtool
-	name = "Welding Tool"
+	name = "welding tool"
 	icon = 'items.dmi'
 	icon_state = "welder"
 	flags = FPRINT | TABLEPASS| CONDUCT
