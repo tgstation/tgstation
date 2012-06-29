@@ -667,7 +667,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 /mob/proc/update_canmove()
-	if( stat || weakened || paralysis || resting || sleeping || (changeling && changeling.changeling_fakedeath) )
+	if(buckled)
+		anchored = 1
+		canmove = 0
+		if( istype(buckled,/obj/structure/stool/bed/chair) )
+			lying = 0
+		else
+			lying = 1
+	else if( stat || weakened || paralysis || resting || sleeping || (changeling && changeling.changeling_fakedeath) )
 		lying = 1
 		canmove = 0
 	else if( stunned )
@@ -676,13 +683,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		lying = 0
 		canmove = 1
-
-	if(buckled)
-		anchored = 1
-		if( istype(buckled,/obj/structure/stool/bed/chair) )
-			lying = 0
-		else
-			lying = 1
 
 	if(lying)
 		density = 0
