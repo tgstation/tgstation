@@ -76,8 +76,8 @@
 	flag = CHEMIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 
@@ -101,8 +101,8 @@
 	flag = GENETICIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
 
