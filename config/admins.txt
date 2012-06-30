@@ -5,9 +5,10 @@ cacophony - Retired Admin
 cajoes - Game Admin
 cib - Game Master
 compactninja - Game Master
+duntadaman - Game Admin
 dysthymia - Retired Admin
 doughnuts - Game Admin
-erthilo - Game Admin
+erthilo - Game Master
 hawkv3 - Game Master
 headswe - Game Master
 iaryni - Game Master
@@ -19,7 +20,8 @@ misterfox - Game Admin
 mloc - Game Master
 ridley4 - Game Admin
 skymarshal - Game Master
-spaceman96 - Game Admin
+spaceman96 - Admin Observer
 strumpetplaya - Retired Admin
 tastyfish - Game Master
 uristqwerty - Game Master
+wrongnumber - Game Admin

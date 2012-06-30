@@ -139,7 +139,7 @@
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
+		if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/office) && !usr.buckled.anchored ) //Making only office chairs fire-extinguishable. Because NO FUN ALLOWED
 			spawn(0)
 				var/obj/B = usr.buckled
 				var/movementdirection = turn(direction,180)

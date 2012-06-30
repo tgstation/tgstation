@@ -558,8 +558,8 @@
 	name = "medical pack"
 	singular_name = "medical pack"
 	icon = 'items.dmi'
-	amount = 10 //To compensate for wounds
-	max_amount = 10
+	amount = 5 //To compensate for wounds
+	max_amount = 5
 	w_class = 1
 	throw_speed = 4
 	throw_range = 20
@@ -571,7 +571,7 @@
 	singular_name = "roll of gauze"
 	desc = "A roll of gauze for sealing up wounds."
 	icon_state = "brutepack"
-	heal_brute = 1
+	heal_brute = 7
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/bruise_pack/tajaran
@@ -580,7 +580,7 @@
 	desc = "A soft leaf that is rubbed on bruises."
 	icon = 'harvest.dmi'
 	icon_state = "cabbage"
-	heal_brute = 1
+	heal_brute = 7
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
@@ -588,7 +588,7 @@
 	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
-	heal_burn = 1
+	heal_burn = 7
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/ointment/tajaran
@@ -597,27 +597,23 @@
 	desc = "A cold leaf that is rubbed on burns."
 	icon = 'harvest.dmi'
 	icon_state = "ambrosiavulgaris"
-	heal_burn = 1
+	heal_burn = 7
 
 /obj/item/stack/medical/advanced/bruise_pack
 	name = "advanced trauma kit"
 	singular_name = "advanced trauma kit"
 	desc = "An advanced trauma kit for severe injuries."
 	icon_state = "traumakit"
-	heal_brute = 1
+	heal_brute = 12
 	origin_tech = "biotech=1"
-	amount = 10
-	max_amount = 10
 
 /obj/item/stack/medical/advanced/ointment
 	name = "advanced burn kit"
 	singular_name = "advanced burn kit"
 	desc = "An advanced treatment kit for severe burns."
 	icon_state = "burnkit"
-	heal_burn = 1
+	heal_burn = 12
 	origin_tech = "biotech=1"
-	amount = 10
-	max_amount = 10
 
 /obj/item/stack/medical/splint
 	name = "medical splint"

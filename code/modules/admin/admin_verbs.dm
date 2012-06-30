@@ -878,8 +878,9 @@
 	verbs -= /client/proc/hide_most_verbs
 	verbs += /client/proc/show_verbs
 
-	verbs += /client/proc/deadchat					//toggles deadchat
-	verbs += /obj/admins/proc/toggleooc				//toggle ooc
+	if(holder.level > 0)
+		verbs += /client/proc/deadchat					//toggles deadchat
+		verbs += /obj/admins/proc/toggleooc				//toggle ooc
 	verbs += /client/proc/cmd_admin_say//asay
 	verbs += /client/proc/cmd_mod_say//asay
 //	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

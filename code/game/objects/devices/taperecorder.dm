@@ -23,6 +23,9 @@
 	if (recording)
 		var/ending = copytext(msg, length(msg))
 		src.timestamp+= src.timerecorded
+		if (issilicon(M))
+			src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] [M.name] states, \"[msg]\""
+			return
 		if (M.stuttering)
 			src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] [M.name] stammers, \"[msg]\""
 			return

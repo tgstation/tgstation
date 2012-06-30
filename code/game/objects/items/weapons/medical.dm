@@ -7,10 +7,10 @@ MEDICAL
 
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
-	var/heal_cap = 0
+	var/heal_cap = 50
 
 	if(istype(src, /obj/item/stack/medical/advanced))
-		heal_cap = -50
+		heal_cap = 0
 
 	if (M.stat == 2)
 		var/t_him = "it"
@@ -51,7 +51,7 @@ MEDICAL
 			if(!((affecting.name == "l_arm") || (affecting.name == "r_arm") || (affecting.name == "l_leg") || (affecting.name == "r_leg")))
 				user << "\red You can't apply a splint there!"
 				return
-			if(!affecting.status & BROKEN)
+			if(!(affecting.status & BROKEN))
 				user << "\red [M]'s [limb] isn't broken!"
 				return
 			if(affecting.status & SPLINTED)
@@ -87,25 +87,26 @@ MEDICAL
 			user << "\red \The [M] is wounded badly, this item cannot help [t_him]!"
 			return
 
+		if (user)
+			if (M != user)
+				user.visible_message("\red \The [H]'s [affecting.display_name] has been bandaged with \a [src] by \the [user].",\
+					"\red You bandage \the [H]'s [affecting.display_name] with \the [src].",\
+					"You hear gauze being ripped.")
+			else
+				var/t_his = "its"
+				if (user.gender == MALE)
+					t_his = "his"
+				else if (user.gender == FEMALE)
+					t_his = "her"
+				user.visible_message("\red \The [user] bandages [t_his] [affecting.display_name] with \a [src].",\
+					"\red You bandage your [affecting.display_name] with \the [src].",\
+					"You hear gauze being ripped.")
+		use(1)
+
 		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
 			H.UpdateDamageIcon()
-			if (user)
-				if (M != user)
-					user.visible_message("\red \The [H]'s [affecting.display_name] has been bandaged with \a [src] by \the [user].",\
-						"\red You bandage \the [H]'s [affecting.display_name] with \the [src].",\
-						"You hear gauze being ripped.")
-				else
-					var/t_his = "its"
-					if (user.gender == MALE)
-						t_his = "his"
-					else if (user.gender == FEMALE)
-						t_his = "her"
-					user.visible_message("\red \The [user] bandages [t_his] [affecting.display_name] with \a [src].",\
-						"\red You bandage your [affecting.display_name] with \the [src].",\
-						"You hear gauze being ripped.")
-			use(1)
 		else
-			user << "Nothing to patch up!"
+			H.UpdateDamage()
 
 		M.updatehealth()
 	else

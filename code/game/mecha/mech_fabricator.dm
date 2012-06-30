@@ -474,7 +474,7 @@
 		temp = "Updating local R&D database..."
 		src.updateUsrDialog()
 		sleep(30) //only sleep if called by user
-	for(var/obj/machinery/computer/rdconsole/RDC in get_area(src))
+	for(var/obj/machinery/computer/rdconsole/RDC in oview(7)) //get_area(src)) is broken due to ULTRALIIIIIGHT
 		if(!RDC.sync)
 			continue
 		for(var/datum/tech/T in RDC.files.known_tech)

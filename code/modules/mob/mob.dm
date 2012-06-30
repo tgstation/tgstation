@@ -687,7 +687,7 @@
 		if(H.health - H.halloss <= config.health_threshold_crit)
 			for(var/name in H.organs)
 				var/datum/organ/external/e = H.organs[name]
-				if((H.lying) && ((e.status & BROKEN && !e.status & SPLINTED) || e.status & BLEEDING) && (H.getBruteLoss() + H.getFireLoss() >= 100))
+				if((H.lying) && ((e.status & BROKEN && !(e.status & SPLINTED)) || e.status & BLEEDING) && (H.getBruteLoss() + H.getFireLoss() >= 100))
 					return 1
 					break
 		return 0
