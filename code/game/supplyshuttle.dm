@@ -701,6 +701,7 @@ This method wont take into account storage items developed in the future and doe
 	density = 0
 	anchored = 1
 	var/id = ""
+	var/temphtml = null // Store the menu HTML in here
 	var/obj/machinery/supply_depot/machine = null
 	var/machinedir = SOUTHWEST
 
@@ -714,34 +715,35 @@ This method wont take into account storage items developed in the future and doe
 			del(src)
 
 /obj/machinery/supply_depot_console/attack_hand(user as mob)
-	// Not ID-locked for now. Maybe in a late update.
-
 	var/dat
-
-	dat += text("<h3>Raw Materials Storage</h3>")
-
-	var/canrelease = 0
-	if (machine.totalmaterial > 0)
-		// Loop through the items in our inventory
-		for (var/material in machine.inventory)
-			var/temp = machine.inventory[material]
-			if (temp["amt"] > 0)
-
-				// Can we press the "release" button?
-				if (temp["rel"] > 0)
-					canrelease = 1
-
-				// The things I do to make it look good...
-				dat += text("<span style='text-transform:capitalize;'>[(temp["name"]) ? temp["name"] : material]:</span> <a href='?src=\ref[src];setrelease=[material]'>[temp["rel"]]</a> ([temp["amt"]] remaining)<br>")
+	if (src.temphtml)
+		dat = src.temphtml
 	else
-		dat += "No materials loaded."
+		dat += "<h3>Raw Materials Storage</h3><table width='100%'>"
+		dat += "<table><tr><td><b>Material</b></td><td><b>Stored</b></td><td><b>Amount to release</b></td></tr>"
 
-	dat += text("<br>Storage space remaining: [(machine.MAX_MATERIAL - machine.totalmaterial < machine.MAX_MATERIAL/10) ? "<font color='#f00'><b>" : ""][machine.MAX_MATERIAL - machine.totalmaterial][(machine.MAX_MATERIAL - machine.totalmaterial < machine.MAX_MATERIAL/10) ? "</b></font>" : ""]<br>") // Warn the operator when we're at 90% capacity
-	dat += text("Print manifest: <a href='?src=\ref[src];toggleprint=1>'>[machine.printmanifest ? "Yes" : "No"]</a><br><br>")
+		var/canrelease = 0
+		if (machine.total_material > 0)
+			// Loop through the items in our inventory
+			for (var/material in machine.inventory)
+				var/temp = machine.inventory[material]
+				if (temp["amt"] > 0)
 
-	dat += text("<a href='?src=\ref[src];load=1'>Load material</a><br>")
-	if (canrelease)
-		dat += text("<a href='?src=\ref[src];release=1'>Release materials</a><br>")
+					// Can we press the "release" button?
+					if (temp["rel"] > 0)
+						canrelease = 1
+
+					// The things I do to make it look good...
+					dat += "<tr><td>[temp["name"]]</td><td>[temp["amt"]]</td><td><a href='?src=\ref[src];set_release=[material]'>[temp["rel"]]</a> - <a href='?src=\ref[src];release_one=[material]'>Release</a></td></tr>"
+		else
+			dat += "<tr><td colspan='3'>No materials loaded.</tr></td>"
+
+		dat += text("</table><br>Space remaining: [((machine.MAX_MATERIAL - machine.total_material) < machine.MAX_MATERIAL/10) ? "<font color='red'><b>" : ""][machine.MAX_MATERIAL - machine.total_material][(machine.MAX_MATERIAL - machine.total_material < machine.MAX_MATERIAL/10) ? "</b></font>" : ""]<br>") // Warn the user when we're at 90% capacity
+		dat += text("Print manifest: <a href='?src=\ref[src];toggle_print=1>'>[machine.print_manifest ? "Yes" : "No"]</a><br><br>")
+
+		dat += text("<a href='?src=\ref[src];load=1'>Load material</a><br>")
+		if (canrelease)
+			dat += text("<a href='?src=\ref[src];release_all=1'>Release material</a><br>")
 
 	user << browse("[dat]", "window=console_stacking_machine")
 
@@ -751,9 +753,10 @@ This method wont take into account storage items developed in the future and doe
 	usr.machine = src
 	src.add_fingerprint(usr)
 
-	if (href_list["setrelease"])
-		if (machine.inventory[href_list["setrelease"]]["amt"] > 0)
-			var/release = text2num(sanitize(input("Amount of [lowertext(machine.inventory[href_list["setrelease"]]["name"])] to release (max 500):", "Amount to release", num2text(machine.inventory[href_list["setrelease"]]["rel"]))))
+	if (href_list["set_release"])
+		var/material = text2path(href_list["set_release"])
+		if (machine.inventory[material]["amt"] > 0)
+			var/release = input("Amount of [lowertext(machine.inventory[material]["name"])] to release (max 500):", "Amount to release", machine.inventory[material]["rel"]) as num
 
 			// For sanity's sake, we don't drop more than 10 stacks at a time.
 			if (release > 500)
@@ -761,20 +764,36 @@ This method wont take into account storage items developed in the future and doe
 			else if (release < 0)
 				release = 0
 
-			machine.inventory[href_list["setrelease"]]["rel"] = release
+			machine.inventory[material]["rel"] = release
 
-	else if (href_list["toggleprint"])
+	// Turn manifests on/off
+	else if (href_list["toggle_print"])
+		machine.print_manifest = !machine.print_manifest
 
-		machine.printmanifest = !machine.printmanifest
-
+	// Load materials from the output area
 	else if (href_list["load"])
-
 		machine.load_materials(machine.output.loc)
 
-	else if (href_list["release"])
+	// Release a single material
+	else if (href_list["release_one"])
+		var/material = text2path(href_list["release_one"])
 
+		// Can we release it?
+		if (!machine.total_material) return
+		if (machine.inventory[material]["amt"] <= 0 || machine.inventory[material]["rel"] <= 0) return
+
+		if (machine.spawn_stacks(material, machine.inventory[material]["rel"]))
+			src.temphtml = "Material released.<br><br>"
+			src.temphtml += "<a href='?src=\ref[src];main_menu=1'>OK</a>"
+
+	else if (href_list["release_all"])
 		// Do it.
 		machine.release_materials()
+		src.temphtml = "Material released[(machine.print_manifest) ? " and shipping manifest printed" : ""].<br><br>"
+		src.temphtml += "<a href='?src=\ref[src];main_menu=1'>OK</a>"
+
+	else if (href_list["main_menu"])
+		src.temphtml = null
 
 	src.updateUsrDialog()
 	return
@@ -784,7 +803,7 @@ This method wont take into account storage items developed in the future and doe
 */
 /obj/machinery/supply_depot
 	name = "supply depot"
-	icon_state = "supply_depot"
+	icon_state = "depot_open"
 	density = 1
 	anchored = 1
 	var/id = ""
@@ -799,28 +818,27 @@ This method wont take into account storage items developed in the future and doe
 	// Or infinite, if research feels like giving cargo a bag of holding, the miserly fucks.
 
 	var/MAX_MATERIAL = 5000 // The upper limit of -all- materials in the machine (default 100 stacks of 50)
-	var/totalmaterial = 0 // The total amount it's holding
-	var/printmanifest = 1 // Print a manifest when releasing material?
-	var/inventory[0] // See below.
+	var/total_material = 0 // The total amount it's holding
+	var/print_manifest = 1 // Print a manifest when releasing material?
+
+	// DEEEEEEERP
+	var/inventory = list(
+		/obj/item/stack/sheet/metal		= list("name" = "Iron", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/plasteel	= list("name" = "Plasteel", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/glass		= list("name" = "Glass", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/rglass	= list("name" = "Reinforced glass", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/plasma	= list("name" = "Solid plasma", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/gold		= list("name" = "Gold", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/silver	= list("name" = "Silver", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/uranium	= list("name" = "Uranium", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/diamond	= list("name" = "Diamond", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/clown		= list("name" = "Bananium", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/adamantine= list("name" = "Adamantine", "amt" = 0, "rel" = 50),
+		/obj/item/stack/sheet/mythril	= list("name" = "Mythril", "amt" = 0, "rel" = 50)
+	)
 
 /obj/machinery/supply_depot/New()
 	..()
-
-	// name is a display name if the item name isn't suitable
-	// amt is how much is in the machine
-	// rel is how much we're releasing in this shipment
-	inventory["metal"] = list(name = "iron", "amt" = 0, "rel" = 50)
-	inventory["plasteel"] = list("amt" = 0, "rel" = 50)
-	inventory["glass"] = list("amt" = 0, "rel" = 50)
-	inventory["rglass"] = list("name" = "reinforced glass", "amt" = 0, "rel" = 50)
-	inventory["plasma"] = list("amt" = 0, "rel" = 50)
-	inventory["gold"] = list("amt" = 0, "rel" = 50)
-	inventory["silver"] = list("amt" = 0, "rel" = 50)
-	inventory["uranium"] = list("amt" = 0, "rel" = 50)
-	inventory["diamond"] = list("amt" = 0, "rel" = 50)
-	inventory["clown"] = list("name" = "bananium", "amt" = 0, "rel" = 50) // HONK
-	inventory["adamantine"] = list("amt" = 0, "rel" = 50)
-	inventory["mythril"] = list("amt" = 0, "rel" = 50)
 
 	spawn(5)
 		// Find input
@@ -831,58 +849,50 @@ This method wont take into account storage items developed in the future and doe
 		for (var/dir in cardinal)
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if (src.output) break
-		// process_objects.Add(src)
 		return
 	return
 
-// Suck up all processable matter from a given location, moving anything we can't
-// process to an arbitrary location.
-/obj/machinery/supply_depot/proc/load_materials(target, passthrough)
-	// No overloading.
-	if (totalmaterial >= MAX_MATERIAL)
+// Suck up all processable matter from a given location
+/obj/machinery/supply_depot/proc/load_materials(loc_in, loc_out)
+	// If we can get out of doing anything, we do.
+	if (total_material >= MAX_MATERIAL || !loc_in)
 		return
 
-	if (target)
-		var/obj/item/stack/sheet/O
-		while (locate(/obj/item/stack/sheet, target))
-			O = locate(/obj/item/stack/sheet, target)
-			var/found = 0
+	var/obj/item/stack/sheet/O
+	while (locate(/obj/item/stack/sheet, loc_in))
+		O = locate(/obj/item/stack/sheet, loc_in)
 
-			// Can we fit any more in?
-			if (totalmaterial + O.amount < MAX_MATERIAL)
-				for (var/material in inventory)
-					if (istype(O, text2path("/obj/item/stack/sheet/[material]")))
-						inventory[material]["amt"] += O.amount
-						totalmaterial += O.amount
-						del(O)
-						found = 1
-						break
-			else
-				// Nope. Max us out and edit the material's amount. We're not deleting it.
-				for (var/material in inventory)
-					if (istype(O, text2path("/obj/item/stack/sheet/[material]")))
-						inventory[material]["amt"] += (MAX_MATERIAL - totalmaterial)
-						totalmaterial = MAX_MATERIAL
-						O.amount = MAX_MATERIAL - totalmaterial
-						found = 1
-						break
+		// Do we want it?
+		if (inventory[O.type])
+			// Will the entire stack fit?
+			if (total_material + O.amount <= MAX_MATERIAL)
+				inventory[O.type]["amt"] += O.amount
+				total_material += O.amount
 
-			if (found)
-				continue
+				update_icon()
+				del(O)
 			else
-				// Anything we don't want gets moved through
-				if (passthrough)
-					O.loc = passthrough
+				// Nope, max us out and update the item
+				var/taken = MAX_MATERIAL - total_material
+				inventory[O.type]["amt"] += taken
+				total_material = MAX_MATERIAL
+				O.amount = O.amount - taken
+
+				update_icon()
+				return
+		else
+			// We don't. Move it along.
+			O.loc = loc_out
 
 // Release a given batch of materials
 /obj/machinery/supply_depot/proc/release_materials()
-
 	// Can we actually release anything in the first place?
-	var/canrelease = 0
+	if (!src.total_material) return
+	var/can_release = 0
 	for (var/material in inventory)
 		if (inventory[material]["amt"] > 0 && inventory[material]["rel"] > 0)
-			canrelease = 1
-	if (!canrelease) return
+			can_release = 1
+	if (!can_release) return
 
 	// Get us a cargo manifest if applicable...
 	if (ordernum)
@@ -891,7 +901,7 @@ This method wont take into account storage items developed in the future and doe
 		ordernum = rand(500,5000)
 
 	var/obj/item/weapon/paper/manifest/slip
-	if (printmanifest)
+	if (print_manifest)
 		slip = new /obj/item/weapon/paper/manifest(output.loc)
 		slip.info = ""
 		slip.info +="<h3>[command_name()] Internal Shipping Manifest</h3><hr><br>"
@@ -908,36 +918,42 @@ This method wont take into account storage items developed in the future and doe
 		if (temp["rel"] > temp["amt"])
 			temp["rel"] = temp["amt"]
 
-		// Subtract material before we go any further
-		inventory[material]["amt"] -= temp["rel"]
-		totalmaterial -= temp["rel"]
+		// WHY THE FUCK DO I DO THESE THINGS
+		var/obj/item/stack/sheet/M = spawn_stacks(material, temp["rel"])
 
-		var/path = text2path("/obj/item/stack/sheet/[material]")
-		if (path)
-			// Need this outside of the ifs so we can get the name afterward.
-			var obj/item/stack/sheet/G
-
-			// Get our full stacks
-			for (var/i = 1, i <= round(temp["rel"] / 50), i++)
-				G = new path
-				G.amount = 50
-				G.loc = output.loc
-
-			// Get our remainder
-			if (temp["rel"] % 50)
-				G = new path
-				G.amount = temp["rel"] % 50
-				G.loc = output.loc
-
-			// Try to get the "official" object name if possible.
-			if (printmanifest)
-				slip.info += "<li>[temp["rel"]] units [(G.name) ? G.name : (temp["name"]) ? temp["name"] : material]</li>"
+		if (M && print_manifest)
+			slip.info += "<li>[temp["rel"]] units [M.name]</li>"
 
 	// Close up the cargo manifest
-	if (printmanifest)
+	if (print_manifest)
 		slip.info += "</ul><br>CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
 		slip.loc = output.loc
+
+	update_icon()
+
+/obj/machinery/supply_depot/proc/spawn_stacks(material, amount)
+	if (!material || amount < 1)
+		return 0
+
+	// Decrement our material counts
+	inventory[material]["amt"] -= amount
+	total_material -= amount
+
+	var/obj/item/stack/sheet/G
+	// Spawn our stacks
+	while (amount > 0)
+		G = new material(output.loc)
+		G.amount = (amount >= 50) ? 50 : amount
+		amount -= G.amount
+
+	return G
 
 /obj/machinery/supply_depot/process()
 	if (src.input && src.output)
 		load_materials(input.loc, output.loc)
+
+/obj/machinery/supply_depot/update_icon()
+	if (src.total_material >= src.MAX_MATERIAL)
+		src.icon_state = "depot_closed"
+	else
+		icon_state = "depot_open"
