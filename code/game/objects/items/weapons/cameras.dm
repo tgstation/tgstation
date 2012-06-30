@@ -81,7 +81,7 @@
 			scribble = txt
 
 	..()
-z
+
 /obj/item/weapon/photo/examine()
 	set src in oview(2)
 	..()
