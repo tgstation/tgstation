@@ -50,24 +50,18 @@
 		if (istype(W, /obj/item/clothing/head/helmet))
 			var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 			A.icon = 'assemblies.dmi'
-			user.u_equip(W)
+
+			user.drop_from_inventory(W)
 			W.loc = A
+			W.master = A
 			A.part1 = W
 
-			if(user.r_hand == W)
-				user.put_in_r_hand(A)
-			else
-				user.put_in_l_hand(A)
-
-			W.master = A
-			src.master = A
-
-			user.u_equip(src)
-
+			user.drop_from_inventory(src)
 			src.loc = A
+			src.master = A
 			A.part2 = src
 
-			src.add_fingerprint(user)
+			user.put_in_hands(A)
 			A.add_fingerprint(user)
 	return
 

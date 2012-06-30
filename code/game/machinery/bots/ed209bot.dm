@@ -996,7 +996,7 @@ Auto Patrol: []"},
 				sleep(40)
 				if(get_turf(user) == T)
 					build_step++
-					name = "armed ED-209 assembly"
+					name = "armed [name]"
 					user << "<span class='notice'>Taser gun attached.</span>"
 
 		if(9)
