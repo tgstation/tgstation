@@ -128,17 +128,63 @@
 	return t
 
 //For sanitizing user inputs
-/proc/reject_bad_text(var/text)
-	if(length(text) > 512)	return			//message too long
+/proc/reject_bad_text(var/text, var/max_length=512)
+	if(length(text) > max_length)	return			//message too long
 	var/non_whitespace = 0
 	for(var/i=1, i<=length(text), i++)
 		switch(text2ascii(text,i))
 			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
 			if(127 to 255)	return			//rejects weird letters like �
 			if(0 to 31)		return			//more weird stuff
-			if(32)							//whitespace
+			if(32)			continue		//whitespace
 			else			non_whitespace = 1
 	if(non_whitespace)		return text		//only accepts the text if it has some non-spaces
+
+//proc for processing names to make it harder for people to use names to metagame. Much stricter than the above.
+//Allows only characters (A...Z,a...z), spaces and apostrophes.
+//There is a flag to allow numbers
+//removes doublespaces and double apostrophes
+//lowercases everything and capitalises the first letter of each word (or characters following an apostrophe)
+//prevents names which are too short, have too many space, or not enough normal letters
+/proc/reject_bad_name(var/t_in, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)
+	if(length(t_in) > max_length)	return			//name too long
+	var/number_of_alphanumeric	= 0
+	var/number_of_spaces		= 0
+	var/last_char_group			= 0
+	var/t_out = ""
+	for(var/i=1, i<=length(t_in), i++)
+		var/ascii_char = text2ascii(t_in,i)
+		switch(ascii_char)
+			if(65 to 90)				//Uppercase letters allowed
+				switch(last_char_group)
+					if(3,4,0)			t_out += ascii2text(ascii_char)
+					else				t_out += ascii2text(ascii_char+32)	//lowercase if not preceeded by space or '
+				last_char_group = 1
+				number_of_alphanumeric++
+			if(97 to 122)				//Lowercase letters allowed
+				switch(last_char_group)
+					if(3,4,0)			t_out += ascii2text(ascii_char-32)	//uppercase if preceeded by space or '
+					else				t_out += ascii2text(ascii_char)
+				last_char_group = 2
+				number_of_alphanumeric++
+			if(32)						//Space
+				if(i==1)	continue
+				if(last_char_group!=3)	t_out += ascii2text(ascii_char)		//so we don't get double-spaces
+				last_char_group = 3
+				number_of_spaces++
+			if(39,45,46)				//Apostrophe for dem Oirish names like "O'Neil", dashes for double-barreled names and periods for "James T. Kirk" and AI's
+				if(i==1)	continue
+				if(last_char_group!=4)	t_out += ascii2text(ascii_char)		//so we don't get double apostrophes or whatever
+				last_char_group = 4
+			if(48 to 57)
+				if(allow_numbers)
+					t_out += ascii2text(ascii_char)		//Allow numbers (i.e. for borgs andd AIs)
+					number_of_alphanumeric++
+			else
+				return
+	if(number_of_alphanumeric < 4)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
+	if(number_of_spaces > 4 || number_of_spaces < 1)	return	//protects against single-word names like "Unknown" and names like "I ' M A D E R P Spaces Lul"
+	return t_out
 
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
 	var/list/strip_chars = list("<",">")

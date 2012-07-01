@@ -439,42 +439,30 @@ datum/preferences
 
 			return 1
 
+
 		if(link_tags["real_name"])
 			var/new_name
 
 			switch(link_tags["real_name"])
 				if("input")
-					new_name = copytext( (input(user, "Please select a name:", "Character Generation")  as text) ,1,MAX_NAME_LEN)
-					var/list/bad_characters = list("_", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\","0","1","2","3","4","5","6","7","8","9")
-					for(var/c in bad_characters)
-						new_name = dd_replacetext(new_name, c, "")
-
-					if(!new_name || (new_name == "Unknown") || (new_name == "floor") || (new_name == "wall") || (new_name == "r-wall"))
-						alert("Invalid name. Don't do that!")
-						return
-
-					//Carn: To fix BYOND text-parsing errors caused by people using dumb capitalisation in their names.
-					var/tempname
-					for(var/N in dd_text2list(new_name, " "))
-						if(N && tempname) //if both aren't null strings
-							tempname += " "
-						tempname += capitalize(lowertext(N))
-					new_name = tempname
+					new_name = reject_bad_name( input(user, "Please select a name:", "Character Generation")  as text|null )
 
 				if("random")
 					randomize_name()
 
 			if(new_name)
 				real_name = new_name
+			else
+				user << "<font color='red'>Invalid name. Your name should be at least ten letters and two words. It should be under [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 		if(link_tags["age"])
 			switch(link_tags["age"])
 				if("input")
-					var/new_age = input(user, "Please select type in age: 15-45", "Character Generation")  as num
+					var/new_age = input(user, "Please select type in age: 17-45", "Character Generation")  as num
 					if(new_age)
-						age = max(min(round(text2num(new_age)), 45), 15)
+						age = max(min(round(text2num(new_age)), 45), 17)
 				if("random")
-					age = rand (20, 45)
+					age = rand (17, 45)
 
 		if(link_tags["OOC"])
 			var/tempnote = ""
