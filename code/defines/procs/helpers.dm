@@ -157,31 +157,35 @@
 		switch(ascii_char)
 			if(65 to 90)				//Uppercase letters allowed
 				switch(last_char_group)
-					if(3,4,0)			t_out += ascii2text(ascii_char)
+					if(3,4,5,0)			t_out += ascii2text(ascii_char)
 					else				t_out += ascii2text(ascii_char+32)	//lowercase if not preceeded by space or '
 				last_char_group = 1
 				number_of_alphanumeric++
 			if(97 to 122)				//Lowercase letters allowed
 				switch(last_char_group)
-					if(3,4,0)			t_out += ascii2text(ascii_char-32)	//uppercase if preceeded by space or '
+					if(3,4,5,0)			t_out += ascii2text(ascii_char-32)	//uppercase if preceeded by space or '
 					else				t_out += ascii2text(ascii_char)
 				last_char_group = 2
 				number_of_alphanumeric++
 			if(32)						//Space
-				if(i==1)	continue
-				if(last_char_group!=3)	t_out += ascii2text(ascii_char)		//so we don't get double-spaces
+				switch(last_char_group)
+					if(3,0)				continue
+					else				t_out += ascii2text(ascii_char)		//so we don't get double-spaces
 				last_char_group = 3
 				number_of_spaces++
 			if(39,45,46)				//Apostrophe for dem Oirish names like "O'Neil", dashes for double-barreled names and periods for "James T. Kirk" and AI's
-				if(i==1)	continue
-				if(last_char_group!=4)	t_out += ascii2text(ascii_char)		//so we don't get double apostrophes or whatever
+				switch(last_char_group)
+					if(4,0)				continue
+					else				t_out += ascii2text(ascii_char)		//so we don't get double apostrophes or whatever
 				last_char_group = 4
 			if(48 to 57)
 				if(allow_numbers)
 					t_out += ascii2text(ascii_char)		//Allow numbers (i.e. for borgs andd AIs)
 					number_of_alphanumeric++
+					last_char_group = 5
 			else
 				return
+	if(last_char_group == 3)	number_of_spaces--
 	if(number_of_alphanumeric < 4)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
 	if(number_of_spaces > 4 || number_of_spaces < 1)	return	//protects against single-word names like "Unknown" and names like "I ' M A D E R P Spaces Lul"
 	return t_out
