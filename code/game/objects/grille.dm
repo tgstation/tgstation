@@ -88,7 +88,7 @@
 		M.visible_message("[M.name] smashes against the [src.name].", \
 							"You smash against the [src.name].", \
 							"You hear a noise")
-		src.health -= rand(4)
+		src.health -= M.melee_damage_upper
 		healthcheck()
 		return
 

@@ -148,6 +148,9 @@
 	for(var/obj/mecha/M in protected_area.turretTargets)
 		if(M.occupant)
 			new_targets += M
+	for(var/mob/living/simple_animal/M in protected_area.turretTargets)
+		if(!M.stat)
+			new_targets += M
 	if(new_targets.len)
 		new_target = pick(new_targets)
 	return new_target
@@ -386,18 +389,36 @@
 	onclose(user, "turretid")
 
 
+/obj/machinery/turret/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)	return
+	if(!(stat & BROKEN))
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\red <B>[M] [M.attacktext] [src]!</B>"), 1)
+		src.health -= M.melee_damage_upper
+		if (src.health <= 0)
+			src.die()
+	else
+		M << "\red That object is useless to you."
+	return
+
+
+
+
 /obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'slash.ogg', 25, 1, -1)
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
-		src.health -= 15
+		src.health -= M.
 		if (src.health <= 0)
 			src.die()
 	else
 		M << "\green That object is useless to you."
 	return
+
+
 
 /obj/machinery/turretid/Topic(href, href_list)
 	..()
