@@ -156,14 +156,12 @@
 		var/ascii_char = text2ascii(t_in,i)
 		switch(ascii_char)
 			if(65 to 90)				//Uppercase letters allowed
-				switch(last_char_group)
-					if(3,4,5,0)			t_out += ascii2text(ascii_char)
-					else				t_out += ascii2text(ascii_char+32)	//lowercase if not preceeded by space or '
+				t_out += ascii2text(ascii_char)
 				last_char_group = 1
 				number_of_alphanumeric++
 			if(97 to 122)				//Lowercase letters allowed
 				switch(last_char_group)
-					if(3,4,5,0)			t_out += ascii2text(ascii_char-32)	//uppercase if preceeded by space or '
+					if(3,4,0)			t_out += ascii2text(ascii_char-32)	//Force uppercase if preceeded by space or '
 					else				t_out += ascii2text(ascii_char)
 				last_char_group = 2
 				number_of_alphanumeric++
