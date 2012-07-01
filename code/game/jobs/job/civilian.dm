@@ -65,7 +65,7 @@
 	flag = BOTANIST
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 2
+	total_positions = 3
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
