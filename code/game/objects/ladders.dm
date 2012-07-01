@@ -60,7 +60,7 @@
 
 	else if(down)
 		user.visible_message("<span class='notice'>[user] climbs down \the [src]!</span>", \
-							 "<span class='notice'>You climb up \the [src]!</span>")
+							 "<span class='notice'>You climb down \the [src]!</span>")
 		user.loc = get_turf(down)
 		down.add_fingerprint(user)
 

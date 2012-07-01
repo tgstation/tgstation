@@ -135,6 +135,7 @@
 	icon = 'watercloset.dmi'
 	icon_state = "mist"
 	layer = MOB_LAYER + 1
+	anchored = 1
 	mouse_opacity = 0
 
 /obj/machinery/shower/attack_hand(mob/M as mob)
