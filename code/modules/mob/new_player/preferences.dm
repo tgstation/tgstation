@@ -445,7 +445,7 @@ datum/preferences
 
 			switch(link_tags["real_name"])
 				if("input")
-					new_name = reject_bad_name( input(user, "Please select a name:", "Character Generation")  as text|null )
+					new_name = reject_bad_name( input(user, "Please select a name:", "Character Generation")  as text|null, 2 )
 
 				if("random")
 					randomize_name()
@@ -453,7 +453,7 @@ datum/preferences
 			if(new_name)
 				real_name = new_name
 			else
-				user << "<font color='red'>Invalid name. Your name should be at least ten letters and two words. It should be under [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+				user << "<font color='red'>Invalid name. Your name should be at least 4 letters and two words but it should be under [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 		if(link_tags["age"])
 			switch(link_tags["age"])

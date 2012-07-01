@@ -146,7 +146,7 @@
 //removes doublespaces and double apostrophes
 //lowercases everything and capitalises the first letter of each word (or characters following an apostrophe)
 //prevents names which are too short, have too many space, or not enough normal letters
-/proc/reject_bad_name(var/t_in, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)
+/proc/reject_bad_name(var/t_in, var/minimum_words=2, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)
 	if(length(t_in) > max_length)	return			//name too long
 	var/number_of_alphanumeric	= 0
 	var/number_of_spaces		= 0
@@ -187,7 +187,7 @@
 				return
 	if(last_char_group == 3)	number_of_spaces--
 	if(number_of_alphanumeric < 4)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
-	if(number_of_spaces > 4 || number_of_spaces < 1)	return	//protects against single-word names like "Unknown" and names like "I ' M A D E R P Spaces Lul"
+	if(number_of_spaces > 4 || number_of_spaces < minimum_words-1)	return	//protects against single-word names like "Unknown" and names like "I ' M A D E R P Spaces Lul"
 	return t_out
 
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
@@ -733,22 +733,29 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/ainame(var/mob/M as mob)
 	var/randomname = M.name
 	var/time_passed = world.time//Pretty basic but it'll do. It's still possible to bypass this by return ainame().
-	var/newname = copytext(sanitize(input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)),1,MAX_NAME_LEN)
-	if((world.time-time_passed)>200)//If more than 20 game seconds passed.
+
+	var/newname
+	var/iterations = 0
+	while(!newname)
+		switch(iterations)
+			if(0)
+			if(1 to 5)	M << "<font color='red'>Invalid name. Your name should be at least 4 alphanumeric characters but under [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+			else		break
+		newname = reject_bad_name(input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname),1,1)
+		iterations++
+
+	if((world.time-time_passed)>300)//If more than 20 game seconds passed.
 		M << "You took too long to decide. Default name selected."
 		return
 
-	if (!newname)
-		newname = randomname
-
-	else
-		if (newname == "Inactive AI")//Keeping this here to prevent dumb.
+	if(newname)
+		if( newname == "Inactive AI" || findtext(newname,"cyborg") )	//To prevent common meta-gaming name-choices
 			M << "That name is reserved."
-			return ainame(M)
+			return
 		for (var/mob/living/silicon/ai/A in world)
-			if (A.real_name == newname&&newname!=randomname)
+			if (A.real_name == newname && newname!=randomname)
 				M << "There's already an AI with that name."
-				return ainame(M)
+				return
 		M.real_name = newname
 		M.name = newname
 		M.original_name = newname
