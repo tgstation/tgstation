@@ -424,7 +424,7 @@ client
 
 		else if (href_list["varnameedit"])
 			if(!href_list["datumedit"] || !href_list["varnameedit"])
-				usr << "Varedit error: Not all information has been sent Contact a coder."
+				usr << "Varedit error: Not all information has been sent. Contact a coder."
 				return
 			var/DAT = locate(href_list["datumedit"])
 			if(!DAT)
