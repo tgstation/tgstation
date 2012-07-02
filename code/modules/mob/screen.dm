@@ -529,7 +529,8 @@
 		usr << "\red You are already sleeping"
 		return
 	else
-		usr.sleeping = 20 //Short nap
+		if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+			usr.sleeping = 20 //Short nap
 
 /mob/living/carbon/verb/lay_down()
 	set name = "Lay down / Get up"
