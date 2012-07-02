@@ -107,6 +107,7 @@
 	afro_large
 		name = "Big Afro"
 		icon_state = "hair_bigafro"
+		choose_female = 0
 
 	fag
 		name = "Flow Hair"
@@ -132,6 +133,7 @@
 	jensen
 		name = "Adam Jensen Hair"
 		icon_state = "hair_jensen"
+		choose_female = 0
 
 	skinhead
 		name = "Skinhead"
@@ -153,6 +155,7 @@
 	spikey
 		name = "Spikey"
 		icon_state = "hair_spikey"
+		choose_female = 0
 
 /*
 ///////////////////////////////////
