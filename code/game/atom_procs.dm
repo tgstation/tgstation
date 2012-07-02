@@ -114,7 +114,7 @@
 		//Now, deal with gloves.
 		if (H.gloves && H.gloves != src)
 			if(fingerprintslast != H.key)
-				fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
+				fingerprintshidden += text("\[[]\](Wearing gloves). Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 				fingerprintslast = H.key
 			H.gloves.add_fingerprint(M)
 		//Deal with gloves the pass finger/palm prints.
@@ -125,7 +125,7 @@
 				return 0
 		//More adminstuffz
 		if(fingerprintslast != H.key)
-			fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
+			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 			fingerprintslast = H.key
 		//Make the list if it does not exist.
 		if(!fingerprints)
@@ -158,7 +158,7 @@
 			else
 				fingerprints[P] = test_print
 		if(fingerprintslast != M.key)
-			fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
+			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key)
 			fingerprintslast = M.key
 	//Cleaning up shit.
 	if(fingerprints && !fingerprints.len)

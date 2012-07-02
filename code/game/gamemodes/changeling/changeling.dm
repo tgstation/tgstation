@@ -159,13 +159,11 @@
 	for(var/datum/mind/changeling in changelings)
 		var/changelingwin = 1
 		var/changeling_name
-		var/totalabsorbed = 0
 		if((changeling.current) && (changeling.current.changeling))
-			totalabsorbed = ((changeling.current.changeling.absorbed_dna.len) - 1)
 			changeling_name = "[changeling.current.real_name] (played by [changeling.key])"
 			world << "<B>The changeling was [changeling_name].</B>"
 			world << "<b>[changeling.current.gender=="male"?"His":"Her"] changeling ID was [changeling.current.gender=="male"?"Mr.":"Mrs."] [changeling.current.changeling.changelingID]."
-			world << "<B>Genomes absorbed: [totalabsorbed]</B>"
+			world << "<B>Genomes absorbed: [changeling.current.changeling.absorbedcount]</B>"
 
 			var/count = 1
 			for(var/datum/objective/objective in changeling.objectives)
@@ -204,6 +202,7 @@
 	var/isabsorbing = 0
 	var/geneticpoints = 5
 	var/purchasedpowers = list()
+	var/absorbedcount = 0
 
 
 

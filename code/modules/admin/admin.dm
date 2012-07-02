@@ -1313,12 +1313,8 @@ var/global/BSACooldown = 0
 			return
 
 	if (href_list["narrateto"])
-		if(rank in list("Game Admin", "Game Master"))
-			var/mob/M = locate(href_list["narrateto"])
-			usr.client.cmd_admin_direct_narrate(M)
-		else
-			alert("You cannot perform this action. You must be of a higher administrative rank!")
-			return
+		var/mob/M = locate(href_list["narrateto"])
+		usr.client.cmd_admin_direct_narrate(M)
 
 	if (href_list["subtlemessage"])
 		var/mob/M = locate(href_list["subtlemessage"])

@@ -156,6 +156,7 @@
 	if(T.changeling)
 		if(T.changeling.absorbed_dna)
 			usr.changeling.absorbed_dna |= T.changeling.absorbed_dna //steal all their loot
+			usr.changeling.absorbedcount += T.changeling.absorbedcount
 
 			T.changeling.absorbed_dna = list()
 			T.changeling.absorbed_dna[T.real_name] = T.dna
@@ -179,9 +180,11 @@
 
 
 
+
 		usr.changeling.chem_charges += T.changeling.chem_charges
 		usr.changeling.geneticpoints += T.changeling.geneticpoints
 		T.changeling.chem_charges = 0
+	usr.changeling.absorbedcount++
 	usr.changeling.isabsorbing = 0
 
 	T.death(0)
