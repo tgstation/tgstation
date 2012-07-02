@@ -9,6 +9,16 @@
 	throwforce = 10
 
 
+/obj/item/weapon/melee/cultblade/pickup(mob/living/carbon/human/user as mob)
+	if(!iscultist(usr))
+		user.Paralyse(5)
+		user << "\red The blade rebels against your touch!"
+		if(istype(user, /mob/living/carbon/human))
+			var/organ = ((user.hand ? "l_":"r_") + "arm")
+			var/datum/organ/external/affecting = user.get_organ(organ)
+			if(affecting.take_damage(40))
+				user.UpdateDamageIcon()
+
 
 /obj/item/clothing/head/culthood
 	name = "cult hood"
