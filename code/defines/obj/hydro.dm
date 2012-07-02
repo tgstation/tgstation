@@ -942,7 +942,7 @@
 	yield = 2
 	potency = 10
 	plant_type = 0
-	growthstages = 6
+	growthstages = 5
 
 /*  // Maybe one day when I get it to work like a grenade which exlodes gibs.
 /obj/item/seeds/gibtomatoseed

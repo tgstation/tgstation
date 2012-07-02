@@ -1740,18 +1740,16 @@ datum
 						M.bodytemperature += 5
 						if(holder.has_reagent("frostoil"))
 							holder.remove_reagent("frostoil", 5)
-						if(prob(40) && !istype(M, /mob/living/carbon/metroid))
-							M.take_organ_damage(0, 1)
 						if(istype(M, /mob/living/carbon/metroid))
 							M.bodytemperature += rand(5,20)
 					if(15 to 25)
 						M.bodytemperature += 10
-						if(prob(60) && !istype(M, /mob/living/carbon/metroid))
-							M.take_organ_damage(0, 1)
 						if(istype(M, /mob/living/carbon/metroid))
-							M.bodytemperature += rand(5,20)
+							M.bodytemperature += rand(10,20)
 					if(25 to INFINITY)
 						M.bodytemperature += 15
+						if(istype(M, /mob/living/carbon/metroid))
+							M.bodytemperature += rand(15,20)
 				data++
 				..()
 				return
@@ -1828,18 +1826,17 @@ datum
 						M.bodytemperature -= 5
 						if(holder.has_reagent("capsaicin"))
 							holder.remove_reagent("capsaicin", 5)
-						if(prob(80) && istype(M, /mob/living/carbon/metroid))
-							M.adjustFireLoss(rand(5,20))
-							M << "\red You feel a terrible chill inside your body!"
-					if(15 to 25)
-						M.bodytemperature -= 10
-						if(prob(60) && !istype(M, /mob/living/carbon/metroid))
-							M.take_organ_damage(0, 1)
 						if(istype(M, /mob/living/carbon/metroid))
 							M.bodytemperature -= rand(5,20)
+					if(15 to 25)
+						M.bodytemperature -= 10
+						if(istype(M, /mob/living/carbon/metroid))
+							M.bodytemperature -= rand(10,20)
 					if(25 to INFINITY)
 						M.bodytemperature -= 15
 						if(prob(1)) M.emote("shiver")
+						if(istype(M, /mob/living/carbon/metroid))
+							M.bodytemperature -= rand(15,20)
 				data++
 				..()
 				return
@@ -1858,7 +1855,7 @@ datum
 		blackpepper
 			name = "Black Pepper"
 			id = "blackpepper"
-			description = "A power ground from peppercorns. *AAAACHOOO*"
+			description = "A powder ground from peppercorns. *AAAACHOOO*"
 			reagent_state = SOLID
 			// no color (ie, black)
 

@@ -96,7 +96,7 @@
 
 /obj/item/weapon/bodybag
 	name = "body bag"
-	desc = "Bag mixed with a bit of body."
+	desc = "A plastic bag designed for the storage and transportation of cadavers."
 	icon = 'closet.dmi'
 	icon_state = "bodybag"
 	force = 5.0
@@ -499,7 +499,7 @@
 
 /obj/item/weapon/card/id
 	name = "identification card"
-	desc = "An identification card. No shit."
+	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
 	var/access = list()
