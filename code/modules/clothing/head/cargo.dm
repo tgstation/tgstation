@@ -47,7 +47,7 @@
 /obj/item/clothing/head/soft/blue
 	name = "blue cap"
 	desc = "It's a baseball hat in a tasteless blue colour."
-	icon_state = "redsoft"
+	icon_state = "bluesoft"
 	color = "cargo"
 
 /obj/item/clothing/head/soft/yellow
