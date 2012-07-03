@@ -1665,7 +1665,7 @@
 "aGa" = (/obj/machinery/door/airlock/maintenance{name = "Bar Maintenance"; req_access_txt = "25"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/crew_quarters/bar)
 "aGb" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=2"; freq = 1400; location = "Bar"},/obj/structure/plasticflaps{opacity = 1},/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/crew_quarters/bar)
 "aGc" = (/turf/simulated/wall,/area/crew_quarters/kitchen)
-"aGd" = (/obj/machinery/door/airlock/maintenance{name = "Theatre Maintenance"; req_access_txt = "46"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor/plating,/area/crew_quarters/kitchen)
+"aGd" = (/obj/machinery/door/airlock/maintenance{name = "Kitchen Maintenance"; req_access_txt = "28"},/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor/plating,/area/crew_quarters/kitchen)
 "aGe" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=2"; freq = 1400; location = "Kitchen"},/obj/structure/plasticflaps{opacity = 1},/obj/machinery/atmospherics/pipe/simple{color = "blue"; icon_state = "intact-b-f"; level = 1; name = "pipe"},/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/crew_quarters/kitchen)
 "aGf" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=2"; freq = 1400; location = "Hydroponics"},/obj/structure/plasticflaps{opacity = 1},/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/hydroponics)
 "aGg" = (/turf/simulated/wall,/area/hydroponics)
