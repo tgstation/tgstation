@@ -945,16 +945,24 @@ var/list/sacrificed = list()
 
 //////////             Rune 24 (counting burningblood, which kinda doesnt work yet.)
 
-		runestun(var/mob/living/carbon/T as mob)
+		runestun(var/mob/living/T as mob)
 			if(istype(src,/obj/effect/rune))   ///When invoked as rune, flash and stun everyone around.
 				usr.say("Fuu ma'jin!")
-				for(var/mob/living/carbon/C in viewers(src))
-					flick("e_flash", C.flash)
-					if (C.stuttering < 1 && (!(HULK in C.mutations)))
-						C.stuttering = 1
-					C.Weaken(1)
-					C.Stun(1)
-					C.show_message("\red The rune explodes in a bright flash.", 3)
+				for(var/mob/living/L in viewers(src))
+
+					if(iscarbon(L) && !iscultist(L))
+						var/mob/living/carbon/C = L
+						flick("e_flash", C.flash)
+						if(C.stuttering < 1 && (!(HULK in C.mutations)))
+							C.stuttering = 1
+						C.Weaken(1)
+						C.Stun(1)
+						C.show_message("\red The rune explodes in a bright flash.", 3)
+
+					else if(issilicon(L))
+						var/mob/living/silicon/S = L
+						S.Weaken(5)
+						S.show_message("\red BZZZT... The rune has exploded in a bright flash.", 3)
 				del(src)
 			else                        ///When invoked as talisman, stun and mute the target mob.
 				usr.say("Dream sign ''Evil sealing talisman''!")
@@ -965,11 +973,17 @@ var/list/sacrificed = list()
 				else
 					for(var/mob/O in viewers(T, null))
 						O.show_message(text("\red <B>[] invokes a talisman at []</B>", usr, T), 1)
-					flick("e_flash", T.flash)
-					if (!(HULK in T.mutations))
-						T.silent += 15
-					T.Weaken(25)
-					T.Stun(25)
+
+					if(issilicon(T))
+						T.Weaken(15)
+
+					else if(iscarbon(T))
+						var/mob/living/carbon/C = T
+						flick("e_flash", C.flash)
+						if (!(HULK in C.mutations))
+							C.silent += 15
+						C.Weaken(25)
+						C.Stun(25)
 				return
 
 /////////////////////////////////////////TWENTY-FIFTH RUNE

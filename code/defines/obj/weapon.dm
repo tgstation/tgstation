@@ -226,9 +226,6 @@
 	force = 10
 	throwforce = 7
 	w_class = 3
-	var/charges = 50.0
-	var/maximum_charges = 50.0
-	var/status = 1
 	origin_tech = "combat=4"
 
 /obj/item/weapon/melee/energy
