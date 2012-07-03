@@ -8,7 +8,7 @@
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
 
-/obj/item/weapon/storage/briefcase/attack(mob/M as mob, mob/living/user as mob)
+/obj/item/weapon/storage/briefcase/attack(mob/living/M as mob, mob/living/user as mob)
 	//..()
 
 	if ((CLUMSY in user.mutations) && prob(50))

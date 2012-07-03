@@ -5,6 +5,9 @@
 
 /mob/living/carbon/alien/say(var/message)
 
+	if (silent)
+		return
+
 	if (length(message) >= 2)
 		if (copytext(message, 1, 3) == ":a")
 			message = copytext(message, 3)

@@ -840,7 +840,7 @@
 		dat = text("[]<BR><BR><A href='?src=\ref[];clear=1'>Main Menu</A>", src.temphtml, src)
 	else
 		if (src.connected) //Is something connected?
-			var/mob/occupant = src.connected.occupant
+			var/mob/living/occupant = src.connected.occupant
 			dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" //Blah obvious
 			if(occupant && occupant.dna) //is there REALLY someone in there?
 				if(NOCLONE in occupant.mutations)

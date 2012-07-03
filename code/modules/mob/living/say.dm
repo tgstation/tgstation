@@ -82,15 +82,8 @@ var/list/department_radio_keys = list(
 	if (!message)
 		return
 
-	if (length(message) >= 1)
-		if (miming && copytext(message, 1, 2) != "*")
-			return
-
 	if (stat == 2)
 		return say_dead(message)
-
-	if (silent)
-		return
 
 	if (src.client)
 		if(client.muted_ic)
@@ -249,6 +242,7 @@ var/list/department_radio_keys = list(
 				used_radios += src:radio
 			message_range = 1
 			italics = 1
+
 		if("changeling")
 			if(src.changeling)
 				for(var/mob/aChangeling in world)

@@ -3,11 +3,12 @@
 	var/list/turretTargets = list()
 
 /area/turret_protected/proc/subjectDied(target)
-	if( ismob(target) )
+	if( isliving(target) )
 		if( !issilicon(target) )
-			if( target:stat )
-				if( target in turretTargets )
-					src.Exited(target)
+			var/mob/living/L = target
+			if( L.stat )
+				if( L in turretTargets )
+					src.Exited(L)
 
 
 /area/turret_protected/Entered(O)

@@ -17,7 +17,6 @@
 			usr.verbs += /client/proc/blind
 
 		usr.whisper("STI KALY")
-	//	usr.spellvoice()
 
 		var/obj/effect/overlay/B = new /obj/effect/overlay( M.loc )
 		B.icon_state = "blspell"
@@ -50,7 +49,6 @@
 	if(!usr.casting()) return
 
 	usr.say("FORTI GY AMA")
-	usr.spellvoice()
 
 	for (var/mob/living/M as mob in oview())
 		spawn(0)
@@ -162,7 +160,6 @@
 	var/forcefield
 
 	usr.whisper("TARCOL MINTI ZHERI")
-//	usr.spellvoice()
 
 	forcefield =  new /obj/effect/forcefield(locate(usr.x,usr.y,usr.z))
 	spawn (300)
@@ -185,7 +182,6 @@
 		usr.verbs += /client/proc/fireball
 
 	usr.say("ONI SOMA")
-	//	usr.spellvoice()
 
 	var/obj/effect/overlay/A = new /obj/effect/overlay( usr.loc )
 	A.icon_state = "fireball"
@@ -220,7 +216,6 @@
 		usr.verbs += /client/proc/knock
 
 	usr.whisper("AULIE OXIN FIERA")
-//	usr.spellvoice()
 
 	for(var/obj/machinery/door/G in oview(3))
 		spawn(1)
@@ -242,7 +237,6 @@
 		usr.verbs += /mob/proc/kill
 
 	usr.say("EI NATH")
-	usr.spellvoice()
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(4, 1, M)
@@ -265,7 +259,6 @@
 		usr.verbs += /mob/proc/tech
 
 	usr.say("NEC CANTIO")
-	usr.spellvoice()
 	empulse(src, 6, 10)
 	return
 
@@ -328,7 +321,6 @@
 	var/area/thearea = teleportlocs[A]
 
 	usr.say("SCYAR NILA [uppertext(A)]")
-	usr.spellvoice()
 
 	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
 	smoke.set_up(5, 0, usr.loc)
@@ -486,7 +478,6 @@
 		usr.verbs += /client/proc/mutate
 
 	usr.say("BIRUZ BENNAR")
-	usr.spellvoice()
 
 	usr << text("\blue You feel strong! You feel pressure building behind your eyes!")
 	if (!(HULK in usr.mutations))

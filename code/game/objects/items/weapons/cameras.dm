@@ -106,10 +106,13 @@
 							else
 								holding = "They are holding \a [temp.r_hand]."
 
-				if(!mob_detail)
-					mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]"
-				else
-					mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]"
+				if(isliving(A))
+					var/mob/living/L = A
+
+					if(!mob_detail)
+						mob_detail = "You can see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]"
+					else
+						mob_detail += "You can also see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]"
 
 		else
 			if(itemnumber < 5)

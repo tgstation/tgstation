@@ -1,7 +1,17 @@
 /mob/living/carbon/human/say(var/message)
+
+	if (silent)
+		return
+
+	//Mimes dont speak!
+	if (length(message) >= 1)
+		if (miming && copytext(message, 1, 2) != "*")
+			return
+
 	if(src.mutantrace == "lizard")
 		if(copytext(message, 1, 2) != "*")
 			message = dd_replaceText(message, "s", stutter("ss"))
+
 	if(src.mutantrace == "metroid" && prob(5))
 		if(copytext(message, 1, 2) != "*")
 			if(copytext(message, 1, 2) == ";")

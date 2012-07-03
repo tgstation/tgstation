@@ -68,8 +68,6 @@
 			message = "<B>[src]</B> [input]"
 
 		if ("me")
-			if(silent)
-				return
 			if (src.client)
 				if(client.muted_ic)
 					src << "You cannot send IC messages (muted by admins)."

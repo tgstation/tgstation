@@ -142,6 +142,12 @@
 /mob/living/proc/setHalLoss(var/amount)
 	halloss = amount
 
+/mob/living/proc/getMaxHealth()
+	return maxHealth
+
+/mob/living/proc/setMaxHealth(var/newMaxHealth)
+	maxHealth = newMaxHealth
+
 // ++++ROCKDTBEN++++ MOB PROCS //END
 
 

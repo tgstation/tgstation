@@ -632,7 +632,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 	var/list/victims = list()
 	for(var/mob/living/carbon/C in oview(usr.changeling.sting_range))
 		victims += C
-	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+	var/mob/living/carbon/T = input(usr, "Who do you wish to sting?") as null | anything in victims
 	if(T && T in view(usr.changeling.sting_range))
 
 		if(usr.stat)
@@ -650,10 +650,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		feedback_add_details("changeling_powers","SS")
 
 		if(!T.changeling)
-		//	T << "You feel a small prick and a burning sensation in your throat."
 			T.silent += 30
-		//else
-		//	T << "You feel a small prick."
 
 		usr.verbs -= /client/proc/changeling_silence_sting
 
@@ -984,7 +981,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 	var/list/victims = list()
 	for(var/mob/living/carbon/C in oview(usr.changeling.sting_range))
 		victims += C
-	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+	var/mob/living/carbon/T = input(usr, "Who do you wish to sting?") as null | anything in victims
 
 	if(T && T in view(usr.changeling.sting_range))
 

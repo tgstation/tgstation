@@ -14,6 +14,7 @@
 /mob/living/carbon/alien/humanoid/hunter
 	name = "alien hunter"
 	caste = "h"
+	maxHealth = 150
 	health = 150
 	storedPlasma = 100
 	max_plasma = 150
@@ -22,6 +23,7 @@
 /mob/living/carbon/alien/humanoid/sentinel
 	name = "alien sentinel"
 	caste = "s"
+	maxHealth = 125
 	health = 125
 	storedPlasma = 100
 	max_plasma = 250
@@ -30,12 +32,14 @@
 /mob/living/carbon/alien/humanoid/drone
 	name = "alien drone"
 	caste = "d"
+	maxHealth = 100
 	health = 100
 	icon_state = "aliend_s"
 
 /mob/living/carbon/alien/humanoid/queen
 	name = "alien queen"
 	caste = "q"
+	maxHealth = 250
 	health = 250
 	icon_state = "alienq_s"
 	nopush = 1

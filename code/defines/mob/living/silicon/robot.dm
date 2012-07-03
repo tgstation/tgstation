@@ -2,6 +2,7 @@
 	name = "Cyborg"
 	icon = 'robots.dmi'//
 	icon_state = "robot"
+	maxHealth = 300
 	health = 300
 
 #define BORGMESON 1

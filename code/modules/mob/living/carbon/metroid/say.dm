@@ -1,3 +1,9 @@
+/mob/living/carbon/metroid/say(var/message)
+	if (silent)
+		return
+	else
+		return ..()
+
 /mob/living/carbon/metroid/say_quote(var/text)
 	var/ending = copytext(text, length(text))
 

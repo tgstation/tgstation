@@ -5,11 +5,10 @@
 	flags = NOREACT
 	var/datum/mind/mind
 
+	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
+
 	//Not in use yet
 	var/obj/effect/organstructure/organStructure = null
-
-	var/maxHealth = 100 //Maximum health that should be possible. Used by living, organ and simple_mobs
-
 
 //	var/uses_hud = 0
 	var/obj/screen/flash = null
@@ -40,8 +39,6 @@
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
-	//var/midis = 1 //Check if midis should be played for someone - no, this is something that is tied to clients, not mobs.
-	var/alien_egg_flag = 0//Have you been infected?
 	var/obj/screen/zone_sel/zone_sel = null
 
 	var/emote_allowed = 1
@@ -57,7 +54,6 @@
 	var/sdisabilities = 0	//Carbon
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
-	var/stat = 0.0
 	var/next_move = null
 	var/prev_move = null
 	var/monkeyizing = null	//Carbon
@@ -91,7 +87,7 @@
 
 	var/timeofdeath = 0.0//Living
 	var/cpr_time = 1.0//Carbon
-	var/health = 100//Living
+
 
 	var/bodytemperature = 310.055	//98.7 F
 	var/drowsyness = 0.0//Carbon
@@ -122,14 +118,8 @@
 	var/obj/item/weapon/tank/internal = null//Human/Monkey
 	var/obj/item/weapon/storage/s_active = null//Carbon
 	var/obj/item/clothing/mask/wear_mask = null//Carbon
-	var/r_epil = 0
-	var/r_ch_cou = 0
-	var/r_Tourette = 0//Carbon
 
 	var/seer = 0 //for cult//Carbon, probably Human
-
-	var/miming = null //checks if the guy is a mime//Human
-	var/silent = null //Can't talk. Value goes down every life proc.//Human
 
 	var/obj/hud/hud_used = null
 
@@ -152,8 +142,6 @@
 
 	var/nodamage = 0
 
-	var/underwear = 1//Human
-	var/backbag = 2//Human
 	var/be_syndicate = 0//This really should be a client variable.
 	var/be_random_name = 0
 	var/const/blindness = 1//Carbon
@@ -206,34 +194,9 @@
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-/*
-//Changeling mode stuff//Carbon
-	var/changeling_level = 0
-	var/list/absorbed_dna = list()
-	var/changeling_fakedeath = 0
-	var/chem_charges = 20.00
-	var/sting_range = 1
-*/
-	var/datum/changeling/changeling = null
-
-	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
-	var/obj/control_object // Hacking in to control objects -- TLE
-
-	var/robot_talk_understand = 0
-	var/alien_talk_understand = 0
-
-/*For ninjas and others. This variable is checked when a mob moves and I guess it was supposed to allow the mob to move
-through dense areas, such as walls. Setting density to 0 does the same thing. The difference here is that
-the mob is also allowed to move without any sort of restriction. For instance, in space or out of holder objects.*/
-//0 is off, 1 is normal, 2 is for ninjas.
-	var/incorporeal_move = 0
-
-
 	var/update_icon = 1 //Set to 1 to trigger update_icons() at the next life() call
 
 	var/UI = 'screen1_Midnight.dmi' // For changing the UI from preferences
-
-//	var/obj/effect/organstructure/organStructure = null //for dem organs
 
 	var/canstun = 1 	// determines if this mob can be stunned by things
 	var/canweaken = 1	// determines if this mob can be weakened/knocked down by things
@@ -249,3 +212,13 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/list/radar_blips = list() // list of screen objects, radar blips
 	var/radar_open = 0 	// nonzero is radar is open
 
+
+	//Datum holding changeling stuff
+	var/datum/changeling/changeling = null //TODO: Move this to living or carbon -Nodrak
+
+	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
+
+	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.
+	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
+	var/robot_talk_understand = 0
+	var/alien_talk_understand = 0

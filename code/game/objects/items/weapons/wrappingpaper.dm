@@ -50,20 +50,22 @@ PHOTOGRAPHS
 
 /obj/item/weapon/wrapping_paper/attack(mob/target as mob, mob/user as mob)
 	if (!istype(target, /mob/living/carbon/human)) return
-	if (istype(target:wear_suit, /obj/item/clothing/suit/straight_jacket) || target:stat)
+	var/mob/living/carbon/human/H = target
+
+	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat)
 		if (src.amount > 2)
-			var/obj/effect/spresent/present = new /obj/effect/spresent (target:loc)
+			var/obj/effect/spresent/present = new /obj/effect/spresent (H.loc)
 			src.amount -= 2
 
-			if (target:client)
-				target:client:perspective = EYE_PERSPECTIVE
-				target:client:eye = present
+			if (H.client)
+				H.client.perspective = EYE_PERSPECTIVE
+				H.client.eye = present
 
-			target:loc = present
-			target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [target.name] ([target.ckey])</font>")
+			H.loc = present
+			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
 
-			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [target.name] ([target.ckey])</font>")
+			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])</font>")
 
 		else
 			user << "\blue You need more paper."

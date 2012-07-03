@@ -1225,7 +1225,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
-			on_mob_life(var/mob/living/M as mob)
+			on_mob_life(var/mob/living/carbon/M as mob)
 				if(!M) M = holder.my_atom ///This can even heal dead people.
 				M.setCloneLoss(0)
 				M.setOxyLoss(0)
@@ -1468,7 +1468,7 @@ datum
 			description = "A strong neurotoxin that puts the subject into a death-like state."
 			color = "#669900" // rgb: 102, 153, 0
 
-			on_mob_life(var/mob/living/M as mob)
+			on_mob_life(var/mob/living/carbon/M as mob)
 				if(!M) M = holder.my_atom
 				M.adjustOxyLoss(0.5)
 				M.adjustToxLoss(0.5)
@@ -3821,7 +3821,7 @@ datum
 			reagent_state = LIQUID
 			color = "#2E2E61" // rgb: 46, 46, 97
 
-			on_mob_life(var/mob/living/M as mob)
+			on_mob_life(var/mob/living/carbon/M as mob)
 				if(!M) M = holder.my_atom
 				M.adjustOxyLoss(0.5)
 				M.adjustOxyLoss(0.5)

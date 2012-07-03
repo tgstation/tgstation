@@ -278,9 +278,11 @@
 
 	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
 
-	if(mob.incorporeal_move)//Move though walls
-		Process_Incorpmove(direct)
-		return
+	if(isliving(mob))
+		var/mob/living/L = mob
+		if(L.incorporeal_move)//Move though walls
+			Process_Incorpmove(direct)
+			return
 
 	if(Process_Grab())	return
 	if(!mob.canmove)	return
@@ -413,10 +415,13 @@
 ///Allows mobs to run though walls
 /client/proc/Process_Incorpmove(direct)
 	var/turf/mobloc = get_turf(mob)
-	switch(mob.incorporeal_move)
+	if(!isliving(mob))
+		return
+	var/mob/living/L = mob
+	switch(L.incorporeal_move)
 		if(1)
-			mob.loc = get_step(mob, direct)
-			mob.dir = direct
+			L.loc = get_step(L, direct)
+			L.dir = direct
 		if(2)
 			if(prob(50))
 				var/locx
@@ -444,19 +449,19 @@
 							return
 					else
 						return
-				mob.loc = locate(locx,locy,mobloc.z)
+				L.loc = locate(locx,locy,mobloc.z)
 				spawn(0)
 					var/limit = 2//For only two trailing shadows.
-					for(var/turf/T in getline(mobloc, mob.loc))
+					for(var/turf/T in getline(mobloc, L.loc))
 						spawn(0)
-							anim(T,mob,'mob.dmi',,"shadow",,mob.dir)
+							anim(T,L,'mob.dmi',,"shadow",,L.dir)
 						limit--
 						if(limit<=0)	break
 			else
 				spawn(0)
-					anim(mobloc,mob,'mob.dmi',,"shadow",,mob.dir)
-				mob.loc = get_step(mob, direct)
-			mob.dir = direct
+					anim(mobloc,mob,'mob.dmi',,"shadow",,L.dir)
+				L.loc = get_step(L, direct)
+			L.dir = direct
 	return 1
 
 

@@ -112,7 +112,7 @@
 
 	proc/handle_disabilities()
 		if (disabilities & 2)
-			if ((prob(1) && paralysis < 1 && r_epil < 1))
+			if ((prob(1) && paralysis < 1))
 				src << "\red You have a seizure!"
 				for(var/mob/O in viewers(src, null))
 					if(O == src)
@@ -121,13 +121,13 @@
 				Paralyse(10)
 				make_jittery(1000)
 		if (disabilities & 4)
-			if ((prob(5) && paralysis <= 1 && r_ch_cou < 1))
+			if ((prob(5) && paralysis <= 1))
 				drop_item()
 				spawn( 0 )
 					emote("cough")
 					return
 		if (disabilities & 8)
-			if ((prob(10) && paralysis <= 1 && r_Tourette < 1))
+			if ((prob(10) && paralysis <= 1))
 				Stun(10)
 				spawn( 0 )
 					switch(rand(1, 3))

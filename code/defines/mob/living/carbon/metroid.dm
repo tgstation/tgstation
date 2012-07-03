@@ -11,6 +11,7 @@
 
 	layer = 5
 
+	maxHealth = 150
 	health = 150
 	gender = NEUTER
 

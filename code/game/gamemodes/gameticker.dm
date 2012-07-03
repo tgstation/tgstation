@@ -162,15 +162,17 @@ var/global/datum/controller/gameticker/ticker
 				M.buckled = temp_buckle
 				if(M.client)
 					M.client.screen += cinematic
+
+				var/mob/living/L = M
 				switch(M.z)
 					if(0)	//inside a crate or something
-						var/turf/T = get_turf(M)
+						var/turf/T = get_turf(L)
 						if(T && T.z==1)				//we don't use M.death(0) because it calls a for(/mob) loop and
-							M.health = 0
-							M.stat = DEAD
+							L.health = 0
+							L.stat = DEAD
 					if(1)	//on a z-level 1 turf.
-						M.health = 0
-						M.stat = DEAD
+						L.health = 0
+						L.stat = DEAD
 
 		//Now animate the cinematic
 		switch(station_missed)

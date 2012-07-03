@@ -69,6 +69,10 @@
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
+	if(alien_egg_flag)
+		src << "The alien inside you forces you to breathe, preventing you from suiciding."
+		return
+
 	if(confirm == "Yes")
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while

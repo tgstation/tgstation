@@ -8,15 +8,20 @@
 	if(usr.stat)
 		usr << "Not when you're incapicated."
 		return
-	if(!usr.miming)
+	if(!ishuman(usr))
+		return
+
+	var/mob/living/carbon/human/H = usr
+
+	if(!H.miming)
 		usr << "You still haven't atoned for your speaking transgression. Wait."
 		return
-	usr.verbs -= /client/proc/mimewall
+	H.verbs -= /client/proc/mimewall
 	spawn(300)
-		usr.verbs += /client/proc/mimewall
-	for (var/mob/V in viewers(usr))
+		H.verbs += /client/proc/mimewall
+	for (var/mob/V in viewers(H))
 		if(V!=usr)
-			V.show_message("[usr] looks as if a wall is in front of them.", 3, "", 2)
+			V.show_message("[H] looks as if a wall is in front of them.", 3, "", 2)
 	usr << "You form a wall in front of yourself."
 	var/obj/effect/forcefield/F =  new /obj/effect/forcefield(locate(usr.x,usr.y,usr.z))
 	F.icon_state = "empty"
@@ -30,10 +35,15 @@
 	set category = "Mime"
 	set name = "Speech"
 	set desc = "Toggle your speech."
-	if(usr.miming)
-		usr.miming = 0
+	if(!ishuman(usr))
+		return
+
+	var/mob/living/carbon/human/H = usr
+
+	if(H.miming)
+		H.miming = 0
 	else
-		usr << "You'll have to wait if you want to atone for your sins."
+		H << "You'll have to wait if you want to atone for your sins."
 		spawn(3000)
-			usr.miming = 1
+			H.miming = 1
 	return

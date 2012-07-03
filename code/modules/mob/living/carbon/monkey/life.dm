@@ -82,17 +82,17 @@
 	proc/handle_disabilities()
 
 		if (disabilities & 2)
-			if ((prob(1) && paralysis < 10 && r_epil < 1))
+			if ((prob(1) && paralysis < 10))
 				src << "\red You have a seizure!"
 				Paralyse(10)
 		if (disabilities & 4)
-			if ((prob(5) && paralysis <= 1 && r_ch_cou < 1))
+			if ((prob(5) && paralysis <= 1))
 				drop_item()
 				spawn( 0 )
 					emote("cough")
 					return
 		if (disabilities & 8)
-			if ((prob(10) && paralysis <= 1 && r_Tourette < 1))
+			if ((prob(10) && paralysis <= 1))
 				Stun(10)
 				spawn( 0 )
 					emote("twitch")

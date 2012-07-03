@@ -46,7 +46,7 @@ KNIFE
 
 // ROLLING PIN
 
-/obj/item/weapon/kitchen/rollingpin/attack(mob/M as mob, mob/living/user as mob)
+/obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
@@ -57,23 +57,26 @@ KNIFE
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
-	if (M.stat < 2 && M.health < 50 && prob(90))
-		var/mob/H = M
-		// ******* Check
-		if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-			M << "\red The helmet protects you from being hit hard in the head!"
-			return
-		var/time = rand(2, 6)
-		if (prob(75))
-			M.Paralyse(time)
-		else
-			M.Stun(time)
-		if(M.stat != 2)	M.stat = 1
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall.", 2)
-	else
-		M << text("\red [] tried to knock you unconcious!",user)
-		M.eye_blurry += 3
+	var/t = user:zone_sel.selecting
+	if (t == "head")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (H.stat < 2 && H.health < 50 && prob(90))
+				// ******* Check
+				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
+					H << "\red The helmet protects you from being hit hard in the head!"
+					return
+				var/time = rand(2, 6)
+				if (prob(75))
+					H.Paralyse(time)
+				else
+					H.Stun(time)
+				if(H.stat != 2)	H.stat = 1
+				for(var/mob/O in viewers(H, null))
+					O.show_message(text("\red <B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.", 2)
+			else
+				H << text("\red [] tried to knock you unconscious!",user)
+				H.eye_blurry += 3
 
 	return
 

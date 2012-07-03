@@ -487,9 +487,6 @@
 //	..()
 	return
 
-/mob/proc/get_damage()
-	return health
-
 /mob/proc/UpdateLuminosity()
 	if(src.total_luminosity == src.last_luminosity)	return 0//nothing to do here
 	src.last_luminosity = src.total_luminosity
@@ -811,12 +808,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
 	return
-
-/mob/proc/getMaxHealth()
-	return maxHealth
-
-/mob/proc/setMaxHealth(var/newMaxHealth)
-	maxHealth = newMaxHealth
 
 /*
  * Sends resource files to client cache

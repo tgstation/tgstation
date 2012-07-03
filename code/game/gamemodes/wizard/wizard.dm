@@ -290,13 +290,3 @@ Made a proc so this is not repeated 14 (or more) times.*/
 		return 0
 	else
 		return 1
-
-/*Checks if the wizard is a mime and male/female.
-Outputs the appropriate voice if the user is not a mime.
-Made a proc here so it's not repeated several times.*/
-/mob/proc/spellvoice()
-//	if(!usr.miming)No longer necessary.
-//	if(usr.gender=="male")
-//		playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
-//	else
-//		playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
