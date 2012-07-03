@@ -57,8 +57,8 @@
 	color = "yellow"
 
 /obj/item/clothing/head/soft/grey
-	name = "blue cap"
-	desc = "It's a baseball hat in a tasteless grey colour."
+	name = "grey cap"
+	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
 	color = "grey"
 
