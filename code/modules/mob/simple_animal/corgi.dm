@@ -147,7 +147,7 @@
 						/obj/item/weapon/bedsheet,
 						/obj/item/clothing/head/helmet/space/santahat,
 						/obj/item/clothing/head/collectable/paper,
-						/obj/item/clothing/head/cargosoft
+						/obj/item/clothing/head/soft
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -216,7 +216,7 @@
 							emote_hear = list("barks christmas songs", "yaps")
 							desc = "He has a very shiny nose."
 							src.sd_SetLuminosity(6)
-						if(/obj/item/clothing/head/cargosoft)
+						if(/obj/item/clothing/head/soft)
 							name = "Corgi Tech [real_name]"
 							speak = list("Needs a stamp!", "Request DENIED!", "Fill these out in triplicate!")
 							desc = "The reason your yellow gloves have chew-marks."

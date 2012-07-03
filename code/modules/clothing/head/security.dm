@@ -24,7 +24,7 @@
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 
-/obj/item/clothing/head/secsoft
+/obj/item/clothing/head/soft/sec
 	name = "soft cap"
 	desc = "It's baseball hat in tasteful red colour."
 	icon_state = "secsoft"

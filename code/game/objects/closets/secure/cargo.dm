@@ -15,6 +15,7 @@
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/device/radio/headset/headset_cargo(src)
 		new /obj/item/clothing/gloves/black(src)
+		new /obj/item/clothing/head/soft(src)
 //		new /obj/item/weapon/cartridge/quartermaster(src)
 		return
 
@@ -40,4 +41,5 @@
 		new /obj/item/weapon/tank/emergency_oxygen(src)
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/clothing/glasses/meson(src)
+		new /obj/item/clothing/head/soft(src)
 		return

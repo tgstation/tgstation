@@ -16,10 +16,10 @@
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/head/secsoft(src)
-	new /obj/item/clothing/head/secsoft(src)
-	new /obj/item/clothing/head/secsoft(src)
-	new /obj/item/clothing/head/secsoft(src)
+	new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/clothing/head/soft/sec(src)
 	return
 
 /obj/structure/closet/wardrobe/pink/New()
