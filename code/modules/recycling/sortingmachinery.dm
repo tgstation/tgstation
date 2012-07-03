@@ -145,7 +145,7 @@
 	"Atmospherics", "Security", "HoS Office", "Medbay",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
-	"Bar", "Kitchen", "Hydroponics", "Janitor Closet",)
+	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
 	//The whole system for the sorttype var is determined based on the order of this list,
 	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
 
