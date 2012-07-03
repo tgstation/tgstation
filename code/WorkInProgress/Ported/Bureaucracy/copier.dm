@@ -134,6 +134,7 @@
 				P.name = template.name
 				P.desc = template.desc
 				P.icon = template.icon
+				P.img = template:img
 
 			sleep(30)
 			job_num_copies -= 1
