@@ -160,4 +160,5 @@ TICKLAG 0.9
 ## Defines if Tick Compensation is used.  It results in a minor slowdown of movement of all mobs, but attempts to result in a level movement speed across all ticks.  Recommended if tickrate is lowered.
 TICKCOMP 0
 
-
+## if uncommented this adds a random surname to a player's name if they only specify one name
+HUMANS_NEED_SURNAMES

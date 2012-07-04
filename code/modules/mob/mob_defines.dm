@@ -198,8 +198,7 @@
 
 	var/UI = 'screen1_Midnight.dmi' // For changing the UI from preferences
 
-	var/canstun = 1 	// determines if this mob can be stunned by things
-	var/canweaken = 1	// determines if this mob can be weakened/knocked down by things
+	var/status_flags = 255	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 	var/nopush = 0 //Can they be shoved?
 
 	var/area/lastarea = null

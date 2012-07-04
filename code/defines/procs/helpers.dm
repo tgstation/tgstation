@@ -146,46 +146,51 @@
 //removes doublespaces and double apostrophes
 //lowercases everything and capitalises the first letter of each word (or characters following an apostrophe)
 //prevents names which are too short, have too many space, or not enough normal letters
-/proc/reject_bad_name(var/t_in, var/minimum_words=2, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)
+/proc/reject_bad_name(var/t_in, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)
 	if(length(t_in) > max_length)	return			//name too long
 	var/number_of_alphanumeric	= 0
-	var/number_of_spaces		= 0
 	var/last_char_group			= 0
 	var/t_out = ""
+
 	for(var/i=1, i<=length(t_in), i++)
 		var/ascii_char = text2ascii(t_in,i)
 		switch(ascii_char)
-			if(65 to 90)				//Uppercase letters allowed
+			if(65 to 90)			//Uppercase Letters
+				t_out += ascii2text(ascii_char)
+				number_of_alphanumeric++
+				last_char_group = 4
+
+			if(97 to 122)			//Lowercase Letters
+				if(last_char_group<2)		t_out += ascii2text(ascii_char-32)	//Force uppercase first character
+				else						t_out += ascii2text(ascii_char)
+				number_of_alphanumeric++
+				last_char_group = 4
+
+			if(48 to 57)			//Numbers
+				if(!last_char_group)		continue	//suppress at start of string
+				if(!allow_numbers)			continue
+				t_out += ascii2text(ascii_char)
+				number_of_alphanumeric++
+				last_char_group = 3
+
+			if(39,45,46)			//Common name punctuation
+				t_out += ascii2text(ascii_char)
+				last_char_group = 2
+
+			if(126,124,64,58,35,36,37,38,42,43)			//Other crap that's harmless
+				if(!last_char_group)		continue	//suppress at start of string
+				if(!allow_numbers)			continue
+				t_out += ascii2text(ascii_char)
+				last_char_group = 2
+
+			if(32)					//Space
+				if(last_char_group <= 1)	continue	//suppress double-spaces and spaces at start of string
 				t_out += ascii2text(ascii_char)
 				last_char_group = 1
-				number_of_alphanumeric++
-			if(97 to 122)				//Lowercase letters allowed
-				switch(last_char_group)
-					if(3,4,0)			t_out += ascii2text(ascii_char-32)	//Force uppercase if preceeded by space or '
-					else				t_out += ascii2text(ascii_char)
-				last_char_group = 2
-				number_of_alphanumeric++
-			if(32)						//Space
-				switch(last_char_group)
-					if(3,0)				continue
-					else				t_out += ascii2text(ascii_char)		//so we don't get double-spaces
-				last_char_group = 3
-				number_of_spaces++
-			if(39,45,46)				//Apostrophe for dem Oirish names like "O'Neil", dashes for double-barreled names and periods for "James T. Kirk" and AI's
-				switch(last_char_group)
-					if(4,0)				continue
-					else				t_out += ascii2text(ascii_char)		//so we don't get double apostrophes or whatever
-				last_char_group = 4
-			if(48 to 57)
-				if(allow_numbers)
-					t_out += ascii2text(ascii_char)		//Allow numbers (i.e. for borgs andd AIs)
-					number_of_alphanumeric++
-					last_char_group = 5
 			else
 				return
-	if(last_char_group == 3)	number_of_spaces--
-	if(number_of_alphanumeric < 4)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
-	if(number_of_spaces > 4 || number_of_spaces < minimum_words-1)	return	//protects against single-word names like "Unknown" and names like "I ' M A D E R P Spaces Lul"
+
+	if(number_of_alphanumeric < 2)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
 	return t_out
 
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
@@ -739,7 +744,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(0)
 			if(1 to 5)	M << "<font color='red'>Invalid name. Your name should be at least 4 alphanumeric characters but under [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
 			else		break
-		newname = reject_bad_name(input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname),1,1)
+		newname = reject_bad_name(input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname),1)
 		iterations++
 
 	if((world.time-time_passed)>300)//If more than 20 game seconds passed.

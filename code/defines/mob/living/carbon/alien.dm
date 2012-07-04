@@ -16,5 +16,4 @@
 
 	var/move_delay_add = 0 // movement delay to add
 
-	canstun = 0
-	canweaken = 0 // aliens cannot be stunned or knocked down. Massive buff!
+	status_flags = CANPARALYSE

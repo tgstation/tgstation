@@ -1,5 +1,5 @@
-#define SAVEFILE_VERSION_MIN	5
-#define SAVEFILE_VERSION_MAX	6
+#define SAVEFILE_VERSION_MIN	7
+#define SAVEFILE_VERSION_MAX	7
 
 datum/preferences/proc/savefile_path(mob/user)
 	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences.sav"

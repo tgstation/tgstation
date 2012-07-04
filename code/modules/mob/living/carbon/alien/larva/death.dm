@@ -4,12 +4,7 @@
 	if(src.healths)
 		src.healths.icon_state = "health6"
 
-	/*
-	if(istype(src,/mob/living/carbon/alien/larva/metroid))
-		src.icon_state = "metroid_dead"
-	*/
-	else
-		src.icon_state = "larva_l"
+	src.icon_state = "larva_l"
 	src.stat = 2
 
 	if (!gibbed)

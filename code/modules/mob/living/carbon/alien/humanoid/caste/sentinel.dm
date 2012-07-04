@@ -5,7 +5,7 @@
 	if(name == "alien sentinel")
 		name = text("alien sentinel ([rand(1, 1000)])")
 	real_name = name
-	verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
+	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
 
 /mob/living/carbon/alien/humanoid/sentinel
 
@@ -50,43 +50,3 @@
 			else
 				adjustBruteLoss(-10)
 				adjustFireLoss(-10)
-
-//Sentinel verbs
-
-/mob/living/carbon/alien/humanoid/sentinel/verb/spit(mob/target as mob in oview())
-	set name = "Spit Neurotoxin (50)"
-	set desc = "Spits neurotoxin at someone, paralyzing them for a short time."
-	set category = "Alien"
-
-	if(powerc(50))
-		if(isalien(target))
-			src << "\green Your allies are not a valid target."
-			return
-		adjustToxLoss(-50)
-		src << "\green You spit neurotoxin at [target]."
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << "\red [src] spits neurotoxin at [target]!"
-		//I'm not motivated enough to revise this. Prjectile code in general needs update.
-		var/turf/T = loc
-		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
-
-		if(!U || !T)
-			return
-		while(U && !istype(U,/turf))
-			U = U.loc
-		if(!istype(T, /turf))
-			return
-		if (U == T)
-			usr.bullet_act(src, get_organ_target())
-			return
-		if(!istype(U, /turf))
-			return
-
-		var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(usr.loc)
-
-		A.current = U
-		A.yo = U.y - T.y
-		A.xo = U.x - T.x
-		A.process()
-	return

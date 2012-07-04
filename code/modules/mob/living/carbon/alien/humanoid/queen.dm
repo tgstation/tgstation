@@ -2,13 +2,16 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-//there should only be one queen
-//	if(src.name == "alien")
-//		src.name = text("alien ([rand(1, 1000)])")
-	src.real_name = src.name
-	src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
-	src.verbs += /mob/living/carbon/alien/humanoid/sentinel/verb/spit
-	src.verbs -= /mob/living/carbon/alien/humanoid/verb/ventcrawl
+
+	//there should only be one queen
+	for(var/mob/living/carbon/alien/humanoid/queen/Q in world)
+		if(Q.stat != DEAD)
+			name = "alien princess ([rand(1, 1000)])"	//if this is too cutesy feel free to change it/remove it.
+			break
+
+	real_name = src.name
+	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
+	verbs -= /mob/living/carbon/alien/humanoid/verb/ventcrawl
 
 
 /mob/living/carbon/alien/humanoid/queen
@@ -59,7 +62,7 @@
 /mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
 
 	set name = "Lay Egg (200)"
-	set desc = "Plants an egg"
+	set desc = "Lay an egg to produce huggers to impregnate prey with."
 	set category = "Alien"
 
 	if(locate(/obj/effect/alien/egg) in get_turf(src))

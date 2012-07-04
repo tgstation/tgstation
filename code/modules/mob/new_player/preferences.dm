@@ -445,7 +445,7 @@ datum/preferences
 
 			switch(link_tags["real_name"])
 				if("input")
-					new_name = reject_bad_name( input(user, "Please select a name:", "Character Generation")  as text|null, 2 )
+					new_name = reject_bad_name( input(user, "Please select a name:", "Character Generation")  as text|null )
 
 				if("random")
 					randomize_name()
@@ -453,7 +453,7 @@ datum/preferences
 			if(new_name)
 				real_name = new_name
 			else
-				user << "<font color='red'>Invalid name. Your name should be at least 4 letters and two words but it should be under [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+				user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 		if(link_tags["age"])
 			switch(link_tags["age"])
@@ -707,6 +707,15 @@ datum/preferences
 	proc/copy_to(mob/living/carbon/human/character, safety = 0)
 		if(be_random_name)
 			randomize_name()
+
+		if(config.humans_need_surnames)
+			var/firstspace = findtext(real_name, " ")
+			var/name_length = length(real_name)
+			if(!firstspace)	//we need a surname
+				real_name += " [pick(last_names)]"
+			else if(firstspace == name_length)
+				real_name += "[pick(last_names)]"
+
 		character.real_name = real_name
 		character.original_name = real_name //Original name is only used in ghost chat! It is not to be edited by anything!
 

@@ -31,8 +31,7 @@
 	nopush = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
-	canstun = 0
-	canweaken = 0
+	status_flags = CANPARALYSE
 
 
 	Life()
@@ -168,8 +167,7 @@
 	speed = -1
 	a_intent = "harm"
 	stop_automated_movement = 1
-	canstun = 0
-	canweaken = 0
+	status_flags = CANPARALYSE
 	see_in_dark = 7
 
 	Life()
@@ -301,8 +299,7 @@
 	nopush = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
-	canstun = 0
-	canweaken = 0
+	status_flags = CANPARALYSE
 
 	Life()
 		..()

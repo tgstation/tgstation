@@ -82,43 +82,23 @@ I kind of like the right click only--the window version can get a little confusi
 	var/obj/effect/alien/acid/A = new(src.loc)
 	A.target = src
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\green <B>[user] vomits globs of vile stuff all over [src]!</B>"), 1)
+		M.show_message(text("\green <B>[user] vomits globs of vile stuff all over [src]. It begins to sizzle and melt under the bubbling mess of acid!</B>"), 1)
 	A.tick()
 
-/mob/living/carbon/alien/humanoid/proc/corrode_target() //Aliens only see items on the list of objects that they can actually spit on./N
-	set name = "Spit Corrosive Acid (200)"
+/mob/living/carbon/alien/humanoid/proc/corrosive_acid(obj/O as obj in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
+	set name = "Corrossive Acid (200)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
 
-	if(powerc(200))//Check 1.
-		var/list/xeno_target
-		xeno_target = list("Abort Command")
-		for(var/obj/O in view(1))
-			if(!O.unacidable)
-				xeno_target.Add(O)
-		var/obj/A
-		A = input("Corrode which target?", "Targets", A) in xeno_target
-		if(!A == "Abort Command")
-			if(powerc(200))//Check 2.
-				if(A in view(1))//Check 3.
-					adjustToxLoss(-200)
-					A.acid(src)
-				else
-					src << "\green Target is too far away."
-	return
-
-/mob/living/carbon/alien/humanoid/verb/corrode(obj/O as anything in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
-	set name = "Corrode with Acid (200)"
-	set desc = "Drench an object in acid, destroying it over time."
-	set category = "Alien"
-
-	if(istype(O, /obj))
-		if(powerc(200))
-			if(!O.unacidable)
+	if(powerc(200))
+		if(O in oview(1))
+			if(O.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
+				src << "\green You cannot dissolve this object."
+			else
 				adjustToxLoss(-200)
-				O.acid()
-			else//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-				src << "\green You cannot destroy this object."
+				O.acid(src)
+		else
+			src << "\green Target is too far away."
 	return
 
 /mob/living/carbon/alien/humanoid/verb/ventcrawl() // -- TLE
@@ -194,4 +174,63 @@ I kind of like the right click only--the window version can get a little confusi
 				src << "\green This vent is not connected to anything."
 		else
 			src << "\green You must be standing on or beside an open air vent to enter it."
+	return
+
+/mob/living/carbon/alien/humanoid/proc/neurotoxin(mob/target as mob in oview())
+	set name = "Spit Neurotoxin (50)"
+	set desc = "Spits neurotoxin at someone, paralyzing them for a short time."
+	set category = "Alien"
+
+	if(powerc(50))
+		if(isalien(target))
+			src << "\green Your allies are not a valid target."
+			return
+		adjustToxLoss(-50)
+		src << "\green You spit neurotoxin at [target]."
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				O << "\red [src] spits neurotoxin at [target]!"
+		//I'm not motivated enough to revise this. Prjectile code in general needs update.
+		var/turf/T = loc
+		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+
+		if(!U || !T)
+			return
+		while(U && !istype(U,/turf))
+			U = U.loc
+		if(!istype(T, /turf))
+			return
+		if (U == T)
+			usr.bullet_act(src, get_organ_target())
+			return
+		if(!istype(U, /turf))
+			return
+
+		var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(usr.loc)
+
+		A.current = U
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+		A.process()
+	return
+
+/mob/living/carbon/alien/humanoid/proc/resin() // -- TLE
+	set name = "Secrete Resin (100)"
+	set desc = "Secrete tough malleable resin."
+	set category = "Alien"
+
+	if(powerc(100))
+		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
+		if(!choice || !powerc(100))	return
+		adjustToxLoss(-100)
+		src << "\green You shape a [choice]."
+		for(var/mob/O in viewers(src, null))
+			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
+		switch(choice)
+			if("resin wall")
+				new /obj/effect/alien/resin/wall(loc)
+			if("resin membrane")
+				new /obj/effect/alien/resin/membrane(loc)
+			if("resin nest")
+				new /obj/structure/stool/bed/nest(loc)
 	return

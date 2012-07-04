@@ -686,10 +686,16 @@
 	var/mob/living/buckled_mob
 
 /obj/structure/stool/bed/alien
-	name = "Resting contraption"
+	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
 
+/obj/structure/stool/bed/nest
+	name = "alien nest"
+	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
+	icon = 'alien.dmi'
+	icon_state = "nest"
+	var/health = 100
 
 /obj/structure/stool/bed/chair	//YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
 	name = "chair"

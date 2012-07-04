@@ -4,6 +4,7 @@
 	icon = 'mob.dmi'
 	icon_state = "ghost"
 	layer = 4
+	stat = DEAD
 	density = 0
 	canmove = 0
 	blinded = 0

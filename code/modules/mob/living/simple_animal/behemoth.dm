@@ -28,8 +28,7 @@
 	nopush = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
-	canstun = 0
-	canweaken = 0
+	status_flags = CANPARALYSE
 	var/energy = 0
 	var/max_energy = 1000
 

@@ -737,52 +737,51 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 
 /mob/proc/Stun(amount)
-	if(canstun)
+	if(status_flags & CANSTUN)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-	else
-		if(istype(src, /mob/living/carbon/alien))	// add some movement delay
-			var/mob/living/carbon/alien/Alien = src
-			Alien.move_delay_add = min(Alien.move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
 
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(canstun)
+	if(status_flags & CANSTUN)
 		stunned = max(amount,0)
 	return
 
 /mob/proc/AdjustStunned(amount)
-	if(canstun)
+	if(status_flags & CANSTUN)
 		stunned = max(stunned + amount,0)
 	return
 
 /mob/proc/Weaken(amount)
-	if(canweaken)
+	if(status_flags & CANWEAKEN)
 		weakened = max(max(weakened,amount),0)
 		update_canmove()	//updates lying, canmove and icons
 	return
 
 /mob/proc/SetWeakened(amount)
-	if(canweaken)
+	if(status_flags & CANWEAKEN)
 		weakened = max(amount,0)
 		update_canmove()	//updates lying, canmove and icons
 	return
 
 /mob/proc/AdjustWeakened(amount)
-	if(canweaken)
+	if(status_flags & CANWEAKEN)
 		weakened = max(weakened + amount,0)
 		update_canmove()	//updates lying, canmove and icons
 	return
 
 /mob/proc/Paralyse(amount)
-	paralysis = max(max(paralysis,amount),0)
+	if(status_flags & CANPARALYSE)
+		paralysis = max(max(paralysis,amount),0)
 	return
 
 /mob/proc/SetParalysis(amount)
-	paralysis = max(amount,0)
+	if(status_flags & CANPARALYSE)
+		paralysis = max(amount,0)
 	return
 
 /mob/proc/AdjustParalysis(amount)
-	paralysis = max(paralysis + amount,0)
+	if(status_flags & CANPARALYSE)
+		paralysis = max(paralysis + amount,0)
 	return
 
 /mob/proc/Sleeping(amount)

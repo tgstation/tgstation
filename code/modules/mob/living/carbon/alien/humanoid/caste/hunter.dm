@@ -5,7 +5,6 @@
 	if(name == "alien hunter")
 		name = text("alien hunter ([rand(1, 1000)])")
 	real_name = name
-	verbs -= /mob/living/carbon/alien/humanoid/verb/corrode
 
 /mob/living/carbon/alien/humanoid/hunter
 

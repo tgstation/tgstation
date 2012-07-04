@@ -33,6 +33,10 @@
 			if (!muzzled)
 				message = "<B>The [src.name]</B> roars."
 				m_type = 2
+		if("hiss")
+			if(!muzzled)
+				message = "<B>The [src.name]</B> hisses."
+				m_type = 2
 		if("tail")
 			message = "<B>The [src.name]</B> waves its tail."
 			m_type = 1

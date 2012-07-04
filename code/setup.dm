@@ -314,7 +314,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 //Bluh shields
 
 
-//Damage things
+//Damage things	//TODO: merge these down to reduce on defines >_>
 #define BRUTE		"brute"
 #define BURN		"fire"
 #define TOX			"tox"
@@ -329,6 +329,11 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define STUTTER		"stutter"
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
+
+//Bitflags defining which status effects can be inflicted on a mob
+#define CANSTUN		1
+#define CANWEAKEN	2
+#define CANPARALYSE	4
 
 var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg','hiss5.ogg','hiss6.ogg','Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg','Welder.ogg','Welder2.ogg','airlock.ogg','clownstep1.ogg','clownstep2.ogg')
 
