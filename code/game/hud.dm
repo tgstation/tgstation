@@ -194,6 +194,9 @@ obj/hud/New(var/type = 0)
 	else if(isrobot(mymob))
 		robot_hud()
 
+	else if(isamorph(mymob))
+		amorph_hud()
+
 //	else if(ishivebot(mymob))
 //		hivebot_hud()
 
