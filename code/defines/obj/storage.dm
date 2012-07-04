@@ -88,7 +88,7 @@
 /obj/item/weapon/storage/pillbottlebox
 	name = "box of pill bottles"
 	desc = "It has pictures of pill bottles on its front."
-	icon_state = "box"
+	icon_state = "pillbox"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
@@ -292,12 +292,19 @@
 
 	update_icon()
 		for(var/obj/item/weapon/card/id/ID in contents)
-			if(ID.icon_state == "gold")
-				icon_state = "walletid_gold"
-				return
-			else if(ID.icon_state == "id")
-				icon_state = "walletid"
-				return
+			switch(ID.icon_state)
+				if("id")
+					icon_state = "walletid"
+					return
+				if("silver")
+					icon_state = "walletid_silver"
+					return
+				if("gold")
+					icon_state = "walletid_gold"
+					return
+				if("centcom")
+					icon_state = "walletid_centcom"
+					return
 		icon_state = "wallet"
 
 
