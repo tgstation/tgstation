@@ -55,6 +55,10 @@
 	if(!text)
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
+	if (is_speaking_soghun)
+		return "hisses, \"[text]\"";
+	if (is_speaking_skrell)
+		return "warbles, \"[text]\"";
 	if (src.disease_symptoms & DISEASE_HOARSE)
 		return "rasps, \"[text]\"";
 	if (src.stuttering)
@@ -67,10 +71,6 @@
 		return "asks, \"[text]\"";
 	if (ending == "!")
 		return "exclaims, \"[text]\"";
-	if (is_speaking_soghun)
-		return "hisses, \"[text]\"";
-	if (is_speaking_skrell)
-		return "warbles, \"[text]\"";
 
 	return "says, \"[text]\"";
 

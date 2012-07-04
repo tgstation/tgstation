@@ -1242,7 +1242,7 @@ CIRCULAR SAW
 				if(istype(M, /mob/living/carbon/human))
 					var/datum/organ/external/affecting = M:get_organ("head")
 					affecting.take_damage(7)
-					affecting.status |= OPEN
+					affecting.open = 1
 				else
 					M.take_organ_damage(7)
 
@@ -1454,7 +1454,8 @@ CIRCULAR SAW
 			user << "\red You mess up!"
 			S.take_damage(15)
 
-		S.status |= OPEN|BLEEDING
+		S.status |= BLEEDING
+		S.open = 1
 		if(S.display_name == "chest")
 			H:embryo_op_stage = 1.0
 		if(S.display_name == "groin")

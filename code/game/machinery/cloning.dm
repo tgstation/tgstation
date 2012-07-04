@@ -128,7 +128,10 @@
 	spawn(30)
 		src.eject_wait = 0
 
-	src.occupant = new /mob/living/carbon/human(src)
+	if(istajaran(occupant))
+		src.occupant = new /mob/living/carbon/human/tajaran(src)
+	else
+		src.occupant = new /mob/living/carbon/human(src)
 
 	occupant:UI = UI // set interface preference
 

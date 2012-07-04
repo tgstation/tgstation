@@ -164,7 +164,7 @@
 							if ("7")
 								//feedback_add_details("wizard_spell_learned","MT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 								usr.spell_list += new /obj/effect/proc_holder/spell/targeted/mind_transfer(usr)
-								src.temp = "This spell allows the user to switch bodies with a target. Careful to not lose your memory in the process."
+								src.temp = "This spell allows the user to switch bodies with a target, and requires full wizard garb. Careful to not lose your memory in the process."
 							if ("8")
 								//feedback_add_details("wizard_spell_learned","FW") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 								usr.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(usr)

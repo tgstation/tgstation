@@ -368,7 +368,7 @@
 /obj/item/weapon/storage/syringes
 	name = "syringes"
 	desc = "A box full of syringes."
-	desc = "A biohazard alert warning is printed on the box"
+	desc = "A biohazard alert warning is printed on the box."
 	icon_state = "syringe"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
@@ -442,7 +442,7 @@
 
 /obj/item/weapon/storage/injectbox
 	name = "DNA-Injectors"
-	desc = "This box contains injectors it seems."
+	desc = "This box contains injectors."
 	icon_state = "box"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap

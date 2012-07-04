@@ -9,7 +9,7 @@
 		s["enter"] = enter_allowed
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
-		s["host"] = host ? host : null
+		s["host"] = config.hostedby
 		s["players"] = list()
 		s["admins"] = 0
 		var/n = 0

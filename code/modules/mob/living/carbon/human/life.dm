@@ -947,7 +947,7 @@
 								emote("scream")
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-						if(!E.status & SPLINTED)
+						if(!(E.status & SPLINTED))
 							leg_tally--									// let it fail even if just foot&leg
 			// can't stand
 			if(leg_tally == 0 && !paralysis && !(lying || resting))
@@ -1048,11 +1048,11 @@
 						stat = 1
 
 					if (sleeping > 0)
-						if(stat == 0)
-							// BUG: this doesn't seem to happen ever.. probably when you hit sleep willingly,
-							// it automatically adjusts your stat without calling this proc
+						if(stat == 0 && !resting)
+						// BUG: this doesn't seem to happen ever.. probably when you hit sleep willingly,
+						// it automatically adjusts your stat without calling this proc
 
-							// show them a message so they know what's going on
+						// show them a message so they know what's going on
 							src << "\blue You feel very drowsy.. Your eyelids become heavy..."
 
 						handle_dreams()
