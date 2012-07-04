@@ -4,6 +4,7 @@
 	see_invisible = 15
 	see_in_dark = 100
 	verbs += /mob/dead/observer/proc/dead_tele
+	stat = DEAD
 
 	if(body)
 		var/turf/location = get_turf(body)//Where is the mob located?

@@ -950,7 +950,7 @@ var/list/sacrificed = list()
 				usr.say("Fuu ma'jin!")
 				for(var/mob/living/L in viewers(src))
 
-					if(iscarbon(L) && !iscultist(L))
+					if(iscarbon(L))
 						var/mob/living/carbon/C = L
 						flick("e_flash", C.flash)
 						if(C.stuttering < 1 && (!(HULK in C.mutations)))

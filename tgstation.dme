@@ -573,6 +573,7 @@
 #include "code\game\mecha\combat\marauder.dm"
 #include "code\game\mecha\combat\phazon.dm"
 #include "code\game\mecha\equipment\mecha_equipment.dm"
+#include "code\game\mecha\equipment\tools\medical_tools.dm"
 #include "code\game\mecha\equipment\tools\tools.dm"
 #include "code\game\mecha\equipment\weapons\weapons.dm"
 #include "code\game\mecha\medical\medical.dm"

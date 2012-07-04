@@ -12,6 +12,27 @@
 	var/enemy_mp = 20
 	var/gameover = 0
 	var/blocked = 0 //Player cannot attack/heal while set
+	var/list/prizes = list(	/obj/item/toy/snappopbox						= 2,
+							/obj/item/toy/blink								= 2,
+							/obj/item/clothing/under/syndicate/tacticool	= 2,
+							/obj/item/toy/sword								= 2,
+							/obj/item/toy/gun								= 2,
+							/obj/item/toy/crossbow							= 2,
+							/obj/item/clothing/suit/syndicatefake			= 2,
+							/obj/item/weapon/storage/crayonbox				= 2,
+							/obj/item/toy/spinningtoy						= 2,
+							/obj/item/toy/prize/ripley						= 1,
+							/obj/item/toy/prize/fireripley					= 1,
+							/obj/item/toy/prize/deathripley					= 1,
+							/obj/item/toy/prize/gygax						= 1,
+							/obj/item/toy/prize/durand						= 1,
+							/obj/item/toy/prize/honk						= 1,
+							/obj/item/toy/prize/marauder					= 1,
+							/obj/item/toy/prize/seraph						= 1,
+							/obj/item/toy/prize/mauler						= 1,
+							/obj/item/toy/prize/odysseus					= 1,
+							/obj/item/toy/prize/phazon						= 1
+							)
 
 /obj/machinery/computer/arcade
 	var/turtle = 0
@@ -139,30 +160,15 @@
 			emagged = 0
 
 		else if(!contents.len)
-			var/prizeselect = pick(1,2,3,4,5,6,7,8,9)
-			switch(prizeselect)
-				if(1)
-					new /obj/item/toy/snappopbox(src.loc)
-				if(2)
-					new /obj/item/toy/blink(src.loc)
-				if(3)
-					new /obj/item/clothing/under/syndicate/tacticool(src.loc)
-				if(4)
-					new /obj/item/toy/sword(src.loc)
-				if(5)
-					new /obj/item/toy/ammo/gun(src.loc)
-					new /obj/item/toy/gun(src.loc)
-				if(6)
-					new /obj/item/toy/crossbow(src.loc)
-				if(7)
-					new /obj/item/clothing/suit/syndicatefake(src.loc)
-					new /obj/item/clothing/head/syndicatefake(src.loc)
-				if(8)
-					new /obj/item/weapon/storage/crayonbox(src.loc)
-				if(9)
-					new /obj/item/toy/spinningtoy(src.loc)
-			//	if(10)									//Commented out on Urist-chan's orders~
-			//		new /obj/item/toy/balloon(src.loc)	//Until it gets a better sprite~
+			var/prizeselect = pickweight(prizes)
+			new prizeselect(src.loc)
+
+			if(istype(prizeselect, /obj/item/toy/gun)) //Ammo comes with the gun
+				new /obj/item/toy/ammo/gun(src.loc)
+
+			else if(istype(prizeselect, /obj/item/clothing/suit/syndicatefake)) //Helmet is part of the suit
+				new	/obj/item/clothing/head/syndicatefake(src.loc)
+
 		else
 			var/atom/movable/Prize = pick(contents)
 			Prize.loc = src.loc

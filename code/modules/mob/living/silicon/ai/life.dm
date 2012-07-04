@@ -48,10 +48,8 @@
 							blind = 1
 
 				if (!blind)	//lol? if(!blind)	#if(src.blind.layer)    <--something here is clearly wrong :P
-							//I'll get back to this when I find out  how this is -supposed- to work ~Carn
+							//I'll get back to this when I find out  how this is -supposed- to work ~Carn //removed this shit since it was confusing as all hell --39kk9t
 					//stage = 4.5
-//					if (src.blind.layer!=0)
-//						src.blind.layer = 0
 					src.sight |= SEE_TURFS
 					src.sight |= SEE_MOBS
 					src.sight |= SEE_OBJS
@@ -66,6 +64,7 @@
 					if (src:aiRestorePowerRoutine==2)
 						src << "Alert cancelled. Power has been restored without our assistance."
 						src:aiRestorePowerRoutine = 0
+						src.blind.layer = 0
 						spawn(1)
 							while (src.getOxyLoss()>0 && stat!=2)
 								sleep(50)
@@ -75,6 +74,7 @@
 					else if (src:aiRestorePowerRoutine==3)
 						src << "Alert cancelled. Power has been restored."
 						src:aiRestorePowerRoutine = 0
+						src.blind.layer = 0
 						spawn(1)
 							while (src.getOxyLoss()>0 && stat!=2)
 								sleep(50)
@@ -115,6 +115,7 @@
 									if (!istype(T, /turf/space))
 										src << "Alert cancelled. Power has been restored without our assistance."
 										src:aiRestorePowerRoutine = 0
+										src.blind.layer = 0
 										return
 								src << "Fault confirmed: missing external power. Shutting down main control system to save power."
 								sleep(20)
@@ -134,97 +135,40 @@
 											theAPC = something
 											break
 */
-								for (var/obj/machinery/power/apc/APC in loc)
-									if (!(APC.stat & BROKEN))
-										theAPC = APC
-										break
-								if (theAPC==null)
-									src << "Unable to locate APC!"
-									src:aiRestorePowerRoutine = 2
-									return
-								if (loc.master.power_equip)
-									if (!istype(T, /turf/space))
-										src << "Alert cancelled. Power has been restored without our assistance."
-										src:aiRestorePowerRoutine = 0
-										return
-								src << "APC located. Optimizing route to APC to avoid needless power waste."
-								sleep(50)
-								theAPC = null
-/*
-								for (var/something in loc)
-									if (istype(something, /obj/machinery/power/apc))
-										if (!(something:stat & BROKEN))
-											theAPC = something
+								var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
+								for (PRP=1, PRP<=4, PRP++)
+									for (var/obj/machinery/power/apc/APC in loc)
+										if (!(APC.stat & BROKEN))
+											theAPC = APC
 											break
-*/
-								for (var/obj/machinery/power/apc/APC in loc)
-									if (!(APC.stat & BROKEN))
-										theAPC = APC
-										break
-								if (theAPC==null)
-									src << "APC connection lost!"
-									src:aiRestorePowerRoutine = 2
-									return
-								if (loc.master.power_equip)
-									if (!istype(T, /turf/space))
-										src << "Alert cancelled. Power has been restored without our assistance."
-										src:aiRestorePowerRoutine = 0
+									if (!theAPC)
+										switch(PRP)
+											if (1) src << "Unable to locate APC!"
+											else src << "Lost connection with the APC!"
+										src:aiRestorePowerRoutine = 2
 										return
-								src << "Best route identified. Hacking offline APC power port."
-								sleep(50)
-								theAPC = null
-/*
-								for (var/something in loc)
-									if (istype(something, /obj/machinery/power/apc))
-										if (!(something:stat & BROKEN))
-											theAPC = something
-											break
-*/
-								for (var/obj/machinery/power/apc/APC in loc)
-									if (!(APC.stat & BROKEN))
-										theAPC = APC
-										break
-								if (theAPC==null)
-									src << "APC connection lost!"
-									src:aiRestorePowerRoutine = 2
-									return
-								if (loc.master.power_equip)
-									if (!istype(T, /turf/space))
-										src << "Alert cancelled. Power has been restored without our assistance."
-										src:aiRestorePowerRoutine = 0
-										return
-								src << "Power port upload access confirmed. Loading control program into APC power port software."
-								sleep(50)
-								theAPC = null
-/*
-								for (var/something in loc)
-									if (istype(something, /obj/machinery/power/apc))
-										if (!(something:stat & BROKEN))
-											theAPC = something
-											break
-*/
-								for (var/obj/machinery/power/apc/APC in loc)
-									if (!(APC.stat & BROKEN))
-										theAPC = APC
-										break
-								if (theAPC==null)
-									src << "APC connection lost!"
-									src:aiRestorePowerRoutine = 2
-									return
-								if (loc.master.power_equip)
-									if (!istype(T, /turf/space))
-										src << "Alert cancelled. Power has been restored without our assistance."
-										src:aiRestorePowerRoutine = 0
-										return
-								src << "Transfer complete. Forcing APC to execute program."
-								sleep(50)
-								src << "Receiving control information from APC."
-								sleep(2)
-								//bring up APC dialog
-								theAPC.attack_ai(src)
-								src:aiRestorePowerRoutine = 3
-								src << "Your laws have been reset:"
-								src.show_laws()
+									if (loc.master.power_equip)
+										if (!istype(T, /turf/space))
+											src << "Alert cancelled. Power has been restored without our assistance."
+											src:aiRestorePowerRoutine = 0
+											src.blind.layer = 0 //This, too, is a fix to issue 603
+											return
+									switch(PRP)
+										if (1) src << "APC located. Optimizing route to APC to avoid needless power waste."
+										if (2) src << "Best route identified. Hacking offline APC power port."
+										if (3) src << "Power port upload access confirmed. Loading control program into APC power port software."
+										if (4)
+											src << "Transfer complete. Forcing APC to execute program."
+											sleep(50)
+											src << "Receiving control information from APC."
+											sleep(2)
+											//bring up APC dialog
+											theAPC.attack_ai(src)
+											src:aiRestorePowerRoutine = 3
+											src << "Your laws have been reset:"
+											src.show_laws()
+									sleep(50)
+									theAPC = null
 
 /mob/living/silicon/ai/updatehealth()
 	if (src.nodamage == 0)
