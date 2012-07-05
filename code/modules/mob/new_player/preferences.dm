@@ -951,23 +951,33 @@ datum/preferences
 			if(!limb_name) return
 
 			var/limb = null
+			var/second_limb = null // if you try to change the arm, the hand should also change
+			var/third_limb = null  // if you try to unchange the hand, the arm should also change
 			switch(limb_name)
 				if("Left Leg")
 					limb = "l_leg"
+					second_limb = "l_foot"
 				if("Right Leg")
 					limb = "r_leg"
+					second_limb = "r_foot"
 				if("Left Arm")
 					limb = "l_arm"
+					second_limb = "l_hand"
 				if("Right Arm")
 					limb = "r_arm"
+					second_limb = "r_hand"
 				if("Left Foot")
 					limb = "l_foot"
+					third_limb = "l_leg"
 				if("Right Foot")
 					limb = "r_foot"
+					third_limb = "r_leg"
 				if("Left Hand")
 					limb = "l_hand"
+					third_limb = "l_arm"
 				if("Right Hand")
 					limb = "r_hand"
+					third_limb = "r_arm"
 
 			var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
 			if(!new_state) return
@@ -975,10 +985,16 @@ datum/preferences
 			switch(new_state)
 				if("Normal")
 					organ_data[limb] = null
+					if(third_limb)
+						organ_data[third_limb] = null
 				if("Amputated")
 					organ_data[limb] = "amputated"
+					if(second_limb)
+						organ_data[second_limb] = "amputated"
 				if("Prothesis")
 					organ_data[limb] = "cyborg"
+					if(second_limb)
+						organ_data[second_limb] = "cyborg"
 
 		if(link_tags["UI"])
 			switch(UI_style)
@@ -1208,6 +1224,7 @@ datum/preferences
 			var/status = organ_data[name]
 			if(status == "amputated")
 				O.status |= DESTROYED
+				O.destspawn = 1
 			else if(status == "cyborg")
 				O.status |= ROBOT
 
