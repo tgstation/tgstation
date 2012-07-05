@@ -226,6 +226,11 @@ datum/preferences
 			if(organ_data["head"] != "amputated")
 				preview_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY)
 
+			for(var/name in list("l_arm","r_arm","l_leg","r_leg","l_foot","r_foot","l_hand","r_hand"))
+				// make sure the organ is added to the list so it's drawn
+				if(organ_data[name] == null)
+					organ_data[name] = null
+
 			for(var/name in organ_data)
 				if(organ_data[name] == "amputated") continue
 
