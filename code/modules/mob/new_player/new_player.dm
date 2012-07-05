@@ -390,3 +390,7 @@
 	proc/close_spawn_windows()
 		src << browse(null, "window=latechoices") //closes late choices window
 		src << browse(null, "window=playersetup") //closes the player setup window
+
+	verb/ShowPreferences()
+		set category = "OOC"
+		preferences.ShowChoices(src)
