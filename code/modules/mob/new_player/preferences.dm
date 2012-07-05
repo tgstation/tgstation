@@ -125,6 +125,10 @@ datum/preferences
 	var/skill_specialization = null
 	var/list/skills = list() // skills can range from 0 to 3
 
+	// maps each organ to either null(intact), "cyborg" or "amputated"
+	// will probably not be able to do this for head and torso ;)
+	var/list/organ_data = list()
+
 		// OOC Metadata:
 	var/metadata = ""
 
@@ -279,7 +283,34 @@ datum/preferences
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-s_tone + 35]/220<br></a>"
 
-	//	if(!IsGuestKey(user.key))//Seeing as it doesn't do anything, it may as well not show up.
+		dat += "Limbs: <a href='byond://?src=\ref[user];preferences=1;limbs=input'>Adjust Limbs</a><br>"
+		for(var/name in organ_data)
+			var/status = organ_data[name]
+			var/organ_name = null
+			switch(name)
+				if("l_arm")
+					organ_name = "left arm"
+				if("r_arm")
+					organ_name = "right arm"
+				if("l_leg")
+					organ_name = "left leg"
+				if("r_leg")
+					organ_name = "right leg"
+				if("l_foot")
+					organ_name = "left foot"
+				if("r_foot")
+					organ_name = "right foot"
+				if("l_hand")
+					organ_name = "left hand"
+				if("r_hand")
+					organ_name = "right hand"
+
+			if(status == "cyborg")
+				dat += "\tRobotical [organ_name] prothesis<br>"
+			if(status == "amputated")
+				dat += "\tAmputated [organ_name]<br>"
+		dat+="<br>"
+
 		if(gender == MALE)
 			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=inputmale\"><b>[underwear_m[underwear]]</b></a><br>"
 		else
@@ -915,6 +946,40 @@ datum/preferences
 				if(species == "Skrell")
 					hair_style = new/datum/sprite_accessory/hair/alien/skrell/male/tentacle
 
+		if(link_tags["limbs"])
+			var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
+			if(!limb_name) return
+
+			var/limb = null
+			switch(limb_name)
+				if("Left Leg")
+					limb = "l_leg"
+				if("Right Leg")
+					limb = "r_leg"
+				if("Left Arm")
+					limb = "l_arm"
+				if("Right Arm")
+					limb = "r_arm"
+				if("Left Foot")
+					limb = "l_foot"
+				if("Right Foot")
+					limb = "r_foot"
+				if("Left Hand")
+					limb = "l_hand"
+				if("Right Hand")
+					limb = "r_hand"
+
+			var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
+			if(!new_state) return
+
+			switch(new_state)
+				if("Normal")
+					organ_data[limb] = null
+				if("Amputated")
+					organ_data[limb] = "amputated"
+				if("Prothesis")
+					organ_data[limb] = "cyborg"
+
 		if(link_tags["UI"])
 			switch(UI_style)
 				if("Midnight")
@@ -1134,6 +1199,17 @@ datum/preferences
 
 		character.h_style = h_style
 		character.f_style = f_style
+
+		// Destroy/cyborgize organs
+		for(var/name in organ_data)
+			var/datum/organ/external/O = character.organs[name]
+			if(!O) continue
+
+			var/status = organ_data[name]
+			if(status == "amputated")
+				del O
+			else if(status == "cyborg")
+				O.status |= ROBOT
 
 		switch(UI_style)
 			if("Midnight")

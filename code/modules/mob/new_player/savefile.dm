@@ -157,6 +157,8 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["skills"] << src.skills
 	F["skill_specialization"] << src.skill_specialization
 
+	F["organ_data"] << src.organ_data
+
 	F["OOC_Notes"] << src.metadata
 
 	return 1
@@ -249,6 +251,9 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["skill_specialization"] >> src.skill_specialization
 	if(!src.skills) src.skills = list()
 	if(!src.used_skillpoints) src.used_skillpoints= 0
+
+	F["organ_data"] >> src.organ_data
+	if(!src.organ_data) src.organ_data = list()
 
 	F["job_engsec_high"] >> src.job_engsec_high
 	F["job_engsec_med"] >> src.job_engsec_med
