@@ -521,18 +521,10 @@ Please contact me on #coderbus IRC. ~Carn x
 				standing	= null
 
 		else
-			if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )	//TODO
-				if (handcuffed)													//
-					handcuffed.loc = loc										//
-					handcuffed.layer = initial(handcuffed.layer)				//
-					handcuffed = null											//
-				if (l_hand || r_hand)											//
-					var/h = hand												//
-					hand = 1													//
-					drop_item()													//
-					hand = 0													//
-					drop_item()													//
-					hand = h													//
+			if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
+				drop_from_inventory(handcuffed)
+				drop_l_hand()
+				drop_r_hand()
 
 			if(wear_suit.blood_DNA)
 				var/t_state

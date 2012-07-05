@@ -461,9 +461,9 @@
 
 			src.density = !( src.lying )
 
-			if (src.sdisabilities & 1)
+			if (src.sdisabilities & BLIND)
 				src.blinded = 1
-			if (src.sdisabilities & 4)
+			if (src.sdisabilities & DEAF)
 				src.ear_deaf = 1
 
 			if (src.eye_blurry > 0)

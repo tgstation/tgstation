@@ -67,7 +67,7 @@
 				O.show_message("\blue [(O==user?"You direct":"[user] directs")] [src] to [(M==user? "your":"[M]")] eyes", 1)
 
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))//robots and aliens are unaffected
-			if(M.stat > 1 || M.sdisabilities & 1)//mob is dead or fully blind
+			if(M.stat == DEAD || M.sdisabilities & BLIND)//mob is dead or fully blind
 				if(M!=user)
 					user.show_message(text("\red [] pupils does not react to the light!", M),1)
 			else if(XRAY in M.mutations)//mob has X-RAY vision

@@ -28,14 +28,9 @@
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 
 	if (istype(loc, /turf))
-		verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
-		verbs += /mob/living/silicon/ai/proc/ai_camera_track
-		verbs += /mob/living/silicon/ai/proc/ai_camera_list
-		//Added ai_network_change by Mord_Sith
-		verbs += /mob/living/silicon/ai/proc/ai_network_change
-		verbs += /mob/living/silicon/ai/proc/ai_statuschange
-		//Hologram verb./N
-		verbs += /mob/living/silicon/ai/proc/ai_hologram_change
+		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
+		/mob/living/silicon/ai/proc/ai_camera_list, /mob/living/silicon/ai/proc/ai_network_change, \
+		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -60,12 +55,6 @@
 
 			spawn(0)
 				ainame(src)
-
-	if(client)
-		for(var/obj/effect/rune/rune in world)
-			var/image/blood = image('blood.dmi', loc = rune, icon_state = "floor[rand(1,7)]")
-			blood.override = 1
-			client.images += blood
 
 	return
 

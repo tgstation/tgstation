@@ -242,6 +242,7 @@
 	buckled = initial(src.buckled)
 	handcuffed = initial(src.handcuffed)
 	stat = CONSCIOUS
+	regenerate_icons()
 	..()
 	return
 

@@ -81,23 +81,23 @@
 
 	proc/handle_disabilities()
 
-		if (disabilities & 2)
+		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 10))
 				src << "\red You have a seizure!"
 				Paralyse(10)
-		if (disabilities & 4)
+		if (disabilities & COUGHING)
 			if ((prob(5) && paralysis <= 1))
 				drop_item()
 				spawn( 0 )
 					emote("cough")
 					return
-		if (disabilities & 8)
+		if (disabilities & TOURETTES)
 			if ((prob(10) && paralysis <= 1))
 				Stun(10)
 				spawn( 0 )
 					emote("twitch")
 					return
-		if (disabilities & 16)
+		if (disabilities & NERVOUS)
 			if (prob(10))
 				stuttering = max(10, stuttering)
 
@@ -426,16 +426,16 @@
 				stat = CONSCIOUS
 
 			//Eyes
-			if(sdisabilities & 1)		//disabled-blind, doesn't get better on its own
+			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
 				blinded = 1
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
 				blinded = 1
-			else if(eye_blurry)	//blurry eyes heal slowly
+			else if(eye_blurry)			//blurry eyes heal slowly
 				eye_blurry = max(eye_blurry-1, 0)
 
 			//Ears
-			if(sdisabilities & 4)		//disabled-deaf, doesn't get better on its own
+			if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_deaf)			//deafness, heals slowly over time
 				ear_deaf = max(ear_deaf-1, 0)
@@ -554,7 +554,7 @@
 			else
 				blind.layer = 0
 
-				if (disabilities & 1)
+				if (disabilities & NEARSIGHTED)
 					client.screen += hud_used.vimpaired
 
 				if (eye_blurry)

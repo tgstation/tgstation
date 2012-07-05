@@ -213,17 +213,17 @@ CRITTER GRENADE
 //This really should be in mob not every check
 		if (M.eye_stat >= 20)
 			M << "\red Your eyes start to burn badly!"
-			M.disabilities |= 1
+			M.disabilities |= NEARSIGHTED
 			if(!banglet && !(istype(src , /obj/item/weapon/flashbang/clusterbang)))
 				if (prob(M.eye_stat - 20 + 1))
 					M << "\red You can't see anything!"
-					M.sdisabilities |= 1
+					M.sdisabilities |= BLIND
 		if (M.ear_damage >= 15)
 			M << "\red Your ears start to ring badly!"
 			if(!banglet && !(istype(src , /obj/item/weapon/flashbang/clusterbang)))
 				if (prob(M.ear_damage - 10 + 5))
 					M << "\red You can't hear anything!"
-					M.sdisabilities |= 4
+					M.sdisabilities |= DEAF
 		else
 			if (M.ear_damage >= 5)
 				M << "\red Your ears start to ring!"

@@ -701,9 +701,9 @@ Tarjan shit, not recoding this -Sieve{R}*/
 
 		if(!T.changeling)
 			T << text("\blue Your eyes cry out in pain!")
-			T.disabilities |= 1
+			T.disabilities |= NEARSIGHTED
 			spawn(300)
-				T.disabilities &= ~1
+				T.disabilities &= ~NEARSIGHTED
 			T.eye_blind = 10
 			T.eye_blurry = 20
 
@@ -744,9 +744,9 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		feedback_add_details("changeling_powers","DS")
 
 		if(!T.changeling)
-			T.sdisabilities |= 4
+			T.sdisabilities |= DEAF
 			spawn(300)
-				T.sdisabilities &= ~4
+				T.sdisabilities &= ~DEAF
 
 		usr.verbs -= /client/proc/changeling_deaf_sting
 

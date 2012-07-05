@@ -97,7 +97,7 @@ var/list/department_radio_keys = list(
 		return
 
 	// Mute disability
-	if (sdisabilities & 2)
+	if (sdisabilities & MUTE)
 		return
 
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle))

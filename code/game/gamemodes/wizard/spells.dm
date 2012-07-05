@@ -30,9 +30,9 @@
 			del(B)
 			M.canmove = 1
 		M << text("\blue Your eyes cry out in pain!")
-		M.disabilities |= 1
+		M.disabilities |= NEARSIGHTED
 		spawn(300)
-			M.disabilities &= ~1
+			M.disabilities &= ~NEARSIGHTED
 		M.eye_blind = 10
 		M.eye_blurry = 20
 		return

@@ -643,16 +643,19 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(H.wear_mask)
 							del (H.wear_mask)
+							H.update_inv_wear_mask()
 							H << "\red Your mask melts away but protects you from the acid!"
 							return
 						if(H.head)
 							del (H.head)
+							H.update_inv_head()
 							H << "\red Your helmet melts into uselessness but protects you from the acid!"
 							return
-					if(istype(M, /mob/living/carbon/monkey))
+					else if(istype(M, /mob/living/carbon/monkey))
 						var/mob/living/carbon/monkey/MK = M
 						if(MK.wear_mask)
 							del (MK.wear_mask)
+							MK.update_inv_wear_mask()
 							MK << "\red Your mask melts away but protects you from the acid!"
 							return
 					if(!M.unacidable)
@@ -662,6 +665,7 @@ datum
 							if(affecting)
 								if(affecting.take_damage(25, 0))
 									H.UpdateDamageIcon()
+								H.status_flags |= DISFIGURED
 								H.emote("scream")
 						else
 							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
@@ -704,6 +708,7 @@ datum
 						if(H.head)
 							if(prob(15))
 								del(H.head)
+								H.update_inv_head()
 								H << "\red Your helmet melts from the acid!"
 							else
 								H << "\red Your helmet protects you from the acid!"
@@ -719,6 +724,7 @@ datum
 							var/mob/living/carbon/monkey/MK = M
 							if(MK.wear_mask)
 								del (MK.wear_mask)
+								MK.update_inv_wear_mask()
 								MK << "\red Your mask melts away but protects you from the acid!"
 								return
 							if(!MK.unacidable)
@@ -731,6 +737,7 @@ datum
 							if(affecting.take_damage(15, 0))
 								H.UpdateDamageIcon()
 							H.emote("scream")
+							H.status_flags |= DISFIGURED
 						else
 							M.take_organ_damage(min(15, volume * 4))
 
@@ -1259,8 +1266,8 @@ datum
 				M.sdisabilities = 0
 				M.eye_blurry = 0
 				M.eye_blind = 0
-				M.disabilities &= ~1
-				M.sdisabilities &= ~1
+//				M.disabilities &= ~NEARSIGHTED		//doesn't even do anythig cos of the disabilities = 0 bit
+//				M.sdisabilities &= ~BLIND			//doesn't even do anythig cos of the sdisabilities = 0 bit
 				M.SetWeakened(0)
 				M.SetStunned(0)
 				M.SetParalysis(0)
@@ -1368,7 +1375,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.eye_blurry = max(M.eye_blurry-5 , 0)
 				M.eye_blind = max(M.eye_blind-5 , 0)
-				M.disabilities &= ~1
+				M.disabilities &= ~NEARSIGHTED
 				M.eye_stat = max(M.eye_stat-5, 0)
 //				M.sdisabilities &= ~1		Replaced by eye surgery
 				..()
@@ -2126,7 +2133,7 @@ datum
 						//nothing
 					if(21 to INFINITY)
 						if (prob(data-10))
-							M.disabilities &= ~1
+							M.disabilities &= ~NEARSIGHTED
 				data++
 				..()
 				return

@@ -312,14 +312,14 @@ WELDINGTOOOL
 		user << "\red Your eyes are really starting to hurt. This can't be good for you!"
 	if (prob(user.eye_stat - 25 + 1))
 		user << "\red You go blind!"
-		user.sdisabilities |= 1
+		user.sdisabilities |= BLIND
 	else if (prob(user.eye_stat - 15 + 1))
 		user << "\red You go blind!"
 		user.eye_blind = 5
 		user.eye_blurry = 5
-		user.disabilities |= 1
+		user.disabilities |= NEARSIGHTED
 		spawn(100)
-			user.disabilities &= ~1
+			user.disabilities &= ~NEARSIGHTED
 	return
 
 

@@ -75,8 +75,7 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()	//TODO: this was broken by the dismemberment revert ~Carn
 
-	if(client)
-		handle_regular_hud_updates()
+	handle_regular_hud_updates()
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
@@ -111,7 +110,7 @@
 
 
 	proc/handle_disabilities()
-		if (disabilities & 2)
+		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 1))
 				src << "\red You have a seizure!"
 				for(var/mob/O in viewers(src, null))
@@ -120,13 +119,13 @@
 					O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
 				Paralyse(10)
 				make_jittery(1000)
-		if (disabilities & 4)
+		if (disabilities & COUGHING)
 			if ((prob(5) && paralysis <= 1))
 				drop_item()
 				spawn( 0 )
 					emote("cough")
 					return
-		if (disabilities & 8)
+		if (disabilities & TOURETTES)
 			if ((prob(10) && paralysis <= 1))
 				Stun(10)
 				spawn( 0 )
@@ -143,7 +142,7 @@
 					pixel_x = old_x
 					pixel_y = old_y
 					return
-		if (disabilities & 16)
+		if (disabilities & NERVOUS)
 			if (prob(10))
 				stuttering = max(10, stuttering)
 		if (getBrainLoss() >= 60 && stat != 2)
@@ -747,7 +746,7 @@
 				stat = CONSCIOUS
 
 			//Eyes
-			if(sdisabilities & 1)		//disabled-blind, doesn't get better on its own
+			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
 				blinded = 1
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
@@ -759,7 +758,7 @@
 				eye_blurry = max(eye_blurry-1, 0)
 
 			//Ears
-			if(sdisabilities & 4)		//disabled-deaf, doesn't get better on its own
+			if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_deaf)			//deafness, heals slowly over time
 				ear_deaf = max(ear_deaf-1, 0)
@@ -786,287 +785,188 @@
 				druggy = max(druggy-1, 0)
 		return 1
 
-
 	proc/handle_regular_hud_updates()
-
 		if(!client)	return 0
 
 		for(var/image/hud in client.images)
 			if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 				del(hud)
 
-		if (stat == 2 || (XRAY in mutations))
-			sight |= SEE_TURFS
-			sight |= SEE_MOBS
-			sight |= SEE_OBJS
-			see_in_dark = 8
-			if(!druggy)
-				see_invisible = 2
+		client.screen.Remove(hud_used.blurry, hud_used.druggy, hud_used.vimpaired, hud_used.darkMask)
 
-		else if (seer)
-			var/obj/effect/rune/R = locate() in loc
-			if (istype(R) && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
-				see_invisible = 15
-			else
-				seer = 0
-				see_invisible = 0
-		else if (istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-			switch(wear_mask:mode)
-				if(0)
-					if(client)
+		if( stat == DEAD )
+			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+			see_in_dark = 8
+			if(!druggy)		see_invisible = 2
+			if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
+		else
+			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+			switch(mutantrace)
+				if("lizard","metroid")
+					see_in_dark = 3
+					see_invisible = 1
+				else
+					see_in_dark = 2
+
+			if(XRAY in mutations)
+				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+				see_in_dark = 8
+				if(!druggy)		see_invisible = 2
+
+			if(seer)
+				var/obj/effect/rune/R = locate() in loc
+				if(R && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
+					see_invisible = 15
+				else
+					see_invisible = 0
+					seer = 0
+
+			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
+				var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
+				switch(O.mode)
+					if(0)
 						var/target_list[] = list()
 						for(var/mob/living/target in oview(src))
 							if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
 								target_list += target
 						if(target_list.len)//Everything else is handled by the ninja mask proc.
-							wear_mask:assess_targets(target_list, src)
-					if (!druggy)
-						see_invisible = 0
-				if(1)
-					see_in_dark = 5
-					if(!druggy)
-						see_invisible = 0
-				if(2)
-					sight |= SEE_MOBS
-					if(!druggy)
-						see_invisible = 2
-				if(3)
+							O.assess_targets(target_list, src)
+						if(!druggy)		see_invisible = 0
+					if(1)
+						see_in_dark = 5
+						if(!druggy)		see_invisible = 0
+					if(2)
+						sight |= SEE_MOBS
+						if(!druggy)		see_invisible = 2
+					if(3)
+						sight |= SEE_TURFS
+						if(!druggy)		see_invisible = 0
+
+			if(glasses)
+				if(istype(glasses, /obj/item/clothing/glasses/meson))
 					sight |= SEE_TURFS
-					if(!druggy)
-						see_invisible = 0
-
-		else if(istype(glasses, /obj/item/clothing/glasses/meson))
-			sight |= SEE_TURFS
-			if(!druggy)
-				see_invisible = 0
-		else if(istype(glasses, /obj/item/clothing/glasses/night))
-			see_in_dark = 5
-			if(!druggy)
-				see_invisible = 0
-		else if(istype(glasses, /obj/item/clothing/glasses/thermal))
-			sight |= SEE_MOBS
-			if(!druggy)
-				see_invisible = 2
-		else if(istype(glasses, /obj/item/clothing/glasses/material))
-			sight |= SEE_OBJS
-			if (!druggy)
-				see_invisible = 0
-
-		else if(stat != 2)
-			sight &= ~SEE_TURFS
-			sight &= ~SEE_MOBS
-			sight &= ~SEE_OBJS
-			if (mutantrace == "lizard" || mutantrace == "metroid")
-				see_in_dark = 3
-				see_invisible = 1
-			else if (druggy) // If drugged~
-				see_in_dark = 2
-				//see_invisible regulated by drugs themselves.
-			else
-				see_in_dark = 2
-
-			var/seer = 0
-			var/obj/effect/rune/R = locate() in loc
-			if (istype(R) && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
-				seer = 1
-			if(!seer)
-				see_invisible = 0
-
-
-
-
-
-
-
-		else if(istype(head, /obj/item/clothing/head/welding))		// wat.  This is never fucking called.
-			if(!head:up && tinted_weldhelh)
-				see_in_dark = 1
-
-
-
-
-
-
-
-
+					if(!druggy)			see_invisible = 0
+				else if(istype(glasses, /obj/item/clothing/glasses/night))
+					see_in_dark = 5
+					if(!druggy)			see_invisible = 0
+				else if(istype(glasses, /obj/item/clothing/glasses/thermal))
+					sight |= SEE_MOBS
+					if(!druggy)			see_invisible = 2
+				else if(istype(glasses, /obj/item/clothing/glasses/material))
+					sight |= SEE_OBJS
+					if(!druggy)			see_invisible = 0
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
-		if(istype(glasses, /obj/item/clothing/glasses/hud/health))
-			if(client)
-				glasses:process_hud(src)
-			if (!druggy)
-				see_invisible = 0
 
-		if(istype(glasses, /obj/item/clothing/glasses/hud/security))
-			if(client)
-				glasses:process_hud(src)
-			if (!druggy)
-				see_invisible = 0
+				else if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
+					see_in_dark = 1
+					if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+						var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
+						if(O.hud)		O.hud.process_hud(src)
+						if(!druggy)		see_invisible = 0
 
-		if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
-			see_in_dark = 1
-			if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-				if(client)
-					if(glasses:hud)
-						glasses:hud:process_hud(src)
-			if (!druggy)
-				see_invisible = 0
+				else if(istype(glasses, /obj/item/clothing/glasses/hud))
+					var/obj/item/clothing/glasses/hud/health/O = glasses
 
-/*
-		if (istype(glasses, /obj/item/clothing/glasses))
-			sight = glasses.vision_flags
-			see_in_dark = 2 + glasses.darkness_view
-			see_invisible = invisa_view
+					if(istype(O, /obj/item/clothing/glasses/hud/health))
+						O.process_hud(src)
+						if(!druggy)		see_invisible = 0
 
-				if(istype(glasses, /obj/item/clothing/glasses/hud))
-					if(client)
-						glasses:process_hud(src)
-*/
-//Should finish this up later
+					else if(istype(O, /obj/item/clothing/glasses/hud/security))
+						O.process_hud(src)
+						if(!druggy)		see_invisible = 0
 
+			if(sleep && !hal_crit)	sleep.icon_state = "sleep[sleeping]"	//used?
 
-
-		if (sleep && !hal_crit) sleep.icon_state = text("sleep[]", sleeping)
-		if (rest) rest.icon_state = text("rest[]", resting)
-
-		if (healths)
-			if (stat != 2)
-				switch(health - halloss)
-					if(100 to INFINITY)
-						healths.icon_state = "health0"
-					if(80 to 100)
-						healths.icon_state = "health1"
-					if(60 to 80)
-						healths.icon_state = "health2"
-					if(40 to 60)
-						healths.icon_state = "health3"
-					if(20 to 40)
-						healths.icon_state = "health4"
-					if(0 to 20)
-						healths.icon_state = "health5"
+			if(healths)
+				switch(hal_screwyhud)
+					if(1)	healths.icon_state = "health6"
+					if(2)	healths.icon_state = "health7"
 					else
-						healths.icon_state = "health6"
-			else
-				healths.icon_state = "health7"
-			if(hal_screwyhud == 1)
-				healths.icon_state = "health6"
-			if(hal_screwyhud == 2)
-				healths.icon_state = "health7"
+						switch(health - halloss)
+							if(100 to INFINITY)		healths.icon_state = "health0"
+							if(80 to 100)			healths.icon_state = "health1"
+							if(60 to 80)			healths.icon_state = "health2"
+							if(40 to 60)			healths.icon_state = "health3"
+							if(20 to 40)			healths.icon_state = "health4"
+							if(0 to 20)				healths.icon_state = "health5"
+							else					healths.icon_state = "health6"
 
-		if (nutrition_icon)
-			switch(nutrition)
-				if(450 to INFINITY)
-					nutrition_icon.icon_state = "nutrition0"
-				if(350 to 450)
-					nutrition_icon.icon_state = "nutrition1"
-				if(250 to 350)
-					nutrition_icon.icon_state = "nutrition2"
-				if(150 to 250)
-					nutrition_icon.icon_state = "nutrition3"
+			if(nutrition_icon)
+				switch(nutrition)
+					if(450 to INFINITY)				nutrition_icon.icon_state = "nutrition0"
+					if(350 to 450)					nutrition_icon.icon_state = "nutrition1"
+					if(250 to 350)					nutrition_icon.icon_state = "nutrition2"
+					if(150 to 250)					nutrition_icon.icon_state = "nutrition3"
+					else							nutrition_icon.icon_state = "nutrition4"
+
+			if(pressure)
+				if(istype(wear_suit, /obj/item/clothing/suit/space)||istype(wear_suit, /obj/item/clothing/suit/armor/captain))
+					pressure.icon_state = "pressure0"
 				else
-					nutrition_icon.icon_state = "nutrition4"
+					var/datum/gas_mixture/environment = loc.return_air()
+					if(environment)
+						switch(environment.return_pressure())
+							if(HAZARD_HIGH_PRESSURE to INFINITY)				pressure.icon_state = "pressure2"
+							if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)	pressure.icon_state = "pressure1"
+							if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)	pressure.icon_state = "pressure0"
+							if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)		pressure.icon_state = "pressure-1"
+							else												pressure.icon_state = "pressure-2"
 
-		if (pressure)
+			if(pullin)
+				if(pulling)								pullin.icon_state = "pull1"
+				else									pullin.icon_state = "pull0"
+//			if(rest)	//Not used with new UI
+//				if(resting || lying || sleeping)		rest.icon_state = "rest1"
+//				else									rest.icon_state = "rest0"
+			if(toxin)
+				if(hal_screwyhud == 4 || toxins_alert)	toxin.icon_state = "tox1"
+				else									toxin.icon_state = "tox0"
+			if(oxygen)
+				if(hal_screwyhud == 3 || oxygen_alert)	oxygen.icon_state = "oxy1"
+				else									oxygen.icon_state = "oxy0"
+			if(fire)
+				if(fire_alert)							fire.icon_state = "fire1"
+				else									fire.icon_state = "fire0"
 
-			if(istype(wear_suit, /obj/item/clothing/suit/space)||istype(wear_suit, /obj/item/clothing/suit/armor/captain))
-				pressure.icon_state = "pressure0"
+			if(bodytemp)
+				switch(bodytemperature) //310.055 optimal body temp
+					if(370 to INFINITY)		bodytemp.icon_state = "temp4"
+					if(350 to 370)			bodytemp.icon_state = "temp3"
+					if(335 to 350)			bodytemp.icon_state = "temp2"
+					if(320 to 335)			bodytemp.icon_state = "temp1"
+					if(300 to 320)			bodytemp.icon_state = "temp0"
+					if(295 to 300)			bodytemp.icon_state = "temp-1"
+					if(280 to 295)			bodytemp.icon_state = "temp-2"
+					if(260 to 280)			bodytemp.icon_state = "temp-3"
+					else					bodytemp.icon_state = "temp-4"
 
+			if(blind)
+				if(blinded)		blind.layer = 18
+				else			blind.layer = 0
+
+			if( disabilities & NEARSIGHTED && !istype(glasses, /obj/item/clothing/glasses/regular) )
+				client.screen += hud_used.vimpaired
+			if(eye_blurry)			client.screen += hud_used.blurry
+			if(druggy)				client.screen += hud_used.druggy
+
+			if( istype(head, /obj/item/clothing/head/welding) )
+				var/obj/item/clothing/head/welding/O = head
+				if(!O.up && tinted_weldhelh)
+					client.screen += hud_used.darkMask
+
+			if(eye_stat > 20)
+				if(eye_stat > 30)	client.screen += hud_used.darkMask
+				else				client.screen += hud_used.vimpaired
+
+			if(machine)
+				if(!machine.check_eye(src))		reset_view(null)
 			else
-				var/datum/gas_mixture/environment = loc.return_air()
-				if(environment)
-					switch(environment.return_pressure())
-						if(HAZARD_HIGH_PRESSURE to INFINITY)
-							pressure.icon_state = "pressure2"
-						if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-							pressure.icon_state = "pressure1"
-						if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-							pressure.icon_state = "pressure0"
-						if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-							pressure.icon_state = "pressure-1"
-						else
-							pressure.icon_state = "pressure-2"
-
-		if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
-
-		if(rest)	rest.icon_state = "rest[(resting || lying || sleeping) ? 1 : 0]"
-
-
-		if (toxin || hal_screwyhud == 4)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
-		if (oxygen || hal_screwyhud == 3)	oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-		if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"													//NOTE: INVESTIGATE NUKE BURNINGS
-		//NOTE: the alerts dont reset when youre out of danger. dont blame me,
-		//blame the person who coded them. Temporary fix added.
-
-		if(bodytemp)
-			switch(bodytemperature) //310.055 optimal body temp
-				if(370 to INFINITY)
-					bodytemp.icon_state = "temp4"
-				if(350 to 370)
-					bodytemp.icon_state = "temp3"
-				if(335 to 350)
-					bodytemp.icon_state = "temp2"
-				if(320 to 335)
-					bodytemp.icon_state = "temp1"
-				if(300 to 320)
-					bodytemp.icon_state = "temp0"
-				if(295 to 300)
-					bodytemp.icon_state = "temp-1"
-				if(280 to 295)
-					bodytemp.icon_state = "temp-2"
-				if(260 to 280)
-					bodytemp.icon_state = "temp-3"
-				else
-					bodytemp.icon_state = "temp-4"
-
-		if(!client)	return 0 //Wish we did not need these
-		client.screen.Remove(hud_used.blurry, hud_used.druggy, hud_used.vimpaired, hud_used.darkMask)
-
-		if ((blind && stat != 2))
-			if(blinded)
-				blind.layer = 18
-			else
-				blind.layer = 0
-
-				if( disabilities & 1 && !istype(glasses, /obj/item/clothing/glasses/regular) )
-					client.screen += hud_used.vimpaired
-
-				if(eye_blurry)
-					client.screen += hud_used.blurry
-
-				if(druggy)
-					client.screen += hud_used.druggy
-
-				if( istype(head, /obj/item/clothing/head/welding) )
-					if(!head:up && tinted_weldhelh)
-						client.screen += hud_used.darkMask
-
-				if(eye_stat > 20)
-					if((eye_stat > 30))
-						client.screen += hud_used.darkMask
-					else
-						client.screen += hud_used.vimpaired
-
-
-
-		if (stat != 2)
-			if (machine)
-				if (!( machine.check_eye(src) ))
-					reset_view(null)
-			else
-				if(!client.adminobs)
-					reset_view(null)
-
+				if(!client.adminobs)			reset_view(null)
 		return 1
 
 	proc/handle_random_events()
-		/* // probably stupid -- Doohl
-		if (prob(1) && prob(2))
-			spawn(0)
-				emote("sneeze")
-				return
-		*/
-
 		// Puke if toxloss is too high
 		if(!stat)
 			if (getToxLoss() >= 45 && nutrition > 20)

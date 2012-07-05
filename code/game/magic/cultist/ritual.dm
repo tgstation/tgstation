@@ -96,10 +96,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 // join hide technology - stun rune. Rune color: bright pink.
 	New()
 		..()
+		var/image/blood = image(loc = src)
+		blood.override = 1
 		for(var/mob/living/silicon/ai/AI in world)
 			if(AI.client)
-				var/image/blood = image('blood.dmi', loc = src, icon_state = "floor[rand(1,7)]")
-				blood.override = 1
 				AI.client.images += blood
 
 	examine()

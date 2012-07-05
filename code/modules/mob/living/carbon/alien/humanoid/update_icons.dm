@@ -64,15 +64,9 @@
 		//TODO
 		wear_suit.screen_loc = ui_alien_oclothing
 		if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-			if (handcuffed)
-				handcuffed.loc = loc
-				handcuffed.layer = initial(handcuffed.layer)
-				handcuffed = null
-			if ((l_hand || r_hand))
-				drop_item()
-				hand = !hand
-				drop_item()
-				hand = !hand
+			drop_from_inventory(handcuffed)
+			drop_r_hand()
+			drop_l_hand()
 
 		overlays_lying[X_SUIT_LAYER]	= lying
 		overlays_standing[X_SUIT_LAYER]	= standing

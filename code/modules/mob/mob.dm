@@ -43,22 +43,22 @@
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 	if(!client)	return
 	if (type)
-		if ((type & 1 && (sdisabilities & 1 || (blinded || paralysis))))//Vision related
+		if(type & 1 && (sdisabilities & BLIND || blinded || paralysis) )//Vision related
 			if (!( alt ))
 				return
 			else
 				msg = alt
 				type = alt_type
-		if ((type & 2 && (sdisabilities & 4 || ear_deaf)))//Hearing related
+		if (type & 2 && (sdisabilities & DEAF || ear_deaf))//Hearing related
 			if (!( alt ))
 				return
 			else
 				msg = alt
 				type = alt_type
-				if ((type & 1 && sdisabilities & 1))
+				if ((type & 1 && sdisabilities & BLIND))
 					return
 	// Added voice muffling for Issue 41.
-	if (stat == 1 || sleeping > 0)
+	if(stat == UNCONSCIOUS || sleeping > 0)
 		src << "<I>... You can almost hear someone talking ...</I>"
 	else
 		src << msg

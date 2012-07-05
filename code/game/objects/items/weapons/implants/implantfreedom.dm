@@ -23,6 +23,7 @@
 			if (source.handcuffed)
 				var/obj/item/weapon/W = source.handcuffed
 				source.handcuffed = null
+				source.update_inv_handcuffed()
 				if (source.client)
 					source.client.screen -= W
 				if (W)

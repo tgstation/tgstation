@@ -172,16 +172,16 @@
 
 
 			//Eyes
-			if(sdisabilities & 1)		//disabled-blind, doesn't get better on its own
+			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
 				blinded = 1
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
 				blinded = 1
-			else if(eye_blurry)	//blurry eyes heal slowly
+			else if(eye_blurry)			//blurry eyes heal slowly
 				eye_blurry = max(eye_blurry-1, 0)
 
 			//Ears
-			if(sdisabilities & 4)		//disabled-deaf, doesn't get better on its own
+			if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
 				ear_deaf = max(ear_deaf, 1)
 			else if(ear_deaf)			//deafness, heals slowly over time
 				ear_deaf = max(ear_deaf-1, 0)
@@ -256,7 +256,7 @@
 			else
 				blind.layer = 0
 
-				if (disabilities & 1)
+				if (disabilities & NEARSIGHTED)
 					client.screen += hud_used.vimpaired
 
 				if (eye_blurry)

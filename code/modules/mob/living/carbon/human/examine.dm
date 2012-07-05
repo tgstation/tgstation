@@ -2,7 +2,7 @@
 	set src in view()
 
 	if(!usr || !src)	return
-	if(((usr.sdisabilities & 1) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))
+	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 

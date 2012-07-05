@@ -747,6 +747,7 @@ var/list/sacrificed = list()
 				if (cultist.handcuffed)
 					cultist.handcuffed.loc = cultist.loc
 					cultist.handcuffed = null
+					cultist.update_inv_handcuffed()
 				if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
 					cultist.u_equip(cultist.wear_mask)
 				if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)
@@ -810,7 +811,7 @@ var/list/sacrificed = list()
 					C.show_message("\red The world around you suddenly becomes quiet.", 3)
 					affected++
 					if(prob(1))
-						C.disabilities |= 4
+						C.sdisabilities |= DEAF
 				if(affected)
 					usr.say("Sti' kaliedir!")
 					usr << "\red The world becomes quiet as the deafening rune dissipates into fine dust."
@@ -849,9 +850,9 @@ var/list/sacrificed = list()
 					C.eye_blurry += 50
 					C.eye_blind += 20
 					if(prob(5))
-						C.disabilities |= 1
+						C.disabilities |= NEARSIGHTED
 						if(prob(10))
-							C.sdisabilities |= 1
+							C.sdisabilities |= BLIND
 					C.show_message("\red Suddenly you see red flash that blinds you.", 3)
 					affected++
 				if(affected)

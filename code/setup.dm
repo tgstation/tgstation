@@ -261,6 +261,18 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NANOREGEN		28 	// regenerative nanobots, -3 all damage types per second
 
 
+//disabilities
+#define NEARSIGHTED		1
+#define EPILEPSY		2
+#define COUGHING		4
+#define TOURETTES		8
+#define NERVOUS			16
+
+//sdisabilities
+#define BLIND			1
+#define MUTE			2
+#define DEAF			4
+
 //mob/var/stat things
 #define CONSCIOUS	0
 #define UNCONSCIOUS	1
@@ -314,7 +326,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 //Bluh shields
 
 
-//Damage things	//TODO: merge these down to reduce on defines >_>
+//Damage things	//TODO: merge these down to reduce on defines
 #define BRUTE		"brute"
 #define BURN		"fire"
 #define TOX			"tox"
@@ -334,6 +346,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define CANSTUN		1
 #define CANWEAKEN	2
 #define CANPARALYSE	4
+#define DISFIGURED	65536	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
 
 var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg','hiss5.ogg','hiss6.ogg','Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg','Welder.ogg','Welder2.ogg','airlock.ogg','clownstep1.ogg','clownstep2.ogg')
 

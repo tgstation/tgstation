@@ -385,14 +385,14 @@
 	M.see_invisible = 0
 
 	if (isblockon(getblock(M.dna.struc_enzymes, 1,3),1))
-		M.disabilities |= 1
+		M.disabilities |= NEARSIGHTED
 		M << "\red Your eyes feel strange."
 	if (isblockon(getblock(M.dna.struc_enzymes, HULKBLOCK,3),2))
 		if(inj || prob(15))
 			M << "\blue Your muscles hurt."
 			M.mutations.Add(HULK)
 	if (isblockon(getblock(M.dna.struc_enzymes, 3,3),3))
-		M.disabilities |= 2
+		M.disabilities |= EPILEPSY
 		M << "\red You get a headache."
 	if (isblockon(getblock(M.dna.struc_enzymes, FAKEBLOCK,3),4))
 		M << "\red You feel strange."
@@ -404,13 +404,13 @@
 		else
 			randmutg(M)
 	if (isblockon(getblock(M.dna.struc_enzymes, 5,3),5))
-		M.disabilities |= 4
+		M.disabilities |= COUGHING
 		M << "\red You start coughing."
 	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),6))
 		M << "\red You feel lightheaded."
 		M.mutations.Add(CLUMSY)
 	if (isblockon(getblock(M.dna.struc_enzymes, 7,3),7))
-		M.disabilities |= 8
+		M.disabilities |= TOURETTES
 		M << "\red You twitch."
 	if (isblockon(getblock(M.dna.struc_enzymes, XRAYBLOCK,3),8))
 		if(inj || prob(30))
@@ -420,21 +420,21 @@
 			M.see_invisible = 2
 			M.mutations.Add(XRAY)
 	if (isblockon(getblock(M.dna.struc_enzymes, 9,3),9))
-		M.disabilities |= 16
+		M.disabilities |= NERVOUS
 		M << "\red You feel nervous."
 	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),10))
 		if(inj || prob(30))
 			M << "\blue Your body feels warm."
 			M.mutations.Add(COLD_RESISTANCE)
 	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),11))
-		M.sdisabilities |= 1
+		M.sdisabilities |= BLIND
 		M << "\red You can't seem to see anything."
 	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),12))
 		if(inj || prob(25))
 			M << "\blue You feel smarter."
 			M.mutations.Add(TK)
 	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),13))
-		M.sdisabilities |= 4
+		M.sdisabilities |= DEAF
 		M.ear_deaf = 1
 		M << "\red You can't seem to hear anything..."
 

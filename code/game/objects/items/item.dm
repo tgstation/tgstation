@@ -332,7 +332,7 @@
 	//	M = user
 		/*
 		M << "\red You stab yourself in the eye."
-		M.sdisabilities |= 1
+		M.sdisabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
 		*/
@@ -356,7 +356,7 @@
 	M.eye_stat += rand(2,4)
 	if (M.eye_stat >= 10)
 		M.eye_blurry += 15+(0.1*M.eye_blurry)
-		M.disabilities |= 1
+		M.disabilities |= NEARSIGHTED
 		if(M.stat != 2)
 			M << "\red Your eyes start to bleed profusely!"
 		if(prob(50))
@@ -369,7 +369,7 @@
 		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "\red You go blind!"
-			M.sdisabilities |= 1
+			M.sdisabilities |= BLIND
 	return
 
 
