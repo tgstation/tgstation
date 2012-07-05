@@ -218,6 +218,16 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/mining/outpost
 	icon_state = "shuttle"
 
+/area/shuttle/research
+	name = "\improper Research Shuttle"
+	music = "music/escape.ogg"
+
+/area/shuttle/research/station
+	icon_state = "shuttle2"
+
+/area/shuttle/research/outpost
+	icon_state = "shuttle"
+
 /area/shuttle/transport1/centcom
 	icon_state = "shuttle"
 	name = "\improper Transport Shuttle Centcom"
@@ -1265,6 +1275,20 @@ proc/process_ghost_teleport_locs()
 /area/toxins/supermatter
 	name = "\improper Supermatter Laboratory"
 	icon_state = "supermatter"
+
+//Anomaly
+
+/area/anomaly
+	name = "Anomaly Lab"
+	icon_state = "anomaly"
+
+/area/anomaly/shuttledock
+	name = "Research Shuttle Dock"
+	icon_state = "anomaly"
+
+/area/anomaly/outpost
+	name = "Research Outpost"
+	icon_state = "anomaly"
 
 //Storage
 

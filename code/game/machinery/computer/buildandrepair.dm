@@ -213,6 +213,10 @@
 	name = "Circuit board (Mining Shuttle)"
 	build_path = "/obj/machinery/computer/mining_shuttle"
 	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/research_shuttle
+	name = "Circuit board (Research Shuttle)"
+	build_path = "/obj/machinery/computer/research_shuttle"
+	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "Circuit board (Holodeck Control)"
 	build_path = "/obj/machinery/computer/HolodeckControl"
@@ -229,6 +233,34 @@
 	name = "Circuit board (Prison Shuttle)"
 	build_path = "/obj/machinery/computer/prison_shuttle"
 	origin_tech = "programming=2"
+
+
+//shielding
+/obj/item/weapon/circuitboard/shield_capacitor
+	name = "Circuit Board (Shield Capacitor)"
+	build_path = "/obj/machinery/shield_capacitor"
+	board_type = "machine"
+	origin_tech = "electromagnetic=3;engineering=2;power=1"
+	frame_desc = "Requires, 2 Cable Coil, 2 Nano Manipulator, 1 Advanced Matter Bin, 1 Console Screen and 1 High-Power Micro-Laser. "
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/weapon/stock_parts/manipulator/nano" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin/adv" = 1,
+							"/obj/item/weapon/stock_parts/console_screen" = 1,
+							"/obj/item/weapon/stock_parts/micro_laser/high" = 1)
+
+/obj/item/weapon/circuitboard/shield_generator
+	name = "Circuit Board (Shield Generator)"
+	build_path = "/obj/machinery/shield_generator"
+	board_type = "machine"
+	origin_tech = "electromagnetic=3;engineering=2;power=1"
+	frame_desc = "Requires, 2 Cable Coil, 2 Nano Manipulator, 1 Advanced Matter Bin, 1 Console Screen and 1 High-Power Micro-Laser. "
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/weapon/stock_parts/manipulator/nano" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin/adv" = 1,
+							"/obj/item/weapon/stock_parts/console_screen" = 1,
+							"/obj/item/weapon/stock_parts/micro_laser/high" = 1)
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
