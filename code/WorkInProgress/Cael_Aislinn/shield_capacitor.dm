@@ -33,6 +33,21 @@
 	/*spawn(10)
 		check_powered()*/
 
+/obj/machinery/shield_capacitor/verb/rotate()
+	set name = "Rotate Clockwise"
+	set category = "Object"
+	set src in oview(1)
+
+	if (src.anchored || usr:stat)
+		usr << "It is fastened to the floor!"
+		return 0
+	src.dir = turn(src.dir, 270)
+	for(var/obj/machinery/shield_gen/possible_gen in range(1))
+		if(get_dir(src, possible_gen) == dir)
+			possible_gen.owned_capacitor = src
+			break
+	return 1
+
 /obj/machinery/shield_capacitor/power_change()
 	if(stat & BROKEN)
 		icon_state = "broke"
@@ -141,16 +156,3 @@
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 	user << browse(t, "window=shield_capacitor;size=500x800")
 	user.machine = src
-
-/obj/item/weapon/circuitboard/shield_capacitor
-	name = "Circuit Board (Shield Capacitor)"
-	build_path = "/obj/machinery/shield_capacitor"
-	board_type = "machine"
-	origin_tech = "electromagnetic=3;engineering=2;power=1"
-	frame_desc = "Requires, 2 Cable Coil, 2 Nano Manipulator, 1 Advanced Matter Bin, 1 Console Screen and 1 High-Power Micro-Laser. "
-	req_components = list(
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/manipulator/nano" = 2,
-							"/obj/item/weapon/stock_parts/matter_bin/adv" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/stock_parts/micro_laser/high" = 1)
