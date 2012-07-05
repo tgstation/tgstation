@@ -82,6 +82,7 @@
 		W.relativewall()
 	for(var/obj/structure/falsewall/W in range(src,1))
 		W.relativewall()
+		W.update_icon()//Refreshes the wall to make sure the icons don't desync
 	for(var/obj/structure/falserwall/W in range(src,1))
 		W.relativewall()
 	return
