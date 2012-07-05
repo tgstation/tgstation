@@ -69,11 +69,11 @@ var/list/wound_progressions = list(
 		W.hits = hits
 		W.time_inflicted = time_inflicted
 		return W
-
+/* fuckign double defines
 #define CUT 0
 #define BRUISE 1
 #define BURN 2
-
+*/
 /****************************************************
 				EXTERNAL ORGANS
 ****************************************************/
