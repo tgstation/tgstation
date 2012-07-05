@@ -16,13 +16,9 @@
 	heat_transfer_coefficient = 0.02
 	protective_temperature = 1000
 
-/area/anomaly
-	name = "Anomaly Lab"
-	icon_state = "anomaly"
-
 /obj/structure/noticeboard/anomaly/New()
-	notices = 4
-	icon_state = "nboard04"
+	notices = 5
+	icon_state = "nboard05"
 
 	//add some memos
 	var/obj/item/weapon/paper/P = new()
@@ -49,6 +45,13 @@
 	P = new()
 	P.name = "READ ME! Before you people destroy any more samples"
 	P.info = "how many times do i have to tell you people, these xeno-arch samples are del-i-cate, and should be handled so! careful application of a focussed, ceoncentrated heat or some corrosive liquids should clear away the extraneous carbon matter, while application of an energy beam will most decidedly destroy it entirely! W, <b>the one who signs your paychecks</b>"
+	P.stamped = list(/obj/item/weapon/stamp/rd)
+	P.overlays = list("paper_stamped_rd")
+	src.contents += P
+
+	P = new()
+	P.name = "Reminder regarding the anomalous material suits"
+	P.info = "Do you people think the anomaly suits are cheap to come by? I'm about a hair trigger away from instituting a log book for the damn things. Only wear them if you're going out for a dig, and for god's sake don't go tramping around the station in them unless you're field testing something, R"
 	P.stamped = list(/obj/item/weapon/stamp/rd)
 	P.overlays = list("paper_stamped_rd")
 	src.contents += P
