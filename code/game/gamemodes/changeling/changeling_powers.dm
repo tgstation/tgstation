@@ -560,10 +560,13 @@ Tarjan shit, not recoding this -Sieve{R}*/
 	L.remove_changeling_powers()
 
 	L.emote("gasp")
+	if(isnull(L.tod)) // If we weren't already dead
+		L.tod = worldtime2text()
 
 	spawn(1200)
 		L.stat = 0
 		//usr.fireloss = 0
+		L.tod = null
 		L.setToxLoss(0)
 		//usr.bruteloss = 0
 		L.setOxyLoss(0)

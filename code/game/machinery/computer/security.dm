@@ -18,6 +18,9 @@
 	var/can_change_id = 0
 	var/list/Perp
 	var/tempname = null
+	//Sorting Variables
+	var/sortBy = "name"
+	var/order = 1 // -1 = Descending - 1 = Ascending
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)
@@ -60,13 +63,13 @@
 </table>
 <table style="text-align:center;" border="1" cellspacing="0" width="100%">
 <tr>
-<th>Name</th>
-<th>ID</th>
-<th>Rank</th>
-<th>Fingerprints</th>
+<th><A href='?src=\ref[src];choice=Sorting;sort=name'>Name</A></th>
+<th><A href='?src=\ref[src];choice=Sorting;sort=id'>ID</A></th>
+<th><A href='?src=\ref[src];choice=Sorting;sort=rank'>Rank</A></th>
+<th><A href='?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</A></th>
 <th>Criminal Status</th>
 </tr>"}
-					for(var/datum/data/record/R in data_core.general)
+					for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
 						var/crimstat = ""
 						for(var/datum/data/record/E in data_core.security)
 							if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
@@ -182,6 +185,18 @@ What a mess.*/
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.machine = src
 		switch(href_list["choice"])
+// SORTING!
+			if("Sorting")
+				// Reverse the order if clicked twice
+				if(sortBy == href_list["sort"])
+					if(order == 1)
+						order = -1
+					else
+						order = 1
+				else
+				// New sorting order!
+					sortBy = href_list["sort"]
+					order = initial(order)
 //BASIC FUNCTIONS
 			if("Clear Screen")
 				temp = null
@@ -502,6 +517,7 @@ What a mess.*/
 							del(active2)
 					else
 						temp = "This function does not appear to be working at the moment. Our apologies."
+
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return

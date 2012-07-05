@@ -14,7 +14,7 @@
 	see_in_dark = 8
 	see_invisible = 2
 
-	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
+	tod = worldtime2text() //weasellos time of death patch
 	store_memory("Time of death: [tod]", 0)
 
 	if (key)

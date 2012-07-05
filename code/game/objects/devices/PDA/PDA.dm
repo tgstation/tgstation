@@ -171,6 +171,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-gene"
 
+// Special AI PDA that cannot explode.
+/obj/item/device/pda/ai
+	icon_state = "NONE"
+	ttone = "data"
+
+/obj/item/device/pda/ai/attack_self(mob/user as mob)
+	if ((honkamt > 0) && (prob(60)))//For clown virus.
+		honkamt--
+		playsound(loc, 'bikehorn.ogg', 30, 1)
+	return
+
 /*
  *	The Actual PDA
  */
@@ -196,14 +207,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return 0
 	var/mob/M = loc
 
-	if(!M.canmove)
+	if(!M.canmove && !isAI(M))
 		return 0
 
-	if((src in M.contents) || ( istype(loc, /turf) && in_range(src, M) ) )
+	if((src in M.contents) || ( istype(loc, /turf) && in_range(src, M) ))
 		return 1
 	else
 		return 0
-
 
 /obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
 	var/mob/M = usr
@@ -213,6 +223,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //NOTE: graphic resources are loaded on client login
 /obj/item/device/pda/attack_self(mob/user as mob)
+
 	user.machine = src
 
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
@@ -238,7 +249,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += text("ID: <A href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
 				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br>")
 
-				dat += "Station Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"//:[world.time / 100 % 6][world.time / 100 % 10]"
+				dat += "Station Time: [worldtime2text()]"//:[world.time / 100 % 6][world.time / 100 % 10]"
 
 				dat += "<br><br>"
 
@@ -339,7 +350,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					for (var/obj/item/device/pda/P in PDAs)
 						if (!P.owner||P.toff||P == src)	continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
-						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate))
+						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate) && !istype(P, /obj/item/device/pda/ai))
 							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"
 						if (istype(cartridge, /obj/item/weapon/cartridge/clown))
 							dat += " (<a href='byond://?src=\ref[src];choice=Send Honk;target=\ref[P]'><img src=pda_honk.png>*Send Virus*</a>)"
@@ -544,94 +555,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						U << browse(null, "window=pda")
 						return
 				if("Message")
-					var/t = input(U, "Please enter message", name, null) as text
-					t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-					if (!t)
-						return
-					if (!in_range(src, U) && loc != U)
-						return
 					var/obj/item/device/pda/P = locate(href_list["target"])
-					if(!istype(P))	return
-
-					if(istype(P, /obj/item/device/pda))
-						if (isnull(P)||P.toff || toff)
-							return
-
-						if (last_text && world.time < last_text + 5)
-							return
-
-						last_text = world.time
-						// check if telecomms I/O route 1459 is stable
-						//var/telecomms_intact = telecomms_process(P.owner, owner, t)
-						var/obj/machinery/message_server/useMS = null
-						if(message_servers)
-							for (var/obj/machinery/message_server/MS in message_servers)
-							//PDAs are now dependant on the Message Server.
-								if(MS.active)
-									useMS = MS
-									break
-						if(useMS) // only send the message if it's stable
-							useMS.send_pda_message("[P.owner]","[owner]","[t]")
-
-							tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
-							P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
-
-							if (prob(15)) //Give the AI a chance of intercepting the message
-								var/who = src.owner
-								if(prob(50))
-									who = P:owner
-								for(var/mob/living/silicon/ai/ai in world)
-									ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
-
-							if (!P.silent)
-								playsound(P.loc, 'twobeep.ogg', 50, 1)
-								for (var/mob/O in hearers(3, P.loc))
-									O.show_message(text("\icon[P] *[P.ttone]*"))
-								if( P.loc && ishuman(P.loc) )
-									var/mob/living/carbon/human/H = P.loc
-									H << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
-							log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-							P.overlays = null
-							P.overlays += image('pda.dmi', "pda-r")
-						else
-							U << "ERROR: Server isn't responding."
-
-					// pAI Message
-					else
-
-						//var/telecomms_intact = telecomms_process(P.owner, owner, t)
-						var/obj/machinery/message_server/useMS = null
-						if(message_servers)
-							for (var/obj/machinery/message_server/MS in message_servers)
-							//PDAs are now dependant on the Message Server.
-								if(MS.active)
-									useMS = MS
-									break
-						if(useMS) // only send the message if it's stable
-							useMS.send_pda_message("[P.owner]","[owner]","[t]")
-							tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
-							P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
-
-
-							if (prob(15)) //Give the AI a chance of intercepting the message
-								var/who = src
-								if(prob(50))
-									who = P
-								for (var/mob/living/silicon/ai/ai in world)
-									ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
-
-							if (!P.silent)
-								playsound(P.loc, 'twobeep.ogg', 50, 1)
-								for (var/mob/O in hearers(3, P.loc))
-									O.show_message(text("\icon[P] *[P.ttone]*"))
-								if( P.loc && ishuman(P.loc) )
-									var/mob/living/carbon/human/H = P.loc
-									H << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
-							log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-						else
-							U << "ERROR: Server isn't responding."
-
-
+					src.create_message(U, P)
 
 				if("Send Honk")//Honk virus
 					if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
@@ -678,6 +603,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(uplink)
 						uplink.active = 0
 						note = uplink.orignote
+						mode = 0 // To stop people metagaming that PDAs on the note screen means it is an uplink PDA.
 				if("Detonate")//Detonate PDA
 					if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 						var/obj/item/device/pda/P = locate(href_list["target"])
@@ -794,6 +720,99 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	return telecomms_intact
 
+/obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
+
+	var/t = input(U, "Please enter message", name, null) as text
+	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+	if (!t)
+		return
+	if (!in_range(src, U) && loc != U)
+		return
+
+	if(!istype(P))	return
+
+	if(istype(P, /obj/item/device/pda))
+		if (isnull(P)||P.toff || toff)
+			return
+
+		if (last_text && world.time < last_text + 5)
+			return
+
+		last_text = world.time
+		// check if telecomms I/O route 1459 is stable
+		//var/telecomms_intact = telecomms_process(P.owner, owner, t)
+		var/obj/machinery/message_server/useMS = null
+		if(message_servers)
+			for (var/obj/machinery/message_server/MS in message_servers)
+			//PDAs are now dependant on the Message Server.
+				if(MS.active)
+					useMS = MS
+					break
+		if(useMS) // only send the message if it's stable
+			useMS.send_pda_message("[P.owner]","[owner]","[t]")
+
+			tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
+			P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
+
+			if (prob(15)) //Give the AI a chance of intercepting the message
+				var/who = src.owner
+				if(prob(50))
+					who = P:owner
+				for(var/mob/living/silicon/ai/ai in world)
+					// Allows other AIs to intercept the message but the AI won't intercept their own message.
+					if(ai.aiPDA != P && ai.aiPDA != src)
+						ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
+
+			if (!P.silent)
+				playsound(P.loc, 'twobeep.ogg', 50, 1)
+			for (var/mob/O in hearers(3, P.loc))
+				if(!P.silent) O.show_message(text("\icon[P] *[P.ttone]*"))
+				if( P.loc && isliving(P.loc) )
+					var/mob/living/L = P.loc
+					L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+
+			log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
+			P.overlays = null
+			P.overlays += image('pda.dmi', "pda-r")
+		else
+			U << "ERROR: Server isn't responding."
+
+	// pAI Message
+	else
+
+		//var/telecomms_intact = telecomms_process(P.owner, owner, t)
+		var/obj/machinery/message_server/useMS = null
+		if(message_servers)
+			for (var/obj/machinery/message_server/MS in message_servers)
+			//PDAs are now dependant on the Message Server.
+				if(MS.active)
+					useMS = MS
+					break
+		if(useMS) // only send the message if it's stable
+			useMS.send_pda_message("[P.owner]","[owner]","[t]")
+			tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
+			P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
+
+
+			if (prob(15)) //Give the AI a chance of intercepting the message
+				var/who = src
+				if(prob(50))
+					who = P
+				for (var/mob/living/silicon/ai/ai in world)
+					// Allows other AIs to intercept the message but the AI won't intercept their own message.
+					if(ai.aiPDA != P && ai.aiPDA != src)
+						ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
+
+			if (!P.silent)
+				playsound(P.loc, 'twobeep.ogg', 50, 1)
+			for (var/mob/O in hearers(3, P.loc))
+				if(!P.silent) O.show_message(text("\icon[P] *[P.ttone]*"))
+				if( P.loc && isliving(P.loc) )
+					var/mob/living/L = P.loc
+					L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+			log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
+		else
+			U << "ERROR: Server isn't responding."
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -904,7 +923,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				user.show_message("\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
 				user.show_message("\blue \t Key: Suffocation/Toxin/Burns/Brute", 1)
 				user.show_message("\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
-
+				if(!isnull(C.tod) && (C.stat == 2 || (C.reagents && C.reagents.has_reagent("zombiepowder")) || (C.changeling && C.changeling.changeling_fakedeath)))
+					user.show_message("\blue \t Time of Death: [C.tod]")
 				if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_organs(1,1)
@@ -990,6 +1010,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			note = A:info
 		user << "\blue Paper scanned." //concept of scanning paper copyright brainoblivion 2009
 
+
 /obj/item/device/pda/proc/explode() //This needs tuning.
 
 	var/turf/T = get_turf(src.loc)
@@ -1005,6 +1026,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	del(src)
 	return
+
+/obj/item/device/pda/ai/explode()
+	return // No explosions for the  AI pda!
 
 /obj/item/device/pda/Del()
 	PDAs -= src
@@ -1033,7 +1057,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /mob/living/silicon/ai/verb/cmd_send_pdamesg()
 	set category = "AI Commands"
-	set name = "Send PDA Message"
+	set name = "PDA - Send Message"
 	var/list/names = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
@@ -1042,12 +1066,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		usr << "You can't send PDA messages because you are dead!"
 		return
 
+	if(src.aiPDA.toff)
+		usr << "Turn on your receiver in order to send messages."
+		return
+
 	for (var/obj/item/device/pda/P in PDAs)
 		if (!P.owner)
 			continue
 		else if (P == src)
 			continue
 		else if (P.toff)
+			continue
+		else if (P == src.aiPDA)
 			continue
 
 		var/name = P.owner
@@ -1060,44 +1090,52 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		plist[text("[name]")] = P
 
-	var/c = input(usr, "Please select a PDA") as null|anything in plist
+	var/c = input(usr, "Please select a PDA") as null|anything in sortList(plist)
 
 	if (!c)
 		return
 
 	var/selected = plist[c]
-	ai_send_pdamesg(selected)
+	src.aiPDA.create_message(src, selected)
 
-/mob/living/silicon/ai/proc/ai_send_pdamesg(obj/selected as obj)
-	var/t = input(usr, "Please enter message", src.name, null) as text
-	t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-	if (!t)
+
+/mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()
+	set category = "AI Commands"
+	set name = "PDA - Toggle Sender/Receiver"
+	if(usr.stat == 2)
+		usr << "You can't do that because you are dead!"
 		return
-
-	if (selected:toff)
-		return
-	var/obj/machinery/message_server/useMS = null
-	if(!isnull(message_servers))
-		for (var/obj/machinery/message_server/MS in message_servers)
-		//PDAs are now dependant on the Message Server.
-			if(MS.active)
-				useMS = MS
-				break
-	if(!isnull(useMS)) // only send the message if it's stable
-		useMS.send_pda_message("[selected:owner]","[usr.name]","[t]")
-
-		usr.show_message("<i>PDA message to <b>[selected:owner]</b>: [t]</i>")
-		selected:tnote += "<i><b>&larr; From (AI) [usr.name]:</b></i><br>[t]<br>"
-
-		if (!selected:silent)
-			playsound(selected.loc, 'twobeep.ogg', 50, 1)
-			for (var/mob/O in hearers(3, selected.loc))
-				O.show_message(text("\icon[selected] *[selected:ttone]*"))
-
-		selected.overlays = null
-		selected.overlays += image('pda.dmi', "pda-r")
+	if(!isnull(aiPDA))
+		aiPDA.toff = !aiPDA.toff
+		usr << "<span class='notice'>PDA sender/receiver toggled [(aiPDA.toff ? "Off" : "On")]!</span>"
 	else
-		usr << "ERROR: Server isn't responding."
+		usr << "You do not have a PDA. You should make an issue report about this."
+
+/mob/living/silicon/ai/verb/cmd_toggle_pda_silent()
+	set category = "AI Commands"
+	set name = "PDA - Toggle Ringer"
+	if(usr.stat == 2)
+		usr << "You can't do that because you are dead!"
+		return
+	if(!isnull(aiPDA))
+		aiPDA.silent = !aiPDA.silent
+		usr << "<span class='notice'>PDA ringer toggled [(aiPDA.silent ? "Off" : "On")]!</span>"
+	else
+		usr << "You do not have a PDA. You should make an issue report about this."
+
+/mob/living/silicon/ai/verb/cmd_show_message_log()
+	set category = "AI Commands"
+	set name = "PDA - Show Message Log"
+	if(usr.stat == 2)
+		usr << "You can't do that because you are dead!"
+		return
+	if(!isnull(aiPDA))
+		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
+		usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
+	else
+		usr << "You do not have a PDA. You should make an issue report about this."
+
+
 
 
 //Some spare PDAs in a box

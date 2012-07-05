@@ -181,7 +181,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/target = null	   //Chosen target.
 
 		dest += getmobs() //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
+		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in sortList(dest)
 
 		if (!target)//Make sure we actually have a target
 			return

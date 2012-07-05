@@ -67,7 +67,9 @@
 			t += "<BR><A href='?src=\ref[src];update=1'>Refresh</A>"
 			t += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
 			t += "<table><tr><td>Name</td><td>Vitals</td><td>Position</td></tr>"
+			var/list/logs = list()
 			for(var/obj/item/clothing/under/C in src.tracked)
+				var/log = ""
 				if((C) && (C.has_sensor) && (C.loc) && (C.loc.z == 1) && C.sensor_mode)
 					if(istype(C.loc, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = C.loc
@@ -77,16 +79,20 @@
 						var/dam4 = round(H.getBruteLoss(),1)
 
 						if(H.wear_id)
-							t += "<tr><td>[H.wear_id.name]</td>"
+							log += "<tr><td>[H.wear_id.name]</td>"
 						else
-							t += "<tr><td>Unknown:</td>"
+							log += "<tr><td>Unknown:</td>"
 						switch(C.sensor_mode)
 							if(1)
-								t+= "<td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"]</td><td>Not Available</td></tr>"
+								log+= "<td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"]</td><td>Not Available</td></tr>"
 							if(2)
-								t += "<td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"], [dam1] - [dam2] - [dam3] - [dam4]</td><td>Not Available</td></tr>"
+								log += "<td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"], [dam1] - [dam2] - [dam3] - [dam4]</td><td>Not Available</td></tr>"
 							if(3)
-								t += "<td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"], [dam2] - [dam2] - [dam3] - [dam4]</td><td>[get_area(H)] ([H.x], [H.y])</td></tr>"
+								log+= "<td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"], [dam2] - [dam2] - [dam3] - [dam4]</td><td>[get_area(H)] ([H.x], [H.y])</td></tr>"
+				logs += log
+			logs = sortList(logs)
+			for(var/log in logs)
+				t += log
 			t += "</table>"
 			t += "</FONT></PRE></TT>"
 			user << browse(t, "window=crewcomp;size=900x600")

@@ -15,6 +15,7 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 	var/icon/holo_icon//Default is assigned when AI is created.
+	var/obj/item/device/pda/ai/aiPDA = null
 
 	//MALFUNCTION
 	var/datum/AI_Module/module_picker/malf_picker

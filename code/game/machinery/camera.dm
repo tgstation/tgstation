@@ -77,6 +77,8 @@
 
 		creatures[name] = M
 
+	creatures = sortList(creatures)
+
 	var/target_name = input(usr, "Which creature should you track?") as null|anything in creatures
 
 	if (!target_name)

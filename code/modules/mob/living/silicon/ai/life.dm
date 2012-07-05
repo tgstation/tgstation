@@ -14,6 +14,10 @@
 
 		src.update_mind()
 
+		if(aiPDA && aiPDA.name != name)
+			aiPDA.owner = name
+			aiPDA.name = name + " (" + aiPDA.ownjob + ")"
+
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
 				src << "\red ERROR: APC access disabled, hack attempt canceled."

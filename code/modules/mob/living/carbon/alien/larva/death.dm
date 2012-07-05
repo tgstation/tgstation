@@ -26,7 +26,7 @@
 					src.verbs += /mob/proc/ghost
 
 	if(mind) // Skie - Added check that there's someone controlling the alien
-		var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
+		tod = worldtime2text() //weasellos time of death patch
 		mind.store_memory("Time of death: [tod]", 0)
 
 	return ..(gibbed)

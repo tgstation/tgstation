@@ -1481,6 +1481,7 @@ datum
 				M.adjustToxLoss(0.5)
 				M.Weaken(10)
 				M.silent = max(M.silent, 10)
+				M.tod = worldtime2text()
 				..()
 				return
 

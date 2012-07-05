@@ -255,7 +255,7 @@ ________________________________________________________________________________
 	else
 		dat += "<h2 ALIGN=CENTER>SpiderOS v.<b>ERR-RR00123</b></h2>"
 	dat += "<br>"
-	dat += "<img src=sos_10.png> Current Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]<br>"
+	dat += "<img src=sos_10.png> Current Time: [worldtime2text()]<br>"
 	dat += "<img src=sos_9.png> Battery Life: [round(cell.charge/100)]%<br>"
 	dat += "<img src=sos_11.png> Smoke Bombs: \Roman [s_bombs]<br>"
 	dat += "<img src=sos_14.png> pai Device: "

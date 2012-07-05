@@ -27,6 +27,11 @@
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 
+	aiPDA = new/obj/item/device/pda/ai(src)
+	aiPDA.owner = name
+	aiPDA.ownjob = "AI"
+	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
+
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
 		/mob/living/silicon/ai/proc/ai_camera_list, /mob/living/silicon/ai/proc/ai_network_change, \
@@ -147,12 +152,14 @@
 /mob/living/silicon/ai/proc/ai_roster()
 	set category = "AI Commands"
 	set name = "Show Crew Manifest"
-
 	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
 
+	var/list/L = list()
 	for (var/datum/data/record/t in data_core.general)
-		dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
-
+		var/R = t.fields["name"] + " - " + t.fields["rank"]
+		L += R
+	for(var/R in sortList(L))
+		dat += "[R]<br>"
 	dat += "</body></html>"
 
 	src << browse(dat, "window=airoster")
@@ -454,6 +461,8 @@
 				cameralist[C.network] = C.network
 
 	network = input(usr, "Which network would you like to view?") as null|anything in cameralist
+	if(isnull(network))
+		network = initial(network) // If nothing is selected, default to SS13 (or the initial network)
 	src << "\blue Switched to [network] camera network."
 //End of code by Mord_Sith
 

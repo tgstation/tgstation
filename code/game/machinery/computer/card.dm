@@ -52,9 +52,13 @@
 		return
 	if (mode) // accessing crew manifest
 		var/crew = ""
-		for(var/datum/data/record/t in data_core.general)
-			crew += "[t.fields["name"]] - [t.fields["rank"]]<br>"
-		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
+		var/list/L = list()
+		for (var/datum/data/record/t in data_core.general)
+			var/R = t.fields["name"] + " - " + t.fields["rank"]
+			L += R
+		for(var/R in sortList(L))
+			crew += "[R]<br>"
+		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 	else
 		var/header = "<div align='center'><b>Identification Card Modifier</b></div>"
 
@@ -248,8 +252,12 @@
 				sleep(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 				var/t1 = "<B>Crew Manifest:</B><BR>"
-				for(var/datum/data/record/t in data_core.general)
-					t1 += "<B>[t.fields["name"]]</B> - [t.fields["rank"]]<BR>"
+				var/list/L = list()
+				for (var/datum/data/record/t in data_core.general)
+					var/R = t.fields["name"] + " - " + t.fields["rank"]
+					L += R
+				for(var/R in sortList(L))
+					t1 += "[R]<br>"
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
 				printing = null

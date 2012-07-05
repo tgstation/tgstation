@@ -101,7 +101,9 @@ MASS SPECTROMETER
 		user.show_message(text("\blue \t Damage Specifics: []-[]-[]-[]", M.getOxyLoss() > 50 ? "\red [M.getOxyLoss()]" : M.getOxyLoss(), M.getToxLoss() > 50 ? "\red [M.getToxLoss()]" : M.getToxLoss(), M.getFireLoss() > 50 ? "\red[M.getFireLoss()]" : M.getFireLoss(), M.getBruteLoss() > 50 ? "\red[M.getBruteLoss()]" : M.getBruteLoss()), 1)
 	user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
 	user.show_message("\blue Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
-	if(mode == 1 && istype(M, /mob/living/carbon/human))
+	if(!isnull(M.tod) && (M.stat == 2 || (M.reagents && M.reagents.has_reagent("zombiepowder")) || (M.changeling && M.changeling.changeling_fakedeath)))
+		user.show_message("\blue Time of Death: [M.tod]")
+	if(istype(M, /mob/living/carbon/human) && mode == 1)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_organs(1,1)
 		user.show_message("\blue Localized Damage, Brute/Burn:",1)

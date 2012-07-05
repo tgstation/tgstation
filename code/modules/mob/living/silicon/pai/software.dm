@@ -238,7 +238,6 @@
 					if(!AnsweringMS)
 						return alert("ERROR: No response from server!")
 
-
 					tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
 					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
 
@@ -443,8 +442,13 @@
 /mob/living/silicon/pai/proc/softwareManifest()
 	var/dat = ""
 	dat += "<h2>Crew Manifest</h2><br><br>"
-	for (var/datum/data/record/t in data_core.general)
-		dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+	var/list/L = list()
+	for (var/datum/data/record/t in sortRecord(data_core.general))
+		var/R = t.fields["name"] + " - " + t.fields["rank"]
+		L += R
+	for(var/R in sortList(L))
+		dat += "[R]<br>"
+	dat += "</body></html>"
 	return dat
 
 // Medical Records
@@ -452,7 +456,7 @@
 	var/dat = ""
 	if(src.subscreen == 0)
 		dat += "<h3>Medical Records</h3><HR>"
-		for(var/datum/data/record/R in data_core.general)
+		for(var/datum/data/record/R in sortRecord(data_core.general))
 			dat += text("<A href='?src=\ref[];med_rec=\ref[];software=medicalrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
 		//dat += text("<HR><A href='?src=\ref[];screen=0;softFunction=medical records'>Back</A>", src)
 	if(src.subscreen == 1)
@@ -474,7 +478,7 @@
 	var/dat = ""
 	if(src.subscreen == 0)
 		dat += "<h3>Security Records</h3><HR>"
-		for(var/datum/data/record/R in data_core.general)
+		for(var/datum/data/record/R in sortRecord(data_core.general))
 			dat += text("<A href='?src=\ref[];sec_rec=\ref[];software=securityrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
 	if(src.subscreen == 1)
 		dat += "<h3>Security Record</h3>"
