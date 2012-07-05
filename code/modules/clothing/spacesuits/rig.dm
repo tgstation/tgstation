@@ -48,12 +48,21 @@
 	item_state = "rig0-white"
 	color = "white"
 
+/obj/item/clothing/head/helmet/space/rig/syndi
+	name = "blood-red hardsuit helmet"
+	icon_state = "rig0-syndi"
+	item_state = "rig0-syndi"
+	color = "syndi"
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
+
+////////////////////Suits
+
 /obj/item/clothing/suit/space/rig
 	name = "engineering hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "rig-engineering"
 	item_state = "rig_suit"
-	protective_temperature = 5000 //For not dieing near a fire, but still not being great in a full inferno
+	protective_temperature = 5000 //For not dying near a fire, but still not being great in a full inferno
 	slowdown = 2
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/satchel,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
@@ -66,3 +75,11 @@
 	icon_state = "rig-white"
 	name = "advanced hardsuit"
 	protective_temperature = 10000
+
+/obj/item/clothing/suit/space/rig/syndi
+	icon_state = "rig-syndi"
+	name = "blood-red hardsuit"
+	slowdown = 1
+	w_class = 3
+	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 60)
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)

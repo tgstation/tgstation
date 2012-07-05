@@ -227,7 +227,7 @@
 				usr << "\red Subject may not have abiotic items on."
 				return
 			if(!src.node)
-				usr << "\red The cell is not corrrectly connected to its pipe network!"
+				usr << "\red The cell is not correctly connected to its pipe network!"
 				return
 			if (M.client)
 				M.client.perspective = EYE_PERSPECTIVE
@@ -247,9 +247,18 @@
 			set name = "Eject occupant"
 			set category = "Object"
 			set src in oview(1)
-			if (usr.stat != 0)
-				return
-			src.go_out()
+			if(usr == src.occupant)//If the user is inside the tube...
+				if (usr.stat == 2)//and he's not dead....
+					return
+				usr << "\blue Release sequence activated. This will take two minutes."
+				sleep(1200)
+				if(!src || !usr || !src.occupant || (src.occupant != usr)) //Check if someone's released/replaced/bombed him already
+					return
+				src.go_out()//and release him from the eternal prison.
+			else
+				if (usr.stat != 0)
+					return
+				src.go_out()
 			add_fingerprint(usr)
 			return
 
