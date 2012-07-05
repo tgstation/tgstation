@@ -115,6 +115,9 @@ MEDICAL
 					"You hear gauze being ripped.")
 		use(1)
 
+		if (!ointment && (affecting.status & BLEEDING))
+			affecting.status &= ~BLEEDING
+
 		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
 			H.UpdateDamageIcon()
 		else
