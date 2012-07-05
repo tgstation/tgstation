@@ -372,7 +372,6 @@ CIRCULAR SAW
 			switch(M:appendix_op_stage)
 				if(1.0)
 					if(M != user)
-						world << "Beep"
 						for(var/mob/O in (viewers(M) - user - M))
 							O.show_message("\red [user] is beginning to clamp bleeders in [M]'s abdomen cut open with [src].", 1)
 						M << "\red [user] begins to clamp bleeders in your abdomen with [src]!"
@@ -400,7 +399,6 @@ CIRCULAR SAW
 						return
 
 	if (user.zone_sel.selecting == "eyes")
-		S = H.organs["head"]
 		if(istype(H) && ( \
 				(H.head && H.head.flags & HEADCOVERSEYES) || \
 				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
@@ -455,7 +453,6 @@ CIRCULAR SAW
 			return ..()
 
 	if(user.zone_sel.selecting == "mouth")
-		S = H.organs["head"]
 		if(istype(H) && ( \
 				(H.head && H.head.flags & HEADCOVERSEYES) || \
 				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
@@ -626,7 +623,6 @@ CIRCULAR SAW
 		else
 			user << "\red [H] is not bleeding in \his [S.display_name]!"
 			return 0
-	world << "Boop"
 	if(H != user)
 		H.visible_message( \
 			"\red [user] is beginning to clamp bleeders in the wound in [H]'s [S.display_name] with [src].", \
