@@ -143,7 +143,7 @@ var/global/sent_syndicate_strike_team = 0
 	camera.network = "Syndicate"
 	camera.c_tag = real_name
 
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
 	equip_if_possible(R, slot_ears)
 	equip_if_possible(new /obj/item/clothing/under/syndicate(src), slot_w_uniform)

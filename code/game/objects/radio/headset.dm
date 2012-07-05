@@ -20,12 +20,13 @@
 	keyslot1 = new /obj/item/device/encryptionkey/
 	recalculateChannels()
 
-/obj/item/device/radio/headset/traitor
+/obj/item/device/radio/headset/syndicate
 	origin_tech = "syndicate=3"
-/obj/item/device/radio/headset/traitor/New()
+/obj/item/device/radio/headset/syndicate/New()
 	..()
 	del(keyslot1)
-	keyslot1 = new /obj/item/device/encryptionkey/traitor
+	keyslot1 = new /obj/item/device/encryptionkey/syndicate
+	syndie = 1
 	recalculateChannels()
 
 /obj/item/device/radio/headset/binary
@@ -177,7 +178,6 @@
 					keyslot2.loc = T
 					keyslot2 = null
 
-
 			recalculateChannels()
 			user << "You pop out the encryption keys in the headset!"
 
@@ -209,6 +209,7 @@
 	src.channels = list()
 	src.translate_binary = 0
 	src.translate_hive = 0
+	src.syndie = 0
 
 	if(keyslot1)
 		for(var/ch_name in keyslot1.channels)
@@ -223,6 +224,9 @@
 		if(keyslot1.translate_hive)
 			src.translate_hive = 1
 
+		if(keyslot1.syndie)
+			src.syndie = 1
+
 	if(keyslot2)
 		for(var/ch_name in keyslot2.channels)
 			if(ch_name in src.channels)
@@ -235,6 +239,9 @@
 
 		if(keyslot2.translate_hive)
 			src.translate_hive = 1
+
+		if(keyslot2.syndie)
+			src.syndie = 1
 
 
 	for (var/ch_name in channels)

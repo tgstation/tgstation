@@ -215,7 +215,7 @@
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
 	var/radio_freq = SYND_FREQ
 
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(synd_mob)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
 	R.set_frequency(radio_freq)
 	synd_mob.equip_if_possible(R, synd_mob.slot_ears)
 

@@ -7,6 +7,7 @@
 	item_state = ""
 	var/translate_binary = 0
 	var/translate_hive = 0
+	var/syndie = 0
 	var/list/channels = list()
 
 
@@ -14,10 +15,11 @@
 
 /obj/item/device/encryptionkey/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-/obj/item/device/encryptionkey/traitor
+/obj/item/device/encryptionkey/syndicate
 	icon_state = "cypherkey"
 	channels = list("Syndicate" = 1)
 	origin_tech = "syndicate=3"
+	syndie = 1//Signifies that it de-crypts Syndicate transmissions
 
 /obj/item/device/encryptionkey/binary
 	icon_state = "cypherkey"

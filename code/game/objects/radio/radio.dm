@@ -23,6 +23,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 	var/subspace_transmission = 0
+	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = FPRINT | CONDUCT | TABLEPASS
 	slot_flags = SLOT_BELT
@@ -631,6 +632,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	*/
 	if (!(wires & WIRE_RECEIVE))
 		return
+	if(freq == SYND_FREQ)
+		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
+			return
 	if (!on)
 		return
 	if (!freq) //recieved on main frequency

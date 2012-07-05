@@ -25,12 +25,14 @@
 			attack_self(user)
 
 
-	send_hear()
+	send_hear(freq)
 		if (!(src.wires & WIRE_RECEIVE))
 			return
 		if (!src.listening)
 			return
-
+		if(freq == SYND_FREQ)
+			if(!(src.syndie))
+				return//Prevents broadcast of messages over devices lacking the encryption
 		/*
 		var/turf/T = get_turf(src)
 		var/list/hear = hearers(7, T)
