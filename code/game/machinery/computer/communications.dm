@@ -482,8 +482,8 @@
 		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		return
 
+	emergency_shuttle.shuttlealert(0)
 	emergency_shuttle.incall()
-	emergency_shuttle.shuttlealert(1)
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
@@ -502,11 +502,11 @@
 	if(sent_strike_team == 1)
 		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
 		return
-
+/*
 	if(world.time < 54000) // 30 minute grace period to let the game get going
 		user << "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again."//may need to change "/600"
 		return
-
+*/
 	if(emergency_shuttle.direction == -1)
 		user << "The shuttle may not be called while returning to CentCom."
 		return
@@ -523,8 +523,8 @@
 		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		return
 
-	emergency_shuttle.incall()
 	emergency_shuttle.shuttlealert(1)
+	emergency_shuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
 	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
