@@ -204,6 +204,7 @@
 #define FILE_DIR "icons/spideros_icons"
 #define FILE_DIR "icons/Testing"
 #define FILE_DIR "icons/turf"
+#define FILE_DIR "icons/vehicles"
 #define FILE_DIR "icons/vending_icons"
 #define FILE_DIR "interface"
 #define FILE_DIR "maps"
