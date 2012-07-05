@@ -5,31 +5,18 @@
 
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
 //some autodetection here.
-	"traitor" = IS_MODE_COMPILED("traitor"),
-	"operative" = IS_MODE_COMPILED("nuclear"),
-	"changeling" = IS_MODE_COMPILED("changeling"),
-	"wizard" = IS_MODE_COMPILED("wizard"),
-	"malf AI" = IS_MODE_COMPILED("malfunction"),
-	"revolutionary" = IS_MODE_COMPILED("revolution"),
-	"alien candidate" = 1, //always show
-	"pai candidate" = 1, // -- TLE
-	"cultist" = IS_MODE_COMPILED("cult"),
-	"infested monkey" = IS_MODE_COMPILED("monkey"),
+	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
+	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
+	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
+	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
+	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
+	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
+	"alien candidate" = 1, //always show                 // 6
+	"pAI candidate" = 1, // -- TLE                       // 7
+	"cultist" = IS_MODE_COMPILED("cult"),                // 8
+	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
 )
-/*
-var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
-//some autodetection here.
-	"traitor" = ispath(text2path("/datum/game_mode/traitor")),
-	"operative" = ispath(text2path("/datum/game_mode/nuclear")),
-	"changeling" = ispath(text2path("/datum/game_mode/changeling")),
-	"wizard" = ispath(text2path("/datum/game_mode/wizard")),
-	"malf AI" = ispath(text2path("/datum/game_mode/malfunction")),
-	"revolutionary" = ispath(text2path("/datum/game_mode/revolution")),
-	"alien candidate" = 1, //always show
-	"cultist" = ispath(text2path("/datum/game_mode/cult")),
-	"infested monkey" = ispath(text2path("/datum/game_mode/monkey")),
-)
-*/
+
 var/const/BE_TRAITOR   =(1<<0)
 var/const/BE_OPERATIVE =(1<<1)
 var/const/BE_CHANGELING=(1<<2)
@@ -37,9 +24,9 @@ var/const/BE_WIZARD    =(1<<3)
 var/const/BE_MALF      =(1<<4)
 var/const/BE_REV       =(1<<5)
 var/const/BE_ALIEN     =(1<<6)
-var/const/BE_CULTIST   =(1<<7)
-var/const/BE_MONKEY    =(1<<8)
-var/const/BE_PAI       =(1<<9)
+var/const/BE_PAI       =(1<<7)
+var/const/BE_CULTIST   =(1<<8)
+var/const/BE_MONKEY    =(1<<9)
 
 
 
