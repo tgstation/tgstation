@@ -254,6 +254,17 @@
 	user.current = src
 	user.reset_view(src)
 
+/obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
+	if(!istype(user))
+		return
+	status = 0
+	for(var/mob/O in viewers(user, null))
+		O.show_message("<span class='warning'>\The [user] slashes at [src]!</span>", 1)
+		playsound(src.loc, 'slash.ogg', 100, 1)
+	icon_state = "camera1"
+	add_hiddenprint(user)
+	deactivate(user,0)
+
 /obj/machinery/camera/attackby(W as obj, user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/wirecutters))
