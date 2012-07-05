@@ -476,11 +476,11 @@ var/list/sacrificed = list()
 					T.imbue = "deafen"
 					imbued_from = R
 					break
-				/*if(R.word1==worddestr && R.word2==wordsee && R.word3==wordother) //blind
+				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordother) //blind
 					T = new(src.loc)
 					T.imbue = "blind"
 					imbued_from = R
-					break*/
+					break
 				if(R.word1==wordself && R.word2==wordother && R.word3==wordtech) //communicat
 					T = new(src.loc)
 					T.imbue = "communicate"
@@ -863,7 +863,7 @@ var/list/sacrificed = list()
 					return fizzle()
 			else
 				var/affected = 0
-				for(var/mob/living/carbon/C in viewers(usr))
+				for(var/mob/living/carbon/C in view(2,usr))
 					if (iscultist(C))
 						continue
 					var/obj/item/weapon/nullrod/N = locate() in C
@@ -997,13 +997,20 @@ var/list/sacrificed = list()
 				usr.whisper("N'ath reth sh'yro eth d'raggathnor!")
 			usr.visible_message("\red Rune disappears with a flash of red light, and a set of armor appears on you..", \
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
-			user.equip_if_possible(new /obj/item/clothing/shoes/cult(user), user.slot_shoes)
-			user.equip_if_possible(new /obj/item/clothing/suit/cultrobes/alt(user), user.slot_wear_suit)
+
 			user.equip_if_possible(new /obj/item/clothing/head/culthood/alt(user), user.slot_head)
-			//user.equip_if_possible(new /obj/item/clothing/gloves/black(user), user.slot_gloves)
-			//user.equip_if_possible(new /obj/item/clothing/suit/magusred(user), user.slot_wear_suit)
-			//user.equip_if_possible(new /obj/item/clothing/head/magus(user), user.slot_head)
-			user.equip_if_possible(new /obj/item/weapon/melee/cultblade(user), user.slot_r_hand)
+			user.equip_if_possible(new /obj/item/clothing/suit/cultrobes/alt(user), user.slot_wear_suit)
+			user.equip_if_possible(new /obj/item/clothing/shoes/cult(user), user.slot_shoes)
 			user.equip_if_possible(new /obj/item/weapon/storage/backpack/cultpack(user), user.slot_back)
+			if(!user.equip_if_possible(new /obj/item/weapon/melee/cultblade(user), user.slot_r_hand))
+				user.equip_if_possible(new /obj/item/weapon/melee/cultblade(user), user.slot_l_hand)
+
+			user.update_inv_head(0)
+			user.update_inv_wear_suit(0)
+			user.update_inv_shoes(0)
+			user.update_inv_back(0)
+			user.update_inv_l_hand(0)
+			user.update_inv_r_hand()
+
 			del(src)
 			return

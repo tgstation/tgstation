@@ -699,7 +699,10 @@
 	//G = null
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	if(locate(/obj/machinery/computer/cloning, get_step(src, EAST)))
+	if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
+		|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
+		|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
+		|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
 
 		if (!M.client)
 			for(var/mob/dead/observer/ghost in world)

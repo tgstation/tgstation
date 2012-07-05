@@ -30,90 +30,41 @@ obj/structure/meteorhit(obj/O as obj)
 	var/state = 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/wrench) && state == 0 && anchored && !istype(src,/obj/structure/girder/displaced))
-			playsound(src.loc, 'Ratchet.ogg', 100, 1)
-			user << "\blue Now disassembling the girder"
-			if(do_after(user,40))
-				user << "\blue You dissasembled the girder!"
-				new /obj/item/stack/sheet/metal(get_turf(src))
-				del(src)
+		if(istype(W, /obj/item/weapon/wrench) && state == 0)
+			if(anchored && !istype(src,/obj/structure/girder/displaced))
+				playsound(src.loc, 'Ratchet.ogg', 100, 1)
+				user << "\blue Now disassembling the girder"
+				if(do_after(user,40))
+					if(!src) return
+					user << "\blue You dissasembled the girder!"
+					new /obj/item/stack/sheet/metal(get_turf(src))
+					del(src)
+			else if(!anchored)
+				playsound(src.loc, 'Ratchet.ogg', 100, 1)
+				user << "\blue Now securing the girder"
+				if(get_turf(user, 40))
+					user << "\blue You secured the girder!"
+					new/obj/structure/girder( src.loc )
+					del(src)
 
 		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 			user << "\blue Now slicing apart the girder"
 			if(do_after(user,30))
+				if(!src) return
 				user << "\blue You slice apart the girder!"
-			new /obj/item/stack/sheet/metal(get_turf(src))
-			del(src)
+				new /obj/item/stack/sheet/metal(get_turf(src))
+				del(src)
 
 		else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
 			user << "\blue You drill through the girder!"
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			del(src)
 
-		else if(istype(W, /obj/item/stack/sheet) && !anchored)
-			switch(W.type)
-				if(/obj/item/stack/sheet/metal)
-					W:use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					new /obj/structure/falsewall (src.loc)
-				if(/obj/item/stack/sheet/plasteel)
-					W:use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					new /obj/structure/falserwall (src.loc)
-				if(/obj/item/stack/sheet/gold)
-					W:use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					new /obj/structure/falsewall/gold (src.loc)
-				if(/obj/item/stack/sheet/silver)
-					W:use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					new /obj/structure/falsewall/silver (src.loc)
-				if(/obj/item/stack/sheet/diamond)
-					W:use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					new /obj/structure/falsewall/diamond (src.loc)
-				if(/obj/item/stack/sheet/uranium)
-					W:use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					new /obj/structure/falsewall/uranium (src.loc)
-				if(/obj/item/stack/sheet/plasma)
-					W:use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					new /obj/structure/falsewall/plasma (src.loc)
-				if(/obj/item/stack/sheet/clown)
-					W:use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					new /obj/structure/falsewall/clown (src.loc)
-				if(/obj/item/stack/sheet/sandstone)
-					W:use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					new /obj/structure/falsewall/sandstone (src.loc)
-/*				if(/obj/item/stack/sheet/wood)
-					W:use(2)
-					user << "\blue You create a false wall! Push on it to open or close the passage."
-					new /obj/structure/falsewall/wood (src.loc)*/
-			add_hiddenprint(usr)
-			del(src)
-
-
-/*		else if((istype(W, /obj/item/stack/sheet/metal)) && (W:amount >= 2) && istype(src,/obj/structure/girder/displaced))
-			W:use(2)
-			user << "\blue You create a false wall! Push on it to open or close the passage."
-			new /obj/structure/falsewall (src.loc)
-			add_hiddenprint(usr)
-			del(src)
-		else if(istype(W, /obj/item/stack/sheet/plasteel) && istype(src,/obj/structure/girder/displaced))
-			W:use(2)
-			user << "\blue You create a false r wall! Push on it to open or close the passage."
-			new /obj/structure/falserwall (src.loc)
-			add_hiddenprint(usr)
-			del(src)*/
-
-
 		else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 			playsound(src.loc, 'Screwdriver.ogg', 100, 1)
 			user << "\blue Now unsecuring support struts"
 			if(do_after(user,40))
+				if(!src) return
 				user << "\blue You unsecured the support struts!"
 				state = 1
 
@@ -121,6 +72,7 @@ obj/structure/meteorhit(obj/O as obj)
 			playsound(src.loc, 'Wirecutter.ogg', 100, 1)
 			user << "\blue Now removing support struts"
 			if(do_after(user,40))
+				if(!src) return
 				user << "\blue You removed the support struts!"
 				new/obj/structure/girder( src.loc )
 				del(src)
@@ -129,156 +81,226 @@ obj/structure/meteorhit(obj/O as obj)
 			playsound(src.loc, 'Crowbar.ogg', 100, 1)
 			user << "\blue Now dislodging the girder"
 			if(do_after(user, 40))
+				if(!src) return
 				user << "\blue You dislodged the girder!"
 				new/obj/structure/girder/displaced( src.loc )
 				del(src)
 
-		else if(istype(W, /obj/item/weapon/wrench) && state == 0 && !anchored )
-			playsound(src.loc, 'Ratchet.ogg', 100, 1)
-			user << "\blue Now securing the girder"
-			if(get_turf(user, 40))
-				user << "\blue You secured the girder!"
-				new/obj/structure/girder( src.loc )
-				del(src)
+		else if(istype(W, /obj/item/stack/sheet))
 
-		else if((istype(W, /obj/item/stack/sheet)) && (W:amount >= 2))
-			switch(W.type)
+			var/obj/item/stack/sheet/S = W
+			switch(S.type)
 
 				if(/obj/item/stack/sheet/metal)
-					user << "\blue Now adding plating..."
-					if (do_after(user,40))
-						user << "\blue You added the plating!"
-						var/turf/Tsrc = get_turf(src)
-						Tsrc.ReplaceWithWall()
-						for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-							P.layer = 1
-						for(var/turf/simulated/wall/X in Tsrc.loc)
-							if(X)	X.add_hiddenprint(usr)
-						if (W)	W:use(2)
-						del(src)
-						return
-
-				if (/obj/item/stack/sheet/plasteel)
-					if (src.icon_state == "reinforced") //Time to finalize!
-						user << "\blue Now finalising reinforced wall."
-						if(do_after(user, 50))
-							user << "\blue Wall fully reinforced!"
+					if(!anchored)
+						if(S.amount < 2) return
+						S.use(2)
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						new /obj/structure/falsewall (src.loc)
+					else
+						if(S.amount < 2) return ..()
+						user << "\blue Now adding plating..."
+						if (do_after(user,40))
+							if(!src || !S || S.amount < 2) return
+							S.use(2)
+							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithRWall()
+							Tsrc.ReplaceWithWall()
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
-							for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
+							for(var/turf/simulated/wall/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
-							if (W)
-								W:use(1)
 							del(src)
 							return
+
+				if(/obj/item/stack/sheet/plasteel)
+					if(!anchored)
+						if(S.amount < 2) return
+						S.use(2)
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						new /obj/structure/falserwall (src.loc)
 					else
-						user << "\blue Now reinforcing girders"
-						if (do_after(user,60))
-							user << "\blue Girders reinforced!"
-							W:use(1)
-							new/obj/structure/girder/reinforced( src.loc )
-							del(src)
-							return
+						if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
+							if(S.amount < 1) return ..()
+							user << "\blue Now finalising reinforced wall."
+							if(do_after(user, 50))
+								if(!src || !S || S.amount < 1) return
+								S.use(1)
+								user << "\blue Wall fully reinforced!"
+								var/turf/Tsrc = get_turf(src)
+								Tsrc.ReplaceWithRWall()
+								for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+									P.layer = 1
+								for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
+									if(X)	X.add_hiddenprint(usr)
+								del(src)
+								return
+						else
+							if(S.amount < 1) return ..()
+							user << "\blue Now reinforcing girders"
+							if (do_after(user,60))
+								if(!src || !S || S.amount < 1) return
+								S.use(1)
+								user << "\blue Girders reinforced!"
+								new/obj/structure/girder/reinforced( src.loc )
+								del(src)
+								return
 
 				if(/obj/item/stack/sheet/gold)
-					user << "\blue Now adding plating..."
-					if (do_after(user,40))
-						user << "\blue You added the plating!"
-						var/turf/Tsrc = get_turf(src)
-						Tsrc.ReplaceWithMineralWall("gold")
-						for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-							P.layer = 1
-						for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
-							if(X)	X.add_hiddenprint(usr)
-						if (W)	W:use(2)
-						del(src)
-						return
+					if(!anchored)
+						if(S.amount < 2) return
+						S.use(2)
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						new /obj/structure/falsewall/gold (src.loc)
+					else
+						if(S.amount < 2) return ..()
+						user << "\blue Now adding plating..."
+						if (do_after(user,40))
+							if(!src || !S || S.amount < 2) return
+							S.use(2)
+							user << "\blue You added the plating!"
+							var/turf/Tsrc = get_turf(src)
+							Tsrc.ReplaceWithMineralWall("gold")
+							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+								P.layer = 1
+							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
+								if(X)	X.add_hiddenprint(usr)
+							del(src)
+							return
 
 				if(/obj/item/stack/sheet/silver)
-					user << "\blue Now adding plating..."
-					if (do_after(user,40))
-						user << "\blue You added the plating!"
-						var/turf/Tsrc = get_turf(src)
-						Tsrc.ReplaceWithMineralWall("silver")
-						for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-							P.layer = 1
-						for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
-							if(X)	X.add_hiddenprint(usr)
-						if (W)	W:use(2)
-						del(src)
-						return
+					if(!anchored)
+						if(S.amount < 2) return
+						S.use(2)
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						new /obj/structure/falsewall/silver (src.loc)
+					else
+						if(S.amount < 2) return ..()
+						user << "\blue Now adding plating..."
+						if (do_after(user,40))
+							if(!src || !S || S.amount < 2) return
+							S.use(2)
+							user << "\blue You added the plating!"
+							var/turf/Tsrc = get_turf(src)
+							Tsrc.ReplaceWithMineralWall("silver")
+							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+								P.layer = 1
+							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
+								if(X)	X.add_hiddenprint(usr)
+							del(src)
+							return
 
 				if(/obj/item/stack/sheet/diamond)
-					user << "\blue Now adding plating..."
-					if (do_after(user,40))
-						user << "\blue You added the plating!"
-						var/turf/Tsrc = get_turf(src)
-						Tsrc.ReplaceWithMineralWall("diamond")
-						for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-							P.layer = 1
-						for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
-							if(X)	X.add_hiddenprint(usr)
-						if (W)	W:use(2)
-						del(src)
-						return
+					if(!anchored)
+						if(S.amount < 2) return
+						S.use(2)
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						new /obj/structure/falsewall/diamond (src.loc)
+					else
+						if(S.amount < 2) return ..()
+						user << "\blue Now adding plating..."
+						if (do_after(user,40))
+							if(!src || !S || S.amount < 2) return
+							S.use(2)
+							user << "\blue You added the plating!"
+							var/turf/Tsrc = get_turf(src)
+							Tsrc.ReplaceWithMineralWall("diamond")
+							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+								P.layer = 1
+							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
+								if(X)	X.add_hiddenprint(usr)
+							del(src)
+							return
 
 				if(/obj/item/stack/sheet/uranium)
-					user << "\blue Now adding plating..."
-					if (do_after(user,40))
-						user << "\blue You added the plating!"
-						var/turf/Tsrc = get_turf(src)
-						Tsrc.ReplaceWithMineralWall("uranium")
-						for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-							P.layer = 1
-						for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
-							if(X)	X.add_hiddenprint(usr)
-						if (W)	W:use(2)
-						del(src)
-						return
+					if(!anchored)
+						if(S.amount < 2) return
+						S.use(2)
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						new /obj/structure/falsewall/uranium (src.loc)
+					else
+						if(S.amount < 2) return ..()
+						user << "\blue Now adding plating..."
+						if (do_after(user,40))
+							if(!src || !S || S.amount < 2) return
+							S.use(2)
+							user << "\blue You added the plating!"
+							var/turf/Tsrc = get_turf(src)
+							Tsrc.ReplaceWithMineralWall("uranium")
+							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+								P.layer = 1
+							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
+								if(X)	X.add_hiddenprint(usr)
+							del(src)
+							return
 
 				if(/obj/item/stack/sheet/plasma)
-					user << "\blue Now adding plating..."
-					if (do_after(user,40))
-						user << "\blue You added the plating!"
-						var/turf/Tsrc = get_turf(src)
-						Tsrc.ReplaceWithMineralWall("plasma")
-						for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-							P.layer = 1
-						for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
-							if(X)	X.add_hiddenprint(usr)
-						if (W)	W:use(2)
-						del(src)
-						return
+					if(!anchored)
+						if(S.amount < 2) return
+						S.use(2)
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						new /obj/structure/falsewall/plasma (src.loc)
+					else
+						if(S.amount < 2) return ..()
+						user << "\blue Now adding plating..."
+						if (do_after(user,40))
+							if(!src || !S || S.amount < 2) return
+							S.use(2)
+							user << "\blue You added the plating!"
+							var/turf/Tsrc = get_turf(src)
+							Tsrc.ReplaceWithMineralWall("plasma")
+							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+								P.layer = 1
+							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
+								if(X)	X.add_hiddenprint(usr)
+							del(src)
+							return
 
 				if(/obj/item/stack/sheet/clown)
-					user << "\blue Now adding plating..."
-					if (do_after(user,40))
-						user << "\blue You added the plating!"
-						var/turf/Tsrc = get_turf(src)
-						Tsrc.ReplaceWithMineralWall("clown")
-						for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-							P.layer = 1
-						for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
-							if(X)	X.add_hiddenprint(usr)
-						if (W)	W:use(2)
-						del(src)
-						return
+					if(!anchored)
+						if(S.amount < 2) return
+						S.use(2)
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						new /obj/structure/falsewall/clown (src.loc)
+					else
+						if(S.amount < 2) return ..()
+						user << "\blue Now adding plating..."
+						if (do_after(user,40))
+							if(!src || !S || S.amount < 2) return
+							user << "\blue You added the plating!"
+							var/turf/Tsrc = get_turf(src)
+							Tsrc.ReplaceWithMineralWall("clown")
+							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+								P.layer = 1
+							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
+								if(X)	X.add_hiddenprint(usr)
+							del(src)
+							return
 
 				if(/obj/item/stack/sheet/sandstone)
-					user << "\blue Now adding plating..."
-					if (do_after(user,40))
-						user << "\blue You added the plating!"
-						var/turf/Tsrc = get_turf(src)
-						Tsrc.ReplaceWithMineralWall("sandstone")
-						for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-							P.layer = 1
-						for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
-							if(X)	X.add_hiddenprint(usr)
-						if (W)	W:use(2)
-						del(src)
-						return
+					if(!anchored)
+						if(S.amount < 2) return
+						S.use(2)
+						user << "\blue You create a false wall! Push on it to open or close the passage."
+						new /obj/structure/falsewall/sandstone (src.loc)
+					else
+						if(S.amount < 2) return ..()
+						user << "\blue Now adding plating..."
+						if (do_after(user,40))
+							if(!src || !S || S.amount < 2) return
+							S.use(2)
+							user << "\blue You added the plating!"
+							var/turf/Tsrc = get_turf(src)
+							Tsrc.ReplaceWithMineralWall("sandstone")
+							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+								P.layer = 1
+							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
+								if(X)	X.add_hiddenprint(usr)
+							del(src)
+							return
+
+			add_hiddenprint(usr)
+			del(src)
 
 		else if(istype(W, /obj/item/pipe))
 			var/obj/item/pipe/P = W
@@ -466,6 +488,14 @@ obj/structure/meteorhit(obj/O as obj)
 /obj/structure/falsewall/uranium/attack_hand(mob/user as mob)
 	radiate()
 	..()
+
+/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+	..()
+	if(density)
+		icon_state = "[mineral]0"
+		src.relativewall()
+	else
+		icon_state = "[mineral]fwall_open"
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/screwdriver))
