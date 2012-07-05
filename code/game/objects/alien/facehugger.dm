@@ -40,6 +40,7 @@ var/const/MAX_ACTIVE_TIME = 600
 
 	attack(mob/living/M as mob, mob/user as mob)
 		..()
+		user.drop_from_inventory(src)
 		Attach(M)
 
 	New()
@@ -72,6 +73,8 @@ var/const/MAX_ACTIVE_TIME = 600
 			Die()
 		return
 
+	equipped(mob/M)
+		Attach(M)
 
 	HasEntered(atom/target)
 		Attach(target)
@@ -89,22 +92,17 @@ var/const/MAX_ACTIVE_TIME = 600
 	proc/Attach(M as mob)
 		if(!isliving(M) || isalien(M))
 			return
-
 		if(attached)
 			return
 		else
 			attached++
 			spawn(MAX_IMPREGNATION_TIME)
-			attached = 0
+				attached = 0
 
 		var/mob/living/L = M //just so I don't need to use :
 
-		if(stat != CONSCIOUS)
-			return
-
+		if(stat != CONSCIOUS)	return
 		if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
-
-		loc = L.loc
 
 		if(issilicon(L))
 			for(var/mob/O in viewers(src, null))
@@ -126,31 +124,17 @@ var/const/MAX_ACTIVE_TIME = 600
 				return
 
 		if(target.wear_mask)
+			if(prob(20))	return
 			var/obj/item/clothing/W = target.wear_mask
+			if(!W.canremove)	return
+			target.drop_from_inventory(W)
 
-			if(!W.canremove)
-				return
-
-			target.u_equip(W)
-			if (target.client)
-				target.client.screen -= W
-			W.loc = target.loc
-			W.dropped(target)
-			W.layer = initial(W.layer)
 			for(var/mob/O in viewers(target, null))
 				O.show_message("\red \b [src] tears [W] off of [target]'s face!", 1)
-
-		if(istype(loc,/mob/living/carbon/alien)) //just taking it off from the alien's UI
-			var/mob/living/carbon/alien/host = loc
-			host.u_equip(src)
-			if (host.client)
-				host.client.screen -= src
-			add_fingerprint(host)
 
 		loc = target
 		layer = 20
 		target.wear_mask = src
-
 		target.update_inv_wear_mask()
 
 		GoIdle() //so it doesn't jump the people that tear it off
@@ -163,7 +147,7 @@ var/const/MAX_ACTIVE_TIME = 600
 		return
 
 	proc/Impregnate(mob/living/carbon/target as mob)
-		if(!target || target.wear_mask != src) //was taken off or something
+		if(!target || target.wear_mask != src || target.stat == DEAD) //was taken off or something
 			return
 
 		if(!sterile)

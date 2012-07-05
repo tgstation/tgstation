@@ -7,6 +7,7 @@
 					"<span class='notice'>[user.name] pulls [buckled_mob.name] free from the sticky nest!</span>",\
 					"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
 					"<span class='notice'>You hear squelching...</span>")
+				buckled_mob.pixel_y = 0
 				unbuckle()
 			else
 				buckled_mob.visible_message(\
@@ -14,7 +15,9 @@
 					"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
 					"<span class='notice'>You hear squelching...</span>")
 				spawn(1200)
-					if(buckled_mob && user.buckled == src)	unbuckle()
+					if(buckled_mob && user.buckled == src)
+						buckled_mob.pixel_y = 0
+						unbuckle()
 			src.add_fingerprint(user)
 	return
 
@@ -40,6 +43,7 @@
 	M.loc = src.loc
 	M.dir = src.dir
 	M.update_canmove()
+	M.pixel_y = 6
 	src.buckled_mob = M
 	src.add_fingerprint(user)
 	return

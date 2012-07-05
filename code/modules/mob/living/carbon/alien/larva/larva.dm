@@ -6,10 +6,7 @@
 	if(name == "alien larva")
 		name = text("alien larva ([rand(1, 1000)])")
 	real_name = name
-	spawn (1)
-		regenerate_icons()
-		src << "\blue Your icons have been generated!"
-//	spawn(1200) grow()  Grow after 120 seconds -- TLE Commented out because life.dm has better version -- Urist
+	regenerate_icons()
 	..()
 
 /mob/living/carbon/alien/larva/proc/mind_initialize(mob/G, alien_caste)

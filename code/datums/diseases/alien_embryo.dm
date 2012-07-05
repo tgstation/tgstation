@@ -1,5 +1,20 @@
 //affected_mob.contract_disease(new /datum/disease/alien_embryo)
 
+//Our own special process so that dead hosts still chestburst
+/datum/disease/alien_embryo/process()
+	if(!holder) return
+	if(holder == affected_mob)
+		stage_act()
+	
+	if(affected_mob.stat == DEAD)
+		if(prob(50))
+			if(--longevity<=0)
+				cure(0)
+
+	if(!affected_mob) //the virus is in inanimate obj
+		cure(0)
+	return
+
 
 /datum/disease/alien_embryo
 	name = "Unidentified Foreign Body"
@@ -60,29 +75,23 @@
 						if(G.client.be_alien)
 							if(((G.client.inactivity/10)/60) <= 5)
 								if(G.corpse)
-									if(G.corpse.stat==2)
+									if(G.corpse.stat==DEAD)
 										candidates.Add(G)
-								if(!G.corpse)
+								else
 									candidates.Add(G)
+
+				var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
 				if(candidates.len)
 					var/mob/dead/observer/G = pick(candidates)
-					var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
 					new_xeno.mind_initialize(G,"Larva")
 					new_xeno.key = G.key
 					del(G)
 				else
 					if(affected_mob.client)
-						affected_mob.client.mob = new/mob/living/carbon/alien/larva(affected_mob.loc)
+						affected_mob.client.mob = new_xeno
+				new_xeno << sound('hiss5.ogg',0,0,0,100)	//To get the player's attention
 				affected_mob.gib()
 				src.cure(0)
 				gibbed = 1
-
-			/*
-				if(affected_mob.client)
-					affected_mob.client.mob = new/mob/living/carbon/alien/larva(affected_mob.loc)
-				else
-					new/mob/living/carbon/alien/larva(affected_mob.loc)
-				affected_mob:gib()
-			*/
 				return
 

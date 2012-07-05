@@ -130,7 +130,7 @@ to null does not delete the object itself. Thank you.
 					del(D) // if there are somehow two viruses of the same kind in the system, delete the other one
 
 	if(holder == affected_mob)
-		if(affected_mob.stat < 2) //he's alive
+		if(affected_mob.stat != DEAD) //he's alive
 			stage_act()
 		else //he's dead.
 			if(spread_type!=SPECIAL)
