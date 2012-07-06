@@ -30,3 +30,4 @@ korphaeron - Game Master
 nodrak - Game Master
 carnwennan - Game Master
 ikarrus - Game Master
+cheridan - Game Master
