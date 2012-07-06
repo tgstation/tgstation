@@ -964,7 +964,7 @@
 				if(blood_volume < 560 && blood_volume)
 					var/datum/reagent/blood/B = locate() in vessel //Grab some blood
 					if(B) // Make sure there's some blood at all
-						if(!B.data["donor"] == src) //If it's not theirs, then we look for theirs
+						if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
 							for(var/datum/reagent/blood/D in vessel)
 								if(D.data["donor"] == src)
 									B = D
