@@ -108,6 +108,10 @@
 		else
 			user << "\red Access denied."
 
+	else if(istype(W, /obj/item/weapon/wrench))
+		src.anchored = !src.anchored
+		src.visible_message("\blue \icon[src] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].")
+
 	else
 		src.add_fingerprint(user)
 		user << "\red You hit the [src.name] with your [W.name]!"
