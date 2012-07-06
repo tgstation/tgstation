@@ -524,6 +524,7 @@
 		istype(W, /obj/item/weapon/scalpel)                       || \
 		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
 		istype(W, /obj/item/weapon/shard)                         || \
+		istype(W, /obj/item/weapon/broken_bottle)				  || \
 		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
 		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
 		istype(W, /obj/item/weapon/twohanded/fireaxe) \

@@ -1872,3 +1872,12 @@ proc/get_mob_with_client_list()
 
 proc/worldtime2text()
 	return "[round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"
+
+/atom/proc/transfer_fingerprints_to(var/atom/A)
+	if(!istype(A.fingerprints,/list))
+		A.fingerprints = list()
+	if(!istype(A.fingerprintshidden,/list))
+		A.fingerprintshidden = list()
+	A.fingerprints |= fingerprints            //detective
+	A.fingerprintshidden |= fingerprintshidden    //admin
+	A.fingerprintslast = fingerprintslast

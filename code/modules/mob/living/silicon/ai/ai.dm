@@ -30,7 +30,7 @@
 	aiPDA = new/obj/item/device/pda/ai(src)
 	aiPDA.owner = name
 	aiPDA.ownjob = "AI"
-	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
+	aiPDA.name = "AI - " + name + " (" + aiPDA.ownjob + ")"
 
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
