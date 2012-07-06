@@ -92,7 +92,7 @@ MEDICAL
 		if (user)
 			if (M != user)
 				if ( ointment )
-					user.visible_message("\red \The [H]'s [affecting.display_name] burns has been salved with \a [src] by \the [user].",\
+					user.visible_message("\red \The [H]'s [affecting.display_name] burns have been salved with \a [src] by \the [user].",\
 					"\red You salve \the [H]'s [affecting.display_name] burns with \the [src].",\
 					"ou hear ointement being applied.")
 				else
