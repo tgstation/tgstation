@@ -1157,6 +1157,7 @@
 #include "code\modules\research\server.dm"
 #include "code\modules\research\xenoarchaeology\archaeo_analysis.dm"
 #include "code\modules\research\xenoarchaeology\archaeo_excavate.dm"
+#include "code\modules\research\xenoarchaeology\archaeo_tools.dm"
 #include "code\modules\research\xenoarchaeology\artifact_analysis.dm"
 #include "code\modules\research\xenoarchaeology\artifact_archaeo.dm"
 #include "code\modules\research\xenoarchaeology\artifact_db.dm"
