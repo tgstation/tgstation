@@ -11,11 +11,19 @@
 	..()
 	return
 
-/obj/machinery/computer/teleporter/attackby(I as obj, user as mob)
+
+//TODO: Merge this proc with attack_hand() code so that this actually uses the teleporter procs instead of just bypassing everything
+/obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob)
 	if (istype(I, /obj/item/weapon/card/data/))
 		var/obj/item/weapon/card/data/M = I
 		if(stat & (NOPOWER|BROKEN) & (M.function != "teleporter"))
 			src.attack_hand()
+
+		//Quickfix for hiding nuke disks and people getting to centcomm until I can get the attack_hand() stuff to incorperate this.
+		for(var/obj/O in user.get_contents())
+			if(istype(O, /obj/item/weapon/disk/nuclear) || istype(O, /obj/item/device/radio/beacon))
+				user << "\red Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through."
+				return
 
 		var/obj/S = null
 		for(var/obj/effect/landmark/sloc in world)

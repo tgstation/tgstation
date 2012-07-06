@@ -9,15 +9,22 @@
 	throwforce = 10
 
 
-/obj/item/weapon/melee/cultblade/pickup(mob/living/carbon/human/user as mob)
-	if(!iscultist(usr))
+/obj/item/weapon/melee/cultblade/attack(mob/living/target as mob, mob/living/carbon/human/user as mob)
+	if(iscultist(user))
+		return ..()
+	else
 		user.Paralyse(5)
-		user << "\red The blade rebels against your touch!"
-		if(istype(user, /mob/living/carbon/human))
-			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/affecting = user.get_organ(organ)
-			if(affecting.take_damage(40))
-				user.UpdateDamageIcon()
+		user << "\red An unexplicable force powerfully repels the sword from [target]!"
+		var/organ = ((user.hand ? "l_":"r_") + "arm")
+		var/datum/organ/external/affecting = user.get_organ(organ)
+		if(affecting.take_damage(rand(force/2, force))) //random amount of damage between half of the blade's force and the full force of the blade.
+			user.UpdateDamageIcon()
+	return
+
+/obj/item/weapon/melee/cultblade/pickup(mob/living/user as mob)
+	if(!iscultist(user))
+		user << "\red An overwhelming feeling of dread comes over you as you pick up the cultist's sword. It would be wise to be rid of this blade quickly."
+		user.make_dizzy(120)
 
 
 /obj/item/clothing/head/culthood
