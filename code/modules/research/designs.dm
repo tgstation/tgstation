@@ -1201,6 +1201,23 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/mechfab"
 
+		shieldgenex
+			name = "Hull Shield Generator Board"
+			desc = "The circuit board for an External Hull Shield Generator"
+			id = "shieldgen"
+			req_tech = list("programming" = 3, "electromagnetic" = 3, "engineering" = 2, "power" = 1)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/shield_generator_external"
+
+		shieldcap
+			name = "Shield Capacitor Board"
+			desc = "The circuit board for a Shield Capacitor"
+			id = "shieldcap"
+			req_tech = list("programming" = 3, "electromagnetic" = 3, "engineering" = 2, "power" = 1)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/shield_capacitor"
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////

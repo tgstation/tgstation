@@ -240,7 +240,7 @@
 	name = "Circuit Board (Shield Capacitor)"
 	build_path = "/obj/machinery/shield_capacitor"
 	board_type = "machine"
-	origin_tech = "electromagnetic=3;engineering=2;power=1"
+	origin_tech = "programming=3;electromagnetic=3;engineering=2;power=1"
 	frame_desc = "Requires, 2 Cable Coil, 2 Nano Manipulator, 1 Advanced Matter Bin, 1 Console Screen and 1 High-Power Micro-Laser. "
 	req_components = list(
 							"/obj/item/weapon/cable_coil" = 2,
@@ -249,11 +249,11 @@
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 1)
 
-/obj/item/weapon/circuitboard/shield_generator
-	name = "Circuit Board (Shield Generator)"
-	build_path = "/obj/machinery/shield_generator"
+/obj/item/weapon/circuitboard/shield_generator_external
+	name = "Circuit Board (Hull Shield Generator)"
+	build_path = "/obj/machinery/shield_generator/external"
 	board_type = "machine"
-	origin_tech = "electromagnetic=3;engineering=2;power=1"
+	origin_tech = "programming=3;electromagnetic=3;engineering=2;power=1"
 	frame_desc = "Requires, 2 Cable Coil, 2 Nano Manipulator, 1 Advanced Matter Bin, 1 Console Screen and 1 High-Power Micro-Laser. "
 	req_components = list(
 							"/obj/item/weapon/cable_coil" = 2,
