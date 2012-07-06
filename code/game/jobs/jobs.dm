@@ -124,7 +124,7 @@ var/list/nonhuman_positions = list(
 			return 0
 		if("Chaplain","Botanist","Hydroponicist","Medical Doctor","Atmospheric Technician","Geneticist", "Virologist", "Surgeon", "Emergency Physician", "Counselor")
 			return 1
-		if("Quartermaster","Cargo Technician","Chemist", "Station Engineer","Roboticist", "Security Officer", "Forensic Technician","Detective", "Scientist","Shaft Miner", "Xenobiologist", "Plasma Researcher","Chief Medical Officer")
+		if("Quartermaster","Cargo Technician","Chemist", "Station Engineer","Roboticist", "Security Officer", "Forensic Technician","Detective", "Scientist", "Shaft Miner", "Xenobiologist", "Plasma Researcher", "Anomalist", "Chief Medical Officer")
 			return 2
 		if("Research Director","Head of Security","Chief Engineer","Warden")
 			return 3

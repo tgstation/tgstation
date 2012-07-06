@@ -1074,6 +1074,7 @@
 	var/list/stamped
 	see_face = 1
 	body_parts_covered = HEAD
+	slot_flags = SLOT_HEAD
 	heat_transfer_coefficient = 0.99
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 0.99
