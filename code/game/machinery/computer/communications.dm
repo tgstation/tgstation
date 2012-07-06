@@ -482,8 +482,8 @@
 		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		return
 
+	emergency_shuttle.shuttlealert(0)
 	emergency_shuttle.incall()
-	emergency_shuttle.shuttlealert(1)
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
@@ -523,8 +523,8 @@
 		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		return
 
-	emergency_shuttle.incall()
 	emergency_shuttle.shuttlealert(1)
+	emergency_shuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
 	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")

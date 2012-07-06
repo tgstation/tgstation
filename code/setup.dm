@@ -371,6 +371,8 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 
 //Damage things
+#define CUT 		"cut"
+#define BRUISE		"bruise"
 #define BRUTE		"brute"
 #define BURN		"fire"
 #define TOX			"tox"

@@ -1,3 +1,9 @@
+/obj/item/Del()
+	if (src.loc && istype(src.loc, /mob/living/carbon/human))
+		//world << "\blue **Beep! Deleted [src] from [src.loc]**"
+		var/mob/living/carbon/human/H = src.loc
+		H.u_equip(src)
+	..()
 
 /obj/item/weapon/bedsheet/ex_act(severity)
 	if (severity <= 2)
