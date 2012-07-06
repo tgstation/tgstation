@@ -5,6 +5,9 @@
 		return 1
 	return 0
 
+/proc/isamorph(A)
+	return istype(A, /mob/living/carbon/amorph)
+
 /proc/ismonkey(A)
 	if(A && istype(A, /mob/living/carbon/monkey))
 		return 1
