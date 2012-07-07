@@ -882,6 +882,7 @@ CIRCULAR SAW
 				S.open = 0
 				S.stage = 0
 				S.status |= ATTACHABLE
+				S.amputated = 1 // this should prevent the wound from hurting etc.
 				M.updatehealth()
 				M.UpdateDamageIcon()
 
