@@ -767,9 +767,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				playsound(P.loc, 'twobeep.ogg', 50, 1)
 			for (var/mob/O in hearers(3, P.loc))
 				if(!P.silent) O.show_message(text("\icon[P] *[P.ttone]*"))
-				if( P.loc && isliving(P.loc) )
-					var/mob/living/L = P.loc
-					L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+			if( P.loc && isliving(P.loc) )
+				var/mob/living/L = P.loc
+				L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
 
 			log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
 			P.overlays = null
