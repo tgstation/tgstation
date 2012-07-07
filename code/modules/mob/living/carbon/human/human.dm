@@ -284,7 +284,7 @@
 
 	for(var/organ in list("l_leg","l_foot","r_leg","r_foot"))
 		var/datum/organ/external/o = organs["[organ]"]
-		if(o.status & BROKEN)
+		if((o.status & BROKEN) || (o.status & DESTROYED))
 			if(o.status & SPLINTED)
 				tally += 3
 			else
