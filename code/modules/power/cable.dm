@@ -462,13 +462,13 @@
 		if(S.burn_dam > 0)
 			S.heal_damage(0,15,0,1)
 			if(user != M)
-				user.visible_message("\red You repair some burn damage on \the [M]'s [S.display_name]",\
-				"\red \The [user] repairs some burn damage on \the [M]'s [S.display_name] with \the [src]",\
-				"You wires being cut.")
+				user.visible_message("\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
+				"\red You repair some burn damage on your [S.display_name]",\
+				"You hear wires being cut.")
 			else
-				user.visible_message("\red You repair some burn damage on your [S.display_name]",\
-				"\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
-				"You wires being cut.")
+				user.visible_message("\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
+				"\red You repair some burn damage on your [S.display_name]",\
+				"You hear wires being cut.")
 		else
 			user << "Nothing to fix!"
 	else
