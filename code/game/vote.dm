@@ -131,7 +131,7 @@
 		var/best = -1
 
 		for(var/v in votes)
-			if(v=="none")
+			if(v=="none"||v=="default")
 				continue
 			if(best < votes[v])
 				best = votes[v]
@@ -140,7 +140,7 @@
 		var/list/winners = list()
 
 		for(var/v in votes)
-			if(votes[v] == best)
+			if(votes[v] == best && v != "default" && v != "none")
 				winners += v
 
 		var/ret = ""
