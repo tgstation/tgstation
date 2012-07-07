@@ -447,3 +447,34 @@
 
 			usr.vote()
 		return
+
+proc/automatic_crew_shuttle_vote()
+
+	if(vote.voting)
+		return
+
+	if(!vote.canvote() )	// double check even though this shouldn't happen
+		return
+
+	vote.mode = 0
+	vote.instant_restart = 0
+
+	vote.voting = 1						// now voting
+	vote.votetime = world.timeofday + config.vote_period*10	// when the vote will end
+
+	spawn(config.vote_period*10)
+		vote.endvote()
+
+	world << "\red<B>*** An *automatic* vote to call the crew transfer shuttle has been initiated.</B>"
+	world << "\red     You have [vote.timetext(config.vote_period)] to vote. Note that your vote defaults to *yes*."
+
+	log_vote("Automatic vote to call the crew transfer shuttle.")
+
+	for(var/mob/CM in world)
+		if(CM.client)
+			if( !CM.is_player_active() )
+				CM.client.vote = "none"
+			else
+				CM.client.vote = "restart"
+
+	return
