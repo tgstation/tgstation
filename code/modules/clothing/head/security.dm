@@ -28,5 +28,4 @@
 	name = "soft cap"
 	desc = "It's baseball hat in tasteful red colour."
 	icon_state = "secsoft"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
-	item_state = "helmet"
+	color = "sec"
