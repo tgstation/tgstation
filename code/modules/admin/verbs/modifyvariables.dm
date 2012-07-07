@@ -127,7 +127,6 @@ var/list/forbidden_varedit_object_types = list(
 	if(!istype(L,/list)) src << "Not a List."
 
 	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine", "poo", "icon", "icon_state")
-
 	var/list/names = sortList(L)
 
 	var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
@@ -211,10 +210,10 @@ var/list/forbidden_varedit_object_types = list(
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
 		class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])", "DELETE FROM LIST")
 	else
 		class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "DELETE FROM LIST")
 
 	if(!class)
 		return
@@ -222,51 +221,45 @@ var/list/forbidden_varedit_object_types = list(
 	if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
 		class = "marked datum"
 
-	switch(class)
+	switch(class) //Spits a runtime error if you try to modify an entry in the contents list. Dunno how to fix it, yet.
 
 		if("list")
 			mod_list(variable)
 
 		if("restore to default")
-			variable = initial(variable)
+			L[L.Find(variable)]=initial(variable)
 
 		if("edit referenced object")
 			modify_variables(variable)
 
-		if("(DELETE FROM LIST)")
+		if("DELETE FROM LIST")
 			L -= variable
 			return
 
 		if("text")
-			variable = input("Enter new text:","Text",\
-				variable) as text
+			L[L.Find(variable)] = input("Enter new text:","Text") as text
 
 		if("num")
-			variable = input("Enter new number:","Num",\
-				variable) as num
+			L[L.Find(variable)] = input("Enter new number:","Num") as num
 
 		if("type")
-			variable = input("Enter type:","Type",variable) \
-				in typesof(/obj,/mob,/area,/turf)
+			L[L.Find(variable)] = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
 
 		if("reference")
-			variable = input("Select reference:","Reference",\
-				variable) as mob|obj|turf|area in world
+			L[L.Find(variable)] = input("Select reference:","Reference") as mob|obj|turf|area in world
 
 		if("mob reference")
-			variable = input("Select reference:","Reference",\
-				variable) as mob in world
+			L[L.Find(variable)] = input("Select reference:","Reference") as mob in world
 
 		if("file")
-			variable = input("Pick file:","File",variable) \
-				as file
+			L[L.Find(variable)] = input("Pick file:","File") as file
 
 		if("icon")
-			variable = input("Pick icon:","Icon",variable) \
-				as icon
+			L[L.Find(variable)] = input("Pick icon:","Icon") as icon
 
 		if("marked datum")
-			variable = holder.marked_datum
+			L[L.Find(variable)] = holder.marked_datum
+
 
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "icon", "icon_state", "mutantrace")

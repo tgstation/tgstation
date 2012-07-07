@@ -76,6 +76,8 @@
 			var/t1 = text2num(href_list["wires"])
 			if (radio.wires & t1)
 				radio.wires &= ~t1
+			else
+				radio.wires |= t1
 		if(href_list["setlaws"])
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.pai_laws) as message),1,MAX_MESSAGE_LEN)
 			if(newlaws)

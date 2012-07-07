@@ -153,7 +153,10 @@ to null does not delete the object itself. Thank you.
 		affected_mob.alien_egg_flag = 0
 //	world << "Removing [src]"
 	spawn(0)
-		del(src)
+		affected_mob.viruses -= src //I am a silly person for trying affected_mob.viruses.Find(src_type) instead of what it's like now and getting LOL WHAT IS THIS PROC
+		del(src) //IT'LL TAKE MORE THAN A LIST REMOVE TO DEFEAT US!
+		//world <<"Virus deleted successfully."
+	//world <<"Cured the disease, deleting virus..."
 	return
 
 

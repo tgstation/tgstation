@@ -8,7 +8,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 // This proc has some procs that should be extracted from it. I believe we can develop some helper procs from it - Rockdtben
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
 //	world << "Contract_disease called by [src] with virus [virus]"
-	if(stat >=2) return
+	if(stat >=2 || src.resistances.Find(virus.type)) return
 
 //This gives a chance to re-infect cured/vaccinated mobs
 //	if(virus.type in resistances)
@@ -59,7 +59,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 					clothing_areas[Covers] += Clothing
 
 */
-	if(prob(15/virus.permeability_mod)) return //the power of immunity compels this disease!
+	if(prob(15/virus.permeability_mod)) return //the power of immunity compels this disease! but then you forgot resistances
 
 	var/obj/item/clothing/Cl = null
 	var/passed = 1

@@ -576,11 +576,12 @@ var/global/BSACooldown = 0
 	if (href_list["removejobban"])
 		if ((src.rank in list("Game Admin", "Game Master"  )))
 			var/t = href_list["removejobban"]
-			if(t)
-				log_admin("[key_name(usr)] removed [t]")
-				message_admins("\blue [key_name_admin(usr)] removed [t]", 1)
-				jobban_remove(t)
-				href_list["ban"] = 1 // lets it fall through and refresh
+			if(input(alert("Do you want to unjobban [t]?","Unjobban confirmation", "Yes", "No") == "Yes")) //No more misclicks! Unless you do it twice.
+				if(t)
+					log_admin("[key_name(usr)] removed [t]")
+					message_admins("\blue [key_name_admin(usr)] removed [t]", 1)
+					jobban_remove(t)
+					href_list["ban"] = 1 // lets it fall through and refresh
 
 	if (href_list["newban"])
 		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
@@ -1133,6 +1134,7 @@ var/global/BSACooldown = 0
 			return
 
 		if(src && src.owner)
+//			//world <<"Passed the owner-check. Owner is [src.owner]. The mob is [M]."
 			var/location_description = ""
 			var/special_role_description = ""
 			var/health_description = ""
@@ -1140,10 +1142,11 @@ var/global/BSACooldown = 0
 
 			//Location
 			if(T && isturf(T))
+//				//world <<"Has a location."
 				if(T.loc && isarea(T.loc))
-					location_description = "([T.x], [T.y], [T.z] in area <b>[T.loc]</b>)"
+					location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [T.x], [T.y], [T.z] in area <b>[T.loc]</b>)"
 				else
-					location_description = "([T.x], [T.y], [T.z])"
+					location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [T.x], [T.y], [T.z])"
 
 			//Job + antagonist
 			if(M.mind)
@@ -1153,11 +1156,19 @@ var/global/BSACooldown = 0
 
 			//Health
 			if(isliving(M))
-				var/mob/living/L
-				health_description = "Oxy: [L.oxyloss] - Tox: [L.toxloss] - Fire: [L.fireloss] - Brute: [L.bruteloss] - Clone: [L.cloneloss] - Brain: [L.brainloss]"
+				var/mob/living/L = M
+				var/status
+				switch (M.stat)
+					if (0) status = "Alive"
+					if (1) status = "\yellow Unconscious"
+					if (2) status = "\red Dead"
+				health_description = "Status - [status]"
+				health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()]"
 			else
+//				world <<"Has no health."
 				health_description = "This mob type has no health to speak of."
 
+//			world <<"Displaying info about the mob..."
 			src.owner << "<b>Info about [M.name]:</b> "
 			src.owner << "Mob type = [M.type]; Damage = [health_description]"
 			src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Original_name = [M.original_name]; Key = <b>[M.key]</b>;"
