@@ -282,6 +282,7 @@ var/list/sacrificed = list()
 			corpse_to_raise.buckled = null
 			if (corpse_to_raise.handcuffed)
 				del(corpse_to_raise.handcuffed)
+				corpse_to_raise.update_inv_handcuffed(0)
 			corpse_to_raise.stat=0
 			corpse_to_raise.updatehealth()
 			corpse_to_raise.UpdateDamageIcon()
@@ -1002,15 +1003,9 @@ var/list/sacrificed = list()
 			user.equip_if_possible(new /obj/item/clothing/suit/cultrobes/alt(user), user.slot_wear_suit)
 			user.equip_if_possible(new /obj/item/clothing/shoes/cult(user), user.slot_shoes)
 			user.equip_if_possible(new /obj/item/weapon/storage/backpack/cultpack(user), user.slot_back)
-			if(!user.equip_if_possible(new /obj/item/weapon/melee/cultblade(user), user.slot_r_hand))
-				user.equip_if_possible(new /obj/item/weapon/melee/cultblade(user), user.slot_l_hand)
-
-			user.update_inv_head(0)
-			user.update_inv_wear_suit(0)
-			user.update_inv_shoes(0)
-			user.update_inv_back(0)
-			user.update_inv_l_hand(0)
-			user.update_inv_r_hand()
+			//the above update their overlay icons cache but do not call update_icons()
+			//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
+			user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor
 
 			del(src)
 			return

@@ -44,27 +44,24 @@
 	var/list/names = list()
 	var/list/namecounts = list()
 	var/list/creatures = list()
-	for (var/mob/M in world)
-		if (istype(M, /mob/new_player))
-			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
+	for(var/mob/living/M in world)
 		//Cameras can't track people wearing an agent card or a ninja hood.
-		if (istype(M, /mob/living/carbon/human))
+		if(istype(M, /mob/living/carbon/human))
 			if(istype(M:wear_id, /obj/item/weapon/card/id/syndicate))
 				continue
 		 	if(istype(M:head, /obj/item/clothing/head/helmet/space/space_ninja)&&!M:head:canremove)
 		 		continue
 		if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
 			continue
-		var/area/wizard_station/A = locate()//So that wizards are not tracked by the AI until they leave their sanctuary. Unless they talk on radio/N
-		if(M in A.contents)
+		if(istype(M.loc.loc, /area/wizard_station))
 			continue
 		if(M.invisibility)//cloaked
 			continue
-		if(istype(M.loc,/obj/effect/dummy))
-			continue
-		else if (M == usr)
+		if(M == usr)
 			continue
 		if(M.digitalcamo)
+			continue
+		if(M.loc.z == 2) // Don't detect mobs on Centcom
 			continue
 
 		var/name = M.name
@@ -76,20 +73,18 @@
 			namecounts[name] = 1
 
 		creatures[name] = M
-
-	creatures = sortList(creatures)
-
-	var/target_name = input(usr, "Which creature should you track?") as null|anything in creatures
+	//I blame : usage!
+	var/target_name = input(usr, "Which creature should you track?") as null|anything in sortList(creatures)
 
 	if (!target_name)
 		usr:cameraFollow = null
 		return
 
 	var/mob/target = creatures[target_name]
-
 	ai_actual_track(target)
 
-/mob/living/silicon/ai/proc/ai_actual_track(mob/target as mob)
+/mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
+	if(!istype(target))	return
 
 	usr:cameraFollow = target
 	usr << text("Now tracking [] on camera.", target.name)
