@@ -83,6 +83,6 @@
 /obj/item/clothing/head/soft/rainbow
 	name = "rainbow cap"
 	desc = "It's a baseball hat in a bright rainbow of colors."
-	icon_state = "rainbowsoft"
+	icon_state = "rbowsoft"
 	color = "rainbow"
 
