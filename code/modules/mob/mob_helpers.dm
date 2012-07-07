@@ -358,3 +358,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	else
 		I.loc = get_turf(src)
 	update_clothing()
+
+
+/mob/proc/is_player_active()
+	if(!src.client) return 0
+	if(src.client.inactivity > 10 * 60 * 10) return 0
+	if(src.stat == 2) return 0
+
+	return 1
