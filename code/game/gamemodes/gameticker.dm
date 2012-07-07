@@ -153,26 +153,25 @@ var/global/datum/controller/gameticker/ticker
 		var/obj/structure/stool/bed/temp_buckle = new(src)
 		//Incredibly hackish. It creates a bed within the gameticker (lol) to stop mobs running around
 		if(station_missed)
-			for(var/mob/M in world)
+			for(var/mob/living/M in world)
 				M.buckled = temp_buckle				//buckles the mob so it can't do anything
 				if(M.client)
 					M.client.screen += cinematic	//show every client the cinematic
 		else	//nuke kills everyone on z-level 1 to prevent "hurr-durr I survived"
-			for(var/mob/M in world)
+			for(var/mob/living/M in world)
 				M.buckled = temp_buckle
 				if(M.client)
 					M.client.screen += cinematic
 
-				var/mob/living/L = M
 				switch(M.z)
 					if(0)	//inside a crate or something
-						var/turf/T = get_turf(L)
+						var/turf/T = get_turf(M)
 						if(T && T.z==1)				//we don't use M.death(0) because it calls a for(/mob) loop and
-							L.health = 0
-							L.stat = DEAD
+							M.health = 0
+							M.stat = DEAD
 					if(1)	//on a z-level 1 turf.
-						L.health = 0
-						L.stat = DEAD
+						M.health = 0
+						M.stat = DEAD
 
 		//Now animate the cinematic
 		switch(station_missed)
