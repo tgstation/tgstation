@@ -232,7 +232,7 @@
 */
 //Watch your tabbing, microwave. --NEO
 
-		if(istype(W, /obj/item/weapon/pickaxe/excavationtool))
+		if(istype(W, /obj/item/weapon/pickaxe/hand_pick) || istype(W, /obj/item/weapon/pickaxe/mini_pick))
 			user << "\red You carefully start clearing away the rock."
 			playsound(user, 'Genhit.ogg', 20, 1)
 

@@ -1,5 +1,8 @@
 obj/machinery/gas_chromatography
 	name = "Gas Chromatography Spectrometer"
+	desc = "A specialised mass spectrometer."
+	icon = 'virology.dmi'
+	icon_state = "analyser"
 
 obj/machinery/gas_chromatography/Topic(href, href_list)
 	if(href_list["close"])
@@ -21,6 +24,9 @@ obj/machinery/gas_chromatography/attack_hand(var/mob/user as mob)
 
 obj/machinery/accelerator
 	name = "Accelerator Spectrometer"
+	desc = "A specialised mass spectrometer."
+	icon = 'virology.dmi'
+	icon_state = "analyser"
 
 obj/machinery/accelerator/Topic(href, href_list)
 	if(href_list["close"])
@@ -41,7 +47,10 @@ obj/machinery/accelerator/attack_hand(var/mob/user as mob)
 	onclose(user, "artanalyser")
 
 obj/machinery/fourier_transform
-	name = "Fourier Transform Spectroscope "
+	name = "Fourier Transform Spectroscope"
+	desc = "A specialised geochemical analysis device."
+	icon = 'virology.dmi'
+	icon_state = "analyser"
 
 obj/machinery/fourier_transform/Topic(href, href_list)
 	if(href_list["close"])
@@ -63,6 +72,9 @@ obj/machinery/fourier_transform/attack_hand(var/mob/user as mob)
 
 obj/machinery/radiometric
 	name = "Radiometric Exposure Spectrometer"
+	desc = "A specialised mass spectrometer, able to radiometrically date inserted materials."
+	icon = 'virology.dmi'
+	icon_state = "analyser"
 
 obj/machinery/radiometric/Topic(href, href_list)
 	if(href_list["close"])
@@ -83,7 +95,10 @@ obj/machinery/radiometric/attack_hand(var/mob/user as mob)
 	onclose(user, "artanalyser")
 
 obj/machinery/ion_mobility
-	name = "Ion Mobility Spectrometer "
+	name = "Ion Mobility Spectrometer"
+	desc = "A specialised mass spectrometer."
+	icon = 'virology.dmi'
+	icon_state = "analyser"
 
 obj/machinery/ion_mobility/Topic(href, href_list)
 	if(href_list["close"])

@@ -45,7 +45,7 @@
 /**********************Ore box**************************/
 
 /obj/structure/ore_box
-	//icon = 'mining.dmi'
+	icon = 'mining.dmi'
 	icon_state = "orebox0"
 	name = "Ore Box"
 	desc = "It's heavy"
