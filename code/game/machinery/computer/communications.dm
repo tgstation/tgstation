@@ -491,20 +491,8 @@
 
 	return
 
-/proc/init_shift_change(var/mob/user)
+/proc/init_shift_change(var/mob/user, var/force = 0)
 	if ((!( ticker ) || emergency_shuttle.location))
-		return
-
-	if(emergency_shuttle.deny_shuttle)
-		user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
-		return
-
-	if(sent_strike_team == 1)
-		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
-		return
-
-	if(world.time < 54000) // 30 minute grace period to let the game get going
-		user << "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again."//may need to change "/600"
 		return
 
 	if(emergency_shuttle.direction == -1)
@@ -515,13 +503,27 @@
 		user << "The shuttle is already on its way."
 		return
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
-		//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
-		emergency_shuttle.fake_recall = rand(300,500)
+	// if force is 0, some things may stop the shuttle call
+	if(!force)
+		if(emergency_shuttle.deny_shuttle)
+			user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
+			return
 
-	if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
-		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
-		return
+		if(sent_strike_team == 1)
+			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
+			return
+
+		if(world.time < 54000) // 30 minute grace period to let the game get going
+			user << "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again."//may need to change "/600"
+			return
+
+		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
+			//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
+			emergency_shuttle.fake_recall = rand(300,500)
+
+		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
+			user << "Under directive 7-10, [station_name()] is quarantined until further notice."
+			return
 
 	emergency_shuttle.shuttlealert(1)
 	emergency_shuttle.incall()

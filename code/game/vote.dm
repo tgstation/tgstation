@@ -118,8 +118,8 @@
 			log_game("Rebooting due to restart vote")
 			world.Reboot()
 		else
-			// Call the shift change shuttle instead
-			init_shift_change()
+			// Call the shift change shuttle instead, the 1 is to force the shuttle to come
+			init_shift_change(null, 1)
 	return
 
 
