@@ -1415,7 +1415,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "tcomsateast"
 
 /area/tcommsat/computer
-	name = "\improper Telecommunications Satellite Observatory"
+	name = "\improper Telecoms Control Room"
 	icon_state = "tcomsatcomp"
 
 /area/tcommsat/lounge
