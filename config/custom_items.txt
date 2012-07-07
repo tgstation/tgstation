@@ -1,4 +1,3 @@
-asanadas: Book Berner: /obj/item/clothing/under/chameleon/psyche, /obj/item/clothing/glasses/meson/fluff/book_berner_1
 atomicdog92: Seth Sealis: /obj/item/clothing/suit/storage/det_suit/fluff/leatherjack
 botanistpower: Walter Brooks: /obj/item/clothing/gloves/fluff/walter_brooks_1
 chinsky: Victor Kaminski: /obj/item/fluff/victor_kaminsky_1
