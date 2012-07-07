@@ -25,7 +25,7 @@
 	var/max_field_strength = 10
 	var/time_since_fail = 100
 	var/energy_conversion_rate = 0.01	//how many renwicks per watt?
-	var/flicker_shield_glitch = 1		//shield is slightly faulty, and flickers
+	var/flicker_shield_glitch = 1		//shield is slightly faulty and flickers - don't think this is working as intended
 	//
 	use_power = 1			//0 use nothing
 							//1 use idle power
@@ -129,15 +129,8 @@
 				if(E.strength < target_field_strength)
 					E.strength += strengthen_rate
 
-				retry:
 				if(stored_renwicks - E.strength < 0)
-					if(owned_capacitor.stored_charge > 0)
-						var/emergency_renwicks = min(E.strength, owned_capacitor.stored_charge * energy_conversion_rate)
-						owned_capacitor.stored_charge -= emergency_renwicks / energy_conversion_rate
-						stored_renwicks += emergency_renwicks
-						goto retry
-					else
-						E.strength = stored_renwicks
+					E.strength = stored_renwicks
 				stored_renwicks -= E.strength
 
 				average_field_strength += E.strength
@@ -174,6 +167,10 @@
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 		else
 			user << "\red Access denied."
+
+	else if(istype(W, /obj/item/weapon/wrench))
+		src.anchored = !src.anchored
+		src.visible_message("\blue \icon[src] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
 
 	else
 		src.add_fingerprint(user)

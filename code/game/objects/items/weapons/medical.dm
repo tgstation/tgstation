@@ -8,6 +8,8 @@ MEDICAL
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
 	var/heal_cap = 50
+	var/ointment = istype(src, /obj/item/stack/medical/advanced/ointment) \
+				||   istype(src, /obj/item/stack/medical/ointment)
 
 	if(istype(src, /obj/item/stack/medical/advanced))
 		heal_cap = 0
@@ -89,7 +91,12 @@ MEDICAL
 
 		if (user)
 			if (M != user)
-				user.visible_message("\red \The [H]'s [affecting.display_name] has been bandaged with \a [src] by \the [user].",\
+				if ( ointment )
+					user.visible_message("\red \The [H]'s [affecting.display_name] burns have been salved with \a [src] by \the [user].",\
+					"\red You salve \the [H]'s [affecting.display_name] burns with \the [src].",\
+					"ou hear ointement being applied.")
+				else
+					user.visible_message("\red \The [H]'s [affecting.display_name] has been bandaged with \a [src] by \the [user].",\
 					"\red You bandage \the [H]'s [affecting.display_name] with \the [src].",\
 					"You hear gauze being ripped.")
 			else
@@ -98,10 +105,18 @@ MEDICAL
 					t_his = "his"
 				else if (user.gender == FEMALE)
 					t_his = "her"
-				user.visible_message("\red \The [user] bandages [t_his] [affecting.display_name] with \a [src].",\
+				if ( ointment )
+					user.visible_message("\red \The [user] salves [t_his] [affecting.display_name] burns with \a [src].",\
+					"\red You salve your [affecting.display_name] burns with \the [src].",\
+					"You hear ointement being applied.")
+				else
+					user.visible_message("\red \The [user] bandages [t_his] [affecting.display_name] with \a [src].",\
 					"\red You bandage your [affecting.display_name] with \the [src].",\
 					"You hear gauze being ripped.")
 		use(1)
+
+		if (!ointment && (affecting.status & BLEEDING))
+			affecting.status &= ~BLEEDING
 
 		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
 			H.UpdateDamageIcon()
@@ -109,6 +124,7 @@ MEDICAL
 			H.UpdateDamage()
 
 		M.updatehealth()
+
 	else
 		if (M.health < heal_cap)
 			var/t_him = "it"

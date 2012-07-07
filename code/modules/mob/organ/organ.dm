@@ -69,11 +69,11 @@ var/list/wound_progressions = list(
 		W.hits = hits
 		W.time_inflicted = time_inflicted
 		return W
-
+/* fuckign double defines
 #define CUT 0
 #define BRUISE 1
 #define BURN 2
-
+*/
 /****************************************************
 				EXTERNAL ORGANS
 ****************************************************/
@@ -416,6 +416,7 @@ var/list/wound_progressions = list(
 			var/size = min( max( 1, damage/10 ) , 6)
 			switch(type)
 				if(CUT)
+					src.status |= BLEEDING
 					var/list/size_names = list("cut", "deep cut", "flesh wound", "gaping wound", "big gaping wound", "massive wound")
 					wound_name = size_names[size]
 					if(wound_descs["[update_time]"])

@@ -49,16 +49,3 @@
 			icon_state = "generator0"
 			src.active = 0*/
 	..()
-
-/obj/item/weapon/circuitboard/shield_gen/external
-	name = "Circuit Board (External Shield Generator)"
-	build_path = "/obj/machinery/shield_gen/external"
-	board_type = "machine"
-	origin_tech = "electromagnetic=3;engineering=2;power=1"
-	frame_desc = "Requires, 2 Cable Coil, 2 Nano Manipulator, 1 Advanced Matter Bin, 1 Console Screen and 1 High-Power Micro-Laser. "
-	req_components = list(
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/manipulator/nano" = 2,
-							"/obj/item/weapon/stock_parts/matter_bin/adv" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/stock_parts/micro_laser/high" = 1)

@@ -29,7 +29,7 @@ datum/shuttle_controller
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall(coeff = 1)
-		if(deny_shuttle)
+		if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
 			return
 
 		if(endtime)
@@ -38,12 +38,12 @@ datum/shuttle_controller
 		else
 			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
-		//turning on the red lights in hallways and siren
-		if(coeff == 1)
+		//turning on the red lights in hallways
+		if(alert == 0)
 			for(var/area/A in world)
 				if(istype(A, /area/hallway))
 					A.readyalert()
-			//sound_siren = 1
+
 
 	proc/shuttlealert(var/X)
 		alert = X

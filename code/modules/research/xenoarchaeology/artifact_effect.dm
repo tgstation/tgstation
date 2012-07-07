@@ -228,7 +228,7 @@
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
-					if(prob(10)) M << "\red Energy radiating from the [src] is making you feel numb."
+					if(prob(10)) M << "\red Energy radiating from the [originator] is making you feel numb."
 					if(prob(20))
 						M << "\red Your body goes numb for a moment."
 						M.stunned += 2

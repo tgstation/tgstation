@@ -24,6 +24,8 @@ CIRCULAR SAW
 	if(((user.zone_sel.selecting == "l_arm") || (user.zone_sel.selecting == "r_arm") || (user.zone_sel.selecting == "l_leg") || (user.zone_sel.selecting == "r_leg")) & (istype(M, /mob/living/carbon/human)))
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
+		if(user.zone_sel.selecting == "mouth" || user.zone_sel.selecting == "eyes")
+			S = H.organs["head"]
 		if(S.status & DESTROYED)
 			if(S.status & BLEEDING)
 				user << "\red There's too much blood here!"
@@ -300,9 +302,10 @@ CIRCULAR SAW
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/stool/bed/roller, M.loc) && (M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || (locate(/obj/structure/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))))
 		return ..()
 
+	var/mob/living/carbon/human/H = M
+	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
+
 	if(((user.zone_sel.selecting == "l_arm") || (user.zone_sel.selecting == "r_arm") || (user.zone_sel.selecting == "l_leg") || (user.zone_sel.selecting == "r_leg")) & (istype(M, /mob/living/carbon/human)))
-		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
 		if(S.status & DESTROYED)
 			if(!(S.status & BLEEDING))
 				user << "\red There is nothing bleeding here!"
@@ -349,6 +352,11 @@ CIRCULAR SAW
 						M << "\red [user] begins to clamp bleeders in your chest with [src]!"
 						user << "\red You clamp bleeders in [M]'s torso with [src]!"
 						M:embryo_op_stage = 2.0
+
+						S.status &= ~BLEEDING
+						M.updatehealth()
+						M.UpdateDamageIcon()
+
 						return
 				if(5.0)
 					if(M != user)
@@ -369,6 +377,11 @@ CIRCULAR SAW
 						M << "\red [user] begins to clamp bleeders in your abdomen with [src]!"
 						user << "\red You clamp bleeders in [M]'s abdomen with [src]!"
 						M:appendix_op_stage = 2.0
+
+						S.status &= ~BLEEDING
+						M.updatehealth()
+						M.UpdateDamageIcon()
+
 						return
 				if(4.0)
 					if(M != user)
@@ -386,8 +399,6 @@ CIRCULAR SAW
 						return
 
 	if (user.zone_sel.selecting == "eyes")
-
-		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
 				(H.head && H.head.flags & HEADCOVERSEYES) || \
 				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
@@ -432,7 +443,6 @@ CIRCULAR SAW
 	if(user.zone_sel.selecting == "head")
 		if(istype(M, /mob/living/carbon/human) && M:brain_op_stage == 1)
 			M:brain_op_stage = 0
-			var/datum/organ/external/S = M:organs["head"]
 			if(!S || !istype(S))
 				return ..()
 			M:brain_op_stage = 0
@@ -443,8 +453,6 @@ CIRCULAR SAW
 			return ..()
 
 	if(user.zone_sel.selecting == "mouth")
-
-		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
 				(H.head && H.head.flags & HEADCOVERSEYES) || \
 				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
@@ -497,6 +505,7 @@ CIRCULAR SAW
 
 						M.face_op_stage = 2.0
 
+						S.status &= ~BLEEDING
 						M.updatehealth()
 						M.UpdateDamageIcon()
 						return
@@ -614,7 +623,6 @@ CIRCULAR SAW
 		else
 			user << "\red [H] is not bleeding in \his [S.display_name]!"
 			return 0
-
 	if(H != user)
 		H.visible_message( \
 			"\red [user] is beginning to clamp bleeders in the wound in [H]'s [S.display_name] with [src].", \
