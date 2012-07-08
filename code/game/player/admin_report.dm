@@ -78,6 +78,16 @@ client/proc/unhandled_reports()
 
 	return 0
 
+// checks if the player has an unhandled report against him
+client/proc/is_reported()
+	var/list/reports = load_reports()
+
+	for(var/datum/admin_report/N in reports)
+		if(N.offender_key == src.key)
+			return 1
+
+	return 0
+
 // display only the reports that haven't been handled
 client/proc/display_admin_reports()
 	set category = "Admin"
