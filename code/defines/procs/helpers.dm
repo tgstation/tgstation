@@ -1753,6 +1753,9 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 	return
 
 /proc/stringsplit(txt, character)
+	if(length(character) < 1) //Do not infinite loop when splitting on "" or null
+		return list(txt)
+
 	var/cur_text = txt
 	var/last_found = 1
 	var/found_char = findtext(cur_text,character)
