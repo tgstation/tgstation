@@ -102,7 +102,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 	log_admin("HELP: [key_name(src)]: [original_msg]")
 	if(tension_master)
 		tension_master.new_adminhelp()
-	send2irc(ckey, msg)
+	send2irc(ckey, original_msg)
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
