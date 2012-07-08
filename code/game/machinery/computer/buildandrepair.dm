@@ -132,7 +132,7 @@
 	build_path = "/obj/machinery/computer/prisoner"
 /obj/item/weapon/circuitboard/rdconsole
 	name = "Circuit Board (RD Console)"
-	build_path = "/obj/machinery/computer/rdconsole"
+	build_path = "/obj/machinery/computer/rdconsole/core"
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
 	build_path = "/obj/machinery/computer/mecha"
@@ -226,6 +226,18 @@
 				return
 			else
 				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
+	return
+
+/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I,/obj/item/weapon/screwdriver))
+		if(src.build_path == "/obj/machinery/computer/rdconsole/core")
+			src.name = "Circuit Board (RD Console - Robotics)"
+			src.build_path = "/obj/machinery/computer/rdconsole/robotics"
+			user << "\blue Access protocols succesfully updated."
+		else
+			src.name = "Circuit Board (RD Console)"
+			src.build_path = "/obj/machinery/computer/rdconsole/core"
+			user << "\blue Defaulting access protocols."
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)

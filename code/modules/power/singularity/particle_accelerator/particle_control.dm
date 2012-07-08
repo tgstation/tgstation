@@ -33,6 +33,10 @@
 			use_power = 0
 			assembled = 0
 			active = 0
+			for(var/obj/structure/particle_accelerator/part in connected_parts)
+				part.strength = null
+				part.powered = 0
+				part.update_icon()
 			connected_parts = list()
 			return
 		if(!part_scan())
@@ -61,10 +65,6 @@
 						icon_state = "[reference]w"
 					else
 						icon_state = "[reference]c"
-		return
-
-	update_icon()
-		..()
 		return
 
 	Topic(href, href_list)
