@@ -42,6 +42,10 @@
 
 	if(client.has_news())
 		src << "<b><font color=blue>There are some unread <a href='?src=\ref[news_topic_handler];client=\ref[client];action=show_news'>news</a> for you! Please make sure to read all news, as they may contain important updates about roleplay rules or canon.</font></b>"
+	if(client.unhandled_reports())
+		src << "<b><font color=red>There are some unhandled <a href='?src=\ref[report_topic_handler];client=\ref[client];action=show_reports'>reports</a>.</font></b>"
+	if(client.is_reported())
+		log_admin("A player who has unhandled admin reports against him just logged in: [client.key]")
 
 	new_player_panel()
 
