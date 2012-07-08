@@ -1278,12 +1278,8 @@ proc/process_ghost_teleport_locs()
 
 //Anomaly
 
-/area/anomaly
+/area/anomaly/lab
 	name = "Anomaly Lab"
-	icon_state = "anomaly"
-
-/area/anomaly/shuttledock
-	name = "Research Shuttle Dock"
 	icon_state = "anomaly"
 
 /area/anomaly/outpost
