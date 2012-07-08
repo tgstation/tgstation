@@ -453,7 +453,8 @@
 	icon_state = "basketball"
 	name = "basketball"
 	item_state = "basketball"
-	desc = "Here's your chance to do your dance at the Space Jam."
+	desc = "Here's your chance, do your dance at the Space Jam."
+	w_class = 4 //Stops people from hiding it in their bags/pockets
 
 /obj/structure/holohoop
 	name = "basketball hoop"
@@ -487,7 +488,7 @@
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
 			return
-		if(prob(60))
+		if(prob(50))
 			I.loc = src.loc
 			for(var/mob/M in viewers(src))
 				M.show_message("\blue Swish! \the [I] lands in \the [src].", 3)
