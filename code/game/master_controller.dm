@@ -20,6 +20,7 @@ datum/controller/game_controller
 	var/global/networks_ready = 0
 	var/global/powernets_ready = 0
 	var/global/ticker_ready = 0
+	var/global/next_crew_shuttle_vote = 2 // the next automatic vote to call the crew shuttle
 
 	proc
 		keepalive()
@@ -144,6 +145,11 @@ datum/controller/game_controller
 		controller_iteration++
 
 		var/start_time = world.timeofday
+
+		// Start an automatic crew shuttle vote every hour starting with the second hour
+		if(world.time > 10 * 60 * 60 * next_crew_shuttle_vote)
+			next_crew_shuttle_vote++
+			automatic_crew_shuttle_vote()
 
 		air_master_ready = 0
 		tension_master_ready = 0

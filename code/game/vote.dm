@@ -118,8 +118,8 @@
 			log_game("Rebooting due to restart vote")
 			world.Reboot()
 		else
-			// Call the shift change shuttle instead
-			init_shift_change()
+			// Call the shift change shuttle instead, the 1 is to force the shuttle to come
+			init_shift_change(null, 1)
 	return
 
 
@@ -131,7 +131,7 @@
 		var/best = -1
 
 		for(var/v in votes)
-			if(v=="none")
+			if(v=="none"||v=="default")
 				continue
 			if(best < votes[v])
 				best = votes[v]
@@ -140,7 +140,7 @@
 		var/list/winners = list()
 
 		for(var/v in votes)
-			if(votes[v] == best)
+			if(votes[v] == best && v != "default" && v != "none")
 				winners += v
 
 		var/ret = ""
@@ -447,3 +447,35 @@
 
 			usr.vote()
 		return
+
+proc/automatic_crew_shuttle_vote()
+
+	if(vote.voting)
+		return
+
+	if(!vote.canvote() )	// double check even though this shouldn't happen
+		return
+
+	vote.mode = 0
+	vote.instant_restart = 0
+
+	vote.voting = 1						// now voting
+	vote.votetime = world.timeofday + config.vote_period*10	// when the vote will end
+
+	spawn(config.vote_period*10)
+		vote.endvote()
+
+	world << "\red<B>*** An *automatic* vote to call the crew transfer shuttle has been initiated.</B>"
+	world << "\red     You have [vote.timetext(config.vote_period)] to vote."
+	world << "\red<B>*** Please make sure to only vote 'no' if you yourself are currently enjoying the round. If you find the round to have gone stale, you should always vote 'yes', regardless of how others are feeling about the round.</B>"
+
+	log_vote("Automatic vote to call the crew transfer shuttle.")
+
+	for(var/mob/CM in world)
+		if(CM.client)
+			if( !CM.is_player_active() )
+				CM.client.vote = "none"
+			else
+				CM.client.vote = "none"
+
+	return

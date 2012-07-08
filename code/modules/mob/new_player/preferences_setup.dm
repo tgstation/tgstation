@@ -221,10 +221,10 @@ datum/preferences
 		else
 			preview_icon = new /icon('human.dmi', "torso_[g]_s", "dir" = preview_dir)
 
-			preview_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY, "dir" = preview_dir)
+			preview_icon.Blend(new /icon('human.dmi', "chest_[g]_s", "dir" = preview_dir), ICON_OVERLAY)
 
 			if(organ_data["head"] != "amputated")
-				preview_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY, "dir" = preview_dir)
+				preview_icon.Blend(new /icon('human.dmi', "head_[g]_s", "dir" = preview_dir), ICON_OVERLAY)
 
 			for(var/name in list("l_arm","r_arm","l_leg","r_leg","l_foot","r_foot","l_hand","r_hand"))
 				// make sure the organ is added to the list so it's drawn

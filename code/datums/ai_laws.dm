@@ -1,4 +1,3 @@
-
 /datum/ai_laws
 	var/name = "Unknown Laws"
 	var/randomly_selectable = 0
@@ -93,9 +92,9 @@
 	src.inherent = list()
 
 /datum/ai_laws/proc/add_supplied_law(var/number, var/law)
-//	while (src.supplied.len < number + 1)
-//		src.supplied += ""
-//Infinite loop
+        // This is not an infinite loop, don't be an idiot Sky
+	while (src.supplied.len < number + 1)
+		src.supplied += ""
 
 	src.supplied[number + 1] = law
 
