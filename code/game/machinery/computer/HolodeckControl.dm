@@ -29,6 +29,7 @@
 
 		dat += "<A href='?src=\ref[src];emptycourt=1'>((Empty Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];boxingcourt=1'>((Boxing Court)</font>)</A><BR>"
+		dat += "<A href='?src=\ref[src];basketball=1'>((Basketball Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];thunderdomecourt=1'>((Thunderdome Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];beach=1'>((Beach)</font>)</A><BR>"
 //		dat += "<A href='?src=\ref[src];turnoff=1'>((Shutdown System)</font>)</A><BR>"
@@ -71,6 +72,11 @@
 
 			else if(href_list["boxingcourt"])
 				target = locate(/area/holodeck/source_boxingcourt)
+				if(target)
+					loadProgram(target)
+
+			else if(href_list["basketball"])
+				target = locate(/area/holodeck/source_basketball)
 				if(target)
 					loadProgram(target)
 
@@ -146,7 +152,7 @@
 		playsound(src.loc, 'sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "\blue You vastly increase projector power and override the safety and security protocols."
-		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintence and do not use the simulator."
+		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
 	src.updateUsrDialog()
 	return
 
@@ -440,9 +446,57 @@
 	New()
 		color = "red"
 
+//BASKETBALL OBJECTS
 
+/obj/item/weapon/beach_ball/holoball
+	icon = 'basketball.dmi'
+	icon_state = "basketball"
+	name = "basketball"
+	item_state = "basketball"
+	desc = "Here's your chance to do your dance at the Space Jam."
 
+/obj/structure/holohoop
+	name = "basketball hoop"
+	desc = "Boom, Shakalaka!."
+	icon = 'basketball.dmi'
+	icon_state = "hoop"
+	anchored = 1
+	density = 1
+	throwpass = 1
 
+/obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+		var/obj/item/weapon/grab/G = W
+		if(G.state<2)
+			user << "\red You need a better grip to do that!"
+			return
+		G.affecting.loc = src.loc
+		G.affecting.Weaken(5)
+		for(var/mob/M in viewers(src))
+			M.show_message("\red [G.assailant] dunks [G.affecting] into the [src]!", 3)
+		del(W)
+		return
+	else if (istype(W, /obj/item) && get_dist(src,user)<2)
+		user.drop_item(src)
+		for(var/mob/M in viewers(src))
+			M.show_message("\blue [user] dunks [W] into the [src]!", 3)
+		return
+
+/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if (istype(mover,/obj/item) && mover.throwing)
+		var/obj/item/I = mover
+		if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
+			return
+		if(prob(60))
+			I.loc = src.loc
+			for(var/mob/M in viewers(src))
+				M.show_message("\blue Swish! \the [I] lands in \the [src].", 3)
+		else
+			for(var/mob/M in viewers(src))
+				M.show_message("\red \the [I] bounces off of \the [src]'s rim!", 3)
+		return 0
+	else
+		return ..(mover, target, height, air_group)
 
 
 /obj/machinery/readybutton

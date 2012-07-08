@@ -810,6 +810,9 @@ proc/process_ghost_teleport_locs()
 /area/holodeck/source_boxingcourt
 	name = "\improper Holodeck - Boxing Court"
 
+/area/holodeck/source_basketball
+	name = "\improper Holodeck - Basketball Court"
+
 /area/holodeck/source_thunderdomecourt
 	name = "\improper Holodeck - Thunderdome Court"
 
