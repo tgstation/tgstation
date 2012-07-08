@@ -252,7 +252,7 @@
 		src.path = new()
 
 	if(!src.patient)
-		if(prob(1) && (!src.shut_up))
+		if(!src.shut_up && prob(1))
 			var/message = pick("Radar, put a mask on!","There's always a catch, and it's the best there is.","I knew it, I should've been a plastic surgeon.","What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
 			src.speak(message)
 

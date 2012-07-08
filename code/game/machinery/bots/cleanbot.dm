@@ -166,12 +166,8 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(src.cleaning)
 		return
 	var/list/cleanbottargets = list()
-	if(!src.target || src.target == null)
-		for(var/obj/machinery/bot/cleanbot/bot in world)
-			if(bot != src)
-				cleanbottargets += bot.target
 
-	if(prob(5) && !src.screwloose && !src.oddbutton)
+	if(!src.screwloose && !src.oddbutton && prob(5))
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("[src] makes an excited beeping booping sound!"), 1)
 
@@ -236,8 +232,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 					src.patrol_path = reverselist(src.patrol_path)
 		else
 			patrol_move()
-			spawn(5)
-				patrol_move()
 
 		return
 

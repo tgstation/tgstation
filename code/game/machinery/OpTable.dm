@@ -17,10 +17,10 @@
 	..()
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
-		if (!isnull(computer))
+		if (computer)
 			break
-	spawn(100)
-		process()
+//	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
+//		process()
 
 /obj/machinery/optable/ex_act(severity)
 

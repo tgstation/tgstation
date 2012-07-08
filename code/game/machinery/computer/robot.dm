@@ -97,12 +97,13 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/engine/process()
+//Why is this in robot/computer and why does it exist when /obj/machinery/computer/engine does not? -Nodrak
+/*/obj/machinery/computer/engine/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	use_power(500)
 	src.updateDialog()
-	return
+	return*/
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	if(..())

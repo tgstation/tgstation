@@ -1,41 +1,3 @@
-/obj/machinery/shieldgen
-		name = "Shield generator"
-		desc = "Used to seal minor hull breaches."
-		icon = 'objects.dmi'
-		icon_state = "shieldoff"
-		var/active = 0
-		var/health = 100
-		var/malfunction = 0
-		density = 1
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
-
-#define maxstoredpower 500
-/obj/machinery/shieldwallgen
-		name = "Shield Generator"
-		desc = "A shield generator."
-		icon = 'stationobjs.dmi'
-		icon_state = "Shield_Gen"
-		anchored = 0
-		density = 1
-		req_access = list(access_security)
-		var/active = 0
-		var/power = 0
-		var/state = 0
-		var/steps = 0
-		var/last_check = 0
-		var/check_delay = 10
-		var/recalc = 0
-		var/locked = 1
-		var/destroyed = 0
-		var/directwired = 1
-//		var/maxshieldload = 200
-		var/obj/structure/cable/attached		// the attached cable
-		var/storedpower = 0
-		flags = FPRINT | CONDUCT
-		use_power = 0
-
 /obj/machinery/shield
 		name = "shield"
 		desc = "An energy shield."
@@ -64,49 +26,61 @@
 		var/obj/machinery/shieldwallgen/gen_secondary
 
 
+/obj/machinery/shieldgen
+		name = "Shield generator"
+		desc = "Used to seal minor hull breaches."
+		icon = 'objects.dmi'
+		icon_state = "shieldoff"
+		density = 1
+		opacity = 0
+		anchored = 0
+		pressure_resistance = 2*ONE_ATMOSPHERE
+		var/active = 0
+		var/health = 100
+		var/malfunction = 0
+		var/list/obj/machinery/shield/deployed_shields
+
 /obj/machinery/shieldgen/Del()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
 		del(shield_tile)
 
 	..()
 
-/obj/machinery/shieldgen/var/list/obj/machinery/shield/deployed_shields
 
-/obj/machinery/shieldgen/proc
-	shields_up()
-		if(active) return 0
+/obj/machinery/shieldgen/proc/shields_up()
+	if(active) return 0
 
-		for(var/turf/target_tile in range(2, src))
-			if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
-				if (malfunction && prob(33) || !malfunction)
-					deployed_shields += new /obj/machinery/shield(target_tile)
+	for(var/turf/target_tile in range(2, src))
+		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
+			if (malfunction && prob(33) || !malfunction)
+				deployed_shields += new /obj/machinery/shield(target_tile)
 
-		src.anchored = 1
-		src.active = 1
-		src.icon_state = malfunction ? "shieldonbr":"shieldon"
+	src.anchored = 1
+	src.active = 1
+	src.icon_state = malfunction ? "shieldonbr":"shieldon"
 
-		spawn src.process()
+	spawn src.process()
 
-	shields_down()
-		if(!active) return 0
+/obj/machinery/shieldgen/proc/shields_down()
+	if(!active) return 0
 
-		for(var/obj/machinery/shield/shield_tile in deployed_shields)
-			del(shield_tile)
+	for(var/obj/machinery/shield/shield_tile in deployed_shields)
+		del(shield_tile)
 
-		src.anchored = 0
-		src.active = 0
-		src.icon_state = malfunction ? "shieldoffbr":"shieldoff"
+	src.anchored = 0
+	src.active = 0
+	src.icon_state = malfunction ? "shieldoffbr":"shieldoff"
 
 /obj/machinery/shieldgen/process()
 	if(active)
 		src.icon_state = malfunction ? "shieldonbr":"shieldon"
 
 		if(malfunction)
-			while(prob(10))
+			if(prob(10) || deployed_shields)
 				del(pick(deployed_shields))
 
-		spawn(30)
-			src.process()
+		//spawn(30) //The MC does this for us...
+		//	src.process()
 	return
 
 /obj/machinery/shieldgen/proc/checkhp()
@@ -173,6 +147,30 @@
 		src.shields_up()
 
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
+#define maxstoredpower 500
+/obj/machinery/shieldwallgen
+		name = "Shield Generator"
+		desc = "A shield generator."
+		icon = 'stationobjs.dmi'
+		icon_state = "Shield_Gen"
+		anchored = 0
+		density = 1
+		req_access = list(access_security)
+		var/active = 0
+		var/power = 0
+		var/state = 0
+		var/steps = 0
+		var/last_check = 0
+		var/check_delay = 10
+		var/recalc = 0
+		var/locked = 1
+		var/destroyed = 0
+		var/directwired = 1
+//		var/maxshieldload = 200
+		var/obj/structure/cable/attached		// the attached cable
+		var/storedpower = 0
+		flags = FPRINT | CONDUCT
+		use_power = 0
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)

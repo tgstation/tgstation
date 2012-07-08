@@ -361,8 +361,9 @@
 		set category = "Object"
 		set src in oview(1)
 
-		if(usr.stat != 0)
+		if(usr.stat != 0 || !(ishuman(usr) || ismonkey(usr)))
 			return
+
 		if(src.occupant)
 			usr << "\blue <B>The sleeper is already occupied!</B>"
 			return

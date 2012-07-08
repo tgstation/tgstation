@@ -41,99 +41,100 @@ obj/machinery/hydroponics/process()
 			// Advance age
 			src.age++
 
-			// Drink random amount of water
-			src.waterlevel -= rand(1,6)
-
+//Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
 			if(src.nutrilevel > 0)
 				if(prob(50))
 					src.nutrilevel -= 1
 
 			// Lack of nutrients hurts non-weeds
-			if(src.nutrilevel == 0 && src.myseed.plant_type != 1)
+			if(src.nutrilevel <= 0 && src.myseed.plant_type != 1)
 				src.health -= rand(1,3)
 
-			// Adjust the water level so it can't go negative
-			if(src.waterlevel < 0)
-				src.waterlevel = 0
+//Water//////////////////////////////////////////////////////////////////
+			// Drink random amount of water
+			src.waterlevel -= rand(1,6)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
-			if(src.waterlevel <= 0 && src.myseed.plant_type != 2)
-				src.health -= rand(1,3)
-			else if(src.waterlevel <= 10 && src.myseed.plant_type != 2)
+			if(src.waterlevel <= 10 && src.myseed.plant_type != 2)
 				src.health -= rand(0,1)
+				if(src.waterlevel <= 0)
+					src.health -= rand(0,2)
+					if(src.waterlevel < 0) //Dont let it drop below 0
+						src.waterlevel = 0
+
+			// Sufficient water level and nutrient level = plant healthy
+			else if(src.waterlevel > 10 && src.nutrilevel > 0)
+				src.health += rand(1,2)
+				if(prob(5))  //5 percent chance the weed population will increase
+					src.weedlevel += 1
+//Toxins/////////////////////////////////////////////////////////////////
 
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
 			if(src.toxic >= 40 && src.toxic < 80)
 				src.health -= 1
 				src.toxic -= rand(1,10)
-			if(src.toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
+			else if(src.toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
 				src.health -= 3
 				src.toxic -= rand(1,10)
+			else if(src.toxic < 0) // Make sure it won't go overoboard
+				src.toxic = 0
 
-			// Sufficient water level and nutrient level = plant healthy
-			if(src.waterlevel > 10 && src.nutrilevel > 0)
-				src.health += rand(1,2)
+//Pests & Weeds//////////////////////////////////////////////////////////
 
 			// Too many pests cause the plant to be sick
-			if(src.pestlevel >= 5)
+			if (src.pestlevel > 10 ) // Make sure it won't go overoboard
+				src.pestlevel = 10
+
+			else if(src.pestlevel >= 5)
 				src.health -= 1
 
 			// If it's a weed, it doesn't stunt the growth
 			if(src.weedlevel >= 5 && src.myseed.plant_type != 1 )
 				src.health -= 1
 
+
+//Health & Age///////////////////////////////////////////////////////////
 			// Don't go overboard with the health
 			if(src.health > src.myseed.endurance)
 				src.health = src.myseed.endurance
+
+			// Plant dies if health <= 0
+			else if(src.health <= 0)
+				src.dead = 1
+				src.harvest = 0
+				src.weedlevel += 1 // Weeds flourish
+				src.pestlevel = 0 // Pests die
 
 			// If the plant is too old, lose health fast
 			if(src.age > src.myseed.lifespan)
 				src.health -= rand(1,5)
 
-			// Plant dies if health = 0
-			if(src.health <= 0)
-				src.dead = 1
-				src.harvest = 0
-				src.weedlevel += 1 // Weeds flourish
-				//src.toxic = 0 // Water is still toxic
-				src.pestlevel = 0 // Pests die
-
 			// Harvest code
-			if(src.age > src.myseed.production && (src.age - src.lastproduce) > src.myseed.production && (!src.harvest && !src.dead))
-				var/m_count = 0
-				while(m_count < src.mutmod)
+			if(mutmod && src.age > src.myseed.production && (src.age - src.lastproduce) > src.myseed.production && (!src.harvest && !src.dead))
+				for(var/i = 0; i < mutmod; i++)
 					if(prob(85))
 						src.mutate()
 					else if(prob(30))
 						src.hardmutate()
 					else if(prob(5))
 						src.mutatespecie()
-					m_count++;
+
 				if(src.yieldmod > 0 && src.myseed.yield != -1) // Unharvestable shouldn't be harvested
 					src.harvest = 1
 				else
 					src.lastproduce = src.age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
 				src.pestlevel += 1
-			if(prob(5) && src.waterlevel > 10 && src.nutrilevel > 0)  // On each tick, there's a 5 percent chance the weed
-				src.weedlevel += 1					//population will increase, but there needs to be water/nuts for that!
 		else
-			if(prob(10) && src.waterlevel > 10 && src.nutrilevel > 0)  // If there's no plant, the percentage chance is 10%
+			if(src.waterlevel > 10 && src.nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
 				src.weedlevel += 1
-
-		// These (v) wouldn't be necessary if additional checks were made earlier (^)
-
-		if (src.weedlevel > 10) // Make sure it won't go overoboard
-			src.weedlevel = 10
-		if (src.toxic < 0) // Make sure it won't go overoboard
-			src.toxic = 0
-		if (src.pestlevel > 10 ) // Make sure it won't go overoboard
-			src.pestlevel = 10
+				if(src.weedlevel > 10)
+					src.weedlevel = 10
 
 		// Weeeeeeeeeeeeeeedddssss
 
-		if (prob(50) && src.weedlevel == 10) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
+		if (src.weedlevel >= 10 && prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(src.planted)
 				if(src.myseed.plant_type == 0) // If a normal plant
 					src.weedinvasion()

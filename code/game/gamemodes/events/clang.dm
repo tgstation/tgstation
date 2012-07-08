@@ -17,7 +17,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	anchored = 1
 
 	Bump(atom/clong)
-		if (istype(clong, /turf) && !istype(clong, /turf/simulated/shuttle) && !istype(clong, /turf/unsimulated))
+		if(istype(clong, /turf/simulated/shuttle)) //Skip shuttles without actually deleting the rod
+			return
+		if (istype(clong, /turf) && !istype(clong, /turf/unsimulated))
 			if(clong.density)
 				clong.ex_act(2)
 				for (var/mob/O in hearers(src, null))
@@ -35,7 +37,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		else del(src)
 
 /proc/immovablerod()
-
 	var/startx = 0
 	var/starty = 0
 	var/endy = 0

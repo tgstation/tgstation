@@ -111,7 +111,6 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 
-
 	src.updateDialog()
 	return
 

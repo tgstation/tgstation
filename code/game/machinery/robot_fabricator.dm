@@ -40,10 +40,6 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/robotic_fabricator/process()
-	if (stat & (NOPOWER | BROKEN))
-		return
-
 /obj/machinery/robotic_fabricator/attack_paw(user as mob)
 	return src.attack_hand(user)
 

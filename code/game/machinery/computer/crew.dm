@@ -26,10 +26,6 @@
 		interact(user)
 
 
-	process()
-		return
-
-
 	power_change()
 		if(stat & BROKEN)
 			icon_state = "broken"

@@ -163,10 +163,6 @@
 	if(src.repairing)
 		return
 	var/list/floorbottargets = list()
-	if(!src.target || src.target == null)
-		for(var/obj/machinery/bot/floorbot/bot in world)
-			if(bot != src)
-				floorbottargets += bot.target
 	if(src.amount <= 0 && ((src.target == null) || !src.target))
 		if(src.eattiles)
 			for(var/obj/item/stack/tile/plasteel/T in view(7, src))
