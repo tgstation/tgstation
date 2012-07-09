@@ -111,7 +111,7 @@ obj/machinery/hydroponics/process()
 				src.health -= rand(1,5)
 
 			// Harvest code
-			if(mutmod && src.age > src.myseed.production && (src.age - src.lastproduce) > src.myseed.production && (!src.harvest && !src.dead))
+			if(src.age > src.myseed.production && (src.age - src.lastproduce) > src.myseed.production && (!src.harvest && !src.dead))
 				for(var/i = 0; i < mutmod; i++)
 					if(prob(85))
 						src.mutate()
