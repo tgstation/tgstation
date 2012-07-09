@@ -69,6 +69,7 @@ proc/load_reports()
 
 // check if there are any unhandled reports
 client/proc/unhandled_reports()
+	if(!src.holder) return 0
 	var/list/reports = load_reports()
 
 	for(var/datum/admin_report/N in reports)
