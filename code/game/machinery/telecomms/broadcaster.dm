@@ -208,15 +208,15 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 	var/display_freq = connection.frequency
 
-	var/list/receive = list()
 
+	var/list/obj/item/device/radio/radios = list()
 
 	// --- Broadcast only to intercom devices ---
 
 	if(data == 1)
 		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
-
-			receive |= R.send_hear(display_freq)
+			if(R.receive_range(display_freq) > 0)
+				radios += R
 
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
@@ -227,7 +227,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 			if(istype(R, /obj/item/device/radio/headset))
 				continue
 
-			receive |= R.send_hear(display_freq)
+			if(R.receive_range(display_freq) > 0)
+				radios += R
 
 
 	// --- Broadcast to syndicate radio! ---
@@ -237,15 +238,19 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
 
-			receive |= R.send_hear(SYND_FREQ)
-
+			if(R.receive_range(SYND_FREQ) > 0)
+				radios += R
 
 	// --- Broadcast to ALL radio devices ---
 
 	else
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
+			if(R.receive_range(display_freq) > 0)
+				radios += R
 
-			receive |= R.send_hear(display_freq)
+
+	// Get a list of mobs who can hear from the radios we collected.
+	var/list/receive = get_mobs_in_radio_ranges(radios)
 
 
   /* ###### Organize the receivers into categories for displaying the message ###### */

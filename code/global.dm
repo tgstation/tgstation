@@ -11,6 +11,10 @@ var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
 		//items that ask to be called every cycle
 
+// This list will map client ckeys to client objects
+// It will be automatically kept up to date by client/New and client/Del
+var/global/list/client_list = list()
+
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 
 var/global/list/global_map = null

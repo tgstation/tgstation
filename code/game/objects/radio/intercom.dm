@@ -4,6 +4,7 @@
 	icon_state = "intercom"
 	anchored = 1
 	w_class = 4.0
+	canhear_range = 4
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
@@ -26,31 +27,21 @@
 
 
 	send_hear(freq)
+		var/range = receive_range(freq)
+
+		if(range > 0)
+			return get_mobs_in_view(canhear_range, src)
+
+	receive_range(freq)
 		if (!(src.wires & WIRE_RECEIVE))
-			return
+			return 0
 		if (!src.listening)
-			return
+			return 0
 		if(freq == SYND_FREQ)
 			if(!(src.syndie))
-				return//Prevents broadcast of messages over devices lacking the encryption
-		/*
-		var/turf/T = get_turf(src)
-		var/list/hear = hearers(7, T)
-		var/list/V
-		//find mobs in lockers, cryo and intellycards
-		for(var/mob/M in world)
-			if (isturf(M.loc))
-				continue //if M can hear us it is already was found by hearers()
-			if (!M.client)
-				continue //skip monkeys and leavers
-			if (!V) //lasy initialisation
-				V = view(7, T)
-			if (get_turf(M) in V) //this slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
-				hear+=M
-		*/
-		//return hear
+				return 0//Prevents broadcast of messages over devices lacking the encryption
 
-		return get_mobs_in_view(4, src)
+		return canhear_range
 
 
 	hear_talk(mob/M as mob, msg)

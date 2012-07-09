@@ -619,27 +619,23 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		return null
 	return
 */
-/obj/item/device/radio/proc/send_hear(freq)
-	/*
 
-		I'm removing this because this is apparently a REALLY REALLY bad thing and causes
-		people's transmissions to get cut off. This also means radios have no delay. A
-		fair price to pay for reliable radios. -- Doohl
 
-	if(last_transmission && world.time < (last_transmission + TRANSMISSION_DELAY))
-		return
-	last_transmission = world.time
-	*/
+/obj/item/device/radio/proc/receive_range(freq)
+	// check if this radio can receive on the given frequency, and if so,
+	// what the range is in which mobs will hear the radio
+	// returns: 0 if can't receive, range otherwise
+
 	if (!(wires & WIRE_RECEIVE))
-		return
+		return 0
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
-			return
+			return 0
 	if (!on)
-		return
+		return 0
 	if (!freq) //recieved on main frequency
 		if (!listening)
-			return
+			return 0
 	else
 		var/accept = (freq==frequency && listening)
 		if (!accept)
@@ -649,28 +645,16 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					accept = 1
 					break
 		if (!accept)
-			return
+			return 0
 
-	/*		// UURAAAGH ALL THE CPUS, WASTED. ALL OF THEM. NO. -- Doohl
-	var/turf/T = get_turf(src)
-	var/list/hear = hearers(1, T)
-	var/list/V
-	//find mobs in lockers, cryo and intellicards, brains, MMIs, and so on.
-	for (var/mob/M in world)
-		if (isturf(M.loc))
-			continue //if M can hear us it is already was found by hearers()
-		if (!M.client)
-			continue //skip monkeys and leavers
-		if (!V) //lasy initialisation
-			V = view(1, T)
-		if (get_turf(M) in V) //this slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
-			hear+=M
-	*/
+	return canhear_range
 
-	/* Instead, let's individually search potential containers for mobs! More verbose but a LOT more efficient and less laggy */
-	// Check gamehelpers.dm for the proc definition:
+/obj/item/device/radio/proc/send_hear(freq)
+	var/range = receive_range(freq)
 
-	return get_mobs_in_view(canhear_range, src)
+	if(range > 0)
+		return get_mobs_in_view(canhear_range, src)
+
 
 /obj/item/device/radio/examine()
 	set src in view()

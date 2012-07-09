@@ -219,6 +219,31 @@
 
 	return hear
 
+
+/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
+	// Returns a list of mobs who can hear any of the radios given in @radios
+
+	var/list/hearers = list()
+
+	// Try to find all the players who can hear the message
+	for(var/key in client_list)
+		var/client/C = client_list[key]
+		var/mob/M = C.mob
+		if(!M) continue
+
+		var/atom/ear = M.get_ear()
+		if(!ear) continue
+
+		// Now see if they're near any broadcasting radio
+		for(var/obj/item/device/radio/R in radios)
+			var/turf/radio_loc = get_turf(R)
+			if(ear in view(R.canhear_range,radio_loc))
+				hearers += M
+				break
+
+	return hearers
+
+
 #define SIGN(X) ((X<0)?-1:1)
 
 proc

@@ -70,3 +70,11 @@
 
 /mob/proc/emote(var/act)
 	return
+
+/mob/proc/get_ear()
+	// returns an atom representing a location on the map from which this
+	// mob can hear things
+
+	// should be overloaded for all mobs whose "ear" is separate from their "mob"
+
+	return get_turf(src)

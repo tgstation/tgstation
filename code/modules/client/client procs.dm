@@ -95,6 +95,8 @@
 		host = key
 		world.update_status()
 
+	client_list[ckey] = src
+
 	..()	//calls mob.Login()
 
 	//Admin Authorisation
@@ -109,6 +111,8 @@
 	//DISCONNECT//
 	//////////////
 /client/Del()
+	client_list.Remove(ckey)
+
 	spawn(0)
 		if(holder)
 			del(holder)
