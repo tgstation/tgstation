@@ -82,7 +82,7 @@ client/proc/unhandled_reports()
 client/proc/is_reported()
 	var/list/reports = load_reports()
 
-	for(var/datum/admin_report/N in reports)
+	for(var/datum/admin_report/N in reports) if(!N.done)
 		if(N.offender_key == src.key)
 			return 1
 
