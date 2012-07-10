@@ -14,7 +14,7 @@
 	var/max_energy = 75
 	var/amount = 30
 	var/beaker = null
-	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine","sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron","copper","mercury","radium","water","ethanol","sugar","acid","milk",)
+	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine","sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron","copper","mercury","tungsten","radium","water","ethanol","sugar","acid","milk",)
 	var/charging_reagents = 0
 
 	ex_act(severity)

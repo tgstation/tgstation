@@ -379,7 +379,7 @@ obj/structure/door_assembly
 							src.mineral = "glass"
 							src.name = "Near finished Window Airlock Assembly"
 							src.airlock_type = /obj/machinery/door/airlock/glass
-							src.base_icon_state = "door_as_glass" //this will be applied to the icon_state with the correct state number at the proc's end.
+							src.base_icon_state = "door_as_g" //this will be applied to the icon_state with the correct state number at the proc's end.
 					if(/obj/item/stack/sheet/gold)
 						if(G.amount>=2)
 							playsound(src.loc, 'Crowbar.ogg', 100, 1)

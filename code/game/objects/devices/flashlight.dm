@@ -174,7 +174,7 @@
 	if(on)
 		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
 	else
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
+		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
 
 /obj/item/clothing/head/helmet/space/rig/pickup(mob/user)
 	if(on)

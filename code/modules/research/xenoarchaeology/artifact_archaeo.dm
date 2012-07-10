@@ -138,12 +138,12 @@
 
 	for(var/Xa = 1,Xa<seperate.len,Xa++)
 		var/next = Xa + 1
-		if(words["[lowertext(seperate[Xa])]"])
-			var/list/w = words["[lowertext(seperate[Xa])]"]
-			w.Add("[lowertext(seperate[next])]")
-		else
+		if(words.len > 20 + rand(10,20))
+			words.Remove(words[1])
+		if(!words["[lowertext(seperate[Xa])]"])
 			words["[lowertext(seperate[Xa])]"] = list()
-			var/list/w = words["[lowertext(seperate[Xa])]"]
+		var/list/w = words["[lowertext(seperate[Xa])]"]
+		if(w)
 			w.Add("[lowertext(seperate[next])]")
 		//world << "Adding [lowertext(seperate[next])] to [lowertext(seperate[Xa])]"
 
@@ -167,7 +167,7 @@
 	if(!word)
 		text = "[pick(words)]"
 	else
-		text = pick(stringsplit(word))
+		text = pick(stringsplit(word, " "))
 	if(lentext(text)==1)
 		text=uppertext(text)
 	else

@@ -657,6 +657,13 @@ datum
 			reagent_state = SOLID
 			color = "#832828" // rgb: 131, 40, 40
 
+		tungsten	//used purely to make lith-sodi-tungs, which is used in xenoarch
+			name = "Tungsten"
+			id = "tungsten"
+			description = "A chemical element, and a strong oxidising agent."
+			reagent_state = SOLID
+			color = "#808080" // rgb: 128, 128, 128, meant to be a silvery grey but idrc
+
 		lithium
 			name = "Lithium"
 			id = "lithium"
