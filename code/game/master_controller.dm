@@ -7,10 +7,6 @@ var/global/controller_iteration = 0
 var/global/last_tick_timeofday = world.timeofday
 var/global/last_tick_duration = 0
 
-var/global/obj/machinery/last_obj_processed			//Used for MC 'proc break' debugging
-var/global/datum/disease/last_disease_processed		//Used for MC 'proc break' debugging
-var/global/obj/machinery/last_machine_processed		//Used for MC 'proc break' debugging
-
 datum/controller/game_controller
 	var/processing = 1
 
@@ -24,6 +20,13 @@ datum/controller/game_controller
 	var/global/networks_ready = 0
 	var/global/powernets_ready = 0
 	var/global/ticker_ready = 0
+
+	//Used for MC 'proc break' debugging
+	var/global/obj/last_obj_processed
+	var/global/datum/disease/last_disease_processed
+	var/global/obj/machinery/last_machine_processed
+	var/global/mob/last_mob_processed
+
 
 	proc/setup()
 		if(master_controller && (master_controller != src))
@@ -142,6 +145,7 @@ datum/controller/game_controller
 
 		spawn(0)
 			for(var/mob/M in world)
+				last_mob_processed = M
 				M.Life()
 			mobs_ready = 1
 
@@ -155,6 +159,7 @@ datum/controller/game_controller
 				last_disease_processed = D
 				D.process()
 			diseases_ready = 1
+
 		spawn(0)
 			for(var/obj/machinery/machine in machines)
 				if(machine)

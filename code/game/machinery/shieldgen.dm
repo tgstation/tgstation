@@ -1,29 +1,171 @@
 /obj/machinery/shield
-		name = "shield"
-		desc = "An energy shield."
+		name = "emergency energy shield"
+		desc = "An energy shield usually used to contain hull breaches."
 		icon = 'effects.dmi'
 		icon_state = "shieldsparkles"
 		density = 1
-		opacity = 1
+		opacity = 0
 		anchored = 1
 		unacidable = 1
+		var/const/max_health = 200
+		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
-/obj/machinery/shieldwall
-		name = "Shield"
-		desc = "An energy shield."
-		icon = 'effects.dmi'
-		icon_state = "shieldwall"
-		anchored = 1
-		density = 1
-		unacidable = 1
-		var/needs_power = 0
-		var/active = 1
-//		var/power = 10
-		var/delay = 5
-		var/last_active
-		var/mob/U
-		var/obj/machinery/shieldwallgen/gen_primary
-		var/obj/machinery/shieldwallgen/gen_secondary
+/obj/machinery/shield/New()
+	src.dir = pick(1,2,3,4)
+	..()
+	update_nearby_tiles(need_rebuild=1)
+
+/obj/machinery/shield/Del()
+	opacity = 0
+	density = 0
+	update_nearby_tiles()
+	..()
+
+/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
+	if(!height || air_group) return 0
+	else return ..()
+
+//Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
+/obj/machinery/shield/proc/update_nearby_tiles(need_rebuild)
+	if(!air_master) return 0
+
+	var/turf/simulated/source = loc
+	var/turf/simulated/north = get_step(source,NORTH)
+	var/turf/simulated/south = get_step(source,SOUTH)
+	var/turf/simulated/east = get_step(source,EAST)
+	var/turf/simulated/west = get_step(source,WEST)
+
+	if(need_rebuild)
+		if(istype(source)) //Rebuild/update nearby group geometry
+			if(source.parent)
+				air_master.groups_to_rebuild += source.parent
+			else
+				air_master.tiles_to_update += source
+		if(istype(north))
+			if(north.parent)
+				air_master.groups_to_rebuild += north.parent
+			else
+				air_master.tiles_to_update += north
+		if(istype(south))
+			if(south.parent)
+				air_master.groups_to_rebuild += south.parent
+			else
+				air_master.tiles_to_update += south
+		if(istype(east))
+			if(east.parent)
+				air_master.groups_to_rebuild += east.parent
+			else
+				air_master.tiles_to_update += east
+		if(istype(west))
+			if(west.parent)
+				air_master.groups_to_rebuild += west.parent
+			else
+				air_master.tiles_to_update += west
+	else
+		if(istype(source)) air_master.tiles_to_update += source
+		if(istype(north)) air_master.tiles_to_update += north
+		if(istype(south)) air_master.tiles_to_update += south
+		if(istype(east)) air_master.tiles_to_update += east
+		if(istype(west)) air_master.tiles_to_update += west
+
+	return 1
+
+
+/obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(!istype(W)) return
+
+	//Calculate damage
+	var/aforce = W.force
+	if(W.damtype == BRUTE || W.damtype == BURN)
+		src.health -= aforce
+
+	//Play a fitting sound
+	playsound(src.loc, 'EMPulse.ogg', 75, 1)
+
+
+	if (src.health <= 0)
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\blue The [src] dissapates")
+		del(src)
+		return
+
+	opacity = 1
+	spawn(20) if(src) opacity = 0
+
+	..()
+
+/obj/machinery/shield/meteorhit()
+	src.health -= max_health*0.75 //3/4 health as damage
+
+	if(src.health <= 0)
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\blue The [src] dissapates")
+		del(src)
+		return
+
+	opacity = 1
+	spawn(20) if(src) opacity = 0
+	return
+
+/obj/machinery/shield/bullet_act(var/obj/item/projectile/Proj)
+	health -= Proj.damage
+	..()
+	if(health <=0)
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\blue The [src] dissapates")
+		del(src)
+		return
+	opacity = 1
+	spawn(20) if(src) opacity = 0
+
+/obj/machinery/shield/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			if (prob(75))
+				del(src)
+		if(2.0)
+			if (prob(50))
+				del(src)
+		if(3.0)
+			if (prob(25))
+				del(src)
+	return
+
+/obj/machinery/shield/blob_act()
+	del(src)
+
+
+/obj/machinery/shield/hitby(AM as mob|obj)
+	//Let everyone know we've been hit!
+	for(var/mob/O in viewers(src, null))
+		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
+
+	//Super realistic, resource-intensive, real-time damage calculations.
+	var/tforce = 0
+	if(ismob(AM))
+		tforce = 40
+	else
+		tforce = AM:throwforce
+
+	src.health -= tforce
+
+	//This seemed to be the best sound for hitting a force field.
+	playsound(src.loc, 'EMPulse.ogg', 100, 1)
+
+	//Handle the destruction of the shield
+	if (src.health <= 0)
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\blue The [src] dissapates")
+		del(src)
+		return
+
+	//The shield becomes dense to absorb the blow.. purely asthetic.
+	opacity = 1
+	spawn(20) if(src) opacity = 0
+
+	..()
+	return
+
 
 
 /obj/machinery/shieldgen
@@ -36,74 +178,58 @@
 		anchored = 0
 		pressure_resistance = 2*ONE_ATMOSPHERE
 		var/active = 0
-		var/health = 100
-		var/malfunction = 0
-		var/list/obj/machinery/shield/deployed_shields
+		var/const/max_health = 100
+		var/health = max_health
+		var/malfunction = 0 //Malfunction causes parts of the shield to slowly dissapate
+		var/list/deployed_shields = list()
+		var/is_open = 0 //Whether or not the wires are exposed
 
 /obj/machinery/shieldgen/Del()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
 		del(shield_tile)
-
 	..()
 
 
 /obj/machinery/shieldgen/proc/shields_up()
-	if(active) return 0
+	if(active) return 0 //If it's already turned on, how did this get called?
+
+	src.active = 1
+	update_icon()
 
 	for(var/turf/target_tile in range(2, src))
 		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
 			if (malfunction && prob(33) || !malfunction)
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
-	src.anchored = 1
-	src.active = 1
-	src.icon_state = malfunction ? "shieldonbr":"shieldon"
-
-	spawn src.process()
-
 /obj/machinery/shieldgen/proc/shields_down()
-	if(!active) return 0
+	if(!active) return 0 //If it's already off, how did this get called?
+
+	src.active = 0
+	update_icon()
 
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
 		del(shield_tile)
 
-	src.anchored = 0
-	src.active = 0
-	src.icon_state = malfunction ? "shieldoffbr":"shieldoff"
-
 /obj/machinery/shieldgen/process()
-	if(active)
-		src.icon_state = malfunction ? "shieldonbr":"shieldon"
+	if(malfunction && active)
+		if(deployed_shields && prob(5))
+			del(pick(deployed_shields))
 
-		if(malfunction)
-			if(prob(10) || deployed_shields)
-				del(pick(deployed_shields))
-
-		//spawn(30) //The MC does this for us...
-		//	src.process()
 	return
 
 /obj/machinery/shieldgen/proc/checkhp()
 	if(health <= 30)
 		src.malfunction = 1
-	if(health <= 10 && prob(75))
+	if(health <= 0)
 		del(src)
-	if (active)
-		src.icon_state = malfunction ? "shieldonbr":"shieldon"
-	else
-		src.icon_state = malfunction ? "shieldoffbr":"shieldoff"
+	update_icon()
 	return
 
 /obj/machinery/shieldgen/meteorhit(obj/O as obj)
-	src.health -= 25
+	src.health -= max_health*0.25 //A quarter of the machine's health
 	if (prob(5))
 		src.malfunction = 1
 	src.checkhp()
-	return
-
-/obj/machinery/shield/meteorhit(obj/O as obj)
-	if (prob(75))
-		del(src)
 	return
 
 /obj/machinery/shieldgen/ex_act(severity)
@@ -121,19 +247,6 @@
 			src.checkhp()
 	return
 
-/obj/machinery/shield/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			if (prob(75))
-				del(src)
-		if(2.0)
-			if (prob(50))
-				del(src)
-		if(3.0)
-			if (prob(25))
-				del(src)
-	return
-
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
 	if (src.active)
 		user.visible_message("\blue \icon[src] [user] deactivated the shield generator.", \
@@ -141,10 +254,60 @@
 			"You hear heavy droning fade out.")
 		src.shields_down()
 	else
-		user.visible_message("\blue \icon[src] [user] activated the shield generator.", \
-			"\blue \icon[src] You activate the shield generator.", \
-			"You hear heavy droning.")
-		src.shields_up()
+		if(anchored)
+			user.visible_message("\blue \icon[src] [user] activated the shield generator.", \
+				"\blue \icon[src] You activate the shield generator.", \
+				"You hear heavy droning.")
+			src.shields_up()
+		else
+			user << "The device must first be secured to the floor."
+	return
+
+/obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/card/emag))
+		malfunction = 1
+		update_icon()
+
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		playsound(src.loc, 'Screwdriver.ogg', 100, 1)
+		if(is_open)
+			user << "\blue You close the panel."
+			is_open = 0
+		else
+			user << "\blue You open the panel and expose the wiring."
+			is_open = 1
+
+	else if(istype(W, /obj/item/weapon/cable_coil) && malfunction && is_open)
+		var/obj/item/weapon/cable_coil/coil = W
+		user << "\blue You begin to repair the cables."
+		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
+		if(do_after(user, 30))
+			if(!src || !coil) return
+			coil.use(1)
+			health = max_health
+			malfunction = 0
+			user << "\blue You repair the [src]!"
+			update_icon()
+
+	else if(istype(W, /obj/item/weapon/wrench))
+		if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
+		playsound(src.loc, 'Ratchet.ogg', 100, 1)
+		if(anchored)
+			user << "\blue You unsecure the [src] from the floor!"
+			anchored = 0
+		else
+			user << "\blue You secure the [src] to the floor!"
+			anchored = 1
+	else
+		..()
+
+
+/obj/machinery/shieldgen/update_icon()
+	if(active)
+		src.icon_state = malfunction ? "shieldonbr":"shieldon"
+	else
+		src.icon_state = malfunction ? "shieldoffbr":"shieldoff"
+	return
 
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 #define maxstoredpower 500
@@ -380,70 +543,23 @@
 	return
 
 
-/obj/machinery/shield
-	New()
-		src.dir = pick(1,2,3,4)
-
-		..()
-
-		update_nearby_tiles(need_rebuild=1)
-
-	Del()
-		update_nearby_tiles()
-
-		..()
-
-	CanPass(atom/movable/mover, turf/target, height, air_group)
-		if(!height || air_group) return 0
-		else return ..()
-
-	proc/update_nearby_tiles(need_rebuild)
-		if(!air_master) return 0
-
-		var/turf/simulated/source = loc
-		var/turf/simulated/north = get_step(source,NORTH)
-		var/turf/simulated/south = get_step(source,SOUTH)
-		var/turf/simulated/east = get_step(source,EAST)
-		var/turf/simulated/west = get_step(source,WEST)
-
-		if(need_rebuild)
-			if(istype(source)) //Rebuild/update nearby group geometry
-				if(source.parent)
-					air_master.groups_to_rebuild += source.parent
-				else
-					air_master.tiles_to_update += source
-			if(istype(north))
-				if(north.parent)
-					air_master.groups_to_rebuild += north.parent
-				else
-					air_master.tiles_to_update += north
-			if(istype(south))
-				if(south.parent)
-					air_master.groups_to_rebuild += south.parent
-				else
-					air_master.tiles_to_update += south
-			if(istype(east))
-				if(east.parent)
-					air_master.groups_to_rebuild += east.parent
-				else
-					air_master.tiles_to_update += east
-			if(istype(west))
-				if(west.parent)
-					air_master.groups_to_rebuild += west.parent
-				else
-					air_master.tiles_to_update += west
-		else
-			if(istype(source)) air_master.tiles_to_update += source
-			if(istype(north)) air_master.tiles_to_update += north
-			if(istype(south)) air_master.tiles_to_update += south
-			if(istype(east)) air_master.tiles_to_update += east
-			if(istype(west)) air_master.tiles_to_update += west
-
-		return 1
-
-
 //////////////Contaiment Field START
-
+/obj/machinery/shieldwall
+		name = "Shield"
+		desc = "An energy shield."
+		icon = 'effects.dmi'
+		icon_state = "shieldwall"
+		anchored = 1
+		density = 1
+		unacidable = 1
+		var/needs_power = 0
+		var/active = 1
+//		var/power = 10
+		var/delay = 5
+		var/last_active
+		var/mob/U
+		var/obj/machinery/shieldwallgen/gen_primary
+		var/obj/machinery/shieldwallgen/gen_secondary
 
 /obj/machinery/shieldwall/New(var/obj/machinery/shieldwallgen/A, var/obj/machinery/shieldwallgen/B)
 	..()
@@ -453,17 +569,6 @@
 		needs_power = 1
 	spawn(1)
 		src.sd_SetLuminosity(3)
-
-/*	for(var/mob/M as mob in src.loc) //does not work for some reason.
-	 	if(istype(M,/mob/living/carbon))
-			M.adjustBruteLoss(100)
-	 		M.updatehealth()
-			M << "\red <B>You feel as the very atoms of your body divide!</B>"
-		else
-			M.adjustBruteLoss(50)
-	 		M.updatehealth()
-			M << "\red <B>Strong energy field detected. Damage from field dampened.</B>"
-*/
 
 /obj/machinery/shieldwall/attack_hand(mob/user as mob)
 	return
