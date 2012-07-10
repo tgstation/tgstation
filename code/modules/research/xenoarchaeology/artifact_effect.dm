@@ -97,7 +97,7 @@
 					user.weakened += 6
 					return 1
 				else user << "Nothing happens."
-			if("stun")
+			/*if("stun")
 				if (istype(user, /mob/living/carbon/))
 					user << "\red A powerful force overwhelms your consciousness."
 					user.paralysis += 30
@@ -105,7 +105,7 @@
 					user.weakened += 45
 					user.stuttering += 45
 					return 1
-				else user << "Nothing happens."
+				else user << "Nothing happens."*/
 			if("roboheal")
 				if (istype(user, /mob/living/silicon/robot))
 					user << "\blue Your systems report damaged components mending by themselves!"
@@ -224,7 +224,7 @@
 					M.adjustBrainLoss(1)
 					M.updatehealth()
 				return 1
-			if("stun")
+			/*if("stun")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
@@ -234,7 +234,7 @@
 						M.stunned += 2
 						M.weakened += 2
 						M.stuttering += 2
-				return 1
+				return 1*/
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					if(prob(10)) M << "\blue SYSTEM ALERT: Beneficial energy field detected!"
@@ -314,7 +314,7 @@
 					M.weakened += 3
 					M.updatehealth()
 				return 1
-			if("stun")
+			/*if("stun")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
@@ -323,7 +323,7 @@
 					M.stunned += 4
 					M.weakened += 4
 					M.stuttering += 4
-				return 1
+				return 1*/
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
@@ -413,7 +413,7 @@
 					M.adjustBrainLoss(3)
 					M.updatehealth()
 				return 1
-			if("stun")
+			/*if("stun")
 				for (var/mob/living/carbon/M in world)
 					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
@@ -422,7 +422,7 @@
 					M.stunned += 8
 					M.weakened += 8
 					M.stuttering += 8
-				return 1
+				return 1*/
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in world)
 					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
