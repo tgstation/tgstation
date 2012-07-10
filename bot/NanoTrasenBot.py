@@ -156,7 +156,7 @@ heavy_psyco = True # +Memory +Startup time -CPU usage -CPU time
 cache_youtube_links = True
 personality_greeter = True
 respond_of_course = True #Responds with "Of course!"
-respond_khan = True #KHAAAAAAAAN!
+respond_khan = False #KHAAAAAAAAN!
 silent_duplicate_takedown = True
 showquotemakers = False
 shortform = True
@@ -637,44 +637,6 @@ while True:
                      tiedosto.write(arg)
                      tiedosto.close()
                      conn.privmsg(targetchannel,"Suggestion received")
-            elif cocheck(prefix+"disable fml"):
-               if (truesender in operators or truesender in halfoperators) and targetchannel==channel:# or truesender.lower() == "skibiliano" and targetchannel==channel:
-                  if debug:
-                     print truesender+":"+prefix+"enable fml"
-                  fml_usable = False
-                  conn.privmsg(targetchannel,"the "+prefix+"fml has now been disabled")
-            elif cocheck(prefix+"enable fml"):
-               if (truesender in operators or truesender in halfoperators) and targetchannel==channel:# or truesender.lower() == "skibiliano" and targetchannel==channel:
-                  if debug:
-                     print truesender+":"+prefix+"enable fml"
-                  fml_usable = True
-                  conn.privmsg(targetchannel,"the "+prefix+"fml has now been enabled")
-            elif cocheck(prefix+"tqm") or cocheck(prefix+"togglequotemakers"):
-               if truesender in operators and targetchannel==channel:# or truesender == "Skibiliano" and targetchannel==channel:
-                  if debug:
-                     print truesender+":"+prefix+"togglequotemakers"
-                  if showquotemakers == True:
-                     showquotemakers = False
-                     conn.privmsg(targetchannel,"Not showing makers of quotes anymore")
-                  else:
-                     showquotemakers = True
-                     conn.privmsg(targetchannel,"Showing makers of quotes...")
-            elif cocheck(prefix+"disable dance") or cocheck(prefix+"dd"):
-               if (truesender in operators or truesender in halfoperators) and targetchannel==channel:# or truesender == "Skibiliano" and targetchannel==channel:
-                  if debug:
-                     print truesender+":"+prefix+"togglequotemakers"
-                  if dance_enabled == True:
-                     dance_enabled = False
-                  else:
-                     dance_enabled = True
-            elif cocheck(prefix+"disable") or cocheck(prefix+"shutup"):
-               if debug:
-                  print truesender+":"+prefix+"disable"
-               if truesender in operators and targetchannel==channel:# or "skibiliano" in truesender.lower() and targetchannel==channel:
-                  enabled = False
-#            elif cocheck("ping"):
-#               what = influx[7:]
-#               conn.privmsg(truesender,"PONG "+what)
             elif cocheck( prefix+"help "): #Space in front of the ( to make sure that my command finder does not pick this up.
                arg = " ".join(influx.split(" ")[1:]).lower()
                if debug:
@@ -691,303 +653,11 @@ while True:
                if debug:
                   print truesender+":"+prefix+"help"
                conn.privmsg(targetchannel,"All my commands are: "+reduce(lambda x,y:str(x)+"; "+str(y),commands))
-            elif influx.lower() == prefix+"rtd":
-               if debug:
-                  print truesender+":"+prefix+"rtd"
-               compiled = random.randint(1,6)
-               conn.privmsg(targetchannel,sender+" : "+dictionary[compiled])
-            elif cocheck(prefix+"tom") or cocheck(prefix+"toggleofflinemssages"):
-               if debug:
-                  print truesender+":"+prefix+"toggleofflinemessages "+str(offline_message)+" -> "+str(not offline_messages)
-               if truesender in operators and targetchannel==channel:# or truesender == "Skibiliano" and targetchannel==channel:
-                  if offline_messages == True:
-                     offline_messages = False
-                     conn.privmsg(targetchannel,sender+" : Offline messages have now been disabled and list purged")
-                     tell_list = {}
-                  else:
-                     offline_messages = True
-                     conn.privmsg(targetchannel,sender+" : Offline messages have been enabled")
-            ### RTD
-            elif cocheck(prefix+"rtd"):
-               conn.privmsg(targetchannel,sender+" : "+rtd(influx[len(prefix+"rtd"):],debug,truesender))
-            ### SRTD
-            elif cocheck(prefix+"srtd"):
-               conn.privmsg(targetchannel,sender+" : "+srtd(influx[len(prefix+"srtd"):],debug,truesender))
-            ### EIGHTBALL
-            elif cocheck(prefix+"eightball ") or cocheck(prefix+"8ball "):
-               conn.privmsg(targetchannel,sender+" : "+C_eightball.eightball(influx.lower(),debug,truesender,prefix))
-            elif cocheck(prefix+"coin"):
-               conn.privmsg(targetchannel,sender+" : "+heaortai(debug,truesender))
-            ### SARCASTIC BALL   
-            elif cocheck(prefix+"sarcasticball ") or cocheck(prefix+"sball "):
-               if highlights:
-                  conn.privmsg(targetchannel,sender+" : "+C_sarcasticball.sarcasticball(influx.lower(),debug,truesender,users,prefix))
-               else:
-                  conn.privmsg(targetchannel,sender+" : "+C_sarcasticball.sarcasticball(influx.lower(),debug,truesender,nonhighlight_names,prefix))
-            elif cocheck(prefix+"thm"):
-               if truesender in operators and targetchannel==channel: #Skibiliano tag removed
-                  if debug:
-                     print truesender+":"+prefix+"thm"
-                  if highlights == True:
-                     conn.privmsg(targetchannel,"Highlighting users in eightball, sarcasticball and otherball has now been turned off")
-                     highlights = False
-                  else:
-                     conn.privmsg(targetchannel,"Highlighting users in eightball, sarcasticball and otherball has now been turned on")
-                     highlights = True
-            elif cocheck(prefix+"suggest "):
-               arg = influx.lower()[8+len(prefix):]
-               if debug:
-                  print truesender+":"+prefix+"suggest "+arg
-               tiedosto = open(targetdirectory+"suggestions/suggestions_"+str(int(time.time()))+".txt","a")
-               tiedosto.write(arg)
-               tiedosto.close()
-               conn.privmsg(targetchannel,sender+": Your suggestion has been saved")
-            elif cocheck(prefix+"stop"):
-               ### SECOND QUIT COMMAND
-#               if debug:
-#                  print truesender+":"+prefix+"stop"
-#               if truesender in operators or "skibiliano" in truesender.lower():
-#                  if random.randint(0,100) == 50:
-#                     conn.privmsg(targetchannel,"Hammertime!")
-#                  else:
-#                     conn.privmsg(targetchannel,"Shutting down.")
-#                  disconnects = 99999
-#                  conn.quit()
-#                  break
-#               else:
-#                  conn.privmsg(targetchannel,"You cannot command me")
-               if stop(truesender,debug):
-                  break
-               else:
-                  pass
-            ### GET REPLACEMENT ###
-            elif cocheck(prefix+"replace"):
-               if debug:
-                  print truesender+":"+prefix+"replace"
-               if truesender in operators:
-                  if usable == True:
-                     conn.privmsg(targetchannel,sender+" : Pneumatic Smasher is already fixed")
-                  else:
-                     usable = True
-                     conn.privmsg(targetchannel,sender+" : Pneumatic Smasher has been fixed.")
-               else:
-                  thread.start_new_thread(replace,() )
-            elif cocheck(prefix+"rot13"):
-               arg = influx.replace(prefix+"rot13 ","",1)
-               if debug:
-                  print truesender+":"+prefix+"rot13 "+arg
-               if arg == influx:
-                  conn.privmsg(targetchannel,sender+" : Please provide something for me to cypher")
-               else:
-                  conn.privmsg(targetchannel,sender+" : "+C_rot13.rot13(arg))
-            ### FML
-            elif cocheck(prefix+"fml"):
-               if debug:
-                  print truesender+":"+prefix+"fml"
-               #conn.privmsg(targetchannel,sender+" : "+load("fmlquotes/"+random.sample(os.listdir("fmlquotes"),1)[0]))
-               try:
-                  if optimize_fml == False:
-                     conn.privmsg(targetchannel,sender+" : "+load(targetdirectory+"fmlquotes/"+fsample(os.listdir(targetdirectory+"fmlquotes"))))
-                  else:
-                     conn.privmsg(targetchannel,sender+" : "+load(targetdirectory+"fmlquotes/"+fsample(pregenned_fml)))
-               except:
-                  execfile("gen_fml.py") #Generates a few random FML entries
-                  if optimize_fml:
-                     pregenned_fml = os.listdir(targetdirectory+"fmlquotes")
-                     conn.privmsg(targetchannel,sender+" : "+load(targetdirectory+"fmlquotes/"+fsample(pregenned_fml)))
-                  else:
-                     conn.privmsg(targetchannel,sender+" : "+load(targetdirectory+"fmlquotes/"+fsample(os.listdir(targetdirectory+"fmlquotes"))))
-               if debug:
-                  print truesender+":"+prefix+"quote"
-               try:
-                  #loaded = load("userquotes/"+random.sample(os.listdir("C:/Python26/Skibot_"+version+"userquotes"),1)[0])
-                  loaded = load(targetdirectory+"userquotes/"+fsample(os.listdir(targetdirectory+"userquotes")))
-               except ValueError:
-                  conn.privmsg(targetchannel,"No quotes available [VALUE ERROR]")
-               except IndexError:
-                  conn.privmsg(targetchannel,"No quotes available [INDEX ERROR]")
-               else:
-                  if showquotemakers == True:
-                     conn.privmsg(targetchannel,sender+" : "+loaded[0]+" -"+loaded[1])
-                  else:
-                     conn.privmsg(targetchannel,sender+" : "+loaded[0])
-            elif cocheck(prefix+"delquote "):
-               if truesender in operators and targetchannel==channel:
-                  if debug:
-                     print truesender+":"+prefix+"delquote"
-                  directory = os.listdir(targetdirectory+"userquotes")
-                  arg = influx.lower()[9+len(prefix):]
-                  if debug:
-                     print truesender+":"+prefix+"delquote "+arg
-                  if arg in directory:
-                     try:
-                        os.remove(targetdirectory+"userquotes/"+arg)
-                     except WindowsError:
-                        conn.privmsg(targetchannel,sender+" : The quote does not exist")
-                     else:
-                        conn.privmsg(targetchannel,sender+" : The quote has been removed")
-                  else:
-                     conn.privmsg(targetchannel,sender+" : The quote does not exist")
-               else:
-                  conn.privmsg(targetchannel,sender+" : I can't let you do that Dave.")
-            elif cocheck(prefix+"quote "):
-               directory = os.listdir(targetdirectory+"userquotes")
-               newdir = []
-               arg = influx.lower()[6+len(prefix):]
-               if debug:
-                  print truesender+":"+prefix+"quote "+arg
-               for possibility in directory:
-                  if arg in possibility:
-                     newdir.append(possibility)
-                  else:
-                     pass
-               if len(newdir) == 0:
-                  conn.privmsg(targetchannel,influx[6+len(prefix):]+" Hasn't made any quotes")
-               else:
-                  try:
-                     # randsamp = random.sample(newdir,1)[0]
-                     randsamp = fsample(newdir)
-                     # userquotes/head_1
-                     loaded = load(targetdirectory+"userquotes/"+randsamp)
-                  except ValueError:
-                     conn.privmsg(targetchannel,"No quotes available [VALUE ERROR]")
-                  except IndexError:
-                     conn.privmsg(targetchannel,"No quotes available [INDEX ERROR]")
-                  else:
-                     if showquotemakers == True:
-                        conn.privmsg(targetchannel,'"'+loaded[0]+'"'+" -By "+loaded[1]\
-                                  #+" In file:"+randsamp\
-                                  )
-                     else:
-                        conn.privmsg(targetchannel,'"'+loaded[0]+'"'\
-                                  #+" In file:"+randsamp\
-                                  )
-            elif cocheck(prefix+"makequote "):
-               conn.privmsg(targetchannel,C_makequote.mkquote(prefix,influx,truesender,debug))
             ### VERSION
             elif influx.lower() == prefix+"version":
                if debug:
                   print truesender+":"+prefix+"version"
                conn.privmsg(targetchannel,Name+" "+pregen+" online at a %s Python %s.%s.%s, At your service." %(str(sys.platform),str(sys.version_info[0]),str(sys.version_info[1]),str(sys.version_info[2])))
-               
-            elif cocheck(prefix+"take"):
-               arg = influx.lower().replace(prefix+"take ","")
-               if arg == "!take" and len(influx.lower()) == len(arg):
-                  conn.privmsg(targetchannel,sender+" : Please provide an argument")
-               else:
-                  if debug:
-                     print truesender+":"+prefix+"take "+arg
-                  if arg in items:
-                     item = items.pop(items.index(arg))
-                     conn.privmsg(targetchannel,sender+"'s "+arg+" was taken back")
-                  else:
-                     conn.privmsg(targetchannel,sender+"'s "+arg+" is not here, sorry.")
-            elif cocheck(prefix+"give"):
-               arg = influx.lower().replace(prefix+"give ","")
-               if debug:
-                  print truesender+":"+prefix+"give "+arg
-               conn.privmsg(targetchannel,sender+"'s "+arg+" received")
-               items.append(arg)
-            elif cocheck(prefix+"use") or cocheck(prefix+"smash"):
-               if debug:
-                  print truesender+":"+prefix+"use"
-               if usable == True:
-                  expcount = str(items).count("bomb") + str(items).count("explosive") + str(items).count("tnt") + str(items).count("explosion")
-                  if "nuke" in str(items):
-                     conn.privmsg(targetchannel,"SWOOOOOOOOSHHHHH")
-                     if debug:
-                        print prefix+"use is now inoperable"
-                     usable = False
-                  elif expcount == 1:
-                     conn.privmsg(targetchannel,"BANG")
-                  elif expcount > 1:
-                     conn.privmsg(targetchannel,"KABOOM")
-                  else:
-                     conn.privmsg(targetchannel,"CLANG")
-                  items = []
-               else:
-                  conn.privmsg(targetchannel,"ERROR: PNEUMATIC SMASHER OUT OF ORDER")
-            elif cocheck( prefix+ "allcaps"):
-               arg = influx[8+len(prefix):]
-               if debug:
-                  print truesender+":"+prefix+"allcaps "+arg
-               conn.privmsg(targetchannel,"Translation: "+arg.capitalize())
-            elif cocheck(prefix+"tyr") or cocheck(prefix+"toggleyoutubereveal"):
-               if truesender in operators and targetchannel==channel:# or "skibiliano" in truesender.lower() and targetchannel==channel:
-                  if debug:
-                     print truesender+":"+prefix+"toggleyoutubereveal"
-                  if automatic_youtube_reveal == False:
-                     automatic_youtube_reveal = True
-                     conn.privmsg(targetchannel,"All youtube links will now be revealed automatically")
-                  else:
-                     automatic_youtube_reveal = False
-                     conn.privmsg(targetchannel,"All youtube links will not be revealed anymore")
-                  
-            elif cocheck(prefix+"translate "):
-               if truesender in operators and targetchannel==channel:
-                  arg = influx.lower()[len(prefix+"translate "):]
-                  if debug:
-                     print truesender+":"+prefix+"translate "+arg
-                  if arg.lower() in translateable:
-                     conn.privmsg(targetchannel,"Not Translating anymore")
-                     translateable.remove(arg.lower())
-                  else:
-                     translateable.append(arg.lower())
-                     conn.privmsg(targetchannel,"Translating..")
-            elif cocheck(prefix+"weather "):
-               arg = influx.lower().split(" ")[1:]
-               arg2 = Weather.Weather((" ".join(arg)).replace(" ","_"))
-               conn.privmsg(targetchannel,"Weather for "+arg2[1]+": "+arg2[0])
-            elif cocheck(prefix+"dance"):
-               if dance_enabled:
-                  if debug:
-                     print truesender+":"+prefix+"dance"
-                  lastdance = trackdance
-                  trackdance = time.time()
-                  subt = trackdance - lastdance
-                  if subt < dance_flood_time:
-                     conn.privmsg(targetchannel,"*Huff* *Puff*")
-                  else:
-                     conn.privmsg(targetchannel,":D/--<")
-                     sleep(0.2)
-                     conn.privmsg(targetchannel,":D|--<")
-                     sleep(0.2)
-                     conn.privmsg(targetchannel,":D\--<")
-            #### YOUTUBE
-            elif cocheck(prefix+"youtube"):
-               if debug:
-                  print truesender+":"+prefix+"youtube"
-               #arg = influx[9:]
-               if len(influx[len(prefix+"youtube"):].split(" ")) != 1:
-                  arg = influx[len(prefix+"youtube"):].split(" ")[0]
-                  check = influx.lower()[len(prefix+"youtube"):].split(" ")[0]
-                  if len(arg) < 5:             
-                      arg = influx[len(prefix+"youtube"):].split(" ")[1]
-                      check = influx.lower()[len(prefix+"youtube"):].split(" ")[1]
-#                  if "http//" in check:
-#                     arg = arg[6:]
-#                  else:
-#                     arg = arg.replace("http//","http://")
-                  if check[0:5] == "https":
-                     conn.privmsg(targetchannel,sender+" :Secure Youtube does NOT exist")
-                  elif "www.youtube.com/watch?v=" not in check and "endlessvideo.com/watch?v=" not in check:
-                     conn.privmsg(targetchannel,sender+" :That's not a proper youtube link!")
-                  else:
-                     if cache_youtube_links == True:
-                        result = YTCV2(arg)
-                     else:
-                        result = YTCV2(arg,0)
-                     if type(result) == str:
-                        ### To remove ="
-                        if result[0] == "N":
-                           pass
-                        else:
-                           result = result[4:]
-                        conn.privmsg(targetchannel,sender+" : "+result)
-                     else:
-                        conn.privmsg(targetchannel,sender+" : The video does not exist")
-               else:
-                      conn.privmsg(targetchannel,sender+" : Please provide a link")
             elif cocheck(prefix+"note ") and influx.count(" ") < 2:
                arg = influx.lower()[len(prefix)+5:]
                if debug:
@@ -1110,29 +780,6 @@ while True:
                         conn.privmsg(targetchannel,sender+" : Note Saved!")
                except:
                   conn.privmsg(targetchannel,sender+" : Something went horribly wrong.")
-            elif cocheck(prefix+"tc"):
-               try:
-                  tc_from_zone,tc_to_zone,tc_time_to_convert = influx[4:].split(" ")
-               except ValueError:
-                  conn.privmsg(targetchannel,sender+" : Please input !tc <from zone> <to zone> <time>, for eq. '!tc GMT+1 UTC 15:00'")
-               else:
-                  conn.privmsg(targetchannel,sender+" : "+Timeconverter.formatter(Timeconverter.converter([tc_from_zone,tc_to_zone],tc_time_to_convert)))
-            elif cocheck(prefix+"tban"):
-               if truesender in operators and targetchannel==channel:
-                  try:
-                     whom,how_long = influx[len(prefix+"tban")+1:].split(" ")
-                     if debug:
-                        print truesender+":"+prefix+"tban "+whom+" "+how_long
-                     test = int(how_long)
-                  except:
-                     conn.privmsg(targetchannel,sender+" : Specify the nick, and after that, the time in seconds. Eq !tban Troll 60")
-                  else:
-                     if whom not in operators:
-                        conn.privmsg(targetchannel,sender+" : Banning "+whom+" for "+how_long+" seconds")
-                        conn.who(whom)
-                        targetlist.append([whom,how_long])
-                     else:
-                        conn.privmsg(targetchannel,sender+" : Wait, what are you doing now? He's an operator!")
             elif cocheck(prefix+"uptime"):
                arg1 = uptime_start
                arg2 = time.time()
@@ -1158,21 +805,6 @@ while True:
                   arg5 = " Hour" if int(arg2[0]) == 1 else " Hours"
                   arg6 = " Minute" if int(arg3[0]) == 1 else " Minutes"
                   conn.privmsg(targetchannel,sender+" : I have been up for "+str(int(arg1[0]))+arg4+", "+str(int(arg2[0]))+arg5+", "+str(int(arg3[0]))+arg6+" and "+str(round(arg3[1],2))+" Seconds")
-            elif influx.lower() == "fml!" and fml_usable == True:
-               #conn.privmsg(targetchannel, "Your life is bad? Ever heard of that one time when"+load("fmlquotes/"+(random.sample(os.listdir("C:/Python26/Skibot_"+version+"/fmlquotes"),1)[0]).replace("FML",""))[6:])
-               if debug == True:
-                  print truesender+": fml!"
-               if optimize_fml == False:
-                  conn.privmsg(targetchannel, "Your life is bad? Ever heard of that one time when"+load(targetdirectory+"fmlquotes/"+(fsample(os.listdir(targetdirectory+"fmlquotes"))).replace("FML",""))[6:])
-               else:
-                  conn.privmsg(targetchannel, "Your life is bad? Ever heard of that one time when"+load(targetdirectory+"fmlquotes/"+(fsample(pregenned_fml))).replace("FML","")[6:])
-               
-            elif cocheck(prefix+"maths") and maths_usable == True:
-               conn.privmsg(targetchannel, sender+" : "+str(C_maths.maths(influx,prefix,truesender,debug,"n")))
-            elif cocheck( prefix+"hmaths") and maths_usable == True:
-               conn.privmsg(targetchannel, sender+" : "+str(C_maths.maths(influx,prefix,truesender,debug,"h")))
-            elif cocheck( prefix+"bmaths") and maths_usable == True:
-               conn.privmsg(targetchannel, sender+" : "+str(C_maths.maths(influx,prefix,truesender,debug,"b")))
             elif cocheck(prefix+"purgemessages"):
                count = 0
                for i,a in tell_list.items():
