@@ -48,17 +48,17 @@
 	// Precursor Artifacts do everything
 	switch(src.origin)
 		if("ancient") my_effect.effecttype = pick("roboheal","robohurt","cellcharge","celldrain")
-		if("martian") my_effect.effecttype = pick("healing","injure","stun","planthelper")
-		if("wizard") my_effect.effecttype = pick("stun","forcefield","teleport")
-		if("eldritch") my_effect.effecttype = pick("injure","stun","robohurt","celldrain")
-		if("precursor") my_effect.effecttype = pick("healing","injure","stun","roboheal","robohurt","cellcharge","celldrain","planthelper","forcefield","teleport")
+		if("martian") my_effect.effecttype = pick("healing","injure"/*,"stun"*/,"planthelper")
+		if("wizard") my_effect.effecttype = pick(/*"stun",*/"forcefield","teleport")
+		if("eldritch") my_effect.effecttype = pick("injure",/*"stun",*/"robohurt","celldrain")
+		if("precursor") my_effect.effecttype = pick("healing","injure",/*"stun",*/"roboheal","robohurt","cellcharge","celldrain","planthelper","forcefield","teleport")
 
 	// Select range based on the power
 	var/canworldpulse = 1
 	switch(my_effect.effecttype)
 		if("healing") my_effect.effectmode = pick("aura","pulse","contact")
 		if("injure") my_effect.effectmode = pick("aura","pulse","contact")
-		if("stun") my_effect.effectmode = pick("aura","pulse","contact")
+		// if("stun") my_effect.effectmode = pick("aura","pulse","contact")
 		if("roboheal") my_effect.effectmode = pick("aura","pulse","contact")
 		if("robohurt") my_effect.effectmode = pick("aura","pulse","contact")
 		if("cellcharge") my_effect.effectmode = pick("aura","pulse")
@@ -230,7 +230,7 @@
 	switch(A.effecttype)
 		if("healing") return 1
 		if("injure") return 0
-		if("stun") return 0
+		// if("stun") return 0
 		if("roboheal") return 1
 		if("robohurt") return 0
 		if("cellcharge") return 1
