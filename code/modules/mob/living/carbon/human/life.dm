@@ -1097,7 +1097,8 @@
 			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
-				if(!(temp.status & BLEEDING) || temp.status & ROBOT)
+        // temp.amputated means it's cleanly healed but the limb is still missing
+				if(!(temp.status & BLEEDING) || temp.status & ROBOT || temp.amputated)
 					continue
 				blood_max += 2
 				if(temp.status & DESTROYED && !(temp.status & GAUZED))
