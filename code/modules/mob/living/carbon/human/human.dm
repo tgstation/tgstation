@@ -2787,7 +2787,9 @@ It can still be worn/put on as normal.
 	var/list/creatures = list()
 	for(var/mob/living/carbon/h in world)
 		creatures += h
-	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
+	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
+	if (isnull(target))
+		return
 
 	var/say = input ("What do you wish to say")
 	if(mRemotetalk in target.mutations)

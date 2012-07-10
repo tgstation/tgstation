@@ -305,12 +305,13 @@
 	set category = "Spells"
 	set name = "Teleport"
 	set desc = "This spell teleports you to a type of area of your selection."
+
 	if(usr.stat)
 		src << "Not when you are incapacitated."
 		return
+
 	if(!usr.casting()) return
-	var/A
-	usr.verbs -= /mob/proc/teleport
+
 /*
 	var/list/theareas = new/list()
 	for(var/area/AR in world)
@@ -322,8 +323,11 @@
 			theareas[AR.name] = AR
 */
 
-	A = input("Area to jump to", "BOOYEA", A) in teleportlocs
+	var/A = input("Area to jump to", "Teleport") as null|anything in teleportlocs
+	if (isnull(A))
+		return
 
+	usr.verbs -= /mob/proc/teleport
 	spawn(600)
 		usr.verbs += /mob/proc/teleport
 
@@ -349,7 +353,7 @@
 	if(L.len)
 		usr.loc = pick(L)
 	else
-		usr <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
+		usr << "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
 
 	smoke.start()
 
@@ -357,9 +361,11 @@
 	if(usr.stat)
 		usr << "Not when you are incapacitated."
 		return
-	var/A
 
-	A = input("Area to jump to", "BOOYEA", A) in teleportlocs
+	var/A = input("Area to jump to", "Teleport") as null|anything in teleportlocs
+	if (isnull(A))
+		return
+
 	var/area/thearea = teleportlocs[A]
 
 	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()

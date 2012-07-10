@@ -406,7 +406,7 @@
 				dat += cart
 
 	dat += "</body></html>"
-	user << browse(dat, "window=pda;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
+	user << browse(dat, "window=pda;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	onclose(user, "pda", src)
 
 /obj/item/device/pda/Topic(href, href_list)
