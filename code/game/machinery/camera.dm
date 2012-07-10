@@ -285,7 +285,7 @@
 		else
 			user << "\blue Dismantling camera..."
 			if(do_after(user, 20))
-				var/obj/item/weapon/chem_grenade/case = new /obj/item/weapon/chem_grenade(src.loc)
+				var/obj/item/weapon/grenade/chem_grenade/case = new /obj/item/weapon/grenade/chem_grenade(src.loc)
 				case.name = "Camera Assembly"
 				case.icon = 'monitors.dmi'
 //JESUS WHAT THE FUCK EVERYTHING TO DO WITH CAMERAS IS TERRIBLE FUCK
@@ -314,7 +314,7 @@
 		playsound(loc, 'blade1.ogg', 50, 1)
 		playsound(loc, "sparks", 50, 1)
 
-		var/obj/item/weapon/chem_grenade/case = new /obj/item/weapon/chem_grenade(loc)
+		var/obj/item/weapon/grenade/chem_grenade/case = new /obj/item/weapon/grenade/chem_grenade(loc)
 		case.name = "Camera Assembly"
 		case.icon = 'monitors.dmi'
 		case.icon_state = "cameracase"

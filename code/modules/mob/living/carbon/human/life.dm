@@ -420,9 +420,10 @@
 			return
 		var/environment_heat_capacity = environment.heat_capacity()
 		var/loc_temp = T0C
-		if(istype(loc, /turf/space))
-			environment_heat_capacity = loc:heat_capacity
-			loc_temp = 2.7
+		if(istype(get_turf(src), /turf/space))
+			var/turf/heat_turf = get_turf(src)
+			environment_heat_capacity = heat_turf.heat_capacity
+			loc_temp = heat_turf.temperature
 		else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			loc_temp = loc:air_contents.temperature
 		else
@@ -430,7 +431,7 @@
 
 		var/thermal_protection = get_thermal_protection()
 
-		//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)]"
+		//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]"
 
 		if(stat != 2 && abs(bodytemperature - 310.15) < 50)
 			bodytemperature += adjust_body_temperature(bodytemperature, 310.15, thermal_protection)
@@ -591,7 +592,7 @@
 	proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
 		if(nodamage)
 			return
-
+		//world <<"body_part = [body_part], exposed_temperature = [exposed_temperature], exposed_intensity = [exposed_intensity]"
 		var/discomfort = min(abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
 
 		if(exposed_temperature > bodytemperature)
@@ -601,6 +602,7 @@
 			discomfort *= 3 //I don't like magic numbers. I'll make mutantraces a datum with vars sometime later. -- Urist
 		else
 			discomfort *= 1.5 //Dangercon 2011 - Upping damage by use of magic numbers - Errorage
+		//world <<"[discomfort]"
 
 		switch(body_part)
 			if(HEAD)

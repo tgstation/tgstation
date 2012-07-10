@@ -485,7 +485,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			M.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(M), M.slot_r_hand)
 			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_l_hand)
-			M.equip_if_possible(new /obj/item/weapon/smokebomb(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/weapon/grenade/smokebomb(M), M.slot_r_store)
 
 
 		if ("tournament gangster") //gangster are supposed to fight each other. --rastaf0
@@ -525,8 +525,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			bucket.reagents.add_reagent("water", 70)
 			M.equip_if_possible(bucket, M.slot_l_hand)
 
-			M.equip_if_possible(new /obj/item/weapon/chem_grenade/cleaner(M), M.slot_r_store)
-			M.equip_if_possible(new /obj/item/weapon/chem_grenade/cleaner(M), M.slot_l_store)
+			M.equip_if_possible(new /obj/item/weapon/grenade/chem_grenade/cleaner(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/weapon/grenade/chem_grenade/cleaner(M), M.slot_l_store)
 			M.equip_if_possible(new /obj/item/stack/tile/plasteel(M), M.slot_in_backpack)
 			M.equip_if_possible(new /obj/item/stack/tile/plasteel(M), M.slot_in_backpack)
 			M.equip_if_possible(new /obj/item/stack/tile/plasteel(M), M.slot_in_backpack)

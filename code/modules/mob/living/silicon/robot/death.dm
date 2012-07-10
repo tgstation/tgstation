@@ -72,5 +72,5 @@
 	if (src.key)
 		spawn(50)
 			if(src.key && src.stat == 2)
-				src.verbs += /mob/proc/ghost
+				src.verbs += /client/proc/ghost
 	return ..(gibbed)

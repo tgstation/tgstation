@@ -21,7 +21,7 @@
 
 		//Quickfix for hiding nuke disks and people getting to centcomm until I can get the attack_hand() stuff to incorperate this.
 		for(var/obj/O in user.get_contents())
-			if(istype(O, /obj/item/weapon/disk/nuclear) || istype(O, /obj/item/device/radio/beacon))
+			if(istype(O, /obj/item/weapon/disk/nuclear) || istype(O, /obj/item/device/radio/beacon) || istype(O, /obj/item/weapon/storage/backpack/holding))
 				user << "\red Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through."
 				return
 

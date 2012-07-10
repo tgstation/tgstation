@@ -53,5 +53,5 @@
 	if (key)
 		spawn(50)
 			if(key && stat == 2)
-				verbs += /mob/proc/ghost
+				client.verbs += /client/proc/ghost
 	return ..(gibbed)

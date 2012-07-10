@@ -275,6 +275,9 @@
 					for (var/obj/item/W in M)
 						if (prob(10))
 							W.loc = src
+					M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //One shall not simply cremate a mob unnoticed!
+					user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
+					log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> gibbed <b>[M]/[M.ckey]</b>")
 					M.death(1)
 					M.ghostize()
 					del(M)

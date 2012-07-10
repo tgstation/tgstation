@@ -20,5 +20,5 @@
 	if (key)
 		spawn(50)
 			if(key && stat == 2)
-				ghost()
+				src.client.verbs += /client/proc/ghost
 	return ..(gibbed)

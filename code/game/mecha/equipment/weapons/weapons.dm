@@ -303,7 +303,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
 	name = "SGL-6 Grenade Launcher"
 	icon_state = "mecha_grenadelnchr"
-	projectile = /obj/item/weapon/flashbang
+	projectile = /obj/item/weapon/grenade/flashbang
 	fire_sound = 'bang.ogg'
 	projectiles = 6
 	missile_speed = 1.5
@@ -314,7 +314,7 @@
 	action(target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		var/obj/item/weapon/flashbang/F = new projectile(chassis.loc)
+		var/obj/item/weapon/grenade/flashbang/F = new projectile(chassis.loc)
 		playsound(chassis, fire_sound, 50, 1)
 		F.throw_at(target, missile_range, missile_speed)
 		projectiles--
@@ -326,7 +326,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang//Because I am a heartless bastard -Sieve
 	name = "SOP-6 Grenade Launcher"
-	projectile = /obj/item/weapon/flashbang/clusterbang
+	projectile = /obj/item/weapon/grenade/flashbang/clusterbang
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "Banana Mortar"

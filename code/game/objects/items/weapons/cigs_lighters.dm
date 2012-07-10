@@ -402,7 +402,7 @@ ZIPPO
 	New()
 		..()
 		flags |= NOREACT
-		create_reagents(15)//so people can inject cigarettes without opening a packet
+		create_reagents(15*cigcount)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
 
 	Del()
 		..()
@@ -420,10 +420,11 @@ ZIPPO
 				user << "\red You're out of cigs, shit! How you gonna get through the rest of the day..."
 				return
 			else
-				cigcount--
 				var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
-				reagents.trans_to(W, reagents.total_volume)
+				reagents.trans_to(W, (reagents.total_volume/cigcount))
 				user.put_in_active_hand(W)
+				src.reagents.maximum_volume = 15*cigcount
+				cigcount--
 		else
 			return ..()
 		update_icon()

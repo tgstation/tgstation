@@ -4,7 +4,7 @@
 
 ///////////////////////////////Grenades
 //Includes changes by Mord_Sith to allow for buildable cameras
-/obj/item/weapon/chem_grenade
+/*/obj/item/weapon/chem_grenade //Commenting this out in case someone wants to revert the change or just doesn't like the move.
 	name = "Grenade Casing"
 	icon_state = "chemg"
 	icon = 'chemical.dmi'
@@ -176,7 +176,7 @@
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (istype(target, /obj/item/weapon/storage)) return ..()
 		if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
-		if (!src.state && stage == 2 && !crit_fail)
+		if (!src.state && stage == 2 && !crit_fail && src.loc != target.loc)
 			user << "\red You prime the grenade! 3 seconds!"
 			message_admins("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
 			log_game("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
@@ -212,7 +212,7 @@
 
 	proc
 		explode()
-			if(reliability)
+			if(prob(reliability))
 				var/has_reagents = 0
 				for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 					if(G.reagents.total_volume) has_reagents = 1
@@ -310,7 +310,7 @@
 
 		beakers += B1
 		beakers += B2
-		icon_state = "chemg_locked"
+		icon_state = "chemg_locked"*/
 
 /obj/effect/syringe_gun_dummy
 	name = ""
@@ -347,7 +347,7 @@
 
 	attackby(obj/item/I as obj, mob/user as mob)
 
-		if((istype(I, /obj/item/weapon/chem_grenade)) || (istype(I, /obj/item/weapon/flashbang)) || (istype(I, /obj/item/weapon/smokebomb)) || (istype(I, /obj/item/weapon/mustardbomb)) || (istype(I, /obj/item/weapon/empgrenade)))
+		if((istype(I, /obj/item/weapon/grenade)))
 			if(grenades.len < max_grenades)
 				user.drop_item()
 				I.loc = src
@@ -378,112 +378,17 @@
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message(text("\red [] fired a grenade!", user), 1)
 			user << "\red You fire the grenade launcher!"
-			if (istype(grenades[1], /obj/item/weapon/chem_grenade))
-				var/obj/item/weapon/chem_grenade/F = grenades[1]
-				grenades -= F
-				F.loc = user.loc
-				F.throw_at(target, 30, 2)
-				message_admins("[key_name_admin(user)] fired a chemistry grenade from a grenade launcher ([src.name]).")
-				log_game("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
-				F.state = 1
-				F.icon_state = initial(icon_state)+"_armed"
-				playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
-				spawn(15)
-					F.explode()
-			else if (istype(grenades[1], /obj/item/weapon/flashbang))
-				var/obj/item/weapon/flashbang/F = grenades[1]
-				grenades -= F
-				F.loc = user.loc
-				F.throw_at(target, 30, 2)
-				F.active = 1
-				F.icon_state = "flashbang1"
-				playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
-				spawn(15)
-					F.prime()
-			else if (istype(grenades[1], /obj/item/weapon/smokebomb))
-				var/obj/item/weapon/smokebomb/F = grenades[1]
-				grenades -= F
-				F.loc = user.loc
-				F.throw_at(target, 30, 2)
-				F.icon_state = "flashbang1"
-				playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
-				spawn(15)
-					F.prime()
-			else if (istype(grenades[1], /obj/item/weapon/mustardbomb))
-				var/obj/item/weapon/mustardbomb/F = grenades[1]
-				grenades -= F
-				F.loc = user.loc
-				F.throw_at(target, 30, 2)
-				F.icon_state = "flashbang1"
-				playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
-				spawn(15)
-					F.prime()
-			else if (istype(grenades[1], /obj/item/weapon/empgrenade))
-				var/obj/item/weapon/empgrenade/F = grenades[1]
-				grenades -= F
-				F.loc = user.loc
-				F.throw_at(target, 30, 2)
-				F.active = 1
-				F.icon_state = "empar"
-				playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
-				spawn(15)
-					F.prime()
-			if (locate (/obj/structure/table, src.loc) || locate (/obj/item/weapon/storage, src.loc))
-				return
-			else
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("\red [] fired a grenade!", user), 1)
-				user << "\red You fire the grenade launcher!"
-				if (istype(grenades[1], /obj/item/weapon/chem_grenade))
-					var/obj/item/weapon/chem_grenade/F = grenades[1]
-					grenades -= F
-					F.loc = user.loc
-					F.throw_at(target, 30, 2)
-					message_admins("[key_name_admin(user)] fired a chemistry grenade from a grenade launcher ([src.name]).")
-					log_game("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
-					F.state = 1
-					F.icon_state = initial(icon_state)+"_armed"
-					playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
-					spawn(15)
-						F.explode()
-				else if (istype(grenades[1], /obj/item/weapon/flashbang))
-					var/obj/item/weapon/flashbang/F = grenades[1]
-					grenades -= F
-					F.loc = user.loc
-					F.throw_at(target, 30, 2)
-					F.active = 1
-					F.icon_state = "flashbang1"
-					playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
-					spawn(15)
-						F.prime()
-				else if (istype(grenades[1], /obj/item/weapon/smokebomb))
-					var/obj/item/weapon/smokebomb/F = grenades[1]
-					grenades -= F
-					F.loc = user.loc
-					F.throw_at(target, 30, 2)
-					F.icon_state = "flashbang1"
-					playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
-					spawn(15)
-						F.prime()
-				else if (istype(grenades[1], /obj/item/weapon/mustardbomb))
-					var/obj/item/weapon/mustardbomb/F = grenades[1]
-					grenades -= F
-					F.loc = user.loc
-					F.throw_at(target, 30, 2)
-					F.icon_state = "flashbang1"
-					playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
-					spawn(15)
-						F.prime()
-				else if (istype(grenades[1], /obj/item/weapon/empgrenade))
-					var/obj/item/weapon/empgrenade/F = grenades[1]
-					grenades -= F
-					F.loc = user.loc
-					F.throw_at(target, 30, 2)
-					F.active = 1
-					F.icon_state = "empar"
-					playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
-					spawn(15)
-						F.prime()
+			var/obj/item/weapon/grenade/chem_grenade/F = grenades[1] //Now with less copypasta!
+			grenades -= F
+			F.loc = user.loc
+			F.throw_at(target, 30, 2)
+			message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).")
+			log_game("[key_name_admin(user)] used a grenade ([src.name]).")
+			F.active = 1
+			F.icon_state = initial(icon_state) + "_active"
+			playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+			spawn(15)
+				F.prime()
 
 
 /obj/item/weapon/gun/syringe
@@ -724,7 +629,7 @@
 		/obj/structure/sink,
 		/obj/item/weapon/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
-		/obj/item/weapon/chem_grenade,
+		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/secstorage/ssafe,

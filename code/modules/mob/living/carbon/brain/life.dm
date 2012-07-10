@@ -75,8 +75,9 @@
 		if(!environment)
 			return
 		var/environment_heat_capacity = environment.heat_capacity()
-		if(istype(loc, /turf/space))
-			environment_heat_capacity = loc:heat_capacity
+		if(istype(get_turf(src), /turf/space))
+			var/turf/heat_turf = get_turf(src)
+			environment_heat_capacity = heat_turf.heat_capacity
 
 		if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
 			var/transfer_coefficient

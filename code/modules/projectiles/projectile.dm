@@ -63,8 +63,12 @@
 			return //cannot shoot yourself
 
 		if(bumped)	return
+		var/chance
 
 		var/forcedodge = 0 // force the projectile to pass
+		if (loc == original) chance = 95
+		else chance = 85
+		def_zone = ran_zone(def_zone, chance-(sqrt(abs(starting.x**2-loc.x**2)+abs(starting.y**2-loc.y**2)))) //Lower accurancy/longer range tradeoff.
 
 		bumped = 1
 		if(firer && istype(A, /mob))

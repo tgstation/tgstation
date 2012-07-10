@@ -174,7 +174,7 @@ var/global/sent_syndicate_strike_team = 0
 		equip_if_possible(new /obj/item/weapon/disk/nuclear(src), slot_in_backpack)
 
 	equip_if_possible(new /obj/item/weapon/melee/energy/sword(src), slot_l_store)
-	equip_if_possible(new /obj/item/weapon/empgrenade(src), slot_r_store)
+	equip_if_possible(new /obj/item/weapon/grenade/empgrenade(src), slot_r_store)
 	equip_if_possible(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
 	equip_if_possible(new /obj/item/weapon/gun/projectile/silenced(src), slot_belt)
 

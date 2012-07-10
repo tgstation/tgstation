@@ -131,7 +131,7 @@
 	occupant:UI = UI // set interface preference
 
 	ghost.client.mob = src.occupant
-
+	src.occupant.attack_log |= ghost.attack_log //THE LEGACY MUST LIVE ON
 	src.occupant.hud_used = new/obj/hud( src.occupant )
 		// probably redundant because previous line calls mob/Login() which does this line of code
 		// but until this is proven useless keep it for safety - Doohl

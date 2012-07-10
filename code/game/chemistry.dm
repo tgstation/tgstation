@@ -1,6 +1,6 @@
 #define REGULATE_RATE 5
 
-/obj/item/weapon/smokebomb
+/*/obj/item/weapon/smokebomb
 	desc = "It is set to detonate in 2 seconds."
 	name = "smoke bomb"
 	icon = 'grenade.dmi'
@@ -179,7 +179,7 @@
 			prime()
 			return
 	return
-
+*/
 /obj/item/weapon/storage/beakerbox
 	name = "Beaker Box"
 	icon_state = "beaker"

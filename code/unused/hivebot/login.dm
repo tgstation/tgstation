@@ -7,7 +7,7 @@
 		src.client.eye = src.loc
 		src.client.perspective = EYE_PERSPECTIVE
 	if (src.stat == 2)
-		src.verbs += /mob/proc/ghost
+		src.verbs += /client/proc/ghost
 	if(src.real_name == "Hiveborg")
 		src.real_name += " "
 		src.real_name += "-[rand(1, 999)]"

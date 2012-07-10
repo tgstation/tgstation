@@ -79,9 +79,11 @@
 		//This is where the suicide assemblies checks would go
 
 		if (client)
+			//world <<"Woo, there's a client!"
 			spawn(10)
 				if(client && src.stat == 2)
-					verbs += /mob/proc/ghost
+					//world <<"You're sooooooo dead, let's ghost!"
+					client.verbs += /client/proc/ghost
 
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind)

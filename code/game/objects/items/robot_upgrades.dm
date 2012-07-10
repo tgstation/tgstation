@@ -12,8 +12,11 @@
 	var/require_module = 0
 	var/installed = 0
 
-/obj/item/borg/upgrade/proc/action()
-	return
+/obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
+	if(R.Stat() == 2)
+		usr << "/red The [src] will not function on a deseased cyborg."
+		return 1
+	return 0
 
 
 /obj/item/borg/upgrade/reset/
@@ -23,6 +26,7 @@
 	require_module = 1
 
 /obj/item/borg/upgrade/reset/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
 	R.uneq_all()
 	R.hands.icon_state = "nomod"
 	R.icon_state = "robot"
@@ -66,6 +70,8 @@
 	require_module = 1
 
 /obj/item/borg/upgrade/vtec/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+
 	if(R.speed == -1)
 		return 0
 
@@ -82,6 +88,8 @@
 
 
 /obj/item/borg/upgrade/tasercooler/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+
 	if(!istype(R.module, /obj/item/weapon/robot_module/security))
 		R << "Upgrade mounting error!  No suitable hardpoint detected!"
 		usr << "There's no mounting point for the module!"
@@ -114,6 +122,8 @@
 	require_module = 1
 
 /obj/item/borg/upgrade/jetpack/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+
 	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
 		R << "Upgrade mounting error!  No suitable hardpoint detected!"
 		usr << "There's no mounting point for the module!"
