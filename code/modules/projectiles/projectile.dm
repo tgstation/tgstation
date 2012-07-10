@@ -49,10 +49,10 @@
 
 
 	proc/on_hit(var/atom/target, var/blocked = 0)
-		if(blocked >= 2)	return 0//Full block
+		if(blocked >= 2)		return 0//Full block
 		if(!isliving(target))	return 0
+		if(isanimal(target))	return 0
 		var/mob/living/L = target
-		if(istype(L, /mob/living/simple_animal)) return 0
 		L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
 		return 1
 
@@ -63,12 +63,7 @@
 			return //cannot shoot yourself
 
 		if(bumped)	return
-		var/chance
-
 		var/forcedodge = 0 // force the projectile to pass
-		if (loc == original) chance = 95
-		else chance = 85
-		def_zone = ran_zone(def_zone, chance-(sqrt(abs(starting.x**2-loc.x**2)+abs(starting.y**2-loc.y**2)))) //Lower accurancy/longer range tradeoff.
 
 		bumped = 1
 		if(firer && istype(A, /mob))
@@ -78,27 +73,25 @@
 				return // nope.avi
 
 			// check for dodge (i can't place in bullet_act because then things get wonky)
-			if((REFLEXES in M.augmentations) && (!M.stat && !M.lying))
-				if(prob(85))
-					var/message = pick("[M] skillfully dodges the [name]!", "[M] ducks, dodging the [name]!", "[M] effortlessly jumps out of the way of the [name]!", "[M] dodges the [name] in one graceful movement!", "[M] leans back, dodging the [name] narrowly!", "[M] sidesteps, avoiding the [name] narrowly.", "[M] barely weaves out of the way of the [name].")
-					M.visible_message("\red <B>[message]</B>")
-					forcedodge = 1
-
-			if(!silenced && !forcedodge)
-				visible_message("\red [A.name] is hit by the [src.name] in the [def_zone]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+			if(!M.stat && !M.lying && (REFLEXES in M.augmentations) && prob(85))
+				var/message = pick("[M] skillfully dodges the [name]!", "[M] ducks, dodging the [name]!", "[M] effortlessly jumps out of the way of the [name]!", "[M] dodges the [name] in one graceful movement!", "[M] leans back, dodging the [name] narrowly!", "[M] sidesteps, avoiding the [name] narrowly.", "[M] barely weaves out of the way of the [name].")
+				M.visible_message("\red <B>[message]</B>")
+				forcedodge = 1
 			else
-				if(!forcedodge)
+				var/distance = get_dist(original,loc)
+				def_zone = ran_zone(def_zone, 100-(5*distance)) //Lower accurancy/longer range tradeoff.
+				if(silenced)
 					M << "\red You've been shot in the [def_zone] by the [src.name]!"
+				else
+					visible_message("\red [A.name] is hit by the [src.name] in the [def_zone]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+
 			if(istype(firer, /mob))
 				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 				log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]</font>")
-
 			else
 				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 				log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src]</font>")
-
-
 
 		spawn(0)
 			if(A)
