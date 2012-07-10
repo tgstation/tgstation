@@ -35,6 +35,7 @@
 		end = get_turf(src)
 		if(start.y != end.y && start.x != end.x || start.z != end.z)
 			usr << "\blue [src] can only be laid horizontally or vertically."
+			return
 
 		var/turf/cur = start
 		var/dir
