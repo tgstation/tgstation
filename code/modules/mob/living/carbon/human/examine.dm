@@ -32,6 +32,7 @@
 	var/t_him = "it"
 	var/t_has = "has"
 	var/t_is = "is"
+	var/t_does = "does"
 
 	var/msg = "<span class='info'>*---------*\nThis is "
 
@@ -50,6 +51,7 @@
 			t_him = "them"
 			t_has = "have"
 			t_is = "are"
+			t_does = "do"
 
 	if(mutantrace == "lizard")
 		examine_text = "one of those lizard-like Soghuns"
@@ -196,7 +198,7 @@
 	if (src.stat == 1 || stat == 2)
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((!isbreathing || holdbreath) && distance <= 3)
-			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
+			msg += "<span class='warning'>[t_He] [t_does] not appear to be breathing.</span>\n"
 		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
 			for(var/mob/O in viewers(usr.loc, null))
 				O.show_message("[usr] checks [src]'s pulse.", 1)
