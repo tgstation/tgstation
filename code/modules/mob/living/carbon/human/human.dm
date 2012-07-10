@@ -534,8 +534,7 @@
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
 	var/datum/organ/external/O = get_organ("head")
-
-	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 )	//disfigured. use id-name if possible
+	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || !real_name )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 
@@ -544,9 +543,10 @@
 /mob/living/carbon/human/proc/get_id_name(var/if_no_id = "Unknown")
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
-	if(istype(pda))		return pda.owner
-	if(istype(id))		return id.registered_name
-	return if_no_id
+	if(istype(pda))		. = pda.owner
+	else if(istype(id))	. = id.registered_name
+	if(!.) 				. = if_no_id	//to prevent null-names making the mob unclickable
+	return
 
 //gets ID card object from special clothes slot or null.
 /mob/living/carbon/human/proc/get_idcard()
