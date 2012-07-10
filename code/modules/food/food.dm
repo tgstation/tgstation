@@ -1453,6 +1453,17 @@
 		reagents.add_reagent("tricordrazine", 8)
 		bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/validsalad
+	name = "valid salad"
+	desc = "It's just an herb salad with meatballs and fried potato slices. Nothing suspicious about it."
+	icon_state = "validsalad"
+	trash = "snack_bowl"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("syndicream", 5)
+		bitesize = 3
+
 /obj/item/weapon/reagent_containers/food/snacks/appletart
 	name = "golden apple streusel tart"
 	desc = "A tasty dessert that won't make it through a metal detector."
@@ -1576,6 +1587,7 @@
 	name = "Brain Cake slice"
 	desc = "Lemme tell you something about prions. THEY'RE DELICIOUS."
 	icon_state = "braincakeslice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesecake
@@ -1627,6 +1639,7 @@
 	name = "Orange Cake slice"
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "orangecake_slice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/limecake
@@ -1643,6 +1656,7 @@
 	name = "Lime Cake slice"
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "limecake_slice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/lemoncake
@@ -1659,6 +1673,7 @@
 	name = "Lemon Cake slice"
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "lemoncake_slice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/chocolatecake
@@ -1675,6 +1690,7 @@
 	name = "Chocolate Cake slice"
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "chocolatecake_slice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel
@@ -1783,6 +1799,7 @@
 	name = "Apple Cake slice"
 	desc = "A slice of heavenly cake."
 	icon_state = "applecakeslice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie
@@ -1799,6 +1816,7 @@
 	name = "Pumpkin Pie slice"
 	desc = "A slice of pumpkin pie, with whipped cream on top. Perfection."
 	icon_state = "pumpkinpieslice"
+	trash = "plate"
 	bitesize = 2
 
 

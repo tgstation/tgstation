@@ -409,7 +409,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
 
 /datum/recipe/chaosdonut
-	reagents = list("frostoil" = 2, "capsaicin" = 2, )
+	reagents = list("frostoil" = 5, "capsaicin" = 5, )
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 		/obj/item/weapon/reagent_containers/food/snacks/egg
@@ -1155,3 +1155,13 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/aesirsalad
+
+/datum/recipe/validsalad
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/validsalad

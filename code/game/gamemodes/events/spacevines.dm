@@ -45,7 +45,7 @@
 			else
 				manual_unbuckle(user)
 				return
-		//TODO: add plant-b-gone
+		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
 	..()
 
 

@@ -1030,23 +1030,22 @@ datum
 			description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 			reagent_state = LIQUID
 			color = "#49002E" // rgb: 73, 0, 46
-			/* Don't know if this is necessary.
+
 			on_mob_life(var/mob/living/carbon/M)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(3.0)
+				M.adjustToxLoss(1.0)
 				..()
 				return
-			*/
+
 			reaction_obj(var/obj/O, var/volume)
-		//		if(istype(O,/obj/plant/vine/))
-		//			var/obj/plant/vine/V = O
-		//			V.life -= rand(15,35) // Kills vines nicely // Not tested as vines don't work in R41
 				if(istype(O,/obj/effect/alien/weeds/))
 					var/obj/effect/alien/weeds/alien_weeds = O
 					alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
 					alien_weeds.healthcheck()
 				else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
 					del(O)
+				else if(istype(O,/obj/effect/spacevine))
+					if(prob(50)) del(O) //Kills kudzu too.
 				// Damage that is done to growing plants is separately
 				// at code/game/machinery/hydroponics at obj/item/hydroponics
 
@@ -1057,7 +1056,7 @@ datum
 					if(!C.wear_mask) // If not wearing a mask
 						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
 					if(ishuman(M))
-						var/mob/living/carbon/human/H
+						var/mob/living/carbon/human/H = M
 						if(H.mutantrace == "plant") //plantmen take a LOT of damage
 							H.adjustToxLoss(10)
 
