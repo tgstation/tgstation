@@ -115,10 +115,10 @@
 		comm.ai += O
 
 	O << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
-	O << "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>"
+	O << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
 	O << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
-	O << "To use something, simply double-click it."
-	O << "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI."
+	O << "To use something, simply click on it."
+	O << {"Use say ":s to speak to your cyborgs through binary."}
 	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
 		O.show_laws()
 		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
@@ -198,9 +198,9 @@
 		ticker.minds += O.mind//Adds them to regular mind list.
 
 	O.loc = loc
-	O << "<B>You are playing a Robot. A Robot can interact with most electronic objects in its view point.</B>"
-	O << "<B>You must follow the laws that the AI has. You are the AI's assistant to the station basically.</B>"
-	O << "To use something, simply double-click it."
+	O << "<B>You are playing a Cyborg. A Cyborg can interact with most electronic objects in its view point.</B>"
+	O << "<B>You must follow the laws that the AI has. You must follow orders the AI gives you.</B>"
+	O << "To use something, simply click on it."
 	O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
 
 	O.job = "Cyborg"
