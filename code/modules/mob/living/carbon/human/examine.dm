@@ -211,17 +211,19 @@
 				for(var/mob/O in viewers(usr.loc, null))
 					O.show_message("[usr] checks [src]'s pulse.", 1)
 			spawn(15)
-				if(!src.client)
-					var/foundghost = 0
+				var/foundghost = 0
+				if(src.client)
+					foundghost = 1
+				else
 					for(var/mob/dead/observer/G in world)
 						if(G.client)
 							if(G.corpse == src)
 								foundghost++
 								break
-					if(!foundghost)
-						usr << "<span class='deadsay'>[t_He] has no pulse and [t_his] soul has departed...</span>"
-					else
-						usr << "<span class='deadsay'>[t_He] has no pulse...</span>"
+				if(!foundghost)
+					usr << "<span class='deadsay'>[t_He] has no pulse and [t_his] soul has departed...</span>"
+				else
+					usr << "<span class='deadsay'>[t_He] has no pulse...</span>"
 
 	msg += "<span class='warning'>"
 
