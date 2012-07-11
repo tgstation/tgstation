@@ -124,6 +124,13 @@ var/global/datum/controller/gameticker/ticker
 
 	start_events() //handles random events and space dust.
 
+	var/admins_number = 0
+	for(var/client/C)
+		if(C.holder)
+			admins_number++
+	if(admins_number == 0)
+		send2irc("Server", "Round just started with no admins online!")
+
 	spawn() supply_ticker() // Added to kick-off the supply shuttle regenerating points -- TLE
 
 	//Start master_controller.process()
