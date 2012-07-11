@@ -23,7 +23,7 @@
 		if (src.client)
 			spawn(10)
 				if(src.client && src.stat == 2)
-					src.client.verbs += /client/proc/ghost
+					src.verbs += /mob/proc/ghost
 
 	if(mind) // Skie - Added check that there's someone controlling the alien
 		tod = worldtime2text() //weasellos time of death patch

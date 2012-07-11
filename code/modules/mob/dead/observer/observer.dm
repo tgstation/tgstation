@@ -36,7 +36,6 @@ Works together with spawning an observer, noted above.
 		if(client)
 			client.screen.len = null//Clear the hud, just to be sure.
 		var/mob/dead/observer/ghost = new(src,transfer_mind)//Transfer safety to observer spawning proc.
-		ghost.attack_log |= attack_log
 		if(transfer_mind)//When a body is destroyed.
 			if(mind)
 				mind.transfer_to(ghost)
@@ -45,7 +44,7 @@ Works together with spawning an observer, noted above.
 		else//Else just modify their key and connect them.
 			ghost.key = key
 
-		verbs -= /client/proc/ghost
+		verbs -= /mob/proc/ghost
 		if (ghost.client)
 			ghost.client.eye = ghost
 
@@ -60,7 +59,7 @@ Works together with spawning an observer, noted above.
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
 */
-/client/proc/ghost()
+/mob/proc/ghost()
 	set category = "Ghost"
 	set name = "Ghost"
 	set desc = "You cannot be revived as a ghost."
@@ -69,11 +68,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "Only dead people and admins get to ghost, and admins don't use this verb to ghost while alive."
 		return*/
 	if(key)
-		var/mob/dead/observer/ghost = new(mob) //Duh.
-		ghost.loc = get_turf(mob) //This is to prevent ghosts from appearing at the arrival shuttle.
-		ghost.attack_log |= mob.attack_log //THE LEGACY MUST LIVE ON
+		var/mob/dead/observer/ghost = new(src)
 		ghost.key = key
-		verbs -= /client/proc/ghost
+		verbs -= /mob/proc/ghost
 		if (ghost.client)
 			ghost.client.eye = ghost
 	return
@@ -148,10 +145,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			return
 	if(corpse.ajourn)
 		corpse.ajourn=0
-	corpse.attack_log |= attack_log //copy the ghost's attack log to the corpse. THE LEGACY MUST LIVE ON
 	client.mob = corpse
 	if (corpse.stat==2)
-		verbs += /client/proc/ghost
+		verbs += /mob/proc/ghost
 	del(src)
 
 /mob/dead/observer/proc/dead_tele()

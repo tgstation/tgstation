@@ -576,8 +576,8 @@ var/global/BSACooldown = 0
 	if (href_list["removejobban"])
 		if ((src.rank in list("Game Admin", "Game Master"  )))
 			var/t = href_list["removejobban"]
-			if(input(alert("Do you want to unjobban [t]?","Unjobban confirmation", "Yes", "No") == "Yes")) //No more misclicks! Unless you do it twice.
-				if(t)
+			if(t)
+				if(input(alert("Do you want to unjobban [t]?","Unjobban confirmation", "Yes", "No") == "Yes") && t) //No more misclicks! Unless you do it twice.
 					log_admin("[key_name(usr)] removed [t]")
 					message_admins("\blue [key_name_admin(usr)] removed [t]", 1)
 					jobban_remove(t)

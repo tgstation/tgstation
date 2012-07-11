@@ -131,6 +131,14 @@
 				del(src)
 	return
 
+/obj/machinery/shield/emp_act(severity)
+	switch(severity)
+		if(1)
+			del(src)
+		if(2)
+			if(prob(50))
+				del(src)
+
 /obj/machinery/shield/blob_act()
 	del(src)
 
@@ -177,12 +185,14 @@
 		opacity = 0
 		anchored = 0
 		pressure_resistance = 2*ONE_ATMOSPHERE
-		var/active = 0
+		req_access = list(access_engine)
 		var/const/max_health = 100
 		var/health = max_health
+		var/active = 0
 		var/malfunction = 0 //Malfunction causes parts of the shield to slowly dissapate
 		var/list/deployed_shields = list()
 		var/is_open = 0 //Whether or not the wires are exposed
+		var/locked = 0
 
 /obj/machinery/shieldgen/Del()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -247,7 +257,26 @@
 			src.checkhp()
 	return
 
+/obj/machinery/shieldgen/emp_act(severity)
+	switch(severity)
+		if(1)
+			src.health /= 2 //cut health in half
+			malfunction = 1
+			locked = pick(0,1)
+		if(2)
+			if(prob(50))
+				src.health *= 0.3 //chop off a third of the health
+				malfunction = 1
+	checkhp()
+
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
+	if(locked)
+		user << "The machine is locked, you are unable to use it."
+		return
+	if(is_open)
+		user << "The panel must be closed before operating this machine."
+		return
+
 	if (src.active)
 		user.visible_message("\blue \icon[src] [user] deactivated the shield generator.", \
 			"\blue \icon[src] You deactivate the shield generator.", \
@@ -279,7 +308,7 @@
 
 	else if(istype(W, /obj/item/weapon/cable_coil) && malfunction && is_open)
 		var/obj/item/weapon/cable_coil/coil = W
-		user << "\blue You begin to repair the cables."
+		user << "\blue You begin to replace the wires."
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, 30))
 			if(!src || !coil) return
@@ -290,17 +319,30 @@
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/wrench))
-		if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
-		playsound(src.loc, 'Ratchet.ogg', 100, 1)
+		if(locked)
+			user << "The bolts are covered, unlocking this would retract the covers."
+			return
 		if(anchored)
+			playsound(src.loc, 'Ratchet.ogg', 100, 1)
 			user << "\blue You unsecure the [src] from the floor!"
 			if(active)
-				user << "The [src] shuts off!"
+				user << "\blue The [src] shuts off!"
 				src.shields_down()
 			anchored = 0
 		else
+			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
+			playsound(src.loc, 'Ratchet.ogg', 100, 1)
 			user << "\blue You secure the [src] to the floor!"
 			anchored = 1
+
+
+	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+		if(src.allowed(user))
+			src.locked = !src.locked
+			user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+		else
+			user << "\red Access denied."
+
 	else
 		..()
 

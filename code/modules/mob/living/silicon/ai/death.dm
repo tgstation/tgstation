@@ -13,16 +13,22 @@
 	var/callshuttle = 0
 
 	for(var/obj/machinery/computer/communications/commconsole in world)
+		if(commconsole.z == 2)
+			continue
 		if(istype(commconsole.loc,/turf))
 			break
 		callshuttle++
 
 	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
+		if(commboard.z == 2)
+			continue
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
 			break
 		callshuttle++
 
 	for(var/mob/living/silicon/ai/shuttlecaller in world)
+		if(shuttlecaller.z == 2)
+			continue
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			break
 		callshuttle++
@@ -53,5 +59,5 @@
 	if (key)
 		spawn(50)
 			if(key && stat == 2)
-				client.verbs += /client/proc/ghost
+				client.verbs += /mob/proc/ghost
 	return ..(gibbed)

@@ -40,7 +40,7 @@
 		src.client.eye = src.loc
 		src.client.perspective = EYE_PERSPECTIVE
 	if (!container || !istype(container, /obj/item/device/mmi))
-		src.verbs += /client/proc/ghost
+		src.verbs += /mob/proc/ghost
 
 	return
 

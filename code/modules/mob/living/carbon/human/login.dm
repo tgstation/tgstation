@@ -7,6 +7,6 @@
 		src.client.eye = src.loc
 		src.client.perspective = EYE_PERSPECTIVE
 	if (src.stat == DEAD)
-		src.verbs += /client/proc/ghost
+		src.verbs += /mob/proc/ghost
 
 	return
