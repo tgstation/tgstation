@@ -58,7 +58,7 @@ proc/get_all_admin_clients()
 		if(M && M.client && M.client.holder)
 			if(usr.client.holder)
 				var/afk = 0
-				if( M.client.inactivity > 3000 ) //3000 deciseconds = 300 seconds = 5 minutes
+				if( M.client.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
 					afk = 1
 				if(isobserver(M))
 					usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""] - Observing [afk ? "(AFK)" : ""]"

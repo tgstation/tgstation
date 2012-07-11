@@ -80,11 +80,16 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 			j++
 
 	msg = dd_list2text(msglist, " ")
+	var/admin_number = 0
+	var/admin_number_afk = 0
 
 	if(mob)
 		var/ref_mob = "\ref[src.mob]"
 		for (var/client/X)
 			if (X.holder)
+				admin_number++
+				if( X.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
+					admin_number_afk++
 				if(X.sound_adminhelp)
 					X << 'adminhelp.ogg'
 				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
@@ -95,6 +100,9 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 		var/ref_client = "\ref[src]"
 		for (var/client/X)
 			if (X.holder)
+				admin_number++
+				if( X.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
+					admin_number_afk++
 				if(X.sound_adminhelp)
 					X << 'adminhelp.ogg'
 				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_client]'>VV</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
@@ -103,10 +111,14 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 				X << msg_to_send
 
 	src << "<font color='blue'>PM to-<b>Admins</b>: [original_msg]</font>"
-	log_admin("HELP: [key_name(src)]: [original_msg]")
+	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number] non-AFK admins.")
 	if(tension_master)
 		tension_master.new_adminhelp()
-	send2irc(ckey, original_msg)
+	if((admin_number - admin_number_afk) <= 0)
+		if(!admin_number_afk)
+			send2irc(ckey, "[original_msg] - No admins online")
+		else
+			send2irc(ckey, "[original_msg] - All admins AFK ([admin_number_afk])")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 

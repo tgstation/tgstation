@@ -397,3 +397,6 @@ var/list/liftable_structures = list(\
 #define BANTYPE_TEMP		2
 #define BANTYPE_JOB_PERMA	3
 #define BANTYPE_JOB_TEMP	4
+
+//The number of deciseconds which someone needs to be inactive to be classified as AFK:
+#define AFK_THRESHOLD 3000
