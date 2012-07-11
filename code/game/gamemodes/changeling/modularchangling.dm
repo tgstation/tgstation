@@ -33,6 +33,16 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 
 
 
+/obj/effect/proc_holder/power/fakedeath
+	name = "Regenerative Stasis"
+	desc = "We fake our death while we regenerate our form, even through death."
+	genomecost = 0
+	allowduringlesserform = 1
+
+	verbpath = /client/proc/changeling_fakedeath
+
+
+
 /obj/effect/proc_holder/power/lesser_form
 	name = "Lesser Form"
 	desc = "We debase ourselves and become lesser.  We become a monkey."
@@ -49,13 +59,6 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 
 	verbpath = /client/proc/changeling_greater_form
 */
-/obj/effect/proc_holder/power/fakedeath
-	name = "Fake Death"
-	desc = "We fake our death while we heal."
-	genomecost = 0
-	allowduringlesserform = 1
-
-	verbpath = /client/proc/changeling_fakedeath
 
 
 
@@ -79,16 +82,6 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 
 
 
-/obj/effect/proc_holder/power/paralysis_sting
-	name = "Paralysis Sting"
-	desc = "We silently sting a human, paralyzing them for a short time.  We must be wary, they can still whisper."
-	genomecost = 5
-
-
-	verbpath = /client/proc/changeling_paralysis_sting
-
-
-
 /obj/effect/proc_holder/power/silence_sting
 	name = "Silence Sting"
 	desc = "We silently sting a human, completely silencing them for a short time."
@@ -106,6 +99,35 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 	genomecost = 2
 
 	verbpath = /client/proc/changeling_transformation_sting
+
+
+
+/obj/effect/proc_holder/power/LSDSting
+	name = "Hallucination Sting"
+	desc = "We evolve the ability to sting a target with a powerful hallunicationary chemical."
+	helptext = "The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
+	genomecost = 3
+
+	verbpath = /client/proc/changeling_lsdsting
+
+
+
+/obj/effect/proc_holder/power/paralysis_sting
+	name = "Paralysis Sting"
+	desc = "We silently sting a human, paralyzing them for a short time.  We must be wary, they can still whisper."
+	genomecost = 5
+
+
+	verbpath = /client/proc/changeling_paralysis_sting
+
+
+
+/obj/effect/proc_holder/power/DeathSting
+	name = "Death Sting"
+	desc = "We silently sting a human, filling him with potent chemicals. His rapid death is all but assured."
+	genomecost = 10
+
+	verbpath = /client/proc/changeling_DEATHsting
 
 
 
@@ -170,15 +192,6 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 
 
 
-/obj/effect/proc_holder/power/DeathSting
-	name = "Death Sting"
-	desc = "We silently sting a human, filling him with potent chemicals. His rapid death is all but assured."
-	genomecost = 10
-
-	verbpath = /client/proc/changeling_DEATHsting
-
-
-
 /obj/effect/proc_holder/power/rapidregeneration
 	name = "Rapid Regeneration"
 	desc = "We evolve the ability to rapidly regenerate, negating the need for stasis."
@@ -186,14 +199,6 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 	genomecost = 8
 
 	verbpath = /client/proc/changeling_rapidregen
-
-/obj/effect/proc_holder/power/LSDSting
-	name = "Hallucination Sting"
-	desc = "We evolve the ability to sting a target with a powerful hallunicationary chemical."
-	helptext = "The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
-	genomecost = 3
-
-	verbpath = /client/proc/changeling_lsdsting
 
 
 
