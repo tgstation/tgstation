@@ -396,8 +396,12 @@
 					//Select Receiver
 					if("Recepient")
 						//Get out list of viable PDAs
+						var/list/obj/item/device/pda/sendPDAs = list()
+						for(var/obj/item/device/pda/P in PDAs)
+							if(!P.owner || P.toff) continue
+							sendPDAs += P
 						if(PDAs && PDAs.len > 0)
-							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in PDAs
+							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortList(sendPDAs)
 						else
 							customrecepient = null
 

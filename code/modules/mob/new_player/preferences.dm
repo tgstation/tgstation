@@ -210,19 +210,11 @@ datum/preferences
 
 		user << browse(dat, "window=preferences;size=300x710")
 
-	proc/SetChoices(mob/user, limit = 17, list/splitJobs, width = 550, height = 500)
+	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 550, height = 500)
 		 //limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
 		 //splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
 		 //width	 - Screen' width. Defaults to 550 to make it look nice.
 		 //height 	 - Screen's height. Defaults to 500 to make it look nice.
-
-		 // Modify this if you added more jobs and it looks like a mess. Add the jobs in the splitJobs that you want to trigger and intitate a new table.
-
-		if(splitJobs == null)
-			if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
-				splitJobs = list()
-			else
-				splitJobs = list("Chief Engineer")
 
 
 		var/HTML = "<body>"
@@ -284,7 +276,7 @@ datum/preferences
 				HTML += " <font color=red>\[NEVER]</font>"
 			HTML += "</a></td></tr>"
 
-		HTML += "</td'><tr></table>"
+		HTML += "</td'></tr></table>"
 
 		HTML += "</center></table>"
 
