@@ -1,8 +1,8 @@
 /obj/machinery/shield
-		name = "emergency energy shield"
-		desc = "An energy shield usually used to contain hull breaches."
+		name = "Emergency energy shield"
+		desc = "An energy shield used to contain hull breaches."
 		icon = 'effects.dmi'
-		icon_state = "shieldsparkles"
+		icon_state = "shield-old"
 		density = 1
 		opacity = 0
 		anchored = 1
@@ -169,7 +169,7 @@
 
 
 /obj/machinery/shieldgen
-		name = "Shield generator"
+		name = "Emergency shield projector"
 		desc = "Used to seal minor hull breaches."
 		icon = 'objects.dmi'
 		icon_state = "shieldoff"
@@ -294,6 +294,9 @@
 		playsound(src.loc, 'Ratchet.ogg', 100, 1)
 		if(anchored)
 			user << "\blue You unsecure the [src] from the floor!"
+			if(active)
+				user << "The [src] shuts off!"
+				src.shields_down()
 			anchored = 0
 		else
 			user << "\blue You secure the [src] to the floor!"

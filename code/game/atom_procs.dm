@@ -1035,8 +1035,9 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	if(istype(M.machine, /obj/machinery/computer/security)) //No examining by looking through cameras
 		return
 
-	if(( abs(src.x-M.x)<8 || abs(src.y-M.y)<8 ) && src.z == M.z ) //This should prevent non-observers to examine stuff from outside their view.
-		examine()
+	//I dont think this was ever really a problem and it's only creating more bugs...
+//	if(( abs(src.x-M.x)<8 || abs(src.y-M.y)<8 ) && src.z == M.z ) //This should prevent non-observers to examine stuff from outside their view.
+	examine()
 
 	return
 

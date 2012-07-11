@@ -11,7 +11,7 @@
 					"/obj/item/weapon/smokebomb",
 					"/obj/item/weapon/smokebomb",
 					"/obj/item/weapon/pen/paralysis",
-					"/obj/item/weapon/chem_grenade/incendiary")
+					"/obj/item/weapon/grenade/chem_grenade/incendiary")
 	cost = 20
 	containertype = "/obj/structure/closet/crate"
 	containername = "Special Ops crate"
@@ -441,9 +441,9 @@
 					"/obj/item/weapon/tank/plasma",
 					"/obj/item/weapon/tank/plasma",
 					"/obj/item/weapon/tank/plasma",
-					"/obj/item/weapon/chem_grenade/incendiary",
-					"/obj/item/weapon/chem_grenade/incendiary",
-					"/obj/item/weapon/chem_grenade/incendiary")
+					"/obj/item/weapon/grenade/chem_grenade/incendiary",
+					"/obj/item/weapon/grenade/chem_grenade/incendiary",
+					"/obj/item/weapon/grenade/chem_grenade/incendiary")
 	cost = 25
 	containertype = "/obj/structure/closet/crate/secure/weapon"
 	containername = "Experimental weapons crate"

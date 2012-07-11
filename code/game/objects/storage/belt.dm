@@ -103,7 +103,7 @@
 	item_state = "security"//Could likely use a better one.
 	storage_slots = 4
 	can_hold = list(
-		"/obj/item/weapon/flashbang",
+		"/obj/item/weapon/grenade/flashbang",
 		"/obj/item/weapon/pepperspray",
 		"/obj/item/weapon/handcuffs",
 		"/obj/item/device/flash",
