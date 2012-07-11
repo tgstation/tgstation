@@ -34,9 +34,6 @@
 			W.layer = 3.1
 			pinned_target = W
 			user << "You slide the target into the stake."
-
-		user.drop_item(src)
-		W.loc = loc
 		return
 
 	attack_hand(mob/user as mob)
