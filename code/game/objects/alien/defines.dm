@@ -4,14 +4,6 @@
 	icon = 'alien.dmi'
 //	unacidable = 1 //Aliens won't ment their own.
 
-/obj/effect/alien/head
-	name = "severed head"
-	desc = "a severed head..."
-	icon_state = "weeds"
-
-	density = 0
-	anchored = 0
-
 /obj/effect/alien/resin
 	name = "resin"
 	desc = "Looks like some kind of slimy growth."

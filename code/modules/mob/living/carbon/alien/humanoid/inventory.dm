@@ -21,60 +21,34 @@
 
 /mob/living/carbon/alien/humanoid/db_click(text, t1)
 	var/obj/item/W = get_active_hand()
-	var/emptyHand = (W == null)
-	if ((!emptyHand) && (!istype(W, /obj/item)))
+	if(W && !istype(W))
 		return
-	if (emptyHand)
-		usr.next_move = usr.prev_move
-		usr:lastDblClick -= 3	//permit the double-click redirection to proceed.
+
 	switch(text)
-
-//if emptyhand then wear the suit, no bedsheet clothes for the alien
-
 		if("o_clothing")
-			if (wear_suit)
-				if (emptyHand)
-					wear_suit.DblClick()
-//			else
-//				update_inv_wear_suit()
-			return
-/*			if (!( istype(W, /obj/item/clothing/suit) ))
+			if(wear_suit)
+				if(!W)	wear_suit.attack_alien(src)
 				return
-			u_equip(W)
-			wear_suit = W
-			W.get_active_hand(src, text)
-*/
+			return
 		if("head")
-			if (head)
-				if (emptyHand)
-					head.DblClick()
-			else if (( istype(W, /obj/effect/alien/head) ))	//TODO: figure out wtf this is about ~Carn
-				u_equip(W)
-				head = W
-				update_inv_head()
+			if(head)
+				if(!W)	head.attack_alien(src)
+				return
 			return
-/*			if (!( istype(W, /obj/item/clothing/head) ))
-				return
-			u_equip(W)
-			head = W
-			W.get_active_hand(src, text)
-*/
 		if("storage1")
-			if (l_store)
-				if (emptyHand)
-					l_store.DblClick()
+			if(l_store)
+				if(!W)	l_store.attack_alien(src)
 				return
-			if ((!( istype(W, /obj/item) ) || W.w_class > 3))
+			if(W.w_class > 3)
 				return
 			u_equip(W)
 			l_store = W
 			update_inv_pockets()
 		if("storage2")
-			if (r_store)
-				if (emptyHand)
-					r_store.DblClick()
+			if(r_store)
+				if(!W)	r_store.attack_alien(src)
 				return
-			if ((!( istype(W, /obj/item) ) || W.w_class > 3))
+			if(W.w_class > 3)
 				return
 			u_equip(W)
 			r_store = W

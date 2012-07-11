@@ -1013,65 +1013,41 @@ It can still be worn/put on as normal.
 
 /mob/living/carbon/human/db_click(text, t1)
 	var/obj/item/W = get_active_hand()
-	var/emptyHand = (W == null)
-	if(emptyHand)
-		usr.next_move = usr.prev_move
-		usr:lastDblClick -= 3	//permit the double-click redirection to proceed.
-	else
-		if( !istype(W, /obj/item) )		return
+	if(W && !istype(W))	return
 
 	switch(text)
 		if("mask")
 			if(wear_mask)
-				if(emptyHand)
-					wear_mask.DblClick()
+				if(!W)	wear_mask.attack_hand(src)
 				return
-			if (!istype(W, /obj/item))
-				return
-			if (!( W.slot_flags & SLOT_MASK ))
+			if( !(W.slot_flags & SLOT_MASK) )
 				return
 			u_equip(W)
 			wear_mask = W
-			if(wear_mask && (wear_mask.flags & BLOCKHAIR))
+			if(wear_mask.flags & BLOCKHAIR)
 				update_hair(0)	//rebuild hair
 			W.equipped(src, text)
 			update_inv_wear_mask()
 		if("back")
-			if (back)
-				if (emptyHand)
-					back.DblClick()
+			if(back)
+				if(!W)	back.attack_hand(src)
 				return
-			if (!istype(W, /obj/item))
+			if( !(W.slot_flags & SLOT_BACK) )
 				return
-			if (!( W.slot_flags & SLOT_BACK ))
-				return
-			if(istype(W,/obj/item/weapon/twohanded) && W:wielded)
+			if(istype(W,/obj/item/weapon/twohanded) && W:wielded)	//TODO
 				usr << "<span class='warning'>Unwield the [initial(W.name)] first!</span>"
 				return
 			u_equip(W)
 			back = W
 			W.equipped(src, text)
 			update_inv_back()
-/*		if("headset")
-			if (ears)
-				if (emptyHand)
-					ears.DblClick()
-				return
-			if (!( istype(W, /obj/item/device/radio/headset) ))
-				return
-			u_equip(W)
-			w_radio = W
-			W.equipped(src, text) */
 		if("o_clothing")
-			if (wear_suit)
-				if (emptyHand)
-					wear_suit.DblClick()
+			if(wear_suit)
+				if(!W)	wear_suit.attack_hand(src)
 				return
-			if (!istype(W, /obj/item))
+			if( !(W.slot_flags & SLOT_OCLOTHING) )
 				return
-			if (!( W.slot_flags & SLOT_OCLOTHING ))
-				return
-			if ((FAT in src.mutations) && !(W.flags & ONESIZEFITSALL))
+			if( !(W.flags & ONESIZEFITSALL) && (FAT in mutations) )
 				src << "\red You're too fat to wear the [W.name]!"
 				return
 			u_equip(W)
@@ -1079,100 +1055,78 @@ It can still be worn/put on as normal.
 			W.equipped(src, text)
 			update_inv_wear_suit()
 		if("gloves")
-			if (gloves)
-				if (emptyHand)
-					gloves.DblClick()
+			if(gloves)
+				if(!W)	gloves.attack_hand(src)
 				return
-			if (!istype(W, /obj/item))
-				return
-			if (!( W.slot_flags & SLOT_GLOVES ))
+			if( !(W.slot_flags & SLOT_GLOVES) )
 				return
 			u_equip(W)
 			gloves = W
 			W.equipped(src, text)
 			update_inv_gloves()
 		if("shoes")
-			if (shoes)
-				if (emptyHand)
-					shoes.DblClick()
+			if(shoes)
+				if(!W)	shoes.attack_hand(src)
 				return
-			if (!istype(W, /obj/item))
-				return
-			if (!( W.slot_flags & SLOT_FEET ))
+			if( !( W.slot_flags & SLOT_FEET) )
 				return
 			u_equip(W)
 			shoes = W
 			W.equipped(src, text)
 			update_inv_shoes()
 		if("belt")
-			if (belt)
-				if (emptyHand)
-					belt.DblClick()
+			if(belt)
+				if(!W)	belt.attack_hand(src)
 				return
-			if (!w_uniform)
+			if(!w_uniform)
 				return
-			if (!istype(W, /obj/item))
-				return
-			if (!( W.slot_flags & SLOT_BELT ))
+			if( !(W.slot_flags & SLOT_BELT) )
 				return
 			u_equip(W)
 			belt = W
 			W.equipped(src, text)
 			update_inv_belt()
 		if("eyes")
-			if (glasses)
-				if (emptyHand)
-					glasses.DblClick()
+			if(glasses)
+				if(!W)	glasses.attack_hand(src)
 				return
-			if (!istype(W, /obj/item))
-				return
-			if (!( W.slot_flags & SLOT_EYES ))
+			if( !(W.slot_flags & SLOT_EYES) )
 				return
 			u_equip(W)
 			glasses = W
 			W.equipped(src, text)
 			update_inv_glasses()
 		if("head")
-			if (head)
-				if (emptyHand)
-					head.DblClick()
+			if(head)
+				if(!W)	head.attack_hand(src)
 				return
-			if (!istype(W, /obj/item))
-				return
-			if (!( W.slot_flags & SLOT_HEAD ))
+			if( !(W.slot_flags & SLOT_HEAD) )
 				return
 			u_equip(W)
 			head = W
 			if(head.flags & BLOCKHAIR)
-				//rebuild hair
-				update_hair(0)
+				update_hair(0)	//rebuild hair
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
 			W.equipped(src, text)
 			update_inv_head()
 		if("ears")
-			if (ears)
-				if (emptyHand)
-					ears.DblClick()
+			if(ears)
+				if(!W)	ears.attack_hand(src)
 				return
-			if (!istype(W, /obj/item))
-				return
-			if (!( W.slot_flags & SLOT_EARS ))
+			if( !(W.slot_flags & SLOT_EARS) )
 				return
 			u_equip(W)
 			ears = W
 			W.equipped(src, text)
 			update_inv_ears()
 		if("i_clothing")
-			if (w_uniform)
-				if (emptyHand)
-					w_uniform.DblClick()
+			if(w_uniform)
+				if(!W)	w_uniform.attack_hand(src)
 				return
-			if (!istype(W, /obj/item))
+			if( !(W.slot_flags & SLOT_ICLOTHING) )
 				return
-			if (!( W.slot_flags & SLOT_ICLOTHING ))
-				return
-			if ((FAT in src.mutations) && !(W.flags & ONESIZEFITSALL))
+			if( !(W.flags & ONESIZEFITSALL) && (FAT in src.mutations) )
 				src << "\red You're too fat to wear the [W.name]!"
 				return
 			u_equip(W)
@@ -1180,66 +1134,51 @@ It can still be worn/put on as normal.
 			W.equipped(src, text)
 			update_inv_w_uniform()
 		if("id")
-			if (wear_id)
-				if (emptyHand)
-					wear_id.DblClick()
+			if(wear_id)
+				if(!W)	wear_id.attack_hand(src)
 				return
-			if (!w_uniform)
+			if(!w_uniform)
 				return
-			if (!istype(W, /obj/item))
-				return
-			if (!( W.slot_flags & SLOT_ID ))
+			if( !(W.slot_flags & SLOT_ID) )
 				return
 			u_equip(W)
 			wear_id = W
 			W.equipped(src, text)
 			update_inv_wear_id()
 		if("storage1")
-			if (l_store)
-				if (emptyHand)
-					l_store.DblClick()
+			if(l_store)
+				if(!W)	l_store.attack_hand(src)
 				return
-			if (!w_uniform)
+			if(!w_uniform)
 				return
-			if (!istype(W, /obj/item))
+			if(W.slot_flags & SLOT_DENYPOCKET)
 				return
-			if ( ( W.slot_flags & SLOT_DENYPOCKET ) )
-				return
-			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
+			if( W.w_class <= 2 || (W.slot_flags & SLOT_POCKET) )
 				u_equip(W)
 				l_store = W
 				update_inv_pockets()
 		if("storage2")
-			if (r_store)
-				if (emptyHand)
-					r_store.DblClick()
+			if(r_store)
+				if(!W)	r_store.attack_hand(src)
 				return
-			if (!w_uniform)
+			if(!w_uniform)
 				return
-			if (!istype(W, /obj/item))
+			if(W.slot_flags & SLOT_DENYPOCKET)
 				return
-			if ( ( W.slot_flags & SLOT_DENYPOCKET ) )
-				return
-			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
+			if( W.w_class <= 2 || (W.slot_flags & SLOT_POCKET) )
 				u_equip(W)
 				r_store = W
 				update_inv_pockets()
 		if("suit storage")
-			if (s_store)
-				if (emptyHand)
-					s_store.DblClick()
+			if(s_store)
+				if(!W)	s_store.attack_hand(src)
 				return
-			var/confirm
-			if (wear_suit)
-				if(!wear_suit.allowed)
-					usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
-					return
-				if (istype(W, /obj/item/device/pda) || istype(W, /obj/item/weapon/pen))
-					confirm = 1
-				if (is_type_in_list(W, wear_suit.allowed))
-					confirm = 1
-			if (!confirm) return
-			else
+			if(!wear_suit)
+				return
+			if(!wear_suit.allowed)
+				usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
+				return
+			if( istype(W, /obj/item/device/pda) || istype(W, /obj/item/weapon/pen) || is_type_in_list(W, wear_suit.allowed) )
 				u_equip(W)
 				s_store = W
 				update_inv_s_store()

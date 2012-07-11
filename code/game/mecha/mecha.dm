@@ -195,14 +195,14 @@
 ////////////////////////////
 ///// Action processing ////
 ////////////////////////////
-
-/client/Click(object,location,control,params)
+/*
+/atom/DblClick(object,location,control,params)
 	var/mob/M = src.mob
 	if(M && M.in_contents_of(/obj/mecha))
-/*
+
 		if(mech_click == world.time) return
 		mech_click = world.time
-*/
+
 		if(!istype(object, /atom)) return
 		if(istype(object, /obj/screen))
 			var/obj/screen/using = object
@@ -214,8 +214,9 @@
 		spawn() //this helps prevent clickspam fest.
 			if (Mech)
 				Mech.click_action(object,M)
-	else
-		return ..()
+//	else
+//		return ..()
+*/
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
 	if(!src.occupant || src.occupant != user ) return

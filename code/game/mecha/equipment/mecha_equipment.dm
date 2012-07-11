@@ -82,11 +82,11 @@
 		return 0
 	if(!chassis)
 		return 0
-	if(energy_drain && !chassis.has_charge(energy_drain))
-		return 0
 	if(!equip_ready)
 		return 0
 	if(crit_fail)
+		return 0
+	if(energy_drain && !chassis.has_charge(energy_drain))
 		return 0
 	return 1
 

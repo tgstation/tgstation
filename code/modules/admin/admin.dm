@@ -1417,6 +1417,7 @@ var/global/BSACooldown = 0
 	//change admin level
 		var/rank = href_list["chgadlvl"]
 		var/client/C = locate(href_list["client4ad"])
+		if(!istype(C))	return
 		if(rank == "Remove")
 			C.clear_admin_verbs()
 			C.update_admins(null)
@@ -1424,6 +1425,9 @@ var/global/BSACooldown = 0
 			message_admins("[key_name_admin(usr)] has removed [C]'s adminship", 1)
 			admins.Remove(C.ckey)
 		else
+			if(C == owner)	//no promoting/demoting yourself
+				message_admins("[C] tried to change their own admin-rank >:(")
+				return
 			C.clear_admin_verbs()
 			C.update_admins(rank)
 			log_admin("[key_name(usr)] has made [C] a [rank]")

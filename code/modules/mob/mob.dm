@@ -108,32 +108,30 @@
 
 //Used by monkeys, *chimpers* //TODO: eliminate this convoluted proc it's incredibly shitty. ~Carn
 /mob/proc/db_click(text, t1)
-	var/obj/item/weapon/W = get_active_hand()
+	var/obj/item/W = get_active_hand()
+	if(W && !istype(W))	return
 	switch(text)
 		if("mask")
-			if (wear_mask)
+			if(wear_mask)
 				return
-			if (!( W.slot_flags & SLOT_MASK ))
+			if( !(W.slot_flags & SLOT_MASK) )
 				return
 			u_equip(W)
 			wear_mask = W
 			W.equipped(src, text)
 			update_inv_wear_mask()
 		if("back")
-			if (back)
+			if(back)
 				return
-			if (!istype(W, /obj/item))
+			if( !(W.slot_flags & SLOT_BACK) )
 				return
-			if (!( W.slot_flags & SLOT_BACK ))
-				return
-			if(istype(W,/obj/item/weapon/twohanded) && W:wielded)
+			if( istype(W,/obj/item/weapon/twohanded) && W:wielded )	//TODO: Carn
 				usr << "<span class='warning'>Unwield the [initial(W.name)] first!</span>"
 				return
 			u_equip(W)
 			back = W
 			W.equipped(src, text)
 			update_inv_back()
-
 	return
 
 /mob/proc/reset_view(atom/A)

@@ -66,7 +66,7 @@
 
 
 /mob/proc/drop_item_v()		//this is dumb.
-	if(stat == CONSCIOUS)
+	if(stat == CONSCIOUS && isturf(loc))
 		return drop_item()
 	return 0
 

@@ -347,19 +347,17 @@
 
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
-
 	if(usr.client.buildmode)
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
-
-	if(using_new_click_proc)  //TODO ERRORAGE (see message below)
-		return DblClickNew()
+//	if(using_new_click_proc)  //TODO ERRORAGE (see message below)
+//		return DblClickNew()
 	return DblClick(location, control, params)
 
 var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblClickNew() proc is being tested)
 
 /atom/proc/DblClickNew()
-
+	if(!usr)	return
 // TODO DOOHL: Intergrate params to new proc. Saved for another time because var/valid_place is a fucking brainfuck
 
 	//Spamclick server-overloading prevention delay... THING
@@ -649,8 +647,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				attack_animal(animal)
 
 /atom/DblClick(location, control, params) //TODO: DEFERRED: REWRITE
-//	world << "checking if this shit gets called at all"
-
+	if(!usr)	return
 
 	// ------- TIME SINCE LAST CLICK -------
 	if (world.time <= usr:lastDblClick+1)
@@ -660,49 +657,47 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 //		world << "atom.DblClick() on [src] by [usr] : src.type is [src.type]"
 		usr:lastDblClick = world.time
 
-	// ------- DIR CHANGING WHEN CLICKING (changes facting direction) ------
+	//Putting it here for now. It diverts stuff to the mech clicking procs. Putting it here stops us drilling items in our inventory Carn
+	if(istype(usr.loc,/obj/mecha))
+		if(usr.client && (src in usr.client.screen))
+			return
+		var/obj/mecha/Mech = usr.loc
+		Mech.click_action(src,usr)
+		return
 
-	if( usr && iscarbon(usr) && !usr.buckled )
+	// ------- DIR CHANGING WHEN CLICKING ------
+	if( iscarbon(usr) && !usr.buckled )
 		if( src.x && src.y && usr.x && usr.y )
 			var/dx = src.x - usr.x
 			var/dy = src.y - usr.y
 
-			if( dy > 0 && abs(dx) < dy ) //North
-				usr.dir = 1
-			if( dy < 0 && abs(dx) < abs(dy) ) //South
-				usr.dir = 2
-			if( dx > 0 && abs(dy) <= dx ) //East
-				usr.dir = 4
-			if( dx < 0 && abs(dy) <= abs(dx) ) //West
-				usr.dir = 8
-			if( dx == 0 && dy == 0 )
-				if(src.pixel_y > 16)
-					usr.dir = 1
-				if(src.pixel_y < -16)
-					usr.dir = 2
-				if(src.pixel_x > 16)
-					usr.dir = 4
-				if(src.pixel_x < -16)
-					usr.dir = 8
+			if(dy || dx)
+				if(abs(dx) < abs(dy))
+					if(dy > 0)	usr.dir = NORTH
+					else		usr.dir = SOUTH
+				else
+					if(dx > 0)	usr.dir = EAST
+					else		usr.dir = WEST
+			else
+				if(pixel_y > 16)		usr.dir = NORTH
+				else if(pixel_y < -16)	usr.dir = SOUTH
+				else if(pixel_x > 16)	usr.dir = EAST
+				else if(pixel_x < -16)	usr.dir = WEST
 
 
 
 
 	// ------- AI -------
-	if (istype(usr, /mob/living/silicon/ai))
+	else if (istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/ai = usr
 		if (ai.control_disabled)
 			return
 
 	// ------- CYBORG -------
-	if (istype (usr, /mob/living/silicon/robot))
+	else if (istype(usr, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/bot = usr
 		if (bot.lockcharge) return
 	..()
-
-
-
-
 
 
 	// ------- SHIFT-CLICK -------
@@ -736,7 +731,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			else
 				AICtrlClick(usr)
 			return
-			}
+		}
 
 		// ------- MIDDLE-CLICK -------
 
@@ -752,17 +747,16 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 	// ------- ITEM IN HAND DEFINED -------
 	var/obj/item/W = usr.get_active_hand()
-
+/*	Now handled by get_active_hand()
 	// ------- ROBOT -------
 	if(istype(usr, /mob/living/silicon/robot))
 		if(!isnull(usr:module_active))
 			W = usr:module_active
 		else
 			W = null
-
+*/
 	// ------- ATTACK SELF -------
 	if (W == src && usr.stat == 0)
-//		spawn (0)	//would cause a runtime if W was deconstructed during a lagspike
 		W.attack_self(usr)
 		if(usr.hand)
 			usr.update_inv_l_hand()	//update in-hand overlays
@@ -784,19 +778,15 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			return
 
 	// ------- 1 TILE AWAY -------
-	var/t5 = in_range(src, usr) || src.loc == usr
-
+	var/t5
 	// ------- AI CAN CLICK ANYTHING -------
-	if (istype(usr, /mob/living/silicon/ai))
+	if(istype(usr, /mob/living/silicon/ai))
 		t5 = 1
-
 	// ------- CYBORG CAN CLICK ANYTHING WHEN NOT HOLDING STUFF -------
-	if ((istype(usr, /mob/living/silicon/robot)) && W == null)
+	else if(istype(usr, /mob/living/silicon/robot) && !W)
 		t5 = 1
-
-	// ------- CLICKING ON ORGANS -------
-	if (istype(src, /datum/organ) && src in usr.contents)
-		return
+	else
+		t5 = in_range(src, usr) || src.loc == usr
 
 //	world << "according to dblclick(), t5 is [t5]"
 
