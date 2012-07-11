@@ -4,8 +4,8 @@ xsi - Game Master
 scaredofshadows - Game Master
 neofite - Game Master
 trubblebass - Game Master
-mport2004 - Game Adminin
-deuryn - Game Admin
+mport2004 - Game Master
+deuryn - Game Master
 agouri - Game Master
 errorage - Game Master
 superxpdude - Game Master
