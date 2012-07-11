@@ -172,6 +172,7 @@ datum/shuttle_controller
 
 						start_location.move_contents_to(end_location)
 						settimeleft(SHUTTLELEAVETIME)
+						send2irc("Server", "The Emergency Shuttle has docked with the station.")
 						captain_announce("The Emergency Shuttle has docked with the station. You have [timeleft()/60] minutes to board the Emergency Shuttle.")
 						world << sound('shuttledock.ogg')
 
