@@ -5,7 +5,7 @@
 	icon_state = "satchel"
 	name = "Mining Satchel"
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
-	var/capacity = 50; //the number of ore pieces it can carry.
+	var/capacity = 25; //the number of ore pieces it can carry.
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	w_class = 1
@@ -40,7 +40,7 @@
 	icon_state = "satchel"
 	name = "Cyborg Mining Satchel"
 	mode = 1;  //0 = pick one at a time, 1 = pick all on tile
-	capacity = 200; //the number of ore pieces it can carry.
+	capacity = 75; //the number of ore pieces it can carry.
 
 /**********************Ore box**************************/
 
@@ -48,8 +48,9 @@
 	icon = 'mining.dmi'
 	icon_state = "orebox0"
 	name = "Ore Box"
-	desc = "It's heavy"
+	desc = "A heavy box used for storing ore."
 	density = 1
+	var/capacity = 200
 
 	New()
 		if(prob(50))
@@ -57,10 +58,18 @@
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/ore))
-		src.contents += W;
-	if (istype(W, /obj/item/weapon/satchel))
-		src.contents += W.contents
-		user << "\blue You empty the satchel into the box."
+		if (src.contents.len + 1 <= src.capacity)
+			src.contents += W;
+		else
+			user << "\blue The ore box is full."
+
+	else if (istype(W, /obj/item/weapon/satchel))
+		if ( src.contents.len + W.contents.len <= src.capacity)
+			src.contents += W.contents
+			user << "\blue You empty the satchel into the box."
+		else
+			user << "\blue The ore box is full."
+
 	return
 
 /obj/structure/ore_box/attack_hand(obj, mob/user as mob)
@@ -122,6 +131,6 @@
 		for (var/obj/item/weapon/ore/O in contents)
 			contents -= O
 			O.loc = src.loc
-		usr << "\blue You empty the box"
+		usr << "\blue You empty the box."
 	src.updateUsrDialog()
 	return
