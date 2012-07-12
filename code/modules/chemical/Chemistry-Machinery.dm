@@ -666,6 +666,7 @@
 	active_power_usage = 100
 	var/inuse = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
+	var/limit = 10
 	var/list/blend_items = list (
 
 		//Sheets
@@ -718,24 +719,46 @@
 
 
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
+
+
 	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
+
 		if (beaker)
 			return 1
 		else
 			src.beaker =  O
 			user.drop_item()
 			O.loc = src
-			src.verbs += /obj/machinery/reagentgrinder/verb/detach
 			update_icon()
 			src.updateUsrDialog()
 			return 0
+
+	if(holdingitems && holdingitems.len >= limit)
+		usr << "The machine cannot hold anymore items."
+		return 1
+
+	//Fill machine with the plantbag!
+	if(istype(O, /obj/item/weapon/plantbag))
+
+		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+			O.contents -= G
+			G.loc = src
+			holdingitems += G
+			if((holdingitems && holdingitems.len >= 10) || beaker.reagents.total_volume >= 80) //Sanity checking so the blender doesn't overfill
+				user << "You fill the All-In-One grinder to the brim."
+				break
+		if(src.contents.len < 10 && src.reagents.total_volume < 80)
+			user << "You empty the plant bag into the All-In-One grinder."
+
+		src.updateUsrDialog()
+		return 0
+
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
 		user << "Cannot refine into a reagent."
 		return 1
+
 	user.before_take_item(O)
-	if(holdingitems && holdingitems.len == 0)
-		src.verbs += /obj/machinery/reagentgrinder/verb/eject
 	O.loc = src
 	holdingitems += O
 	src.updateUsrDialog()
@@ -813,29 +836,22 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/reagentgrinder/verb/detach()
-	set category = "Object"
-	set name = "Detach Beaker from the grinder"
-	set src in oview(1)
+/obj/machinery/reagentgrinder/proc/detach()
+
 	if (usr.stat != 0)
 		return
 	if (!beaker)
 		return
-	src.verbs -= /obj/machinery/reagentgrinder/verb/detach
 	beaker.loc = src.loc
 	beaker = null
 	update_icon()
 
-/obj/machinery/reagentgrinder/verb/eject()
-	set category = "Object"
-	set name = "Eject contents from the grinder"
-	set src in oview(1)
+/obj/machinery/reagentgrinder/proc/eject()
+
 	if (usr.stat != 0)
 		return
 	if (holdingitems && holdingitems.len == 0)
 		return
-
-	src.verbs -= /obj/machinery/reagentgrinder/verb/eject
 
 	for(var/obj/item/O in holdingitems)
 		O.loc = src.loc
@@ -887,7 +903,7 @@
 	power_change()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!beaker || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
 	playsound(src.loc, 'juicer.ogg', 20, 1)
 	inuse = 1
@@ -908,23 +924,19 @@
 			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 			var/amount = get_juice_amount(O)
 
-			O.reagents.trans_id_to(beaker, r_id, min(amount, space))
+			beaker.reagents.add_reagent(r_id, min(amount, space))
 
 			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 				break
-		if(O.reagents.reagent_list.len == 0)
-			remove_object(O)
 
-
-	if(holdingitems && holdingitems.len == 0)
-		src.verbs -= /obj/machinery/reagentgrinder/verb/eject
+		remove_object(O)
 
 /obj/machinery/reagentgrinder/proc/grind()
 
 	power_change()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!beaker || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
 	playsound(src.loc, 'blender.ogg', 50, 1)
 	inuse = 1
@@ -947,6 +959,7 @@
 			if(amount == 0)
 				if (O.reagents != null && O.reagents.has_reagent("nutriment"))
 					beaker.reagents.add_reagent(r_id, min(O.reagents.get_reagent_amount("nutriment"), space))
+					O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
 
 			else
 				O.reagents.trans_id_to(beaker, r_id, min(amount, space))
@@ -998,6 +1011,3 @@
 		O.reagents.trans_to(beaker, amount)
 		if(!O.reagents.total_volume)
 			remove_object(O)
-
-	if(holdingitems && holdingitems.len == 0)
-		src.verbs -= /obj/machinery/reagentgrinder/verb/eject
