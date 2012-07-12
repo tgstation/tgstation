@@ -16,7 +16,7 @@
 
 		if(aiPDA && aiPDA.name != name)
 			aiPDA.owner = name
-			aiPDA.name = "AI - " + name + " (" + aiPDA.ownjob + ")"
+			aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)

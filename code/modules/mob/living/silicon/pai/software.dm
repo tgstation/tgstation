@@ -181,74 +181,17 @@
 				spawn CheckDNA(M, src)
 
 		if("pdamessage")
-			if(href_list["target"])
-				if(silence_time)
-					return alert("Communications circuits remain unitialized.")
+			if(!isnull(pda))
+				if(href_list["toggler"])
+					pda.toff = !pda.toff
+				else if(href_list["ringer"])
+					pda.silent = !pda.silent
+				else if(href_list["target"])
+					if(silence_time)
+						return alert("Communications circuits remain unitialized.")
 
-				var/t = input(usr, "Please enter message", name, null) as text
-				t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-				if(!t)
-					return
-				var/target = locate(href_list["target"])
-
-				// PDA Message
-				if(istype(target, /obj/item/device/pda))
-					var/obj/item/device/pda/P = target
-					if(isnull(P)||P.toff)
-						return
-
-					var/AnsweringMS = 0
-					for (var/obj/machinery/message_server/MS in message_servers)
-						if(MS.active)
-							MS.send_pda_message("[P.owner]","[src]","[t]")
-							AnsweringMS = 1
-							break
-
-					if(!AnsweringMS)
-						return alert("ERROR: No response from server!")
-
-					tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
-					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
-
-					if(prob(15)) //Give the AI a chance of intercepting the message
-						var/who = src
-						if(prob(50))
-							who = P:owner
-						for(var/mob/living/silicon/ai/ai in world)
-							ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
-
-					if(!P.silent)
-						playsound(P.loc, 'twobeep.ogg', 50, 1)
-						for (var/mob/O in hearers(3, P.loc))
-							O.show_message(text("\icon[P] *[P.ttone]*"))
-
-					P.overlays = null
-					P.overlays += image('pda.dmi', "pda-r")
-
-				// pAI Message
-				else
-					var/mob/living/silicon/pai/P = target
-
-					var/AnsweringMS = 0
-					for (var/obj/machinery/message_server/MS in message_servers)
-						MS.send_pda_message("[P]","[src]","[t]")
-						AnsweringMS = 1
-						break
-
-					if(!AnsweringMS)
-						return alert("ERROR: No response from server!")
-
-					tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
-					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
-
-					if (prob(15)) //Give the AI a chance of intercepting the message
-						var/who = src
-						if(prob(50))
-							who = P
-						for (var/mob/living/silicon/ai/ai in world)
-							ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
-
-					playsound(P.loc, 'twobeep.ogg', 50, 1)
+					var/target = locate(href_list["target"])
+					pda.create_message(src, target)
 
 		// Accessing medical records
 		if("medicalrecord")
@@ -309,6 +252,7 @@
 /mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
 	var/dat = ""
 
+	dat += "<A href='byond://?src=\ref[src];software=refresh'>Refresh</A><br>"
 	// Built-in
 	dat += "<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>"
 	dat += "<A href='byond://?src=\ref[src];software=radio;sub=0'>Radio Configuration</A><br>"
@@ -660,17 +604,19 @@
 
 // Digital Messenger
 /mob/living/silicon/pai/proc/pdamessage()
+
 	var/dat = "<h3>Digital Messenger</h3>"
+	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;toggler=1'>
+	[(pda.toff) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br>
+	<b>Ringer Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;ringer=1'>
+	[(pda.silent) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
-	for (var/obj/item/device/pda/P in world)
-		if (!P.owner||P.toff||P == src)	continue
-		dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
-		dat += "</li>"
-	for (var/mob/living/silicon/pai/P in world)
-		if(P.stat != 2)
+	if(!pda.toff)
+		for (var/obj/item/device/pda/P in sortList(PDAs))
+			if (!P.owner||P.toff||P == src.pda)	continue
 			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"
 	dat += "<br><br>"
-	dat += "Messages: <hr> [tnote]"
+	dat += "Messages: <hr> [pda.tnote]"
 	return dat

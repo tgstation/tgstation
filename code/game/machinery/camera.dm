@@ -43,10 +43,13 @@
 
 	var/list/names = list()
 	var/list/namecounts = list()
-	var/list/creatures = list()
+	var/list/humans = list()
+	var/list/others = list()
 	for(var/mob/living/M in world)
 		//Cameras can't track people wearing an agent card or a ninja hood.
+		var/human = 0
 		if(istype(M, /mob/living/carbon/human))
+			human = 1
 			if(istype(M:wear_id, /obj/item/weapon/card/id/syndicate))
 				continue
 		 	if(istype(M:head, /obj/item/clothing/head/helmet/space/space_ninja)&&!M:head:canremove)
@@ -71,66 +74,71 @@
 		else
 			names.Add(name)
 			namecounts[name] = 1
+		if(human)
+			humans[name] = M
+		else
+			others[name] = M
 
-		creatures[name] = M
-	//I blame : usage!
-	var/target_name = input(usr, "Which creature should you track?") as null|anything in sortList(creatures)
+	var/list/targets = sortList(humans) + sortList(others)
+	var/target_name = input(usr, "Which creature should you track?") as null|anything in targets
 
 	if (!target_name)
 		usr:cameraFollow = null
 		return
 
-	var/mob/target = creatures[target_name]
+	var/mob/target = (isnull(humans[target_name]) ? others[target_name] : humans[target_name])
 	ai_actual_track(target)
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
 	if(!istype(target))	return
+	var/mob/living/silicon/ai/U = usr
 
-	usr:cameraFollow = target
-	usr << text("Now tracking [] on camera.", target.name)
-	if (usr.machine == null)
-		usr.machine = usr
+	U.cameraFollow = target
+	U << text("Now tracking [] on camera.", target.name)
+	if (U.machine == null)
+		U.machine = U
 
 	spawn (0)
-		while (usr:cameraFollow == target)
-			if (usr:cameraFollow == null)
+		while (U.cameraFollow == target)
+			if (U.cameraFollow == null)
 				return
 			else if (istype(target, /mob/living/carbon/human))
 				if(istype(target:wear_id, /obj/item/weapon/card/id/syndicate))
-					usr << "Follow camera mode terminated."
-					usr:cameraFollow = null
+					U << "Follow camera mode terminated."
+					U.cameraFollow = null
 					return
 		 		if(istype(target:head, /obj/item/clothing/head/helmet/space/space_ninja)&&!target:head:canremove)
-		 			usr << "Follow camera mode terminated."
-					usr:cameraFollow = null
+		 			U << "Follow camera mode terminated."
+					U.cameraFollow = null
 					return
 				if(target.digitalcamo)
-					usr << "Follow camera mode terminated."
-					usr:cameraFollow = null
+					U << "Follow camera mode terminated."
+					U.cameraFollow = null
 					return
 
 			else if(istype(target.loc,/obj/effect/dummy))
-				usr << "Follow camera mode ended."
-				usr:cameraFollow = null
+				U << "Follow camera mode ended."
+				U.cameraFollow = null
 				return
 			else if (!target || !istype(target.loc, /turf)) //in a closet
-				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
+				U << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
 				sleep(40) //because we're sleeping another second after this (a few lines down)
 				continue
 
-			var/obj/machinery/camera/C = usr:current
+			var/obj/machinery/camera/C = U.current
 			if ((C && istype(C, /obj/machinery/camera)) || C==null)
 
 				if(isrobot(target))
-					C = target:camera
-					usr:current = C
-					usr.reset_view(C)
+					var/mob/living/silicon/robot/R = target
+					C = R.camera
+					U.current = C
+					U.reset_view(C)
 				else
 					var/closestDist = -1
 					if (C!=null)
 						if (C.status)
 							closestDist = get_dist(C, target)
-					//usr << text("Dist = [] for camera []", closestDist, C.name)
+					//U << text("Dist = [] for camera []", closestDist, C.name)
 					var/zmatched = 0
 					if (closestDist > 7 || closestDist == -1)
 						//check other cameras
@@ -144,18 +152,18 @@
 										if ((dist < closestDist) || (closestDist == -1))
 											closestDist = dist
 											closest = C2
-						//usr << text("Closest camera dist = [], for camera []", closestDist, closest.area.name)
+						//U << text("Closest camera dist = [], for camera []", closestDist, closest.area.name)
 
 						if (closest != C)
-							usr:current = closest
-							usr.reset_view(closest)
+							U.current = closest
+							U.reset_view(closest)
 							//use_power(50)
 						if (zmatched == 0)
-							usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
+							U << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
 							sleep(40) //because we're sleeping another second after this (a few lines down)
 			else
-				usr << "Follow camera mode ended."
-				usr:cameraFollow = null
+				U << "Follow camera mode ended."
+				U.cameraFollow = null
 
 			sleep(10)
 
@@ -263,22 +271,35 @@
 	deactivate(user,0)
 
 /obj/machinery/camera/attackby(W as obj, user as mob)
-	..()
 	if (istype(W, /obj/item/weapon/wirecutters))
 		deactivate(user)
-	else if (istype(W, /obj/item/weapon/paper))
-		var/obj/item/weapon/paper/X = W
-		user << "You hold a paper up to the camera ..."
+	else if ((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+		var/mob/living/U = user
+		var/obj/item/weapon/paper/X = null
+		var/obj/item/device/pda/P = null
+
+		var/itemname = ""
+		var/info = ""
+		if(istype(W, /obj/item/weapon/paper))
+			X = W
+			itemname = X.name
+			info = X.info
+		else
+			P = W
+			itemname = P.name
+			info = P.note
+		U << "You hold \a [itemname] up to the camera ..."
 		for(var/mob/living/silicon/ai/O in world)
 			//if (O.current == src)
-			O << "[user] holds a paper up to one of your cameras ..."
-			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+			if(U.name == "Unknown") O << "<b>[U]</b> holds \a [itemname] up to one of your cameras ..."
+			else O << "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds \a [itemname] up to one of your cameras ..."
+			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		for(var/mob/O in world)
 			if (istype(O.machine, /obj/machinery/computer/security))
 				var/obj/machinery/computer/security/S = O.machine
 				if (S.current == src)
-					O << "[user] holds a paper up to one of the cameras ..."
-					O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+					O << "[U] holds \a [itemname] up to one of the cameras ..."
+					O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 	else if (istype(W, /obj/item/weapon/wrench)) //Adding dismantlable cameras to go with the constructable ones. --NEO
 		if(src.status)
 			user << "\red You can't dismantle a camera while it is active."
@@ -327,6 +348,8 @@
 		for(var/mob/O in viewers(user, 3))
 			O.show_message(text("\blue The camera has been sliced apart by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 		del(src)
+	else
+		..()
 	return
 
 /obj/machinery/camera/proc/deactivate(user as mob, var/choice = 1)

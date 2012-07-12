@@ -15,3 +15,4 @@ nodrak - Game Master
 carnwennan - Game Master
 ikarrus - Game Master
 cheridan - Game Master
+giacomand - Game Master

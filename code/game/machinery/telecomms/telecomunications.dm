@@ -477,8 +477,13 @@
 	id = "Receiver B"
 	network = "tcommsat"
 	autolinkers = list("bus3", "bus4") // Bus units 3 and 4
-	freq_listening = list(1459, 1353, 1357, 1359) // common, command, engineering, security
+	freq_listening = list(1353, 1357, 1359) //command, engineering, security
 
+	//Common and other radio frequencies for people to freely use
+	New()
+		for(var/i = 1441, i < 1489, i += 2)
+			freq_listening |= i
+		..()
 
 
 /obj/machinery/telecomms/bus/preset_one
@@ -551,8 +556,15 @@
 
 	common
 		id = "Common Server"
-		freq_listening = list(1459)
+		freq_listening = list()
 		autolinkers = list("common", "broadcasterB")
+
+		//Common and other radio frequencies for people to freely use
+		// 1441 to 1489
+		New()
+			for(var/i = 1441, i < 1489, i += 2)
+				freq_listening |= i
+			..()
 
 	command
 		id = "Command Server"

@@ -24,6 +24,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
+	var/maxf = 1499
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = FPRINT | CONDUCT | TABLEPASS
 	slot_flags = SLOT_BELT
@@ -65,10 +66,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	if(freerange)
 		if(frequency < 1200 || frequency > 1600)
-			frequency = sanitize_frequency(frequency)
-	else if (frequency < 1441 || frequency > 1489)
+			frequency = sanitize_frequency(frequency, maxf)
+	// The max freq is higher than a regular headset to decrease the chance of people listening in, if you use the higher channels.
+	else if (frequency < 1441 || frequency > maxf)
 		world.log << "[src] ([type]) has a frequency of [frequency], sanitizing."
-		frequency = sanitize_frequency(frequency)
+		frequency = sanitize_frequency(frequency, maxf)
 
 	set_frequency(frequency)
 
@@ -181,7 +183,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	else if (href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
 		if (!freerange || (frequency < 1200 || frequency > 1600))
-			new_frequency = sanitize_frequency(new_frequency)
+			new_frequency = sanitize_frequency(new_frequency, maxf)
 		set_frequency(new_frequency)
 
 		if (traitor_frequency && frequency == traitor_frequency)
