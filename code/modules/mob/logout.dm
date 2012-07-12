@@ -8,7 +8,7 @@
 					admins_number++
 
 			message_admins("Admin logout: [key_name(src)]")
-			if(admins_number == 1) //Since this admin has not logged out yet, they are still counted, if the number of admins is 1 it means that after this one logs out, it will be 0.
+			if(admins_number == 0) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
 				send2irc("Server", "I have no admins online!")
 	..()
 
