@@ -9,7 +9,26 @@
 
 			message_admins("Admin logout: [key_name(src)]")
 			if(admins_number == 0) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
-				send2irc("Server", "I have no admins online!")
+				var/cheesy_message = pick( list(  \
+					"I have no admins online!",\
+					"I'm all alone :(",\
+					"I'm feeling lonely :(",\
+					"I'm so lonely :(",\
+					"Why does nobody love me? :(",\
+					"I want a man :(",\
+					"Where has everyone gone?",\
+					"I need a hug :(",\
+					"Someone come hold me :(",\
+					"I need someone on me :(",\
+					"What happened? Where has everyone gone?",\
+					"Forever alone :("\
+				) )
+
+				if(cheesy_message)
+					cheesy_message += " (No admins online)"
+
+
+				send2irc("Server", "[cheesy_message]")
 	..()
 
 	return 1
