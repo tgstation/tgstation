@@ -116,9 +116,15 @@
 
 	affecting = loc.contents - src		// moved items will be all in loc
 	spawn(1)	// slight delay to prevent infinite propagation due to map order
+
+		var/items_moved = 0
 		for(var/atom/movable/A in affecting)
+			if(items_moved >= 10)
+				break
+
 			if(!A.anchored)
 				if(isturf(A.loc)) // this is to prevent an ugly bug that forces a player to drop what they're holding if they recently pick it up from the conveyer belt
+					items_moved++
 					if(!step(A,movedir))
 						//if it's a crate, move the item into the crate
 						var/turf/T = get_step(A,movedir)
