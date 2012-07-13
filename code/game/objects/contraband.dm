@@ -1,7 +1,7 @@
 
 //########################## CONTRABAND ;3333333333333333333 -Agouri ###################################################
 
-#define NUM_OF_POSTER_DESIGNS 22
+#define NUM_OF_POSTER_DESIGNS 27
 #define BS12_POSTERS_START 18
 
 /obj/item/weapon/contraband
@@ -83,6 +83,7 @@ obj/effect/decal/poster/New(var/serial)
 
 	src.serial_number = serial
 
+	restart_proc:
 	if(serial_number==src.loc)
 		//add an increased chance for BS12 specific posters to spawn
 		if(prob(10))
@@ -145,6 +146,8 @@ obj/effect/decal/poster/New(var/serial)
 		if(17)
 			name += " - Dangerous Static"
 			desc += " This particular one depicts nothing remarkable other than a rather mesmerising pattern of monitor static. There's a tag on the sides of the poster, urging you to \"tear this poster in half to receive your free sample\"."
+
+		//bs12 specific posters
 		if(18)
 			name += " - Pinup Girl Val"		//art thou incensed, brethren?
 			desc += " Luscious Val McNeil, the vertically challenged Legal Extraordinaire, winner of Miss Space two years running and favoured pinup girl of Lawyers Weekly."
@@ -160,12 +163,28 @@ obj/effect/decal/poster/New(var/serial)
 		if(22)
 			name += " - Skrell Twilight"
 			desc += " This poster depicts a mysteriously inscrutable, alien scene. Numerous Skrell can be seen conversing amidst great, crystalline towers rising above crashing waves"
+		if(23)
+			name += " - Join the Fuzz!"
+			desc += " It's a nice recruitment poster of a white haired Chinese woman that says; \"Big Guns, Hot Women, Good Times. Security. We get it done.\""
+		if(24)
+			name += " - Looking for a career with excitement?"
+			desc += " A recruitment poster starring a dark haired woman with glasses and a purple shirt that has \"Got Brains? Got Talent? Not afraid of electric flying monsters that want to suck the soul out of you? Then Xenobiology could use someone like you!\" written on the bottom."
+		if(25)
+			name += " - Safety first: because electricity doesn't wait!"
+			desc += " A safety poster starring a clueless looking redhead with frazzled hair. \"Every year, hundreds of NT employees expose themselves to electric shock. Play it safe. Avoid suspicious doors after electrical storms, and always wear protection when doing electric maintenance.\""
+		if(26)
+			name += " - Responsible medbay habits, No #259"
+			desc += " A poster with a nervous looking geneticist on it states; \"Friends Don't Tell Friends They're Clones. It can cause severe and irreparable emotional trauma. Always do the right thing and never tell them that they were dead.\""
+		if(27)
+			name += " - Irresponsible medbay habits, No #2"
+			desc += " This is a safety poster starring a perverted looking naked doctor. \"Sexual harassment is never okay. REPORT any acts of sexual deviance or harassment that disrupt a healthy working environment.\""
 		/*if(20)
 			name += " - the Disabled Triptarch: Ironfoot, Seber and Ore"
 			desc += " This poster depicts a genetics researcher, a chemist and a medical doctor in various states of miscommunication."*/
 		else
-			name = "This shit just bugged. Report it to Agouri - polyxenitopalidou@gmail.com"
-			desc = "Why are you still here?"
+			//properly handle unhinged logic states
+			src.serial_number = src.loc
+			goto restart_proc
 	..()
 
 obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)

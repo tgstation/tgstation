@@ -59,6 +59,7 @@
 #define ACCESS_RC_ANNOUNCE 59 //Request console announcements
 #define ACCESS_KEYCARD_AUTH 60 //Used for events which require at least two people to confirm them
 #define ACCESS_TCOMSAT 61 // has access to the entire telecomms satellite / machinery
+#define ACCESS_ANOMALY 62 //in case of future job separation from scientist
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.

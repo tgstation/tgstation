@@ -2,6 +2,8 @@
 //note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
 //cael - added fix for diverters, not sure if tg has them
 
+#define MAX_MOVED 10
+
 /obj/machinery/conveyor
 	icon = 'recycling.dmi'
 	icon_state = "conveyor0"
@@ -118,8 +120,9 @@
 	spawn(1)	// slight delay to prevent infinite propagation due to map order
 
 		var/items_moved = 0
+
 		for(var/atom/movable/A in affecting)
-			if(items_moved >= 10)
+			if(items_moved >= MAX_MOVED)
 				break
 
 			if(!A.anchored)

@@ -201,8 +201,8 @@
 	else if (src.effectmode == "aura")
 		switch(src.effecttype)
 			if("healing")
-				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+				for (var/mob/living/carbon/human/M in range(src.aurarange,originator))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					if(prob(10)) M << "\blue You feel a soothing energy radiating from something nearby."
 					M.adjustBruteLoss(-1)
@@ -213,8 +213,8 @@
 					M.updatehealth()
 				return 1
 			if("injure")
-				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+				for (var/mob/living/carbon/human/M in range(src.aurarange,originator))
+					if(istype(ishuman(M) && M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					if(prob(10)) M << "\red You feel a painful force radiating from something nearby."
 					M.adjustBruteLoss(1)
@@ -225,8 +225,8 @@
 					M.updatehealth()
 				return 1
 			/*if("stun")
-				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+				for (var/mob/living/carbon/human/M in range(src.aurarange,originator))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					if(prob(10)) M << "\red Energy radiating from the [originator] is making you feel numb."
 					if(prob(20))
@@ -289,8 +289,8 @@
 			O.show_message(text("<b>[]</b> emits a pulse of energy!", originator), 1)
 		switch(src.effecttype)
 			if("healing")
-				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+				for (var/mob/living/carbon/human/M in range(src.aurarange,originator))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\blue A wave of energy invigorates you."
 					M.adjustBruteLoss(-5)
@@ -301,8 +301,8 @@
 					M.updatehealth()
 				return 1
 			if("injure")
-				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+				for (var/mob/living/carbon/human/M in range(src.aurarange,originator))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\red A wave of energy causes you great pain!"
 					M.adjustBruteLoss(5)
@@ -315,8 +315,8 @@
 					M.updatehealth()
 				return 1
 			/*if("stun")
-				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+				for (var/mob/living/carbon/human/M in range(src.aurarange,originator))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\red A wave of energy overwhelms your senses!"
 					M.paralysis += 3
@@ -373,7 +373,7 @@
 				return 1
 			if("teleport")
 				for (var/mob/living/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					var/list/randomturfs = new/list()
 					for(var/turf/T in orange(M, 30))
@@ -392,8 +392,8 @@
 			O.show_message(text("<b>[]</b> emits a powerful burst of energy!", originator), 1)
 		switch(src.effecttype)
 			if("healing")
-				for (var/mob/living/carbon/M in world)
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+				for (var/mob/living/carbon/human/M in world)
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\blue Waves of soothing energy wash over you."
 					M.adjustBruteLoss(-3)
@@ -404,7 +404,7 @@
 					M.updatehealth()
 				return 1
 			if("injure")
-				for (var/mob/living/carbon/M in world)
+				for (var/mob/living/carbon/human/M in world)
 					M << "\red A wave of painful energy strikes you!"
 					M.adjustBruteLoss(3)
 					M.adjustFireLoss(3)
@@ -414,8 +414,8 @@
 					M.updatehealth()
 				return 1
 			/*if("stun")
-				for (var/mob/living/carbon/M in world)
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+				for (var/mob/living/carbon/human/M in world)
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\red A powerful force causes you to black out momentarily."
 					M.paralysis += 5
@@ -459,7 +459,7 @@
 				return 1
 			if("teleport")
 				for (var/mob/living/M in world)
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					var/list/randomturfs = new/list()
 					for(var/turf/T in orange(M, 15))
