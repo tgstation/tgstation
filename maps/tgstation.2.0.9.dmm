@@ -3044,7 +3044,7 @@
 "bgB" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor,/area/quartermaster/sorting)
 "bgC" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor,/area/quartermaster/sorting)
 "bgD" = (/obj/machinery/atmospherics/pipe/manifold{color = "red"; dir = 1; icon_state = "manifold-r-f"; level = 1; name = "pipe manifold"},/turf/simulated/floor{dir = 8; icon_state = "loadingarea"; tag = "loading"},/area/quartermaster/sorting)
-"bgE" = (/obj/machinery/conveyor{dir = 8; id = "packageExternal"},/obj/structure/plasticflaps{opacity = 1},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor{icon_state = "floorgrime"},/area/quartermaster/sorting)
+"bgE" = (/obj/machinery/conveyor{dir = 8; id = "packageExternal"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/plasticflaps,/turf/simulated/floor{icon_state = "floorgrime"},/area/quartermaster/sorting)
 "bgF" = (/obj/machinery/conveyor{dir = 8; id = "packageExternal"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor{icon_state = "floorgrime"},/area/quartermaster/sorting)
 "bgG" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/hallway/primary/central)
 "bgH" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = "90Curve"},/turf/simulated/floor,/area/hallway/primary/central)
