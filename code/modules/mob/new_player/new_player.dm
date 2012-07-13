@@ -29,73 +29,34 @@
 
 
 	proc/new_player_panel_proc()
-		var/output = "<B>New Player Options</B>"
-		output +="<hr>"
-		output += "<br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
-
-		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-			if(!ready)	output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><BR>"
-			else	output += "<b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)<BR>"
-
-		else
-			output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><BR>"
-
-		output += "<BR><a href='byond://?src=\ref[src];observe=1'>Observe</A><BR>"
-
-		src << browse(output,"window=playersetup;size=250x210;can_close=0")
-		return
-
-	proc/handle_privacy_poll()
 		var/user = sqlfdbklogin
 		var/pass = sqlfdbkpass
 		var/db = sqlfdbkdb
 		var/address = sqladdress
 		var/port = sqlport
 
+		var/output = "<div align='center'><B>New Player Options</B>"
+		output +="<hr>"
+		output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
+
+		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
+			if(!ready)	output += "<p><a href='byond://?src=\ref[src];ready=1'>Declare Ready</A></p>"
+			else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
+
+		else
+			output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
+
+		output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
+
 		var/DBConnection/dbcon = new()
-
 		dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
-		if(!dbcon.IsConnected())
-			return
-		var/voted = 0
-
-		var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
-		query.Execute()
-		while(query.NextRow())
-			voted = 1
-			break
-
-		if(!voted)
-			privacy_poll()
-
+		if(dbcon.IsConnected())
+			output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
 		dbcon.Disconnect()
-
-	proc/privacy_poll()
-		var/output = "<div align='center'><B>Player poll</B>"
-		output +="<hr>"
-		output += "<b>We would like to expand our stats gathering.</b>"
-		output += "<br>This however involves gathering data about player behavior, play styles, unique player numbers, play times, etc. Data like that cannot be gathered fully anonymously, which is why we're asking you how you'd feel if player-specific data was gathered. Prior to any of this actually happening, a privacy policy will be discussed, but before that can begin, we'd preliminarily like to know how you feel about the concept."
-		output +="<hr>"
-		output += "How do you feel about the game gathering player-specific statistics? This includes statistics about individual players as well as in-game polling/opinion requests."
-
-		output += "<p><a href='byond://?src=\ref[src];privacy_poll=signed'>Signed stats gathering</A>"
-		output += "<br>Pick this option if you think usernames should be logged with stats. This allows us to have personalized stats as well as polls."
-
-		output += "<p><a href='byond://?src=\ref[src];privacy_poll=anonymous'>Anonymous stats gathering</A>"
-		output += "<br>Pick this option if you think only hashed (indecipherable) usernames should be logged with stats. This doesn't allow us to have personalized stats, as we can't tell who is who (hashed values aren't readable), we can however have ingame polls."
-
-		output += "<p><a href='byond://?src=\ref[src];privacy_poll=nostats'>No stats gathering</A>"
-		output += "<br>Pick this option if you don't want player-specific stats gathered. This does not allow us to have player-specific stats or polls."
-
-		output += "<p><a href='byond://?src=\ref[src];privacy_poll=later'>Ask again later</A>"
-		output += "<br>This poll will be brought up again next round."
-
-		output += "<p><a href='byond://?src=\ref[src];privacy_poll=abstain'>Don't ask again</A>"
-		output += "<br>Only pick this if you are fine with whatever option wins."
 
 		output += "</div>"
 
-		src << browse(output,"window=privacypoll;size=600x500")
+		src << browse(output,"window=playersetup;size=250x240;can_close=0")
 		return
 
 	proc/Playmusic()
@@ -246,6 +207,23 @@
 		if(href_list["priv_msg"])
 			..()	//pass PM calls along to /mob/Topic
 			return
+
+		if(href_list["showpoll"])
+			handle_player_polling()
+			return
+
+		if(href_list["pollid"])
+			var/pollid = href_list["pollid"]
+			if(istext(pollid))
+				pollid = text2num(pollid)
+			if(isnum(pollid))
+				src.poll_player(pollid)
+			return
+
+		if(href_list["votepollid"] && href_list["voteoptionid"])
+			var/pollid = text2num(href_list["votepollid"])
+			var/optionid = text2num(href_list["voteoptionid"])
+			vote_on_poll(pollid, optionid)
 
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)
