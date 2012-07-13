@@ -35,9 +35,77 @@
 
 
 
-
 /obj/item/weapon/gun/projectile/mateba
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
+
+// A gun to play Russian Roulette!
+// You can spin the chamber to randomize the position of the bullet.
+
+/obj/item/weapon/gun/projectile/russian
+	name = "Russian Revolver"
+	desc = "A Russian made revolver. Uses 357 ammo. It has a single slot in it's chamber for a bullet."
+	max_shells = 6
+	origin_tech = "combat=2;materials=2"
+
+/obj/item/weapon/gun/projectile/russian/New()
+	Spin()
+	update_icon()
+
+/obj/item/weapon/gun/projectile/russian/proc/Spin()
+
+	for(var/obj/item/ammo_casing/AC in loaded)
+		del(AC)
+	loaded = list()
+	var/random = rand(1, max_shells)
+	for(var/i = 1; i <= max_shells; i++)
+		if(i != random)
+			loaded += i // Basically null
+		else
+			loaded += new ammo_type(src)
+
+
+/obj/item/weapon/gun/projectile/russian/attackby(var/obj/item/A as obj, mob/user as mob)
+
+	var/num_loaded = 0
+	if(istype(A, /obj/item/ammo_magazine))
+		if((load_method == 2) && loaded.len)	return
+		var/obj/item/ammo_magazine/AM = A
+		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
+			if(getAmmo() > 0 || loaded.len >= max_shells)
+				break
+			if(AC.caliber == caliber && loaded.len < max_shells)
+				AC.loc = src
+				AM.stored_ammo -= AC
+				loaded += AC
+				num_loaded++
+			break
+		if(load_method == 2)
+			..()
+			return
+	if(istype(A, /obj/item/ammo_casing) && !load_method)
+		var/obj/item/ammo_casing/AC = A
+		if(AC.caliber == caliber && loaded.len < max_shells && getAmmo() == 0)
+			user.drop_item()
+			AC.loc = src
+			loaded += AC
+			num_loaded++
+
+	if(num_loaded)
+		user.visible_message("[user] loads a single bullet into the revolver and spins the chamber.", "You load a single bullet into the chamber and spin it.")
+	else
+		user.visible_message("[user] spins the chamber of the revolver.", "You spin the revolver's chamber.")
+	if(getAmmo() > 0)
+		Spin()
+	A.update_icon()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/russian/attack_self(mob/user as mob)
+
+	user.visible_message("[user] spins the chamber of the revolver.", "You spin the revolver's chamber.")
+	if(getAmmo() > 0)
+		Spin()
+

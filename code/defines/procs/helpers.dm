@@ -247,7 +247,7 @@
 	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
 
 /proc/sortRecord(var/list/datum/data/record/L, var/field = "name", var/order = 1)
-	if(L.len < 2)
+	if(isnull(L) || L.len < 2)
 		return L
 	var/middle = L.len / 2 + 1
 	return mergeRecordLists(sortRecord(L.Copy(0, middle), field, order), sortRecord(L.Copy(middle), field, order), field, order)
@@ -796,6 +796,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	else
 		var/badname = 0
+		newname = trim_right(trim_left(newname)) // " Abe Butts " becomes "Abe Butts"
 		switch(newname)
 			if("Unknown")	badname = 1
 			if("floor")	badname = 1
