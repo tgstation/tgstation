@@ -47,12 +47,16 @@
 		icon_state = "hair_a" // you do not need to define _s or _l sub-states, game automatically does this for you
 
 	long
-		name = "Long Hair"
+		name = "Shoulder-length Hair"
 		icon_state = "hair_b"
 
 	longer
-		name = "Longer Hair"
+		name = "Long Hair"
 		icon_state = "hair_vlong"
+
+	longest
+		name = "Very Long Hair"
+		icon_state = "hair_longest"
 
 	longfringe
 		name = "Long Fringe"
@@ -157,10 +161,15 @@
 		icon_state = "hair_spikey"
 		choose_female = 0
 
-	spikey
+	braid
 		name = "Floorlength Braid"
 		icon_state = "hair_braid"
 		choose_male = 0
+
+	dwarf
+		name = "Dwarf"
+		icon_state = "hair_dwarf"
+		choose_female = 0
 
 /*
 ///////////////////////////////////
@@ -234,6 +243,10 @@
 	jensen
 		name = "Adam Jensen Beard"
 		icon_state = "facial_jensen"
+
+	dwarf
+		name = "Dwarf Beard"
+		icon_state = "facial_dwarf"
 
 	shaved
 
