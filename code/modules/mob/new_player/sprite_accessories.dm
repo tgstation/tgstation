@@ -157,6 +157,11 @@
 		icon_state = "hair_spikey"
 		choose_female = 0
 
+	spikey
+		name = "Floorlength Braid"
+		icon_state = "hair_braid"
+		choose_male = 0
+
 /*
 ///////////////////////////////////
 /  =---------------------------=  /
