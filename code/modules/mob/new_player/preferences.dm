@@ -669,7 +669,7 @@ datum/preferences
 
 			else if(link_tags["changeslot"])
 				savefile_save(user)
-				user.client.activeslot = text2num(link_tags["changeslot"])
+				user.client.activeslot = min(max(text2num(link_tags["changeslot"]), 1), MAX_SAVE_SLOTS)
 				savefile_load(user)
 
 
