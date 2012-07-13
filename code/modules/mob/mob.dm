@@ -687,7 +687,7 @@
 		if(H.health - H.halloss <= config.health_threshold_crit)
 			for(var/name in H.organs)
 				var/datum/organ/external/e = H.organs[name]
-				if((H.lying) && ((e.status & BROKEN && !(e.status & SPLINTED)) || e.status & BLEEDING) && (H.getBruteLoss() + H.getFireLoss() >= 100))
+				if((H.lying) && ((e.status & ORGAN_BROKEN && !(e.status & ORGAN_SPLINTED)) || e.status & ORGAN_BLEEDING) && (H.getBruteLoss() + H.getFireLoss() >= 100))
 					return 1
 					break
 		return 0
@@ -713,12 +713,12 @@
 	if(ishuman(usr))
 		if(usr.hand) // if he's using his left hand.
 			var/datum/organ/external/temp = usr:get_organ("l_hand")
-			if(temp.status & DESTROYED)
+			if(temp.status & ORGAN_DESTROYED)
 				usr << "\blue You look at your stump."
 				return
 		else
 			var/datum/organ/external/temp = usr:get_organ("r_hand")
-			if(temp.status & DESTROYED)
+			if(temp.status & ORGAN_DESTROYED)
 				usr << "\blue You look at your stump."
 				return
 

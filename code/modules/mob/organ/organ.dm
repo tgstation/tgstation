@@ -121,26 +121,26 @@ var/list/wound_progressions = list(
 	proc/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
 		if((brute <= 0) && (burn <= 0))
 			return 0
-		if(status & DESTROYED)
+		if(status & ORGAN_DESTROYED)
 			return 0
-		if(status & ROBOT)
+		if(status & ORGAN_ROBOT)
 			brute *= 0.66 //~2/3 damage for ROBOLIMBS
 			burn *= 0.66 //~2/3 damage for ROBOLIMBS
 
-		if(owner && !(status & ROBOT))
+		if(owner && !(status & ORGAN_ROBOT))
 			owner.pain(display_name, (brute+burn)*3, 1, burn > brute)
 
 		if(sharp)
 			var/nux = brute * rand(10,15)
 			if(brute_dam >= max_damage)
 				if(prob(5 * brute))
-					status |= DESTROYED
+					status |= ORGAN_DESTROYED
 					droplimb()
 					return
 
 			else if(prob(nux))
 				createwound( CUT, brute )
-				if(!(status & ROBOT))
+				if(!(status & ORGAN_ROBOT))
 					owner << "You feel something wet on your [display_name]"
 
 		if((brute_dam + burn_dam + brute + burn) < max_damage)
@@ -172,7 +172,7 @@ var/list/wound_progressions = list(
 						burn = can_inflict
 						burn_dam += burn
 						createwound(max(1,min(6,round(burn/10) + rand(0,1))),2,burn)
-			else if(!(status & ROBOT))
+			else if(!(status & ORGAN_ROBOT))
 				var/passed_dam = (brute + burn) - can_inflict //Getting how much overdamage we have.
 				var/list/datum/organ/external/possible_points = list()
 				if(parent)
@@ -193,7 +193,7 @@ var/list/wound_progressions = list(
 				droplimb(1) //Robot limbs just kinda fail at full damage.
 
 
-			if(status & BROKEN)
+			if(status & ORGAN_BROKEN)
 				owner.emote("scream")
 
 		if(used_weapon) add_wound(used_weapon, brute + burn)
@@ -205,7 +205,7 @@ var/list/wound_progressions = list(
 
 
 	proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
-		if(status & ROBOT && !robo_repair)
+		if(status & ORGAN_ROBOT && !robo_repair)
 			return
 	//	var/brute_to_heal = 0
 	//	var/brute_wounds = list()
@@ -217,7 +217,7 @@ var/list/wound_progressions = list(
 		burn_dam = max(0, burn_dam-burn)
 
 		if(internal)
-			status &= ~BROKEN
+			status &= ~ORGAN_BROKEN
 			perma_injury = 0
 		// if all damage is healed, replace the wounds with scars
 		if(brute_dam + burn_dam == 0)
@@ -255,23 +255,23 @@ var/list/wound_progressions = list(
 	process()
 		if(next_wound_update && world.time > next_wound_update)
 			update_wounds()
-		if(status & DESTROYED)
+		if(status & ORGAN_DESTROYED)
 			if(!destspawn)
 				droplimb()
 			return
-		if(!(status & BROKEN))
+		if(!(status & ORGAN_BROKEN))
 			perma_dmg = 0
 		if(parent)
-			if(parent.status & DESTROYED)
-				status |= DESTROYED
+			if(parent.status & ORGAN_DESTROYED)
+				status |= ORGAN_DESTROYED
 				owner:update_body()
 				return
-		if(brute_dam > min_broken_damage && !(status & ROBOT))
-			if(!(status & BROKEN))
+		if(brute_dam > min_broken_damage && !(status & ORGAN_ROBOT))
+			if(!(status & ORGAN_BROKEN))
 				//owner.unlock_medal("Broke Yarrr Bones!", 0, "Break a bone.", "easy")
 				owner.visible_message("\red You hear a loud cracking sound coming from \the [owner].","\red <b>Something feels like it shattered in your [display_name]!</b>","You hear a sickening crack.")
 				owner.emote("scream")
-				status |= BROKEN
+				status |= ORGAN_BROKEN
 				broken_description = pick("broken","fracture","hairline fracture")
 				perma_injury = brute_dam
 		return
@@ -314,17 +314,17 @@ var/list/wound_progressions = list(
 
 	proc/droplimb(var/override = 0,var/no_explode = 0)
 		if(override)
-			status |= DESTROYED
-		if(status & DESTROYED)
-			if(status & SPLINTED)
-				status &= ~SPLINTED
+			status |= ORGAN_DESTROYED
+		if(status & ORGAN_DESTROYED)
+			if(status & ORGAN_SPLINTED)
+				status &= ~ORGAN_SPLINTED
 			if(implant)
 				for(var/implants in implant)
 					del(implants)
 			//owner.unlock_medal("Lost something?", 0, "Lose a limb.", "easy")
 
 			for(var/datum/organ/external/I in children)
-				if(I && !(I.status & DESTROYED))
+				if(I && !(I.status & ORGAN_DESTROYED))
 					I.droplimb(1,1)
 			var/obj/item/weapon/organ/H
 			switch(body_part)
@@ -390,7 +390,7 @@ var/list/wound_progressions = list(
 			var/lol = pick(cardinal)
 			step(H,lol)
 			destspawn = 1
-			if(status & ROBOT)
+			if(status & ORGAN_ROBOT)
 				owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
 				"\red <b>Your [display_name] explodes!</b>",\
 				"You hear an explosion followed by a scream!")
@@ -416,7 +416,7 @@ var/list/wound_progressions = list(
 			var/size = min( max( 1, damage/10 ) , 6)
 			switch(type)
 				if(CUT)
-					src.status |= BLEEDING
+					src.status |= ORGAN_BLEEDING
 					var/list/size_names = list("cut", "deep cut", "flesh wound", "gaping wound", "big gaping wound", "massive wound")
 					wound_name = size_names[size]
 					if(wound_descs["[update_time]"])
@@ -469,7 +469,7 @@ var/list/wound_progressions = list(
 			next_wound_update = 0
 
 	proc/emp_act(severity)
-		if(!(status & ROBOT))
+		if(!(status & ORGAN_ROBOT))
 			return
 		if(prob(30*severity))
 			take_damage(4(4-severity), 0, 1, used_weapon = "EMP")

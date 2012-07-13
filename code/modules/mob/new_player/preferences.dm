@@ -1233,10 +1233,10 @@ datum/preferences
 			var/status = organ_data[name]
 			if(status == "amputated")
 				O.amputated = 1
-				O.status |= DESTROYED
+				O.status |= ORGAN_DESTROYED
 				O.destspawn = 1
 			else if(status == "cyborg")
-				O.status |= ROBOT
+				O.status |= ORGAN_ROBOT
 
 		switch(UI_style)
 			if("Midnight")

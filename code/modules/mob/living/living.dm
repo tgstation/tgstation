@@ -181,9 +181,9 @@
 			affecting = H.organs[A]
 			if(!istype(affecting, /datum/organ/external))    continue
 			affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
-			affecting.status &= ~BROKEN
-			affecting.status &= ~SPLINTED
-			affecting.status &= ~DESTROYED
+			affecting.status &= ~ORGAN_BROKEN
+			affecting.status &= ~ORGAN_SPLINTED
+			affecting.status &= ~ORGAN_DESTROYED
 			del affecting.wound_descs
 		H.UpdateDamageIcon()
 		H.update_body()
@@ -209,13 +209,13 @@
 				var/datum/organ/external/e = H.organs[name]
 				e.brute_dam = 0.0
 				e.burn_dam = 0.0
-				e.status &= ~BANDAGED
+				e.status &= ~ORGAN_BANDAGED
 				e.max_damage = initial(e.max_damage)
-				e.status &= ~BLEEDING
+				e.status &= ~ORGAN_BLEEDING
 				e.open = 0
-				e.status &= ~BROKEN
-				e.status &= ~SPLINTED
-				e.status &= ~DESTROYED
+				e.status &= ~ORGAN_BROKEN
+				e.status &= ~ORGAN_SPLINTED
+				e.status &= ~ORGAN_DESTROYED
 				e.perma_injury = 0
 				e.update_icon()
 				del e.wound_descs

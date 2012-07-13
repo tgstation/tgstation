@@ -131,7 +131,7 @@
 	//splints
 	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
 		var/datum/organ/external/o = organs["[organ]"]
-		if(o.status & SPLINTED)
+		if(o.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on his [o.getDisplayName()]!</span>\n"
 
 	//belt
@@ -271,11 +271,11 @@
 	for(var/named in organs)
 		var/datum/organ/external/temp = organs[named]
 		if(temp)
-			if(temp.status & DESTROYED)
+			if(temp.status & ORGAN_DESTROYED)
 				is_destroyed["[temp.display_name]"] = 1
 				wound_flavor_text["[temp.display_name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [temp.display_name].</b></span>\n"
 				continue
-			if(temp.status & ROBOT)
+			if(temp.status & ORGAN_ROBOT)
 				if(!(temp.brute_dam + temp.burn_dam))
 					wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a robot [temp.display_name]!</span>\n"
 					continue
@@ -336,7 +336,7 @@
 					flavor_text_string += flavor_text[text]
 				flavor_text_string += " on [t_his] [named].</span><br>"
 				wound_flavor_text["[named]"] = flavor_text_string
-				if(temp.status & BLEEDING)
+				if(temp.status & ORGAN_BLEEDING)
 					is_bleeding["[named]"] = 1
 			else
 				wound_flavor_text["[temp.display_name]"] = ""

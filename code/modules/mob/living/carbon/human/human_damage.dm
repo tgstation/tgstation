@@ -26,7 +26,7 @@
 
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		if(O.status & DESTROYED) damage_appearance += "d"
+		if(O.status & ORGAN_DESTROYED) damage_appearance += "d"
 		else
 			damage_appearance += O.damage_state
 
@@ -41,7 +41,7 @@
 
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		if(!(O.status & DESTROYED))
+		if(!(O.status & ORGAN_DESTROYED))
 			O.update_icon()
 			var/icon/DI = new /icon('dam_human.dmi', O.damage_state)			// the damage icon for whole human
 			DI.Blend(new /icon('dam_mask.dmi', O.icon_name), ICON_MULTIPLY)		// mask with this organ's pixels
@@ -68,7 +68,7 @@
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
 		organ = get_organ(check_zone(def_zone))
-	if(!organ || organ.status & DESTROYED)	return 0
+	if(!organ || organ.status & ORGAN_DESTROYED)	return 0
 	if(blocked)
 		damage = (damage/(blocked+1))
 
