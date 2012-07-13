@@ -745,10 +745,10 @@
 			O.contents -= G
 			G.loc = src
 			holdingitems += G
-			if((holdingitems && holdingitems.len >= 10) || beaker.reagents.total_volume >= 80) //Sanity checking so the blender doesn't overfill
+			if((holdingitems && holdingitems.len >= limit) || beaker.reagents.total_volume >= 80) //Sanity checking so the blender doesn't overfill
 				user << "You fill the All-In-One grinder to the brim."
 				break
-		if(src.contents.len < 10 && src.reagents.total_volume < 80)
+		if(src.contents.len < limit && src.reagents.total_volume < 80)
 			user << "You empty the plant bag into the All-In-One grinder."
 
 		src.updateUsrDialog()

@@ -38,6 +38,7 @@
 	var/be_pai			= 1		//Consider client when searching for players to recruit as a pAI
 	var/vote			= null
 	var/showvote		= null
+	var/activeslot		= 1		//Default active slot!
 	var/STFU_ghosts				//80+ people rounds are fun to admin when text flies faster than airport security
 	var/STFU_radio				//80+ people rounds are fun to admin when text flies faster than airport security
 

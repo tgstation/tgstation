@@ -2,7 +2,10 @@
 #define SAVEFILE_VERSION_MAX	7
 
 datum/preferences/proc/savefile_path(mob/user)
-	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences.sav"
+	if(!user.client)
+		return null
+	else
+		return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences[user.client.activeslot].sav"
 
 datum/preferences/proc/savefile_save(mob/user)
 	if (IsGuestKey(user.key))
@@ -81,7 +84,22 @@ datum/preferences/proc/savefile_load(mob/user)
 	if(IsGuestKey(user.key))	return 0
 
 	var/path = savefile_path(user)
-	if(!fexists(path))	return 0
+
+	if(!fexists(path))
+		//Is there a preference file before this was committed?
+		path = "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences.sav"
+		if(!fexists(path))
+			//No there is not
+			return 0
+		else
+			//Yes there is. Let's rename it.
+			var/savefile/oldsave = new/savefile(path)
+			fcopy(oldsave, savefile_path(user))
+			fdel(path) // We don't need the old file anymore
+			path = savefile_path(user)
+			// Did nothing break?
+			if(!fexists(path))
+				return 0
 
 	var/savefile/F = new /savefile(path)
 

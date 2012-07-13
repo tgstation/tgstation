@@ -29,10 +29,11 @@ var/const/BE_CULTIST   =(1<<8)
 var/const/BE_MONKEY    =(1<<9)
 
 
-
+var/const/MAX_SAVE_SLOTS = 3
 
 
 datum/preferences
+
 	var/real_name
 	var/be_random_name = 0
 	var/gender = MALE
@@ -122,7 +123,28 @@ datum/preferences
 		update_preview_icon()
 		user << browse_rsc(preview_icon_front, "previewicon.png")
 		user << browse_rsc(preview_icon_side, "previewicon2.png")
-		var/dat = "<html><body>"
+		var/dat = "<html><body><center>"
+
+
+		if(!IsGuestKey(user.key))
+			var/list/saves = list()
+			for(var/i = 1; i <= MAX_SAVE_SLOTS; i += 1)
+				saves += "<a href=\"byond://?src=\ref[user];preferences=1;changeslot=[i]\">Save Slot [i]</a>"
+
+			for(var/i = 1; i <= MAX_SAVE_SLOTS; i += 1)
+				if(i == user.client.activeslot)
+					dat += "Save Slot [i]"
+				else
+					dat += "[saves[i]]"
+
+				if(i != MAX_SAVE_SLOTS)
+					dat += " / "
+
+		else
+			dat += "Please create an account to save your preferences."
+
+		dat += "</center><hr><table><tr><td width='300px' height='300px'>"
+
 		dat += "<b>Name:</b> "
 		dat += "<a href=\"byond://?src=\ref[user];preferences=1;real_name=input\"><b>[real_name]</b></a> "
 		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;real_name=random\">&reg;</A>) "
@@ -142,17 +164,17 @@ datum/preferences
 			dat += "<b>OOC Notes:</b> <a href='byond://?src=\ref[user];preferences=1;OOC=input'> Edit </a><br>"
 
 		if((user.client) && (user.client.holder) && (user.client.holder.rank))
-			dat += "<hr><b>Adminhelp sound</b>: "
-			dat += "[(sound_adminhelp)?"On":"Off"] <a href='byond://?src=\ref[user];preferences=1;toggleadminhelpsound=1'>toggle</a>"
+			dat += "<b>Adminhelp sound</b>: "
+			dat += "[(sound_adminhelp)?"On":"Off"] <a href='byond://?src=\ref[user];preferences=1;toggleadminhelpsound=1'>toggle</a><br>"
 
 			if(user.client.holder.level >= 5)
-				dat += "<hr><b>OOC</b><br>"
-				dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change color</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font>"
+				dat += "<br><b>OOC</b><br>"
+				dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change color</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font><br>"
 
-		dat += "<hr><b>Occupation Choices</b><br>"
+		dat += "<br><b>Occupation Choices</b><br>"
 		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>Set Preferences</b></a><br>"
 
-		dat += "<hr><table><tr><td><b>Body</b> "
+		dat += "<br><table><tr><td><b>Body</b> "
 		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;backbag_type=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
 		dat += "<br>"
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[b_type]</a><br>"
@@ -168,22 +190,24 @@ datum/preferences
 
 		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"	//Carn: Now with profile!
 
-		dat += "<hr><b>Hair</b><br>"
+		dat += "</td><td width='300px' height='300px'>"
+
+		dat += "<br><b>Hair</b><br>"
 
 		dat += "<a href='byond://?src=\ref[user];preferences=1;hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]\"><table style='display:inline;' bgcolor=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]\"><tr><td>__</td></tr></table></font> "
 
-		dat += "Style: <a href='byond://?src=\ref[user];preferences=1;h_style=input'>[h_style]</a>"
+		dat += "Style: <a href='byond://?src=\ref[user];preferences=1;h_style=input'>[h_style]</a><br>"
 
-		dat += "<hr><b>Facial</b><br>"
+		dat += "<br><b>Facial</b><br>"
 
 		dat += "<a href='byond://?src=\ref[user];preferences=1;facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]\"><tr><td>__</td></tr></table></font> "
 
-		dat += "Style: <a href='byond://?src=\ref[user];preferences=1;f_style=input'>[f_style]</a>"
+		dat += "Style: <a href='byond://?src=\ref[user];preferences=1;f_style=input'>[f_style]</a><br>"
 
-		dat += "<hr><b>Eyes</b><br>"
+		dat += "<br><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
 
-		dat += "<hr>"
+		dat += "<br><br>"
 		if(jobban_isbanned(user, "Syndicate"))
 			dat += "<b>You are banned from antagonist roles.</b>"
 			src.be_special = 0
@@ -199,16 +223,16 @@ datum/preferences
 					else
 						dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_special=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
 				n++
-		dat += "<hr>"
+		dat += "</td></tr></table><hr><center>"
 
 		if(!IsGuestKey(user.key))
-			dat += "<a href='byond://?src=\ref[user];preferences=1;load=1'>Load Setup</a><br>"
-			dat += "<a href='byond://?src=\ref[user];preferences=1;save=1'>Save Setup</a><br>"
+			dat += "<a href='byond://?src=\ref[user];preferences=1;load=1'>Undo</a> - "
+			dat += "<a href='byond://?src=\ref[user];preferences=1;save=1'>Save Setup</a> - "
 
-		dat += "<a href='byond://?src=\ref[user];preferences=1;reset_all=1'>Reset Setup</a><br>"
-		dat += "</body></html>"
+		dat += "<a href='byond://?src=\ref[user];preferences=1;reset_all=1'>Reset Setup</a>"
+		dat += "</center></body></html>"
 
-		user << browse(dat, "window=preferences;size=300x710")
+		user << browse(dat, "window=preferences;size=550x545")
 
 	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 550, height = 500)
 		 //limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
@@ -640,8 +664,14 @@ datum/preferences
 				savefile_save(user)
 
 			else if(link_tags["load"])
-				if(!savefile_load(user, 0))
-					alert(user, "You do not have a savefile.")
+				if(!savefile_load(user))
+					alert(user, "You do not have a savefile or a convertable savefile.")
+
+			else if(link_tags["changeslot"])
+				savefile_save(user)
+				user.client.activeslot = text2num(link_tags["changeslot"])
+				savefile_load(user)
+
 
 		if(link_tags["reset_all"])
 			gender = MALE
