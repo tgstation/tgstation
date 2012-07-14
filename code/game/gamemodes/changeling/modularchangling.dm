@@ -102,6 +102,16 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 
 
 
+/obj/effect/proc_holder/power/paralysis_sting
+	name = "Paralysis Sting"
+	desc = "We silently sting a human, paralyzing them for a short time."
+	genomecost = 3
+
+
+	verbpath = /client/proc/changeling_paralysis_sting
+
+
+
 /obj/effect/proc_holder/power/LSDSting
 	name = "Hallucination Sting"
 	desc = "We evolve the ability to sting a target with a powerful hallunicationary chemical."
@@ -109,16 +119,6 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 	genomecost = 3
 
 	verbpath = /client/proc/changeling_lsdsting
-
-
-
-/obj/effect/proc_holder/power/paralysis_sting
-	name = "Paralysis Sting"
-	desc = "We silently sting a human, paralyzing them for a short time.  We must be wary, they can still whisper."
-	genomecost = 5
-
-
-	verbpath = /client/proc/changeling_paralysis_sting
 
 
 
