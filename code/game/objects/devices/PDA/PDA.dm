@@ -211,7 +211,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/proc/can_use()
 
-	if(istype(src, /obj/item/device/pda/ai))
+	if(istype(src, /obj/item/device/pda/ai) || istype(src, /obj/item/device/pda/pai))
 		return 1
 	if(!ismob(loc))
 		return 0
