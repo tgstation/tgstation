@@ -153,9 +153,6 @@
 
 /mob/proc/get_contents()
 
-/mob/verb/getthecontents()
-	for(var/obj/O in src.get_contents())
-		world << "[O]"
 
 //Recursive function to find everything a mob is holding.
 /mob/living/get_contents(var/obj/item/weapon/storage/Storage = null)
