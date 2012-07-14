@@ -22,15 +22,20 @@
 		user << "You find putting an evidence bag in another evidence bag to be slightly absurd."
 		return
 
-	if(O in user && (user.l_hand != O && user.r_hand != O)) //If it is in their inventory, but not in their hands, don't grab it off of them.
-		user << "You are wearing that."
-		return
-
 	if(contents.len)
 		user << "The [src] already has something inside it."
 		return ..()
 
-	if(istype(O.loc,/obj/item/weapon/storage))
+	if(O in user) //If it is in their inventory, but not in their hands, don't grab it off of them.
+		if(user.l_hand == O)
+			user.drop_l_hand()
+		else if(user.r_hand == O)
+			user.drop_r_hand()
+		else
+			user << "You are wearing that."
+			return
+
+	else if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/U = O.loc
 		user.client.screen -= O
 		U.contents.Remove(O)
@@ -38,7 +43,8 @@
 	user.visible_message("\The [user] puts \a [O] into \a [src]", "You put \the [O] inside \the [src].",\
 	"You hear a rustle as someone puts something into a plastic bag.")
 	icon_state = "evidence"
-	overlays += O
+	var/image/I = image("icon"=O, "layer"=FLOAT_LAYER)	//take a snapshot. (necessary to stop the underlays appearing under our inventory-HUD slots ~Carn
+	underlays += I
 	desc = "An evidence bag containing \a [O]. [O.desc]"
 	O.loc = src
 	w_class = O.w_class
@@ -50,7 +56,7 @@
 		var/obj/item/I = contents[1]
 		user.visible_message("\The [user] takes \a [I] out of \a [src]", "You take \the [I] out of \the [src].",\
 		"You hear someone rustle around in a plastic bag, and remove something.")
-		overlays -= I
+		underlays = null	//remove the underlays
 		user.put_in_hands(I)
 		w_class = 1
 		icon_state = "evidenceobj"

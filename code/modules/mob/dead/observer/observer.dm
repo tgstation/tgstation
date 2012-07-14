@@ -7,21 +7,18 @@
 	stat = DEAD
 
 	if(body)
-		var/turf/location = get_turf(body)//Where is the mob located?
-		if(location)//Found turf.
-			loc = location
-		else//Safety, in case a turf cannot be found.
-			loc = pick(latejoin)
-		if(!istype(body,/mob))	return//This needs to be recoded sometime so it has loc as its first arg
-		real_name = body.name
-		original_name = body.original_name //Original name is only used in ghost chat! It is not to be edited by anything!
-		name = body.original_name
-		if(!name)
+		var/turf/T = get_turf(body)			//Where is the body located?
+		if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
+		loc = T
+		if(ismob(body))
+			real_name = body.real_name
+			original_name = body.original_name	//Original name is only used in ghost chat! It is not to be edited by anything!
+			name = body.original_name
+			if(!safety)
+				corpse = body
+		if(!name)							//To prevent nameless ghosts
 			name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
 			real_name = name
-		if(!safety)
-			corpse = body
-			verbs += /mob/dead/observer/proc/reenter_corpse
 		return
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -33,46 +30,38 @@ Works together with spawning an observer, noted above.
 
 /mob/proc/ghostize(var/transfer_mind = 0)
 	if(key)
+		var/mob/dead/observer/ghost = new(src,transfer_mind)	//Transfer safety to observer spawning proc.
 		if(client)
-			client.screen.len = null//Clear the hud, just to be sure.
-		var/mob/dead/observer/ghost = new(src,transfer_mind)//Transfer safety to observer spawning proc.
-		if(transfer_mind)//When a body is destroyed.
-			if(mind)
-				mind.transfer_to(ghost)
-			else//They may not have a mind and be gibbed/destroyed.
-				ghost.key = key
-		else//Else just modify their key and connect them.
+			client.images.len = null				//remove the images such as AIs being unable to see runes
+			client.screen.len = null				//remove hud items just in case
+		ghost.attack_log = attack_log			//preserve our attack logs by copying them to our ghost
+		if(transfer_mind && mind)				//When a body is destroyed attempt to transfer their mind
+			mind.transfer_to(ghost)
+		else									//Else just modify their key and connect them.
 			ghost.key = key
 
-		verbs -= /mob/proc/ghost
-		if (ghost.client)
-			ghost.client.eye = ghost
-
-	else if(transfer_mind)//Body getting destroyed but the person is not present inside.
+	else if(transfer_mind)						//Body getting destroyed but the person is not present inside.
 		for(var/mob/dead/observer/O in world)
-			if(O.corpse == src&&O.key)//If they have the same corpse and are keyed.
+			if(O.corpse == src && O.key)		//If they have the same corpse and are keyed.
 				if(mind)
-					O.mind = mind//Transfer their mind if they have one.
+					O.mind = mind				//Transfer their mind if they have one.
 				break
 	return
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
 */
-/mob/proc/ghost()
-	set category = "Ghost"
+/mob/living/verb/ghost()
+	set category = "OOC"
 	set name = "Ghost"
-	set desc = "You cannot be revived as a ghost."
+	set desc = "Relinquish your life and enter the land of the dead."
 
-	/*if(stat != 2) //this check causes nothing but troubles. Commented out for Nar-Sie's sake. --rastaf0
-		src << "Only dead people and admins get to ghost, and admins don't use this verb to ghost while alive."
-		return*/
-	if(key)
-		var/mob/dead/observer/ghost = new(src)
-		ghost.key = key
-		verbs -= /mob/proc/ghost
-		if (ghost.client)
-			ghost.client.eye = ghost
+	if(stat == DEAD)
+		ghostize(0)
+	else
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		if(response != "Ghost")	return	//didn't want to ghost after-all
+		ghostize(1)						//safety is on so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 	return
 
 /mob/proc/adminghostize()
@@ -124,18 +113,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				if (timeleft)
 					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-/mob/dead/observer/proc/reenter_corpse()
+/mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
+	if(!client)	return
 	if(!corpse)
-		alert("You don't have a corpse!")
+		src << "<span class='warning'>Sorry, you don't have a corpse to re-enter.</span>"
 		return
-	if(client && client.holder && client.holder.state == 2)
+	if(client.holder && client.holder.state == 2)
 		var/rank = client.holder.rank
 		client.clear_admin_verbs()
 		client.holder.state = 1
 		client.update_admins(rank)
-	if(iscultist(corpse) && corpse.ajourn==1 && corpse.stat!=2) //checks if it's an astral-journeying cultistm if it is and he's not on an astral journey rune, re-entering won't work
+
+	if(iscultist(corpse) && corpse.ajourn==1 && corpse.stat != DEAD) //checks if it's an astral-journeying cultistm if it is and he's not on an astral journey rune, re-entering won't work
 		var/S=0
 		for(var/obj/effect/rune/R in world)
 			if(corpse.loc==R.loc && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself)
@@ -146,23 +137,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(corpse.ajourn)
 		corpse.ajourn=0
 	client.mob = corpse
-	if (corpse.stat==2)
-		verbs += /mob/proc/ghost
 	del(src)
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
-	if((usr.stat != 2) || !istype(usr, /mob/dead/observer))
+	if(!istype(usr, /mob/dead/observer))
 		usr << "Not when you're not dead!"
 		return
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
 	var/A
-	A = input("Area to jump to", "BOOYEA", A) in ghostteleportlocs
+	A = input("Area to jump to", "BOOYEA", A) as null|anything in ghostteleportlocs
 	var/area/thearea = ghostteleportlocs[A]
+	if(!thearea)	return
 
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))

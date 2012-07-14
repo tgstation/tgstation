@@ -2,7 +2,6 @@
 	layer = 2
 	var/level = 2
 	var/flags = FPRINT
-	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null

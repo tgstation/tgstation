@@ -1,9 +1,7 @@
 	////////////
 	//SECURITY//
 	////////////
-#define TOPIC_SPAM_DELAY	4		//4 tick delay is about half a second
-	// REDUCED because holy fucking balls the delay was too damn high
-
+#define TOPIC_SPAM_DELAY	4		//4 ticks is about 3/10ths of a second
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 	/*
 	When somebody clicks a link in game, this Topic is called first.
@@ -21,9 +19,11 @@
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 /client/Topic(href, href_list, hsrc)
+	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
+		return
+
 	//Reduces spamming of links by dropping calls that happen during the delay period
 	if(next_allowed_topic_time > world.time)
-//		src << "\red DEBUG: Error: SPAM"
 		return
 	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
 
@@ -91,7 +91,7 @@
 		del(src)
 		return
 
-	if (((world.address == address || !(address)) && !(host)))
+	if ( (world.address == address || !address) && !host )
 		host = key
 		world.update_status()
 

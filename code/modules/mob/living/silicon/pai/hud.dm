@@ -43,7 +43,7 @@
 			client.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
 			if(patient.stat == 2)
 				client.images += image(tempHud,patient,"huddead")
-			else if(patient.alien_egg_flag)
+			else if(patient.status_flags & XENO_HOST)
 				client.images += image(tempHud,patient,"hudxeno")
 			else if(foundVirus)
 				client.images += image(tempHud,patient,"hudill")

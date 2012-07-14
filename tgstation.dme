@@ -967,6 +967,7 @@
 #include "code\modules\mob\living\carbon\brain\death.dm"
 #include "code\modules\mob\living\carbon\brain\hud.dm"
 #include "code\modules\mob\living\carbon\brain\life.dm"
+#include "code\modules\mob\living\carbon\brain\login.dm"
 #include "code\modules\mob\living\carbon\brain\MMI.dm"
 #include "code\modules\mob\living\carbon\brain\say.dm"
 #include "code\modules\mob\living\carbon\human\death.dm"

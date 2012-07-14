@@ -1,14 +1,13 @@
 /mob/living/silicon/ai/death(gibbed)
-	stat = 2
-	canmove = 0
-	if(blind)
-		blind.layer = 0
-	sight |= SEE_TURFS
-	sight |= SEE_MOBS
-	sight |= SEE_OBJS
+	if(stat == DEAD)	return
+	stat = DEAD
+	icon_state = "ai-crash"
+
+	update_canmove()
+	if(blind)	blind.layer = 0
+	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
 	see_invisible = 2
-	icon_state = "ai-crash"
 
 	var/callshuttle = 0
 
@@ -56,8 +55,4 @@
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 
-	if (key)
-		spawn(50)
-			if(key && stat == 2)
-				client.verbs += /mob/proc/ghost
 	return ..(gibbed)

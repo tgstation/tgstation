@@ -317,7 +317,7 @@
 	var/obj/item/master = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
-	var/see_face = 1.0
+	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 	var/color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/protective_temperature = 0

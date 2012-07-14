@@ -33,17 +33,6 @@
 		return ..()
 
 
-/mob/living/carbon/brain/Login()
-	..()
-
-	if (!isturf(src.loc))
-		src.client.eye = src.loc
-		src.client.perspective = EYE_PERSPECTIVE
-	if (!container || !istype(container, /obj/item/device/mmi))
-		src.verbs += /mob/proc/ghost
-
-	return
-
 /mob/living/carbon/brain/update_canmove()
 	if(in_contents_of(/obj/mecha))	canmove = 1
 	else							canmove = 0

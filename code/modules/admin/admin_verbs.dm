@@ -464,7 +464,8 @@
 	holder.state = 1
 	update_admins(rank)
 	if(istype(mob, /mob/dead/observer))
-		mob:reenter_corpse()
+		var/mob/dead/observer/ghost = mob
+		ghost.reenter_corpse()
 	src << "\blue You are now playing"
 	feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

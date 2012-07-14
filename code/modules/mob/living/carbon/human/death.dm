@@ -40,74 +40,44 @@
 
 
 /mob/living/carbon/human/death(gibbed)
-
-	if(halloss > 0 && (!gibbed))
+	if(halloss > 0 && !gibbed)
 		halloss = 0
 		return
-
-	if(src.stat == 2)
-		return
-
-	if(src.healths)
-		src.healths.icon_state = "health5"
-
-	src.stat = 2
-	src.dizziness = 0
-	src.jitteriness = 0
+	if(stat == DEAD)	return
+	if(healths)		healths.icon_state = "health5"
+	stat = DEAD
+	dizziness = 0
+	jitteriness = 0
 
 	tension_master.death(src)
 
-	if (!gibbed)
+	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
 		//For ninjas exploding when they die./N
-		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
+		if( istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_initialized )
 			src << browse(null, "window=spideros")//Just in case.
 			var/location = loc
 			explosion(location, 1, 2, 3, 4)
 
-		canmove = 0
-		if(src.client)
-			src.blind.layer = 0
-		lying = 1
-		var/h = src.hand
-		hand = 0
-		drop_item()
-		hand = 1
-		drop_item()
-		hand = h
-		//This is where the suicide assemblies checks would go
+		update_canmove()
+		if(client)	blind.layer = 0
 
-		if (client)
-			spawn(10)
-				if(client && src.stat == 2)
-					verbs += /mob/proc/ghost
-
-	tod = worldtime2text() //weasellos time of death patch
-	if(mind)
-		mind.store_memory("Time of death: [tod]", 0)
+	tod = worldtime2text()		//weasellos time of death patch
+	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 	sql_report_death(src)
-
-	//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
-	ticker.mode.check_win()
-	//Traitor's dead! Oh no!
-	/* --Admins do not need to know when people die. This was a relic of the singletraitor times where a traitor dying meant there were no antagonists left ~Erro
-	if (ticker.mode.name == "traitor" && src.mind && src.mind.special_role == "traitor")
-		message_admins("\red Traitor [key_name_admin(src)] has died.")
-		log_game("Traitor [key_name(src)] has died.")
-	*/
+	ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(HUSK in src.mutations)
-		return
+	if(HUSK in mutations)	return
 	mutations.Add(HUSK)
-	real_name = "Unknown"
+	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	update_body(0)
 	update_mutantrace()
 	return
 
 /mob/living/carbon/human/proc/Drain()
 	ChangeToHusk()
-	mutations.Add(NOCLONE)
+	mutations |= NOCLONE
 	return

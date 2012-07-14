@@ -168,9 +168,10 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
 #define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
 #define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEMASK	1	//APPLIES ONLY TO HELMETS!!
-#define HIDEEARS	2	//APPLIES ONLY TO HELMETS!!
-#define HIDEEYES	4	//APPLIES ONLY TO HELMETS!!
+#define HIDEMASK	1	//APPLIES ONLY TO HELMETS/MASKS!!
+#define HIDEEARS	2	//APPLIES ONLY TO HELMETS/MASKS!!
+#define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!!
+#define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -342,10 +343,11 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
 
-//Bitflags defining which status effects can be inflicted on a mob
+//Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1
 #define CANWEAKEN	2
 #define CANPARALYSE	4
+#define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
 #define DISFIGURED	65536	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
 
 var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg','hiss5.ogg','hiss6.ogg','Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg','Welder.ogg','Welder2.ogg','airlock.ogg','clownstep1.ogg','clownstep2.ogg')

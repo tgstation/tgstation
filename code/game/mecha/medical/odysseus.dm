@@ -91,7 +91,7 @@
 			C.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
 			if(patient.stat == 2)
 				C.images += image(tempHud,patient,"huddead")
-			else if(patient.alien_egg_flag)
+			else if(patient.status_flags & XENO_HOST)
 				C.images += image(tempHud,patient,"hudxeno")
 			else if(foundVirus)
 				C.images += image(tempHud,patient,"hudill")

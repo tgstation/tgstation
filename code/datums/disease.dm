@@ -150,7 +150,7 @@ to null does not delete the object itself. Thank you.
 		var/saved_type = "[type]"//copy the value, not create the reference to it, so when the object is deleted, the value remains.
 		affected_mob.resistances += text2path(saved_type)
 	if((affected_mob) && (istype(src, /datum/disease/alien_embryo)))//Get rid of the flag.
-		affected_mob.alien_egg_flag = 0
+		affected_mob.status_flags &= ~(XENO_HOST)
 //	world << "Removing [src]"
 	spawn(0)
 		affected_mob.viruses -= src //I am a silly person for trying affected_mob.viruses.Find(src_type) instead of what it's like now and getting LOL WHAT IS THIS PROC

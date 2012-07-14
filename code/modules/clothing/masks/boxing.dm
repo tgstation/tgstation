@@ -3,8 +3,8 @@
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
 	item_state = "balaclava"
-	see_face = 0.0
 	flags = FPRINT|TABLEPASS|HEADSPACE|BLOCKHAIR
+	flags_inv = HIDEFACE
 	w_class = 2
 
 /obj/item/clothing/mask/luchador
@@ -13,7 +13,7 @@
 	icon_state = "luchag"
 	item_state = "luchag"
 	flags = FPRINT|TABLEPASS|HEADSPACE|BLOCKHAIR
-	see_face = 0.0
+	flags_inv = HIDEFACE
 	w_class = 2
 
 /obj/item/clothing/mask/luchador/tecnicos

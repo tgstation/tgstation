@@ -90,9 +90,8 @@
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
-	see_face = 0.0
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 
 
 /obj/item/clothing/head/cueball
@@ -125,5 +124,4 @@
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
-	see_face = 0.0
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE

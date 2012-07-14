@@ -5,8 +5,7 @@
 	item_state = "hardhat0_pumpkin"
 	color = "pumpkin"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
-	see_face = 0.0
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	var/brightness_on = 2 //luminosity when on
 	var/on = 0
 

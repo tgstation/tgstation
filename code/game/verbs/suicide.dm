@@ -3,7 +3,7 @@
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
 
-	if (stat == 2)
+	if (stat == DEAD)
 		src << "You're already dead!"
 		return
 
@@ -17,11 +17,10 @@
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
-	if(alien_egg_flag)
-		src << "The alien inside you forces you to breathe, preventing you from suiciding."
-		return
-
 	if(confirm == "Yes")
+		if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+			src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
+			return
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"
@@ -69,11 +68,10 @@
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
-	if(alien_egg_flag)
-		src << "The alien inside you forces you to breathe, preventing you from suiciding."
-		return
-
 	if(confirm == "Yes")
+		if(!canmove || restrained())
+			src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
+			return
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"

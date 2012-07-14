@@ -1,21 +1,18 @@
 /mob/living/silicon/robot/Login(var/syndie = 0)
 	..()
-
 	regenerate_icons()
 
-	if (!isturf(src.loc))
-		src.client.eye = src.loc
-		src.client.perspective = EYE_PERSPECTIVE
-	if (src.stat == 2)
-		src.verbs += /mob/proc/ghost
-	if(src.real_name == "Cyborg")
-		src.ident = rand(1, 999)
-		src.real_name += " "
-		src.real_name += "-[ident]"
-		src.name = src.real_name
-	/*if(!src.connected_ai)
+	if(!isturf(loc))
+		client.eye = loc
+		client.perspective = EYE_PERSPECTIVE
+	if(real_name == "Cyborg")
+		ident = rand(1, 999)
+		real_name += " "
+		real_name += "-[ident]"
+		name = real_name
+	/*if(!connected_ai)
 		for(var/mob/living/silicon/ai/A in world)
-			src.connected_ai = A
+			connected_ai = A
 			A.connected_robots += src
 			break
 	*/
@@ -54,8 +51,8 @@
 		var/obj/item/weapon/cell/C = new(src)
 		C.charge = 1500
 		cell = C
-	if(src.mind)
-		ticker.mode.remove_revolutionary(src.mind)
+	if(mind)
+		ticker.mode.remove_revolutionary(mind)
 	started = 1
 
 	return

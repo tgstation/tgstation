@@ -10,7 +10,6 @@
 	layer = 4
 	pressure_resistance = 1
 	slot_flags = SLOT_HEAD
-	see_face = 1
 	body_parts_covered = HEAD
 	protective_temperature = 0
 

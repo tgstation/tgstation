@@ -153,7 +153,8 @@ var/const/MAX_ACTIVE_TIME = 600
 		if(!sterile)
 			target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
 			for(var/datum/disease/alien_embryo/A in target.viruses)
-				target.alien_egg_flag = max(1,target.alien_egg_flag)
+				target.status_flags |= XENO_HOST
+				break
 
 			for(var/mob/O in viewers(target,null))
 				O.show_message("\red \b [src] falls limp after violating [target]'s face!", 1)

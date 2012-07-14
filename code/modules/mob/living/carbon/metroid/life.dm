@@ -505,7 +505,7 @@
 						var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)
 						for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
 							var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
-							M.nutrition = round(nutrition * 0.9)
+//							M.nutrition = round(nutrition * 0.9)
 							M.powerlevel = round(powerlevel/number)
 							M.Friends = Friends
 							M.tame = tame
@@ -519,7 +519,7 @@
 					if(!client)
 						var/mob/living/carbon/metroid/adult/A = new/mob/living/carbon/metroid/adult(src.loc)
 						A.nutrition = nutrition
-						A.nutrition += 100
+//						A.nutrition += 100
 						A.powerlevel = max(0, powerlevel-1)
 						A.Friends = Friends
 						A.tame = tame

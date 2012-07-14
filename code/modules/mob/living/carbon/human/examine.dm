@@ -2,7 +2,7 @@
 	set src in view()
 
 	if(!usr || !src)	return
-	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
+	if( usr.sdisabilities & BLIND || usr.blinded || usr.stat==UNCONSCIOUS )
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 
@@ -13,18 +13,23 @@
 	var/skipmask = 0
 	var/skipears = 0
 	var/skipeyes = 0
+	var/skipface = 0
 
 	//exosuits and helmets obscure our view and stuff.
-	if (src.wear_suit)
-		skipgloves = src.wear_suit.flags_inv & HIDEGLOVES
-		skipsuitstorage = src.wear_suit.flags_inv & HIDESUITSTORAGE
-		skipjumpsuit = src.wear_suit.flags_inv & HIDEJUMPSUIT
-		skipshoes = src.wear_suit.flags_inv & HIDESHOES
+	if(wear_suit)
+		skipgloves = wear_suit.flags_inv & HIDEGLOVES
+		skipsuitstorage = wear_suit.flags_inv & HIDESUITSTORAGE
+		skipjumpsuit = wear_suit.flags_inv & HIDEJUMPSUIT
+		skipshoes = wear_suit.flags_inv & HIDESHOES
 
-	if (src.head)
-		skipmask = src.head.flags_inv & HIDEMASK
-		skipeyes = src.head.flags_inv & HIDEEYES
-		skipears = src.head.flags_inv & HIDEEARS
+	if(head)
+		skipmask = head.flags_inv & HIDEMASK
+		skipeyes = head.flags_inv & HIDEEYES
+		skipears = head.flags_inv & HIDEEARS
+		skipface = head.flags_inv & HIDEFACE
+
+	if(wear_mask)
+		skipface |= wear_mask & HIDEFACE
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
 	var/t_He = "It" //capitalised for use at the start of each line.
@@ -35,16 +40,16 @@
 
 	var/msg = "<span class='info'>*---------*\nThis is "
 
-	if( skipjumpsuit && (wear_mask || skipmask) ) //big suits/masks make it hard to tell their gender
+	if( skipjumpsuit && skipface ) //big suits/masks/helmets make it hard to tell their gender
 		t_He = "They"
 		t_his = "their"
 		t_him = "them"
 		t_has = "have"
 		t_is = "are"
 	else
-		if(src.icon)
-			msg += "\icon[src.icon] " //fucking BYOND: this should stop dreamseeker crashing if we -somehow- examine somebody before their icon is generated
-		switch(src.gender)
+		if(icon)
+			msg += "\icon[icon] " //fucking BYOND: this should stop dreamseeker crashing if we -somehow- examine somebody before their icon is generated
+		switch(gender)
 			if(MALE)
 				t_He = "He"
 				t_his = "his"
@@ -54,137 +59,137 @@
 				t_his = "her"
 				t_him = "her"
 
-	msg += "<EM>\a [src]</EM>!\n"
+	msg += "<EM>[src.name]</EM>!\n"
 
 	//uniform
-	if (src.w_uniform && !skipjumpsuit)
-		if (src.w_uniform.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.w_uniform] [src.w_uniform.gender==PLURAL?"some":"a"] blood-stained [src.w_uniform.name]!</span>\n"
+	if(w_uniform && !skipjumpsuit)
+		if(w_uniform.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing \icon[src.w_uniform] \a [src.w_uniform].\n"
+			msg += "[t_He] [t_is] wearing \icon[w_uniform] \a [w_uniform].\n"
 
 	//head
-	if (src.head)
-		if (src.head.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.head] [src.head.gender==PLURAL?"some":"a"] blood-stained [src.head.name] on [t_his] head!</span>\n"
+	if(head)
+		if(head.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[head] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on [t_his] head!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing \icon[src.head] \a [src.head] on [t_his] head.\n"
+			msg += "[t_He] [t_is] wearing \icon[head] \a [head] on [t_his] head.\n"
 
 	//suit/armour
-	if (src.wear_suit)
-		if (src.wear_suit.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.wear_suit] [src.wear_suit.gender==PLURAL?"some":"a"] blood-stained [src.wear_suit.name]!</span>\n"
+	if(wear_suit)
+		if(wear_suit.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_suit] [wear_suit.gender==PLURAL?"some":"a"] blood-stained [wear_suit.name]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing \icon[src.wear_suit] \a [src.wear_suit].\n"
+			msg += "[t_He] [t_is] wearing \icon[wear_suit] \a [wear_suit].\n"
 
 		//suit/armour storage
-		if(src.s_store && !skipsuitstorage)
-			if(src.s_store.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_is] carrying \icon[src.s_store] [src.s_store.gender==PLURAL?"some":"a"] blood-stained [src.s_store.name] on [t_his] [src.wear_suit.name]!</span>\n"
+		if(s_store && !skipsuitstorage)
+			if(s_store.blood_DNA)
+				msg += "<span class='warning'>[t_He] [t_is] carrying \icon[s_store] [s_store.gender==PLURAL?"some":"a"] blood-stained [s_store.name] on [t_his] [wear_suit.name]!</span>\n"
 			else
-				msg += "[t_He] [t_is] carrying \icon[src.s_store] \a [src.s_store] on [t_his] [src.wear_suit.name].\n"
+				msg += "[t_He] [t_is] carrying \icon[s_store] \a [s_store] on [t_his] [wear_suit.name].\n"
 
 	//back
-	if (src.back)
-		if (src.back.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_has] \icon[src.back] [src.back.gender==PLURAL?"some":"a"] blood-stained [src.back] on [t_his] back.</span>\n"
+	if(back)
+		if(back.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] \icon[back] [back.gender==PLURAL?"some":"a"] blood-stained [back] on [t_his] back.</span>\n"
 		else
-			msg += "[t_He] [t_has] \icon[src.back] \a [src.back] on [t_his] back.\n"
+			msg += "[t_He] [t_has] \icon[back] \a [back] on [t_his] back.\n"
 
 	//left hand
-	if (src.l_hand)
-		if (src.l_hand.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] holding \icon[src.l_hand] [src.l_hand.gender==PLURAL?"some":"a"] blood-stained [src.l_hand.name] in [t_his] left hand!</span>\n"
+	if(l_hand)
+		if(l_hand.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_is] holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in [t_his] left hand!</span>\n"
 		else
-			msg += "[t_He] [t_is] holding \icon[src.l_hand] \a [src.l_hand] in [t_his] left hand.\n"
+			msg += "[t_He] [t_is] holding \icon[l_hand] \a [l_hand] in [t_his] left hand.\n"
 
 	//right hand
-	if (src.r_hand)
-		if (src.r_hand.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] holding \icon[src.r_hand] [src.r_hand.gender==PLURAL?"some":"a"] blood-stained [src.r_hand.name] in [t_his] right hand!</span>\n"
+	if(r_hand)
+		if(r_hand.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_is] holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in [t_his] right hand!</span>\n"
 		else
-			msg += "[t_He] [t_is] holding \icon[src.r_hand] \a [src.r_hand] in [t_his] right hand.\n"
+			msg += "[t_He] [t_is] holding \icon[r_hand] \a [r_hand] in [t_his] right hand.\n"
 
 	//gloves
-	if (src.gloves && !skipgloves)
-		if (src.gloves.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_has] \icon[src.gloves] [src.gloves.gender==PLURAL?"some":"a"] blood-stained [src.gloves.name] on [t_his] hands!</span>\n"
+	if(gloves && !skipgloves)
+		if(gloves.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] \icon[gloves] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
 		else
-			msg += "[t_He] [t_has] \icon[src.gloves] \a [src.gloves] on [t_his] hands.\n"
-	else if (src.blood_DNA)
+			msg += "[t_He] [t_has] \icon[gloves] \a [gloves] on [t_his] hands.\n"
+	else if(blood_DNA)
 		msg += "<span class='warning'>[t_He] [t_has] blood-stained hands!</span>\n"
 
 	//handcuffed?
 
 	//handcuffed?
-	if (src.handcuffed)
-		if(istype(src.handcuffed, /obj/item/weapon/handcuffs/cable))
-			msg += "<span class='warning'>[t_He] [t_is] \icon[src.handcuffed] restrained with cable!</span>\n"
+	if(handcuffed)
+		if(istype(handcuffed, /obj/item/weapon/handcuffs/cable))
+			msg += "<span class='warning'>[t_He] [t_is] \icon[handcuffed] restrained with cable!</span>\n"
 		else
-			msg += "<span class='warning'>[t_He] [t_is] \icon[src.handcuffed] handcuffed!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] \icon[handcuffed] handcuffed!</span>\n"
 
 	//belt
-	if (src.belt)
-		if (src.belt.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_has] \icon[src.belt] [src.belt.gender==PLURAL?"some":"a"] blood-stained [src.belt.name] about [t_his] waist!</span>\n"
+	if(belt)
+		if(belt.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] \icon[belt] [belt.gender==PLURAL?"some":"a"] blood-stained [belt.name] about [t_his] waist!</span>\n"
 		else
-			msg += "[t_He] [t_has] \icon[src.belt] \a [src.belt] about [t_his] waist.\n"
+			msg += "[t_He] [t_has] \icon[belt] \a [belt] about [t_his] waist.\n"
 
 	//shoes
-	if (src.shoes && !skipshoes)
-		if(src.shoes.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.shoes] [src.shoes.gender==PLURAL?"some":"a"] blood-stained [src.shoes.name] on [t_his] feet!</span>\n"
+	if(shoes && !skipshoes)
+		if(shoes.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[shoes] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing \icon[src.shoes] \a [src.shoes] on [t_his] feet.\n"
+			msg += "[t_He] [t_is] wearing \icon[shoes] \a [shoes] on [t_his] feet.\n"
 
 	//mask
-	if (src.wear_mask && !skipmask)
-		if (src.wear_mask.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_has] \icon[src.wear_mask] [src.wear_mask.gender==PLURAL?"some":"a"] blood-stained [src.wear_mask.name] on [t_his] face!</span>\n"
+	if(wear_mask && !skipmask)
+		if(wear_mask.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] \icon[wear_mask] [wear_mask.gender==PLURAL?"some":"a"] blood-stained [wear_mask.name] on [t_his] face!</span>\n"
 		else
-			msg += "[t_He] [t_has] \icon[src.wear_mask] \a [src.wear_mask] on [t_his] face.\n"
+			msg += "[t_He] [t_has] \icon[wear_mask] \a [wear_mask] on [t_his] face.\n"
 
 	//eyes
-	if (src.glasses && !skipeyes)
-		if (src.glasses.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_has] \icon[src.glasses] [src.glasses.gender==PLURAL?"some":"a"] blood-stained [src.glasses] covering [t_his] eyes!</span>\n"
+	if(glasses && !skipeyes)
+		if(glasses.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] \icon[glasses] [glasses.gender==PLURAL?"some":"a"] blood-stained [glasses] covering [t_his] eyes!</span>\n"
 		else
-			msg += "[t_He] [t_has] \icon[src.glasses] \a [src.glasses] covering [t_his] eyes.\n"
+			msg += "[t_He] [t_has] \icon[glasses] \a [glasses] covering [t_his] eyes.\n"
 
 	//ears
-	if (src.ears && !skipears)
-		msg += "[t_He] [t_has] \icon[src.ears] \a [src.ears] on [t_his] ears.\n"
+	if(ears && !skipears)
+		msg += "[t_He] [t_has] \icon[ears] \a [ears] on [t_his] ears.\n"
 
 	//ID
-	if (src.wear_id)
+	if(wear_id)
 		var/id
-		if(istype(src.wear_id, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = src.wear_id
+		if(istype(wear_id, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = wear_id
 			id = pda.owner
-		else if(istype(src.wear_id, /obj/item/weapon/card/id)) //just in case something other than a PDA/ID card somehow gets in the ID slot :[
-			var/obj/item/weapon/card/id/idcard = src.wear_id
+		else if(istype(wear_id, /obj/item/weapon/card/id)) //just in case something other than a PDA/ID card somehow gets in the ID slot :[
+			var/obj/item/weapon/card/id/idcard = wear_id
 			id = idcard.registered_name
-		if (id && (id != src.real_name) && (get_dist(src, usr) <= 1) && prob(10))
-			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.wear_id] \a [src.wear_id] yet something doesn't seem right...</span>\n"
+		if(id && (id != real_name) && (get_dist(src, usr) <= 1) && prob(10))
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_id] \a [wear_id] yet something doesn't seem right...</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing \icon[src.wear_id] \a [src.wear_id].\n"
+			msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
 
 	//Jitters
-	if (src.is_jittery)
-		if(src.jitteriness >= 300)
+	if(is_jittery)
+		if(jitteriness >= 300)
 			msg += "<span class='warning'><B>[t_He] [t_is] convulsing violently!</B></span>\n"
-		else if(src.jitteriness >= 200)
+		else if(jitteriness >= 200)
 			msg += "<span class='warning'>[t_He] [t_is] extremely jittery.</span>\n"
-		else if(src.jitteriness >= 100)
+		else if(jitteriness >= 100)
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
-	if (src.suiciding)
+	if(suiciding)
 		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and [t_has] suffered major bloodloss!</span>\n"
 
-	if (src.stat == DEAD || (changeling && (changeling.changeling_fakedeath == 1)))
+	if(stat == DEAD || (changeling && (changeling.changeling_fakedeath == 1)))
 		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 
-		if(!src.client)
+		if(!client)
 			var/foundghost = 0
 			for(var/mob/dead/observer/G in world)
 				if(G.client)
@@ -196,48 +201,51 @@
 		msg += "...</span>\n"
 
 	else
+
 		msg += "<span class='warning'>"
 
-		var/temp = src.getBruteLoss() //no need to calculate each of these twice
+		var/temp = getBruteLoss() //no need to calculate each of these twice
 		if(temp)
-			if (temp < 30)
+			if(temp < 30)
 				msg += "[t_He] [t_has] minor bruising.\n"
 			else
 				msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
 
-		temp = src.getFireLoss()
-		if (temp)
-			if (temp < 30)
+		temp = getFireLoss()
+		if(temp)
+			if(temp < 30)
 				msg += "[t_He] [t_has] minor burns.\n"
 			else
 				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
 
-		temp = src.getCloneLoss()
-		if (temp)
-			if (temp < 30)
+		temp = getCloneLoss()
+		if(temp)
+			if(temp < 30)
 				msg += "[t_He] [t_has] minor genetic deformities.\n"
 			else
 				msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
 
-		if (src.nutrition < 100)
+		if(nutrition < 100)
 			msg += "[t_He] [t_is] severely malnourished.\n"
-		else if (src.nutrition >= 500)
-			if (usr.nutrition < 100)
+		else if(nutrition >= 500)
+			if(usr.nutrition < 100)
 				msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 			else
 				msg += "[t_He] [t_is] quite chubby.\n"
 
 		msg += "</span>"
 
-		if (src.stat == UNCONSCIOUS)
+		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-		else if (src.getBrainLoss() >= 60)
+		else if(getBrainLoss() >= 60)
 			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-		if (!src.client)
+		if(!key)
+			msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
+		else if(!client)
 			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
-	if (src.digitalcamo)
+	if(digitalcamo)
 		msg += "[t_He] [t_is] repulsively uncanny!\n"
 
 
@@ -257,12 +265,12 @@
 					var/obj/item/device/pda/tempPda = wear_id
 					perpname = tempPda.owner
 			else
-				perpname = src.name
+				perpname = name
 
 			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
+				if(E.fields["name"] == perpname)
 					for (var/datum/data/record/R in data_core.security)
-						if (R.fields["id"] == E.fields["id"])
+						if(R.fields["id"] == E.fields["id"])
 							criminal = R.fields["criminal"]
 
 

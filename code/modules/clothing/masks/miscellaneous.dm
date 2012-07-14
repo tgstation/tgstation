@@ -23,7 +23,7 @@
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
 	flags = FPRINT|TABLEPASS
-	see_face = 0.0 //Well, it's a disguise, of course.
+	flags_inv = HIDEFACE
 
 /obj/item/clothing/mask/owl_mask
 	name = "owl mask"
