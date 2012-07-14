@@ -109,3 +109,24 @@
 	if(getAmmo() > 0)
 		Spin()
 
+/obj/item/weapon/gun/projectile/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
+
+	if(isliving(target) && isliving(user))
+		if(target == user)
+			var/datum/organ/external/affecting = user.zone_sel.selecting
+			if(affecting == "head")
+
+				var/obj/item/ammo_casing/AC = loaded[1]
+				if(!load_into_chamber())
+					user.visible_message("\red *click*", "\red *click*")
+					return
+				if(!in_chamber)
+					return
+				var/obj/item/projectile/P = new AC.projectile_type
+				playsound(user, fire_sound, 50, 1)
+				user.visible_message("\red [user.name] fires the [src.name] at his head!", "\red You fire the [src.name] at your head!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+				if(!P.nodamage)
+					user.apply_damage(300, BRUTE, affecting) // You are dead, dead, dead.
+				return
+	..()
+
