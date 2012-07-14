@@ -360,10 +360,6 @@ datum/objective/steal
 				for(var/obj/item/I in all_items) //Check for plasma tanks
 					if(istype(I, steal_target))
 						found_amount += (target_name=="28 moles of plasma (full tank)" ? (I:air_contents:toxins) : (I:amount))
-
-				for(var/obj/item/smallDelivery/J in all_items) //Check to see plasma tank is wrapped
-					if(istype(J.wrapped, steal_target))
-						found_amount += (target_name=="28 moles of plasma (full tank)" ? (J.wrapped:air_contents:toxins) : (J.wrapped:amount))
 				return found_amount>=target_amount
 
 			if("50 coins (in bag)")
@@ -381,20 +377,10 @@ datum/objective/steal
 					for(var/mob/living/silicon/ai/M in C)
 						if(istype(M, /mob/living/silicon/ai) && M.stat != 2) //See if any AI's are alive inside that card.
 							return 1
-
-				for(var/obj/item/smallDelivery/D in all_items) //Check for AI card desguised as packages
-					for(var/mob/living/silicon/ai/N in D.wrapped)
-						if(istype(N, /mob/living/silicon/ai) && N.stat != 2) //No idea why I have to check the type of a mob that I JUST created but ok.
-							return 1
-
 			else
 
 				for(var/obj/I in all_items) //Check for items
 					if(istype(I, steal_target))
-						return 1
-
-				for(var/obj/item/smallDelivery/J in all_items) //Check for items desguised as packages
-					if(istype(J.wrapped, steal_target))
 						return 1
 		return 0
 

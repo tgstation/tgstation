@@ -1,4 +1,4 @@
-/obj/effect/bigDelivery //Why is this an effect? 0.o --SkyMarshal
+/obj/structure/bigDelivery
 	desc = "A big wrapped package."
 	name = "large parcel"
 	icon = 'storage.dmi'
@@ -81,7 +81,9 @@
 	afterattack(var/obj/target as obj, mob/user as mob)
 		if(!(istype(target, /obj)))	//this really shouldn't be necessary (but it is).	-Pete
 			return
-		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) || istype(target,/obj/item/smallDelivery))
+		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) \
+		|| istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
+		|| istype(target, /obj/item/weapon/gift))
 			return
 		if(target.anchored)
 			return
@@ -99,11 +101,14 @@
 						user.client.screen -= O
 				P.wrapped = O
 				O.loc = P
+				P.add_fingerprint(usr)
+				O.add_fingerprint(usr)
+				src.add_fingerprint(usr)
 				src.amount -= 1
 		else if (istype(target, /obj/structure/closet/crate))
 			var/obj/structure/closet/crate/O = target
 			if (src.amount > 3 && !O.opened)
-				var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(O.loc))
+				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 				P.icon_state = "deliverycrate"
 				P.wrapped = O
 				O.loc = P
@@ -113,7 +118,7 @@
 		else if (istype (target, /obj/structure/closet))
 			var/obj/structure/closet/O = target
 			if (src.amount > 3 && !O.opened)
-				var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(O.loc))
+				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
 				O.welded = 1
 				O.loc = P
@@ -190,9 +195,9 @@
 		user << "/blue You can only tag properly wrapped delivery packages!"
 */
 	attack(target as obj, mob/user as mob)
-		if (istype(target, /obj/effect/bigDelivery))
+		if (istype(target, /obj/structure/bigDelivery))
 			user << "\blue *TAGGED*"
-			var/obj/effect/bigDelivery/O = target
+			var/obj/structure/bigDelivery/O = target
 			O.sortTag = src.currTag
 		else if (istype(target, /obj/item/smallDelivery))
 			user << "\blue *TAGGED*"
@@ -238,7 +243,7 @@
 		var/deliveryCheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 											// travels through the pipes.
-		for(var/obj/effect/bigDelivery/O in src)
+		for(var/obj/structure/bigDelivery/O in src)
 			deliveryCheck = 1
 			if(O.sortTag == 0)
 				O.sortTag = 1

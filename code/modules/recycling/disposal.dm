@@ -496,8 +496,8 @@
 				var/mob/living/carbon/human/H = AM
 				if(FAT in H.mutations)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
-			if(istype(AM, /obj/effect/bigDelivery) && !hasmob)
-				var/obj/effect/bigDelivery/T = AM
+			if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
+				var/obj/structure/bigDelivery/T = AM
 				src.destinationTag = T.sortTag
 			if(istype(AM, /obj/item/smallDelivery) && !hasmob)
 				var/obj/item/smallDelivery/T = AM

@@ -19,6 +19,9 @@ PHOTOGRAPHS
 				user << "\blue You need more paper!"
 				return
 			else
+				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
+					return
+
 				src.amount -= a_used
 				user.drop_item()
 				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )

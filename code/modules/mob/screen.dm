@@ -578,7 +578,7 @@
 
 
 	//unbuckling yourself
-	if( L.buckled && (L.last_special <= world.time) )
+	if(L.buckled && (L.last_special <= world.time) )
 		if( L.handcuffed )
 			L.next_move = world.time + 100
 			L.last_special = world.time + 100
@@ -598,6 +598,8 @@
 
 	//Breaking out of a locker?
 	else if( src.loc && (istype(src.loc, /obj/structure/closet)) )
+		var/breakout_time = 2 //2 minutes by default
+
 		var/obj/structure/closet/C = L.loc
 		if(C.opened)
 			return //Door's open... wait, why are you in it's contents then?
@@ -608,16 +610,20 @@
 		else
 			if(!C.welded)
 				return //closed but not welded...
+		//	else Meh, lets just keep it at 2 minutes for now
+		//		breakout_time++ //Harder to get out of welded lockers than locked lockers
 
 		//okay, so the closet is either welded or locked... resist!!!
 		usr.next_move = world.time + 100
 		L.last_special = world.time + 100
-		L << "\red You lean on the back of \the [C] and start pushing the door open. (this will take about 2 minutes)"
+		L << "\red You lean on the back of \the [C] and start pushing the door open. (this will take about [breakout_time] minutes)"
 		for(var/mob/O in viewers(usr.loc))
 			O.show_message("\red <B>The [L.loc] begins to shake violently!</B>", 1)
+
+
 		spawn(0)
-			if(do_after(usr, 50))
-				if(!C || !L || L.loc != C || C.opened) //User, closet destroyed OR user no longer in closet OR closet opened
+			if(do_after(usr,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+				if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened) //closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
 					return
 
 				//Perform the same set of checks as above for weld and lock status to determine if there is even still a point in 'resisting'...
@@ -643,12 +649,18 @@
 					usr << "\red You successfully break out!"
 					for(var/mob/O in viewers(L.loc))
 						O.show_message("\red <B>\the [usr] successfully broke out of \the [SC]!</B>", 1)
+					if(istype(SC.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
+						var/obj/structure/bigDelivery/BD = SC.loc
+						BD.attack_hand(usr)
 					SC.open()
 				else
 					C.welded = 0
 					usr << "\red You successfully break out!"
 					for(var/mob/O in viewers(L.loc))
 						O.show_message("\red <B>\the [usr] successfully broke out of \the [C]!</B>", 1)
+					if(istype(C.loc, /obj/structure/bigDelivery)) //nullspace ect.. read the comment above
+						var/obj/structure/bigDelivery/BD = C.loc
+						BD.attack_hand(usr)
 					C.open()
 
 	//breaking out of handcuffs
