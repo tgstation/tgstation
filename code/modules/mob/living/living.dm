@@ -184,7 +184,7 @@
 			affecting.status &= ~ORGAN_BROKEN
 			affecting.status &= ~ORGAN_SPLINTED
 			affecting.status &= ~ORGAN_DESTROYED
-			del affecting.wound_descs
+			affecting.wound_descs.Cut()
 		H.UpdateDamageIcon()
 		H.update_body()
 	//src.fireloss = 0
@@ -218,7 +218,7 @@
 				e.status &= ~ORGAN_DESTROYED
 				e.perma_injury = 0
 				e.update_icon()
-				del e.wound_descs
+				e.wound_descs.Cut()
 			del(H.vessel)
 			H.vessel = new/datum/reagents(560)
 			H.vessel.my_atom = H
