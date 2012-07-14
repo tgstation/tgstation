@@ -282,11 +282,11 @@
 						var/imp = ""
 						var/bled = ""
 						var/splint = ""
-						if(e.status & SPLINTED)
+						if(e.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
-						if(e.status & BLEEDING)
+						if(e.status & ORGAN_BLEEDING)
 							bled = "Bleeding:"
-						if(e.status & BROKEN)
+						if(e.status & ORGAN_BROKEN)
 							AN = "[e.broken_description]:"
 						if(e.open)
 							open = "Open:"
@@ -294,7 +294,7 @@
 							imp = "Implanted:"
 						if(!AN && !open && !infected & !imp)
 							AN = "None"
-						if(!(e.status & DESTROYED))
+						if(!(e.status & ORGAN_DESTROYED))
 							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[bled][AN][splint][open][infected][imp]</td>"
 						else
 							dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"

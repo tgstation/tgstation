@@ -904,7 +904,7 @@
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				E.process()
-				if(E.status & ROBOT && prob(E.brute_dam + E.burn_dam))
+				if(E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
 							drop_item()
@@ -928,10 +928,10 @@
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 						leg_tally--									// let it fail even if just foot&leg
-				if(E.status & BROKEN || E.status & DESTROYED)
+				if(E.status & ORGAN_BROKEN || E.status & ORGAN_DESTROYED)
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
-							if(E.status & SPLINTED && prob(10))
+							if(E.status & ORGAN_SPLINTED && prob(10))
 								drop_item()
 								emote("scream")
 							else
@@ -939,7 +939,7 @@
 								emote("scream")
 					else if(E.name == "r_hand" || E.name == "r_arm")
 						if(!hand && equipped())
-							if(E.status & SPLINTED && prob(10))
+							if(E.status & ORGAN_SPLINTED && prob(10))
 								drop_item()
 								emote("scream")
 							else
@@ -947,7 +947,7 @@
 								emote("scream")
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-						if(!(E.status & SPLINTED))
+						if(!(E.status & ORGAN_SPLINTED))
 							leg_tally--									// let it fail even if just foot&leg
 			// can't stand
 			if(leg_tally == 0 && !paralysis && !(lying || resting))
@@ -1097,10 +1097,10 @@
 			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
-				if(!(temp.status & BLEEDING) || temp.status & ROBOT)
+				if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
 					continue
 				blood_max += 2
-				if(temp.status & DESTROYED && !(temp.status & GAUZED))
+				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
 					blood_max += 10 //Yer missing a fucking limb.
 			drip(blood_max)
 			if (eye_blind)

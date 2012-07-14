@@ -97,13 +97,13 @@
 	if (user.hand)
 		if(ishuman(user))
 			var/datum/organ/external/temp = user:organs["l_hand"]
-			if(temp.status & DESTROYED)
+			if(temp.status & ORGAN_DESTROYED)
 				user << "\blue Yo- wait a minute."
 				return
 	else
 		if(ishuman(user))
 			var/datum/organ/external/temp = user:organs["r_hand"]
-			if(temp.status & DESTROYED)
+			if(temp.status & ORGAN_DESTROYED)
 				user << "\blue Yo- wait a minute."
 
 	if (istype(src.loc, /obj/item/weapon/storage))
@@ -136,7 +136,7 @@
 	if (user.hand)
 		if(ishuman(user))
 			var/datum/organ/external/temp = user:organs["l_hand"]
-			if(!(temp.status & DESTROYED))
+			if(!(temp.status & ORGAN_DESTROYED))
 				user.l_hand = src
 			else
 				user << "\blue You pick \the [src] up with your ha- wait a minute."
@@ -148,7 +148,7 @@
 	else
 		if(ishuman(user))
 			var/datum/organ/external/temp = user:organs["r_hand"]
-			if(!(temp.status & DESTROYED))
+			if(!(temp.status & ORGAN_DESTROYED))
 				user.r_hand = src
 			else
 				user << "\blue You pick \the [src] up with your ha- wait a minute."
@@ -176,13 +176,13 @@
 	if (user.hand)
 		if(ismonkey(user))
 			var/datum/organ/external/temp = user:organs["l_hand"]
-			if(temp.status & DESTROYED)
+			if(temp.status & ORGAN_DESTROYED)
 				user << "\blue Yo- wait a minute."
 				return
 	else
 		if(ismonkey(user))
 			var/datum/organ/external/temp = user:organs["r_hand"]
-			if(temp.status & DESTROYED)
+			if(temp.status & ORGAN_DESTROYED)
 				user << "\blue Yo- wait a minute."
 
 	if (istype(src.loc, /obj/item/weapon/storage))
