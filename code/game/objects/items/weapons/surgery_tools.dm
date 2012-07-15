@@ -304,6 +304,8 @@ CIRCULAR SAW
 
 	var/mob/living/carbon/human/H = M
 	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
+	if(isnull(S))
+		CRASH("External organ S is null in surgery_tools.dm")
 
 	if(((user.zone_sel.selecting == "l_arm") || (user.zone_sel.selecting == "r_arm") || (user.zone_sel.selecting == "l_leg") || (user.zone_sel.selecting == "r_leg")) & (istype(M, /mob/living/carbon/human)))
 		if(S.status & ORGAN_DESTROYED)
