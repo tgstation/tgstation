@@ -103,6 +103,12 @@
 					check_anomalies = 0
 					shot_delay = 30
 
+				if(/obj/item/weapon/gun/energy/laser/practice)
+					projectile = /obj/item/projectile/practice
+					eprojectile = /obj/item/projectile/beam
+					iconholder = null
+					reqpower = 100
+
 				if(/obj/item/weapon/gun/energy/pulse_rifle)
 					projectile = /obj/item/projectile/beam/pulse
 					eprojectile = projectile
