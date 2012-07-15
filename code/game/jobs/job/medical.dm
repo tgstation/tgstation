@@ -14,7 +14,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/heads/cmo(H), H.slot_ears)
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_med(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/chief_medical_officer(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/heads/cmo(H), H.slot_belt)
@@ -44,7 +44,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_med(H), H.slot_ears)
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_med(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/medical(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/medical(H), H.slot_belt)
@@ -120,7 +120,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_med(H), H.slot_ears)
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_med(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/virologist(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/medical(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/mask/surgical(H), H.slot_wear_mask)

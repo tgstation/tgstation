@@ -7014,7 +7014,7 @@
 "cET" = (/obj/machinery/librarycomp,/obj/structure/table/woodentable,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "cEU" = (/obj/machinery/vending/magivend,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "cEV" = (/obj/machinery/vending/snack,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
-"cEW" = (/obj/structure/closet{icon_closed = "cabinet_closed"; icon_opened = "cabinet_open"; icon_state = "cabinet_closed"},/turf/unsimulated/floor{dir = 9; icon_state = "carpetside"},/area/wizard_station)
+"cEW" = (/obj/structure/closet{icon_closed = "cabinet_closed"; icon_opened = "cabinet_open"; icon_state = "cabinet_closed"},/obj/item/weapon/storage/backpack/satchel,/turf/unsimulated/floor{dir = 9; icon_state = "carpetside"},/area/wizard_station)
 "cEX" = (/obj/structure/mirror{pixel_y = 28},/turf/unsimulated/floor{dir = 1; icon_state = "carpetside"},/area/wizard_station)
 "cEY" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/rd,/turf/unsimulated/floor{dir = 5; icon_state = "carpetside"},/area/wizard_station)
 "cEZ" = (/turf/unsimulated/floor{dir = 8; icon_state = "carpetside"},/area/wizard_station)

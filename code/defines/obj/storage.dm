@@ -2,6 +2,7 @@
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
+	item_state = "backpack"
 	w_class = 4.0
 	flags = FPRINT|TABLEPASS
 	slot_flags = SLOT_BACK	//ERROOOOO
@@ -108,6 +109,7 @@
 	name = "satchel"
 	desc = "It's a very robust satchel to wear on your back."
 	icon_state = "satchel"
+	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/satchel/withwallet
 	New()
@@ -125,11 +127,13 @@
 	name = "industrial satchel"
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
+	item_state = "engiepack"
 
 /obj/item/weapon/storage/backpack/satchel_med
 	name = "medical satchel"
 	desc = "A sterile satchel used in medical departments."
 	icon_state = "satchel-med"
+	item_state = "medicalpack"
 
 /obj/item/weapon/storage/backpack/satchel_vir
 	name = "virologist satchel"
@@ -155,6 +159,7 @@
 	name = "security satchel"
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
+	item_state = "securitypack"
 
 /obj/item/weapon/storage/backpack/satchel_hyd
 	name = "hydroponics satchel"

@@ -317,7 +317,7 @@ var/global/datum/controller/occupations/job_master
 				H.equip_if_possible(BPK, H.slot_back,1)
 
 			if(H.backbag == 3)
-				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel(H)
+				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
 				new /obj/item/weapon/storage/box/survival(BPK)
 				H.equip_if_possible(BPK, H.slot_back,1)
 

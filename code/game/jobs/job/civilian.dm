@@ -13,7 +13,7 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_norm(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/suit/armor/vest(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/bartender(H), H.slot_w_uniform)
@@ -144,7 +144,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_mine (H), H.slot_ears)
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_eng(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/device/pda/shaftminer(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/miner(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
@@ -205,7 +205,7 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_norm(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/mime(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/mime(H), H.slot_belt)
@@ -287,7 +287,7 @@ var/global/lawyer = 0//Checks for another lawyer
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_norm(H), H.slot_back)
 		if(!lawyer)
 			lawyer = 1
 			H.equip_if_possible(new /obj/item/clothing/under/lawyer/bluesuit(H), H.slot_w_uniform)

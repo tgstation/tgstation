@@ -64,7 +64,10 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/storage/backpack/medic(src)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/medic(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_med(src)
 		new /obj/item/clothing/under/rank/nursesuit (src)
 		new /obj/item/clothing/head/nursehat (src)
 		switch(pick("blue", "green", "purple"))
@@ -104,6 +107,10 @@
 	New()
 		..()
 		sleep(2)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/medic(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_med(src)
 		new /obj/item/clothing/suit/bio_suit/cmo(src)
 		new /obj/item/clothing/head/bio_hood/cmo(src)
 		new /obj/item/clothing/under/rank/chief_medical_officer(src)

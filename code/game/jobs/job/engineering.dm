@@ -14,7 +14,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/heads/ce(H), H.slot_ears)
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_eng(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/chief_engineer(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/heads/ce(H), H.slot_l_store)
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
@@ -47,7 +47,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_eng(H), H.slot_ears)
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial(H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_eng(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/engineer(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/orange(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/weapon/storage/belt/utility/full(H), H.slot_belt)
@@ -77,7 +77,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_eng(H), H.slot_ears)
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_norm(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/atmospheric_technician(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/atmos(H), H.slot_l_store)
@@ -104,7 +104,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_rob(H), H.slot_ears)
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_norm(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/roboticist(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/roboticist(H), H.slot_belt)

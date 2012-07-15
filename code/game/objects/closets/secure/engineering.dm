@@ -12,7 +12,10 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/storage/backpack/industrial(src)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/industrial(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_eng(src)
 		new /obj/item/blueprints(src)
 		new /obj/item/clothing/under/rank/chief_engineer(src)
 		new /obj/item/clothing/head/hardhat/white(src)
@@ -97,7 +100,10 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/storage/backpack/industrial(src)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/industrial(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_eng(src)
 		new /obj/item/clothing/under/rank/engineer(src)
 		new /obj/item/clothing/shoes/orange(src)
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
