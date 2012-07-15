@@ -130,7 +130,7 @@
 				sleep(40) //because we're sleeping another second after this (a few lines down)
 				continue
 
-			if(client.eye == eyeobj)
+			if(client && client.eye == eyeobj)
 				if(checkcameravis(target))
 					eyeobj.loc = target.loc
 					sleep(50)

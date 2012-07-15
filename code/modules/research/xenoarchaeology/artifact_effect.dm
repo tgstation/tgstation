@@ -195,7 +195,7 @@
 					user << "\red You are suddenly zapped away elsewhere!"
 					user.loc = pick(randomturfs)
 					var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-					sparks.set_up(3, 0, get_turf(src)) //no idea what the 0 is
+					sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
 					sparks.start()
 				return 1
 	else if (src.effectmode == "aura")
