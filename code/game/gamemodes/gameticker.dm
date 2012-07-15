@@ -343,4 +343,22 @@ var/global/datum/controller/gameticker/ticker
 		if (findtext("[handler]","auto_declare_completion_"))
 			call(mode, handler)()
 
+	//Print a list of antagonists to the server log
+	var/list/total_antagonists = list()
+	//Look into all mobs in world, dead or alive
+	for(var/mob/M in world)
+		if(M.mind && M.mind.special_role) //If they have a mind and are an antagonist of some sort...
+			var/temprole = M.mind.special_role
+
+			if(temprole in total_antagonists) //If the role exists already, add the name to it
+				total_antagonists[temprole] += ", [M.real_name]([M.ckey])"
+			else
+				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
+				total_antagonists[temprole] += ": [M.real_name]([M.ckey])"
+
+	//Now print them all into the log!
+	log_game("Antagonists at round end were...")
+	for(var/i in total_antagonists)
+		log_game("[i]s[total_antagonists[i]].")
+
 	return 1

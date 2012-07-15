@@ -362,12 +362,14 @@ About the new airlock wires panel:
 			//raises them if they are down (only if power's on)
 			if(!src.locked)
 				src.locked = 1
-				usr << "You hear a click from the bottom of the door."
+				for(var/mob/M in range(1,src))
+					M << "You hear a click from the bottom of the door."
 				src.updateUsrDialog()
 			else
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
 					src.locked = 0
-					usr << "You hear a click from inside the door."
+					for(var/mob/M in range(1,src))
+						M << "You hear a click from the bottom of the door."
 					src.updateUsrDialog()
 			update_icon()
 

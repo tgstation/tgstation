@@ -1871,7 +1871,7 @@
 // *************************************
 
 /obj/item/weapon/plantbgone // -- Skie
-	desc = "<I>Kill those pesky weeds!<I/>"
+	desc = "<I>Kill those pesky weeds!</I>"
 	icon = 'hydroponics.dmi'
 	name = "bottle of Plant-B-Gone"
 	icon_state = "plantbgone"

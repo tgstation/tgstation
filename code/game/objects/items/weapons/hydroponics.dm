@@ -69,8 +69,14 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 
 /obj/item/weapon/plantbgone/examine()
 	set src in usr
-	usr << text("\icon[] [] units of Plant-B-Gone left!", src, src.reagents.total_volume)
 	..()
+	if(!(usr in view(2)) && usr!=src.loc) return
+	usr << "\blue The Plant-B-Gone bottle contains:"
+	if(reagents && reagents.reagent_list.len)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			usr << "\blue [R.volume] units of [R.name]"
+	else
+		usr << "\blue Nothing."
 	return
 
 // Sunflower

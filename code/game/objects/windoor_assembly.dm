@@ -179,7 +179,7 @@ obj/structure/windoor_assembly/Del()
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'Screwdriver.ogg', 100, 1)
-				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to install electronics into the airlock assembly.")
+				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to uninstall electronics from the airlock assembly.")
 
 				if(do_after(user, 40))
 					if(!src) return
@@ -196,6 +196,9 @@ obj/structure/windoor_assembly/Del()
 
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(istype(W, /obj/item/weapon/crowbar))
+				if(!src.electronics)
+					usr << "\red The assembly is missing electronics."
+					return
 				usr << browse(null, "window=windoor_access")
 				playsound(src.loc, 'Crowbar.ogg', 100, 1)
 				user.visible_message("[user] pries the windoor into the frame.", "You start prying the windoor into the frame.")

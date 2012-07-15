@@ -22,35 +22,35 @@
 			var/religion_name = "Christianity"
 			var/new_religion = copytext(sanitize(input(H, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
 
-			if ((length(new_religion) == 0) || (new_religion == "Christianity"))
+			if (!new_religion)
 				new_religion = religion_name
 
-				switch(lowertext(new_religion))
-					if("christianity")
-						B.name = pick("The Holy Bible","The Dead Sea Scrolls")
-					if("satanism")
-						B.name = "The Unholy Bible"
-					if("cthulu")
-						B.name = "The Necronomicon"
-					if("islam")
-						B.name = "Quran"
-					if("scientology")
-						B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
-					if("chaos")
-						B.name = "The Book of Lorgar"
-					if("imperium")
-						B.name = "Uplifting Primer"
-					if("toolboxia")
-						B.name = "Toolbox Manifesto"
-					if("homosexuality")
-						B.name = "Guys Gone Wild"
-					if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
-						B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
-						H.setBrainLoss(100) // starts off retarded as fuck
-					if("science")
-						B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
-					else
-						B.name = "The Holy Book of [new_religion]"
+			switch(lowertext(new_religion))
+				if("christianity")
+					B.name = pick("The Holy Bible","The Dead Sea Scrolls")
+				if("satanism")
+					B.name = "The Unholy Bible"
+				if("cthulu")
+					B.name = "The Necronomicon"
+				if("islam")
+					B.name = "Quran"
+				if("scientology")
+					B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+				if("chaos")
+					B.name = "The Book of Lorgar"
+				if("imperium")
+					B.name = "Uplifting Primer"
+				if("toolboxia")
+					B.name = "Toolbox Manifesto"
+				if("homosexuality")
+					B.name = "Guys Gone Wild"
+				if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
+					B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
+					H.setBrainLoss(100) // starts off retarded as fuck
+				if("science")
+					B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+				else
+					B.name = "The Holy Book of [new_religion]"
 			feedback_set_details("religion_name","[new_religion]")
 
 		spawn(1)
