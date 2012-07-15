@@ -28,7 +28,10 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				return
 			if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
 				var/mob/living/silicon/pai/pai = new(card)
-				pai.name = candidate.name
+				if(!candidate.name)
+					pai.name = pick(ninja_names)
+				else
+					pai.name = candidate.name
 				pai.real_name = pai.name
 				pai.key = candidate.key
 
@@ -36,7 +39,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				pai.mind.current = pai
 				pai.mind.assigned_role = "Assistant"//Default to an assistant.
 
-				card.pai = pai
+				card.setPersonality(pai)
 				card.looking_for_personality = 0
 
 				ticker.mode.update_cult_icons_removed(card.pai.mind)

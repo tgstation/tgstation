@@ -144,6 +144,31 @@
 		if("radio")
 			src.card.radio.attack_self(src)
 
+		if("image")
+			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+			var/pID = 1
+
+			switch(newImage)
+				if("Happy")
+					pID = 1
+				if("Cat")
+					pID = 2
+				if("Extremely Happy")
+					pID = 3
+				if("Face")
+					pID = 4
+				if("Laugh")
+					pID = 5
+				if("Off")
+					pID = 6
+				if("Sad")
+					pID = 7
+				if("Angry")
+					pID = 8
+				if("What")
+					pID = 9
+			src.card.setEmotion(pID)
+
 		if("signaller")
 
 			if(href_list["send"])
@@ -256,6 +281,7 @@
 	// Built-in
 	dat += "<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>"
 	dat += "<A href='byond://?src=\ref[src];software=radio;sub=0'>Radio Configuration</A><br>"
+	dat += "<A href='byond://?src=\ref[src];software=image'>Screen Display</A><br>"
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
 

@@ -214,6 +214,6 @@
 	var/obj/item/device/paicard/card = new(t)
 	var/mob/living/silicon/pai/pai = new(card)
 	pai.key = src.key
-	card.pai = pai
+	card.setPersonality(pai)
 
 */

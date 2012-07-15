@@ -193,7 +193,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
 	pai.real_name = pai.name
 	pai.key = choice.key
-	card.pai = pai
+	card.setPersonality(pai)
 	for(var/datum/paiCandidate/candidate in paiController.pai_candidates)
 		if(candidate.key == choice.key)
 			paiController.pai_candidates.Remove(candidate)

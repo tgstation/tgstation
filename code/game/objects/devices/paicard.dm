@@ -11,6 +11,10 @@
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
 
+	New()
+		..()
+		overlays += "pai-off"
+
 	attack_self(mob/user)
 		if (!in_range(src, user))
 			return
@@ -71,7 +75,7 @@
 					M << "<font color = #ff8787><h4>Your mental faculties leave you.</h4></font>"
 					M << "<font color = #ffc4c4><h5>oblivion... </h5></font>"
 					M.death(0)
-				src.pai = null
+				removePersonality()
 		if(href_list["wires"])
 			var/t1 = text2num(href_list["wires"])
 			if (radio.wires & t1)
@@ -87,11 +91,32 @@
 				pai << "Supplemental Directives: <br>[pai.pai_laws]"
 		attack_self(usr)
 
-
-
 // 		WIRE_SIGNAL = 1
 //		WIRE_RECEIVE = 2
 //		WIRE_TRANSMIT = 4
+
+	proc/setPersonality(mob/living/silicon/pai/personality)
+		src.pai = personality
+		src.overlays += "pai-happy"
+
+	proc/removePersonality()
+		src.pai = null
+		src.overlays = null
+		src.overlays += "pai-off"
+
+	proc/setEmotion(var/emotion)
+		if(pai)
+			src.overlays = null
+			switch(emotion)
+				if(1) src.overlays += "pai-happy"
+				if(2) src.overlays += "pai-cat"
+				if(3) src.overlays += "pai-extremely-happy"
+				if(4) src.overlays += "pai-face"
+				if(5) src.overlays += "pai-laugh"
+				if(6) src.overlays += "pai-off"
+				if(7) src.overlays += "pai-sad"
+				if(8) src.overlays += "pai-angry"
+				if(9) src.overlays += "pai-what"
 
 	proc/alertUpdate()
 		var/turf/T = get_turf_or_move(src.loc)
