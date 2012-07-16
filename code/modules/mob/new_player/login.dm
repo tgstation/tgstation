@@ -28,19 +28,20 @@
 	if(watch_locations.len>0)
 		loc = pick(watch_locations)
 
-	if(!preferences.savefile_load(src, 0))
-		preferences.ShowChoices(src)
-		if(!client.changes)
-			changes()
-	else
-		var/lastchangelog = length('changelog.html')
-		if(!client.changes && preferences.lastchangelog!=lastchangelog)
-			changes()
-			preferences.lastchangelog = lastchangelog
-			preferences.savefile_save(src)
 
-	spawn(10)
+
+	spawn(60)
 		if(client)
+			if(!preferences.savefile_load(src, 0))
+				preferences.ShowChoices(src)
+				if(!client.changes)
+					changes()
+			else
+				var/lastchangelog = length('changelog.html')
+				if(!client.changes && preferences.lastchangelog!=lastchangelog)
+					changes()
+					preferences.lastchangelog = lastchangelog
+					preferences.savefile_save(src)
 			handle_privacy_poll()
 			new_player_panel()
 	//PDA Resource Initialisation =======================================================>

@@ -356,15 +356,14 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/lying		= image("icon_state" = "[t_color]_l")
 		var/image/standing	= image("icon_state" = "[t_color]_s")
 
-		if( (FAT in mutations) )
+		if(FAT in mutations)
 			if(w_uniform.flags&ONESIZEFITSALL)
 				lying.icon		= 'uniform_fat.dmi'
 				standing.icon	= 'uniform_fat.dmi'
 			else
 				src << "\red You burst out of \the [w_uniform]!"
 				drop_from_inventory(w_uniform)
-				lying		= null
-				standing	= null
+				return
 		else
 			lying.icon		= 'uniform.dmi'
 			standing.icon	= 'uniform.dmi'

@@ -58,25 +58,27 @@
 //Improved /N
 /mob/living/silicon/robot/Del()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
-		mmi.loc = get_turf(loc)//To hopefully prevent run time errors.
+		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
+		if(T)
+			mmi.loc = T
 
-		if(!key)
-			for(var/mob/dead/observer/ghost in world)
-				if(ghost.corpse == src && ghost.client)
-					ghost.client.mob = ghost.corpse
+			if(!key)	//if we don't have an associated key, try to find the ghost of this body
+				for(var/mob/dead/observer/ghost in world)
+					if(ghost.corpse == src && ghost.client)
+						ghost.client.mob = ghost.corpse
 
-		if(key)//If there is a client attached to host.
-			if(client)
-				client.screen.len = null
-			if(mind)//If the cyborg has a mind. It should if it's a player. May not.
-				mind.transfer_to(mmi.brainmob)
-			else if(!mmi.brainmob.mind)//If the brainmob has no mind and neither does the cyborg. Shouldn't happen but can due to admun canspiraucy.
-				mmi.brainmob.mind = new()//Quick mind initialize
-				mmi.brainmob.mind.current = mmi.brainmob
-				mmi.brainmob.mind.assigned_role = "Assistant"//Default to an assistant.
-				mmi.brainmob.key = key
-			else//If the brain does have a mind. Also shouldn't happen but who knows.
-				mmi.brainmob.key = key
+			if(key)//If there is a client attached to host.
+				if(client)
+					client.screen.len = null
+				if(mind)//If the cyborg has a mind. It should if it's a player. May not.
+					mind.transfer_to(mmi.brainmob)
+				else if(!mmi.brainmob.mind)//If the brainmob has no mind and neither does the cyborg. Shouldn't happen but can due to admun canspiraucy.
+					mmi.brainmob.mind = new()//Quick mind initialize
+					mmi.brainmob.mind.current = mmi.brainmob
+					mmi.brainmob.mind.assigned_role = "Assistant"//Default to an assistant.
+					mmi.brainmob.key = key
+				else//If the brain does have a mind. Also shouldn't happen but who knows.
+					mmi.brainmob.key = key
 
 		mmi = null
 	..()

@@ -31,9 +31,6 @@ Works together with spawning an observer, noted above.
 /mob/proc/ghostize(var/transfer_mind = 0)
 	if(key)
 		var/mob/dead/observer/ghost = new(src,transfer_mind)	//Transfer safety to observer spawning proc.
-		if(client)
-			client.images.len = null				//remove the images such as AIs being unable to see runes
-			client.screen.len = null				//remove hud items just in case
 		ghost.attack_log = attack_log			//preserve our attack logs by copying them to our ghost
 		if(transfer_mind && mind)				//When a body is destroyed attempt to transfer their mind
 			mind.transfer_to(ghost)

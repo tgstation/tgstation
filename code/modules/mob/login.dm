@@ -24,14 +24,22 @@
 
 /mob/Login()
 	update_Login_details()
-	if(!src.dna) src.dna = new /datum/dna(null)
 	world.update_status()
-	if(!src.hud_used)
-		src.hud_used = new/obj/hud( src )
-	else
-		del(src.hud_used)
-		src.hud_used = new/obj/hud( src )
+	client.images = null				//remove the images such as AIs being unable to see runes
+	client.screen = null				//remove hud items just in case
+	if(!dna) dna = new /datum/dna(null)
+	if(hud_used)	del(hud_used)
+	hud_used = new/obj/hud( src )
 
-	src.next_move = 1
-	src.sight |= SEE_SELF
+	next_move = 1
+	sight |= SEE_SELF
 	..()
+
+	if(loc && !isturf(loc))
+		client.eye = loc
+		client.perspective = EYE_PERSPECTIVE
+	else
+		client.eye = src
+		client.perspective = MOB_PERSPECTIVE
+
+

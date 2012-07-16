@@ -2,9 +2,6 @@
 	..()
 	regenerate_icons()
 
-	if(!isturf(loc))
-		client.eye = loc
-		client.perspective = EYE_PERSPECTIVE
 	if(real_name == "Cyborg")
 		ident = rand(1, 999)
 		real_name += " "

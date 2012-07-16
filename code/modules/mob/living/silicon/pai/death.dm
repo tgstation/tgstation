@@ -12,6 +12,6 @@
 
 	//New pAI's get a brand new mind to prevent meta stuff from their previous life. This new mind causes problems down the line if it's not deleted here.
 	//Read as: I have no idea what I'm doing but asking for help got me nowhere so this is what you get. - Nodrak
-	del(mind)
-	if(key)	ghostize(0)
+	if(mind)	del(mind)
+	ghostize(0)
 	del(src)
