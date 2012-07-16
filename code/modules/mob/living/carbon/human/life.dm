@@ -958,20 +958,25 @@
 
 		handle_blood()
 			// take care of blood and blood loss
-
 			if(stat < 2)
 				var/blood_volume = round(vessel.get_reagent_amount("blood"))
 				if(blood_volume < 560 && blood_volume)
-					var/datum/reagent/blood/B = locate() in vessel //Grab some blood
+					var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 					if(B) // Make sure there's some blood at all
 						if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
-							for(var/datum/reagent/blood/D in vessel)
+							for(var/datum/reagent/blood/D in vessel.reagent_list)
 								if(D.data["donor"] == src)
 									B = D
 									break
+						var/datum/reagent/nutriment/F = locate() in vessel.reagent_list
+						if(F != null)
+							if(F.volume >= 1)
+								B.volume = max(min(10 + blood_volume,560), 0)
+								F.volume -= 1
+						else
+							//At this point, we dun care which blood we are adding to, as long as they get more blood.
+							B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
 
-						//At this point, we dun care which blood we are adding to, as long as they get more blood.
-						B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
 
 				if(blood_volume > 448)
 					if(pale)
