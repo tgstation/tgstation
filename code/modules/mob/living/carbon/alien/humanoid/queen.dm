@@ -5,8 +5,10 @@
 
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in world)
-		if(Q.stat != DEAD)
-			name = "alien princess ([rand(1, 1000)])"	//if this is too cutesy feel free to change it/remove it.
+		if(Q == src)		continue
+		if(Q.stat == DEAD)	continue
+		if(Q.client)
+			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
 			break
 
 	real_name = src.name
