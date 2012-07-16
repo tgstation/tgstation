@@ -1,4 +1,3 @@
-
 //BUG!!!: reactions on splashing etc cause errors because stuff gets deleted before it executes.
 //		  Bandaid fix using spawn - very ugly, need to fix this.
 
@@ -1345,7 +1344,7 @@
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
 	icon = 'syringe.dmi'
 	item_state = "hypo"
-	icon_state = "borghypo"
+	icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = null
