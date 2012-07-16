@@ -1,9 +1,9 @@
 /* Runtime Condenser by Nodrak
- * This will sum up identical runtimes into one, giving a total of how many times it occured. The first occurance 
- * of the runtime will log the proc, source, usr and src, the rest will just add to the total. Infinite loops will 
+ * This will sum up identical runtimes into one, giving a total of how many times it occured. The first occurance
+ * of the runtime will log the proc, source, usr and src, the rest will just add to the total. Infinite loops will
  * also be caught and displayed (if any) above the list of runtimes.
  *
- * How to use: 
+ * How to use:
  * 1) Copy and paste your list of runtimes from Dream Daemon into input.exe
  * 2) Run RuntimeCondenser.exe
  * 3) Open output.txt for a condensed report of the runtimes
@@ -19,7 +19,7 @@ using namespace std;
 	const unsigned short maxStorage = 99; //100 - 1
 
 	//What we use to read input
-	string currentLine = "Blank"; 
+	string currentLine = "Blank";
 	string nextLine = "Blank";
 
 	//Stores lines we want to keep to print out
@@ -28,7 +28,7 @@ using namespace std;
 	string storedSource[maxStorage+1];
 	string storedUsr[maxStorage+1];
 	string storedSrc[maxStorage+1];
-	
+
 	//Stat tracking stuff for output
 	unsigned int totalRuntimes = 0;
 	unsigned int totalUniqueRuntimes = 0;
@@ -44,7 +44,7 @@ bool readFromFile()
 {
 	//Open file to read
 	ifstream inputFile("input.txt");
-	
+
 	if(inputFile.is_open())
 	{
 		while(!inputFile.eof()) //Until end of file
@@ -73,7 +73,7 @@ bool readFromFile()
 					//Skip ahead again
 					currentLine = nextLine;
 					getline(inputFile, nextLine);
-				
+
 					//Store the last of the info
 					storedSrc[storedIterator] = nextLine;
 				}
@@ -88,7 +88,7 @@ bool readFromFile()
 				for(int i=0; i <= maxStorage; i++)
 				{
 					//We've already encountered this
-					if(currentLine == storedRuntime[i]) 
+					if(currentLine == storedRuntime[i])
 					{
 						numRuntime[i]++;
 						break;
@@ -116,7 +116,7 @@ bool readFromFile()
 				for(int i=0; i <= maxStorage; i++)
 				{
 					//We've already encountered this
-					if(currentLine == storedRuntime[i]) 
+					if(currentLine == storedRuntime[i])
 					{
 						numRuntime[i]++;
 						break;
@@ -148,7 +148,7 @@ bool writeToFile()
 {
 	//Open and clear the file
 	ofstream outputFile("Output.txt", ios::trunc);
-	
+
 	if(outputFile.is_open())
 	{
 		outputFile << "Note: The proc name, source file, src and usr are all from the FIRST of the identical runtimes. Everything else is cropped.\n\n";
@@ -162,14 +162,14 @@ bool writeToFile()
 		}
 		outputFile << "Total unique runtimes: " << totalUniqueRuntimes << endl;
 		outputFile << "Total runtimes: " << totalRuntimes << endl << endl;
-		
+
 		//Display a warning if we've hit the maximum space we've allocated for storage
 		if(totalUniqueRuntimes + totalUniqueInfiniteLoops >= maxStorage)
 		{
 			outputFile << "Warning: The maximum number of unique runtimes has been hit. If there were more, they have been cropped out.\n\n";
 		}
-		
-		
+
+
 		//If we have infinite loops, display them first.
 		if(totalInfiniteLoops > 0)
 		{
@@ -188,7 +188,7 @@ bool writeToFile()
 			}
 			outputFile << endl << endl; //For spacing
 		}
-		
+
 
 		//Do runtimes next
 		outputFile << "** Runtimes **";
@@ -220,14 +220,14 @@ void sortRuntimes(bool ascending = false)
 	string tempUsr[maxStorage+1];
 	string tempSrc[maxStorage+1];
 	unsigned int tempNumRuntime[maxStorage+1];
-	int highestCount = 0; //Used for descending order
-	int keepLooping = 0;
+	unsigned int highestCount = 0; //Used for descending order
+//	int keepLooping = 0;
 
 	//Move all of our data into temporary arrays. Also clear the stored data (not necessary but.. just incase)
 	for(int i=0; i <= maxStorage; i++)
 	{
 		//Get the largest occurance of a single runtime
-		if(highestCount < numRuntime[i]) 
+		if(highestCount < numRuntime[i])
 		{
 			highestCount = numRuntime[i];
 		}
@@ -280,19 +280,19 @@ int main() {
 		numRuntime[i] = 0;
 
 	}
-	
-	if(readFromFile()) 
+
+	if(readFromFile())
 	{
 		cout << "Input read successfully!\n";
 	}
-	else 
+	else
 	{
 		cout << "Input failed to open, shutting down.\n";
 		cout << "\nEnter any letter to quit.\n";
 		cin >> exit;
 		return 1;
 	}
-	
+
 	sortRuntimes();
 
 	if(writeToFile())
@@ -302,7 +302,7 @@ int main() {
 		cin >> exit;
 		return 0;
 	}
-	else	
+	else
 	{
 		cout << "The output file could not be opened, shutting down.\n";
 		cout << "\nEnter any letter to quit.\n";
