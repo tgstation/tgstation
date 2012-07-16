@@ -46,6 +46,10 @@
 		name = "Short Hair"	  // try to capatilize the names please~
 		icon_state = "hair_a" // you do not need to define _s or _l sub-states, game automatically does this for you
 
+	cut
+		name = "Cut Hair"
+		icon_state = "hair_c"
+
 	long
 		name = "Shoulder-length Hair"
 		icon_state = "hair_b"
@@ -74,10 +78,6 @@
 		name = "Half-banged Hair Alt"
 		icon_state = "hair_halfbang_alt"
 
-	kusangi
-		name = "Kusanagi Hair"
-		icon_state = "hair_kusanagi"
-
 	ponytail1
 		name = "Ponytail 1"
 		icon_state = "hair_ponytail"
@@ -89,33 +89,6 @@
 	ponytail3
 		name = "Ponytail 3"
 		icon_state = "hair_ponytail3"
-
-	cut
-		name = "Cut Hair"
-		icon_state = "hair_c"
-
-	mohawk
-		name = "Mohawk"
-		icon_state = "hair_d"
-		choose_female = 0 // gross
-
-	balding
-		name = "Balding Hair"
-		icon_state = "hair_e"
-		choose_female = 0 // turnoff!
-
-	afro
-		name = "Afro"
-		icon_state = "hair_afro"
-
-	afro_large
-		name = "Big Afro"
-		icon_state = "hair_bigafro"
-		choose_female = 0
-
-	fag
-		name = "Flow Hair"
-		icon_state = "hair_f"
 
 	bedhead
 		name = "Bedhead"
@@ -134,41 +107,79 @@
 		icon_state = "hair_dreads"
 		choose_female = 0 // okay.jpg
 
+	curls
+		name = "Curls"
+		icon_state = "hair_curls"
+
+	afro
+		name = "Afro"
+		icon_state = "hair_afro"
+
+	afro_large
+		name = "Big Afro"
+		icon_state = "hair_bigafro"
+		choose_female = 0
+
+	sargeant
+		name = "Flat Top"
+		icon_state = "hair_sargeant"
+		choose_female = 0
+
+	fag
+		name = "Flow Hair"
+		icon_state = "hair_f"
+
+	mohawk
+		name = "Mohawk"
+		icon_state = "hair_d"
+		choose_female = 0 // gross
+
 	jensen
 		name = "Adam Jensen Hair"
 		icon_state = "hair_jensen"
 		choose_female = 0
 
-	skinhead
-		name = "Skinhead"
-		icon_state = "hair_skinhead"
+	gelled
+		name = "Gelled Back"
+		icon_state = "hair_gelled"
+		choose_male = 0
 
-	bald
-		name = "Bald"
-		icon_state = "bald"
+	spiky
+		name = "Spiky"
+		icon_state = "hair_spikey"
 		choose_female = 0
+
+	kusangi
+		name = "Kusanagi Hair"
+		icon_state = "hair_kusanagi"
+
+	kagami
+		name = "Pigtails"
+		icon_state = "hair_kagami"
+		choose_male = 0
 
 	himecut
 		name = "Hime Cut"
 		icon_state = "hair_himecut"
-
-	curls
-		name = "Curls"
-		icon_state = "hair_curls"
-
-	spikey
-		name = "Spikey"
-		icon_state = "hair_spikey"
-		choose_female = 0
+		choose_male = 0
 
 	braid
 		name = "Floorlength Braid"
 		icon_state = "hair_braid"
 		choose_male = 0
 
-	dwarf
-		name = "Dwarf"
-		icon_state = "hair_dwarf"
+	skinhead
+		name = "Skinhead"
+		icon_state = "hair_skinhead"
+
+	balding
+		name = "Balding Hair"
+		icon_state = "hair_e"
+		choose_female = 0 // turnoff!
+
+	bald
+		name = "Bald"
+		icon_state = "bald"
 		choose_female = 0
 
 /*
@@ -183,6 +194,11 @@
 
 	icon = 'human_face.dmi'
 	choose_female = 0 // barf (unless you're a dorf, dorfs dig chix /w beards :P)
+
+	shaved
+		name = "Shaved"
+		icon_state = "bald"
+		choose_female = 1 // shaved is the only facial hair on women because why would chicks have beards???
 
 	watson
 		name = "Watson Mustache"
@@ -247,12 +263,6 @@
 	dwarf
 		name = "Dwarf Beard"
 		icon_state = "facial_dwarf"
-
-	shaved
-
-		name = "Shaved"
-		icon_state = "bald"
-		choose_female = 1 // shaved is the only facial hair on women because why would chicks have beards???
 
 
 
