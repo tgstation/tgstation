@@ -570,7 +570,7 @@
 			del(animation)
 
 		var/mob/living/carbon/monkey/O = new(src)
-		del(O.organs)
+		O.organs.Cut()
 		O.organs = H.organs
 		for(var/name in O.organs)
 			var/datum/organ/external/organ = O.organs[name]
@@ -644,7 +644,7 @@
 			O.gender = MALE
 		O.dna = M.dna
 		M.dna = null
-		del(O.organs)
+		O.organs.Cut()
 		O.organs = M.organs
 		for(var/name in O.organs)
 			var/datum/organ/external/organ = O.organs[name]

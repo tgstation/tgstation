@@ -16,7 +16,7 @@
 	//animation = null
 	var/mob/living/carbon/human/tajaran/O = new /mob/living/carbon/human/tajaran( loc )
 	del(animation)
-	del(O.organs)
+	O.organs.Cut()
 	O.organs = organs
 	for(var/name in O.organs) //Ensuring organ trasnfer
 		var/datum/organ/external/organ = O.organs[name]
