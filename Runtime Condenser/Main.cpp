@@ -212,7 +212,7 @@ bool writeToFile()
 	return true;
 }
 
-void sortRuntimes(bool ascending = false)
+void sortRuntimes()
 {
 	string tempRuntime[maxStorage+1];
 	string tempProc[maxStorage+1];
