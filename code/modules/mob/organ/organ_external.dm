@@ -84,6 +84,11 @@
 	min_broken_damage = 15
 	body_part = HAND_LEFT
 
+/datum/organ/Del()
+	CRASH("Some dawg tried to delete this sexy datum. Here's the data.")
+
+/obj/item/weapon/organ/Del()
+	CRASH("Some dawg tried to delete this sexy organ. Here's the data.")
 
 
 obj/item/weapon/organ
