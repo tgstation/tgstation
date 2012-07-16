@@ -76,10 +76,11 @@
 
 		handle_regular_status_updates()
 
-			if(camera)
-				src.camera.status = 1//bluh bluh ugly fix but it will work till this whole thing gets recoded
-				if(src.stat)
+			if(src.camera && !scrambledcodes)
+				if(src.stat == 2 || isWireCut(5))
 					src.camera.status = 0
+				else
+					src.camera.status = 1
 
 			health = 200 - (getOxyLoss() + getFireLoss() + getBruteLoss())
 

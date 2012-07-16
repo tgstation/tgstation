@@ -2,24 +2,26 @@
 #define BORG_WIRE_MAIN_POWER1 2
 #define BORG_WIRE_MAIN_POWER2 3
 #define BORG_WIRE_AI_CONTROL 4
+#define BORG_WIRE_CAMERA 5
 
 /proc/RandomBorgWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
-	var/list/Borgwires = list(0, 0, 0, 0)
-	BorgIndexToFlag = list(0, 0, 0, 0)
-	BorgIndexToWireColor = list(0, 0, 0, 0)
-	BorgWireColorToIndex = list(0, 0, 0, 0)
+	var/list/Borgwires = list(0, 0, 0, 0, 0)
+	BorgIndexToFlag = list(0, 0, 0, 0, 0)
+	BorgIndexToWireColor = list(0, 0, 0, 0, 0)
+	BorgWireColorToIndex = list(0, 0, 0, 0, 0)
 	var/flagIndex = 1
-	for (var/flag=1, flag<16, flag+=flag)
-		var/valid = 0
-		while (!valid)
-			var/colorIndex = rand(1, 4)
-			if (Borgwires[colorIndex]==0)
-				valid = 1
-				Borgwires[colorIndex] = flag
-				BorgIndexToFlag[flagIndex] = flag
-				BorgIndexToWireColor[flagIndex] = colorIndex
-				BorgWireColorToIndex[colorIndex] = flagIndex
+	//I think it's easier to read this way, also doesn't rely on the random number generator to land on a new wire.
+	var/list/colorIndexList = list(BORG_WIRE_LAWCHECK, BORG_WIRE_MAIN_POWER1, BORG_WIRE_MAIN_POWER2, BORG_WIRE_AI_CONTROL, BORG_WIRE_CAMERA)
+	for (var/flag=1, flag<=16, flag+=flag)
+		var/colorIndex = pick(colorIndexList)
+		if (Borgwires[colorIndex]==0)
+			Borgwires[colorIndex] = flag
+			BorgIndexToFlag[flagIndex] = flag
+			BorgIndexToWireColor[flagIndex] = colorIndex
+			BorgWireColorToIndex[colorIndex] = flagIndex
+			colorIndexList -= colorIndex // Shortens the list.
+		//world.log << "Flag: [flag], CIndex: [colorIndex], FIndex: [flagIndex]"
 		flagIndex+=1
 	return Borgwires
 
@@ -43,6 +45,11 @@
 		if (BORG_WIRE_AI_CONTROL) //Cut the AI wire to reset AI control
 			if (src.connected_ai)
 				src.connected_ai = null
+		if (BORG_WIRE_CAMERA)
+			if(!isnull(src.camera) && !scrambledcodes)
+				src.camera.status = 0
+				src.camera.deactivate(usr, 0) // Will kick anyone who is watching the Cyborg's camera.
+
 	src.interact(usr)
 
 /mob/living/silicon/robot/proc/mend(var/wireColor)
@@ -53,6 +60,10 @@
 		if(BORG_WIRE_LAWCHECK) //turns law updates back on assuming the borg hasn't been emagged
 			if (src.lawupdate == 0 && !src.emagged)
 				src.lawupdate = 1
+		if(BORG_WIRE_CAMERA)
+			if (!isnull(src.camera) && !scrambledcodes)
+				src.camera.status = 1
+
 	src.interact(usr)
 
 
@@ -63,9 +74,16 @@
 			if (src.lawupdate)
 				src.lawsync()
 
-		if (BORG_WIRE_AI_CONTROL) //pule the AI wire to make the borg reselect an AI
+		if (BORG_WIRE_AI_CONTROL) //pulse the AI wire to make the borg reselect an AI
 			if(!src.emagged)
 				src.connected_ai = activeais()
+
+		if (BORG_WIRE_CAMERA)
+			if(!isnull(src.camera) && src.camera.status && !scrambledcodes)
+				src.camera.deactivate(usr, 0) // Kick anyone watching the Cyborg's camera, doesn't display you disconnecting the camera.
+				usr << "[src]'s camera lens focuses loudly."
+				src << "Your camera lens focuses loudly."
+
 	src.interact(usr)
 
 /mob/living/silicon/robot/proc/interact(mob/user)
@@ -77,6 +95,7 @@
 			"Dark red" = 2,
 			"White" = 3,
 			"Yellow" = 4,
+			"Blue" = 5,
 		)
 		for(var/wiredesc in Borgwires)
 			var/is_uncut = src.borgwires & BorgWireColorToFlag[Borgwires[wiredesc]]
@@ -88,6 +107,7 @@
 				t1 += "<a href='?src=\ref[src];pulse=[Borgwires[wiredesc]]'>Pulse</a> "
 			t1 += "<br>"
 		t1 += text("<br>\n[(src.lawupdate ? "The LawSync light is on." : "The LawSync light is off.")]<br>\n[(src.connected_ai ? "The AI link light is on." : "The AI link light is off.")]")
+		t1 += text("<br>\n[((!isnull(src.camera) && src.camera.status == 1) ? "The Camera light is on." : "The Camera light is off.")]<br>\n")
 		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p>\n")
 		user << browse(t1, "window=borgwires")
 		onclose(user, "borgwires")
@@ -119,3 +139,9 @@
 			usr << browse(null, "window=borgwires")
 			usr.machine = null
 			return
+
+#undef BORG_WIRE_LAWCHECK
+#undef BORG_WIRE_MAIN_POWER1
+#undef BORG_WIRE_MAIN_POWER2
+#undef BORG_WIRE_AI_CONTROL
+#undef BORG_WIRE_CAMERA

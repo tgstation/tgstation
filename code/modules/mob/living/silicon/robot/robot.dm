@@ -15,6 +15,12 @@
 			ident = rand(1, 999)
 			real_name += "-[ident]"
 			name = real_name
+		src << "<B>You are playing a Cyborg. You can move around and remotely interact with the machines around you.</B>"
+		src << "<B>You can use things such as computers, APCs, intercoms, doors, etc. To use something, simply click on it.</B>"
+		src << "<B>As a new Cyborg you can choose your class. Each class have different modules that help them perform their duties.</B>"
+		src << "<B>Remember that you have a limited charge and the more modules you have active the more power you will drain.</B>"
+		src << "<B>Finally, you are loyal to your linked AI. You should obey all orders of the linked AI as long as it does not conflict with your laws.</B>"
+		src << "Use say :s to speak to your fellow machines through binary."
 
 	spawn (4)
 		if(!syndie)
@@ -44,9 +50,10 @@
 			modtype = "Synd"
 
 		radio = new /obj/item/device/radio(src)
-		camera = new /obj/machinery/camera(src)
-		camera.c_tag = real_name
-		camera.network = "SS13"
+		if(!scrambledcodes)
+			camera = new /obj/machinery/camera(src)
+			camera.c_tag = real_name
+			camera.network = "SS13"
 	if(!cell)
 		var/obj/item/weapon/cell/C = new(src)
 		C.charge = 1500
@@ -963,17 +970,24 @@ Frequency:
 	lockcharge = 0
 	canmove = 1
 	scrambledcodes = 1
-
+	//Disconnect it's camera so it's not so easily tracked.
+	if(src.camera)
+		del(src.camera)
+		src.camera = null
+		// I'm trying to get the Cyborg to not be listed in the camera list
+		// Instead of being listed as "deactivated". The downside is that I'm going
+		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
+		// I could change the network to null but I don't know what would happen, and it seems too hacky for me.
 
 
 /mob/living/silicon/robot/proc/ResetSecurityCodes()
 	set category = "Robot Commands"
 	set name = "Reset Identity Codes"
-	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you and but permenantly severs you from your AI and the robotics console."
+	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you and but permenantly severs you from your AI and the robotics console and will deactivate your camera system."
 
 	var/mob/living/silicon/robot/R = usr
 
 	if(R)
 		R.UnlinkSelf()
-		R << "Buffers flushed and reset.  All systems operational."
+		R << "Buffers flushed and reset. Camera system shutdown.  All systems operational."
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes

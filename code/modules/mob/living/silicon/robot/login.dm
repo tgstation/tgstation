@@ -41,9 +41,12 @@
 			modtype = "Synd"
 
 		radio = new /obj/item/device/radio(src)
-		camera = new /obj/machinery/camera(src)
-		camera.c_tag = real_name
-		camera.network = "SS13"
+		if(!scrambledcodes)
+			camera = new /obj/machinery/camera(src)
+			camera.c_tag = real_name
+			camera.network = "SS13"
+			if(isWireCut(5)) // 5 = BORG CAMERA
+				camera.status = 0
 	if(!cell)
 		var/obj/item/weapon/cell/C = new(src)
 		C.charge = 1500

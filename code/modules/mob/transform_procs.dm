@@ -198,10 +198,10 @@
 		ticker.minds += O.mind//Adds them to regular mind list.
 
 	O.loc = loc
-	O << "<B>You are playing a Cyborg. A Cyborg can interact with most electronic objects in its view point.</B>"
-	O << "<B>You must follow the laws that the AI has. You must follow orders the AI gives you.</B>"
-	O << "To use something, simply click on it."
-	O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
+	//O << "<B>You are playing a Cyborg. A Cyborg can interact with most electronic objects in its view point.</B>"
+	//O << "<B>You must follow the laws that the AI has. You must follow orders the AI gives you.</B>"
+	//O << "To use something, simply click on it."
+	//O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
 
 	O.job = "Cyborg"
 

@@ -48,8 +48,8 @@
 	update_canmove()
 
 	tension_master.death(src)
-
-	camera.status = 0
+	if(camera)
+		camera.status = 0
 
 	if(in_contents_of(/obj/machinery/recharge_station))//exit the recharge station
 		var/obj/machinery/recharge_station/RC = loc
