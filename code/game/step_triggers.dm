@@ -30,24 +30,27 @@
 	var/nostop = 0 // if 1: will only be stopped by teleporters
 	var/list/affecting = list()
 
-	Trigger(var/atom/movable/A)
+	Trigger(var/atom/A)
+		if(!A || !istype(A, /atom/movable))
+			return
+		var/atom/movable/AM = A
 		var/curtiles = 0
 		var/stopthrow = 0
 		for(var/obj/effect/step_trigger/thrower/T in orange(2, src))
-			if(A in T.affecting)
+			if(AM in T.affecting)
 				return
 
-		if(ismob(A))
-			var/mob/M = A
+		if(ismob(AM))
+			var/mob/M = AM
 			if(immobilize)
 				M.canmove = 0
 
-		affecting.Add(A)
-		while(A && !stopthrow)
+		affecting.Add(AM)
+		while(AM && !stopthrow)
 			if(tiles)
 				if(curtiles >= tiles)
 					break
-			if(A.z != src.z)
+			if(AM.z != src.z)
 				break
 
 			curtiles++
@@ -56,26 +59,26 @@
 
 			// Calculate if we should stop the process
 			if(!nostop)
-				for(var/obj/effect/step_trigger/T in get_step(A, direction))
+				for(var/obj/effect/step_trigger/T in get_step(AM, direction))
 					if(T.stopper && T != src)
 						stopthrow = 1
 			else
-				for(var/obj/effect/step_trigger/teleporter/T in get_step(A, direction))
+				for(var/obj/effect/step_trigger/teleporter/T in get_step(AM, direction))
 					if(T.stopper)
 						stopthrow = 1
 
-			if(A)
-				var/predir = A.dir
-				step(A, direction)
+			if(AM)
+				var/predir = AM.dir
+				step(AM, direction)
 				if(!facedir)
-					A.dir = predir
+					AM.dir = predir
 
 
 
-		affecting.Remove(A)
+		affecting.Remove(AM)
 
-		if(ismob(A))
-			var/mob/M = A
+		if(ismob(AM))
+			var/mob/M = AM
 			if(immobilize)
 				M.canmove = 1
 

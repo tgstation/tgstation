@@ -1212,7 +1212,7 @@ turf/simulated/floor/proc/update_icon()
 			if(air)
 				update_visuals(air)
 
-turf/simulated/floor/return_siding_icon_state()
+/turf/simulated/floor/return_siding_icon_state()
 	..()
 	if(is_grass_floor())
 		var/dir_sum = 0
