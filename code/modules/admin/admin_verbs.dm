@@ -152,6 +152,7 @@
 			verbs += /obj/admins/proc/restart							//restart
 			verbs += /client/proc/cmd_admin_check_contents
 			verbs += /client/proc/cmd_admin_create_centcom_report
+			verbs += /client/proc/cmd_admin_classified_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
 			verbs += /client/proc/deadmin_self
@@ -365,6 +366,7 @@
 	verbs -= /client/proc/stealth
 	verbs -= /client/proc/cmd_admin_check_contents
 	verbs -= /client/proc/cmd_admin_create_centcom_report
+	verbs -= /client/proc/cmd_admin_classified_centcom_report
 	verbs -= /client/proc/deadchat										//toggles deadchat
 	//verbs -= /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 	verbs -= /client/proc/cmd_admin_pm_context

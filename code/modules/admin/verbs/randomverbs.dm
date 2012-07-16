@@ -571,6 +571,30 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(src)] has created a command report", 1)
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_classified_centcom_report()
+	set category = "Special Verbs"
+	set name = "Create Classified Report"
+	if(!holder)
+		src << "Only administrators may use this command."
+		return
+	var/input = input(usr, "What do you want to say to the command staff?", "What?", "") as message|null
+	if(!input)
+		return
+	for (var/obj/machinery/computer/communications/C in machines)
+		if(! (C.stat & (BROKEN|NOPOWER) ) )
+			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
+			P.name = "paper- '[command_name()] Update.'"
+			P.info = input
+			C.messagetitle.Add("[command_name()] Update")
+			C.messagetext.Add(P.info)
+
+	command_alert("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message");
+
+	world << sound('commandreport.ogg')
+	log_admin("[key_name(src)] has created a classified command report: [input]")
+	message_admins("[key_name_admin(src)] has created a classified command report", 1)
+	feedback_add_details("admin_verb","CCCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
 	set category = "Admin"
 	set name = "Delete"

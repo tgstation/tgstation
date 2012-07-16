@@ -182,7 +182,7 @@
 					var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 					if(choice == "Confirm")
 						if(R && istype(R))
-//							message_admins("\blue [key_name_admin(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
+							message_admins("\blue [key_name_admin(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 							log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 							R.canmove = !R.canmove
 							if (R.lockcharge)

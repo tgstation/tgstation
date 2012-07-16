@@ -155,8 +155,17 @@ obj/structure/door_assembly
 		state = 1
 		glass = 0
 
+	door_assembly_hatch
+		name = "Airtight Hatch Assembly"
+		icon_state = "door_as_hatch1"
+		airlock_type = /obj/machinery/door/airlock/hatch
+		anchored = 1
+		density = 1
+		state = 1
+		glass = 0
+
 	door_assembly_mhatch
-		name = "Airtight Maintenance Hatch Assembly"
+		name = "Maintenance Hatch Assembly"
 		icon_state = "door_as_mhatch1"
 		airlock_type = /obj/machinery/door/airlock/maintenance_hatch
 		anchored = 1
