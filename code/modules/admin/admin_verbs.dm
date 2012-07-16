@@ -466,6 +466,7 @@
 	if(istype(mob, /mob/dead/observer))
 		var/mob/dead/observer/ghost = mob
 		ghost.reenter_corpse()
+	deadchat = 0
 	src << "\blue You are now playing"
 	feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

@@ -110,6 +110,9 @@
 			else if(href_list["AIoverride"])
 				if(!issilicon(usr))	return
 				emagged = !emagged
+				if(emagged)
+					message_admins("[key_name_admin(usr)] overrided the holodeck's safeties")
+					log_game("[key_name(usr)] overrided the holodeck's safeties")
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()
@@ -153,6 +156,7 @@
 		emagged = 1
 		user << "\blue You vastly increase projector power and override the safety and security protocols."
 		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
+		log_game("[key_name(usr)] emagged the Holodeck Control Computer")
 	src.updateUsrDialog()
 	return
 
