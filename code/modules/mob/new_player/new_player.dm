@@ -48,11 +48,23 @@
 
 		output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
-		var/DBConnection/dbcon = new()
-		dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
-		if(dbcon.IsConnected())
-			output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
-		dbcon.Disconnect()
+		if(!IsGuestKey(src.key))
+			var/DBConnection/dbcon = new()
+			dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+
+			if(dbcon.IsConnected())
+				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\")")
+				query.Execute()
+				var/newpoll = 0
+				while(query.NextRow())
+					newpoll = 1
+					break
+
+				if(newpoll)
+					output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
+				else
+					output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
+			dbcon.Disconnect()
 
 		output += "</div>"
 
