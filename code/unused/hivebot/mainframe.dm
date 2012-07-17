@@ -72,7 +72,7 @@
 	if (istype(other, /mob/living/silicon/ai))
 		return 1
 	if (istype(other, /mob/living/carbon/human/tajaran))
-			return 1
+		return 1
 	return ..()
 
 /mob/living/silicon/hive_mainframe/say_quote(var/text)
