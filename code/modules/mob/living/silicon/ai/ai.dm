@@ -269,12 +269,12 @@
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
 		if(A && target)
 
-			A:cameraFollow = target
+			A.cameraFollow = target
 			A << text("Now tracking [] on camera.", target.name)
 			if (usr.machine == null)
 				usr.machine = usr
 
-			while (usr:cameraFollow == target)
+			while (src.cameraFollow == target)
 				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
 				sleep(40)
 				continue
@@ -356,17 +356,16 @@
 
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
-	usr:cameraFollow = null
-	if (!C)
+
+	src.cameraFollow = null
+	if (!C || stat == 2 || !C.status || C.network != network)
 		machine = null
 		reset_view(null)
 		return 0
-	if (stat == 2 || !C.status || C.network != network) return 0
 
 	// ok, we're alive, camera is good and in our network...
-
 	machine = src
-	src:current = C
+	src.current = C
 	reset_view(C)
 	return 1
 
@@ -429,7 +428,7 @@
 	set name = "Cancel Camera View"
 	reset_view(null)
 	machine = null
-	src:cameraFollow = null
+	src.cameraFollow = null
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
@@ -439,14 +438,14 @@
 	set name = "Change Camera Network"
 	reset_view(null)
 	machine = null
-	src:cameraFollow = null
+	src.cameraFollow = null
 	var/cameralist[0]
 
 	if(usr.stat == 2)
 		usr << "You can't change your camera network because you are dead!"
 		return
 
-	for (var/obj/machinery/camera/C in world)
+	for (var/obj/machinery/camera/C in Cameras)
 		if(!C.status)
 			continue
 		if(C.network == "AI Satellite")

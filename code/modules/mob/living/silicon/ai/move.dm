@@ -42,7 +42,7 @@
 	var/area/A = get_area(old)
 	var/list/old_types = dd_text2list("[A.type]", "/")
 
-	for(var/obj/machinery/camera/current in world)
+	for(var/obj/machinery/camera/current in Cameras)
 		if(user.network != current.network)	continue
 		if(!current.status)	continue	//	ignore disabled cameras
 

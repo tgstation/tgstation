@@ -1,3 +1,13 @@
+var/global/list/obj/machinery/camera/Cameras = list()
+
+/obj/machinery/camera/New()
+	Cameras += src
+	..()
+
+/obj/machinery/camera/Del()
+	Cameras -= src
+	..()
+
 
 // Double clicking turfs to move to nearest camera
 
@@ -143,7 +153,7 @@
 					if (closestDist > 7 || closestDist == -1)
 						//check other cameras
 						var/obj/machinery/camera/closest = C
-						for(var/obj/machinery/camera/C2 in world)
+						for(var/obj/machinery/camera/C2 in Cameras)
 							if (C2.network == src.network)
 								if (C2.z == target.z)
 									zmatched = 1
@@ -191,10 +201,14 @@
 	if (stat == 2)
 		return
 
+	// If they cancel then just put them back to their old camera
+	var/obj/machinery/camera/tempC = src.current
 	user.machine = src
+	src.current = null
+	switchCamera(null)
 
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in world)
+	for (var/obj/machinery/camera/C in Cameras)
 		L.Add(C)
 
 	camera_sort(L)
@@ -208,11 +222,15 @@
 	var/t = input(user, "Which camera should you change to?") as null|anything in D
 
 	if (!t || t == "Cancel")
-		switchCamera(null)
+		if(tempC && tempC.status)
+			src.current = tempC
+			switchCamera(null)
+		else
+			src.current = null
+			switchCamera(null)
 		return 0
 
 	var/obj/machinery/camera/C = D[t]
-
 	switchCamera(C)
 
 	return
@@ -382,6 +400,24 @@
 				S.current = null
 				O.reset_view(null)
 				O << "The screen bursts into static."
+
+/atom/proc/auto_turn()
+	//Automatically turns based on nearby walls.
+	var/turf/simulated/wall/T = null
+	for(var/i = 1, i <= 8; i += i)
+		T = get_ranged_target_turf(src, i, 1)
+		if(!isnull(T) && istype(T))
+			//If someone knows a better way to do this, let me know. -Giacom
+			switch(i)
+				if(NORTH)
+					src.dir = SOUTH
+				if(SOUTH)
+					src.dir = NORTH
+				if(WEST)
+					src.dir = EAST
+				if(EAST)
+					src.dir = WEST
+			break
 
 //Return a working camera that can see a given mob
 //or null if none

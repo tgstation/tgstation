@@ -152,15 +152,29 @@
 						if(istype(W, /obj/item/weapon/screwdriver))
 							playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 							user << "\blue You connect the lense."
-							var/B
+							var/obj/machinery/camera/B = null
 							if(motion == 1)
 								B = new /obj/machinery/camera/motion( src.loc )
 							else
 								B = new /obj/machinery/camera( src.loc )
-							B:network = "SS13"
-							B:network = input(usr, "Which network would you like to connect this camera to?", "Set Network", "SS13")
-							direct = input(user, "Direction?", "Assembling Camera", null) in list( "NORTH", "EAST", "SOUTH", "WEST" )
-							B:dir = text2dir(direct)
+							// To prevent people exploiting the fact that it doesn't delete the assembly until the user is done
+							// entering the camera options.
+							src.loc = B
+
+							//Auto detect walls and turn camera based on wall locations.
+							B.auto_turn()
+
+							B.network = "SS13"
+							B.network = input(usr, "Which network would you like to connect this camera to?", "Set Network", "SS13")
+
+							for(var/i = 5; i >= 0; i -= 1)
+								direct = input(user, "Direction?", "Assembling Camera", null) in list("LEAVE IT", "NORTH", "EAST", "SOUTH", "WEST" )
+								if(direct != "LEAVE IT")
+									B.dir = text2dir(direct)
+								if(i != 0)
+									var/confirm = alert(user, "Is this what you want? Chances Remaining: [i]", "Confirmation", "Yes", "No")
+									if(confirm == "Yes")
+										break
 							del(src)
 
 	prime()

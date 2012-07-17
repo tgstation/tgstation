@@ -33,7 +33,7 @@
 		user.machine = src
 
 		var/list/L = list()
-		for (var/obj/machinery/camera/C in world)
+		for (var/obj/machinery/camera/C in Cameras)
 			L.Add(C)
 
 		camera_sort(L)
@@ -57,6 +57,8 @@
 
 		if(C)
 			if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.status )) && (!istype(user, /mob/living/silicon/ai)))
+				if(!C.status)
+					src.current = null
 				return 0
 			else
 				src.current = C
