@@ -246,6 +246,31 @@
 /proc/capitalize(var/t as text)
 	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
 
+//Sorts Atoms by their name property.
+//Sorry for the copy+pasta, I doubt quick sorting will change anytime soon though.
+// Order 1 = Ascending / Order -1 = Descending
+/proc/sortAtom(var/list/atom/L, var/order = 1)
+	if(isnull(L) || L.len < 2)
+		return L
+	var/middle = L.len / 2 + 1
+	return mergeAtoms(sortAtom(L.Copy(0,middle)), sortAtom(L.Copy(middle)), order)
+
+/proc/mergeAtoms(var/list/atom/L, var/list/atom/R, var/order = 1)
+	var/Li=1
+	var/Ri=1
+	var/list/result = new()
+	while(Li <= L.len && Ri <= R.len)
+		var/atom/rL = L[Li]
+		var/atom/rR = R[Ri]
+		if(sorttext(rL.name, rR.name) == order)
+			result += L[Li++]
+		else
+			result += R[Ri++]
+
+	if(Li <= L.len)
+		return (result + L.Copy(Li, 0))
+	return (result + R.Copy(Ri, 0))
+
 /proc/sortRecord(var/list/datum/data/record/L, var/field = "name", var/order = 1)
 	if(isnull(L) || L.len < 2)
 		return L
