@@ -3,6 +3,8 @@
 		return 1
 	if (istype(other, /mob/living/carbon/human))
 		return 1
+	if (istype(other, /mob/living/carbon/human/tajaran))
+			return 1
 	if (istype(other, /mob/living/silicon/robot))
 		return 1
 	return ..()
