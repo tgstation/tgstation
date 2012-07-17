@@ -493,7 +493,7 @@
 			M << speech_bubble
 		spawn(30) del(speech_bubble)
 
-/living/carbon/human/tajaran/say_understands(var/other)
+/mob/living/carbon/human/tajaran/say_understands(var/other)
 	if (istype(other, /mob/living/silicon/ai))
 		return 1
 	if (istype(other, /mob/living/silicon/decoy))
