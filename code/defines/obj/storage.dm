@@ -94,27 +94,30 @@
 	name = "Giggles Von Honkerton"
 	desc = "It's a backpack made by Honk! Co."
 	icon_state = "clownpack"
+	item_state = "clownpack"
 
 /obj/item/weapon/storage/backpack/medic
 	name = "medical backpack"
 	desc = "It's a backpack especially designed for use in a sterile environment."
 	icon_state = "medicalpack"
+	item_state = "medicalpack"
 
 /obj/item/weapon/storage/backpack/security
 	name = "security backpack"
 	desc = "It's a very robust backpack."
 	icon_state = "securitypack"
+	item_state = "securitypack"
 
 /obj/item/weapon/storage/backpack/captain
 	name = "Captain's Backpack"
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
 	icon_state = "captainpack"
+	item_state = "captainpack"
 
 /obj/item/weapon/storage/backpack/satchel
 	name = "satchel"
 	desc = "It's a very robust satchel to wear on your back."
 	icon_state = "satchel"
-	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/satchel/withwallet
 	New()
@@ -175,6 +178,7 @@
 	name = "Captain's Satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
+	item_state = "captainpack"
 
 /obj/item/weapon/storage/backpack/bandolier
 	name = "bandolier"
@@ -185,6 +189,7 @@
 	name = "industrial backpack"
 	desc = "It's a tough backpack for the daily grind of station life."
 	icon_state = "engiepack"
+	item_state = "engiepack"
 
 /obj/item/weapon/storage/briefcase
 	name = "briefcase"
