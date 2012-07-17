@@ -145,18 +145,14 @@ to null does not delete the object itself. Thank you.
 	return
 
 /datum/disease/proc/cure(var/resistance=1)//if resistance = 0, the mob won't develop resistance to disease
-	if(resistance && affected_mob && !(type in affected_mob.resistances))
-//		world << "Setting res to [src]"
-		var/saved_type = "[type]"//copy the value, not create the reference to it, so when the object is deleted, the value remains.
-		affected_mob.resistances += text2path(saved_type)
-	if((affected_mob) && (istype(src, /datum/disease/alien_embryo)))//Get rid of the flag.
-		affected_mob.status_flags &= ~(XENO_HOST)
-//	world << "Removing [src]"
-	spawn(0)
-		affected_mob.viruses -= src //I am a silly person for trying affected_mob.viruses.Find(src_type) instead of what it's like now and getting LOL WHAT IS THIS PROC
-		del(src) //IT'LL TAKE MORE THAN A LIST REMOVE TO DEFEAT US!
-		//world <<"Virus deleted successfully."
-	//world <<"Cured the disease, deleting virus..."
+	if(affected_mob)
+		if(resistance && !(type in affected_mob.resistances))
+			var/saved_type = "[type]"
+			affected_mob.resistances += text2path(saved_type)
+		if(istype(src, /datum/disease/alien_embryo))	//Get rid of the infection flag if it's a xeno embryo.
+			affected_mob.status_flags &= ~(XENO_HOST)
+		affected_mob.viruses -= src		//remove the datum from the list
+	del(src)	//delete the datum to stop it processing
 	return
 
 
