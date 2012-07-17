@@ -965,7 +965,7 @@
 	set category = "Object"
 	set name = "Enter Exosuit"
 	set src in oview(1)
-	if (ishuman(usr) && istajaran(usr) == 0 || usr.stat) //Mechs can take Tajaran pilots now.
+	if (ishuman(usr) || istajaran(usr) || usr.stat) //Mechs can take Tajaran pilots now.
 		return
 	src.log_message("[usr] tries to move in.")
 	if (src.occupant)
@@ -1133,7 +1133,7 @@
 		return
 	if(mob_container.forceMove(src.loc))//ejecting mob container
 	/*
-		if(ishuman(occupant) || istajaran(occupant) && (return_pressure() > HAZARD_HIGH_PRESSURE))
+		if((ishuman(occupant) || istajaran(occupant)) && (return_pressure() > HAZARD_HIGH_PRESSURE))
 			use_internal_tank = 0
 			var/datum/gas_mixture/environment = get_turf_air()
 			if(environment)
