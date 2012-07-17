@@ -105,6 +105,11 @@
 	desc = "It's a very robust backpack."
 	icon_state = "securitypack"
 
+/obj/item/weapon/storage/backpack/captain
+	name = "Captain's Backpack"
+	desc = "It's a special backpack made exclusively for Nanotrasen officers."
+	icon_state = "captainpack"
+
 /obj/item/weapon/storage/backpack/satchel
 	name = "satchel"
 	desc = "It's a very robust satchel to wear on your back."
@@ -166,7 +171,10 @@
 	desc = "A green satchel for plant related work."
 	icon_state = "satchel_hyd"
 
-
+/obj/item/weapon/storage/backpack/satchel_cap
+	name = "Captain's Satchel"
+	desc = "An exclusive satchel for Nanotrasen officers."
+	icon_state = "satchel-cap"
 
 /obj/item/weapon/storage/backpack/bandolier
 	name = "bandolier"

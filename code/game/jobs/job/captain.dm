@@ -13,8 +13,8 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/heads/captain(H), H.slot_ears)
-		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_norm(H), H.slot_back)
+		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/captain(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_cap(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/captain(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/captain(H), H.slot_belt)
