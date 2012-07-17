@@ -318,19 +318,12 @@
 		user << "\red Someone's already washing here."
 		return
 
-	if (istype(O, /obj/item/weapon/reagent_containers/glass/bucket))
-		O:reagents.add_reagent("water", 70)
-		user.visible_message( \
-			"\blue [user] fills the [O] using \the [src].", \
-			"\blue You fill the [O] using \the [src].")
+	if (istype(O, /obj/item/weapon/reagent_containers))
+		var/obj/item/weapon/reagent_containers/RG = O
+		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+		user.visible_message("\blue [user] fills the [RG] using \the [src].","\blue You fill the [RG] using \the [src].")
 		return
 
-	if (istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks))
-		O:reagents.add_reagent("water", 10)
-		user.visible_message( \
-			"\blue [user] fills the [O] using \the [src].", \
-			"\blue You fill the [O] using \the [src].")
-		return
 	else if (istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
 		if (B.charges > 0 && B.status == 1)

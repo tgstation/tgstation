@@ -69,8 +69,11 @@
 
 /obj/item/weapon/gun/projectile/russian/attackby(var/obj/item/A as obj, mob/user as mob)
 
+	if(!A) return
+
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_magazine))
+
 		if((load_method == 2) && loaded.len)	return
 		var/obj/item/ammo_magazine/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
@@ -82,16 +85,7 @@
 				loaded += AC
 				num_loaded++
 			break
-		if(load_method == 2)
-			..()
-			return
-	if(istype(A, /obj/item/ammo_casing) && !load_method)
-		var/obj/item/ammo_casing/AC = A
-		if(AC.caliber == caliber && loaded.len < max_shells && getAmmo() == 0)
-			user.drop_item()
-			AC.loc = src
-			loaded += AC
-			num_loaded++
+		A.update_icon()
 
 	if(num_loaded)
 		user.visible_message("[user] loads a single bullet into the revolver and spins the chamber.", "You load a single bullet into the chamber and spin it.")
@@ -99,7 +93,6 @@
 		user.visible_message("[user] spins the chamber of the revolver.", "You spin the revolver's chamber.")
 	if(getAmmo() > 0)
 		Spin()
-	A.update_icon()
 	update_icon()
 	return
 
