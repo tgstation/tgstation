@@ -102,7 +102,7 @@
 	if(getAmmo() > 0)
 		Spin()
 
-/obj/item/weapon/gun/projectile/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
+/obj/item/weapon/gun/projectile/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
 
 	if(isliving(target) && isliving(user))
 		if(target == user)
