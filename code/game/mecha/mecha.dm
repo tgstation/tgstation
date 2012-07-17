@@ -965,7 +965,7 @@
 	set category = "Object"
 	set name = "Enter Exosuit"
 	set src in oview(1)
-	if (ishuman(usr) || istajaran(usr) || usr.stat) //Mechs can take Tajaran pilots now.
+	if ((ishuman(usr) && istajaran(usr)) == 0 || usr.stat) //Mechs can take Tajaran pilots now. (Because I have fixed the little bork that happened when fixing my little bork. Bork bork bork :P)
 		return
 	src.log_message("[usr] tries to move in.")
 	if (src.occupant)
