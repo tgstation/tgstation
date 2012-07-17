@@ -5,8 +5,7 @@
 	icon = 'tajaran.dmi'
 	icon_state = "m_none"
 	var/list/tajspeak_letters = list("~","*","-")
-	//
-	universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
+	//universal_speak = 1 (I think I fixed it, need testy testy) hacky fix until someone can figure out how to make them only understand humans
 	taj_talk_understand = 1
 	voice_message = "mrowls"
 	examine_text = "one of the cat-like Tajarans"
