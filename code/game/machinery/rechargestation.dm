@@ -108,6 +108,10 @@
 								var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
 								if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
 									B.reagents.add_reagent(B.reagent, 2)
+							//Janitor
+							if(istype(O, /obj/item/device/lightreplacer))
+								var/obj/item/device/lightreplacer/LR = O
+								LR.charge(R)
 
 						if(R)
 							if(R.module)

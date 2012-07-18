@@ -2646,7 +2646,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
-	item_state = "beer" //Generic held-item sprite until unique ones are made.
+	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
@@ -2724,7 +2724,7 @@
 		//Display an attack message.
 		for(var/mob/O in viewers(user, null))
 			if(target != user) O.show_message(text("\red <B>[target] has been hit over the head with a bottle of [src.name], by [user]!</B>"), 1)
-			else O.show_message(text("\red <B>[target] has hit himself with a bottle of [src.name] over his head!</B>"), 1)
+			else O.show_message(text("\red <B>[target] hit himself with a bottle of [src.name] on the head!</B>"), 1)
 		//Weaken the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
 			target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
