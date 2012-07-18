@@ -331,7 +331,7 @@
 
 		for (var/area/A in alarm_area.related)
 			for (var/obj/machinery/alarm/AA in A)
-				if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.danger_level != new_danger_level)
+				if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.danger_level != new_danger_level)
 					AA.update_icon()
 
 		if(danger_level > 1)
@@ -354,6 +354,7 @@
 							spawn(0)
 								E.close()
 					continue
+
 				if(istype(E, /obj/machinery/door/airlock))
 					if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
 					if(!E.density)
@@ -389,9 +390,10 @@
 							spawn(0)
 								E.open()
 					continue
+
 				if(istype(E, /obj/machinery/door/airlock))
 					if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
-					if(E:air_locked) //Don't mess with doors locked for other reasons.
+					if(!isnull(E:air_locked)) //Don't mess with doors locked for other reasons.
 						if(E.density)
 							E:req_access = E:air_locked
 							E:air_locked = null
