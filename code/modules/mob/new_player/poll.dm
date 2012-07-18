@@ -79,7 +79,7 @@
 		while(select_query.NextRow())
 			pollid = select_query.item[1]
 			pollquestion = select_query.item[2]
-			output += "<a href=\"byond://?src=\ref[src];pollid=[pollid]\"><b>[pollquestion]</b></a> "
+			output += "<a href=\"byond://?src=\ref[src];pollid=[pollid]\"><b>[pollquestion]</b></a><br>"
 
 		src << browse(output,"window=playerpolllist;size=500x300")
 
