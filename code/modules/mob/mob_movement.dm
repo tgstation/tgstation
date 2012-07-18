@@ -306,7 +306,7 @@
 
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
-				if(((M.pulling == mob && (!( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
+				if(M.pulling == mob && !M.restrained() && M.stat == 0 && M.canmove)
 					src << "\blue You're restrained! You can't move!"
 					return 0
 

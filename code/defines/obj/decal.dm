@@ -1,11 +1,3 @@
-/obj/effect/decal/ash
-	name = "ashes"
-	desc = "Ashes to ashes, dust to dust, and into space."
-	gender = PLURAL
-	icon = 'objects.dmi'
-	icon_state = "ash"
-	anchored = 1
-
 /obj/effect/decal/remains/human
 	name = "remains"
 	desc = "They look like human remains. They have a strange aura about them."
@@ -42,6 +34,14 @@
 	var/list/random_icon_states = list()
 
 //HUMANS
+
+/obj/effect/decal/cleanable/ash
+	name = "ashes"
+	desc = "Ashes to ashes, dust to dust, and into space."
+	gender = PLURAL
+	icon = 'objects.dmi'
+	icon_state = "ash"
+	anchored = 1
 
 /obj/effect/decal/cleanable/blood
 	name = "blood"

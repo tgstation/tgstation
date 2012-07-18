@@ -342,7 +342,7 @@ ZIPPO
 		var/turf/location = get_turf(src)
 		src.smoketime--
 		if(src.smoketime < 1)
-			new /obj/effect/decal/ash(location)
+			new /obj/effect/decal/cleanable/ash(location)
 			if(ismob(src.loc))
 				var/mob/living/M = src.loc
 				M << "\red Your [src.name] goes out, and you empty the ash."

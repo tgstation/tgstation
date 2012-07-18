@@ -32,7 +32,7 @@
 	animation.master = src
 
 	flick("dust-m", animation)
-	new /obj/effect/decal/ash(loc)
+	new /obj/effect/decal/cleanable/ash(loc)
 
 	spawn(15)
 		if(animation)	del(animation)

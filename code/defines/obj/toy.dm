@@ -336,7 +336,7 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		new /obj/effect/decal/ash(src.loc)
+		new /obj/effect/decal/cleanable/ash(src.loc)
 		src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
 		playsound(src, 'snap.ogg', 50, 1)
 		del(src)
@@ -350,7 +350,7 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(2, 0, src)
 			s.start()
-			new /obj/effect/decal/ash(src.loc)
+			new /obj/effect/decal/cleanable/ash(src.loc)
 			src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
 			playsound(src, 'snap.ogg', 50, 1)
 			del(src)

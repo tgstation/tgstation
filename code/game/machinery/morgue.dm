@@ -250,50 +250,41 @@
 	if(cremating)
 		return //don't let you cremate something twice or w/e
 
-	if(length(contents) == 0)
+	if(contents.len <= 0)
 		for (var/mob/M in viewers(src))
 			M.show_message("\red You hear a hollow crackle.", 1)
 			return
-	else if(contents)
+
+	else
+		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
+			usr << "You get the feeling that you shouldn't cremate one of the items in the cremator."
+			return
+
 		for (var/mob/M in viewers(src))
 			M.show_message("\red You hear a roar as the crematorium activates.", 1)
+
 		cremating = 1
 		locked = 1
-		if(locate(/mob/living/, src))
-			for (var/obj/item/I in contents)
-				del(I)
-			for (var/mob/living/M in contents)
-				M.Stun(100) //You really dont want to place this inside the loop.
-				spawn(1)
-					for(var/i=1 to 10)
-						sleep(10)
-						if(M)
-							M.take_overall_damage(0,30)
-							if (M.stat!=2 && prob(30))
-								M.emote("scream")
-					new /obj/effect/decal/ash(src)
-					for (var/obj/item/W in M)
-						if (prob(10))
-							W.loc = src
-					//Logging for this runtimes and causes the cremator to lock up
-					//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point when the mob's about to be deleted
-					//user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
-					//log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> gibbed <b>[M]/[M.ckey]</b>")
-					M.death(1)
-					M.ghostize()
-					del(M)
-					cremating = 0
-					locked = 0
-					playsound(src.loc, 'ding.ogg', 50, 1)
-		else
-			for(var/obj/item/I in contents)
-				if(!istype(I, /obj/item/weapon/disk/nuclear))
-					del(I)
-					new /obj/effect/decal/ash(src)
-				sleep(30)
-				cremating = 0
-				locked = 0
-				playsound(src.loc, 'ding.ogg', 50, 1)
+
+		for(var/mob/living/M in contents)
+			if (M.stat!=2)
+				M.emote("scream")
+			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
+			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be deleted
+			//user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
+			//log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+			M.death(1)
+			M.ghostize()
+			del(M)
+
+		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
+			del(O)
+
+		new /obj/effect/decal/cleanable/ash(src)
+		sleep(30)
+		cremating = 0
+		locked = 0
+		playsound(src.loc, 'ding.ogg', 50, 1)
 	return
 
 /obj/structure/c_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
