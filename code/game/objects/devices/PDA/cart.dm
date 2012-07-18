@@ -554,8 +554,8 @@ Code:
 						if(ml)
 							if (ml.z != cl.z)
 								continue
-
-							ldat += "Mop - <b>\[[ml.x],[ml.y]\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
+							var/direction = get_dir(src, M)
+							ldat += "Mop - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
 
 					if (!ldat)
 						menu += "None"
@@ -571,8 +571,8 @@ Code:
 						if(bl)
 							if (bl.z != cl.z)
 								continue
-
-							ldat += "Bucket - <b>\[[bl.x],[bl.y]\]</b> - Water level: [B.reagents.total_volume]/100<br>"
+							var/direction = get_dir(src, B)
+							ldat += "Bucket - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
 
 					if (!ldat)
 						menu += "None"
@@ -588,8 +588,8 @@ Code:
 						if(bl)
 							if (bl.z != cl.z)
 								continue
-
-							ldat += "Cleanbot - <b>\[[bl.x],[bl.y]\]</b> - [B.on ? "Online" : "Offline"]<br>"
+							var/direction = get_dir(src, B)
+							ldat += "Cleanbot - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - [B.on ? "Online" : "Offline"]<br>"
 
 					if (!ldat)
 						menu += "None"
@@ -598,6 +598,7 @@ Code:
 
 				else
 					menu += "ERROR: Unable to determine current location."
+				menu += "<br><br><A href='byond://?src=\ref[src];choice=49'>Refresh GPS Locator</a>"
 
 	proc/add_data(atom/A as mob|obj|turf|area)
 		//I love hashtables.

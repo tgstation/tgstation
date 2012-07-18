@@ -1383,7 +1383,7 @@
 "aAE" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/requests_console{department = "Tech storage"; pixel_x = -30},/turf/simulated/floor/plating,/area/storage/tech)
 "aAF" = (/obj/machinery/light,/obj/machinery/light_switch{pixel_y = -23},/turf/simulated/floor/plating,/area/storage/tech)
 "aAG" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = "90Curve"},/turf/simulated/floor/plating,/area/storage/tech)
-"aAH" = (/obj/machinery/light,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = "Streight"},/obj/item/weapon/circuitboard/message_monitor{step_x = 3; step_y = 29},/turf/simulated/floor/plating,/area/storage/tech)
+"aAH" = (/obj/machinery/light,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = "Streight"},/obj/item/weapon/circuitboard/message_monitor,/turf/simulated/floor/plating,/area/storage/tech)
 "aAI" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = "90Curve"},/turf/simulated/floor/plating,/area/storage/tech)
 "aAJ" = (/obj/machinery/atmospherics/unary/vent_pump{on = 1},/obj/machinery/camera{c_tag = "Tech Storage South"; dir = 1; network = "SS13"},/turf/simulated/floor/plating,/area/storage/tech)
 "aAK" = (/obj/machinery/camera{c_tag = "Secure Construction Area"; dir = 4; network = "SS13"},/obj/item/weapon/crowbar,/obj/item/weapon/extinguisher,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/table/reinforced,/turf/simulated/floor/plating,/area/teleporter/gateway)

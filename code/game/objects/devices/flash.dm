@@ -94,7 +94,8 @@
 
 	else if(issilicon(M))
 		M.Weaken(rand(5,10))
-		flashfail++
+	else
+		flashfail = 1
 
 	if(isrobot(user))
 		spawn(0)
@@ -109,11 +110,19 @@
 
 	if(!flashfail)
 		flick("flash2", src)
-		for(var/mob/O in viewers(user, null))
-			O.show_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+		if(!issilicon(M))
+
+			for(var/mob/O in viewers(user, null))
+				O.show_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+		else
+
+			for(var/mob/O in viewers(user, null))
+				O.show_message("<span class='notice'>[user] overloads [M]'s sensors with the flash!</span>")
 	else
+
 		for(var/mob/O in viewers(user, null))
 			O.show_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
+
 	return
 
 
