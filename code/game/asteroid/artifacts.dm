@@ -105,7 +105,7 @@ var/global/list/spawned_surprises = list()
 			user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 			obj_count++
 
-		world << "You have a very bad feeling about this."
+		user << "You have a very bad feeling about this."
 
 	return
 
