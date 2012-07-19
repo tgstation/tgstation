@@ -129,9 +129,9 @@
 					"/obj/item/weapon/caution",
 					"/obj/item/weapon/caution",
 					"/obj/item/weapon/cleaner",
-					"/obj/item/weapon/chem_grenade/cleaner",
-					"/obj/item/weapon/chem_grenade/cleaner",
-					"/obj/item/weapon/chem_grenade/cleaner",
+					"/obj/item/weapon/grenade/chem_grenade/cleaner",
+					"/obj/item/weapon/grenade/chem_grenade/cleaner",
+					"/obj/item/weapon/grenade/chem_grenade/cleaner",
 					"/obj/structure/mopbucket")
 	cost = 10
 	containertype = "/obj/structure/closet/crate"
