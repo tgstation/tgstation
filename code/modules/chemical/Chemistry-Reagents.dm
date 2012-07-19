@@ -2587,8 +2587,7 @@ datum
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
-				if(holder.has_reagent("toxin"))
-					holder.remove_reagent("toxin", 2)
+				M.radiation = max(M.radiation-2,0)
 				if(data >= 45 && data <125)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
