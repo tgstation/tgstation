@@ -109,7 +109,7 @@
 	item_state = "securitypack"
 
 /obj/item/weapon/storage/backpack/captain
-	name = "Captain's Backpack"
+	name = "captain's backpack"
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
 	icon_state = "captainpack"
 	item_state = "captainpack"
@@ -175,7 +175,7 @@
 	icon_state = "satchel_hyd"
 
 /obj/item/weapon/storage/backpack/satchel_cap
-	name = "Captain's Satchel"
+	name = "captain's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
