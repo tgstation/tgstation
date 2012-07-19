@@ -674,7 +674,7 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	item_state = "c_tube"
-	g_amt = 200
+	g_amt = 100
 	brightness = 8
 
 	large

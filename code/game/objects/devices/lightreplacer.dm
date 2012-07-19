@@ -15,7 +15,7 @@
 //
 // HOW TO REFILL THE DEVICE
 //
-// It will need to be manually refilled with glass.
+// It will need to be manually refilled with lights.
 // If it's part of a robot module, it will charge when the Robot is inside a Recharge Station.
 //
 // EMAGGED FEATURES
@@ -36,7 +36,7 @@
 /obj/item/device/lightreplacer
 
 	name = "light replacer"
-	desc = "A device to automatically replace lights. Needs glass to operate."
+	desc = "A device to automatically replace lights. Refill with working lightbulbs."
 
 	icon = 'janitor.dmi'
 	icon_state = "lightreplacer0"
@@ -47,7 +47,7 @@
 	var/emagged = 0
 	var/failmsg = ""
 	// How much to increase per each glass?
-	var/increment = 2
+	var/increment = 5
 	// How much to take from the glass?
 	var/decrement = 1
 	var/charging = 0
@@ -63,7 +63,7 @@
 	usr << "It has [uses] lights remaining."
 
 /obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
-	if(istype(W,  /obj/item/weapon/card/emag))
+	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
 		Emag()
 		return
 
@@ -74,6 +74,20 @@
 			ModifyUses(increment)
 			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
 			return
+
+	if(istype(W, /obj/item/weapon/light))
+		var/obj/item/weapon/light/L = W
+		if(L.status == 0) // LIGHT OKAY
+			if(uses <= max_uses)
+				ModifyUses(1)
+				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
+				user.drop_item()
+				del(L)
+				return
+		else
+			user << "You need a working light."
+			return
+
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	/* // This would probably be a bit OP. If you want it though, uncomment the code.

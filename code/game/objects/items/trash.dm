@@ -81,6 +81,14 @@
 	else
 		user << "\blue The bag is full!"
 
+/obj/item/weapon/trashbag/attack_self(mob/living/user as mob)
+
+	if(contents.len > 0)
+		for(var/obj/item/I in src.contents)
+			I.loc = user.loc
+		update_icon()
+		user << "\blue You drop all the trash onto the floor."
+
 /obj/item/weapon/trashbag/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
 	if(istype(target, /obj/item))
 		var/obj/item/W = target

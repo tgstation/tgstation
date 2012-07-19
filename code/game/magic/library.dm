@@ -512,8 +512,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					var/title = query.item[3]
 					var/category = query.item[4]
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td></tr>"
-				dat += "</table><BR>"
-				dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+				dat += "</table>"
+			dat += "<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 			dbcon.Disconnect()
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"

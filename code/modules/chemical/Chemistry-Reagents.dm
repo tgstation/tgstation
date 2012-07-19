@@ -37,18 +37,12 @@ datum
 							if(istype(C, /obj/item/clothing/suit/bio_suit))
 								// bio suits are just about completely fool-proof - Doohl
 								// kind of a hacky way of making bio suits more resistant to chemicals but w/e
-								if(prob(50))
+								if(prob(75))
 									block = 1
-								else
-									if(prob(50))
-										block = 1
 
 							if(istype(C, /obj/item/clothing/head/bio_hood))
-								if(prob(50))
+								if(prob(75))
 									block = 1
-								else
-									if(prob(50))
-										block = 1
 
 						chance = chance * 100
 
@@ -2593,6 +2587,8 @@ datum
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
+				if(holder.has_reagent("toxin"))
+					holder.remove_reagent("toxin", 2)
 				if(data >= 45 && data <125)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
