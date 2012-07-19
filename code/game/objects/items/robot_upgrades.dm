@@ -13,8 +13,8 @@
 	var/installed = 0
 
 /obj/item/borg/upgrade/proc/action(var/mob/living/silicon/robot/R)
-	if(R.Stat() == 2)
-		usr << "/red The [src] will not function on a deseased cyborg."
+	if(R.stat == DEAD)
+		usr << "/red The [src] will not function on a deceased cyborg."
 		return 1
 	return 0
 
