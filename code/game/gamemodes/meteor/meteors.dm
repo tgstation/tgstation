@@ -36,25 +36,25 @@
 	do
 		switch(pick(1,2,3,4))
 			if(1) //NORTH
-				starty = world.maxy-3
-				startx = rand(1, world.maxx-1)
-				endy = 1
-				endx = rand(1, world.maxx-1)
+				starty = world.maxy-8
+				startx = rand(8, world.maxx-8)
+				endy = 8
+				endx = rand(1, world.maxx-8)
 			if(2) //EAST
-				starty = rand(1,world.maxy-1)
-				startx = world.maxx-3
-				endy = rand(1, world.maxy-1)
-				endx = 1
+				starty = rand(1,world.maxy-8)
+				startx = world.maxx-8
+				endy = rand(1, world.maxy-8)
+				endx = 8
 			if(3) //SOUTH
-				starty = 3
-				startx = rand(1, world.maxx-1)
-				endy = world.maxy-1
-				endx = rand(1, world.maxx-1)
+				starty = 8
+				startx = rand(1, world.maxx-8)
+				endy = world.maxy-8
+				endx = rand(1, world.maxx-8)
 			if(4) //WEST
-				starty = rand(1, world.maxy-1)
-				startx = 3
-				endy = rand(1,world.maxy-1)
-				endx = world.maxx-1
+				starty = rand(1, world.maxy-8)
+				startx = 8
+				endy = rand(1,world.maxy-8)
+				endx = world.maxx-8
 
 		pickedstart = locate(startx, starty, 1)
 		pickedgoal = locate(endx, endy, 1)
