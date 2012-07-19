@@ -39,21 +39,21 @@
 				starty = world.maxy-8
 				startx = rand(8, world.maxx-8)
 				endy = 8
-				endx = rand(1, world.maxx-8)
+				endx = rand(8, world.maxx-8)
 			if(2) //EAST
-				starty = rand(1,world.maxy-8)
+				starty = rand(8,world.maxy-8)
 				startx = world.maxx-8
-				endy = rand(1, world.maxy-8)
+				endy = rand(8, world.maxy-8)
 				endx = 8
 			if(3) //SOUTH
 				starty = 8
-				startx = rand(1, world.maxx-8)
+				startx = rand(8, world.maxx-8)
 				endy = world.maxy-8
-				endx = rand(1, world.maxx-8)
+				endx = rand(8, world.maxx-8)
 			if(4) //WEST
-				starty = rand(1, world.maxy-8)
+				starty = rand(8, world.maxy-8)
 				startx = 8
-				endy = rand(1,world.maxy-8)
+				endy = rand(8,world.maxy-8)
 				endx = world.maxx-8
 
 		pickedstart = locate(startx, starty, 1)
