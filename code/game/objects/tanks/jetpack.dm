@@ -42,11 +42,11 @@
 		on = !on
 		if(on)
 			icon_state = "[icon_state]-on"
-			item_state = "[item_state]-on"
+//			item_state = "[item_state]-on"
 			ion_trail.start()
 		else
 			icon_state = initial(icon_state)
-			item_state = initial(item_state)
+//			item_state = initial(item_state)
 			ion_trail.stop()
 		return
 
