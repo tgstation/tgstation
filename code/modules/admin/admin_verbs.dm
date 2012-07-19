@@ -216,6 +216,7 @@
 			verbs += /client/proc/hide_most_verbs
 			verbs += /client/proc/jumptocoord
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/giveruntimelog						//used by coders to retrieve runtime logs
 			//verbs += /client/proc/cmd_admin_godmode					--Merged with view variables
 			//verbs += /client/proc/cmd_admin_gib 						--Merged with view variables
 			//verbs += /proc/togglebuildmode 							--Merged with view variables
@@ -276,7 +277,6 @@
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/giveruntimelog						//used by coders to retrieve runtime logs
 			verbs += /client/proc/cinematic								//show a cinematic sequence
 			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/toggle_log_hrefs
