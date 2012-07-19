@@ -114,9 +114,6 @@
 		spawn(50) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
 			toggle = 1
 
-/obj/item/device/transfer_valve/process()
-	return
-
 /obj/item/device/transfer_valve/update_icon()
 	overlays = null
 	underlays = null

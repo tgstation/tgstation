@@ -118,7 +118,7 @@
 	..()
 	return
 
-/obj/effect/alien/resin/process() //Buggy and irrelevant now that you're able to just make nice little infection chambers - Urist
+///obj/effect/alien/resin/process() //Buggy and irrelevant now that you're able to just make nice little infection chambers - Urist
 	/*if(affecting)
 		var/mob/living/carbon/M = affecting
 		var/check = 0
@@ -157,7 +157,7 @@
 		else
 			for(var/mob/O in viewers(src, 3))
 				O.show_message(text("\red An alien larva bursts from the resin wall!"), 1, text("\red You hear a high, alien screech nearby!"), 2)*/
-	return
+//	return
 
 /obj/effect/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return 0

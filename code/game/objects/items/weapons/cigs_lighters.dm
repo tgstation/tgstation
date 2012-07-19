@@ -26,14 +26,12 @@ ZIPPO
 
 
 	process()
-		while(src.lit == 1)
-			src.smoketime--
-			sleep(10)
-			if(src.smoketime < 1)
-				src.icon_state = "match_burnt"
-				src.lit = -1
-				processing_objects.Remove(src)
-				return
+		src.smoketime--
+		if(src.smoketime < 1)
+			src.icon_state = "match_burnt"
+			src.lit = -1
+			processing_objects.Remove(src)
+			return
 
 
 	dropped(mob/user as mob)

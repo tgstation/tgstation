@@ -827,7 +827,7 @@ steam.start() -- spawns the effect
 	spawn(3 + metal*3)
 		process()
 	spawn(120)
-		expand = 0 // stop expanding
+		processing_objects.Remove(src)
 		sleep(30)
 
 		if(metal)
@@ -854,30 +854,27 @@ steam.start() -- spawns the effect
 		return
 
 
-	while(expand)	// keep trying to expand while true
-
-		for(var/direction in cardinal)
+	for(var/direction in cardinal)
 
 
-			var/turf/T = get_step(src,direction)
-			if(!T)
-				continue
+		var/turf/T = get_step(src,direction)
+		if(!T)
+			continue
 
-			if(!T.Enter(src))
-				continue
+		if(!T.Enter(src))
+			continue
 
-			var/obj/effect/effect/foam/F = locate() in T
-			if(F)
-				continue
+		var/obj/effect/effect/foam/F = locate() in T
+		if(F)
+			continue
 
-			F = new(T, metal)
-			F.amount = amount
-			if(!metal)
-				F.create_reagents(10)
-				if (reagents)
-					for(var/datum/reagent/R in reagents.reagent_list)
-						F.reagents.add_reagent(R.id,1)
-		sleep(15)
+		F = new(T, metal)
+		F.amount = amount
+		if(!metal)
+			F.create_reagents(10)
+			if (reagents)
+				for(var/datum/reagent/R in reagents.reagent_list)
+					F.reagents.add_reagent(R.id,1)
 
 // foam disolves when heated
 // except metal foams

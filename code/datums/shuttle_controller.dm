@@ -173,7 +173,7 @@ datum/shuttle_controller
 						start_location.move_contents_to(end_location)
 						settimeleft(SHUTTLELEAVETIME)
 						send2irc("Server", "The Emergency Shuttle has docked with the station.")
-						captain_announce("The Emergency Shuttle has docked with the station. You have [timeleft()/60] minutes to board the Emergency Shuttle.")
+						captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
 						world << sound('shuttledock.ogg')
 
 						return 1
@@ -243,7 +243,7 @@ datum/shuttle_controller
 									D.close()
 
 
-						captain_announce("The Emergency Shuttle has left the station. Estimate [timeleft()/60] minutes until the shuttle docks at Central Command.")
+						captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 
 						// Some aesthetic turbulance shaking
 						for(var/mob/M in end_location)
