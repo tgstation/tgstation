@@ -2425,7 +2425,7 @@
 "aUG" = (/obj/machinery/light_switch{pixel_y = -25},/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "aUH" = (/obj/machinery/power/apc{dir = 2; name = "Kitchen APC"; pixel_y = -24},/obj/structure/cable,/obj/machinery/light,/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "aUI" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
-"aUJ" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/machinery/light,/obj/machinery/door_control{id = "kitchen"; name = "Kitchen Shutters Control"; pixel_x = -1; pixel_y = -24; req_access_txt = "31"},/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
+"aUJ" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/machinery/light,/obj/machinery/door_control{id = "kitchen"; name = "Kitchen Shutters Control"; pixel_x = -1; pixel_y = -24; req_access_txt = "28"},/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "aUK" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 8},/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/crew_quarters/kitchen)
 "aUL" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor,/area/hydroponics)
 "aUM" = (/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor,/area/hydroponics)

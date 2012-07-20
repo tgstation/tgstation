@@ -115,8 +115,8 @@
 	item_state = "captainpack"
 
 /obj/item/weapon/storage/backpack/satchel
-	name = "satchel"
-	desc = "It's a very robust satchel to wear on your back."
+	name = "leather satchel"
+	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
 
 /obj/item/weapon/storage/backpack/satchel/withwallet
