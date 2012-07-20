@@ -47,6 +47,10 @@
 	icon_state = "lightreplacer0"
 	item_state = "electronic"
 
+	flags = FPRINT | CONDUCT
+	slot_flags = SLOT_BELT
+	origin_tech = "magnets=3;materials=2"
+
 	var/max_uses = 20
 	var/uses = 0
 	var/emagged = 0
@@ -75,7 +79,14 @@
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(G.amount - decrement >= 0 && uses < max_uses)
-			G.amount -= decrement
+			var/remaining = max(G.amount - decrement, 0)
+			if(!remaining && !(G.amount - decrement) == 0)
+				user << "There isn't enough glass."
+				return
+			G.amount = remaining
+			if(!G.amount)
+				user.drop_item()
+				del(G)
 			AddUses(increment)
 			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
 			return

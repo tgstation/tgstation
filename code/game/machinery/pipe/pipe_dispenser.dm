@@ -55,6 +55,7 @@
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (/*usr.loc*/ src.loc, pipe_type=p_type, dir=p_dir)
 			P.update()
+			P.add_fingerprint(usr)
 			wait = 1
 			spawn(10)
 				wait = 0
@@ -67,6 +68,7 @@
 	return
 
 /obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
+	src.add_fingerprint(usr)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		usr << "\blue You put [W] back to [src]."
 		del(W)
@@ -183,7 +185,7 @@ Nah
 				if(7)
 					C.ptype = 8
 					C.density = 1
-
+			C.add_fingerprint(usr)
 			C.update()
 			wait = 1
 			spawn(15)

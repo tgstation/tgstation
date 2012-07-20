@@ -1096,6 +1096,15 @@ datum
 			materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
 			build_path = "/obj/item/weapon/cell/hyper"
 
+		light_replacer
+			name = "Light Replacer"
+			desc = "A device to automatically replace lights. Refill with working lightbulbs."
+			id = "light_replacer"
+			req_tech = list("magnets" = 3, "materials" = 4)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 1500, "$silver" = 150, "$glass" = 3000)
+			build_path = "/obj/item/device/lightreplacer"
+
 ////////////////////////////////////////
 //////////////MISC Boards///////////////
 ////////////////////////////////////////

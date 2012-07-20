@@ -47,12 +47,12 @@
 
 		if(isrobot(user) && !istype(I, /obj/item/weapon/trashbag))
 			return
+		src.add_fingerprint(user)
 		if(mode<=0) // It's off
-			if(contents.len > 0)
-				user << "Eject the items first!"
-				return
-
 			if(istype(I, /obj/item/weapon/screwdriver))
+				if(contents.len > 0)
+					user << "Eject the items first!"
+					return
 				if(mode==0) // It's off but still not unscrewed
 					mode=-1 // Set it to doubleoff l0l
 					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
@@ -64,6 +64,9 @@
 					user << "You attach the screws around the power connection."
 					return
 			else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
+				if(contents.len > 0)
+					user << "Eject the items first!"
+					return
 				var/obj/item/weapon/weldingtool/W = I
 				if(W.remove_fuel(0,user))
 					playsound(src.loc, 'Welder2.ogg', 100, 1)
@@ -73,6 +76,7 @@
 						if(!src || !W.isOn()) return
 						user << "You sliced the floorweld off the disposal unit."
 						var/obj/structure/disposalconstruct/C = new (src.loc)
+						src.transfer_fingerprints_to(C)
 						C.ptype = 6 // 6 = disposal unit
 						C.anchored = 1
 						C.density = 1
@@ -131,7 +135,7 @@
 	MouseDrop_T(mob/target, mob/user)
 		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
 			return
-
+		src.add_fingerprint(user)
 		var/msg
 		for (var/mob/V in viewers(usr))
 			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
@@ -812,7 +816,7 @@
 		var/turf/T = src.loc
 		if(T.intact)
 			return		// prevent interaction with T-scanner revealed pipes
-
+		src.add_fingerprint(user)
 		if(istype(I, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/W = I
 
@@ -849,7 +853,7 @@
 				C.ptype = 4
 			if("pipe-t")
 				C.ptype = 5
-
+		src.transfer_fingerprints_to(C)
 		C.dir = dir
 		C.density = 0
 		C.anchored = 1
@@ -1101,12 +1105,10 @@
 	if(C && C.anchored)
 		return
 
-
-
 	var/turf/T = src.loc
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
-
+	src.add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 
@@ -1223,7 +1225,7 @@
 	attackby(var/obj/item/I, var/mob/user)
 		if(!I || !user)
 			return
-
+		src.add_fingerprint(user)
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(mode==0)
 				mode=1
@@ -1244,6 +1246,7 @@
 					if(!src || !W.isOn()) return
 					user << "You sliced the floorweld off the disposal outlet."
 					var/obj/structure/disposalconstruct/C = new (src.loc)
+					src.transfer_fingerprints_to(C)
 					C.ptype = 7 // 7 =  outlet
 					C.update()
 					C.anchored = 1
