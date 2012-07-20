@@ -356,26 +356,26 @@
 					continue
 
 				if(istype(E, /obj/machinery/door/airlock))
-					if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
+					if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER) || E:air_locked) continue
 					if(!E.density)
 						spawn(0)
 							E.close()
-							/*sleep(10)
+							spawn(10)
+								if(E.density)
+									E:air_locked = E.req_access
+									E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
+									E.update_icon()
+					else if(E.operating)
+						spawn(10)
+							E.close()
 							if(E.density)
 								E:air_locked = E.req_access
 								E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
-								E.update_icon()*/
-					if(E.operating)
-						spawn(10)
-							E.close()
-							/*if(E.density)
-								E:air_locked = E.req_access
-								E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
-								E.update_icon()*/
-					/*else if(!E:locked) //Don't lock already bolted doors.
+								E.update_icon()
+					else if(!E:locked) //Don't lock already bolted doors.
 						E:air_locked = E.req_access
 						E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
-						E.update_icon()*/
+						E.update_icon()
 
 	proc/air_doors_open(manual)
 		var/area/A = get_area(loc)
@@ -391,13 +391,12 @@
 								E.open()
 					continue
 
-				/*if(istype(E, /obj/machinery/door/airlock))
+				if(istype(E, /obj/machinery/door/airlock))
 					if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
 					if(!isnull(E:air_locked)) //Don't mess with doors locked for other reasons.
-						if(E.density)
-							E:req_access = E:air_locked
-							E:air_locked = null
-							E.update_icon()*/
+						E:req_access = E:air_locked
+						E:air_locked = null
+						E.update_icon()
 
 ///////////
 //HACKING//
