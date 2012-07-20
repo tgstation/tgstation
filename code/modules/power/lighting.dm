@@ -354,48 +354,11 @@
 
 	//Light replacer code
 	if(istype(W, /obj/item/device/lightreplacer))
-		if(status != LIGHT_OK)
-			if(isliving(user))
-				var/obj/item/device/lightreplacer/LR = W
-				var/mob/living/U = user
-				if(LR.CanUse(U))
-
-					if(!LR.Use(U)) return
-					U << "<span class='notice'>You replace the [src.fitting] with the [W].</span>"
-					if(status != LIGHT_EMPTY)
-						var/obj/item/weapon/light/L1 = new light_type(src.loc)
-						L1.status = status
-						L1.rigged = rigged
-						L1.brightness = src.brightness
-						L1.switchcount = switchcount
-						switchcount = 0
-						L1.update()
-
-						status = LIGHT_EMPTY
-						update()
-
-					var/obj/item/weapon/light/L2 = new light_type()
-
-					status = L2.status
-					switchcount = L2.switchcount
-					rigged = LR.emagged
-					brightness = L2.brightness
-					on = has_power()
-					update()
-					del(L2)
-
-					 // Leaving this here in case I get the go ahead to make emagged light replacers to insert rigged lights
-					if(on && rigged)
-						explode()
-					return
-
-				else
-					user << LR.failmsg
-					return
-		else
-			user << "There is a working [fitting] already inserted."
+		var/obj/item/device/lightreplacer/LR = W
+		if(isliving(user))
+			var/mob/living/U = user
+			LR.ReplaceLight(src, U)
 			return
-
 
 	// attempt to insert light
 	if(istype(W, /obj/item/weapon/light))

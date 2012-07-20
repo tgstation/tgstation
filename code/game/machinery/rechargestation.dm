@@ -111,7 +111,7 @@
 							//Janitor
 							if(istype(O, /obj/item/device/lightreplacer))
 								var/obj/item/device/lightreplacer/LR = O
-								LR.charge(R)
+								LR.Charge(R)
 
 						if(R)
 							if(R.module)

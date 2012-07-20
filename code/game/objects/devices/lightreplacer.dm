@@ -32,6 +32,11 @@
 //
 // The explosion cannot insta-kill anyone with 30% or more health.
 
+#define LIGHT_OK 0
+#define LIGHT_EMPTY 1
+#define LIGHT_BROKEN 2
+#define LIGHT_BURNED 3
+
 
 /obj/item/device/lightreplacer
 
@@ -50,7 +55,7 @@
 	var/increment = 5
 	// How much to take from the glass?
 	var/decrement = 1
-	var/charging = 0
+	var/charge = 1
 
 /obj/item/device/lightreplacer/New()
 	uses = max_uses / 2
@@ -71,7 +76,7 @@
 		var/obj/item/stack/sheet/glass/G = W
 		if(G.amount - decrement >= 0 && uses <= max_uses)
 			G.amount -= decrement
-			ModifyUses(increment)
+			AddUses(increment)
 			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
 			return
 
@@ -79,7 +84,7 @@
 		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses <= max_uses)
-				ModifyUses(1)
+				AddUses(1)
 				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
 				user.drop_item()
 				del(L)
@@ -110,20 +115,59 @@
 	var/pass = 0
 	if(do_after(user, 30))
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-		ModifyUses(-1)
+		AddUses(-1)
 		pass = 1
 	return pass
 
 // Negative numbers will subtract
-/obj/item/device/lightreplacer/proc/ModifyUses(var/amount = 1)
+/obj/item/device/lightreplacer/proc/AddUses(var/amount = 1)
 	uses = min(max(uses + amount, 0), max_uses)
 
-/obj/item/device/lightreplacer/proc/charge(var/mob/user)
-	if(!charging)
-		charging = 1
-		if(do_after(user, 50))
-			ModifyUses(1)
-			charging = 0
+/obj/item/device/lightreplacer/proc/Charge(var/mob/user)
+	charge += 1
+	if(charge > 7)
+		AddUses(1)
+		charge = 1
+
+/obj/item/device/lightreplacer/proc/ReplaceLight(var/obj/machinery/light/target, var/mob/living/U)
+
+	if(target.status != LIGHT_OK)
+		if(CanUse(U))
+			if(!Use(U)) return
+			U << "<span class='notice'>You replace the [target.fitting] with the [src].</span>"
+			if(target.status != LIGHT_EMPTY)
+				var/obj/item/weapon/light/L1 = new target.light_type(src.loc)
+				L1.status = target.status
+				L1.rigged = target.rigged
+				L1.brightness = target.brightness
+				L1.switchcount = target.switchcount
+				target.switchcount = 0
+				L1.update()
+
+				target.status = LIGHT_EMPTY
+				target.update()
+
+			var/obj/item/weapon/light/L2 = new target.light_type()
+
+			target.status = L2.status
+			target.switchcount = L2.switchcount
+			target.rigged = emagged
+			target.brightness = L2.brightness
+			target.on = target.has_power()
+			target.update()
+			del(L2)
+
+			 // Leaving this here in case I get the go ahead to make emagged light replacers to insert rigged lights
+			if(target.on && target.rigged)
+				target.explode()
+			return
+
+		else
+			U << failmsg
+			return
+	else
+		U << "There is a working [target.fitting] already inserted."
+		return
 
 /obj/item/device/lightreplacer/proc/Emag()
 	emagged = !emagged
@@ -143,3 +187,8 @@
 		return 1
 	else
 		return 0
+
+#undef LIGHT_OK
+#undef LIGHT_EMPTY
+#undef LIGHT_BROKEN
+#undef LIGHT_BURNED
