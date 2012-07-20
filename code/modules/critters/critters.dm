@@ -158,14 +158,6 @@
 	var/stunchance = 10 // chance to tackle things down
 
 
-//TEMPORARY
-	New()
-		..()
-		spawn(0)
-			del(src)
-//TEMPORARY
-
-
 	Harvest(var/obj/item/weapon/W, var/mob/living/user)
 		if(..())
 			var/success = 0

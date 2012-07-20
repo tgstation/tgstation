@@ -70,7 +70,7 @@ proc/isorgan(A)
 	return istype(A, /datum/organ/external)
 
 proc/hasorgans(A)
-	return (ishuman(A) || ismonkey(A)
+	return (ishuman(A) || ismonkey(A))
 
 
 
