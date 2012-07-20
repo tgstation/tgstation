@@ -225,7 +225,7 @@ turf
 								if(NT && NT.zone && NT.zone == T.zone)
 									T.zone.rebuild = 1
 
-					else if(T.CanPass(null, src, 0, 0) && direction in DoorDirections)
+					else if(T.CanPass(null, src, 0, 0) && (!has_door || direction in DoorDirections))
 						if(T.zone != zone)
 							ZConnect(src,T)
 
