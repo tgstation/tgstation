@@ -1,122 +1,76 @@
 
 // fun if you want to typecast humans/monkeys/etc without writing long path-filled lines.
 /proc/ishuman(A)
-	if(istype(A, /mob/living/carbon/human))
-		return 1
-	return 0
+	return istype(A, /mob/living/carbon/human)
 
 /proc/isamorph(A)
 	return istype(A, /mob/living/carbon/amorph)
 
 /proc/ismonkey(A)
-	if(A && istype(A, /mob/living/carbon/monkey))
-		return 1
-	return 0
+	return istype(A, /mob/living/carbon/monkey)
 
 /proc/isbrain(A)
-	if(A && istype(A, /mob/living/carbon/brain))
-		return 1
-	return 0
+	return istype(A, /mob/living/carbon/brain)
 
 /proc/isalien(A)
-	if(istype(A, /mob/living/carbon/alien))
-		return 1
-	return 0
+	return istype(A, /mob/living/carbon/alien)
 
 /proc/isalienadult(A)
-	if(istype(A, /mob/living/carbon/alien/humanoid))
-		return 1
-	return 0
+	return istype(A, /mob/living/carbon/alien/humanoid)
 
 /proc/islarva(A)
-	if(istype(A, /mob/living/carbon/alien/larva))
-		return 1
-	return 0
+	return istype(A, /mob/living/carbon/alien/larva)
 
 /proc/ismetroid(A)
-	if(istype(A, /mob/living/carbon/metroid))
-		return 1
-	return 0
+	return istype(A, /mob/living/carbon/metroid)
 
 /proc/isrobot(A)
-	if(istype(A, /mob/living/silicon/robot))
-		return 1
-	return 0
+	return istype(A, /mob/living/silicon/robot)
 
 /proc/isanimal(A)
-	if(istype(A, /mob/living/simple_animal))
-		return 1
-	return 0
+	return istype(A, /mob/living/simple_animal)
 
 /proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/corgi))
-		return 1
-	return 0
+	return istype(A, /mob/living/simple_animal/corgi)
 
 /proc/iscrab(A)
-	if(istype(A, /mob/living/simple_animal/crab))
-		return 1
-	return 0
+	return istype(A, /mob/living/simple_animal/crab)
 
 /proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/cat/))
-		return 1
-	return 0
+	return istype(A, /mob/living/simple_animal/cat/)
 
 /proc/istajaran(A)
-	if(istype(A, /mob/living/carbon/human/tajaran))
-		return 1
-	return 0
+	return istype(A, /mob/living/carbon/human/tajaran)
 
 /*proc/ishivebot(A)
-	if(A && istype(A, /mob/living/silicon/hivebot))
-		return 1
-	return 0*/
+	return istype(A, /mob/living/silicon/hivebot)*/
 
 /*proc/ishivemainframe(A)
-	if(A && istype(A, /mob/living/silicon/hive_mainframe))
-		return 1
-	return 0*/
+	return istype(A, /mob/living/silicon/hive_mainframe)*/
 
 /proc/isAI(A)
-	if(istype(A, /mob/living/silicon/ai))
-		return 1
-	return 0
+	return istype(A, /mob/living/silicon/ai)
 
 /proc/ispAI(A)
-	if(istype(A, /mob/living/silicon/pai))
-		return 1
-	return 0
+	return istype(A, /mob/living/silicon/pai)
 
 /proc/iscarbon(A)
-	if(istype(A, /mob/living/carbon))
-		return 1
-	return 0
+	return istype(A, /mob/living/carbon)
 
 /proc/issilicon(A)
-	if(istype(A, /mob/living/silicon))
-		return 1
-	return 0
+	return istype(A, /mob/living/silicon)
 
 /proc/isliving(A)
-	if(istype(A, /mob/living))
-		return 1
-	return 0
+	return istype(A, /mob/living)
 
 proc/isobserver(A)
-	if(istype(A, /mob/dead/observer))
-		return 1
-	return 0
+	return istype(A, /mob/dead/observer)
 
 proc/isorgan(A)
-	if(istype(A, /datum/organ/external))
-		return 1
-	return 0
+	return istype(A, /datum/organ/external)
 
 proc/hasorgans(A)
-	if(ishuman(A) || ismonkey(A))
-		return 1
-	return 0
+	return (ishuman(A) || ismonkey(A)
 
 
 
