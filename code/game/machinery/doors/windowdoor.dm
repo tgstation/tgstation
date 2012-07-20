@@ -158,14 +158,26 @@
 /obj/machinery/door/window/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
-
 /obj/machinery/door/window/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
+	if(istype(user, /mob/living/carbon/alien/humanoid) || istype(user, /mob/living/carbon/metroid/adult))
+		if(src.operating)
+			return
+		src.health = max(0, src.health - 25)
+		playsound(src.loc, 'Glasshit.ogg', 75, 1)
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\red <B>[user] smashes against the [src.name].</B>", 1)
+		if (src.health <= 0)
+			new /obj/item/weapon/shard(src.loc)
+			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+			CC.amount = 2
+			src.density = 0
+			del(src)
+	else
+		return src.attack_hand(user)
 
 
 /obj/machinery/door/window/attack_hand(mob/user as mob)
 	return src.attackby(user, user)
-
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
 

@@ -55,7 +55,14 @@
 //	luminosity = 1
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
+	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupant = null
+	var/list/apcwirelist = list(
+		"Orange" = 1,
+		"Dark red" = 2,
+		"White" = 3,
+		"Yellow" = 4,
+	)
 
 /proc/RandomAPCWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
@@ -463,6 +470,32 @@
 	user.machine = src
 	src.interact(user)
 
+/obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
+	if(!user)
+		return
+	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
+	playsound(src.loc, 'slash.ogg', 100, 1)
+	var/allcut = 1
+	for(var/wire in apcwirelist)
+		if(!isWireCut(apcwirelist[wire]))
+			allcut = 0
+			break
+	if(beenhit >= pick(3, 4) && wiresexposed != 1)
+		wiresexposed = 1
+		src.updateicon()
+		src.visible_message("\red The [src.name]'s cover flies open, exposing the wires!")
+
+	else if(wiresexposed == 1 && allcut == 0)
+		for(var/wire in apcwirelist)
+			cut(apcwirelist[wire])
+		src.updateicon()
+		src.visible_message("\red The [src.name]'s wires are shredded!")
+	else
+		beenhit += 1
+	return
+
+
+
 /obj/machinery/power/apc/proc/interact(mob/user)
 	if(!user)
 		return
@@ -483,20 +516,15 @@
 				return
 	if(wiresexposed && (!istype(user, /mob/living/silicon)))
 		var/t1 = text("<html><head><title>[area.name] APC wires</title></head><body><B>Access Panel</B><br>\n")
-		var/list/apcwires = list(
-			"Orange" = 1,
-			"Dark red" = 2,
-			"White" = 3,
-			"Yellow" = 4,
-		)
-		for(var/wiredesc in apcwires)
+
+		for(var/wiredesc in apcwirelist)
 			var/is_uncut = src.apcwires & APCWireColorToFlag[apcwires[wiredesc]]
 			t1 += "[wiredesc] wire: "
 			if(!is_uncut)
-				t1 += "<a href='?src=\ref[src];apcwires=[apcwires[wiredesc]]'>Mend</a>"
+				t1 += "<a href='?src=\ref[src];apcwires=[apcwirelist[wiredesc]]'>Mend</a>"
 			else
-				t1 += "<a href='?src=\ref[src];apcwires=[apcwires[wiredesc]]'>Cut</a> "
-				t1 += "<a href='?src=\ref[src];pulse=[apcwires[wiredesc]]'>Pulse</a> "
+				t1 += "<a href='?src=\ref[src];apcwires=[apcwirelist[wiredesc]]'>Cut</a> "
+				t1 += "<a href='?src=\ref[src];pulse=[apcwirelist[wiredesc]]'>Pulse</a> "
 			t1 += "<br>"
 		t1 += text("<br>\n[(src.locked ? "The APC is locked." : "The APC is unlocked.")]<br>\n[(src.shorted ? "The APCs power has been shorted." : "The APC is working properly!")]<br>\n[(src.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
 		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p></body></html>")
@@ -1214,6 +1242,8 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
+	if(isalien(user))
+		return 0
 	if (electrocute_mob(user, src, src))
 		return 1
 	else

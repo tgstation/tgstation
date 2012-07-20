@@ -26,7 +26,7 @@
 					var/atom/a = get_turf_loc(vent)
 					choices.Add(a.loc)
 				var/turf/startloc = loc
-				var/obj/selection = input("Select a destination.", "Duct System") in choices
+				var/obj/selection = input("Select a destination.", "Duct System") in sortAtom(choices)
 				var/selection_position = choices.Find(selection)
 				if(loc==startloc)
 					var/obj/target_vent = vents[selection_position]
