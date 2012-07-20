@@ -272,7 +272,9 @@
 	return (result + R.Copy(Ri, 0))
 
 /proc/sortRecord(var/list/datum/data/record/L, var/field = "name", var/order = 1)
-	if(isnull(L) || L.len < 2)
+	if(isnull(L))
+		return list()
+	if(L.len < 2)
 		return L
 	var/middle = L.len / 2 + 1
 	return mergeRecordLists(sortRecord(L.Copy(0, middle), field, order), sortRecord(L.Copy(middle), field, order), field, order)
@@ -282,16 +284,23 @@
 	var/Li=1
 	var/Ri=1
 	var/list/result = new()
-	while(Li <= L.len && Ri <= R.len)
-		var/datum/data/record/rL = L[Li]
-		var/datum/data/record/rR = R[Ri]
-		if(sorttext(rL.fields[field], rR.fields[field]) == order)
-			result += L[Li++]
-		else
-			result += R[Ri++]
+	if(!isnull(L) && !isnull(R))
+		while(Li <= L.len && Ri <= R.len)
+			var/datum/data/record/rL = L[Li]
+			if(isnull(rL))
+				L -= rL
+				continue
+			var/datum/data/record/rR = R[Ri]
+			if(isnull(rR))
+				R -= rR
+				continue
+			if(sorttext(rL.fields[field], rR.fields[field]) == order)
+				result += L[Li++]
+			else
+				result += R[Ri++]
 
-	if(Li <= L.len)
-		return (result + L.Copy(Li, 0))
+		if(Li <= L.len)
+			return (result + L.Copy(Li, 0))
 	return (result + R.Copy(Ri, 0))
 
 /proc/sortList(var/list/L)

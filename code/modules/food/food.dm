@@ -104,6 +104,11 @@
 	name = "donut"
 	desc = "Goes great with Robust Coffee."
 	icon_state = "donut1"
+
+/obj/item/weapon/reagent_containers/food/snacks/donut/normal
+	name = "donut"
+	desc = "Goes great with Robust Coffee."
+	icon_state = "donut1"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
@@ -114,12 +119,12 @@
 			src.name = "frosted donut"
 			reagents.add_reagent("sprinkles", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/chaosdonut
+/obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 	name = "Chaos Donut"
 	desc = "Like life, it never quite tastes the same."
 	icon_state = "donut1"
 	New()
-		..()
+
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("sprinkles", 1)
 		bitesize = 10
@@ -150,7 +155,8 @@
 			src.name = "Frosted Chaos Donut"
 			reagents.add_reagent("sprinkles", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/jellydonut
+
+/obj/item/weapon/reagent_containers/food/snacks/donut/jelly
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"

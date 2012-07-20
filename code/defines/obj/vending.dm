@@ -176,7 +176,7 @@
 	icon_state = "sec"
 	icon_deny = "sec-deny"
 	req_access_txt = "1"
-	product_paths = "/obj/item/weapon/handcuffs;/obj/item/weapon/grenade/flashbang;/obj/item/device/flash;/obj/item/weapon/reagent_containers/food/snacks/donut;/obj/item/weapon/storage/box/evidence"
+	product_paths = "/obj/item/weapon/handcuffs;/obj/item/weapon/grenade/flashbang;/obj/item/device/flash;/obj/item/weapon/reagent_containers/food/snacks/donut/normal;/obj/item/weapon/storage/box/evidence"
 	product_amounts = "8;4;5;12;6"
 	product_hidden = "/obj/item/clothing/glasses/sunglasses;/obj/item/kitchen/donut_box"
 	product_hideamt = "2;2"

@@ -45,14 +45,14 @@
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 		/obj/item/weapon/reagent_containers/food/snacks/egg
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/jellydonut
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly
 
 /datum/recipe/donut
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 		/obj/item/weapon/reagent_containers/food/snacks/egg
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donut
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 
 /datum/recipe/human
 	//invalid recipe
@@ -414,7 +414,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 		/obj/item/weapon/reagent_containers/food/snacks/egg
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/chaosdonut
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 
 /datum/recipe/human/kabob
 	items = list(

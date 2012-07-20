@@ -69,32 +69,33 @@
 <th><A href='?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</A></th>
 <th>Criminal Status</th>
 </tr>"}
-					for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
-						var/crimstat = ""
-						for(var/datum/data/record/E in data_core.security)
-							if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
-								crimstat = E.fields["criminal"]
-						var/background
-						switch(crimstat)
-							if("*Arrest*")
-								background = "'background-color:#DC143C;'"
-							if("Incarcerated")
-								background = "'background-color:#CD853F;'"
-							if("Parolled")
-								background = "'background-color:#CD853F;'"
-							if("Released")
-								background = "'background-color:#3BB9FF;'"
-							if("None")
-								background = "'background-color:#00FF7F;'"
-							if("")
-								background = "'background-color:#FFFFFF;'"
-								crimstat = "No Record."
-						dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
-						dat += text("<td>[]</td>", R.fields["id"])
-						dat += text("<td>[]</td>", R.fields["rank"])
-						dat += text("<td>[]</td>", R.fields["fingerprint"])
-						dat += text("<td>[]</td></tr>", crimstat)
-					dat += "</table><hr width='75%' />"
+					if(!isnull(data_core.general))
+						for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
+							var/crimstat = ""
+							for(var/datum/data/record/E in data_core.security)
+								if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
+									crimstat = E.fields["criminal"]
+							var/background
+							switch(crimstat)
+								if("*Arrest*")
+									background = "'background-color:#DC143C;'"
+								if("Incarcerated")
+									background = "'background-color:#CD853F;'"
+								if("Parolled")
+									background = "'background-color:#CD853F;'"
+								if("Released")
+									background = "'background-color:#3BB9FF;'"
+								if("None")
+									background = "'background-color:#00FF7F;'"
+								if("")
+									background = "'background-color:#FFFFFF;'"
+									crimstat = "No Record."
+							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+							dat += text("<td>[]</td>", R.fields["id"])
+							dat += text("<td>[]</td>", R.fields["rank"])
+							dat += text("<td>[]</td>", R.fields["fingerprint"])
+							dat += text("<td>[]</td></tr>", crimstat)
+						dat += "</table><hr width='75%' />"
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
 					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
 				if(2.0)
@@ -400,7 +401,7 @@ What a mess.*/
 					if("name")
 						if (istype(active1, /datum/data/record))
 							var/t1 = input("Please input name:", "Secure. records", active1.fields["name"], null)  as text
-							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon)))) || active1 != a1)
+							if ((!( t1 ) || !length(trim(t1)) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon)))) || active1 != a1)
 								return
 							active1.fields["name"] = t1
 					if("id")

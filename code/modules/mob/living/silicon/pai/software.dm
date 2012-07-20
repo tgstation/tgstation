@@ -413,9 +413,10 @@
 	var/dat = ""
 	dat += "<h2>Crew Manifest</h2><br><br>"
 	var/list/L = list()
-	for (var/datum/data/record/t in sortRecord(data_core.general))
-		var/R = t.fields["name"] + " - " + t.fields["rank"]
-		L += R
+	if(!isnull(data_core.general))
+		for (var/datum/data/record/t in sortRecord(data_core.general))
+			var/R = t.fields["name"] + " - " + t.fields["rank"]
+			L += R
 	for(var/R in sortList(L))
 		dat += "[R]<br>"
 	dat += "</body></html>"
@@ -426,8 +427,9 @@
 	var/dat = ""
 	if(src.subscreen == 0)
 		dat += "<h3>Medical Records</h3><HR>"
-		for(var/datum/data/record/R in sortRecord(data_core.general))
-			dat += text("<A href='?src=\ref[];med_rec=\ref[];software=medicalrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
+		if(!isnull(data_core.general))
+			for(var/datum/data/record/R in sortRecord(data_core.general))
+				dat += text("<A href='?src=\ref[];med_rec=\ref[];software=medicalrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
 		//dat += text("<HR><A href='?src=\ref[];screen=0;softFunction=medical records'>Back</A>", src)
 	if(src.subscreen == 1)
 		dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
@@ -448,8 +450,9 @@
 	var/dat = ""
 	if(src.subscreen == 0)
 		dat += "<h3>Security Records</h3><HR>"
-		for(var/datum/data/record/R in sortRecord(data_core.general))
-			dat += text("<A href='?src=\ref[];sec_rec=\ref[];software=securityrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
+		if(!isnull(data_core.general))
+			for(var/datum/data/record/R in sortRecord(data_core.general))
+				dat += text("<A href='?src=\ref[];sec_rec=\ref[];software=securityrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
 	if(src.subscreen == 1)
 		dat += "<h3>Security Record</h3>"
 		if ((istype(src.securityActive1, /datum/data/record) && data_core.general.Find(src.securityActive1)))

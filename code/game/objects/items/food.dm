@@ -10,62 +10,70 @@ MONKEY CUBE BOX
 /mob/living/carbon/var/last_eating = 0
 
 /obj/item/kitchen/donut_box
-	var/amount = 6
+	var/const/max_amount = 6
+	var/list/obj/item/weapon/reagent_containers/food/snacks/donut/donuts = list()
 	icon = 'food.dmi'
-	icon_state = "donutbox"
+	icon_state = "donutbox6"
 	name = "donut box"
+
 /obj/item/kitchen/egg_box
 	var/amount = 12
 	icon = 'food.dmi'
 	icon_state = "eggbox"
 	name = "egg box"
 
+/obj/item/kitchen/donut_box/New()
+	for(var/i = 0; i < max_amount; i++)
+		donuts += new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(src)
+	update()
+	..()
+
 /obj/item/kitchen/donut_box/proc/update()
-	src.icon_state = text("donutbox[]", src.amount)
+	src.icon_state = text("donutbox[]", src.donuts.len)
 	return
 
-/*
-/obj/item/kitchen/donut_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/donut) && (amount < 6))
+/obj/item/kitchen/donut_box/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
+	if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/donut) && (donuts.len < max_amount))
 		user.drop_item()
 		W.loc = src
+		donuts += W
 		usr << "You place a donut back into the box."
-	src.update()
+		src.update()
 	return
-*/
 
-/obj/item/kitchen/donut_box/MouseDrop(mob/user as mob)
+/obj/item/kitchen/donut_box/MouseDrop(mob/living/user as mob)
 	if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
 		if(!istype(user, /mob/living/carbon/metroid))
 			if( !usr.get_active_hand() )
 				src.attack_hand(usr, usr.hand, 1)
 	return
 
-/obj/item/kitchen/donut_box/attack_paw(mob/user as mob)
+/obj/item/kitchen/donut_box/attack_paw(mob/living/user as mob)
 	return src.attack_hand(user)
 
-/obj/item/kitchen/donut_box/attack_hand(mob/user as mob, unused, flag)
+/obj/item/kitchen/donut_box/attack_hand(mob/living/user as mob, unused, flag)
 	if (flag)
 		return ..()
 	src.add_fingerprint(user)
 
-	var/obj/item/weapon/reagent_containers/food/snacks/donut/P = locate() in src
-	if(!P && (amount >= 1))
-		P = new /obj/item/weapon/reagent_containers/food/snacks/donut( src )
+	var/last = donuts.len
+	if(last <= 0)
+		user << "Oh no! No donuts left!"
+		return
+	//world.log << last
+	var/obj/item/weapon/reagent_containers/food/snacks/donut/P = donuts[last] // Get the last donut.
 	if(P)
-		usr.put_in_hands(P)
-		usr << "You take a donut out of the box."
-		src.amount--
+		P.loc = user.loc
+		user.put_in_hands(P)
+		donuts -= P
+		user << "You take a donut out of the box."
 		src.update()
 	return
 
 /obj/item/kitchen/donut_box/examine()
 	set src in oview(1)
 
-	src.amount = round(src.amount)
-	var/n = src.amount
-	for(var/obj/item/weapon/reagent_containers/food/snacks/donut/P in src)
-		n++
+	var/n = src.donuts.len
 	if (n <= 0)
 		n = 0
 		usr << "There are no donuts left in the box."

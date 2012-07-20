@@ -260,9 +260,9 @@ Code:
 
 				menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 				menu += "Entries cannot be modified from this terminal.<br><br>"
-
-				for (var/datum/data/record/t in sortRecord(data_core.general))
-					menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+				if(!isnull(data_core.general))
+					for (var/datum/data/record/t in sortRecord(data_core.general))
+						menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
 				menu += "<br>"
 
 
@@ -335,8 +335,9 @@ Code:
 
 			if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
 				menu = "<h4><img src=pda_medical.png> Medical Record List</h4>"
-				for (var/datum/data/record/R in sortRecord(data_core.general))
-					menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
+				if(!isnull(data_core.general))
+					for (var/datum/data/record/R in sortRecord(data_core.general))
+						menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 				menu += "<br>"
 			if(441)
 				menu = "<h4><img src=pda_medical.png> Medical Record</h4>"
@@ -377,9 +378,9 @@ Code:
 				menu += "<br>"
 			if (45) //security records
 				menu = "<h4><img src=pda_cuffs.png> Security Record List</h4>"
-
-				for (var/datum/data/record/R in sortRecord(data_core.general))
-					menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
+				if(!isnull(data_core.general))
+					for (var/datum/data/record/R in sortRecord(data_core.general))
+						menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 
 				menu += "<br>"
 			if(451)

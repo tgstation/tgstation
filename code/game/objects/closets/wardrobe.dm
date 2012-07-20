@@ -66,6 +66,9 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/clothing/head/soft/green(src)
+	new /obj/item/clothing/head/soft/green(src)
+	new /obj/item/clothing/head/soft/green(src)
 	return
 
 /obj/structure/closet/wardrobe/orange/New()
@@ -75,6 +78,9 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
+	new /obj/item/clothing/head/soft/orange(src)
+	new /obj/item/clothing/head/soft/orange(src)
+	new /obj/item/clothing/head/soft/orange(src)
 	return
 
 /obj/structure/closet/wardrobe/yellow/New()
@@ -84,6 +90,9 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
+	new /obj/item/clothing/head/soft/yellow(src)
+	new /obj/item/clothing/head/soft/yellow(src)
+	new /obj/item/clothing/head/soft/yellow(src)
 	return
 
 /obj/structure/closet/wardrobe/atmospherics_yellow/New()
@@ -93,6 +102,9 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/clothing/head/soft/yellow(src)
+	new /obj/item/clothing/head/soft/yellow(src)
+	new /obj/item/clothing/head/soft/yellow(src)
 	return
 
 /obj/structure/closet/wardrobe/engineering_yellow/New()
@@ -102,6 +114,9 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
+	new /obj/item/clothing/head/soft/yellow(src)
+	new /obj/item/clothing/head/soft/yellow(src)
+	new /obj/item/clothing/head/soft/yellow(src)
 	return
 
 /obj/structure/closet/wardrobe/white/New()
@@ -185,6 +200,13 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/head/soft/mime(src)
+	new /obj/item/clothing/head/soft/blue(src)
+	new /obj/item/clothing/head/soft/yellow(src)
+	new /obj/item/clothing/head/soft/green(src)
+	new /obj/item/clothing/head/soft/orange(src)
+	new /obj/item/clothing/head/soft/purple(src)
+	if(prob(10)) new /obj/item/clothing/head/soft/rainbow(src)
 	return
 
 /obj/structure/closet/lawcloset/New()

@@ -110,8 +110,8 @@
 		"/obj/item/clothing/glasses",
 		"/obj/item/ammo_casing/shotgun",
 		"/obj/item/ammo_magazine",
-		"/obj/item/weapon/reagent_containers/food/snacks/donut",
-		"/obj/item/weapon/reagent_containers/food/snacks/jellydonut"
+		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
+		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly"
 		)
 
 /obj/item/weapon/storage/belt/soulstone
