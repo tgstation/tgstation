@@ -356,7 +356,7 @@
 					continue
 
 				if(istype(E, /obj/machinery/door/airlock))
-					if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
+					if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER) || E:air_locked) continue
 					if(!E.density)
 						spawn(0)
 							E.close()
