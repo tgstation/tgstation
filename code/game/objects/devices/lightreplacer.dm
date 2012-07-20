@@ -74,7 +74,7 @@
 
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
-		if(G.amount - decrement >= 0 && uses <= max_uses)
+		if(G.amount - decrement >= 0 && uses < max_uses)
 			G.amount -= decrement
 			AddUses(increment)
 			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
@@ -83,7 +83,7 @@
 	if(istype(W, /obj/item/weapon/light))
 		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
-			if(uses <= max_uses)
+			if(uses < max_uses)
 				AddUses(1)
 				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
 				user.drop_item()
