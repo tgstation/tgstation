@@ -138,11 +138,14 @@ datum
 
 				for(var/turf/simulated/S in world)
 					if(S.z < 5)
-						if(!S.zone && !S.blocks_air && S.z < 5) // Added last check to force skipping asteroid z-levels -- TLE
+						if(!S.zone && !S.blocks_air)
 							if(S.CanPass(null, S, 0, 0))
 								new/zone(S)
 
+				for(var/turf/simulated/S in world)
+					if(S.z < 5)
 						S.update_air_properties()
+						S.check_connections()
 
 				world << "\red \b Geometry processed in [time2text(world.timeofday-start_time, "mm:ss")] minutes!"
 				spawn start()

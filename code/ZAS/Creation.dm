@@ -8,7 +8,7 @@ zone
 
 		//Change all the zone vars of the turfs, check for space to be added to space_tiles.
 		for(var/turf/T in contents)
-			if(T.zone)
+			if(T.zone && T.zone != src)
 				T.zone.RemoveTurf(T)
 			T.zone = src
 			if(istype(T,/turf/space))
@@ -28,7 +28,7 @@ zone
 		air.update_values()
 
 		//Add this zone to the global list.
-		zones += src
+		zones.Add(src)
 
 	Del()
 		//Ensuring the zone list doesn't get clogged with null values.
@@ -40,8 +40,8 @@ zone
 			if(src in Z.connected_zones)
 				Z.connected_zones.Remove(src)
 		for(var/connection/C in connections)
-			C.Cleanup()
-		zones -= src
+			del C
+		zones.Remove(src)
 		. = ..()
 
 proc/FloodFill(turf/start)
@@ -51,6 +51,7 @@ proc/FloodFill(turf/start)
 		list
 			open = list(start)
 			closed = list()
+			doors = list()
 
 	while(open.len)
 		for(var/turf/T in open)
@@ -62,8 +63,20 @@ proc/FloodFill(turf/start)
 					//Simple pass check.
 					if(O.ZCanPass(T) && !(O in open) && !(O in closed))
 						open += O
+			else
+				doors += T
+				open -= T
+				continue
 
 			open -= T
+			closed += T
+
+	for(var/turf/T in doors)
+		var/turf/O = get_step(T,NORTH)
+		if(O in closed)
+			closed += T
+		O = get_step(T,WEST)
+		if(O in closed)
 			closed += T
 
 	return closed
