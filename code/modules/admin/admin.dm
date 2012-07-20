@@ -528,6 +528,7 @@ var/global/BSACooldown = 0
 						jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 						if(!msg)	msg = job
 						else		msg += ", [job]"
+					notes_add(M.ckey, "Banned  from [msg] - [reason]")
 					message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg]", 1)
 					M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>"
 					M << "\red <B>The reason is: [reason]</B>"
@@ -572,6 +573,26 @@ var/global/BSACooldown = 0
 				message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].", 1)
 				//M.client = null
 				del(M.client)
+
+	//Player Notes
+	if(href_list["notes"])
+		var/ckey = href_list["ckey"]
+		if(!ckey)
+			var/mob/M = locate(href_list["mob"])
+			if(ismob(M))
+				ckey = M.ckey
+
+		switch(href_list["notes"])
+			if("show")
+				notes_show(ckey)
+			if("add")
+				notes_add(ckey,href_list["text"])
+				notes_show(ckey)
+			if("remove")
+				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))
+				notes_show(ckey)
+		return
+
 
 	if (href_list["removejobban"])
 		if ((src.rank in list("Game Admin", "Game Master"  )))
@@ -2194,7 +2215,8 @@ var/global/BSACooldown = 0
 
 	body += "<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> | "
 	body += "<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | "
-	body += "<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> "
+	body += "<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> | "
+	body += "<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A> "
 
 	if(M.client)
 		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | "
