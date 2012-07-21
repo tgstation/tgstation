@@ -4,7 +4,7 @@ pl_control/var
 	PLASMA_DMG_DESC = "Self Descriptive"
 
 	CLOTH_CONTAMINATION = 0
-	CLOTH_CONTAMINATION = "Cloth Contamination"
+	CLOTH_CONTAMINATION_NAME = "Cloth Contamination"
 	CLOTH_CONTAMINATION_DESC = "If this is on, plasma does damage by getting into cloth."
 
 	PLASMAGUARD_ONLY = 0
