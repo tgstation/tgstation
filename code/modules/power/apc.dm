@@ -518,7 +518,7 @@
 		var/t1 = text("<html><head><title>[area.name] APC wires</title></head><body><B>Access Panel</B><br>\n")
 
 		for(var/wiredesc in apcwirelist)
-			var/is_uncut = src.apcwires & APCWireColorToFlag[apcwires[wiredesc]]
+			var/is_uncut = src.apcwires & APCWireColorToFlag[apcwirelist[wiredesc]]
 			t1 += "[wiredesc] wire: "
 			if(!is_uncut)
 				t1 += "<a href='?src=\ref[src];apcwires=[apcwirelist[wiredesc]]'>Mend</a>"
