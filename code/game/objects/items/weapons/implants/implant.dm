@@ -343,16 +343,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 		var/area/t = get_area(M)
 
-		if(isnull(M) || t in areas_hidden_from_deathalarm) // If the mob got gibbed
+		if(isnull(M)) // If the mob got gibbed
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			a.autosay("states, \"[mobname] has died-zzzzt in-in-in...\"", "[mobname]'s Death Alarm")
 			del(a)
 			processing_objects.Remove(src)
 		else if(M.stat == 2)
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			if(istype(t, /area/syndicate_station) ||
-			istype(t, /area/syndicate_mothership)) ||
-			istype(t, /area/shuttle/syndicate_elite) )
+			if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
 				//give the syndies a bit of stealth
 				a.autosay("states, \"[mobname] has died in Space!\"", "[mobname]'s Death Alarm")
 			else
