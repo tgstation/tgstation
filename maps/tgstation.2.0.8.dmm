@@ -7447,7 +7447,7 @@
 "cNk" = (/obj/machinery/door/airlock/centcom{name = "General Access"; opacity = 1; req_access_txt = "101"},/turf/unsimulated/floor{icon_state = "vault"; dir = 5},/area/tdome)
 "cNl" = (/obj/item/clothing/gloves/yellow,/obj/item/device/assembly/signaler,/obj/item/clothing/glasses/night,/obj/structure/closet/crate,/turf/unsimulated/floor,/area)
 "cNm" = (/obj/item/weapon/crowbar,/obj/item/weapon/cable_coil{pixel_x = 3; pixel_y = -7},/obj/item/clothing/gloves/yellow,/obj/item/device/assembly/prox_sensor{pixel_x = -8; pixel_y = 4},/obj/item/clothing/glasses/night,/obj/structure/closet/crate,/turf/unsimulated/floor,/area)
-"cNn" = (/obj/structure/rack{dir = 1},/obj/item/weapon/storage/toolbox/electrical{step_x = 4; step_y = -4},/obj/item/weapon/storage/toolbox/electrical,/obj/item/weapon/storage/toolbox/electrical{pixel_x = -4; pixel_y = 4},/turf/unsimulated/floor,/area)
+"cNn" = (/obj/structure/rack{dir = 1},/obj/item/weapon/storage/toolbox/electrical{pixel_x = 4; pixel_y = -4},/obj/item/weapon/storage/toolbox/electrical,/obj/item/weapon/storage/toolbox/electrical{pixel_x = -4; pixel_y = 4},/turf/unsimulated/floor,/area)
 "cNo" = (/obj/structure/table/reinforced,/obj/machinery/cell_charger,/turf/unsimulated/floor,/area)
 "cNp" = (/obj/machinery/washing_machine,/turf/unsimulated/floor{icon_state = "vault"; dir = 5},/area)
 "cNq" = (/obj/structure/table/reinforced,/turf/simulated/floor,/area)
