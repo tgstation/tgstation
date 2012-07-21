@@ -10,6 +10,7 @@
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
+	// Convert ALL the people
 /*	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Head of Security", "Security Officer", "Detective", "Chaplain", "Warden")))	return 0
 	for(var/obj/item/weapon/implant/loyalty/L in mind.current)
 		if(L && L.implanted)
@@ -20,7 +21,9 @@
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
-	restricted_jobs = list("AI", "Cyborg")
+	// Why is the Head of Security restricted always? It's because he is usually put in charge of dealing with the cult,
+	// as well as him having an easy time converting the rest of security, which leads to a bit of an unbalance.
+	restricted_jobs = list("AI", "Cyborg", "Head of Security")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Captain", "Head of Security")
 	required_players = 3
 	required_enemies = 3
