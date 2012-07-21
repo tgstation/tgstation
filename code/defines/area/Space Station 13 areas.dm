@@ -449,6 +449,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Syndicate Station"
 	icon_state = "yellow"
 	requires_power = 0
+	ul_Lighting = 0
 
 /area/syndicate_station/start
 	name = "\improper Syndicate Station Start"
