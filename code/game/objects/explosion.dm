@@ -1,69 +1,62 @@
 //TODO: Flash range does nothing currently
 
+//A very crude linear approximatiaon of pythagoras theorem.
+/proc/cheap_pythag(var/dx, var/dy)
+	dx = abs(dx); dy = abs(dy);
+	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
+	else		return dy + (0.5*dx)
+
+
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
-	spawn()
+	spawn(0)
+		var/start = world.timeofday
+		epicenter = get_turf(epicenter)
 		if(!epicenter) return
+
+		if(adminlog)
+			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
+			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
+
+		playsound(epicenter, 'explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
+		playsound(epicenter, "explosion", 100, 1, round(devastation_range,1) )
+
+		tension_master.explosion()
 
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 1
-
-		if (!istype(epicenter, /turf))
-			epicenter = get_turf(epicenter.loc)
-
-		playsound(epicenter.loc, 'explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
-		playsound(epicenter.loc, "explosion", 100, 1, round(devastation_range,1) )
-
-		if (adminlog)
-			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
-			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
-
-		tension_master.explosion()
 
 		if(heavy_impact_range > 1)
 			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
 			E.set_up(epicenter)
 			E.start()
 
-		var/list/expTurfs = range(epicenter, max(devastation_range, heavy_impact_range, light_impact_range))
+		var/x0 = epicenter.x
+		var/y0 = epicenter.y
+		var/z0 = epicenter.z
 
-		// Hello future editors, please note that 1000 calls to spawn will not speed this up, but this exact amount has been tested
-		// Now, tonnes of calls to spawn will allow other stuff to happen, but I believe we may as well let explosions
-		// Get over with and blow up like an explosion would
-
-		var/list/dTurfs = list()
-		var/list/hTurfs = list()
-		var/list/lTurfs = list()
-
-		for(var/turf/T in expTurfs) // This doesn't slow it down at all, even 100,100,100 bombs
-			var/dist = approx_dist(epicenter, T)
+		for(var/turf/T in range(epicenter, max(devastation_range, heavy_impact_range, light_impact_range)))
+			var/dist = cheap_pythag(T.x - x0,T.y - y0)
 
 			if(dist < devastation_range)
-				dTurfs.Add(T)
+				dist = 1
 			else if(dist < heavy_impact_range)
-				hTurfs.Add(T)
-			else // The expTurfs list only has turfs that are in it's range, so no if here for light_impact
-				lTurfs.Add(T)
-
-		// Lag from hereon
-		for(var/turf/T in dTurfs)
-			if(prob(10))
-				T.ex_act(2)
+				dist = 2
+			else if(dist < light_impact_range)
+				dist = 3
 			else
-				T.ex_act(1)
-			for(var/atom/object in T.contents)
-				object.ex_act(1)
-		for(var/turf/T in hTurfs)
-			T.ex_act(2)
-			for(var/atom/object in T.contents)
-				object.ex_act(2)
+				continue
 
-		for(var/turf/T in lTurfs)
-			T.ex_act(3)
-			for(var/atom/object in T.contents)
-				object.ex_act(3)
+			T.ex_act(dist)
+			if(T)
+				for(var/atom/object in T.contents)
+					object.ex_act(dist)
 
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 0
+
+		//here util we get explosions to be less laggy, might help us identify issues after changes to splosions (because let's face it we've had a few)
+		world.log << "## Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [(world.timeofday-start)/10] seconds."
+
 	return 1
 
 

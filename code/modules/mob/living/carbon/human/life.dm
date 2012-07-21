@@ -73,7 +73,7 @@
 	update_canmove()
 
 	//Update our name based on whether our face is obscured/disfigured
-	name = get_visible_name()	//TODO: this was broken by the dismemberment revert ~Carn
+	name = get_visible_name()
 
 	handle_regular_hud_updates()
 

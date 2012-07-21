@@ -30,17 +30,15 @@
 		else
 	return
 
-/proc/get_turf(turf/location as turf)
-	while (location)
-		if (istype(location, /turf))
+/proc/get_turf(turf/location)
+	while(location)
+		if(isturf(location))
 			return location
-
 		location = location.loc
 	return null
 
-/proc/get_turf_or_move(turf/location as turf)
-	location = get_turf(location)
-	return location
+/proc/get_turf_or_move(turf/location)
+	return get_turf(location)
 
 
 
