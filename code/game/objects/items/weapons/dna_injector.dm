@@ -15,12 +15,13 @@
 	var/uses = 1
 	var/nofail
 	var/is_bullet = 0
+	var/inuse = 0
 
 /obj/item/weapon/dnainjector/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
 
-/obj/item/weapon/dnainjector/proc/inject(mob/M as mob)
+/obj/item/weapon/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
 	if(istype(M,/mob/living))
 		M.radiation += rand(20,50)
 
@@ -52,6 +53,7 @@
 				uses--
 
 	spawn(0)//this prevents the collapse of space-time continuum
+		user.drop_from_inventory(src)
 		del(src)
 	return uses
 
@@ -68,53 +70,62 @@
 
 	if (user)
 		if (istype(M, /mob/living/carbon/human))
-			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-			O.source = user
-			O.target = M
-			O.item = src
-			O.s_loc = user.loc
-			O.t_loc = M.loc
-			O.place = "dnainjector"
-			M.requests += O
-			if (dnatype == "se")
-				if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
-					log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+			if(!inuse)
+				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
+				O.source = user
+				O.target = M
+				O.item = src
+				O.s_loc = user.loc
+				O.t_loc = M.loc
+				O.place = "dnainjector"
+				src.inuse = 1
+				spawn(50) // Not the best fix. There should be an failure proc, for /effect/equip_e/, which is called when the first initital checks fail
+					inuse = 0
+				M.requests += O
+				if (dnatype == "se")
+					if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
+						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+						log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+					else
+	//					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+						log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
 				else
-//					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+	//				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 					log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
-			else
-//				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-				log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
 
-			spawn( 0 )
-				O.process()
-				return
+				spawn( 0 )
+					O.process()
+					return
 		else
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] has been injected with [] by [].", M, src, user), 1)
-				//Foreach goto(192)
-			if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
-				user << "\red Apparently it didn't work."
-				return
-			if (dnatype == "se")
-				if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
-					log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+			if(!inuse)
+
+				for(var/mob/O in viewers(M, null))
+					O.show_message(text("\red [] has been injected with [] by [].", M, src, user), 1)
+					//Foreach goto(192)
+				if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
+					user << "\red Apparently it didn't work."
+					return
+				if (dnatype == "se")
+					if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
+						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+						log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+					else
+						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+						log_game("[key_name(user)] injected [key_name(M)] with the [name]")
 				else
 					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 					log_game("[key_name(user)] injected [key_name(M)] with the [name]")
-			else
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-				log_game("[key_name(user)] injected [key_name(M)] with the [name]")
-			inject(M)//Now we actually do the heavy lifting.
-			/*
-			A user injecting themselves could mean their own transformation and deletion of mob.
-			I don't have the time to figure out how this code works so this will do for now.
-			I did rearrange things a bit.
-			*/
-			if(!isnull(user))//If the user still exists. Their mob may not.
-				user.show_message(text("\red You inject [M]"))
+				inuse = 1
+				inject(M, user)//Now we actually do the heavy lifting.
+				spawn(50)
+					inuse = 0
+				/*
+				A user injecting themselves could mean their own transformation and deletion of mob.
+				I don't have the time to figure out how this code works so this will do for now.
+				I did rearrange things a bit.
+				*/
+				if(!isnull(user))//If the user still exists. Their mob may not.
+					user.show_message(text("\red You inject [M.name]"))
 	return
 
 

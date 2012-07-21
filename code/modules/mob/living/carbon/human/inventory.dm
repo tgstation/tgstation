@@ -942,20 +942,23 @@ It can still be worn/put on as normal.
 				source << "\red Repeat every 7 seconds AT LEAST."
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = item
-			if(item)
-				item.add_fingerprint(source)
-				item:inject(target, null)
+			if(S)
+				S.add_fingerprint(source)
 				if (!( istype(S, /obj/item/weapon/dnainjector) ))
 					//SN src = null
+					S.inuse = 0
 					del(src)
 					return
+				S.inject(target, source)
 				if (S.s_time >= world.time + 30)
 					//SN src = null
+					S.inuse = 0
 					del(src)
 					return
 				S.s_time = world.time
 				for(var/mob/O in viewers(source, null))
 					O.show_message(text("\red [] injects [] with the DNA Injector!", source, target), 1)
+				S.inuse = 0
 		if("pockets")
 			if (target.l_store)
 				var/obj/item/W = target.l_store
