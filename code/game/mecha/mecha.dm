@@ -1133,7 +1133,7 @@
 		return
 	if(mob_container.forceMove(src.loc))//ejecting mob container
 	/*
-		if((ishuman(occupant)) && (return_pressure() > HAZARD_HIGH_PRESSURE))
+		if(ishuman(occupant)) && (return_pressure() > HAZARD_HIGH_PRESSURE))
 			use_internal_tank = 0
 			var/datum/gas_mixture/environment = get_turf_air()
 			if(environment)
