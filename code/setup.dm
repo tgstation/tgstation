@@ -347,8 +347,8 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define CANSTUN		1
 #define CANWEAKEN	2
 #define CANPARALYSE	4
+#define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
 #define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
-#define DISFIGURED	65536	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
 
 var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg','hiss5.ogg','hiss6.ogg','Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg','Welder.ogg','Welder2.ogg','airlock.ogg','clownstep1.ogg','clownstep2.ogg')
 
