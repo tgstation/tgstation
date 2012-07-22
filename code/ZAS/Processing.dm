@@ -229,11 +229,10 @@ zone/proc/Rebuild()
 	if(!contents.len)
 		del src
 
-	var/list/tried_turfs = list()
+	var/list/turfs_to_consider = contents.Copy()
 	do
 		if(sample)
-			tried_turfs |= sample
-		var/list/turfs_to_consider = contents - tried_turfs
+			turfs_to_consider -= sample
 		if(!turfs_to_consider.len)
 			break
 		sample = pick(turfs_to_consider)  //Nor this.
@@ -259,8 +258,6 @@ zone/proc/Rebuild()
 		if(!(T in new_contents))
 			T.zone = null
 			problem = 1
-
-	for(var/turf/T in new_contents)
 
 	if(problem)
 		//Build some new zones for stuff that wasn't included.
