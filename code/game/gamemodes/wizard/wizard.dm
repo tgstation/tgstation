@@ -165,7 +165,8 @@
 	wizard_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal(wizard_mob), wizard_mob.slot_shoes)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe(wizard_mob), wizard_mob.slot_wear_suit)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/head/wizard(wizard_mob), wizard_mob.slot_head)
-	wizard_mob.equip_if_possible(new /obj/item/weapon/storage/backpack(wizard_mob), wizard_mob.slot_back)
+	if(wizard_mob.backbag == 2) wizard_mob.equip_if_possible(new /obj/item/weapon/storage/backpack(wizard_mob), wizard_mob.slot_back)
+	if(wizard_mob.backbag == 3) wizard_mob.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_norm(wizard_mob), wizard_mob.slot_back)
 	wizard_mob.equip_if_possible(new /obj/item/weapon/storage/box(wizard_mob), wizard_mob.slot_in_backpack)
 //	wizard_mob.equip_if_possible(new /obj/item/weapon/scrying_gem(wizard_mob), wizard_mob.slot_l_store) For scrying gem.
 	wizard_mob.equip_if_possible(new /obj/item/weapon/teleportation_scroll(wizard_mob), wizard_mob.slot_r_store)
