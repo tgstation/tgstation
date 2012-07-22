@@ -1,7 +1,7 @@
 tgstation13 v1.0 - 6 October 2010
 
 Website: http://nanotrasen.com
-Code: https://github.com/tgstation/-tg-station
+Code: http://code.google.com/p/tgstation13/
 IRC: irc://irc.rizon.net/tgstation13
 
 ================================================================================
@@ -21,7 +21,7 @@ saving tgstation.dmb (DEBUG mode)
 tgstation.dmb - 0 errors, 0 warnings
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt
-download or the files extracted wrong.  
+download or the files extracted wrong.
 
 Once that's done, open up the config folder.  You'll want to edit config.txt to
 set the probabilities for different gamemodes in Secret and to set your server
