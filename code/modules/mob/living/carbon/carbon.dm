@@ -245,3 +245,80 @@
 	dna = newDNA
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
+
+/mob/living/carbon/proc/handle_ventcrawl() // -- TLE -- Merged by Carn
+
+	if(!stat)
+		if(!lying)
+
+			var/obj/machinery/atmospherics/unary/vent_pump/vent_found
+			for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
+				if(!v.welded)
+					vent_found = v
+				else
+					src << "\red That vent is welded."
+
+			if(vent_found)
+				if(vent_found.network&&vent_found.network.normal_members.len)
+					var/list/vents[0]
+					for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in vent_found.network.normal_members)
+						if(temp_vent.loc == loc)
+							continue
+						var/turf/T = get_turf(temp_vent)
+
+						if(!T || T.z != loc.z)
+							continue
+
+						var/i = 1
+						var/index = "[T.loc.name]\[[i]\]"
+						while(index in vents)
+							i++
+							index = "[T.loc.name]\[[i]\]"
+						vents[index] = temp_vent
+
+					var/turf/startloc = loc
+					var/obj/selection = input("Select a destination.", "Duct System") as null|anything in sortList(vents)
+					if(!selection)	return
+					if(loc==startloc)
+						if(contents.len)
+							for(var/obj/item/carried_item in contents)//If the monkey got on objects.
+								if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
+									src << "\red You can't be carrying items or have items equipped when vent crawling!"
+									return
+						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
+						if(target_vent)
+							for(var/mob/O in viewers(src, null))
+								O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
+							loc = target_vent
+
+							var/travel_time = round(get_dist(loc, target_vent.loc) / 2)
+
+							spawn(travel_time)
+
+								if(!target_vent)	return
+								for(var/mob/O in hearers(target_vent,null))
+									O.show_message("You hear something squeezing through the ventilation ducts.",2)
+
+								sleep(travel_time)
+
+								if(!target_vent)	return
+								if(target_vent.welded)			//the vent can be welded while alien scrolled through the list or travelled.
+									target_vent = vent_found 	//travel back. No additional time required.
+									src << "\red The vent you were heading to appears to be welded."
+								loc = target_vent.loc
+
+					else
+						src << "You need to remain still while entering a vent."
+				else
+					src << "This vent is not connected to anything."
+
+			else
+				src << "You must be standing on or beside an air vent to enter it."
+
+		else
+			src << "You can't vent crawl while you're stunned!"
+
+	else
+		src << "You must be conscious to do this!"
+	return
+

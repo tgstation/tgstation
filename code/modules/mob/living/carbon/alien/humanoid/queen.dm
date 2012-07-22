@@ -13,19 +13,20 @@
 
 	real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
-	verbs -= /mob/living/carbon/alien/humanoid/verb/ventcrawl
+	verbs -= /mob/living/carbon/alien/verb/ventcrawl
 
 
 /mob/living/carbon/alien/humanoid/queen
 
 	updatehealth()
-		if (src.nodamage == 0)
-		//oxyloss is only used for suicide
-		//toxloss isn't used for aliens, its actually used as alien powers!!
-			src.health = 250 - src.getOxyLoss() - src.getFireLoss() - src.getBruteLoss()
-		else
+		if (src.nodamage)
 			src.health = 250
 			src.stat = 0
+		else
+			//oxyloss is only used for suicide
+			//toxloss isn't used for aliens, its actually used as alien powers!!
+			src.health = 250 - src.getOxyLoss() - src.getFireLoss() - src.getBruteLoss()
+
 
 	handle_regular_hud_updates()
 

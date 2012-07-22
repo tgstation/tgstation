@@ -743,6 +743,7 @@
 #include "code\modules\mob\living\carbon\carbon_defines.dm"
 #include "code\modules\mob\living\carbon\alien\alien.dm"
 #include "code\modules\mob\living\carbon\alien\death.dm"
+#include "code\modules\mob\living\carbon\alien\powers.dm"
 #include "code\modules\mob\living\carbon\alien\say.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\alien_powers.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\death.dm"

@@ -6,11 +6,14 @@
 		name = text("baby metroid ([rand(1, 1000)])")
 	else
 		name = text("adult metroid ([rand(1,1000)])")
-
 	real_name = name
 	spawn (1)
 		regenerate_icons()
 		src << "\blue Your icons have been generated!"
+	..()
+
+/mob/living/carbon/metroid/adult/New()
+	verbs.Remove(/mob/living/carbon/metroid/verb/ventcrawl)
 	..()
 
 /mob/living/carbon/metroid/proc/mind_initialize(mob/G)
