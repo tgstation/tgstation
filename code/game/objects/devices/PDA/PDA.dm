@@ -32,7 +32,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/ttone = "beep" //The ringtone!
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
-	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function.
+	var/note = "" //Current note in the notepad function, without HTML.
+	var/notehtml = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function, with HTML.
 	var/cart = "" //A place to stick cartridge menu information
 	var/detonate = 1 // Can the PDA be blown up?
 
@@ -333,7 +334,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					dat += "<a href='byond://?src=\ref[src];choice=Lock'> Lock</a><br>"
 				else
 					dat += "<a href='byond://?src=\ref[src];choice=Edit'> Edit</a><br>"
-				dat += note
+				dat += notehtml
 
 			if (2)
 				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
@@ -536,6 +537,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (in_range(src, U) && loc == U)
 						n = copytext(adminscrub(n), 1, MAX_MESSAGE_LEN)
 						if (mode == 1)
+							notehtml = dd_replacetext(n, "\n", "<BR>")
 							note = n
 					else
 						U << browse(null, "window=pda")

@@ -63,6 +63,8 @@
 		"White" = 3,
 		"Yellow" = 4,
 	)
+	var/longtermpower = 10
+	//var/debug = 0
 
 /proc/RandomAPCWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
@@ -1016,6 +1018,9 @@
 	if(terminal && terminal.powernet)
 		perapc = terminal.powernet.perapc
 
+	//if(debug)
+	//	world.log << "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]"
+
 	if(cell && !shorted)
 
 		// draw power from cell as before
@@ -1025,7 +1030,6 @@
 
 		if(excess > 0 || perapc > lastused_total)		// if power excess, or enough anyway, recharge the cell
 														// by the same amount just used
-
 			cell.give(cellused)
 			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
 
@@ -1046,19 +1050,26 @@
 				lighting = autoset(lighting, 0)
 				environ = autoset(environ, 0)
 
+
 		// set channels depending on how much charge we have left
+
+		// Allow the APC to operate as normal if the cell can charge
+		if(charging && longtermpower < 10)
+			longtermpower += 1
+		else if(longtermpower > -10)
+			longtermpower -= 2
 
 		if(cell.charge <= 0)					// zero charge, turn all off
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
 			area.poweralert(0, src)
-		else if(cell.percent() < 15)			// <15%, turn off lighting & equipment
+		else if(cell.percent() < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
 			area.poweralert(0, src)
-		else if(cell.percent() < 30)			// <30%, turn off equipment
+		else if(cell.percent() < 30 && longtermpower < 0)			// <30%, turn off equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)

@@ -305,7 +305,7 @@ var/global/list/obj/machinery/camera/Cameras = list()
 		else
 			P = W
 			itemname = P.name
-			info = P.note
+			info = P.notehtml
 		U << "You hold \a [itemname] up to the camera ..."
 		for(var/mob/living/silicon/ai/O in world)
 			//if (O.current == src)
