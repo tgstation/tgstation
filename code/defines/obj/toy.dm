@@ -13,56 +13,56 @@
 
 /obj/item/toy/prize/ripley
 	name = "toy ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/11"
+	desc = "Mini-Mecha action figure! Collect them all! 1/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 
 /obj/item/toy/prize/fireripley
 	name = "toy firefighting ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/11"
+	desc = "Mini-Mecha action figure! Collect them all! 2/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "fireripleytoy"
 
 /obj/item/toy/prize/deathripley
 	name = "toy deathsquad ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/11"
+	desc = "Mini-Mecha action figure! Collect them all! 3/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "deathripleytoy"
 
 /obj/item/toy/prize/gygax
 	name = "toy gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/11"
+	desc = "Mini-Mecha action figure! Collect them all! 4/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "gygaxtoy"
 
 /obj/item/toy/prize/durand
 	name = "toy gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 5/11"
+	desc = "Mini-Mecha action figure! Collect them all! 5/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "durandprize"
 
 /obj/item/toy/prize/honk
 	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/11"
+	desc = "Mini-Mecha action figure! Collect them all! 6/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "honkprize"
 
 /obj/item/toy/prize/marauder
 	name = "toy marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/11"
+	desc = "Mini-Mecha action figure! Collect them all! 7/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "marauderprize"
 
 /obj/item/toy/prize/seraph
 	name = "toy seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/11"
+	desc = "Mini-Mecha action figure! Collect them all! 8/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "seraphprize"
 
 /obj/item/toy/prize/mauler
 	name = "toy mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/11"
+	desc = "Mini-Mecha action figure! Collect them all! 9/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "maulerprize"
 
 /obj/item/toy/prize/odysseus
 	name = "toy odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/11"
+	desc = "Mini-Mecha action figure! Collect them all! 10/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "odysseusprize"
 
 /obj/item/toy/prize/phazon
 	name = "toy phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/11"
+	desc = "Mini-Mecha action figure! Collect them all! 11/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "phazonprize"
 
 

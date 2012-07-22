@@ -85,7 +85,7 @@
 	if(..())
 		return
 
-	if (!src.blocked)
+	if (!src.blocked && !src.gameover)
 		if (href_list["attack"])
 			src.blocked = 1
 			var/attackamt = rand(2,6)
@@ -148,30 +148,33 @@
 
 /obj/machinery/computer/arcade/proc/arcade_action()
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
-		src.gameover = 1
-		src.temp = "[src.enemy_name] has fallen! Rejoice!"
+		if(!gameover)
+			src.gameover = 1
+			src.temp = "[src.enemy_name] has fallen! Rejoice!"
 
-		if(emagged)
-			new /obj/effect/spawner/newbomb/timer/syndicate(src.loc)
-			new /obj/item/clothing/head/collectable/petehat(src.loc)
-			message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-			log_game("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-			src.New()
-			emagged = 0
+			if(emagged)
+				feedback_inc("arcade_win_emagged")
+				new /obj/effect/spawner/newbomb/timer/syndicate(src.loc)
+				new /obj/item/clothing/head/collectable/petehat(src.loc)
+				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+				log_game("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+				src.New()
+				emagged = 0
+			else if(!contents.len)
+				feedback_inc("arcade_win_normal")
+				var/prizeselect = pickweight(prizes)
+				new prizeselect(src.loc)
 
-		else if(!contents.len)
-			var/prizeselect = pickweight(prizes)
-			new prizeselect(src.loc)
+				if(istype(prizeselect, /obj/item/toy/gun)) //Ammo comes with the gun
+					new /obj/item/toy/ammo/gun(src.loc)
 
-			if(istype(prizeselect, /obj/item/toy/gun)) //Ammo comes with the gun
-				new /obj/item/toy/ammo/gun(src.loc)
+				else if(istype(prizeselect, /obj/item/clothing/suit/syndicatefake)) //Helmet is part of the suit
+					new	/obj/item/clothing/head/syndicatefake(src.loc)
 
-			else if(istype(prizeselect, /obj/item/clothing/suit/syndicatefake)) //Helmet is part of the suit
-				new	/obj/item/clothing/head/syndicatefake(src.loc)
-
-		else
-			var/atom/movable/Prize = pick(contents)
-			Prize.loc = src.loc
+			else
+				feedback_inc("arcade_win_normal")
+				var/atom/movable/prize = pick(contents)
+				prize.loc = src.loc
 
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
@@ -189,7 +192,10 @@
 			sleep(10)
 			src.temp = "You have been drained! GAME OVER"
 			if(emagged)
+				feedback_inc("arcade_loss_mana_emagged")
 				usr.gib()
+			else
+				feedback_inc("arcade_loss_mana_normal")
 
 	else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))
 		src.temp = "[src.enemy_name] heals for 4 health!"
@@ -205,7 +211,10 @@
 		src.gameover = 1
 		src.temp = "You have been crushed! GAME OVER"
 		if(emagged)
+			feedback_inc("arcade_loss_hp_emagged")
 			usr.gib()
+		else
+			feedback_inc("arcade_loss_hp_normal")
 
 	src.blocked = 0
 	return

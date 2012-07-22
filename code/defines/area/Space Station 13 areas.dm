@@ -223,9 +223,6 @@ proc/process_ghost_teleport_locs()
 	icon_state = "shuttle"
 	name = "\improper Transport Shuttle"
 
-/area/shuttle/transport2/centcom
-	icon_state = "shuttle"
-
 /area/shuttle/alien/base
 	icon_state = "shuttle"
 	name = "\improper Alien Shuttle Base"
@@ -1456,7 +1453,6 @@ var/list/centcom_areas = list (
 	/area/shuttle/escape_pod3/centcom,
 	/area/shuttle/escape_pod5/centcom,
 	/area/shuttle/transport1/centcom,
-	/area/shuttle/transport2/centcom,
 	/area/shuttle/administration/centcom,
 	/area/shuttle/specops/centcom,
 )

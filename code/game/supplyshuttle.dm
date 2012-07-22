@@ -2,8 +2,8 @@
 #define SUPPLY_DOCKZ 2          //Z-level of the Dock.
 #define SUPPLY_STATIONZ 1       //Z-level of the Station.
 #define SUPPLY_POINTSPER 10      //Points per tick.
-#define SUPPLY_POINTDELAY 3000 //Delay between ticks in milliseconds.
-#define SUPPLY_MOVETIME 1800	//Time to station is milliseconds.
+#define SUPPLY_POINTDELAY 3000  //Delay between ticks in milliseconds.
+#define SUPPLY_MOVETIME 1200	//Time to station is milliseconds.
 #define SUPPLY_POINTSPERCRATE 5	//Points per crate sent back.
 #define SUPPLY_STATION_AREATYPE "/area/supply/station" //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE "/area/supply/dock"	//Type of the supply shuttle area for dock
@@ -18,6 +18,21 @@ var/supply_shuttle_time = 0
 var/supply_shuttle_timeleft = 0
 var/supply_shuttle_points = 50
 var/ordernum=0
+var/supplyshuttle_mech_redeem = 0 //You can redeem a full set of mech toys for a reward.
+
+var/list/mechtoys = list(
+	/obj/item/toy/prize/ripley,
+	/obj/item/toy/prize/fireripley,
+	/obj/item/toy/prize/deathripley,
+	/obj/item/toy/prize/gygax,
+	/obj/item/toy/prize/durand,
+	/obj/item/toy/prize/honk,
+	/obj/item/toy/prize/marauder,
+	/obj/item/toy/prize/seraph,
+	/obj/item/toy/prize/mauler,
+	/obj/item/toy/prize/odysseus,
+	/obj/item/toy/prize/phazon
+)
 
 /area/supply/station //DO NOT TURN THE SD_LIGHTING STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
@@ -80,11 +95,6 @@ var/ordernum=0
 			if(istype(T, /turf/simulated/floor))
 				T.blocks_air = 0
 		..()
-
-/area/supplyshuttle
-	name = "Supply Shuttle"
-	icon_state = "supply"
-	requires_power = 0
 
 /obj/machinery/computer/supplycomp
 	name = "Supply shuttle console"
@@ -214,6 +224,16 @@ This method wont take into account storage items developed in the future and doe
 			del(slip)
 		var/crate = locate(/obj/structure/closet/crate) in T
 		if(crate)
+			if(mechtoys)
+				var/toysfound = 0
+				for(var/toytype in mechtoys)
+					if( !locate(toytype) in crate )
+						break
+					else
+						toysfound++
+				if(toysfound && toysfound == mechtoys.len)
+					supplyshuttle_mech_redeem++
+					feedback_inc("supply_mech_collection_redeemed")
 			del(crate)
 			supply_shuttle_points += SUPPLY_POINTSPERCRATE
 
@@ -235,10 +255,13 @@ This method wont take into account storage items developed in the future and doe
 		var/pickedloc = 0
 		var/found = 0
 		for(var/C in markers)
-			if ((locate(/obj/structure/closet/crate) in get_turf(C)) || (locate(/obj/structure/largecrate) in get_turf(C))) continue
+			if ((locate(/obj/structure/closet/crate) in get_turf(C)) || (locate(/obj/structure/largecrate) in get_turf(C)))
+				continue
 			found = 1
 			pickedloc = get_turf(C)
-		if (!found) pickedloc = get_turf(pick(markers))
+			break
+		if (!found)
+			pickedloc = get_turf(pick(markers))
 		var/datum/supply_order/SO = S
 		var/datum/supply_packs/SP = SO.object
 
@@ -275,6 +298,26 @@ This method wont take into account storage items developed in the future and doe
 		slip.info += "</ul><br>"
 		slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
 
+	if(supplyshuttle_mech_redeem)
+		for (var/i = 0; i < supplyshuttle_mech_redeem; i++)
+			var/pickedloc = 0
+			var/found = 0
+			for(var/C in markers)
+				if ( 	(locate(/obj/structure/closet/crate) in get_turf(C)) || \
+						(locate(/obj/structure/largecrate) in get_turf(C)) || \
+						(locate(/obj/mecha/combat/marauder) in get_turf(C))
+					)
+					continue
+				found = 1
+				pickedloc = get_turf(C)
+				break
+			if (!found)
+				pickedloc = get_turf(pick(markers))
+			if (!pickedloc)
+				return
+			var/obj/mecha/combat/marauder/M = new(pickedloc)	//Redeeming the mech toy collection gives you your very own life-sized combat mech!
+			M.operation_req_access = list()
+			M.internals_req_access = list()
 	return
 
 /obj/machinery/computer/ordercomp/attack_ai(var/mob/user as mob)
