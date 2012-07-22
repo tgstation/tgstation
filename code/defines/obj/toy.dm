@@ -31,7 +31,7 @@
 	icon_state = "gygaxtoy"
 
 /obj/item/toy/prize/durand
-	name = "toy gygax"
+	name = "toy durand"
 	desc = "Mini-Mecha action figure! Collect them all! 5/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "durandprize"
 

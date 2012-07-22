@@ -71,6 +71,11 @@
 
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(HUSK in mutations)	return
+
+	facial_hair_style.icon_state = "bald"	//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
+	hair_style.icon_state = "bald"
+	update_hair()
+
 	mutations.Add(HUSK)
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	update_body(0)
