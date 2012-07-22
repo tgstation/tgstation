@@ -226,7 +226,7 @@
 	var/on_gs = 0
 	var/brightness = 8			// luminosity when on, also used in power calculation
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
-
+	var/flickering = 0
 	var/light_type = /obj/item/weapon/light/tube		// the type of light item
 	var/fitting = "tube"
 	var/switchcount = 0			// count of number of times switched on/off
@@ -280,9 +280,7 @@
 //		A.update_lights()
 	..()
 
-
-// update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update()
+/obj/machinery/light/update_icon()
 
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
@@ -296,6 +294,12 @@
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
 			on = 0
+	return
+
+// update the icon_state and luminosity of the light depending on its state
+/obj/machinery/light/proc/update(var/trigger = 1)
+
+	update_icon()
 	if(!on)
 		use_power = 1
 	else
@@ -310,7 +314,7 @@
 		switchcount++
 
 		// now check to see if the bulb is burned out
-		if(status == LIGHT_OK)
+		if(status == LIGHT_OK && trigger)
 			if(on && rigged)
 				explode()
 			if( prob( min(60, switchcount*switchcount*0.01) ) )
@@ -447,10 +451,24 @@
 	var/area/A = src.loc.loc
 	return A.master.lightswitch && A.master.power_light
 
+/obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
+	if(flickering) return
+	flickering = 1
+	spawn(0)
+		if(on && status == LIGHT_OK)
+			for(var/i = 0; i < amount; i++)
+				if(status != LIGHT_OK) break
+				on = !on
+				update(0)
+				sleep(rand(5, 15))
+			on = (status == LIGHT_OK)
+			update(0)
+		flickering = 0
 
-// ai attack - do nothing
+// ai attack - make lights flicker, because why not
 
 /obj/machinery/light/attack_ai(mob/user)
+	src.flicker(1)
 	return
 
 // Aliens smash the bulb but do not get electrocuted./N

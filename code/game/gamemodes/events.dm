@@ -141,6 +141,7 @@
 			C.cell.charge = 0
 
 /proc/power_restore()
+
 	command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal")
 	world << sound('poweron.ogg')
 	for(var/obj/machinery/power/apc/C in world)
@@ -273,6 +274,11 @@
 		world << sound('aliens.ogg')
 
 /proc/high_radiation_event()
+
+	for(var/obj/machinery/light/L in world)
+		if(L.z != 1) continue
+		L.flicker(50)
+	sleep(100)
 	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
 	world << sound('radiation.ogg')
 	for(var/mob/living/carbon/human/H in world)
@@ -289,9 +295,19 @@
 					domutcheck(H,null,1)
 	for(var/mob/living/carbon/monkey/M in world)
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
+	sleep(300)
+	command_alert("High levels of radiation has ceased. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
+
+
 
 //Changing this to affect the main station. Blame Urist. --Pete
 /proc/prison_break() // -- Callagan
+
+	for(var/obj/machinery/light/L in world)
+		if(!istype(get_area(L), /area/security/prison) && !istype(get_area(L), /area/security/brig)) continue
+		L.flicker(10)
+	sleep(100)
+
 	for (var/obj/machinery/power/apc/temp_apc in world)
 		if(istype(get_area(temp_apc), /area/security/prison))
 			temp_apc.overload_lighting()

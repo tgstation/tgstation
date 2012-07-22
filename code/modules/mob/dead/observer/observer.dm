@@ -156,6 +156,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		L+=T
 	usr.loc = pick(L)
 
+
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
 	set name = "Jump to Mob"
@@ -182,6 +183,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				A << "This mob is not located in the game world."
 
+/mob/dead/observer/verb/boo()
+	set category = "Ghost"
+	set name = "Boo!"
+	set desc= "Scare your crew members because of boredom!"
+
+	if(bootime > world.time) return
+	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
+	if(L)
+		L.flicker()
+		bootime = world.time + 600
+		return
+	//Maybe in the future we can add more <i>spooky</i> code here!
+	return
 
 /mob/dead/observer/verb/toggle_alien_candidate()
 	set name = "Toggle Be Alien Candidate"

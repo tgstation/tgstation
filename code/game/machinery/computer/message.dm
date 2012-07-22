@@ -402,7 +402,7 @@
 							if(!P.owner || P.toff) continue
 							sendPDAs += P
 						if(PDAs && PDAs.len > 0)
-							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortNames(sendPDAs)
+							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortAtom(sendPDAs)
 						else
 							customrecepient = null
 
