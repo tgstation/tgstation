@@ -12,6 +12,7 @@
 
 	var/list/newVars = list() //vars of the summoned objects will be replaced with those where they meet
 	//should have format of list("emagged" = 1,"name" = "Wizard's Justicebot"), for example
+	var/delay = 1//Go Go Gadget Inheritance
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/cast(list/targets)
 
@@ -19,23 +20,31 @@
 		if(T.density && !summon_ignore_density)
 			targets -= T
 
-	for(var/i=0,i<summon_amt,i++)
-		if(!targets.len)
-			break
-		var/summoned_object_type = text2path(pick(summon_type))
-		var/spawn_place = pick(targets)
-		if(summon_ignore_prev_spawn_points)
-			targets -= spawn_place
-		var/atom/summoned_object = new summoned_object_type(spawn_place)
+	if(do_after(usr,delay))
+		for(var/i=0,i<summon_amt,i++)
+			if(!targets.len)
+				break
+			var/summoned_object_type = text2path(pick(summon_type))
+			var/spawn_place = pick(targets)
+			if(summon_ignore_prev_spawn_points)
+				targets -= spawn_place
+			var/atom/summoned_object = new summoned_object_type(spawn_place)
 
-		for(var/varName in newVars)
-			if(varName in summoned_object.vars)
-				summoned_object.vars[varName] = newVars[varName]
+			for(var/varName in newVars)
+				if(varName in summoned_object.vars)
+					summoned_object.vars[varName] = newVars[varName]
 
-		if(summon_lifespan)
-			spawn(summon_lifespan)
-				if(summoned_object)
-					del(summoned_object)
+			if(summon_lifespan)
+				spawn(summon_lifespan)
+					if(summoned_object)
+						del(summoned_object)
+	else
+		switch(charge_type)
+			if("recharge")
+				charge_counter = charge_max - 5//So you don't lose charge for a failed spell(Also prevents most over-fill)
+			if("charges")
+				charge_counter++//Ditto, just for different spell types
+
 
 	return
 
