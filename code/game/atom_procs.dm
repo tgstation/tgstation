@@ -1,3 +1,8 @@
+/atom/Del()
+	var/log_file = file("[time2text(world.timeofday, "deletions/DD-MM-YYYY.txt")]")
+	log_file << "Atom [name] - [x],[y],[z]"
+	. = ..()
+
 /atom/proc/MouseDrop_T()
 	return
 
