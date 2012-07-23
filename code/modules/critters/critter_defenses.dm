@@ -42,7 +42,7 @@ Contains the procs that control attacking critters
 				O.show_message("\blue [user] touches [src]!", 1)
 
 
-	Target_Attacker(var/target)
+	proc/Target_Attacker(var/target)
 		if(!target)	return
 		src.target = target
 		src.oldtarget_name = target:name
@@ -54,7 +54,7 @@ Contains the procs that control attacking critters
 		return
 
 
-	TakeDamage(var/damage = 0)
+	proc/TakeDamage(var/damage = 0)
 		var/tempdamage = (damage-armor)
 		if(tempdamage > 0)
 			src.health -= tempdamage
@@ -64,7 +64,7 @@ Contains the procs that control attacking critters
 			src.Die()
 
 
-	Die()
+	proc/Die()
 		if (!src.alive) return
 		src.icon_state += "-dead"
 		src.alive = 0
@@ -74,7 +74,7 @@ Contains the procs that control attacking critters
 		src.visible_message("<b>[src]</b> [deathtext]")
 
 
-	Harvest(var/obj/item/weapon/W, var/mob/living/user)
+	proc/Harvest(var/obj/item/weapon/W, var/mob/living/user)
 		if((!W) || (!user))	return 0
 		if(src.alive)	return 0
 		return 1

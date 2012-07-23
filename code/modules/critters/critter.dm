@@ -80,16 +80,8 @@
 	var/attack_speed = 25 // delay of attack
 
 
-	proc
-		patrol_step()
-		seek_target()
-		Die()
-		ChaseAttack()
-		RunAttack()
-		TakeDamage(var/damage = 0)
-		Target_Attacker(var/target)
-		Harvest(var/obj/item/weapon/W, var/mob/living/user)//Controls havesting things from dead critters
-		AfterAttack(var/mob/living/target)
+	proc/AfterAttack(var/mob/living/target)
+		return
 
 
 

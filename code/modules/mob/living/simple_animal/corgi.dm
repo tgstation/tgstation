@@ -267,7 +267,7 @@
 	..()
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(alive && !resting && !buckled)
+	if(!stat && !resting && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0
@@ -364,7 +364,7 @@
 
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/weapon/newspaper))
-		if(alive)
+		if(!stat)
 			for(var/mob/M in viewers(user, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("\blue [user] baps [name] on the nose with the rolled up [O]")

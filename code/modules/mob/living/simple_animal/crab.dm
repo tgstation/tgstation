@@ -21,7 +21,7 @@
 /mob/living/simple_animal/crab/Life()
 	..()
 	//CRAB movement
-	if(!ckey && alive)
+	if(!ckey && !stat)
 		if(isturf(src.loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
@@ -43,7 +43,7 @@
 		health -= 20
 		Die()
 	if(istype(O, /obj/item/stack/medical))
-		if(alive)
+		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
 				if(MED.amount >= 1)

@@ -56,19 +56,14 @@
 	return 0
 
 /proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/cat/))
+	if(istype(A, /mob/living/simple_animal/cat))
 		return 1
 	return 0
 
-/*proc/ishivebot(A)
-	if(A && istype(A, /mob/living/silicon/hivebot))
+/proc/isbear(A)
+	if(istype(A, /mob/living/simple_animal/bear))
 		return 1
-	return 0*/
-
-/*proc/ishivemainframe(A)
-	if(A && istype(A, /mob/living/silicon/hive_mainframe))
-		return 1
-	return 0*/
+	return 0
 
 /proc/isAI(A)
 	if(istype(A, /mob/living/silicon/ai))

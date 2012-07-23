@@ -86,7 +86,7 @@
 		return
 
 
-	patrol_step()
+	proc/patrol_step()
 		var/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
 		if (istype(moveto, /turf/simulated/floor) || istype(moveto, /turf/simulated/shuttle/floor) || istype(moveto, /turf/unsimulated/floor)) step_towards(src, moveto)
 		if(src.aggressive) seek_target()
@@ -114,7 +114,7 @@
 			M:loc = T
 
 
-	seek_target()
+	proc/seek_target()
 		src.anchored = 0
 		var/T = null
 		for(var/mob/living/C in view(src.seekrange,src))//TODO: mess with this
@@ -179,13 +179,13 @@
 		return
 
 
-	ChaseAttack()
+	proc/ChaseAttack()
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[src]</B> [src.angertext] at [src.target]!", 1)
 		return
 
 
-	RunAttack()
+	proc/RunAttack()
 		src.attacking = 1
 		if(ismob(src.target))
 

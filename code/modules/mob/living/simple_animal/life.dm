@@ -3,7 +3,6 @@
 	var/icon_living = ""
 	var/icon_dead = ""
 	maxHealth = 20
-	var/alive = 1
 	var/list/speak = list()
 	var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
 	var/speak_chance = 0
@@ -64,10 +63,9 @@
 /mob/living/simple_animal/Life()
 
 	//Health
-	if(!alive)
+	if(stat == DEAD)
 		if(health > 0)
 			icon_state = icon_living
-			alive = 1
 			stat = CONSCIOUS
 			density = 1
 		return
@@ -217,7 +215,11 @@
 
 /mob/living/simple_animal/Bumped(AM as mob|obj)
 	if(!AM) return
-	if(isturf(src.loc) && !resting && !buckled)
+
+	if(resting || buckled)
+		return
+
+	if(isturf(src.loc))
 		if(ismob(AM))
 			var/newamloc = src.loc
 			src.loc = AM:loc
@@ -304,7 +306,7 @@
 
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
-		if(alive)
+		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
 				if(MED.amount >= 1)
@@ -344,7 +346,6 @@
 	stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
-	alive = 0
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
@@ -364,3 +365,6 @@
 
 		if(3.0)
 			health -= 30
+
+/mob/living/simple_animal/adjustBruteLoss(damage)
+	health -= damage
