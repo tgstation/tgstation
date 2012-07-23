@@ -84,7 +84,7 @@
 
 /mob/living/carbon/monkey/update_inv_handcuffed(var/update_icons=1)
 	if(handcuffed)
-		pulling = null
+		stop_pulling()
 		overlays_lying[M_HANDCUFF_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "handcuff2")
 		overlays_standing[M_HANDCUFF_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "handcuff1")
 	else

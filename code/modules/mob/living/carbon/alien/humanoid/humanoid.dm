@@ -156,7 +156,7 @@
 		return 0
 
 	if (restrained())
-		pulling = null
+		stop_pulling()
 
 	var/t7 = 1
 	if (restrained())
@@ -169,7 +169,7 @@
 
 		if (pulling && pulling.loc)
 			if(!( isturf(pulling.loc) ))
-				pulling = null
+				stop_pulling()
 				return
 			else
 				if(Debug)
@@ -178,7 +178,7 @@
 
 		/////
 		if(pulling && pulling.anchored)
-			pulling = null
+			stop_pulling()
 			return
 
 		if (!restrained())
@@ -203,21 +203,21 @@
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
 							ok = 0
 					if (ok)
-						var/t = M.pulling
-						M.pulling = null
+						var/atom/movable/t = M.pulling
+						M.stop_pulling()
 
 						step(pulling, get_dir(pulling.loc, T))
-						M.pulling = t
+						M.start_pulling(t)
 				else
 					if (pulling)
 						if (istype(pulling, /obj/structure/window))
 							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
 								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
-									pulling = null
+									stop_pulling()
 					if (pulling)
 						step(pulling, get_dir(pulling.loc, T))
 	else
-		pulling = null
+		stop_pulling()
 		. = ..()
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)

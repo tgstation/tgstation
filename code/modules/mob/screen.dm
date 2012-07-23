@@ -434,7 +434,7 @@
 			usr.hud_used.action_intent.icon_state = "disarm"
 			usr.hud_used.show_intent_icons = 0
 		if("pull")
-			usr.pulling = null
+			usr.stop_pulling()
 		if("throw")
 			if (!usr.stat && isturf(usr.loc) && !usr.restrained())
 				usr:toggle_throw_mode()

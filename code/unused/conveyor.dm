@@ -147,12 +147,12 @@
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
-		M.pulling = null
+		M.stop_pulling()
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.pulling = null
+		user.stop_pulling()
 	else
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.pulling = null
+		user.stop_pulling()
 	return
 
 

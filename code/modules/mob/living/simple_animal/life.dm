@@ -15,7 +15,8 @@
 	var/meat_amount = 0
 	var/meat_type
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
-
+	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
+	
 	//Interaction
 	var/response_help   = "You try to help"
 	var/response_disarm = "You try to disarm"
@@ -114,8 +115,9 @@
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
-				Move(get_step(src,pick(cardinal)))
-				turns_since_move = 0
+				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
+					Move(get_step(src,pick(cardinal)))
+					turns_since_move = 0
 
 
 

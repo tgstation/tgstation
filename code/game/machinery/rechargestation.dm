@@ -142,7 +142,7 @@
 				usr<<"\blue Without a powercell, you can't be recharged."
 				//Make sure they actually HAVE a cell, now that they can get in while powerless. --NEO
 				return
-			usr.pulling = null
+			usr.stop_pulling()
 			if(usr && usr.client)
 				usr.client.perspective = EYE_PERSPECTIVE
 				usr.client.eye = src

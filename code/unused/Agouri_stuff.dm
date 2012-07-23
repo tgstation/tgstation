@@ -210,7 +210,7 @@
 			if(1)
 				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
 					if ((M.m_intent == "run") && !(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP))
-						M.pulling = null
+						M.stop_pulling()
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
 						playsound(src.loc, 'slip.ogg', 50, 1, -3)
@@ -221,7 +221,7 @@
 						return
 				else if(!istype(M, /mob/living/carbon/metroid))
 					if (M.m_intent == "run")
-						M.pulling = null
+						M.stop_pulling()
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
 						playsound(src.loc, 'slip.ogg', 50, 1, -3)
@@ -233,7 +233,7 @@
 
 			if(2) //lube
 				if(!istype(M, /mob/living/carbon/metroid))
-					M.pulling = null
+					M.stop_pulling()
 					step(M, M.dir)
 					spawn(1) step(M, M.dir)
 					spawn(2) step(M, M.dir)
@@ -1003,9 +1003,9 @@ turf/simulated/floor/return_siding_icon_state()
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/mob/t = M.pulling
-		M.pulling = null
+		M.stop_pulling()
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		M.pulling = t
+		M.start_pulling(t)
 	else
 		step(user.pulling, get_dir(user.pulling.loc, src))
 	return
@@ -1288,9 +1288,9 @@ turf/simulated/floor/return_siding_icon_state()
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
 		var/mob/t = M.pulling
-		M.pulling = null
+		M.stop_pulling()
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		M.pulling = t
+		M.start_pulling(t)
 	else
 		step(user.pulling, get_dir(user.pulling.loc, src))
 	return
@@ -1309,10 +1309,10 @@ turf/simulated/floor/return_siding_icon_state()
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
-		var/t = M.pulling
-		M.pulling = null
+		var/atom/movable/t = M.pulling
+		M.stop_pulling()
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		M.pulling = t
+		M.start_pulling(t)
 	else
 		step(user.pulling, get_dir(user.pulling.loc, src))
 	return

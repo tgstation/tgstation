@@ -1022,7 +1022,7 @@
 		H.client.perspective = EYE_PERSPECTIVE
 		H.client.eye = src
 		*/
-		H.pulling = null
+		H.stop_pulling()
 		H.forceMove(src)
 		src.occupant = H
 		src.add_fingerprint(H)

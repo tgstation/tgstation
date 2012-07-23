@@ -1029,7 +1029,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (src.cartridge:honk_charges < 5)
 				src.cartridge:honk_charges++
 
-		M.pulling = null
+		M.stop_pulling()
 		M << "\blue You slipped on the PDA!"
 		playsound(src.loc, 'slip.ogg', 50, 1, -3)
 		M.Stun(8)

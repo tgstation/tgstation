@@ -766,7 +766,7 @@
 				src.visible_message("\red [src] bumps into [M]!")
 			else
 				src.visible_message("\red [src] knocks over [M]!")
-				M.pulling = null
+				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
 				M.lying = 1

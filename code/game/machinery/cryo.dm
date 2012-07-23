@@ -232,7 +232,7 @@
 			if (M.client)
 				M.client.perspective = EYE_PERSPECTIVE
 				M.client.eye = src
-			M.pulling = null
+			M.stop_pulling()
 			M.loc = src
 			if(M.health > -100 && (M.health < 0 || M.sleeping))
 				M << "\blue <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>"

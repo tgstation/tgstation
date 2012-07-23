@@ -192,7 +192,7 @@
 				if(pulling)
 					visible_message("\red <b>[M] has broken [src]'s grip on [pulling]!</B>")
 					talked = 1
-					pulling = null
+					stop_pulling()
 
 				//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
 				if(istype(l_hand, /obj/item/weapon/grab))

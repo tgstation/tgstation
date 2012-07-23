@@ -13,7 +13,7 @@ BIKE HORN
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
 			return
 
-		M.pulling = null
+		M.stop_pulling()
 		M << "\blue You slipped on the [name]!"
 		playsound(src.loc, 'slip.ogg', 50, 1, -3)
 		M.Stun(4)
@@ -25,7 +25,7 @@ BIKE HORN
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
 			return
 
-		M.pulling = null
+		M.stop_pulling()
 		M << "\blue You slipped on the [name]!"
 		playsound(src.loc, 'slip.ogg', 50, 1, -3)
 		M.Stun(8)
@@ -37,7 +37,7 @@ BIKE HORN
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
 			return
 
-		M.pulling = null
+		M.stop_pulling()
 		M << "\blue You slipped on the [name]!"
 		playsound(src.loc, 'slip.ogg', 50, 1, -3)
 		M.Stun(3)

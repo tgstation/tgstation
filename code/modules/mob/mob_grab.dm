@@ -62,7 +62,7 @@
 		assailant.client.screen -= hud1
 		assailant.client.screen += hud1
 	if (assailant.pulling == affecting || assailant.pulling == structure)
-		assailant.pulling = null
+		assailant.stop_pulling()
 
 	if (structure)
 		structure.loc = assailant.loc

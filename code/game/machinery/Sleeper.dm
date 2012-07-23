@@ -378,7 +378,7 @@
 			if(src.occupant)
 				usr << "\blue <B>The sleeper is already occupied!</B>"
 				return
-			usr.pulling = null
+			usr.stop_pulling()
 			usr.client.perspective = EYE_PERSPECTIVE
 			usr.client.eye = src
 			usr.loc = src

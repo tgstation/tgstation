@@ -93,7 +93,7 @@
 	if(!usr.pulling)
 		usr << "\blue You are not pulling anything."
 		return
-	usr.pulling = null
+	usr.stop_pulling()
 
 /client/verb/swap_hand()
 	set hidden = 1

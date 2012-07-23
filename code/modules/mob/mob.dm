@@ -501,22 +501,38 @@
 	if(LinkBlocked(usr.loc,loc)) return
 	show_inv(usr)
 
+/atom/movable
+	var/mob/pulledby = null
+
 /atom/movable/verb/pull()
 	set name = "Pull"
 	set category = "IC"
 	set src in oview(1)
 
-	if ( !usr || usr==src || !istype(src.loc,/turf) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	usr.start_pulling(src)
+	return
+
+/mob/proc/stop_pulling()
+	if(pulling)
+		pulling.pulledby = null
+		pulling = null
+
+/mob/proc/start_pulling(var/atom/movable/AM)
+	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
-	if (!( anchored ))
-		usr.pulling = src
-		if(ismob(src))
-			var/mob/M = src
-			if(!istype(usr, /mob/living/carbon))
+
+	if (!( AM.anchored ))
+		if(pulling)
+			stop_pulling()
+
+		src.pulling = AM
+		AM.pulledby = src
+		if(ismob(AM))
+			var/mob/M = AM
+			if(!iscarbon(src))
 				M.LAssailant = null
 			else
 				M.LAssailant = usr
-	return
 
 /atom/verb/examine()
 	set name = "Examine"

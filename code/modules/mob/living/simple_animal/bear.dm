@@ -24,6 +24,7 @@
 	response_disarm = "gently pushes aside the"
 	response_harm   = "pokes the"
 
+	stop_automated_movement_when_pulled = 0
 	health = 60
 
 	//Space bears aren't affected by atmos.

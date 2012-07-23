@@ -452,7 +452,7 @@
 	for (var/mob/V in viewers(usr))
 		V.show_message("[usr] starts squeezing into the suit storage unit!", 3)
 	if(do_after(usr, 10))
-		usr.pulling = null
+		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE
 		usr.client.eye = src
 		usr.loc = src

@@ -165,7 +165,7 @@
 
 		if (pulling && pulling.loc)
 			if(!( isturf(pulling.loc) ))
-				pulling = null
+				stop_pulling()
 				return
 			else
 				if(Debug)
@@ -174,7 +174,7 @@
 
 		/////
 		if(pulling && pulling.anchored)
-			pulling = null
+			stop_pulling()
 			return
 
 		if (!restrained())
@@ -199,15 +199,15 @@
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
 							ok = 0
 					if (ok)
-						var/t = M.pulling
-						M.pulling = null
+						var/atom/movable/t = M.pulling
+						M.stop_pulling()
 						step(pulling, get_dir(pulling.loc, T))
-						M.pulling = t
+						M.start_pulling(t)
 				else
 					if (pulling)
 						step(pulling, get_dir(pulling.loc, T))
 	else
-		pulling = null
+		stop_pulling()
 		. = ..()
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)

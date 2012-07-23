@@ -428,7 +428,7 @@ Frequency:
 		return
 
 	if (src.restrained())
-		src.pulling = null
+		src.stop_pulling()
 
 	var/t7 = 1
 	if (src.restrained())
@@ -441,7 +441,7 @@ Frequency:
 
 		if (src.pulling && src.pulling.loc)
 			if(!( isturf(src.pulling.loc) ))
-				src.pulling = null
+				src.stop_pulling()
 				return
 			else
 				if(Debug)
@@ -450,7 +450,7 @@ Frequency:
 
 		/////
 		if(src.pulling && src.pulling.anchored)
-			src.pulling = null
+			src.stop_pulling()
 			return
 
 		if (!src.restrained())
@@ -474,15 +474,15 @@ Frequency:
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
 							ok = 0
 					if (ok)
-						var/t = M.pulling
-						M.pulling = null
+						var/atom/movable/t = M.pulling
+						M.stop_pulling()
 						step(src.pulling, get_dir(src.pulling.loc, T))
-						M.pulling = t
+						M.start_pulling(t)
 				else
 					if (src.pulling)
 						step(src.pulling, get_dir(src.pulling.loc, T))
 	else
-		src.pulling = null
+		src.stop_pulling()
 		. = ..()
 	if ((src.s_active && !( s_active in src.contents ) ))
 		src.s_active.close(src)
