@@ -53,7 +53,10 @@
 			dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
 
 			if(dbcon.IsConnected())
-				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\")")
+				var/isadmin = 0
+				if(src.client && src.client.holder)
+					isadmin = 1
+				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\")")
 				query.Execute()
 				var/newpoll = 0
 				while(query.NextRow())

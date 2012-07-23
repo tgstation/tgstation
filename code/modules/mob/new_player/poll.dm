@@ -67,8 +67,11 @@
 	var/DBConnection/dbcon = new()
 	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
 	if(dbcon.IsConnected())
+		var/isadmin = 0
+		if(src.client && src.client.holder)
+			isadmin = 1
 
-		var/DBQuery/select_query = dbcon.NewQuery("SELECT id, question FROM erro_poll_question WHERE Now() BETWEEN starttime AND endtime")
+		var/DBQuery/select_query = dbcon.NewQuery("SELECT id, question FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime")
 		select_query.Execute()
 
 		var/output = "<div align='center'><B>Player polls</B>"
