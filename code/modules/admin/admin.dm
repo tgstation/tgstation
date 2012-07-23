@@ -547,6 +547,7 @@ var/global/BSACooldown = 0
 						if("Yes")
 							ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 							log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
+							DB_ban_unban(M.ckey, BANTYPE_JOB_PERMA, job)
 							feedback_inc("ban_job_unban",1)
 							feedback_add_details("ban_job_unban","- [job]")
 							jobban_unban(M, job)
@@ -598,11 +599,15 @@ var/global/BSACooldown = 0
 		if ((src.rank in list("Game Admin", "Game Master"  )))
 			var/t = href_list["removejobban"]
 			if(t)
-				if(input(alert("Do you want to unjobban [t]?","Unjobban confirmation", "Yes", "No") == "Yes") && t) //No more misclicks! Unless you do it twice.
+				if((alert("Do you want to unjobban [t]?","Unjobban confirmation", "Yes", "No") == "Yes") && t) //No more misclicks! Unless you do it twice.
 					log_admin("[key_name(usr)] removed [t]")
 					message_admins("\blue [key_name_admin(usr)] removed [t]", 1)
 					jobban_remove(t)
 					href_list["ban"] = 1 // lets it fall through and refresh
+					var/t_split = dd_text2list(t, " - ")
+					var/key = t_split[1]
+					var/job = t_split[2]
+					DB_ban_unban(ckey(key), BANTYPE_JOB_PERMA, job)
 
 	if (href_list["newban"])
 		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
