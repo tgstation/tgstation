@@ -29,3 +29,9 @@
 	desc = "It's baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	color = "sec"
+
+/obj/item/clothing/head/beret/sec
+	name = "security beret"
+	desc = "A beret with the security insignia emblazoned on it. For officers that are more inclined towards style than safety."
+	icon_state = "beret_badge"
+	flags = FPRINT | TABLEPASS
