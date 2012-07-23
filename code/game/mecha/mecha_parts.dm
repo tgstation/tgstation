@@ -4,7 +4,7 @@
 
 /obj/item/mecha_parts
 	name = "mecha part"
-	icon = 'mech_construct.dmi'
+	icon = 'icons/mecha/mech_construct.dmi'
 	icon_state = "blank"
 	w_class = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -399,7 +399,7 @@
 
 /obj/item/weapon/circuitboard/mecha
 	name = "Exosuit Circuit board"
-	icon = 'module.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | CONDUCT

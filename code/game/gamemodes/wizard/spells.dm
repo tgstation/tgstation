@@ -20,7 +20,7 @@
 
 		var/obj/effect/overlay/B = new /obj/effect/overlay( M.loc )
 		B.icon_state = "blspell"
-		B.icon = 'wizard.dmi'
+		B.icon = 'icons/obj/wizard.dmi'
 		B.name = "spell"
 		B.anchored = 1
 		B.density = 0
@@ -54,7 +54,7 @@
 		spawn(0)
 			var/obj/effect/overlay/A = new /obj/effect/overlay( usr.loc )
 			A.icon_state = "magicm"
-			A.icon = 'wizard.dmi'
+			A.icon = 'icons/obj/wizard.dmi'
 			A.name = "a magic missile"
 			A.anchored = 0
 			A.density = 0
@@ -65,7 +65,7 @@
 					break
 				var/obj/effect/overlay/B = new /obj/effect/overlay( A.loc )
 				B.icon_state = "magicmd"
-				B.icon = 'wizard.dmi'
+				B.icon = 'icons/obj/wizard.dmi'
 				B.name = "trail"
 				B.anchored = 1
 				B.density = 0
@@ -127,7 +127,7 @@
 /obj/effect/forcefield
 	desc = "A space wizard's magic wall."
 	name = "FORCEWALL"
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "m_shield"
 	anchored = 1.0
 	opacity = 0
@@ -185,7 +185,7 @@
 
 	var/obj/effect/overlay/A = new /obj/effect/overlay( usr.loc )
 	A.icon_state = "fireball"
-	A.icon = 'wizard.dmi'
+	A.icon = 'icons/obj/wizard.dmi'
 	A.name = "a fireball"
 	A.anchored = 0
 	A.density = 0
@@ -399,7 +399,7 @@
 		animation.name = "water"
 		animation.density = 0
 		animation.anchored = 1
-		animation.icon = 'mob.dmi'
+		animation.icon = 'icons/mob/mob.dmi'
 		animation.icon_state = "liquify"
 		animation.layer = 5
 		animation.master = holder
@@ -426,7 +426,7 @@
 /*
 /obj/effect/dummy/spell_jaunt
 	name = "water"
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/canmove = 1
 	density = 0

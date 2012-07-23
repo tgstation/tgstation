@@ -3,7 +3,7 @@
 /obj/structure/grille
 	desc = "A piece of metal with evenly spaced gridlike holes in it. Blocks large object but lets small items, gas, or energy beams through. Strangely enough these grilles also lets meteors pass through them, whether they be small or huge station breaking death stones."
 	name = "grille"
-	icon = 'structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
 	density = 1
 	anchored = 1.0

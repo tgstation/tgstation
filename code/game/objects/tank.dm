@@ -1,7 +1,7 @@
 
 /obj/item/weapon/tank
 	name = "tank"
-	icon = 'tank.dmi'
+	icon = 'icons/obj/tank.dmi'
 
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE

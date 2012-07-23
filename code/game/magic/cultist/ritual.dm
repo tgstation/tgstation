@@ -55,7 +55,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 /obj/effect/rune
 	desc = ""
 	anchored = 1
-	icon = 'rune.dmi'
+	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	var/visibility = 0
 	unacidable = 1

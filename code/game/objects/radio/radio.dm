@@ -4,7 +4,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 
 /obj/item/device/radio
-	icon = 'radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	name = "station bounced radio"
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"

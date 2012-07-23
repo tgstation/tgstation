@@ -2,7 +2,7 @@
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = 2.0
-	icon = 'gloves.dmi'
+	icon = 'icons/obj/clothing/gloves.dmi'
 	protective_temperature = 400
 	heat_transfer_coefficient = 0.25
 	siemens_coefficient = 0.50

@@ -3,7 +3,7 @@
 	voice_name = "alien"
 	voice_message = "hisses"
 	say_message = "hisses"
-	icon = 'alien.dmi'
+	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 
 	var/storedPlasma = 250

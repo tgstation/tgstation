@@ -1,6 +1,6 @@
 /turf/simulated/wall/asteroid
 	name = "asteroid"
-	icon = 'walls.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "asteroid"
 	opacity = 1
 	density = 1
@@ -32,7 +32,7 @@
 /*
 /turf/simulated/wall/asteroid/frozen_gas
 	name="frozen gas"
-	icon = 'atmos.dmi'
+	icon = 'icons/obj/atmos.dmi'
 
 /turf/simulated/wall/asteroid/frozen_gas/oxygen
 	icon_state = "blue"

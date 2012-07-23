@@ -80,14 +80,14 @@
 				if(synd_mind.current.client)
 					for(var/datum/mind/synd_mind_1 in syndicates)
 						if(synd_mind_1.current)
-							var/I = image('mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
+							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
 							synd_mind.current.client.images += I
 
 /datum/game_mode/proc/update_synd_icons_added(datum/mind/synd_mind)
 	spawn(0)
 		if(synd_mind.current)
 			if(synd_mind.current.client)
-				var/I = image('mob.dmi', loc = synd_mind.current, icon_state = "synd")
+				var/I = image('icons/mob/mob.dmi', loc = synd_mind.current, icon_state = "synd")
 				synd_mind.current.client.images += I
 
 /datum/game_mode/proc/update_synd_icons_removed(datum/mind/synd_mind)

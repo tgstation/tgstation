@@ -969,7 +969,7 @@
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 	O.name = "Thermite"
 	O.desc = "Looks hot."
-	O.icon = 'fire.dmi'
+	O.icon = 'icons/effects/fire.dmi'
 	O.icon_state = "2"
 	O.anchored = 1
 	O.density = 1
@@ -1013,7 +1013,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	//Note to coders, the 'intact' var can no longer be used to determine if the floor is a plating or not.
 	//Use the is_plating(), is_plasteel_floor() and is_light_floor() procs instead. --Errorage
 	name = "floor"
-	icon = 'floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
@@ -1128,11 +1128,11 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 		name = "plating"
 
 /turf/simulated/floor/bluegrid
-	icon = 'floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
 
 /turf/simulated/floor/greengrid
-	icon = 'floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
 
 /turf/simulated/floor/New()
@@ -1796,4 +1796,4 @@ turf/simulated/floor/proc/update_icon()
 	if(flags & NOJAUNT)
 		return
 	flags |= NOJAUNT
-	overlays += image('water.dmi',src,"holywater")
+	overlays += image('icons/effects/water.dmi',src,"holywater")

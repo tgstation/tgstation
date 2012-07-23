@@ -37,6 +37,7 @@
 				if(!client.changes)
 					changes()
 			else
+				client.activeslot = preferences.last_slot
 				var/lastchangelog = length('changelog.html')
 				if(!client.changes && preferences.lastchangelog!=lastchangelog)
 					changes()

@@ -1,7 +1,7 @@
 
 /obj/structure/shuttle
 	name = "shuttle"
-	icon = 'shuttle.dmi'
+	icon = 'icons/turf/shuttle.dmi'
 
 /obj/structure/shuttle/engine
 	name = "engine"

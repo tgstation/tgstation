@@ -10,7 +10,7 @@
 /area/New()
 
 	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references src.loc.loc.master ~Carn
-	src.icon = 'alert.dmi'
+	src.icon = 'icons/effects/alert.dmi'
 	uid = ++global_uid
 	spawn(1)
 	//world.log << "New: [src] [tag]"
@@ -21,7 +21,7 @@
 			return
 		related = list(src)
 
-		src.icon = 'alert.dmi'
+		src.icon = 'icons/effects/alert.dmi'
 		src.layer = 10
 	//	update_lights()
 		if(name == "Space")			// override defaults for space

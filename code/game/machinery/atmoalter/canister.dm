@@ -1,6 +1,6 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
-	icon = 'atmos.dmi'
+	icon = 'icons/obj/atmos.dmi'
 	icon_state = "yellow"
 	density = 1
 	var/health = 100.0
@@ -66,13 +66,13 @@
 		var/tank_pressure = air_contents.return_pressure()
 
 		if (tank_pressure < 10)
-			overlays += image('atmos.dmi', "can-o0")
+			overlays += image('icons/obj/atmos.dmi', "can-o0")
 		else if (tank_pressure < ONE_ATMOSPHERE)
-			overlays += image('atmos.dmi', "can-o1")
+			overlays += image('icons/obj/atmos.dmi', "can-o1")
 		else if (tank_pressure < 15*ONE_ATMOSPHERE)
-			overlays += image('atmos.dmi', "can-o2")
+			overlays += image('icons/obj/atmos.dmi', "can-o2")
 		else
-			overlays += image('atmos.dmi', "can-o3")
+			overlays += image('icons/obj/atmos.dmi', "can-o3")
 	return
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

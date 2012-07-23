@@ -3,7 +3,7 @@
 /obj/machinery/power/monitor
 	name = "power monitoring computer"
 	desc = "It monitors power levels across the station."
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	density = 1
 	anchored = 1

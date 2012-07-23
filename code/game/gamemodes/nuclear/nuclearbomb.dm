@@ -1,7 +1,7 @@
 /obj/machinery/nuclearbomb
 	desc = "Uh oh. RUN!!!!"
 	name = "Nuclear Fission Explosive"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
 	density = 1
 	var/deployable = 0.0

@@ -11,7 +11,7 @@
 /obj/mecha
 	name = "Mecha"
 	desc = "Exosuit"
-	icon = 'mecha.dmi'
+	icon = 'icons/mecha/mecha.dmi'
 	density = 1 //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.

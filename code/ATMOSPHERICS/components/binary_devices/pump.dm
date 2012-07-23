@@ -13,7 +13,7 @@ Thus, the two variables affect pump operation are set in New():
 */
 
 obj/machinery/atmospherics/binary/pump
-	icon = 'pump.dmi'
+	icon = 'icons/obj/atmospherics/pump.dmi'
 	icon_state = "intact_off"
 
 	name = "Gas pump"

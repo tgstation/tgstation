@@ -6,7 +6,7 @@
 /obj/machinery/bot/medbot
 	name = "Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "medibot0"
 	layer = 5.0
 	density = 1
@@ -49,7 +49,7 @@
 /obj/item/weapon/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "firstaid_arm"
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
@@ -60,7 +60,7 @@
 		..()
 		spawn(5)
 			if(src.skin)
-				src.overlays += image('aibots.dmi', "kit_skin_[src.skin]")
+				src.overlays += image('icons/obj/aibots.dmi', "kit_skin_[src.skin]")
 
 
 /obj/machinery/bot/medbot/New()
@@ -69,7 +69,7 @@
 
 	spawn(4)
 		if(src.skin)
-			src.overlays += image('aibots.dmi', "medskin_[src.skin]")
+			src.overlays += image('icons/obj/aibots.dmi', "medskin_[src.skin]")
 
 		src.botcard = new /obj/item/weapon/card/id(src)
 		if(isnull(src.botcard_access) || (src.botcard_access.len < 1))
@@ -580,7 +580,7 @@
 					src.build_step++
 					user << "<span class='notice'>You add the health sensor to [src].</span>"
 					src.name = "First aid/robot arm/health analyzer assembly"
-					src.overlays += image('aibots.dmi', "na_scanner")
+					src.overlays += image('icons/obj/aibots.dmi', "na_scanner")
 
 			if(1)
 				if(isprox(W))

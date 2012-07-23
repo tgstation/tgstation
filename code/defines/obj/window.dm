@@ -1,6 +1,6 @@
 /obj/structure/window
 	name = "window"
-	icon = 'structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	desc = "A window."
 	density = 1
 	layer = 3.2//Just above doors

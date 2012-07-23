@@ -10,7 +10,7 @@ CRITTER GRENADE
 	desc = "It is set to detonate in 5 seconds."
 	name = "emp grenade"
 	w_class = 2.0
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "emp"
 	item_state = "emp"
 	throw_speed = 4
@@ -85,7 +85,7 @@ CRITTER GRENADE
 /obj/item/weapon/flashbang
 	desc = "It is set to detonate in 3 seconds."
 	name = "flashbang"
-	icon = 'grenade.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	w_class = 2.0
 	item_state = "flashbang"
@@ -284,7 +284,7 @@ CRITTER GRENADE
 /obj/item/weapon/flashbang/clusterbang
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
 	name = "clusterbang"
-	icon = 'grenade.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang"
 	var/child = 0
 
@@ -364,7 +364,7 @@ CRITTER GRENADE
 /obj/item/weapon/spawnergrenade
 	desc = "It is set to detonate in 3 seconds. It will unleash unleash an unspecified anomaly into the vicinity."
 	name = "delivery grenade"
-	icon = 'grenade.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "delivery"
 	w_class = 2.0
 	item_state = "flashbang"

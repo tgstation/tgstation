@@ -2,7 +2,7 @@
 	name = "unknown"
 	real_name = "unknown"
 	voice_name = "unknown"
-	icon = 'human.dmi'
+	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m_s"
 
 

@@ -1,7 +1,7 @@
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
-	icon = 'vending.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
 	layer = 2.9
 	anchored = 1
@@ -58,7 +58,7 @@
 /obj/machinery/vending/atmospherics //Commenting this out until someone ponies up some actual working, broken, and unpowered sprites - Quarxink
 	name = "Tank Vendor"
 	desc = "A vendor with a wide variety of masks and gas tanks."
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "dispenser"
 	product_paths = "/obj/item/weapon/tank/oxygen;/obj/item/weapon/tank/plasma;/obj/item/weapon/tank/emergency_oxygen;/obj/item/weapon/tank/emergency_oxygen/engi;/obj/item/clothing/mask/breath"
 	product_amounts = "10;10;10;5;25"

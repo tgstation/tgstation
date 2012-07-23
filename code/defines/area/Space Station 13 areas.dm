@@ -22,7 +22,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/party = null
 	level = null
 	name = "Space"
-	icon = 'areas.dmi'
+	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
 	layer = 10
 	mouse_opacity = 0

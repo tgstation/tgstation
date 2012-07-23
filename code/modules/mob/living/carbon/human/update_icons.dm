@@ -147,7 +147,7 @@ Please contact me on #coderbus IRC. ~Carn x
 					stealth = 1
 					break
 		if(stealth)
-			icon = 'human.dmi'
+			icon = 'icons/mob/human.dmi'
 			icon_state = "body_cloaked"
 			var/image/I	= overlays_standing[L_HAND_LAYER]
 			if(istype(I))	overlays += I
@@ -163,8 +163,8 @@ Please contact me on #coderbus IRC. ~Carn x
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
 /mob/living/carbon/human/UpdateDamageIcon(var/update_icons=1)
-	var/image/standing	= image("icon" = 'dam_human.dmi', "icon_state" = "blank")
-	var/image/lying		= image("icon" = 'dam_human.dmi', "icon_state" = "blank2")
+	var/image/standing	= image("icon" = 'icons/mob/dam_human.dmi', "icon_state" = "blank")
+	var/image/lying		= image("icon" = 'icons/mob/dam_human.dmi', "icon_state" = "blank2")
 	for(var/datum/organ/external/O in organs)
 		if(O.brutestate)
 			standing.overlays	+= "[O.icon_name]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
@@ -188,14 +188,14 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(gender == FEMALE)	g = "f"
 	//Base mob icon
 	if(husk)
-		stand_icon = new /icon('human.dmi', "husk_s")
-		lying_icon = new /icon('human.dmi', "husk_l")
+		stand_icon = new /icon('icons/mob/human.dmi', "husk_s")
+		lying_icon = new /icon('icons/mob/human.dmi', "husk_l")
 	else if(fat)
-		stand_icon = new /icon('human.dmi', "fatbody_s")
-		lying_icon = new /icon('human.dmi', "fatbody_l")
+		stand_icon = new /icon('icons/mob/human.dmi', "fatbody_s")
+		lying_icon = new /icon('icons/mob/human.dmi', "fatbody_l")
 	else
-		stand_icon = new /icon('human.dmi', "body_[g]_s")
-		lying_icon = new /icon('human.dmi', "body_[g]_l")
+		stand_icon = new /icon('icons/mob/human.dmi', "body_[g]_s")
+		lying_icon = new /icon('icons/mob/human.dmi', "body_[g]_l")
 
 	//Skin tone
 	if(s_tone >= 0)
@@ -206,22 +206,22 @@ Please contact me on #coderbus IRC. ~Carn x
 		lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
 	//Eyes
-	var/icon/eyes_s = new/icon('human_face.dmi', "eyes_s")
-	var/icon/eyes_l = new/icon('human_face.dmi', "eyes_l")
+	var/icon/eyes_s = new/icon('icons/mob/human_face.dmi', "eyes_s")
+	var/icon/eyes_l = new/icon('icons/mob/human_face.dmi', "eyes_l")
 	eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 	eyes_l.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 	stand_icon.Blend(eyes_s, ICON_OVERLAY)
 	lying_icon.Blend(eyes_l, ICON_OVERLAY)
 
 	//Mouth
-	stand_icon.Blend(new/icon('human_face.dmi', "mouth_[g]_s"), ICON_OVERLAY)
-	lying_icon.Blend(new/icon('human_face.dmi', "mouth_[g]_l"), ICON_OVERLAY)
+	stand_icon.Blend(new/icon('icons/mob/human_face.dmi', "mouth_[g]_s"), ICON_OVERLAY)
+	lying_icon.Blend(new/icon('icons/mob/human_face.dmi', "mouth_[g]_l"), ICON_OVERLAY)
 
 	//Underwear
 	if(underwear < 12 && underwear > 0)
 		if(!fat)
-			stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
 	if(update_icons)	update_icons()
 
 
@@ -237,8 +237,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 
 	//base icons
-	var/icon/face_standing	= new /icon('human_face.dmi',"bald_s")
-	var/icon/face_lying		= new /icon('human_face.dmi',"bald_l")
+	var/icon/face_standing	= new /icon('icons/mob/human_face.dmi',"bald_s")
+	var/icon/face_lying		= new /icon('icons/mob/human_face.dmi',"bald_l")
 
 	if(facial_hair_style)
 		var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
@@ -266,8 +266,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if( FAT in mutations )
 		fat = "fat"
 
-	var/image/lying		= image("icon" = 'genetics.dmi')
-	var/image/standing	= image("icon" = 'genetics.dmi')
+	var/image/lying		= image("icon" = 'icons/effects/genetics.dmi')
+	var/image/standing	= image("icon" = 'icons/effects/genetics.dmi')
 	var/add_image = 0
 	for(var/mut in mutations)
 		switch(mut)
@@ -303,14 +303,14 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	switch(mutantrace)
 		if("lizard","golem","metroid")
-			overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat]_l")
-			overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat]_s")
+			overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[mutantrace][fat]_l")
+			overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[mutantrace][fat]_s")
 		if("plant")
 			if(stat == DEAD)	//TODO
-				overlays_lying[MUTANTRACE_LAYER] = image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_d")
+				overlays_lying[MUTANTRACE_LAYER] = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[mutantrace]_d")
 			else
-				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat]_[gender]_l")
-				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat]_[gender]_s")
+				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[mutantrace][fat]_[gender]_l")
+				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[mutantrace][fat]_[gender]_s")
 		else
 			overlays_lying[MUTANTRACE_LAYER]	= null
 			overlays_standing[MUTANTRACE_LAYER]	= null
@@ -358,19 +358,19 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(FAT in mutations)
 			if(w_uniform.flags&ONESIZEFITSALL)
-				lying.icon		= 'uniform_fat.dmi'
-				standing.icon	= 'uniform_fat.dmi'
+				lying.icon		= 'icons/mob/uniform_fat.dmi'
+				standing.icon	= 'icons/mob/uniform_fat.dmi'
 			else
 				src << "\red You burst out of \the [w_uniform]!"
 				drop_from_inventory(w_uniform)
 				return
 		else
-			lying.icon		= 'uniform.dmi'
-			standing.icon	= 'uniform.dmi'
+			lying.icon		= 'icons/mob/uniform.dmi'
+			standing.icon	= 'icons/mob/uniform.dmi'
 
 		if(w_uniform.blood_DNA)
-			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "uniformblood2")
-			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "uniformblood")
+			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "uniformblood2")
+			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "uniformblood")
 		overlays_lying[UNIFORM_LAYER]		= lying
 		overlays_standing[UNIFORM_LAYER]	= standing
 	else
@@ -391,8 +391,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_wear_id(var/update_icons=1)
 	if(wear_id)
-		overlays_lying[ID_LAYER]	= image("icon" = 'mob.dmi', "icon_state" = "id2")
-		overlays_standing[ID_LAYER]	= image("icon" = 'mob.dmi', "icon_state" = "id")
+		overlays_lying[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id2")
+		overlays_standing[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id")
 		wear_id.screen_loc = ui_id	//TODO
 	else
 		overlays_lying[ID_LAYER]	= null
@@ -403,18 +403,18 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(gloves)
 		var/t_state = gloves.item_state
 		if(!t_state)	t_state = gloves.icon_state
-		var/image/lying		= image("icon" = 'hands.dmi', "icon_state" = "[t_state]2")
-		var/image/standing	= image("icon" = 'hands.dmi', "icon_state" = "[t_state]")
+		var/image/lying		= image("icon" = 'icons/mob/hands.dmi', "icon_state" = "[t_state]2")
+		var/image/standing	= image("icon" = 'icons/mob/hands.dmi', "icon_state" = "[t_state]")
 		if(gloves.blood_DNA)
-			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "bloodyhands2")
-			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "bloodyhands")
+			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands2")
+			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands")
 		gloves.screen_loc = ui_gloves
 		overlays_lying[GLOVES_LAYER]	= lying
 		overlays_standing[GLOVES_LAYER]	= standing
 	else
 		if(blood_DNA)
-			overlays_lying[GLOVES_LAYER]	= image("icon" = 'blood.dmi', "icon_state" = "bloodyhands2")
-			overlays_standing[GLOVES_LAYER]	= image("icon" = 'blood.dmi', "icon_state" = "bloodyhands")
+			overlays_lying[GLOVES_LAYER]	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands2")
+			overlays_standing[GLOVES_LAYER]	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands")
 		else
 			overlays_lying[GLOVES_LAYER]	= null
 			overlays_standing[GLOVES_LAYER]	= null
@@ -423,8 +423,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_glasses(var/update_icons=1)
 	if(glasses)
-		overlays_lying[GLASSES_LAYER]		= image("icon" = 'eyes.dmi', "icon_state" = "[glasses.icon_state]2")
-		overlays_standing[GLASSES_LAYER]	= image("icon" = 'eyes.dmi', "icon_state" = "[glasses.icon_state]")
+		overlays_lying[GLASSES_LAYER]		= image("icon" = 'icons/mob/eyes.dmi', "icon_state" = "[glasses.icon_state]2")
+		overlays_standing[GLASSES_LAYER]	= image("icon" = 'icons/mob/eyes.dmi', "icon_state" = "[glasses.icon_state]")
 	else
 		overlays_lying[GLASSES_LAYER]		= null
 		overlays_standing[GLASSES_LAYER]	= null
@@ -432,8 +432,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_ears(var/update_icons=1)
 	if(ears)
-		overlays_lying[EARS_LAYER] = image("icon" = 'ears.dmi', "icon_state" = "[ears.icon_state]2")
-		overlays_standing[EARS_LAYER] = image("icon" = 'ears.dmi', "icon_state" = "[ears.icon_state]")
+		overlays_lying[EARS_LAYER] = image("icon" = 'icons/mob/ears.dmi', "icon_state" = "[ears.icon_state]2")
+		overlays_standing[EARS_LAYER] = image("icon" = 'icons/mob/ears.dmi', "icon_state" = "[ears.icon_state]")
 	else
 		overlays_lying[EARS_LAYER]		= null
 		overlays_standing[EARS_LAYER]	= null
@@ -441,11 +441,11 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_shoes(var/update_icons=1)
 	if(shoes)
-		var/image/lying		= image("icon" = 'feet.dmi', "icon_state" = "[shoes.icon_state]2")
-		var/image/standing	= image("icon" = 'feet.dmi', "icon_state" = "[shoes.icon_state]")
+		var/image/lying		= image("icon" = 'icons/mob/feet.dmi', "icon_state" = "[shoes.icon_state]2")
+		var/image/standing	= image("icon" = 'icons/mob/feet.dmi', "icon_state" = "[shoes.icon_state]")
 		if(shoes.blood_DNA)
-			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "shoeblood2")
-			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "shoeblood")
+			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "shoeblood2")
+			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "shoeblood")
 		overlays_lying[SHOES_LAYER]		= lying
 		overlays_standing[SHOES_LAYER]	= standing
 	else
@@ -457,8 +457,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(s_store)
 		var/t_state = s_store.item_state
 		if(!t_state)	t_state = s_store.icon_state
-		overlays_lying[SUIT_STORE_LAYER]	= image("icon" = 'belt_mirror.dmi', "icon_state" = "[t_state]2")
-		overlays_standing[SUIT_STORE_LAYER]	= image("icon" = 'belt_mirror.dmi', "icon_state" = "[t_state]")
+		overlays_lying[SUIT_STORE_LAYER]	= image("icon" = 'icons/mob/belt_mirror.dmi', "icon_state" = "[t_state]2")
+		overlays_standing[SUIT_STORE_LAYER]	= image("icon" = 'icons/mob/belt_mirror.dmi', "icon_state" = "[t_state]")
 		s_store.screen_loc = ui_sstore1		//TODO
 	else
 		overlays_lying[SUIT_STORE_LAYER]	= null
@@ -475,11 +475,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			lying		= image("icon" = head:mob2)
 			standing	= image("icon" = head:mob)
 		else
-			lying		= image("icon" = 'head.dmi', "icon_state" = "[head.icon_state]2")
-			standing	= image("icon" = 'head.dmi', "icon_state" = "[head.icon_state]")
+			lying		= image("icon" = 'icons/mob/head.dmi', "icon_state" = "[head.icon_state]2")
+			standing	= image("icon" = 'icons/mob/head.dmi', "icon_state" = "[head.icon_state]")
 		if(head.blood_DNA)
-			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "helmetblood2")
-			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "helmetblood")
+			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood2")
+			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
 		overlays_lying[HEAD_LAYER]		= lying
 		overlays_standing[HEAD_LAYER]	= standing
 	else
@@ -492,8 +492,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		belt.screen_loc = ui_belt	//TODO
 		var/t_state = belt.item_state
 		if(!t_state)	t_state = belt.icon_state
-		overlays_lying[BELT_LAYER]		= image("icon" = 'belt.dmi', "icon_state" = "[t_state]2")
-		overlays_standing[BELT_LAYER]	= image("icon" = 'belt.dmi', "icon_state" = "[t_state]")
+		overlays_lying[BELT_LAYER]		= image("icon" = 'icons/mob/belt.dmi', "icon_state" = "[t_state]2")
+		overlays_standing[BELT_LAYER]	= image("icon" = 'icons/mob/belt.dmi', "icon_state" = "[t_state]")
 	else
 		overlays_lying[BELT_LAYER]		= null
 		overlays_standing[BELT_LAYER]	= null
@@ -503,8 +503,8 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_inv_wear_suit(var/update_icons=1)
 	if( wear_suit && istype(wear_suit, /obj/item/clothing/suit) )	//TODO check this
 		wear_suit.screen_loc = ui_oclothing	//TODO
-		var/image/lying		= image("icon" = 'suit.dmi', "icon_state" = "[wear_suit.icon_state]2")
-		var/image/standing	= image("icon" = 'suit.dmi', "icon_state" = "[wear_suit.icon_state]")
+		var/image/lying		= image("icon" = 'icons/mob/suit.dmi', "icon_state" = "[wear_suit.icon_state]2")
+		var/image/standing	= image("icon" = 'icons/mob/suit.dmi', "icon_state" = "[wear_suit.icon_state]")
 
 		if(FAT in mutations)
 			if(!wear_suit.flags&ONESIZEFITSALL)
@@ -533,8 +533,8 @@ Please contact me on #coderbus IRC. ~Carn x
 					t_state = "coat"
 				else
 					t_state = "suit"
-				lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "[t_state]blood2")
-				standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "[t_state]blood")
+				lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_state]blood2")
+				standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_state]blood")
 
 		overlays_lying[SUIT_LAYER]		= lying
 		overlays_standing[SUIT_LAYER]	= standing
@@ -552,11 +552,11 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_inv_wear_mask(var/update_icons=1)
 	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
 		wear_mask.screen_loc = ui_mask	//TODO
-		var/image/lying		= image("icon" = 'mask.dmi', "icon_state" = "[wear_mask.icon_state]2")
-		var/image/standing	= image("icon" = 'mask.dmi', "icon_state" = "[wear_mask.icon_state]")
+		var/image/lying		= image("icon" = 'icons/mob/mask.dmi', "icon_state" = "[wear_mask.icon_state]2")
+		var/image/standing	= image("icon" = 'icons/mob/mask.dmi', "icon_state" = "[wear_mask.icon_state]")
 		if( !istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA )
-			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "maskblood2")
-			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "maskblood")
+			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood2")
+			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood")
 		overlays_lying[FACEMASK_LAYER]		= lying
 		overlays_standing[FACEMASK_LAYER]	= standing
 	else
@@ -568,8 +568,8 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_inv_back(var/update_icons=1)
 	if(back)
 		back.screen_loc = ui_back	//TODO
-		overlays_lying[BACK_LAYER]		= image("icon" = 'back.dmi', "icon_state" = "[back.icon_state]2")
-		overlays_standing[BACK_LAYER]	= image("icon" = 'back.dmi', "icon_state" = "[back.icon_state]")
+		overlays_lying[BACK_LAYER]		= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]2")
+		overlays_standing[BACK_LAYER]	= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]")
 	else
 		overlays_lying[BACK_LAYER]		= null
 		overlays_standing[BACK_LAYER]	= null
@@ -585,8 +585,8 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_inv_handcuffed(var/update_icons=1)
 	if(handcuffed)
 		pulling = null	//TODO: should be handled elsewhere
-		overlays_lying[HANDCUFF_LAYER]		= image("icon" = 'mob.dmi', "icon_state" = "handcuff2")
-		overlays_standing[HANDCUFF_LAYER]	= image("icon" = 'mob.dmi', "icon_state" = "handcuff1")
+		overlays_lying[HANDCUFF_LAYER]		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "handcuff2")
+		overlays_standing[HANDCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "handcuff1")
 	else
 		overlays_lying[HANDCUFF_LAYER]		= null
 		overlays_standing[HANDCUFF_LAYER]	= null
@@ -598,7 +598,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		r_hand.screen_loc = ui_rhand	//TODO
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
-		overlays_standing[R_HAND_LAYER] = image("icon" = 'items_righthand.dmi', "icon_state" = "[t_state]")
+		overlays_standing[R_HAND_LAYER] = image("icon" = 'icons/mob/items_righthand.dmi', "icon_state" = "[t_state]")
 	else
 		overlays_standing[R_HAND_LAYER] = null
 	if(update_icons)   update_icons()
@@ -609,7 +609,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		l_hand.screen_loc = ui_lhand	//TODO
 		var/t_state = l_hand.item_state
 		if(!t_state)	t_state = l_hand.icon_state
-		overlays_standing[L_HAND_LAYER] = image("icon" = 'items_lefthand.dmi', "icon_state" = "[t_state]")
+		overlays_standing[L_HAND_LAYER] = image("icon" = 'icons/mob/items_lefthand.dmi', "icon_state" = "[t_state]")
 	else
 		overlays_standing[L_HAND_LAYER] = null
 	if(update_icons)   update_icons()

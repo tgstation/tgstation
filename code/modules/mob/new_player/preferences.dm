@@ -110,6 +110,7 @@ datum/preferences
 	var/metadata = ""
 
 	var/sound_adminhelp = 0
+	var/last_slot = 1//Holder so it doesn't default to slot 1, rather the last one used
 
 
 	New()
@@ -670,6 +671,7 @@ datum/preferences
 			else if(link_tags["changeslot"])
 				savefile_save(user)
 				user.client.activeslot = min(max(text2num(link_tags["changeslot"]), 1), MAX_SAVE_SLOTS)
+				last_slot = user.client.activeslot//Changes the last used slot to be the temp default one
 				savefile_load(user)
 
 
@@ -750,13 +752,13 @@ datum/preferences
 
 		switch(UI_style)
 			if("Midnight")
-				character.UI = 'screen1_Midnight.dmi'
+				character.UI = 'icons/mob/screen1_Midnight.dmi'
 			if("Orange")
-				character.UI = 'screen1_Orange.dmi'
+				character.UI = 'icons/mob/screen1_Orange.dmi'
 			if("old")
-				character.UI = 'screen1_old.dmi'
+				character.UI = 'icons/mob/screen1_old.dmi'
 			else
-				character.UI = 'screen1_Midnight.dmi'
+				character.UI = 'icons/mob/screen1_Midnight.dmi'
 
 		character.hair_style = hair_style
 		character.facial_hair_style = facial_hair_style

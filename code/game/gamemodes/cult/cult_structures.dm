@@ -1,7 +1,7 @@
 /obj/structure/cult
 	density = 1
 	anchored = 1
-	icon = 'cult.dmi'
+	icon = 'icons/obj/cult.dmi'
 
 /obj/structure/cult/talisman
 	name = "Altar"
@@ -39,7 +39,7 @@
 /obj/effect/gateway
 	name = "gateway"
 	desc = "You're pretty sure that abyss is staring back"
-	icon = 'cult.dmi'
+	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
 	density = 1
 	unacidable = 1

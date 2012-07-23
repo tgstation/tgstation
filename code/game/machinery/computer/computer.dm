@@ -1,6 +1,6 @@
 /obj/machinery/computer
 	name = "computer"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	density = 1
 	anchored = 1.0
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassemble
@@ -73,11 +73,11 @@
 					if (O.occupant)
 						switch (O.occupant.stat)
 							if (0)
-								overlays += image('computer.dmi', "ai-fixer-full")
+								overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
 							if (2)
-								overlays += image('computer.dmi', "ai-fixer-404")
+								overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
 					else
-						overlays += image('computer.dmi', "ai-fixer-empty")
+						overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 			else
 				spawn(rand(0, 15))
 					//icon_state = "c_unpowered"

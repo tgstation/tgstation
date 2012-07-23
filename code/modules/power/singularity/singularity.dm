@@ -8,7 +8,7 @@ var/global/list/uneatable = list(
 /obj/machinery/singularity/
 	name = "Gravitational Singularity"
 	desc = "A Gravitational Singularity."
-	icon = 'singularity.dmi'
+	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 	anchored = 1
 	density = 1
@@ -128,7 +128,7 @@ var/global/list/uneatable = list(
 			switch(temp_allowed_size)
 				if(1)
 					current_size = 1
-					icon = 'singularity.dmi'
+					icon = 'icons/obj/singularity.dmi'
 					icon_state = "singularity_s1"
 					pixel_x = 0
 					pixel_y = 0
@@ -139,7 +139,7 @@ var/global/list/uneatable = list(
 					dissipate_strength = 1
 				if(3)//1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
 					current_size = 3
-					icon = '96x96.dmi'
+					icon = 'icons/effects/96x96.dmi'
 					icon_state = "singularity_s3"
 					pixel_x = -32
 					pixel_y = -32
@@ -151,7 +151,7 @@ var/global/list/uneatable = list(
 				if(5)
 					if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
 						current_size = 5
-						icon = '160x160.dmi'
+						icon = 'icons/effects/160x160.dmi'
 						icon_state = "singularity_s5"
 						pixel_x = -64
 						pixel_y = -64
@@ -163,7 +163,7 @@ var/global/list/uneatable = list(
 				if(7)
 					if((check_turfs_in(1,3))&&(check_turfs_in(2,3))&&(check_turfs_in(4,3))&&(check_turfs_in(8,3)))
 						current_size = 7
-						icon = '224x224.dmi'
+						icon = 'icons/effects/224x224.dmi'
 						icon_state = "singularity_s7"
 						pixel_x = -96
 						pixel_y = -96
@@ -174,7 +174,7 @@ var/global/list/uneatable = list(
 						dissipate_strength = 10
 				if(9)//this one also lacks a check for gens because it eats everything
 					current_size = 9
-					icon = '288x288.dmi'
+					icon = 'icons/effects/288x288.dmi'
 					icon_state = "singularity_s9"
 					pixel_x = -128
 					pixel_y = -128
@@ -444,7 +444,7 @@ var/global/list/uneatable = list(
 	narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
 		name = "Tear in the Fabric of Reality"
 		desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
-		icon = 'magic_terror.dmi'
+		icon = 'icons/obj/magic_terror.dmi'
 		pixel_x = -89
 		pixel_y = -85
 		current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO

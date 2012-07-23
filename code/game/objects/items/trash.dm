@@ -1,6 +1,6 @@
 //Added by Jack Rost
 /obj/item/trash
-	icon = 'trash.dmi'
+	icon = 'icons/obj/trash.dmi'
 	w_class = 1.0
 	desc = "This is rubbish."
 	raisins
@@ -44,14 +44,14 @@
 		icon_state = "tray"
 	candle
 		name = "candle"
-		icon = 'candle.dmi'
+		icon = 'icons/obj/candle.dmi'
 		icon_state = "candle4"
 
 /obj/item/trash/attack(mob/M as mob, mob/living/user as mob)
 	return
 
 /obj/item/weapon/trashbag
-	icon = 'trash.dmi'
+	icon = 'icons/obj/trash.dmi'
 	icon_state = "trashbag0"
 	item_state = "trashbag"
 	name = "Trash bag"

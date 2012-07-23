@@ -1,7 +1,7 @@
 /mob/living/simple_animal/parrot
 	name = "\improper Parrot"
 	desc = "It's a parrot!  No dirty words!"
-	icon = 'mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"

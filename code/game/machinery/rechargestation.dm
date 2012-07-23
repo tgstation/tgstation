@@ -1,6 +1,6 @@
 /obj/machinery/recharge_station
 	name = "Cyborg Recharging Station"
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = 1
 	anchored = 1.0

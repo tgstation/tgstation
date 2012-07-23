@@ -101,7 +101,7 @@ turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info,bloodco
 					T.blood_DNA["Non-human DNA"] = "A+"
 				return
 	var/obj/effect/decal/cleanable/blood/tracks/this = new(src)
-	this.icon = 'footprints.dmi'
+	this.icon = 'icons/effects/footprints.dmi'
 
 	var/preiconstate = ""
 
@@ -174,7 +174,7 @@ proc/blood_incompatible(donor,receiver)
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."
 	w_class = 1
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5)

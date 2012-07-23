@@ -1,5 +1,5 @@
 obj/machinery/atmospherics/trinary/mixer
-	icon = 'mixer.dmi'
+	icon = 'icons/obj/atmospherics/mixer.dmi'
 	icon_state = "intact_off"
 	density = 1
 

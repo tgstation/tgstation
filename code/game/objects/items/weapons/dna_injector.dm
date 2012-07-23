@@ -1,7 +1,7 @@
 /obj/item/weapon/dnainjector
 	name = "DNA-Injector"
 	desc = "This injects the person with DNA."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "dnainjector"
 	var/dnatype = null
 	var/dna = null

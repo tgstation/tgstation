@@ -43,7 +43,7 @@
 	name = "light replacer"
 	desc = "A device to automatically replace lights. Refill with working lightbulbs."
 
-	icon = 'janitor.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
 	item_state = "electronic"
 

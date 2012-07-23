@@ -3,7 +3,7 @@
 /obj/item/weapon/evidencebag
 	name = "evidence bag"
 	desc = "An empty evidence bag."
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 	w_class = 1
 

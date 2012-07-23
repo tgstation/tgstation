@@ -1,7 +1,7 @@
 /mob/living/blob
 	name = "blob fragment"
 	real_name = "blob fragment"
-	icon = 'blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_spore_temp"
 	pass_flags = PASSBLOB
 	see_in_dark = 8

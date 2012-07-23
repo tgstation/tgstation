@@ -1,7 +1,7 @@
 /obj/item/weapon/stamp
 	desc = "A rubber stamp for stamping important documents."
 	name = "rubber stamp"
-	icon = 'bureaucracy.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "stamp-qm"
 	item_state = "stamp"
 	flags = FPRINT | TABLEPASS

@@ -23,7 +23,7 @@
 			animation.name = "water"
 			animation.density = 0
 			animation.anchored = 1
-			animation.icon = 'mob.dmi'
+			animation.icon = 'icons/mob/mob.dmi'
 			animation.icon_state = "liquify"
 			animation.layer = 5
 			animation.master = holder
@@ -69,7 +69,7 @@
 
 /obj/effect/dummy/spell_jaunt
 	name = "water"
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/canmove = 1
 	density = 0

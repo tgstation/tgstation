@@ -1,6 +1,6 @@
-/obj/hud/proc/human_hud(var/ui_style='screen1_old.dmi')
+/obj/hud/proc/human_hud(var/ui_style='icons/mob/screen1_old.dmi')
 
-	//ui_style='screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
+	//ui_style='icons/mob/screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
 
 	src.adding = list(  )
 	src.other = list(  )
@@ -674,7 +674,7 @@
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
 	mymob.zone_sel.overlays = null
-	mymob.zone_sel.overlays += image("icon" = 'zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
+	mymob.zone_sel.overlays += image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
 
 	mymob.client.screen = null
 
@@ -742,7 +742,7 @@ Radar-related things
 /mob/living/carbon/human/proc/close_radar()
 	radar_open = 0
 	for(var/obj/screen/x in client.screen)
-		if( (x.name == "radar" && x.icon == 'radar.dmi') || (x in radar_blips) )
+		if( (x.name == "radar" && x.icon == 'icons/misc/radar.dmi') || (x in radar_blips) )
 			client.screen -= x
 			del(x)
 
@@ -750,7 +750,7 @@ Radar-related things
 
 /mob/living/carbon/human/proc/place_radar_closed()
 	var/obj/screen/closedradar = new()
-	closedradar.icon = 'radar.dmi'
+	closedradar.icon = 'icons/misc/radar.dmi'
 	closedradar.icon_state = "radarclosed"
 	closedradar.screen_loc = "WEST,NORTH-1"
 	closedradar.name = "radar closed"
@@ -759,30 +759,30 @@ Radar-related things
 /mob/living/carbon/human/proc/start_radar()
 
 	for(var/obj/screen/x in client.screen)
-		if(x.name == "radar closed" && x.icon == 'radar.dmi')
+		if(x.name == "radar closed" && x.icon == 'icons/misc/radar.dmi')
 			client.screen -= x
 			del(x)
 
 	var/obj/screen/cornerA = new()
-	cornerA.icon = 'radar.dmi'
+	cornerA.icon = 'icons/misc/radar.dmi'
 	cornerA.icon_state = "radar(1,1)"
 	cornerA.screen_loc = "WEST,NORTH-2"
 	cornerA.name = "radar"
 
 	var/obj/screen/cornerB = new()
-	cornerB.icon = 'radar.dmi'
+	cornerB.icon = 'icons/misc/radar.dmi'
 	cornerB.icon_state = "radar(2,1)"
 	cornerB.screen_loc = "WEST+1,NORTH-2"
 	cornerB.name = "radar"
 
 	var/obj/screen/cornerC = new()
-	cornerC.icon = 'radar.dmi'
+	cornerC.icon = 'icons/misc/radar.dmi'
 	cornerC.icon_state = "radar(1,2)"
 	cornerC.screen_loc = "WEST,NORTH-1"
 	cornerC.name = "radar"
 
 	var/obj/screen/cornerD = new()
-	cornerD.icon = 'radar.dmi'
+	cornerD.icon = 'icons/misc/radar.dmi'
 	cornerD.icon_state = "radar(2,2)"
 	cornerD.screen_loc = "WEST+1,NORTH-1"
 	cornerD.name = "radar"
@@ -849,7 +849,7 @@ Radar-related things
 		var/blip_x = max_dist + (-( distance_ref.x-a_x ) ) + starting_px
 		var/blip_y = max_dist + (-( distance_ref.y-a_y ) ) + starting_py
 		var/obj/screen/blip = new()
-		blip.icon = 'radar.dmi'
+		blip.icon = 'icons/misc/radar.dmi'
 		blip.name = "Blip"
 		blip.layer = 21
 		blip.screen_loc = "WEST:[blip_x-1],NORTH-2:[blip_y-1]" // offset -1 because the center of the blip is not at the bottomleft corner (14)

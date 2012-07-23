@@ -3,7 +3,7 @@
 /obj/item/device/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
-	icon = 'assemblies.dmi'
+	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
 	w_class = 3
 	origin_tech = "biotech=3"

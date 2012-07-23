@@ -1,7 +1,7 @@
 /obj/item/bodybag
 	name = "body bag"
 	desc = "A folded bag designed to contain dead things."
-	icon = 'bodybag.dmi'
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
 
 	attack_self(mob/user)
@@ -33,7 +33,7 @@
 /obj/structure/closet/body_bag
 	name = "body bag"
 	desc = "A bag designed to contain dead things."
-	icon = 'bodybag.dmi'
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_closed"
 	icon_closed = "bodybag_closed"
 	icon_opened = "bodybag_open"

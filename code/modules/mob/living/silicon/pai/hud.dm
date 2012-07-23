@@ -6,7 +6,7 @@
 
 /mob/living/silicon/pai/proc/securityHUD()
 	if(client)
-		var/icon/tempHud = 'hud.dmi'
+		var/icon/tempHud = 'icons/mob/hud.dmi'
 		var/turf/T = get_turf_or_move(src.loc)
 		for(var/mob/living/carbon/human/perp in view(T))
 			if(perp.wear_id)
@@ -31,7 +31,7 @@
 
 /mob/living/silicon/pai/proc/medicalHUD()
 	if(client)
-		var/icon/tempHud = 'hud.dmi'
+		var/icon/tempHud = 'icons/mob/hud.dmi'
 		var/turf/T = get_turf_or_move(src.loc)
 		for(var/mob/living/carbon/human/patient in view(T))
 

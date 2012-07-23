@@ -4,7 +4,7 @@
 /obj/item/borg/upgrade/
 	name = "A borg upgrade module."
 	desc = "Protected by FRM."
-	icon = 'module.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
 	var/construction_time = 120
 	var/construction_cost = list("metal"=10000)

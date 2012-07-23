@@ -68,7 +68,7 @@
 /obj/item/weapon/implantcase/tracking
 	name = "Glass Case- 'Tracking'"
 	desc = "A case containing a tracking implant."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 
 
@@ -82,7 +82,7 @@
 /obj/item/weapon/implantcase/explosive
 	name = "Glass Case- 'Explosive'"
 	desc = "A case containing an explosive implant."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
 
@@ -96,7 +96,7 @@
 /obj/item/weapon/implantcase/chem
 	name = "Glass Case- 'Chem'"
 	desc = "A case containing a chemical implant."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 /obj/item/weapon/implantcase/chem/New()
 
@@ -108,7 +108,7 @@
 /obj/item/weapon/implantcase/loyalty
 	name = "Glass Case- 'Loyalty'"
 	desc = "A case containing a loyalty implant."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
 

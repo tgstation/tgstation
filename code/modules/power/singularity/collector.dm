@@ -4,7 +4,7 @@
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
 	desc = "A device which uses Hawking Radiation and plasma to produce power."
-	icon = 'singularity.dmi'
+	icon = 'icons/obj/singularity.dmi'
 	icon_state = "ca"
 	anchored = 0
 	density = 1
@@ -123,11 +123,11 @@
 	proc/updateicon()
 		overlays = null
 		if(P)
-			overlays += image('singularity.dmi', "ptank")
+			overlays += image('icons/obj/singularity.dmi', "ptank")
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if(active)
-			overlays += image('singularity.dmi', "on")
+			overlays += image('icons/obj/singularity.dmi', "on")
 
 
 	proc/toggle_power()

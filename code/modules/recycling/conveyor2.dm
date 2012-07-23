@@ -2,7 +2,7 @@
 //note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
 
 /obj/machinery/conveyor
-	icon = 'recycling.dmi'
+	icon = 'icons/obj/recycling.dmi'
 	icon_state = "conveyor0"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
@@ -158,7 +158,7 @@
 
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
-	icon = 'recycling.dmi'
+	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting

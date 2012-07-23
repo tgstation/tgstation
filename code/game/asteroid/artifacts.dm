@@ -38,7 +38,7 @@ var/global/list/spawned_surprises = list()
 /obj/machinery/wish_granter
 	name = "Wish Granter"
 	desc = "You're not so sure about this, anymore..."
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
 	anchored = 1

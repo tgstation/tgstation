@@ -1,7 +1,7 @@
 /obj/structure/bigDelivery
 	desc = "A big wrapped package."
 	name = "large parcel"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
 	var/obj/wrapped = null
 	density = 1
@@ -36,7 +36,7 @@
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
 	name = "small parcel"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrateSmall"
 	var/obj/item/wrapped = null
 	var/sortTag = 0
@@ -72,7 +72,7 @@
 
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
 	w_class = 3.0
 	var/amount = 25.0

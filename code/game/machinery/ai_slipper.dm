@@ -1,6 +1,6 @@
 /obj/machinery/ai_slipper
 	name = "AI Liquid Dispenser"
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
 	layer = 3
 	anchored = 1.0

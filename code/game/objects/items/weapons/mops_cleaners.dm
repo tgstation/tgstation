@@ -2,7 +2,7 @@
 
 /obj/item/weapon/cleaner
 	desc = "Space Cleaner!"
-	icon = 'janitor.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	name = "space cleaner"
 	icon_state = "cleaner"
 	item_state = "cleaner"
@@ -58,7 +58,7 @@
 			// If you add brighter colors to it it'll eventually get lighter, though.
 
 	D.name = "chemicals"
-	D.icon = 'chempuff.dmi'
+	D.icon = 'icons/obj/chempuff.dmi'
 
 	D.icon += finalcolor
 
@@ -100,7 +100,7 @@
 
 /obj/item/weapon/chemsprayer//Another copy paste with a tiny change it seems
 	desc = "A utility used to spray large amounts of reagent in a given area."
-	icon = 'gun.dmi'
+	icon = 'icons/obj/gun.dmi'
 	name = "chem sprayer"
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
@@ -136,7 +136,7 @@
 		if(src.reagents.total_volume < 1) break
 		var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
 		D.name = "chemicals"
-		D.icon = 'chempuff.dmi'
+		D.icon = 'icons/obj/chempuff.dmi'
 		D.create_reagents(5)
 		src.reagents.trans_to(D, 5)
 
@@ -203,7 +203,7 @@
 //A direct copy paste of the cleaner, fantastic.
 /obj/item/weapon/pepperspray
 	desc = "Manufactured by UhangInc., used to blind and down an opponent quickly. It has three spray settings, and is currently set to 'low'."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	name = "pepperspray"
 	icon_state = "pepperspray"
 	item_state = "pepperspray"
@@ -264,7 +264,7 @@
 		if(src.reagents.total_volume < 1) break
 		var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
 		D.name = "chemicals"
-		D.icon = 'chempuff.dmi'
+		D.icon = 'icons/obj/chempuff.dmi'
 		var/xfer_volume = round(45/(4-src.setting)) // Use more spray per spray on higher settings
 		D.create_reagents(xfer_volume)
 		src.reagents.trans_to(D, xfer_volume)
@@ -339,7 +339,7 @@
 /obj/item/weapon/mop
 	desc = "The world of janitalia wouldn't be complete without a mop."
 	name = "mop"
-	icon = 'janitor.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
 	var/mopping = 0
 	var/mopcount = 0

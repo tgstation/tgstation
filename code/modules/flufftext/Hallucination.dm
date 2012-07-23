@@ -50,29 +50,29 @@ mob/living/carbon/proc/handle_hallucinations()
 						halitem.layer = 50
 						switch(rand(1,6))
 							if(1) //revolver
-								halitem.icon = 'gun.dmi'
+								halitem.icon = 'icons/obj/gun.dmi'
 								halitem.icon_state = "revolver"
 								halitem.name = "Revolver"
 							if(2) //c4
-								halitem.icon = 'assemblies.dmi'
+								halitem.icon = 'icons/obj/assemblies.dmi'
 								halitem.icon_state = "plastic-explosive0"
 								halitem.name = "Mysterious Package"
 								if(prob(25))
 									halitem.icon_state = "c4small_1"
 							if(3) //sword
-								halitem.icon = 'weapons.dmi'
+								halitem.icon = 'icons/obj/weapons.dmi'
 								halitem.icon_state = "sword1"
 								halitem.name = "Sword"
 							if(4) //stun baton
-								halitem.icon = 'weapons.dmi'
+								halitem.icon = 'icons/obj/weapons.dmi'
 								halitem.icon_state = "stunbaton"
 								halitem.name = "Stun Baton"
 							if(5) //emag
-								halitem.icon = 'card.dmi'
+								halitem.icon = 'icons/obj/card.dmi'
 								halitem.icon_state = "emag"
 								halitem.name = "Cryptographic Sequencer"
 							if(6) //flashbang
-								halitem.icon = 'grenade.dmi'
+								halitem.icon = 'icons/obj/grenade.dmi'
 								halitem.icon_state = "flashbang1"
 								halitem.name = "Flashbang"
 						if(client) client.screen += halitem
@@ -91,13 +91,13 @@ mob/living/carbon/proc/handle_hallucinations()
 						switch(rand(1,3))
 							if(1)
 								//src << "Space"
-								halimage = image('space.dmi',target,"[rand(1,25)]",TURF_LAYER)
+								halimage = image('icons/turf/space.dmi',target,"[rand(1,25)]",TURF_LAYER)
 							if(2)
 								//src << "Fire"
-								halimage = image('fire.dmi',target,"1",TURF_LAYER)
+								halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
 							if(3)
 								//src << "C4"
-								halimage = image('assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
+								halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
 
 
 						if(client) client.images += halimage
@@ -151,11 +151,11 @@ mob/living/carbon/proc/handle_hallucinations()
 						var/turf/simulated/floor/target = pick(possible_points)
 						switch(rand(1,4))
 							if(1)
-								halbody = image('human.dmi',target,"husk_l",TURF_LAYER)
+								halbody = image('icons/mob/human.dmi',target,"husk_l",TURF_LAYER)
 							if(2,3)
-								halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
+								halbody = image('icons/mob/human.dmi',target,"husk_s",TURF_LAYER)
 							if(4)
-								halbody = image('alien.dmi',target,"alienother",TURF_LAYER)
+								halbody = image('icons/mob/alien.dmi',target,"alienother",TURF_LAYER)
 	//						if(5)
 	//							halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
 
@@ -324,7 +324,7 @@ proc/check_panel(mob/M)
 /proc/fake_blood(var/mob/target)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 	O.name = "blood"
-	var/image/I = image('blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
+	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
 	target << I
 	spawn(300)
 		del(O)

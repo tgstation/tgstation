@@ -128,7 +128,7 @@ turf
 
 				var/siding_icon_state = return_siding_icon_state()
 				if(siding_icon_state)
-					overlays += image('floors.dmi',siding_icon_state)
+					overlays += image('icons/turf/floors.dmi',siding_icon_state)
 
 				switch(model.graphic)
 					if("plasma")

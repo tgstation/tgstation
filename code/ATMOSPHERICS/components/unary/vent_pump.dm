@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/unary/vent_pump
-	icon = 'vent_pump.dmi'
+	icon = 'icons/obj/atmospherics/vent_pump.dmi'
 	icon_state = "off"
 
 	name = "Air Vent"

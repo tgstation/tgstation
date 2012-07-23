@@ -1,6 +1,6 @@
 /obj/item/robot_parts
 	name = "robot parts"
-	icon = 'robot_parts.dmi'
+	icon = 'icons/obj/robot_parts.dmi'
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = FPRINT | TABLEPASS | CONDUCT

@@ -1,7 +1,7 @@
 /obj/machinery/computer/arcade
 	name = "arcade machine"
 	desc = "Does not support Pin ball."
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
 	circuit = "/obj/item/weapon/circuitboard/arcade"
 	var/enemy_name = "Space Villian"

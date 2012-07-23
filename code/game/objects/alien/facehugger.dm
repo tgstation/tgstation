@@ -173,7 +173,7 @@ var/const/MAX_ACTIVE_TIME = 600
 		stat = CONSCIOUS
 
 /*		for(var/mob/living/carbon/alien/alien in world)
-			var/image/activeIndicator = image('alien.dmi', loc = src, icon_state = "facehugger_active")
+			var/image/activeIndicator = image('icons/mob/alien.dmi', loc = src, icon_state = "facehugger_active")
 			activeIndicator.override = 1
 			if(alien && alien.client)
 				alien.client.images += activeIndicator	*/

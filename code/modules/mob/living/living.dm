@@ -89,13 +89,13 @@
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(var/amount)
-	bruteloss = max(bruteloss + amount, 0)
+	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(var/amount)
-	oxyloss = max(oxyloss + amount, 0)
+	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setOxyLoss(var/amount)
 	oxyloss = amount
@@ -104,7 +104,7 @@
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(var/amount)
-	toxloss = max(toxloss + amount, 0)
+	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setToxLoss(var/amount)
 	toxloss = amount
@@ -113,13 +113,13 @@
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(var/amount)
-	fireloss = max(fireloss + amount, 0)
+	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(var/amount)
-	cloneloss = max(cloneloss + amount, 0)
+	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setCloneLoss(var/amount)
 	cloneloss = amount
@@ -128,7 +128,7 @@
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(var/amount)
-	brainloss = max(brainloss + amount, 0)
+	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setBrainLoss(var/amount)
 	brainloss = amount
@@ -137,7 +137,7 @@
 	return halloss
 
 /mob/living/proc/adjustHalLoss(var/amount)
-	halloss = max(halloss + amount, 0)
+	halloss = min(max(halloss + amount, 0),(maxHealth*2))
 
 /mob/living/proc/setHalLoss(var/amount)
 	halloss = amount

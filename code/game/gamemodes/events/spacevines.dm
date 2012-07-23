@@ -2,7 +2,7 @@
 /obj/effect/spacevine
 	name = "space vines"
 	desc = "An extremely expansionistic species of vine."
-	icon = 'spacevines.dmi'
+	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "Light1"
 	anchored = 1
 	density = 0

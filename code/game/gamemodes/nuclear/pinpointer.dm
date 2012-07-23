@@ -1,6 +1,6 @@
 /obj/item/weapon/pinpointer
 	name = "pinpointer"
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
@@ -51,7 +51,7 @@
 
 /obj/item/weapon/pinpointer/advpinpointer
 	name = "Advanced Pinpointer"
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	desc = "A larger version of the normal pinpointer, this unit features a helpful quantum entanglement detection system to locate various objects that do not broadcast a locator signal."
 	var/mode = 0  // Mode 0 locates disk, mode 1 locates coordinates.
 	var/turf/location = null

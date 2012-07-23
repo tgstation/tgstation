@@ -5,7 +5,7 @@
 	anchored = 1
 	opacity = 0
 	density = 0
-	icon = 'lighting.dmi'
+	icon = 'icons/effects/lighting.dmi'
 	icon_state = "glowshroomf"
 	layer = 2.1
 	var/endurance = 30

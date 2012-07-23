@@ -1,7 +1,7 @@
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Modifier Access Console"
 	desc = "Scand DNA."
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
 	density = 1
 	var/uniblock = 1.0
@@ -77,7 +77,7 @@
 
 /obj/machinery/computer/cloning
 	name = "Cloning console"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	circuit = "/obj/item/weapon/circuitboard/cloning"
 	req_access = list(access_heads) //Only used for record deletion right now.

@@ -17,7 +17,7 @@ var/bomb_set = 1
 
 /obj/machinery/computer/syndicate_station
 	name = "Syndicate Station Terminal"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
 	req_access = list()
 	var/temp = null

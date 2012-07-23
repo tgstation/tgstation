@@ -4,7 +4,7 @@
 /obj/machinery/power/solar
 	name = "solar panel"
 	desc = "A solar electrical generator."
-	icon = 'power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	anchored = 1
 	density = 1
@@ -68,9 +68,9 @@
 	updateicon()
 		overlays = null
 		if(stat & BROKEN)
-			overlays += image('power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
+			overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
 		else
-			overlays += image('power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
+			overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
 			src.dir = angle2dir(adir)
 		return
 
@@ -155,7 +155,7 @@
 /obj/machinery/power/solar_control
 	name = "solar panel control"
 	desc = "A controller for solar panel arrays."
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "solar"
 	anchored = 1
 	density = 1
@@ -202,7 +202,7 @@
 		icon_state = "solar"
 		overlays = null
 		if(cdir > 0)
-			overlays += image('computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
+			overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 		return
 
 

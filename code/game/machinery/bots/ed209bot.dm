@@ -1,7 +1,7 @@
 /obj/machinery/bot/ed209
 	name = "ED-209 Security Robot"
 	desc = "A security robot.  He looks less than thrilled."
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed2090"
 	layer = 5.0
 	density = 1
@@ -66,7 +66,7 @@
 /obj/item/weapon/ed209_assembly
 	name = "ED-209 assembly"
 	desc = "Some sort of bizarre assembly."
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed209_frame"
 	item_state = "ed209_frame"
 	var/build_step = 0
@@ -760,7 +760,7 @@ Auto Patrol: []"},
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.overlays += image('aibots.dmi', "hs_hole")
+	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
 	Sa.created_name = src.name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -855,7 +855,7 @@ Auto Patrol: []"},
 		..(severity-1)
 	else
 		var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
-		pulse2.icon = 'effects.dmi'
+		pulse2.icon = 'icons/effects/effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"
 		pulse2.anchored = 1

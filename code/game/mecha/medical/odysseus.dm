@@ -78,7 +78,7 @@
 		if(!M || M.stat || !(M in view(M)))	return
 		if(!M.client)	return
 		var/client/C = M.client
-		var/icon/tempHud = 'hud.dmi'
+		var/icon/tempHud = 'icons/mob/hud.dmi'
 		for(var/mob/living/carbon/human/patient in view(M.loc))
 			if(M.see_invisible < patient.invisibility)
 				continue

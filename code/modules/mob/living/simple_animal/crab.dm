@@ -2,7 +2,7 @@
 /mob/living/simple_animal/crab
 	name = "crab"
 	desc = "Free crabs!"
-	icon = 'mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "crab"
 	icon_living = "crab"
 	icon_dead = "crab_dead"

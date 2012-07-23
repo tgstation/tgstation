@@ -1,5 +1,5 @@
 /obj/item/clothing/suit
-	icon = 'suits.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL

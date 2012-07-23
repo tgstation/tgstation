@@ -291,7 +291,7 @@ KNIFE
 		if (W.icon_state == "forkloaded")
 			user << "\red You already have omelette on your fork."
 			return
-		W.icon = 'kitchen.dmi'
+		W.icon = 'icons/obj/kitchen.dmi'
 		W.icon_state = "forkloaded"
 		viewers(3,user) << "[user] takes a piece of omelette with his fork!"
 		reagents.remove_reagent("nutriment", 1)

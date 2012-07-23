@@ -3,7 +3,7 @@
 /obj/effect/critter
 	name = "Critter"
 	desc = "Generic critter."
-	icon = 'critter.dmi'
+	icon = 'icons/mob/critter.dmi'
 	icon_state = "basic"
 	layer = 5.0
 	density = 1

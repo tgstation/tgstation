@@ -1,7 +1,7 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
 /obj/machinery/bot
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
 	var/obj/item/weapon/card/id/botcard			// the ID card that the bot "holds"
 	var/on = 1
@@ -125,7 +125,7 @@
 	var/was_on = on
 	stat |= EMPED
 	var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
-	pulse2.icon = 'effects.dmi'
+	pulse2.icon = 'icons/effects/effects.dmi'
 	pulse2.icon_state = "empdisable"
 	pulse2.name = "emp sparks"
 	pulse2.anchored = 1

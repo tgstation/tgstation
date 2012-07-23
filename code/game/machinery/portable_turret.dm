@@ -11,7 +11,7 @@
 
 /obj/machinery/porta_turret
 	name = "turret"
-	icon = 'turrets.dmi'
+	icon = 'icons/obj/turrets.dmi'
 	icon_state = "grey_target_prism"
 	anchored = 1
 	layer = 3
@@ -687,7 +687,7 @@ Status: []<BR>"},
 
 /obj/machinery/porta_turret_construct
 	name = "turret frame"
-	icon = 'turrets.dmi'
+	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
 	density=1
 	var/build_step = 0 // the current step in the building process
@@ -886,7 +886,7 @@ Status: []<BR>"},
 
 /obj/machinery/porta_turret_cover
 	name = "turret"
-	icon = 'turrets.dmi'
+	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
 	anchored = 1
 	layer = 3.5

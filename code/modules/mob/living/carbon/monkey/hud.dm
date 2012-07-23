@@ -1,6 +1,6 @@
-/obj/hud/proc/monkey_hud(var/ui_style='screen1_old.dmi')
+/obj/hud/proc/monkey_hud(var/ui_style='icons/mob/screen1_old.dmi')
 
-	//ui_style='screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
+	//ui_style='icons/mob/screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
 
 	src.adding = list(  )
 	src.other = list(  )
@@ -575,7 +575,7 @@
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
 	mymob.zone_sel.overlays = null
-	mymob.zone_sel.overlays += image("icon" = 'zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
+	mymob.zone_sel.overlays += image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
 
 	mymob.client.screen = null
 

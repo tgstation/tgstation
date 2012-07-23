@@ -3,7 +3,7 @@
 
 /obj/machinery/mineral/unloading_machine
 	name = "unloading machine"
-	icon = 'mining_machines.dmi'
+	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "unloader"
 	density = 1
 	anchored = 1.0

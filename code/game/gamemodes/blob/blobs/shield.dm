@@ -1,6 +1,6 @@
 /obj/effect/blob/shield
 	name = "strong blob"
-	icon = 'blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_idle"
 	desc = "Some blob creature thingy"
 	density = 1

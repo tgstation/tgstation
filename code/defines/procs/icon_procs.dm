@@ -489,7 +489,7 @@ proc
 
 		var
 			// We start with a blank canvas, otherwise some icon procs crash silently
-			icon/flat = icon('effects.dmi', "icon_state"="nothing") // Final flattened icon
+			icon/flat = icon('icons/effects/effects.dmi', "icon_state"="nothing") // Final flattened icon
 			icon/add // Icon of overlay being added
 
 			// Current dimensions of flattened icon
@@ -571,7 +571,7 @@ proc
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
 	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
 	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
-	var/icon/alpha_mask = new('effects.dmi', "scanline")//Scanline effect.
+	var/icon/alpha_mask = new('icons/effects/effects.dmi', "scanline")//Scanline effect.
 	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
 	return flat_icon
 

@@ -1,5 +1,5 @@
 obj/structure/door_assembly
-	icon = 'door_assembly.dmi'
+	icon = 'icons/obj/doors/door_assembly.dmi'
 
 	name = "Airlock Assembly"
 	icon_state = "door_as_0"

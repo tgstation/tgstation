@@ -13,7 +13,7 @@ WELDINGTOOOL
 /obj/item/weapon/wrench
 	name = "wrench"
 	desc = "A wrench with common uses. Can be found in your hand."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "wrench"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
@@ -67,7 +67,7 @@ WELDINGTOOOL
 // WELDING TOOL
 /obj/item/weapon/weldingtool
 	name = "welding tool"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
@@ -358,7 +358,7 @@ WELDINGTOOOL
 /obj/item/weapon/wirecutters
 	name = "wirecutters"
 	desc = "This cuts wires."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "cutters"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT

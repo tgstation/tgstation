@@ -53,7 +53,7 @@ var/list/mechtoys = list(
 /obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
 	name = "\improper Plastic flaps"
 	desc = "I definitely cant get past those. No way."
-	icon = 'stationobjs.dmi' //Change this.
+	icon = 'icons/obj/stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
 	density = 0
 	anchored = 1
@@ -98,7 +98,7 @@ var/list/mechtoys = list(
 
 /obj/machinery/computer/supplycomp
 	name = "Supply shuttle console"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "supply"
 	req_access = list(access_cargo)
 	circuit = "/obj/item/weapon/circuitboard/supplycomp"
@@ -108,7 +108,7 @@ var/list/mechtoys = list(
 
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
 	circuit = "/obj/item/weapon/circuitboard/ordercomp"
 	var/temp = null
@@ -116,7 +116,7 @@ var/list/mechtoys = list(
 
 /obj/effect/marker/supplymarker
 	icon_state = "X"
-	icon = 'mark.dmi'
+	icon = 'icons/misc/mark.dmi'
 	name = "X"
 	invisibility = 101
 	anchored = 1

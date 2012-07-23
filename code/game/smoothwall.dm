@@ -71,7 +71,7 @@
 			if(is_floor) //if is_floor = 1, we use the floor diagonal sprite
 				src.icon = newicon; //we'll set the floor's icon to the floor next to it and overlay the wall segment. shuttle floor sprites have priority
 				src.icon_state = newiconstate; //
-				src.overlays += icon('shuttle.dmi',"swall_f[junction]")
+				src.overlays += icon('icons/turf/shuttle.dmi',"swall_f[junction]")
 			else //otherwise, the space one
 				src.icon_state = "swall_s[junction]"*/
 

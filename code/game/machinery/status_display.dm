@@ -6,7 +6,7 @@
 // And arbitrary messages set by comms computer
 
 /obj/machinery/status_display
-	icon = 'status_display.dmi'
+	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
 	anchored = 1
@@ -155,7 +155,7 @@
 	proc/set_picture(var/state)
 		picture_state = state
 		overlays = null
-		overlays += image('status_display.dmi', icon_state=picture_state)
+		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 	proc/update_display(var/line1, var/line2)
 
@@ -198,7 +198,7 @@
 	// valid characters are 0-9 and :
 	// px, py are pixel offsets
 	proc/texticon(var/tn, var/px = 0, var/py = 0)
-		var/image/I = image('status_display.dmi', "blank")
+		var/image/I = image('icons/obj/status_display.dmi', "blank")
 
 
 		var/len = lentext(tn)
@@ -211,7 +211,7 @@
 			if(char == " ")
 				continue
 
-			var/image/ID = image('status_display.dmi', icon_state=char)
+			var/image/ID = image('icons/obj/status_display.dmi', icon_state=char)
 
 			ID.pixel_x = -(d-1)*5 + px
 			ID.pixel_y = py
@@ -249,7 +249,7 @@
 
 
 /obj/machinery/ai_status_display
-	icon = 'status_display.dmi'
+	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "AI display"
 	anchored = 1
@@ -316,4 +316,4 @@
 	proc/set_picture(var/state)
 		picture_state = state
 		overlays = null
-		overlays += image('status_display.dmi', icon_state=picture_state)
+		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)

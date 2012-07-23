@@ -82,7 +82,7 @@
 
 /obj/effect/meteor
 	name = "meteor"
-	icon = 'meteor.dmi'
+	icon = 'icons/obj/meteor.dmi'
 	icon_state = "flaming"
 	density = 1
 	anchored = 1.0

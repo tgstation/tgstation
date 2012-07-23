@@ -1,6 +1,6 @@
 /obj/item/weapon/clipboard
 	name = "clipboard"
-	icon = 'bureaucracy.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "clipboard"
 	item_state = "clipboard"
 	throwforce = 0

@@ -216,7 +216,7 @@
 
 /obj/machinery/telecomms/receiver
 	name = "Subspace Receiver"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "broadcast receiver"
 	desc = "This machine has a dish-like shape and green lights. It is designed to detect and process subspace radio activity."
 	density = 1
@@ -257,7 +257,7 @@
 
 /obj/machinery/telecomms/bus
 	name = "Bus Mainframe"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bus"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
 	density = 1
@@ -303,7 +303,7 @@
 
 /obj/machinery/telecomms/processor
 	name = "Processor Unit"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "processor"
 	desc = "This machine is used to process large quantities of information."
 	density = 1
@@ -339,7 +339,7 @@
 
 /obj/machinery/telecomms/server
 	name = "Telecommunication Server"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "comm_server"
 	desc = "A machine used to store data and network statistics."
 	density = 1

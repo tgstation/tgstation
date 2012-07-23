@@ -2,7 +2,7 @@
 
 /obj/item/weapon
 	name = "weapon"
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 
 /obj/item/weapon/shield
 	name = "shield"
@@ -10,7 +10,7 @@
 /obj/item/weapon/shield/riot
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BACK
@@ -29,7 +29,7 @@
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "eshield0" // eshield1 for expanded
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 3.0
@@ -97,7 +97,7 @@
 /obj/item/weapon/bodybag
 	name = "body bag"
 	desc = "A plastic bag designed for the storage and transportation of cadavers."
-	icon = 'closet.dmi'
+	icon = 'icons/obj/closet.dmi'
 	icon_state = "bodybag"
 	force = 5.0
 	throwforce = 5.0
@@ -111,7 +111,7 @@
 /obj/item/weapon/rsf
 	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
@@ -124,7 +124,7 @@
 /obj/item/weapon/rsp
 	name = "\improper Rapid-Seed-Producer (RSP)"
 	desc = "A device used to rapidly deploy seeds."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
@@ -137,7 +137,7 @@
 /obj/item/weapon/rcd_ammo
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD."
-	icon = 'ammo.dmi'
+	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	opacity = 0
@@ -151,7 +151,7 @@
 	name = "space cash"
 	desc = "It's worth 1 credit."
 	gender = PLURAL
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "spacecash"
 	opacity = 0
 	density = 0
@@ -281,7 +281,7 @@
 /obj/item/weapon/bananapeel
 	name = "banana peel"
 	desc = "A peel from a banana."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
 	w_class = 1.0
@@ -292,7 +292,7 @@
 /obj/item/weapon/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
-	icon = 'harvest.dmi'
+	icon = 'icons/obj/harvest.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
 	w_class = 1.0
@@ -304,7 +304,7 @@
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
 	gender = PLURAL
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
 	w_class = 1.0
 	throwforce = 0
@@ -326,7 +326,7 @@
 /obj/item/weapon/bedsheet
 	name = "bedsheet"
 	desc = "Nice, linen, bedsheet. Perfect to put on."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "sheet"
 	layer = 4.0
 	item_state = "bedsheet"
@@ -403,7 +403,7 @@
 /obj/item/weapon/bikehorn
 	name = "bike horn"
 	desc = "A horn off of a bicycle."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
 	throwforce = 3
@@ -415,7 +415,7 @@
 /obj/item/stack/medical
 	name = "medical pack"
 	singular_name = "medical pack"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	amount = 5
 	max_amount = 5
 	w_class = 1
@@ -444,7 +444,7 @@
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
 	desc = "A tube... of cardboard."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
 	throwforce = 1
 	w_class = 1.0
@@ -463,7 +463,7 @@
 /obj/item/weapon/card
 	name = "card"
 	desc = "Does card things."
-	icon = 'card.dmi'
+	icon = 'icons/obj/card.dmi'
 	w_class = 1.0
 
 	var/list/files = list(  )
@@ -555,7 +555,7 @@
 #define MAXCOIL 30
 /obj/item/weapon/cable_coil
 	name = "cable coil"
-	icon = 'power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "coil_red"
 	var/amount = MAXCOIL
 	color = "red"
@@ -610,7 +610,7 @@
 /obj/item/weapon/crowbar
 	name = "crowbar"
 	desc = "Used to hit floors"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "crowbar"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
@@ -622,14 +622,14 @@
 	origin_tech = "engineering=1"
 
 /obj/item/weapon/crowbar/red
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
 
 /obj/item/weapon/cane
 	name = "cane"
 	desc = "A cane used by a true gentlemen. Or a clown."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
@@ -644,7 +644,7 @@
 
 /obj/item/weapon/disk
 	name = "disk"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
@@ -662,7 +662,7 @@
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "fire_extinguisher0"
 	var/last_use = 1.0
 	var/safety = 1
@@ -691,7 +691,7 @@
 /obj/item/weapon/f_card
 	name = "finger print card"
 	desc = "Used to take fingerprints."
-	icon = 'card.dmi'
+	icon = 'icons/obj/card.dmi'
 	icon_state = "fingerprint0"
 	var/amount = 10.0
 	item_state = "paper"
@@ -704,13 +704,13 @@
 /obj/item/weapon/fcardholder
 	name = "fingerprint card case"
 	desc = "Apply finger print card."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "fcardholder0"
 	item_state = "clipboard"
 
 /obj/item/weapon/flasks
 	name = "flask"
-	icon = 'Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	var/oxygen = 0.0
 	var/plasma = 0.0
 	var/coolant = 0.0
@@ -733,7 +733,7 @@
 /*
 /obj/item/weapon/game_kit
 	name = "Gaming Kit"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "game_kit"
 	var/selected = null
 	var/board_stat = null
@@ -746,7 +746,7 @@
 /obj/item/weapon/gift
 	name = "gift"
 	desc = "A wrapped item."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "gift3"
 	var/size = 3.0
 	var/obj/item/gift = null
@@ -756,7 +756,7 @@
 /obj/item/weapon/hand_tele
 	name = "hand tele"
 	desc = "A portable item using blue-space technology."
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 5
@@ -770,7 +770,7 @@
 	name = "handcuffs"
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
@@ -820,7 +820,7 @@
 /obj/item/weapon/locator
 	name = "locator"
 	desc = "Used to track those with locater implants."
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/temp = null
 	var/frequency = 1451
@@ -837,7 +837,7 @@
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
 	name = "wet floor sign"
-	icon = 'janitor.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "caution"
 	force = 1.0
 	throwforce = 3.0
@@ -855,7 +855,7 @@
 	name = "crumpled paper"
 	gender = PLURAL
 	desc = "This is a crumpled piece of paper."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crumpled"
 	throwforce = 0
 	w_class = 1.0
@@ -901,7 +901,7 @@
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "toyhammer"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
@@ -925,7 +925,7 @@
 /obj/item/weapon/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "rack_parts"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt = 3750
@@ -933,7 +933,7 @@
 /obj/item/weapon/rubber_chicken
 	name = "rubber chicken"
 	desc = "A rubber chicken, isn't that hilarious?"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "rubber_chicken"
 	item_state = "rubber_chicken"
 	w_class = 2.0
@@ -941,7 +941,7 @@
 /obj/item/weapon/screwdriver
 	name = "screwdriver"
 	desc = "You can be totally screwwy with this."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT
@@ -955,7 +955,7 @@
 
 /obj/item/weapon/shard
 	name = "shard"
-	icon = 'shards.dmi'
+	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
 	desc = "Could probably be used as ... a throwing weapon?"
 	w_class = 1.0
@@ -967,7 +967,7 @@
 /*/obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
 	desc = "Remain silent about this..."
-	icon = 'radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
 	var/temp = null
 	var/uses = 10.0
@@ -986,7 +986,7 @@
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
 	desc = "used to comunicate it appears."
-	icon = 'radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
 	var/temp = null
 	var/uses = 4.0
@@ -1006,7 +1006,7 @@
 /obj/item/weapon/spellbook
 	name = "spell book"
 	desc = "The legendary book of spells of the wizard."
-	icon = 'library.dmi'
+	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
@@ -1024,7 +1024,7 @@
 /obj/item/weapon/staff
 	name = "wizards staff"
 	desc = "Apparently a staff used by the wizard."
-	icon = 'wizard.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
 	force = 3.0
 	throwforce = 5.0
@@ -1037,7 +1037,7 @@
 /obj/item/weapon/staff/stick
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "stick"
 	item_state = "stick"
 	force = 3.0
@@ -1051,7 +1051,7 @@
 	name = "table parts"
 	desc = "Parts of a table. Poor table."
 	gender = PLURAL
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "table_parts"
 	m_amt = 3750
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -1059,7 +1059,7 @@
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
 	desc = "Hard table parts. Well...harder..."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "reinf_tableparts"
 	m_amt = 7500
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -1073,7 +1073,7 @@
 /obj/item/weapon/teleportation_scroll
 	name = "scroll of teleportation"
 	desc = "A scroll for moving around."
-	icon = 'wizard.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS
@@ -1086,7 +1086,7 @@
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
 	name = "wire"
-	icon = 'power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "item_wire"
 	var/amount = 1.0
 	var/laying = 0.0
@@ -1096,14 +1096,14 @@
 /obj/item/weapon/wrapping_paper
 	name = "wrapping paper"
 	desc = "You can use this to wrap items in."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "wrap_paper"
 	var/amount = 20.0
 
 /obj/item/weapon/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
-	icon = 'power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
@@ -1192,7 +1192,7 @@
 	name = "potato battery"
 	desc = "A rechargable starch based power cell."
 	origin_tech = "powerstorage=1"
-	icon = 'power.dmi' //'harvest.dmi'
+	icon = 'icons/obj/power.dmi' //'icons/obj/harvest.dmi'
 	icon_state = "cell" //"potato_battery"
 	charge = 100
 	maxcharge = 300
@@ -1227,7 +1227,7 @@
 
 
 /obj/item/weapon/module
-	icon = 'module.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
 	w_class = 2.0
 	item_state = "electronic"
@@ -1263,7 +1263,7 @@
 /obj/item/weapon/a_gift
 	name = "gift"
 	desc = "A gift it appears."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "gift"
 	item_state = "gift"
 	pressure_resistance = 70
@@ -1271,7 +1271,7 @@
 
 /obj/item/weapon/camera_bug
 	name = "camera bug"
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "flash"
 	w_class = 1.0
 	item_state = "electronic"
@@ -1280,7 +1280,7 @@
 
 
 /obj/item/weapon/kitchen
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 
 /obj/item/weapon/kitchen/rollingpin
 	name = "rolling pin"
@@ -1294,7 +1294,7 @@
 
 /obj/item/weapon/kitchenknife
 	name = "kitchen knife"
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1308,7 +1308,7 @@
 
 /obj/item/weapon/butch
 	name = "butcher's Cleaver"
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1322,7 +1322,7 @@
 
 /obj/item/weapon/tray
 	name = "tray"
-	icon = 'food.dmi'
+	icon = 'icons/obj/food.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
 	throwforce = 12.0
@@ -1383,7 +1383,7 @@
 /obj/item/weapon/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 10.0
@@ -1398,7 +1398,7 @@
 /obj/item/weapon/retractor
 	name = "retractor"
 	desc = "Retracts stuff."
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	m_amt = 10000
 	g_amt = 5000
@@ -1409,7 +1409,7 @@
 /obj/item/weapon/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	m_amt = 5000
 	g_amt = 2500
@@ -1420,7 +1420,7 @@
 /obj/item/weapon/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	m_amt = 5000
 	g_amt = 2500
@@ -1431,7 +1431,7 @@
 /obj/item/weapon/surgicaldrill
 	name = "surgical drill"
 	desc = "You can drill using this item. You dig?"
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
 	hitsound = 'circsawhit.ogg'
 	m_amt = 15000
@@ -1444,7 +1444,7 @@
 /obj/item/weapon/circular_saw
 	name = "circular saw"
 	desc = "For heavy duty cutting."
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw3"
 	hitsound = 'circsawhit.ogg'
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1460,7 +1460,7 @@
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
 	desc = "Meat that appears...strange..."
-	icon = 'food.dmi'
+	icon = 'icons/obj/food.dmi'
 	icon_state = "meat"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
@@ -1469,7 +1469,7 @@
 /obj/item/weapon/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 12.0
@@ -1485,7 +1485,7 @@
 /obj/item/weapon/cigarpacket
 	name = "Pete's Cuban Cigars"
 	desc = "The most robust cigars on the planet."
-	icon = 'cigarettes.dmi'
+	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarpacket"
 	item_state = "cigarpacket"
 	w_class = 1
@@ -1497,7 +1497,7 @@
 /obj/item/weapon/mousetrap
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "mousetrap"
 	item_state = "mousetrap"
 	w_class = 1
@@ -1514,7 +1514,7 @@
 	name = "d6"
 	desc = "A dice with six sides."
 	var/sides = 6
-	icon = 'dice.dmi'
+	icon = 'icons/obj/dice.dmi'
 	icon_state = "d66"
 
 /obj/item/weapon/dice/New()
@@ -1529,7 +1529,7 @@
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
 	name = "data cable"
-	icon = 'power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
 	var/obj/machinery/machine
 
@@ -1537,7 +1537,7 @@
 	name = "plastic explosives"
 	desc = "Used to put holes in specific areas without too much extra hole."
 	gender = PLURAL
-	icon = 'assemblies.dmi'
+	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
 	flags = FPRINT | TABLEPASS | USEDELAY
@@ -1552,7 +1552,7 @@
 	name = "stock part"
 	desc = "What?"
 	gender = PLURAL
-	icon = 'stock_parts.dmi'
+	icon = 'icons/obj/stock_parts.dmi'
 	w_class = 2.0
 	var/rating = 1
 	New()
@@ -1750,12 +1750,12 @@
 	name = "ectoplasm"
 	desc = "spooky"
 	gender = PLURAL
-	icon = 'wizard.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
 
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve
 	name = "research"
-	icon = 'stock_parts.dmi'
+	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "capacitor"
 	desc = "A debug item for research."
 	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"

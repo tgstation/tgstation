@@ -6,7 +6,7 @@
 /obj/item/weapon/contraband
 	name = "contraband item"
 	desc = "You probably shouldn't be holding this."
-	icon = 'contraband.dmi'
+	icon = 'icons/obj/contraband.dmi'
 	force = 0
 
 
@@ -68,7 +68,7 @@
 obj/effect/decal/poster
 	name = "poster"
 	desc = "A large piece of space-resistant printed paper. It's considered contraband."
-	icon = 'contraband.dmi'
+	icon = 'icons/obj/contraband.dmi'
 	anchored = 1
 	var/serial_number //Will hold the value of src.loc if nobody initialises it
 	var/ruined = 0

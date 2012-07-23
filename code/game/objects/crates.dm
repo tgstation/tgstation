@@ -3,7 +3,7 @@
 /obj/structure/closet/crate
 	desc = "A crate."
 	name = "Crate"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
 	density = 1
 	icon_opened = "crateopen"
@@ -16,7 +16,7 @@
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
 	name = "Internals crate"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "o2crate"
 	density = 1
 	icon_opened = "o2crateopen"
@@ -25,7 +25,7 @@
 /obj/structure/closet/crate/trashcart
 	desc = "A heavy, metal trashcart with wheels."
 	name = "Trash Cart"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "trashcart"
 	density = 1
 	icon_opened = "trashcartopen"
@@ -35,7 +35,7 @@
 /obj/structure/closet/crate/hat
 	desc = "A crate filled with Valuable Collector's Hats!."
 	name = "Hat Crate"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
 	density = 1
 	icon_opened = "crateopen"
@@ -44,7 +44,7 @@
 /obj/structure/closet/crate/contraband
 	name = "Poster crate"
 	desc = "A random assortment of posters manufactured by providers NOT listed under Nanotrasen's whitelist."
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
 	density = 1
 	icon_opened = "crateopen"
@@ -54,7 +54,7 @@
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
 	name = "Medical crate"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "medicalcrate"
 	density = 1
 	icon_opened = "medicalcrateopen"
@@ -63,7 +63,7 @@
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of the RCD."
 	name = "RCD crate"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
 	density = 1
 	icon_opened = "crateopen"
@@ -72,7 +72,7 @@
 /obj/structure/closet/crate/freezer
 	desc = "A freezer."
 	name = "Freezer"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "freezer"
 	density = 1
 	icon_opened = "freezeropen"
@@ -102,7 +102,7 @@
 /obj/structure/closet/crate/bin
 	desc = "A large bin."
 	name = "Large bin"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "largebin"
 	density = 1
 	icon_opened = "largebinopen"
@@ -111,7 +111,7 @@
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "Radioactive gear crate"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "radiation"
 	density = 1
 	icon_opened = "radiationopen"
@@ -120,7 +120,7 @@
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."
 	name = "Weapons crate"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "weaponcrate"
 	density = 1
 	icon_opened = "weaponcrateopen"
@@ -129,7 +129,7 @@
 /obj/structure/closet/crate/secure/plasma
 	desc = "A secure plasma crate."
 	name = "Plasma crate"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "plasmacrate"
 	density = 1
 	icon_opened = "plasmacrateopen"
@@ -138,7 +138,7 @@
 /obj/structure/closet/crate/secure/gear
 	desc = "A secure gear crate."
 	name = "Gear crate"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "secgearcrate"
 	density = 1
 	icon_opened = "secgearcrateopen"
@@ -171,7 +171,7 @@
 /obj/structure/closet/crate/hydroponics
 	name = "Hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "hydrocrate"
 	icon_opened = "hydrocrateopen"
 	icon_closed = "hydrocrate"
@@ -181,7 +181,7 @@
 	//This exists so the prespawned hydro crates spawn with their contents.
 /*	name = "Hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "hydrocrate"
 	icon_opened = "hydrocrateopen"
 	icon_closed = "hydrocrate"

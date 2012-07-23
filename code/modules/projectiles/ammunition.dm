@@ -1,7 +1,7 @@
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
-	icon = 'ammo.dmi'
+	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
@@ -27,7 +27,7 @@
 	name = "ammo box (.357)"
 	desc = "A box of ammo"
 	icon_state = "357"
-	icon = 'ammo.dmi'
+	icon = 'icons/obj/ammo.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"

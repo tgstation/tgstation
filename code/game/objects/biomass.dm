@@ -1,5 +1,5 @@
 /obj/effect/biomass
-	icon = 'biomass.dmi'
+	icon = 'icons/obj/biomass.dmi'
 	icon_state = "stage1"
 	opacity = 0
 	density = 0
@@ -15,7 +15,7 @@
 	var/spreadDelay = 1 //will change to something bigger later, but right now I want it to spread as fast as possible for testing
 
 /obj/effect/rift
-	icon = 'biomass.dmi'
+	icon = 'icons/obj/biomass.dmi'
 	icon_state = "rift"
 	var/list/obj/effect/biomass/linkedBiomass = list() //all the biomass patches that have spread from it
 	var/newicon = 1 //DEBUG

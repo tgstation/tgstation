@@ -1,7 +1,7 @@
 //I will need to recode parts of this but I am way too tired atm
 /obj/effect/blob
 	name = "blob"
-	icon = 'blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob"
 	desc = "Some blob creature thingy"
 	density = 1

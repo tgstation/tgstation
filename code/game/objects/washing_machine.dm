@@ -1,6 +1,6 @@
 /obj/machinery/washing_machine
 	name = "Washing Machine"
-	icon = 'washing_machine.dmi'
+	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_10"
 	density = 1
 	anchored = 1.0

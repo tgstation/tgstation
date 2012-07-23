@@ -15,7 +15,7 @@
 	anchored = 1
 	canmove = 0
 	loc = loc
-	holo_icon = getHologramIcon(icon('AI.dmi',"holo1"))
+	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 
 	proc_holder_list = new()
 
@@ -504,9 +504,9 @@
 			del(holo_icon)
 			switch(input)
 				if("default")
-					holo_icon = getHologramIcon(icon('AI.dmi',"holo1"))
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 				if("floating face")
-					holo_icon = getHologramIcon(icon('AI.dmi',"holo2"))
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo2"))
 	return
 
 /mob/living/silicon/ai/proc/corereturn()

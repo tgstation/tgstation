@@ -8,7 +8,7 @@
 /////////Toy Mechs/////////
 
 /obj/item/toy/prize
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
 
 /obj/item/toy/prize/ripley
@@ -73,7 +73,7 @@
 	throw_speed = 4
 	throw_range = 20
 	force = 0
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
 	w_class = 4.0
@@ -81,20 +81,20 @@
 /obj/item/toy/blink
 	name = "electronic blink toy game"
 	desc = "Blink.  Blink.  Blink. Ages 8 and up."
-	icon = 'radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
 	item_state = "signaler"
 
 /obj/item/toy/spinningtoy
 	name = "Gravitational Singularity"
 	desc = "\"Singulo\" brand spinning toy."
-	icon = 'singularity.dmi'
+	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'ammo.dmi'
+	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357-7"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = 1.0
@@ -110,7 +110,7 @@
 /obj/item/toy/ammo/crossbow
 	name = "foam dart"
 	desc = "Its nerf or nothing! Ages 8 and up."
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamdart"
 	flags = FPRINT | TABLEPASS
 	w_class = 1.0
@@ -118,7 +118,7 @@
 /obj/effect/foam_dart_dummy
 	name = ""
 	desc = ""
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "null"
 	anchored = 1
 	density = 0
@@ -126,7 +126,7 @@
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
-	icon = 'gun.dmi'
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
@@ -182,7 +182,7 @@
 /obj/item/toy/sword
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
 	item_state = "sword0"
 	var/active = 0.0
@@ -209,7 +209,7 @@
 /obj/item/toy/crossbow
 	name = "foam dart crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
-	icon = 'gun.dmi'
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	flags = FPRINT | TABLEPASS | USEDELAY
@@ -305,7 +305,7 @@
 /obj/item/weapon/storage/crayonbox
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
-	icon = 'crayons.dmi'
+	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = 2.0
 	storage_slots = 6
@@ -316,7 +316,7 @@
 /obj/item/toy/crayon
 	name = "crayon"
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
-	icon = 'crayons.dmi'
+	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
 	w_class = 1.0
 	var/colour = "#FF0000" //RGB
@@ -328,7 +328,7 @@
 /obj/item/toy/snappop
 	name = "snap pop"
 	desc = "Wow!"
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
 
 	throw_impact(atom/hit_atom)
@@ -358,7 +358,7 @@
 /obj/item/toy/snappopbox
 	name = "snap pop box"
 	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "spbox"
 	var/amount = 8
 
@@ -383,7 +383,7 @@
 /obj/item/toy/waterflower
 	name = "Water Flower"
 	desc = "A seemingly innocent sunflower...with a twist."
-	icon = 'harvest.dmi'
+	icon = 'icons/obj/harvest.dmi'
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	var/empty = 0
@@ -422,7 +422,7 @@
 
 		var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src))
 		D.name = "water"
-		D.icon = 'chemical.dmi'
+		D.icon = 'icons/obj/chemical.dmi'
 		D.icon_state = "chempuff"
 		D.create_reagents(5)
 		src.reagents.trans_to(D, 1)
@@ -450,7 +450,7 @@
 /obj/item/toy/balloon
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
 

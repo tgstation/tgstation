@@ -12,7 +12,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 /obj/machinery/telecomms/broadcaster
 	name = "Subspace Broadcaster"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "broadcaster"
 	desc = "A dish-shaped machine used to broadcast processed subspace signals."
 	density = 1
@@ -98,7 +98,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 /obj/machinery/telecomms/allinone
 	name = "Telecommunications Mainframe"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "comm_server"
 	desc = "A compact machine used for portable subspace telecommuniations processing."
 	density = 1

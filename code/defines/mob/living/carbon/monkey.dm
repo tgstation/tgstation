@@ -3,7 +3,7 @@
 	voice_name = "monkey"
 	voice_message = "chimpers"
 	say_message = "chimpers"
-	icon = 'monkey.dmi'
+	icon = 'icons/mob/monkey.dmi'
 	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE

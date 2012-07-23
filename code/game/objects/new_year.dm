@@ -2,7 +2,7 @@
 /obj/effect/new_year_tree
 	name = "The fir"
 	desc = "This is a fir. Real fir on dammit spess station. You smell pine-needles."
-	icon = '160x160.dmi'
+	icon = 'icons/effects/160x160.dmi'
 	icon_state = "new-year-tree"
 	anchored = 1
 	opacity = 1
@@ -47,7 +47,7 @@
 /obj/item/weapon/firbang
 	desc = "It is set to detonate in 10 seconds."
 	name = "firbang"
-	icon = 'grenade.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	var/state = null
 	var/det_time = 100.0

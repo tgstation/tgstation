@@ -151,7 +151,7 @@ var/global/datum/controller/gameticker/ticker
 
 		//initialise our cinematic screen object
 		cinematic = new(src)
-		cinematic.icon = 'station_explosion.dmi'
+		cinematic.icon = 'icons/effects/station_explosion.dmi'
 		cinematic.icon_state = "station_intact"
 		cinematic.layer = 20
 		cinematic.mouse_opacity = 0

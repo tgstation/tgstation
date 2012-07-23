@@ -1,5 +1,5 @@
 /obj/item/clothing/under
-	icon = 'uniforms.dmi'
+	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	protective_temperature = T0C + 50

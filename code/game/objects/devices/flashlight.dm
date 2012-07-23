@@ -139,7 +139,7 @@
 /obj/item/device/flashlight/lamp
 	name = "desk lamp"
 	desc = "A desk lamp"
-	icon = 'lighting.dmi'
+	icon = 'icons/effects/lighting.dmi'
 	icon_state = "lamp0"
 	brightness_on = 5
 	icon_on = "lamp1"

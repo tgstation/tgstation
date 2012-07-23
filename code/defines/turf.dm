@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /turf
-	icon = 'floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	var/intact = 1 //for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 
 	level = 1.0
@@ -37,7 +37,7 @@
 		return 0
 
 /turf/space
-	icon = 'space.dmi'
+	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
 	icon_state = "placeholder"
 
@@ -125,7 +125,7 @@
 
 
 /turf/space/New()
-//	icon = 'space.dmi'
+//	icon = 'icons/turf/space.dmi'
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[pick(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)]"
 
@@ -158,7 +158,7 @@
 /turf/simulated/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
-	icon = 'walls.dmi'
+	icon = 'icons/turf/walls.dmi'
 	var/mineral = "metal"
 	opacity = 1
 	density = 1
@@ -251,7 +251,7 @@
 
 /turf/simulated/shuttle
 	name = "shuttle"
-	icon = 'shuttle.dmi'
+	icon = 'icons/turf/shuttle.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 	layer = 2
@@ -269,7 +269,7 @@
 
 /turf/simulated/shuttle/plating
 	name = "plating"
-	icon = 'floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
 
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
@@ -284,12 +284,12 @@
 
 /turf/unsimulated/floor
 	name = "floor"
-	icon = 'floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "Floor3"
 
 /turf/unsimulated/wall
 	name = "wall"
-	icon = 'walls.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "riveted"
 	opacity = 1
 	density = 1
@@ -323,7 +323,7 @@
 
 /*
 /turf/simulated/wall/mineral
-	icon = 'mineral_walls.dmi'
+	icon = 'icons/turf/mineral_walls.dmi'
 	walltype = "iron"
 
 	var/oreAmount = 1

@@ -4,7 +4,7 @@
 	density = 1
 	anchored = 0
 	name = "Computer-frame"
-	icon = 'stock_parts.dmi'
+	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "0"
 	var/state = 0
 	var/obj/item/weapon/circuitboard/circuit = null
@@ -15,7 +15,7 @@
 	anchored = 0
 	w_class = 2.0
 	name = "Circuit board"
-	icon = 'module.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"

@@ -1,7 +1,7 @@
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "Its a gun. It's pretty terrible, though."
-	icon = 'gun.dmi'
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "detective"
 	item_state = "gun"
 	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY

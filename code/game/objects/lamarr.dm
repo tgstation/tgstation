@@ -1,6 +1,6 @@
 /obj/structure/lamarr
 	name = "Lab Cage"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "labcage1"
 	desc = "A glass lab container for storing interesting creatures."
 	density = 1

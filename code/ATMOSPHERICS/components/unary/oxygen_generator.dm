@@ -1,5 +1,5 @@
 obj/machinery/atmospherics/unary/oxygen_generator
-	icon = 'oxygen_generator.dmi'
+	icon = 'icons/obj/atmospherics/oxygen_generator.dmi'
 	icon_state = "intact_off"
 	density = 1
 

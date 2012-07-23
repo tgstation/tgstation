@@ -6,7 +6,7 @@
 		if(health <= 0)
 			head_icon_state += "2"
 
-		var/icon/head_icon = icon('corgi_head.dmi',head_icon_state)
+		var/icon/head_icon = icon('icons/mob/corgi_head.dmi',head_icon_state)
 		if(head_icon)
 			overlays += head_icon
 
@@ -15,7 +15,7 @@
 		if(health <= 0)
 			back_icon_state += "2"
 
-		var/icon/back_icon = icon('corgi_back.dmi',back_icon_state)
+		var/icon/back_icon = icon('icons/mob/corgi_back.dmi',back_icon_state)
 		if(back_icon)
 			overlays += back_icon
 	return

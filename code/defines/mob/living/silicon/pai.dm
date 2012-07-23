@@ -1,6 +1,6 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	icon = 'mob.dmi'//
+	icon = 'icons/mob/mob.dmi'//
 	icon_state = "shadow"
 
 	robot_talk_understand = 0

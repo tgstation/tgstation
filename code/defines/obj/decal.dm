@@ -2,7 +2,7 @@
 	name = "remains"
 	desc = "They look like human remains. They have a strange aura about them."
 	gender = PLURAL
-	icon = 'blood.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
 	anchored = 1
 
@@ -10,7 +10,7 @@
 	name = "remains"
 	desc = "They look like the remains of something... alien. They have a strange aura about them."
 	gender = PLURAL
-	icon = 'blood.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "remainsxeno"
 	anchored = 1
 
@@ -18,14 +18,14 @@
 	name = "remains"
 	desc = "They look like the remains of something mechanical. They have a strange aura about them."
 	gender = PLURAL
-	icon = 'robots.dmi'
+	icon = 'icons/mob/robots.dmi'
 	icon_state = "remainsrobot"
 	anchored = 1
 
 /obj/effect/decal/point
 	name = "arrow"
 	desc = "It's an arrow hanging in mid-air. There may be a wizard about."
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	icon_state = "arrow"
 	layer = 16.0
 	anchored = 1
@@ -39,7 +39,7 @@
 	name = "ashes"
 	desc = "Ashes to ashes, dust to dust, and into space."
 	gender = PLURAL
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	anchored = 1
 
@@ -50,7 +50,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'blood.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	var/list/viruses = list()
@@ -87,7 +87,7 @@
 	density = 0
 	anchored = 0
 	layer = 2
-	icon = 'blood.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 
@@ -115,7 +115,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'blood.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	var/list/viruses = list()
@@ -133,7 +133,7 @@
 	name = "xeno gibs"
 	desc = "Gnarly..."
 	gender = PLURAL
-	icon = 'blood.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "xgib1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 
@@ -165,7 +165,7 @@
 	density = 0
 	anchored = 0
 	layer = 2
-	icon = 'robots.dmi'
+	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 
@@ -185,7 +185,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'robots.dmi'
+	icon = 'icons/mob/robots.dmi'
 	icon_state = "floor1"
 	var/viruses = list()
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
@@ -207,7 +207,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "shards"
 
 /obj/effect/decal/cleanable/dirt
@@ -217,7 +217,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "dirt"
 
 /obj/effect/decal/cleanable/greenglow
@@ -227,7 +227,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "greenglow"
 
 /obj/effect/decal/cleanable/cobweb
@@ -236,7 +236,7 @@
 	density = 0
 	anchored = 1
 	layer = 3
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb1"
 
 /obj/effect/decal/cleanable/molten_item
@@ -245,7 +245,7 @@
 	density = 0
 	anchored = 1
 	layer = 3
-	icon = 'chemical.dmi'
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "molten"
 
 /obj/effect/decal/cleanable/cobweb2
@@ -254,7 +254,7 @@
 	density = 0
 	anchored = 1
 	layer = 3
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb2"
 
 // Used for spray that you spray at walls, tables, hydrovats etc
@@ -271,7 +271,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'blood.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	var/list/viruses = list()
@@ -287,7 +287,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'tomatodecal.dmi'
+	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("tomato_floor1", "tomato_floor2", "tomato_floor3")
 
 /obj/effect/decal/cleanable/egg_smudge
@@ -296,7 +296,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'tomatodecal.dmi'
+	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_egg1", "smashed_egg2", "smashed_egg3")
 
 /obj/effect/decal/cleanable/pie_smudge //honk
@@ -305,5 +305,5 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'tomatodecal.dmi'
+	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")

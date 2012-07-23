@@ -6,7 +6,7 @@
 /obj/structure/powerswitch
 	name = "power switch"
 	desc = "A switch that controls power."
-	icon = 'power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "switch-dbl-up"
 	var/icon_state_on = "switch-dbl-down"
 	var/icon_state_off = "switch-dbl-up"

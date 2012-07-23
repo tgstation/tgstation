@@ -1,6 +1,6 @@
 /obj/item/weapon/secstorage/ssafe
 	name = "secure safe"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
 	icon_opened = "safe0"
 	icon_locking = "safeb"

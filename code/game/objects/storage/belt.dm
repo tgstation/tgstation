@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/belt
 	name = "belt"
 	desc = "Can hold various things."
-	icon = 'belts.dmi'
+	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	flags = FPRINT | TABLEPASS

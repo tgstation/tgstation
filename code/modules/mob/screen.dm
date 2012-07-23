@@ -1,6 +1,6 @@
 /obj/screen
 	name = "screen"
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	layer = 20.0
 	unacidable = 1
 	var/id = 0.0
@@ -29,7 +29,7 @@
 
 /obj/screen/zone_sel
 	name = "Damage Zone"
-	icon = 'zone_sel.dmi'
+	icon = 'icons/mob/zone_sel.dmi'
 	icon_state = "blank"
 	var/selecting = "chest"
 	screen_loc = ui_zonesel
@@ -181,7 +181,7 @@
 		return
 
 	overlays = null
-	overlays += image("icon" = 'zone_sel.dmi', "icon_state" = text("[]", selecting))
+	overlays += image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", selecting))
 
 	return
 

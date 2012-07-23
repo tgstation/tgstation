@@ -51,15 +51,15 @@
 	if(wear_suit)
 		var/t_state = wear_suit.item_state
 		if(!t_state)	t_state = wear_suit.icon_state
-		var/image/lying		= image("icon" = 'mob.dmi', "icon_state" = "[t_state]2")
-		var/image/standing	= image("icon" = 'mob.dmi', "icon_state" = "[t_state]")
+		var/image/lying		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]2")
+		var/image/standing	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]")
 
 		if(wear_suit.blood_DNA)
 			var/t_suit = "suit"
 			if( istype(wear_suit, /obj/item/clothing/suit/armor) )
 				t_suit = "armor"
-			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "[t_suit]blood2")
-			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "[t_suit]blood")
+			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_suit]blood2")
+			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_suit]blood")
 
 		//TODO
 		wear_suit.screen_loc = ui_alien_oclothing
@@ -80,11 +80,11 @@
 	if (head)
 		var/t_state = head.item_state
 		if(!t_state)	t_state = head.icon_state
-		var/image/lying		= image("icon" = 'mob.dmi', "icon_state" = "[t_state]2")
-		var/image/standing	= image("icon" = 'mob.dmi', "icon_state" = "[t_state]")
+		var/image/lying		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]2")
+		var/image/standing	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]")
 		if(head.blood_DNA)
-			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "helmetblood2")
-			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "helmetblood")
+			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood2")
+			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
 		head.screen_loc = ui_alien_head
 		overlays_lying[X_HEAD_LAYER]	= lying
 		overlays_standing[X_HEAD_LAYER]	= standing
@@ -105,7 +105,7 @@
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
 		r_hand.screen_loc = ui_rhand
-		overlays_standing[X_R_HAND_LAYER]	= image("icon" = 'items_righthand.dmi', "icon_state" = t_state)
+		overlays_standing[X_R_HAND_LAYER]	= image("icon" = 'icons/mob/items_righthand.dmi', "icon_state" = t_state)
 	else
 		overlays_standing[X_R_HAND_LAYER]	= null
 	if(update_icons)	update_icons()
@@ -115,7 +115,7 @@
 		var/t_state = l_hand.item_state
 		if(!t_state)	t_state = l_hand.icon_state
 		l_hand.screen_loc = ui_lhand
-		overlays_standing[X_L_HAND_LAYER]	= image("icon" = 'items_lefthand.dmi', "icon_state" = t_state)
+		overlays_standing[X_L_HAND_LAYER]	= image("icon" = 'icons/mob/items_lefthand.dmi', "icon_state" = t_state)
 	else
 		overlays_standing[X_L_HAND_LAYER]	= null
 	if(update_icons)	update_icons()

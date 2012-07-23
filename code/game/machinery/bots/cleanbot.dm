@@ -2,7 +2,7 @@
 /obj/item/weapon/bucket_sensor
 	desc = "It's a bucket. With a sensor attached."
 	name = "proxy bucket"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "bucket_proxy"
 	force = 3.0
 	throwforce = 10.0
@@ -17,7 +17,7 @@
 /obj/machinery/bot/cleanbot
 	name = "Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
 	layer = 5.0
 	density = 0
@@ -181,7 +181,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 				if(T.wet_overlay)
 					T.overlays -= T.wet_overlay
 					T.wet_overlay = null
-				T.wet_overlay = image('water.dmi',T,"wet_floor")
+				T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
 				T.overlays += T.wet_overlay
 				spawn(800)
 					if (istype(T) && T.wet < 2)

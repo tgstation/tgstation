@@ -203,12 +203,12 @@
 		icon_state = "apc0"
 		// if closed, update overlays for channel status
 		if (!(stat & (BROKEN|MAINT)))
-			overlays += image('power.dmi', "apcox-[locked]")	// 0=blue 1=red
-			overlays += image('power.dmi', "apco3-[charging]") // 0=red, 1=yellow/black 2=green
+			overlays += image('icons/obj/power.dmi', "apcox-[locked]")	// 0=blue 1=red
+			overlays += image('icons/obj/power.dmi', "apco3-[charging]") // 0=red, 1=yellow/black 2=green
 			if(operating)
-				overlays += image('power.dmi', "apco0-[equipment]")	// 0=red, 1=green, 2=blue
-				overlays += image('power.dmi', "apco1-[lighting]")
-				overlays += image('power.dmi', "apco2-[environ]")
+				overlays += image('icons/obj/power.dmi', "apco0-[equipment]")	// 0=red, 1=green, 2=blue
+				overlays += image('icons/obj/power.dmi', "apco1-[lighting]")
+				overlays += image('icons/obj/power.dmi', "apco2-[environ]")
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 

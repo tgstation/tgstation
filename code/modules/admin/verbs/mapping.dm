@@ -23,7 +23,7 @@ var/camera_range_display_status = 0
 var/intercom_range_display_status = 0
 
 /obj/effect/debugging/camera_range
-	icon = '480x480.dmi'
+	icon = 'icons/480x480.dmi'
 	icon_state = "25percent"
 
 	New()
@@ -31,7 +31,7 @@ var/intercom_range_display_status = 0
 		src.pixel_y = -224
 
 /obj/effect/debugging/marker
-	icon = 'areas.dmi'
+	icon = 'icons/turf/areas.dmi'
 	icon_state = "yellow"
 
 /client/proc

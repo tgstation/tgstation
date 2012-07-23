@@ -1,7 +1,7 @@
 /obj/machinery/door/window
 	name = "interior door"
 	desc = "A strong door."
-	icon = 'windoor.dmi'
+	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
 	var/base_state = "left"
 	var/health = 150.0 //If you change this, consiter changing ../door/window/brigdoor/ health at the bottom of this .dm file
@@ -238,7 +238,7 @@
 
 /obj/machinery/door/window/brigdoor
 	name = "Secure Door"
-	icon = 'windoor.dmi'
+	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)

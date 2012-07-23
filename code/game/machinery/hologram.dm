@@ -142,7 +142,7 @@ Holographic project of everything else.
 	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
 	var/input = input("Select what icon state to use in effect.",,"")
 	if(input)
-		var/icon/alpha_mask = new('effects.dmi', "[input]")
+		var/icon/alpha_mask = new('icons/effects/effects.dmi', "[input]")
 		flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
 		hologram.icon = flat_icon
 

@@ -1,7 +1,7 @@
 /obj/machinery/shield
 		name = "Emergency energy shield"
 		desc = "An energy shield used to contain hull breaches."
-		icon = 'effects.dmi'
+		icon = 'icons/effects/effects.dmi'
 		icon_state = "shield-old"
 		density = 1
 		opacity = 0
@@ -179,7 +179,7 @@
 /obj/machinery/shieldgen
 		name = "Emergency shield projector"
 		desc = "Used to seal minor hull breaches."
-		icon = 'objects.dmi'
+		icon = 'icons/obj/objects.dmi'
 		icon_state = "shieldoff"
 		density = 1
 		opacity = 0
@@ -359,7 +359,7 @@
 /obj/machinery/shieldwallgen
 		name = "Shield Generator"
 		desc = "A shield generator."
-		icon = 'stationobjs.dmi'
+		icon = 'icons/obj/stationobjs.dmi'
 		icon_state = "Shield_Gen"
 		anchored = 0
 		density = 1
@@ -592,7 +592,7 @@
 /obj/machinery/shieldwall
 		name = "Shield"
 		desc = "An energy shield."
-		icon = 'effects.dmi'
+		icon = 'icons/effects/effects.dmi'
 		icon_state = "shieldwall"
 		anchored = 1
 		density = 1

@@ -1,6 +1,6 @@
 /obj/machinery/door/poddoor/shutters
 	name = "Shutters"
-	icon = 'rapid_pdoor.dmi'
+	icon = 'icons/obj/doors/rapid_pdoor.dmi'
 	icon_state = "shutter1"
 
 /obj/machinery/door/poddoor/shutters/New()

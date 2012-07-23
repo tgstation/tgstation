@@ -14,7 +14,7 @@
 /obj/item/light_fixture_frame
 	name = "light fixture frame"
 	desc = "Used for building lights."
-	icon = 'lighting.dmi'
+	icon = 'icons/effects/lighting.dmi'
 	icon_state = "tube-construct-item"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	var/fixture_type = "tube"
@@ -61,7 +61,7 @@
 /obj/item/light_fixture_frame/small
 	name = "small light fixture frame"
 	desc = "Used for building small lights."
-	icon = 'lighting.dmi'
+	icon = 'icons/effects/lighting.dmi'
 	icon_state = "bulb-construct-item"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	fixture_type = "bulb"
@@ -70,7 +70,7 @@
 /obj/machinery/light_construct
 	name = "light fixture frame"
 	desc = "A light fixture under construction."
-	icon = 'lighting.dmi'
+	icon = 'icons/effects/lighting.dmi'
 	icon_state = "tube-construct-stage1"
 	anchored = 1
 	layer = 5
@@ -201,7 +201,7 @@
 /obj/machinery/light_construct/small
 	name = "small light fixture frame"
 	desc = "A small light fixture under construction."
-	icon = 'lighting.dmi'
+	icon = 'icons/effects/lighting.dmi'
 	icon_state = "bulb-construct-stage1"
 	anchored = 1
 	layer = 5
@@ -212,7 +212,7 @@
 // the standard tube light fixture
 /obj/machinery/light
 	name = "light fixture"
-	icon = 'lighting.dmi'
+	icon = 'icons/effects/lighting.dmi'
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube1"
 	desc = "A lighting fixture."
@@ -637,7 +637,7 @@
 // will fit into empty /obj/machinery/light of the corresponding type
 
 /obj/item/weapon/light
-	icon = 'lighting.dmi'
+	icon = 'icons/effects/lighting.dmi'
 	flags = FPRINT | TABLEPASS
 	force = 2
 	throwforce = 5
@@ -747,7 +747,7 @@
 
 /obj/item/weapon/storage/lightbox
 	name = "replacement bulbs"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "light"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
 	item_state = "syringe_kit"

@@ -1,6 +1,6 @@
 
 obj/machinery/atmospherics/pipe/simple/heat_exchanging
-	icon = 'heat.dmi'
+	icon = 'icons/obj/pipes/heat.dmi'
 	icon_state = "intact"
 	level = 2
 	var/initialize_directions_he
@@ -58,7 +58,7 @@ obj/machinery/atmospherics/pipe/simple/heat_exchanging
 
 
 obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction
-	icon = 'junction.dmi'
+	icon = 'icons/obj/pipes/junction.dmi'
 	icon_state = "intact"
 	level = 2
 	minimum_temperature_difference = 300

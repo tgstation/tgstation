@@ -524,5 +524,5 @@ What a mess.*/
 	return
 
 /obj/machinery/computer/secure_data/detective_computer
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "messyfiles"

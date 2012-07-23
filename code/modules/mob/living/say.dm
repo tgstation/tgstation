@@ -354,7 +354,7 @@ var/list/department_radio_keys = list(
 			if(M.client)
 
 				if(!M.client.bubbles || M == src)
-					var/image/I = image('speechbubble.dmi', B, "override")
+					var/image/I = image('icons/effects/speechbubble.dmi', B, "override")
 					I.override = 1
 					M << I
 			*/ /*

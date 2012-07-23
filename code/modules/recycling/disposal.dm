@@ -10,7 +10,7 @@
 /obj/machinery/disposal
 	name = "disposal unit"
 	desc = "A pneumatic waste disposal unit."
-	icon = 'disposal.dmi'
+	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "disposal"
 	anchored = 1
 	density = 1
@@ -310,7 +310,7 @@
 
 		// flush handle
 		if(flush)
-			overlays += image('disposal.dmi', "dispover-handle")
+			overlays += image('icons/obj/pipes/disposal.dmi', "dispover-handle")
 
 		// only handle is shown if no power
 		if(stat & NOPOWER || mode == -1)
@@ -318,13 +318,13 @@
 
 		// 	check for items in disposal - occupied light
 		if(contents.len > 0)
-			overlays += image('disposal.dmi', "dispover-full")
+			overlays += image('icons/obj/pipes/disposal.dmi', "dispover-full")
 
 		// charging and ready light
 		if(mode == 1)
-			overlays += image('disposal.dmi', "dispover-charge")
+			overlays += image('icons/obj/pipes/disposal.dmi', "dispover-charge")
 		else if(mode == 2)
-			overlays += image('disposal.dmi', "dispover-ready")
+			overlays += image('icons/obj/pipes/disposal.dmi', "dispover-ready")
 
 	// timed process
 	// charge the gas reservoir and perform flush if ready
@@ -597,7 +597,7 @@
 // Disposal pipes
 
 /obj/structure/disposalpipe
-	icon = 'disposal.dmi'
+	icon = 'icons/obj/pipes/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
 	anchored = 1
@@ -1183,7 +1183,7 @@
 /obj/structure/disposaloutlet
 	name = "disposal outlet"
 	desc = "An outlet for the pneumatic disposal system."
-	icon = 'disposal.dmi'
+	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "outlet"
 	density = 1
 	anchored = 1

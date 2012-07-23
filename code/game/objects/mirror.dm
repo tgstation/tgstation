@@ -2,7 +2,7 @@
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
-	icon = 'watercloset.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
 	density = 0
 	anchored = 1

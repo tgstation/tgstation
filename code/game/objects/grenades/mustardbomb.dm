@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade/mustardbomb
 	desc = "It is set to detonate in 4 seconds."
 	name = "mustard gas bomb"
-	icon = 'grenade.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	det_time = 40.0
 	item_state = "flashbang"

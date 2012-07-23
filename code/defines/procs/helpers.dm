@@ -1588,7 +1588,7 @@ proc/listclearnulls(list/list)
 
 						// Reset the shuttle corners
 						if(O.tag == "delete me")
-							X.icon = 'shuttle.dmi'
+							X.icon = 'icons/turf/shuttle.dmi'
 							X.icon_state = dd_replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
 							X.name = "wall"
 							del(O) // prevents multiple shuttle corners from stacking

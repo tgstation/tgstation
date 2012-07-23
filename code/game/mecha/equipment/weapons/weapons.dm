@@ -287,7 +287,7 @@
 
 
 /obj/item/missile
-	icon = 'grenade.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	var/primed = null
 	throwforce = 15

@@ -299,7 +299,7 @@
 	holographic_items = A.copy_contents_to(linkedholodeck , 1)
 
 	if(emagged)
-		for(var/obj/item/weapon/melee/energy/sword/holosword/H in linkedholodeck)
+		for(var/obj/item/weapon/holo/esword/H in linkedholodeck)
 			H.damtype = BRUTE
 
 	spawn(30)
@@ -376,7 +376,7 @@
 /obj/structure/table/holotable
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	icon = 'structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "table"
 	density = 1
 	anchored = 1.0
@@ -428,7 +428,7 @@
 
 /obj/structure/holowindow
 	name = "reinforced window"
-	icon = 'structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "rwindow"
 	desc = "A window."
 	density = 1
@@ -441,22 +441,60 @@
 /obj/structure/holowindow/Del()
 	..()
 
-
-/obj/item/weapon/melee/energy/sword/holosword
+/obj/item/weapon/holo
 	damtype = HALLOSS
 
-/obj/item/weapon/melee/energy/sword/holosword/green
+/obj/item/weapon/holo/esword
+	desc = "May the force be within you. Sorta"
+	icon_state = "sword0"
+	force = 3.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = 2.0
+	flags = FPRINT | TABLEPASS | NOSHIELD
+	var/active = 0
+
+/obj/item/weapon/holo/esword/green
 	New()
 		color = "green"
 
-/obj/item/weapon/melee/energy/sword/holosword/red
+/obj/item/weapon/holo/esword/red
 	New()
 		color = "red"
+
+/obj/item/weapon/holo/esword/IsShield()
+	if(active)
+		return 1
+	return 0
+
+/obj/item/weapon/holo/esword/attack(target as mob, mob/user as mob)
+	..()
+
+/obj/item/weapon/holo/esword/New()
+	color = pick("red","blue","green","purple")
+
+/obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
+	active = !active
+	if (active)
+		force = 30
+		icon_state = "sword[color]"
+		w_class = 4
+		playsound(user, 'saberon.ogg', 50, 1)
+		user << "\blue [src] is now active."
+	else
+		force = 3
+		icon_state = "sword0"
+		w_class = 2
+		playsound(user, 'saberoff.ogg', 50, 1)
+		user << "\blue [src] can now be concealed."
+	add_fingerprint(user)
+	return
 
 //BASKETBALL OBJECTS
 
 /obj/item/weapon/beach_ball/holoball
-	icon = 'basketball.dmi'
+	icon = 'icons/obj/basketball.dmi'
 	icon_state = "basketball"
 	name = "basketball"
 	item_state = "basketball"
@@ -466,7 +504,7 @@
 /obj/structure/holohoop
 	name = "basketball hoop"
 	desc = "Boom, Shakalaka!."
-	icon = 'basketball.dmi'
+	icon = 'icons/obj/basketball.dmi'
 	icon_state = "hoop"
 	anchored = 1
 	density = 1
@@ -510,7 +548,7 @@
 /obj/machinery/readybutton
 	name = "Ready Declaration Device"
 	desc = "This device is used to declare ready.  If all devices in an area are ready, the event will begin!"
-	icon = 'monitors.dmi'
+	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
 	var/ready = 0
 	var/area/currentarea = null

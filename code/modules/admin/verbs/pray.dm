@@ -14,7 +14,7 @@
 		if (src.client.handle_spam_prevention(msg,MUTE_PRAY))
 			return
 
-	var/icon/cross = icon('storage.dmi',"bible")
+	var/icon/cross = icon('icons/obj/storage.dmi',"bible")
 
 	for (var/mob/M in world)
 		if (M.client && M.client.holder && M.client.seeprayers)

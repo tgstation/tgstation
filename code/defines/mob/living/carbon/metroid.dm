@@ -3,7 +3,7 @@
 
 /mob/living/carbon/metroid
 	name = "baby metroid"
-	icon = 'mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "baby metroid"
 	pass_flags = PASSTABLE
 	voice_message = "skree!"
@@ -47,7 +47,7 @@
 
 /mob/living/carbon/metroid/adult
 	name = "adult metroid"
-	icon = 'mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "adult metroid"
 
 	health = 200

@@ -1,7 +1,7 @@
 
 /obj/machinery/processor
 	name = "Food Processor"
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor"
 	layer = 2.9
 	density = 1

@@ -1,5 +1,5 @@
 obj/machinery/atmospherics/valve
-	icon = 'valve.dmi'
+	icon = 'icons/obj/atmospherics/valve.dmi'
 	icon_state = "valve0"
 
 	name = "manual valve"
@@ -250,7 +250,7 @@ obj/machinery/atmospherics/valve
 	digital		// can be controlled by AI
 		name = "digital valve"
 		desc = "A digitally controlled valve."
-		icon = 'digital_valve.dmi'
+		icon = 'icons/obj/atmospherics/digital_valve.dmi'
 
 		attack_ai(mob/user as mob)
 			return src.attack_hand(user)

@@ -279,7 +279,7 @@
 	C.invisibility = 101
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( C.loc )
 	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
+	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 	flick("h2monkey", animation)
 	sleep(48)
@@ -371,7 +371,7 @@
 	C.invisibility = 101
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( C.loc )
 	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
+	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 	flick("monkey2h", animation)
 	sleep(48)
@@ -443,7 +443,7 @@
 
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( usr.loc )
 	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
+	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 	flick("h2monkey", animation)
 	sleep(48)
@@ -692,7 +692,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 
 		var/obj/effect/overlay/B = new /obj/effect/overlay( T.loc )
 		B.icon_state = "blspell"
-		B.icon = 'wizard.dmi'
+		B.icon = 'icons/obj/wizard.dmi'
 		B.name = "spell"
 		B.anchored = 1
 		B.density = 0

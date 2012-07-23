@@ -10,7 +10,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod
 	name = "Immovable Rod"
 	desc = "What the fuck is that?"
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "immrod"
 	throwforce = 100
 	density = 1

@@ -3,7 +3,7 @@
 	desc = "It is set to detonate in 5 seconds."
 	name = "grenade"
 	w_class = 2.0
-	icon = 'grenade.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "grenade"
 	throw_speed = 4

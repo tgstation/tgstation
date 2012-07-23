@@ -1,7 +1,7 @@
 /**********************Satchel**************************/
 
 /obj/item/weapon/satchel
-	icon = 'mining.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
 	name = "Mining Satchel"
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
@@ -36,7 +36,7 @@
 			usr << "The satchel now picks up one ore at a time."
 
 /obj/item/weapon/satchel/borg
-	icon = 'mining.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
 	name = "Cyborg Mining Satchel"
 	mode = 1;  //0 = pick one at a time, 1 = pick all on tile
@@ -45,7 +45,7 @@
 /**********************Ore box**************************/
 
 /obj/structure/ore_box
-	icon = 'mining.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "orebox"
 	name = "Ore Box"
 	desc = "It's heavy"
@@ -126,7 +126,7 @@
 //Stolen satchel code, making it a box just wouldn't work well for this -Sieve
 
 /obj/item/weapon/sheetsnatcher
-	icon = 'mining.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "sheetsnatcher"
 	name = "Sheet Snatcher"
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."

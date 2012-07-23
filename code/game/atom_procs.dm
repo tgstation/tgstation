@@ -184,8 +184,8 @@
 		//if we haven't made our blood_overlay already
 		if( !O.blood_overlay )
 			var/icon/I = new /icon(O.icon, O.icon_state)
-			I.Blend(new /icon('blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
-			I.Blend(new /icon('blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+			I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
+			I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 
 			//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
 			for(var/obj/item/A in world)
@@ -1004,7 +1004,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					usr:handle_regular_hud_updates()
 
 				var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( usr.loc )
-				A.icon = 'genetics.dmi'
+				A.icon = 'icons/effects/genetics.dmi'
 				A.icon_state = "eyelasers"
 				playsound(usr.loc, 'taser2.ogg', 75, 1)
 

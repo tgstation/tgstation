@@ -710,7 +710,7 @@ datum
 								if(M.client)
 									var/obj/blueeffect = new /obj(src)
 									blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
-									blueeffect.icon = 'effects.dmi'
+									blueeffect.icon = 'icons/effects/effects.dmi'
 									blueeffect.icon_state = "shieldsparkles"
 									blueeffect.layer = 17
 									blueeffect.mouse_opacity = 0

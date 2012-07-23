@@ -59,7 +59,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 /obj/machinery/door/airlock
 	name = "Airlock"
-	icon = 'doorint.dmi'
+	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door_closed"
 
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -87,164 +87,164 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 /obj/machinery/door/airlock/command
 	name = "Airlock"
-	icon = 'Doorcom.dmi'
+	icon = 'icons/obj/doors/Doorcom.dmi'
 	doortype = 1
 
 /obj/machinery/door/airlock/security
 	name = "Airlock"
-	icon = 'Doorsec.dmi'
+	icon = 'icons/obj/doors/Doorsec.dmi'
 	doortype = 2
 
 /obj/machinery/door/airlock/engineering
 	name = "Airlock"
-	icon = 'Dooreng.dmi'
+	icon = 'icons/obj/doors/Dooreng.dmi'
 	doortype = 3
 
 /obj/machinery/door/airlock/medical
 	name = "Airlock"
-	icon = 'Doormed.dmi'
+	icon = 'icons/obj/doors/Doormed.dmi'
 	doortype = 4
 
 /obj/machinery/door/airlock/maintenance
 	name = "Maintenance Access"
-	icon = 'Doormaint.dmi'
+	icon = 'icons/obj/doors/Doormaint.dmi'
 	doortype = 5
 
 /obj/machinery/door/airlock/external
 	name = "External Airlock"
-	icon = 'Doorext.dmi'
+	icon = 'icons/obj/doors/Doorext.dmi'
 	doortype = 6
 
 /obj/machinery/door/airlock/glass
 	name = "Glass Airlock"
-	icon = 'Doorglass.dmi'
+	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
 	doortype = 7
 	glass = 1
 
 /obj/machinery/door/airlock/centcom
 	name = "Airlock"
-	icon = 'Doorele.dmi'
+	icon = 'icons/obj/doors/Doorele.dmi'
 	opacity = 0
 	doortype = 8
 
 /obj/machinery/door/airlock/vault
 	name = "Vault"
-	icon = 'vault.dmi'
+	icon = 'icons/obj/doors/vault.dmi'
 	opacity = 1
 	doortype = 9
 
 /obj/machinery/door/airlock/glass_large
 	name = "Glass Airlock"
-	icon = 'Door2x1glassfull.dmi'
+	icon = 'icons/obj/doors/Door2x1glassfull.dmi'
 	opacity = 0
 	doortype = 10
 	glass = 1
 
 /obj/machinery/door/airlock/freezer
 	name = "Freezer Airlock"
-	icon = 'Doorfreezer.dmi'
+	icon = 'icons/obj/doors/Doorfreezer.dmi'
 	opacity = 1
 	doortype = 11
 
 /obj/machinery/door/airlock/hatch
 	name = "Airtight Hatch"
-	icon = 'Doorhatchele.dmi'
+	icon = 'icons/obj/doors/Doorhatchele.dmi'
 	opacity = 1
 	doortype = 12
 
 /obj/machinery/door/airlock/maintenance_hatch
 	name = "Maintenance Hatch"
-	icon = 'Doorhatchmaint2.dmi'
+	icon = 'icons/obj/doors/Doorhatchmaint2.dmi'
 	opacity = 1
 	doortype = 13
 
 /obj/machinery/door/airlock/glass_command
 	name = "Maintenance Hatch"
-	icon = 'Doorcomglass.dmi'
+	icon = 'icons/obj/doors/Doorcomglass.dmi'
 	opacity = 0
 	doortype = 14
 	glass = 1
 
 /obj/machinery/door/airlock/glass_engineering
 	name = "Maintenance Hatch"
-	icon = 'Doorengglass.dmi'
+	icon = 'icons/obj/doors/Doorengglass.dmi'
 	opacity = 0
 	doortype = 15
 	glass = 1
 
 /obj/machinery/door/airlock/glass_security
 	name = "Maintenance Hatch"
-	icon = 'Doorsecglass.dmi'
+	icon = 'icons/obj/doors/Doorsecglass.dmi'
 	opacity = 0
 	doortype = 16
 	glass = 1
 
 /obj/machinery/door/airlock/glass_medical
 	name = "Maintenance Hatch"
-	icon = 'doormedglass.dmi'
+	icon = 'icons/obj/doors/Doormedglass.dmi'
 	opacity = 0
 	doortype = 17
 	glass = 1
 
 /obj/machinery/door/airlock/mining
 	name = "Mining Airlock"
-	icon = 'Doormining.dmi'
+	icon = 'icons/obj/doors/Doormining.dmi'
 	doortype = 18
 
 /obj/machinery/door/airlock/atmos
 	name = "Atmospherics Airlock"
-	icon = 'Dooratmo.dmi'
+	icon = 'icons/obj/doors/Dooratmo.dmi'
 	doortype = 19
 
 /obj/machinery/door/airlock/research
 	name = "Airlock"
-	icon = 'Doorresearch.dmi'
+	icon = 'icons/obj/doors/Doorresearch.dmi'
 	doortype = 20
 
 /obj/machinery/door/airlock/glass_research
 	name = "Maintenance Hatch"
-	icon = 'doorresearchglass.dmi'
+	icon = 'icons/obj/doors/Doorresearchglass.dmi'
 	opacity = 0
 	doortype = 21
 	glass = 1
 
 /obj/machinery/door/airlock/glass_mining
 	name = "Maintenance Hatch"
-	icon = 'doorminingglass.dmi'
+	icon = 'icons/obj/doors/Doorminingglass.dmi'
 	opacity = 0
 	doortype = 22
 	glass = 1
 
 /obj/machinery/door/airlock/glass_atmos
 	name = "Maintenance Hatch"
-	icon = 'dooratmoglass.dmi'
+	icon = 'icons/obj/doors/Dooratmoglass.dmi'
 	opacity = 0
 	doortype = 23
 	glass = 1
 
 /obj/machinery/door/airlock/gold
 	name = "Gold Airlock"
-	icon = 'Doorgold.dmi'
+	icon = 'icons/obj/doors/Doorgold.dmi'
 	var/mineral = "gold"
 	doortype = 24
 
 /obj/machinery/door/airlock/silver
 	name = "Silver Airlock"
-	icon = 'Doorsilver.dmi'
+	icon = 'icons/obj/doors/Doorsilver.dmi'
 	var/mineral = "silver"
 	doortype = 25
 
 /obj/machinery/door/airlock/diamond
 	name = "Diamond Airlock"
-	icon = 'Doordiamond.dmi'
+	icon = 'icons/obj/doors/Doordiamond.dmi'
 	var/mineral = "diamond"
 	doortype = 26
 
 /obj/machinery/door/airlock/uranium
 	name = "Uranium Airlock"
 	desc = "And they said I was crazy."
-	icon = 'Dooruranium.dmi'
+	icon = 'icons/obj/doors/Dooruranium.dmi'
 	var/mineral = "uranium"
 	doortype = 27
 	var/last_event = 0
@@ -264,7 +264,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/plasma
 	name = "Plasma Airlock"
 	desc = "No way this can end badly."
-	icon = 'Doorplasma.dmi'
+	icon = 'icons/obj/doors/Doorplasma.dmi'
 	var/mineral = "plasma"
 	doortype = 28
 
@@ -301,13 +301,13 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/clown
 	name = "Bananium Airlock"
 	desc = "Honkhonkhonk"
-	icon = 'Doorbananium.dmi'
+	icon = 'icons/obj/doors/Doorbananium.dmi'
 	var/mineral = "clown"
 	doortype = 29
 
 /obj/machinery/door/airlock/sandstone
 	name = "Sandstone Airlock"
-	icon = 'Doorsand.dmi'
+	icon = 'icons/obj/doors/Doorsand.dmi'
 	var/mineral = "sandstone"
 	doortype = 30
 

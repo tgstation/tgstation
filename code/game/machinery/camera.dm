@@ -326,7 +326,7 @@ var/global/list/obj/machinery/camera/Cameras = list()
 			if(do_after(user, 20))
 				var/obj/item/weapon/grenade/chem_grenade/case = new /obj/item/weapon/grenade/chem_grenade(src.loc)
 				case.name = "Camera Assembly"
-				case.icon = 'monitors.dmi'
+				case.icon = 'icons/obj/monitors.dmi'
 //JESUS WHAT THE FUCK EVERYTHING TO DO WITH CAMERAS IS TERRIBLE FUCK
 				case.icon_state = "cameracase"
 				case.path = 2
@@ -355,7 +355,7 @@ var/global/list/obj/machinery/camera/Cameras = list()
 
 		var/obj/item/weapon/grenade/chem_grenade/case = new /obj/item/weapon/grenade/chem_grenade(loc)
 		case.name = "Camera Assembly"
-		case.icon = 'monitors.dmi'
+		case.icon = 'icons/obj/monitors.dmi'
 		case.icon_state = "cameracase"
 		case.path = 2
 		case.state = 5

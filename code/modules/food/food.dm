@@ -460,7 +460,7 @@
 			if (W.icon_state == "forkloaded")
 				user << "\red You already have omelette on your fork."
 				return
-			//W.icon = 'kitchen.dmi'
+			//W.icon = 'icons/obj/kitchen.dmi'
 			W.icon_state = "forkloaded"
 			/*if (herp)
 				world << "[user] takes a piece of omelette with his fork!"*/
@@ -1907,7 +1907,7 @@
 /obj/item/pizzabox
 	name = "pizza box"
 	desc = "A box suited for pizzas."
-	icon = 'food.dmi'
+	icon = 'icons/obj/food.dmi'
 	icon_state = "pizzabox1"
 
 	var/open = 0 // Is the box open?

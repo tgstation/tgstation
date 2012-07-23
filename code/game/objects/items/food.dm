@@ -12,13 +12,13 @@ MONKEY CUBE BOX
 /obj/item/kitchen/donut_box
 	var/const/max_amount = 6
 	var/list/obj/item/weapon/reagent_containers/food/snacks/donut/donuts = list()
-	icon = 'food.dmi'
+	icon = 'icons/obj/food.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
 
 /obj/item/kitchen/egg_box
 	var/amount = 12
-	icon = 'food.dmi'
+	icon = 'icons/obj/food.dmi'
 	icon_state = "eggbox"
 	name = "egg box"
 
@@ -134,7 +134,7 @@ MONKEY CUBE BOX
 /obj/item/weapon/monkeycube_box
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
-	icon = 'food.dmi'
+	icon = 'icons/obj/food.dmi'
 	icon_state = "monkeycubebox"
 	var/amount = 2
 

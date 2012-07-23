@@ -2,7 +2,7 @@
 
 /obj/vehicle
 	name = "Vehicle"
-	icon = 'vehicles.dmi'
+	icon = 'icons/vehicles/vehicles.dmi'
 	density = 1
 	anchored = 1
 	unacidable = 1 //To avoid the pilot-deleting shit that came with mechas

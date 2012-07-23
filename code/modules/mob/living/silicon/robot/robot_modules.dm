@@ -1,6 +1,6 @@
 /obj/item/weapon/robot_module
 	name = "robot module"
-	icon = 'module.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
 	w_class = 100.0
 	item_state = "electronic"

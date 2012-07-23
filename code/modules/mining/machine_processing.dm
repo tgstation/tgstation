@@ -2,7 +2,7 @@
 
 /obj/machinery/mineral/processing_unit_console
 	name = "production machine console"
-	icon = 'mining_machines.dmi'
+	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = 1
 	anchored = 1
@@ -175,7 +175,7 @@
 
 /obj/machinery/mineral/processing_unit
 	name = "furnace"
-	icon = 'mining_machines.dmi'
+	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "furnace"
 	density = 1
 	anchored = 1.0

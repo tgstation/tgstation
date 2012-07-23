@@ -2,7 +2,7 @@
 /obj/item/weapon/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
 	name = "tiles and toolbox"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "toolbox_tiles"
 	force = 3.0
 	throwforce = 10.0
@@ -15,7 +15,7 @@
 /obj/item/weapon/toolbox_tiles_sensor
 	desc = "It's a toolbox with tiles sticking out the top and a sensor attached"
 	name = "tiles, toolbox and sensor arrangement"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
 	force = 3.0
 	throwforce = 10.0
@@ -29,7 +29,7 @@
 /obj/machinery/bot/floorbot
 	name = "Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "floorbot0"
 	layer = 5.0
 	density = 0

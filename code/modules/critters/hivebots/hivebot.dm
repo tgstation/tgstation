@@ -7,7 +7,7 @@
 /obj/effect/critter/hivebot
 	name = "Hivebot"
 	desc = "A small robot"
-	icon = 'hivebot.dmi'
+	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "basic"
 	health = 10
 	max_health = 10
@@ -170,7 +170,7 @@
 /obj/effect/critter/hivebot/tele//this still needs work
 	name = "Beacon"
 	desc = "Some odd beacon thing"
-	icon = 'Hivebot.dmi'
+	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "def_radar-off"
 	health = 100
 	max_health = 100

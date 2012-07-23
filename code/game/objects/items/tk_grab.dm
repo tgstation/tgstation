@@ -3,7 +3,7 @@
 /obj/item/tk_grab
 	name = "Telekinetic Grab"
 	desc = "Magic"
-	icon = 'magic.dmi'//Needs sprites
+	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
 	flags = USEDELAY
 	//item_state = null
@@ -82,7 +82,7 @@
 		O.density = 0
 		O.layer = FLY_LAYER
 		O.dir = pick(cardinal)
-		O.icon = 'effects.dmi'
+		O.icon = 'icons/effects/effects.dmi'
 		O.icon_state = "nothing"
 		flick("empdisable",O)
 		spawn(5)

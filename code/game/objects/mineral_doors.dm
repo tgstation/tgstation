@@ -7,7 +7,7 @@
 	anchored = 1
 	opacity = 1
 
-	icon = 'mineral_doors.dmi'
+	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 
 	var/mineralType = "metal"

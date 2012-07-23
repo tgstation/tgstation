@@ -14,7 +14,7 @@
 
 /obj/item/weapon/flamethrower
 	name = "flamethrower"
-	icon = 'flamethrower.dmi'
+	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
 	desc = "You are a firestarter!"

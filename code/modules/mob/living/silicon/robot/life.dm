@@ -203,7 +203,7 @@
 				if(ticker.mode.name == "traitor")
 					for(var/datum/mind/tra in ticker.mode.traitors)
 						if(tra.current)
-							var/I = image('mob.dmi', loc = tra.current, icon_state = "traitor")
+							var/I = image('icons/mob/mob.dmi', loc = tra.current, icon_state = "traitor")
 							src.client.images += I
 				if(src.connected_ai)
 					src.connected_ai.connected_robots -= src

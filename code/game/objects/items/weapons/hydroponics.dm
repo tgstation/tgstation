@@ -44,7 +44,7 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 		else
 			var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src)) // Targeting elsewhere
 			D.name = "chemicals"
-			D.icon = 'chemical.dmi'
+			D.icon = 'icons/obj/chemical.dmi'
 			D.icon_state = "weedpuff"
 			D.create_reagents(5)
 			src.reagents.trans_to(D, 5) // 5 units of solution used at a time => 20 uses

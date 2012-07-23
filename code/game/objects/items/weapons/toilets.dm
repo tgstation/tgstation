@@ -10,7 +10,7 @@ TOILET
 	var/status = 0.0
 	var/clogged = 0.0
 	anchored = 1.0
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "toilet"
 	item_state = "syringe_kit"
 

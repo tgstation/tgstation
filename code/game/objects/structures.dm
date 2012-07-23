@@ -1,5 +1,5 @@
 obj/structure
-	icon = 'structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 
 obj/structure/blob_act()
 	if(prob(50))
@@ -346,7 +346,7 @@ obj/structure/meteorhit(obj/O as obj)
 	state = 2
 
 /obj/structure/cultgirder
-	icon= 'cult.dmi'
+	icon= 'icons/obj/cult.dmi'
 	icon_state= "cultgirder"
 	anchored = 1
 	density = 1

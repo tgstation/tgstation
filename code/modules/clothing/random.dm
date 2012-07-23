@@ -14,13 +14,13 @@
 
 	update_icon(var/mob/living/carbon/human/user)
 		if(!istype(user)) return
-		mob = new/icon("icon" = 'head.dmi', "icon_state" = "kitty")
-		mob2 = new/icon("icon" = 'head.dmi', "icon_state" = "kitty2")
+		mob = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty")
+		mob2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kitty2")
 		mob.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
 		mob2.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
 
-		var/icon/earbit = new/icon("icon" = 'head.dmi', "icon_state" = "kittyinner")
-		var/icon/earbit2 = new/icon("icon" = 'head.dmi', "icon_state" = "kittyinner2")
+		var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner")
+		var/icon/earbit2 = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "kittyinner2")
 		mob.Blend(earbit, ICON_OVERLAY)
 		mob2.Blend(earbit2, ICON_OVERLAY)
 
@@ -176,7 +176,7 @@
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
 	flags = FPRINT | TABLEPASS

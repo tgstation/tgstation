@@ -58,7 +58,7 @@ for reference:
 /obj/structure/barricade/wooden
 	name = "wooden barricade"
 	desc = "This space is blocked off by a wooden barricade."
-	icon = 'structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
 	anchored = 1.0
 	density = 1.0
@@ -144,13 +144,13 @@ for reference:
 /obj/machinery/deployable
 	name = "deployable"
 	desc = "deployable"
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	req_access = list(access_security)//I'm changing this until these are properly tested./N
 
 /obj/machinery/deployable/barrier
 	name = "deployable barrier"
 	desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	anchored = 0.0
 	density = 1.0
 	icon_state = "barrier0"

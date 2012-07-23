@@ -25,7 +25,7 @@ Buildable meters
 	//var/pipe_dir = 0
 	var/pipename
 	force = 7
-	icon = 'pipe-item.dmi'
+	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
 	flags = TABLEPASS|FPRINT
@@ -468,7 +468,7 @@ Buildable meters
 /obj/item/pipe_meter
 	name = "meter"
 	desc = "A meter that can be laid on pipes"
-	icon = 'pipe-item.dmi'
+	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
 	flags = TABLEPASS|FPRINT

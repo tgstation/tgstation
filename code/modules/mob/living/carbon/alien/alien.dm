@@ -13,7 +13,7 @@
 
 	for(var/obj/item/clothing/mask/facehugger/facehugger in world)
 		if(facehugger.stat == CONSCIOUS)
-			var/image/activeIndicator = image('alien.dmi', loc = facehugger, icon_state = "facehugger_active")
+			var/image/activeIndicator = image('icons/mob/alien.dmi', loc = facehugger, icon_state = "facehugger_active")
 			activeIndicator.override = 1
 			if(client)
 				client.images += activeIndicator

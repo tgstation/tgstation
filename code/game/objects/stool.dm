@@ -141,7 +141,7 @@
 
 /obj/structure/stool/bed/roller
 	name = "roller bed"
-	icon = 'rollerbed.dmi'
+	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
 

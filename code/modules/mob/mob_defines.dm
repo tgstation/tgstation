@@ -196,7 +196,7 @@
 
 	var/update_icon = 1 //Set to 1 to trigger update_icons() at the next life() call
 
-	var/UI = 'screen1_Midnight.dmi' // For changing the UI from preferences
+	var/UI = 'icons/mob/screen1_Midnight.dmi' // For changing the UI from preferences
 
 	var/status_flags = 255	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 	var/nopush = 0 //Can they be shoved?

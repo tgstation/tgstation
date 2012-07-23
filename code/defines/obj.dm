@@ -26,7 +26,7 @@
 	proc/initialize()
 
 /obj/structure/signpost
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "signpost"
 	anchored = 1
 	density = 1
@@ -45,7 +45,7 @@
 
 /obj/effect/mark
 		var/mark = ""
-		icon = 'mark.dmi'
+		icon = 'icons/misc/mark.dmi'
 		icon_state = "blank"
 		anchored = 1
 		layer = 99
@@ -69,14 +69,14 @@
 /obj/structure/bedsheetbin
 	name = "linen bin"
 	desc = "A bin for containing bedsheets. It looks rather cosy."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "bedbin"
 	var/amount = 23.0
 	anchored = 1.0
 
 /obj/effect/begin
 	name = "begin"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "begin"
 	anchored = 1.0
 	unacidable = 1
@@ -108,7 +108,7 @@
 /obj/effect/sign/securearea
 	desc = "A warning sign which reads 'SECURE AREA'. This obviously applies to a nun-Clown."
 	name = "SECURE AREA"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "securearea"
 	anchored = 1.0
 	opacity = 0
@@ -117,7 +117,7 @@
 /obj/effect/sign/biohazard
 	desc = "A warning sign which reads 'BIOHAZARD'"
 	name = "BIOHAZARD"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "bio"
 	anchored = 1.0
 	opacity = 0
@@ -126,7 +126,7 @@
 /obj/effect/sign/electricshock
 	desc = "A warning sign which reads 'HIGH VOLTAGE'"
 	name = "HIGH VOLTAGE"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 	anchored = 1.0
 	opacity = 0
@@ -135,7 +135,7 @@
 /obj/effect/sign/examroom
 	desc = "A guidance sign which reads 'EXAM ROOM'"
 	name = "EXAM"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "examroom"
 	anchored = 1.0
 	opacity = 0
@@ -144,7 +144,7 @@
 /obj/effect/sign/vacuum
 	desc = "A warning sign which reads 'HARD VACUUM AHEAD'"
 	name = "HARD VACUUM AHEAD"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "space"
 	anchored = 1.0
 	opacity = 0
@@ -153,7 +153,7 @@
 /obj/effect/sign/deathsposal
 	desc = "A warning sign which reads 'DISPOSAL LEADS TO SPACE'"
 	name = "DISPOSAL LEADS TO SPACE"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "deathsposal"
 	anchored = 1.0
 	opacity = 0
@@ -162,7 +162,7 @@
 /obj/effect/sign/pods
 	desc = "A warning sign which reads 'ESCAPE PODS'"
 	name = "ESCAPE PODS"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "pods"
 	anchored = 1.0
 	opacity = 0
@@ -171,7 +171,7 @@
 /obj/effect/sign/fire
 	desc = "A warning sign which reads 'DANGER: FIRE'"
 	name = "DANGER: FIRE"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "fire"
 	anchored = 1.0
 	opacity = 0
@@ -181,7 +181,7 @@
 /obj/effect/sign/nosmoking_1
 	desc = "A warning sign which reads 'NO SMOKING'"
 	name = "NO SMOKING"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "nosmoking"
 	anchored = 1.0
 	opacity = 0
@@ -191,7 +191,7 @@
 /obj/effect/sign/nosmoking_2
 	desc = "A warning sign which reads 'NO SMOKING'"
 	name = "NO SMOKING"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "nosmoking2"
 	anchored = 1.0
 	opacity = 0
@@ -200,7 +200,7 @@
 /obj/effect/sign/redcross
 	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here.'"
 	name = "Med-Bay"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "redcross"
 	anchored = 1.0
 	opacity = 0
@@ -209,7 +209,7 @@
 /obj/effect/sign/goldenplaque
 	desc = "To be Robust is not an action or a way of life, but a mental state. Only those with the force of Will strong enough to act during a crisis, saving friend from foe, are truly Robust. Stay Robust my friends."
 	name = "The Most Robust Men Award for Robustness"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "goldenplaque"
 	anchored = 1.0
 	opacity = 0
@@ -218,7 +218,7 @@
 /*/obj/item/weapon/plaque_assembly                       //commenting this out until there's a better rework
 	desc = "Put this on a wall and engrave an epitaph"
 	name = "Plaque Assembly"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "goldenplaque"
 
 /obj/item/weapon/plaque_assembly/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
@@ -233,7 +233,7 @@
 /obj/effect/sign/maltesefalcon1         //The sign is 64x32, so it needs two tiles. ;3
 	desc = "The Maltese Falcon, Space Bar and Grill."
 	name = "The Maltese Falcon"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "maltesefalcon1"
 	anchored = 1.0
 	opacity = 0
@@ -242,7 +242,7 @@
 /obj/effect/sign/maltesefalcon2
 	desc = "The Maltese Falcon, Space Bar and Grill."
 	name = "The Maltese Falcon"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "maltesefalcon2"
 	anchored = 1.0
 	opacity = 0
@@ -251,7 +251,7 @@
 /obj/effect/sign/science//These 3 have multiple types, just var-edit the icon_state to whatever one you want on the map
 	desc = "A warning sign which reads 'SCIENCE!'"
 	name = "SCIENCE!"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "science1"
 	anchored = 1.0
 	opacity = 0
@@ -260,7 +260,7 @@
 /obj/effect/sign/chemistry
 	desc = "A warning sign which reads 'CHEMISTY'"
 	name = "CHEMISTRY"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "chemistry1"
 	anchored = 1.0
 	opacity = 0
@@ -269,7 +269,7 @@
 /obj/effect/sign/botany
 	desc = "A warning sign which reads 'HYDROPONICS'"
 	name = "HYDROPONICS"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "hydro1"
 	anchored = 1.0
 	opacity = 0
@@ -297,7 +297,7 @@
 
 /obj/item
 	name = "item"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	var/icon/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
 	var/force = 0
@@ -347,7 +347,7 @@
 		usr << "\red This mob type can't use this verb."
 
 /obj/item/device
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 
 /obj/item/device/infra_sensor
 	name = "Infrared Sensor"
@@ -378,19 +378,19 @@
 /obj/item/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There's stamp \"Classified\" and several coffee stains on it."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
 
 /obj/item/apc_frame
 	name = "APC frame"
 	desc = "Used for repairing or building APCs"
-	icon = 'apc_repair.dmi'
+	icon = 'icons/obj/apc_repair.dmi'
 	icon_state = "apc_frame"
 	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/effect/landmark
 	name = "landmark"
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = 1.0
 	unacidable = 1
@@ -401,14 +401,14 @@
 /obj/effect/laser
 	name = "laser"
 	desc = "IT BURNS!!!"
-	icon = 'projectiles.dmi'
+	icon = 'icons/obj/projectiles.dmi'
 	var/damage = 0.0
 	var/range = 10.0
 
 /obj/structure/lattice
 	desc = "A lightweight support lattice."
 	name = "lattice"
-	icon = 'structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "latticefull"
 	density = 0
 	anchored = 1.0
@@ -422,7 +422,7 @@
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
 			del(LAT)
-	icon = 'smoothlattice.dmi'
+	icon = 'icons/obj/smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()
 	for (var/dir in cardinal)
@@ -492,7 +492,7 @@
 /obj/structure/m_tray
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morguet"
 	density = 1
 	layer = 2.0
@@ -502,7 +502,7 @@
 /obj/structure/c_tray
 	name = "crematorium tray"
 	desc = "Apply body before burning."
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "cremat"
 	density = 1
 	layer = 2.0
@@ -519,7 +519,7 @@
 	var/netnum = 0
 	name = "power cable"
 	desc = "A flexible superconducting cable for heavy-duty power transfer"
-	icon = 'power_cond_red.dmi'
+	icon = 'icons/obj/power_cond_red.dmi'
 	icon_state = "0-1"
 	var/d1 = 0
 	var/d2 = 1
@@ -529,42 +529,42 @@
 
 /obj/structure/cable/yellow
 	color="yellow"
-	icon = 'power_cond_yellow.dmi'
+	icon = 'icons/obj/power_cond_yellow.dmi'
 
 /obj/structure/cable/green
 	color="green"
-	icon = 'power_cond_green.dmi'
+	icon = 'icons/obj/power_cond_green.dmi'
 
 /obj/structure/cable/blue
 	color="blue"
-	icon = 'power_cond_blue.dmi'
+	icon = 'icons/obj/power_cond_blue.dmi'
 
 /obj/structure/cable/pink
 	color="pink"
-	icon = 'power_cond_pink.dmi'
+	icon = 'icons/obj/power_cond_pink.dmi'
 
 /obj/structure/cable/orange
 	color="orange"
-	icon = 'power_cond_orange.dmi'
+	icon = 'icons/obj/power_cond_orange.dmi'
 
 /obj/structure/cable/cyan
 	color="cyan"
-	icon = 'power_cond_cyan.dmi'
+	icon = 'icons/obj/power_cond_cyan.dmi'
 
 /obj/structure/cable/white
 	color="white"
-	icon = 'power_cond_white.dmi'
+	icon = 'icons/obj/power_cond_white.dmi'
 
 /obj/effect/manifest
 	name = "manifest"
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
 	unacidable = 1//Just to be sure.
 
 /obj/structure/morgue
 	name = "morgue"
 	desc = "Used to keep bodies in untill someone fetches them."
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	density = 1
 	var/obj/structure/m_tray/connected = null
@@ -573,7 +573,7 @@
 /obj/structure/crematorium
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbeque nights."
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "crema1"
 	density = 1
 	var/obj/structure/c_tray/connected = null
@@ -588,7 +588,7 @@
 	density = 1
 	anchored = 1
 	layer = 3
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
 	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
@@ -625,7 +625,7 @@
 
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
-	icon='beam.dmi'
+	icon='icons/effects/beam.dmi'
 	icon_state="b_beam"
 	var/tmp/atom/BeamSource
 	New()
@@ -635,7 +635,7 @@
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
 	unacidable = 1//Can't destroy energy portals.
@@ -652,7 +652,7 @@
 /obj/structure/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	density = 1
 	flags = FPRINT
@@ -666,14 +666,14 @@
 
 /obj/effect/landmark/start
 	name = "start"
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
 	anchored = 1.0
 
 /obj/structure/stool
 	name = "stool"
 	desc = "Apply butt."
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
 	anchored = 1.0
 	flags = FPRINT
@@ -693,7 +693,7 @@
 /obj/structure/stool/bed/nest
 	name = "alien nest"
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
-	icon = 'alien.dmi'
+	icon = 'icons/mob/alien.dmi'
 	icon_state = "nest"
 	var/health = 100
 
@@ -740,7 +740,7 @@
 /obj/structure/table
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	icon = 'structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "table"
 	density = 1
 	anchored = 1.0
@@ -949,7 +949,7 @@
 /obj/structure/mopbucket
 	desc = "Fill it with water, but don't forget a mop!"
 	name = "mop bucket"
-	icon = 'janitor.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mopbucket"
 	density = 1
 	flags = FPRINT
@@ -959,7 +959,7 @@
 
 /obj/structure/kitchenspike
 	name = "a meat spike"
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "spike"
 	desc = "A spike for collecting meat from animals"
 	density = 1
@@ -970,7 +970,7 @@
 
 /obj/structure/displaycase
 	name = "Display Case"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox1"
 	desc = "A display case for prized possessions. It taunts you to kick it."
 	density = 1
@@ -982,7 +982,7 @@
 
 /obj/effect/showcase
 	name = "Showcase"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showcase_1"
 	desc = "A stand with the empty body of a cyborg bolted to it."
 	density = 1
@@ -993,7 +993,7 @@
 /obj/item/brain
 	name = "brain"
 	desc = "A piece of juicy meat found in a persons head."
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain2"
 	flags = TABLEPASS
 	force = 1.0
@@ -1034,7 +1034,7 @@
 /obj/item/metroid_core
 	name = "metroid core"
 	desc = "A very slimy and tender part of a Metroid. They also legend to have \"magical powers\"."
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "metroid core"
 	flags = TABLEPASS
 	force = 1.0
@@ -1073,7 +1073,7 @@
 
 /obj/structure/noticeboard
 	name = "Notice Board"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nboard00"
 	flags = FPRINT
 	desc = "A board for pinning important notices upon."
@@ -1083,7 +1083,7 @@
 
 /obj/effect/deskclutter
 	name = "desk clutter"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "deskclutter"
 	desc = "Some clutter the detective has accumalated over the years..."
 	anchored = 1
@@ -1094,7 +1094,7 @@
 /obj/item/weapon/glass
 	name = "empty glass"
 	desc = "Emptysville."
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "glass_empty"
 	item_state = "beaker"
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
@@ -1127,7 +1127,7 @@
 /obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
-	icon = 'walls.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = ""
 	density = 1
 	opacity = 1
@@ -1176,7 +1176,7 @@
 /obj/structure/falserwall
 	name = "r wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
-	icon = 'walls.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "r_wall"
 	density = 1
 	opacity = 1
@@ -1414,7 +1414,7 @@
 	origin_tech = "materials=1"
 
 /obj/item/weapon/beach_ball
-	icon = 'beach.dmi'
+	icon = 'icons/misc/beach.dmi'
 	icon_state = "ball"
 	name = "beach ball"
 	item_state = "beachball"

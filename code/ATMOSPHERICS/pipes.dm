@@ -56,7 +56,7 @@ obj/machinery/atmospherics/pipe
 		..()
 
 	simple
-		icon = 'pipes.dmi'
+		icon = 'icons/obj/pipes.dmi'
 		icon_state = "intact-f"
 
 		name = "pipe"
@@ -304,7 +304,7 @@ obj/machinery/atmospherics/pipe
 
 
 	simple/insulated
-		icon = 'red_pipe.dmi'
+		icon = 'icons/obj/atmospherics/red_pipe.dmi'
 		icon_state = "intact"
 
 		minimum_temperature_difference = 10000
@@ -317,7 +317,7 @@ obj/machinery/atmospherics/pipe
 
 
 	tank
-		icon = 'pipe_tank.dmi'
+		icon = 'icons/obj/atmospherics/pipe_tank.dmi'
 		icon_state = "intact"
 
 		name = "Pressure Tank"
@@ -361,7 +361,7 @@ obj/machinery/atmospherics/pipe
 				..()
 
 		toxins
-			icon = 'orange_pipe_tank.dmi'
+			icon = 'icons/obj/atmospherics/orange_pipe_tank.dmi'
 			name = "Pressure Tank (Plasma)"
 
 			New()
@@ -374,7 +374,7 @@ obj/machinery/atmospherics/pipe
 				..()
 
 		oxygen_agent_b
-			icon = 'red_orange_pipe_tank.dmi'
+			icon = 'icons/obj/atmospherics/red_orange_pipe_tank.dmi'
 			name = "Pressure Tank (Oxygen + Plasma)"
 
 			New()
@@ -390,7 +390,7 @@ obj/machinery/atmospherics/pipe
 				..()
 
 		oxygen
-			icon = 'blue_pipe_tank.dmi'
+			icon = 'icons/obj/atmospherics/blue_pipe_tank.dmi'
 			name = "Pressure Tank (Oxygen)"
 
 			New()
@@ -403,7 +403,7 @@ obj/machinery/atmospherics/pipe
 				..()
 
 		nitrogen
-			icon = 'red_pipe_tank.dmi'
+			icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
 			name = "Pressure Tank (Nitrogen)"
 
 			New()
@@ -416,7 +416,7 @@ obj/machinery/atmospherics/pipe
 				..()
 
 		air
-			icon = 'red_pipe_tank.dmi'
+			icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
 			name = "Pressure Tank (Air)"
 
 			New()
@@ -497,7 +497,7 @@ obj/machinery/atmospherics/pipe
 					user << "\blue Tank is empty!"
 
 	vent
-		icon = 'pipe_vent.dmi'
+		icon = 'icons/obj/atmospherics/pipe_vent.dmi'
 		icon_state = "intact"
 
 		name = "Vent"
@@ -581,7 +581,7 @@ obj/machinery/atmospherics/pipe
 				icon_state = "exposed"
 
 	manifold
-		icon = 'pipe_manifold.dmi'
+		icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
 		icon_state = "manifold-f"
 
 		name = "pipe manifold"

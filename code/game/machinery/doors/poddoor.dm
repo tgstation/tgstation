@@ -1,7 +1,7 @@
 /obj/machinery/door/poddoor
 	name = "Podlock"
 	desc = "Why it no open!!!"
-	icon = 'rapid_pdoor.dmi'
+	icon = 'icons/obj/doors/rapid_pdoor.dmi'
 	icon_state = "pdoor1"
 	var/id = 1.0
 
@@ -278,7 +278,7 @@
 /obj/machinery/door/poddoor/two_tile_hor
 	var/obj/machinery/door/poddoor/filler_object/f1
 	var/obj/machinery/door/poddoor/filler_object/f2
-	icon = '1x2blast_hor.dmi'
+	icon = 'icons/obj/doors/1x2blast_hor.dmi'
 
 	New()
 		..()
@@ -297,7 +297,7 @@
 /obj/machinery/door/poddoor/two_tile_ver
 	var/obj/machinery/door/poddoor/filler_object/f1
 	var/obj/machinery/door/poddoor/filler_object/f2
-	icon = '1x2blast_vert.dmi'
+	icon = 'icons/obj/doors/1x2blast_vert.dmi'
 
 	New()
 		..()
@@ -318,7 +318,7 @@
 	var/obj/machinery/door/poddoor/filler_object/f2
 	var/obj/machinery/door/poddoor/filler_object/f3
 	var/obj/machinery/door/poddoor/filler_object/f4
-	icon = '1x4blast_hor.dmi'
+	icon = 'icons/obj/doors/1x4blast_hor.dmi'
 
 	New()
 		..()
@@ -347,7 +347,7 @@
 	var/obj/machinery/door/poddoor/filler_object/f2
 	var/obj/machinery/door/poddoor/filler_object/f3
 	var/obj/machinery/door/poddoor/filler_object/f4
-	icon = '1x4blast_vert.dmi'
+	icon = 'icons/obj/doors/1x4blast_vert.dmi'
 
 	New()
 		..()

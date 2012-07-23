@@ -5,7 +5,7 @@
 /obj/item/candle
 	name = "red candle"
 	desc = "a candle"
-	icon = 'candle.dmi'
+	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 	item_state = "candle1"
 
@@ -97,7 +97,7 @@
 /obj/item/weapon/candlepack
 	name = "Candle pack"
 	//desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
-	icon = 'candle.dmi'
+	icon = 'icons/obj/candle.dmi'
 	icon_state = "pack5"
 	item_state = "pack5"
 	w_class = 1

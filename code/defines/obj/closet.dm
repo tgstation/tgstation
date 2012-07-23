@@ -1,7 +1,7 @@
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
-	icon = 'closet.dmi'
+	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
 	density = 1
 	var/icon_closed = "closed"
@@ -30,7 +30,7 @@
 /obj/effect/spresent
 	name = "strange present"
 	desc = "It's a ... present?"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "strangepresent"
 	density = 1
 	anchored = 0
@@ -340,7 +340,7 @@
 /obj/structure/closet/secure_closet
 	name = "secure locker"
 	desc = "It's an immobile card-locked storage unit."
-	icon = 'closet.dmi'
+	icon = 'icons/obj/closet.dmi'
 	icon_state = "secure1"
 	density = 1
 	opened = 0

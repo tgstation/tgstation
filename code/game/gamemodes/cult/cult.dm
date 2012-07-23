@@ -231,7 +231,7 @@
 				if(cultist.current.client)
 					for(var/datum/mind/cultist_1 in cult)
 						if(cultist_1.current)
-							var/I = image('mob.dmi', loc = cultist_1.current, icon_state = "cult")
+							var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
 							cultist.current.client.images += I
 
 
@@ -240,11 +240,11 @@
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)
 				if(cultist.current.client)
-					var/I = image('mob.dmi', loc = cult_mind.current, icon_state = "cult")
+					var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
 					cultist.current.client.images += I
 			if(cult_mind.current)
 				if(cult_mind.current.client)
-					var/image/J = image('mob.dmi', loc = cultist.current, icon_state = "cult")
+					var/image/J = image('icons/mob/mob.dmi', loc = cultist.current, icon_state = "cult")
 					cult_mind.current.client.images += J
 
 

@@ -1,6 +1,6 @@
 /obj/item/weapon/secstorage/sbriefcase
 	name = "secure briefcase"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."

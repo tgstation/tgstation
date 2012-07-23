@@ -79,7 +79,7 @@
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"
 	desc = "They suspend the illusion of the mime's play."
-	icon = 'belts.dmi'
+	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
 
 

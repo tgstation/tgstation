@@ -59,7 +59,7 @@
 						var/obj/effect/portal/P = new /obj/effect/portal( T )
 						P.target = picked
 						P.creator = null
-						P.icon = 'objects.dmi'
+						P.icon = 'icons/obj/objects.dmi'
 						P.failchance = 0
 						P.icon_state = "anom"
 						P.name = "wormhole"

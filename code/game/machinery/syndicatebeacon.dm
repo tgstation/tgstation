@@ -9,7 +9,7 @@
 /obj/machinery/syndicate_beacon
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
 	anchored = 1
@@ -106,7 +106,7 @@
 /obj/machinery/singularity_beacon //not the best place for it but it's a hack job anyway -- Urist
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
-	icon = 'singularity.dmi'
+	icon = 'icons/obj/singularity.dmi'
 	icon_state = "beacon"
 
 	anchored = 0

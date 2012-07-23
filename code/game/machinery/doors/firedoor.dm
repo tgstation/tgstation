@@ -5,7 +5,7 @@
 /obj/machinery/door/firedoor
 	name = "Firelock"
 	desc = "Apply crowbar"
-	icon = 'Doorfire.dmi'
+	icon = 'icons/obj/doors/Doorfire.dmi'
 	icon_state = "door_open"
 	var/blocked = 0
 	opacity = 0

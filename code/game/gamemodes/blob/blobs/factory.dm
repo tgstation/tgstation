@@ -1,6 +1,6 @@
 /obj/effect/blob/factory
 	name = "porous blob"
-	icon = 'blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
 	health = 100
 	brute_resist = 1

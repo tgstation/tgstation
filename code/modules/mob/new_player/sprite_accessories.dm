@@ -40,7 +40,7 @@
 
 /datum/sprite_accessory/hair
 
-	icon = 'human_face.dmi'	  // default icon for all hairs
+	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 
 	short
 		name = "Short Hair"	  // try to capatilize the names please~
@@ -192,7 +192,7 @@
 
 /datum/sprite_accessory/facial_hair
 
-	icon = 'human_face.dmi'
+	icon = 'icons/mob/human_face.dmi'
 	choose_female = 0 // barf (unless you're a dorf, dorfs dig chix /w beards :P)
 
 	shaved

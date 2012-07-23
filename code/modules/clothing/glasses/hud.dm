@@ -47,7 +47,7 @@
 		if(!M)	return
 		if(!M.client)	return
 		var/client/C = M.client
-		var/icon/tempHud = 'hud.dmi'
+		var/icon/tempHud = 'icons/mob/hud.dmi'
 		for(var/mob/living/carbon/human/patient in view(M))
 			var/foundVirus = 0
 			for(var/datum/disease/D in patient.viruses)
@@ -83,7 +83,7 @@
 	if(!M)	return
 	if(!M.client)	return
 	var/client/C = M.client
-	var/icon/tempHud = 'hud.dmi'
+	var/icon/tempHud = 'icons/mob/hud.dmi'
 	for(var/mob/living/carbon/human/perp in view(M))
 		if(!C) continue
 		var/perpname = "wot"

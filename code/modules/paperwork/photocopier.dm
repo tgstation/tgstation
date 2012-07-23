@@ -2,7 +2,7 @@
 
 /obj/machinery/photocopier
 	name = "Photocopier"
-	icon = 'library.dmi'
+	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
 	anchored = 1
 	density = 1

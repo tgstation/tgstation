@@ -38,7 +38,7 @@
 
 /obj/machinery/turret
 	name = "turret"
-	icon = 'turrets.dmi'
+	icon = 'icons/obj/turrets.dmi'
 	icon_state = "grey_target_prism"
 	var/raised = 0
 	var/enabled = 1
@@ -80,7 +80,7 @@
 
 /obj/machinery/turretcover
 	name = "pop-up turret cover"
-	icon = 'turrets.dmi'
+	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
 	anchored = 1
 	layer = 3.5
@@ -297,7 +297,7 @@
 
 /obj/machinery/turretid
 	name = "Turret deactivation control"
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
 	anchored = 1
 	density = 0
@@ -474,7 +474,7 @@
 	var/health = 40
 	var/list/scan_for = list("human"=0,"cyborg"=0,"mecha"=0,"alien"=1)
 	var/on = 0
-	icon = 'turrets.dmi'
+	icon = 'icons/obj/turrets.dmi'
 	icon_state = "gun_turret"
 
 

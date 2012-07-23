@@ -2,7 +2,7 @@
 /obj/machinery/gibber
 	name = "Gibber"
 	desc = "The name isn't descriptive enough?"
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	density = 1
 	anchored = 1
@@ -47,20 +47,20 @@
 
 /obj/machinery/gibber/New()
 	..()
-	src.overlays += image('kitchen.dmi', "grjam")
+	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
 
 /obj/machinery/gibber/update_icon()
 	overlays = null
 	if (dirty)
-		src.overlays += image('kitchen.dmi', "grbloody")
+		src.overlays += image('icons/obj/kitchen.dmi', "grbloody")
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		src.overlays += image('kitchen.dmi', "grjam")
+		src.overlays += image('icons/obj/kitchen.dmi', "grjam")
 	else if (operating)
-		src.overlays += image('kitchen.dmi', "gruse")
+		src.overlays += image('icons/obj/kitchen.dmi', "gruse")
 	else
-		src.overlays += image('kitchen.dmi', "gridle")
+		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
 
 /obj/machinery/gibber/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

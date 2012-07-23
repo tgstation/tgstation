@@ -1,6 +1,6 @@
 /obj/effect/blob/node
 	name = "blob node"
-	icon = 'blob.dmi'
+	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_node"
 	health = 100
 	brute_resist = 1

@@ -28,7 +28,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/selection_type = "view" //can be "range" or "view"
 
 	var/overlay = 0
-	var/overlay_icon = 'wizard.dmi'
+	var/overlay_icon = 'icons/obj/wizard.dmi'
 	var/overlay_icon_state = "spell"
 	var/overlay_lifespan = 0
 

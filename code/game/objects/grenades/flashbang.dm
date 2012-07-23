@@ -102,7 +102,7 @@
 /obj/item/weapon/grenade/flashbang/clusterbang
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
 	name = "clusterbang"
-	icon = 'grenade.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang"
 	var/child = 0
 

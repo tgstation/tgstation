@@ -541,7 +541,7 @@ ________________________________________________________________________________
 				for (var/mob/O in hearers(3, P.loc))
 					O.show_message(text("\icon[P] *[P.ttone]*"))
 			P.overlays = null
-			P.overlays += image('pda.dmi', "pda-r")
+			P.overlays += image('icons/obj/pda.dmi', "pda-r")
 
 		if("Inject")
 			if( (href_list["tag"]=="radium"? (reagents.get_reagent_amount("radium"))<=(a_boost*a_transfer) : !reagents.get_reagent_amount(href_list["tag"])) )//Special case for radium. If there are only a_boost*a_transfer radium units left.
@@ -869,7 +869,7 @@ ________________________________________________________________________________
 		cancel_stealth()
 	else
 		spawn(0)
-			anim(U.loc,U,'mob.dmi',,"cloak",,U.dir)
+			anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
 		U.update_icons()	//update their icons
 		U << "\blue You are now invisible to normal detection."
@@ -881,7 +881,7 @@ ________________________________________________________________________________
 	var/mob/living/carbon/human/U = affecting
 	if(s_active)
 		spawn(0)
-			anim(U.loc,U,'mob.dmi',,"uncloak",,U.dir)
+			anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
 		U.update_icons()	//update their icons
 		U << "\blue You are now visible."
@@ -1188,7 +1188,7 @@ ________________________________________________________________________________
 
 //This proc is linked to human life.dm. It determines what hud icons to display based on mind special role for most mobs.
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/assess_targets(list/target_list, mob/living/carbon/U)
-	var/icon/tempHud = 'hud.dmi'
+	var/icon/tempHud = 'icons/mob/hud.dmi'
 	for(var/mob/living/target in target_list)
 		if(iscarbon(target))
 			switch(target.mind.special_role)
@@ -1305,7 +1305,7 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/effect/energy_net
 	name = "energy net"
 	desc = "It's a net made of green energy."
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "energynet"
 
 	density = 1//Can't pass through.
@@ -1359,7 +1359,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 			spawn(0)
 				playsound(M.loc, 'sparks4.ogg', 50, 1)
-				anim(M.loc,M,'mob.dmi',,"phaseout",,M.dir)
+				anim(M.loc,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
 
 			M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
 			M << "\red You appear in a strange place!"
@@ -1370,7 +1370,7 @@ It is possible to destroy the net by the occupant or someone else.
 				spark_system.start()
 				playsound(M.loc, 'phasein.ogg', 25, 1)
 				playsound(M.loc, 'sparks2.ogg', 50, 1)
-				anim(M.loc,M,'mob.dmi',,"phasein",,M.dir)
+				anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
 				del(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 
 			for(var/mob/O in viewers(src, 3))

@@ -1,5 +1,5 @@
 obj/machinery/air_sensor
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
 	name = "Gas Sensor"
 
@@ -75,7 +75,7 @@ obj/machinery/air_sensor
 			set_frequency(frequency)
 
 obj/machinery/computer/general_air_control
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
 
 	name = "Computer"
@@ -184,7 +184,7 @@ obj/machinery/computer/general_air_control
 		set_frequency(frequency)
 
 	large_tank_control
-		icon = 'computer.dmi'
+		icon = 'icons/obj/computer.dmi'
 		icon_state = "tank"
 
 		var/input_tag
@@ -283,7 +283,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				src.updateDialog()
 
 	fuel_injection
-		icon = 'computer.dmi'
+		icon = 'icons/obj/computer.dmi'
 		icon_state = "atmos"
 
 		var/device_tag

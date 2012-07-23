@@ -53,7 +53,7 @@
 
 /obj/machinery/alarm
 	name = "alarm"
-	icon = 'monitors.dmi'
+	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
 	anchored = 1
 	use_power = 1

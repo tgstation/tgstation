@@ -25,7 +25,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 /obj/machinery/newscaster
 	name = "Newscaster"
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
-	icon = 'terminals.dmi'
+	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
 	var/isbroken = 0  //1 if someone banged it with something heavy
 	var/ispowered = 1 //starts powered, changes with power_change()

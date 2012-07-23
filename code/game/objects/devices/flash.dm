@@ -102,7 +102,7 @@
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
-			animation.icon = 'mob.dmi'
+			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)
@@ -156,7 +156,7 @@
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
-			animation.icon = 'mob.dmi'
+			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)

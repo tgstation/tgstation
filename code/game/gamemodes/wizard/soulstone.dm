@@ -1,6 +1,6 @@
 /obj/item/device/soulstone
 	name = "Soul Stone Shard"
-	icon = 'wizard.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	item_state = "electronic"
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
@@ -82,7 +82,7 @@
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
 	name = "empty shell"
-	icon = 'wizard.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive"
 	flags = FPRINT | TABLEPASS
@@ -118,7 +118,7 @@
 							T.invisibility = 101
 							var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )
 							animation.icon_state = "blank"
-							animation.icon = 'mob.dmi'
+							animation.icon = 'icons/mob/mob.dmi'
 							animation.master = T
 							flick("dust-h", animation)
 							del(animation)

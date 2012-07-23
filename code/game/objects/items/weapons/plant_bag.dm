@@ -2,7 +2,7 @@
 /**********************Plant Bag**************************/
 
 /obj/item/weapon/plantbag
-	icon = 'hydroponics.dmi'
+	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "plantbag"
 	name = "Plant Bag"
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
@@ -65,7 +65,7 @@
 */
 /obj/machinery/smartfridge
 	name = "SmartFridge"
-	icon = 'vending.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "smartfridge"
 	layer = 2.9
 	density = 1

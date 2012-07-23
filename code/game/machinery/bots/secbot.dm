@@ -1,7 +1,7 @@
 /obj/machinery/bot/secbot
 	name = "Securitron"
 	desc = "A little security robot.  He looks less than thrilled."
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
 	layer = 5.0
 	density = 1
@@ -63,7 +63,7 @@
 /obj/item/weapon/secbot_assembly
 	name = "helmet/signaler assembly"
 	desc = "Some sort of bizarre assembly."
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
 	var/build_step = 0
@@ -673,7 +673,7 @@ Auto Patrol: []"},
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.overlays += image('aibots.dmi', "hs_hole")
+	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
 	Sa.created_name = src.name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -728,14 +728,14 @@ Auto Patrol: []"},
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			src.build_step++
-			src.overlays += image('aibots.dmi', "hs_hole")
+			src.overlays += image('icons/obj/aibots.dmi', "hs_hole")
 			user << "You weld a hole in [src]!"
 
 	else if(isprox(W) && (src.build_step == 1))
 		user.drop_item()
 		src.build_step++
 		user << "You add the prox sensor to [src]!"
-		src.overlays += image('aibots.dmi', "hs_eye")
+		src.overlays += image('icons/obj/aibots.dmi', "hs_eye")
 		src.name = "helmet/signaler/prox sensor assembly"
 		del(W)
 
@@ -744,7 +744,7 @@ Auto Patrol: []"},
 		src.build_step++
 		user << "You add the robot arm to [src]!"
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
-		src.overlays += image('aibots.dmi', "hs_arm")
+		src.overlays += image('icons/obj/aibots.dmi', "hs_arm")
 		del(W)
 
 	else if((istype(W, /obj/item/weapon/melee/baton)) && (src.build_step >= 3))

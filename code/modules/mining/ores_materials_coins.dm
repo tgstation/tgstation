@@ -2,7 +2,7 @@
 
 /obj/item/weapon/ore
 	name = "Rock"
-	icon = 'Mining.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 
 /obj/item/weapon/ore/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -86,7 +86,7 @@
 /*****************************Coin********************************/
 
 /obj/item/weapon/coin
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	name = "Coin"
 	icon_state = "coin"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -147,7 +147,7 @@
 			del(CC)
 			return
 
-		overlays += image('items.dmi',"coin_string_overlay")
+		overlays += image('icons/obj/items.dmi',"coin_string_overlay")
 		string_attached = 1
 		user << "\blue You attach a string to the coin."
 		CC.use(1)

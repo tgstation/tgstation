@@ -8,7 +8,7 @@
 
 	animation = new(loc)
 	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
+	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
 	flick("gibbed-a", animation)
@@ -28,7 +28,7 @@
 
 	animation = new(loc)
 	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
+	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
 	flick("dust-a", animation)

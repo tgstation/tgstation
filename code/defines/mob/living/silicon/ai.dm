@@ -1,6 +1,6 @@
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'AI.dmi'//
+	icon = 'icons/mob/AI.dmi'//
 	icon_state = "ai"
 	anchored = 1 // -- TLE
 	density = 1

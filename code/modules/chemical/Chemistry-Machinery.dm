@@ -6,7 +6,7 @@
 	name = "chem dispenser"
 	density = 1
 	anchored = 1
-	icon = 'chemical.dmi'
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	use_power = 1
 	idle_power_usage = 40
@@ -166,7 +166,7 @@
 	name = "ChemMaster 3000"
 	density = 1
 	anchored = 1
-	icon = 'chemical.dmi'
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	use_power = 1
 	idle_power_usage = 20
@@ -440,7 +440,7 @@
 	name = "PanD.E.M.I.C 2200"
 	density = 1
 	anchored = 1
-	icon = 'chemical.dmi'
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	use_power = 1
 	idle_power_usage = 20
@@ -656,7 +656,7 @@
 /obj/machinery/reagentgrinder
 
 	name = "All-In-One Grinder"
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = 2.9
 	density = 1
