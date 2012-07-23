@@ -653,6 +653,21 @@
 		return attack_hand(user)
 	return
 
+/turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
+	if ((HULK in user.mutations) || (SUPRSTR in user.augmentations))
+		if (prob(5))
+			usr << text("\blue You smash through the wall.")
+			dismantle_wall(1)
+			return
+		else
+			usr << text("\blue You punch the wall.")
+			return
+
+	user << "\blue You push the wall but nothing happens!"
+	playsound(src.loc, 'Genhit.ogg', 25, 1)
+	src.add_fingerprint(user)
+	return
+
 /turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob)
 
 	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
