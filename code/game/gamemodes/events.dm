@@ -275,10 +275,13 @@
 
 /proc/high_radiation_event()
 
+/* // Haha, this is way too laggy. I'll keep the prison break though.
 	for(var/obj/machinery/light/L in world)
 		if(L.z != 1) continue
 		L.flicker(50)
+
 	sleep(100)
+*/
 	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
 	world << sound('radiation.ogg')
 	for(var/mob/living/carbon/human/H in world)
@@ -303,37 +306,45 @@
 //Changing this to affect the main station. Blame Urist. --Pete
 /proc/prison_break() // -- Callagan
 
-	for(var/obj/machinery/light/L in world)
-		if(!istype(get_area(L), /area/security/prison) && !istype(get_area(L), /area/security/brig)) continue
-		L.flicker(10)
-	sleep(100)
 
-	for (var/obj/machinery/power/apc/temp_apc in world)
-		if(istype(get_area(temp_apc), /area/security/prison))
-			temp_apc.overload_lighting()
-		if(istype(get_area(temp_apc), /area/security/brig))
-			temp_apc.overload_lighting()
-//	for (var/obj/machinery/computer/prison_shuttle/temp_shuttle in world)
-//		temp_shuttle.prison_break()
-	for (var/obj/structure/closet/secure_closet/brig/temp_closet in world)
-		if(istype(get_area(temp_closet), /area/security/prison))
-			temp_closet.locked = 0
-			temp_closet.icon_state = temp_closet.icon_closed
-	for (var/obj/machinery/door/airlock/security/temp_airlock in world)
-		if(istype(get_area(temp_airlock), /area/security/prison))
-			temp_airlock.prison_open()
-		if(istype(get_area(temp_airlock), /area/security/brig))
-			temp_airlock.prison_open()
-	for (var/obj/machinery/door/airlock/glass_security/temp_glassairlock in world)
-		if(istype(get_area(temp_glassairlock), /area/security/prison))
-			temp_glassairlock.prison_open()
-		if(istype(get_area(temp_glassairlock), /area/security/brig))
-			temp_glassairlock.prison_open()
-	for (var/obj/machinery/door_timer/temp_timer in world)
-		if(istype(get_area(temp_timer), /area/security/brig))
-			temp_timer.releasetime = 1
-	sleep(150)
-	command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
+	var/list/area/areas = list()
+	for(var/area/A in world)
+		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
+			areas += A
+
+	if(areas && areas.len > 0)
+
+		for(var/area/A in areas)
+			for(var/obj/machinery/light/L in A)
+				L.flicker(10)
+
+		sleep(100)
+
+		for(var/area/A in areas)
+			for (var/obj/machinery/power/apc/temp_apc in A)
+				temp_apc.overload_lighting()
+
+		for(var/area/A in areas)
+			for (var/obj/structure/closet/secure_closet/brig/temp_closet in A)
+				temp_closet.locked = 0
+				temp_closet.icon_state = temp_closet.icon_closed
+
+		for(var/area/A in areas)
+			for (var/obj/machinery/door/airlock/security/temp_airlock in A)
+				temp_airlock.prison_open()
+
+		for(var/area/A in areas)
+			for (var/obj/machinery/door/airlock/glass_security/temp_glassairlock in A)
+				temp_glassairlock.prison_open()
+
+		for(var/area/A in areas)
+			for (var/obj/machinery/door_timer/temp_timer in A)
+				temp_timer.releasetime = 1
+
+		sleep(150)
+		command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
+	else
+		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."
 
 /proc/carp_migration() // -- Darem
 	for(var/obj/effect/landmark/C in world)
