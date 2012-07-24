@@ -200,13 +200,13 @@
 		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
 		switch(choice)
 			if("Title")
-				var/newtitle = copytext(sanitize(input("Write a new title:") as text|null),1,MAX_MESSAGE_LEN)
+				var/newtitle = copytext(reject_bad_text(input("Write a new title:") as text|null),1,MAX_MESSAGE_LEN)
 				if(!newtitle)
 					usr << "The title is invalid."
 					return
 				else
-					src.name = reject_bad_text(newtitle)
-					src.title = reject_bad_text(newtitle)
+					src.name = newtitle
+					src.title = newtitle
 			if("Contents")
 				var/content = strip_html(input("Write your book's contents (HTML NOT allowed):"),8192) as message|null
 				if(!content)
