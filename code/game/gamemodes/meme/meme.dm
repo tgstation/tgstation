@@ -45,7 +45,7 @@
 
 	// for every 10 players, get 1 meme, and for each meme, get a host
 	// also make sure that there's at least one meme and one host
-	recommended_enemies = max(src.num_players() / 10 * 2, 2)
+	recommended_enemies = max(src.num_players() / 20 * 2, 2)
 
 	var/list/datum/mind/possible_memes = get_players_for_role(BE_MEME)
 
