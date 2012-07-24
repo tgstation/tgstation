@@ -37,7 +37,9 @@
 				if(!client.changes)
 					changes()
 			else
-				client.activeslot = preferences.last_slot
+				if(client.activeslot != preferences.default_slot)//Loads default slot
+					client.activeslot = preferences.default_slot
+					preferences.savefile_load(src)
 				var/lastchangelog = length('changelog.html')
 				if(!client.changes && preferences.lastchangelog!=lastchangelog)
 					changes()

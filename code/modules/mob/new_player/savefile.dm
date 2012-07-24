@@ -7,6 +7,15 @@ datum/preferences/proc/savefile_path(mob/user)
 	else
 		return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences[user.client.activeslot].sav"
 
+datum/preferences/proc/savefile_saveslot(mob/user,var/slot)//Mirrors default slot across each save
+	if(!user.client)
+		return null
+	else
+		for(var/i = 1; i <= MAX_SAVE_SLOTS; i += 1)
+			var/savefile/F = new /savefile("data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences[i].sav")
+			F["default_slot"] << slot
+	return 1
+
 datum/preferences/proc/savefile_save(mob/user)
 	if (IsGuestKey(user.key))
 		return 0
@@ -72,6 +81,8 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["OOC_Notes"] << src.metadata
 
 	F["sound_adminhelp"] << src.sound_adminhelp
+	F["default_slot"] << src.default_slot
+	F["slotname"] << src.slot_name
 
 	return 1
 
@@ -163,6 +174,10 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["OOC_Notes"] >> src.metadata
 
 	F["sound_adminhelp"] >> src.sound_adminhelp
+	F["default_slot"] >> src.default_slot
+	if(isnull(default_slot))
+		default_slot = 1
+	F["slotname"] >> src.slot_name
 
 	if(isnull(metadata))
 		metadata = ""

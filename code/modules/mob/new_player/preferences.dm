@@ -105,12 +105,14 @@ datum/preferences
 
 		// Want randomjob if preferences already filled - Donkie
 	var/userandomjob = 1 // Defaults to 1 for less assistants!
+	var/default_slot = 1//Holder so it doesn't default to slot 1, rather the last one used
+	var/slot_name = ""
 
 		// OOC Metadata:
 	var/metadata = ""
 
 	var/sound_adminhelp = 0
-	var/last_slot = 1//Holder so it doesn't default to slot 1, rather the last one used
+
 
 
 	New()
@@ -129,17 +131,32 @@ datum/preferences
 
 		if(!IsGuestKey(user.key))
 			var/list/saves = list()
+			var/n = null
 			for(var/i = 1; i <= MAX_SAVE_SLOTS; i += 1)
-				saves += "<a href=\"byond://?src=\ref[user];preferences=1;changeslot=[i]\">Save Slot [i]</a>"
+				var/savefile/F = new /savefile("data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences[i].sav")
+				F["slotname"] >> n
+				if((n == "") || !n)
+					saves += "<a href=\"byond://?src=\ref[user];preferences=1;changeslot=[i]\">Save Slot [i]</a>"
+				else
+					saves += "<a href=\"byond://?src=\ref[user];preferences=1;changeslot=[i]\">[n]</a>"
 
 			for(var/i = 1; i <= MAX_SAVE_SLOTS; i += 1)
 				if(i == user.client.activeslot)
-					dat += "Save Slot [i]"
+					if((slot_name == "") || (!slot_name))
+						dat += "Save Slot [i]"
+					else
+						dat += "[slot_name]"
 				else
 					dat += "[saves[i]]"
+				if(i == default_slot)
+					dat += "(D)"
+				else
+					dat += "<a href=\"byond://?src=\ref[user];preferences=1;defaultslot=[i]\">(D)</a>"
 
 				if(i != MAX_SAVE_SLOTS)
 					dat += " / "
+			dat += "<br>"
+			dat += "<a href=\"byond://?src=\ref[user];preferences=1;slotname=input\">*</a>"
 
 		else
 			dat += "Please create an account to save your preferences."
@@ -671,9 +688,18 @@ datum/preferences
 			else if(link_tags["changeslot"])
 				savefile_save(user)
 				user.client.activeslot = min(max(text2num(link_tags["changeslot"]), 1), MAX_SAVE_SLOTS)
-				last_slot = user.client.activeslot//Changes the last used slot to be the temp default one
 				savefile_load(user)
 
+			else if(link_tags["defaultslot"])
+				default_slot = min(max(text2num(link_tags["defaultslot"]), 1), MAX_SAVE_SLOTS)//Changes the last used slot to be the temp default one
+				savefile_saveslot(user,default_slot)//Mirrors choice across all saves
+
+			else if(link_tags["slotname"])
+				var/sname = ""
+				switch(link_tags["slotname"])
+					if("input")
+						sname = reject_bad_slotname( (input(user, "Please select a name:", "Save Slot Name")  as text|null), 16 )
+						slot_name = sname
 
 		if(link_tags["reset_all"])
 			gender = MALE

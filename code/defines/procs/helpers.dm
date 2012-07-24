@@ -193,6 +193,43 @@
 	if(number_of_alphanumeric < 2)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
 	return t_out
 
+/proc/reject_bad_slotname(var/t_in, var/max_length)//Forgive meeeeee
+	if(length(t_in) > max_length)	return			//name too long
+	var/letter = 0//Making sure there is at least 1 letter or symbol in there, so it doesn't become unclickable
+	var/t_out = ""
+
+	for(var/i=1, i<=length(t_in), i++)
+		var/ascii_char = text2ascii(t_in,i)
+		switch(ascii_char)
+			if(65 to 90)			//Uppercase Letters
+				t_out += ascii2text(ascii_char)
+				letter = 1
+
+			if(97 to 122)			//Lowercase Letters
+				t_out += ascii2text(ascii_char)
+				letter = 1
+
+			if(48 to 57)			//Numbers
+				t_out += ascii2text(ascii_char)
+				letter = 1
+
+			if(39,45,46)			//Common name punctuation
+				t_out += ascii2text(ascii_char)
+				letter = 1
+
+			if(126,124,64,58,35,36,37,38,42,43)			//Other crap that's harmless
+				t_out += ascii2text(ascii_char)
+				letter = 1
+
+			if(32)					//Space
+				t_out += ascii2text(ascii_char)
+			else
+				return ""
+	if(!letter)
+		return ""//Default he
+	else
+		return t_out
+
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
 	var/list/strip_chars = list("<",">")
 	t = copytext(t,1,limit)
