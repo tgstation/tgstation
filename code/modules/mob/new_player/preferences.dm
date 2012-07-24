@@ -698,8 +698,10 @@ datum/preferences
 				var/sname = ""
 				switch(link_tags["slotname"])
 					if("input")
-						sname = reject_bad_slotname( (input(user, "Please select a name:", "Save Slot Name")  as text|null), 16 )
-						slot_name = sname
+						sname = input(user, "Please select a name:", "Save Slot Name")  as text|null
+						if(!(ckey(sname)))//Checks to make sure there is one letter
+							sname = null
+						slot_name = strip_html_simple(sname,16)
 
 		if(link_tags["reset_all"])
 			gender = MALE
