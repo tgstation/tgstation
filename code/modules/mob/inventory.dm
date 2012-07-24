@@ -158,6 +158,9 @@
 	else if (W == handcuffed)
 		handcuffed = null
 		update_inv_handcuffed()
+	else if (W == legcuffed)
+		legcuffed = null
+		update_inv_legcuffed()
 	else if (W == back)
 		back = null
 		update_inv_back()

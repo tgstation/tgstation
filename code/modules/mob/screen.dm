@@ -318,6 +318,11 @@
 					usr.hud_used.action_intent.icon_state = "help"
 
 		if("mov_intent")
+			if(usr.legcuffed)
+				usr << "\red You are legcuffed! You cannot run until you get your cuffs removed!"
+				usr.m_intent = "walk"	//Just incase
+				usr.hud_used.move_intent.icon_state = "walking"
+				return
 			switch(usr.m_intent)
 				if("run")
 					usr.m_intent = "walk"
@@ -703,3 +708,40 @@
 						CM.handcuffed.loc = usr.loc
 						CM.handcuffed = null
 						CM.update_inv_handcuffed()
+		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
+			CM.next_move = world.time + 100
+			CM.last_special = world.time + 100
+			if(isalienadult(CM) || (HULK in usr.mutations) || (SUPRSTR in CM.augmentations))//Don't want to do a lot of logic gating here.
+				usr << "\green You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)"
+				for(var/mob/O in viewers(CM))
+					O.show_message(text("\red <B>[] is trying to break the legcuffs!</B>", CM), 1)
+				spawn(0)
+					if(do_after(CM, 50))
+						if(!CM.legcuffed || CM.buckled)
+							return
+						for(var/mob/O in viewers(CM))
+							O.show_message(text("\red <B>[] manages to break the legcuffs!</B>", CM), 1)
+						CM << "\green You successfully break your legcuffs."
+						del(CM.legcuffed)
+						CM.legcuffed = null
+						CM.update_inv_legcuffed()
+			else
+				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
+				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
+				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
+				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
+					breakouttime = HC.breakouttime
+					displaytime = breakouttime / 600 //Minutes
+				CM << "\red You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)"
+				for(var/mob/O in viewers(CM))
+					O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
+				spawn(0)
+					if(do_after(CM, breakouttime))
+						if(!CM.legcuffed || CM.buckled)
+							return // time leniency for lag which also might make this whole thing pointless but the server
+						for(var/mob/O in viewers(CM))//                                         lags so hard that 40s isn't lenient enough - Quarxink
+							O.show_message("\red <B>[CM] manages to remove the legcuffs!</B>", 1)
+						CM << "\blue You successfully remove \the [CM.legcuffed]."
+						CM.legcuffed.loc = usr.loc
+						CM.legcuffed = null
+						CM.update_inv_legcuffed()

@@ -749,6 +749,10 @@ var/list/sacrificed = list()
 					cultist.handcuffed.loc = cultist.loc
 					cultist.handcuffed = null
 					cultist.update_inv_handcuffed()
+				if (cultist.legcuffed)
+					cultist.legcuffed.loc = cultist.loc
+					cultist.legcuffed = null
+					cultist.update_inv_legcuffed()
 				if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
 					cultist.u_equip(cultist.wear_mask)
 				if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)

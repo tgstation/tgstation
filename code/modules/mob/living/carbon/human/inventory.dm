@@ -18,6 +18,7 @@
 	var/const/slot_r_store		= 16
 	var/const/slot_s_store		= 17
 	var/const/slot_in_backpack	= 18
+	var/const/slot_legcuffed	= 19
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, del_on_fail = 1)
 	for (var/slot in slots)
@@ -174,6 +175,11 @@
 			if(!src.handcuffed)
 				src.handcuffed = W
 				update_inv_handcuffed(0)
+				equipped = 1
+		if(slot_legcuffed)
+			if(!src.legcuffed)
+				src.legcuffed = W
+				update_inv_legcuffed(0)
 				equipped = 1
 		if(slot_l_hand)
 			if(!src.l_hand)
@@ -360,6 +366,9 @@
 	else if (W == handcuffed)
 		handcuffed = null
 		update_inv_handcuffed(0)
+	else if (W == legcuffed)
+		legcuffed = null
+		update_inv_legcuffed(0)
 	else if (W == r_hand)
 		r_hand = null
 		update_inv_r_hand(0)
@@ -502,6 +511,8 @@
 				message = text("\red <B>[] is trying to take off \a [] from []'s back!</B>", source, target.back, target)
 			if("handcuff")
 				message = text("\red <B>[] is trying to unhandcuff []!</B>", source, target)
+			if("legcuff")
+				message = text("\red <B>[] is trying to unlegcuff []!</B>", source, target)
 			if("uniform")
 				if(istype(target.w_uniform, /obj/item/clothing)&&!target.w_uniform:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.w_uniform, target)
@@ -926,6 +937,23 @@ It can still be worn/put on as normal.
 					target.handcuffed = item
 					item.loc = target
 					target.update_inv_handcuffed(0)
+		if("legcuff")
+			if (target.legcuffed)
+				var/obj/item/W = target.legcuffed
+				target.u_equip(W)
+				if (target.client)
+					target.client.screen -= W
+				if (W)
+					W.loc = target.loc
+					W.dropped(target)
+					W.layer = initial(W.layer)
+					W.add_fingerprint(source)
+			else
+				if (istype(item, /obj/item/weapon/legcuffs))
+					source.drop_item()
+					target.legcuffed = item
+					item.loc = target
+					target.update_inv_legcuffed(0)
 		if("CPR")
 			if (target.cpr_time >= world.time + 30)
 				//SN src = null

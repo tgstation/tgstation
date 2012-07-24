@@ -113,9 +113,10 @@ Please contact me on #coderbus IRC. ~Carn x
 #define FACEMASK_LAYER			15
 #define HEAD_LAYER				16
 #define HANDCUFF_LAYER			17
-#define L_HAND_LAYER			18
-#define R_HAND_LAYER			19
-#define TOTAL_LAYERS			19
+#define LEGCUFF_LAYER			18
+#define L_HAND_LAYER			19
+#define R_HAND_LAYER			20
+#define TOTAL_LAYERS			20
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -340,6 +341,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_inv_r_hand(0)
 	update_inv_l_hand(0)
 	update_inv_handcuffed(0)
+	update_inv_legcuffed(0)
 	update_inv_pockets(0)
 	update_icons()
 	//Hud Stuff
@@ -590,6 +592,20 @@ Please contact me on #coderbus IRC. ~Carn x
 	else
 		overlays_lying[HANDCUFF_LAYER]		= null
 		overlays_standing[HANDCUFF_LAYER]	= null
+	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/update_inv_legcuffed(var/update_icons=1)
+	if(legcuffed)
+		overlays_lying[LEGCUFF_LAYER]		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "legcuff2")
+		overlays_standing[LEGCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "legcuff1")
+		if(src.m_intent != "walk")
+			src.m_intent = "walk"
+			if(src.hud_used && src.hud_used.move_intent)
+				src.hud_used.move_intent.icon_state = "walking"
+
+	else
+		overlays_lying[LEGCUFF_LAYER]		= null
+		overlays_standing[LEGCUFF_LAYER]	= null
 	if(update_icons)   update_icons()
 
 
