@@ -205,7 +205,8 @@
 					usr << "The title is invalid."
 					return
 				else
-					src.author = sanitize(newtitle)
+					src.name = reject_bad_text(newtitle)
+					src.title = reject_bad_text(newtitle)
 			if("Contents")
 				var/content = strip_html(input("Write your book's contents (HTML NOT allowed):"),8192) as message|null
 				if(!content)
