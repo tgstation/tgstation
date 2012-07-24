@@ -6,6 +6,8 @@
 #define AIRLOCK_STATE_OUTOPEN		2
 #define AIRLOCK_STATE_BOTHOPEN		3
 
+//todo: add an internal and external sensor, so that the pressure is actually equalised, rather than just toggled between 1atm and 0atm
+
 datum/computer/file/embedded_program/airlock_controller
 	var/id_tag
 	var/exterior_door_tag
