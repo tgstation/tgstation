@@ -601,6 +601,11 @@
 				loc_temp = 2.7
 			else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				loc_temp = loc:air_contents.temperature
+			else if(istype(get_turf(src), /turf/simulated))
+				var/turf/simulated/T = get_turf(src)
+				var/zone/zone = T.zone
+				if(zone && zone.air)
+					loc_temp = zone.air.temperature
 			else
 				loc_temp = environment.temperature
 
