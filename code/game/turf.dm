@@ -655,7 +655,7 @@
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user as mob)
 	if ((HULK in user.mutations) || (SUPRSTR in user.augmentations))
-		if (prob(5))
+		if (prob(10))
 			usr << text("\blue You smash through the wall.")
 			dismantle_wall(1)
 			return

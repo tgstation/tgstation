@@ -231,7 +231,7 @@
 			D.affected_mob = H
 			H.viruses += D
 			break
-	spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
+	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 		world << sound('outbreak7.ogg')
 
@@ -282,8 +282,6 @@
 
 	sleep(100)
 */
-	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
-	world << sound('radiation.ogg')
 	for(var/mob/living/carbon/human/H in world)
 		if(istype(H,/mob/living/carbon/human))
 			H.apply_effect((rand(15,75)),IRRADIATE,0)
@@ -298,8 +296,9 @@
 					domutcheck(H,null,1)
 	for(var/mob/living/carbon/monkey/M in world)
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
-	sleep(300)
-	command_alert("High levels of radiation has ceased. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
+	sleep(100)
+	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
+	world << sound('radiation.ogg')
 
 
 
@@ -354,7 +353,7 @@
 			else
 				new /obj/effect/critter/spesscarp/elite(C.loc)
 	//sleep(100)
-	spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
+	spawn(rand(300, 600)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 		world << sound('commandreport.ogg')
 
