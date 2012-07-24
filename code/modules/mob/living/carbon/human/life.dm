@@ -601,7 +601,6 @@
 				loc_temp = 2.7
 			else
 				loc_temp = environment.temperature
-			world << loc_temp
 
 			var/thermal_protection = get_thermal_protection()
 
