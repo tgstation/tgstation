@@ -69,6 +69,7 @@
 	name = "Booze-O-Mat"
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	icon_state = "boozeomat"        //////////////18 drink entities below, plus the glasses, in case someone wants to edit the number of bottles
+	icon_deny = "boozeomat-deny"
 	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/bottle/gin;/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey;/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla;/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka;/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth;/obj/item/weapon/reagent_containers/food/drinks/bottle/rum;/obj/item/weapon/reagent_containers/food/drinks/bottle/wine;/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac;/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua;/obj/item/weapon/reagent_containers/food/drinks/beer;/obj/item/weapon/reagent_containers/food/drinks/ale;/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/cream;/obj/item/weapon/reagent_containers/food/drinks/tonic;/obj/item/weapon/reagent_containers/food/drinks/cola;/obj/item/weapon/reagent_containers/food/drinks/sodawater;/obj/item/weapon/reagent_containers/food/drinks/drinkingglass;/obj/item/weapon/reagent_containers/food/drinks/ice"
 	product_amounts = "5;5;5;5;5;5;5;5;5;6;6;4;4;4;4;8;8;15;30;9"
 	vend_delay = 15
@@ -76,6 +77,7 @@
 	product_hideamt = "10"
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
+	req_access_txt = "25"
 
 /obj/machinery/vending/assist
 	product_amounts = "5;3;4;1;4"
@@ -243,7 +245,7 @@
 	product_hideamt = "20"
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 
-/obj/machinery/vending/tool//Who did this and why is it here? I don't even
+/obj/machinery/vending/tool
 	name = "YouTool"
 	desc = "Tools for tools."
 	icon_state = "tool"
@@ -251,21 +253,21 @@
 	req_access_txt = "12" //Maintenance access
 	product_paths = "/obj/item/weapon/cable_coil/random;/obj/item/weapon/crowbar;/obj/item/weapon/weldingtool;/obj/item/weapon/wirecutters;/obj/item/weapon/wrench;/obj/item/device/analyzer;/obj/item/device/t_scanner"
 	product_amounts = "10;5;3;5;5;5;5"
-	product_hidden = "/obj/item/weapon/weldingtool/largetank;/obj/item/device/multitool"
+	product_hidden = "/obj/item/weapon/weldingtool/hugeetank;/obj/item/clothing/gloves/fyellow"
 	product_hideamt = "2;2"
 	product_coin = "/obj/item/clothing/gloves/yellow"
 	product_coin_amt = "1"
 
-/obj/machinery/vending/engivend//Source of tools and what have you for Engineering (Needed on account of the public auto-lathe being removed) -Sieve
+/obj/machinery/vending/engivend
 	name = "Engi-Vend"
 	desc = "Spare tool vending. What? Did you expect some witty description?"
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "10" //Engineering access
-	product_paths = "/obj/item/weapon/cable_coil/random;/obj/item/clothing/glasses/meson;/obj/item/weapon/crowbar;/obj/item/weapon/weldingtool;/obj/item/weapon/wirecutters;/obj/item/weapon/wrench;/obj/item/device/t_scanner;/obj/item/device/multitool;/obj/item/weapon/airlock_electronics;/obj/item/weapon/module/power_control"
-	product_amounts = "5;3;5;3;5;5;5;2;3;3"
-	product_hidden = "/obj/item/weapon/weldingtool/hugetank;/obj/item/clothing/gloves/fyellow"
-	product_hideamt = "2;2"
+	product_paths = "/obj/item/clothing/glasses/meson;/obj/item/device/multitool;/obj/item/weapon/airlock_electronics;/obj/item/weapon/module/power_control;/obj/item/weapon/cell/high"
+	product_amounts = "2;4;10;10;10"
+	product_hidden = "/obj/item/weapon/cell/potato"
+	product_hideamt = "3"
 	product_coin = "/obj/item/weapon/storage/belt/utility"
 	product_coin_amt = "3"
 

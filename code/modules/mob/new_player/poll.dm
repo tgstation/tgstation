@@ -230,7 +230,12 @@
 			usr << "\red You already voted in this poll."
 			return
 
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]')")
+		var/adminrank = "Player"
+		if(usr && usr.client && usr.client.holder)
+			adminrank = usr.client.holder.rank
+
+
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (`id` ,`datetime` ,`pollid` ,`optionid` ,`ckey` ,`ip` ,'adminrank') VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]')")
 		insert_query.Execute()
 
 		usr << "\blue Vote successful."
