@@ -1019,9 +1019,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"asteroid","asteroid_dug",
 				"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
 				"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
-				"burning","oldburning","light-on-r","light-on-y","light-on-g","light-on-b")
+				"burning","oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken")
 
 var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug")
+var/list/wood_icons = list("wood","wood-broken")
 
 /turf/simulated/floor
 
@@ -1038,48 +1039,53 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	var/burnt = 0
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
 
-	airless
-		icon_state = "floor"
-		name = "airless floor"
-		oxygen = 0.01
-		nitrogen = 0.01
-		temperature = TCMB
+/turf/simulated/floor/airless
+	icon_state = "floor"
+	name = "airless floor"
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
 
-		New()
-			..()
-			name = "floor"
+	New()
+		..()
+		name = "floor"
 
-	light
-		name = "Light floor"
-		luminosity = 5
-		icon_state = "light_on"
-		floor_tile = new/obj/item/stack/tile/light
+/turf/simulated/floor/light
+	name = "Light floor"
+	luminosity = 5
+	icon_state = "light_on"
+	floor_tile = new/obj/item/stack/tile/light
 
-		New()
-			floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
-			var/n = name //just in case commands rename it in the ..() call
-			..()
-			spawn(4)
-				if(src)
-					update_icon()
-					name = n
+	New()
+		floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
+		var/n = name //just in case commands rename it in the ..() call
+		..()
+		spawn(4)
+			if(src)
+				update_icon()
+				name = n
 
-	grass
-		name = "Grass patch"
-		icon_state = "grass1"
-		floor_tile = new/obj/item/stack/tile/grass
+/turf/simulated/floor/grass
+	name = "Grass patch"
+	icon_state = "grass1"
+	floor_tile = new/obj/item/stack/tile/grass
 
-		New()
-			floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
-			icon_state = "grass[pick("1","2","3","4")]"
-			..()
-			spawn(4)
-				if(src)
-					update_icon()
-					for(var/direction in cardinal)
-						if(istype(get_step(src,direction),/turf/simulated/floor))
-							var/turf/simulated/floor/FF = get_step(src,direction)
-							FF.update_icon() //so siding get updated properly
+	New()
+		floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
+		icon_state = "grass[pick("1","2","3","4")]"
+		..()
+		spawn(4)
+			if(src)
+				update_icon()
+				for(var/direction in cardinal)
+					if(istype(get_step(src,direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,direction)
+						FF.update_icon() //so siding get updated properly
+
+/turf/simulated/floor/wood
+	name = "floor"
+	icon_state = "wood"
+	floor_tile = new/obj/item/stack/tile/wood
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
@@ -1222,6 +1228,11 @@ turf/simulated/floor/proc/update_icon()
 		if(!broken && !burnt)
 			if(!(icon_state in list("grass1","grass2","grass3","grass4")))
 				icon_state = "grass[pick("1","2","3","4")]"
+	if(is_wood_floor())
+		if(!broken && !burnt)
+			if( !(icon_state in wood_icons) )
+				icon_state = "wood"
+				//world << "[icon_state]'s got [icon_state]"
 	spawn(1)
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
@@ -1311,6 +1322,12 @@ turf/simulated/floor/proc/update_icon()
 	else
 		return 0
 
+/turf/simulated/floor/is_wood_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/wood))
+		return 1
+	else
+		return 0
+
 /turf/simulated/floor/is_plating()
 	if(!floor_tile)
 		return 1
@@ -1324,11 +1341,14 @@ turf/simulated/floor/proc/update_icon()
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
 		broken = 1
-	else if(is_plasteel_floor())
+	else if(is_light_floor())
 		src.icon_state = "light_broken"
 		broken = 1
 	else if(is_plating())
 		src.icon_state = "platingdmg[pick(1,2,3)]"
+		broken = 1
+	else if(is_wood_floor())
+		src.icon_state = "wood-broken"
 		broken = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
@@ -1346,6 +1366,9 @@ turf/simulated/floor/proc/update_icon()
 		burnt = 1
 	else if(is_plating())
 		src.icon_state = "panelscorched"
+		burnt = 1
+	else if(is_wood_floor())
+		src.icon_state = "wood-broken"
 		burnt = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
@@ -1438,6 +1461,24 @@ turf/simulated/floor/proc/update_icon()
 	update_icon()
 	levelupdate()
 
+//This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
+//If no argument is given a new one will be made.
+/turf/simulated/floor/proc/make_wood_floor(var/obj/item/stack/tile/wood/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		if(istype(T,/obj/item/stack/tile/wood))
+			floor_tile = T
+			update_icon()
+			levelupdate()
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/wood
+
+	update_icon()
+	levelupdate()
+
 /turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
 
 	if(!C || !user)
@@ -1459,11 +1500,27 @@ turf/simulated/floor/proc/update_icon()
 		if(broken || burnt)
 			user << "\red You remove the broken plating."
 		else
-			user << "\red You remove the [floor_tile.name]."
-			new floor_tile.type(src)
+			if(is_wood_floor())
+				user << "\red You forcefully pry off the planks, destroying them in the process."
+			else
+				user << "\red You remove the [floor_tile.name]."
+				new floor_tile.type(src)
 
 		make_plating()
 		playsound(src.loc, 'Crowbar.ogg', 80, 1)
+
+		return
+
+	if(istype(C, /obj/item/weapon/screwdriver) && is_wood_floor())
+		if(broken || burnt)
+			return
+		else
+			if(is_wood_floor())
+				user << "\red You unscrew the planks."
+				new floor_tile.type(src)
+
+		make_plating()
+		playsound(src.loc, 'Screwdriver.ogg', 80, 1)
 
 		return
 

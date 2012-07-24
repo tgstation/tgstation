@@ -33,7 +33,9 @@
 		return 0
 	proc/is_grass_floor()
 		return 0
-	proc/return_siding_icon_state()
+	proc/is_wood_floor()
+		return 0
+	proc/return_siding_icon_state()		//used for grass floors, which have siding.
 		return 0
 
 /turf/space
