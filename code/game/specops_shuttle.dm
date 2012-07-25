@@ -80,7 +80,7 @@ var/specops_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
-		M << "\red You have arrived at Central Command. Operation has ended!"
+		M << "\red You have returned to Central Command."
 
 	specops_shuttle_at_station = 0
 
@@ -223,7 +223,7 @@ var/specops_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
-		M << "\red You have arrived to [station_name]. Commence operation!"
+		M << "\red You have arrived to [station_name]."
 
 	for(var/obj/machinery/computer/specops_shuttle/S in world)
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY

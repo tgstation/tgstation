@@ -68,8 +68,8 @@ proc/move_research_shuttle()
 
 /obj/machinery/computer/research_shuttle/attack_hand(user as mob)
 	src.add_fingerprint(usr)
-	var/dat
-	dat = text("<center>research shuttle:<br> <b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>")
+	var/dat = "<center>Research shuttle: <b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
+
 	user << browse("[dat]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/research_shuttle/Topic(href, href_list)
