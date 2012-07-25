@@ -107,18 +107,20 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 		if(!iscultist(usr))
 			usr << "A strange collection of symbols drawn in blood."
+			return
+			/* Explosions... really?
 			if(desc && !usr.stat)
 				usr << "It reads: <i>[desc]</i>."
 				sleep(30)
 				explosion(src.loc, 0, 2, 5, 5)
 				if(src)
 					del(src)
-		return
-
+			*/
 		if(!desc)
 			usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
 		else
 			usr << "Explosive Runes inscription in blood. It reads: <i>[desc]</i>."
+
 		return
 
 

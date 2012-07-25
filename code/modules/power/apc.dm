@@ -446,8 +446,8 @@
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/attack_hand(mob/user)
-	if (!can_use(user))
-		return
+//	if (!can_use(user)) This already gets called in interact() and in topic()
+//		return
 	src.add_fingerprint(user)
 	if(opened && (!istype(user, /mob/living/silicon)))
 		if(cell)
@@ -502,21 +502,7 @@
 	if(!user)
 		return
 
-	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
-			user.machine = null
-			user << browse(null, "window=apc")
-			return
-		else if (istype(user, /mob/living/silicon) && src.aidisabled && !src.malfhack)
-			user << "AI control for this APC interface has been disabled."
-			user << browse(null, "window=apc")
-			return
-		else if (src.malfai)
-			if ((src.malfai != user && src.malfai != user:parent) && !islinked(user, malfai))
-				user << "AI control for this APC interface has been disabled."
-				user << browse(null, "window=apc")
-				return
-	if(wiresexposed && (!istype(user, /mob/living/silicon)))
+	if(wiresexposed /*&& (!istype(user, /mob/living/silicon))*/) //Commented out the typecheck to allow engiborgs to repair damaged apcs.
 		var/t1 = text("<html><head><title>[area.name] APC wires</title></head><body><B>Access Panel</B><br>\n")
 
 		for(var/wiredesc in apcwirelist)
@@ -535,6 +521,23 @@
 
 	user.machine = src
 	var/t = "<html><head><title>[area.name] APC</title></head><body><TT><B>Area Power Controller</B> ([area.name])<HR>"
+
+	//This goes after the wire stuff. They should be able to fix a physical problem when a wire is cut
+	if ( (get_dist(src, user) > 1 ))
+		if (!istype(user, /mob/living/silicon))
+			user.machine = null
+			user << browse(null, "window=apc")
+			return
+		else if (istype(user, /mob/living/silicon) && src.aidisabled && !src.malfhack)
+			user << "AI control for this APC interface has been disabled."
+			user << browse(null, "window=apc")
+			return
+		else if (src.malfai)
+			if ((src.malfai != user && src.malfai != user:parent) && !islinked(user, malfai))
+				user << "AI control for this APC interface has been disabled."
+				user << browse(null, "window=apc")
+				return
+
 
 	if(locked && (!istype(user, /mob/living/silicon)))
 		t += "<I>(Swipe ID card to unlock inteface.)</I><BR>"
@@ -738,7 +741,7 @@
 					src.aidisabled = 0
 				src.updateDialog()
 
-/obj/machinery/power/apc/proc/can_use(mob/user as mob) //used by attack_hand() and Topic()
+/obj/machinery/power/apc/proc/can_use(mob/user as mob, var/loud = 0) //used by attack_hand() and Topic()
 	if (user.stat)
 		user << "\red You must be conscious to use this [src]!"
 		return 0
@@ -766,15 +769,17 @@
 				(istype(robot) && (robot in malfai.connected_robots))    \
 			)                                                            \
 		)
-			user << "\red \The [src] have AI control disabled!"
-			user << browse(null, "window=apc")
-			user.machine = null
+			if(!loud)
+				user << "\red \The [src] have AI control disabled!"
+				user << browse(null, "window=apc")
+				user.machine = null
 			return 0
 	else
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			user << browse(null, "window=apc")
 			user.machine = null
 			return 0
+
 	var/mob/living/carbon/human/H = user
 	if (istype(H))
 		if(H.getBrainLoss() >= 60)
@@ -787,8 +792,9 @@
 	return 1
 
 /obj/machinery/power/apc/Topic(href, href_list, var/usingUI = 1)
-	if (!can_use(usr))
-		return
+	if(!(isrobot(usr) && (href_list["apcwires"] || href_list["pulse"])))
+		if(!can_use(usr, 1))
+			return
 	src.add_fingerprint(usr)
 	usr.machine = src
 	if (href_list["apcwires"])
