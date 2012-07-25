@@ -53,6 +53,7 @@
 
 	var/max_uses = 20
 	var/uses = 0
+	var/inuse = 0
 	var/emagged = 0
 	var/failmsg = ""
 	// How much to increase per each glass?
@@ -122,12 +123,15 @@
 
 /obj/item/device/lightreplacer/proc/Use(var/mob/user)
 
+	if(inuse) return
 	playsound(src.loc, 'click.ogg', 50, 1)
 	var/pass = 0
+	inuse = 1
 	if(do_after(user, 30))
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		AddUses(-1)
 		pass = 1
+	inuse = 0
 	return pass
 
 // Negative numbers will subtract
@@ -146,8 +150,10 @@
 		if(CanUse(U))
 			if(!Use(U)) return
 			U << "<span class='notice'>You replace the [target.fitting] with the [src].</span>"
+
 			if(target.status != LIGHT_EMPTY)
-				var/obj/item/weapon/light/L1 = new target.light_type(src.loc)
+
+				var/obj/item/weapon/light/L1 = new target.light_type(target.loc)
 				L1.status = target.status
 				L1.rigged = target.rigged
 				L1.brightness = target.brightness
@@ -168,7 +174,6 @@
 			target.update()
 			del(L2)
 
-			 // Leaving this here in case I get the go ahead to make emagged light replacers to insert rigged lights
 			if(target.on && target.rigged)
 				target.explode()
 			return

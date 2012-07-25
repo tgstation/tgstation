@@ -748,7 +748,8 @@
 			if((holdingitems && holdingitems.len >= limit) || beaker.reagents.total_volume >= 80) //Sanity checking so the blender doesn't overfill
 				user << "You fill the All-In-One grinder to the brim."
 				break
-		if(src.contents.len < limit && src.reagents.total_volume < 80)
+
+		if(!O.contents.len)
 			user << "You empty the plant bag into the All-In-One grinder."
 
 		src.updateUsrDialog()
