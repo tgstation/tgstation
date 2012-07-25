@@ -838,10 +838,8 @@
 	breakouttime = 300 //Deciseconds = 30s = 0.5 minute
 	var/armed = 0
 
-/obj/item/weapon/legcuffs/beartrap/verb/arm()
-	set name = "Arm"
-	set category = "Object"
-
+/obj/item/weapon/legcuffs/beartrap/attack_self()
+	..()
 	if(ishuman(usr) && !usr.stat && !usr.restrained())
 		armed = !armed
 		usr << "\blue \the [src] is now [(armed)?"armed":"disarmed"]"
@@ -857,6 +855,7 @@
 					src.loc = usr
 					usr.update_inv_legcuffed()
 					H << "\red <B>You step on \the [src]!</B>"
+					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 					for(var/mob/O in viewers(H, null))
 						if(O == H)
 							continue
