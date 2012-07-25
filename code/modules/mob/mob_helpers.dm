@@ -187,7 +187,7 @@ proc/isorgan(A)
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 
-proc/Gibberish(t, p)
+proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
 	for(var/i = 1, i <= length(t), i++)

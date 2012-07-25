@@ -3,6 +3,8 @@
 /mob/living/carbon/brain
 	var/obj/item/container = null
 	var/timeofhostdeath = 0
+	var/emp_damage = 0//Handles a type of MMI damage
+	var/alert = null
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(1000)

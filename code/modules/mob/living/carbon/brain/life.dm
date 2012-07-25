@@ -40,8 +40,10 @@
 		if (radiation)
 			if (radiation > 100)
 				radiation = 100
-				Weaken(10)
-				src << "\red You feel weak."
+				if(!container)//If it's not in an MMI
+					src << "\red You feel weak."
+				else//Fluff-wise, since the brain can't detect anything itself, the MMI handles thing like that
+					src << "\red STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED."
 
 			switch(radiation)
 				if(1 to 49)
@@ -55,19 +57,15 @@
 					adjustToxLoss(1)
 					if(prob(5))
 						radiation -= 5
-						Weaken(3)
-						src << "\red You feel weak."
-//							emote("collapse")
+						if(!container)
+							src << "\red You feel weak."
+						else
+							src << "\red STATUS: DANGEROUS LEVELS OF RADIATION DETECTED."
 					updatehealth()
 
 				if(75 to 100)
 					radiation -= 3
 					adjustToxLoss(3)
-					if(prob(1))
-						src << "\red You mutate!"
-						randmutb(src)
-						domutcheck(src,null)
-						emote("gasp")
 					updatehealth()
 
 
@@ -115,13 +113,6 @@
 
 		if(reagents) reagents.metabolize(src)
 
-		if (drowsyness)
-			drowsyness--
-			eye_blurry = max(2, eye_blurry)
-			if (prob(5))
-				sleeping += 1
-				Paralyse(5)
-
 		confused = max(0, confused - 1)
 		// decrement dizziness counter, clamped to 0
 		if(resting)
@@ -147,47 +138,58 @@
 				silent = 0
 				return 1
 
-			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 25) || (config.health_threshold_crit > health) )
-				if( health <= 20 && prob(1) )
-					spawn(0)
-						emote("gasp")
-				if(!reagents.has_reagent("inaprovaline"))
-					adjustOxyLoss(1)
-				Paralyse(3)
-
-			if(paralysis)
-				AdjustParalysis(-1)
-				blinded = 1
-				stat = UNCONSCIOUS
-			else if(sleeping)
-				sleeping = max(sleeping-1, 0)
-				blinded = 1
-				stat = UNCONSCIOUS
-				if( prob(10) && health )
-					spawn(0)
-						emote("snore")
-			//CONSCIOUS
-			else
-				stat = CONSCIOUS
-
-
-			//Eyes
-			if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
-				blinded = 1
-			else if(eye_blind)			//blindness, heals slowly over time
-				eye_blind = max(eye_blind-1,0)
-				blinded = 1
-			else if(eye_blurry)			//blurry eyes heal slowly
-				eye_blurry = max(eye_blurry-1, 0)
-
-			//Ears
-			if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
-				ear_deaf = max(ear_deaf, 1)
-			else if(ear_deaf)			//deafness, heals slowly over time
-				ear_deaf = max(ear_deaf-1, 0)
-			else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
-				ear_damage = max(ear_damage-0.05, 0)
+			//Handling EMP effect in the Life(), it's made VERY simply, and has some additional effects handled elsewhere
+			if(emp_damage)			//This is pretty much a damage type only used by MMIs, dished out by the emp_act
+				if(!(container && istype(container, /obj/item/device/mmi)))
+					emp_damage = 0
+				else
+					emp_damage = round(emp_damage,1)//Let's have some nice numbers to work with
+				switch(emp_damage)
+					if(31 to INFINITY)
+						emp_damage = 30//Let's not overdo it
+					if(21 to 30)//High level of EMP damage, unable to see, hear, or speak
+						eye_blind = 1
+						blinded = 1
+						ear_deaf = 1
+						silent = 1
+						if(!alert)//Sounds an alarm, but only once per 'level'
+							emote("alarm")
+							src << "\red Major electrical distruption detected: System rebooting."
+							alert = 1
+						if(prob(75))
+							emp_damage -= 1
+					if(20)
+						alert = 0
+						blinded = 0
+						eye_blind = 0
+						ear_deaf = 0
+						silent = 0
+						emp_damage -= 1
+					if(11 to 19)//Moderate level of EMP damage, resulting in nearsightedness and ear damage
+						eye_blurry = 1
+						ear_damage = 1
+						if(!alert)
+							emote("alert")
+							src << "\red Primary systems are now online."
+							alert = 1
+						if(prob(50))
+							emp_damage -= 1
+					if(10)
+						alert = 0
+						eye_blurry = 0
+						ear_damage = 0
+						emp_damage -= 1
+					if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
+						if(!alert)
+							emote("notice")
+							src << "\red System reboot nearly complete."
+							alert = 1
+						if(prob(25))
+							emp_damage -= 1
+					if(1)
+						alert = 0
+						src << "\red All systems restored."
+						emp_damage -= 1
 
 			//Other
 			if(stunned)
@@ -281,3 +283,16 @@
 			for(var/datum/disease/D in viruses)
 				D.cure()
 		return
+
+/*/mob/living/carbon/brain/emp_act(severity)
+	if(!(container && istype(container, /obj/item/device/mmi)))
+		return
+	else
+		switch(severity)
+			if(1)
+				emp_damage += rand(20,30)
+			if(2)
+				emp_damage += rand(10,20)
+			if(3)
+				emp_damage += rand(0,10)
+	..()*/

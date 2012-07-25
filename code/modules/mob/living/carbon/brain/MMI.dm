@@ -126,3 +126,16 @@
 
 			radio.listening = radio.listening==1 ? 0 : 1
 			brainmob << "\blue Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast."
+
+/obj/item/device/mmi/emp_act(severity)
+	if(!brainmob)
+		return
+	else
+		switch(severity)
+			if(1)
+				brainmob.emp_damage += rand(20,30)
+			if(2)
+				brainmob.emp_damage += rand(10,20)
+			if(3)
+				brainmob.emp_damage += rand(0,10)
+	..()

@@ -61,7 +61,7 @@
 	name = "engineering hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "rig-engineering"
-	item_state = "rig_suit"
+	item_state = "eng_hardsuit"
 	protective_temperature = 5000 //For not dying near a fire, but still not being great in a full inferno
 	slowdown = 2
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 60)
@@ -70,15 +70,18 @@
 /obj/item/clothing/suit/space/rig/mining
 	icon_state = "rig-mining"
 	name = "mining hardsuit"
+	item_state = "mining_hardsuit"
 
 /obj/item/clothing/suit/space/rig/elite
 	icon_state = "rig-white"
 	name = "advanced hardsuit"
+	item_state = "ce_hardsuit"
 	protective_temperature = 10000
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndi"
 	name = "blood-red hardsuit"
+	item_state = "syndie_hardsuit"
 	slowdown = 1
 	w_class = 3
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 60)

@@ -173,8 +173,87 @@
 
 
 
+/obj/item/weapon/pinpointer/nukeop//Used by nuke ops specifically so they can get their asses back to the shuttle
+	var/mode = 0  // Mode 0 locates disk, mode 1 locates the shuttle
+	var/location = null//Follow that shuttle!
+	var/obj/machinery/computer/syndicate_station/home = null
 
+	attack_self()
+		if(!active)
+			active = 1
+			if(mode == 0)
+				workdisk()
+			if(mode == 1)
+				worklocation()
+			usr << "\blue You activate the pinpointer"
+		else
+			active = 0
+			icon_state = "pinoff"
+			usr << "\blue You deactivate the pinpointer"
 
+/obj/item/weapon/pinpointer/nukeop/workdisk()
+	if(!active) return
+	if(!the_disk)
+		the_disk = locate()
+		if(!the_disk)
+			icon_state = "pinonnull"
+			return
+	if(src.loc.z >1)//If you are on a different z-level from the station
+		icon_state = "pinonalert"
+	else
+		src.dir = get_dir(src,the_disk)
+		switch(get_dist(src,the_disk))
+			if(0)
+				icon_state = "pinondirect"
+			if(1 to 8)
+				icon_state = "pinonclose"
+			if(9 to 16)
+				icon_state = "pinonmedium"
+			if(16 to INFINITY)
+				icon_state = "pinonfar"
+		spawn(5) .()
+
+/obj/item/weapon/pinpointer/nukeop/proc/worklocation()
+	if(!active)
+		return
+	if(!home)
+		home = locate()
+		if(!home)
+			icon_state = "pinonnull"
+			return
+	if(src.loc.z >2)//If you are on a different z-level from the shuttle
+		icon_state = "pinonalert"
+	else
+		src.dir = get_dir(src,home)
+		switch(get_dist(src,home))
+			if(0)
+				icon_state = "pinondirect"
+			if(1 to 8)
+				icon_state = "pinonclose"
+			if(9 to 16)
+				icon_state = "pinonmedium"
+			if(16 to INFINITY)
+				icon_state = "pinonfar"
+
+	spawn(5) .()
+
+/obj/item/weapon/pinpointer/nukeop/verb/toggle_mode()
+	set category = "Object"
+	set name = "Toggle Pinpointer Mode"
+	set src in view(1)
+
+	active = 0
+	icon_state = "pinoff"
+
+	if(mode)
+		mode = 0
+		usr << "Nuclear Disk locator active."
+		return attack_self()
+
+	else
+		mode = 1
+		usr << "Shuttle locator active."
+		return attack_self()
 
 
 /*/obj/item/weapon/pinpointer/New()
