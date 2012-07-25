@@ -832,7 +832,8 @@
 	var/breakouttime = 300 //Deciseconds = 30s = 0.5 minute
 
 /obj/item/weapon/legcuffs/beartrap
-	name = "beartrap"
+	name = "bear trap"
+	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
 	breakouttime = 300 //Deciseconds = 30s = 0.5 minute
 	var/armed = 0
