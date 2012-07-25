@@ -1,7 +1,4 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
-vs_control/var/zone_share_percent = 10
-vs_control/var/zone_share_percent_NAME = "Zone Share Percent"
-vs_control/var/zone_share_percent_DESC = "Percentage of air difference to move per tick"
 zone/proc/process()
 	//Deletes zone if empty.
 	if(!contents.len)
@@ -24,11 +21,8 @@ zone/proc/process()
 	if(space_tiles)
 		for(var/T in space_tiles)
 			if(!istype(T,/turf/space))
-				space_tiles -= T
-				continue
-			total_space++
-		if(space_tiles && !space_tiles.len)
-			del space_tiles
+				RemoveSpace(T)
+		total_space = space_tiles.len
 
 	//Add checks to ensure that we're not sucking air out of an empty room.
 	if(total_space && air.total_moles > 0.1 && air.temperature > TCMB+0.5)
@@ -221,9 +215,6 @@ zone/proc/Rebuild()
 		list/new_contents
 		problem = 0
 
-	if(space_tiles)
-		del(space_tiles)
-
 	contents.Remove(null) //I can't believe this is needed.
 
 	if(!contents.len)
@@ -232,7 +223,7 @@ zone/proc/Rebuild()
 	var/list/turfs_to_consider = contents.Copy()
 	do
 		if(sample)
-			turfs_to_consider -= sample
+			turfs_to_consider.Remove(sample)
 		if(!turfs_to_consider.len)
 			break
 		sample = pick(turfs_to_consider)  //Nor this.
@@ -284,3 +275,12 @@ zone/proc/Rebuild()
 		else if(!T.zone)
 			T.zone = src
 	air.group_multiplier = contents.len
+
+	if(space_tiles)
+		var/list/new_space_tiles = space_tiles.Copy()
+		space_tiles = null
+		for(var/turf/space/S in new_space_tiles)
+			for(var/direction in cardinal)
+				var/turf/simulated/T = get_step(S,direction)
+				if(istype(T) && T.zone)
+					T.zone.AddSpace(S)

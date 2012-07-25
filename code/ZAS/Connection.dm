@@ -5,7 +5,7 @@ Indirect connections will not merge the two zones after they reach equilibrium.
 
 connection
 	var
-		turf //The turfs involved in the connection.
+		turf/simulated //The turfs involved in the connection.
 			A
 			B
 		zone
@@ -30,22 +30,15 @@ connection
 			zone_B = B.zone
 			ref_B = "\ref[B]"
 
-			if(!air_master.tiles_with_connections)
-				air_master.tiles_with_connections = list()
-
-			if(air_master.tiles_with_connections[ref_A])
-				var/list/A_connections = air_master.tiles_with_connections[ref_A]
-				A_connections |= src
+			if(!A.connections)
+				A.connections = list(src)
 			else
-				var/list/A_connections = list(src)
-				air_master.tiles_with_connections[ref_A] = A_connections
+				A.connections += src
 
-			if(air_master.tiles_with_connections[ref_B])
-				var/list/B_connections = air_master.tiles_with_connections[ref_B]
-				B_connections |= src
+			if(!B.connections)
+				B.connections = list(src)
 			else
-				var/list/B_connections = list(src)
-				air_master.tiles_with_connections[ref_B] = B_connections
+				B.connections += src
 
 			if(!A.zone.connected_zones)
 				A.zone.connected_zones = list()
@@ -74,23 +67,15 @@ connection
 				A.zone.connections.Remove(src)
 				if(!A.zone.connections.len)
 					del A.zone.connections
-		if(ref_A in air_master.tiles_with_connections)
-			var/list/A_connections = air_master.tiles_with_connections[ref_A]
-			A_connections -= src
-			if(A_connections && !A_connections.len)
-				del A_connections
-				air_master.tiles_with_connections.Remove(ref_A)
+			if(istype(A))
+				A.connections -= src
 		if(B)
 			if(B.zone && B.zone.connections)
 				B.zone.connections.Remove(src)
 				if(!B.zone.connections.len)
 					del B.zone.connections
-		if(ref_B in air_master.tiles_with_connections)
-			var/list/B_connections = air_master.tiles_with_connections[ref_B]
-			B_connections -= src
-			if(B_connections && !B_connections.len)
-				del B_connections
-				air_master.tiles_with_connections.Remove(ref_B)
+			if(istype(B))
+				B.connections -= src
 		if(zone_A)
 			if(zone_A && zone_A.connections)
 				zone_A.connections.Remove(src)
@@ -193,7 +178,7 @@ connection
 
 	proc/CheckPassSanity()
 		Cleanup()
-		if(!A.CanPass(null, B, 0, 0) || !B.CanPass(null, A, 0, 0))
+		if(!A.CanPass(null, B, 0, 0))
 			del src
 		if(A.HasDoor(B) || B.HasDoor(A))
 			indirect = 1

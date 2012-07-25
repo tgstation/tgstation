@@ -1,3 +1,5 @@
+var/image/contamination_overlay = image('icons/effects/contamination.dmi')
+
 pl_control/var
 	PLASMA_DMG = 3
 	PLASMA_DMG_NAME = "Plasma Damage Amount"
@@ -50,11 +52,11 @@ obj/item/proc
 		//Do a contamination overlay? Temporary measure to keep contamination less deadly than it was.
 		if(!contaminated)
 			contaminated = 1
-			overlays += 'icons/effects/contamination.dmi'
+			overlays += contamination_overlay
 
 	decontaminate()
 		contaminated = 0
-		overlays -= 'icons/effects/contamination.dmi'
+		overlays -= contamination_overlay
 
 /mob/proc/contaminate()
 
@@ -111,6 +113,7 @@ obj/item/proc
 			randmutb(src)
 			src << "\red High levels of toxins cause you to spontaneously mutate."
 			domutcheck(src,null)
+
 
 /mob/living/carbon/human/proc/burn_eyes()
 	//The proc that handles eye burning.

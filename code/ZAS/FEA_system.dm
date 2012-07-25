@@ -100,7 +100,6 @@ datum
 
 			//Geometry updates lists
 			var/list/turf/simulated/tiles_to_update = list()
-			var/list/turf/simulated/tiles_with_connections = list()
 			var/list/connection/connections_checked = list()
 //			var/list/turf/simulated/groups_to_rebuild = list()
 
@@ -145,7 +144,7 @@ datum
 				for(var/turf/simulated/S in world)
 					if(S.z < 5)
 						S.update_air_properties()
-						S.check_connections()
+					//	S.check_connections()
 
 				world << "\red \b Geometry processed in [time2text(world.timeofday-start_time, "mm:ss")] minutes!"
 				spawn start()

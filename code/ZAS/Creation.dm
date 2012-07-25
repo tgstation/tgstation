@@ -61,7 +61,7 @@ proc/FloodFill(turf/start)
 				for(var/d in cardinal)
 					var/turf/O = get_step(T,d)
 					//Simple pass check.
-					if(O.ZCanPass(T) && !(O in open) && !(O in closed))
+					if(istype(O) && O.ZCanPass(T) && !(O in open) && !(O in closed))
 						open += O
 			else
 				doors += T
@@ -72,19 +72,38 @@ proc/FloodFill(turf/start)
 			closed += T
 
 	for(var/turf/T in doors)
+		var/force_connection = 1
 		var/turf/O = get_step(T,NORTH)
 		if(O in closed)
 			closed += T
+			continue
+		else if(T.ZCanPass(O))
+			force_connection = 0
+
 		O = get_step(T,WEST)
 		if(O in closed)
 			closed += T
+			continue
+		else if(force_connection && T.ZCanPass(O))
+			force_connection = 0
+
+		if(force_connection)
+			O = get_step(T,SOUTH)
+			if(O in closed)
+				closed += T
+			else if(!T.ZCanPass(O) && get_step(T,EAST) in closed)
+				closed += T
+
 
 	return closed
 
 turf/proc/ZCanPass(turf/T, var/include_space = 0)
 	//Fairly standard pass checks for turfs, objects and directional windows. Also stops at the edge of space.
+	if(!istype(T))
+		return 0
 
-	if(istype(T,/turf/space) && !include_space) return 0
+	if(istype(T,/turf/space) && !include_space)
+		return 0
 	else
 		if(T.blocks_air||blocks_air)
 			return 0
@@ -92,13 +111,35 @@ turf/proc/ZCanPass(turf/T, var/include_space = 0)
 		for(var/obj/obstacle in src)
 			if(istype(obstacle,/obj/machinery/door) && !istype(obstacle,/obj/machinery/door/window))
 				continue
-			if(!obstacle.CanPass(0, T, 1.5, 1))
+			if(!obstacle.CanPass(null, T, 1.5, 1))
 				return 0
 
 		for(var/obj/obstacle in T)
 			if(istype(obstacle,/obj/machinery/door) && !istype(obstacle,/obj/machinery/door/window))
 				continue
-			if(!obstacle.CanPass(0, src, 1.5, 1))
+			if(!obstacle.CanPass(null, src, 1.5, 1))
 				return 0
 
 		return 1
+
+turf/proc/ZAirPass(turf/T)
+	//Fairly standard pass checks for turfs, objects and directional windows. Also stops at the edge of space.
+	if(!istype(T))
+		return 0
+
+	if(T.blocks_air||blocks_air)
+		return 0
+
+	for(var/obj/obstacle in src)
+		if(istype(obstacle,/obj/machinery/door) && !istype(obstacle,/obj/machinery/door/window))
+			continue
+		if(!obstacle.CanPass(null, T, 0, 0))
+			return 0
+
+	for(var/obj/obstacle in T)
+		if(istype(obstacle,/obj/machinery/door) && !istype(obstacle,/obj/machinery/door/window))
+			continue
+		if(!obstacle.CanPass(null, src, 0, 0))
+			return 0
+
+	return 1
