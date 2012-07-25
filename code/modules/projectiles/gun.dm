@@ -20,6 +20,7 @@
 	var/silenced = 0
 	var/recoil = 0
 	var/ejectshell = 1
+	var/clumsy_check = 1
 
 
 	proc/load_into_chamber()
@@ -47,7 +48,7 @@
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 
 		//Exclude lasertag guns from the CLUMSY check.
-		if(src.name != "laser tag gun")
+		if(src.clumsy_check)
 			if(istype(user, /mob/living))
 				var/mob/living/M = user
 				if ((CLUMSY in M.mutations) && prob(50))

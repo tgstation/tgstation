@@ -34,6 +34,7 @@ obj/item/weapon/gun/energy/staff
 	charge_cost = 200
 	projectile_type = "/obj/item/projectile/change"
 	origin_tech = null
+	clumsy_check = 0
 	var/charge_tick = 0
 
 
