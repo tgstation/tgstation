@@ -23,7 +23,7 @@
 	req_access = list(access_security)
 	power_channel = EQUIP	// drains power from the EQUIPMENT channel
 
-	var/lasercolor = ""
+	var/lasercolor = ""		// Something to do with lasertag turrets, blame Sieve for not adding a comment.
 	var/raised = 0			// if the turret cover is "open" and the turret is raised
 	var/raising= 0			// if the turret is currently opening or closing its cover
 	var/health = 80			// the turret's health
@@ -434,10 +434,12 @@ Status: []<BR>"},
 
 			src.cover = new /obj/machinery/porta_turret_cover(src.loc) // if the turret has no cover and is anchored, give it a cover
 			src.cover.Parent_Turret = src // assign the cover its Parent_Turret, which would be this (src)
+
 	if(stat & (NOPOWER|BROKEN))
 		// if the turret has no power or is broken, make the turret pop down if it hasn't already
 		popDown()
 		return
+
 	if(!on)
 		// if the turret is off, make it pop down
 		popDown()
@@ -447,11 +449,11 @@ Status: []<BR>"},
 	var/list/secondarytargets = list() // targets that are least important
 
 	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "crittersssss"
-		for (var/obj/effect/critter/L in view(12,src))
+		for (var/obj/effect/critter/L in view(7,src))
 			if(L.alive)
 				targets += L
 
-	for (var/mob/living/carbon/C in view(12,src)) // loops through all living carbon-based lifeforms in view(12)
+	for (var/mob/living/carbon/C in view(7,src)) // loops through all living carbon-based lifeforms in view(12)
 		if(istype(C, /mob/living/carbon/alien) && src.check_anomalies) // git those fukken xenos
 			if(!C.stat) // if it's dead/dying, there's no need to keep shooting at it.
 				targets += C
@@ -464,10 +466,10 @@ Status: []<BR>"},
 					continue // move onto next potential victim!
 
 				var/dst = get_dist(src, C) // if it's too far away, why bother?
-				if (dst > 12)
+				if (dst > 7)
 					continue
 
-				if(!istype(C, /mob/living/silicon) && ai) // If it's set to attack all nonsilicons, target them!
+				if(ai) // If it's set to attack all nonsilicons, target them!
 					if(C.lying)
 						if(lasercolor)
 							continue
@@ -482,7 +484,7 @@ Status: []<BR>"},
 					if(src.assess_perp(C)<4)
 						continue // if threat level < 4, keep going
 
-				else if (istype(C, /mob/living/carbon/monkey) || istype(C, /mob/living/silicon))
+				else if (istype(C, /mob/living/carbon/monkey))
 					continue // Don't target monkeys or borgs/AIs you dumb shit
 
 				if (C.lying) // if the perp is lying down, it's still a target but a less-important target

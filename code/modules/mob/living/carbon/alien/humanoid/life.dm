@@ -37,7 +37,7 @@
 	blinded = null
 
 	//Disease Check
-	handle_virus_updates()
+	//handle_virus_updates() There is no disease that affects aliens
 
 	//Update mind
 	update_mind()

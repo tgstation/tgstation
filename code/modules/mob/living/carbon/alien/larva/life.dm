@@ -37,7 +37,7 @@
 	update_mind()
 
 	//Disease Check
-	handle_virus_updates()
+	//handle_virus_updates() There is no disease that affects larva
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment()
