@@ -8,7 +8,7 @@ Why are you archiving data before modifying it?
 	This prevents abnormalities like air/fire spreading rapidly in one direction and super slowly in the other.
 
 Why not just archive everything and then calculate?
-	Efficiency. While a for-loop that goes through all tils and groups to archive their information before doing any calculations seems simple, it is
+	Efficiency. While a for-loop that goes through all tiles and groups to archive their information before doing any calculations seems simple, it is
 		slightly less efficient than the archive-before-modify/read method.
 
 Why is there a cycle check for calculating data as well?
