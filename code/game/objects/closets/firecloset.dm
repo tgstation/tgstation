@@ -18,6 +18,7 @@
 	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/helmet/space/fire_helmet(src)
+	new /obj/item/clothing/shoes/magboots(src) //[Redacted] ZAS! >:C
 
 	/*switch (pickweight(list("nothing" = 5, "bare-bones" = 35, "basic" = 40, "pickpocketed" = 10, "untouched" = 10)))
 		if ("nothing")
