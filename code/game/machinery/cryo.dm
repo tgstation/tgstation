@@ -16,6 +16,9 @@
 	var/current_heat_capacity = 50
 
 
+	return_air()
+		return air_contents
+
 
 	New()
 		..()

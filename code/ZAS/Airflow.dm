@@ -48,44 +48,6 @@ atom/movable/RepelAirflowDest(n)
 
 */
 
-vs_control/var
-	airflow_lightest_pressure = 30
-	airflow_lightest_pressure_NAME = "Airflow - Small Movement Threshold %"
-	airflow_lightest_pressure_DESC = "Percent of 1 Atm. at which items with the small weight classes will move."
-	airflow_light_pressure = 45
-	airflow_light_pressure_NAME = "Airflow - Medium Movement Threshold %"
-	airflow_light_pressure_DESC = "Percent of 1 Atm. at which items with the medium weight classes will move."
-	airflow_medium_pressure = 90
-	airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
-	airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
-	airflow_heavy_pressure = 95
-	airflow_heavy_pressure_NAME = "Airflow - Mob Movement Threshold %"
-	airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which mobs will move."
-	airflow_dense_pressure = 120
-	airflow_dense_pressure_NAME = "Airflow - Dense Movement Threshold %"
-	airflow_dense_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
-	airflow_stun_pressure = 100
-	airflow_stun_pressure_NAME = "Airflow - Mob Stunning Threshold %"
-	airflow_stun_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
-	airflow_stun_cooldown = 60
-	airflow_stun_cooldown_NAME = "Aiflow Stunning - Cooldown"
-	airflow_stun_cooldown_DESC = "How long, in tenths of a second, to wait before stunning them again."
-	airflow_stun = 0.15
-	airflow_stun_NAME = "Airflow Impact - Stunning"
-	airflow_stun_DESC = "How much a mob is stunned when hit by an object."
-	airflow_damage = 0.3
-	airflow_damage_NAME = "Airflow Impact - Damage"
-	airflow_damage_DESC = "Damage from airflow impacts."
-	airflow_speed_decay = 1.5
-	airflow_speed_decay_NAME = "Airflow Speed Decay"
-	airflow_speed_decay_DESC = "How rapidly the speed gained from airflow decays."
-	airflow_delay = 30
-	airflow_delay_NAME = "Airflow Retrigger Delay"
-	airflow_delay_DESC = "Time in deciseconds before things can be moved by airflow again."
-	airflow_mob_slowdown = 1
-	airflow_mob_slowdown_NAME = "Airflow Slowdown"
-	airflow_mob_slowdown_DESC = "Time in tenths of a second to add as a delay to each movement by a mob if they are fighting the pull of the airflow."
-
 mob/var/tmp/last_airflow_stun = 0
 mob/proc/airflow_stun()
 	if(stat == 2)
@@ -309,6 +271,8 @@ atom/movable
 				src.airflow_dest = locate(min(max(src.x + xo, 1), world.maxx), min(max(src.y + yo, 1), world.maxy), src.z)
 			if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 				return
+			if(!istype(loc, /turf))
+				return
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client) src:client:move_delay = world.time + vsc.airflow_mob_slowdown
 		airflow_dest = null
@@ -362,6 +326,8 @@ atom/movable
 			if ((!( src.airflow_dest ) || src.loc == src.airflow_dest))
 				src.airflow_dest = locate(min(max(src.x + xo, 1), world.maxx), min(max(src.y + yo, 1), world.maxy), src.z)
 			if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
+				return
+			if(!istype(loc, /turf))
 				return
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client) src:client:move_delay = world.time + vsc.airflow_mob_slowdown

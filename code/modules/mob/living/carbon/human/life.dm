@@ -562,6 +562,8 @@
 				var/ratio = breath.toxins/safe_toxins_max
 				adjustToxLoss(min(ratio, 10))	//Limit amount of damage toxin exposure can do per second
 				toxins_alert = max(toxins_alert, 1)
+				if(vsc.plc.PLASMA_HALLUCINATION && prob(20))
+					hallucination += 20
 			else
 				toxins_alert = 0
 
@@ -575,6 +577,8 @@
 					else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 						if(prob(20) && isbreathing)
 							spawn(0) emote(pick("giggle", "laugh"))
+						if(vsc.plc.N2O_HALLUCINATION && prob(10) && isbreathing)
+							hallucination += 30
 					SA.moles = 0 //Hack to stop the damned surgeon from giggling.
 
 
@@ -599,8 +603,6 @@
 			if(istype(loc, /turf/space))
 				environment_heat_capacity = loc:heat_capacity
 				loc_temp = 2.7
-			else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-				loc_temp = loc:air_contents.temperature
 			else
 				loc_temp = environment.temperature
 
@@ -816,6 +818,9 @@
 		handle_chemicals_in_body()
 			if(reagents && stat != 2) reagents.metabolize(src)
 			if(vessel && stat != 2) vessel.metabolize(src)
+			for(var/obj/item/I in src)
+				if(I.contaminated)
+					toxloss += vsc.plc.CONTAMINATION_LOSS
 
 			if(mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 				var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
