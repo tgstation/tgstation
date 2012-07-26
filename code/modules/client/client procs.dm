@@ -95,6 +95,7 @@
 		host = key
 		world.update_status()
 
+	log_client_to_db()
 
 	..()	//calls mob.Login()
 
@@ -118,3 +119,50 @@
 			del(holder)
 	client_list -= src
 	return ..()
+
+
+
+/client/proc/log_client_to_db()
+	var/user = sqlfdbklogin
+	var/pass = sqlfdbkpass
+	var/db = sqlfdbkdb
+	var/address = sqladdress
+	var/port = sqlport
+
+	var/DBConnection/dbcon = new()
+
+	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	if(!dbcon.IsConnected())
+		return
+
+	var/sql_ckey = sql_sanitize_text(src.ckey)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_player WHERE ckey = '[sql_ckey]'")
+	query.Execute()
+	var/sql_id = 0
+	while(query.NextRow())
+		sql_id = query.item[1]
+		break
+
+	//Just the standard check to see if it's actually a number
+	if(sql_id)
+		if(istext(sql_id))
+			sql_id = text2num(sql_id)
+		if(!isnum(sql_id))
+			return
+
+	var/sql_ip = sql_sanitize_text(src.address)
+	var/sql_computerid = sql_sanitize_text(src.computer_id)
+
+	if(sql_id)
+		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
+
+		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]' WHERE id = [sql_id]")
+		query_update.Execute()
+	else
+		//New player!! Need to insert all the stuff
+
+		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]')")
+		query_insert.Execute()
+
+	dbcon.Disconnect()
