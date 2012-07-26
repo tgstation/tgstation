@@ -116,8 +116,10 @@ datum/shuttle_controller
 										if(M.buckled)
 											shake_camera(M, 4, 1) // buckled, not a lot of shaking
 										else
-											M.Weaken(5)
 											shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+								if(istype(M, /mob/living/carbon))
+									if(!M.buckled)
+										M.Weaken(5)
 
 							//pods
 							start_location = locate(/area/shuttle/escape_pod1/transit)
@@ -135,8 +137,10 @@ datum/shuttle_controller
 										if(M.buckled)
 											shake_camera(M, 4, 1) // buckled, not a lot of shaking
 										else
-											M.Weaken(5)
 											shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+								if(istype(M, /mob/living/carbon))
+									if(!M.buckled)
+										M.Weaken(5)
 
 							start_location = locate(/area/shuttle/escape_pod2/transit)
 							end_location = locate(/area/shuttle/escape_pod2/centcom)
@@ -153,8 +157,10 @@ datum/shuttle_controller
 										if(M.buckled)
 											shake_camera(M, 4, 1) // buckled, not a lot of shaking
 										else
-											M.Weaken(5)
 											shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+								if(istype(M, /mob/living/carbon))
+									if(!M.buckled)
+										M.Weaken(5)
 
 							start_location = locate(/area/shuttle/escape_pod3/transit)
 							end_location = locate(/area/shuttle/escape_pod3/centcom)
@@ -171,8 +177,10 @@ datum/shuttle_controller
 										if(M.buckled)
 											shake_camera(M, 4, 1) // buckled, not a lot of shaking
 										else
-											M.Weaken(5)
 											shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+								if(istype(M, /mob/living/carbon))
+									if(!M.buckled)
+										M.Weaken(5)
 
 							start_location = locate(/area/shuttle/escape_pod5/transit)
 							end_location = locate(/area/shuttle/escape_pod5/centcom)
@@ -189,8 +197,10 @@ datum/shuttle_controller
 										if(M.buckled)
 											shake_camera(M, 4, 1) // buckled, not a lot of shaking
 										else
-											M.Weaken(5)
 											shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+								if(istype(M, /mob/living/carbon))
+									if(!M.buckled)
+										M.Weaken(5)
 
 							online = 0
 
@@ -288,8 +298,10 @@ datum/shuttle_controller
 									if(M.buckled)
 										shake_camera(M, 4, 1) // buckled, not a lot of shaking
 									else
-										M.Weaken(5)
 										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
 
 						//pods
 						start_location = locate(/area/shuttle/escape_pod1/station)
@@ -306,8 +318,10 @@ datum/shuttle_controller
 									if(M.buckled)
 										shake_camera(M, 4, 1) // buckled, not a lot of shaking
 									else
-										M.Weaken(5)
 										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
 
 						start_location = locate(/area/shuttle/escape_pod2/station)
 						end_location = locate(/area/shuttle/escape_pod2/transit)
@@ -317,15 +331,16 @@ datum/shuttle_controller
 								spawn(0)
 									D.close()
 
-
 						for(var/mob/M in end_location)
 							if(M.client)
 								spawn(0)
 									if(M.buckled)
 										shake_camera(M, 4, 1) // buckled, not a lot of shaking
 									else
-										M.Weaken(5)
 										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
 
 						start_location = locate(/area/shuttle/escape_pod3/station)
 						end_location = locate(/area/shuttle/escape_pod3/transit)
@@ -335,15 +350,16 @@ datum/shuttle_controller
 								spawn(0)
 									D.close()
 
-
 						for(var/mob/M in end_location)
 							if(M.client)
 								spawn(0)
 									if(M.buckled)
 										shake_camera(M, 4, 1) // buckled, not a lot of shaking
 									else
-										M.Weaken(5)
 										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
 
 						start_location = locate(/area/shuttle/escape_pod5/station)
 						end_location = locate(/area/shuttle/escape_pod5/transit)
@@ -353,15 +369,16 @@ datum/shuttle_controller
 								spawn(0)
 									D.close()
 
-
 						for(var/mob/M in end_location)
 							if(M.client)
 								spawn(0)
 									if(M.buckled)
 										shake_camera(M, 4, 1) // buckled, not a lot of shaking
 									else
-										M.Weaken(5)
 										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
 
 						captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 
