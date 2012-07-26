@@ -134,6 +134,7 @@
 	w_class = 3.0
 	g_amt = 10
 	m_amt = 10
+	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
 	examine()
@@ -188,6 +189,7 @@
 	var/active = 0.0
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
+	attack_verb = list("attacked", "struck", "hit")
 
 	attack_self(mob/user as mob)
 		src.active = !( src.active )
@@ -214,6 +216,7 @@
 	item_state = "crossbow"
 	flags = FPRINT | TABLEPASS | USEDELAY
 	w_class = 2.0
+	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
 
 	examine()
@@ -319,6 +322,7 @@
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
 	w_class = 1.0
+	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
 	var/shadeColour = "#220000" //RGB
 	var/uses = 30 //0 for unlimited uses

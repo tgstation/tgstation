@@ -6,6 +6,7 @@
 	item_state = "utility"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
+	attack_verb = list("whipped", "lashed", "disciplined")
 
 
 /obj/item/weapon/storage/belt/proc/can_use()

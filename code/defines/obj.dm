@@ -12,6 +12,7 @@
 	var/datum/marked_datum
 	animate_movement = 2
 	var/throwforce = 1
+	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 
 	proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 		//Return: (NONSTANDARD)
@@ -380,6 +381,7 @@
 	desc = "Blueprints of the station. There's stamp \"Classified\" and several coffee stains on it."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
+	attack_verb = list("attacked", "bapped", "hit")
 
 /obj/item/apc_frame
 	name = "APC frame"
@@ -745,7 +747,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 2.8
-	throwpass = 1	//You can throw objects over this, despite it's density.
+	throwpass = 1	//You can throw objects over this, despite it's density.")
 
 /obj/structure/table/New()
 	..()
@@ -1002,6 +1004,7 @@
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "biotech=3"
+	attack_verb = list("attacked", "slapped", "whacked")
 
 	var/mob/living/carbon/brain/brainmob = null
 
@@ -1200,6 +1203,7 @@
 	throw_range = 20
 	m_amt = 1875
 	max_amount = 60
+	attack_verb = list("hit", "bludgeoned", "whacked")
 
 /obj/item/stack/sheet
 	name = "sheet"
@@ -1213,6 +1217,7 @@
 	max_amount = 50
 	throw_speed = 3
 	throw_range = 3
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	var/perunit = 3750
 
 /obj/item/stack/sheet/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -1394,6 +1399,7 @@
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
 	max_amount = 60
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	var/on = 1
 	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 
@@ -1449,3 +1455,9 @@
 	name = "Geas"
 	desc = "You can't resist."
 	// name = ""
+
+/obj/item/clothing
+	name = "clothing"
+
+/obj/effect/spawner
+	name = "object spawner"

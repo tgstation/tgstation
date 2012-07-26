@@ -22,6 +22,7 @@
 	g_amt = 7500
 	m_amt = 1000
 	origin_tech = "materials=2"
+	attack_verb = list("shoved", "bashed")
 
 	IsShield()
 		return 1
@@ -38,6 +39,7 @@
 	throw_range = 4
 	w_class = 1
 	origin_tech = "materials=4;magnets=3;syndicate=4"
+	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
 
@@ -64,6 +66,7 @@
 	force = 2
 	throwforce = 1
 	w_class = 3
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/claymore
 	name = "claymore"
@@ -75,6 +78,7 @@
 	force = 40
 	throwforce = 10
 	w_class = 3
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	IsShield()
 		return 1
@@ -89,6 +93,7 @@
 	force = 40
 	throwforce = 10
 	w_class = 3
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	IsShield()
 		return 1
@@ -227,6 +232,7 @@
 	throwforce = 7
 	w_class = 3
 	origin_tech = "combat=4"
+	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 
 /obj/item/weapon/melee/energy
 	var/active = 0
@@ -242,6 +248,7 @@
 	w_class = 3.0
 	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS
 	origin_tech = "combat=3"
+	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 
 /obj/item/weapon/melee/energy/sword
 	color
@@ -255,6 +262,7 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/melee/energy/sword/chainsword
 	color = "chain"
@@ -276,6 +284,7 @@
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
 	flags = FPRINT | TABLEPASS | NOSHIELD
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system
 
 /obj/item/weapon/bananapeel
@@ -410,6 +419,7 @@
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 15
+	attack_verb = list("HONKED")
 	var/spam_flag = 0
 
 /obj/item/stack/medical
@@ -569,6 +579,7 @@
 	flags = TABLEPASS | USEDELAY | FPRINT | CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "coil_red"
+	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
 /obj/item/weapon/cable_coil/cut
 	item_state = "coil_red2"
@@ -620,6 +631,7 @@
 	w_class = 2.0
 	m_amt = 50
 	origin_tech = "engineering=1"
+	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/crowbar/red
 	icon = 'icons/obj/items.dmi'
@@ -637,6 +649,7 @@
 	item_state = "cane"
 	w_class = 2.0
 	m_amt = 50
+	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
 /obj/item/weapon/cane/browncane
 	name = " browncane"
@@ -675,6 +688,7 @@
 	force = 10.0
 	item_state = "fire_extinguisher"
 	m_amt = 90
+	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 
 /obj/item/weapon/extinguisher/mini
 	name = "fire extinguisher"
@@ -894,6 +908,7 @@
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
+	attack_verb = list("warned", "cautioned", "smashed")
 
 /obj/item/weapon/caution/cone
 	desc = "This cone is trying to warn you of something!"
@@ -958,6 +973,7 @@
 	w_class = 1.0
 	throw_speed = 7
 	throw_range = 15
+	attack_verb = list("banned")
 
 /obj/item/weapon/pen/sleepypen
 	desc = "It's a normal black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
@@ -1001,6 +1017,7 @@
 	throw_range = 5
 	g_amt = 0
 	m_amt = 75
+	attack_verb = list("stabbed")
 
 /obj/item/weapon/shard
 	name = "shard"
@@ -1012,6 +1029,7 @@
 	throwforce = 15.0
 	item_state = "shard-glass"
 	g_amt = 3750
+	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 
 /*/obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
@@ -1081,7 +1099,7 @@
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
-
+	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
 /obj/item/weapon/staff/stick
 	name = "stick"
@@ -1104,6 +1122,7 @@
 	icon_state = "table_parts"
 	m_amt = 3750
 	flags = FPRINT | TABLEPASS| CONDUCT
+	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
@@ -1141,6 +1160,7 @@
 	var/laying = 0.0
 	var/old_lay = null
 	m_amt = 40
+	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
 /obj/item/weapon/wrapping_paper
 	name = "wrapping paper"
@@ -1340,6 +1360,7 @@
 	throw_speed = 2
 	throw_range = 7
 	w_class = 3.0
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchenknife
 	name = "kitchen knife"
@@ -1354,6 +1375,7 @@
 	throw_range = 6
 	m_amt = 12000
 	origin_tech = "materials=1"
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/butch
 	name = "butcher's Cleaver"
@@ -1368,6 +1390,7 @@
 	throw_range = 6
 	m_amt = 12000
 	origin_tech = "materials=1"
+	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/tray
 	name = "tray"
@@ -1410,6 +1433,7 @@
 	throw_range = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=1"
+	attack_verb = list("attacked", "stabbed", "poked")
 
 
 /obj/item/weapon/kitchen/utensil/fork
@@ -1428,6 +1452,7 @@
 	name = "spoon"
 	desc = "SPOON!"
 	icon_state = "spoon"
+	attack_verb = list("attacked", "poked")
 
 /obj/item/weapon/scalpel
 	name = "scalpel"
@@ -1443,6 +1468,7 @@
 	m_amt = 10000
 	g_amt = 5000
 	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/retractor
 	name = "retractor"
@@ -1465,6 +1491,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("attacked", "pinched")
 
 /obj/item/weapon/cautery
 	name = "cautery"
@@ -1476,6 +1503,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("burnt")
 
 /obj/item/weapon/surgicaldrill
 	name = "surgical drill"
@@ -1489,6 +1517,7 @@
 	force = 15.0
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("drilled")
 
 /obj/item/weapon/circular_saw
 	name = "circular saw"
@@ -1505,6 +1534,7 @@
 	m_amt = 20000
 	g_amt = 10000
 	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("attacked", "slashed", "sawed", "cut")
 
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
@@ -1528,6 +1558,7 @@
 	throw_range = 4
 	m_amt = 15000
 	origin_tech = "materials=2;combat=1"
+	attack_verb = list("chopped", "torn", "cut")
 
 
 /*
@@ -1580,6 +1611,7 @@
 	name = "data cable"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
+
 	var/obj/machinery/machine
 
 /obj/item/weapon/plastique

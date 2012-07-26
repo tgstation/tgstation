@@ -12,6 +12,7 @@
 	m_amt = 60
 	color = "cargo"
 	pressure_resistance = 5
+	attack_verb = list("stamped")
 
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"

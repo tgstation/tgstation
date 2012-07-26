@@ -13,6 +13,7 @@
 	throw_range = 5
 	force = 5.0
 	origin_tech = "combat=1"
+	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = 'Gunshot.ogg'
 	var/obj/item/projectile/in_chamber = null

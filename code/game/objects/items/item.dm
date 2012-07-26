@@ -265,7 +265,10 @@
 			showname = "."
 
 		for(var/mob/O in viewers(messagesource, null))
-			O.show_message(text("\red <B>[] has been attacked with [][] </B>", M, src, showname), 1)
+			if(src.attack_verb.len)
+				O.show_message("\red <B>[M] has been [pick(src.attack_verb)] with [src][showname] </B>", 1)
+			else
+				O.show_message("\red <B>[M] has been attacked with [src][showname] </B>", 1)
 
 		if(!showname && user)
 			if(user.client)

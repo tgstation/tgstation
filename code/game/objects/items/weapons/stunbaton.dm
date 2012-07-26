@@ -12,6 +12,7 @@
 	var/status = 0
 	origin_tech = "combat=2"
 
+
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
 		icon_state = "stunbaton_active"

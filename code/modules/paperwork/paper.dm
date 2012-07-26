@@ -12,6 +12,7 @@
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
 	protective_temperature = 0
+	attack_verb = list("")
 
 	var/info	//What's actually written on the paper.
 	var/info_links //A different version of the paper which includes html links at fields and EOF

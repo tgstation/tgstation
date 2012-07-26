@@ -1728,6 +1728,7 @@
 	plant_type = 2
 	origin_tech = "materials=1"
 	seed = "/obj/item/seeds/towermycelium"
+	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
@@ -1812,6 +1813,7 @@
 	plant_type = 1
 	seed = "/obj/item/seeds/deathnettleseed"
 	origin_tech = "combat=3"
+	attack_verb = list("stung")
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
@@ -1926,6 +1928,7 @@
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 50
+	attack_verb = list("slashed", "sliced", "cut", "clawed")
 
 // *************************************
 // Weedkiller defines for hydroponics

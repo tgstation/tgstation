@@ -2764,6 +2764,7 @@
 	throw_range = 5
 	item_state = "beer"
 	//item_state - Need to find a bottle sprite
+	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 
 

@@ -7,6 +7,7 @@
 	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 
 /obj/item/weapon/melee/cultblade/attack(mob/living/target as mob, mob/living/carbon/human/user as mob)

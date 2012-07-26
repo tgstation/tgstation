@@ -6,6 +6,7 @@ CONTAINS:
 WRENCH
 SCREWDRIVER
 WELDINGTOOOL
+WIRECUTTERS
 */
 
 
@@ -22,7 +23,7 @@ WELDINGTOOOL
 	w_class = 2.0
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
-
+	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 
 // SCREWDRIVER
@@ -355,6 +356,10 @@ WELDINGTOOOL
 	reagents += (gen_amount)
 	if(reagents > max_fuel)
 		reagents = max_fuel
+
+
+
+//WIRECUTTERS
 /obj/item/weapon/wirecutters
 	name = "wirecutters"
 	desc = "This cuts wires."
@@ -368,6 +373,7 @@ WELDINGTOOOL
 	w_class = 2.0
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
+	attack_verb = list("pinched", "nipped")
 
 /obj/item/weapon/wirecutters/New()
 	if(prob(50))
