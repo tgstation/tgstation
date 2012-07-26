@@ -1,5 +1,6 @@
 zone
 	New(turf/start)
+		. = ..()
 		//Get the turfs that are part of the zone using a floodfill method
 		if(istype(start,/list))
 			contents = start
