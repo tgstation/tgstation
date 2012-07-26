@@ -51,7 +51,6 @@ turf
 //			current_cycle = 0
 
 			obj/fire/active_hotspot
-			tmp/list/connections
 
 //			temperature_archived //USED ONLY FOR SOLIDS
 //			being_superconductive = 0
@@ -194,12 +193,12 @@ turf
 				if(!zone) //Still no zone, the floodfill determined it is not part of a larger zone.  Force a zone on it.
 					new/zone(list(src))
 
-			if(connections) //Check pass sanity of the connections.
-				for(var/connection/C in connections)
+			if("\ref[src]" in air_master.turfs_with_connections) //Check pass sanity of the connections.
+				for(var/connection/C in air_master.turfs_with_connections["\ref[src]"])
 					if(!(C in air_master.connections_checked))
 						air_master.connections_checked += C
 
-			update_zone_properties() //Update self zone and adjacent zones.
+			. = update_zone_properties() //Update self zone and adjacent zones.
 
 			if(air_check_directions)
 				processing = 1
@@ -220,6 +219,7 @@ turf
 
 					else
 						ZConnect(src,T)
+			return 1
 
 //				else if(zone && !zone.rebuild)
 //					for(var/direction2 in cardinal - reverse_direction(direction)) //Check all other directions for air that might be connected.
