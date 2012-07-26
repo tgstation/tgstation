@@ -136,15 +136,12 @@ datum
 				var/start_time = world.timeofday
 
 				for(var/turf/simulated/S in world)
-					if(S.z < 5)
-						if(!S.zone && !S.blocks_air)
-							if(S.CanPass(null, S, 0, 0))
-								new/zone(S)
+					if(!S.zone && !S.blocks_air)
+						if(S.CanPass(null, S, 0, 0))
+							new/zone(S)
 
 				for(var/turf/simulated/S in world)
-					if(S.z < 5)
-						S.update_air_properties()
-					//	S.check_connections()
+					S.update_air_properties()
 
 				world << "\red \b Geometry processed in [time2text(world.timeofday-start_time, "mm:ss")] minutes!"
 				spawn start()
