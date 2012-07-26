@@ -937,6 +937,10 @@ proc/process_ghost_teleport_locs()
 		name = "\improper Engineering Core"
 		icon_state = "engine_core"
 
+	cooling
+		name = "\improper Emergency Cooling Room"
+		icon_state = "engine"
+
 //reactor areas
 
 	reactor_core
