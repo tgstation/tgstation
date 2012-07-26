@@ -6,6 +6,8 @@
 	verbs += /mob/dead/observer/proc/dead_tele
 	stat = DEAD
 
+	dead_mob_list += src
+	add_to_mob_list(src)
 	if(body)
 		var/turf/T = get_turf(body)			//Where is the body located?
 		if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
@@ -38,7 +40,7 @@ Works together with spawning an observer, noted above.
 			ghost.key = key
 
 	else if(transfer_mind)						//Body getting destroyed but the person is not present inside.
-		for(var/mob/dead/observer/O in world)
+		for(var/mob/dead/observer/O in dead_mob_list)
 			if(O.corpse == src && O.key)		//If they have the same corpse and are keyed.
 				if(mind)
 					O.mind = mind				//Transfer their mind if they have one.
@@ -135,6 +137,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(corpse.ajourn)
 		corpse.ajourn=0
 	client.mob = corpse
+	remove_from_mob_list(src)
+	dead_mob_list -= src
 	del(src)
 
 /mob/dead/observer/proc/dead_tele()
@@ -227,4 +231,3 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/add_memory()
 	set hidden = 1
 	src << "\red You are dead! You have no mind to store memory!"
-

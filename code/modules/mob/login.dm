@@ -4,7 +4,7 @@
 	computer_id	= client.computer_id
 	log_access("Login: [key_name(src)] from [lastKnownIP ? lastKnownIP : "localhost"]-[computer_id] || BYOND v[client.byond_version]")
 	if(config.log_access)
-		for(var/mob/M in world)
+		for(var/mob/M in player_list)
 			if(M == src)	continue
 			if( M.key && (M.key != key) )
 				var/matches
@@ -23,6 +23,9 @@
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
 /mob/Login()
+	player_list |= list(src)
+	if(client.holder)
+		admin_list |= list(src)
 	update_Login_details()
 	world.update_status()
 	client.images = null				//remove the images such as AIs being unable to see runes

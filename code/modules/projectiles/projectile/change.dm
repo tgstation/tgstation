@@ -18,7 +18,7 @@
 
 
 
-/obj/item/projectile/change/proc/wabbajack (mob/M as mob in world)
+/obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != 2)
 		for(var/obj/item/W in M)
 			if (istype(M, /mob/living/silicon/robot)||istype(W, /obj/item/weapon/implant))

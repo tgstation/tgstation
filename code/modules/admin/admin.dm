@@ -6,8 +6,8 @@ var/global/BSACooldown = 0
 /proc/message_admins(var/text, var/admin_ref = 0, var/admin_holder_ref = 0)
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
 	log_adminwarn(rendered)
-	for (var/mob/M in world)
-		if (M && M.client && M.client.holder)
+	for (var/mob/M in admin_list)
+		if (M)
 			var/msg = rendered
 			if (admin_ref)
 				msg = dd_replaceText(msg, "%admin_ref%", "\ref[M]")
@@ -1630,14 +1630,14 @@ var/global/BSACooldown = 0
 				if("monkey")
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","M")
-					for(var/mob/living/carbon/human/H in world)
+					for(var/mob/living/carbon/human/H in mob_list)
 						spawn(0)
 							H.monkeyize()
 					ok = 1
 				if("corgi")
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","M")
-					for(var/mob/living/carbon/human/H in world)
+					for(var/mob/living/carbon/human/H in mob_list)
 						spawn(0)
 							H.corgize()
 					ok = 1
@@ -1688,7 +1688,7 @@ var/global/BSACooldown = 0
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","PW")
 					message_admins("\blue [key_name_admin(usr)] teleported all players to the prison station.", 1)
-					for(var/mob/living/carbon/human/H in world)
+					for(var/mob/living/carbon/human/H in mob_list)
 						var/turf/loc = find_loc(H)
 						var/security = 0
 						if(loc.z > 1 || prisonwarped.Find(H))
@@ -1731,7 +1731,7 @@ var/global/BSACooldown = 0
 							return
 						feedback_inc("admin_secrets_fun_used",1)
 						feedback_add_details("admin_secrets_fun_used","TA([objective])")
-						for(var/mob/living/carbon/human/H in world)
+						for(var/mob/living/carbon/human/H in player_list)
 							if(H.stat == 2 || !H.client || !H.mind) continue
 							if(is_special_character(H)) continue
 							//traitorize(H, objective, 0)
@@ -1744,7 +1744,7 @@ var/global/BSACooldown = 0
 							ticker.mode.greet_traitor(H)
 							//ticker.mode.forge_traitor_objectives(H.mind)
 							ticker.mode.finalize_traitor(H)
-						for(var/mob/living/silicon/A in world)
+						for(var/mob/living/silicon/A in player_list)
 							ticker.mode.traitors += A.mind
 							A.mind.special_role = "traitor"
 							var/datum/objective/new_objective = new
@@ -1825,8 +1825,8 @@ var/global/BSACooldown = 0
 					feedback_add_details("admin_secrets_fun_used","FL")
 					while(!usr.stat)
 	//knock yourself out to stop the ghosts
-						for(var/mob/M in world)
-							if(M.client && M.stat != 2 && prob(25))
+						for(var/mob/M in player_list)
+							if(M.stat != 2 && prob(25))
 								var/area/AffectedArea = get_area(M)
 								if(AffectedArea.name != "Space" && AffectedArea.name != "Engine Walls" && AffectedArea.name != "Chemical Lab Test Chamber" && AffectedArea.name != "Escape Shuttle" && AffectedArea.name != "Arrival Area" && AffectedArea.name != "Arrival Shuttle" && AffectedArea.name != "start area" && AffectedArea.name != "Engine Combustion Chamber")
 									AffectedArea.power_light = 0
@@ -1848,8 +1848,8 @@ var/global/BSACooldown = 0
 										if(prob(25) && !W.anchored)
 											step_rand(W)
 						sleep(rand(100,1000))
-					for(var/mob/M in world)
-						if(M.client && M.stat != 2)
+					for(var/mob/M in player_list)
+						if(M.stat != 2)
 							M.show_message(text("\blue The chilling wind suddenly stops..."), 1)
 	/*				if("shockwave")
 					ok = 1
@@ -1998,9 +1998,8 @@ var/global/BSACooldown = 0
 					if (src.rank in list("Badmin", "Game Admin", "Game Master"))
 						feedback_inc("admin_secrets_fun_used",1)
 						feedback_add_details("admin_secrets_fun_used","RET")
-						for(var/mob/living/carbon/human/H in world)
-							if(H.client)
-								H << "\red <B>You suddenly feel stupid.</B>"
+						for(var/mob/living/carbon/human/H in player_list)
+							H << "\red <B>You suddenly feel stupid.</B>"
 							H.setBrainLoss(60)
 						message_admins("[key_name_admin(usr)] made everybody retarded")
 					else
@@ -2037,7 +2036,7 @@ var/global/BSACooldown = 0
 					if (src.rank in list("Badmin","Game Admin", "Game Master"))
 						feedback_inc("admin_secrets_fun_used",1)
 						feedback_add_details("admin_secrets_fun_used","DF")
-						for(var/mob/living/carbon/human/B in world)
+						for(var/mob/living/carbon/human/B in mob_list)
 							B.face_icon_state = "facial_wise"
 							B.update_hair()
 						message_admins("[key_name_admin(usr)] activated dorf mode")
@@ -2102,7 +2101,7 @@ var/global/BSACooldown = 0
 				if("check_antagonist")
 					check_antagonists()
 				if("showailaws")
-					for(var/mob/living/silicon/ai/ai in world)
+					for(var/mob/living/silicon/ai/ai in mob_list)
 						usr << "[key_name(ai, usr)]'s Laws:"
 						if (ai.laws == null)
 							usr << "[key_name(ai, usr)]'s Laws are null??"
@@ -2117,7 +2116,7 @@ var/global/BSACooldown = 0
 				if("manifest")
 					var/dat = "<B>Showing Crew Manifest.</B><HR>"
 					dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
-					for(var/mob/living/carbon/human/H in world)
+					for(var/mob/living/carbon/human/H in mob_list)
 						if(H.ckey)
 							dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
 					dat += "</table>"
@@ -2125,7 +2124,7 @@ var/global/BSACooldown = 0
 				if("DNA")
 					var/dat = "<B>Showing DNA from blood.</B><HR>"
 					dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
-					for(var/mob/living/carbon/human/H in world)
+					for(var/mob/living/carbon/human/H in mob_list)
 						if(H.dna && H.ckey)
 							dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
 					dat += "</table>"
@@ -2133,7 +2132,7 @@ var/global/BSACooldown = 0
 				if("fingerprints")
 					var/dat = "<B>Showing Fingerprints.</B><HR>"
 					dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
-					for(var/mob/living/carbon/human/H in world)
+					for(var/mob/living/carbon/human/H in mob_list)
 						if(H.ckey)
 							if(H.dna && H.dna.uni_identity)
 								dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
@@ -2181,7 +2180,7 @@ var/global/BSACooldown = 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
-/obj/admins/proc/show_player_panel(var/mob/M in world)
+/obj/admins/proc/show_player_panel(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
@@ -2559,19 +2558,17 @@ var/global/BSACooldown = 0
 
 	log_admin("Voting to [vote.mode?"change mode":"restart round"] forced by admin [key_name(usr)]")
 
-	for(var/mob/CM in world)
-		if(CM.client)
-			if(config.vote_no_default || (config.vote_no_dead && CM.stat == 2))
-				CM.client.vote = "none"
-			else
-				CM.client.vote = "default"
+	for(var/mob/CM in player_list)
+		if(config.vote_no_default || (config.vote_no_dead && CM.stat == 2))
+			CM.client.vote = "none"
+		else
+			CM.client.vote = "default"
 
-	for(var/mob/CM in world)
-		if(CM.client)
-			if(config.vote_no_default || (config.vote_no_dead && CM.stat == 2))
-				CM.client.vote = "none"
-			else
-				CM.client.vote = "default"
+	for(var/mob/CM in player_list)
+		if(config.vote_no_default || (config.vote_no_dead && CM.stat == 2))
+			CM.client.vote = "none"
+		else
+			CM.client.vote = "default"
 	feedback_add_details("admin_verb","SV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/votekill()
@@ -2588,11 +2585,10 @@ var/global/BSACooldown = 0
 	vote.voting = 0
 	vote.nextvotetime = world.timeofday + 10*config.vote_delay
 
-	for(var/mob/M in world)
+	for(var/mob/M in player_list)
 		// clear vote window from all clients
-		if(M.client)
-			M << browse(null, "window=vote")
-			M.client.showvote = 0
+		M << browse(null, "window=vote")
+		M.client.showvote = 0
 	feedback_add_details("admin_verb","AV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/voteres()
@@ -2841,7 +2837,7 @@ var/global/BSACooldown = 0
 		usr << "Prayer visibility turned off"
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/obj/admins/proc/unprison(var/mob/M in world)
+/obj/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
 	if (M.z == 2)
@@ -2954,7 +2950,7 @@ var/global/BSACooldown = 0
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/obj/admins/proc/show_traitor_panel(var/mob/M in world)
+/obj/admins/proc/show_traitor_panel(var/mob/M in mob_list)
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"

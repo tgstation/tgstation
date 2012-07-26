@@ -5,7 +5,7 @@
 	set desc = "Summon Guns"
 	set name = "Wizards: No sense of right and wrong!"
 
-	for(var/mob/living/carbon/human/H in world)
+	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(is_special_character(H)) continue
 		if(prob(25))

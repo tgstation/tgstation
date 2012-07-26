@@ -53,9 +53,9 @@ obj/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1
 		a_computerid = src.owner:computer_id
 		a_ip = src.owner:address
 
-	var/list/client/clients = get_all_clients()
+//	var/list/client/clients = get_all_clients()
 	var/who
-	for(var/client/C in clients)
+	for(var/client/C in client_list)
 		if(!who)
 			who = "[C]"
 		else

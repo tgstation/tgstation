@@ -191,11 +191,10 @@
 
 		if(!client)
 			var/foundghost = 0
-			for(var/mob/dead/observer/G in world)
-				if(G.client)
-					if(G.corpse == src)
-						foundghost++
-						break
+			for(var/mob/dead/observer/G in player_list)
+				if(G.corpse == src)
+					foundghost++
+					break
 			if(!foundghost)
 				msg += " and [t_his] soul has departed"
 		msg += "...</span>\n"

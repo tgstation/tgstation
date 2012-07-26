@@ -7,6 +7,7 @@
 	src.real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
 	verbs -= /mob/living/carbon/alien/humanoid/verb/ActivateHuggers	//<-- pointless
+	living_mob_list += src
 //Drones use the same base as generic humanoids.
 //Drone verbs
 

@@ -3,7 +3,7 @@
 	spawn()
 		if(!nosleep)
 			sleep(40)
-		for(var/mob/living/carbon/human/H in world)
+		for(var/mob/living/carbon/human/H in player_list)
 			if (!isnull(H.mind) && (H.mind.assigned_role != "MODE"))
 				var/datum/data/record/G = new()
 				var/datum/data/record/M = new()

@@ -9,7 +9,7 @@
 
 	else if(T == "players")
 		var/n = 0
-		for(var/mob/M in world)
+		for(var/mob/M in player_list)
 			if(M.client)
 				n++
 		return n
@@ -27,7 +27,7 @@
 		var/n = 0
 		var/admins = 0
 
-		for(var/mob/M in world)
+		for(var/mob/M in player_list)
 
 			if(M.client)
 				if(M.client.holder)

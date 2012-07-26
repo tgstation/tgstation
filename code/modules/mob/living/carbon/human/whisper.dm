@@ -161,8 +161,8 @@
 	else
 		rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] whispers, <span class='message'>\"[message]\"</span></span>"
 
-	for (var/mob/M in world)
-		if (istype(M, /mob/new_player))
+	for (var/mob/M in dead_mob_list)
+		if (!(M.client))
 			continue
 		if (M.stat > 1 && !(M in heard_a))
 			M.show_message(rendered, 2)

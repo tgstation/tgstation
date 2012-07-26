@@ -47,11 +47,9 @@
 	if (message)
 		log_emote("[name]/[key] : [message]")
 
-		for(var/mob/M in world)
+		for(var/mob/M in dead_mob_list)
 			if (!M.client)
 				continue //skip monkeys and leavers
-			if (istype(M, /mob/new_player))
-				continue
 			if(M.stat == 2 && M.client.ghost_sight && !(M in viewers(src,null)))
 				M.show_message(message)
 

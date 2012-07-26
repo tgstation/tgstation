@@ -44,7 +44,7 @@
 	usr.control_object = null
 	feedback_add_details("admin_verb","RO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/proc/givetestverbs(mob/M as mob in world)
+/proc/givetestverbs(mob/M as mob in mob_list)
 	set desc = "Give this guy possess/release verbs"
 	set category = "Debug"
 	set name = "Give Possessing Verbs"

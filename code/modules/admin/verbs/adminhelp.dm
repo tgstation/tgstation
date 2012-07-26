@@ -33,7 +33,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 
 	var/list/mob/mobs = list()
 
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		mobs += M
 
 	var/list/replacement_value = list()		//When a word match is found, the word matched will get replaced with an × (fancy multiplication symbol).

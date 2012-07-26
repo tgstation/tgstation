@@ -98,9 +98,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		..()
 		var/image/blood = image(loc = src)
 		blood.override = 1
-		for(var/mob/living/silicon/ai/AI in world)
-			if(AI.client)
-				AI.client.images += blood
+		for(var/mob/living/silicon/ai/AI in player_list)
+			AI.client.images += blood
 
 	examine()
 		set src in view(2)

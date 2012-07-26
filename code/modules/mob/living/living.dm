@@ -263,6 +263,9 @@
 	heal_overall_damage(1000, 1000)
 	buckled = initial(src.buckled)
 	handcuffed = initial(src.handcuffed)
+	if(stat == 2)
+		dead_mob_list -= src
+		living_mob_list += src
 	stat = CONSCIOUS
 	regenerate_icons()
 	..()

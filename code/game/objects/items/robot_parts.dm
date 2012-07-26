@@ -189,8 +189,8 @@
 			if (M.brainmob && M.brainmob.mind)
 				M.brainmob.mind.transfer_to(O)
 			else
-				for(var/mob/dead/observer/G in world)
-					if(G.corpse == M.brainmob && G.client && G.corpse.mind)
+				for(var/mob/dead/observer/G in player_list)
+					if(G.corpse == M.brainmob && G.corpse.mind)
 						G.corpse.mind.transfer_to(O)
 						del(G)
 						break

@@ -90,12 +90,11 @@
 	if( connection != "seeker" )
 		del(src)
 		return
-
+	client_list |= src
 	if ( (world.address == address || !address) && !host )
 		host = key
 		world.update_status()
 
-	client_list[ckey] = src
 
 	..()	//calls mob.Login()
 
@@ -104,6 +103,7 @@
 		holder = new /obj/admins(src)
 		holder.rank = admins[ckey]
 		update_admins(admins[ckey])
+		make_admin_list()
 		admin_memo_show()
 
 
@@ -116,4 +116,5 @@
 	spawn(0)
 		if(holder)
 			del(holder)
+	client_list -= src
 	return ..()

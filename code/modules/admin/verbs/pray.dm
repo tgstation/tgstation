@@ -16,8 +16,8 @@
 
 	var/icon/cross = icon('icons/obj/storage.dmi',"bible")
 
-	for (var/mob/M in world)
-		if (M.client && M.client.holder && M.client.seeprayers)
+	for (var/mob/M in admin_list)
+		if (M.client.seeprayers)
 			M << "\blue \icon[cross] <b><font color=purple>PRAY: </font>[key_name(src, M)] (<A HREF='?src=\ref[M.client.holder];adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[src]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>) (<A HREF='?src=\ref[M.client.holder];adminspawncookie=\ref[src]'>SC</a>):</b> [msg]"
 
 	usr << "Your prayers have been received by the gods."
@@ -31,9 +31,8 @@
 
 //	log_admin("[key_name(Sender)] sent a message to Centcomm!  The message was [msg]")  // Handled somewhere else
 
-	for (var/mob/M in world)
-		if (M.client && M.client.holder)
-			M << "\blue <b><font color=orange>CENTCOMM:</font>[key_name(Sender, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[Sender]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>) (<A HREF='?src=\ref[M.client.holder];BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?src=\ref[M.client.holder];CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]"
+	for (var/mob/M in admin_list)
+		M << "\blue <b><font color=orange>CENTCOMM:</font>[key_name(Sender, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[Sender]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>) (<A HREF='?src=\ref[M.client.holder];BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?src=\ref[M.client.holder];CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]"
 			//
 /proc/Syndicate_announce(var/text , var/mob/Sender)
 
@@ -41,7 +40,6 @@
 
 //	log_admin("[key_name(Sender)] sent a message to the Syndicate!  The message was [msg]")  // Handled somewhere else
 
-	for (var/mob/M in world)
-		if (M.client && M.client.holder)
-			M << "\blue <b><font color=crimson>SYNDICATE:</font>[key_name(Sender, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[Sender]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>) (<A HREF='?src=\ref[M.client.holder];BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?src=\ref[M.client.holder];SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [msg]"
+	for (var/mob/M in admin_list)
+		M << "\blue <b><font color=crimson>SYNDICATE:</font>[key_name(Sender, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[Sender]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>) (<A HREF='?src=\ref[M.client.holder];BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?src=\ref[M.client.holder];SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [msg]"
 			//

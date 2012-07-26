@@ -19,6 +19,9 @@
 	lastarea = starting_loc
 
 	sight |= SEE_TURFS
+	player_list |= src
+	if(src.client.holder)
+		admin_list |= src
 
 	var/list/watch_locations = list()
 	for(var/obj/effect/landmark/landmark in world)

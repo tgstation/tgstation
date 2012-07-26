@@ -132,3 +132,8 @@
 	new /obj/item/clothing/mask/gas/sexymime(src.loc)
 	new /obj/item/clothing/under/sexymime(src.loc)
 	del(src)
+
+///obj/effect/landmark/costume/hidden/master/New()
+//	var/list/templist = list()
+//	templist += src
+//	for(var/obj/effect/landmark/costume/hidden/H in z1

@@ -84,7 +84,7 @@
 		var/list/possible_targets = get_unconvertables()
 
 		if(!possible_targets.len)
-			for(var/mob/living/carbon/human/player in world)
+			for(var/mob/living/carbon/human/player in player_list)
 				if(player.mind && !(player.mind in cult))
 					possible_targets += player.mind
 
@@ -266,7 +266,7 @@
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
-	for(var/mob/living/carbon/human/player in world)
+	for(var/mob/living/carbon/human/player in mob_list)
 		if(!is_convertable_to_cult(player.mind))
 			ucs += player.mind
 	return ucs

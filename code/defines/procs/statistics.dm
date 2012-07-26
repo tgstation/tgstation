@@ -2,7 +2,7 @@ proc/sql_poll_players()
 	if(!sqllogging)
 		return
 	var/playercount = 0
-	for(var/mob/M in world)
+	for(var/mob/M in player_list)
 		if(M.client)
 			playercount += 1
 	var/DBConnection/dbcon = new()
@@ -22,8 +22,8 @@ proc/sql_poll_admins()
 	if(!sqllogging)
 		return
 	var/admincount = 0
-	for (var/mob/M in world)
-		if(M && M.client && M.client.holder)
+	for (var/mob/M in admin_list)
+		if(M && M.client)
 			admincount += 1
 	var/DBConnection/dbcon = new()
 	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")

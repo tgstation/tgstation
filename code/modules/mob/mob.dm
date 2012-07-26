@@ -1,5 +1,13 @@
 /mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	ghostize(1)
+	remove_from_mob_list(src)
+	living_mob_list -= src
+	dead_mob_list -= src
+	..()
+
+/mob/New()
+	add_to_mob_list(src)
+	living_mob_list += src//No way this can possibly fail
 	..()
 
 /mob/proc/Cell()
@@ -87,7 +95,7 @@
 
 
 /mob/proc/findname(msg)
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if (M.real_name == text("[]", msg))
 			return M
 	return 0

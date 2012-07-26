@@ -36,7 +36,7 @@ rcd light flash thingy on matter drain
 /client/proc/fireproof_core()
 	set category = "Malfunction"
 	set name = "Fireproof Core"
-	for(var/mob/living/silicon/ai/ai in world)
+	for(var/mob/living/silicon/ai/ai in player_list)
 		ai.fire_res_on_core = 1
 	usr.verbs -= /client/proc/fireproof_core
 	usr << "\red Core fireproofed."
@@ -49,7 +49,7 @@ rcd light flash thingy on matter drain
 	set category = "Malfunction"
 	set name = "Upgrade Turrets"
 	usr.verbs -= /client/proc/upgrade_turrets
-	for(var/obj/machinery/turret/turret in world)
+	for(var/obj/machinery/turret/turret in player_list)
 		turret.health += 30
 		turret.shot_delay = 20
 

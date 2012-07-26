@@ -173,11 +173,11 @@
 
 
 	// Brains/MMIs/pAIs
-	for(var/mob/living/carbon/brain/C in world)
+	for(var/mob/living/carbon/brain/C in player_list)
 		if(get_turf(C) in V)
 			if(isInSight(source,C))
 				hear += C
-	for(var/mob/living/silicon/pai/C in world)
+	for(var/mob/living/silicon/pai/C in player_list)
 		if(get_turf(C) in V)
 			if(isInSight(source,C))
 				hear += C

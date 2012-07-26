@@ -225,3 +225,39 @@ datum/controller/game_controller
 
 
 		return 1
+
+
+
+/datum/failsafe // This thing pretty much just keeps poking the master controller
+	var/spinning = 1
+	var/current_iteration = 0
+
+/datum/failsafe/proc/spin()
+	if(!master_controller) // Well fuck.  How did this happen?
+		sleep(50)
+		if(!master_controller)
+			master_controller = new /datum/controller/game_controller()
+		spawn(-1)
+			master_controller.setup()
+
+	else
+		while(spinning)
+			current_iteration = controller_iteration
+			sleep(600) // Wait 15 seconds
+			if(current_iteration == controller_iteration) // Mm.  The master controller hasn't ticked yet.
+
+				for (var/mob/M in admin_list)
+					if (M.client)
+						M << "<font color='red' size='2'><b> Warning.  The Master Controller has not fired in the last 60 seconds.  Restart recommended.  Automatic restart in 60 seconds.</b></font>"
+
+				sleep(600)
+				if(current_iteration == controller_iteration)
+					for (var/mob/M in admin_list)
+						if (M.client)
+							M << "<font color='red' size='2'><b> Warning.  The Master Controller has not fired in the last 2 minutes.  Automatic restart beginning.</b></font>"
+					master_controller.process()
+					sleep(150)
+				else
+					for (var/mob/M in admin_list)
+						if (M.client)
+							M << "<font color='red' size='2'><b> The Master Controller has fired.  Automatic restart aborted.</b></font>"

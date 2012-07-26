@@ -84,12 +84,12 @@
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
-		for (var/mob/living/silicon/aiPlayer in world)
+		for (var/mob/living/silicon/aiPlayer in player_list)
 			if (state == 1)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
 				aiPlayer.triggerAlarm("Power", src, cameras, source)
-		for(var/obj/machinery/computer/station_alert/a in world)
+		for(var/obj/machinery/computer/station_alert/a in player_list)
 			if(state == 1)
 				a.cancelAlarm("Power", src, source)
 			else
@@ -108,12 +108,12 @@
 				//src.updateicon()
 				for(var/obj/machinery/camera/C in RA)
 					cameras += C
-			for(var/mob/living/silicon/aiPlayer in world)
+			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in world)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
 		else if (src.atmosalm == 2)
-			for(var/mob/living/silicon/aiPlayer in world)
+			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in world)
 				a.cancelAlarm("Atmosphere", src, src)
@@ -138,7 +138,7 @@
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
-		for (var/mob/living/silicon/ai/aiPlayer in world)
+		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 		for (var/obj/machinery/computer/station_alert/a in world)
 			a.triggerAlarm("Fire", src, cameras, src)
@@ -156,9 +156,9 @@
 				else if(D.density)
 					spawn(0)
 					D.open()
-		for (var/mob/living/silicon/ai/aiPlayer in world)
+		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/station_alert/a in world)
+		for (var/obj/machinery/computer/station_alert/a in player_list)
 			a.cancelAlarm("Fire", src, src)
 	return
 

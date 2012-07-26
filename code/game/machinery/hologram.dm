@@ -19,7 +19,7 @@ Possible to do for anyone motivated enough:
 			last_request = world.time
 			user << "<span class='notice'>You request an AI's presence.</span>"
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in world)
+			for(var/mob/living/silicon/ai/AI in player_list)
 				if(!AI.client)	continue
 				AI << "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>"
 		else

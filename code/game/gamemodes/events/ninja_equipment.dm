@@ -1064,7 +1064,7 @@ ________________________________________________________________________________
 			U << "\blue Hacking \the [A]..."
 			spawn(0)
 				var/turf/location = get_turf(U)
-				for(var/mob/living/silicon/ai/AI in world)
+				for(var/mob/living/silicon/ai/AI in player_list)
 					AI << "\red <b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>."
 			if(A:files&&A:files.known_tech.len)
 				for(var/datum/tech/current_data in S.stored_research)
@@ -1239,7 +1239,7 @@ ________________________________________________________________________________
 				voice = "[pick(wizard_first)] [pick(wizard_second)]"
 			if(91 to 100)//Small chance of an existing crew name.
 				var/names[] = new()
-				for(var/mob/living/carbon/human/M in world)
+				for(var/mob/living/carbon/human/M in player_list)
 					if(M==U||!M.client||!M.real_name)	continue
 					names.Add(M.real_name)
 				voice = !names.len ? "Cuban Pete" : pick(names)

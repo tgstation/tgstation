@@ -245,7 +245,7 @@ var/list/department_radio_keys = list(
 
 		if("changeling")
 			if(src.changeling)
-				for(var/mob/aChangeling in world)
+				for(var/mob/aChangeling in mob_list)
 					if(aChangeling.changeling || istype(aChangeling, /mob/dead/observer))
 						aChangeling << "<i><font color=#800080><b>[gender=="male"?"Mr.":"Mrs."] [changeling.changelingID]:</b> [message]</font></i>"
 				return
@@ -263,7 +263,7 @@ var/list/department_radio_keys = list(
 	var/list/listening
 
 	listening = get_mobs_in_view(message_range, src)
-	for(var/mob/M in world)
+	for(var/mob/M in player_list)
 		if (!M.client)
 			continue //skip monkeys and leavers
 		if (istype(M, /mob/new_player))

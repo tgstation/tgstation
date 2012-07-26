@@ -80,7 +80,7 @@ Whitespace:Seperator;
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
-	for(var/mob/new_player/player in world)
+	for(var/mob/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
 	if(playerC >= required_players)
@@ -133,7 +133,7 @@ Whitespace:Seperator;
 
 	var/list/area/escape_locations = list(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
 
-	for(var/mob/M in world)
+	for(var/mob/M in player_list)
 		if(M.client)
 			clients++
 			if(ishuman(M))
@@ -249,7 +249,7 @@ Whitespace:Seperator;
 
 
 	// Ultimate randomizing code right here
-	for(var/mob/new_player/player in world)
+	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
 			players += player
 
@@ -331,7 +331,7 @@ Whitespace:Seperator;
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/new_player/P in world)
+	for(var/mob/new_player/P in player_list)
 		if(P.client && P.ready)
 			. ++
 
@@ -341,7 +341,7 @@ Whitespace:Seperator;
 ///////////////////////////////////
 /datum/game_mode/proc/get_living_heads()
 	var/list/heads = list()
-	for(var/mob/living/carbon/human/player in world)
+	for(var/mob/living/carbon/human/player in player_list)
 		if(player.stat!=2 && player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads
@@ -352,7 +352,7 @@ Whitespace:Seperator;
 ////////////////////////////
 /datum/game_mode/proc/get_all_heads()
 	var/list/heads = list()
-	for(var/mob/player in world)
+	for(var/mob/player in player_list)
 		if(player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads

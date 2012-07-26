@@ -75,7 +75,6 @@ var/global/datum/controller/gameticker/ticker
 			src.mode = new mtype
 	else
 		src.mode = config.pick_mode(master_mode)
-
 	if (!src.mode.can_start())
 		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
 		del(mode)
@@ -160,12 +159,12 @@ var/global/datum/controller/gameticker/ticker
 		var/obj/structure/stool/bed/temp_buckle = new(src)
 		//Incredibly hackish. It creates a bed within the gameticker (lol) to stop mobs running around
 		if(station_missed)
-			for(var/mob/living/M in world)
+			for(var/mob/living/M in living_mob_list)
 				M.buckled = temp_buckle				//buckles the mob so it can't do anything
 				if(M.client)
 					M.client.screen += cinematic	//show every client the cinematic
 		else	//nuke kills everyone on z-level 1 to prevent "hurr-durr I survived"
-			for(var/mob/living/M in world)
+			for(var/mob/living/M in living_mob_list)
 				M.buckled = temp_buckle
 				if(M.client)
 					M.client.screen += cinematic
@@ -243,7 +242,7 @@ var/global/datum/controller/gameticker/ticker
 
 
 	proc/create_characters()
-		for(var/mob/new_player/player in world)
+		for(var/mob/new_player/player in player_list)
 			if(player.ready)
 				if(player.mind && player.mind.assigned_role=="AI")
 					player.close_spawn_windows()
@@ -254,14 +253,14 @@ var/global/datum/controller/gameticker/ticker
 
 
 	proc/collect_minds()
-		for(var/mob/living/player in world)
+		for(var/mob/living/player in player_list)
 			if(player.mind)
 				ticker.minds += player.mind
 
 
 	proc/equip_characters()
 		var/captainless=1
-		for(var/mob/living/carbon/human/player in world)
+		for(var/mob/living/carbon/human/player in player_list)
 			if(player && player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role == "Captain")
 					captainless=0
@@ -315,7 +314,7 @@ var/global/datum/controller/gameticker/ticker
 
 /datum/controller/gameticker/proc/declare_completion()
 
-	for (var/mob/living/silicon/ai/aiPlayer in world)
+	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2)
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</b>"
 		else
@@ -328,7 +327,7 @@ var/global/datum/controller/gameticker/ticker
 				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
 			world << "[robolist]"
 
-	for (var/mob/living/silicon/robot/robo in world)
+	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai)
 			if (robo.stat != 2)
 				world << "<b>[robo.name] (Played by: [robo.key]) survived as an AI-less borg! Its laws were:</b>"
@@ -346,7 +345,7 @@ var/global/datum/controller/gameticker/ticker
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
 	//Look into all mobs in world, dead or alive
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if(M.mind && M.mind.special_role) //If they have a mind and are an antagonist of some sort...
 			var/temprole = M.mind.special_role
 

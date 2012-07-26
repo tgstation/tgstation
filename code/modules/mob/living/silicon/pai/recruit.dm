@@ -151,7 +151,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		for(var/datum/paiCandidate/c in paiController.pai_candidates)
 			if(c.ready)
 				var/found = 0
-				for(var/mob/dead/observer/o in world)
+				for(var/mob/dead/observer/o in player_list)
 					if(o.key == c.key)
 						found = 1
 				if(found)
@@ -192,7 +192,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		user << browse(dat, "window=findPai")
 
 	proc/requestRecruits()
-		for(var/mob/dead/observer/O in world)
+		for(var/mob/dead/observer/O in player_list)
 			if(jobban_isbanned(O, "pAI"))
 				continue
 			if(asked.Find(O.key))

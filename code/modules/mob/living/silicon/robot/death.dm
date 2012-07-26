@@ -14,6 +14,7 @@
 	flick("gibbed-r", animation)
 	robogibs(loc, viruses)
 
+	living_mob_list -= src
 	spawn(15)
 		if(animation)	del(animation)
 		if(src)			del(src)
@@ -35,6 +36,7 @@
 	new /obj/effect/decal/remains/robot(loc)
 	if(mmi)		del(mmi)	//Delete the MMI first so that it won't go popping out.
 
+	dead_mob_list -= src
 	spawn(15)
 		if(animation)	del(animation)
 		if(src)			del(src)

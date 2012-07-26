@@ -163,7 +163,7 @@
 			A.power_change()
 
 /proc/appendicitis()
-	for(var/mob/living/carbon/human/H in world)
+	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/foundAlready = 0 // don't infect someone that already has the virus
 		for(var/datum/disease/D in H.viruses)
 			foundAlready = 1
@@ -204,7 +204,7 @@
 //				virus_type = /datum/disease/t_virus
 			if("pierrot's throat")
 				virus_type = /datum/disease/pierrot_throat
-	for(var/mob/living/carbon/human/H in world)
+	for(var/mob/living/carbon/human/H in living_mob_list)
 
 		var/foundAlready = 0 // don't infect someone that already has the virus
 		for(var/datum/disease/D in H.viruses)
@@ -249,7 +249,7 @@
 
 		var/list/candidates = list() // Picks a random ghost in the world to shove in the larva -- TLE; If there's no ghost... well, sucks. Wasted event. -- Urist
 
-		for(var/mob/dead/observer/G in world)
+		for(var/mob/dead/observer/G in player_list)
 			if(G.client)
 				if(G.client.be_alien)
 					if(((G.client.inactivity/10)/60) <= 5)
@@ -282,7 +282,7 @@
 
 	sleep(100)
 */
-	for(var/mob/living/carbon/human/H in world)
+	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(istype(H,/mob/living/carbon/human))
 			H.apply_effect((rand(15,75)),IRRADIATE,0)
 			if (prob(5))
@@ -294,7 +294,7 @@
 				else
 					randmutg(H)
 					domutcheck(H,null,1)
-	for(var/mob/living/carbon/monkey/M in world)
+	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
 	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
@@ -395,7 +395,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 */
 
 	//AI laws
-	for(var/mob/living/silicon/ai/M in world)
+	for(var/mob/living/silicon/ai/M in living_mob_list)
 		if(M.stat != 2 && M.see_in_dark != 0)
 			var/who2 = pick("ALIENS", "BEARS", "CLOWNS", "XENOS", "PETES", "BOMBS", "FETISHES", "WIZARDS", "SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS",  "BEES", "CARP", "CRABS", "EELS", "BANDITS", "LIGHTS")
 			var/what2 = pick("BOLTERS", "STAVES", "DICE", "SINGULARITIES", "TOOLBOXES", "NETTLES", "AIRLOCKS", "CLOTHES", "WEAPONS", "MEDKITS", "BOMBS", "CANISTERS", "CHAIRS", "BBQ GRILLS", "ID CARDS", "CAPTAINS")
@@ -414,7 +414,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 			var/allergysev = pick("deathly", "mildly", "severely", "contagiously")
 			var/crew
 			var/list/pos_crew = list()
-			for(var/mob/living/carbon/human/pos in world)
+			for(var/mob/living/carbon/human/pos in player_list)
 				pos_crew += pos.real_name
 			crew = pick(pos_crew)
 			switch(rand(1,14))

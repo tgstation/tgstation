@@ -477,7 +477,7 @@
 		spawn(10)
 			var/list/candidates = list()
 
-			for(var/mob/dead/observer/G in world)
+			for(var/mob/dead/observer/G in player_list)
 				candidates += G
 
 			for(var/mob/dead/observer/G in candidates)

@@ -79,6 +79,7 @@
 	var/turf/T = src.loc			// hide if turf is not intact
 
 	if(level==1) hide(T.intact)
+	cable_list += src
 
 
 /obj/structure/cable/Del()		// called when a cable is deleted
@@ -87,6 +88,7 @@
 		if(netnum && powernets && (powernets.len >= netnum) && (netnum >= 1) )		// make sure cable & powernet data is valid
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
+	cable_list -= src
 //	else
 //		if(Debug) diary << "Defered cable deletion at [x],[y]: #[netnum]"
 	..()													// then go ahead and delete the cable

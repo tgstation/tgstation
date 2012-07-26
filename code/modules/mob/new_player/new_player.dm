@@ -108,7 +108,7 @@
 				stat("Players: [totalPlayers]", "Players Ready: [totalPlayersReady]")
 				totalPlayers = 0
 				totalPlayersReady = 0
-				for(var/mob/new_player/player in world)
+				for(var/mob/new_player/player in player_list)
 					stat("[player.key]", (player.ready)?("(Playing)"):(null))
 					totalPlayers++
 					if(player.ready)totalPlayersReady++
@@ -272,9 +272,8 @@
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
 			var/ailist[] = list()
-			for (var/mob/living/silicon/ai/A in world)
-				if (!A.stat)
-					ailist += A
+			for (var/mob/living/silicon/ai/A in living_mob_list)
+				ailist += A
 			if (ailist.len)
 				var/mob/living/silicon/ai/announcer = pick(ailist)
 				if(character.mind)

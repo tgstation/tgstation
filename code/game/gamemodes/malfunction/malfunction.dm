@@ -28,7 +28,7 @@
 
 
 /datum/game_mode/malfunction/pre_setup()
-	for(var/mob/new_player/player in world)
+	for(var/mob/new_player/player in player_list)
 		if(player.mind && player.mind.assigned_role == "AI")
 			malf_ai+=player.mind
 	if(malf_ai.len)
@@ -178,9 +178,8 @@
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
 	ticker.mode:explosion_in_progress = 1
-	for(var/mob/M in world)
-		if(M.client)
-			M << 'Alarm.ogg'
+	for(var/mob/M in player_list)
+		M << 'Alarm.ogg'
 	world << "Self-destructing in 10"
 	for (var/i=9 to 1 step -1)
 		sleep(10)

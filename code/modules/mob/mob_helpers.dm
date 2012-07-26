@@ -249,7 +249,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/findname(msg)
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if (M.real_name == text("[msg]"))
 			return 1
 	return 0

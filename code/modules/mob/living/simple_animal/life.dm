@@ -16,7 +16,7 @@
 	var/meat_type
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
-	
+
 	//Interaction
 	var/response_help   = "You try to help"
 	var/response_disarm = "You try to disarm"
@@ -67,6 +67,8 @@
 	if(stat == DEAD)
 		if(health > 0)
 			icon_state = icon_living
+			dead_mob_list -= src
+			living_mob_list += src
 			stat = CONSCIOUS
 			density = 1
 		return
@@ -348,6 +350,8 @@
 	stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
+	living_mob_list -= src
+	dead_mob_list += src
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0

@@ -55,7 +55,7 @@ var/global/list/obj/machinery/camera/Cameras = list()
 	var/list/namecounts = list()
 	var/list/humans = list()
 	var/list/others = list()
-	for(var/mob/living/M in world)
+	for(var/mob/living/M in mob_list)
 		//Cameras can't track people wearing an agent card or a ninja hood.
 		var/human = 0
 		if(istype(M, /mob/living/carbon/human))
@@ -242,11 +242,11 @@ var/global/list/obj/machinery/camera/Cameras = list()
 		spawn(900)
 			network = initial(network)
 			icon_state = initial(icon_state)
-		for(var/mob/living/silicon/ai/O in world)
+		for(var/mob/living/silicon/ai/O in mob_list)
 			if (O.current == src)
 				O.cancel_camera()
 				O << "Your connection to the camera has been lost."
-		for(var/mob/O in world)
+		for(var/mob/O in mob_list)
 			if (istype(O.machine, /obj/machinery/computer/security))
 				var/obj/machinery/computer/security/S = O.machine
 				if (S.current == src)
@@ -307,12 +307,12 @@ var/global/list/obj/machinery/camera/Cameras = list()
 			itemname = P.name
 			info = P.notehtml
 		U << "You hold \a [itemname] up to the camera ..."
-		for(var/mob/living/silicon/ai/O in world)
+		for(var/mob/living/silicon/ai/O in player_list)
 			//if (O.current == src)
 			if(U.name == "Unknown") O << "<b>[U]</b> holds \a [itemname] up to one of your cameras ..."
 			else O << "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds \a [itemname] up to one of your cameras ..."
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
-		for(var/mob/O in world)
+		for(var/mob/O in player_list)
 			if (istype(O.machine, /obj/machinery/computer/security))
 				var/obj/machinery/computer/security/S = O.machine
 				if (S.current == src)
@@ -388,11 +388,11 @@ var/global/list/obj/machinery/camera/Cameras = list()
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
 	//I guess that doesn't matter since they can't use it anyway?
-	for(var/mob/living/silicon/ai/O in world)
+	for(var/mob/living/silicon/ai/O in player_list)
 		if (O.current == src)
 			O.cancel_camera()
 			O << "Your connection to the camera has been lost."
-	for(var/mob/O in world)
+	for(var/mob/O in player_list)
 		if (istype(O.machine, /obj/machinery/computer/security))
 			var/obj/machinery/computer/security/S = O.machine
 			if (S.current == src)

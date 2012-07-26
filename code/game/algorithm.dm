@@ -46,14 +46,14 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 // This function counts a passed job.
 proc/countJob(rank)
 	var/jobCount = 0
-	for(var/mob/H in world)
+	for(var/mob/H in player_list)
 		if(H.mind && H.mind.assigned_role == rank)
 			jobCount++
 	return jobCount
 
 /proc/AutoUpdateAI(obj/subject)
 	if (subject!=null)
-		for(var/mob/living/silicon/ai/M in world)
+		for(var/mob/living/silicon/ai/M in player_list)
 			if ((M.client && M.machine == subject))
 				subject.attack_ai(M)
 

@@ -65,12 +65,13 @@
 //Improved /N
 /mob/living/silicon/robot/Del()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
+		living_mob_list += mmi
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)
 			mmi.loc = T
 
 			if(!key)	//if we don't have an associated key, try to find the ghost of this body
-				for(var/mob/dead/observer/ghost in world)
+				for(var/mob/dead/observer/ghost in player_list)
 					if(ghost.corpse == src && ghost.client)
 						ghost.client.mob = ghost.corpse
 

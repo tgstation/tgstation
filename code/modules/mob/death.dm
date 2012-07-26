@@ -16,6 +16,7 @@
 //	flick("gibbed-m", animation)
 	gibs(loc, viruses, dna)
 
+	dead_mob_list -= src
 	spawn(15)
 		if(animation)	del(animation)
 		if(src)			del(src)
@@ -40,6 +41,7 @@
 //	flick("dust-m", animation)
 	new /obj/effect/decal/cleanable/ash(loc)
 
+	dead_mob_list -= src
 	spawn(15)
 		if(animation)	del(animation)
 		if(src)			del(src)
@@ -49,16 +51,16 @@
 	timeofdeath = world.time
 
 	var/cancel = 0
-	for(var/mob/M in world)
-		if(M.client && (M.stat != DEAD))
+	for(var/mob/M in player_list)
+		if(M.stat != DEAD)
 			cancel = 1
 			break
 	if(!cancel)
 		world << "<B>Everyone is dead! Resetting in 30 seconds!</B>"
 
 		spawn(300)
-			for(var/mob/M in world)
-				if(M.client && (M.stat != DEAD))
+			for(var/mob/M in player_list)
+				if(M.stat != DEAD)
 					world << "Aborting world restart!"
 					return
 
@@ -73,4 +75,6 @@
 			world.Reboot()
 			return
 
+	living_mob_list -= src
+	dead_mob_list += src
 	return ..(gibbed)

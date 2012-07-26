@@ -76,14 +76,14 @@
 	var/netcount = 0
 	powernets = list()
 
-	for(var/obj/structure/cable/PC in world)
+	for(var/obj/structure/cable/PC in cable_list)
 		PC.netnum = 0
 	for(var/obj/machinery/power/M in machines)
 		if(M.netnum >=0)
 			M.netnum = 0
 
 
-	for(var/obj/structure/cable/PC in world)
+	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.netnum)
 			PC.netnum = ++netcount
 
@@ -99,7 +99,7 @@
 		PN.number = L
 
 
-	for(var/obj/structure/cable/C in world)
+	for(var/obj/structure/cable/C in cable_list)
 		var/datum/powernet/PN = powernets[C.netnum]
 		PN.cables += C
 

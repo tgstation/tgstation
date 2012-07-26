@@ -108,7 +108,7 @@
 
 	var/list/bodies = new/list()
 
-	for(var/mob/living/silicon/hivebot/H in world)
+	for(var/mob/living/silicon/hivebot/H in mob_list)
 		if(H.z == src.z)
 			if(H.shell)
 				if(!H.stat)

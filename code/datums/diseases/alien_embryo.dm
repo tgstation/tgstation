@@ -5,7 +5,7 @@
 	if(!holder) return
 	if(holder == affected_mob)
 		stage_act()
-	
+
 	if(affected_mob.stat == DEAD)
 		if(prob(50))
 			if(--longevity<=0)
@@ -70,7 +70,7 @@
 			if(prob(40))
 				if(gibbed != 0) return 0
 				var/list/candidates = list() // Picks a random ghost in the world to shove in the larva -- TLE
-				for(var/mob/dead/observer/G in world)
+				for(var/mob/dead/observer/G in player_list)
 					if(G.client)
 						if(G.client.be_alien)
 							if(((G.client.inactivity/10)/60) <= 5)

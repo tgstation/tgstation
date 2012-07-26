@@ -33,7 +33,7 @@
 		features += "AI allowed"
 
 	var/n = 0
-	for (var/mob/M in world)
+	for (var/mob/M in player_list)
 		if (M.client)
 			n++
 

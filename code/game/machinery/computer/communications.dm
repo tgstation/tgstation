@@ -516,7 +516,7 @@
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
 			return ..()
 
-	for(var/mob/living/silicon/ai/shuttlecaller in world)
+	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
@@ -541,7 +541,7 @@
 		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)) && commboard != src)
 			return ..()
 
-	for(var/mob/living/silicon/ai/shuttlecaller in world)
+	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 

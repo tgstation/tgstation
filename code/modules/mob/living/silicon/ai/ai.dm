@@ -4,7 +4,7 @@
 	var/pickedName = null
 	while(!pickedName)
 		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in world)
+		for (var/mob/living/silicon/ai/A in mob_list)
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
@@ -59,7 +59,7 @@
 
 			spawn(0)
 				ainame(src)
-
+	living_mob_list += src
 	return
 
 

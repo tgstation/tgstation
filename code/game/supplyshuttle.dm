@@ -163,7 +163,7 @@ var/list/mechtoys = list(
 
 //I know this is an absolutly horrendous way to do this, very inefficient, but it's the only reliable way I can think of.
 	//Check for mobs
-	for(var/mob/living/M in world)
+	for(var/mob/living/M in mob_list)
 		var/area/A = get_area(M)
 		if(!A || !A.type) continue
 		if(A.type == /area/supply/station)

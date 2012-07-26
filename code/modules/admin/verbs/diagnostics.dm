@@ -7,7 +7,7 @@
 			usr << alert("Master_controller not found.")
 
 		var/mobs = 0
-		for(var/mob/M in world)
+		for(var/mob/M in mob_list)
 			mobs++
 
 		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>

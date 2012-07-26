@@ -473,14 +473,13 @@
 /client/proc/get_admin_state()
 	set name = "Get Admin State"
 	set category = "Debug"
-	for(var/mob/M in world)
-		if(M.client && M.client.holder)
-			if(M.client.holder.state == 1)
-				src << "[M.key] is playing - [M.client.holder.state]"
-			else if(M.client.holder.state == 2)
-				src << "[M.key] is observing - [M.client.holder.state]"
-			else
-				src << "[M.key] is undefined - [M.client.holder.state]"
+	for(var/mob/M in admin_list)
+		if(M.client.holder.state == 1)
+			src << "[M.key] is playing - [M.client.holder.state]"
+		else if(M.client.holder.state == 2)
+			src << "[M.key] is observing - [M.client.holder.state]"
+		else
+			src << "[M.key] is undefined - [M.client.holder.state]"
 	feedback_add_details("admin_verb","GAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -578,7 +577,7 @@
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #define AUTOBATIME 10
-/client/proc/warn(var/mob/M in world)
+/client/proc/warn(var/mob/M in player_list)
 	/*set category = "Special Verbs"
 	set name = "Warn"
 	set desc = "Warn a player"*/ //Based on the information I gathered via stat logging this verb was not used. Use the show player panel alternative. --erro
@@ -631,7 +630,7 @@
 	message_admins("\blue [ckey] creating an admin explosion at [epicenter.loc].")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/give_spell(mob/T as mob in world) // -- Urist
+/client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."

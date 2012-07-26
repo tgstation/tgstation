@@ -52,7 +52,7 @@
 		return
 
 	var/mob/selected = null
-	for(var/mob/M in world)
+	for(var/mob/M in player_list)
 		//Dead people only thanks!
 		if ((M.stat != 2) || (!M.client))
 			continue

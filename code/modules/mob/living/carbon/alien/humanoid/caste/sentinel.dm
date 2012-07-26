@@ -6,6 +6,7 @@
 		name = text("alien sentinel ([rand(1, 1000)])")
 	real_name = name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
+	living_mob_list += src
 
 /mob/living/carbon/alien/humanoid/sentinel
 

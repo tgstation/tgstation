@@ -270,9 +270,9 @@
 	..()
 	if(istype(AM,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
-		if(istype(H.l_hand,/obj/item/weapon/pickaxe))
+		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
 			src.attackby(H.l_hand,H)
-		else if(istype(H.r_hand,/obj/item/weapon/pickaxe))
+		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
 			src.attackby(H.r_hand,H)
 		return
 	else if(istype(AM,/mob/living/silicon/robot))

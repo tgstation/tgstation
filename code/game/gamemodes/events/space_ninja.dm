@@ -139,10 +139,9 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 	var/mob/dead/observer/G
 	var/list/candidates = list()
-	for(G in world)
-		if(G.client)//Now everyone can ninja!
-			if(((G.client.inactivity/10)/60) <= 5)
-				candidates.Add(G)
+	for(G in player_list)
+		if(((G.client.inactivity/10)/60) <= 5)
+			candidates.Add(G)
 
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))
@@ -165,7 +164,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 	//Xenos and deathsquads take precedence over everything else.
 
 	//Unless the xenos are hiding in a locker somewhere, this'll find em.
-	for(var/mob/living/carbon/alien/humanoid/xeno in world)
+	for(var/mob/living/carbon/alien/humanoid/xeno in player_list)
 		if(istype(xeno))
 			xeno_list += xeno
 
@@ -362,7 +361,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 //=======//CURRENT PLAYER VERB//=======//
 
-/client/proc/cmd_admin_ninjafy(var/mob/M in world)
+/client/proc/cmd_admin_ninjafy(var/mob/M in player_list)
 	set category = null
 	set name = "Make Space Ninja"
 
@@ -426,8 +425,8 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		return
 
 	var/mob/dead/observer/G
-	for(var/mob/dead/observer/G_find in world)
-		if(G_find.client&&ckey(G_find.key)==ckey(input))
+	for(var/mob/dead/observer/G_find in player_list)
+		if(ckey(G_find.key)==ckey(input))
 			G = G_find
 			break
 

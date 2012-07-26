@@ -14,19 +14,17 @@
 	if(src.holder.rank == "Game Master" || src.holder.rank == "Game Admin" || src.holder.rank == "Badmin")
 		log_admin("[key_name(src)] played sound [S]")
 		message_admins("[key_name_admin(src)] played sound [S]", 1)
-		for(var/mob/M in world)
-			if(M.client)
-				if(M.client.midis)
-					M << uploaded_sound
+		for(var/mob/M in player_list)
+			if(M.client.midis)
+				M << uploaded_sound
 	else
 		if(usr.client.canplaysound)
 			usr.client.canplaysound = 0
 			log_admin("[key_name(src)] played sound [S]")
 			message_admins("[key_name_admin(src)] played sound [S]", 1)
-			for(var/mob/M in world)
-				if(M.client)
-					if(M.client.midis)
-						M << uploaded_sound
+			for(var/mob/M in player_list)
+				if(M.client.midis)
+					M << uploaded_sound
 		else
 			usr << "You already used up your jukebox monies this round!"
 			del(uploaded_sound)

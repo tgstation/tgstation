@@ -210,7 +210,7 @@
 	..()
 	var/list/possibleIDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
 
-	for(var/mob/living/carbon/aChangeling in world)
+	for(var/mob/living/carbon/aChangeling in player_list)
 		if(aChangeling.changeling)
 			possibleIDs -= aChangeling.changeling.changelingID
 

@@ -9,7 +9,7 @@
 		return
 
 	feedback_add_details("admin_verb","TCBOO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for(var/mob/living/carbon/human/H in world)
+	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(is_special_character(H)) continue
 

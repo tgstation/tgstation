@@ -13,6 +13,7 @@
 
 	flick("gibbed-a", animation)
 	xgibs(loc, viruses)
+	dead_mob_list -= src
 
 	spawn(15)
 		if(animation)	del(animation)
@@ -33,6 +34,7 @@
 
 	flick("dust-a", animation)
 	new /obj/effect/decal/remains/xeno(loc)
+	dead_mob_list -= src
 
 	spawn(15)
 		if(animation)	del(animation)

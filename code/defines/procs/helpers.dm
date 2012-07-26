@@ -813,7 +813,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if( newname == "Inactive AI" || findtext(newname,"cyborg") )	//To prevent common meta-gaming name-choices
 			M << "That name is reserved."
 			return
-		for (var/mob/living/silicon/ai/A in world)
+		for (var/mob/living/silicon/ai/A in player_list)
 			if (A.real_name == newname && newname!=randomname)
 				M << "There's already an AI with that name."
 				return
@@ -843,7 +843,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(badname)
 			M << "That name is reserved."
 			return clname(M)
-		for (var/mob/A in world)
+		for (var/mob/A in player_list)
 			if(A.real_name == newname)
 				M << "That name is reserved."
 				return clname(M)
@@ -870,7 +870,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/names = list()
 	var/list/borgs = list()
 	var/list/namecounts = list()
-	for (var/mob/living/silicon/robot/A in world)
+	for (var/mob/living/silicon/robot/A in player_list)
 		var/name = A.real_name
 		if (A.stat == 2)
 			continue
@@ -892,7 +892,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/names = list()
 	var/list/ais = list()
 	var/list/namecounts = list()
-	for (var/mob/living/silicon/ai/A in world)
+	for (var/mob/living/silicon/ai/A in player_list)
 		var/name = A.real_name
 		if (A.stat == 2)
 			continue
@@ -934,34 +934,34 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 /proc/sortmobs()
 
-	var/list/mob_list = list()
-	for(var/mob/living/silicon/ai/M in world)
-		mob_list.Add(M)
-	for(var/mob/living/silicon/pai/M in world)
-		mob_list.Add(M)
-	for(var/mob/living/silicon/robot/M in world)
-		mob_list.Add(M)
-	for(var/mob/living/carbon/human/M in world)
-		mob_list.Add(M)
-	for(var/mob/living/carbon/brain/M in world)
-		mob_list.Add(M)
-	for(var/mob/living/carbon/alien/M in world)
-		mob_list.Add(M)
-	for(var/mob/dead/observer/M in world)
-		mob_list.Add(M)
-	for(var/mob/new_player/M in world)
-		mob_list.Add(M)
-	for(var/mob/living/carbon/monkey/M in world)
-		mob_list.Add(M)
-	for(var/mob/living/carbon/metroid/M in world)
-		mob_list.Add(M)
-	for(var/mob/living/simple_animal/M in world)
-		mob_list.Add(M)
+	var/list/moblist = list()
+	for(var/mob/living/silicon/ai/M in mob_list)
+		moblist.Add(M)
+	for(var/mob/living/silicon/pai/M in mob_list)
+		moblist.Add(M)
+	for(var/mob/living/silicon/robot/M in mob_list)
+		moblist.Add(M)
+	for(var/mob/living/carbon/human/M in mob_list)
+		moblist.Add(M)
+	for(var/mob/living/carbon/brain/M in mob_list)
+		moblist.Add(M)
+	for(var/mob/living/carbon/alien/M in mob_list)
+		moblist.Add(M)
+	for(var/mob/dead/observer/M in mob_list)
+		moblist.Add(M)
+	for(var/mob/new_player/M in mob_list)
+		moblist.Add(M)
+	for(var/mob/living/carbon/monkey/M in mob_list)
+		moblist.Add(M)
+	for(var/mob/living/carbon/metroid/M in mob_list)
+		moblist.Add(M)
+	for(var/mob/living/simple_animal/M in mob_list)
+		moblist.Add(M)
 //	for(var/mob/living/silicon/hivebot/M in world)
 //		mob_list.Add(M)
 //	for(var/mob/living/silicon/hive_mainframe/M in world)
 //		mob_list.Add(M)
-	return mob_list
+	return moblist
 
 /proc/convert2energy(var/M)
 	var/E = M*(SPEED_OF_LIGHT_SQ)

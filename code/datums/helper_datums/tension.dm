@@ -101,8 +101,8 @@ var/global/datum/tension/tension_master
 							if(forcenexttick)
 								forcenexttick = 0
 
-							for (var/mob/M in world)
-								if (M.client && M.client.holder)
+							for (var/mob/M in admin_list)
+								if (M.client)
 									M << "<font color='red' size='3'><b> The tensioner wishes to create additional antagonists!  Press (<a href='?src=\ref[tension_master];Supress=1'>this</a>) in 60 seconds to abort!</b></font>"
 
 							spawn(600)
@@ -201,7 +201,7 @@ var/global/datum/tension/tension_master
 
 	proc/get_num_players()
 		var/peeps = 0
-		for (var/mob/M in world)
+		for (var/mob/M in player_list)
 			if (!M.client)
 				continue
 			peeps += 1
@@ -296,7 +296,7 @@ var/global/datum/tension/tension_master
 		var/mob/living/silicon/malfAI = null
 		var/datum/mind/themind = null
 
-		for(var/mob/living/silicon/ai/ai in world)
+		for(var/mob/living/silicon/ai/ai in player_list)
 			if(ai.client)
 				AIs += ai
 
@@ -336,7 +336,7 @@ var/global/datum/tension/tension_master
 		var/list/mob/living/carbon/human/candidates = list()
 		var/mob/living/carbon/human/H = null
 
-		for(var/mob/living/carbon/human/applicant in world)
+		for(var/mob/living/carbon/human/applicant in player_list)
 
 			var/datum/preferences/preferences = new
 
@@ -373,7 +373,7 @@ var/global/datum/tension/tension_master
 		var/list/mob/living/carbon/human/candidates = list()
 		var/mob/living/carbon/human/H = null
 
-		for(var/mob/living/carbon/human/applicant in world)
+		for(var/mob/living/carbon/human/applicant in player_list)
 
 			var/datum/preferences/preferences = new
 
@@ -409,7 +409,7 @@ var/global/datum/tension/tension_master
 		var/list/mob/living/carbon/human/candidates = list()
 		var/mob/living/carbon/human/H = null
 
-		for(var/mob/living/carbon/human/applicant in world)
+		for(var/mob/living/carbon/human/applicant in player_list)
 
 			var/datum/preferences/preferences = new
 
@@ -440,7 +440,7 @@ var/global/datum/tension/tension_master
 		var/mob/dead/observer/theghost = null
 		var/time_passed = world.time
 
-		for(var/mob/dead/observer/G in world)
+		for(var/mob/dead/observer/G in player_list)
 			if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
 				spawn(0)
 					switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
@@ -482,7 +482,7 @@ var/global/datum/tension/tension_master
 		var/list/mob/living/carbon/human/candidates = list()
 		var/mob/living/carbon/human/H = null
 
-		for(var/mob/living/carbon/human/applicant in world)
+		for(var/mob/living/carbon/human/applicant in player_list)
 
 			var/datum/preferences/preferences = new
 
@@ -523,7 +523,7 @@ var/global/datum/tension/tension_master
 		var/mob/dead/observer/theghost = null
 		var/time_passed = world.time
 
-		for(var/mob/dead/observer/G in world)
+		for(var/mob/dead/observer/G in player_list)
 			if(!jobban_isbanned(G, "operative") && !jobban_isbanned(G, "Syndicate"))
 				spawn(0)
 					switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
@@ -570,7 +570,7 @@ var/global/datum/tension/tension_master
 				if(closet_spawn)
 					new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
-				for (var/obj/effect/landmark/A in world)
+				for (var/obj/effect/landmark/A in /area/syndicate_station/start)//Because that's the only place it can BE -Sieve
 					if (A.name == "Syndicate-Gear-Closet")
 						new /obj/structure/closet/syndicate/personal(A.loc)
 						del(A)
@@ -635,7 +635,7 @@ var/global/datum/tension/tension_master
 	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
 
 
-		for(var/mob/dead/observer/G in world)
+		for(var/mob/dead/observer/G in player_list)
 			spawn(0)
 				switch(alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
 					if("Yes")
@@ -653,7 +653,7 @@ var/global/datum/tension/tension_master
 		if(candidates.len)
 			var/numagents = 6
 			//Spawns commandos and equips them.
-			for (var/obj/effect/landmark/L in world)
+			for (var/obj/effect/landmark/L in /area/syndicate_mothership/elite_squad)
 				if(numagents<=0)
 					break
 				if (L.name == "Syndicate-Commando")
@@ -692,7 +692,7 @@ var/global/datum/tension/tension_master
 				//	P.info = "<p><b>Good morning soldier!</b>. This compact guide will familiarize you with standard operating procedure. There are three basic rules to follow:<br>#1 Work as a team.<br>#2 Accomplish your objective at all costs.<br>#3 Leave no witnesses.<br>You are fully equipped and stocked for your mission--before departing on the Spec. Ops. Shuttle due South, make sure that all operatives are ready. Actual mission objective will be relayed to you by Central Command through your headsets.<br>If deemed appropriate, Central Command will also allow members of your team to equip assault power-armor for the mission. You will find the armor storage due West of your position. Once you are ready to leave, utilize the Special Operations shuttle console and toggle the hull doors via the other console.</p><p>In the event that the team does not accomplish their assigned objective in a timely manner, or finds no other way to do so, attached below are instructions on how to operate a Nanotrasen Nuclear Device. Your operations <b>LEADER</b> is provided with a nuclear authentication disk and a pin-pointer for this reason. You may easily recognize them by their rank: Lieutenant, Captain, or Major. The nuclear device itself will be present somewhere on your destination.</p><p>Hello and thank you for choosing Nanotrasen for your nuclear information needs. Today's crash course will deal with the operation of a Fission Class Nanotrasen made Nuclear Device.<br>First and foremost, <b>DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.</b> Pressing any button on the compacted bomb will cause it to extend and bolt itself into place. If this is done to unbolt it one must completely log in which at this time may not be possible.<br>To make the device functional:<br>#1 Place bomb in designated detonation zone<br> #2 Extend and anchor bomb (attack with hand).<br>#3 Insert Nuclear Auth. Disk into slot.<br>#4 Type numeric code into keypad ([nuke_code]).<br>Note: If you make a mistake press R to reset the device.<br>#5 Press the E button to log onto the device.<br>You now have activated the device. To deactivate the buttons at anytime, for example when you have already prepped the bomb for detonation, remove the authentication disk OR press the R on the keypad. Now the bomb CAN ONLY be detonated using the timer. A manual detonation is not an option.<br>Note: Toggle off the <b>SAFETY</b>.<br>Use the - - and + + to set a detonation time between 5 seconds and 10 minutes. Then press the timer toggle button to start the countdown. Now remove the authentication disk so that the buttons deactivate.<br>Note: <b>THE BOMB IS STILL SET AND WILL DETONATE</b><br>Now before you remove the disk if you need to move the bomb you can: Toggle off the anchor, move it, and re-anchor.</p><p>The nuclear authorization code is: <b>[nuke_code ? nuke_code : "None provided"]</b></p><p><b>Good luck, soldier!</b></p>"
 				//	P.name = "Spec. Ops. Manual"
 
-			for (var/obj/effect/landmark/L in world)
+			for (var/obj/effect/landmark/L in /area/shuttle/syndicate_elite)
 				if (L.name == "Syndicate-Commando-Bomb")
 					new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 				//	del(L)
@@ -708,7 +708,7 @@ var/global/datum/tension/tension_master
 
 	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
 
-		for(var/mob/dead/observer/G in world)
+		for(var/mob/dead/observer/G in player_list)
 			spawn(0)
 				switch(alert(G,"Do you wish to be considered for a cyborg strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
 					if("Yes")
@@ -727,7 +727,7 @@ var/global/datum/tension/tension_master
 			var/numagents = 3
 
 			//Spawns commandos and equips them.
-			for (var/obj/effect/landmark/L in world)
+			for (var/obj/effect/landmark/L in /area/borg_deathsquad)
 				if(numagents<=0)
 					break
 				if (L.name == "Borg-Deathsquad")

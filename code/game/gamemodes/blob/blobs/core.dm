@@ -40,8 +40,8 @@
 
 	proc/create_fragments(var/wave_size = 1)
 		var/list/candidates = list()
-		for(var/mob/dead/observer/G in world)
-			if(G.client && G.client.be_alien)
+		for(var/mob/dead/observer/G in player_list)
+			if(G.client.be_alien)
 				if(G.corpse)
 					if(G.corpse.stat==2)
 						candidates.Add(G)

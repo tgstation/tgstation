@@ -1,9 +1,7 @@
 proc/get_all_clients()
 	var/list/client/clients = list()
 
-	for (var/mob/M in world)
-		if (!M.client)
-			continue
+	for (var/mob/M in player_list)
 
 		clients += M.client
 
@@ -12,12 +10,7 @@ proc/get_all_clients()
 proc/get_all_admin_clients()
 	var/list/client/clients = list()
 
-	for (var/mob/M in world)
-		if (!M.client)
-			continue
-
-		if (!M.client.holder)
-			continue
+	for (var/mob/M in admin_list)
 
 		clients += M.client
 
@@ -32,14 +25,11 @@ proc/get_all_admin_clients()
 
 	var/list/peeps = list()
 
-	for (var/mob/M in world)
-		if (!M.client)
-			continue
-
-		if (M.client.stealth && !usr.client.holder)
-			peeps += "\t[M.client.fakekey]"
+	for (var/client/C in client_list)
+		if (C.stealth && !usr.client.holder)
+			peeps += "\t[C.fakekey]"
 		else
-			peeps += "\t[M.client][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""]"
+			peeps += "\t[C.key][C.stealth ? " <i>(as [C.fakekey])</i>" : ""]"
 
 	peeps = sortList(peeps)
 
@@ -54,9 +44,9 @@ proc/get_all_admin_clients()
 
 	usr << "<b>Current Admins:</b>"
 
-	for (var/mob/M in world)
-		if(M && M.client && M.client.holder)
-			if(usr.client.holder)
+	for (var/mob/M in admin_list)
+		if(M && M.client)
+			if(usr.client)
 				var/afk = 0
 				if( M.client.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
 					afk = 1

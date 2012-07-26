@@ -104,7 +104,7 @@ var/global/datum/controller/occupations/job_master
 				break
 
 	proc/ResetOccupations()
-		for(var/mob/new_player/player in world)
+		for(var/mob/new_player/player in player_list)
 			if((player) && (player.mind))
 				player.mind.assigned_role = null
 				player.mind.special_role = null
@@ -172,7 +172,7 @@ var/global/datum/controller/occupations/job_master
 					A.spawn_positions = 3
 
 		//Get the players who are ready
-		for(var/mob/new_player/player in world)
+		for(var/mob/new_player/player in player_list)
 			if((player) && (player.client) && (player.ready) && (player.mind) && (!player.mind.assigned_role))
 				unassigned += player
 
@@ -415,7 +415,7 @@ var/global/datum/controller/occupations/job_master
 			var/level3 = 0 //low
 			var/level4 = 0 //never
 			var/level5 = 0 //banned
-			for(var/mob/new_player/player in world)
+			for(var/mob/new_player/player in player_list)
 				if(!((player) && (player.client) && (player.ready) && (player.mind) && (!player.mind.assigned_role)))
 					continue //This player is not ready
 				if(jobban_isbanned(player, job.title))
