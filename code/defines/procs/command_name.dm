@@ -3,8 +3,8 @@ var/command_name = null
 	if (command_name)
 		return command_name
 
-	var/name = ""
-
+	var/name = "Central Command"
+/*
 	if (prob(10))
 		name += pick("Super", "Ultra")
 		name += " "
@@ -19,8 +19,7 @@ var/command_name = null
 
 	// Suffix
 	name += pick("Federation", "Command", "Alliance", "Unity", "Empire", "Confederation", "Kingdom", "Monarchy", "Complex", "Protectorate", "Commonwealth", "Imperium", "Republic")
-	name += " "
-
+*/
 	command_name = name
 	return name
 
