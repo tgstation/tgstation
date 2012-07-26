@@ -159,43 +159,18 @@
 			user.visible_message("[user.name] closes [src]'s casing.", \
 				"You close [src]'s casing.", "You hear a noise.")
 			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
-			return
-		else if (src.stage == 3)
-			switch(fixture_type)
-				if ("tube")
-					src.icon_state = "tube-construct-stage2"
-				if("bulb")
-					src.icon_state = "bulb-construct-stage2"
-			user.visible_message("[user.name] opens [src]'s casing.", \
-				"You open [src]'s casing.", "You hear a noise.")
-			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
-			src.stage = 2
-			return
 
-	if(istype(W, /obj/item/weapon/light/))
-		if (istype(W, /obj/item/weapon/light/tube) && !(fixture_type == "tube")) return
-		if (istype(W, /obj/item/weapon/light/bulb) && !(fixture_type == "bulb")) return
-		if (src.stage != 3) return
-		switch(fixture_type)
-			if("tube")
-				newlight = new /obj/machinery/light(src.loc)
-			if ("bulb")
-				newlight = new /obj/machinery/light/small(src.loc)
-		var/obj/item/weapon/light/L = W
-		newlight.status = L.status
-		newlight.switchcount = L.switchcount
-		newlight.rigged = L.rigged
-		newlight.brightness = L.brightness
-		newlight.dir = src.dir
-		newlight.on = newlight.has_power()
-		newlight.fingerprints = src.fingerprints
-		newlight.fingerprintshidden = src.fingerprintshidden
-		newlight.fingerprintslast = src.fingerprintslast
-		user.visible_message("[user.name] adds a light tube to [src], finishing it.", \
-			"You finish [src].")
-		del(W)
-		del(src)
-		return
+			switch(fixture_type)
+
+				if("tube")
+					newlight = new /obj/machinery/light/built(src.loc)
+				if ("bulb")
+					newlight = new /obj/machinery/light/small/built(src.loc)
+
+			newlight.dir = src.dir
+			src.transfer_fingerprints_to(newlight)
+			del(src)
+			return
 	..()
 
 /obj/machinery/light_construct/small
@@ -251,6 +226,15 @@
 	light_type = /obj/item/weapon/light/tube/large
 	brightness = 15
 
+/obj/machinery/light/built/New()
+	status = LIGHT_EMPTY
+	update(0)
+	..()
+
+/obj/machinery/light/small/built/New()
+	status = LIGHT_EMPTY
+	update(0)
+	..()
 
 // create a new lighting fixture
 /obj/machinery/light/New()
@@ -271,7 +255,7 @@
 				if(prob(25))
 					broken(1)
 		spawn(1)
-			update()
+			update(0)
 
 /obj/machinery/light/Del()
 	var/area/A = get_area(src)
