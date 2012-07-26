@@ -723,7 +723,7 @@ datum
 						return 20
 
 
-			magboots
+			/*magboots
 				steal_target = /obj/item/clothing/shoes/magboots
 				explanation_text = "Steal a pair of \"NanoTrasen\" brand magboots."
 				weight = 20
@@ -745,7 +745,7 @@ datum
 					if(GetRank(job) == 4)
 						return 10
 					else
-						return 20
+						return 20*/
 
 
 			blueprints
