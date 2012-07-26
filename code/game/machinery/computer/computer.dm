@@ -85,7 +85,7 @@ Pod/Blast Doors computer
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	use_power(250)
+	use_power(750)
 
 /obj/machinery/computer/proc/set_broken()
 	icon_state = initial(icon_state)
