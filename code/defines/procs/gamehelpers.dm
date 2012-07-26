@@ -226,9 +226,7 @@
 	var/list/hearers = list()
 
 	// Try to find all the players who can hear the message
-	for(var/key in client_list)
-		var/client/C = client_list[key]
-		var/mob/M = C.mob
+	for(var/mob/M in player_list)
 		if(!M) continue
 
 		var/atom/ear = M.get_ear()
