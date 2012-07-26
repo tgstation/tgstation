@@ -73,6 +73,9 @@
 /obj/structure/closet/secure_closet/relaymove(mob/user as mob)
 	if(user.stat)
 		return
+
+	if(user.stat)
+		return
 	if(!(src.locked))
 		for(var/obj/item/I in src)
 			I.loc = src.loc
@@ -109,6 +112,9 @@
 		return
 
 	if(get_dist(usr, src) != 1)
+		return
+
+	if(src.broken)
 		return
 
 	if (ishuman(usr))

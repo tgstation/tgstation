@@ -223,10 +223,10 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 		src << "Only administrators may use this command."
 		return
 
-	create_xeno()
-	feedback_add_details("admin_verb","X") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] spawned a xeno.")
-	message_admins("\blue [key_name_admin(usr)] spawned a xeno.", 1)
+	if(create_xeno())
+		feedback_add_details("admin_verb","X") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] spawned a xeno.")
+		message_admins("\blue [key_name_admin(usr)] spawned a xeno.", 1)
 	return
 
 //I use this proc for respawn character too. /N
@@ -243,6 +243,8 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel (spawn_here)
 		if("Drone")
 			new_xeno = new /mob/living/carbon/alien/humanoid/drone (spawn_here)
+		else
+			return 0
 
 	// Picks a random ghost for the role if none is specified. Mostly a copy of alien burst code.
 	var/candidates_list[] = list()
@@ -257,6 +259,8 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 			var/client/G_client = input("Pick the client you want to respawn as a xeno.", "Active Players") as null|anything in candidates_list//It will auto-pick a person when there is only one candidate.
 			if(G_client)//They may have logged out when the admin was choosing people. Or were not chosen. Would run time error otherwise.
 				G = G_client.mob
+			else
+				return 0
 
 		if(G)//If G exists.
 			message_admins("\blue [key_name_admin(usr)] has spawned [G.key] as a filthy xeno.", 1)
@@ -266,11 +270,11 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 			del(new_xeno)
 
 		del(G)
-		return
+		return 1
 
 	alert("There are no available ghosts to throw into the xeno. Aborting command.")
 	del(new_xeno)
-	return
+	return 0
 
 /*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
