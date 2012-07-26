@@ -19,9 +19,9 @@
 
 #define MOLES_PLASMA_VISIBLE	0.5 //Moles in a standard cell after which plasma is visible
 
-#define SPECIFIC_HEAT_TOXIN		700
-#define SPECIFIC_HEAT_AIR		100
-#define SPECIFIC_HEAT_CDO		150
+#define SPECIFIC_HEAT_TOXIN		200
+#define SPECIFIC_HEAT_AIR		20
+#define SPECIFIC_HEAT_CDO		30
 #define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
 	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
 
