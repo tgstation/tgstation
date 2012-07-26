@@ -227,6 +227,7 @@
 					"/obj/item/seeds/plumpmycelium",
 					"/obj/item/seeds/libertymycelium",
 					"/obj/item/seeds/amanitamycelium",
+					"/obj/item/seeds/spaceshroommycelium",
 					"/obj/item/seeds/bananaseed",
 					"/obj/item/seeds/eggyseed")
 	cost = 15

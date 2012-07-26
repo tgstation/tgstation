@@ -419,6 +419,24 @@
 	plant_type = 0
 	growthstages = 3
 
+/obj/item/seeds/spaceshroommycelium
+	name = "pack of space shroom mycelium"
+	desc = "This mycelium grows into something relaxing."
+	icon_state = "mycelium-spaceshroom"
+	mypath = "/obj/item/seeds/spaceshroom"
+	species = "spaceshroom"
+	plantname = "Space Shroom"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/spaceshroom"
+	lifespan = 35
+	endurance = 35
+	maturation = 10
+	production = 5
+	yield = 4
+	potency = 10 // Sleeping based on potency?
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
+
 /obj/item/seeds/amanitamycelium
 	name = "pack of fly amanita mycelium"
 	desc = "This mycelium grows into something horrible."
@@ -1540,6 +1558,25 @@
 		reagents.add_reagent("imidazoline", 3+round(potency / 5, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/spaceshroom
+	seed = "/obj/item/seeds/spaceshroommycelium"
+	name = "space shroom"
+	desc = "<I>Space Shroom</I>: A special fungus found growing on the walls of station."
+	icon_state = "spaceshroom"
+	potency = 10
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("stoxin", 3+round(potency / 3, 1))
+		reagents.add_reagent("space_drugs", 1+round(potency / 25, 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/spaceshroom/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	. = ..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "<span class='info'>- Sleep Toxin: <i>[reagents.get_reagent_amount("stoxin")]%</i></span>"
+		user << "<span class='info'>- Space Drugs: <i>[reagents.get_reagent_amount("space_drugs")]%</i></span>"
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = "/obj/item/seeds/amanitamycelium"
 	name = "fly amanita"
@@ -1557,7 +1594,6 @@
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>"
-		user << "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
 	seed = "/obj/item/seeds/angelmycelium"

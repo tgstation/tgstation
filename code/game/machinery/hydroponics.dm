@@ -194,7 +194,9 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	src.dead = 0
 	if(src.myseed) // In case there's nothing in the tray beforehand
 		del(src.myseed)
-	switch(rand(1,15))		// randomly pick predominative weed
+	switch(rand(1,18))		// randomly pick predominative weed
+		if(16 to 18)
+			src.myseed = new /obj/item/seeds/spaceshroommycelium
 		if(14 to 15)
 			src.myseed = new /obj/item/seeds/nettleseed
 		if(12 to 13)
