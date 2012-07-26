@@ -1,10 +1,11 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
 zone/proc/process()
+	. = 1
+
 	//Deletes zone if empty.
 	if(!contents.len)
 		del src
-		return 0
-	//Does rebuilding stuff. Not sure if used.
+	//Does rebuilding stuff.
 	if(rebuild)
 		rebuild = 0
 		Rebuild() //Shoving this into a proc.
@@ -76,7 +77,7 @@ zone/proc/process()
 			//Do merging if conditions are met. Specifically, if there's a non-door connection
 			//to somewhere with space, the zones are merged regardless of equilibrium, to speed
 			//up spacing in areas with double-plated windows.
-			if(C && !C.indirect && C.A.zone && C.B.zone)
+			if(C && C.indirect == 2 && C.A.zone && C.B.zone) //indirect = 2 is a direct connection.
 				if(C.A.zone.air.compare(C.B.zone.air) || total_space)
 					ZMerge(C.A.zone,C.B.zone)
 
@@ -191,34 +192,12 @@ proc/ShareSpace(datum/gas_mixture/A, ratio)
 
 	return 1
 
-
-zone/proc/connected_zones()
-	//A legacy proc for getting connected zones.
-	. = list()
-	for(var/connection/C in connections)
-		var/zone/Z
-		if(C.A.zone == src)
-			Z = C.B.zone
-		else
-			Z = C.A.zone
-
-		if(Z in .)
-			.[Z]++
-		else
-			. += Z
-			.[Z] = 1
-
 zone/proc/Rebuild()
 	//Choose a random turf and regenerate the zone from it.
 	var
 		turf/simulated/sample = pick(contents)
 		list/new_contents
 		problem = 0
-
-	contents.Remove(null) //I can't believe this is needed.
-
-	if(!contents.len)
-		del src
 
 	var/list/turfs_to_consider = contents.Copy()
 	do
@@ -237,9 +216,8 @@ zone/proc/Rebuild()
 	new_contents = FloodFill(sample)
 
 	for(var/turf/space/S in new_contents)
-		if(!space_tiles)
-			space_tiles = list()
-		space_tiles |= S
+		AddSpace(S)
+		new_contents.Remove(S)
 
 	if(contents.len != new_contents.len)
 		problem = 1
@@ -255,20 +233,20 @@ zone/proc/Rebuild()
 		var/list/turf/simulated/rebuild_turfs = contents - new_contents
 		var/list/turf/simulated/reconsider_turfs = list()
 		contents = new_contents
-		for(var/turf/T in rebuild_turfs)
-			if(istype(T,/turf/space))
-				air_master.tiles_to_update |= T
-			else if(!T.zone && T.CanPass(null, T, 1.5, 1))
+		for(var/turf/simulated/T in rebuild_turfs)
+			if(!T.zone && T.CanPass(null, T, 1.5, 1))
 				var/zone/Z = new /zone(T)
 				Z.air.copy_from(air)
 			else
 				reconsider_turfs |= T
-		for(var/turf/T in reconsider_turfs)
-			if(!T.zone)
+		for(var/turf/simulated/T in reconsider_turfs)
+			if(!T.zone && T.CanPass(null, T, 1.5, 1))
 				var/zone/Z = new /zone(T)
 				Z.air.copy_from(air)
+			else if(!T in air_master.tiles_to_update)
+				air_master.tiles_to_update.Add(T)
 
-	for(var/turf/T in contents)
+	for(var/turf/simulated/T in contents)
 		if(T.zone && T.zone != src)
 			T.zone.RemoveTurf(T)
 			T.zone = src
@@ -284,3 +262,19 @@ zone/proc/Rebuild()
 				var/turf/simulated/T = get_step(S,direction)
 				if(istype(T) && T.zone)
 					T.zone.AddSpace(S)
+/*
+zone/proc/connected_zones()
+	//A legacy proc for getting connected zones.
+	. = list()
+	for(var/connection/C in connections)
+		var/zone/Z
+		if(C.A.zone == src)
+			Z = C.B.zone
+		else
+			Z = C.A.zone
+
+		if(Z in .)
+			.[Z]++
+		else
+			. += Z
+			.[Z] = 1*/

@@ -176,8 +176,11 @@ datum/controller/game_controller
 			air_master.current_cycle++
 			var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
 			if(!success) //Runtimed.
-				world << "<font color='red'><b>ERROR IN ATMOS TICKER.  Killing air simulation!</font></b>"
-				kill_air = 1
+				air_master.failed_ticks++
+				if(air_master.failed_ticks > 5)
+					world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
+					kill_air = 1
+					air_master.failed_ticks = 0
 		air_master_ready = 1
 
 		src.set_debug_state("Tension Master")

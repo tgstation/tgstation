@@ -130,8 +130,8 @@ proc/ZConnect(turf/simulated/A,turf/simulated/B)
 		return ZMerge(A.zone,B.zone)
 
 	//Ensure the connection isn't already made.
-	if(A.connections)
-		for(var/connection/C in A.connections)
+	if("\ref[A]" in air_master.turfs_with_connections)
+		for(var/connection/C in air_master.turfs_with_connections["\ref[A]"])
 			C.Cleanup()
 			if(C && (C.B == B || C.A == B))
 				return

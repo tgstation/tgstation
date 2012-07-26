@@ -77,6 +77,7 @@ obj
 			archived_firelevel = 0
 
 		process()
+			. = 1
 
 			if(firelevel > vsc.IgnitionLevel)
 
@@ -167,12 +168,14 @@ obj
 			firelevel = fl
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(min(max(0.1,firelevel / 20),10)) //Burn the humans!
+			air_master.active_hotspots.Add(src)
 
 		Del()
 			if (istype(loc, /turf/simulated))
 				ul_SetLuminosity(0)
 
 				loc = null
+			air_master.active_hotspots.Remove(src)
 
 			..()
 
