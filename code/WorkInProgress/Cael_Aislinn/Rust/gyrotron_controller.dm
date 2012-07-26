@@ -33,7 +33,7 @@
 
 	process()
 		..()
-		//updateDialog()
+		src.updateDialog()
 
 	proc
 		interact(mob/user)
@@ -96,5 +96,5 @@
 			t += "</table>"
 			*/
 			t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-			user << browse(t, "window=gyrotron_controller;size=500x800")
+			user << browse(t, "window=gyrotron_controller;size=500x400")
 			user.machine = src
