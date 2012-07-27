@@ -32,6 +32,7 @@
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPARALYSE
+	attack_sound = 'punch3.ogg'
 
 
 	Life()
@@ -108,6 +109,8 @@
 		if(M.melee_damage_upper <= 0)
 			M.emote("[M.friendly] \the <EM>[src]</EM>")
 		else
+			if(M.attack_sound)
+				playsound(loc, M.attack_sound, 50, 1, 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -169,6 +172,7 @@
 	stop_automated_movement = 1
 	status_flags = CANPARALYSE
 	see_in_dark = 7
+	attack_sound = 'bladeslice.ogg'
 
 	Life()
 		..()
@@ -238,6 +242,8 @@
 		if(M.melee_damage_upper <= 0)
 			M.emote("[M.friendly] \the <EM>[src]</EM>")
 		else
+			if(M.attack_sound)
+				playsound(loc, M.attack_sound, 50, 1, 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -300,6 +306,7 @@
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPARALYSE
+	attack_sound = 'punch2.ogg'
 
 	Life()
 		..()
@@ -320,6 +327,8 @@
 		if(M.melee_damage_upper <= 0)
 			M.emote("[M.friendly] \the <EM>[src]</EM>")
 		else
+			if(M.attack_sound)
+				playsound(loc, M.attack_sound, 50, 1, 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
