@@ -16,7 +16,7 @@
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	meat_amount = 3
 	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
+	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
 	var/obj/item/inventory_head
@@ -260,7 +260,7 @@
 	var/turns_since_scan = 0
 	var/obj/movement_target
 	response_help  = "pets"
-	response_disarm = "gently pushes aside"
+	response_disarm = "bops"
 	response_harm   = "kicks"
 
 /mob/living/simple_animal/corgi/Ian/Life()
