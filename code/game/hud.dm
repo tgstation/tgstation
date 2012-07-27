@@ -1,15 +1,13 @@
 
+//Upper left action buttons, displayed when you pick up an item that has this enabled.
+#define ui_action_slot1 "1:6,14:26"
+#define ui_action_slot2 "2:8,14:26"
+#define ui_action_slot3 "3:10,14:26"
+#define ui_action_slot4 "4:12,14:26"
+#define ui_action_slot5 "5:14,14:26"
 
 //Lower left, persistant menu
 #define ui_inventory "1:6,1:5"
-
-
-//Inventory close areas. When you pass your mouse over these areas they close the inventory.
-#define ui_invclosearea1 "1,1 to 1:6,5"
-#define ui_invclosearea2 "1,1 to 4,1:16"
-#define ui_invclosearea3 "4:16,1 to 5:16,5"
-#define ui_invclosearea4 "1,5:16 to 4,5:16"
-
 
 //Lower center, persistant menu
 #define ui_sstore1 "3:10,1:5"

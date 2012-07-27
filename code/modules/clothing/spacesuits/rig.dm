@@ -8,6 +8,7 @@
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	color = "engineering" //Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
+	icon_action_button = "action_hardhat"
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))

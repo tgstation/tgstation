@@ -377,6 +377,7 @@
 		update_inv_l_hand(0)
 	else
 		return 0
+	update_action_buttons()
 	return 1
 
 

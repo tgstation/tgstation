@@ -11,6 +11,7 @@
 	var/on = 0.0
 	var/stabilization_on = 0
 	var/volume_rate = 500              //Needed for borg jetpack transfer
+	icon_action_button = "action_jetpack"
 
 	New()
 		..()
@@ -66,6 +67,9 @@
 
 		del(G)
 		return
+
+	ui_action_click()
+		toggle()
 
 
 /obj/item/weapon/tank/jetpack/void

@@ -796,6 +796,8 @@
 
 		client.screen.Remove(hud_used.blurry, hud_used.druggy, hud_used.vimpaired, hud_used.darkMask)
 
+		update_action_buttons()
+
 		if( stat == DEAD )
 			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 			see_in_dark = 8

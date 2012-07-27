@@ -294,6 +294,8 @@
 	var/list/obj/screen/hotkeybuttons = null
 	var/hotkey_ui_hidden = 0 //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
+	var/list/obj/screen/item_action/item_action_list = null //Used for the item action ui buttons.
+
 	var/h_type = /obj/screen		//this is like...the most pointless thing ever. Use a god damn define!
 
 /obj/item
@@ -316,6 +318,8 @@
 	pressure_resistance = 50
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
+
+	var/icon_action_button //If this is set, The item will make an action button on the player's HUD when picked up. The button will have the icon_action_button sprite from the screen1_action.dmi file.
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -346,6 +350,13 @@
 			usr << "\red You already have something in your hand."
 	else
 		usr << "\red This mob type can't use this verb."
+
+//This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
+//The default action is attack_self().
+//Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
+/obj/item/proc/ui_action_click()
+	if( src in usr )
+		attack_self(usr)
 
 /obj/item/device
 	icon = 'icons/obj/device.dmi'

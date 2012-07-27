@@ -892,3 +892,32 @@ Radar-related things
 		client.screen += blip
 
 
+/mob/living/carbon/human/update_action_buttons()
+	var/num = 1
+	if(!src.hud_used) return
+	if(!src.client) return
+
+	src.client.screen -= src.hud_used.item_action_list
+	hud_used.item_action_list = list()
+
+	for(var/obj/item/I in src)
+		if(I.icon_action_button)
+			var/obj/screen/item_action/A = new(src.hud_used)
+			A.icon = 'icons/mob/screen1_action.dmi'
+			A.icon_state = I.icon_action_button
+			A.owner = I
+			hud_used.item_action_list += A
+			switch(num)
+				if(1)
+					A.screen_loc = ui_action_slot1
+				if(2)
+					A.screen_loc = ui_action_slot2
+				if(3)
+					A.screen_loc = ui_action_slot3
+				if(4)
+					A.screen_loc = ui_action_slot4
+				if(5)
+					A.screen_loc = ui_action_slot5
+			num++
+
+	src.client.screen += src.hud_used.item_action_list

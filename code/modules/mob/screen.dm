@@ -15,6 +15,26 @@
 		src.master:close(usr)
 	return
 
+/obj/screen/item_action
+	var/obj/item/owner
+
+/obj/screen/item_action/DblClick()
+	if(!usr || !owner)
+		return
+
+	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
+		return
+
+	if(!(owner in usr))
+		return
+
+	spawn()
+		owner.ui_action_click()
+
+//This is the proc used to update all the action buttons. It just returns for all mob types except humans.
+/mob/proc/update_action_buttons()
+	return
+
 /obj/screen/grab
 	name = "grab"
 	master = null

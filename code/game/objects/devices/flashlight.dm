@@ -8,6 +8,7 @@
 	slot_flags = SLOT_BELT
 	m_amt = 50
 	g_amt = 20
+	icon_action_button = "action_flashlight"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 	var/icon_on = "flight1"
