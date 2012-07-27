@@ -141,6 +141,7 @@
 			verbs += /client/proc/general_report
 			verbs += /client/proc/air_report
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/check_ai_laws
 			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
 			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
 		else	return
@@ -428,6 +429,7 @@
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
+	verbs -= /client/proc/check_ai_laws
 	return
 
 
@@ -822,3 +824,14 @@
 		else
 			config.log_hrefs = 1
 			src << "<b>Started logging hrefs</b>"
+
+/client/proc/check_ai_laws()
+	set name = "Check AI Laws"
+	set category = "Admin"
+	if(!holder) return
+	for(var/mob/living/silicon/ai/ai in mob_list)
+		usr << "[key_name(ai, usr)]'s Laws:"
+		if (ai.laws == null)
+			usr << "[key_name(ai, usr)]'s Laws are null??"
+		else
+			ai.laws.show_laws(usr)
