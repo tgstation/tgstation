@@ -258,6 +258,7 @@
 	src.health -= Proj.damage
 	..()
 	if(prob(45) && Proj.damage > 0) src.spark_system.start()
+	del (Proj)
 	if (src.health <= 0)
 		src.die()
 	return
