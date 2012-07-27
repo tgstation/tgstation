@@ -585,6 +585,7 @@
 			if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 				if(prob(20))
 					src << "\red You feel a searing heat in your lungs!"
+					take_overall_damage(0,2) //burn them a bit.
 				fire_alert = max(fire_alert, 1)
 			else
 				fire_alert = 0
