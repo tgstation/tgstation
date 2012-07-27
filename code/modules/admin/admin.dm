@@ -1153,6 +1153,10 @@ var/global/BSACooldown = 0
 					sleep(2)
 					cl.jumptomob(M)
 
+	if (href_list["adminchecklaws"])
+		if(src && src.owner)
+			output_ai_laws()
+
 	if (href_list["adminmoreinfo"])
 		var/mob/M = locate(href_list["adminmoreinfo"])
 		if(!M)
@@ -2101,12 +2105,7 @@ var/global/BSACooldown = 0
 				if("check_antagonist")
 					check_antagonists()
 				if("showailaws")
-					for(var/mob/living/silicon/ai/ai in mob_list)
-						usr << "[key_name(ai, usr)]'s Laws:"
-						if (ai.laws == null)
-							usr << "[key_name(ai, usr)]'s Laws are null??"
-						else
-							ai.laws.show_laws(usr)
+					output_ai_laws()
 				if("showgm")
 					if(!ticker)
 						alert("The game hasn't started yet!")
@@ -2996,6 +2995,25 @@ var/global/BSACooldown = 0
 	feedback_add_details("admin_verb","UJBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
+/obj/admins/proc/output_ai_laws()
+	var/ai_number = 0
+	for(var/mob/living/silicon/S in mob_list)
+		ai_number++
+		if(isAI(S))
+			usr << "<b>AI [key_name(S, usr)]'s laws:</b>"
+		else if(isrobot(S))
+			usr << "<b>CYBORG [key_name(S, usr)]'s laws:</b>"
+		else if (ispAI(S))
+			usr << "<b>pAI [key_name(S, usr)]'s laws:</b>"
+		else
+			usr << "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>"
+
+		if (S.laws == null)
+			usr << "[key_name(S, usr)]'s laws are null?? Contact a coder."
+		else
+			S.laws.show_laws(usr)
+	if(!ai_number)
+		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
 //
 //

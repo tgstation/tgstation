@@ -41,6 +41,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 											//So if this list has the value list("John","Jane") and msg is, at the end, "This is × and he griffed ×" the text to
 											//display will be "This is John and he griffe Jane". The strings in this list are a bit more complex than 'John' and 'Jane' tho.
 
+	var/ai_found = 0 //If an AI name or 'ai' word is found in the text, the additional (CL) = Check Laws button gets added. Not added every time so it doesn't spam.
+
 	//we will try to locate each word of the message in our lists of names and clients
 	//for each mob that we have found
 	//split the mob's info into a list. "John Arnolds" becomes list("John","Arnolds") so we can iterate through this
@@ -58,6 +60,9 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 		word = dd_replaceText(word, ")", "")
 		if(lowertext(word) in adminhelp_ignored_words)
 			continue
+		if(lowertext(word) == "ai")
+			ai_found = 1
+			continue
 		for(var/mob/M in mobs)
 			var/list/namelist = dd_text2list("[M.name] [M.real_name] [M.original_name] [M.ckey] [M.key]", " ")
 			var/word_is_match = 0 //Used to break from this mob for loop if a match is found
@@ -70,6 +75,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 					word_is_match = 1
 					break
 			if(word_is_match)
+				if(isAI(M))
+					ai_found = 1
 				break //Breaks execution of the mob loop, since a match was already found.
 
 	var/j = 1 //index to the next element in the replacement_value list
@@ -92,7 +99,11 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 					admin_number_afk++
 				if(X.sound_adminhelp)
 					X << 'adminhelp.ogg'
-				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
+				var/check_laws_text = ""
+				if(ai_found)
+					check_laws_text = (" (<A HREF='?src=\ref[X.holder];adminchecklaws=[ref_mob]'>CL</A>)")
+
+				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>) [check_laws_text]:</b> [msg]"
 				msg_to_send = dd_replaceText(msg_to_send, "HOLDERREF", "\ref[X.holder]")
 				msg_to_send = dd_replaceText(msg_to_send, "ADMINREF", "\ref[X]")
 				X << msg_to_send
