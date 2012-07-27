@@ -235,11 +235,19 @@
 /obj/structure/closet/crate/open()
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
 
+	var/itemcount = 0
+
 	for(var/obj/O in src)
+		if(itemcount >= storage_capacity)
+			break
 		O.loc = get_turf(src)
+		itemcount++
 
 	for(var/mob/M in src)
+		if(itemcount >= storage_capacity)
+			break
 		M.loc = get_turf(src)
+		itemcount++
 
 	icon_state = icon_opened
 	src.opened = 1

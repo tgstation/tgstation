@@ -50,11 +50,18 @@
 	if(!src.can_close())
 		return 0
 
+	var/itemcount = 0
+
 	for(var/obj/item/I in src.loc)
+		if(itemcount >= storage_capacity)
+			break
 		if(!I.anchored)
 			I.loc = src
+			itemcount++
 
 	for(var/mob/M in src.loc)
+		if(itemcount >= storage_capacity)
+			break
 		if(istype (M, /mob/dead/observer))
 			continue
 		if(M.buckled)
@@ -65,6 +72,8 @@
 			M.client.eye = src
 
 		M.loc = src
+		itemcount++
+
 	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))

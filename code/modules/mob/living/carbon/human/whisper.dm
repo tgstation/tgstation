@@ -2,10 +2,7 @@
 /mob/living/carbon/human/whisper(message as text)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	if (!message)
-		return
-
-	if (silent)
+	if (!message || silent || miming)
 		return
 
 	log_whisper("[src.name]/[src.key] : [message]")

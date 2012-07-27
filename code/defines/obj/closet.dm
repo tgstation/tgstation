@@ -4,14 +4,16 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
 	density = 1
+	flags = FPRINT
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
 	var/wall_mounted = 0 //never solid (You can always pass over it)
-	flags = FPRINT
 	var/health = 100
 	var/lastbang
+	var/storage_capacity = 20 //This is so that someone can't pack hundreds of items in a locker/crate
+							  //then open it in a populated area to crash clients.
 
 /obj/structure/closet/acloset
 	name = "strange closet"
