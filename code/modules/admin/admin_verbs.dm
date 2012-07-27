@@ -828,10 +828,6 @@
 /client/proc/check_ai_laws()
 	set name = "Check AI Laws"
 	set category = "Admin"
-	if(!holder) return
-	for(var/mob/living/silicon/ai/ai in mob_list)
-		usr << "[key_name(ai, usr)]'s Laws:"
-		if (ai.laws == null)
-			usr << "[key_name(ai, usr)]'s Laws are null??"
-		else
-			ai.laws.show_laws(usr)
+	if(holder)
+		src.holder.output_ai_laws()
+
