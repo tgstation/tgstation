@@ -28,7 +28,6 @@
 /obj/machinery/shield_capacitor/New()
 	spawn(10)
 		for(var/obj/machinery/shield_gen/possible_gen in range(1, src))
-			world << "possible_gen:[possible_gen], get_dir:[get_dir(src, possible_gen)], src.dir:[src.dir]"
 			if(get_dir(src, possible_gen) == src.dir)
 				target_generator = possible_gen
 				possible_gen.owned_capacitor = src
