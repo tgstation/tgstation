@@ -1290,50 +1290,20 @@
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 	proc/On_Consume()
-		if (!trash) return
+		if(!usr)	return
 		if(!reagents.total_volume)
-			var/mob/M = usr
-			switch(trash)
-				if ("raisins")
-					var/obj/item/trash/raisins/T = new /obj/item/trash/raisins/( M )
-					M.put_in_hands(T)
-				if ("candy")
-					var/obj/item/trash/candy/T = new /obj/item/trash/candy/( M )
-					M.put_in_hands(T)
-				if ("cheesie")
-					var/obj/item/trash/cheesie/T = new /obj/item/trash/cheesie/( M )
-					M.put_in_hands(T)
-				if ("chips")
-					var/obj/item/trash/chips/T = new /obj/item/trash/chips/( M )
-					M.put_in_hands(T)
-				if ("popcorn")
-					var/obj/item/trash/popcorn/T = new /obj/item/trash/popcorn/( M )
-					M.put_in_hands(T)
-				if ("sosjerky")
-					var/obj/item/trash/sosjerky/T = new /obj/item/trash/sosjerky/( M )
-					M.put_in_hands(T)
-				if ("syndi_cakes")
-					var/obj/item/trash/syndi_cakes/T = new /obj/item/trash/syndi_cakes/( M )
-					M.put_in_hands(T)
-				if ("waffles")
-					var/obj/item/trash/waffles/T = new /obj/item/trash/waffles/( M )
-					M.put_in_hands(T)
-				if ("plate")
-					var/obj/item/trash/plate/T = new /obj/item/trash/plate/( M )
-					M.put_in_hands(T)
-				if ("snack_bowl")
-					var/obj/item/trash/snack_bowl/T = new /obj/item/trash/snack_bowl/( M )
-					M.put_in_hands(T)
-				if ("pistachios")
-					var/obj/item/trash/pistachios/T = new /obj/item/trash/pistachios/( M )
-					M.put_in_hands(T)
-				if ("semki")
-					var/obj/item/trash/semki/T = new /obj/item/trash/semki/( M )
-					M.put_in_hands(T)
-				if ("tray")
-					var/obj/item/trash/tray/T = new /obj/item/trash/tray/( M )
-					M.put_in_hands(T)
+			usr.visible_message("<span class='notice'>[usr] finishes eating [src].</span>","<span class='notice'>You finish eating [src].</span>")
+			usr.drop_from_inventory(src)	//so icons update :[
+
+			if(trash)
+				if(ispath(trash,/obj/item))
+					var/obj/item/TrashItem = new trash(usr)
+					usr.put_in_hands(TrashItem)
+				else if(istype(trash,/obj/item))
+					usr.put_in_hands(trash)
+			del(src)
 		return
+
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -1386,6 +1356,7 @@
 					return
 
 			if(reagents)								//Handle ingestion of the reagent.
+				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				if(reagents.total_volume)
 					reagents.reaction(M, INGEST)
 					spawn(5)
@@ -1401,12 +1372,6 @@
 							reagents.trans_to(M, reagents.total_volume)
 						bitecount++
 						On_Consume()
-						if(!reagents.total_volume)
-							if(M == user) user << "\red You finish eating [src]."
-							else user << "\red [M] finishes eating [src]."
-							M.drop_from_inventory(src)	//so icons update :[
-							del(src)
-				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1
 
 		return 0

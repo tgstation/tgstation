@@ -502,6 +502,7 @@
 		paper.loc = null //prevent deletion
 		var/obj/item/weapon/reagent_containers/food/snacks/fortunecookie/being_cooked = ..(container)
 		paper.loc = being_cooked
+		being_cooked.trash = paper //so the paper is left behind as trash without special-snowflake(TM Nodrak) code ~carn
 		return being_cooked
 	check_items(var/obj/container as obj)
 		. = ..()

@@ -1078,13 +1078,8 @@
 	desc = "Needs some butter!"
 	icon_state = "corn"
 	potency = 40
-	On_Consume()
-		if(!reagents.total_volume)
-			var/mob/M = usr
-			var/obj/item/weapon/corncob/W = new /obj/item/weapon/corncob( M )
-			M << "<span class='notice'>You chew on the corn, leaving nothing behind but a cob.</span>"
-			M.put_in_hands(W)
-			W.add_fingerprint(M)
+	trash = /obj/item/weapon/corncob
+
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
@@ -1377,13 +1372,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana"
 	item_state = "banana"
-	On_Consume()
-		if(!reagents.total_volume)
-			var/mob/M = usr
-			var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
-			M << "<span class='notice'>You peel the banana.</span>"
-			M.put_in_hands(W)
-			W.add_fingerprint(M)
+	trash = /obj/item/weapon/bananapeel
+
 	New()
 		..()
 		reagents.add_reagent("banana", 1+round((potency / 10), 1))
