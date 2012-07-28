@@ -15,6 +15,7 @@
 	robogibs(loc, viruses)
 
 	living_mob_list -= src
+	dead_mob_list -= src
 	spawn(15)
 		if(animation)	del(animation)
 		if(src)			del(src)

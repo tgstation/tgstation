@@ -14,7 +14,7 @@
 	real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
 	verbs -= /mob/living/carbon/alien/verb/ventcrawl
-	living_mob_list += src
+	add_to_mob_list(src)
 
 /mob/living/carbon/alien/humanoid/queen
 
