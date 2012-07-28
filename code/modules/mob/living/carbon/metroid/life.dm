@@ -41,6 +41,8 @@
 	if(client)
 		handle_regular_hud_updates() */
 
+	if(stat == 2)
+		return
 	handle_nutrition()
 
 	if(Tempstun)
