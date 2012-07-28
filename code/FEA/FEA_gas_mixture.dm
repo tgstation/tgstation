@@ -346,7 +346,7 @@ What are the archived variables for?
 					trace_gases += corresponding
 				corresponding.moles += trace_gas.moles*giver.group_multiplier/group_multiplier
 
-		del(giver)
+	//	del(giver)
 		return 1
 
 	remove(amount)

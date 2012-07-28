@@ -216,6 +216,15 @@
 	opacity = 0
 	density = 0
 
+/obj/effect/sign/atmosplaque
+	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
+	name = "FEA Atmospherics Division"
+	icon = 'icons/obj/decals.dmi'
+	icon_state = "atmosplaque"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
 /*/obj/item/weapon/plaque_assembly                       //commenting this out until there's a better rework
 	desc = "Put this on a wall and engrave an epitaph"
 	name = "Plaque Assembly"
