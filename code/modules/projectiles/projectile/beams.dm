@@ -45,7 +45,7 @@ var/list/beam_master = list()
 						beam_master["[icon_state][target_dir]"] = I //And cache it!
 
 					//Finally add the overlay
-					loc.overlays += beam_master["[icon_state][target_dir]"]
+					src.loc.overlays += beam_master["[icon_state][target_dir]"]
 
 					//Add the turf to a list in the beam master so they can be cleaned up easily.
 					if(reference in beam_master)

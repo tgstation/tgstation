@@ -1,8 +1,6 @@
 // thermo electric generator powered by twinned gas turbines
 // more realistic than type 2, and also cooler
 #define ENERGY_TRANSFER_FACTOR 10
-#define POWER_PRODUCTION_FACTOR 1.25
-
 /*/obj/machinery/power/generator/verb/set_amount(var/g as num)
 	set src in view(1)
 
@@ -31,7 +29,8 @@
 		if(lastgenlev != 0)
 			overlays += image('power.dmi', "teg-op[lastgenlev]")
 
-#define GENRATE 800		// generator output coefficient from Q
+#define GENRATE 0.05		// generator output coefficient from Q
+#define MAX_SAFE_OUTPUT 500000
 
 /obj/machinery/power/generator/process()
 
@@ -62,7 +61,7 @@
 			var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
 
 			var/heat = energy_transfer*(1-efficiency)
-			lastgen = POWER_PRODUCTION_FACTOR * energy_transfer*efficiency
+			lastgen = energy_transfer * efficiency * GENRATE
 
 			//ENERGY_TRANSFER_FACTOR to beef up the amount of heat passed over
 			hot_air.temperature -= energy_transfer/hot_air_heat_capacity
@@ -71,7 +70,18 @@
 
 			//world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]"
 
+			//if producing more than 1 million watts, emit sparks and waste a little power
+			var/runoff = 0
+			if(lastgen > MAX_SAFE_OUTPUT)
+				runoff = lastgen - MAX_SAFE_OUTPUT
+				if( prob(max( 100, (100 * runoff / MAX_SAFE_OUTPUT) )) )
+					lastgen -= rand(1, 10) * (runoff / 100)
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(5, 1, src)
+					s.start()
+			//
 			add_avail(lastgen)
+
 	// update icon overlays only if displayed level has changed
 
 	if(air1)
@@ -80,7 +90,7 @@
 	if(air2)
 		circ2.air2.merge(air2)
 
-	var/genlev = max(0, min( round(11*lastgen / 250000), 11))
+	var/genlev = max(0, min( round(11*lastgen / MAX_SAFE_OUTPUT), 11))
 	if(genlev != lastgenlev)
 		lastgenlev = genlev
 		updateicon()

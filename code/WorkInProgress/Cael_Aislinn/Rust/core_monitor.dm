@@ -6,8 +6,10 @@
 	name = "Core Primary Monitor"
 	icon_state = "power"
 	var/obj/machinery/rust/core/core_generator = null
+	var/updating = 1
 
 	New()
+		..()
 		spawn(0)
 			core_generator = locate() in world
 
@@ -23,16 +25,22 @@
 	Topic(href, href_list)
 		..()
 		if( href_list["shutdown"] )
+			updating = 0
 			core_generator.Topic(href, href_list)
 			updateDialog()
+			updating = 1
 			return
 		if( href_list["startup"] )
+			updating = 0
 			core_generator.Topic(href, href_list)
 			updateDialog()
+			updating = 1
 			return
 		if( href_list["modify_field_strength"] )
+			updating = 0
 			core_generator.Topic(href, href_list)
 			updateDialog()
+			updating = 1
 			return
 		if( href_list["close"] )
 			usr << browse(null, "window=core_monitor")
@@ -41,7 +49,8 @@
 
 	process()
 		..()
-		updateDialog()
+		if(updating)
+			src.updateDialog()
 
 	proc
 		interact(mob/user)
@@ -60,7 +69,7 @@
 					t += "	<font color=blue>Energy levels (MeV): [core_generator.owned_field.mega_energy]</font><br>"
 					t += "	<font color=blue>Core frequency: [core_generator.owned_field.frequency]</font><br>"
 					t += "	<font color=blue>Moles of plasma: [core_generator.owned_field.held_plasma.toxins]</font><br>"
-					t += "	<font color=blue>Plasma temperature: [core_generator.owned_field.held_plasma.temperature]</font><br>"
+					t += "	<font color=blue>Core temperature: [core_generator.owned_field.held_plasma.temperature]</font><br>"
 					t += "<hr>"
 					t += "<b>Core atomic and subatomic constituents:</font></b><br>"
 					if(core_generator.owned_field.dormant_reactant_quantities && core_generator.owned_field.dormant_reactant_quantities.len)
@@ -74,5 +83,5 @@
 				t += "<b><font color=red>Core Generator unresponsive</font></b><br>"
 			t += "<hr>"
 			t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-			user << browse(t, "window=core_monitor;size=500x800")
+			user << browse(t, "window=core_monitor;size=500x400")
 			user.machine = src

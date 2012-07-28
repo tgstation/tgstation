@@ -88,9 +88,33 @@
 			for(var/obj/machinery/computer/rust/gyrotron_controller/comp in range(25))
 				comp.updateDialog()
 			return
-
+/*
+			var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+			playsound(src.loc, 'emitter.ogg', 25, 1)
+			if(prob(35))
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				s.set_up(5, 1, src)
+				s.start()
+			A.dir = src.dir
+			if(src.dir == 1)//Up
+				A.yo = 20
+				A.xo = 0
+			else if(src.dir == 2)//Down
+				A.yo = -20
+				A.xo = 0
+			else if(src.dir == 4)//Right
+				A.yo = 0
+				A.xo = 20
+			else if(src.dir == 8)//Left
+				A.yo = 0
+				A.xo = -20
+			else // Any other
+				A.yo = -20
+				A.xo = 0
+			A.fired()
+*/
 	proc/Emit()
-		var/obj/item/projectile/beam/ehf_beam/A = new ( src.loc )
+		var/obj/item/projectile/beam/ehf_beam/A = new /obj/item/projectile/beam/ehf_beam( src.loc )
 		A.frequency = frequency
 		A.damage = mega_energy * 500
 		//

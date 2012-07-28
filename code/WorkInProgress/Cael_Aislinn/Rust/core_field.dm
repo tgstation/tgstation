@@ -116,7 +116,6 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		volume_covered = PI * major_radius * minor_radius * 2.5 * 2.5 * 1000
 
 	process()
-		..()
 		//make sure the field generator is still intact
 		if(!owned_core)
 			del(src)
@@ -131,29 +130,21 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		radiation = 0
 
 		//update values
-		var/transfer_ratio = field_strength / 50
-		major_radius = field_strength * 0.21875// max = 8.75
-		minor_radius = field_strength * 0.2125// max = 8.625
-		volume_covered = PI * major_radius * minor_radius * 2.5 * 2.5 * 2.5 * 7 * 7 * transfer_ratio
+		var/transfer_ratio = field_strength / 50			//higher field strength will result in faster plasma aggregation
+		major_radius = field_strength * 0.21875// max = 8.75m
+		minor_radius = field_strength * 0.2125// max = 8.625m
+		volume_covered = PI * major_radius * minor_radius * 2.5 * 2.5 * 2.5 * 7 * 7 * transfer_ratio	//one tile = 2.5m*2.5m*2.5m
 
 		//add plasma from the surrounding environment
 		var/datum/gas_mixture/environment = loc.return_air()
 
-/*
-		if(air_contents.temperature > 0)
-			var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
-			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
-			loc.assume_air(removed)
-*/
-
-		//we're going to hack in some stuff to remove plasma from the air because QUANTUM PHYSICS
+		//hack in some stuff to remove plasma from the air because SCIENCE
 		//the amount of plasma pulled in each update is relative to the field strength, with 50T (max field strength) = 100% of area covered by the field
 		//at minimum strength, 0.25% of the field volume is pulled in per update (?)
 		//have a max of 1000 moles suspended
 		if(held_plasma.toxins < transfer_ratio * 1000)
 			var/moles_covered = environment.return_pressure()*volume_covered/(environment.temperature * R_IDEAL_GAS_EQUATION)
+			//world << "\blue moles_covered: [moles_covered]"
 			//
 			var/datum/gas_mixture/gas_covered = environment.remove(moles_covered)
 			var/datum/gas_mixture/plasma_captured = new /datum/gas_mixture()
@@ -161,9 +152,10 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			plasma_captured.toxins = round(gas_covered.toxins * transfer_ratio)
 			//world << "\blue[plasma_captured.toxins] moles of plasma captured"
 			plasma_captured.temperature = gas_covered.temperature
-			//plasma_captured.update_values()
+			plasma_captured.update_values()
+			//
 			gas_covered.toxins -= plasma_captured.toxins
-			//gas_covered.update_values()
+			gas_covered.update_values()
 			//
 			held_plasma.merge(plasma_captured)
 			//
