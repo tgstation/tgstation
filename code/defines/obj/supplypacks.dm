@@ -33,12 +33,13 @@
 	containername = "Empty Box crate"
 
 /datum/supply_packs/pcm
-	name = "Power Control Module supplies"
+	name = "APC and Airlock Electronics crate"
 	contains = list("/obj/item/weapon/storage/PCMBox",
-	"/obj/item/weapon/storage/PCMBox")
+	"/obj/item/weapon/storage/AirlockBox")
 	cost = 25
 	containertype = "/obj/structure/closet/crate"
 	containername = "Power Control Module crate"
+	group = "Engineering"
 
 /datum/supply_packs/body_bags
 	name = "Body Bag supplies"
@@ -764,6 +765,7 @@
 	containername = "Secruity Barriers crate"
 	group = "Security"
 
+/*
 /datum/supply_packs/randomised
 	var/num_contained = 3 //number of items picked to be contained in a randomised crate
 	contains = list("/obj/item/clothing/head/collectable/chef",
@@ -794,6 +796,7 @@
 	cost = 200
 	containertype = "/obj/structure/closet/crate"
 	containername = "Collectable hats crate! Brought to you by Bass.inc!"
+*/
 
 /datum/supply_packs/randomised/New()
 	var/list/tempContains = list()
