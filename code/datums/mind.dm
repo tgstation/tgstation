@@ -24,6 +24,8 @@ datum/mind
 	proc/transfer_to(mob/new_character)
 		// multikey information is stored in the mob, not the mind, so
 		// we need to clean this stuff up to avoid multikey alerts
+		if(!new_character || !current)
+			return
 		current.lastKnownIP = null
 		current.computer_id = null
 
