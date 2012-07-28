@@ -123,6 +123,10 @@
 
 
 /client/proc/log_client_to_db()
+
+	if ( IsGuestKey(src.key) )
+		return
+
 	var/user = sqlfdbklogin
 	var/pass = sqlfdbkpass
 	var/db = sqlfdbkdb
