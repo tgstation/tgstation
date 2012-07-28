@@ -2,6 +2,7 @@
 /obj/machinery/computer/rust/gyrotron_controller
 	name = "Gyrotron Remote Controller"
 	icon_state = "power"
+	var/updating = 1
 
 	New()
 		..()
@@ -33,7 +34,8 @@
 
 	process()
 		..()
-		src.updateDialog()
+		if(updating)
+			src.updateDialog()
 
 	proc
 		interact(mob/user)

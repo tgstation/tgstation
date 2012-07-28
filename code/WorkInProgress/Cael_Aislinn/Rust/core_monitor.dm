@@ -6,6 +6,7 @@
 	name = "Core Primary Monitor"
 	icon_state = "power"
 	var/obj/machinery/rust/core/core_generator = null
+	var/updating = 1
 
 	New()
 		..()
@@ -24,16 +25,22 @@
 	Topic(href, href_list)
 		..()
 		if( href_list["shutdown"] )
+			updating = 0
 			core_generator.Topic(href, href_list)
 			updateDialog()
+			updating = 1
 			return
 		if( href_list["startup"] )
+			updating = 0
 			core_generator.Topic(href, href_list)
 			updateDialog()
+			updating = 1
 			return
 		if( href_list["modify_field_strength"] )
+			updating = 0
 			core_generator.Topic(href, href_list)
 			updateDialog()
+			updating = 1
 			return
 		if( href_list["close"] )
 			usr << browse(null, "window=core_monitor")
@@ -42,7 +49,8 @@
 
 	process()
 		..()
-		src.updateDialog()
+		if(updating)
+			src.updateDialog()
 
 	proc
 		interact(mob/user)
