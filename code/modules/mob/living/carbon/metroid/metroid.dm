@@ -700,10 +700,15 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 			health = 150
 		stat = 0
 
-
 /mob/living/carbon/metroid/proc/get_obstacle_ok(atom/A)
 	var/direct = get_dir(src, A)
-	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( src.loc )
+	var/obj/item/weapon/dummy/D = locate() in DummyCache //See atom_procs.dm
+	if(!D)
+		D = new /obj/item/weapon/dummy( src.loc )
+	else
+		D.loc = src.loc
+		DummyCache.Remove(D)
+
 	var/ok = 0
 
 	if ( (direct - 1) & direct)
@@ -781,7 +786,8 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 					if(!border_obstacle.CanPass(D, D.loc, 1, 0))
 						ok = 0
 
-	del(D)
+	D.loc = null
+	DummyCache.Add(D)
 	if (!( ok ))
 		return 0
 
