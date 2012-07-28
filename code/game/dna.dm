@@ -228,6 +228,49 @@
 	if (!output) output = "5"
 	return output
 
+//Instead of picking a value far from the input, this will pick values closer to it.
+//Sorry for the block of code, but it's more efficient then calling text2hex -> loop -> hex2text
+/proc/miniscrambletarget(input,rs,rd)
+	var/output = null
+	switch(input)
+		if("0")
+			output = pick(prob((rs*10)+(rd));"0",prob((rs*10)+(rd));"1",prob((rs*10));"2",prob((rs*10)-(rd));"3")
+		if("1")
+			output = pick(prob((rs*10)+(rd));"0",prob((rs*10)+(rd));"1",prob((rs*10)+(rd));"2",prob((rs*10));"3",prob((rs*10)-(rd));"4")
+		if("2")
+			output = pick(prob((rs*10));"0",prob((rs*10)+(rd));"1",prob((rs*10)+(rd));"2",prob((rs*10)+(rd));"3",prob((rs*10));"4",prob((rs*10)-(rd));"5")
+		if("3")
+			output = pick(prob((rs*10)-(rd));"0",prob((rs*10));"1",prob((rs*10)+(rd));"2",prob((rs*10)+(rd));"3",prob((rs*10)+(rd));"4",prob((rs*10));"5",prob((rs*10)-(rd));"6")
+		if("4")
+			output = pick(prob((rs*10)-(rd));"1",prob((rs*10));"2",prob((rs*10)+(rd));"3",prob((rs*10)+(rd));"4",prob((rs*10)+(rd));"5",prob((rs*10));"6",prob((rs*10)-(rd));"7")
+		if("5")
+			output = pick(prob((rs*10)-(rd));"2",prob((rs*10));"3",prob((rs*10)+(rd));"4",prob((rs*10)+(rd));"5",prob((rs*10)+(rd));"6",prob((rs*10));"7",prob((rs*10)-(rd));"8")
+		if("6")
+			output = pick(prob((rs*10)-(rd));"3",prob((rs*10));"4",prob((rs*10)+(rd));"5",prob((rs*10)+(rd));"6",prob((rs*10)+(rd));"7",prob((rs*10));"8",prob((rs*10)-(rd));"9")
+		if("7")
+			output = pick(prob((rs*10)-(rd));"4",prob((rs*10));"5",prob((rs*10)+(rd));"6",prob((rs*10)+(rd));"7",prob((rs*10)+(rd));"8",prob((rs*10));"9",prob((rs*10)-(rd));"A")
+		if("8")
+			output = pick(prob((rs*10)-(rd));"5",prob((rs*10));"6",prob((rs*10)+(rd));"7",prob((rs*10)+(rd));"8",prob((rs*10)+(rd));"9",prob((rs*10));"A",prob((rs*10)-(rd));"B")
+		if("9")
+			output = pick(prob((rs*10)-(rd));"6",prob((rs*10));"7",prob((rs*10)+(rd));"8",prob((rs*10)+(rd));"9",prob((rs*10)+(rd));"A",prob((rs*10));"B",prob((rs*10)-(rd));"C")
+		if("10")//A
+			output = pick(prob((rs*10)-(rd));"7",prob((rs*10));"8",prob((rs*10)+(rd));"9",prob((rs*10)+(rd));"A",prob((rs*10)+(rd));"B",prob((rs*10));"C",prob((rs*10)-(rd));"D")
+		if("11")//B
+			output = pick(prob((rs*10)-(rd));"8",prob((rs*10));"9",prob((rs*10)+(rd));"A",prob((rs*10)+(rd));"B",prob((rs*10)+(rd));"C",prob((rs*10));"D",prob((rs*10)-(rd));"E")
+		if("12")//C
+			output = pick(prob((rs*10)-(rd));"9",prob((rs*10));"A",prob((rs*10)+(rd));"B",prob((rs*10)+(rd));"C",prob((rs*10)+(rd));"D",prob((rs*10));"E",prob((rs*10)-(rd));"F")
+		if("13")//D
+			output = pick(prob((rs*10)-(rd));"A",prob((rs*10));"B",prob((rs*10)+(rd));"C",prob((rs*10)+(rd));"D",prob((rs*10)+(rd));"E",prob((rs*10));"F")
+		if("14")//E
+			output = pick(prob((rs*10)-(rd));"B",prob((rs*10));"C",prob((rs*10)+(rd));"D",prob((rs*10)+(rd));"E",prob((rs*10)+(rd));"F")
+		if("15")//F
+			output = pick(prob((rs*10)-(rd));"C",prob((rs*10));"D",prob((rs*10)+(rd));"E",prob((rs*10)+(rd));"F")
+
+	if(!input || !output) //How did this happen?
+		output = "8"
+
+	return output
+
 /proc/isblockon(hnumber, bnumber , var/UI = 0)
 
 	var/temp2
@@ -818,14 +861,14 @@
 		src.diskette = W
 		user << "You insert [W]."
 		src.updateUsrDialog()
-
+/*
 /obj/machinery/computer/scan_consolenew/process() //not really used right now
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!( src.status )) //remove this
 		return
 	return
-
+*/
 /obj/machinery/computer/scan_consolenew/attack_paw(user as mob)
 	return src.attack_hand(user)
 
@@ -963,24 +1006,74 @@
 			src.temphtml += text("<A href='?src=\ref[];unimenuminus=1'><-</A> Block <A href='?src=\ref[];unimenuplus=1'>-></A><BR><BR>", src, src)
 			src.temphtml += text("Selected Sub-Block: <font color='blue'><B>[]</B></FONT><BR>", src.subblock)
 			src.temphtml += text("<A href='?src=\ref[];unimenusubminus=1'><-</A> Sub-Block <A href='?src=\ref[];unimenusubplus=1'>-></A><BR><BR>", src, src)
+			src.temphtml += text("Selected Target: <font color='blue'><B>[]</B></FONT><BR>", src.unitargethex)
+			src.temphtml += text("<A href='?src=\ref[];unimenutargetminus=1'><-</A> Target <A href='?src=\ref[];unimenutargetplus=1'>-></A><BR><BR>", src, src)
 			src.temphtml += "<B>Modify Block:</B><BR>"
 			src.temphtml += text("<A href='?src=\ref[];unipulse=1'>Irradiate</A><BR>", src)
 			src.delete = 0
 		if (href_list["unimenuplus"])
 			if (src.uniblock < 13)
 				src.uniblock++
+			else
+				src.uniblock = 1
 			dopage(src,"unimenu")
 		if (href_list["unimenuminus"])
 			if (src.uniblock > 1)
 				src.uniblock--
+			else
+				src.uniblock = 13
 			dopage(src,"unimenu")
 		if (href_list["unimenusubplus"])
 			if (src.subblock < 3)
 				src.subblock++
+			else
+				src.subblock = 1
 			dopage(src,"unimenu")
 		if (href_list["unimenusubminus"])
 			if (src.subblock > 1)
 				src.subblock--
+			else
+				src.subblock = 3
+			dopage(src,"unimenu")
+		if (href_list["unimenutargetplus"])
+			if (src.unitarget < 15)
+				src.unitarget++
+				src.unitargethex = src.unitarget
+				switch(unitarget)
+					if(10)
+						src.unitargethex = "A"
+					if(11)
+						src.unitargethex = "B"
+					if(12)
+						src.unitargethex = "C"
+					if(13)
+						src.unitargethex = "D"
+					if(14)
+						src.unitargethex = "E"
+					if(15)
+						src.unitargethex = "F"
+			else
+				src.unitarget = 0
+				src.unitargethex = 0
+			dopage(src,"unimenu")
+		if (href_list["unimenutargetminus"])
+			if (src.unitarget > 0)
+				src.unitarget--
+				src.unitargethex = src.unitarget
+				switch(unitarget)
+					if(10)
+						src.unitargethex = "A"
+					if(11)
+						src.unitargethex = "B"
+					if(12)
+						src.unitargethex = "C"
+					if(13)
+						src.unitargethex = "D"
+					if(14)
+						src.unitargethex = "E"
+			else
+				src.unitarget = 15
+				src.unitargethex = "F"
 			dopage(src,"unimenu")
 		if (href_list["uimenuset"] && href_list["uimenusubset"]) // This chunk of code updates selected block / sub-block based on click
 			var/menuset = text2num(href_list["uimenuset"])
@@ -1009,7 +1102,7 @@
 					return null
 				///
 				if (prob((80 + (src.radduration / 2))))
-					block = miniscramble(block, src.radstrength, src.radduration)
+					block = miniscrambletarget(num2text(unitarget), src.radstrength, src.radduration)
 					newblock = null
 					if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)
 					if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)
@@ -1058,18 +1151,26 @@
 		if (href_list["strucmenuplus"])
 			if (src.strucblock < 14)
 				src.strucblock++
+			else
+				src.strucblock = 1
 			dopage(src,"strucmenu")
 		if (href_list["strucmenuminus"])
 			if (src.strucblock > 1)
 				src.strucblock--
+			else
+				src.strucblock = 14
 			dopage(src,"strucmenu")
 		if (href_list["strucmenusubplus"])
 			if (src.subblock < 3)
 				src.subblock++
+			else
+				src.subblock = 1
 			dopage(src,"strucmenu")
 		if (href_list["strucmenusubminus"])
 			if (src.subblock > 1)
 				src.subblock--
+			else
+				src.subblock = 3
 			dopage(src,"strucmenu")
 		if (href_list["semenuset"] && href_list["semenusubset"]) // This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
 			var/menuset = text2num(href_list["semenuset"])

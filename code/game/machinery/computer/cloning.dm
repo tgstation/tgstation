@@ -7,6 +7,8 @@
 	var/uniblock = 1.0
 	var/strucblock = 1.0
 	var/subblock = 1.0
+	var/unitarget = 1
+	var/unitargethex = 1
 	var/status = null
 	var/radduration = 2.0
 	var/radstrength = 1.0
