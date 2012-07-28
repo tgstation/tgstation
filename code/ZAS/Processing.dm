@@ -23,7 +23,8 @@ zone/proc/process()
 		for(var/T in space_tiles)
 			if(!istype(T,/turf/space))
 				RemoveSpace(T)
-		total_space = space_tiles.len
+		if(space_tiles)
+			total_space = space_tiles.len
 
 	//Add checks to ensure that we're not sucking air out of an empty room.
 	if(total_space && air.total_moles > 0.1 && air.temperature > TCMB+0.5)
