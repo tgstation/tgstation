@@ -10,7 +10,7 @@
 	icon_state = "smes"
 	density = 1
 	anchored = 1
-	var/output = 50000
+	var/output = 120000
 	var/lastout = 0
 	var/loaddemand = 0
 	var/capacity = 10e6
@@ -18,7 +18,7 @@
 	var/charging = 0
 	var/chargemode = 0
 	var/chargecount = 0
-	var/chargelevel = 120000
+	var/chargelevel = 50000
 	var/online = 1
 	var/n_tag = null
 	var/obj/machinery/power/terminal/terminal = null
