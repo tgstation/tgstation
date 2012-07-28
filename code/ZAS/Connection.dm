@@ -190,6 +190,9 @@ connection
 		return 1
 
 	proc/UpdateZones() //Changes connection data in the zones if it is required.
+		if(istype(A,/turf/space) || istype(B,/turf/space))
+			src.Cleanup()
+			return
 		if(A.ZAirPass(B))
 			var/door_pass = A.CanPass(null,B,1.5,1)
 			if(door_pass || A.CanPass(null,B,0,0))
