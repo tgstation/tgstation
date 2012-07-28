@@ -195,7 +195,7 @@ steam.start() -- spawns the effect
 			if(src.total_sparks > 20)
 				return
 			spawn(0)
-				if(holder || !istype(holder,/datum))
+				if(holder && !istype(holder,/datum))
 					src.location = get_turf(holder)
 				var/obj/effect/effect/sparks/sparks = new /obj/effect/effect/sparks(src.location)
 				src.total_sparks++
