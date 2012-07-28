@@ -26,12 +26,14 @@
 	var/charge_rate = 100
 
 /obj/machinery/shield_capacitor/New()
+	spawn(10)
+		for(var/obj/machinery/shield_gen/possible_gen in range(1, src))
+			world << "possible_gen:[possible_gen], get_dir:[get_dir(src, possible_gen)], src.dir:[src.dir]"
+			if(get_dir(src, possible_gen) == src.dir)
+				target_generator = possible_gen
+				possible_gen.owned_capacitor = src
+				break
 	..()
-	target_generator = locate() in get_step(src,dir)
-	if(target_generator && !target_generator.owned_capacitor)
-		target_generator.owned_capacitor = src
-	/*spawn(10)
-		check_powered()*/
 
 /obj/machinery/shield_capacitor/verb/rotate()
 	set name = "Rotate Clockwise"
@@ -42,10 +44,9 @@
 		usr << "It is fastened to the floor!"
 		return 0
 	src.dir = turn(src.dir, 270)
-	for(var/obj/machinery/shield_gen/possible_gen in range(1))
-		if(get_dir(src, possible_gen) == dir)
-			possible_gen.owned_capacitor = src
-			break
+	target_generator = locate() in get_step(src,dir)
+	if(target_generator && !target_generator.owned_capacitor)
+		target_generator.owned_capacitor = src
 	return 1
 
 /obj/machinery/shield_capacitor/power_change()
