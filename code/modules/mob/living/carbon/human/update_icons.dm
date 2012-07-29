@@ -648,6 +648,7 @@ Please contact me on #coderbus IRC. ~Carn x
 #undef HAIR_LAYER
 #undef HEAD_LAYER
 #undef HANDCUFF_LAYER
+#undef LEGCUFF_LAYER
 #undef L_HAND_LAYER
 #undef R_HAND_LAYER
 #undef TOTAL_LAYERS

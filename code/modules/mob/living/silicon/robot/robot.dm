@@ -944,22 +944,33 @@ Frequency:
 
 	if(module)
 		if(module.type == /obj/item/weapon/robot_module/janitor)	//you'd think checking the module would work
-			var/turf/tile = get_turf(loc)
-
-			tile.clean_blood()
-			for(var/obj/effect/R in tile)
-				if(istype(R, /obj/effect/rune) || istype(R, /obj/effect/decal/cleanable) || istype(R, /obj/effect/overlay))
-					del(R)
-
-			for(var/obj/item/cleaned_item in tile)
-				cleaned_item.clean_blood()
-
-			for(var/mob/living/carbon/human/cleaned_human in tile)	//HUE HUE I CLEAN U
-				if(cleaned_human.lying)
-					cleaned_human.clean_blood()
-					cleaned_human << "\red [src] cleans your face!"
-					for(var/obj/item/carried_item in cleaned_human.contents)
-						carried_item.clean_blood()
+			var/turf/tile = loc
+			if(isturf(tile))
+				tile.clean_blood()
+				for(var/A in tile)
+					if(istype(A, /obj/effect))
+						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+							del(A)
+					else if(istype(A, /obj/item))
+						var/obj/item/cleaned_item = A
+						cleaned_item.clean_blood()
+					else if(istype(A, /mob/living/carbon/human))
+						var/mob/living/carbon/human/cleaned_human = A
+						if(cleaned_human.lying)
+							if(cleaned_human.head)
+								cleaned_human.head.clean_blood()
+								cleaned_human.update_inv_head(0)
+							if(cleaned_human.wear_suit)
+								cleaned_human.wear_suit.clean_blood()
+								cleaned_human.update_inv_wear_suit(0)
+							else if(cleaned_human.w_uniform)
+								cleaned_human.w_uniform.clean_blood()
+								cleaned_human.update_inv_w_uniform(0)
+							if(cleaned_human.shoes)
+								cleaned_human.shoes.clean_blood()
+								cleaned_human.update_inv_shoes(0)
+							cleaned_human.clean_blood()
+							cleaned_human << "\red [src] cleans your face!"
 		return
 
 /mob/living/silicon/robot/proc/self_destruct()

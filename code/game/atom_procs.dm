@@ -285,20 +285,34 @@
 
 /atom/proc/clean_blood()
 
-	if (!( src.flags ) & FPRINT)
-		return
-	if (blood_DNA)
+	if(istype(fingerprints, /list))
+		//Smudge up dem prints some
+		for(var/P in fingerprints)
+			var/test_print = stars(fingerprints[P], rand(10,20))
+			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
+				fingerprints.Remove(P)
+			else
+				fingerprints[P] = test_print
+		if(!fingerprints.len)
+			del(fingerprints)
 
+	if(istype(blood_DNA, /list))
 		//Cleaning blood off of mobs
-		if (istype (src, /mob/living/carbon))
+		if(istype(src, /mob/living/carbon))
 			var/mob/living/carbon/M = src
 			del(M.blood_DNA)
-			if(ishuman(src))
-				var/mob/living/carbon/human/H = src
-				H.bloody_hands = 0
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.gloves)
+					H.gloves.clean_blood()
+//					H.update_inv_gloves(0)		//Needs to be called even if we aren't wearing gloves.
+				else
+					H.bloody_hands = 0
+				H.update_inv_gloves(0)		//because it handles bloody hands too
+			M.update_icons()	//apply the now updated overlays to the mob
 
 		//Cleaning blood off of items
-		else if (istype (src, /obj/item))
+		else if(istype(src, /obj/item))
 			var/obj/item/O = src
 			del(O.blood_DNA)
 			if(O.blood_overlay)
@@ -309,7 +323,7 @@
 				G.transfer_blood = 0
 
 		//Cleaning blood off of turfs
-		else if (istype(src, /turf/simulated))
+		else if(istype(src, /turf/simulated))
 			var/turf/simulated/T = src
 			del(T.blood_DNA)
 			if(T.icon_old)
@@ -318,21 +332,8 @@
 			else
 				T.icon = initial(icon)
 
-	if(blood_DNA && istype(blood_DNA, /list) && !blood_DNA.len)
-		del(blood_DNA)
-	if(fingerprints && fingerprints.len)
-		//Smudge up dem prints some
-		for(var/P in fingerprints)
-			var/test_print = stars(fingerprints[P], rand(10,20))
-			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-				fingerprints.Remove(P)
-			else
-				fingerprints[P] = test_print
-	if(fingerprints && !fingerprints.len)
-		del(fingerprints)
-	if(istype(src, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src
-		M.update_inv_gloves()		//handles bloody hands too
+		else if(!blood_DNA.len)
+			del(blood_DNA)
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)

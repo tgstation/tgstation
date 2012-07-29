@@ -201,45 +201,38 @@
 /obj/machinery/shower/proc/wash(atom/movable/O as obj|mob)
 	if(!on) return
 
-	if(istype(O, /mob/living/carbon))
-		var/mob/living/carbon/monkey = O	//it's not necessarily a monkey, but >accurate varnames
-		if(monkey.r_hand)
-			monkey.r_hand.clean_blood()
-		if(monkey.l_hand)
-			monkey.l_hand.clean_blood()
-		if(monkey.wear_mask)
-			monkey.wear_mask.clean_blood()
-			monkey.update_inv_wear_mask(0)
-
-		if(istype(O, /mob/living/carbon/human))
-			var/mob/living/carbon/human/washer = O
-			if(washer.head)
-				washer.head.clean_blood()
-				washer.update_inv_head(0)
-			if(washer.wear_suit)
-				washer.wear_suit.clean_blood()
-				washer.update_inv_wear_suit(0)
-			else if(washer.w_uniform)
-				washer.w_uniform.clean_blood()
-				washer.update_inv_w_uniform(0)
-			if(washer.shoes)
-				washer.shoes.clean_blood()
-				washer.update_inv_shoes(0)
-			if(washer.gloves)
-				washer.gloves.clean_blood()
-//				washer.update_inv_gloves(0)		//no need for this one since it's located in clean_blood too.
+	if(iscarbon(O))
+		var/mob/living/carbon/M = O
+		if(M.r_hand)
+			M.r_hand.clean_blood()
+		if(M.l_hand)
+			M.l_hand.clean_blood()
+		if(M.wear_mask)
+			M.wear_mask.clean_blood()
+			M.update_inv_wear_mask(0)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.head)
+				H.head.clean_blood()
+				H.update_inv_head(0)
+			if(H.wear_suit)
+				H.wear_suit.clean_blood()
+				H.update_inv_wear_suit(0)
+			else if(H.w_uniform)
+				H.w_uniform.clean_blood()
+				H.update_inv_w_uniform(0)
+			if(H.shoes)
+				H.shoes.clean_blood()
+				H.update_inv_shoes(0)
 
 	O.clean_blood()
 
-	if(loc)
-		var/turf/tile = get_turf(loc)
+	if(isturf(loc))
+		var/turf/tile = loc
 		loc.clean_blood()
-		for(var/obj/effect/rune/R in tile)
-			del(R)
-		for(var/obj/effect/decal/cleanable/R in tile)
-			del(R)
-		for(var/obj/effect/overlay/R in tile)
-			del(R)
+		for(var/obj/effect/E in tile)
+			if(istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay))
+				del(E)
 
 /obj/machinery/shower/process()
 	if(!on || !mobpresent) return
@@ -298,18 +291,7 @@
 
 	if(M.loc != location) return		//Person has moved away from the sink
 
-	if(istype(M, /mob/living/carbon))
-		var/mob/living/carbon/C = M
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/washer = C
-			if(washer.gloves)					//if they have gloves
-				washer.gloves.clean_blood()		//clean the gloves
-				washer.update_inv_gloves()		//update our overlays
-			else								//and if they don't,
-				washer.clean_blood()			//wash their hands (a mob being bloody means they are 'red handed')
-				//overlays will be updated in clean_blood()
-		else
-			C.clean_blood()						//other things that can't wear gloves should just wash the mob.
+	M.clean_blood()
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [M] washes their hands using \the [src].")
 

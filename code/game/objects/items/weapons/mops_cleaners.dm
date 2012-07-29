@@ -361,12 +361,9 @@
 obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 	src.reagents.reaction(A,1,10)
 	A.clean_blood()
-	for(var/obj/effect/rune/R in A)
-		del(R)
-	for(var/obj/effect/decal/cleanable/R in A)
-		del(R)
-	for(var/obj/effect/overlay/R in A)
-		del(R)
+	for(var/obj/effect/O in A)
+		if( istype(O,/obj/effect/rune) || istype(O,/obj/effect/decal/cleanable) || istype(O,/obj/effect/overlay) )
+			del(O)
 
 
 /obj/effect/attackby(obj/item/weapon/W as obj, mob/user as mob)

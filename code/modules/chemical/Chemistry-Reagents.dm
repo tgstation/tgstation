@@ -983,7 +983,7 @@ datum
 				if(istype(O,/obj/effect/decal/cleanable))
 					del(O)
 				else
-					if (O)
+					if(O)
 						O.clean_blood()
 			reaction_turf(var/turf/T, var/volume)
 				T.overlays = null
@@ -994,8 +994,7 @@ datum
 				for(var/mob/living/carbon/metroid/M in T)
 					M.adjustToxLoss(rand(5,10))
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)	//TODO: CARN
-				M.clean_blood()
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
 					if(C.r_hand)
@@ -1004,19 +1003,22 @@ datum
 						C.l_hand.clean_blood()
 					if(C.wear_mask)
 						C.wear_mask.clean_blood()
+						C.update_inv_wear_mask(0)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = C
-						if(H.w_uniform)
-							H.w_uniform.clean_blood()
-						if(H.wear_suit)
-							H.wear_suit.clean_blood()
-						if(H.shoes)
-							H.shoes.clean_blood()
-						if(H.gloves)
-							H.gloves.clean_blood()
 						if(H.head)
 							H.head.clean_blood()
-
+							H.update_inv_head(0)
+						if(H.wear_suit)
+							H.wear_suit.clean_blood()
+							H.update_inv_wear_suit(0)
+						else if(H.w_uniform)
+							H.w_uniform.clean_blood()
+							H.update_inv_w_uniform(0)
+						if(H.shoes)
+							H.shoes.clean_blood()
+							H.update_inv_shoes(0)
+					M.clean_blood()
 
 		plantbgone
 			name = "Plant-B-Gone"

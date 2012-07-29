@@ -44,11 +44,15 @@ BIKE HORN
 		M.Weaken(2)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob)
-	if(istype(target,/obj/effect/decal/cleanable))
-		user << "\blue You scrub \the [target.name] out."
+	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
+	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+	if(user.client && (target in user.client.screen))
+		user << "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>"
+	else if(istype(target,/obj/effect/decal/cleanable))
+		user << "<span class='notice'>You scrub \the [target.name] out.</span>"
 		del(target)
 	else
-		user << "\blue You clean \the [target.name]."
+		user << "<span class='notice'>You clean \the [target.name].</span>"
 		target.clean_blood()
 	return
 
