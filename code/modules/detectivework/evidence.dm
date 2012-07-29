@@ -11,34 +11,32 @@
 	if(!in_range(O,user))
 		return
 
-	if(istype(O, /obj/item/weapon/storage) && O in user)
+	if(istype(O, /obj/item/weapon/storage))
 		return ..()
 
-	if(!(O && istype(O)) || O.anchored == 1)
-		user << "You can't put that inside \the [src]!"
+	if(!istype(O) || O.anchored == 1)
+		user << "<span class='notice'>You can't put that inside \the [src]!</span>"
 		return ..()
 
 	if(istype(O, /obj/item/weapon/evidencebag))
-		user << "You find putting an evidence bag in another evidence bag to be slightly absurd."
+		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
 		return
 
 	if(contents.len)
-		user << "The [src] already has something inside it."
+		user << "<span class='notice'>\The [src] already has something inside it.</span>"
 		return ..()
 
-	if(O in user) //If it is in their inventory, but not in their hands, don't grab it off of them.
-		if(user.l_hand == O)
+	if(!isturf(O.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
+		if(istype(O.loc,/obj/item/weapon/storage))	//in a container.
+			var/obj/item/weapon/storage/U = O.loc
+			user.client.screen -= O
+			U.contents.Remove(O)
+		else if(user.l_hand == O)					//in a hand
 			user.drop_l_hand()
-		else if(user.r_hand == O)
+		else if(user.r_hand == O)					//in a hand
 			user.drop_r_hand()
 		else
-			user << "You are wearing that."
 			return
-
-	else if(istype(O.loc,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/U = O.loc
-		user.client.screen -= O
-		U.contents.Remove(O)
 
 	user.visible_message("\The [user] puts \a [O] into \a [src]", "You put \the [O] inside \the [src].",\
 	"You hear a rustle as someone puts something into a plastic bag.")

@@ -61,6 +61,8 @@
 	else if(put_in_inactive_hand(W))	return 1
 	else
 		W.loc = get_turf(src)
+		W.layer = initial(W.layer)
+		W.dropped()
 		return 0
 
 
