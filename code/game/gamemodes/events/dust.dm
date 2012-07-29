@@ -61,25 +61,25 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 
 		switch(startside)
 			if(NORTH)
-				starty = world.maxy-1
-				startx = rand(1, world.maxx-1)
-				endy = 1
-				endx = rand(1, world.maxx-1)
+				starty = world.maxy-8
+				startx = rand(8, world.maxx-8)
+				endy = 8
+				endx = rand(8, world.maxx-8)
 			if(EAST)
-				starty = rand(1,world.maxy-1)
-				startx = world.maxx-1
-				endy = rand(1, world.maxy-1)
-				endx = 1
+				starty = rand(8,world.maxy-8)
+				startx = world.maxx-8
+				endy = rand(8, world.maxy-8)
+				endx = 8
 			if(SOUTH)
-				starty = 1
-				startx = rand(1, world.maxx-1)
-				endy = world.maxy-1
-				endx = rand(1, world.maxx-1)
+				starty = 8
+				startx = rand(8, world.maxx-8)
+				endy = world.maxy-8
+				endx = rand(1, world.maxx-8)
 			if(WEST)
-				starty = rand(1, world.maxy-1)
-				startx = 1
-				endy = rand(1,world.maxy-1)
-				endx = world.maxx-1
+				starty = rand(8, world.maxy-8)
+				startx = 8
+				endy = rand(8,world.maxy-8)
+				endx = world.maxx-8
 		var/goal = locate(endx, endy, 1)
 		src.x = startx
 		src.y = starty
