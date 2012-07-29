@@ -691,7 +691,7 @@
 
 
 			var/pressure = environment.return_pressure()
-			if(!istype(wear_suit, /obj/item/clothing/suit/space) && !istype(wear_suit, /obj/item/clothing/suit/fire))
+			if(!istype(wear_suit, /obj/item/clothing/suit/space) && !istype(wear_suit, /obj/item/clothing/suit/fire) && !istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 					/*if(pressure < 20)
 						if(prob(25))
 							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
