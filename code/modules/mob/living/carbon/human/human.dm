@@ -969,7 +969,7 @@
 	// Gloves
 	var/datum/organ/external/lo = organs["l_hand"]
 	var/datum/organ/external/ro = organs["r_hand"]
-	if (!(lo.status & ORGAN_DESTROYED && ro.status & ORGAN_DESTROYED))
+	if (lo && ro && !(lo.status & ORGAN_DESTROYED && ro.status & ORGAN_DESTROYED))
 		if (gloves)
 			var/t1 = gloves.item_state
 			if (!t1)
@@ -1419,7 +1419,7 @@
 	lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
 
 	var/datum/organ/external/head = organs["head"]
-	if(!(head.status & ORGAN_DESTROYED))
+	if(head && !(head.status & ORGAN_DESTROYED))
 		stand_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "head_[g]_l"), ICON_OVERLAY)
 

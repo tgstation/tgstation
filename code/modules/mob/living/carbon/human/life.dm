@@ -357,7 +357,7 @@
 							emote("gasp")
 						updatehealth()
 
-				if(damage)
+				if(damage && organs.len)
 					var/V = pick(organs)
 					var/datum/organ/external/O = organs[V]
 					if(istype(O)) O.add_wound("Radiation Poisoning", damage)

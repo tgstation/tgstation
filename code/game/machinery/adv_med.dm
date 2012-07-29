@@ -290,7 +290,7 @@
 							AN = "[e.broken_description]:"
 						if(e.open)
 							open = "Open:"
-						if(e.implant && e.implant.len)
+						if(e.implant)
 							imp = "Implanted:"
 						if(!AN && !open && !infected & !imp)
 							AN = "None"
