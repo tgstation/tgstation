@@ -60,6 +60,11 @@
 		return 1
 	return 0
 
+/proc/ismouse(A)
+	if(istype(A, /mob/living/simple_animal/mouse))
+		return 1
+	return 0
+
 /proc/isbear(A)
 	if(istype(A, /mob/living/simple_animal/bear))
 		return 1

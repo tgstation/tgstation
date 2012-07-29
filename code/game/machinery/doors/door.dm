@@ -48,7 +48,7 @@
 		if(ismob(AM))
 			var/mob/M = AM
 			if(world.time - M.last_bumped <= 60) return
-			if(M.client && !M:handcuffed)
+			if(M.client && !M.restrained() && !isanimal(M))
 				bumpopen(M)
 			return
 

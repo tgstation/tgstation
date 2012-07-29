@@ -186,15 +186,20 @@
 	..()
 
 /obj/item/weapon/mousetrap/HasEntered(AM as mob|obj)
-	if((ishuman(AM)) && (armed))
-		var/mob/living/carbon/H = AM
-		if(H.m_intent == "run")
-			src.triggered(H)
-			H << "\red <B>You accidentally step on the mousetrap!</B>"
-			for(var/mob/O in viewers(H, null))
-				if(O == H)
-					continue
-				O.show_message("\red <B>[H] accidentally steps on the mousetrap.</B>", 1)
+	if(armed)
+		if(ishuman(AM))
+			var/mob/living/carbon/H = AM
+			if(H.m_intent == "run")
+				src.triggered(H)
+				H << "\red <B>You accidentally step on the mousetrap!</B>"
+				for(var/mob/O in viewers(H, null))
+					if(O == H)
+						continue
+					O.show_message("\red <B>[H] accidentally steps on the mousetrap.</B>", 1)
+		if(ismouse(AM))
+			var/mob/living/simple_animal/mouse/M = AM
+			src.visible_message("\red <b>SPLAT!</b>")
+			M.splat()
 	..()
 
 /obj/item/weapon/mousetrap/hitby(A as mob|obj)
