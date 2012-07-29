@@ -128,7 +128,7 @@
 		var/i = 0
 		for(var/obj/machinery/telecomms/T in links)
 			i++
-			if(T.hide)
+			if(T.hide && !src.hide)
 				continue
 			dat += "<li>\ref[T] [T.name] ([T.id])  <a href='?src=\ref[src];unlink=[i]'>\[X\]</a></li>"
 		dat += "</ol>"

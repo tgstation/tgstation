@@ -52,7 +52,8 @@
 				dat += "Selected Network Entity: [SelectedMachine.name] ([SelectedMachine.id])<br>"
 				dat += "Linked Entities: <ol>"
 				for(var/obj/machinery/telecomms/T in SelectedMachine.links)
-					dat += "<li><a href='?src=\ref[src];viewmachine=[T.id]'>\ref[T.id] [T.name]</a> ([T.id])</li>"
+					if(!T.hide)
+						dat += "<li><a href='?src=\ref[src];viewmachine=[T.id]'>\ref[T.id] [T.name]</a> ([T.id])</li>"
 				dat += "</ol>"
 
 

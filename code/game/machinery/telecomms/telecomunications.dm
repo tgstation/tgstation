@@ -34,7 +34,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/heating_power = 40000
 	var/long_range_link = 0
 	var/circuitboard = null // string pointing to a circuitboard type
-	var/hide				// Is it a hidden machine?
+	var/hide = 0				// Is it a hidden machine?
 
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount)
@@ -576,6 +576,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
 	hide = 1
+	toggled = 0
 	autolinkers = list("r_relay", "r_receiverA", "r_receiverB", "r_broadcasterA", "r_broadcasterB")
 
 //HUB
@@ -583,7 +584,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/hub/preset
 	id = "Hub"
 	network = "tcommsat"
-	autolinkers = list("hub", "relay", "s_relay", "m_relay", "science", "medical",
+	autolinkers = list("hub", "relay", "s_relay", "m_relay", "r_relay", "science", "medical",
 	"cargo", "mining", "common", "command", "engineering", "security")
 
 //Receivers
@@ -626,11 +627,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	id = "Ruskie Receiver A"
 	autolinkers = list("r_receiverA")
 	toggled = 0
+	hide = 1
 
 /obj/machinery/telecomms/receiver/preset_right/ruskie
 	id = "Ruskie Receiver B"
 	autolinkers = list("r_receiverB")
 	toggled = 0
+	hide = 1
 
 //Buses
 
@@ -763,12 +766,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	id = "Ruskie Broadcaster A"
 	autolinkers = list("r_broadcasterA")
 	toggled = 0
+	hide = 1
 
 /obj/machinery/telecomms/broadcaster/preset_right/ruskie
 	id = "Ruskie Broadcaster B"
 	autolinkers = list("r_broadcasterB")
 	toggled = 0
-
+	hide = 1
 
 
 

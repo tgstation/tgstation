@@ -519,6 +519,24 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/telecomms/bus"
 
+		telecomms_hub
+			name = "Circuit Design (Hub Mainframe)"
+			desc = "Allows for the construction of Telecommunications Hub Mainframes."
+			id = "s-hub"
+			req_tech = list("programming" = 4, "engineering" = 4)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/telecomms/hub"
+
+		telecomms_relay
+			name = "Circuit Design (Relay Mainframe)"
+			desc = "Allows for the construction of Telecommunications Relay Mainframes."
+			id = "s-relay"
+			req_tech = list("programming" = 3, "engineering" = 4, "bluespace" = 3)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/telecomms/relay"
+
 		telecomms_processor
 			name = "Circuit Design (Processor Unit)"
 			desc = "Allows for the construction of Telecommunications Processor equipment."
