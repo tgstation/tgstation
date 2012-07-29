@@ -336,7 +336,8 @@ datum
 					corresponding.moles += trace_gas.moles*giver.group_multiplier/group_multiplier
 			update_values()
 
-			del(giver)
+			// Let the garbage collector handle it, faster according to /tg/ testers
+			//del(giver)
 			return 1
 
 		proc/remove(amount)
