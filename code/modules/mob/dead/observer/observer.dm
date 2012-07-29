@@ -28,7 +28,7 @@
 
 			name = original_name
 
-			if(!can_reenter_corpse)
+			if(can_reenter_corpse)
 				corpse = body
 	if(!name)								//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
