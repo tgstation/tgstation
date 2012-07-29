@@ -112,6 +112,14 @@
 	icon_on = "blackzippoon"
 	icon_off = "blackzippo"
 
+/obj/item/weapon/lighter/zippo/fluff/sniperyeti_1 //sniperyeti: Patrick Harris/Susan Harris
+	name = "red black zippo"
+	desc = "A shiny red zippo lighter that looks like it's in perfect condition."
+	icon = 'custom_items.dmi'
+	icon_state = "redzippo"
+	icon_on = "redzippoon"
+	icon_off = "redzippo"
+
 /obj/item/weapon/fluff/cado_keppel_1 //sparklysheep: Cado Keppel
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic. It has a small K etched into its side."
@@ -237,6 +245,12 @@
 	icon = 'custom_items.dmi'
 	icon_state = "yuki_matsuda_1"
 
+/obj/item/clothing/head/helmet/welding/fluff/norah_briggs_1 //bountylord13: Norah Briggs
+	name = "blue flame decal welding helmet"
+	desc = "A welding helmet with blue flame decals on it."
+	icon = 'custom_items.dmi'
+	icon_state = "norah_briggs_1"
+
 /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1 //themij: Taryn Kifer
 	name = "orange bandana"
 	desc = "Hey, I think we're missing a hazard vest..."
@@ -280,6 +294,13 @@
 	icon = 'custom_items.dmi'
 	icon_state = "labcoat_burnt_open"
 
+/obj/item/clothing/suit/armor/vest/fluff/deus_blueshield //deusdactyl
+	name = "blue shield security armor"
+	desc = "An armored vest with the badge of a Blue Shield Security lieutenant."
+	icon = 'custom_items.dmi'
+	icon_state = "deus_blueshield"
+	item_state = "deus_blueshield"
+
 //////////// Uniforms ////////////
 
 /obj/item/clothing/under/fluff/jumpsuitdown //searif: Yuki Matsuda
@@ -304,6 +325,14 @@
 	icon = 'custom_items.dmi'
 	icon_state = "jeremy_wolf_1"
 	color = "jeremy_wolf_1"
+
+/obj/item/clothing/under/fluff/tian_dress //phaux: Tian Yinhu
+	name = "purple dress"
+	desc = "A nicely tailored purple dress made for the taller woman."
+	icon = 'custom_items.dmi'
+	icon_state = "tian_dress"
+	item_state = "tian_dress"
+	color = "tian_dress"
 
 //////////// Masks ////////////
 
