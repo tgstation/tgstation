@@ -420,7 +420,7 @@
 	throw_range = 7
 	w_class = 4.0
 	origin_tech = "combat=1"
-	attack_verb = "robusted"
+	attack_verb = list("robusted")
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
