@@ -29,8 +29,8 @@
 		if(lastgenlev != 0)
 			overlays += image('power.dmi', "teg-op[lastgenlev]")
 
-#define GENRATE 0.05		// generator output coefficient from Q
-#define MAX_SAFE_OUTPUT 500000
+#define GENRATE 0.1		// generator output coefficient from Q
+#define MAX_SAFE_OUTPUT 1000000
 
 /obj/machinery/power/generator/process()
 
@@ -107,6 +107,9 @@
 	add_fingerprint(user)
 
 	if(stat & (BROKEN|NOPOWER)) return
+
+	if(lastgenlev > MAX_SAFE_OUTPUT)
+		electrocute_mob(user, get_area(src), src, 0.7)
 
 	interact(user)
 

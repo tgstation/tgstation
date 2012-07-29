@@ -2,6 +2,7 @@
 	name = "Shutters"
 	icon = 'rapid_pdoor.dmi'
 	icon_state = "shutter1"
+	desc = "Steel-reinforced privacy."
 
 /obj/machinery/door/poddoor/shutters/New()
 	..()

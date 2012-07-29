@@ -535,6 +535,13 @@
 	icon_state = "circuit"
 	item_state = "syringe_kit"
 
+/obj/item/weapon/storage/AirlockBox
+	name = "spare airlock electronics"
+	desc = "A box of spare airlock circuit boards."
+	icon = 'storage.dmi'
+	icon_state = "circuit"
+	item_state = "syringe_kit"
+
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "red and black toolbox"
 	desc = "An oddly coloured toolbox."

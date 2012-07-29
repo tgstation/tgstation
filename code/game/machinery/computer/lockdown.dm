@@ -9,32 +9,29 @@
 	circuit = "/obj/item/weapon/circuitboard/lockdown"
 	var/connected_doors
 	var/department*/
+	var/list/displayedNetworks
 
 	New()
 		..()
 		connected_doors = new/list()
+		displayedNetworks  = new/list()
 		//only load blast doors for map-defined departments for the moment
 		//door networks are hardcoded here.
 		switch(department)
 			if("Engineering")
-				//Antiqua SinguloEngineering
-				connected_doors.Add("Engineering Primary Access")
-				connected_doors.Add("Engineering Secondary Access")
-				connected_doors.Add("Fore Maintenance Access")
-				connected_doors.Add("Aft Maintenance Access")
-				connected_doors.Add("Particle Accelerator Rad Shielding")
-				connected_doors.Add("Foreward Emitter Array Rad Shielding")
-				connected_doors.Add("Aftward Emitter Array Rad Shielding")
-				connected_doors.Add("Starboard Observation Rad Shielding")
-				connected_doors.Add("Atmospheric Storage Rad Shielding")
-				connected_doors.Add("Construction Storage Rad Shielding")
-				connected_doors.Add("Engineering Secure Storage")
-				//Antiqua RustEngineering
-				connected_doors.Add("Port vessel entry")
-				connected_doors.Add("Starboard vessel entry")
-				connected_doors.Add("Central aft shell access")
-				connected_doors.Add("Port aft shell access")
-				connected_doors.Add("Starboard aft shell access")
+				connected_doors.Add("Engineering")
+				//Antiqua Engineering
+				connected_doors.Add("Reactor core")
+				connected_doors.Add("Control Room")
+				connected_doors.Add("Vent Seal")
+				connected_doors.Add("Rig Storage")
+				connected_doors.Add("Fore Port Shutters")
+				connected_doors.Add("Fore Starboard Shutters")
+				connected_doors.Add("Electrical Storage Shutters")
+				connected_doors.Add("Locker Room Shutters")
+				connected_doors.Add("Breakroom Shutters")
+				connected_doors.Add("Observation Shutters")
+				//exodus engineering
 			if("Medbay")
 				//Exodus Medbay
 				connected_doors.Add("Genetics Outer Shutters")
@@ -47,14 +44,20 @@
 
 		for(var/net in connected_doors)
 			connected_doors[net] = new/list()
-			world << "network: [net]"
 
 		//loop through the world, grabbing all the relevant doors
 		spawn(1)
-			for(var/obj/machinery/door/poddoor/D in world)
-				if(D.id in connected_doors)
-					var/list/L = connected_doors[D.id]
-					L.Add(D)
+			ConnectDoors()
+
+	proc/ConnectDoors()
+		for(var/list/L in connected_doors)
+			for(var/item in L)
+				L.Remove(item)
+		//
+		for(var/obj/machinery/door/poddoor/D in world)
+			if(D.network in connected_doors)
+				var/list/L = connected_doors[D.network]
+				L.Add(D)
 
 	attack_ai(mob/user)
 		attack_hand(user)
@@ -71,7 +74,8 @@
 				return
 
 		var/t = "<B>Lockdown Control</B><BR>"
-		t += "<A href='?src=\ref[src];close=1'>Close</A><hr>"
+		t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
+		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 		t += "<table border=1>"
 		var/empty = 1
 		for(var/curNetId in connected_doors)
@@ -80,36 +84,57 @@
 				continue
 			empty = 0
 			t += "<tr>"
-			t += "<td><b>" + curNetId + "<b></td>"
-			t += "<td><b><a href='?src=\ref[src];open_net=[curNetId]'>Disable lockdown</a> / <a href='?src=\ref[src];close_net=[curNetId]'>Enable lockdown</a></b></td>"
-			t += "</tr>"
-
-			for(var/obj/machinery/door/poddoor/D in connected_doors[curNetId])
-				t += "<tr>"
-				if(istype(D,/obj/machinery/door/poddoor/shutters))
-					t += "<td>	Shutter</td>"
-				else
-					t += "<td>	Blast door</td>"
-				if(D.density)
-					//t += "<td><a href='?src=\ref[D];open=1'>Open</a> - Close</td>"
-					t += "Closed"
-				else
-					//t += "<td>Open - <a href='?src=\ref[D];close=1'>Close</a></td>"
-					t += "Open"
+			if(curNetId in displayedNetworks)
+				t += "<td><a href='?src=\ref[src];hide_net=[curNetId]'>\[-\]</a><b> " + curNetId + "<b></td>"
+				t += "<td colspan=\"2\"><b><a href='?src=\ref[src];open_net=[curNetId]'>Open all</a> / <a href='?src=\ref[src];close_net=[curNetId]'>Close all</a></b></td>"
 				t += "</tr>"
+
+				for(var/obj/machinery/door/poddoor/D in connected_doors[curNetId])
+					t += "<tr>"
+					t += "<td>[D.id]</td>"
+
+					if(istype(D,/obj/machinery/door/poddoor/shutters))
+						t += "<td>Shutter ([D.density ? "Closed" : "Open"])</td>"
+					else
+						t += "<td>Blast door ([D.density ? "Closed" : "Open"])</td>"
+					t += "<td><b><a href='?src=\ref[D];toggle=1'>Toggle</a></b></td>"
+					t += "</tr>"
+			else
+				t += "<td><a href='?src=\ref[src];show_net=[curNetId]'>\[+\]</a> <b>" + curNetId + "<b></td>"
 		t += "</table>"
 		if(empty)
 			t += "\red No networks connected.<br>"
+		t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-		user << browse(t, "window=lockdown;size=500x800")
+		user << browse(t, "window=lockdown;size=550x600")
 		onclose(user, "lockdown")
 
 	Topic(href, href_list)
 		..()
+
 		if( href_list["close"] )
 			usr << browse(null, "window=lockdown")
 			usr.machine = null
-			return
+
+		if( href_list["show_net"] )
+			displayedNetworks.Add(href_list["show_net"])
+			updateDialog()
+
+		if( href_list["hide_net"] )
+			if(href_list["hide_net"] in displayedNetworks)
+				displayedNetworks.Remove(href_list["hide_net"])
+				updateDialog()
+
+		if( href_list["toggle_id"] )
+			var/idTag = href_list["toggle_id"]
+			for(var/net in connected_doors)
+				for(var/obj/machinery/door/poddoor/D in connected_doors[net])
+					if(D.id == idTag)
+						if(D.density)
+							D.open()
+						else
+							D.close()
+						break
 
 		if( href_list["open_net"] )
 			var/netTag = href_list["open_net"]
@@ -117,8 +142,6 @@
 				if(D.density)	//for some reason, there's no var saying whether the door is open or not >.>
 					spawn(0)
 						D.open()
-			src.updateDialog()
-			return
 
 		if( href_list["close_net"] )
 			var/netTag = href_list["close_net"]
@@ -126,25 +149,5 @@
 				if(!D.density)
 					spawn(0)
 						D.close()
-			src.updateDialog()
-			return
-
-		if( href_list["close_all"] )
-			for(var/netTag in connected_doors)
-				for(var/obj/machinery/door/poddoor/D in connected_doors[netTag])
-					if(!D.density)
-						spawn(0)
-							D.close()
-			src.updateDialog()
-			return
-
-		if( href_list["open_all"] )
-			for(var/netTag in connected_doors)
-				for(var/obj/machinery/door/poddoor/D in connected_doors[netTag])
-					if(D.density)
-						spawn(0)
-							D.open()
-			src.updateDialog()
-			return
 
 		src.updateDialog()

@@ -4,6 +4,19 @@
 	icon = 'rapid_pdoor.dmi'
 	icon_state = "pdoor1"
 	var/id = ""
+	var/network = ""
+
+	Topic(href, href_list)
+		..()
+		if( href_list["open"] )
+			open()
+		if( href_list["close"] )
+			close()
+		if( href_list["toggle"] )
+			if(src.density)
+				open()
+			else
+				close()
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)
