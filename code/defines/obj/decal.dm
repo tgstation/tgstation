@@ -75,7 +75,7 @@
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
 /obj/effect/decal/cleanable/blood/tracks
-	icon_state = "blood"
+	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
 	gender = PLURAL
 	random_icon_states = null
