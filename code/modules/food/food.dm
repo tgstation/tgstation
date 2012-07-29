@@ -197,6 +197,8 @@
 			usr << "\blue You color \the [C] [clr]"
 			icon_state = "egg-[clr]"
 			color = clr
+		else
+			..()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
