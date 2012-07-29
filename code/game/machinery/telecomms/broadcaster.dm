@@ -24,72 +24,77 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 	delay = 7
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
-	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
+/obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
+	// Don't broadcast rejected signals
+	if(signal.data["reject"])
+		return
 
-		// Don't broadcast rejected signals
-		if(signal.data["reject"])
+	//Is it a test signal?
+	if(signal.data["type"] == 4)
+		signal.data["done"] = 1
+		signal.data["level"] += src.loc.z
+		return
+
+	if(signal.data["message"])
+
+		// Prevents massive radio spam
+		if("[signal.data["message"]]:[signal.data["realname"]]:[src.loc.z]" in recentmessages)
 			return
+		recentmessages.Add("[signal.data["message"]]:[signal.data["realname"]]:[src.loc.z]")
 
-		if(signal.data["message"])
+		signal.data["done"] = 1 // mark the signal as being broadcasted
 
-			// Prevents massive radio spam
-			if("[signal.data["message"]]:[signal.data["realname"]]" in recentmessages)
-				return
-			recentmessages.Add( "[signal.data["message"]]:[signal.data["realname"]]" )
+		// Search for the original signal and mark it as done as well
+		var/datum/signal/original = signal.data["original"]
+		if(original)
+			original.data["done"] = 1
 
+		if(signal.data["slow"] > 0)
+			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
-			signal.data["done"] = 1 // mark the signal as being broadcasted
+	   /** #### - Normal Broadcast - #### **/
 
-			// Search for the original signal and mark it as done as well
-			var/datum/signal/original = signal.data["original"]
-			if(original)
-				original.data["done"] = 1
+		if(signal.data["type"] == 0)
 
-			if(signal.data["slow"] > 0)
-				sleep(signal.data["slow"]) // simulate the network lag if necessary
-
-
-		   /** #### - Normal Broadcast - #### **/
-
-			if(signal.data["type"] == 0)
-
-				/* ###### Broadcast a message using signal.data ###### */
-				Broadcast_Message(signal.data["connection"], signal.data["mob"],
-								  signal.data["vmask"], signal.data["vmessage"],
-								  signal.data["radio"], signal.data["message"],
-								  signal.data["name"], signal.data["job"],
-								  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
+			/* ###### Broadcast a message using signal.data ###### */
+			Broadcast_Message(signal.data["connection"], signal.data["mob"],
+							  signal.data["vmask"], signal.data["vmessage"],
+							  signal.data["radio"], signal.data["message"],
+							  signal.data["name"], signal.data["job"],
+							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], src.loc.z)
 
 
-		   /** #### - Simple Broadcast - #### **/
+	   /** #### - Simple Broadcast - #### **/
 
-			if(signal.data["type"] == 1)
+		if(signal.data["type"] == 1)
 
-				/* ###### Broadcast a message using signal.data ###### */
-				Broadcast_SimpleMessage(signal.data["name"], signal.frequency,
-									  signal.data["message"],null, null,
-									  signal.data["compression"])
+			/* ###### Broadcast a message using signal.data ###### */
+			Broadcast_SimpleMessage(signal.data["name"], signal.frequency,
+								  signal.data["message"],null, null,
+								  signal.data["compression"])
 
 
-		   /** #### - Artificial Broadcast - #### **/
-		   			// (Imitates a mob)
+	   /** #### - Artificial Broadcast - #### **/
+	   			// (Imitates a mob)
 
-			if(signal.data["type"] == 2)
+		if(signal.data["type"] == 2)
 
-				/* ###### Broadcast a message using signal.data ###### */
-					// Parameter "data" as 4: AI can't track this person/mob
+			/* ###### Broadcast a message using signal.data ###### */
+				// Parameter "data" as 4: AI can't track this person/mob
 
-				Broadcast_Message(signal.data["connection"], signal.data["mob"],
-								  signal.data["vmask"], signal.data["vmessage"],
-								  signal.data["radio"], signal.data["message"],
-								  signal.data["name"], signal.data["job"],
-								  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"])
+			Broadcast_Message(signal.data["connection"], signal.data["mob"],
+							  signal.data["vmask"], signal.data["vmessage"],
+							  signal.data["radio"], signal.data["message"],
+							  signal.data["name"], signal.data["job"],
+							  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], src.loc.z)
 
-			spawn(1)
-				recentmessages = list()
+		spawn(5)
+			recentmessages = list()
 
-			/* --- Do a snazzy animation! --- */
-			flick("broadcaster_send", src)
+		/* --- Do a snazzy animation! --- */
+		flick("broadcaster_send", src)
+
+
 
 /*
 	Basically just an empty shell for receiving and broadcasting radio messages. Not
@@ -109,41 +114,41 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 	heatgen = 0
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
 
-	receive_signal(datum/signal/signal)
+/obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
 
-		if(!on) // has to be on to receive messages
-			return
+	if(!on) // has to be on to receive messages
+		return
 
-		if(is_freq_listening(signal)) // detect subspace signals
+	if(is_freq_listening(signal)) // detect subspace signals
 
-			signal.data["done"] = 1 // mark the signal as being broadcasted
-			signal.data["compression"] = 0
+		signal.data["done"] = 1 // mark the signal as being broadcasted
+		signal.data["compression"] = 0
 
-			// Search for the original signal and mark it as done as well
-			var/datum/signal/original = signal.data["original"]
-			if(original)
-				original.data["done"] = 1
+		// Search for the original signal and mark it as done as well
+		var/datum/signal/original = signal.data["original"]
+		if(original)
+			original.data["done"] = 1
 
-			if(signal.data["slow"] > 0)
-				sleep(signal.data["slow"]) // simulate the network lag if necessary
+		if(signal.data["slow"] > 0)
+			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
-			/* ###### Broadcast a message using signal.data ###### */
+		/* ###### Broadcast a message using signal.data ###### */
 
-			var/datum/radio_frequency/connection = signal.data["connection"]
+		var/datum/radio_frequency/connection = signal.data["connection"]
 
-			if(connection.frequency == SYND_FREQ) // if syndicate broadcast, just
+		if(connection.frequency == SYND_FREQ) // if syndicate broadcast, just
+			Broadcast_Message(signal.data["connection"], signal.data["mob"],
+							  signal.data["vmask"], signal.data["vmessage"],
+							  signal.data["radio"], signal.data["message"],
+							  signal.data["name"], signal.data["job"],
+							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], src.loc.z)
+		else
+			if(intercept)
 				Broadcast_Message(signal.data["connection"], signal.data["mob"],
-								  signal.data["vmask"], signal.data["vmessage"],
-								  signal.data["radio"], signal.data["message"],
-								  signal.data["name"], signal.data["job"],
-								  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
-			else
-				if(intercept)
-					Broadcast_Message(signal.data["connection"], signal.data["mob"],
-								  signal.data["vmask"], signal.data["vmessage"],
-								  signal.data["radio"], signal.data["message"],
-								  signal.data["name"], signal.data["job"],
-								  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"])
+							  signal.data["vmask"], signal.data["vmessage"],
+							  signal.data["radio"], signal.data["message"],
+							  signal.data["name"], signal.data["job"],
+							  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"], src.loc.z)
 
 
 
@@ -196,12 +201,15 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 		If 0, the signal is audible
 		If nonzero, the signal may be partially inaudible or just complete gibberish.
 
+	@param level:
+		The Z level that the sending radio is on.
+
 **/
 
 /proc/Broadcast_Message(var/datum/radio_frequency/connection, var/mob/M,
 						var/vmask, var/vmessage, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname, var/vname,
-						var/data, var/compression)
+						var/data, var/compression, var/level)
 
 
   /* ###### Prepare the radio connection ###### */
@@ -215,8 +223,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 	if(data == 1)
 		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
-			if(R.receive_range(display_freq) > 0)
-				radios += R
+			if(R.receive_range(display_freq, level) > 0)
+				radios |= R
 
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
@@ -227,8 +235,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 			if(istype(R, /obj/item/device/radio/headset))
 				continue
 
-			if(R.receive_range(display_freq) > 0)
-				radios += R
+			if(R.receive_range(display_freq, level) > 0)
+				radios |= R
 
 
 	// --- Broadcast to syndicate radio! ---
@@ -238,16 +246,15 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
 
-			if(R.receive_range(SYND_FREQ) > 0)
-				radios += R
+			if(R.receive_range(SYND_FREQ, level) > 0)
+				radios |= R
 
 	// --- Broadcast to ALL radio devices ---
 
 	else
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
-			if(R.receive_range(display_freq) > 0)
-				radios += R
-
+			if(R.receive_range(display_freq, level) > 0)
+				radios |= R
 
 	// Get a list of mobs who can hear from the radios we collected.
 	var/list/receive = get_mobs_in_radio_ranges(radios)
@@ -363,31 +370,32 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/blackbox_msg = "[part_a][name][part_blackbox_b][quotedmsg][part_c]"
 		//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
-		for (var/obj/machinery/blackbox_recorder/BR in world)
-			//BR.messages_admin += blackbox_admin_msg
+
+		//BR.messages_admin += blackbox_admin_msg
+		if(istype(blackbox))
 			switch(display_freq)
 				if(1459)
-					BR.msg_common += blackbox_msg
+					blackbox.msg_common += blackbox_msg
 				if(1351)
-					BR.msg_science += blackbox_msg
+					blackbox.msg_science += blackbox_msg
 				if(1353)
-					BR.msg_command += blackbox_msg
+					blackbox.msg_command += blackbox_msg
 				if(1355)
-					BR.msg_medical += blackbox_msg
+					blackbox.msg_medical += blackbox_msg
 				if(1357)
-					BR.msg_engineering += blackbox_msg
+					blackbox.msg_engineering += blackbox_msg
 				if(1359)
-					BR.msg_security += blackbox_msg
+					blackbox.msg_security += blackbox_msg
 				if(1441)
-					BR.msg_deathsquad += blackbox_msg
+					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
-					BR.msg_syndicate += blackbox_msg
+					blackbox.msg_syndicate += blackbox_msg
 				if(1349)
-					BR.msg_mining += blackbox_msg
+					blackbox.msg_mining += blackbox_msg
 				if(1347)
-					BR.msg_cargo += blackbox_msg
+					blackbox.msg_cargo += blackbox_msg
 				else
-					BR.messages += blackbox_msg
+					blackbox.messages += blackbox_msg
 
 		//End of research and feedback code.
 
@@ -482,7 +490,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 
 
-/proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression)
+/proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
 
 
   /* ###### Prepare the radio connection ###### */
@@ -502,8 +510,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 	if(data == 1)
 		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
-
-			receive |= R.send_hear(display_freq)
+			if(R.loc && R.loc.z == level)
+				receive |= R.send_hear(display_freq)
 
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
@@ -514,7 +522,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 			if(istype(R, /obj/item/device/radio/headset))
 				continue
 
-			receive |= R.send_hear(display_freq)
+			if(R.loc && R.loc.z == level)
+				receive |= R.send_hear(display_freq)
 
 
 	// --- Broadcast to syndicate radio! ---
@@ -524,7 +533,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
 
-			receive |= R.send_hear(SYND_FREQ)
+			if(R.loc && R.loc.z == level)
+				receive |= R.send_hear(SYND_FREQ)
 
 
 	// --- Broadcast to ALL radio devices ---
@@ -532,7 +542,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 	else
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
 
-			receive |= R.send_hear(display_freq)
+			if(R.loc && R.loc.z == level)
+				receive |= R.send_hear(display_freq)
 
 
   /* ###### Organize the receivers into categories for displaying the message ###### */
@@ -630,31 +641,32 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/blackbox_msg = "[part_a][source][part_blackbox_b]\"[text]\"[part_c]"
 		//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
-		for (var/obj/machinery/blackbox_recorder/BR in world)
-			//BR.messages_admin += blackbox_admin_msg
+
+		//BR.messages_admin += blackbox_admin_msg
+		if(istype(blackbox))
 			switch(display_freq)
 				if(1459)
-					BR.msg_common += blackbox_msg
+					blackbox.msg_common += blackbox_msg
 				if(1351)
-					BR.msg_science += blackbox_msg
+					blackbox.msg_science += blackbox_msg
 				if(1353)
-					BR.msg_command += blackbox_msg
+					blackbox.msg_command += blackbox_msg
 				if(1355)
-					BR.msg_medical += blackbox_msg
+					blackbox.msg_medical += blackbox_msg
 				if(1357)
-					BR.msg_engineering += blackbox_msg
+					blackbox.msg_engineering += blackbox_msg
 				if(1359)
-					BR.msg_security += blackbox_msg
+					blackbox.msg_security += blackbox_msg
 				if(1441)
-					BR.msg_deathsquad += blackbox_msg
+					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
-					BR.msg_syndicate += blackbox_msg
+					blackbox.msg_syndicate += blackbox_msg
 				if(1349)
-					BR.msg_mining += blackbox_msg
+					blackbox.msg_mining += blackbox_msg
 				if(1347)
-					BR.msg_cargo += blackbox_msg
+					blackbox.msg_cargo += blackbox_msg
 				else
-					BR.messages += blackbox_msg
+					blackbox.messages += blackbox_msg
 
 		//End of research and feedback code.
 
@@ -688,5 +700,37 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 			for (var/mob/R in heard_gibberish)
 				R.show_message(rendered, 2)
 
+//Use this to test if an obj can communicate with a Telecommunications Network
 
+/atom/proc/test_telecomms()
+	var/datum/signal/signal = telecomms_process()
+	return (src.loc.z in signal.data["level"] && signal.data["done"])
+
+/atom/proc/telecomms_process()
+
+	// First, we want to generate a new radio signal
+	var/datum/signal/signal = new
+	signal.transmission_method = 2 // 2 would be a subspace transmission.
+
+	// --- Finally, tag the actual signal with the appropriate values ---
+	signal.data = list(
+		"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
+		"message" = "TEST",
+		"compression" = rand(45, 50), // If the signal is compressed, compress our message too.
+		"traffic" = 0, // dictates the total traffic sum that the signal went through
+		"type" = 4, // determines what type of radio input it is: test broadcast
+		"reject" = 0,
+		"done" = 0,
+		"level" = list() // The level it is being broadcasted at.
+	)
+	signal.frequency = 1459// Common channel
+
+  //#### Sending the signal to all subspace receivers ####//
+	for(var/obj/machinery/telecomms/receiver/R in world)
+		if(src.loc.z == R.loc.z)
+			R.receive_signal(signal)
+
+	sleep(rand(10,25))
+
+	return signal
 

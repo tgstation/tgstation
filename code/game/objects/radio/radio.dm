@@ -359,11 +359,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		  //#### Sending the signal to all subspace receivers ####//
 			for(var/obj/machinery/telecomms/receiver/R in world)
-				R.receive_signal(signal)
+				if(src.loc.z == R.loc.z)
+					R.receive_signal(signal)
 
 			// Allinone can act as receivers.
 			for(var/obj/machinery/telecomms/allinone/R in world)
-				R.receive_signal(signal)
+				if(src.loc.z == R.loc.z)
+					R.receive_signal(signal)
 
 		  	// Receiving code can be located in Telecommunications.dm
 			return
@@ -409,7 +411,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		signal.frequency = connection.frequency // Quick frequency set
 
 		for(var/obj/machinery/telecomms/receiver/R in world)
-			R.receive_signal(signal)
+			if(src.loc.z == R.loc.z)
+				R.receive_signal(signal)
 
 
 		sleep(rand(10,25)) // wait a little...
@@ -426,7 +429,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		Broadcast_Message(connection, M, voicemask, M.voice_message,
 						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type, signal.data["compression"])
+		                  filter_type, signal.data["compression"], src.loc.z)
 
 
 
@@ -535,31 +538,31 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 			var/blackbox_msg = "[part_a][M.name][part_blackbox_b][quotedmsg][part_c]"
 			//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
-			for (var/obj/machinery/blackbox_recorder/BR in world)
+			if(istype(blackbox))
 				//BR.messages_admin += blackbox_admin_msg
 				switch(display_freq)
 					if(1459)
-						BR.msg_common += blackbox_msg
+						blackbox.msg_common += blackbox_msg
 					if(1351)
-						BR.msg_science += blackbox_msg
+						blackbox.msg_science += blackbox_msg
 					if(1353)
-						BR.msg_command += blackbox_msg
+						blackbox.msg_command += blackbox_msg
 					if(1355)
-						BR.msg_medical += blackbox_msg
+						blackbox.msg_medical += blackbox_msg
 					if(1357)
-						BR.msg_engineering += blackbox_msg
+						blackbox.msg_engineering += blackbox_msg
 					if(1359)
-						BR.msg_security += blackbox_msg
+						blackbox.msg_security += blackbox_msg
 					if(1441)
-						BR.msg_deathsquad += blackbox_msg
+						blackbox.msg_deathsquad += blackbox_msg
 					if(1213)
-						BR.msg_syndicate += blackbox_msg
+						blackbox.msg_syndicate += blackbox_msg
 					if(1349)
-						BR.msg_mining += blackbox_msg
+						blackbox.msg_mining += blackbox_msg
 					if(1347)
-						BR.msg_cargo += blackbox_msg
+						blackbox.msg_cargo += blackbox_msg
 					else
-						BR.messages += blackbox_msg
+						blackbox.messages += blackbox_msg
 
 			//End of research and feedback code.
 
@@ -623,12 +626,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 */
 
 
-/obj/item/device/radio/proc/receive_range(freq)
+/obj/item/device/radio/proc/receive_range(freq, level)
 	// check if this radio can receive on the given frequency, and if so,
 	// what the range is in which mobs will hear the radio
 	// returns: 0 if can't receive, range otherwise
 
 	if (!(wires & WIRE_RECEIVE))
+		return 0
+	if(isnull(src.loc) || src.loc.z != level)
 		return 0
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys

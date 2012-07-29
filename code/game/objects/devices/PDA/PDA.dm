@@ -701,36 +701,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			id.loc = get_turf(src)
 		id = null
 
-/obj/item/device/pda/proc/telecomms_process(var/receipent, var/originator, var/data)
-	var/telecomms_intact = 0
-	/* Make sure telecomms is intact */
-	for (var/obj/machinery/telecomms/receiver/R in world)
-
-		if((1459 in R.freq_listening) && R.on)
-
-			for (var/obj/machinery/telecomms/bus/B in R.links)
-
-				if((1459 in B.freq_listening) && B.on)
-
-					for(var/obj/machinery/telecomms/server/S in B.links)
-
-						if((1459 in S.freq_listening) && S.on)
-							// Add a log
-							S.add_entry("[originator] sent to [receipent]: \"[data]\"", "PDA log")
-
-							for(var/obj/machinery/telecomms/broadcaster/C in S.links)
-
-								if(((1459 in C.freq_listening  || C.freq_listening.len == 0)) && C.on)
-
-									telecomms_intact = 1
-									break
-
-							break
-					break
-			break
-
-	return telecomms_intact
-
 /obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
 
 	var/t = input(U, "Please enter message", name, null) as text
@@ -756,7 +726,23 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if(MS.active)
 				useMS = MS
 				break
-	if(useMS) // only send the message if it's stable
+
+	var/datum/signal/signal = telecomms_process()
+
+	var/useTC = 0
+	if(signal)
+		if(signal.data["done"])
+			useTC = 1
+			if(P.loc.z in signal.data["level"])
+				useTC = 2
+				//Let's make this barely readable
+				if(signal.data["compression"] > 0)
+					t = Gibberish(t, signal.data["compression"] + 50)
+
+	if(useMS && useTC) // only send the message if it's stable
+		if(useTC != 2) // Does our recepient have a broadcaster on their level?
+			U << "ERROR: Cannot reach recepient."
+			return
 		useMS.send_pda_message("[P.owner]","[owner]","[t]")
 
 		tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"

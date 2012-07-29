@@ -32,8 +32,14 @@
 		if(range > 0)
 			return get_mobs_in_view(canhear_range, src)
 
-	receive_range(freq)
+	receive_range(freq, level)
+		if (!on)
+			return 0
 		if (!(src.wires & WIRE_RECEIVE))
+			return 0
+		if(!src.loc)
+			return 0
+		if(src.loc.z != level)
 			return 0
 		if (!src.listening)
 			return 0
