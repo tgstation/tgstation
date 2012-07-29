@@ -1454,6 +1454,7 @@ var/global/BSACooldown = 0
 			log_admin("[key_name(usr)] has removed [C]'s adminship")
 			message_admins("[key_name_admin(usr)] has removed [C]'s adminship", 1)
 			admins.Remove(C.ckey)
+			admin_list -= C.mob
 		else
 			if(C == owner)	//no promoting/demoting yourself
 				message_admins("[C] tried to change their own admin-rank >:(")
@@ -1463,6 +1464,7 @@ var/global/BSACooldown = 0
 			log_admin("[key_name(usr)] has made [C] a [rank]")
 			message_admins("[key_name_admin(usr)] has made [C] a [rank]", 1)
 			admins[C.ckey] = rank
+			admin_list |= C.mob
 
 
 	if (href_list["object_list"])

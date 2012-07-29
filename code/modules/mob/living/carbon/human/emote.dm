@@ -475,8 +475,8 @@
  // Maybe some people are okay with that.
 
 		for(var/mob/M in dead_mob_list)
-			if (!M.client)
-				continue //skip monkeys and leavers
+			if (!M.client || istype(M, /mob/new_player))
+				continue //skip monkeys, leavers and new players
 			if(M.stat == 2 && M.client.ghost_sight && !(M in viewers(src,null)))
 				M.show_message(message)
 

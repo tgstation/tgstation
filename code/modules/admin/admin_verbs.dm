@@ -751,6 +751,7 @@
 			src.clear_admin_verbs()
 			src.update_admins(null)
 			admins.Remove(src.ckey)
+			admin_list -= src.mob
 			usr << "You are now a normal player."
 	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
