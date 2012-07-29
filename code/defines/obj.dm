@@ -1042,6 +1042,7 @@
 			brainmob = new(src)
 			brainmob.name = H.real_name
 			brainmob.real_name = H.real_name
+			brainmob.original_name = H.original_name
 			brainmob.dna = H.dna
 			brainmob.timeofhostdeath = H.timeofdeath
 			if(H.mind)

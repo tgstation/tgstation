@@ -418,7 +418,7 @@
 
 		//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
 		if(M.key)//Revised. /N
-			M.ghostize(1)
+			M.ghostize()
 
 		if(brainmob.mind)
 			brainmob.mind.transfer_to(M)

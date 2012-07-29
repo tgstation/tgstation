@@ -368,7 +368,7 @@
 	else if (href_list["clone"])
 		var/datum/data/record/C = locate(href_list["clone"])
 		//Look for that player! They better be dead!
-		if(C)
+		if(istype(C))
 			var/mob/selected = find_dead_player("[C.fields["ckey"]]")
 
 //Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.

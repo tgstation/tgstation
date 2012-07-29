@@ -114,10 +114,12 @@
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI, var/datum/changeling/changelingClone)
-	if(((!ghost) || (!ghost.client)) || src.mess || src.attempting)
+	if(!(ghost && ghost.client) || src.mess || src.attempting)
 		return 0
 
-
+	var/datum/mind/clonemind = locate(mindref) in ticker.minds
+	if( !(clonemind && istype(clonemind) && clonemind.current && clonemind.current.stat==DEAD) )
+		return 0
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1
@@ -147,25 +149,14 @@
 	src.occupant << "\blue <b>Clone generation process initiated.</b>"
 	src.occupant << "\blue This will take a moment, please hold."
 
-	if(clonename)
-		src.occupant.real_name = clonename
-		src.occupant.original_name = clonename //we don't want random ghost names should we die again.
-	else
-		src.occupant.real_name = "clone"  //No null names!!
+	if(!clonename)	//to prevent null names
+		clonename = "clone ([rand(0,999)])"
 
+	occupant.real_name = clonename
+	occupant.original_name = clonename //we don't want random ghost names should we die again.
 
-	var/datum/mind/clonemind = (locate(mindref) in ticker.minds)
-
-	if ((clonemind) && (istype(clonemind))) //Move that mind over!!
-		clonemind.transfer_to(src.occupant)
-		clonemind.original = src.occupant
-	else //welp
-		src.occupant.mind = new /datum/mind(  )
-		src.occupant.mind.key = src.occupant.key
-		src.occupant.mind.current = src.occupant
-		src.occupant.mind.original = src.occupant
-		src.occupant.mind.transfer_to(src.occupant)
-		ticker.minds += src.occupant.mind
+	clonemind.transfer_to(src.occupant)
+	clonemind.original = src.occupant
 
 	// -- Mode/mind specific stuff goes here
 
@@ -216,7 +207,7 @@
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
-		if((src.occupant.stat == 2) || (src.occupant.suiciding))  //Autoeject corpses and suiciding dudes.
+		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			src.go_out()
 			src.connected_message("Clone Rejected: Deceased.")

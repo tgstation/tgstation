@@ -1,4 +1,4 @@
-/mob/dead/observer/New(mob/body, var/safety = 0)
+/mob/dead/observer/New(mob/body, var/can_reenter_corpse = 1)
 	invisibility = 10
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = 15
@@ -13,15 +13,28 @@
 		if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
 		loc = T
 		if(ismob(body))
-			real_name = body.real_name
-			original_name = body.original_name	//Original name is only used in ghost chat! It is not to be edited by anything!
-			name = body.original_name
-			if(!safety)
+			if(body.original_name)
+				original_name = body.original_name
+			else
+				if(body.real_name)
+					original_name = body.real_name
+				else
+					original_name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+
+			if(body.real_name)
+				real_name = body.real_name
+			else
+				real_name = original_name
+
+			name = original_name
+
+			if(!can_reenter_corpse)
 				corpse = body
-		if(!name)							//To prevent nameless ghosts
-			name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
-			real_name = name
-		return
+	if(!name)								//To prevent nameless ghosts
+		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+		real_name = name
+		original_name = name
+	return
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
@@ -30,21 +43,11 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(var/transfer_mind = 0)
+/mob/proc/ghostize(var/can_reenter_corpse = 1)
 	if(key)
-		var/mob/dead/observer/ghost = new(src,transfer_mind)	//Transfer safety to observer spawning proc.
+		var/mob/dead/observer/ghost = new(src,can_reenter_corpse)	//Transfer safety to observer spawning proc.
 		ghost.attack_log = attack_log			//preserve our attack logs by copying them to our ghost
-		if(transfer_mind && mind)				//When a body is destroyed attempt to transfer their mind
-			mind.transfer_to(ghost)
-		else									//Else just modify their key and connect them.
-			ghost.key = key
-
-	else if(transfer_mind)						//Body getting destroyed but the person is not present inside.
-		for(var/mob/dead/observer/O in dead_mob_list)
-			if(O.corpse == src && O.key)		//If they have the same corpse and are keyed.
-				if(mind)
-					O.mind = mind				//Transfer their mind if they have one.
-				break
+		ghost.key = key
 	return
 
 /*
@@ -56,11 +59,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Relinquish your life and enter the land of the dead."
 
 	if(stat == DEAD)
-		ghostize(0)
+		ghostize(1)
 	else
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")	return	//didn't want to ghost after-all
-		ghostize(1)						//safety is on so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
+		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 	return
 
 /mob/proc/adminghostize()
@@ -78,14 +81,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
 		y++
-	if((direct & SOUTH) && y > 1)
+	else if((direct & SOUTH) && y > 1)
 		y--
 	if((direct & EAST) && x < world.maxx)
 		x++
-	if((direct & WEST) && x > 1)
+	else if((direct & WEST) && x > 1)
 		x--
 
-	for(var/obj/effect/step_trigger/S in locate(x, y, z))
+	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.HasEntered(src)
 
 /mob/dead/observer/examine()
@@ -131,6 +134,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		for(var/obj/effect/rune/R in world)
 			if(corpse.loc==R.loc && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself)
 				S=1
+				break
 		if(!S)
 			usr << "\red The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you."
 			return

@@ -41,7 +41,7 @@
 			for(var/mob/M in viewers(src, null))
 				if((M.client && !( M.blinded )))
 					M.show_message("\red [src] collapses in a shattered heap ")
-					ghostize(0)
+					ghostize()
 			del src
 			return
 

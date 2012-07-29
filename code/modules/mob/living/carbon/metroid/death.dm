@@ -5,7 +5,7 @@
 
 	if(!gibbed)
 		if(istype(src, /mob/living/carbon/metroid/adult))
-			ghostize(1)
+			ghostize()
 			explosion(loc, -1,-1,3,12)
 			if(src)	del(src)
 		else

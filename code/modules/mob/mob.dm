@@ -1,5 +1,5 @@
 /mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	ghostize(1)
+	ghostize()
 	remove_from_mob_list(src)
 	..()
 

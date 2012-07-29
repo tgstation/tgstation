@@ -448,7 +448,7 @@
 	holder.state = 2
 	update_admins(rank)
 	if(!istype(mob, /mob/dead/observer))
-		mob.adminghostize(1)
+		mob.adminghostize()
 	src << "\blue You are now observing"
 	feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

@@ -51,12 +51,10 @@ datum/objective/assassinate
 
 	check_completion()
 		if(target && target.current)
-			if(target.current.stat == 2 || istype(target.current.loc.loc, /area/tdome) || issilicon(target.current) || isbrain(target.current)) //Assuming this works, people in the thunderdome and borgs now count as dead for traitor objectives. --NeoFite
+			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current)) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 				return 1
-			else
-				return 0
-		else
-			return 1
+			return 0
+		return 1
 
 
 
@@ -78,19 +76,15 @@ datum/objective/mutiny
 			explanation_text = "Free Objective"
 		return target
 
-
 	check_completion()
 		if(target && target.current)
-			var/turf/T = get_turf(target.current)
-			if(target.current.stat == 2)
+			if(target.current.stat == DEAD)
 				return 1
-			else if((T) && (T.z != 1))//If they leave the station they count as dead for this
+			var/turf/T = get_turf(target.current)
+			if(T && (T.z != 1))			//If they leave the station they count as dead for this
 				return 2
-			else
-				return 0
-		else
-			return 1
-
+			return 0
+		return 1
 
 
 datum/objective/debrain//I want braaaainssss
@@ -111,19 +105,19 @@ datum/objective/debrain//I want braaaainssss
 			explanation_text = "Free Objective"
 		return target
 
-
 	check_completion()
 		if(!target)//If it's a free objective.
 			return 1
-		if(!owner.current||owner.current.stat==2)//If you're otherwise dead.
+		if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
 			return 0
-		var/list/all_items = owner.current.get_contents()
-		for(var/obj/item/device/mmi/mmi in all_items)
-			if(mmi.brainmob&&mmi.brainmob.mind==target)	return 1
-		for(var/obj/item/brain/brain in all_items)
-			if(brain.brainmob&&brain.brainmob.mind==target)	return 1
+		if( !target.current || !isbrain(target.current) )
+			return 0
+		var/atom/A = target.current
+		while(A.loc)			//check to see if the brainmob is on our person
+			A = A.loc
+			if(A == owner.current)
+				return 1
 		return 0
-
 
 
 datum/objective/protect//The opposite of killing a dude.
@@ -144,41 +138,35 @@ datum/objective/protect//The opposite of killing a dude.
 			explanation_text = "Free Objective"
 		return target
 
-
 	check_completion()
-		if(!target)//If it's a free objective.
+		if(!target)			//If it's a free objective.
 			return 1
 		if(target.current)
-			if(target.current.stat == 2 || istype(target.current.loc.loc, /area/tdome) || issilicon(target.current) || isbrain(target.current))
+			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current))
 				return 0
-			else
-				return 1
-		else
-			return 0
-
+			return 1
+		return 0
 
 
 datum/objective/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
 
-
 	check_completion()
-		if(istype(owner.current, /mob/living/silicon))
+		if(!owner.current || owner.current.stat)
 			return 0
 		if(emergency_shuttle.location<2)
 			return 0
-		if(!owner.current || owner.current.stat)
+		if(issilicon(owner.current))
 			return 0
 		var/area/shuttle = locate(/area/shuttle/escape/centcom)
-		var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
+		var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue
 			if (player.mind && (player.mind != owner))
-				if (!player.stat) //they're not dead or in crit
-					if (get_turf(player) in shuttle)
+				if(player.stat != DEAD)			//they're not dead!
+					if(get_turf(player) in shuttle)
 						return 0
 		return 1
-
 
 
 datum/objective/block
@@ -274,12 +262,11 @@ datum/objective/survive
 
 
 	check_completion()
+		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
+			return 0		//Brains no longer win survive objectives. --NEO
 		if(issilicon(owner.current) && owner.current != owner.original)
 			return 0
-		if(!owner.current || owner.current.stat == 2 || isbrain(owner.current)) //Brains no longer win survive objectives. --NEO
-			return 0
 		return 1
-
 
 
 datum/objective/nuclear
