@@ -185,6 +185,51 @@
 		src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
 		del(src)
 
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype( W, /obj/item/toy/crayon ))
+			var/obj/item/toy/crayon/C = W
+			var/clr = C.colourName
+
+			if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
+				usr << "\blue The egg refuses to take on this color!"
+				return
+
+			usr << "\blue You color \the [C] [clr]"
+			icon_state = "egg-[clr]"
+			color = clr
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/blue
+	icon_state = "egg-blue"
+	color = "blue"
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/green
+	icon_state = "egg-green"
+	color = "green"
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/mime
+	icon_state = "egg-mime"
+	color = "mime"
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/orange
+	icon_state = "egg-orange"
+	color = "orange"
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/purple
+	icon_state = "egg-purple"
+	color = "purple"
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/rainbow
+	icon_state = "egg-rainbow"
+	color = "rainbow"
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/red
+	icon_state = "egg-red"
+	color = "red"
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/yellow
+	icon_state = "egg-yellow"
+	color = "yellow"
+
 /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	name = "Fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
