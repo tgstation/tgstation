@@ -796,7 +796,6 @@
 	cost = 200
 	containertype = "/obj/structure/closet/crate"
 	containername = "Collectable hats crate! Brought to you by Bass.inc!"
-*/
 
 /datum/supply_packs/randomised/New()
 	var/list/tempContains = list()
@@ -815,3 +814,4 @@
 	containertype = "/obj/structure/closet/crate"
 	containername = "Contraband crate"
 	contraband = 1
+*/
