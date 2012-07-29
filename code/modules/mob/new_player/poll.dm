@@ -79,10 +79,19 @@
 
 		var/pollid
 		var/pollquestion
+
+		output += "<table>"
+		var/color1 = "#ececec"
+		var/color2 = "#e2e2e2"
+		var/i = 0
+
 		while(select_query.NextRow())
 			pollid = select_query.item[1]
 			pollquestion = select_query.item[2]
-			output += "<a href=\"byond://?src=\ref[src];pollid=[pollid]\"><b>[pollquestion]</b></a><br>"
+			output += "<tr bgcolor='[ (i % 2 == 1) ? color1 : color2 ]'><td><a href=\"byond://?src=\ref[src];pollid=[pollid]\"><b>[pollquestion]</b></a></td></tr>"
+			i++
+
+		output += "</table>"
 
 		src << browse(output,"window=playerpolllist;size=500x300")
 
