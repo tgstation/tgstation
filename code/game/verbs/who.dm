@@ -46,7 +46,7 @@ proc/get_all_admin_clients()
 
 	for (var/mob/M in admin_list)
 		if(M && M.client && M.client.holder)
-			if(usr.client)
+			if((usr.client && usr.client.holder) || config.show_admin_info)
 				var/afk = 0
 				if( M.client.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
 					afk = 1

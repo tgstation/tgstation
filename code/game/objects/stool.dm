@@ -74,7 +74,7 @@
 /obj/structure/stool/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	if (!ticker)
 		user << "You can't buckle anyone in before the game starts."
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
 	unbuckle()
@@ -152,7 +152,7 @@
 			buckled_mob.loc = src.loc
 
 /obj/structure/stool/bed/roller/buckle_mob(mob/M as mob, mob/user as mob)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(usr, /mob/living/silicon/pai) )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(usr, /mob/living/silicon/pai) )
 		return
 	M.pixel_y = 6
 	density = 1

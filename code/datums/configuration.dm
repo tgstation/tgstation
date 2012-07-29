@@ -30,6 +30,7 @@
 	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
 	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
 	var/protect_roles_from_antagonist = 0// If security and such can be tratior/cult/other
+	var/show_admin_info = 0				//If true will show players extended admin info in adminwho, aka a bad idea.
 	var/Tensioner_Active = 0			// If the tensioner is running.
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
@@ -246,6 +247,9 @@
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist = 1
+
+				if("show_admin_info")
+					config.show_admin_info = 1
 
 				if("tensioner_active")
 					config.Tensioner_Active = 1

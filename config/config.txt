@@ -141,6 +141,9 @@ FEATURE_OBJECT_SPELL_SYSTEM
 ##Toggle for having jobs load up from the .txt
 # LOAD_JOBS_FROM_TXT
 
+## Will show players extended information about admins in adminwho, aka a bad idea.
+# SHOW_ADMIN_INFO
+
 ##Remove the # mark infront of this to forbid admins from posssessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
