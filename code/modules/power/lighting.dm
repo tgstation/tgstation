@@ -573,14 +573,11 @@
 // timed process
 // use power
 
-/*
 #define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
 
 /obj/machinery/light/process()
-	return
-//	if(on)
-//		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
-*/
+	if(on)
+		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
 
 // called when area power state changes
 /obj/machinery/light/power_change()
