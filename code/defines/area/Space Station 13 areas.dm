@@ -449,6 +449,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Syndicate Station"
 	icon_state = "yellow"
 	requires_power = 0
+	ul_Lighting = 0
 
 /area/syndicate_station/start
 	name = "\improper Syndicate Station Start"
@@ -936,6 +937,10 @@ proc/process_ghost_teleport_locs()
 		name = "\improper Engineering Core"
 		icon_state = "engine_core"
 
+	cooling
+		name = "\improper Emergency Cooling Room"
+		icon_state = "engine"
+
 //reactor areas
 
 	reactor_core
@@ -1277,6 +1282,10 @@ proc/process_ghost_teleport_locs()
 	icon_state = "supermatter"
 
 //Anomaly
+
+/area/anomaly/hallway
+	name = "Anomaly Hallway"
+	icon_state = "anomaly"
 
 /area/anomaly/lab
 	name = "Anomaly Lab"

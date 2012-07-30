@@ -228,6 +228,7 @@
 #define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
+#include "code\modules\mob\simple_animal\munchkin.dm"
 #include "code\access_defines.dm"
 #include "code\names.dm"
 #include "code\setup.dm"

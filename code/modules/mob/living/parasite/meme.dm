@@ -194,12 +194,12 @@ mob/living/parasite/meme/proc/select_indoctrinated(var/title, var/message)
 // A meme can make people hear things with the thought ability
 mob/living/parasite/meme/verb/Thought()
 	set category = "Meme"
-	set name	 = "Thought(150)"
+	set name	 = "Thought(50)"
 	set desc     = "Implants a thought into the target, making them think they heard someone talk."
 
-	if(meme_points < 150)
+	if(meme_points < 50)
 		// just call use_points() to give the standard failure message
-		use_points(150)
+		use_points(50)
 		return
 
 	var/list/candidates = indoctrinated.Copy()
@@ -217,7 +217,7 @@ mob/living/parasite/meme/verb/Thought()
 	if(!message) return
 
 	// Use the points at the end rather than the beginning, because the user might cancel
-	if(!use_points(150)) return
+	if(!use_points(50)) return
 
 	message = say_quote(message)
 	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>[message]</span></span>"

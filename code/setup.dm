@@ -167,7 +167,7 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define BLOCKHAIR	32768		// temporarily removes the user's hair icon
 
-#define PLASMAGUARD 65536		//Does not get contaminated by plasma.
+#define PLASMAGUARD 8192		//Does not get contaminated by plasma.
 
 //flags for pass_flags
 #define PASSTABLE	1

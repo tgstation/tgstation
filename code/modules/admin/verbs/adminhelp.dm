@@ -101,6 +101,6 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 	msg = sanitize_simple(msg, replacechars)
 	if(tension_master)
 		tension_master.new_adminhelp()
-	send2adminirc("#bs12admin","HELP: \"[src.key]: [msg]\"")
+	send2adminirc("#bs12admin","HELP: \"[src.key]: [original_msg]\"")
 	//feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

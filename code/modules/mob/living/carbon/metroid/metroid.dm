@@ -700,11 +700,17 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 			health = 150
 		stat = 0
 
-
 /mob/living/carbon/metroid/proc/get_obstacle_ok(atom/A)
 	var/direct = get_dir(src, A)
-	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( src.loc )
+	var/obj/item/weapon/dummy/D = locate() in DummyCache //See atom_procs.dm
+	if(!D)
+		D = new /obj/item/weapon/dummy( src.loc )
+	else
+		D.loc = src.loc
+		DummyCache.Remove(D)
+
 	var/ok = 0
+
 	if ( (direct - 1) & direct)
 		var/turf/Step_1
 		var/turf/Step_2
@@ -725,56 +731,64 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 				Step_1 = get_step(src, SOUTH)
 				Step_2 = get_step(src, WEST)
 
-			else
 		if(Step_1 && Step_2)
 			var/check_1 = 0
 			var/check_2 = 0
+
 			if(step_to(D, Step_1))
 				check_1 = 1
 				for(var/obj/border_obstacle in Step_1)
 					if(border_obstacle.flags & ON_BORDER)
 						if(!border_obstacle.CheckExit(D, A))
 							check_1 = 0
-				for(var/obj/border_obstacle in get_turf(A))
-					if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
-						if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-							check_1 = 0
+							break
+
+				if(check_1 != 0)
+					for(var/obj/border_obstacle in get_turf(A))
+						if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
+							if(!border_obstacle.CanPass(D, D.loc, 1, 0))
+								check_1 = 0
+								break
 
 			D.loc = src.loc
-			if(step_to(D, Step_2))
+			if(check_1 != 1 && step_to(D, Step_2))
 				check_2 = 1
 
 				for(var/obj/border_obstacle in Step_2)
 					if(border_obstacle.flags & ON_BORDER)
 						if(!border_obstacle.CheckExit(D, A))
 							check_2 = 0
-				for(var/obj/border_obstacle in get_turf(A))
-					if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
-						if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-							check_2 = 0
+							break
+
+				if(check_2 != 0)
+					for(var/obj/border_obstacle in get_turf(A))
+						if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
+							if(!border_obstacle.CanPass(D, D.loc, 1, 0))
+								check_2 = 0
+								break
+
 			if(check_1 || check_2)
 				ok = 1
 	else
-		if(loc == src.loc)
-			ok = 1
-		else
-			ok = 1
+		ok = 1
 
-			//Now, check objects to block exit that are on the border
-			for(var/obj/border_obstacle in src.loc)
-				if(border_obstacle.flags & ON_BORDER)
-					if(!border_obstacle.CheckExit(D, A))
-						ok = 0
+		//Now, check objects to block exit that are on the border
+		for(var/obj/border_obstacle in src.loc)
+			if(border_obstacle.flags & ON_BORDER)
+				if(!border_obstacle.CheckExit(D, A))
+					ok = 0
+					break
 
+		if(ok != 0)
 			//Next, check objects to block entry that are on the border
 			for(var/obj/border_obstacle in get_turf(A))
 				if((border_obstacle.flags & ON_BORDER) && (A != border_obstacle))
 					if(!border_obstacle.CanPass(D, D.loc, 1, 0))
 						ok = 0
 
-	del(D)
+	D.loc = null
+	DummyCache.Add(D)
 	if (!( ok ))
-
 		return 0
 
 	return 1

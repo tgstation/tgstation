@@ -12,8 +12,6 @@ Attach to transfer valve and open. BOOM.
 
 
 
-vs_control/var/IgnitionLevel = 0.5
-vs_control/var/IgnitionLevel_DESC = "Moles of oxygen+plasma - co2 needed to burn."
 
 //Some legacy definitions so fires can be started.
 atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -79,6 +77,7 @@ obj
 			archived_firelevel = 0
 
 		process()
+			. = 1
 
 			if(firelevel > vsc.IgnitionLevel)
 
@@ -169,12 +168,14 @@ obj
 			firelevel = fl
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(min(max(0.1,firelevel / 20),10)) //Burn the humans!
+			air_master.active_hotspots.Add(src)
 
 		Del()
 			if (istype(loc, /turf/simulated))
 				ul_SetLuminosity(0)
 
 				loc = null
+			air_master.active_hotspots.Remove(src)
 
 			..()
 

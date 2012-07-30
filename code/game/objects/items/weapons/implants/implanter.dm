@@ -114,8 +114,7 @@
 	..()
 
 /obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob)
-	if(istype(A,/obj/item))
-		var/obj/item/weapon/implant/compressed/c = imp
-		c.scanned = A
+	if(istype(A,/obj/item) && imp)
+		imp:scanned = A
 		A.loc.contents.Remove(A)
 		update()

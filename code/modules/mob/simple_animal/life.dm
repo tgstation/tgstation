@@ -51,7 +51,7 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
-	var/obj/item/device/radio/headset/ears = null
+	var/obj/item/device/radio/headset/l_ear = null
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -126,38 +126,15 @@
 
 
 	//Speaking
-	if(speak_chance)
-		if(prob(speak_chance))
-			if(speak && speak.len)
-				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
-					var/length = speak.len
-					if(emote_hear && emote_hear.len)
-						length += emote_hear.len
-					if(emote_see && emote_see.len)
-						length += emote_see.len
-					var/randomValue = rand(1,length)
-					if(randomValue <= speak.len)
-						say(pick(speak))
-					else
-						randomValue -= speak.len
-						if(emote_see && randomValue <= emote_see.len)
-							emote(pick(emote_see),1)
-						else
-							emote(pick(emote_hear),2)
-				else
-					say(pick(speak))
-			else
-				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote(pick(emote_see),1)
-				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote(pick(emote_hear),2)
-				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					var/length = emote_hear.len + emote_see.len
-					var/pick = rand(1,length)
-					if(pick <= emote_see.len)
-						emote(pick(emote_see),1)
-					else
-						emote(pick(emote_hear),2)
+	if(prob(speak_chance))
+		var/length = speak.len + emote_hear.len + emote_see.len
+		if(speak.len && prob((speak.len / length) * 100))
+			say(pick(speak))
+		else if(emote_see.len && prob((emote_see.len / length) * 100))
+			emote("auto",1,pick(emote_see))
+		else if(emote_hear.len)
+			emote("auto",2,pick(emote_hear))
+			//var/act,var/m_type=1,var/message = null
 
 
 	//Atmos
@@ -278,8 +255,11 @@
 					m_type = 2
 				else
 					message = "<B>[src]</B> [message]"
+		if("auto")
+			message = "<B>[src]</B> [message]"
 		else
-			src << text("Invalid Emote: []", act)
+			if(!message)
+				src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))

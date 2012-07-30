@@ -321,6 +321,32 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/ert/boost( src )
 	return
 
+/obj/item/weapon/storage/PCMBox/New()
+	..()
+	contents = list()
+	sleep(1)
+	new /obj/item/weapon/module/power_control( src )
+	new /obj/item/weapon/module/power_control( src )
+	new /obj/item/weapon/module/power_control( src )
+	new /obj/item/weapon/module/power_control( src )
+	new /obj/item/weapon/module/power_control( src )
+	new /obj/item/weapon/module/power_control( src )
+	new /obj/item/weapon/module/power_control( src )
+	return
+
+/obj/item/weapon/storage/AirlockBox/New()
+	..()
+	contents = list()
+	sleep(1)
+	new /obj/item/weapon/airlock_electronics( src )
+	new /obj/item/weapon/airlock_electronics( src )
+	new /obj/item/weapon/airlock_electronics( src )
+	new /obj/item/weapon/airlock_electronics( src )
+	new /obj/item/weapon/airlock_electronics( src )
+	new /obj/item/weapon/airlock_electronics( src )
+	new /obj/item/weapon/airlock_electronics( src )
+	return
+
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
 	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1)))

@@ -40,3 +40,8 @@ whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
 whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1
 jamini: Edwin Atweeke: /obj/item/clothing/suit/storage/labcoat/fluff/burnt
 cubejackal: Barry Sharke: /obj/item/clothing/mask/fluff/electriccig
+sniperyeti: Patrick Harris: /obj/item/weapon/lighter/zippo/fluff/sniperyeti_1
+sniperyeti: Susan Harris: /obj/item/weapon/lighter/zippo/fluff/sniperyeti_1
+bountylord13: Norah Briggs: /obj/item/clothing/head/helmet/welding/fluff/norah_briggs_1
+deusdactyl: James Girard: /obj/item/clothing/suit/armor/vest/fluff/deus_blueshield
+phaux: Tian Yinhu: /obj/item/clothing/under/fluff/tian_dress

@@ -84,6 +84,13 @@ datum
 			required_reagents = list("inaprovaline" = 1, "ethanol" = 1, "oxygen" = 1)
 			result_amount = 3
 
+		oxycodone
+			name = "Oxycodone"
+			id = "oxycodone"
+			result = "oxycodone"
+			required_reagents = list("ethanol" = 1, "tramadol" = 1, "plasma" = 1)
+			result_amount = 1
+
 		//cyanide
 		//	name = "Cyanide"
 		//	id = "cyanide"

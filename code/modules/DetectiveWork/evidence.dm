@@ -6,6 +6,7 @@
 	icon = 'storage.dmi'
 	icon_state = "evidenceobj"
 	w_class = 1
+	var/image/overlay_image
 
 /obj/item/weapon/evidencebag/afterattack(obj/item/O, mob/user as mob)
 	if(!in_range(O,user))
@@ -47,7 +48,8 @@
 	user.visible_message("\The [user] puts \a [O] into \a [src]", "You put \the [O] inside \the [src].",\
 	"You hear a rustle as someone puts something into a plastic bag.")
 	icon_state = "evidence"
-	overlays += O
+	overlay_image = image(O.icon, O.icon_state, layer, O.dir)
+	overlays += overlay_image
 	desc = "An evidence bag containing \a [O]. [O.desc]"
 	O.loc = src
 	w_class = O.w_class
@@ -59,7 +61,8 @@
 		var/obj/item/I = contents[1]
 		user.visible_message("\The [user] takes \a [I] out of \a [src]", "You take \the [I] out of \the [src].",\
 		"You hear someone rustle around in a plastic bag, and remove something.")
-		overlays -= I
+		overlays -= overlay_image
+		del overlay_image
 		user.put_in_hands(I)
 		w_class = 1
 		icon_state = "evidenceobj"
@@ -67,7 +70,6 @@
 
 	else
 		user << "\The [src] is empty."
-		icon_state = "evidenceobj"
 	return
 
 /obj/item/weapon/storage/box/evidence

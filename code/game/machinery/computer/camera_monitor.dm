@@ -6,11 +6,11 @@
 		else
 			switch(department)
 				if("Security")
-					networks = list("Arrivals","SS13","Engineering","Research","Medbay","Tcomsat","Mess Hall","Security","Atmospherics","Cargo","Command","Solars","Robotics","Chapel","Hydroponics", "Dormitory")
+					networks = list("Arrivals","SS13","Engineering","Research","Medbay","Tcomsat","Mess Hall","Security","Prison Wing","Atmospherics","Cargo","Command","Solars","Robotics","Chapel","Hydroponics", "Dormitory","Theatre","Library")
 				if("Engineering")
 					networks = list("Engineering","Tcomsat","Singularity","Atmospherics","Solars","Robotics")
 				if("Research")
-					networks = list("Research","Bomb Testing")
+					networks = list("Research","Bomb Testing","Outpost")
 				if("Medbay")
 					networks = list("Medbay")
 				if("Cargo")

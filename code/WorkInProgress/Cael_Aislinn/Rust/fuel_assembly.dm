@@ -4,7 +4,7 @@
 	icon_state = "fuel_assembly"
 	name = "Fuel Rod Assembly"
 	var/list/rod_quantities
-	var/amount_depleted = 0		//percent depleted
+	var/percent_depleted = 0
 	//
 	New()
 		rod_quantities = new/list

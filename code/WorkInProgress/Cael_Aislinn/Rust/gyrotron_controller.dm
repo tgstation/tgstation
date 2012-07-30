@@ -2,6 +2,7 @@
 /obj/machinery/computer/rust/gyrotron_controller
 	name = "Gyrotron Remote Controller"
 	icon_state = "power"
+	var/updating = 1
 
 	New()
 		..()
@@ -33,7 +34,8 @@
 
 	process()
 		..()
-		//updateDialog()
+		if(updating)
+			src.updateDialog()
 
 	proc
 		interact(mob/user)
@@ -96,5 +98,5 @@
 			t += "</table>"
 			*/
 			t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-			user << browse(t, "window=gyrotron_controller;size=500x800")
+			user << browse(t, "window=gyrotron_controller;size=500x400")
 			user.machine = src
