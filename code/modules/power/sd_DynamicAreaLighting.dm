@@ -399,6 +399,7 @@ atom
 				/*	increase the turf's brightness depending on the
 					brightness and distance of the lightsource */
 				T.sd_lumcount -= (luminosity-get_dist(center,T))
+				T.sd_lumcount = max(0, T.sd_lumcount)
 
 				//if(T.tag == "sdd")
 				//	slog << "\red lc-([luminosity-get_dist(center,T)]) from [center] ([center:x],[center:y])"
@@ -484,6 +485,7 @@ atom
 					if(ATurf)
 						for(T in affected[A]-view(A.luminosity, ATurf))
 							T.sd_lumcount -= (A.luminosity-get_dist(A,T))
+							T.sd_lumcount = max(0, T.sd_lumcount)
 
 							//if(T.tag == "sdd")
 							//	slog << "\red lc(1)-([A.luminosity-get_dist(A,T)]) from [A] ([A.x],[A.y])"
