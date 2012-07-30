@@ -306,18 +306,84 @@
 			output += "<div class='part'>[output_part_info(part)]<br>\[[resources_available?"<a href='?src=\ref[src];part=\ref[part]'>Build</a> | ":null]<a href='?src=\ref[src];add_to_queue=\ref[part]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=\ref[part]'>?</a>\]</div>"
 	return output
 
-/obj/machinery/mecha_part_fabricator/proc/output_part_info(var/obj/item/mecha_parts/part)
-	var/output = "[part.name] (Cost: [output_part_cost(part)]) [get_construction_time_w_coeff(part)/10]sec"
-	return output
+/obj/machinery/mecha_part_fabricator/proc/output_part_info(var/obj/item/part)
+//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
+	if(istype(part,/obj/item/robot_parts))
+		var/obj/item/robot_parts/P = part
+		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
+		return output
+	else if(istype(part,/obj/item/mecha_parts))
+		var/obj/item/mecha_parts/P = part
+		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
+		return output
+	else if(istype(part,/obj/item/borg/upgrade))
+		var/obj/item/borg/upgrade/P = part
+		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
+		return output
+	else if(istype(part,/obj/item/device/mmi))
+		var/obj/item/device/mmi/P = part
+		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
+		return output
+	else if(istype(part,/obj/item/device/flash/synthetic))
+		var/obj/item/device/flash/synthetic/P = part
+		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
+		return output
+	else if(istype(part,/obj/item/weapon/cell))
+		var/obj/item/weapon/cell/P = part
+		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
+		return output
+	else
+		return 0
 
-/obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/obj/item/mecha_parts/part)
+
+/obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/obj/item/part)
 	var/i = 0
 	var/output
-	for(var/p in part.construction_cost)
-		if(p in resources)
-			output += "[i?" | ":null][get_resource_cost_w_coeff(part,p)] [p]"
-			i++
-	return output
+//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
+	if(istype(part,/obj/item/robot_parts))
+		var/obj/item/robot_parts/P = part
+		for(var/c in P.construction_cost)
+			if(c in resources)
+				output += "[i?" | ":null][get_resource_cost_w_coeff(P,c)] [c]"
+				i++
+		return output
+	else if(istype(part,/obj/item/mecha_parts))
+		var/obj/item/mecha_parts/P = part
+		for(var/c in P.construction_cost)
+			if(c in resources)
+				output += "[i?" | ":null][get_resource_cost_w_coeff(P,c)] [c]"
+				i++
+		return output
+	else if(istype(part,/obj/item/borg/upgrade))
+		var/obj/item/borg/upgrade/P = part
+		for(var/c in P.construction_cost)
+			if(c in resources)
+				output += "[i?" | ":null][get_resource_cost_w_coeff(P,c)] [c]"
+				i++
+		return output
+	else if(istype(part,/obj/item/device/mmi))
+		var/obj/item/device/mmi/P = part
+		for(var/c in P.construction_cost)
+			if(c in resources)
+				output += "[i?" | ":null][get_resource_cost_w_coeff(P,c)] [c]"
+				i++
+		return output
+	else if(istype(part,/obj/item/device/flash/synthetic))
+		var/obj/item/device/flash/synthetic/P = part
+		for(var/c in P.construction_cost)
+			if(c in resources)
+				output += "[i?" | ":null][get_resource_cost_w_coeff(P,c)] [c]"
+				i++
+		return output
+	else if(istype(part,/obj/item/weapon/cell))
+		var/obj/item/weapon/cell/P = part
+		for(var/c in P.construction_cost)
+			if(c in resources)
+				output += "[i?" | ":null][get_resource_cost_w_coeff(P,c)] [c]"
+				i++
+		return output
+	else
+		return 0
 
 /obj/machinery/mecha_part_fabricator/proc/output_available_resources()
 	var/output
@@ -329,22 +395,88 @@
 		output += "<br/>"
 	return output
 
-/obj/machinery/mecha_part_fabricator/proc/remove_resources(var/obj/item/mecha_parts/part)
-	if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts))
-		for(var/resource in part.construction_cost)
+/obj/machinery/mecha_part_fabricator/proc/remove_resources(var/obj/item/part)
+//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
+	if(istype(part,/obj/item/robot_parts))
+		var/obj/item/robot_parts/P = part
+		for(var/resource in P.construction_cost)
 			if(resource in src.resources)
-				src.resources[resource] -= get_resource_cost_w_coeff(part,resource)
-	return
+				src.resources[resource] -= get_resource_cost_w_coeff(P,resource)
+	else if(istype(part,/obj/item/mecha_parts))
+		var/obj/item/mecha_parts/P = part
+		for(var/resource in P.construction_cost)
+			if(resource in src.resources)
+				src.resources[resource] -= get_resource_cost_w_coeff(P,resource)
+	else if(istype(part,/obj/item/borg/upgrade))
+		var/obj/item/borg/upgrade/P = part
+		for(var/resource in P.construction_cost)
+			if(resource in src.resources)
+				src.resources[resource] -= get_resource_cost_w_coeff(P,resource)
+	else if(istype(part,/obj/item/device/mmi))
+		var/obj/item/device/mmi/P = part
+		for(var/resource in P.construction_cost)
+			if(resource in src.resources)
+				src.resources[resource] -= get_resource_cost_w_coeff(P,resource)
+	else if(istype(part,/obj/item/device/flash/synthetic))
+		var/obj/item/device/flash/synthetic/P = part
+		for(var/resource in P.construction_cost)
+			if(resource in src.resources)
+				src.resources[resource] -= get_resource_cost_w_coeff(P,resource)
+	else if(istype(part,/obj/item/weapon/cell))
+		var/obj/item/weapon/cell/P = part
+		for(var/resource in P.construction_cost)
+			if(resource in src.resources)
+				src.resources[resource] -= get_resource_cost_w_coeff(P,resource)
+	else
+		return
 
-/obj/machinery/mecha_part_fabricator/proc/check_resources(var/obj/item/mecha_parts/part)
+/obj/machinery/mecha_part_fabricator/proc/check_resources(var/obj/item/part)
 //		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts) || istype(part,/obj/item/borg/upgrade))
-	if(part.construction_time!=null && part.construction_cost!=null)//Much more efficient way to check the item, since it won't have those vars if it isn't meant to go through the mechfabs -Sieve
-		for(var/resource in part.construction_cost)
+//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
+	if(istype(part,/obj/item/robot_parts))
+		var/obj/item/robot_parts/P = part
+		for(var/resource in P.construction_cost)
 			if(resource in src.resources)
-				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
+				if(src.resources[resource] < get_resource_cost_w_coeff(P,resource))
 					return 0
 		return 1
-	return 0
+	else if(istype(part,/obj/item/mecha_parts))
+		var/obj/item/mecha_parts/P = part
+		for(var/resource in P.construction_cost)
+			if(resource in src.resources)
+				if(src.resources[resource] < get_resource_cost_w_coeff(P,resource))
+					return 0
+		return 1
+	else if(istype(part,/obj/item/borg/upgrade))
+		var/obj/item/borg/upgrade/P = part
+		for(var/resource in P.construction_cost)
+			if(resource in src.resources)
+				if(src.resources[resource] < get_resource_cost_w_coeff(P,resource))
+					return 0
+			return 1
+	else if(istype(part,/obj/item/device/mmi))
+		var/obj/item/device/mmi/P = part
+		for(var/resource in P.construction_cost)
+			if(resource in src.resources)
+				if(src.resources[resource] < get_resource_cost_w_coeff(P,resource))
+					return 0
+		return 1
+	else if(istype(part,/obj/item/device/flash/synthetic))
+		var/obj/item/device/flash/synthetic/P = part
+		for(var/resource in P.construction_cost)
+			if(resource in src.resources)
+				if(src.resources[resource] < get_resource_cost_w_coeff(P,resource))
+					return 0
+		return 1
+	else if(istype(part,/obj/item/weapon/cell))
+		var/obj/item/weapon/cell/P = part
+		for(var/resource in P.construction_cost)
+			if(resource in src.resources)
+				if(src.resources[resource] < get_resource_cost_w_coeff(P,resource))
+					return 0
+		return 1
+	else
+		return 0
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(var/obj/item/part)
 	if(!part) return
@@ -490,11 +622,51 @@
 			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/mecha_parts/part as obj,var/resource as text, var/roundto=1)
-	return round(part.construction_cost[resource]*resource_coeff, roundto)
+/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
+//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
+	if(istype(part,/obj/item/robot_parts))
+		var/obj/item/robot_parts/P = part
+		return round(P.construction_cost[resource]*resource_coeff, roundto)
+	else if(istype(part,/obj/item/mecha_parts))
+		var/obj/item/mecha_parts/P = part
+		return round(P.construction_cost[resource]*resource_coeff, roundto)
+	else if(istype(part,/obj/item/borg/upgrade))
+		var/obj/item/borg/upgrade/P = part
+		return round(P.construction_cost[resource]*resource_coeff, roundto)
+	else if(istype(part,/obj/item/device/mmi))
+		var/obj/item/device/mmi/P = part
+		return round(P.construction_cost[resource]*resource_coeff, roundto)
+	else if(istype(part,/obj/item/device/flash/synthetic))
+		var/obj/item/device/flash/synthetic/P = part
+		return round(P.construction_cost[resource]*resource_coeff, roundto)
+	else if(istype(part,/obj/item/weapon/cell))
+		var/obj/item/weapon/cell/P = part
+		return round(P.construction_cost[resource]*resource_coeff, roundto)
+	else
+		return 0
 
-/obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/obj/item/mecha_parts/part as obj, var/roundto=1)
-	return round(part.construction_time*time_coeff, roundto)
+/obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/obj/item/part as obj, var/roundto=1)
+//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
+	if(istype(part,/obj/item/robot_parts))
+		var/obj/item/robot_parts/P = part
+		return round(P.construction_time*time_coeff, roundto)
+	else if(istype(part,/obj/item/mecha_parts))
+		var/obj/item/mecha_parts/P = part
+		return round(P.construction_time*time_coeff, roundto)
+	else if(istype(part,/obj/item/borg/upgrade))
+		var/obj/item/borg/upgrade/P = part
+		return round(P.construction_time*time_coeff, roundto)
+	else if(istype(part,/obj/item/device/mmi))
+		var/obj/item/device/mmi/P = part
+		return round(P.construction_time*time_coeff, roundto)
+	else if(istype(part,/obj/item/device/flash/synthetic))
+		var/obj/item/device/flash/synthetic/P = part
+		return round(P.construction_time*time_coeff, roundto)
+	else if(istype(part,/obj/item/weapon/cell))
+		var/obj/item/weapon/cell/P = part
+		return round(P.construction_time*time_coeff, roundto)
+	else
+		return 0
 
 
 /obj/machinery/mecha_part_fabricator/attack_hand(mob/user as mob)

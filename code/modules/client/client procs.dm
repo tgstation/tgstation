@@ -104,7 +104,6 @@
 		holder = new /obj/admins(src)
 		holder.rank = admins[ckey]
 		update_admins(admins[ckey])
-		make_admin_list()
 		admin_memo_show()
 
 
