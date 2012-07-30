@@ -117,6 +117,7 @@ obj/structure/closet/wardrobe/hop/New()
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/magboots(src) //[Redacted] ZAS! >:C
+	new /obj/item/clothing/head/helmet/hardhat/red(src)
 
 /obj/structure/closet/wardrobe/engineering_yellow/New()
 	new /obj/item/clothing/under/rank/engineer(src)
