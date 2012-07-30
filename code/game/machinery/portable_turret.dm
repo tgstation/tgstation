@@ -15,7 +15,7 @@
 	icon_state = "grey_target_prism"
 	anchored = 1
 	layer = 3
-	invisibility = 2		// the turret is invisible if it's inside its cover
+	invisibility = INVISIBILITY_LEVEL_TWO		// the turret is invisible if it's inside its cover
 	density = 1
 	use_power = 1			// this turret uses and requires power
 	idle_power_usage = 50	// when inactive, this turret takes up constant 50 Equipment power
@@ -326,7 +326,7 @@ Status: []<BR>"},
 
 		if(!anchored)
 			anchored = 1
-			invisibility = 2
+			invisibility = INVISIBILITY_LEVEL_TWO
 			icon_state = "[lasercolor]grey_target_prism"
 			user << "You secure the exterior bolts on the turret."
 			cover=new/obj/machinery/porta_turret_cover(src.loc) // create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
@@ -1032,7 +1032,7 @@ Status: []<BR>"},
 
 		if(!Parent_Turret.anchored)
 			Parent_Turret.anchored = 1
-			Parent_Turret.invisibility = 2
+			Parent_Turret.invisibility = INVISIBILITY_LEVEL_TWO
 			Parent_Turret.icon_state = "grey_target_prism"
 			user << "You secure the exterior bolts on the turret."
 		else

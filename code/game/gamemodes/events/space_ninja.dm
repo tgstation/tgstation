@@ -581,7 +581,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 //Allows the mob to grab a stealth icon.
 /mob/proc/NinjaStealthActive(atom/A)//A is the atom which we are using as the overlay.
-	invisibility = 2//Set ninja invis to 2.
+	invisibility = INVISIBILITY_LEVEL_TWO//Set ninja invis to 2.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)
 	var/icon/alpha_mask = getIconMask(src)
 	var/icon/alpha_mask_2 = new('icons/effects/effects.dmi', "at_shield1")

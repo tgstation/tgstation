@@ -6,3 +6,4 @@
 	var/now_pushing = null
 	var/cameraFollow = null
 	var/tod = null // Time of death
+	see_invisible = SEE_INVISIBLE_LIVING

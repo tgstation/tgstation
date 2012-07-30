@@ -15,7 +15,7 @@
 		..()
 		var/turf/T = loc
 		Beacon = new /obj/item/device/radio/beacon
-		Beacon.invisibility = 100
+		Beacon.invisibility = INVISIBILITY_MAXIMUM
 		Beacon.loc = T
 
 		hide(T.intact)
@@ -44,7 +44,7 @@
 		if(!Beacon)
 			var/turf/T = loc
 			Beacon = new /obj/item/device/radio/beacon
-			Beacon.invisibility = 100
+			Beacon.invisibility = INVISIBILITY_MAXIMUM
 			Beacon.loc = T
 		if(Beacon)
 			if(Beacon.loc != loc)

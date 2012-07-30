@@ -204,7 +204,7 @@
 					src.reagents.reaction(A, 1, 10)
 
 
-			invisibility = 100 //Why am i doing this?
+			invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
 			spawn(50)		   //To make sure all reagents can work
 				del(src)	   //correctly before deleting the grenade.
 		else

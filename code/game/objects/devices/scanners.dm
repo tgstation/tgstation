@@ -58,7 +58,7 @@ MASS SPECTROMETER
 			M.invisibility = 0
 			spawn(2)
 				if(M)
-					M.invisibility = 2
+					M.invisibility = INVISIBILITY_LEVEL_TWO
 
 
 /obj/item/device/healthanalyzer

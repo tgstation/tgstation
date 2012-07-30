@@ -1,6 +1,6 @@
 /obj/virus
 	// a virus instance that is placed on the map, moves, and infects
-	invisibility = 100
+	invisibility = INVISIBILITY_LEVEL_ONE00
 
 	var/datum/disease2/disease
 

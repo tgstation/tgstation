@@ -425,7 +425,7 @@
 	M.mutations = list()
 
 	M.see_in_dark = 2
-	M.see_invisible = 0
+	M.see_invisible = SEE_INVISIBLE_LIVING
 
 	if (isblockon(getblock(M.dna.struc_enzymes, 1,3),1))
 		M.disabilities |= NEARSIGHTED
@@ -460,7 +460,7 @@
 			M << "\blue The walls suddenly disappear."
 			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 			M.see_in_dark = 8
-			M.see_invisible = 2
+			M.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			M.mutations.Add(XRAY)
 	if (isblockon(getblock(M.dna.struc_enzymes, 9,3),9))
 		M.disabilities |= NERVOUS

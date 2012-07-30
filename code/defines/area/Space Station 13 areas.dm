@@ -26,6 +26,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "unknown"
 	layer = 10
 	mouse_opacity = 0
+	invisibility = INVISIBILITY_LIGHTING
 	var/lightswitch = 1
 
 	var/area_lights_luminosity = 9	//This gets assigned at area creation. It is used to determine how bright the lights in an area should be. At the time of writing the value that it gets assigned is rand(6,9) - only used for light tubes

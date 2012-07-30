@@ -44,7 +44,7 @@
 	var/enabled = 1
 	anchored = 1
 	layer = 3
-	invisibility = 2
+	invisibility = INVISIBILITY_LEVEL_TWO
 	density = 1
 	var/lasers = 0
 	var/lasertype = 1
@@ -251,7 +251,7 @@
 			src.cover.icon_state = "turretCover"
 		spawn(10)
 			if (popping==-1)
-				invisibility = 2
+				invisibility = INVISIBILITY_LEVEL_TWO
 				popping = 0
 
 /obj/machinery/turret/bullet_act(var/obj/item/projectile/Proj)

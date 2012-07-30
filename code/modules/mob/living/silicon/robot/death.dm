@@ -61,7 +61,7 @@
 	if(blind)	blind.layer = 0
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
-	see_invisible = 2
+	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	updateicon()
 
 	tod = worldtime2text() //weasellos time of death patch

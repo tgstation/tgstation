@@ -206,7 +206,7 @@ var/list/sacrificed = list()
 					usr << "\red The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision."
 				else
 					usr << "\red The world beyond opens to your eyes."
-				usr.see_invisible = 15
+				usr.see_invisible = SEE_INVISIBLE_OBSERVER
 				usr.seer = 1
 				return
 			return fizzle()
@@ -411,7 +411,7 @@ var/list/sacrificed = list()
 				D.visible_message("\red [D] slowly dissipates into dust and bones.", \
 				"\red You feel pain, as bonds formed between your soul and this homunculus break.", \
 				"\red You hear faint rustle.")
-				ghost.invisibility = 10
+				ghost.invisibility = INVISIBILITY_OBSERVER
 				ghost.key = D.key
 				D.dust()
 			return

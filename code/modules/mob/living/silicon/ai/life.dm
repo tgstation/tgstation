@@ -58,7 +58,7 @@
 					src.sight |= SEE_MOBS
 					src.sight |= SEE_OBJS
 					src.see_in_dark = 8
-					src.see_invisible = 2
+					src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 					var/area/home = get_area(src)
 					if(!home)	return//something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn
@@ -94,7 +94,7 @@
 					src.sight = src.sight&~SEE_MOBS
 					src.sight = src.sight&~SEE_OBJS
 					src.see_in_dark = 0
-					src.see_invisible = 0
+					src.see_invisible = SEE_INVISIBLE_LIVING
 
 					if (((!loc.master.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item))
 						if (src:aiRestorePowerRoutine==0)

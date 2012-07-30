@@ -1,7 +1,7 @@
 /mob/dead/observer/New(mob/body, var/can_reenter_corpse = 1)
-	invisibility = 10
+	invisibility = INVISIBILITY_OBSERVER
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	see_invisible = 15
+	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	verbs += /mob/dead/observer/proc/dead_tele
 	stat = DEAD
@@ -235,3 +235,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/add_memory()
 	set hidden = 1
 	src << "\red You are dead! You have no mind to store memory!"
+
+/mob/dead/observer/verb/toggle_darkness()
+	set name = "Toggle Darkness"
+	set category = "Ghost"
+
+	if (see_invisible == SEE_INVISIBLE_OBSERVER_NOLIGHTING)
+		see_invisible = SEE_INVISIBLE_OBSERVER
+	else
+		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING

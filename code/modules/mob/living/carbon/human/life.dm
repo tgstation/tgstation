@@ -801,28 +801,28 @@
 		if( stat == DEAD )
 			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 			see_in_dark = 8
-			if(!druggy)		see_invisible = 2
+			if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
 		else
 			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 			switch(mutantrace)
 				if("lizard","metroid")
 					see_in_dark = 3
-					see_invisible = 1
+					see_invisible = SEE_INVISIBLE_LEVEL_ONE
 				else
 					see_in_dark = 2
 
 			if(XRAY in mutations)
 				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 				see_in_dark = 8
-				if(!druggy)		see_invisible = 2
+				if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 			if(seer)
 				var/obj/effect/rune/R = locate() in loc
 				if(R && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
-					see_invisible = 15
+					see_invisible = SEE_INVISIBLE_OBSERVER
 				else
-					see_invisible = 0
+					see_invisible = SEE_INVISIBLE_LIVING
 					seer = 0
 
 			if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
@@ -835,30 +835,30 @@
 								target_list += target
 						if(target_list.len)//Everything else is handled by the ninja mask proc.
 							O.assess_targets(target_list, src)
-						if(!druggy)		see_invisible = 0
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 					if(1)
 						see_in_dark = 5
-						if(!druggy)		see_invisible = 0
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 					if(2)
 						sight |= SEE_MOBS
-						if(!druggy)		see_invisible = 2
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 					if(3)
 						sight |= SEE_TURFS
-						if(!druggy)		see_invisible = 0
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 
 			if(glasses)
 				if(istype(glasses, /obj/item/clothing/glasses/meson))
 					sight |= SEE_TURFS
-					if(!druggy)			see_invisible = 0
+					if(!druggy)			see_invisible = SEE_INVISIBLE_MINIMUM
 				else if(istype(glasses, /obj/item/clothing/glasses/night))
 					see_in_dark = 5
-					if(!druggy)			see_invisible = 0
+					if(!druggy)			see_invisible = SEE_INVISIBLE_MINIMUM
 				else if(istype(glasses, /obj/item/clothing/glasses/thermal))
 					sight |= SEE_MOBS
-					if(!druggy)			see_invisible = 2
+					if(!druggy)			see_invisible = SEE_INVISIBLE_MINIMUM
 				else if(istype(glasses, /obj/item/clothing/glasses/material))
 					sight |= SEE_OBJS
-					if(!druggy)			see_invisible = 0
+					if(!druggy)			see_invisible = SEE_INVISIBLE_MINIMUM
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
@@ -868,18 +868,18 @@
 					if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
 						var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
 						if(O.hud)		O.hud.process_hud(src)
-						if(!druggy)		see_invisible = 0
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 
 				else if(istype(glasses, /obj/item/clothing/glasses/hud))
 					var/obj/item/clothing/glasses/hud/health/O = glasses
 
 					if(istype(O, /obj/item/clothing/glasses/hud/health))
 						O.process_hud(src)
-						if(!druggy)		see_invisible = 0
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 
 					else if(istype(O, /obj/item/clothing/glasses/hud/security))
 						O.process_hud(src)
-						if(!druggy)		see_invisible = 0
+						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 
 			if(sleep && !hal_crit)	sleep.icon_state = "sleep[sleeping]"	//used?
 

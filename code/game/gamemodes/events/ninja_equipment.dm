@@ -1266,7 +1266,7 @@ ________________________________________________________________________________
 			U << "Switching mode to <B>Thermal Scanner</B>."
 		if(2)
 			mode=3
-			U.see_invisible = 0
+			U.see_invisible = SEE_INVISIBLE_LIVING
 			U.sight &= ~SEE_MOBS
 			U << "Switching mode to <B>Meson Scanner</B>."
 		if(3)
