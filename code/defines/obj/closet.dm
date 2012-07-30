@@ -294,6 +294,11 @@
 	icon_state = "white"
 	icon_closed = "white"
 
+/obj/structure/closet/wardrobe/pjs
+	name = "Pajama wardrobe"
+	icon_state = "white"
+	icon_closed = "white"
+
 /obj/structure/closet/wardrobe/toxins_white
 	name = "toxins wardrobe"
 	icon_state = "white"
@@ -399,3 +404,10 @@
 
 	//too small to put a man in
 	large = 0
+
+/obj/structure/closet/crate/critter
+	name = "critter crate"
+	desc = "A crate which can sustain life for a while."
+	icon_state = "critter"
+	icon_opened = "critteropen"
+	icon_closed = "critter"

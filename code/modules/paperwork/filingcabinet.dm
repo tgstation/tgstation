@@ -3,9 +3,22 @@
 	desc = "A large cabinet with drawers."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "filing_cabinet0"
+	var/icon_closed = "filing_cabinet0"
+	var/icon_open = "filing_cabinet1"
 	density = 1
 	anchored = 1
 	var/list/items = new/list()
+
+/obj/structure/filingcabinet/chestdrawer
+	name = "chest drawer"
+	icon_state = "chestdrawer"
+	icon_closed = "chestdrawer"
+	icon_open = "chestdrawer-open"
+
+/obj/structure/filingcabinet/filingcabinet
+	icon_state = "filingcabinet"
+	icon_closed = "filingcabinet"
+	icon_open = "filingcabinet-open"
 
 /obj/structure/filingcabinet/attackby(obj/item/P as obj, mob/user as mob)
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder))
@@ -13,9 +26,9 @@
 		user.drop_item()
 		P.loc = src
 		spawn()
-			icon_state = "filing_cabinet1"
+			icon_state = icon_open
 			sleep(5)
-			icon_state = "filing_cabinet0"
+			icon_state = icon_closed
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'Ratchet.ogg', 50, 1)
 		anchored = !anchored
@@ -50,8 +63,8 @@
 			else
 				P.loc = get_turf_loc(src)
 
-			icon_state = "filing_cabinet1"
+			icon_state = icon_open
 			sleep(5)
-			icon_state = "filing_cabinet0"
+			icon_state = icon_closed
 
 

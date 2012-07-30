@@ -121,6 +121,20 @@
 	product_hideamt = "5"
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
 
+//This one's from bay12
+/obj/machinery/vending/cart
+	name = "PTech"
+	desc = "Cartridges for PDAs"
+	icon_state = "cart"
+	icon_deny = "cart-deny"
+	product_paths = "/obj/item/weapon/cartridge/medical;/obj/item/weapon/cartridge/engineering;/obj/item/weapon/cartridge/security;/obj/item/weapon/cartridge/janitor;/obj/item/weapon/cartridge/signal/toxins;/obj/item/device/pda/heads;/obj/item/weapon/cartridge/captain;/obj/item/weapon/cartridge/quartermaster"
+	product_amounts = "10;10;10;10;10;10;3;10"
+	product_slogans = "Carts to go!"
+	product_hidden = ""
+	product_hideamt = ""
+	product_coin = ""
+	product_coin_amt = ""
+
 /obj/machinery/vending/cigarette
 	name = "cigarette machine"
 	desc = "If you want to get cancer, might as well do it in style"
@@ -146,6 +160,17 @@
 	product_hidden = "/obj/item/weapon/reagent_containers/pill/tox;/obj/item/weapon/reagent_containers/pill/stox;/obj/item/weapon/reagent_containers/pill/antitox"
 	product_hideamt = "3;4;6"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
+
+//This one's from bay12
+/obj/machinery/vending/plasmaresearch
+	name = "Toximate 3000"
+	desc = "All the fine parts you need in one vending machine!"
+	product_paths = "/obj/item/clothing/under/rank/scientist;/obj/item/clothing/suit/bio_suit;/obj/item/clothing/head/bio_hood;/obj/item/device/transfer_valve;/obj/item/device/assembly/signaler;/obj/item/device/assembly/prox_sensor;/obj/item/device/assembly/igniter;/obj/item/device/assembly/timer"
+	product_amounts = "6;6;6;6;6"
+	product_hidden = ""
+	product_hideamt = ""
+	product_coin = ""
+	product_coin_amt = ""
 
 /obj/machinery/vending/wallmed1
 	name = "NanoMed"
@@ -271,3 +296,30 @@
 	product_coin = "/obj/item/weapon/storage/belt/utility"
 	product_coin_amt = "3"
 
+//This one's from bay12
+/obj/machinery/vending/engineering
+	name = "Robco Tool Maker"
+	desc = "Everything you need for do-it-yourself station repair."
+	icon_state = "engi"
+	icon_deny = "engi-deny"
+	req_access_txt = "10"
+	product_paths = "/obj/item/clothing/under/rank/chief_engineer;/obj/item/clothing/under/rank/engineer;/obj/item/clothing/shoes/orange;/obj/item/clothing/head/helmet/hardhat;/obj/item/weapon/storage/belt/utility;/obj/item/clothing/glasses/meson;/obj/item/clothing/gloves/yellow;/obj/item/weapon/screwdriver;/obj/item/weapon/crowbar;/obj/item/weapon/wirecutters;/obj/item/device/multitool;/obj/item/weapon/wrench;/obj/item/device/t_scanner;/obj/item/weapon/CableCoil/power;/obj/item/weapon/circuitry;/obj/item/weapon/cell;/obj/item/weapon/weldingtool;/obj/item/clothing/head/helmet/welding;/obj/item/weapon/light/tube;/obj/item/clothing/suit/fire;/obj/item/weapon/stock_parts/scanning_module;/obj/item/weapon/stock_parts/micro_laser;/obj/item/weapon/stock_parts/matter_bin;/obj/item/weapon/stock_parts/manipulator;/obj/item/weapon/stock_parts/console_screen"
+//	product_amounts = "4;4;4;4;4;4;4;12;12;12;12;12;12;8;4;8;8;8;10;4"
+	product_hidden = ""
+	product_hideamt = ""
+	product_coin = ""
+	product_coin_amt = ""
+
+//This one's from bay12
+/obj/machinery/vending/robotics
+	name = "Robotech Deluxe"
+	desc = "All the tools you need to create your own robot army."
+	icon_state = "robotics"
+	icon_deny = "robotics-deny"
+	req_access_txt = "29"
+	product_paths = "/obj/item/clothing/suit/storage/labcoat;/obj/item/clothing/under/rank/roboticist;/obj/item/weapon/cable_coil;/obj/item/device/flash;/obj/item/weapon/cell/high;/obj/item/device/assembly/prox_sensor;/obj/item/device/assembly/signaler;/obj/item/device/healthanalyzer;/obj/item/weapon/scalpel;/obj/item/weapon/circular_saw;/obj/item/weapon/tank/anesthetic;/obj/item/clothing/mask/medical;/obj/item/weapon/screwdriver;/obj/item/weapon/crowbar"
+	product_amounts = "4;4;4;4;12"
+	product_hidden = ""
+	product_hideamt = ""
+	product_coin = ""
+	product_coin_amt = ""

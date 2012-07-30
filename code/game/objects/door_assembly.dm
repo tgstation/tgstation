@@ -116,6 +116,21 @@ obj/structure/door_assembly
 			glass = 1
 			icon_state = "door_as_gres1"
 
+	door_assembly_science
+		name = "Science Airlock Assembly"
+		icon_state = "door_as_sci1"
+		glass_base_icon_state = "door_as_gsci"
+		glass_type = /obj/machinery/door/airlock/glass_science
+		airlock_type = /obj/machinery/door/airlock/science
+		anchored = 1
+		density = 1
+		state = 1
+		glass = 0
+
+		glass
+			glass = 1
+			icon_state = "door_as_gsci1"
+
 	door_assembly_med
 		name = "Medical Airlock Assembly"
 		icon_state = "door_as_med1"

@@ -128,6 +128,17 @@
 	new /obj/item/clothing/shoes/white(src)
 	return
 
+/obj/structure/closet/wardrobe/pjs/New()
+	new /obj/item/clothing/under/pj/red(src)
+	new /obj/item/clothing/under/pj/red(src)
+	new /obj/item/clothing/under/pj/blue(src)
+	new /obj/item/clothing/under/pj/blue(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/shoes/white(src)
+	return
+
 /obj/structure/closet/wardrobe/toxins_white/New()
 	new /obj/item/clothing/under/rank/scientist(src)
 	new /obj/item/clothing/under/rank/scientist(src)

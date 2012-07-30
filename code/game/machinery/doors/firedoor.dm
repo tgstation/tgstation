@@ -125,3 +125,7 @@
 			if(istype(source)) air_master.tiles_to_update += source
 			if(istype(destination)) air_master.tiles_to_update += destination
 		return 1
+
+/obj/machinery/door/firedoor/border_only/hazard
+	name = "hazard door"
+	icon = 'icons/obj/doors/DoorHazard.dmi'

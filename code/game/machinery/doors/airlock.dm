@@ -311,10 +311,22 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/mineral = "sandstone"
 	doortype = 30
 
+/obj/machinery/door/airlock/science
+	name = "Airlock"
+	icon = 'icons/obj/doors/Doorsci.dmi'
+	doortype = 31
+
+/obj/machinery/door/airlock/glass_science
+	name = "Glass Airlocks"
+	icon = 'icons/obj/doors/Doorsciglass.dmi'
+	opacity = 0
+	doortype = 32
+	glass = 1
+
 /obj/machinery/door/airlock/highsecurity
 	name = "High Tech Security Airlock"
 	icon = 'icons/obj/doors/hightechsecurity.dmi'
-	doortype = 31
+	doortype = 33
 
 /*
 About the new airlock wires panel:
@@ -1160,7 +1172,9 @@ About the new airlock wires panel:
 					if(28) new/obj/structure/door_assembly/door_assembly_plasma( src.loc )
 					if(29) new/obj/structure/door_assembly/door_assembly_clown( src.loc )
 					if(30) new/obj/structure/door_assembly/door_assembly_sandstone( src.loc )
-					if(31) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
+					if(31) new/obj/structure/door_assembly/door_assembly_science( src.loc )
+					if(32) new/obj/structure/door_assembly/door_assembly_science/glass( src.loc )
+					if(33) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
 
 				var/obj/item/weapon/airlock_electronics/ae
 				if(!electronics)

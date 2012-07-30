@@ -60,3 +60,19 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
 	icon_state = "scrubspurple"
 	color = "scrubspurple"
+
+//pj's
+
+/obj/item/clothing/under/pj/red
+	name = "red pj's"
+	desc = "Sleepwear."
+	icon_state = "red_pyjamas"
+	color = "red_pyjamas"
+	item_state = "w_suit"
+
+/obj/item/clothing/under/pj/blue
+	name = "blue pj's"
+	desc = "Sleepwear."
+	icon_state = "blue_pyjamas"
+	color = "blue_pyjamas"
+	item_state = "w_suit"
