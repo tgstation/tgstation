@@ -141,6 +141,10 @@
 			if(affecting.take_damage(1, 0))
 				H.UpdateDamageIcon()
 			H.updatehealth()
+	else if(ismouse(target))
+		var/mob/living/simple_animal/mouse/M = target
+		src.visible_message("\red <b>SPLAT!</b>")
+		M.splat()
 	playsound(target.loc, 'snap.ogg', 50, 1)
 	icon_state = "mousetrap"
 	armed = 0
@@ -197,9 +201,7 @@
 						continue
 					O.show_message("\red <B>[H] accidentally steps on the mousetrap.</B>", 1)
 		if(ismouse(AM))
-			var/mob/living/simple_animal/mouse/M = AM
-			src.visible_message("\red <b>SPLAT!</b>")
-			M.splat()
+			triggered(AM)
 	..()
 
 /obj/item/weapon/mousetrap/hitby(A as mob|obj)

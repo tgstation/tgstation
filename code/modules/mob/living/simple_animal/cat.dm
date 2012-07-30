@@ -35,7 +35,7 @@
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
-					emote("\the [src] SPLATS \the [M]")
+					emote("SPLATS \the [M]")
 					movement_target = null
 					stop_automated_movement = 0
 					break

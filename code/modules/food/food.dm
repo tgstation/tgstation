@@ -194,7 +194,7 @@
 				usr << "\blue The egg refuses to take on this color!"
 				return
 
-			usr << "\blue You color \the [C] [clr]"
+			usr << "\blue You color \the [src] [clr]"
 			icon_state = "egg-[clr]"
 			color = clr
 		else
