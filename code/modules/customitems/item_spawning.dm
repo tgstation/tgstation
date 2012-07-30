@@ -65,6 +65,7 @@
 								del(C)
 								break
 						else //Was not the right job position, gotta delete the custom item.
+							ok = 1
 							del(I)
 				else
 					for(var/obj/item/weapon/storage/S in M.contents) // Try to place it in any item that can store stuff, on the mob.
