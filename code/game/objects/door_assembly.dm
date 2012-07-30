@@ -272,7 +272,7 @@ obj/structure/door_assembly
 
 	door_assembly_highsecurity // Borrowing this until WJohnston makes sprites for the assembly
 		name = "High Tech Security Assembly"
-		icon_state = "door_as_hatch1"
+		icon_state = "door_as_highsec1"
 		airlock_type = /obj/machinery/door/airlock/highsecurity
 		anchored = 1
 		density = 1

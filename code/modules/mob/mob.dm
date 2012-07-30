@@ -431,7 +431,15 @@
 
 //THIS IS HOW YOU ADD OBJECTS TO BE OBSERVED
 
-	creatures += getmobs()
+	for(var/mob/M in sortAtom(mob_list))
+		var/name = M.name
+		if (name in names)
+			namecounts[name]++
+			name = "[name] ([namecounts[name]])"
+		else
+			names.Add(name)
+			namecounts[name] = 1
+		creatures[name] = M
 //THIS IS THE MOBS PART: LOOK IN HELPERS.DM
 
 	client.perspective = EYE_PERSPECTIVE
