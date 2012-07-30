@@ -335,14 +335,20 @@
 				message = noserver
 			else
 				if(auth)
-					var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
-					if(length(newkey) <= 3)
-						message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
-					else if(length(newkey) > 16)
-						message = "<span class='notice'>NOTICE: Decryption key too long!</span>"
-					else if(newkey && newkey != "")
-						src.linkedServer.decryptkey = newkey
-						message = "<span class='notice'>NOTICE: Decryption key set.</span>"
+					var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+					if(dkey && dkey != "")
+						if(src.linkedServer.decryptkey == dkey)
+							var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
+							if(length(newkey) <= 3)
+								message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
+							else if(length(newkey) > 16)
+								message = "<span class='notice'>NOTICE: Decryption key too long!</span>"
+							else if(newkey && newkey != "")
+								src.linkedServer.decryptkey = newkey
+							message = "<span class='notice'>NOTICE: Decryption key set.</span>"
+						else
+							message = incorrectkey
+
 		//Hack the Console to get the password
 		if (href_list["hack"])
 			if((istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot)) && (usr.mind.special_role && usr.mind.original == usr))

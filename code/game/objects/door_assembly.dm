@@ -246,6 +246,24 @@ obj/structure/door_assembly
 		state = 1
 		mineral = "sandstone"
 
+	door_assembly_sandstone
+		name = "Sandstone Airlock Assembly"
+		icon_state = "door_as_sandstone1"
+		airlock_type = /obj/machinery/door/airlock/sandstone
+		anchored = 1
+		density = 1
+		state = 1
+		mineral = "sandstone"
+
+	door_assembly_highsecurity // Borrowing this until WJohnston makes sprites for the assembly
+		name = "High Tech Security Assembly"
+		icon_state = "door_as_hatch1"
+		airlock_type = /obj/machinery/door/airlock/highsecurity
+		anchored = 1
+		density = 1
+		state = 1
+		glass = 0
+
 /obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
 		var/obj/item/weapon/weldingtool/WT = W

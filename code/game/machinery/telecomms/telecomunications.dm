@@ -277,7 +277,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/hub
 	name = "Telecommunication Hub"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "bus"
+	icon_state = "hub"
 	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
 	density = 1
 	anchored = 1
@@ -311,7 +311,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/relay
 	name = "Telecommunication Relay"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "bus"
+	icon_state = "relay"
 	desc = "A mighty piece of hardware used to send massive amounts of data far away."
 	density = 1
 	anchored = 1

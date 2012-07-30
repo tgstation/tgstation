@@ -311,6 +311,11 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/mineral = "sandstone"
 	doortype = 30
 
+/obj/machinery/door/airlock/highsecurity
+	name = "High Tech Security Airlock"
+	icon = 'icons/obj/doors/hightechsecurity.dmi'
+	doortype = 31
+
 /*
 About the new airlock wires panel:
 *	An airlock wire dialog can be accessed by the normal way or by using wirecutters or a multitool on the door while the wire-panel is open. This would show the following wires, which you can either wirecut/mend or send a multitool pulse through. There are 9 wires.
@@ -1155,6 +1160,7 @@ About the new airlock wires panel:
 					if(28) new/obj/structure/door_assembly/door_assembly_plasma( src.loc )
 					if(29) new/obj/structure/door_assembly/door_assembly_clown( src.loc )
 					if(30) new/obj/structure/door_assembly/door_assembly_sandstone( src.loc )
+					if(31) new/obj/structure/door_assembly/door_assembly_highsecurity(src.loc)
 
 				var/obj/item/weapon/airlock_electronics/ae
 				if(!electronics)
