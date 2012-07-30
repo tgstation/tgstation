@@ -28,30 +28,30 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
+		//Disease Check
+		handle_virus_updates()
+
+		//Updates the number of stored chemicals for powers
+		handle_changeling()
+
+		//Mutations and radiation
+		handle_mutations_and_radiation()
+
+		//Chemicals in the body
+		handle_chemicals_in_body()
+
+		//Disabilities
+		handle_disabilities()
+
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
 	blinded = null
 
-	//Disease Check
-	handle_virus_updates()
-
-	//Changeling things
-	handle_changeling()
-
 	//Handle temperature/pressure differences between body and environment
 	if(environment)	// More error checking -- TLE
 		handle_environment(environment)
-
-	//Mutations and radiation
-	handle_mutations_and_radiation()
-
-	//Chemicals in the body
-	handle_chemicals_in_body()
-
-	//Disabilities
-	handle_disabilities()
 
 	//Flashlights and such
 	UpdateLuminosity()

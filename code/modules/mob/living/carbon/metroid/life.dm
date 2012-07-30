@@ -7,6 +7,18 @@
 
 	..()
 
+	if(stat != DEAD)
+		//Chemicals in the body
+		handle_chemicals_in_body()
+
+		//Disease Check
+		//handle_virus_updates() There is no disease that affects metroids
+
+		handle_nutrition()
+
+		handle_targets()
+
+
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(src.loc)
 		environment = loc.return_air()
@@ -18,192 +30,15 @@
 	//to find it.
 	src.blinded = null
 
-	//Disease Check
-	//handle_virus_updates() There is no disease that affects metroids
-
-
 	// Basically just deletes any screen objects :<
 	regular_hud_updates()
 
 	//Handle temperature/pressure differences between body and environment
-
 	if(environment)
 		handle_environment(environment)
 
-
-	//Chemicals in the body
-	handle_chemicals_in_body()
-
 	//Status updates, death etc.
 	handle_regular_status_updates()
-
-	/*
-	if(client)
-		handle_regular_hud_updates() */
-
-	if(stat == 2)
-		return
-	handle_nutrition()
-
-	if(Tempstun)
-		if(!Victim) // not while they're eating!
-			canmove = 0
-	else
-		canmove = 1
-
-	if(attacked > 50) attacked = 50
-
-	if(attacked > 0)
-		if(prob(85))
-			attacked--
-
-	if(Discipline > 0)
-
-		if(Discipline >= 5 && rabid)
-			if(prob(60)) rabid = 0
-
-		if(prob(10))
-			Discipline--
-
-
-	// Grabbing
-
-	if(!client && stat != 2)
-
-		if(!canmove) return
-
-		// DO AI STUFF HERE
-
-		if(Target)
-			if(attacked <= 0)
-				Target = null
-
-		if(Victim) return // if it's eating someone already, continue eating!
-
-
-		if(prob(5))
-			emote(pick("click","chatter","sway","light","vibrate","chatter","shriek"))
-
-		if(AIproc && SStun) return
-
-
-		var/hungry = 0 // determines if the metroid is hungry
-		var/starving = 0 // determines if the metroid is starving-hungry
-		if(istype(src, /mob/living/carbon/metroid/adult)) // 1200 max nutrition
-			switch(nutrition)
-				if(301 to 600) hungry = 1
-				if(0 to 300)
-					starving = 1
-
-		else
-			switch(nutrition)			// 1000 max nutrition
-				if(201 to 500) hungry = 1
-				if(0 to 200) starving = 1
-
-
-		if(starving && !client) // if a metroid is starving, it starts losing its friends
-			if(Friends.len > 0 && prob(1))
-				var/friendnum = 0
-				for(var/mob/M in Friends)
-					friendnum++
-
-				if(friendnum > 0)
-					var/mob/nofriend = pick(Friends)
-					Friends -= nofriend
-
-		if(!Target)
-			var/list/targets = list()
-
-			if(hungry || starving) //Only add to the list if we need to
-				for(var/mob/living/L in view(7,src))
-
-					//Ignore other metroids, dead mobs and simple_animals
-					if(ismetroid(L) \
-					|| L.stat == DEAD\
-					|| isanimal(L))
-						continue
-
-					if(issilicon(L))
-						if(!istype(src, /mob/living/carbon/metroid/adult)) //Non-starving diciplined adult metroids wont eat things
-							if(!starving && Discipline > 0)
-								continue
-
-						if(tame) //Tame metroids ignore electronic life
-							continue
-
-						targets += L //Possible target found!
-
-					else if(iscarbon(L))
-
-						if(istype(L, /mob/living/carbon/human)) //Ignore metroid(wo)men
-							var/mob/living/carbon/human/H = L
-							if(H.mutantrace == "metroid")
-								continue
-
-						if(!istype(src, /mob/living/carbon/metroid/adult)) //Non-starving diciplined adult metroids wont eat things
-							if(!starving && Discipline > 0)
-								continue
-
-						if(L in Friends) //No eating friends!
-							continue
-
-						if(tame && ishuman(L)) //Tame metroids dont eat people.
-							continue
-
-						if(!L.canmove) //Only one metroid can latch on at a time.
-
-							var/notarget = 0
-							for(var/mob/living/carbon/metroid/M in view(1,L))
-								if(M.Victim == L)
-									notarget = 1
-							if(notarget)
-								continue
-
-						targets += L //Possible target found!
-
-
-
-			if((hungry || starving) && targets.len > 0)
-				if(!istype(src, /mob/living/carbon/metroid/adult))
-					if(!starving)
-						for(var/mob/living/carbon/C in targets)
-							if(!Discipline && prob(5))
-								if(ishuman(C))
-									Target = C
-									break
-								if(isalienadult(C))
-									Target = C
-									break
-
-							if(islarva(C))
-								Target = C
-								break
-							if(ismonkey(C))
-								Target = C
-								break
-					else
-						Target = targets[1]
-				else
-					Target = targets[1] // closest target
-
-			if(targets.len > 0)
-				if(attacked > 0 || rabid)
-					Target = targets[1] //closest mob probably attacked it, so override Target and attack the nearest!
-
-
-		if(!Target)
-			if(hungry || starving)
-				if(canmove && isturf(loc) && prob(50))
-					step(src, pick(cardinal))
-
-			else
-				if(canmove && isturf(loc) && prob(33))
-					step(src, pick(cardinal))
-		else
-			if(!AIproc)
-				spawn() AIprocess()
-
-
 
 
 
@@ -483,8 +318,6 @@
 
 		handle_nutrition()
 
-			if(stat == 2) return // haha wow
-
 			if(prob(20))
 				if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(4,6)
 				else nutrition-=rand(2,3)
@@ -538,4 +371,152 @@
 					D.cure()
 			return
 
+		handle_targets()
+			if(Tempstun)
+				if(!Victim) // not while they're eating!
+					canmove = 0
+			else
+				canmove = 1
 
+			if(attacked > 50) attacked = 50
+
+			if(attacked > 0)
+				if(prob(85))
+					attacked--
+
+			if(Discipline > 0)
+
+				if(Discipline >= 5 && rabid)
+					if(prob(60)) rabid = 0
+
+				if(prob(10))
+					Discipline--
+
+
+			if(!client)
+
+				if(!canmove) return
+
+				// DO AI STUFF HERE
+
+				if(Target)
+					if(attacked <= 0)
+						Target = null
+
+				if(Victim) return // if it's eating someone already, continue eating!
+
+
+				if(prob(5))
+					emote(pick("click","chatter","sway","light","vibrate","chatter","shriek"))
+
+				if(AIproc && SStun) return
+
+
+				var/hungry = 0 // determines if the metroid is hungry
+				var/starving = 0 // determines if the metroid is starving-hungry
+				if(istype(src, /mob/living/carbon/metroid/adult)) // 1200 max nutrition
+					switch(nutrition)
+						if(301 to 600) hungry = 1
+						if(0 to 300)
+							starving = 1
+
+				else
+					switch(nutrition)			// 1000 max nutrition
+						if(201 to 500) hungry = 1
+						if(0 to 200) starving = 1
+
+
+				if(starving && !client) // if a metroid is starving, it starts losing its friends
+					if(Friends.len > 0 && prob(1))
+						var/mob/nofriend = pick(Friends)
+						Friends -= nofriend
+
+				if(!Target)
+					var/list/targets = list()
+
+					if(hungry || starving) //Only add to the list if we need to
+						for(var/mob/living/L in view(7,src))
+
+							//Ignore other metroids, dead mobs and simple_animals
+							if(ismetroid(L) || L.stat == DEAD || isanimal(L))
+								continue
+
+							if(issilicon(L))
+								if(!istype(src, /mob/living/carbon/metroid/adult)) //Non-starving diciplined adult metroids wont eat things
+									if(!starving && Discipline > 0)
+										continue
+
+								if(tame) //Tame metroids ignore electronic life
+									continue
+
+								targets += L //Possible target found!
+
+							else if(iscarbon(L))
+
+								if(istype(L, /mob/living/carbon/human)) //Ignore metroid(wo)men
+									var/mob/living/carbon/human/H = L
+									if(H.mutantrace == "metroid")
+										continue
+
+								if(!istype(src, /mob/living/carbon/metroid/adult)) //Non-starving diciplined adult metroids wont eat things
+									if(!starving && Discipline > 0)
+										continue
+
+								if(L in Friends) //No eating friends!
+									continue
+
+								if(tame && ishuman(L)) //Tame metroids dont eat people.
+									continue
+
+								if(!L.canmove) //Only one metroid can latch on at a time.
+
+									var/notarget = 0
+									for(var/mob/living/carbon/metroid/M in view(1,L))
+										if(M.Victim == L)
+											notarget = 1
+									if(notarget)
+										continue
+
+								targets += L //Possible target found!
+
+
+
+					if((hungry || starving) && targets.len > 0)
+						if(!istype(src, /mob/living/carbon/metroid/adult))
+							if(!starving)
+								for(var/mob/living/carbon/C in targets)
+									if(!Discipline && prob(5))
+										if(ishuman(C))
+											Target = C
+											break
+										if(isalienadult(C))
+											Target = C
+											break
+
+									if(islarva(C))
+										Target = C
+										break
+									if(ismonkey(C))
+										Target = C
+										break
+							else
+								Target = targets[1]
+						else
+							Target = targets[1] // closest target
+
+					if(targets.len > 0)
+						if(attacked > 0 || rabid)
+							Target = targets[1] //closest mob probably attacked it, so override Target and attack the nearest!
+
+
+				if(!Target)
+					if(hungry || starving)
+						if(canmove && isturf(loc) && prob(50))
+							step(src, pick(cardinal))
+
+					else
+						if(canmove && isturf(loc) && prob(33))
+							step(src, pick(cardinal))
+				else
+					if(!AIproc)
+						spawn() AIprocess()

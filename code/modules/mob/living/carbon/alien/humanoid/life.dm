@@ -30,6 +30,15 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
+		//Mutations and radiation
+		handle_mutations_and_radiation()
+
+		//Chemicals in the body
+		handle_chemicals_in_body()
+
+		//Disabilities
+		handle_disabilities()
+
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
@@ -45,17 +54,9 @@
 	//Handle temperature/pressure differences between body and environment
 	handle_environment()
 
-	//Mutations and radiation
-	handle_mutations_and_radiation()
-
-	//Chemicals in the body
-	handle_chemicals_in_body()
-
 	//stuff in the stomach
 	handle_stomach()
 
-	//Disabilities
-	handle_disabilities()
 
 	//Status updates, death etc.
 	handle_regular_status_updates()

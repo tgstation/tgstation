@@ -3,6 +3,16 @@
 	set background = 1
 	..()
 
+	if(stat != DEAD)
+		//Mutations and radiation
+		handle_mutations_and_radiation()
+
+		//Chemicals in the body
+		handle_chemicals_in_body()
+
+		//Disease Check
+		//handle_virus_updates() There is no disease that affects brains
+
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(loc)
 		environment = loc.return_air()
@@ -13,18 +23,9 @@
 	//to find it.
 	blinded = null
 
-	//Disease Check
-	//handle_virus_updates() There is no disease that affects brains
-
 	//Handle temperature/pressure differences between body and environment
 	if(environment)	// More error checking -- TLE
 		handle_environment(environment)
-
-	//Mutations and radiation
-	handle_mutations_and_radiation()
-
-	//Chemicals in the body
-	handle_chemicals_in_body()
 
 	//Status updates, death etc.
 	handle_regular_status_updates()

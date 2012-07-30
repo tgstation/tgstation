@@ -41,7 +41,7 @@
 		//Disease Check
 		handle_virus_updates()
 
-		//Changeling things
+		//Updates the number of stored chemicals for powers
 		handle_changeling()
 
 		//Mutations and radiation
