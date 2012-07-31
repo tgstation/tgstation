@@ -17,11 +17,17 @@
 
 
 /obj/item/weapon/grab/proc/throw()
+
 	if(affecting)
-		var/grabee = affecting
-		spawn(0)
-			del(src)
-		return grabee
+		if(state >= 2)
+			var/grabee = affecting
+			spawn(0)
+				del(src)
+			return grabee
+		else
+			spawn(0)
+				del(src)
+			return null
 
 	else if(structure)
 		var/grabee = structure

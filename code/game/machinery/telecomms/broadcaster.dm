@@ -20,7 +20,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 	use_power = 1
 	idle_power_usage = 25
 	machinetype = 5
-	heatgen = 60
+	heatgen = 0
 	delay = 7
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 

@@ -249,7 +249,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 1
-	heatgen = 5
+	heatgen = 0
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
@@ -284,7 +284,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	use_power = 1
 	idle_power_usage = 80
 	machinetype = 7
-	heatgen = 5
+	heatgen = 40
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/hub"
 	long_range_link = 1
 	netspeed = 40
@@ -318,7 +318,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 8
-	heatgen = 5
+	heatgen = 0
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/relay"
 	netspeed = 5
 	long_range_link = 1
@@ -592,13 +592,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/receiver/preset_left
 	id = "Receiver A"
 	network = "tcommsat"
-	autolinkers = list("receiverA") // link to bus units 1 and 2
+	autolinkers = list("receiverA") // link to relay
 	freq_listening = list(1351, 1355, 1347, 1349) // science, medical, cargo, mining
 
 /obj/machinery/telecomms/receiver/preset_right
 	id = "Receiver B"
 	network = "tcommsat"
-	autolinkers = list("receiverB") // Bus units 3 and 4
+	autolinkers = list("receiverB") // link to relay
 	freq_listening = list(1353, 1357, 1359) //command, engineering, security
 
 	//Common and other radio frequencies for people to freely use
@@ -607,13 +607,14 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			freq_listening |= i
 		..()
 
-/obj/machinery/telecomms/receiver/preset_left/station
+/obj/machinery/telecomms/receiver/preset_left/station // Unused, note to self to delete later
 	id = "Station Receiver A"
 	autolinkers = list("s_receiverA")
 
 /obj/machinery/telecomms/receiver/preset_right/station
 	id = "Station Receiver B"
 	autolinkers = list("s_receiverB")
+	freq_listening = list(1351, 1355, 1347, 1349, 1353, 1357, 1359) // science, medical, cargo, mining, command, engineering, security
 
 /obj/machinery/telecomms/receiver/preset_left/mining
 	id = "Mining Receiver A"
@@ -623,7 +624,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	id = "Mining Receiver B"
 	autolinkers = list("m_receiverB")
 
-/obj/machinery/telecomms/receiver/preset_left/ruskie
+/obj/machinery/telecomms/receiver/preset_left/ruskie // Unused, not to self to delete later.
 	id = "Ruskie Receiver A"
 	autolinkers = list("r_receiverA")
 	toggled = 0
@@ -632,8 +633,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/receiver/preset_right/ruskie
 	id = "Ruskie Receiver B"
 	autolinkers = list("r_receiverB")
+	freq_listening = list(1351, 1355, 1347, 1349, 1353, 1357, 1359) // science, medical, cargo, mining, command, engineering, security
 	toggled = 0
 	hide = 1
+
 
 //Buses
 
@@ -746,9 +749,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	network = "tcommsat"
 	autolinkers = list("broadcasterB")
 
-/obj/machinery/telecomms/broadcaster/preset_left/station
+/obj/machinery/telecomms/broadcaster/preset_left/station // Unused, not to self to delete later
 	id = "Station Broadcaster A"
 	autolinkers = list("s_broadcasterA")
+
 
 /obj/machinery/telecomms/broadcaster/preset_right/station
 	id = "Station Broadcaster B"
