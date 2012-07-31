@@ -263,26 +263,29 @@
 				usr << browse(dat, "window=chem_master;size=575x400")
 				return
 			else if (href_list["add1"])
+
+				/*
+				(this fixes a pretty serious exploit) ~~ Doohl
 				R.remove_reagent(href_list["add1"], 1) //Remove/add used instead of trans_to since we're moving a specific reagent.
 				reagents.add_reagent(href_list["add1"], 1)
+				*/
+
+				R.trans_id_to(src, href_list["add1"], 1)
+
 			else if (href_list["add5"])
-				R.remove_reagent(href_list["add5"], 5)
-				reagents.add_reagent(href_list["add5"], 5)
+				R.trans_id_to(src, href_list["add5"], 5)
 			else if (href_list["add10"])
-				R.remove_reagent(href_list["add10"], 10)
-				reagents.add_reagent(href_list["add10"], 10)
+				R.trans_id_to(src, href_list["add10"], 10)
 			else if (href_list["addall"])
 				var/temp_amt = R.get_reagent_amount(href_list["addall"])
-				reagents.add_reagent(href_list["addall"], temp_amt)
-				R.del_reagent(href_list["addall"])
+				R.trans_id_to(src, href_list["addall"], temp_amt)
 			else if (href_list["addcustom"])
 
 				var/id = href_list["addcustom"]
 				useramount = input("Select the amount to transfer.", 30, useramount) as num
 				useramount = isgoodnumber(useramount)
 				var/realamount = R.get_reagent_amount(id)
-				R.remove_reagent(id, min(useramount, realamount))
-				reagents.add_reagent(id, min(useramount, realamount))
+				R.trans_id_to(src, href_list["addcustom"], realamount)
 
 			else if (href_list["remove1"])
 				reagents.remove_reagent(href_list["remove1"], 1)
