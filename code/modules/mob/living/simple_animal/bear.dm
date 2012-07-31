@@ -2,16 +2,16 @@
 #define BEAR_STANCE_ALERT 2
 #define BEAR_STANCE_ATTACK 3
 #define BEAR_STANCE_ATTACKING 4
-#define BEAR_STANCE_TIRED 4
+#define BEAR_STANCE_TIRED 5
 
 //Space bears!
 /mob/living/simple_animal/bear
 	name = "space bear"
 	desc = "RawrRawr!!"
-	icon = 'icons/mob/mob.dmi'
-	icon_state = "bearspace"
-	icon_living = "bearspace"
-	icon_dead = "bear_d"
+	icon_state = "bear"
+	icon_living = "bear"
+	icon_dead = "bear_dead"
+	icon_gib = "bear_gib"
 	speak = list("RAWR!","Rawr!","GRR!","Growl!")
 	speak_emote = list("growls", "roars")
 	emote_hear = list("rawrs","grumbles","grawls")
@@ -25,6 +25,7 @@
 	response_harm   = "pokes the"
 
 	stop_automated_movement_when_pulled = 0
+	maxHealth = 60
 	health = 60
 
 	//Space bears aren't affected by atmos.
@@ -53,8 +54,8 @@
 	..()
 
 	if(!stat)
-		if( loc && istype(loc,/turf/space) )
-			icon_state = "bearspace"
+		if(loc && istype(loc,/turf/space))
+			icon_state = "bear"
 		else
 			icon_state = "bearfloor"
 
@@ -111,12 +112,12 @@
 					stance = BEAR_STANCE_ALERT
 					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
 					return
-				if( !(target_mob in viewers(7,src)) )
+				if(!(target_mob in viewers(7,src)))
 					stance = BEAR_STANCE_ALERT
 					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
 					target_mob = null
 					return
-				if( get_dist(src, target_mob) <= 1 )	//Attacking
+				if(get_dist(src, target_mob) <= 1)	//Attacking
 					emote( pick( list("slashes at [target_mob]", "bites [target_mob]") ) )
 
 					var/damage = rand(20,30)
@@ -130,7 +131,7 @@
 						var/mob/living/L = target_mob
 						L.adjustBruteLoss(damage)
 
-				if( stance_step >= 20 )	//attacks for 20 ticks, then it gets tired and needs to rest
+				if(stance_step >= 20)	//attacks for 20 ticks, then it gets tired and needs to rest
 					emote( "is worn out and needs to rest" )
 					stance = BEAR_STANCE_TIRED
 					stance_step = 0
@@ -160,5 +161,5 @@
 		target_mob = M
 	..()
 
-/mob/living/simple_animal/bear/Process_Spacemove(var/check_drift = 0)
+/mob/living/simple_animal/carp/Process_Spacemove(var/check_drift = 0)
 	return	//No drifting in space for space bears!

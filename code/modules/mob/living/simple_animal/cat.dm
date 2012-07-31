@@ -2,7 +2,6 @@
 /mob/living/simple_animal/cat
 	name = "cat"
 	desc = "Kitty!!"
-	icon = 'icons/mob/mob.dmi'
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
@@ -35,7 +34,7 @@
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
-					emote("SPLATS \the [M]")
+					emote("splats \the [M]")
 					movement_target = null
 					stop_automated_movement = 0
 					break

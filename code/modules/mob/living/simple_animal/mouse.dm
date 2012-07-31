@@ -1,8 +1,6 @@
-//Mouse
 /mob/living/simple_animal/mouse
 	name = "mouse"
 	desc = "It's a nasty, ugly, evil, disease-ridden rodent."
-	icon = 'icons/mob/mob.dmi'
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"

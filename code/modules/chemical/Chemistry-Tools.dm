@@ -457,11 +457,12 @@
 						for(var/mob/living/carbon/M in D.loc)
 							if(!istype(M,/mob/living/carbon)) continue
 							if(M == user) continue
-							//Syring gune attack logging by Yvarov
+							//Syringe gun attack logging by Yvarov
 							var/R
-							for(var/datum/reagent/A in D.reagents.reagent_list)
-								R += A.id + " ("
-								R += num2text(A.volume) + "),"
+							if(D.reagents)
+								for(var/datum/reagent/A in D.reagents.reagent_list)
+									R += A.id + " ("
+									R += num2text(A.volume) + "),"
 							if (istype(M, /mob))
 								M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
 								user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
@@ -469,10 +470,11 @@
 							else
 								M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
 								log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a <b>syringegun</b> ([R])</font>")
-							D.reagents.trans_to(M, 15)
+							if(D.reagents)
+								D.reagents.trans_to(M, 15)
 							M.take_organ_damage(5)
 							for(var/mob/O in viewers(world.view, D))
-								O.show_message(text("\red [] is hit by the syringe!", M.name), 1)
+								O.show_message("\red [M.name] is hit by the syringe!", 1)
 
 							del(D)
 					if(D)

@@ -1459,7 +1459,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	new /obj/effect/critter/killertomato(user.loc)
+	new /mob/living/simple_animal/tomato(user.loc)
 	del(src)
 
 	user << "<span class='notice'>You plant the killer-tomato.</span>"
@@ -1654,7 +1654,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	new /obj/effect/critter/walkingmushroom(user.loc)
+	new /mob/living/simple_animal/mushroom(user.loc)
 	del(src)
 
 	user << "<span class='notice'>You plant the walking mushroom.</span>"

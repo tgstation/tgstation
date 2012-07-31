@@ -70,6 +70,11 @@
 		return 1
 	return 0
 
+/proc/iscarp(A)
+	if(istype(A, /mob/living/simple_animal/carp))
+		return 1
+	return 0
+
 /proc/isAI(A)
 	if(istype(A, /mob/living/silicon/ai))
 		return 1

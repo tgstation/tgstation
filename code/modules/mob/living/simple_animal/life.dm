@@ -1,12 +1,14 @@
 /mob/living/simple_animal
 	name = "animal"
+	icon = 'icons/mob/animal.dmi'
 	var/icon_living = ""
 	var/icon_dead = ""
+	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
 	maxHealth = 20
 	var/list/speak = list()
 	var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
 	var/speak_chance = 0
-	var/list/emote_hear = list()	//EHearable emotes
+	var/list/emote_hear = list()	//Hearable emotes
 	var/list/emote_see = list()		//Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
 	health = 20
 	var/turns_per_move = 1
@@ -232,6 +234,8 @@
 			..()
 
 /mob/living/simple_animal/gib()
+	if(icon_gib)
+		flick(icon_gib, src)
 	if(meat_amount && meat_type)
 		for(var/i = 0; i < meat_amount; i++)
 			new meat_type(src.loc)
@@ -272,13 +276,13 @@
 
 	switch(M.a_intent)
 
-		if ("help")
+		if("help")
 			if (health > 0)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message("\blue [M] [response_help] [src]")
 
-		if ("grab")
+		if("grab")
 			if (M == src)
 				return
 			if (nopush)
@@ -297,13 +301,13 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
-		if ("hurt")
+		if("hurt")
 			health -= harm_intent_damage
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message("\red [M] [response_harm] [src]")
 
-		if ("disarm")
+		if("disarm")
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message("\blue [M] [response_disarm] [src]")
@@ -325,6 +329,13 @@
 							M.show_message("\blue [user] applies the [MED] on [src]")
 		else
 			user << "\blue this [src] is dead, medical items won't bring it back to life."
+	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
+		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
+			new meat_type (get_turf(src))
+			if(prob(95))
+				del(src)
+				return
+			gib()
 	else
 		if(O.force)
 			health -= O.force

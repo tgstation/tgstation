@@ -7,7 +7,7 @@
 	var/id = null
 
 /obj/machinery/computer/teleporter/New()
-	src.id = text("[]", rand(1000, 9999))
+	src.id = "[rand(1000, 9999)]"
 	..()
 	return
 
@@ -22,21 +22,22 @@
 		//Quickfix for hiding nuke disks and people getting to centcomm until I can get the attack_hand() stuff to incorperate this.
 		for(var/obj/O in user.get_contents())
 			if(istype(O, /obj/item/weapon/disk/nuclear) || istype(O, /obj/item/device/radio/beacon) || istype(O, /obj/item/weapon/storage/backpack/holding))
-				user << "\red Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through."
+				user << "<span class='notice'>Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>"
 				return
 
 		var/obj/S = null
 		for(var/obj/effect/landmark/sloc in world)
 			if (sloc.name != M.data)
 				continue
-			if (locate(/mob) in sloc.loc)
+			if (locate(/mob/living) in sloc.loc)
 				continue
 			S = sloc
 			break
-		if (!S)
+		if(!S)
 			S = locate("landmark*[M.data]") // use old stype
-		if (istype(S, /obj/effect/landmark/) && istype(S.loc, /turf))
-			usr.loc = S.loc
+		if(istype(S, /obj/effect/landmark/) && istype(S.loc, /turf))
+			user.loc = S.loc
+			user.drop_item()
 			del(I)
 		return
 	else
@@ -44,12 +45,6 @@
 	return
 
 /obj/machinery/computer/teleporter/attack_paw()
-	src.attack_hand()
-
-/obj/machinery/computer/teleporter/security/attackby(obj/item/weapon/W)
-	src.attack_hand()
-
-/obj/machinery/computer/teleporter/security/attack_paw()
 	src.attack_hand()
 
 /obj/machinery/teleport/station/attack_ai()

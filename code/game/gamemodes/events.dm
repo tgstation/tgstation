@@ -348,10 +348,7 @@
 /proc/carp_migration() // -- Darem
 	for(var/obj/effect/landmark/C in world)
 		if(C.name == "carpspawn")
-			if(prob(99))
-				new /obj/effect/critter/spesscarp(C.loc)
-			else
-				new /obj/effect/critter/spesscarp/elite(C.loc)
+			new /mob/living/simple_animal/carp(C.loc)
 	//sleep(100)
 	spawn(rand(300, 600)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
