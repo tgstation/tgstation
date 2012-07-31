@@ -15,18 +15,18 @@
 	layer = 2.6 // a bit above wires
 
 
-	New()
-		..()
-		var/turf/T = src.loc
-		if(level==1) hide(T.intact)
-		return
+/obj/machinery/power/terminal/New()
+	..()
+	var/turf/T = src.loc
+	if(level==1) hide(T.intact)
+	return
 
 
-	hide(var/i)
-		if(i)
-			invisibility = 101
-			icon_state = "term-f"
-		else
-			invisibility = 0
-			icon_state = "term"
+/obj/machinery/power/terminal/hide(var/i)
+	if(i)
+		invisibility = 101
+		icon_state = "term-f"
+	else
+		invisibility = 0
+		icon_state = "term"
 

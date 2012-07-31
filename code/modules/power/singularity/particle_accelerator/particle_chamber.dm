@@ -5,6 +5,6 @@
 	icon_state = "fuel_chamber"
 	reference = "fuel_chamber"
 
-	update_icon()
-		..()
-		return
+/obj/structure/particle_accelerator/fuel_chamber/update_icon()
+	..()
+	return

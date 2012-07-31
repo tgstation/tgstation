@@ -16,69 +16,69 @@
 	var/on = 0  //up is off, down is on
 	var/busy = 0 //set to 1 when you start pulling
 
-	simple
-		icon_state = "switch-up"
-		icon_state_on = "switch-down"
-		icon_state_off = "switch-up"
+/obj/structure/powerswitch/simple
+	icon_state = "switch-up"
+	icon_state_on = "switch-down"
+	icon_state_off = "switch-up"
 
 
-	examine()
-		..()
-		if(on)
-			usr << "The switch is in the on position"
-		else
-			usr << "The switch is in the off position"
+/obj/structure/powerswitch/examine()
+	..()
+	if(on)
+		usr << "The switch is in the on position"
+	else
+		usr << "The switch is in the off position"
 
-	attack_ai(mob/user)
-		user << "\red You're an AI. This is a manual switch. It's not going to work."
+/obj/structure/powerswitch/attack_ai(mob/user)
+	user << "\red You're an AI. This is a manual switch. It's not going to work."
+	return
+
+/obj/structure/powerswitch/attack_hand(mob/user)
+
+	if(busy)
+		user << "\red This switch is already being toggled."
 		return
 
-	attack_hand(mob/user)
+	..()
 
-		if(busy)
-			user << "\red This switch is already being toggled."
-			return
+	busy = 1
+	for(var/mob/O in viewers(user))
+		O.show_message(text("\red [user] started pulling the [src]."), 1)
 
-		..()
-
-		busy = 1
+	if(do_after(user, 50))
+		set_state(!on)
 		for(var/mob/O in viewers(user))
-			O.show_message(text("\red [user] started pulling the [src]."), 1)
+			O.show_message(text("\red [user] flipped the [src] into the [on ? "on": "off"] position."), 1)
+	busy = 0
 
-		if(do_after(user, 50))
-			set_state(!on)
-			for(var/mob/O in viewers(user))
-				O.show_message(text("\red [user] flipped the [src] into the [on ? "on": "off"] position."), 1)
-		busy = 0
+/obj/structure/powerswitch/proc/set_state(var/state)
+	on = state
+	if(on)
+		icon_state = icon_state_on
+		var/list/connection_dirs = list()
+		for(var/direction in list(1,2,4,8,5,6,9,10))
+			for(var/obj/structure/cable/C in get_step(src,direction))
+				if(C.d1 == turn(direction, 180) || C.d2 == turn(direction, 180))
+					connection_dirs += direction
+					break
 
-	proc/set_state(var/state)
-		on = state
-		if(on)
-			icon_state = icon_state_on
-			var/list/connection_dirs = list()
-			for(var/direction in list(1,2,4,8,5,6,9,10))
-				for(var/obj/structure/cable/C in get_step(src,direction))
-					if(C.d1 == turn(direction, 180) || C.d2 == turn(direction, 180))
-						connection_dirs += direction
-						break
+		for(var/direction in connection_dirs)
+			var/obj/structure/cable/C = new/obj/structure/cable(src.loc)
+			C.d1 = 0
+			C.d2 = direction
+			C.icon_state = "[C.d1]-[C.d2]"
+			C.power_switch = src
 
-			for(var/direction in connection_dirs)
-				var/obj/structure/cable/C = new/obj/structure/cable(src.loc)
-				C.d1 = 0
-				C.d2 = direction
-				C.icon_state = "[C.d1]-[C.d2]"
-				C.power_switch = src
+			var/datum/powernet/PN = new()
+			PN.number = powernets.len + 1
+			powernets += PN
+			C.netnum = PN.number
+			PN.cables += C
 
-				var/datum/powernet/PN = new()
-				PN.number = powernets.len + 1
-				powernets += PN
-				C.netnum = PN.number
-				PN.cables += C
+			C.mergeConnectedNetworks(C.d2)
+			C.mergeConnectedNetworksOnTurf()
 
-				C.mergeConnectedNetworks(C.d2)
-				C.mergeConnectedNetworksOnTurf()
-
-		else
-			icon_state = icon_state_off
-			for(var/obj/structure/cable/C in src.loc)
-				del(C)
+	else
+		icon_state = icon_state_off
+		for(var/obj/structure/cable/C in src.loc)
+			del(C)
