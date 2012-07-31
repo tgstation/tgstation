@@ -155,7 +155,7 @@
 		emagged = 1
 		safety = 0
 		user << "\blue You vastly increase projector power and override the safety and security protocols."
-		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintence and do not use the simulator."
+		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call NanoTrasen maintence and do not use the simulator."
 		log_admin("[user] ([user.ckey]) emagged Holodeck Safeties.")
 		message_admins("[user] ([user.ckey]) emagged Holodeck Safeties.")
 	src.updateUsrDialog()

@@ -243,7 +243,7 @@
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
-				//dat += "<li><a href='byond://?src=\red[src];choice=chatroom'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
+				//dat += "<li><a href='byond://?src=\red[src];choice=chatroom'><img src=pda_chatroom.png> NanoTrasen Relay Chat</a></li>"
 
 				if (cartridge)
 					if (cartridge.access_clown)
@@ -385,7 +385,7 @@
 				dat += "<br>"
 
 			if (5)
-				dat += "<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat</h4>"
+				dat += "<h4><img src=pda_chatroom.png> NanoTrasen Relay Chat</h4>"
 
 				dat += "<h4><img src=pda_menu.png> Detected Channels</h4>: <li>"
 				for(var/datum/chatroom/C in chatrooms)

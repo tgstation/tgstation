@@ -566,5 +566,5 @@
 
 /obj/machinery/computer/med_data/laptop
 	name = "Medical Laptop"
-	desc = "Cheap Nanotrasen Laptop."
+	desc = "Cheap NanoTrasen Laptop."
 	icon_state = "medlaptop"

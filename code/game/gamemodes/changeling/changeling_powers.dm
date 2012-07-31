@@ -511,7 +511,7 @@
 				while(emergency_shuttle.online == 1)
 					sleep(10)
 					if((locate(/mob/living/carbon/human/tajaran/Emissary) in locate(/area/shuttle/escape/centcom))   ||  (locate(/mob/living/carbon/human/tajaran/Emissary) in locate(/area/centcom/evac)) || (locate(/mob/living/carbon/human/tajaran/Emissary) in locate(/area/centcom/control)  )     )
-						command_alert("What the fu- Shoot it!  SHOOT IT!  CENTRAL COMMAND TRANSMITTING DIST- *static*  Nevermind previous transmission, Nanotrasen.  We're all good here.  Subject contained. Standing down alert status.")
+						command_alert("What the fu- Shoot it!  SHOOT IT!  CENTRAL COMMAND TRANSMITTING DIST- *static*  Nevermind previous transmission, NanoTrasen.  We're all good here.  Subject contained. Standing down alert status.")
 Tarjan shit, not recoding this -Sieve{R}*/
 
 /client/proc/changeling_fakedeath()
