@@ -52,9 +52,8 @@
 		H.equip_if_possible(new /obj/item/clothing/under/rank/head_of_personnel(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/heads/hop(H), H.slot_belt)
-		//H.equip_if_possible(new /obj/item/clothing/suit/armor/vest(H), H.slot_wear_suit)
-		//H.equip_if_possible(new /obj/item/clothing/head/helmet(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/gloves/blue(H), H.slot_gloves)
+		H.equip_if_possible(new /obj/item/weapon/clipboard(H), H.slot_l_hand)
 		if(H.backbag == 1)
 			H.equip_if_possible(new /obj/item/weapon/storage/id_kit(H), H.slot_r_hand)
 		else

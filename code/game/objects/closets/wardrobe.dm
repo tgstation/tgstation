@@ -46,10 +46,9 @@ obj/structure/closet/wardrobe/hos/New()
 
 obj/structure/closet/wardrobe/hop/New()
 	new /obj/item/clothing/under/rank/head_of_personnel(src)
-	//new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/weapon/clipboard(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/gloves/blue(src)
-	//new /obj/item/clothing/head/helmet(src)
 
 /obj/structure/closet/wardrobe/pink/New()
 	new /obj/item/clothing/under/color/pink(src)
