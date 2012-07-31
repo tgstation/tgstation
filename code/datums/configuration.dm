@@ -49,6 +49,7 @@
 	var/usewhitelist = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
+	var/ToRban = 0
 
 	var/server
 	var/banappeals
@@ -312,6 +313,9 @@
 
 				if("humans_need_surnames")
 					humans_need_surnames = 1
+
+				if("tor_ban")
+					ToRban = 1
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

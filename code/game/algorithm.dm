@@ -26,8 +26,10 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	process_ghost_teleport_locs() //Sets up ghost teleport locations.
 	sleep_offline = 1
 
-	if (config.kick_inactive)
-		spawn(30)
+	spawn(3000)		//so we aren't adding to the round-start lag
+		if(config.ToRban)
+			ToRban_autoupdate()
+		if(config.kick_inactive)
 			KickInactiveClients()
 
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)

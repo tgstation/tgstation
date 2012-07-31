@@ -9,6 +9,14 @@ world/IsBanned(key,address,computer_id)
 		message_admins("\blue Failed Login: [key] - Guests not allowed")
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed.brb")
 
+	//check if the IP address is a known TOR node
+	if( config && config.ToRban && ToRban_isbanned(address) )
+		log_access("Failed Login: [src] - Banned: ToR - BYOND Version: [byond_version]")
+		message_admins("\blue Failed Login: [src] - Banned: ToR - BYOND Version: [byond_version]")
+		//ban their computer_id and ckey for posterity
+		AddBan(ckey(key), computer_id, "Use of ToR", "Automated Ban", 0, 0)
+		return list("reason"="Using ToR", "desc"="\nReason: The network you are using to connect has been banned.\nIf you believe this is a mistake, please request help at [config.banappeals]")
+
 	//Ban Checking
 	. = CheckBan( ckey(key), computer_id, address )
 	if(.)

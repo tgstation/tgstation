@@ -254,6 +254,7 @@
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/Set_Holiday							//Force-set a Holiday
 			verbs += /client/proc/admin_memo
+			verbs += /client/proc/ToRban								//ToRban  frontend to access its features.
 			//verbs += /client/proc/cmd_mass_modify_object_variables 	--Merged with view variables
 			//verbs += /client/proc/cmd_admin_explosion					--Merged with view variables
 			//verbs += /client/proc/cmd_admin_emp						--Merged with view variables
@@ -412,6 +413,7 @@
 	verbs -= /client/proc/admin_memo
 	verbs -= /client/proc/investigate_show								//investigate in-game mishaps using various logs.
 	verbs -= /client/proc/toggle_log_hrefs
+	verbs -= /client/proc/ToRban
 	verbs -= /proc/possess
 	verbs -= /proc/release
 	//verbs -= /client/proc/give_spell 									--Merged with view variables

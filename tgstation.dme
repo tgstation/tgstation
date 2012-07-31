@@ -781,6 +781,7 @@
 #include "code\modules\admin\newbanjob.dm"
 #include "code\modules\admin\player_notes.dm"
 #include "code\modules\admin\player_panel.dm"
+#include "code\modules\admin\ToRban.dm"
 #include "code\modules\admin\DB ban\functions.dm"
 #include "code\modules\admin\verbs\adminhelp.dm"
 #include "code\modules\admin\verbs\adminjump.dm"

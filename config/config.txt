@@ -162,3 +162,6 @@ TICKCOMP 0
 
 ## if uncommented this adds a random surname to a player's name if they only specify one name
 HUMANS_NEED_SURNAMES
+
+## Uncomment this to ban use of ToR
+#TOR_BAN
