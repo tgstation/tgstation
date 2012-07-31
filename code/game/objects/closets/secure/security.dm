@@ -16,7 +16,7 @@
 		new /obj/item/device/pda/captain(src)
 		new /obj/item/weapon/storage/id_kit(src)
 		new /obj/item/clothing/suit/armor/captain(src)
-		new /obj/item/clothing/head/helmet/cap(src)
+		new /obj/item/clothing/head/caphat(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/weapon/cartridge/captain(src)
@@ -52,6 +52,8 @@
 		new /obj/item/weapon/storage/id_kit(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/flash(src)
+		new /obj/item/clothing/suit/armor/vest(src)
+		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		return
 
