@@ -109,39 +109,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/game_mode/nuclear/post_setup()
-	var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
-	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-	var/obj/effect/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
 
-	var/nuke_code = "[rand(10000, 99999)]"
-	var/leader_selected = 0
-	var/agent_number = 1
-
-	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.current.loc = get_turf(synd_spawn)
-
-		forge_syndicate_objectives(synd_mind)
-		greet_syndicate(synd_mind)
-
-
-		if(!leader_selected)
-			prepare_syndicate_leader(synd_mind, nuke_code)
-			leader_selected = 1
-		else
-			synd_mind.current.real_name = "[syndicate_name()] Operative #[agent_number]"
-			agent_number++
-
-		equip_syndicate(synd_mind.current)
-		update_synd_icons_added(synd_mind)
-
-	update_all_synd_icons()
-
-	if(nuke_spawn)
-		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
-		the_bomb.r_code = nuke_code
-
-	if(closet_spawn)
-		new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
+	var/list/turf/synd_spawn = list()
 
 	for (var/obj/effect/landmark/A in world)
 		if (A.name == "Syndicate-Gear-Closet")
@@ -153,6 +122,45 @@
 			new /obj/effect/spawner/newbomb/timer/syndicate(A.loc)
 			del(A)
 			continue
+
+		if(A.name == "Syndicate-Spawn")
+			synd_spawn += get_turf(A)
+			del(A)
+			continue
+
+	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
+	var/obj/effect/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
+
+	var/nuke_code = "[rand(10000, 99999)]"
+	var/leader_selected = 0
+	var/agent_number = 1
+	var/spawnpos = agent_number
+
+	for(var/datum/mind/synd_mind in syndicates)
+		spawnpos = (agent_number >= synd_spawn.len ? 1 : spawnpos + 1)
+		synd_mind.current.loc = synd_spawn[spawnpos]
+
+		forge_syndicate_objectives(synd_mind)
+		greet_syndicate(synd_mind)
+		equip_syndicate(synd_mind.current)
+
+		if(!leader_selected)
+			prepare_syndicate_leader(synd_mind, nuke_code)
+			leader_selected = 1
+		else
+			synd_mind.current.real_name = "[syndicate_name()] Operative #[agent_number]"
+			agent_number++
+
+		update_synd_icons_added(synd_mind)
+
+	update_all_synd_icons()
+
+	if(nuke_spawn && synd_spawn.len > 0)
+		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
+		the_bomb.r_code = nuke_code
+
+	if(closet_spawn)
+		new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -175,19 +183,11 @@
 			P.loc = synd_mind.current.loc
 		else
 			var/mob/living/carbon/human/H = synd_mind.current
-			var/list/slots = list (
-				"backpack" = H.slot_in_backpack,
-				"left pocket" = H.slot_l_store,
-				"right pocket" = H.slot_r_store,
-				"left hand" = H.slot_l_hand,
-				"right hand" = H.slot_r_hand,
-			)
-			var/where = H.equip_in_one_of_slots(P, slots, del_on_fail=0)
-			if (!where)
-				P.loc = H.loc
+			P.loc = H.loc
+			H.equip_if_possible(P, H.slot_r_store, 0)
 
 	else
-		nuke_code = "code will be proveded later"
+		nuke_code = "code will be provided later"
 	synd_mind.current << "Nuclear Explosives 101:\n\tHello and thank you for choosing the Syndicate for your nuclear information needs.\nToday's crash course will deal with the operation of a Fusion Class Nanotrasen made Nuclear Device.\nFirst and foremost, DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.\nPressing any button on the compacted bomb will cause it to extend and bolt itself into place.\nIf this is done to unbolt it one must compeltely log in which at this time may not be possible.\nTo make the device functional:\n1. Place bomb in designated detonation zone\n2. Extend and anchor bomb (attack with hand).\n3. Insert Nuclear Auth. Disk into slot.\n4. Type numeric code into keypad ([nuke_code]).\n\tNote: If you make a mistake press R to reset the device.\n5. Press the E button to log onto the device\nYou now have activated the device. To deactivate the buttons at anytime for example when\nyou've already prepped the bomb for detonation remove the auth disk OR press the R ont he keypad.\nNow the bomb CAN ONLY be detonated using the timer. A manual det. is not an option.\n\tNote: Nanotrasen is a pain in the neck.\nToggle off the SAFETY.\n\tNote: You wouldn't believe how many Syndicate Operatives with doctorates have forgotten this step\nSo use the - - and + + to set a det time between 5 seconds and 10 minutes.\nThen press the timer toggle button to start the countdown.\nNow remove the auth. disk so that the buttons deactivate.\n\tNote: THE BOMB IS STILL SET AND WILL DETONATE\nNow before you remove the disk if you need to move the bomb you can:\nToggle off the anchor, move it, and re-anchor.\n\nGood luck. Remember the order:\nDisk, Code, Safety, Timer, Disk, RUN!\nIntelligence Analysts believe that they are hiding the disk in the bridge. Your space ship will not leave until the bomb is armed and timing.\nGood luck!"
 	return
 

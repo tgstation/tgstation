@@ -29,9 +29,10 @@
 	return null
 
 //puts the item "W" into an appropriate slot in a human's inventory
+//returns 0 if it cannot, 1 if successful
 /mob/living/carbon/human/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!W)				return
-	if(!ishuman(src))	return
+	if(!W)				return 0
+	if(!ishuman(src))	return 0
 
 	if(W.slot_flags & SLOT_BACK)
 		if(!back)
@@ -39,7 +40,7 @@
 				u_equip(W)
 			back = W
 			update_inv_back()
-			return
+			return 1
 
 	if(W.slot_flags & SLOT_ID)
 		if(!wear_id && w_uniform)
@@ -47,7 +48,7 @@
 				u_equip(W)
 			wear_id = W
 			update_inv_wear_id()
-			return
+			return 1
 
 	if(W.slot_flags & SLOT_ICLOTHING)
 		if(!w_uniform)
@@ -55,7 +56,7 @@
 				u_equip(W)
 			w_uniform = W
 			update_inv_w_uniform()
-			return
+			return 1
 
 	if(W.slot_flags & SLOT_OCLOTHING)
 		if(!wear_suit)
@@ -63,7 +64,7 @@
 				u_equip(W)
 			wear_suit = W
 			update_inv_wear_suit()
-			return
+			return 1
 
 	if(W.slot_flags & SLOT_MASK)
 		if(!wear_mask)
@@ -71,7 +72,7 @@
 				u_equip(W)
 			wear_mask = W
 			update_inv_wear_mask()
-			return
+			return 1
 
 	if(W.slot_flags & SLOT_HEAD)
 		if(!head)
@@ -79,7 +80,7 @@
 				u_equip(W)
 			head = W
 			update_inv_head()
-			return
+			return 1
 
 	if(W.slot_flags & SLOT_FEET)
 		if(!shoes)
@@ -87,7 +88,7 @@
 				u_equip(W)
 			shoes = W
 			update_inv_shoes()
-			return
+			return 1
 
 	if(W.slot_flags & SLOT_GLOVES)
 		if(!gloves)
@@ -95,7 +96,7 @@
 				u_equip(W)
 			gloves = W
 			update_inv_gloves()
-			return
+			return 1
 
 	if(W.slot_flags & SLOT_EARS)
 		if(!ears)
@@ -103,7 +104,7 @@
 				u_equip(W)
 			ears = W
 			update_inv_ears()
-			return
+			return 1
 
 	if(W.slot_flags & SLOT_EYES)
 		if(!glasses)
@@ -111,7 +112,7 @@
 				u_equip(W)
 			glasses = W
 			update_inv_glasses()
-			return
+			return 1
 
 	if(W.slot_flags & SLOT_BELT)
 		if(!belt && w_uniform)
@@ -119,7 +120,7 @@
 				u_equip(W)
 			belt = W
 			update_inv_belt()
-			return
+			return 1
 
 	//Suit storage
 	var/confirm
@@ -133,7 +134,7 @@
 			u_equip(W)
 			s_store = W
 			update_inv_s_store()
-			return
+			return 1
 
 	//Pockets
 	if ( !( W.slot_flags & SLOT_DENYPOCKET ) )
@@ -142,23 +143,26 @@
 				u_equip(W)
 				l_store = W
 				update_inv_pockets()
-				return
+				return 1
 		if(!r_store)
 			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
 				u_equip(W)
 				r_store = W
 				update_inv_pockets()
-				return
+				return 1
+	return 0
 
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, del_on_fail = 1) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
 	//warning: icky code
 	var/equipped = 0
 	if((slot == l_store || slot == r_store || slot == belt || slot == wear_id) && !src.w_uniform)
-		del(W)
+		if(del_on_fail)
+			del(W)
 		return
 	if(slot == s_store && !src.wear_suit)
-		del(W)
+		if(del_on_fail)
+			del(W)
 		return
 	switch(slot)
 		if(slot_back)
