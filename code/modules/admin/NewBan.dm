@@ -36,10 +36,10 @@ var/savefile/Banlist
 				if(matches)
 					matches += "/"
 				matches += "id"
-//			if( address == Banlist["ip"] )
-//				if(matches)
-//					matches += "/"
-//				matches += "ip"
+			if( address == Banlist["ip"] )
+				if(matches)
+					matches += "/"
+				matches += "ip"
 
 			if(matches)
 				if(Banlist["temp"])
@@ -93,7 +93,7 @@ var/savefile/Banlist
 	return 1
 
 
-/proc/AddBan(ckey, computerid, reason, bannedby, temp, minutes)
+/proc/AddBan(ckey, computerid, reason, bannedby, temp, minutes, address)
 
 	var/bantimestamp
 
@@ -110,6 +110,7 @@ var/savefile/Banlist
 		Banlist.cd = "/base/[ckey][computerid]"
 		Banlist["key"] << ckey
 		Banlist["id"] << computerid
+		Banlist["ip"] << address
 		Banlist["reason"] << reason
 		Banlist["bannedby"] << bannedby
 		Banlist["temp"] << temp
@@ -140,7 +141,7 @@ var/savefile/Banlist
 		usr.client.holder.DB_ban_unban( ckey(key), BANTYPE_ANY_FULLBAN)
 	for (var/A in Banlist.dir)
 		Banlist.cd = "/base/[A]"
-		if (key == Banlist["key"] || id == Banlist["id"])
+		if (key == Banlist["key"] /*|| id == Banlist["id"]*/)
 			Banlist.cd = "/base"
 			Banlist.dir.Remove(A)
 			continue
