@@ -494,8 +494,12 @@
 
 /obj/item/weapon/paper/monitorkey/New()
 	..()
-	if(message_servers && message_servers.len > 0)
-		server = message_servers[1]
-		info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
-		info_links = info
-		overlays += "paper_words"
+	spawn(10)
+		if(message_servers)
+			for(var/obj/machinery/message_server/server in message_servers)
+				if(!isnull(server))
+					if(!isnull(server.decryptkey))
+						info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+						info_links = info
+						overlays += "paper_words"
+						break
