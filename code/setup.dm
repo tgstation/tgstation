@@ -414,13 +414,13 @@ var/list/liftable_structures = list(\
 
 #define SEE_INVISIBLE_LIVING 25
 
-#define SEE_INVISIBLE_OBSERVER 30
-#define INVISIBILITY_OBSERVER 30
-
 #define SEE_INVISIBLE_LEVEL_ONE 35	//Used by some stuff in code. It's really poorly organized.
 #define INVISIBILITY_LEVEL_ONE 35	//Used by some stuff in code. It's really poorly organized.
 
 #define SEE_INVISIBLE_LEVEL_TWO 45	//Used by some other stuff in code. It's really poorly organized.
 #define INVISIBILITY_LEVEL_TWO 45	//Used by some other stuff in code. It's really poorly organized.
+
+#define INVISIBILITY_OBSERVER 60
+#define SEE_INVISIBLE_OBSERVER 60
 
 #define INVISIBILITY_MAXIMUM 100
