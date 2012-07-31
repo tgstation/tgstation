@@ -125,4 +125,5 @@
 	rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 
 	for (var/mob/M in dead_mob_list)
-		M.show_message(rendered, 2)
+		if(!istype(M,/mob/new_player))
+			M.show_message(rendered, 2)
