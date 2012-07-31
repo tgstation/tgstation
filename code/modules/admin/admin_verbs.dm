@@ -281,6 +281,7 @@
 			verbs += /client/proc/cinematic								//show a cinematic sequence
 			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/toggle_log_hrefs
+			verbs += /client/proc/cmd_debug_mob_lists
 		else	return
 	return
 
@@ -430,6 +431,7 @@
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
 	verbs -= /client/proc/check_ai_laws
+	verbs -= /client/proc/cmd_debug_mob_lists
 	return
 
 
@@ -475,13 +477,13 @@
 /client/proc/get_admin_state()
 	set name = "Get Admin State"
 	set category = "Debug"
-	for(var/mob/M in admin_list)
-		if(M.client.holder.state == 1)
-			src << "[M.key] is playing - [M.client.holder.state]"
-		else if(M.client.holder.state == 2)
-			src << "[M.key] is observing - [M.client.holder.state]"
+	for(var/client/C in admin_list)
+		if(C.holder.state == 1)
+			src << "[C.key] is playing - [C.holder.state]"
+		else if(C.holder.state == 2)
+			src << "[C.key] is observing - [C.holder.state]"
 		else
-			src << "[M.key] is undefined - [M.client.holder.state]"
+			src << "[C.key] is undefined - [C.holder.state]"
 	feedback_add_details("admin_verb","GAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -751,7 +753,7 @@
 			src.clear_admin_verbs()
 			src.update_admins(null)
 			admins.Remove(src.ckey)
-			admin_list -= src.mob
+			admin_list -= src
 			usr << "You are now a normal player."
 	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

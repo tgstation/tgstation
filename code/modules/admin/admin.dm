@@ -6,14 +6,14 @@ var/global/BSACooldown = 0
 /proc/message_admins(var/text, var/admin_ref = 0, var/admin_holder_ref = 0)
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
 	log_adminwarn(rendered)
-	for (var/mob/M in admin_list)
-		if (M)
+	for (var/client/C in admin_list)
+		if (C)
 			var/msg = rendered
 			if (admin_ref)
-				msg = dd_replaceText(msg, "%admin_ref%", "\ref[M]")
-			if (admin_holder_ref && M.client.holder)
-				msg = dd_replaceText(msg, "%holder_ref%", "\ref[M.client.holder]")
-			M << msg
+				msg = dd_replaceText(msg, "%admin_ref%", "\ref[C]")
+			if (admin_holder_ref && C.holder)
+				msg = dd_replaceText(msg, "%holder_ref%", "\ref[C.holder]")
+			C << msg
 
 
 /obj/admins/Topic(href, href_list)
@@ -1454,7 +1454,7 @@ var/global/BSACooldown = 0
 			log_admin("[key_name(usr)] has removed [C]'s adminship")
 			message_admins("[key_name_admin(usr)] has removed [C]'s adminship", 1)
 			admins.Remove(C.ckey)
-			admin_list -= C.mob
+			admin_list -= C
 		else
 			if(C == owner)	//no promoting/demoting yourself
 				message_admins("[C] tried to change their own admin-rank >:(")
@@ -1464,7 +1464,7 @@ var/global/BSACooldown = 0
 			log_admin("[key_name(usr)] has made [C] a [rank]")
 			message_admins("[key_name_admin(usr)] has made [C] a [rank]", 1)
 			admins[C.ckey] = rank
-			admin_list |= C.mob
+			admin_list |= C
 
 
 	if (href_list["object_list"])

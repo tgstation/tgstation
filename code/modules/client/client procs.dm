@@ -90,7 +90,7 @@
 	if( connection != "seeker" )
 		del(src)
 		return
-	client_list |= src
+	client_list += src
 	if ( (world.address == address || !address) && !host )
 		host = key
 		world.update_status()
@@ -103,7 +103,9 @@
 	if( ckey in admins )
 		holder = new /obj/admins(src)
 		holder.rank = admins[ckey]
+		admin_list += src
 		update_admins(admins[ckey])
+
 		admin_memo_show()
 
 
@@ -111,10 +113,10 @@
 	//DISCONNECT//
 	//////////////
 /client/Del()
-	client_list.Remove(ckey)
 
 	spawn(0)
 		if(holder)
+			admin_list -= src
 			del(holder)
 	client_list -= src
 	return ..()

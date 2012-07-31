@@ -54,10 +54,10 @@ var/global/sent_strike_team = 0
 	var/mob/dead/observer/G//Basic variable to search for later.
 	var/candidates_list[] = list()//candidates for being a commando out of all the active ghosts in world.
 	var/commandos_list[] = list()//actual commando ghosts as picked by the user.
-	for(G in admin_list)
+	for(G in dead_mob_list)
 		if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5) //Whoever called/has the proc won't be added to the list.
 //		if(((G.client.inactivity/10)/60) <= 5) //Removing it allows even the caller to jump in. Good for testing.
-			candidates_list += G.client//Add their client to list.
+			candidates_list += G//Add their client to list.
 	for(var/i=commandos_possible,(i>0&&candidates_list.len),i--)//Decrease with every commando selected.
 		var/client/G_client = input("Pick characters to spawn as the commandos. This will go on until there either no more ghosts to pick from or the slots are full.", "Active Players") as null|anything in candidates_list//It will auto-pick a person when there is only one candidate.
 		if(G_client)//They may have logged out when the admin was choosing people. Or were not chosen. Would run time error otherwise.

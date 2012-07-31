@@ -23,9 +23,7 @@
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
 /mob/Login()
-	player_list |= list(src)
-	if(client.holder)
-		admin_list |= list(src)
+	player_list |= src
 	update_Login_details()
 	world.update_status()
 	client.images = null				//remove the images such as AIs being unable to see runes

@@ -821,3 +821,22 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/obj/machinery/power/smes/SMES in world)
 		if(SMES.anchored)
 			SMES.chargemode = 1
+
+/client/proc/cmd_debug_mob_lists()
+	set category = "Debug"
+	set name = "Debug Mob Lists"
+	set desc = "For when you just gotta know"
+
+	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs", "Clients"))
+		if("Players")
+			usr << dd_list2text(player_list,",")
+		if("Admins")
+			usr << dd_list2text(admin_list,",")
+		if("Mobs")
+			usr << dd_list2text(mob_list,",")
+		if("Living Mobs")
+			usr << dd_list2text(living_mob_list,",")
+		if("Dead Mobs")
+			usr << dd_list2text(dead_mob_list,",")
+		if("Clients")
+			usr << dd_list2text(client_list,",")

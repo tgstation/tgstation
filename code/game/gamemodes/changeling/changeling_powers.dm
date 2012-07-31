@@ -564,6 +564,9 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		L.tod = worldtime2text()
 
 	spawn(1200)
+		if(L.stat == 2)
+			dead_mob_list -= L
+			living_mob_list += L
 		L.stat = 0
 		//usr.fireloss = 0
 		L.tod = null

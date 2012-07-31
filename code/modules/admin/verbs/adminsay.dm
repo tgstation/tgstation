@@ -22,9 +22,9 @@
 		return
 	feedback_add_details("admin_verb","M") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	for (var/mob/M in admin_list)
+	for (var/client/C in admin_list)
 		if (src.holder.rank == "Admin Observer")
-			M << "<span class='adminobserver'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, M)]:</EM> <span class='message'>[msg]</span></span>"
+			C << "<span class='adminobserver'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, C)]:</EM> <span class='message'>[msg]</span></span>"
 		else
-			M << "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, M)]</EM> (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
+			C << "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, C)]</EM> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
 

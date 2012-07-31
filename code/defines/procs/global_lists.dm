@@ -24,9 +24,9 @@ proc/make_player_list()//Global proc that rebuilds the player list
 
 proc/make_admin_list()//Rebuild that shit to try and avoid issues with stealthmins
 	admin_list = list()
-	for(var/mob/M in player_list)
-		if(M.client && M.client.holder)
-			admin_list += M
+	for(var/client/C in client_list)
+		if(C && C.holder)
+			admin_list += C
 
 proc/make_mob_list()
 	for(var/mob/p in mob_list)
@@ -67,14 +67,14 @@ proc/rebuild_mob_lists()
 		mob_list += M
 		if(M.client)
 			player_list += M
-			if(M.client.holder)
-				admin_list += M
 		if(M.stat != DEAD)
 			living_mob_list += M
 		else
 			dead_mob_list += M
 	for(var/client/C)
 		client_list += C.ckey
+		if(C.holder)
+			admin_list += C
 
 proc/add_to_mob_list(var/mob/A)//Adds an individual mob
 	if(A)
@@ -83,10 +83,8 @@ proc/add_to_mob_list(var/mob/A)//Adds an individual mob
 			dead_mob_list |= A
 		if(A.stat != 2)
 			living_mob_list |= A
-		if(A.client)
-			player_list |= A
-			if(A.client.holder)
-				admin_list |= A
+//		if(A.client)
+//			player_list |= A
 
 proc/remove_from_mob_list(var/mob/R)//Removes an individual mob
 	mob_list -= R
@@ -94,11 +92,8 @@ proc/remove_from_mob_list(var/mob/R)//Removes an individual mob
 		dead_mob_list -= R
 	if(R.stat != 2)
 		living_mob_list -= R
-	if(R.client)
-		player_list -= R
-		if(R.client.holder)
-			admin_list -= R
-
+//	if(R.client)
+//		player_list -= R
 
 proc/make_client_list()//Rebuilds client list
 	for(var/mob/c in client_list)
@@ -110,7 +105,7 @@ proc/make_client_list()//Rebuilds client list
 
 
 
-/obj/item/listdebug//Quick debugger for the global lists
+/*/obj/item/listdebug//Quick debugger for the global lists
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "radio-igniter-tank"
 
@@ -127,4 +122,4 @@ proc/make_client_list()//Rebuilds client list
 		if("Dead Mobs")
 			usr << dd_list2text(dead_mob_list,",")
 		if("Clients")
-			usr << dd_list2text(client_list,",")
+			usr << dd_list2text(client_list,",")*/

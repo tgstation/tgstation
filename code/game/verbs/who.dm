@@ -10,9 +10,9 @@ proc/get_all_clients()
 proc/get_all_admin_clients()
 	var/list/client/clients = list()
 
-	for (var/mob/M in admin_list)
+	for (var/client/C in admin_list)
 
-		clients += M.client
+		clients += C
 
 	return clients
 
@@ -44,17 +44,17 @@ proc/get_all_admin_clients()
 
 	usr << "<b>Current Admins:</b>"
 
-	for (var/mob/M in admin_list)
-		if(M && M.client && M.client.holder)
+	for (var/client/C in admin_list)
+		if(C && C.holder)
 			if(usr.client && usr.client.holder)
 				var/afk = 0
-				if( M.client.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
+				if(C.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
 					afk = 1
-				if(isobserver(M))
-					usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""] - Observing [afk ? "(AFK)" : ""]"
-				else if(istype(M,/mob/new_player))
-					usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""] - Has not entered [afk ? "(AFK)" : ""]"
-				else if(istype(M,/mob/living))
-					usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""] - Playing [afk ? "(AFK)" : ""]"
-			else if(!M.client.stealth)
-				usr << "\t[M.client]  is a [M.client.holder.rank]"
+				if(isobserver(C.mob))
+					usr << "[C] is a [C.holder.rank][C.stealth ? " <i>(as [C.fakekey])</i>" : ""] - Observing [afk ? "(AFK)" : ""]"
+				else if(istype(C.mob,/mob/new_player))
+					usr << "[C] is a [C.holder.rank][C.stealth ? " <i>(as [C.fakekey])</i>" : ""] - Has not entered [afk ? "(AFK)" : ""]"
+				else if(istype(C.mob,/mob/living))
+					usr << "[C] is a [C.holder.rank][C.stealth ? " <i>(as [C.fakekey])</i>" : ""] - Playing [afk ? "(AFK)" : ""]"
+			else if(!C.stealth)
+				usr << "\t[C]  is a [C.holder.rank]"

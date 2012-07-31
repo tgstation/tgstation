@@ -101,9 +101,8 @@ var/global/datum/tension/tension_master
 							if(forcenexttick)
 								forcenexttick = 0
 
-							for (var/mob/M in admin_list)
-								if (M.client)
-									M << "<font color='red' size='3'><b> The tensioner wishes to create additional antagonists!  Press (<a href='?src=\ref[tension_master];Supress=1'>this</a>) in 60 seconds to abort!</b></font>"
+							for (var/client/C in admin_list)
+								C << "<font color='red' size='3'><b> The tensioner wishes to create additional antagonists!  Press (<a href='?src=\ref[tension_master];Supress=1'>this</a>) in 60 seconds to abort!</b></font>"
 
 							spawn(600)
 								if(!supress)
