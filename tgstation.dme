@@ -189,9 +189,7 @@
 #define FILE_DIR "icons/vending_icons"
 #define FILE_DIR "interface"
 #define FILE_DIR "maps"
-#define FILE_DIR "maps/backup"
 #define FILE_DIR "maps/RandomZLevels"
-#define FILE_DIR "Redirector"
 #define FILE_DIR "sound"
 #define FILE_DIR "sound/AI"
 #define FILE_DIR "sound/ambience"
@@ -204,6 +202,8 @@
 #define FILE_DIR "sound/piano"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/weapons"
+#define FILE_DIR "tools"
+#define FILE_DIR "tools/Redirector"
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES

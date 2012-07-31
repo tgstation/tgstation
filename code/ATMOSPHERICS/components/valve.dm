@@ -9,6 +9,7 @@ obj/machinery/atmospherics/valve
 	initialize_directions = SOUTH|NORTH
 
 	var/open = 0
+	var/openDuringInit = 0
 
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
@@ -169,6 +170,9 @@ obj/machinery/atmospherics/valve
 			if(target.initialize_directions & get_dir(target,src))
 				node2 = target
 				break
+		if(openDuringInit)
+			open()
+			openDuringInit = 0
 /*
 		var/connect_directions
 		switch(dir)
