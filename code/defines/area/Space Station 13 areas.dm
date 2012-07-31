@@ -712,6 +712,14 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Mint"
 	icon_state = "green"
 
+/area/comms
+	name = "\improper Communications Relay"
+	icon_state = "tcomsatcham"
+
+/area/server
+	name = "\improper Messaging Server Room"
+	icon_state = "server"
+
 //Crew
 
 /area/crew_quarters
@@ -1322,7 +1330,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "ai_upload"
 
 /area/turret_protected/ai_upload_foyer
-	name = "\improper AI Upload Foyer"
+	name = "Secure Tech Access"
 	icon_state = "ai_foyer"
 
 /area/turret_protected/ai

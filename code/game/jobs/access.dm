@@ -456,7 +456,7 @@
 		if(access_keycard_auth)
 			return "Keycode Auth. Device"
 		if(access_tcomsat)
-			return "Telecoms Satellite"
+			return "Telecommunications"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
