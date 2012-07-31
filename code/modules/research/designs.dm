@@ -73,7 +73,7 @@ datum/design/seccamera
 	id = "seccamera"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/security"
 
 datum/design/aicore
@@ -82,7 +82,7 @@ datum/design/aicore
 	id = "aicore"
 	req_tech = list("programming" = 4, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/aicore"
 
 datum/design/aiupload
@@ -91,7 +91,7 @@ datum/design/aiupload
 	id = "aiupload"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/aiupload"
 
 datum/design/borgupload
@@ -100,7 +100,7 @@ datum/design/borgupload
 	id = "borgupload"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/borgupload"
 
 datum/design/med_data
@@ -109,7 +109,7 @@ datum/design/med_data
 	id = "med_data"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/med_data"
 
 datum/design/operating
@@ -118,7 +118,7 @@ datum/design/operating
 	id = "operating"
 	req_tech = list("programming" = 2, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/operating"
 
 datum/design/pandemic
@@ -127,7 +127,7 @@ datum/design/pandemic
 	id = "pandemic"
 	req_tech = list("programming" = 2, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/pandemic"
 
 datum/design/scan_console
@@ -136,7 +136,7 @@ datum/design/scan_console
 	id = "scan_console"
 	req_tech = list("programming" = 2, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/scan_consolenew"
 
 datum/design/comconsole
@@ -145,7 +145,7 @@ datum/design/comconsole
 	id = "comconsole"
 	req_tech = list("programming" = 2, "magnets" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/communications"
 
 datum/design/idcardconsole
@@ -154,7 +154,7 @@ datum/design/idcardconsole
 	id = "idcardconsole"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/card"
 
 datum/design/crewconsole
@@ -163,7 +163,7 @@ datum/design/crewconsole
 	id = "crewconsole"
 	req_tech = list("programming" = 3, "magnets" = 2, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/crew"
 
 datum/design/teleconsole
@@ -172,7 +172,7 @@ datum/design/teleconsole
 	id = "teleconsole"
 	req_tech = list("programming" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/teleporter"
 
 datum/design/secdata
@@ -181,7 +181,7 @@ datum/design/secdata
 	id = "secdata"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/secure_data"
 
 datum/design/atmosalerts
@@ -190,7 +190,7 @@ datum/design/atmosalerts
 	id = "atmosalerts"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/atmos_alert"
 
 datum/design/air_management
@@ -199,7 +199,7 @@ datum/design/air_management
 	id = "air_management"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/air_management"
 
 /* Uncomment if someone makes these buildable
@@ -209,7 +209,7 @@ datum/design/general_alert
 	id = "general_alert"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/general_alert"
 */
 
@@ -219,7 +219,7 @@ datum/design/robocontrol
 	id = "robocontrol"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/robotics"
 
 datum/design/clonecontrol
@@ -228,7 +228,7 @@ datum/design/clonecontrol
 	id = "clonecontrol"
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/cloning"
 
 datum/design/clonepod
@@ -237,7 +237,7 @@ datum/design/clonepod
 	id = "clonepod"
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/clonepod"
 
 datum/design/clonescanner
@@ -246,7 +246,7 @@ datum/design/clonescanner
 	id = "clonescanner"
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/clonescanner"
 
 datum/design/arcademachine
@@ -255,7 +255,7 @@ datum/design/arcademachine
 	id = "arcademachine"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/arcade"
 
 datum/design/powermonitor
@@ -264,7 +264,7 @@ datum/design/powermonitor
 	id = "powermonitor"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/powermonitor"
 
 datum/design/solarcontrol
@@ -273,7 +273,7 @@ datum/design/solarcontrol
 	id = "solarcontrol"
 	req_tech = list("programming" = 2, "powerstorage" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/solar_control"
 
 datum/design/prisonmanage
@@ -282,7 +282,7 @@ datum/design/prisonmanage
 	id = "prisonmanage"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/prisoner"
 
 datum/design/mechacontrol
@@ -291,7 +291,7 @@ datum/design/mechacontrol
 	id = "mechacontrol"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha_control"
 
 datum/design/mechapower
@@ -300,7 +300,7 @@ datum/design/mechapower
 	id = "mechapower"
 	req_tech = list("programming" = 2, "powerstorage" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mech_bay_power_console"
 
 datum/design/rdconsole
@@ -309,7 +309,7 @@ datum/design/rdconsole
 	id = "rdconsole"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/rdconsole"
 
 datum/design/ordercomp
@@ -318,7 +318,7 @@ datum/design/ordercomp
 	id = "ordercomp"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/ordercomp"
 
 datum/design/supplycomp
@@ -327,7 +327,7 @@ datum/design/supplycomp
 	id = "supplycomp"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/supplycomp"
 
 datum/design/mining
@@ -336,7 +336,7 @@ datum/design/mining
 	id = "mining"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mining"
 
 datum/design/comm_monitor
@@ -345,7 +345,7 @@ datum/design/comm_monitor
 	id = "comm_monitor"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/comm_monitor"
 
 datum/design/comm_server
@@ -354,7 +354,7 @@ datum/design/comm_server
 	id = "comm_server"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/comm_server"
 
 datum/design/message_monitor
@@ -363,7 +363,7 @@ datum/design/message_monitor
 	id = "message_monitor"
 	req_tech = list("programming" = 5)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/message_monitor"
 
 datum/design/aifixer
@@ -372,7 +372,7 @@ datum/design/aifixer
 	id = "aifixer"
 	req_tech = list("programming" = 3, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/aifixer"
 
 ///////////////////////////////////
@@ -384,7 +384,7 @@ datum/design/safeguard_module
 	id = "safeguard_module"
 	req_tech = list("programming" = 3, "materials" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = "/obj/item/weapon/aiModule/safeguard"
 
 datum/design/onehuman_module
@@ -393,7 +393,7 @@ datum/design/onehuman_module
 	id = "onehuman_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = "/obj/item/weapon/aiModule/oneHuman"
 
 datum/design/protectstation_module
@@ -402,7 +402,7 @@ datum/design/protectstation_module
 	id = "protectstation_module"
 	req_tech = list("programming" = 3, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = "/obj/item/weapon/aiModule/protectStation"
 
 datum/design/notele_module
@@ -411,7 +411,7 @@ datum/design/notele_module
 	id = "notele_module"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = "/obj/item/weapon/aiModule/teleporterOffline"
 
 datum/design/quarantine_module
@@ -420,7 +420,7 @@ datum/design/quarantine_module
 	id = "quarantine_module"
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = "/obj/item/weapon/aiModule/quarantine"
 
 datum/design/oxygen_module
@@ -429,7 +429,7 @@ datum/design/oxygen_module
 	id = "oxygen_module"
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = "/obj/item/weapon/aiModule/oxygen"
 
 datum/design/freeform_module
@@ -438,7 +438,7 @@ datum/design/freeform_module
 	id = "freeform_module"
 	req_tech = list("programming" = 4, "materials" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = "/obj/item/weapon/aiModule/freeform"
 
 datum/design/reset_module
@@ -447,7 +447,7 @@ datum/design/reset_module
 	id = "reset_module"
 	req_tech = list("programming" = 3, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$gold" = 100)
 	build_path = "/obj/item/weapon/aiModule/reset"
 
 datum/design/purge_module
@@ -456,7 +456,7 @@ datum/design/purge_module
 	id = "purge_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = "/obj/item/weapon/aiModule/purge"
 
 datum/design/freeformcore_module
@@ -465,7 +465,7 @@ datum/design/freeformcore_module
 	id = "freeformcore_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = "/obj/item/weapon/aiModule/freeformcore"
 
 datum/design/asimov
@@ -474,7 +474,7 @@ datum/design/asimov
 	id = "asimov_module"
 	req_tech = list("programming" = 3, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = "/obj/item/weapon/aiModule/asimov"
 
 datum/design/paladin_module
@@ -483,7 +483,7 @@ datum/design/paladin_module
 	id = "paladin_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = "/obj/item/weapon/aiModule/paladin"
 
 datum/design/tyrant_module
@@ -492,7 +492,7 @@ datum/design/tyrant_module
 	id = "tyrant_module"
 	req_tech = list("programming" = 4, "syndicate" = 2, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
+	materials = list("$glass" = 2000, "sacid" = 20, "$diamond" = 100)
 	build_path = "/obj/item/weapon/aiModule/tyrant"
 
 
@@ -506,7 +506,7 @@ datum/design/subspace_receiver
 	id = "s-receiver"
 	req_tech = list("programming" = 4, "engineering" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 datum/design/telecomms_bus
@@ -515,7 +515,7 @@ datum/design/telecomms_bus
 	id = "s-bus"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/telecomms/bus"
 
 datum/design/telecomms_hub
@@ -524,7 +524,7 @@ datum/design/telecomms_hub
 	id = "s-hub"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/telecomms/hub"
 
 datum/design/telecomms_relay
@@ -533,7 +533,7 @@ datum/design/telecomms_relay
 	id = "s-relay"
 	req_tech = list("programming" = 3, "engineering" = 4, "bluespace" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/telecomms/relay"
 
 datum/design/telecomms_processor
@@ -542,7 +542,7 @@ datum/design/telecomms_processor
 	id = "s-processor"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/telecomms/processor"
 
 datum/design/telecomms_server
@@ -551,7 +551,7 @@ datum/design/telecomms_server
 	id = "s-server"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/telecomms/server"
 
 datum/design/subspace_broadcaster
@@ -560,7 +560,7 @@ datum/design/subspace_broadcaster
 	id = "s-broadcaster"
 	req_tech = list("programming" = 4, "engineering" = 4, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
 
@@ -596,7 +596,7 @@ datum/design/ripley_main
 	id = "ripley_main"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/ripley/main"
 
 datum/design/ripley_peri
@@ -605,7 +605,7 @@ datum/design/ripley_peri
 	id = "ripley_peri"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/ripley/peripherals"
 
 datum/design/odysseus_main
@@ -614,7 +614,7 @@ datum/design/odysseus_main
 	id = "odysseus_main"
 	req_tech = list("programming" = 3,"biotech" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/odysseus/main"
 
 datum/design/odysseus_peri
@@ -623,7 +623,7 @@ datum/design/odysseus_peri
 	id = "odysseus_peri"
 	req_tech = list("programming" = 3,"biotech" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/odysseus/peripherals"
 
 datum/design/gygax_main
@@ -632,7 +632,7 @@ datum/design/gygax_main
 	id = "gygax_main"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/gygax/main"
 
 datum/design/gygax_peri
@@ -641,7 +641,7 @@ datum/design/gygax_peri
 	id = "gygax_peri"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/gygax/peripherals"
 
 datum/design/gygax_targ
@@ -650,7 +650,7 @@ datum/design/gygax_targ
 	id = "gygax_targ"
 	req_tech = list("programming" = 4, "combat" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/gygax/targeting"
 
 datum/design/durand_main
@@ -659,7 +659,7 @@ datum/design/durand_main
 	id = "durand_main"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/durand/main"
 
 datum/design/durand_peri
@@ -668,7 +668,7 @@ datum/design/durand_peri
 	id = "durand_peri"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/durand/peripherals"
 
 datum/design/durand_targ
@@ -677,7 +677,7 @@ datum/design/durand_targ
 	id = "durand_targ"
 	req_tech = list("programming" = 4, "combat" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/durand/targeting"
 
 datum/design/honker_main
@@ -686,7 +686,7 @@ datum/design/honker_main
 	id = "honker_main"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/honker/main"
 
 datum/design/honker_peri
@@ -695,7 +695,7 @@ datum/design/honker_peri
 	id = "honker_peri"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/honker/peripherals"
 
 datum/design/honker_targ
@@ -704,7 +704,7 @@ datum/design/honker_targ
 	id = "honker_targ"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mecha/honker/targeting"
 
 ////////////////////////////////////////
@@ -1131,7 +1131,7 @@ datum/design/destructive_analyzer
 	id = "destructive_analyzer"
 	req_tech = list("programming" = 2, "magnets" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/destructive_analyzer"
 
 datum/design/protolathe
@@ -1140,7 +1140,7 @@ datum/design/protolathe
 	id = "protolathe"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/protolathe"
 
 datum/design/circuit_imprinter
@@ -1149,7 +1149,7 @@ datum/design/circuit_imprinter
 	id = "circuit_imprinter"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/circuit_imprinter"
 
 datum/design/autolathe
@@ -1158,7 +1158,7 @@ datum/design/autolathe
 	id = "autolathe"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/autolathe"
 
 datum/design/rdservercontrol
@@ -1167,7 +1167,7 @@ datum/design/rdservercontrol
 	id = "rdservercontrol"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/rdservercontrol"
 
 datum/design/rdserver
@@ -1176,7 +1176,7 @@ datum/design/rdserver
 	id = "rdserver"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/rdserver"
 
 datum/design/mechfab
@@ -1185,7 +1185,7 @@ datum/design/mechfab
 	id = "mechfab"
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_type = IMPRINTER
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/mechfab"
 
 
@@ -1200,7 +1200,7 @@ datum/design/pacman
 	req_tech = list("programming" = 3, "plasmatech" = 3, "powerstorage" = 3, "engineering" = 3)
 	build_type = IMPRINTER
 	reliability_base = 79
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/pacman"
 
 datum/design/superpacman
@@ -1210,7 +1210,7 @@ datum/design/superpacman
 	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
 	build_type = IMPRINTER
 	reliability_base = 76
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/pacman/super"
 
 datum/design/mrspacman
@@ -1220,7 +1220,7 @@ datum/design/mrspacman
 	req_tech = list("programming" = 3, "powerstorage" = 5, "engineering" = 5)
 	build_type = IMPRINTER
 	reliability_base = 74
-	materials = list("$glass" = 2000, "acid" = 20)
+	materials = list("$glass" = 2000, "sacid" = 20)
 	build_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 
 

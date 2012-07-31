@@ -555,9 +555,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					src.nutrilevel += round(S.reagents.get_reagent_amount("sodawater")*0.1)
 
 				// Man, you guys are retards
-				if(S.reagents.has_reagent("acid", 1))
-					src.health -= round(S.reagents.get_reagent_amount("acid")*1)
-					src.toxic += round(S.reagents.get_reagent_amount("acid")*1.5)
+				if(S.reagents.has_reagent("sacid", 1))
+					src.health -= round(S.reagents.get_reagent_amount("sacid")*1)
+					src.toxic += round(S.reagents.get_reagent_amount("sacid")*1.5)
 					src.weedlevel -= rand(1,2)
 
 				// SERIOUSLY

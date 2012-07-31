@@ -253,7 +253,7 @@
 
 		B1.reagents.add_reagent("aluminum", 25)
 		B2.reagents.add_reagent("plasma", 25)
-		B2.reagents.add_reagent("acid", 25)
+		B2.reagents.add_reagent("sacid", 25)
 
 		beakers += B1
 		beakers += B2

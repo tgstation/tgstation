@@ -116,7 +116,7 @@ datum
 			name = "Polytrinic acid"
 			id = "pacid"
 			result = "pacid"
-			required_reagents = list("acid" = 1, "chlorine" = 1, "potassium" = 1)
+			required_reagents = list("sacid" = 1, "chlorine" = 1, "potassium" = 1)
 			result_amount = 3
 
 		synaptizine
@@ -273,14 +273,14 @@ datum
 			name = "Glycerol"
 			id = "glycerol"
 			result = "glycerol"
-			required_reagents = list("cornoil" = 3, "acid" = 1)
+			required_reagents = list("cornoil" = 3, "sacid" = 1)
 			result_amount = 1
 
 		nitroglycerin
 			name = "Nitroglycerin"
 			id = "nitroglycerin"
 			result = "nitroglycerin"
-			required_reagents = list("glycerol" = 1, "pacid" = 1, "acid" = 1)
+			required_reagents = list("glycerol" = 1, "pacid" = 1, "sacid" = 1)
 			result_amount = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
@@ -331,7 +331,7 @@ datum
 			name = "Napalm"
 			id = "napalm"
 			result = null
-			required_reagents = list("aluminum" = 1, "plasma" = 1, "acid" = 1 )
+			required_reagents = list("aluminum" = 1, "plasma" = 1, "sacid" = 1 )
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = get_turf(holder.my_atom.loc)
@@ -443,7 +443,7 @@ datum
 			name = "Foam surfactant"
 			id = "foam surfactant"
 			result = "fluorosurfactant"
-			required_reagents = list("fluorine" = 2, "carbon" = 2, "acid" = 1)
+			required_reagents = list("fluorine" = 2, "carbon" = 2, "sacid" = 1)
 			result_amount = 5
 
 
@@ -639,7 +639,7 @@ datum
 			name = "Metroid Virus"
 			id = "m_virus"
 			result = null
-			required_reagents = list("sugar" = 1, "acid" = 1)
+			required_reagents = list("sugar" = 1, "sacid" = 1)
 			result_amount = 2
 			required_container = /obj/item/metroid_core
 			required_other = 3
@@ -722,7 +722,7 @@ datum
 			name = "Metroid Crit"
 			id = "m_tele"
 			result = null
-			required_reagents = list("acid" = 1, "blood" = 1)
+			required_reagents = list("sacid" = 1, "blood" = 1)
 			required_catalysts = list("plasma" = 1, "mutagen" = 1)
 			result_amount = 1
 			required_container = /obj/item/metroid_core
@@ -798,7 +798,7 @@ datum
 			name = "Metroid Foam"
 			id = "m_foam"
 			result = null
-			required_reagents = list("acid" = 1)
+			required_reagents = list("sacid" = 1)
 			result_amount = 2
 			required_container = /obj/item/metroid_core
 			required_other = 5
@@ -883,7 +883,7 @@ datum
 			name = "Soy Sauce"
 			id = "soysauce"
 			result = "soysauce"
-			required_reagents = list("soymilk" = 4, "acid" = 1)
+			required_reagents = list("soymilk" = 4, "sacid" = 1)
 			result_amount = 5
 
 		cheesewheel
@@ -1317,7 +1317,7 @@ datum
 			name = "Acid Spit"
 			id = "acidspit"
 			result = "acidspit"
-			required_reagents = list("acid" = 1, "wine" = 5)
+			required_reagents = list("sacid" = 1, "wine" = 5)
 			result_amount = 6
 
 		amasec

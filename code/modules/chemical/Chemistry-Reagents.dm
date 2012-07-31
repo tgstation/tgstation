@@ -288,8 +288,8 @@ datum
 					holder.remove_reagent("stoxin", 2)
 				if(holder.has_reagent("plasma"))
 					holder.remove_reagent("plasma", 1)
-				if(holder.has_reagent("acid"))
-					holder.remove_reagent("acid", 1)
+				if(holder.has_reagent("sacid"))
+					holder.remove_reagent("sacid", 1)
 				if(holder.has_reagent("cyanide"))
 					holder.remove_reagent("cyanide", 1)
 				if(holder.has_reagent("amatoxin"))
@@ -616,9 +616,9 @@ datum
 				..()
 				return
 
-		acid
+		sacid
 			name = "Sulphuric acid"
-			id = "acid"
+			id = "sacid"
 			description = "A strong mineral acid with the molecular formula H2SO4."
 			reagent_state = LIQUID
 			color = "#DB5008" // rgb: 219, 80, 8
@@ -1240,8 +1240,8 @@ datum
 					holder.remove_reagent("stoxin", 5)
 				if(holder.has_reagent("plasma"))
 					holder.remove_reagent("plasma", 5)
-				if(holder.has_reagent("acid"))
-					holder.remove_reagent("acid", 5)
+				if(holder.has_reagent("sacid"))
+					holder.remove_reagent("sacid", 5)
 				if(holder.has_reagent("pacid"))
 					holder.remove_reagent("pacid", 5)
 				if(holder.has_reagent("cyanide"))
