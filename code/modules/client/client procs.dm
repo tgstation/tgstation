@@ -3,6 +3,8 @@
 	////////////
 #define TOPIC_SPAM_DELAY	4		//4 ticks is about 3/10ths of a second
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
+#define MIN_CLIENT_VERSION	0		//Just an ambiguously low version for now, I don't want to suddenly stop people playing.
+									//I would just like the code ready should it ever need to be used.
 	/*
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
@@ -86,8 +88,8 @@
 	//CONNECT//
 	///////////
 /client/New()
-	//Connection-Type Checking
-	if( connection != "seeker" )
+	//Connection-Type and client byond_version checking
+	if( connection != "seeker" || (byond_version < MIN_CLIENT_VERSION))	//Out of date or wrong connection type. Update your client!!
 		del(src)
 		return
 	client_list += src
@@ -177,3 +179,7 @@
 		query_insert.Execute()
 
 	dbcon.Disconnect()
+
+#undef TOPIC_SPAM_DELAY
+#undef UPLOAD_LIMIT
+#undef MIN_CLIENT_VERSION
