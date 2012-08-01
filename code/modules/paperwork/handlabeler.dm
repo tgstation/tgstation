@@ -1,5 +1,5 @@
 /obj/item/weapon/hand_labeler
-	name = "Hand labeler"
+	name = "hand labeler"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
 	item_state = "flight"
@@ -14,19 +14,19 @@
 		return		// don't set a label
 
 	if(!labels_left)
-		user << "\blue No labels left."
+		user << "<span class='notice'>No labels left.</span>"
 		return
 	if(!label || !length(label))
-		user << "\blue No text set."
+		user << "<span class='notice'>No text set.</span>"
 		return
 	if(length(A.name) + length(label) > 64)
-		user << "\blue Label too big."
+		user << "<span class='notice'>Label too big.</span>"
 		return
 	if(ishuman(A))
-		user << "\blue You can't label humans."
+		user << "<span class='notice'>You can't label humans.</span>"
 		return
 	if(issilicon(A))
-		user << "\blue You can't label cyborgs."
+		user << "<span class='notice'>You can't label cyborgs.</span>"
 		return
 
 	for(var/mob/M in viewers())
@@ -38,13 +38,13 @@
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
-		usr << "\blue You turn on the hand labeler."
+		usr << "<span class='notice'>You turn on \the [src].</span>"
 		//Now let them chose the text.
 		var/str = copytext(reject_bad_text(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			usr << "\red Invalid text."
+			usr << "<span class='notice'>Invalid text.</span>"
 			return
 		label = str
-		usr << "\blue You set the text to '[str]'."
+		usr << "<span class='notice'>You set the text to '[str]'.</span>"
 	else
-		usr << "\blue You turn off the hand labeler."
+		usr << "<span class='notice'>You turn off \the [src].</span>"

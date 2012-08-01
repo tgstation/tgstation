@@ -47,12 +47,12 @@
 			P.loc = user.loc
 			if(ishuman(user))
 				user.put_in_hands(P)
-				user << "You take a paper out of the bin."
+				user << "<span class='notice'>You take a paper out of the bin.</span>"
 			else
 				P.loc = get_turf_loc(src)
-				user << "You take a paper out of the bin."
+				user << "<span class='notice'>You take a paper out of the bin.</span>"
 		else
-			user << "The paper bin is empty!"
+			user << "<span class='notice'>The paper bin is empty!</span>"
 
 		add_fingerprint(user)
 		return
@@ -63,7 +63,7 @@
 
 		user.drop_item()
 		i.loc = src
-		usr << "You put the paper on the top of the paper bin."
+		usr << "<span class='notice'>You put the paper on the top of the paper bin.</span>"
 		papers.Add(i)
 		amount++
 
@@ -71,9 +71,9 @@
 		set src in oview(1)
 
 		if(amount)
-			usr << "There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin."
+			usr << "<span class='notice'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>"
 		else
-			usr << "There are no papers in the bin."
+			usr << "<span class='notice'>There are no papers in the bin.</span>"
 		return
 
 	update_icon()

@@ -49,7 +49,7 @@
 		user.drop_item()
 		W.loc = src
 		toppaper = W
-		user << "\blue You clip the paper onto the clipboard."
+		user << "<span class='notice'>You clip the paper onto \the [src].</span>"
 		update_icon()
 	else if(toppaper)
 		toppaper.attackby(usr.get_active_hand(), usr)
@@ -97,7 +97,7 @@
 					usr.drop_item()
 					W.loc = src
 					haspen = W
-					usr << "\blue You slot the pen into the clipboard."
+					usr << "<span class='notice'>You slot the pen into \the [src].</span>"
 
 		if(href_list["write"])
 			var/obj/item/P = locate(href_list["write"])
@@ -132,7 +132,7 @@
 			var/obj/item/P = locate(href_list["top"])
 			if(P)
 				toppaper = P
-				usr << "You move [P.name] to the top."
+				usr << "<span class='notice'>You move [P.name] to the top.</span>"
 
 		//Update everything
 		attack_self(usr)

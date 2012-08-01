@@ -1,6 +1,6 @@
 /obj/item/weapon/stamp
-	desc = "A rubber stamp for stamping important documents."
 	name = "rubber stamp"
+	desc = "A rubber stamp for stamping important documents."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "stamp-qm"
 	item_state = "stamp"

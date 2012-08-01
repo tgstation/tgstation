@@ -22,7 +22,7 @@
 
 /obj/structure/filingcabinet/attackby(obj/item/P as obj, mob/user as mob)
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder))
-		user << "You put the [P] in the [name]."
+		user << "<span class='notice'>You put the [P] in \the [src].</span>"
 		user.drop_item()
 		P.loc = src
 		spawn()
@@ -32,13 +32,13 @@
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'Ratchet.ogg', 50, 1)
 		anchored = !anchored
-		user << "You [anchored ? "wrench" : "unwrench"] \the [src]."
+		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
 	else
-		user << "You can't put a [P] in the [src]!"
+		user << "<span class='notice'>You can't put a [P] in \the [src]!</span>"
 
 /obj/structure/filingcabinet/attack_hand(mob/user as mob)
 	if(contents.len <= 0)
-		user << "\The [src] is empty."
+		user << "<span class='notice'>\The [src] is empty.</span>"
 		return
 
 	var/dat = "<center><table>"

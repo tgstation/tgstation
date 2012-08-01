@@ -64,7 +64,7 @@
 	set src in usr
 
 	if ((CLUMSY in usr.mutations) && prob(50))
-		usr << "\red You cut yourself on the paper."
+		usr << "<span class='warning'>You cut yourself on the paper.</span>"
 		return
 	var/n_name = input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text
 	n_name = copytext(n_name, 1, 32)
@@ -285,7 +285,7 @@
 				overlays += "paper_stamped_denied"
 			if(/obj/item/weapon/stamp/clown)
 				if (!clown)
-					usr << "\red You are totally unable to use the stamp. HONK!"
+					usr << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
 					return
 				else
 					overlays += "paper_stamped_clown"
@@ -295,7 +295,7 @@
 			stamped = new
 		stamped += P.type
 
-		user << "\blue You stamp the paper with your rubber stamp."
+		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 
 	add_fingerprint(user)
 	return
