@@ -13,7 +13,7 @@
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		return say_dead(message)
 
-	// wtf?
+	//Must be concious to speak
 	if (stat)
 		return
 

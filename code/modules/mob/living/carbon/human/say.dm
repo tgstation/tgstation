@@ -3,10 +3,18 @@
 	if (silent)
 		return
 
-	//Mimes dont speak!
-	if (length(message) >= 1)
-		if (miming && copytext(message, 1, 2) != "*")
-			return
+	//Mimes dont speak! Changeling hivemind and emotes are allowed.
+	if (miming)
+		if(length(message) >= 2)
+			if(src.changeling)
+				if(copytext(message, 1, 2) != "*" && copytext(message, 1, 3) != ":g" && copytext(message, 1, 3) != ":G" && copytext(message, 1, 3) != ":ï")
+					return
+				else
+					return ..(message)
+
+		if(length(message) >= 1) //In case people forget the '*help' command, this will slow them the message and prevent people from saying one letter at a time
+			if (copytext(message, 1, 2) != "*")
+				return
 
 	if(src.mutantrace == "lizard")
 		if(copytext(message, 1, 2) != "*")
