@@ -167,7 +167,11 @@
 
 	Die()
 		..()
+		new /obj/effect/decal/cleanable/mucus(src.loc)
 		del(src)
+
+/proc/isroach(var/obj/O)
+	return istype(O,/obj/effect/critter/roach)
 
 // We can maybe make these controllable via some console or something
 /obj/effect/critter/manhack

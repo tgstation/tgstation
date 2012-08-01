@@ -148,6 +148,14 @@
 			affecting.take_damage(1, 0)
 			H.UpdateDamageIcon()
 			H.updatehealth()
+	else if(ismouse(target))
+		var/mob/living/simple_animal/mouse/M = target
+		src.visible_message("\red \icon[src] <b>SPLAT!</b>")
+		M.splat()
+	else if(isroach(target))
+		var/obj/effect/critter/roach/R = target
+		src.visible_message("\red \icon[src] <b>CRUNCH!</b>")
+		R.Die()
 	playsound(target.loc, 'snap.ogg', 50, 1)
 	icon_state = "mousetrap"
 	armed = 0
