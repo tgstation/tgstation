@@ -161,5 +161,5 @@
 		target_mob = M
 	..()
 
-/mob/living/simple_animal/carp/Process_Spacemove(var/check_drift = 0)
+/mob/living/simple_animal/bear/Process_Spacemove(var/check_drift = 0)
 	return	//No drifting in space for space bears!
