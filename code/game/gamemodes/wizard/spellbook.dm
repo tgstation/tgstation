@@ -13,7 +13,7 @@
 		dat += "<B>Memorize which spell:</B><BR>"
 		dat += "<I>The number after the spell name is the cooldown time.</I><BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=1'>Magic Missile</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=2'>Fireball</A> (20)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=2'>Fireball</A> (10)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=3'>Disintegrate</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=4'>Disable Technology</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=5'>Smoke</A> (10)<BR>"
@@ -64,7 +64,7 @@
 						if ("2")
 							usr.verbs += /client/proc/fireball
 							usr.mind.special_verbs += /client/proc/fireball
-							src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
+							src.temp = "This spell fires a fireball in the direction you're facing and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
 						if ("3")
 							usr.verbs += /mob/proc/kill
 							usr.mind.special_verbs += /mob/proc/kill
@@ -138,7 +138,7 @@
 							if ("2")
 								feedback_add_details("wizard_spell_learned","FB") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 								usr.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/fireball(usr)
-								src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
+								src.temp = "This spell fires a fireball in the direction you're facing and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
 							if ("3")
 								feedback_add_details("wizard_spell_learned","DG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 								usr.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate(usr)
