@@ -1262,7 +1262,7 @@
 	desc = "A rechargable starch based power cell."
 	origin_tech = "powerstorage=1"
 	icon = 'icons/obj/power.dmi' //'icons/obj/harvest.dmi'
-	icon_state = "cell" //"potato_battery"
+	icon_state = "potato_cell" //"potato_battery"
 	charge = 100
 	maxcharge = 300
 	m_amt = 0
