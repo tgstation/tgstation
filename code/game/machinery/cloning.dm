@@ -191,6 +191,10 @@
 	if(se)
 		src.occupant.dna.struc_enzymes = se
 		randmutb(src.occupant) //Sometimes the clones come out wrong.
+
+	src.occupant:f_style = "Shaved"
+	src.occupant:h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+
 	src.occupant:mutantrace = mrace
 	src.occupant:update_mutantrace()
 	src.occupant:suiciding = 0
