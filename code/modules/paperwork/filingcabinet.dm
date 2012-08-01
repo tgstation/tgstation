@@ -38,7 +38,7 @@
 
 /obj/structure/filingcabinet/attack_hand(mob/user as mob)
 	if(contents.len <= 0)
-		user << "The [src] is empty."
+		user << "\The [src] is empty."
 		return
 
 	var/dat = "<center><table>"

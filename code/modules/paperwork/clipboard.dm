@@ -87,10 +87,8 @@
 		if(href_list["pen"])
 			if(haspen)
 				haspen.loc = usr.loc
-				if(ishuman(usr))
-					if(!usr.get_active_hand())
-						usr.put_in_hands(haspen)
-						haspen = null
+				usr.put_in_hands(haspen)
+				haspen = null
 
 		if(href_list["addpen"])
 			if(!haspen)
@@ -111,14 +109,11 @@
 			var/obj/item/P = locate(href_list["remove"])
 			if(P)
 				P.loc = usr.loc
-				if(ishuman(usr))
-					if(!usr.get_active_hand())
-						usr.put_in_hands(P)
-				else
-					P.loc = get_turf(usr)
+				usr.put_in_hands(P)
 				if(P == toppaper)
-					var/obj/item/weapon/paper/newtop = locate(/obj/item/weapon/paper in src)
-					if(newtop && (newtop != toppaper))
+					toppaper = null
+					var/obj/item/weapon/paper/newtop = locate(/obj/item/weapon/paper) in src
+					if(newtop && (newtop != P))
 						toppaper = newtop
 					else
 						toppaper = null
