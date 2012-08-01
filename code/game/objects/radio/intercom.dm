@@ -26,9 +26,8 @@
 			attack_self(user)
 
 
-	send_hear(freq)
-		var/range = receive_range(freq)
-
+	send_hear(freq, level)
+		var/range = receive_range(freq, level)
 		if(range > 0)
 			return get_mobs_in_view(canhear_range, src)
 
@@ -37,9 +36,8 @@
 			return 0
 		if (!(src.wires & WIRE_RECEIVE))
 			return 0
-		if(!src.loc)
-			return 0
-		if(src.loc.z != level)
+		var/turf/position = get_turf(src)
+		if(isnull(position) || position.z != level)
 			return 0
 		if (!src.listening)
 			return 0

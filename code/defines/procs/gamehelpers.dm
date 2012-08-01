@@ -229,7 +229,7 @@
 	for(var/mob/M in player_list)
 		if(!M) continue
 
-		var/atom/ear = M.get_ear()
+		var/turf/ear = get_turf(M)
 		if(!ear) continue
 
 		// Now see if they're near any broadcasting radio

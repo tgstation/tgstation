@@ -26,21 +26,22 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
+	var/turf/position = get_turf(src)
 	if(signal.data["reject"])
 		return
 
 	//Is it a test signal?
 	if(signal.data["type"] == 4)
 		signal.data["done"] = 1
-		signal.data["level"] += src.loc.z
+		signal.data["level"] += position.z
 		return
 
 	if(signal.data["message"])
 
 		// Prevents massive radio spam
-		if("[signal.data["message"]]:[signal.data["realname"]]:[src.loc.z]" in recentmessages)
+		if("[signal.data["message"]]:[signal.data["realname"]]:[position.z]" in recentmessages)
 			return
-		recentmessages.Add("[signal.data["message"]]:[signal.data["realname"]]:[src.loc.z]")
+		recentmessages.Add("[signal.data["message"]]:[signal.data["realname"]]:[position.z]")
 
 		signal.data["done"] = 1 // mark the signal as being broadcasted
 
@@ -61,7 +62,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], src.loc.z)
+							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], position.z)
 
 
 	   /** #### - Simple Broadcast - #### **/
@@ -71,7 +72,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 			/* ###### Broadcast a message using signal.data ###### */
 			Broadcast_SimpleMessage(signal.data["name"], signal.frequency,
 								  signal.data["message"],null, null,
-								  signal.data["compression"])
+								  signal.data["compression"], position.z)
 
 
 	   /** #### - Artificial Broadcast - #### **/
@@ -86,7 +87,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], src.loc.z)
+							  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], position.z)
 
 		spawn(5)
 			recentmessages = list()
@@ -135,20 +136,21 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 		/* ###### Broadcast a message using signal.data ###### */
 
 		var/datum/radio_frequency/connection = signal.data["connection"]
+		var/turf/position = get_turf(src)
 
 		if(connection.frequency == SYND_FREQ) // if syndicate broadcast, just
 			Broadcast_Message(signal.data["connection"], signal.data["mob"],
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], src.loc.z)
+							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], position.z)
 		else
 			if(intercept)
 				Broadcast_Message(signal.data["connection"], signal.data["mob"],
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"], src.loc.z)
+							  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"], position.z)
 
 
 
@@ -211,11 +213,9 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 						var/message, var/name, var/job, var/realname, var/vname,
 						var/data, var/compression, var/level)
 
-
   /* ###### Prepare the radio connection ###### */
 
 	var/display_freq = connection.frequency
-
 
 	var/list/obj/item/device/radio/radios = list()
 
@@ -224,8 +224,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 	if(data == 1)
 		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
 			if(R.receive_range(display_freq, level) > 0)
-				radios |= R
-
+				radios += R
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
 
@@ -236,8 +235,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 				continue
 
 			if(R.receive_range(display_freq, level) > 0)
-				radios |= R
-
+				radios += R
 
 	// --- Broadcast to syndicate radio! ---
 
@@ -247,18 +245,17 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
 
 			if(R.receive_range(SYND_FREQ, level) > 0)
-				radios |= R
+				radios += R
 
 	// --- Broadcast to ALL radio devices ---
 
 	else
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
 			if(R.receive_range(display_freq, level) > 0)
-				radios |= R
+				radios += R
 
 	// Get a list of mobs who can hear from the radios we collected.
 	var/list/receive = get_mobs_in_radio_ranges(radios)
-
 
   /* ###### Organize the receivers into categories for displaying the message ###### */
 
@@ -510,8 +507,9 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 	if(data == 1)
 		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
-			if(R.loc && R.loc.z == level)
-				receive |= R.send_hear(display_freq)
+			var/turf/position = get_turf(R)
+			if(position && position.z == level)
+				receive |= R.send_hear(display_freq, level)
 
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
@@ -521,8 +519,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 			if(istype(R, /obj/item/device/radio/headset))
 				continue
-
-			if(R.loc && R.loc.z == level)
+			var/turf/position = get_turf(R)
+			if(position && position.z == level)
 				receive |= R.send_hear(display_freq)
 
 
@@ -532,8 +530,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 		var/datum/radio_frequency/syndicateconnection = radio_controller.return_frequency(SYND_FREQ)
 
 		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
-
-			if(R.loc && R.loc.z == level)
+			var/turf/position = get_turf(R)
+			if(position && position.z == level)
 				receive |= R.send_hear(SYND_FREQ)
 
 
@@ -541,8 +539,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 	else
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
-
-			if(R.loc && R.loc.z == level)
+			var/turf/position = get_turf(R)
+			if(position && position.z == level)
 				receive |= R.send_hear(display_freq)
 
 
@@ -704,7 +702,8 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 /atom/proc/test_telecomms()
 	var/datum/signal/signal = telecomms_process()
-	return (src.loc.z in signal.data["level"] && signal.data["done"])
+	var/turf/position = get_turf(src)
+	return (position.z in signal.data["level"] && signal.data["done"])
 
 /atom/proc/telecomms_process()
 
@@ -726,8 +725,10 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 	signal.frequency = 1459// Common channel
 
   //#### Sending the signal to all subspace receivers ####//
-	for(var/obj/machinery/telecomms/receiver/R in world)
-		if(src.loc.z == R.loc.z)
+	var/turf/position = get_turf(src)
+	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
+		var/turf/receiver_turf = get_turf(R)
+		if(position.z == receiver_turf.z)
 			R.receive_signal(signal)
 
 	sleep(rand(10,25))

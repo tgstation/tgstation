@@ -69,7 +69,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			frequency = sanitize_frequency(frequency, maxf)
 	// The max freq is higher than a regular headset to decrease the chance of people listening in, if you use the higher channels.
 	else if (frequency < 1441 || frequency > maxf)
-		world.log << "[src] ([type]) has a frequency of [frequency], sanitizing."
+		//world.log << "[src] ([type]) has a frequency of [frequency], sanitizing."
 		frequency = sanitize_frequency(frequency, maxf)
 
 	set_frequency(frequency)
@@ -358,16 +358,21 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			signal.frequency = connection.frequency // Quick frequency set
 
 		  //#### Sending the signal to all subspace receivers ####//
-			for(var/obj/machinery/telecomms/receiver/R in world)
-				if(src.loc.z == R.loc.z)
+
+			var/turf/position = get_turf(src)
+
+			for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
+				var/turf/receiver_turf = get_turf(R)
+				if(position.z == receiver_turf.z)
 					R.receive_signal(signal)
 
 			// Allinone can act as receivers.
-			for(var/obj/machinery/telecomms/allinone/R in world)
-				if(src.loc.z == R.loc.z)
+			for(var/obj/machinery/telecomms/allinone/R in telecomms_list)
+				var/turf/receiver_turf = get_turf(R)
+				if(position.z == receiver_turf.z)
 					R.receive_signal(signal)
 
-		  	// Receiving code can be located in Telecommunications.dm
+			// Receiving code can be located in Telecommunications.dm
 			return
 
 
@@ -410,8 +415,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		)
 		signal.frequency = connection.frequency // Quick frequency set
 
-		for(var/obj/machinery/telecomms/receiver/R in world)
-			if(src.loc.z == R.loc.z)
+		var/turf/position = get_turf(src)
+
+		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
+			var/turf/receiver_turf = get_turf(R)
+			if(position.z == receiver_turf.z)
 				R.receive_signal(signal)
 
 
@@ -429,7 +437,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		Broadcast_Message(connection, M, voicemask, M.voice_message,
 						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type, signal.data["compression"], src.loc.z)
+		                  filter_type, signal.data["compression"], position.z)
 
 
 
@@ -473,7 +481,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		//for (var/obj/item/device/radio/R in radio_connection.devices)
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"]) // Modified for security headset code -- TLE
 			//if(R.accept_rad(src, message))
-			receive |= R.send_hear(display_freq)
+			receive |= R.send_hear(display_freq, 0)
 
 		//world << "DEBUG: receive.len=[receive.len]"
 		var/list/heard_masked = list() // masked name or no real name
@@ -633,7 +641,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	if (!(wires & WIRE_RECEIVE))
 		return 0
-	if(isnull(src.loc) || src.loc.z != level)
+	var/turf/position = get_turf(src)
+	if(isnull(position) || position.z != level)
 		return 0
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
@@ -656,9 +665,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	return canhear_range
 
-/obj/item/device/radio/proc/send_hear(freq)
-	var/range = receive_range(freq)
+/obj/item/device/radio/proc/send_hear(freq, level)
 
+	var/range = receive_range(freq, level)
 	if(range > 0)
 		return get_mobs_in_view(canhear_range, src)
 
