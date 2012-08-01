@@ -74,7 +74,7 @@
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
-	desc = "It's standardised Nanotrasen prisoner wear. Its suit sensors are stuck in the \"Fully On\" position."
+	desc = "It's standardised NanoTrasen prisoner wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "orange"
 	item_state = "o_suit"
 	color = "orange"

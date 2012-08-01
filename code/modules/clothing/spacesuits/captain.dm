@@ -11,7 +11,7 @@
 
 /obj/item/clothing/suit/armor/captain
 	name = "captain's armor"
-	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
+	desc = "A bulky, heavy-duty piece of exclusive NanoTrasen armor. YOU are in charge!"
 	icon_state = "caparmor"
 	item_state = "capspacesuit"
 	w_class = 4
