@@ -95,8 +95,6 @@
 		host = key
 		world.update_status()
 
-	log_client_to_db()
-
 	..()	//calls mob.Login()
 
 	//Admin Authorisation
@@ -107,6 +105,8 @@
 		update_admins(admins[ckey])
 
 		admin_memo_show()
+
+	log_client_to_db()
 
 
 	//////////////
@@ -156,18 +156,24 @@
 		if(!isnum(sql_id))
 			return
 
+	var/admin_rank = "Player"
+	if(src.holder)
+		admin_rank = src.holder.rank
+
 	var/sql_ip = sql_sanitize_text(src.address)
 	var/sql_computerid = sql_sanitize_text(src.computer_id)
+	var/sql_admin_rank = sql_sanitize_text(admin_rank)
+
 
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 
-		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]' WHERE id = [sql_id]")
+		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
 	else
 		//New player!! Need to insert all the stuff
 
-		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]')")
+		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
 		query_insert.Execute()
 
 	dbcon.Disconnect()
