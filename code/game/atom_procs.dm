@@ -294,6 +294,8 @@
 			del(fingerprints)
 
 /atom/proc/clean_blood()
+	clean_prints()
+
 	if(istype(blood_DNA, /list))
 		del(blood_DNA)
 		.=1
