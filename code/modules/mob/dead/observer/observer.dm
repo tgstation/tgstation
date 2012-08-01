@@ -121,7 +121,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Re-enter Corpse"
 	if(!client)	return
 	if(!corpse)
-		src << "<span class='warning'>Sorry, you don't have a corpse to re-enter.</span>"
+		src << "<span class='warning'>You have no body.</span>"
 		return
 	if(client.holder && client.holder.state == 2)
 		var/rank = client.holder.rank
@@ -129,18 +129,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		client.holder.state = 1
 		client.update_admins(rank)
 
-	if(iscultist(corpse) && corpse.ajourn==1 && corpse.stat != DEAD) //checks if it's an astral-journeying cultistm if it is and he's not on an astral journey rune, re-entering won't work
-		var/S=0
-		for(var/obj/effect/rune/R in world)
-			if(corpse.loc==R.loc && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself)
-				S=1
-				break
-		if(!S)
-			usr << "\red The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you."
+	if(corpse.ajourn && corpse.stat != DEAD) 	//check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
+		var/obj/effect/rune/R = locate() in corpse.loc	//whilst corpse is alive, we can only reenter the body if it's on the rune
+		if(!(R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself))	//astral journeying rune
+			usr << "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>"
 			return
-	if(corpse.ajourn)
-		corpse.ajourn=0
-	client.mob = corpse
+	corpse.ajourn=0
+	if(corpse.key)		//makes sure we don't accidentally kick any clients
+		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
+		return	
+	corpse.key = key
 	remove_from_mob_list(src)
 	dead_mob_list -= src
 	del(src)
