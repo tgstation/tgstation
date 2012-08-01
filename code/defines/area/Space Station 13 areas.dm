@@ -996,8 +996,8 @@ proc/process_ghost_teleport_locs()
 	icon_state = "genetics"
 
 /area/medical/sleeper
-	name = "\improper Medical Sleepers Room"
-	icon_state = "medbay"
+	name = "\improper Medical Sleeper Room"
+	icon_state = "exam_room"
 
 //Security
 
