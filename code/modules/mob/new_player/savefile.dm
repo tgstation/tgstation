@@ -188,8 +188,6 @@ datum/preferences/proc/savefile_load(mob/user)
 	if(version && version < SAVEFILE_VERSION_MAX)
 		convert_hairstyles() // convert version 4 hairstyles to version 5
 
-	style_to_datum() // convert f_style and h_style to /datum
-
 	return 1
 
 #undef SAVEFILE_VERSION_MAX

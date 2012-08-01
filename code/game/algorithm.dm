@@ -1,7 +1,10 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+#define RECOMMENDED_VERSION 494
 
 /world/New()
 	..()
+	if(byond_version < RECOMMENDED_VERSION)
+		world.log << "Your server's byond version does not meet the recommended requirements for TGstation code. Please update BYOND"
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
 	diary << {"
@@ -22,8 +25,9 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	jobban_loadbanfile()
 	jobban_updatelegacybans()
 	LoadBans()
-	process_teleport_locs() //Sets up the wizard teleport locations
-	process_ghost_teleport_locs() //Sets up ghost teleport locations.
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+	process_teleport_locs()			//Sets up the wizard teleport locations
+	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 	sleep_offline = 1
 
 	spawn(3000)		//so we aren't adding to the round-start lag
@@ -32,6 +36,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 		if(config.kick_inactive)
 			KickInactiveClients()
 
+#undef RECOMMENDED_VERSION
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
 	for(var/client/C)
@@ -42,6 +47,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 					C << "\red You have been inactive for more than 10 minutes and have been disconnected."
 			del(C)
 	spawn(3000) KickInactiveClients()//more or less five minutes
+#undef INACTIVITY_KICK
 
 /// EXPERIMENTAL STUFF
 

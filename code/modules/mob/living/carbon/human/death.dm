@@ -72,10 +72,10 @@
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(HUSK in mutations)	return
 
-	if(facial_hair_style)
-		facial_hair_style.icon_state = "bald"	//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
-	if(hair_style)
-		hair_style.icon_state = "bald"
+	if(f_style)
+		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
+	if(h_style)
+		h_style = "Bald"
 	update_hair(0)
 
 	mutations.Add(HUSK)

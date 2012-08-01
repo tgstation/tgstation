@@ -1,29 +1,25 @@
 /mob/living/carbon/human
 
 	//Hair colour and style
-	var/r_hair = 0.0
-	var/g_hair = 0.0
-	var/b_hair = 0.0
-	var/h_style = "Short Hair"
-	var/datum/sprite_accessory/hair/hair_style
-	var/hair_icon_state = "hair_a"
+	var/r_hair = 0
+	var/g_hair = 0
+	var/b_hair = 0
+	var/h_style = "Bald"
 
 	//Facial hair colour and style
-	var/r_facial = 0.0
-	var/g_facial = 0.0
-	var/b_facial = 0.0
+	var/r_facial = 0
+	var/g_facial = 0
+	var/b_facial = 0
 	var/f_style = "Shaved"
-	var/datum/sprite_accessory/facial_hair/facial_hair_style
-	var/face_icon_state = "bald"
 
 	//Eye colour
-	var/r_eyes = 0.0
-	var/g_eyes = 0.0
-	var/b_eyes = 0.0
+	var/r_eyes = 0
+	var/g_eyes = 0
+	var/b_eyes = 0
 
-	var/s_tone = 0.0	//Skin tone
+	var/s_tone = 0	//Skin tone
 
-	var/age = 30.0		//Player's age (pure fluff)
+	var/age = 30		//Player's age (pure fluff)
 	var/b_type = "A+"	//Player's bloodtype (Not currently used, just character fluff)
 
 	var/underwear = 1	//Which underwear the player wants

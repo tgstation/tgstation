@@ -10,37 +10,26 @@
 		if(length(uni_identity) != 39)
 			//Lazy.
 			var/temp
-			var/hair = 0
-			var/beard
 
-			// determine DNA fragment from hairstyle
-			// :wtc:
+			//Hair
+			var/hair	= 0
+			if(!character.h_style)
+				character.h_style = "Skinhead"
 
+			var/hrange = round(4095 / hair_styles_list.len)
+			var/index = hair_styles_list.Find(character.h_style)
+			if(index)
+				hair = index * hrange - rand(1,hrange-1)
 
-			// If the character doesn't have initialized hairstyles / beardstyles, initialize it for them!
-			if(!character.hair_style)
-				character.hair_style = new/datum/sprite_accessory/hair/short
+			//Facial Hair
+			var/beard	= 0
+			if(!character.f_style)
+				character.f_style = "Shaved"
 
-			if(!character.facial_hair_style)
-				character.facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
-
-			var/list/styles = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
-			var/hrange = round(4095 / styles.len)
-
-			if(character.hair_style)
-				var/style = styles.Find(character.hair_style.type)
-				if(style)
-					hair = style * hrange - rand(1,hrange-1)
-
-			// Beard dna code - mostly copypasted from hair code to allow for more dynamic facial hair style additions
-			var/list/face_styles = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
-			var/f_hrange = round(4095 / face_styles.len)
-
-			var/f_style = face_styles.Find(character.facial_hair_style.type)
-			if(f_style)
-				beard = f_style * f_hrange - rand(1,f_hrange-1)
-			else
-				beard = 0
+			var/f_hrange = round(4095 / facial_hair_styles_list.len)
+			index = facial_hair_styles_list.Find(character.f_style)
+			if(index)
+				beard = index * f_hrange - rand(1,f_hrange-1)
 
 			temp = add_zero2(num2hex((character.r_hair),1), 3)
 			temp += add_zero2(num2hex((character.b_hair),1), 3)
@@ -78,32 +67,27 @@
 		if(length(struc_enzymes)!= 42) struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4000"
 
 /datum/dna/proc/ready_dna(mob/living/carbon/human/character)
-
 	var/temp
-	var/hair
-	var/beard
 
-	// determine DNA fragment from hairstyle
-	// :wtc:
+	//Hair
+	var/hair	= 0
+	if(!character.h_style)
+		character.h_style = "Bald"
 
-	var/list/styles = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
-	var/hrange = round(4095 / styles.len)
+	var/hrange = round(4095 / hair_styles_list.len)
+	var/index = hair_styles_list.Find(character.h_style)
+	if(index)
+		hair = index * hrange - rand(1,hrange-1)
 
-	var/style = styles.Find(character.hair_style.type)
-	if(style)
-		hair = style * hrange - rand(1,hrange-1)
-	else
-		hair = 0
+	//Facial Hair
+	var/beard	= 0
+	if(!character.f_style)
+		character.f_style = "Shaved"
 
-	// Beard dna code - mostly copypasted from hair code to allow for more dynamic facial hair style additions
-	var/list/face_styles = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
-	var/f_hrange = round(4095 / face_styles.len)
-
-	var/f_style = face_styles.Find(character.facial_hair_style.type)
-	if(f_style)
-		beard = f_style * f_hrange - rand(1,f_hrange-1)
-	else
-		beard = 0
+	var/f_hrange = round(4095 / facial_hair_styles_list.len)
+	index = facial_hair_styles_list.Find(character.f_style)
+	if(index)
+		beard = index * f_hrange - rand(1,f_hrange-1)
 
 	temp = add_zero2(num2hex((character.r_hair),1), 3)
 	temp += add_zero2(num2hex((character.b_hair),1), 3)
@@ -378,32 +362,17 @@
 		else
 			H.gender = MALE
 
-
-		/// BEARDS
-
-		var/beardnum = hex2num(getblock(structure,12,3))
-		var/list/facial_styles = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
-		var/fstyle = round(1 +(beardnum / 4096)*facial_styles.len)
-
-		var/fpath = text2path("[facial_styles[fstyle]]")
-		var/datum/sprite_accessory/facial_hair/fhair = new fpath
-
-		H.face_icon_state = fhair.icon_state
-		H.f_style = fhair.icon_state
-		H.facial_hair_style = fhair
-
-
-		// HAIR
+		//Hair
 		var/hairnum = hex2num(getblock(structure,13,3))
-		var/list/styles = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
-		var/style = round(1 +(hairnum / 4096)*styles.len)
+		var/index = round(1 +(hairnum / 4096)*hair_styles_list.len)
+		if((0 < index) && (index <= hair_styles_list.len))
+			H.h_style = hair_styles_list[index]
 
-		var/hpath = text2path("[styles[style]]")
-		var/datum/sprite_accessory/hair/hair = new hpath
-
-		H.hair_icon_state = hair.icon_state
-		H.h_style = hair.icon_state
-		H.hair_style = hair
+		//Facial Hair
+		var/beardnum = hex2num(getblock(structure,12,3))
+		index = round(1 +(beardnum / 4096)*facial_hair_styles_list.len)
+		if((0 < index) && (index <= facial_hair_styles_list.len))
+			H.f_style = facial_hair_styles_list[index]
 
 		H.update_body(0)
 		H.update_hair()

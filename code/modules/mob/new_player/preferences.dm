@@ -17,6 +17,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
 )
 
+var/global/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "Mankini", "Love-Hearts", "Black2", "Grey2", "Stripey", "Kinky", "None") //Curse whoever made male/female underwear diffrent colours
+var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "Babydoll", "Baby-Blue", "Green", "Pink", "Kinky", "None")
+var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
+
 var/const/BE_TRAITOR   =(1<<0)
 var/const/BE_OPERATIVE =(1<<1)
 var/const/BE_CHANGELING=(1<<2)
@@ -53,14 +57,10 @@ datum/preferences
 		//Just like it sounds
 	var/ooccolor = "#b82e00"
 	var/underwear = 1
-	var/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "Mankini", "Love-Hearts", "Black2", "Grey2", "Stripey", "Kinky", "None") //Curse whoever made male/female underwear diffrent colours
-	var/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "Babydoll", "Baby-Blue", "Green", "Pink", "Kinky", "None")
 	var/backbag = 2
-	var/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 
 		//Hair type
-	var/h_style = "Short Hair"
-	var/datum/sprite_accessory/hair/hair_style
+	var/h_style = "Bald"
 		//Hair color
 	var/r_hair = 0
 	var/g_hair = 0
@@ -68,7 +68,6 @@ datum/preferences
 
 		//Face hair type
 	var/f_style = "Shaved"
-	var/datum/sprite_accessory/facial_hair/facial_hair_style
 		//Face hair color
 	var/r_facial = 0
 	var/g_facial = 0
@@ -116,8 +115,6 @@ datum/preferences
 
 
 	New()
-		hair_style = new/datum/sprite_accessory/hair/short
-		facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 		randomize_name()
 		..()
 
@@ -557,33 +554,10 @@ datum/preferences
 					// see preferences_setup.dm for proc
 
 				if("input") // input hair selection
-
-					// Generate list of hairs via typesof()
-					var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
-
-					// List of hair names
-					var/list/hairs = list()
-
-					// loop through potential hairs
-					for(var/x in all_hairs)
-						var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
-						hairs.Add(H.name) // add hair name to hairs
-						del(H) // delete the hair after it's all done
-
-					// prompt the user for a hair selection, the selection being anything in list hairs
-					var/new_style = input(user, "Select a hair style", "Character Generation")  as null|anything in hairs
-
-					// if new style selected (not cancel)
+					var/new_style = input(user, "Select a hair style", "Character Generation")  as null|anything in hair_styles_list
 					if(new_style)
 						h_style = new_style
 
-						for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
-							var/datum/sprite_accessory/hair/H = new x // create new hair datum
-							if(H.name == new_style)
-								hair_style = H // assign the hair_style variable a new hair datum
-								break
-							else
-								del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
 
 		if(link_tags["ooccolor"])
 			var/ooccolor = input(user, "Please select OOC colour.", "OOC colour") as color
@@ -599,28 +573,12 @@ datum/preferences
 
 				// see above for commentation. This is just a slight modification of the hair code for facial hairs
 				if("random")
-
 					randomize_facial(gender)
 
 				if("input")
-
-					var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
-					var/list/fhairs = list()
-					for(var/x in all_fhairs)
-						var/datum/sprite_accessory/facial_hair/H = new x
-						fhairs.Add(H.name)
-						del(H)
-
-					var/new_style = input(user, "Select a facial hair style", "Character Generation")  as null|anything in fhairs
+					var/new_style = input(user, "Select a facial hair style", "Character Generation")  as null|anything in facial_hair_styles_list
 					if(new_style)
 						f_style = new_style
-						for(var/x in all_fhairs)
-							var/datum/sprite_accessory/facial_hair/H = new x
-							if(H.name == new_style)
-								facial_hair_style = H
-								break
-							else
-								del(H)
 
 		if(link_tags["gender"])
 			if(gender == MALE)
@@ -787,9 +745,6 @@ datum/preferences
 				character.UI = 'icons/mob/screen1_old.dmi'
 			else
 				character.UI = 'icons/mob/screen1_Midnight.dmi'
-
-		character.hair_style = hair_style
-		character.facial_hair_style = facial_hair_style
 
 		if(underwear > 12 || underwear < 1)
 			underwear = 1 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me.

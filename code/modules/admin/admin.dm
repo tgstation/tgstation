@@ -2048,7 +2048,7 @@ var/global/BSACooldown = 0
 						feedback_inc("admin_secrets_fun_used",1)
 						feedback_add_details("admin_secrets_fun_used","DF")
 						for(var/mob/living/carbon/human/B in mob_list)
-							B.face_icon_state = "facial_wise"
+							B.f_style = "Dward Beard"
 							B.update_hair()
 						message_admins("[key_name_admin(usr)] activated dorf mode")
 					else

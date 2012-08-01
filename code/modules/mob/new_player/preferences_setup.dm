@@ -26,47 +26,11 @@ datum/preferences
 		return
 
 	proc/randomize_hair(var/gender)
-		// Generate list of all possible hairs via typesof(), subtract the parent type however
-		var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+		h_style = pick(hair_styles_list)
 
-		// List of hair datums. Used in pick() to select random hair
-		var/list/hairs = list()
-
-		// Loop through potential hairs
-		for(var/x in all_hairs)
-			var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
-
-			if(gender == FEMALE && H.choose_female) // if female and hair is female-suitable, add to possible hairs
-				hairs.Add(H)
-
-			else if(gender != FEMALE && H.choose_male) // if male and hair is male-suitable, add to hairs
-				hairs.Add(H)
-
-			else
-				del(H) // delete if incompatible
-
-		if(hairs.len > 0) // if hairs could be generated
-			hair_style = pick(hairs) // assign random hair
-			h_style = hair_style.name
 
 	proc/randomize_facial() // uncommented, see randomize_hair() for commentation
-		var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
-
-		var/list/fhairs = list()
-
-		for(var/x in all_fhairs)
-			var/datum/sprite_accessory/facial_hair/H = new x
-
-			if(gender == FEMALE && H.choose_female)
-				fhairs.Add(H)
-			else if(gender != FEMALE && H.choose_male)
-				fhairs.Add(H)
-			else
-				del(H)
-
-		if(fhairs.len > 0)
-			facial_hair_style = pick(fhairs)
-			f_style = facial_hair_style.name
+		f_style = pick(facial_hair_styles_list)
 
 	proc/randomize_skin_tone()
 		var/tone
@@ -138,7 +102,7 @@ datum/preferences
 		green = max(min(green + rand (-25, 25), 255), 0)
 		blue = max(min(blue + rand (-25, 25), 255), 0)
 
-		switch (target)
+		switch(target)
 			if ("hair")
 				r_hair = red
 				g_hair = green
@@ -222,20 +186,20 @@ datum/preferences
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s")
 		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 
-
-		// Hair and facial hair, improved by Doohl
-		var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
-		hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
-
-		var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
-		facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
-
+		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
+		if(hair_style)
+			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+			hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
+			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
 		var/icon/mouth_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "mouth_[g]_s")
-
-		eyes_s.Blend(hair_s, ICON_OVERLAY)
 		eyes_s.Blend(mouth_s, ICON_OVERLAY)
-		eyes_s.Blend(facial_s, ICON_OVERLAY)
+
+		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
+		if(facial_hair_style)
+			var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
+			facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
+			eyes_s.Blend(facial_s, ICON_OVERLAY)
 
 		var/icon/clothes_s = null
 		if(job_civilian_low & ASSISTANT)//This gives the preview icon clothes depending on which job(if any) is set to 'high'
@@ -532,27 +496,7 @@ datum/preferences
 
 		del(preview_icon)
 		del(mouth_s)
-		del(facial_s)
-		del(hair_s)
 		del(eyes_s)
 		del(clothes_s)
 
 
-	proc/style_to_datum()
-		// use h_style and f_style to load /datum hairs
-
-		// hairs
-		for(var/x in typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair)
-			var/datum/sprite_accessory/hair/H = new x
-			if(H.name == h_style)
-				hair_style = H
-			else
-				del(H)
-
-		// facial hairs
-		for(var/x in typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair)
-			var/datum/sprite_accessory/facial_hair/H = new x
-			if(H.name == f_style)
-				facial_hair_style = H
-			else
-				del(H)

@@ -27,15 +27,13 @@
 		var/n = 0
 		var/admins = 0
 
-		for(var/mob/M in player_list)
-
-			if(M.client)
-				if(M.client.holder)
-					if(!M.client.stealth)
-						admins++
-
-				s["player[n]"] = M.client.key
-				n++
+		for(var/client/C in client_list)
+			if(C.holder)
+				if(C.stealth)
+					continue	//so stealthmins aren't revealed by the hub
+				admins++
+			s["player[n]"] = C.key
+			n++
 		s["players"] = n
 
 		// 7 + s["players"] + 1 = index of s["revinfo"]

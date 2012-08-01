@@ -8,11 +8,26 @@ var/global/list/living_mob_list = list()//List of all living mobs, including cli
 var/global/list/dead_mob_list = list()//List of all dead mobs, including clientless
 var/global/list/client_list = list()//List of all clients, based on ckey
 var/global/list/cable_list = list()//Index for all cables, so that powernets don't have to look through the entire world all the time
+var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
+var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessory/facial_hair indexed by name
 
 //////////////////////////
 /////Initial Building/////
 //////////////////////////
 //Realistically, these should never be run, but ideally, they should only be run once at round-start
+
+/proc/make_datum_references_lists()
+	var/list/paths
+	//Hair - Initialise all /datum/sprite_accessory/hair into an list indexed by hair-style name
+	paths = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	for(var/path in paths)
+		var/datum/sprite_accessory/hair/H = new path()
+		hair_styles_list[H.name] = H
+	//Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
+	paths = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+	for(var/path in paths)
+		var/datum/sprite_accessory/facial_hair/H = new path()
+		facial_hair_styles_list[H.name] = H
 
 proc/make_player_list()//Global proc that rebuilds the player list
 	for(var/mob/p in player_list)//Clears out everyone that logged out
