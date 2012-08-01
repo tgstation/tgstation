@@ -1,57 +1,4 @@
-/mob/living/simple_animal
-	name = "animal"
-	var/icon_living = ""
-	var/icon_dead = ""
-	maxHealth = 20
-	var/alive = 1
-	var/list/speak = list()
-	var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
-	var/speak_chance = 0
-	var/list/emote_hear = list()	//EHearable emotes
-	var/list/emote_see = list()		//Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
-	health = 20
-	var/turns_per_move = 1
-	var/turns_since_move = 0
-	universal_speak = 1
-	var/meat_amount = 0
-	var/meat_type
-	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 
-	//Interaction
-	var/response_help   = "You try to help"
-	var/response_disarm = "You try to disarm"
-	var/response_harm   = "You try to hurt"
-	var/harm_intent_damage = 3
-
-	//Temperature effect
-	var/minbodytemp = 270
-	var/maxbodytemp = 370
-	var/heat_damage_per_tick = 3	//amount of damage applied if animal's body temperature is higher than maxbodytemp
-	var/cold_damage_per_tick = 2	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
-
-	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
-	var/min_oxy = 5
-	var/max_oxy = 0					//Leaving something at 0 means it's off - has no maximum
-	var/min_tox = 0
-	var/max_tox = 1
-	var/min_co2 = 0
-	var/max_co2 = 5
-	var/min_n2 = 0
-	var/max_n2 = 0
-	var/unsuitable_atoms_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
-
-
-	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
-	var/melee_damage_lower = 0
-	var/melee_damage_upper = 0
-	var/attacktext = "attacks"
-	var/attack_sound = null
-	var/friendly = "nuzzles" //If the mob does no damage with it's attack
-	var/wall_smash = 0 //if they can smash walls
-
-	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
-
-	var/obj/item/device/radio/headset/l_ear = null
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -60,137 +7,6 @@
 	if(src && src.client)
 		src.client.screen = null
 	..()
-
-/mob/living/simple_animal/Life()
-
-	//Health
-	if(!alive)
-		if(health > 0)
-			icon_state = icon_living
-			alive = 1
-			stat = CONSCIOUS
-			density = 1
-		return
-
-
-	if(health < 1)
-		Die()
-
-	if(health > maxHealth)
-		health = maxHealth
-
-/*
-	// Stun/Weaken
-
-	if (paralysis || stunned || weakened) //Stunned etc.
-		if (stunned > 0)
-			AdjustStunned(-1)
-			stat = 0
-		if (weakened > 0)
-			AdjustWeakened(-1)
-			lying = 1
-			stat = 0
-		if (paralysis > 0)
-			AdjustParalysis(-1)
-			blinded = 1
-			lying = 1
-			stat = 1
-		var/h = hand
-		hand = 0
-		drop_item()
-		hand = 1
-		drop_item()
-		hand = h
-
-	else	//Not stunned.
-		lying = 0
-		stat = 0
-
-	if(paralysis || stunned || weakened || buckled)
-		canmove = 0
-	else
-		canmove = 1
-*/
-	//Movement
-	if(!ckey && !stop_automated_movement)
-		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
-			turns_since_move++
-			if(turns_since_move >= turns_per_move)
-				Move(get_step(src,pick(cardinal)))
-				turns_since_move = 0
-
-
-
-
-
-
-
-	//Speaking
-	if(prob(speak_chance))
-		var/length = speak.len + emote_hear.len + emote_see.len
-		if(speak.len && prob((speak.len / length) * 100))
-			say(pick(speak))
-		else if(emote_see.len && prob((emote_see.len / length) * 100))
-			emote("auto",1,pick(emote_see))
-		else if(emote_hear.len)
-			emote("auto",2,pick(emote_hear))
-			//var/act,var/m_type=1,var/message = null
-
-
-	//Atmos
-	var/atmos_suitable = 1
-
-	var/atom/A = src.loc
-	if(isturf(A))
-		var/turf/T = A
-		var/areatemp = T.temperature
-		if( abs(areatemp - bodytemperature) > 50 )
-			var/diff = areatemp - bodytemperature
-			diff = diff / 5
-			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
-			bodytemperature += diff
-
-		if(istype(T,/turf/simulated))
-			var/turf/simulated/ST = T
-			if(ST.air)
-				var/tox = ST.air.toxins
-				var/oxy = ST.air.oxygen
-				var/n2  = ST.air.nitrogen
-				var/co2 = ST.air.carbon_dioxide
-
-				if(min_oxy)
-					if(oxy < min_oxy)
-						atmos_suitable = 0
-				if(max_oxy)
-					if(oxy > max_oxy)
-						atmos_suitable = 0
-				if(min_tox)
-					if(tox < min_tox)
-						atmos_suitable = 0
-				if(max_tox)
-					if(tox > max_tox)
-						atmos_suitable = 0
-				if(min_n2)
-					if(n2 < min_n2)
-						atmos_suitable = 0
-				if(max_n2)
-					if(n2 > max_n2)
-						atmos_suitable = 0
-				if(min_co2)
-					if(co2 < min_co2)
-						atmos_suitable = 0
-				if(max_co2)
-					if(co2 > max_co2)
-						atmos_suitable = 0
-
-	//Atmos effect
-	if(bodytemperature < minbodytemp)
-		health -= cold_damage_per_tick
-	else if(bodytemperature > maxbodytemp)
-		health -= heat_damage_per_tick
-
-	if(!atmos_suitable)
-		health -= unsuitable_atoms_damage
 
 /mob/living/simple_animal/Bumped(AM as mob|obj)
 	if(!AM) return
@@ -217,9 +33,8 @@
 
 /mob/living/simple_animal/emote(var/act,var/m_type=1,var/message = null)
 	switch(act)
-
 		if ("scream")
-			message = "<B>[src]</B> screams!"
+			message = "<B>[src]</B> makes a loud and pained whimper"
 			m_type = 2
 
 		if ("custom")
@@ -332,7 +147,7 @@
 
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
-		if(alive)
+		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
 				if(MED.amount >= 1)
@@ -372,7 +187,6 @@
 	stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
 /mob/living/simple_animal/proc/Die()
-	alive = 0
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0

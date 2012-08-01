@@ -26,6 +26,3 @@
 /mob/living/simple_animal/kobold/Move(var/dir)
 	..()
 	flick("kobold_walk",src)
-
-/mob/living/simple_animal/kobold/munchkin
-	name = "Munchkin"

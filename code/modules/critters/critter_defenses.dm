@@ -73,7 +73,7 @@ Contains the procs that control attacking critters
 
 	Die()
 		if (!src.alive) return
-		src.icon_state += "-dead"
+		src.icon_state += "_dead"
 		src.alive = 0
 		src.anchored = 0
 		src.density = 0

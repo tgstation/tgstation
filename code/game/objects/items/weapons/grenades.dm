@@ -510,15 +510,15 @@ CRITTER GRENADE
 	deliveryamt = 5
 	origin_tech = "materials=3;magnets=4;syndicate=4"
 
-/obj/item/weapon/spawnergrenade/spesscarp
+/obj/item/weapon/spawnergrenade/carp
 	name = "carp delivery grenade"
-	spawner_type = /obj/effect/critter/spesscarp
+	spawner_type = /mob/living/simple_animal/carp
 	deliveryamt = 5
 	origin_tech = "materials=3;magnets=4;syndicate=4"
 
-/obj/item/weapon/spawnergrenade/elitespesscarp
+/obj/item/weapon/spawnergrenade/elitecarp
 	name = "elite carp delivery grenade"
-	spawner_type = /obj/effect/critter/spesscarp/elite
+	spawner_type = /mob/living/simple_animal/carp/elite
 	deliveryamt = 2
 	origin_tech = "materials=3;magnets=4;syndicate=4"
 
