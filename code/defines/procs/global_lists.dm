@@ -94,10 +94,13 @@ proc/rebuild_mob_lists()
 proc/add_to_mob_list(var/mob/A)//Adds an individual mob
 	if(A)
 		mob_list |= A
-		if(A.stat == 2)
-			dead_mob_list |= A
-		if(A.stat != 2)
-			living_mob_list |= A
+		if(istype(A,/mob/new_player))//New players are only on the mob list, but not the dead/living
+			return
+		else
+			if(A.stat == 2)
+				dead_mob_list |= A
+			if(A.stat != 2)
+				living_mob_list |= A
 //		if(A.client)
 //			player_list |= A
 
