@@ -74,24 +74,23 @@
 		winset(user, "chemdispenser.eject", "text=\"\[Insert beaker\]\"")
 /obj/machinery/chem_dispenser/proc/initWindow(mob/user as mob)
 	var/i = 0
-	var list/nameparams = params2list(winget(user, "chemdispenser_reagents.template_name", "pos;size;type;image;image-mode"))
-	var list/buttonparams = params2list(winget(user, "chemdispenser_reagents.template_dispense", "pos;size;type;image;image-mode;text;is-flat"))
+	var/list/nameparams = params2list(winget(user, "chemdispenser_reagents.template_name", "pos;size;type;image;image-mode"))
+	var/list/buttonparams = params2list(winget(user, "chemdispenser_reagents.template_dispense", "pos;size;type;image;image-mode;text;is-flat"))
 	for(var/re in dispensable_reagents)
-		for(var/da in typesof(/datum/reagent) - /datum/reagent)
-			var/datum/reagent/temp = new da()
-			if(temp.id == re)
-				var list/newparams1 = nameparams.Copy()
-				var list/newparams2 = buttonparams.Copy()
-				var/posy = 8 + 40 * i
-				newparams1["pos"] = text("8,[posy]")
-				newparams2["pos"] = text("248,[posy]")
-				newparams1["parent"] = "chemdispenser_reagents"
-				newparams2["parent"] = "chemdispenser_reagents"
-				newparams1["text"] = temp.name
-				newparams2["command"] = text("skincmd \"chemdispenser;[temp.id]\"")
-				winset(user, "chemdispenser_reagent_name[i]", list2params(newparams1))
-				winset(user, "chemdispenser_reagent_dispense[i]", list2params(newparams2))
-				i++
+		var/datum/reagent/temp = chemical_reagents_list[re]
+		if(temp)
+			var/list/newparams1 = nameparams.Copy()
+			var/list/newparams2 = buttonparams.Copy()
+			var/posy = 8 + 40 * i
+			newparams1["pos"] = text("8,[posy]")
+			newparams2["pos"] = text("248,[posy]")
+			newparams1["parent"] = "chemdispenser_reagents"
+			newparams2["parent"] = "chemdispenser_reagents"
+			newparams1["text"] = temp.name
+			newparams2["command"] = text("skincmd \"chemdispenser;[temp.id]\"")
+			winset(user, "chemdispenser_reagent_name[i]", list2params(newparams1))
+			winset(user, "chemdispenser_reagent_dispense[i]", list2params(newparams2))
+			i++
 	winset(user, "chemdispenser_reagents", "size=340x[8 + 40 * i]")
 
 /obj/machinery/chem_dispenser/SkinCmd(mob/user as mob, var/data as text)

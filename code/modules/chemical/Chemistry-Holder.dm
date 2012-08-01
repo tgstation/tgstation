@@ -15,6 +15,22 @@ datum
 		New(maximum=100)
 			maximum_volume = maximum
 
+			//I dislike having these here but map-objects are initialised before world/New() is called. >_>
+			if(!chemical_reagents_list)
+				//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
+				var/paths = typesof(/datum/reagent) - /datum/reagent
+				chemical_reagents_list = list()
+				for(var/path in paths)
+					var/datum/reagent/D = new path()
+					chemical_reagents_list[D.id] = D
+			if(!chemical_reactions_list)
+				//Chemical Reactions - Initialises all /datum/chemical_reaction into a list (without an index)
+				var/paths = typesof(/datum/chemical_reaction) - /datum/chemical_reaction
+				chemical_reactions_list = list()
+				for(var/path in paths)
+					var/datum/chemical_reaction/D = new path()
+					chemical_reactions_list += D
+
 		proc
 
 			remove_any(var/amount=1)
@@ -182,8 +198,7 @@ datum
 				var/reaction_occured = 0
 				do
 					reaction_occured = 0
-					for(var/A in typesof(/datum/chemical_reaction) - /datum/chemical_reaction)
-						var/datum/chemical_reaction/C = new A()
+					for(var/datum/chemical_reaction/C in chemical_reactions_list)
 						var/total_required_reagents = C.required_reagents.len
 						var/total_matching_reagents = 0
 						var/total_required_catalysts = C.required_catalysts.len
@@ -349,22 +364,22 @@ datum
 						handle_reactions()
 						return 0
 
-				for(var/A in typesof(/datum/reagent) - /datum/reagent)
-					var/datum/reagent/R = new A()
-					if (R.id == reagent)
-						reagent_list += R
-						R.holder = src
-						R.volume = amount
-						R.data = data
-						//debug
-						//world << "Adding data"
-						//for(var/D in R.data)
-						//	world << "Container data: [D] = [R.data[D]]"
-						//debug
-						update_total()
-						my_atom.on_reagent_change()
-						handle_reactions()
-						return 0
+				var/datum/reagent/D = chemical_reagents_list[reagent]
+				if(D)
+					var/datum/reagent/R = new D.type()
+					reagent_list += R
+					R.holder = src
+					R.volume = amount
+					R.data = data
+					//debug
+					//world << "Adding data"
+					//for(var/D in R.data)
+					//	world << "Container data: [D] = [R.data[D]]"
+					//debug
+					update_total()
+					my_atom.on_reagent_change()
+					handle_reactions()
+					return 0
 
 				handle_reactions()
 

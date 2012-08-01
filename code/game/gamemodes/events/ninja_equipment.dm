@@ -465,7 +465,7 @@ ________________________________________________________________________________
 			if(t_disk)
 				dat += "<a href='byond://?src=\ref[src];choice=Eject Disk'>Eject Disk</a><br>"
 			dat += "<ul>"
-			if(stored_research.len)//If there is stored research. Should be but just in case.
+			if(istype(stored_research,/list))//If there is stored research. Should be but just in case.
 				for(var/datum/tech/current_data in stored_research)
 					dat += "<li>"
 					dat += "[current_data.name]: [current_data.level]"

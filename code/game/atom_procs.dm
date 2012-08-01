@@ -281,10 +281,7 @@
 				this.viruses += newDisease
 				newDisease.holder = this
 
-
-
-/atom/proc/clean_blood()
-
+/atom/proc/clean_prints()
 	if(istype(fingerprints, /list))
 		//Smudge up dem prints some
 		for(var/P in fingerprints)
@@ -296,44 +293,43 @@
 		if(!fingerprints.len)
 			del(fingerprints)
 
+/atom/proc/clean_blood()
 	if(istype(blood_DNA, /list))
-		//Cleaning blood off of mobs
-		if(istype(src, /mob/living/carbon))
-			var/mob/living/carbon/M = src
-			del(M.blood_DNA)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.gloves)
-					H.gloves.clean_blood()
-//					H.update_inv_gloves(0)		//Needs to be called even if we aren't wearing gloves.
-				else
-					H.bloody_hands = 0
-				H.update_inv_gloves(0)		//because it handles bloody hands too
-			M.update_icons()	//apply the now updated overlays to the mob
+		del(blood_DNA)
+		.=1
 
-		//Cleaning blood off of items
-		else if(istype(src, /obj/item))
-			var/obj/item/O = src
-			del(O.blood_DNA)
-			if(O.blood_overlay)
-				O.overlays.Remove(O.blood_overlay)
-
-			if(istype(src, /obj/item/clothing/gloves))
-				var/obj/item/clothing/gloves/G = src
-				G.transfer_blood = 0
-
-		//Cleaning blood off of turfs
-		else if(istype(src, /turf/simulated))
-			var/turf/simulated/T = src
-			del(T.blood_DNA)
-			if(T.icon_old)
-				var/icon/I = new /icon(T.icon_old, T.icon_state)
-				T.icon = I
+	//Cleaning blood off of mobs
+	if(istype(src, /mob/living/carbon))
+		var/mob/living/carbon/M = src
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.gloves)
+				if(H.gloves.clean_blood())
+					H.update_inv_gloves(0)
 			else
-				T.icon = initial(icon)
+				if(H.bloody_hands)
+					H.bloody_hands = 0
+					H.update_inv_gloves(0)
+		M.update_icons()	//apply the now updated overlays to the mob
 
-		else if(!blood_DNA.len)
-			del(blood_DNA)
+	//Cleaning blood off of items
+	else if(istype(src, /obj/item))
+		var/obj/item/O = src
+		if(O.blood_overlay)
+			O.overlays.Remove(O.blood_overlay)
+
+		if(istype(src, /obj/item/clothing/gloves))
+			var/obj/item/clothing/gloves/G = src
+			G.transfer_blood = 0
+
+	//Cleaning blood off of turfs
+	else if(istype(src, /turf/simulated))
+		var/turf/simulated/T = src
+		if(T.icon_old)
+			var/icon/I = new /icon(T.icon_old, T.icon_state)
+			T.icon = I
+		else
+			T.icon = initial(icon)
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)

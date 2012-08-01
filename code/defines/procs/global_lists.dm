@@ -10,6 +10,8 @@ var/global/list/client_list = list()//List of all clients, based on ckey
 var/global/list/cable_list = list()//Index for all cables, so that powernets don't have to look through the entire world all the time
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
 var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessory/facial_hair indexed by name
+var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
+var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 
 //////////////////////////
 /////Initial Building/////
