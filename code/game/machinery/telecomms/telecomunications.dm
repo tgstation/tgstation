@@ -563,7 +563,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
-	autolinkers = list("s_relay", "s_receiverA", "s_receiverB", "s_broadcasterA", "s_broadcasterB")
+	autolinkers = list("s_relay", "s_receiverB", "s_broadcasterB")
 
 /obj/machinery/telecomms/relay/preset/telecomms
 	id = "Telecomms Relay"
@@ -571,13 +571,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/relay/preset/mining
 	id = "Mining Relay"
-	autolinkers = list("m_relay", "m_receiverA", "m_receiverB", "m_broadcasterA", "m_broadcasterB")
+	autolinkers = list("m_relay", "m_receiverB", "m_broadcasterB")
 
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
 	hide = 1
 	toggled = 0
-	autolinkers = list("r_relay", "r_receiverA", "r_receiverB", "r_broadcasterA", "r_broadcasterB")
+	autolinkers = list("r_relay", "r_receiverB", "r_broadcasterB")
 
 //HUB
 
@@ -607,28 +607,15 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			freq_listening |= i
 		..()
 
-/obj/machinery/telecomms/receiver/preset_left/station // Unused, note to self to delete later
-	id = "Station Receiver A"
-	autolinkers = list("s_receiverA")
-
 /obj/machinery/telecomms/receiver/preset_right/station
 	id = "Station Receiver B"
 	autolinkers = list("s_receiverB")
 	freq_listening = list(1351, 1355, 1347, 1349, 1353, 1357, 1359) // science, medical, cargo, mining, command, engineering, security
 
-/obj/machinery/telecomms/receiver/preset_left/mining
-	id = "Mining Receiver A"
-	autolinkers = list("m_receiverA")
-
 /obj/machinery/telecomms/receiver/preset_right/mining
 	id = "Mining Receiver B"
 	autolinkers = list("m_receiverB")
-
-/obj/machinery/telecomms/receiver/preset_left/ruskie // Unused, not to self to delete later.
-	id = "Ruskie Receiver A"
-	autolinkers = list("r_receiverA")
-	toggled = 0
-	hide = 1
+	freq_listening = list(1351, 1355, 1347, 1349, 1353, 1357, 1359)
 
 /obj/machinery/telecomms/receiver/preset_right/ruskie
 	id = "Ruskie Receiver B"
@@ -749,28 +736,15 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	network = "tcommsat"
 	autolinkers = list("broadcasterB")
 
-/obj/machinery/telecomms/broadcaster/preset_left/station // Unused, not to self to delete later
-	id = "Station Broadcaster A"
-	autolinkers = list("s_broadcasterA")
-
 
 /obj/machinery/telecomms/broadcaster/preset_right/station
 	id = "Station Broadcaster B"
 	autolinkers = list("s_broadcasterB")
 
-/obj/machinery/telecomms/broadcaster/preset_left/mining
-	id = "Mining Broadcaster A"
-	autolinkers = list("m_broadcasterA")
 
 /obj/machinery/telecomms/broadcaster/preset_right/mining
 	id = "Mining Broadcaster B"
 	autolinkers = list("m_broadcasterB")
-
-/obj/machinery/telecomms/broadcaster/preset_left/ruskie
-	id = "Ruskie Broadcaster A"
-	autolinkers = list("r_broadcasterA")
-	toggled = 0
-	hide = 1
 
 /obj/machinery/telecomms/broadcaster/preset_right/ruskie
 	id = "Ruskie Broadcaster B"
