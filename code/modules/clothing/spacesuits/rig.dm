@@ -2,7 +2,7 @@
 	name = "engineering hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	icon_state = "rig0-engineering"
-	item_state = "rig0_engineering"
+	item_state = "eng_helm"
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight)
 	var/brightness_on = 4 //luminosity when on
@@ -16,7 +16,7 @@
 			return
 		on = !on
 		icon_state = "rig[on]-[color]"
-		item_state = "rig[on]-[color]"
+//		item_state = "rig[on]-[color]"
 
 		if(on)
 			user.total_luminosity += brightness_on
@@ -39,20 +39,20 @@
 /obj/item/clothing/head/helmet/space/rig/mining
 	name = "mining hardsuit helmet"
 	icon_state = "rig0-mining"
-	item_state = "rig0-mining"
+	item_state = "mining_helm"
 	color = "mining"
 
 
 /obj/item/clothing/head/helmet/space/rig/elite
 	name = "advanced hardsuit helmet"
 	icon_state = "rig0-white"
-	item_state = "rig0-white"
+	item_state = "ce_helm"
 	color = "white"
 
 /obj/item/clothing/head/helmet/space/rig/syndi
 	name = "blood-red hardsuit helmet"
 	icon_state = "rig0-syndi"
-	item_state = "rig0-syndi"
+	item_state = "syndie_helm"
 	color = "syndi"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
 

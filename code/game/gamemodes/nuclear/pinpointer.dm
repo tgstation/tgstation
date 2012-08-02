@@ -183,9 +183,10 @@
 			active = 1
 			if(mode == 0)
 				workdisk()
+				usr << "\blue Authentication Disk Locator active."
 			if(mode == 1)
 				worklocation()
-			usr << "\blue You activate the pinpointer"
+				usr << "\blue Shuttle Locator active."
 		else
 			active = 0
 			icon_state = "pinoff"
@@ -193,6 +194,16 @@
 
 /obj/item/weapon/pinpointer/nukeop/workdisk()
 	if(!active) return
+	if(mode)//Check in case the mode changes while operating
+		worklocation()
+		return
+	if(bomb_set)//If the bomb is set, lead to the shuttle
+		mode = 1//Ensures worklocation() continues to work
+		worklocation()
+		playsound(src.loc, 'twobeep.ogg', 50, 1)//Plays a beep
+		for (var/mob/O in hearers(1, src.loc))
+			O.show_message(text("Shuttle Locator active."))//Lets the mob holding it know that the mode has changed
+		return//Get outta here
 	if(!the_disk)
 		the_disk = locate()
 		if(!the_disk)
@@ -216,6 +227,15 @@
 /obj/item/weapon/pinpointer/nukeop/proc/worklocation()
 	if(!active)
 		return
+	if(!mode)
+		workdisk()
+		return
+	if(!bomb_set)
+		mode = 0
+		workdisk()
+		playsound(src.loc, 'twobeep.ogg', 50, 1)
+		for (var/mob/O in hearers(2, src.loc))
+			O.show_message(text("Authentication Disk Locator active."))
 	if(!home)
 		home = locate()
 		if(!home)
@@ -236,24 +256,6 @@
 				icon_state = "pinonfar"
 
 	spawn(5) .()
-
-/obj/item/weapon/pinpointer/nukeop/verb/toggle_mode()
-	set category = "Object"
-	set name = "Toggle Pinpointer Mode"
-	set src in view(1)
-
-	active = 0
-	icon_state = "pinoff"
-
-	if(mode)
-		mode = 0
-		usr << "Nuclear Disk locator active."
-		return attack_self()
-
-	else
-		mode = 1
-		usr << "Shuttle locator active."
-		return attack_self()
 
 
 /*/obj/item/weapon/pinpointer/New()
