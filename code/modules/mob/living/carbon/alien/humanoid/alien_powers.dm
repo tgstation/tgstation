@@ -146,13 +146,15 @@ I kind of like the right click only--the window version can get a little confusi
 	set category = "Alien"
 
 	if(powerc(100))
-		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
+		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
 		if(!choice || !powerc(100))	return
 		adjustToxLoss(-100)
 		src << "\green You shape a [choice]."
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
 		switch(choice)
+			if("resin door")
+				new /obj/structure/mineral_door/resin(loc)
 			if("resin wall")
 				new /obj/effect/alien/resin/wall(loc)
 			if("resin membrane")

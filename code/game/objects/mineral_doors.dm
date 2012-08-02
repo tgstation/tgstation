@@ -285,6 +285,11 @@
 /obj/structure/mineral_door/resin
 	mineralType = "resin"
 	hardness = 5
+	var/close_delay = 100
+
+	TryToSwitchState(atom/user)
+		if(isalien(user))
+			return ..()
 
 	Open()
 		isSwitchingStates = 1
@@ -296,6 +301,10 @@
 		state = 1
 		update_icon()
 		isSwitchingStates = 0
+
+		spawn(close_delay)
+			if(!isSwitchingStates && state == 1)
+				Close()
 
 	Close()
 		isSwitchingStates = 1

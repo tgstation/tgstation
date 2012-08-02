@@ -238,6 +238,9 @@
 			if(ear in view(R.canhear_range,radio_loc))
 				hearers += M
 				break
+			else if(ear in range(0, radio_loc))
+				hearers += M
+				break
 
 	return hearers
 
