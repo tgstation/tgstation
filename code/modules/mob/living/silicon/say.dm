@@ -18,7 +18,7 @@
 		return
 
 	if (length(message) >= 2)
-		if ((copytext(message, 1, 3) == ":s") || (copytext(message, 1, 3) == ":S"))
+		if ((copytext(message, 1, 3) == ":b") || (copytext(message, 1, 3) == ":B"))
 			if(istype(src, /mob/living/silicon/pai))
 				return ..(message)
 			message = copytext(message, 3)

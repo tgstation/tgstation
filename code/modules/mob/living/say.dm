@@ -133,9 +133,10 @@ var/list/department_radio_keys = list(
 		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
 		if (message_mode)
 			message = trim(copytext(message, 3))
-			if (!(ishuman(src) || isanimal(src) && (message_mode=="department" || (message_mode in radiochannels))))
+			if (!(ishuman(src) || isanimal(src) || isrobot(src) && (message_mode=="department" || (message_mode in radiochannels))))
 				message_mode = null //only humans can use headsets
 			// Check removed so parrots can use headsets!
+			// And borgs -Sieve
 
 	if (!message)
 		return
@@ -236,6 +237,7 @@ var/list/department_radio_keys = list(
 				used_radios += src:ears
 			message_range = 1
 			italics = 1
+
 		if ("pAI")
 			if (src:radio)
 				src:radio.talk_into(src, message)
@@ -253,9 +255,15 @@ var/list/department_radio_keys = list(
 		else
 			//world << "SPECIAL HEADSETS"
 			if (message_mode in radiochannels)
-				if (src:ears)
-					src:ears.talk_into(src, message, message_mode)
-					used_radios += src:ears
+				if(isrobot(src))//Seperates robots to prevent runtimes from the ear stuff
+					var/mob/living/silicon/robot/R = src
+					if(R.radio)//Sanityyyy
+						R.radio.talk_into(src, message, message_mode)
+						used_radios += R.radio
+				else
+					if (src:ears)
+						src:ears.talk_into(src, message, message_mode)
+						used_radios += src:ears
 				message_range = 1
 				italics = 1
 /////SPECIAL HEADSETS END

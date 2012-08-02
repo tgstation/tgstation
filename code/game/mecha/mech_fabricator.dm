@@ -307,34 +307,8 @@
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_info(var/obj/item/part)
-//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(istype(part,/obj/item/robot_parts))
-		var/obj/item/robot_parts/P = part
-		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
-		return output
-	else if(istype(part,/obj/item/mecha_parts))
-		var/obj/item/mecha_parts/P = part
-		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
-		return output
-	else if(istype(part,/obj/item/borg/upgrade))
-		var/obj/item/borg/upgrade/P = part
-		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
-		return output
-	else if(istype(part,/obj/item/device/mmi))
-		var/obj/item/device/mmi/P = part
-		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
-		return output
-	else if(istype(part,/obj/item/device/flash/synthetic))
-		var/obj/item/device/flash/synthetic/P = part
-		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
-		return output
-	else if(istype(part,/obj/item/weapon/cell))
-		var/obj/item/weapon/cell/P = part
-		var/output = "[P.name] (Cost: [output_part_cost(P)]) [get_construction_time_w_coeff(P)/10]sec"
-		return output
-	else
-		return 0
-
+	var/output = "[part.name] (Cost: [output_part_cost(part)]) [get_construction_time_w_coeff(part)/10]sec"
+	return output
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/obj/item/part)
 	var/i = 0

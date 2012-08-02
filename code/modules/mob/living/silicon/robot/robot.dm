@@ -49,7 +49,7 @@
 			icon_state = "secborg"
 			modtype = "Synd"
 
-		radio = new /obj/item/device/radio(src)
+		radio = new /obj/item/device/radio/borg(src)
 		if(!scrambledcodes)
 			camera = new /obj/machinery/camera(src)
 			camera.c_tag = real_name
@@ -432,10 +432,23 @@
 		else
 			user << "You can't reach the wiring."
 
-	else if	(istype(W, /obj/item/weapon/screwdriver) && opened)	// haxing
+	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
 		updateicon()
+
+	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
+		if(radio)
+			radio.attackby(W,user)//Push it to the radio to let it handle everything
+		else
+			user << "Unable to locate a radio."
+		updateicon()
+
+	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
+		if(radio)//sanityyyyyy
+			radio.attackby(W,user)//GTFO, you have your own procs
+		else
+			user << "Unable to locate a radio."
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
@@ -855,21 +868,7 @@
 	return
 
 /mob/living/silicon/robot/proc/radio_menu()
-	var/dat = {"
-<TT>
-Microphone: [radio.broadcasting ? "<A href='byond://?src=\ref[radio];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[radio];talk=1'>Disengaged</A>"]<BR>
-Speaker: [radio.listening ? "<A href='byond://?src=\ref[radio];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[radio];listen=1'>Disengaged</A>"]<BR>
-Frequency:
-<A href='byond://?src=\ref[radio];freq=-10'>-</A>
-<A href='byond://?src=\ref[radio];freq=-2'>-</A>
-[format_frequency(radio.frequency)]
-<A href='byond://?src=\ref[radio];freq=2'>+</A>
-<A href='byond://?src=\ref[radio];freq=10'>+</A><BR>
--------
-</TT>"}
-	src << browse(dat, "window=radio")
-	onclose(src, "radio")
-	return
+	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
 
 
 /mob/living/silicon/robot/Move(a, b, flag)
