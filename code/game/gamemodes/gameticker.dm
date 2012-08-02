@@ -41,7 +41,6 @@ var/datum/roundinfo/roundinfo = new()
 	login_music = pick('title1.ogg', 'title2.ogg') // choose title music!
 
 	do
-		vermin_spawn_areas = new/list("/area/maintenance","/area/mine/maintenance","/area/crew_quarters/toilet","/area/crew_quarters/locker/locker_toilet")
 
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
@@ -54,6 +53,9 @@ var/datum/roundinfo/roundinfo = new()
 			if(pregame_timeleft <= 0)
 				current_state = GAME_STATE_SETTING_UP
 	while (!setup())
+
+	spawn(10)
+		vermin_spawn_areas = list("/area/maintenance","/area/mine/maintenance","/area/crew_quarters/toilet","/area/crew_quarters/locker/locker_toilet")
 
 /datum/controller/gameticker/proc/setup()
 	//Create and announce mode
@@ -310,34 +312,32 @@ var/datum/roundinfo/roundinfo = new()
 				world.Reboot()
 
 		//randomly spawn vermin in maintenance and other areas
-		//doesn't seem to be working
-		/*if(spawn_vermin && vermin_spawn_areas.len)
+		if(spawn_vermin && vermin_spawn_areas && vermin_spawn_areas.len)
 			if(!spawning_vermin)
 				spawning_vermin = 1
-				spawn(rand(10,10))	//between 10 (6000) and 15 (9000) minutes interval
-					var/area_text = pick( text2path(vermin_spawn_areas) )
-					world << area_text
+				spawn(rand(6000,9000))	//between 10 (6000) and 15 (9000) minutes interval
+					var/area_text = pick(vermin_spawn_areas)
+					area_text = text2path(area_text)
 					var/random_area = pick( typesof(area_text) )
-					world << random_area
 					var/list/turfs = get_area_turfs(random_area)
-					world << turfs.len
 					if(!turfs.len)
 						turfs = get_area_turfs(pick(typesof(pick(vermin_spawn_areas))))
-						world << turfs.len
-					else
-						world << "-----"
 					//
-					if(turfs && turfs.len)
-						var/turf/T = get_random_turf(turfs)
-						world << T
-						//
-						if(prob(100))
+					while(turfs.len > 0)
+						var/turf/T = pick(turfs)
+						turfs -= T
+						if(T.density)
+							continue
+						for(var/obj/I in T)
+							if(I.density)
+								continue
+						if(prob(50))
 							//spawn a mouse, any of the gray, brown or white varieties
 							new /mob/living/simple_animal/mouse(T)
 						else
 							//spawn a roach
 							new /obj/effect/critter/roach(T)
-					spawning_vermin = 0*/
+					spawning_vermin = 0
 
 		return 1
 

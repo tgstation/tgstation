@@ -17,7 +17,7 @@
 	response_disarm = "gently pushes aside the"
 	response_harm   = "splats the"
 	density = 0
-	var/color = "gray" //brown, gray and white
+	var/color	//brown, gray and white
 
 /mob/living/simple_animal/mouse/Life()
 	..()
