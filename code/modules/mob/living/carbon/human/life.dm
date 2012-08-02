@@ -1,6 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 #define HUMAN_MAX_OXYLOSS 12 //Defines how much oxyloss humans can get per tick. No air applies this value.
+#define HUMAN_CRIT_MAX_OXYLOSS ( (4 * last_tick_duration) /3) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
 
 /mob/living/carbon/human
 	var/oxygen_alert = 0
@@ -31,7 +32,7 @@
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD)
 		if(air_master.current_cycle%4==2) 	//First, resolve location and get a breath
-			spawn(0) breathe() 				//Only try to take a breath every 4 seconds, unless suffocating
+			spawn(0) breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj/))
@@ -258,10 +259,7 @@
 
 			//No breath from internal atmosphere so get breath from location
 			if(!breath)
-				if(istype(loc, /obj/))
-					var/obj/location_as_object = loc
-					breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
-				else if(istype(loc, /turf/))
+				if(isturf(loc))
 					var/breath_moles = 0
 					/*if(environment.return_pressure() > ONE_ATMOSPHERE)
 						// Loads of air around (pressure effect will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
@@ -271,12 +269,16 @@
 					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
 					breath = loc.remove_air(breath_moles)
-
 					// Handle chem smoke effect  -- Doohl
-
 					var/block = 0
 					if(wear_mask)
-						if(istype(wear_mask, /obj/item/clothing/mask/gas))
+						if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
+							block = 1
+					if(glasses)
+						if(glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
+							block = 1
+					if(head)
+						if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
 							block = 1
 
 					if(!block)
@@ -290,9 +292,6 @@
 								break // If they breathe in the nasty stuff once, no need to continue checking
 
 			else //Still give containing object the chance to interact
-				if(istype(loc, /obj/))
-					var/obj/location_as_object = loc
-					location_as_object.handle_internal_lifeform(src, 0)
 
 		handle_breath(breath)
 
@@ -322,7 +321,10 @@
 		if(!breath || (breath.total_moles() == 0))
 			if(reagents.has_reagent("inaprovaline"))
 				return
-			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+			if(health > 0)
+				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+			else
+				adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 			oxygen_alert = max(oxygen_alert, 1)
 
@@ -697,14 +699,17 @@
 				silent = 0
 				return 1
 
+
 			//UNCONSCIOUS. NO-ONE IS HOME
 			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
+				Paralyse(3)
+
+				/* Done by handle_breath()
 				if( health <= 20 && prob(1) )
 					spawn(0)
 						emote("gasp")
 				if(!reagents.has_reagent("inaprovaline"))
-					adjustOxyLoss(1)
-				Paralyse(3)
+					adjustOxyLoss(1)*/
 
 			if(hallucination)
 				if(hallucination >= 20)
@@ -849,16 +854,20 @@
 			if(glasses)
 				if(istype(glasses, /obj/item/clothing/glasses/meson))
 					sight |= SEE_TURFS
-					if(!druggy)			see_invisible = SEE_INVISIBLE_MINIMUM
+					if(!druggy)
+						see_invisible = SEE_INVISIBLE_MINIMUM
 				else if(istype(glasses, /obj/item/clothing/glasses/night))
 					see_in_dark = 5
-					if(!druggy)			see_invisible = SEE_INVISIBLE_MINIMUM
+					if(!druggy)
+						see_invisible = SEE_INVISIBLE_MINIMUM
 				else if(istype(glasses, /obj/item/clothing/glasses/thermal))
 					sight |= SEE_MOBS
-					if(!druggy)			see_invisible = SEE_INVISIBLE_MINIMUM
+					if(!druggy)
+						see_invisible = SEE_INVISIBLE_MINIMUM
 				else if(istype(glasses, /obj/item/clothing/glasses/material))
 					sight |= SEE_OBJS
-					if(!druggy)			see_invisible = SEE_INVISIBLE_MINIMUM
+					if(!druggy)
+						see_invisible = SEE_INVISIBLE_MINIMUM
 
 	/* HUD shit goes here, as long as it doesn't modify sight flags */
 	// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
@@ -880,6 +889,10 @@
 					else if(istype(O, /obj/item/clothing/glasses/hud/security))
 						O.process_hud(src)
 						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+				else
+					see_invisible = SEE_INVISIBLE_LIVING
+			else
+				see_invisible = SEE_INVISIBLE_LIVING
 
 			if(sleep && !hal_crit)	sleep.icon_state = "sleep[sleeping]"	//used?
 
@@ -1029,3 +1042,4 @@
 					changeling.geneticdamage = changeling.geneticdamage-1
 
 #undef HUMAN_MAX_OXYLOSS
+#undef HUMAN_CRIT_MAX_OXYLOSS

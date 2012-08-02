@@ -329,6 +329,7 @@
 	var/obj/item/master = null
 
 	var/icon_action_button //If this is set, The item will make an action button on the player's HUD when picked up. The button will have the icon_action_button sprite from the screen1_action.dmi file.
+	var/action_button_name //This is the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. Note that icon_action_button needs to be set in order for the action button to appear.
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -723,6 +724,16 @@
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
+
+/obj/structure/stool/bed/chair/wood/normal
+	icon_state = "wooden_chair"
+	name = "wooden chair"
+	desc = "Old is never too old to not be in fashion."
+
+/obj/structure/stool/bed/chair/wood/wings
+	icon_state = "wooden_chair_wings"
+	name = "wooden chair"
+	desc = "Old is never too old to not be in fashion."
 
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"

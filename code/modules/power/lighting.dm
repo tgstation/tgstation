@@ -639,10 +639,10 @@
 	g_amt = 100
 	brightness = 8
 
-	large
-		w_class = 2
-		name = "large light tube"
-		brightness = 15
+/obj/item/weapon/light/tube/large
+	w_class = 2
+	name = "large light tube"
+	brightness = 15
 
 /obj/item/weapon/light/bulb
 	name = "light bulb"
@@ -652,6 +652,10 @@
 	item_state = "contvapour"
 	g_amt = 100
 	brightness = 5
+
+/obj/item/weapon/light/throw_impact(atom/hit_atom)
+	..()
+	shatter()
 
 /obj/item/weapon/light/bulb/fire
 	name = "fire bulb"
@@ -663,18 +667,18 @@
 	brightness = 5
 
 // update the icon state and description of the light
-/obj/item/weapon/light
-	proc/update()
-		switch(status)
-			if(LIGHT_OK)
-				icon_state = base_state
-				desc = "A replacement [name]."
-			if(LIGHT_BURNED)
-				icon_state = "[base_state]-burned"
-				desc = "A burnt-out [name]."
-			if(LIGHT_BROKEN)
-				icon_state = "[base_state]-broken"
-				desc = "A broken [name]."
+
+/obj/item/weapon/light/proc/update()
+	switch(status)
+		if(LIGHT_OK)
+			icon_state = base_state
+			desc = "A replacement [name]."
+		if(LIGHT_BURNED)
+			icon_state = "[base_state]-burned"
+			desc = "A burnt-out [name]."
+		if(LIGHT_BROKEN)
+			icon_state = "[base_state]-broken"
+			desc = "A broken [name]."
 
 
 /obj/item/weapon/light/New()
@@ -715,8 +719,11 @@
 	if(user.a_intent != "hurt")
 		return
 
+	shatter()
+
+/obj/item/weapon/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		user << "The [name] shatters!"
+		src.visible_message("\red [name] shatters.","\red You hear a small glass object shatter.")
 		status = LIGHT_BROKEN
 		force = 5
 		playsound(src.loc, 'Glasshit.ogg', 75, 1)

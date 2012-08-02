@@ -544,17 +544,18 @@
 	desc = "Just like back home, on clown planet! HONK!"
 	icon_state = "pie"
 	trash = /obj/item/trash/plate
-	New()
-		..()
-		reagents.add_reagent("nutriment", 4)
-		reagents.add_reagent("banana",5)
-		bitesize = 3
 
-	throw_impact(atom/hit_atom)
-		..()
-		new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-		src.visible_message("\red [src.name] splats.","\red You hear a splat.")
-		del(src)
+/obj/item/weapon/reagent_containers/food/snacks/pie/New()
+	..()
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("banana",5)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom)
+	..()
+	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
+	src.visible_message("\red [src.name] splats.","\red You hear a splat.")
+	del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis
 	name = "Berry Clafoutis"

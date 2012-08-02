@@ -19,8 +19,8 @@
 	druggy.mouse_opacity = 0
 
 	mymob.blind = new /obj/screen( null )
-	mymob.blind.icon = ui_style
-	mymob.blind.icon_state = "blackanimate"
+	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
+	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
-	mymob.blind.screen_loc = "1,1 to 15,15"
+	mymob.blind.screen_loc = "1,1"
 	mymob.blind.layer = 0

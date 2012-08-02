@@ -550,10 +550,11 @@
 	src.hotkeybuttons += mymob.pullin
 
 	mymob.blind = new /obj/screen( null )
-	mymob.blind.icon = ui_style
-	mymob.blind.icon_state = "blackanimate"
+	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
+	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
-	mymob.blind.screen_loc = "1,1 to 15,15"
+	mymob.blind.screen_loc = "1,1"
+
 	mymob.blind.layer = 0
 
 	mymob.flash = new /obj/screen( null )
@@ -897,6 +898,9 @@ Radar-related things
 	if(!src.hud_used) return
 	if(!src.client) return
 
+	if(!hud_used.hud_shown)	//Hud toggled to minimal
+		return
+
 	src.client.screen -= src.hud_used.item_action_list
 	hud_used.item_action_list = list()
 
@@ -905,6 +909,10 @@ Radar-related things
 			var/obj/screen/item_action/A = new(src.hud_used)
 			A.icon = 'icons/mob/screen1_action.dmi'
 			A.icon_state = I.icon_action_button
+			if(I.action_button_name)
+				A.name = I.action_button_name
+			else
+				A.name = "Use [I.name]"
 			A.owner = I
 			hud_used.item_action_list += A
 			switch(num)
@@ -918,6 +926,7 @@ Radar-related things
 					A.screen_loc = ui_action_slot4
 				if(5)
 					A.screen_loc = ui_action_slot5
+					break //5 slots available, so no more can be added.
 			num++
 
 	src.client.screen += src.hud_used.item_action_list

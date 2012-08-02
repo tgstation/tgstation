@@ -291,6 +291,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					src.client.screen -= src.hud_used.other
 				if(src.hud_used.hotkeybuttons)
 					src.client.screen -= src.hud_used.hotkeybuttons
+				if(src.hud_used.item_action_list)
+					src.client.screen -= src.hud_used.item_action_list
 
 				//Due to some poor coding some things need special treatment:
 				//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
@@ -311,11 +313,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(src.hud_used.hotkeybuttons && !src.hud_used.hotkey_ui_hidden)
 					src.client.screen += src.hud_used.hotkeybuttons
 
+
 				src.hud_used.action_intent.screen_loc = ui_acti //Restore intent selection to the original position
 				src.client.screen += src.zone_sel				//This one is a special snowflake
 
 			hud_used.hidden_inventory_update()
 			hud_used.persistant_inventory_update()
+			update_action_buttons()
 		else
 			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
 	else

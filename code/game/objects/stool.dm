@@ -40,6 +40,15 @@
 		return
 	return
 
+
+/obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wrench))
+		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		new /obj/item/stack/sheet/wood(src.loc)
+		del(src)
+	else
+		..()
+
 /obj/structure/stool/bed/Del()
 	unbuckle()
 	..()

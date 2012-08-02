@@ -254,10 +254,10 @@
 	mymob.pullin.screen_loc = ui_pull_resist
 
 	mymob.blind = new /obj/screen( null )
-	mymob.blind.icon = 'icons/mob/screen1_alien.dmi'
-	mymob.blind.icon_state = "blackanimate"
+	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
+	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
-	mymob.blind.screen_loc = "1,1 to 15,15"
+	mymob.blind.screen_loc = "1,1"
 	mymob.blind.layer = 0
 
 	mymob.flash = new /obj/screen( null )
