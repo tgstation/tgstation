@@ -165,6 +165,10 @@
 	atksilicon = 0
 	attacktext = "bites"
 
+	Bump(var/mob/M)
+		if(ishuman(M))
+			Die()
+
 	Die()
 		..()
 		new /obj/effect/decal/cleanable/mucus(src.loc)
