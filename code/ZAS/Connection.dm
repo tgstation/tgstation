@@ -189,10 +189,8 @@ connection
 			return 0
 		return 1
 
-	proc/UpdateZones() //Changes connection data in the zones if it is required.
-		if(istype(A,/turf/space) || istype(B,/turf/space))
-			src.Cleanup()
-			return
+	proc/CheckPassSanity()
+		Cleanup()
 		if(A.ZAirPass(B))
 			var/door_pass = A.CanPass(null,B,1.5,1)
 			if(door_pass || A.CanPass(null,B,0,0))
@@ -236,11 +234,6 @@ connection
 					B.zone.connected_zones = null
 		else //If I can no longer pass air, better delete
 			del src
-
-	proc/CheckPassSanity()
-		Cleanup()
-		UpdateZones()
-		return 1
 
 	proc/Sanitize()
 		//If the zones change on connected turfs, update it.
