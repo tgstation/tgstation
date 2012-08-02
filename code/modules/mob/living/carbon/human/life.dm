@@ -260,7 +260,10 @@
 
 			//No breath from internal atmosphere so get breath from location
 			if(!breath)
-				if(isturf(loc))
+				if(isobj(loc))
+					var/obj/location_as_object = loc
+					breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
+				else if(isturf(loc))
 					var/breath_moles = 0
 					/*if(environment.return_pressure() > ONE_ATMOSPHERE)
 						// Loads of air around (pressure effect will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
@@ -293,6 +296,9 @@
 								break // If they breathe in the nasty stuff once, no need to continue checking
 
 			else //Still give containing object the chance to interact
+				if(istype(loc, /obj/))
+					var/obj/location_as_object = loc
+					location_as_object.handle_internal_lifeform(src, 0)
 
 		handle_breath(breath)
 
