@@ -442,7 +442,7 @@ var/global/list/uneatable = list(
 
 
 /obj/machinery/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
-	name = "Tear in the Fabric of Reality"
+	name = "Nar-Sie"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
