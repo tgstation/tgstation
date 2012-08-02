@@ -2782,7 +2782,7 @@
 "bbz" = (/obj/structure/displaycase,/obj/machinery/light{dir = 4; icon_state = "tube1"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "bbA" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
 "bbB" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
-"bbC" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/machinery/power/apc{dir = 1; equip_consumption = 100; light_consumption = 50; name = "AI Chamber APC"; pixel_y = 24},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
+"bbC" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/machinery/power/apc{dir = 1; name = "AI Chamber APC"; pixel_y = 24},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
 "bbD" = (/obj/machinery/door/window{name = "AI Core Door"; req_access_txt = "16"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
 "bbE" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/machinery/flasher{pixel_x = 0; pixel_y = 24; id = "AI"},/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
 "bbF" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/bluegrid,/area/turret_protected/ai)
