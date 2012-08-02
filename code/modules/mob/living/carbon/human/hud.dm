@@ -1,7 +1,5 @@
 /obj/hud/proc/human_hud(var/ui_style='icons/mob/screen1_old.dmi')
 
-	//ui_style='icons/mob/screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
-
 	src.adding = list(  )
 	src.other = list(  )
 	src.vimpaired = list(  )
@@ -554,8 +552,16 @@
 	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "1,1"
-
+	mymob.blind.mouse_opacity = 0
 	mymob.blind.layer = 0
+
+	mymob.damageoverlay = new /obj/screen( null )
+	mymob.damageoverlay.icon = 'icons/mob/screen1_full.dmi'
+	mymob.damageoverlay.icon_state = "oxydamageoverlay0"
+	mymob.damageoverlay.name = "dmg"
+	mymob.damageoverlay.screen_loc = "1,1"
+	mymob.damageoverlay.mouse_opacity = 0
+	mymob.damageoverlay.layer = 17
 
 	mymob.flash = new /obj/screen( null )
 	mymob.flash.icon = ui_style
@@ -680,7 +686,7 @@
 	mymob.client.screen = null
 
 	//, mymob.i_select, mymob.m_select
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.hotkeybuttons
 	inventory_shown = 0;
 

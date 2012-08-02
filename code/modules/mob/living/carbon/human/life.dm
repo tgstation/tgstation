@@ -1,7 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-#define HUMAN_MAX_OXYLOSS 12 //Defines how much oxyloss humans can get per tick. No air applies this value.
-#define HUMAN_CRIT_MAX_OXYLOSS ( (4 * last_tick_duration) /3) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
+//NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
+#define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
+#define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /3) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
 
 /mob/living/carbon/human
 	var/oxygen_alert = 0
@@ -31,7 +32,7 @@
 
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD)
-		if(air_master.current_cycle%4==2) 	//First, resolve location and get a breath
+		if(air_master.current_cycle%4==2 || failed_last_breath) 	//First, resolve location and get a breath
 			spawn(0) breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
 		else //Still give containing object the chance to interact
@@ -323,8 +324,10 @@
 				return
 			if(health > 0)
 				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+				failed_last_breath = 1
 			else
 				adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
+				failed_last_breath = 1
 
 			oxygen_alert = max(oxygen_alert, 1)
 
@@ -353,9 +356,11 @@
 			if(O2_pp > 0)
 				var/ratio = safe_oxygen_min/O2_pp
 				adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
+				failed_last_breath = 1
 				oxygen_used = breath.oxygen*ratio/6
 			else
 				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+				failed_last_breath = 1
 			oxygen_alert = max(oxygen_alert, 1)
 		/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
 			spawn(0) emote("cough")
@@ -364,6 +369,7 @@
 			oxygen_used = breath.oxygen*ratio/6
 			oxygen_alert = max(oxygen_alert, 1)*/
 		else								// We're in safe limits
+			failed_last_breath = 0
 			adjustOxyLoss(-5)
 			oxygen_used = breath.oxygen/6
 			oxygen_alert = 0
@@ -371,6 +377,7 @@
 		breath.oxygen -= oxygen_used
 		breath.carbon_dioxide += oxygen_used
 
+		//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
 		if(CO2_pp > safe_co2_max)
 			if(!co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				co2overloadtime = world.time
@@ -802,6 +809,25 @@
 		client.screen.Remove(hud_used.blurry, hud_used.druggy, hud_used.vimpaired, hud_used.darkMask)
 
 		update_action_buttons()
+
+		if(src.oxyloss)
+			switch(oxyloss)
+				if(0 to 10)
+					damageoverlay.icon_state = "oxydamageoverlay0"
+				if(10 to 20)
+					damageoverlay.icon_state = "oxydamageoverlay1"
+				if(20 to 25)
+					damageoverlay.icon_state = "oxydamageoverlay2"
+				if(25 to 30)
+					damageoverlay.icon_state = "oxydamageoverlay3"
+				if(30 to 35)
+					damageoverlay.icon_state = "oxydamageoverlay4"
+				if(35 to 40)
+					damageoverlay.icon_state = "oxydamageoverlay5"
+				if(40 to 45)
+					damageoverlay.icon_state = "oxydamageoverlay6"
+				if(45 to INFINITY)
+					damageoverlay.icon_state = "oxydamageoverlay7"
 
 		if( stat == DEAD )
 			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
