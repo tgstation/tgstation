@@ -529,7 +529,7 @@ atom/movable/Move() // when something moves
 	if(.&&(luminosity>0))	// if the atom actually moved
 		if(istype(oldloc))
 			sd_StripLum(oldview,oldloc)
-			//oldloc.sd_lumcount++	// correct "off by 1" error in oldloc - no longer needed it seems (Erro)
+			oldloc.sd_lumcount++	// correct "off by 1" error in oldloc
 		sd_ApplyLum()
 
 area
