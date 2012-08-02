@@ -111,16 +111,16 @@ var/global/datum/controller/occupations/job_master
 		return
 
 
-	proc/FillHeadPosition()
+	proc/FillHeadPosition(var/command_position)
+		if(!command_position) return 0
 		for(var/level = 1 to 3)
-			for(var/command_position in command_positions)
-				var/datum/job/job = GetJob(command_position)
-				if(!job)	continue
-				var/list/candidates = FindOccupationCandidates(job, level)
-				if(!candidates.len)	continue
-				var/mob/new_player/candidate = pick(candidates)
-				if(AssignRole(candidate, command_position))
-					return 1
+			var/datum/job/job = GetJob(command_position)
+			if(!job)	continue
+			var/list/candidates = FindOccupationCandidates(job, level)
+			if(!candidates.len)	continue
+			var/mob/new_player/candidate = pick(candidates)
+			if(AssignRole(candidate, command_position))
+				return 1
 		return 0
 
 
@@ -195,7 +195,8 @@ var/global/datum/controller/occupations/job_master
 
 		//Select one head
 		Debug("DO, Running Head Check")
-		FillHeadPosition()
+		for(var/i in command_positions)
+			FillHeadPosition(i)
 		Debug("DO, Head Check end")
 
 		//Check for an AI
