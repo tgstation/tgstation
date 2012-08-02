@@ -526,13 +526,13 @@
 
 /datum/supply_packs/safety_gear
 	name = "Safety gear crate"
-					"/obj/item/clothing/gloves/fingerless/black"
-					"/obj/item/clothing/gloves/fingerless/black"
-					"/obj/item/device/flashlight"
-					"/obj/item/device/flashlight"
+	contains = list("/obj/item/clothing/gloves/fingerless/black",
+					"/obj/item/clothing/gloves/fingerless/black",
+					"/obj/item/device/flashlight",
+					"/obj/item/device/flashlight",
 					"/obj/item/clothing/suit/hazardvest",
 					"/obj/item/clothing/suit/hazardvest",
-					"/obj/item/clothing/head/helmet/hardhat"
+					"/obj/item/clothing/head/helmet/hardhat",
 					"/obj/item/clothing/head/helmet/hardhat")
 	cost = 10
 	containertype = "/obj/structure/closet/crate/secure"
@@ -541,7 +541,7 @@
 
 /datum/supply_packs/firefighting
 	name = "Firefighting equipment crate"
-					"/obj/item/clothing/mask/gas",
+	contains = list("/obj/item/clothing/mask/gas",
 					"/obj/item/clothing/mask/gas",
 					"/obj/item/clothing/head/helmet/space/fire_helmet",
 					"/obj/item/clothing/head/helmet/space/fire_helmet",
@@ -640,7 +640,7 @@
 	name = "Sterile equipment crate"
 	contains = list("/obj/item/clothing/under/rank/medical/green",
 					"/obj/item/clothing/under/rank/medical/green",
-					"/obj/item/store/stma_kit"
+					"/obj/item/store/stma_kit",
 					"/obj/item/store/lglo_kit")
 	cost = 10
 	containertype = "/obj/structure/closet/crate/secure"
