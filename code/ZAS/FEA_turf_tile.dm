@@ -195,8 +195,8 @@ turf
 
 			if("\ref[src]" in air_master.turfs_with_connections) //Check pass sanity of the connections.
 				for(var/connection/C in air_master.turfs_with_connections["\ref[src]"])
-					if(!(C in air_master.connections_checked))
-						air_master.connections_checked += C
+					if(!(C in air_master.connections_to_check))
+						air_master.connections_to_check += C
 
 			. = update_zone_properties() //Update self zone and adjacent zones.
 

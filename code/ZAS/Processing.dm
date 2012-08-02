@@ -1,14 +1,16 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
 zone/proc/process()
 	. = 1
-
 	//Deletes zone if empty.
 	if(!contents.len)
-		del src
+		return SoftDelete()
 	//Does rebuilding stuff.
 	if(rebuild)
 		rebuild = 0
 		Rebuild() //Shoving this into a proc.
+
+	if(!contents.len) //If we got soft deleted.
+		return
 
 	//Sometimes explosions will cause the air to be deleted for some reason.
 	if(!air)
@@ -84,13 +86,14 @@ zone/proc/process()
 
 		//Share some
 		for(var/zone/Z in connected_zones)
-			//Ensure we're not doing pointless calculations on equilibrium zones.
-			if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
-				if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
-					Airflow(src,Z)
-				ShareRatio( air , Z.air , connected_zones[Z]*vsc.zone_share_percent/200 )
-				//Divided by 200 since each zone is processed.  Each connection is considered twice
-				//Space tiles force it to try and move twice as much air.
+			if(air && Z.air)
+				//Ensure we're not doing pointless calculations on equilibrium zones.
+				if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
+					if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
+						Airflow(src,Z)
+					ShareRatio( air , Z.air , connected_zones[Z]*vsc.zone_share_percent/200 )
+					//Divided by 200 since each zone is processed.  Each connection is considered twice
+					//Space tiles force it to try and move twice as much air.
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
@@ -212,7 +215,7 @@ zone/proc/Rebuild()
 	if(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1)) //Not a single valid turf.
 		for(var/turf/simulated/T in contents)
 			air_master.tiles_to_update |= T
-		del src
+		return SoftDelete()
 
 	new_contents = FloodFill(sample)
 

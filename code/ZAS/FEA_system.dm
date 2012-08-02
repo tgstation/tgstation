@@ -96,10 +96,11 @@ datum
 			var/list/obj/fire/active_hotspots = list()
 
 			//Special functions lists
+			var/list/turf/simulated/tiles_to_reconsider_zones = list()
 
 			//Geometry updates lists
 			var/list/turf/simulated/tiles_to_update = list()
-			var/list/connection/connections_checked = list()
+			var/list/connection/connections_to_check = list()
 
 			var/current_cycle = 0
 			var/update_delay = 5 //How long between check should it try to process atmos again.
@@ -174,15 +175,22 @@ datum
 					log_file << "\"\The [get_area(pick(z.contents))]\",[z.air.oxygen],[z.air.nitrogen],[z.air.carbon_dioxide],[z.air.toxins],[z.air.temperature],[z.air.group_multiplier * z.air.volume]"
 					next_stat_check = current_cycle + (rand(5,7)*60)
 
-				if(tiles_to_update.len > 0) //If there are tiles to update, do so.
+				if(tiles_to_update.len) //If there are tiles to update, do so.
 					for(var/turf/simulated/T in tiles_to_update)
 						var/output = T.update_air_properties()
 						if(. && T && !output)
 							. = 0 //If a runtime occured, make sure we can sense it.
 					tiles_to_update = list()
-					for(var/connection/C in connections_checked)
+
+				if(connections_to_check.len)
+					for(var/connection/C in connections_to_check)
 						C.CheckPassSanity()
-					connections_checked = list()
+					connections_to_check = list()
+
+				if(tiles_to_reconsider_zones.len)
+					for(var/turf/simulated/T in tiles_to_reconsider_zones)
+						if(!T.zone)
+							new /zone(T)
 
 				for(var/zone/Z in zones)
 					if(Z.last_update < current_cycle)
