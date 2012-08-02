@@ -86,7 +86,7 @@
 		src.emag = new /obj/item/borg/stun(src)
 		src.modules += new /obj/item/borg/rcd(src)
 		src.modules += new /obj/item/weapon/extinguisher(src)
-		src.modules += new /obj/item/device/flashlight(src)
+//		src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/weapon/weldingtool/largetank(src)
 		src.modules += new /obj/item/weapon/screwdriver(src)
 		src.modules += new /obj/item/weapon/wrench(src)
