@@ -126,15 +126,17 @@
 							S.loc = C //put shade in stone
 							S.nodamage = 1 //So they won't die inside the stone somehow
 							S.canmove = 0//Can't move out of the soul stone
-							S.name = "Shade of [T.name]"
+							S.name = "Shade of [T.real_name]"
+							S.real_name = "Shade of [T.real_name]"
+							S.original_name = "Shade of [T.real_name]"
 							if (T.client)
 								T.client.mob = S
 							S.cancel_camera()
 							C.icon_state = "soulstone2"
-							C.name = "Soul Stone: [S.name]"
+							C.name = "Soul Stone: [S.real_name]"
 							S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
-							U << "\blue <b>Capture successful!</b>: \black [T.name]'s soul has been ripped from their body and stored within the soul stone."
-							U << "The soulstone has been imprinted with [S.name]'s mind, it will no longer react to other souls."
+							U << "\blue <b>Capture successful!</b>: \black [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
+							U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."
 							C.imprinted = "[S.name]"
 							del T
 		if("SHADE")

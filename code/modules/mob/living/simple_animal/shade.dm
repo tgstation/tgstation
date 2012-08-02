@@ -1,5 +1,7 @@
 /mob/living/simple_animal/shade
 	name = "Shade"
+	real_name = "Shade"
+	original_name = "Shade"
 	desc = "A bound spirit"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
