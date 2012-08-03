@@ -248,7 +248,7 @@
 
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
-			if (prob(75)) //High chance of gasping for air
+			if (prob(10)) //Gasp per 10 ticks? Sounds about right.
 				spawn emote("gasp")
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
