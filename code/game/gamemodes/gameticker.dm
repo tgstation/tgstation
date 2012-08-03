@@ -328,15 +328,18 @@ var/datum/roundinfo/roundinfo = new()
 						turfs -= T
 						if(T.density)
 							continue
+						var/bad = 0
 						for(var/obj/I in T)
 							if(I.density)
-								continue
+								bad = 1
+								break
+						if(bad)
+							continue
 						if(prob(50))
-							//spawn a mouse, any of the gray, brown or white varieties
 							new /mob/living/simple_animal/mouse(T)
 						else
-							//spawn a roach
 							new /obj/effect/critter/roach(T)
+						break
 					spawning_vermin = 0
 
 		return 1
