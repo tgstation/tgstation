@@ -1205,7 +1205,7 @@ datum
 					var/held_credits = 0
 					for(var/obj/item/weapon/money/M in owner.current.get_contents())
 						held_credits += M.worth
-					if(held_credits > steal_amount)
+					if(held_credits >= steal_amount)
 						return 1
 					return 0
 
