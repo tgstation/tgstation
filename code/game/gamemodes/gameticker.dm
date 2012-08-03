@@ -37,6 +37,7 @@ var/datum/roundinfo/roundinfo = new()
 	var/vermin_min_spawntime = 3000		//between 5 (3000) and 15 (9000) minutes interval
 	var/vermin_max_spawntime = 9000
 	var/spawning_vermin = 0
+	var/max_vermin = 30
 	var/list/vermin_spawn_turfs
 
 /datum/controller/gameticker/proc/pregame()
@@ -328,6 +329,16 @@ var/datum/roundinfo/roundinfo = new()
 				spawning_vermin = 1
 				spawn(rand(vermin_min_spawntime, vermin_max_spawntime))
 					spawning_vermin = 0
+					var/cur_alive_vermin = 0
+					//check to see if there are too many already
+					for(var/obj/effect/critter/roach/R in world))
+						cur_alive_vermin++
+					for(var/mob/living/simple_animal/mouse/M in world)
+						if(!M.stat)
+							cur_alive_vermin++
+					if(cur_alive_vermin <= max_vermin)
+						return
+
 					var/turf/T = pick(vermin_spawn_turfs)
 					if(T)
 						if(prob(50))
