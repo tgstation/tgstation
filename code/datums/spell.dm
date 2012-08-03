@@ -93,13 +93,19 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	switch(invocation_type)
 		if("shout")
-			usr.say(invocation)
+			if(prob(50))//Auto-mute? Fuck that noise
+				usr.say(invocation)
+			else
+				usr.say(dd_replacetext(invocation," ","`"))
 			if(usr.gender=="male")
 				playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
 			else
 				playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
 		if("whisper")
-			usr.whisper(invocation)
+			if(prob(50))
+				usr.whisper(invocation)
+			else
+				usr.whisper(dd_replacetext(invocation," ","`"))
 
 /obj/effect/proc_holder/spell/New()
 	..()
