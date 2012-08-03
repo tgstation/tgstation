@@ -31,19 +31,39 @@ zone
 		//Add this zone to the global list.
 		zones.Add(src)
 
+//LEGACY, DO NOT USE.
 	Del()
 		//Ensuring the zone list doesn't get clogged with null values.
 		for(var/turf/simulated/T in contents)
-			if(T.zone && T.zone == src)
-				T.zone = null
-				air_master.tiles_to_update |= T
+			RemoveTurf(T)
+			air_master.tiles_to_reconsider_zones += T
 		for(var/zone/Z in connected_zones)
 			if(src in Z.connected_zones)
 				Z.connected_zones.Remove(src)
 		for(var/connection/C in connections)
-			del C
+			air_master.connections_to_check += C
 		zones.Remove(src)
+		air = null
 		. = ..()
+
+//Handles deletion via garbage collection.
+	proc/SoftDelete()
+		zones.Remove(src)
+		air = null
+		//Ensuring the zone list doesn't get clogged with null values.
+		for(var/turf/simulated/T in contents)
+			RemoveTurf(T)
+			air_master.tiles_to_reconsider_zones += T
+		for(var/zone/Z in connected_zones)
+			if(src in Z.connected_zones)
+				Z.connected_zones.Remove(src)
+		for(var/connection/C in connections)
+			if(C.zone_A == src)
+				C.zone_A = null
+			if(C.zone_B == src)
+				C.zone_B = null
+			air_master.connections_to_check += C
+
 
 proc/FloodFill(turf/start)
 	if(!istype(start))

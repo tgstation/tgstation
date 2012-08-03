@@ -16,7 +16,8 @@
 		contents -= T
 		if(air)
 			air.group_multiplier--
-		T.zone = null
+		if(T.zone == src)
+			T.zone = null
 
 	proc/AddSpace(turf/space/S)
 		//Adds a space tile to the list, and creates the list if null.
@@ -104,7 +105,7 @@ proc/ZMerge(zone/A,zone/B)
 	for(var/connection/C in A.connections)
 		C.Cleanup()
 
-	del B
+	B.SoftDelete()
 
 proc/ZConnect(turf/simulated/A,turf/simulated/B)
 	//Connects two zones by forming a connection object representing turfs A and B.
