@@ -7,8 +7,8 @@
 	original_name = "Juggernaut"
 	desc = "A possessed suit of armour driven by the will of the restless dead"
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "armour"
-	icon_living = "armour"
+	icon_state = "behemoth"
+	icon_living = "behemoth"
 	icon_dead = "shade_dead"
 	maxHealth = 250
 	health = 250
