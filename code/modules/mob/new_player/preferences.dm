@@ -437,7 +437,7 @@ datum/preferences
 
 
 	proc/process_link(mob/user, list/link_tags)
-		if(!usr)
+		if(!user)
 			return
 
 		if(link_tags["togglerandjob"])
