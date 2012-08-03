@@ -55,7 +55,11 @@
 		"/obj/item/weapon/cable_coil",
 		"/obj/item/device/t_scanner",
 		"/obj/item/device/analyzer",
-		"/obj/item/device/pda")
+		"/obj/item/device/pda",
+		"/obj/item/weapon/lighter",
+		"/obj/item/weapon/cigpacket",
+		"/obj/item/weapon/matchbox"
+	)
 
 
 /obj/item/weapon/storage/belt/utility/full/New()
@@ -102,12 +106,15 @@
 		"/obj/item/weapon/reagent_containers/syringe",
 		"/obj/item/weapon/reagent_containers/glass/dispenser",
 		"/obj/item/weapon/reagent_containers/hypospray",
-		"/obj/item/weapon/lighter/zippo",
+		"/obj/item/weapon/lighter",
 		"/obj/item/weapon/cigpacket",
+		"/obj/item/weapon/matchbox",
 		"/obj/item/weapon/storage/pill_bottle",
 		"/obj/item/stack/medical",
 		"/obj/item/device/flashlight/pen",
-		"/obj/item/device/pda"
+		"/obj/item/device/pda",
+		"/obj/item/clothing/mask/surgical",
+		"/obj/item/clothing/gloves/latex"
 	)
 
 
@@ -141,10 +148,12 @@
 		"/obj/item/weapon/camera_test",
 		"/obj/item/weapon/camera_film",
 		"/obj/item/weapon/cigpacket",
-		"/obj/item/weapon/zippo",
+		"/obj/item/weapon/lighter",
+		"/obj/item/weapon/matchbox",
 		"/obj/item/device/taperecorder",
 		"/obj/item/weapon/evidencebag",
-		"/obj/item/taperoll/police"
+		"/obj/item/taperoll/police",
+		"/obj/item/clothing/mask/gas"
 		)
 
 /obj/item/weapon/storage/belt/soulstone
