@@ -6,7 +6,7 @@
 	icon_state = "kobold_idle"
 	icon_living = "kobold_idle"
 	icon_dead = "kobold_dead"
-	speak = list("You no take candle!","Ooh, pretty shiny.","Me take?","Where gold here...","Me likey.")
+	//speak = list("You no take candle!","Ooh, pretty shiny.","Me take?","Where gold here...","Me likey.")
 	speak_emote = list("mutters","hisses","grumbles")
 	emote_hear = list("mutters under it's breath.","grumbles.", "yips!")
 	emote_see = list("looks around suspiciously.", "scratches it's arm.","putters around a bit.")
