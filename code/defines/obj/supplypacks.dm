@@ -274,33 +274,48 @@
 
 /datum/supply_packs/internals
 	name = "Internals crate"
-	contains = list("/obj/item/clothing/mask/gas",
-					"/obj/item/clothing/mask/gas",
-					"/obj/item/clothing/mask/gas",
+	contains = list("/obj/item/clothing/mask/breath",
+					"/obj/item/clothing/mask/breath",
+					"/obj/item/clothing/mask/breath",
+					"/obj/item/clothing/mask/breath",
+					"/obj/item/clothing/mask/breath",
+					"/obj/item/weapon/tank/air",
+					"/obj/item/weapon/tank/air",
 					"/obj/item/weapon/tank/air",
 					"/obj/item/weapon/tank/air",
 					"/obj/item/weapon/tank/air")
-	cost = 10
+	cost = 30
 	containertype = "/obj/structure/closet/crate/internals"
 	containername = "Internals crate"
 
+/datum/supply_packs/emergency_internals
+	name = "Emergency Internals crate"
+	contains = list("/obj/item/clothing/mask/breath",
+					"/obj/item/clothing/mask/breath",
+					"/obj/item/clothing/mask/breath",
+					"/obj/item/clothing/mask/breath",
+					"/obj/item/clothing/mask/breath",
+					"/obj/item/weapon/tank/emergency_oxygen",
+					"/obj/item/weapon/tank/emergency_oxygen",
+					"/obj/item/weapon/tank/emergency_oxygen",
+					"/obj/item/weapon/tank/emergency_oxygen",
+					"/obj/item/weapon/tank/emergency_oxygen")
+	cost = 10
+	containertype = "/obj/structure/closet/crate/internals"
+	containername = "Emergency Internals crate"
+
 /datum/supply_packs/evacuation
 	name = "Emergency equipment"
-	contains = list("/obj/machinery/bot/floorbot",
-					"/obj/machinery/bot/floorbot",
-					"/obj/machinery/bot/medbot",
-					"/obj/machinery/bot/medbot",
-					"/obj/item/weapon/tank/air",
-					"/obj/item/weapon/tank/air",
-					"/obj/item/weapon/tank/air",
-					"/obj/item/weapon/tank/air",
-					"/obj/item/weapon/tank/air",
+	contains = list("/obj/item/weapon/tank/emergency_oxygen",
+					"/obj/item/weapon/tank/emergency_oxygen",
 					"/obj/item/clothing/mask/gas",
 					"/obj/item/clothing/mask/gas",
-					"/obj/item/clothing/mask/gas",
-					"/obj/item/clothing/mask/gas",
-					"/obj/item/clothing/mask/gas")
-	cost = 35
+					"/obj/item/weapon/storage/toolbox/emergency",
+					"/obj/item/weapon/storage/toolbox/emergency",
+					"/obj/item/weapon/storage/toolbox/emergency",
+					"/obj/item/weapon/chem_grenade/metalfoam",
+					"/obj/item/weapon/chem_grenade/metalfoam")
+	cost = 15
 	containertype = "/obj/structure/closet/crate/internals"
 	containername = "Emergency Crate"
 
@@ -435,7 +450,7 @@
 					"/obj/item/weapon/reagent_containers/glass/bottle/stoxin",
 					"/obj/item/weapon/storage/syringes",
 					"/obj/item/weapon/reagent_containers/glass/large")
-	cost = 10
+	cost = 20
 	containertype = "/obj/structure/closet/crate/medical"
 	containername = "Medical crate"
 	group = "Medical / Science"
@@ -488,7 +503,7 @@
 					"/obj/item/weapon/cell",
 					"/obj/item/weapon/cell/high",
 					"/obj/item/weapon/cell/high")
-	cost = 15
+	cost = 20
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Electrical maintenance crate"
 	access = ACCESS_ENGINE
@@ -498,18 +513,48 @@
 	name = "Mechanical maintenance crate"
 	contains = list("/obj/item/weapon/storage/belt/utility/full",
 					"/obj/item/weapon/storage/belt/utility/full",
-					"/obj/item/weapon/storage/belt/utility/full",
-					"/obj/item/clothing/suit/hazardvest",
-					"/obj/item/clothing/suit/hazardvest",
-					"/obj/item/clothing/suit/hazardvest",
 					"/obj/item/clothing/head/helmet/welding",
 					"/obj/item/clothing/head/helmet/welding",
-					"/obj/item/clothing/head/helmet/hardhat")
-	cost = 10
+					"/obj/item/weapon/storage/toolbox/mechanical",
+					"/obj/item/weapon/storage/toolbox/mechanical")
+	cost = 15
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Mechanical maintenance crate"
 	access = ACCESS_ENGINE
 	group = "Engineering"
+
+//"/obj/item/tape/engineering"
+
+/datum/supply_packs/safety_gear
+	name = "Safety gear crate"
+	contains = list("/obj/item/clothing/gloves/fingerless/black",
+					"/obj/item/clothing/gloves/fingerless/black",
+					"/obj/item/device/flashlight",
+					"/obj/item/device/flashlight",
+					"/obj/item/clothing/suit/hazardvest",
+					"/obj/item/clothing/suit/hazardvest",
+					"/obj/item/clothing/head/helmet/hardhat",
+					"/obj/item/clothing/head/helmet/hardhat")
+	cost = 10
+	containertype = "/obj/structure/closet/crate/secure"
+	containername = "Safety gear crate"
+	group = "Engineering"
+
+/datum/supply_packs/firefighting
+	name = "Firefighting equipment crate"
+	contains = list("/obj/item/clothing/mask/gas",
+					"/obj/item/clothing/mask/gas",
+					"/obj/item/clothing/head/helmet/space/fire_helmet",
+					"/obj/item/clothing/head/helmet/space/fire_helmet",
+					"/obj/item/clothing/suit/fire/heavy",
+					"/obj/item/clothing/suit/fire/heavy",
+					"/obj/item/weapon/extinguisher",
+					"/obj/item/weapon/extinguisher")
+	cost = 20
+	containertype = "/obj/structure/closet/crate/firefighting"
+	containername = "Firefighting equipment crate"
+	group = "Engineering"
+	access = ACCESS_ATMOSPHERICS
 
 /datum/supply_packs/waterfueltank
 	name = "Water/Fuel tank crate"
@@ -523,7 +568,7 @@
 	name = "Emitter crate"
 	contains = list("/obj/machinery/emitter",
 					"/obj/machinery/emitter",)
-	cost = 10
+	cost = 15
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Emitter crate"
 	access = ACCESS_HEADS
@@ -534,12 +579,14 @@
 	contains = list("/obj/machinery/field_generator",
 					"/obj/machinery/field_generator",)
 	containername = "Field Generator crate"
+	cost = 15
 	group = "Engineering"
 
 /datum/supply_packs/engine/sing_gen
 	name = "Singularity Generator crate"
 	contains = list("/obj/machinery/the_singularitygen")
 	containername = "Singularity Generator crate"
+	cost = 15
 	group = "Engineering"
 
 /datum/supply_packs/engine/collector
@@ -548,6 +595,7 @@
 					"/obj/machinery/power/rad_collector",
 					"/obj/machinery/power/rad_collector")
 	containername = "Collector crate"
+	cost = 15
 	group = "Engineering"
 
 /datum/supply_packs/engine/PA
@@ -578,15 +626,29 @@
 	name = "Surgery crate"
 	contains = list("/obj/item/weapon/cautery",
 					"/obj/item/weapon/surgicaldrill",
+					"/obj/item/clothing/mask/breath/medical",
+					"/obj/item/weapon/tank/anesthetic",
 					"/obj/item/weapon/hemostat",
 					"/obj/item/weapon/scalpel",
 					"/obj/item/weapon/surgical_tool/bonegel",
 					"/obj/item/weapon/retractor",
 					"/obj/item/weapon/surgical_tool/bonesetter",
 					"/obj/item/weapon/circular_saw")
-	cost = 20
+	cost = 25
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Surgery crate"
+	access = ACCESS_MEDICAL
+	group = "Medical / Science"
+
+/datum/supply_packs/sterile
+	name = "Sterile equipment crate"
+	contains = list("/obj/item/clothing/under/rank/medical/green",
+					"/obj/item/clothing/under/rank/medical/green",
+					"/obj/item/store/stma_kit",
+					"/obj/item/store/lglo_kit")
+	cost = 10
+	containertype = "/obj/structure/closet/crate/secure"
+	containername = "Sterile equipment crate"
 	access = ACCESS_MEDICAL
 	group = "Medical / Science"
 

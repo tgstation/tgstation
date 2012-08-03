@@ -1,5 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
 
+//todo: merge this with simple_animal?
+
 /obj/effect/critter
 	name = "Critter"
 	desc = "Generic critter."

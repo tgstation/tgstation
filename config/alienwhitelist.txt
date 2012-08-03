@@ -7,6 +7,7 @@ dopeghoti - Tajaran
 duntadaman - Skrell
 fenrisian - Tajaran
 firefishie - Skrell
+foolamancer - Skrell
 forsamori - Tajaran
 forsamori - Soghun
 galenus - Soghun
@@ -16,6 +17,7 @@ quilan - Tajaran
 searif - Soghun
 searif - Tajaran
 searif - Skrell
+succubusy - Skrell
 teddybehr - Soghun
 spaceman96 - Tajaran
 spaceman96 - Soghun

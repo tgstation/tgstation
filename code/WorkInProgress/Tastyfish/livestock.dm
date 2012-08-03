@@ -23,7 +23,7 @@
 	Life()
 		..()
 
-		if(alive)
+		if(stat != DEAD)
 			meat_amount = round(nutrition / 50)
 
 			nutrition_step--
@@ -152,7 +152,7 @@
 	..()
 
 	// go right before cycle elapses, and if animal isn't starving
-	if(alive && nutrition_step == 1 && nutrition > max_nutrition / 2)
+	if(stat != DEAD && nutrition_step == 1 && nutrition > max_nutrition / 2)
 		// lay an egg with probability of 5% in 5 second time period
 		if(prob(33))
 			new/obj/item/weapon/reagent_containers/food/snacks/egg(src.loc) // lay an egg

@@ -310,7 +310,7 @@ datum
 				target = targeta
 				job = joba
 				weight = get_points(job)
-				explanation_text = "[target.current.real_name], the [target.assigned_role] is a relative of a high ranking Syndicate Leader.  Make sure they get off the ship safely, while minimizing intervention."
+				explanation_text = "[target.current.real_name], the [target.assigned_role] is a [pick("relative of a","friend of a","") + pick("high ranking","important","well-liked")] Syndicate [pick("Leader","Officer","Agent","sympathiser")].  Make sure they get off the station safely, while minimizing intervention."
 
 			check_completion()
 				if(emergency_shuttle.location<2)
@@ -354,7 +354,7 @@ datum
 				target = targeta
 				job = joba
 				weight = get_points(job)
-				explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
+				explanation_text = "Assassinate [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : target.assigned_role]."
 
 			check_completion()
 				if(target && target.current)
@@ -393,7 +393,7 @@ datum
 						break
 
 				if(target && target.current)
-					explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
+					explanation_text = "Assassinate [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : target.assigned_role]."
 				else
 					explanation_text = "Free Objective"
 
@@ -411,7 +411,7 @@ datum
 					target = pick(possible_targets)
 
 				if(target && target.current)
-					explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
+					explanation_text = "Assassinate [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : target.assigned_role]."
 				else
 					explanation_text = "Free Objective"
 
@@ -1184,6 +1184,30 @@ datum
 							return 1
 						else
 							return 0
+
+				get_weight(var/job)
+					return 20
+
+			cash	//must be in credits - atm and coins don't count
+				var/steal_amount = 2000
+				explanation_text = "Beg, borrow or steal 2000 credits."
+				weight = 20
+
+				New(var/text,var/joba)
+					..(text,joba)
+					steal_amount = 1250 + rand(0,3750)
+					explanation_text = "Beg, borrow or steal [steal_amount] credits."
+
+				get_points(var/job)
+					return 10 + 25 * round(steal_amount / 5000)
+
+				check_completion()
+					var/held_credits = 0
+					for(var/obj/item/weapon/money/M in owner.current.get_contents())
+						held_credits += M.worth
+					if(held_credits >= steal_amount)
+						return 1
+					return 0
 
 				get_weight(var/job)
 					return 20

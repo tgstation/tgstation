@@ -32,11 +32,16 @@ var/datum/roundinfo/roundinfo = new()
 
 	var/pregame_timeleft = 0
 
+	//automated spawning of mice and roaches
+	var/global/spawn_vermin = 1
+	var/spawning_vermin = 0
+	var/list/vermin_spawn_areas
 
 /datum/controller/gameticker/proc/pregame()
 	login_music = pick('title1.ogg', 'title2.ogg') // choose title music!
 
 	do
+
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
@@ -48,6 +53,9 @@ var/datum/roundinfo/roundinfo = new()
 			if(pregame_timeleft <= 0)
 				current_state = GAME_STATE_SETTING_UP
 	while (!setup())
+
+	spawn(10)
+		vermin_spawn_areas = list("/area/maintenance","/area/mine/maintenance","/area/crew_quarters/toilet","/area/crew_quarters/locker/locker_toilet")
 
 /datum/controller/gameticker/proc/setup()
 	//Create and announce mode
@@ -302,6 +310,37 @@ var/datum/roundinfo/roundinfo = new()
 				sleep(restart_timeout)
 				while(!going) sleep(10)
 				world.Reboot()
+
+		//randomly spawn vermin in maintenance and other areas
+		if(spawn_vermin && vermin_spawn_areas && vermin_spawn_areas.len)
+			if(!spawning_vermin)
+				spawning_vermin = 1
+				spawn(rand(6000,9000))	//between 10 (6000) and 15 (9000) minutes interval
+					var/area_text = pick(vermin_spawn_areas)
+					area_text = text2path(area_text)
+					var/random_area = pick( typesof(area_text) )
+					var/list/turfs = get_area_turfs(random_area)
+					if(!turfs.len)
+						turfs = get_area_turfs(pick(typesof(pick(vermin_spawn_areas))))
+					//
+					while(turfs.len > 0)
+						var/turf/T = pick(turfs)
+						turfs -= T
+						if(T.density)
+							continue
+						var/bad = 0
+						for(var/obj/I in T)
+							if(I.density)
+								bad = 1
+								break
+						if(bad)
+							continue
+						if(prob(50))
+							new /mob/living/simple_animal/mouse(T)
+						else
+							new /obj/effect/critter/roach(T)
+						break
+					spawning_vermin = 0
 
 		return 1
 
