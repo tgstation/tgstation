@@ -2,6 +2,7 @@
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
+	real_name = src.name
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
