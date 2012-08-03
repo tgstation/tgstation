@@ -153,6 +153,38 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		verbs += /mob/proc/ghost
 	del(src)
 
+/mob/dead/observer/proc/become_mouse()
+	set category = "Ghost"
+	set name = "Become mouse"
+	//locate an empty mouse
+	if(client && client.holder && client.holder.state == 2)
+		var/rank = client.holder.rank
+		client.clear_admin_verbs()
+		client.holder.state = 1
+		client.update_admins(rank)
+
+	var/list/eligible_targets = new()
+	for(var/mob/living/simple_animal/mouse/M in world)
+		if(!M.ckey)
+			eligible_targets.Add(M)
+
+	var/mob/living/simple_animal/mouse/target_mouse
+	if(ticker.spawn_vermin)
+		if(eligible_targets.len)
+			//grab a random existing one
+			target_mouse = pick(eligible_targets)
+		else
+			//make a new mouse
+			target_mouse = new(pick(ticker.vermin_spawn_turfs))
+
+	if(target_mouse)
+		client.mob = target_mouse
+		verbs += /mob/proc/ghost
+		target_mouse.real_name = src.name + " (as mouse)"
+	else
+		client << "\red Unable to become a mouse!"
+	del(src)
+
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
 	set name = "Teleport"
