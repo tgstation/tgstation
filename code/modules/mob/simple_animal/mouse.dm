@@ -18,6 +18,7 @@
 	response_harm   = "splats the"
 	density = 0
 	var/color	//brown, gray and white
+	layer = 2.1		//so they can hide under objects
 
 /mob/living/simple_animal/mouse/Life()
 	..()
