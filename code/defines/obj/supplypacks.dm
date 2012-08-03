@@ -312,9 +312,10 @@
 					"/obj/item/clothing/mask/gas",
 					"/obj/item/weapon/storage/toolbox/emergency",
 					"/obj/item/weapon/storage/toolbox/emergency",
+					"/obj/item/weapon/storage/toolbox/emergency",
 					"/obj/item/weapon/chem_grenade/metalfoam",
 					"/obj/item/weapon/chem_grenade/metalfoam")
-	cost = 30
+	cost = 15
 	containertype = "/obj/structure/closet/crate/internals"
 	containername = "Emergency Crate"
 
