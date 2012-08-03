@@ -112,7 +112,7 @@
 
 	var/list/turf/synd_spawn = list()
 
-	for (var/obj/effect/landmark/A in world)
+	for(var/obj/effect/landmark/A in world)
 		if (A.name == "Syndicate-Gear-Closet")
 			new /obj/structure/closet/syndicate/personal(A.loc)
 			del(A)
@@ -134,10 +134,11 @@
 	var/nuke_code = "[rand(10000, 99999)]"
 	var/leader_selected = 0
 	var/agent_number = 1
-	var/spawnpos = agent_number
+	var/spawnpos = 1
 
 	for(var/datum/mind/synd_mind in syndicates)
-		spawnpos = (agent_number >= synd_spawn.len ? 1 : spawnpos + 1)
+		if(spawnpos > synd_spawn.len)
+			spawnpos = 1
 		synd_mind.current.loc = synd_spawn[spawnpos]
 
 		forge_syndicate_objectives(synd_mind)
@@ -150,7 +151,7 @@
 		else
 			synd_mind.current.real_name = "[syndicate_name()] Operative #[agent_number]"
 			agent_number++
-
+		spawnpos++
 		update_synd_icons_added(synd_mind)
 
 	update_all_synd_icons()
