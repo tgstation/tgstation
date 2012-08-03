@@ -50,7 +50,7 @@
 			src << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
 			src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
 			src << "To use something, simply click on it."
-			src << "Use say :s to speak to your cyborgs through binary."
+			src << "Use say :b to speak to your cyborgs through binary."
 			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
 				show_laws()
 				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"

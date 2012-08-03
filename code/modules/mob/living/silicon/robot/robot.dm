@@ -20,7 +20,7 @@
 		src << "<B>As a new Cyborg you can choose your class. Each class have different modules that help them perform their duties.</B>"
 		src << "<B>Remember that you have a limited charge and the more modules you have active the more power you will drain.</B>"
 		src << "<B>Finally, you are loyal to your linked AI. You should obey all orders of the linked AI as long as it does not conflict with your laws.</B>"
-		src << "Use say :s to speak to your fellow machines through binary."
+		src << "Use say :b to speak to your fellow machines through binary."
 
 	spawn (4)
 		if(!syndie)
