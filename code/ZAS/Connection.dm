@@ -191,49 +191,50 @@ connection
 
 	proc/CheckPassSanity()
 		Cleanup()
-		if(A.ZAirPass(B))
-			var/door_pass = A.CanPass(null,B,1.5,1)
-			if(door_pass || A.CanPass(null,B,0,0))
-				if(indirect == CONNECTION_CLOSED)
-					//ADJUST FOR CAN CONNECT
-					if(!A.zone.connected_zones)
-						A.zone.connected_zones = list()
-					if(B.zone in A.zone.connected_zones)
-						A.zone.connected_zones[B.zone]++
-					else
-						A.zone.connected_zones += B.zone
-						A.zone.connected_zones[B.zone] = 1
+		if(A.zone && B.zone)
+			if(A.ZAirPass(B))
+				var/door_pass = A.CanPass(null,B,1.5,1)
+				if(door_pass || A.CanPass(null,B,0,0))
+					if(indirect == CONNECTION_CLOSED)
+						//ADJUST FOR CAN CONNECT
+						if(!A.zone.connected_zones)
+							A.zone.connected_zones = list()
+						if(B.zone in A.zone.connected_zones)
+							A.zone.connected_zones[B.zone]++
+						else
+							A.zone.connected_zones += B.zone
+							A.zone.connected_zones[B.zone] = 1
 
-					if(!B.zone.connected_zones)
-						B.zone.connected_zones = list()
-					if(A.zone in B.zone.connected_zones)
-						B.zone.connected_zones[A.zone]++
-					else
-						B.zone.connected_zones += A.zone
-						B.zone.connected_zones[A.zone] = 1
-				if(door_pass)
-					indirect = CONNECTION_DIRECT
-				else if(!door_pass)
-					indirect = CONNECTION_INDIRECT
-			else if(indirect > CONNECTION_CLOSED)
-				indirect = CONNECTION_CLOSED
-				//ADJUST FOR CANNOT CONNECT
-				if(A.zone.connected_zones)
-					if(A.zone.connected_zones[B.zone] > 1)
-						A.zone.connected_zones[B.zone]--
-					else
-						A.zone.connected_zones.Remove(B.zone)
-				if(A.zone.connected_zones && !A.zone.connected_zones.len)
-					A.zone.connected_zones = null
-				if(B.zone.connected_zones)
-					if(B.zone.connected_zones[A.zone] > 1)
-						B.zone.connected_zones[A.zone]--
-					else
-						B.zone.connected_zones.Remove(A.zone)
-				if(B.zone.connected_zones && !B.zone.connected_zones.len)
-					B.zone.connected_zones = null
-		else //If I can no longer pass air, better delete
-			del src
+						if(!B.zone.connected_zones)
+							B.zone.connected_zones = list()
+						if(A.zone in B.zone.connected_zones)
+							B.zone.connected_zones[A.zone]++
+						else
+							B.zone.connected_zones += A.zone
+							B.zone.connected_zones[A.zone] = 1
+					if(door_pass)
+						indirect = CONNECTION_DIRECT
+					else if(!door_pass)
+						indirect = CONNECTION_INDIRECT
+				else if(indirect > CONNECTION_CLOSED)
+					indirect = CONNECTION_CLOSED
+					//ADJUST FOR CANNOT CONNECT
+					if(A.zone.connected_zones)
+						if(A.zone.connected_zones[B.zone] > 1)
+							A.zone.connected_zones[B.zone]--
+						else
+							A.zone.connected_zones.Remove(B.zone)
+					if(A.zone.connected_zones && !A.zone.connected_zones.len)
+						A.zone.connected_zones = null
+					if(B.zone.connected_zones)
+						if(B.zone.connected_zones[A.zone] > 1)
+							B.zone.connected_zones[A.zone]--
+						else
+							B.zone.connected_zones.Remove(A.zone)
+					if(B.zone.connected_zones && !B.zone.connected_zones.len)
+						B.zone.connected_zones = null
+			else //If I can no longer pass air, better delete
+				del src
 
 	proc/Sanitize()
 		//If the zones change on connected turfs, update it.
