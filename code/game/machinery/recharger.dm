@@ -53,8 +53,7 @@ obj/machinery/recharger/attack_hand(mob/user as mob)
 		update_icon()
 
 obj/machinery/recharger/attack_paw(mob/user as mob)
-	if((ticker && ticker.mode.name == "monkey"))
-		return attack_hand(user)
+	return attack_hand(user)
 
 obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)

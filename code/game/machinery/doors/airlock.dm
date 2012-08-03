@@ -634,7 +634,8 @@ About the new airlock wires panel:
 		if("opening")
 			if(overlays) overlays = null
 			if(p_open)
-				icon_state = "o_door_opening" //can not use flick due to BYOND bug updating overlays right before flicking
+				spawn(2) // The only work around that works. Downside is that the door will be gone for a millisecond.
+					flick("o_door_opening", src)  //can not use flick due to BYOND bug updating overlays right before flicking
 			else
 				flick("door_opening", src)
 		if("closing")

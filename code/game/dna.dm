@@ -516,7 +516,7 @@
 			O.loc = C
 			C.occupant = O
 			connected = null
-		O.name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
+		O.real_name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
 		O.take_overall_damage(M.getBruteLoss() + 40, M.getFireLoss())
 		O.adjustToxLoss(M.getToxLoss() + 20)
 		O.adjustOxyLoss(M.getOxyLoss())
