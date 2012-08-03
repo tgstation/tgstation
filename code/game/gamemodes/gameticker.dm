@@ -66,7 +66,7 @@ var/datum/roundinfo/roundinfo = new()
 				var/list/area_turfs = get_area_turfs(area)
 				for(var/turf/T in area_turfs)
 					if(T.density)
-						turfs -= T
+						area_turfs -= T
 				vermin_spawn_turfs.Add(area_turfs)
 
 /datum/controller/gameticker/proc/setup()
@@ -331,7 +331,7 @@ var/datum/roundinfo/roundinfo = new()
 					spawning_vermin = 0
 					var/cur_alive_vermin = 0
 					//check to see if there are too many already
-					for(var/obj/effect/critter/roach/R in world))
+					for(var/obj/effect/critter/roach/R in world)
 						cur_alive_vermin++
 					for(var/mob/living/simple_animal/mouse/M in world)
 						if(!M.stat)

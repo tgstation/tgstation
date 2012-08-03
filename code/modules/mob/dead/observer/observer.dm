@@ -169,13 +169,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			eligible_targets.Add(M)
 
 	var/mob/living/simple_animal/mouse/target_mouse
-	if(master_controller.game_ticker.spawn_vermin)
+	if(ticker.spawn_vermin)
 		if(eligible_targets.len)
 			//grab a random existing one
 			target_mouse = pick(eligible_targets)
 		else
 			//make a new mouse
-			target_mouse = new(pick(master_controller.game_ticker.vermin_spawn_turfs))
+			target_mouse = new(pick(ticker.vermin_spawn_turfs))
 
 	if(target_mouse)
 		client.mob = target_mouse
