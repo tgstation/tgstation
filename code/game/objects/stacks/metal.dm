@@ -121,6 +121,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	src.pixel_y = rand(1, 14)
 	return
 
+/*
 /obj/item/stack/tile/plasteel/attack_self(mob/user as mob)
 	if (usr.stat)
 		return
@@ -135,6 +136,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	src.add_fingerprint(user)
 	use(1)
 	return
+*/
 
 /obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
 	S.ReplaceWithPlating()
