@@ -107,14 +107,15 @@
 		//	the lowest to multiply it by the proper success ratio.
 			var/weight = max(ordered_success)
 			ordered_success -= weight
-			if(weight == steal_success)
-				steal_weight *= steal_success*success_weights[i]
-			else if(weight == frame_success)
-				frame_weight *= frame_success*success_weights[i]
-			else if(weight == protect_success)
-				protect_weight *= protect_success*success_weights[i]
-			else if(weight == kill_success)
-				kill_weight *= kill_success*success_weights[i]
+			switch(weight)
+				if(steal_success)
+					steal_weight *= steal_success*success_weights[i]
+				if(frame_success)
+					frame_weight *= frame_success*success_weights[i]
+				if(protect_success)
+					protect_weight *= protect_success*success_weights[i]
+				if(kill_success)
+					kill_weight *= kill_success*success_weights[i]
 
 		var/total_weights = kill_weight + protect_weight + frame_weight + steal_weight
 		frame_weight = round(frame_weight/total_weights)
@@ -310,7 +311,7 @@ datum
 				target = targeta
 				job = joba
 				weight = get_points(job)
-				explanation_text = "[target.current.real_name], the [target.assigned_role] is a relative of a high ranking Syndicate Leader.  Make sure they get off the ship safely, while minimizing intervention."
+				explanation_text = "[target.current.real_name], the [target.assigned_role] is a [pick("relative of a","friend of a","") + pick("high ranking","important","well-liked")] Syndicate [pick("Leader","Officer","Agent","sympathiser"].  Make sure they get off the station safely, while minimizing intervention."
 
 			check_completion()
 				if(emergency_shuttle.location<2)
@@ -354,7 +355,7 @@ datum
 				target = targeta
 				job = joba
 				weight = get_points(job)
-				explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
+				explanation_text = "Assassinate [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.special_role)]."
 
 			check_completion()
 				if(target && target.current)
@@ -393,7 +394,7 @@ datum
 						break
 
 				if(target && target.current)
-					explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
+					explanation_text = "Assassinate [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.special_role)]."
 				else
 					explanation_text = "Free Objective"
 
@@ -411,7 +412,7 @@ datum
 					target = pick(possible_targets)
 
 				if(target && target.current)
-					explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
+					explanation_text = "Assassinate [target.current.real_name], the [target.role_alt_title ? target.role_alt_title : (!role_type ? target.assigned_role : target.special_role)]."
 				else
 					explanation_text = "Free Objective"
 
