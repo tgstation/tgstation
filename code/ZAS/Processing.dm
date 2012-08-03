@@ -199,7 +199,7 @@ proc/ShareSpace(datum/gas_mixture/A, ratio)
 zone/proc/Rebuild()
 	//Choose a random turf and regenerate the zone from it.
 	var
-		turf/simulated/sample = pick(contents)
+		turf/simulated/sample = locate() in contents
 		list/new_contents
 		problem = 0
 
@@ -207,10 +207,10 @@ zone/proc/Rebuild()
 	do
 		if(sample)
 			turfs_to_consider.Remove(sample)
-		if(!turfs_to_consider.len)
+		sample = locate() in turfs_to_consider
+		if(!sample)
 			break
-		sample = pick(turfs_to_consider)  //Nor this.
-	while(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1))
+	while(!sample.CanPass(null, sample, 1.5, 1))
 
 	if(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1)) //Not a single valid turf.
 		for(var/turf/simulated/T in contents)
