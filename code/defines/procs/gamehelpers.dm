@@ -133,6 +133,14 @@
 				if(M.client)
 					hear += M
 
+	// Search for Mulebots. A person might be riding in it's load.
+	for(var/obj/machinery/bot/mulebot/C in V)
+		if(C.load && ismob(C.load))
+			if(isInSight(source,C))
+				var/mob/M = C.load
+				if(M.client)
+					hear += M
+
 	// Cryos:
 	for(var/obj/machinery/atmospherics/unary/cryo_cell/C in V)
 		if(C.occupant)

@@ -350,14 +350,18 @@
 	set category = "Object"
 	set name = "Pick up"
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(src, usr))
 		return
 
 	if(ishuman(usr))
 		if(usr.get_active_hand() == null)
+			src.Click() // Let me know if this has any problems -Giacom
+		/*
+		if(usr.get_active_hand() == null)
 			src.attack_hand(usr)
 		else
 			usr << "\red You already have something in your hand."
+		*/
 	else
 		usr << "\red This mob type can't use this verb."
 
