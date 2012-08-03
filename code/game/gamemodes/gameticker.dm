@@ -33,7 +33,9 @@ var/datum/roundinfo/roundinfo = new()
 	var/pregame_timeleft = 0
 
 	//automated spawning of mice and roaches
-	var/global/spawn_vermin = 1
+	var/spawn_vermin = 1
+	var/vermin_min_spawntime = 3000		//between 5 (3000) and 15 (9000) minutes interval
+	var/vermin_max_spawntime = 9000
 	var/spawning_vermin = 0
 	var/list/vermin_spawn_areas
 
@@ -55,7 +57,7 @@ var/datum/roundinfo/roundinfo = new()
 	while (!setup())
 
 	spawn(10)
-		vermin_spawn_areas = list("/area/maintenance","/area/mine/maintenance","/area/crew_quarters/toilet","/area/crew_quarters/locker/locker_toilet")
+		vermin_spawn_areas = list("/area/maintenance","/area/mine/maintenance")
 
 /datum/controller/gameticker/proc/setup()
 	//Create and announce mode
@@ -315,7 +317,7 @@ var/datum/roundinfo/roundinfo = new()
 		if(spawn_vermin && vermin_spawn_areas && vermin_spawn_areas.len)
 			if(!spawning_vermin)
 				spawning_vermin = 1
-				spawn(rand(6000,9000))	//between 10 (6000) and 15 (9000) minutes interval
+				spawn(rand(vermin_min_spawntime, vermin_max_spawntime))
 					var/area_text = pick(vermin_spawn_areas)
 					area_text = text2path(area_text)
 					var/random_area = pick( typesof(area_text) )
