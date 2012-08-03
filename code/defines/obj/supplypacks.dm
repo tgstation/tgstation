@@ -443,13 +443,12 @@
 					"/obj/item/weapon/storage/firstaid/fire",
 					"/obj/item/weapon/storage/firstaid/toxin",
 					"/obj/item/weapon/storage/firstaid/o2",
-					"/obj/item/weapon/storage/firstaid/adv",
 					"/obj/item/weapon/reagent_containers/glass/bottle/antitoxin",
 					"/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline",
 					"/obj/item/weapon/reagent_containers/glass/bottle/stoxin",
 					"/obj/item/weapon/storage/syringes",
 					"/obj/item/weapon/reagent_containers/glass/large")
-	cost = 10
+	cost = 15
 	containertype = "/obj/structure/closet/crate/medical"
 	containername = "Medical crate"
 	group = "Medical / Science"
@@ -502,7 +501,7 @@
 					"/obj/item/weapon/cell",
 					"/obj/item/weapon/cell/high",
 					"/obj/item/weapon/cell/high")
-	cost = 15
+	cost = 20
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Electrical maintenance crate"
 	access = ACCESS_ENGINE
@@ -567,7 +566,7 @@
 	name = "Emitter crate"
 	contains = list("/obj/machinery/emitter",
 					"/obj/machinery/emitter",)
-	cost = 10
+	cost = 15
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Emitter crate"
 	access = ACCESS_HEADS
@@ -578,12 +577,14 @@
 	contains = list("/obj/machinery/field_generator",
 					"/obj/machinery/field_generator",)
 	containername = "Field Generator crate"
+	cost = 15
 	group = "Engineering"
 
 /datum/supply_packs/engine/sing_gen
 	name = "Singularity Generator crate"
 	contains = list("/obj/machinery/the_singularitygen")
 	containername = "Singularity Generator crate"
+	cost = 15
 	group = "Engineering"
 
 /datum/supply_packs/engine/collector
@@ -592,6 +593,7 @@
 					"/obj/machinery/power/rad_collector",
 					"/obj/machinery/power/rad_collector")
 	containername = "Collector crate"
+	cost = 15
 	group = "Engineering"
 
 /datum/supply_packs/engine/PA
