@@ -3,6 +3,7 @@
 	..()
 	verbs -= /mob/verb/observe
 	real_name = src.name
+	archived_speak_chance = speak_chance
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -29,8 +30,19 @@
 	if(speak_emote && speak_emote.len)
 		var/emote = pick(speak_emote)
 		if(emote)
-			return "[emote], \"[text]\""
+			return "<b>[src]</b> [emote], \"[text]\""
 	return "says, \"[text]\"";
+
+//swhen talking, simple_animals can only understand each other
+/mob/living/simple_animal/say(var/message)
+	for(var/mob/M in view(src,7))
+		if(istype(M, src.type) || M.universal_speak)
+			M << say_quote(message)
+		else if(speak.len)
+			M << "<b>[src]</b> [pick(speak)]"
+		else
+			M << "<b>[src]</b> [pick("makes some strange noises.","makes some strange noises.","makes some strange noises.","makes a small commotion.","kicks up a fuss about something.")]"
+	return
 
 /mob/living/simple_animal/emote(var/act,var/m_type=1,var/message = null)
 	switch(act)
@@ -73,9 +85,9 @@
 					message = "<B>[src]</B> [message]"
 		if("auto")
 			message = "<B>[src]</B> [message]"
-		else
+		/*else
 			if(!message)
-				src << text("Invalid Emote: []", act)
+				src << "Invalid Emote: [act]"*/
 	if ((message && src.stat == 0))
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
@@ -175,11 +187,7 @@
 
 
 /mob/living/simple_animal/movement_delay()
-	var/tally = 0 //Incase I need to add stuff other than "speed" later
-
-	tally = speed
-
-	return tally
+	return speed
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -207,3 +215,6 @@
 
 		if(3.0)
 			health -= 30
+
+/proc/issimpleanimal(var/mob/AM)
+	return istype(AM,/mob/living/simple_animal)

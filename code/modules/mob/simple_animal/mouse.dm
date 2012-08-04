@@ -5,8 +5,8 @@
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
 	speak = list("Squeek!","SQUEEK!","Squeek?")
-	speak_emote = list("squeeks")
-	emote_hear = list("squeeks")
+	speak_emote = list("squeeks","squeeks","squiks")
+	emote_hear = list("squeeks","squeaks","squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
 	speak_chance = 1
 	turns_per_move = 5
@@ -18,14 +18,18 @@
 	response_harm   = "splats the"
 	density = 0
 	var/color	//brown, gray and white
-	layer = 2.1		//so they can hide under objects
+	layer = 2.5		//so they can hide under objects
+	swap_on_mobbump = 0
 
 /mob/living/simple_animal/mouse/Life()
 	..()
 	if(!stat && prob(speak_chance))
 		for(var/mob/M in view())
-			M << "\blue \icon[src] Squeek!"
 			M << 'sound/effects/mousesqueek.ogg'
+
+/mob/living/simple_animal/mouse/gray
+	color = "gray"
+	icon_state = "mouse_gray"
 
 /mob/living/simple_animal/mouse/white
 	color = "white"
@@ -41,7 +45,7 @@
 	icon_state = "mouse_[color]"
 	icon_living = "mouse_[color]"
 	icon_dead = "mouse_[color]_dead"
-	desc = "It's a small, [color], disease-ridden rodent."
+	desc = "It's a small [color] rodent, often seen hiding in maintenance areas."
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0

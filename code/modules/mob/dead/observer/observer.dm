@@ -4,6 +4,7 @@
 	see_invisible = 15
 	see_in_dark = 100
 	verbs += /mob/dead/observer/proc/dead_tele
+	verbs += /mob/dead/observer/proc/become_mouse
 	taj_talk_understand = 1
 
 	if(body)
@@ -76,6 +77,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		verbs -= /mob/proc/ghost
 		if (ghost.client)
 			ghost.client.eye = ghost
+		if(issimpleanimal(src))
+			ghost.name  = ghost.name + " ([src.real_name])"
+			ghost.real_name  = ghost.real_name + " ([src.real_name])"
 	return
 
 /mob/proc/adminghostize()
@@ -156,13 +160,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/become_mouse()
 	set category = "Ghost"
 	set name = "Become mouse"
-	//locate an empty mouse
-	if(client && client.holder && client.holder.state == 2)
-		var/rank = client.holder.rank
-		client.clear_admin_verbs()
-		client.holder.state = 1
-		client.update_admins(rank)
 
+	//locate an empty mouse
 	var/list/eligible_targets = new()
 	for(var/mob/living/simple_animal/mouse/M in world)
 		if(!M.ckey)
@@ -178,12 +177,27 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			target_mouse = new(pick(ticker.vermin_spawn_turfs))
 
 	if(target_mouse)
+		//move player into mouse
+		//the mouse ai will deactivate itself
 		client.mob = target_mouse
-		verbs += /mob/proc/ghost
-		target_mouse.real_name = src.name + " (as mouse)"
+		target_mouse.real_name = src.name
+
+		//reset admin verbs
+		if(client && client.holder && client.holder.state == 2)
+			var/rank = client.holder.rank
+			client.clear_admin_verbs()
+			client.holder.state = 1
+			client.update_admins(rank)
+
+		//update allowed verbs
+		target_mouse.verbs += /mob/proc/ghost
+		target_mouse.verbs -= /client/verb/toggle_ghost_ears
+		target_mouse.verbs -= /client/verb/toggle_ghost_sight
+
+		del(src)
+
 	else
 		client << "\red Unable to become a mouse!"
-	del(src)
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"

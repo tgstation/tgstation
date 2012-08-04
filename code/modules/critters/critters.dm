@@ -164,7 +164,7 @@
 	atkcarbon = 1
 	atksilicon = 0
 	attacktext = "bites"
-	layer = 2.1		//so they can hide under objects
+	layer = 2.5		//so they can hide under objects
 
 	Bump(var/mob/M)
 		if(ishuman(M))
