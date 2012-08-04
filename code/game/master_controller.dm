@@ -177,7 +177,7 @@ datum/controller/game_controller
 			var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
 			if(!success) //Runtimed.
 				air_master.failed_ticks++
-				if(air_master.failed_ticks > 5)
+				if(air_master.failed_ticks > 10)
 					world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
 					kill_air = 1
 					air_master.failed_ticks = 0

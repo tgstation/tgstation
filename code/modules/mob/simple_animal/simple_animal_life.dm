@@ -22,7 +22,7 @@
 				turns_since_move = 0
 
 	//Speaking
-	if(prob(speak_chance))
+	if(!ckey && prob(speak_chance))
 		var/length = (speak ? speak.len : 0) + (emote_see ? emote_see.len : 0) + (emote_hear ? emote_hear.len : 0)
 		if(speak && speak.len && prob((speak.len / length) * 100))
 			say(pick(speak))

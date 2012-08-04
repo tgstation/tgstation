@@ -51,6 +51,8 @@
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
 	var/wall_smash = 0 //if they can smash walls
 
-	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
+	var/speed = 5
+
+	var/can_open_doors = 0		//door opening kind of guy
 
 	var/obj/item/device/radio/headset/l_ear = null
