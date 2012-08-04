@@ -826,7 +826,24 @@
 	containername = "Secruity Barriers crate"
 	group = "Security"
 
-/*
+/datum/supply_packs/randomised/New()
+	var/list/tempContains = list()
+	for(var/i = 0,i<num_contained,i++)
+		tempContains += pick(contains)
+	contains = tempContains
+	..()
+
+
+/datum/supply_packs/randomised/contraband
+	num_contained = 5
+	//We randomly pick 5 items from this list through the constructor, look below
+	contains = list("/obj/item/weapon/contraband/poster","/obj/item/weapon/cigpacket/dromedaryco","/obj/item/clothing/mask/cigarette/cigar/havana", "/obj/item/seeds/plumphelmet", "/obj/item/seeds/libertycap", "/obj/item/seeds/bloodtomato", "/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe", "/obj/item/weapon/reagent_containers/food/drinks/bottle/deadrum" )
+	name = "Contraband crate"
+	cost = 30
+	containertype = "/obj/structure/closet/crate"
+	containername = "Contraband crate"
+	contraband = 1
+
 /datum/supply_packs/randomised
 	var/num_contained = 3 //number of items picked to be contained in a randomised crate
 	contains = list("/obj/item/clothing/head/collectable/chef",
@@ -857,22 +874,3 @@
 	cost = 200
 	containertype = "/obj/structure/closet/crate"
 	containername = "Collectable hats crate! Brought to you by Bass.inc!"
-
-/datum/supply_packs/randomised/New()
-	var/list/tempContains = list()
-	for(var/i = 0,i<num_contained,i++)
-		tempContains += pick(contains)
-	contains = tempContains
-	..()
-
-
-/datum/supply_packs/randomised/contraband
-	num_contained = 5
-	//We randomly pick 5 items from this list through the constructor, look below
-	contains = list("/obj/item/weapon/contraband/poster","/obj/item/weapon/cigpacket/dromedaryco","/obj/item/clothing/mask/cigarette/cigar/havana", "/obj/item/seeds/plumphelmet", "/obj/item/seeds/libertycap", "/obj/item/seeds/bloodtomato", "/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe", "/obj/item/weapon/reagent_containers/food/drinks/bottle/deadrum" )
-	name = "Contraband crate"
-	cost = 30
-	containertype = "/obj/structure/closet/crate"
-	containername = "Contraband crate"
-	contraband = 1
-*/
