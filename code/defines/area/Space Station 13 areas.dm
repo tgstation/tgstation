@@ -1135,7 +1135,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "security"
 
 /area/security/warden
-	name = "\improper Warden"
+	name = "\improper Warden's Office"
 	icon_state = "Warden"
 
 /area/security/armoury
