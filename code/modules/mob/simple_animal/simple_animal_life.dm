@@ -81,15 +81,15 @@
 	//Atmos effect
 	if(bodytemperature < minbodytemp)
 		health -= cold_damage_per_tick
-		if(prob(15)
-			emote("auto",1,"shivers![prob(50) : pick(" It seems quite cold."," It seems to be freezing.") : ""]")
+		if(prob(15))
+			emote("auto",1,"shivers![prob(50) ? "[pick(" It seems quite cold."," It seems to be freezing.")]" : ""]")
 
 	else if(bodytemperature > maxbodytemp)
 		health -= heat_damage_per_tick
-		if(prob(15)
-			emote("auto",1,"sweats![prob(50) : pick(" It seems quite hot."," It seems to be burning up.") : ""]")
+		if(prob(15))
+			emote("auto",1,"sweats![prob(50) ? "[pick(" It seems quite hot."," It seems to be burning up.")]" : ""]")
 
 	if(!atmos_suitable)
 		health -= unsuitable_atoms_damage
-		if(prob(15)
-			emote("auto",1,"gasps![prob(50) : pick(" It seems unable to breath."," It seems to be asphyxiating.") : ""]")
+		if(prob(15))
+			emote("auto",1,"gasps![prob(50) ? "[pick(" It seems unable to breath."," It seems to be asphyxiating.")]" : ""]")
