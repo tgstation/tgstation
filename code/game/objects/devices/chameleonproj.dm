@@ -54,7 +54,7 @@
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
-	var/saved_item = "/obj/item/weapon/shard"
+	var/saved_item = "/obj/item/weapon/cigbutt"
 
 	dropped()
 		disrupt()
@@ -73,7 +73,7 @@
 		if(active_dummy)
 			playsound(src, 'pop.ogg', 100, 1, 1)
 			for(var/atom/movable/A in active_dummy)
-				A.loc = get_turf(active_dummy)
+				A.loc = active_dummy.loc
 				if(ismob(A))
 					if(A:client)
 						A:client:eye = A
@@ -88,7 +88,7 @@
 			playsound(src, 'pop.ogg', 100, 1, 1)
 			var/obj/O = new saved_item (src)
 			if(!O) return
-			var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(get_turf(src))
+			var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
 			C.name = O.name
 			C.desc = O.desc
 			C.icon = O.icon
@@ -111,7 +111,7 @@
 			spark_system.attach(src)
 			spark_system.start()
 			for(var/atom/movable/A in active_dummy)
-				A.loc = get_turf(active_dummy)
+				A.loc = active_dummy.loc
 				if(ismob(A))
 					if(A:client)
 						A:client:eye = A

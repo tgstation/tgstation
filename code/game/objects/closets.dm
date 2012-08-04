@@ -17,6 +17,10 @@
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
+	//Cham Projector Exception
+	for(var/obj/effect/dummy/chameleon/AD in src)
+		AD.loc = src.loc
+
 	for(var/obj/item/I in src)
 		I.loc = src.loc
 
@@ -51,6 +55,13 @@
 		return 0
 
 	var/itemcount = 0
+
+	//Cham Projector Exception
+	for(var/obj/effect/dummy/chameleon/AD in src.loc)
+		if(itemcount >= storage_capacity)
+			break
+		AD.loc = src
+		itemcount++
 
 	for(var/obj/item/I in src.loc)
 		if(itemcount >= storage_capacity)

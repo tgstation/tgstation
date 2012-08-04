@@ -49,6 +49,10 @@
 		if(!(TK in host.mutations))
 			del(src)
 			return
+		if(isobj(target))
+			if(!target.loc || !isturf(target.loc))
+				del(src)
+				return
 		if(!focus)
 			focus_object(target, user)
 			return
@@ -68,6 +72,8 @@
 		if(target.anchored)
 			target.attack_hand(user) // you can use shit now!
 			return//No throwing anchored things
+		if(!isturf(target.loc))
+			return
 		focus = target
 		update_icon()
 		apply_focus_overlay()

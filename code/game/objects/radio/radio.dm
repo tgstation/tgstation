@@ -54,10 +54,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(radio_controller)
 		initialize()
 
-	// If intercom: do a local power check loop
-	if(istype(src, /obj/item/device/radio/intercom))
-		spawn(5)
-			checkpower()
 
 /obj/item/device/radio/initialize()
 
@@ -122,27 +118,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			<B>[chan_name]</B><br>
 			Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
 			"}
-
-/obj/item/device/radio/proc/checkpower()
-
-	// Simple loop, checks for power. Strictly for intercoms
-	while(src)
-
-		if(!src.loc)
-			on = 0
-		else
-			var/area/A = src.loc.loc
-			if(!A || !isarea(A) || !A.master)
-				on = 0
-			else
-				on = A.master.powered(EQUIP) // set "on" to the power status
-
-		if(!on)
-			icon_state = "intercom-p"
-		else
-			icon_state = "intercom"
-
-		sleep(30)
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
@@ -233,10 +208,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/talk_into(mob/M as mob, message, channel)
 
 	if(!on) return // the device has to be on
-/*  Fix for permacell radios, but kinda eh about actually fixing them.
+	//  Fix for permacell radios, but kinda eh about actually fixing them.
+
+	//  Uncommenting this. To the above comment:
+	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
 	if(!(src.wires & WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
 		return
-*/
+
 
 	if(GLOBAL_RADIO_TYPE == 1) // NEW RADIO SYSTEMS: By Doohl
 
