@@ -242,6 +242,9 @@ obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user << "<span class='notice'>You start placing the poster on the wall...</span>" //Looks like it's uncluttered enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
+	if(P.resulting_poster != src.serial_number)
+		del P.resulting_poster
+		P.resulting_poster = new(src.serial_number)
 	var/obj/effect/decal/poster/D = P.resulting_poster
 
 	var/temp_loc = user.loc
