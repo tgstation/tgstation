@@ -29,8 +29,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	invisibility = INVISIBILITY_LIGHTING
 	var/lightswitch = 1
 
-	var/area_lights_luminosity = 9	//This gets assigned at area creation. It is used to determine how bright the lights in an area should be. At the time of writing the value that it gets assigned is rand(6,9) - only used for light tubes
-
 	var/eject = null
 
 	var/requires_power = 1
@@ -1128,10 +1126,6 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Toxins Mixing Room"
 	icon_state = "toxmix"
 
-/area/toxins/misc_lab
-	name = "Miscellaneous Research"
-	icon_state = "toxtest"
-
 /area/toxins/server
 	name = "\improper Server Room"
 	icon_state = "server"
@@ -1334,7 +1328,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "ai_upload"
 
 /area/turret_protected/ai_upload_foyer
-	name = "Secure Network Access"
+	name = "Secure Tech Access"
 	icon_state = "ai_foyer"
 
 /area/turret_protected/ai

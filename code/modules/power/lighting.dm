@@ -243,11 +243,7 @@
 	spawn(2)
 		switch(fitting)
 			if("tube")
-				if(src.loc && src.loc.loc && isarea(src.loc.loc))
-					var/area/A = src.loc.loc
-					brightness = A.area_lights_luminosity
-				else
-					brightness = 9
+				brightness = 8
 				if(prob(10))
 					broken(1)
 			if("bulb")
