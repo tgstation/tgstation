@@ -806,7 +806,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 
 /client/proc/changeling_transformation_sting()
 	set category = "Changeling"
-	set name = "Transformation sting (30)"
+	set name = "Transformation sting (40)"
 	set desc="Sting target"
 
 	if(!usr.changeling)
@@ -823,11 +823,11 @@ Tarjan shit, not recoding this -Sieve{R}*/
 			usr << "\red Not when we are incapacitated."
 			return
 
-		if(usr.changeling.chem_charges < 30)
+		if(usr.changeling.chem_charges < 40)
 			usr << "\red We don't have enough stored chemicals to do that!"
 			return
 
-		if(T.stat != 2 || (HUSK in T.mutations) || (!ishuman(T) && !ismonkey(T)))
+		if((HUSK in T.mutations) || (!ishuman(T) && !ismonkey(T)))
 			usr << "\red We can't transform that target!"
 			return
 
@@ -836,7 +836,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		if (S == null)
 			return
 
-		usr.changeling.chem_charges -= 30
+		usr.changeling.chem_charges -= 40
 		usr.changeling.sting_range = 1
 
 		usr << "\blue We stealthily sting [T]."

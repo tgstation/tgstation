@@ -96,7 +96,7 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 /obj/effect/proc_holder/power/transformation_sting
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform into another."
-	genomecost = 2
+	genomecost = 3
 
 	verbpath = /client/proc/changeling_transformation_sting
 
