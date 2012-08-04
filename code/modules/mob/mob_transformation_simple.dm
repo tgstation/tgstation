@@ -42,6 +42,7 @@
 		M.real_name = src.real_name
 
 	M.dna = src.dna
+	M.UI = src.UI
 
 	M.ckey = src.ckey
 	if(mind)

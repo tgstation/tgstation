@@ -24,6 +24,7 @@
 	del(animation)
 
 	O.name = "monkey"
+	O.UI = UI
 	O.dna = dna
 	dna = null
 	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
@@ -133,6 +134,7 @@
 
 //	O.verbs += /mob/living/silicon/ai/proc/ai_cancel_call
 	O.job = "AI"
+	O.UI = UI
 
 	if(O.mind)
 		ticker.mode.remove_cultist(O.mind, 1)
@@ -180,6 +182,7 @@
 	O.invisibility = 0
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
+	O.UI = UI
 	if(client)
 		O.lastKnownIP = client.address ? client.address : null
 	if (mind)
@@ -250,6 +253,7 @@
 
 	new_xeno.mind_initialize(src, alien_caste)
 	new_xeno.key = key
+	new_xeno.UI = UI
 
 	new_xeno.a_intent = "hurt"
 	new_xeno << "<B>You are now an alien.</B>"
@@ -284,6 +288,7 @@
 
 		new_metroid.mind_initialize(src)
 		new_metroid.key = key
+		new_metroid.UI = UI
 
 		new_metroid.a_intent = "hurt"
 		new_metroid << "<B>You are now a baby Metroid.</B>"
@@ -292,6 +297,7 @@
 		var/mob/living/carbon/metroid/adult/new_metroid = new /mob/living/carbon/metroid/adult (loc)
 		new_metroid.mind_initialize(src)
 		new_metroid.key = key
+		new_metroid.UI = UI
 
 		new_metroid.a_intent = "hurt"
 		new_metroid << "<B>You are now an adult Metroid.</B>"
@@ -301,6 +307,7 @@
 
 		new_metroid.mind_initialize(src)
 		new_metroid.key = key
+		new_metroid.UI = UI
 
 		new_metroid.a_intent = "hurt"
 		new_metroid << "<B>You are now a baby Metroid.</B>"
@@ -325,6 +332,7 @@
 
 	new_corgi.mind_initialize(src)
 	new_corgi.key = key
+	new_corgi.UI = UI
 
 	new_corgi.a_intent = "hurt"
 	new_corgi << "<B>You are now a Corgi!.</B>"
