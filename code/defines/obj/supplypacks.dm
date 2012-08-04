@@ -121,7 +121,7 @@
 /datum/supply_packs/charge/toxins
 	name = "Toxins Research Charge"
 	contains = list("/obj/item/weapon/vending_charge/toxins")
-	containername = "Toxins Reasearch charge crate"
+	containername = "Toxins Research charge crate"
 
 /* removed these for now, as to not confuse people (the machines are in the tg map)
 /datum/supply_packs/charge/genetics
@@ -551,7 +551,7 @@
 					"/obj/item/weapon/extinguisher",
 					"/obj/item/weapon/extinguisher")
 	cost = 20
-	containertype = "/obj/structure/closet/crate/firefighting"
+	containertype = "/obj/structure/closet/crate"
 	containername = "Firefighting equipment crate"
 	group = "Engineering"
 	access = ACCESS_ATMOSPHERICS
@@ -644,12 +644,11 @@
 	name = "Sterile equipment crate"
 	contains = list("/obj/item/clothing/under/rank/medical/green",
 					"/obj/item/clothing/under/rank/medical/green",
-					"/obj/item/store/stma_kit",
-					"/obj/item/store/lglo_kit")
+					"/obj/item/weapon/storage/stma_kit",
+					"/obj/item/weapon/storage/lglo_kit")
 	cost = 10
-	containertype = "/obj/structure/closet/crate/secure"
+	containertype = "/obj/structure/closet/crate"
 	containername = "Sterile equipment crate"
-	access = ACCESS_MEDICAL
 	group = "Medical / Science"
 
 /datum/supply_packs/mecha_odysseus
