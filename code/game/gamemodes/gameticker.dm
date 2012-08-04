@@ -327,27 +327,28 @@ var/datum/roundinfo/roundinfo = new()
 		if(spawn_vermin && vermin_spawn_turfs && vermin_spawn_turfs.len)
 			if(!spawning_vermin)
 				spawning_vermin = 1
+
 				spawn(rand(vermin_min_spawntime, vermin_max_spawntime))
 					spawning_vermin = 0
 					var/cur_alive_vermin = 0
+
 					//check to see if there are too many already
 					for(var/obj/effect/critter/roach/R in world)
 						cur_alive_vermin++
 					for(var/mob/living/simple_animal/mouse/M in world)
 						if(!M.stat)
 							cur_alive_vermin++
-					if(cur_alive_vermin <= max_vermin)
-						return
 
-					var/turf/T = pick(vermin_spawn_turfs)
-					if(T)
-						if(prob(50))
-							new /mob/living/simple_animal/mouse(T)
+					if(cur_alive_vermin < max_vermin)
+						var/turf/T = pick(vermin_spawn_turfs)
+						if(T)
+							if(prob(50))
+								new /mob/living/simple_animal/mouse(T)
+							else
+								new /obj/effect/critter/roach(T)
 						else
-							new /obj/effect/critter/roach(T)
-					else
-						//no turf, skip this time
-						vermin_spawn_turfs.Remove(T)
+							//no turf, skip this time
+							vermin_spawn_turfs.Remove(T)
 
 		return 1
 
