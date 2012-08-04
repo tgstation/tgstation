@@ -1126,6 +1126,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Toxins Mixing Room"
 	icon_state = "toxmix"
 
+/area/toxins/misc_lab
+	name = "Miscellaneous Research"
+	icon_state = "toxtest"
+
 /area/toxins/server
 	name = "\improper Server Room"
 	icon_state = "server"
@@ -1328,7 +1332,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "ai_upload"
 
 /area/turret_protected/ai_upload_foyer
-	name = "Secure Tech Access"
+	name = "Secure Network Access"
 	icon_state = "ai_foyer"
 
 /area/turret_protected/ai
