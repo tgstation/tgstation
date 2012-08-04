@@ -148,15 +148,7 @@
 		mob << "The Syndicate were unfortunately unable to get you a flash."
 	else
 		mob << "The flash in your [where] will help you to persuade the crew to join your cause."
-		switch(where)
-			if("left pocket")
-				mob.update_inv_pockets()
-			if("right pocket")
-				mob.update_inv_pockets()
-			if("left_hand")
-				mob.update_inv_l_hand()
-			if("right_hand")
-				mob.update_inv_r_hand()
+		mob.update_icons()
 		return 1
 
 //////////////////////////////////////

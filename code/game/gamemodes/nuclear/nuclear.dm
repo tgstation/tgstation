@@ -186,7 +186,7 @@
 			var/mob/living/carbon/human/H = synd_mind.current
 			P.loc = H.loc
 			H.equip_if_possible(P, H.slot_r_store, 0)
-			H.update_inv_pockets()
+			H.update_icons()
 
 	else
 		nuke_code = "code will be provided later"
