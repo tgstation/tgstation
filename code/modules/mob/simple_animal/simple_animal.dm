@@ -27,7 +27,7 @@
 
 	//Temperature effect
 	var/minbodytemp = 270
-	var/maxbodytemp = 370
+	var/maxbodytemp = 305
 	var/heat_damage_per_tick = 3	//amount of damage applied if animal's body temperature is higher than maxbodytemp
 	var/cold_damage_per_tick = 2	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
 

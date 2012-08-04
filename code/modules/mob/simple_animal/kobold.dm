@@ -17,6 +17,8 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
+	minbodytemp = 250
+	min_oxy = 1
 
 /mob/living/simple_animal/kobold/Life()
 	..()
