@@ -146,6 +146,7 @@
 		mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately."
 	else
 		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
+		mob.update_icons()
 		return 1
 
 

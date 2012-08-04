@@ -325,9 +325,14 @@
 		if(nodamage || REBREATHER in augmentations)
 			return
 
-		if(!breath || (breath.total_moles() == 0))
+		if(!breath || (breath.total_moles() == 0) || suiciding)
 			if(reagents.has_reagent("inaprovaline"))
 				return
+			if(suiciding)
+				adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
+				failed_last_breath = 1
+				oxygen_alert = max(oxygen_alert, 1)
+				return 0
 			if(health > 0)
 				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				failed_last_breath = 1
@@ -706,7 +711,7 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()	//TODO
-			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+			if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 				blinded = 1
 				silent = 0

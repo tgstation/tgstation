@@ -186,6 +186,7 @@
 			var/mob/living/carbon/human/H = synd_mind.current
 			P.loc = H.loc
 			H.equip_if_possible(P, H.slot_r_store, 0)
+			H.update_inv_pockets()
 
 	else
 		nuke_code = "code will be provided later"
@@ -236,6 +237,7 @@
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
 	E.imp_in = synd_mob
 	E.implanted = 1
+	synd_mob.update_icons()
 	return 1
 
 
