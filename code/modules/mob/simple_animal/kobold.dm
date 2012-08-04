@@ -17,6 +17,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
+	min_oxy = 0		//doesn't need oxy to breathe. kobolds are space asteroid miners
 
 /mob/living/simple_animal/kobold/Life()
 	..()

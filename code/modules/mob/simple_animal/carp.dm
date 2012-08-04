@@ -46,6 +46,11 @@
 	health = 50
 	melee_damage_lower = 10
 	melee_damage_upper = 20
+	minbodytemp = 0		//so they don't freeze in space
+	maxbodytemp = 295	//if it's just 25 degrees, they start to burn up	var/min_oxy = 5
+	min_oxy = 0			//doesn't need to breath
+	max_tox = 0			//can survive toxic atmospheres
+	max_co2 = 0
 
 /proc/iscarp(var/mob/M)
 	return istype(M, /mob/living/simple_animal/carp)
