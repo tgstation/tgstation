@@ -3,7 +3,6 @@
 	..()
 	verbs -= /mob/verb/observe
 	real_name = src.name
-	archived_speak_chance = speak_chance
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
