@@ -198,6 +198,7 @@
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
+	src << "\red You have died!"
 	return
 
 /mob/living/simple_animal/ex_act(severity)

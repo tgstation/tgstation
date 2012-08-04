@@ -164,7 +164,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//locate an empty mouse
 	var/list/eligible_targets = new()
 	for(var/mob/living/simple_animal/mouse/M in world)
-		if(!M.ckey)
+		if(!M.ckey && !M.stat)
 			eligible_targets.Add(M)
 
 	var/mob/living/simple_animal/mouse/target_mouse
