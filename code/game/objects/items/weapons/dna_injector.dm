@@ -110,10 +110,10 @@
 						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
 						log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 					else
-						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+//						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 						log_game("[key_name(user)] injected [key_name(M)] with the [name]")
 				else
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+//					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 					log_game("[key_name(user)] injected [key_name(M)] with the [name]")
 				inuse = 1
 				inject(M, user)//Now we actually do the heavy lifting.

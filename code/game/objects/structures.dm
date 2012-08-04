@@ -111,7 +111,7 @@ obj/structure/meteorhit(obj/O as obj)
 							for(var/turf/simulated/wall/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
-							return
+						return
 
 				if(/obj/item/stack/sheet/plasteel)
 					if(!anchored)
@@ -134,7 +134,7 @@ obj/structure/meteorhit(obj/O as obj)
 								for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
 									if(X)	X.add_hiddenprint(usr)
 								del(src)
-								return
+							return
 						else
 							if(S.amount < 1) return ..()
 							user << "\blue Now reinforcing girders"
@@ -144,7 +144,7 @@ obj/structure/meteorhit(obj/O as obj)
 								user << "\blue Girders reinforced!"
 								new/obj/structure/girder/reinforced( src.loc )
 								del(src)
-								return
+							return
 
 				if(/obj/item/stack/sheet/gold)
 					if(!anchored)
@@ -166,7 +166,7 @@ obj/structure/meteorhit(obj/O as obj)
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
-							return
+						return
 
 				if(/obj/item/stack/sheet/silver)
 					if(!anchored)
@@ -188,7 +188,7 @@ obj/structure/meteorhit(obj/O as obj)
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
-							return
+						return
 
 				if(/obj/item/stack/sheet/diamond)
 					if(!anchored)
@@ -210,7 +210,7 @@ obj/structure/meteorhit(obj/O as obj)
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
-							return
+						return
 
 				if(/obj/item/stack/sheet/uranium)
 					if(!anchored)
@@ -232,7 +232,7 @@ obj/structure/meteorhit(obj/O as obj)
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
-							return
+						return
 
 				if(/obj/item/stack/sheet/plasma)
 					if(!anchored)
@@ -254,7 +254,7 @@ obj/structure/meteorhit(obj/O as obj)
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
-							return
+						return
 
 				if(/obj/item/stack/sheet/clown)
 					if(!anchored)
@@ -275,7 +275,7 @@ obj/structure/meteorhit(obj/O as obj)
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
-							return
+						return
 
 				if(/obj/item/stack/sheet/sandstone)
 					if(!anchored)
@@ -297,7 +297,7 @@ obj/structure/meteorhit(obj/O as obj)
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
-							return
+						return
 
 			add_hiddenprint(usr)
 			del(src)

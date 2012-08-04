@@ -1000,7 +1000,7 @@ var/list/sacrificed = list()
 				usr.say("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
 			else
 				usr.whisper("N'ath reth sh'yro eth d[pick("'","`")]raggathnor!")
-			usr.visible_message("\red Rune disappears with a flash of red light, and a set of armor appears on you..", \
+			usr.visible_message("\red The rune disappears with a flash of red light, and a set of armor appears on [usr]...", \
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
 
 			user.equip_if_possible(new /obj/item/clothing/head/culthood/alt(user), user.slot_head)

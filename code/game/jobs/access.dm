@@ -214,7 +214,7 @@
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth)
 		if("Atmospheric Technician")
-			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
+			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 		if("Bartender")
 			return list(access_bar)
 		if("Chemist")
