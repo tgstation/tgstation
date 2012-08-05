@@ -7,6 +7,7 @@
 	var/effectmode = "aura"    // How does it carry out the effect?
 	var/aurarange = 4          // How far the artifact will extend an aura effect.
 	var/list/created_field
+	var/archived_loc
 
 /datum/artifact_effect/New()
 	//
@@ -34,11 +35,19 @@
 		del F
 
 /datum/artifact_effect/proc/UpdateEffect(var/atom/originator)
-	for(var/obj/effect/energy_field/F in created_field)
+	/*for(var/obj/effect/energy_field/F in created_field)
 		created_field.Remove(F)
-		del F
+		del F*/
+	if(originator.loc != archived_loc)
+		archived_loc = originator.loc
+		update_move(originator)
+
+	for(var/obj/effect/energy_field/E in created_field)
+		if(E.strength < 5)
+			E.Strengthen(0.2)
 
 /datum/artifact_effect/proc/DoEffect(var/atom/originator)
+	archived_loc = originator.loc
 	if (src.effectmode == "contact")
 		var/mob/user = originator
 		if(!user)
@@ -121,7 +130,13 @@
 					return 1
 				else user << "Nothing happens."
 			if("forcefield")
-				var/obj/effect/energy_field/E = new /obj/effect/energy_field(locate(user.x + 2,user.y,user.z))
+				while(created_field.len < 16)
+					var/obj/effect/energy_field/E = new (locate(user.x,user.y,user.z))
+					created_field.Add(E)
+					E.strength = 1
+					E.density = 1
+					E.invisibility = 0
+				/*var/obj/effect/energy_field/E = new /obj/effect/energy_field(locate(user.x + 2,user.y,user.z))
 				E.strength = 1
 				E.invisibility = 0
 				E = new /obj/effect/energy_field(locate(user.x + 2,user.y + 1,user.z))
@@ -183,7 +198,7 @@
 				E = new /obj/effect/energy_field(locate(user.x - 1,user.y - 2,user.z))
 				created_field.Add(E)
 				E.strength = 1
-				E.invisibility = 0
+				E.invisibility = 0*/
 				return 1
 			if("teleport")
 				var/list/randomturfs = new/list()
@@ -473,3 +488,52 @@
 						sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
 						sparks.start()
 				return 1
+
+//initially for the force field artifact
+/datum/artifact_effect/proc/update_move(var/atom/originator)
+	switch(effecttype)
+		if("forcefield")
+			while(created_field.len < 16)
+				//for now, just instantly respawn the fields when they get destroyed
+				var/obj/effect/energy_field/E = new (locate(originator.x,originator.y,originator))
+				created_field.Add(E)
+				E.strength = 1
+				E.density = 1
+				E.invisibility = 0
+
+			var/obj/effect/energy_field/E = created_field[1]
+			E.loc = locate(originator.x + 2,originator.y + 2,originator.z)
+			E = created_field[2]
+			E.loc = locate(originator.x + 2,originator.y + 1,originator.z)
+			E = created_field[3]
+			E.loc = locate(originator.x + 2,originator.y,originator.z)
+			E = created_field[4]
+			E.loc = locate(originator.x + 2,originator.y - 1,originator.z)
+			E = created_field[5]
+			E.loc = locate(originator.x + 2,originator.y - 2,originator.z)
+			E = created_field[6]
+			E.loc = locate(originator.x + 1,originator.y + 2,originator.z)
+			E = created_field[7]
+			E.loc = locate(originator.x + 1,originator.y - 2,originator.z)
+			E = created_field[8]
+			E.loc = locate(originator.x,originator.y + 2,originator.z)
+			E = created_field[9]
+			E.loc = locate(originator.x,originator.y - 2,originator.z)
+			E = created_field[10]
+			E.loc = locate(originator.x - 1,originator.y + 2,originator.z)
+			E = created_field[11]
+			E.loc = locate(originator.x - 1,originator.y - 2,originator.z)
+			E = created_field[12]
+			E.loc = locate(originator.x - 2,originator.y + 2,originator.z)
+			E = created_field[13]
+			E.loc = locate(originator.x - 2,originator.y + 1,originator.z)
+			E = created_field[14]
+			E.loc = locate(originator.x - 2,originator.y,originator.z)
+			E = created_field[15]
+			E.loc = locate(originator.x - 2,originator.y - 1,originator.z)
+			E = created_field[16]
+			E.loc = locate(originator.x - 2,originator.y - 2,originator.z)
+
+	/*for(var/obj/effect/energy_field/F in created_field)
+		created_field.Remove(F)
+		del F*/
