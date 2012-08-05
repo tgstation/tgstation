@@ -545,9 +545,13 @@ What are the archived variables for?
 		var/old_self_heat_capacity = 0
 		var/old_sharer_heat_capacity = 0
 
-		var/heat_self_to_sharer = 0
+
+		//These two variables have been commented out. The author did not leave documentation on what they were supposed to be for. -Rockdtben
+		//These two variables are only changed and do not exist outside of this proc. -Rockdtben
+		//var/heat_self_to_sharer = 0
+		//var/heat_sharer_to_self = 0
+
 		var/heat_capacity_self_to_sharer = 0
-		var/heat_sharer_to_self = 0
 		var/heat_capacity_sharer_to_self = 0
 
 		if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -556,28 +560,28 @@ What are the archived variables for?
 			if(delta_air)
 				var/air_heat_capacity = SPECIFIC_HEAT_AIR*delta_air
 				if(delta_air > 0)
-					heat_self_to_sharer += air_heat_capacity*temperature_archived
+					//heat_self_to_sharer += air_heat_capacity*temperature_archived
 					heat_capacity_self_to_sharer += air_heat_capacity
 				else
-					heat_sharer_to_self -= air_heat_capacity*sharer.temperature_archived
+					//heat_sharer_to_self -= air_heat_capacity*sharer.temperature_archived
 					heat_capacity_sharer_to_self -= air_heat_capacity
 
 			if(delta_carbon_dioxide)
 				var/carbon_dioxide_heat_capacity = SPECIFIC_HEAT_CDO*delta_carbon_dioxide
 				if(delta_carbon_dioxide > 0)
-					heat_self_to_sharer += carbon_dioxide_heat_capacity*temperature_archived
+					//heat_self_to_sharer += carbon_dioxide_heat_capacity*temperature_archived
 					heat_capacity_self_to_sharer += carbon_dioxide_heat_capacity
 				else
-					heat_sharer_to_self -= carbon_dioxide_heat_capacity*sharer.temperature_archived
+					//heat_sharer_to_self -= carbon_dioxide_heat_capacity*sharer.temperature_archived
 					heat_capacity_sharer_to_self -= carbon_dioxide_heat_capacity
 
 			if(delta_toxins)
 				var/toxins_heat_capacity = SPECIFIC_HEAT_TOXIN*delta_toxins
 				if(delta_toxins > 0)
-					heat_self_to_sharer += toxins_heat_capacity*temperature_archived
+					//heat_self_to_sharer += toxins_heat_capacity*temperature_archived
 					heat_capacity_self_to_sharer += toxins_heat_capacity
 				else
-					heat_sharer_to_self -= toxins_heat_capacity*sharer.temperature_archived
+					//heat_sharer_to_self -= toxins_heat_capacity*sharer.temperature_archived
 					heat_capacity_sharer_to_self -= toxins_heat_capacity
 
 			old_self_heat_capacity = heat_capacity()*group_multiplier
@@ -619,10 +623,10 @@ What are the archived variables for?
 				if(delta)
 					var/individual_heat_capacity = trace_gas.specific_heat*delta
 					if(delta > 0)
-						heat_self_to_sharer += individual_heat_capacity*temperature_archived
+						//heat_self_to_sharer += individual_heat_capacity*temperature_archived
 						heat_capacity_self_to_sharer += individual_heat_capacity
 					else
-						heat_sharer_to_self -= individual_heat_capacity*sharer.temperature_archived
+						//heat_sharer_to_self -= individual_heat_capacity*sharer.temperature_archived
 						heat_capacity_sharer_to_self -= individual_heat_capacity
 
 				moved_moles += delta
@@ -647,7 +651,7 @@ What are the archived variables for?
 
 					//Guaranteed transfer from sharer to self
 					var/individual_heat_capacity = trace_gas.specific_heat*delta
-					heat_sharer_to_self += individual_heat_capacity*sharer.temperature_archived
+					//heat_sharer_to_self += individual_heat_capacity*sharer.temperature_archived
 					heat_capacity_sharer_to_self += individual_heat_capacity
 
 					moved_moles += -delta
