@@ -1,64 +1,17 @@
-/mob/living/silicon/robot
-	var/started = null//A fix to ensure people don't try to bypass law assignment. Initial assignment sets it to one but it check on login whether they have been initiated -Sieve
-
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	spawn (1)
-		src << "\blue Your icons have been generated!"
-		playsound(loc, 'liveagain.ogg', 50, 1, -3)
-		modtype = "robot"
-		updateicon()
-//		syndicate = syndie
-		if(real_name == "Cyborg")
-			ident = rand(1, 999)
-			real_name += "-[ident]"
-			name = real_name
-		src << "<B>You are playing a Cyborg. You can move around and remotely interact with the machines around you.</B>"
-		src << "<B>You can use things such as computers, APCs, intercoms, doors, etc. To use something, simply click on it.</B>"
-		src << "<B>As a new Cyborg you can choose your class. Each class have different modules that help them perform their duties.</B>"
-		src << "<B>Remember that you have a limited charge and the more modules you have active the more power you will drain.</B>"
-		src << "<B>Finally, you are loyal to your linked AI. You should obey all orders of the linked AI as long as it does not conflict with your laws.</B>"
-		src << "Use say :b to speak to your fellow machines through binary."
 
-	spawn (4)
-		if(!syndie)
-			if (client)
-				connected_ai = activeais()
-			if (connected_ai)
-				connected_ai.connected_robots += src
-	//			laws = connected_ai.laws //The borg inherits its AI's laws
-				laws = new /datum/ai_laws
-				lawsync()
-				src << "<b>Unit slaved to [connected_ai.name], downloading laws.</b>"
-				lawupdate = 1
-			else
-				laws = new /datum/ai_laws/asimov
-				lawupdate = 0
-				src << "<b>Unable to locate an AI, reverting to standard Asimov laws.</b>"
-		else
-			laws = new /datum/ai_laws/antimov
-			lawupdate = 0
-			scrambledcodes = 1
-			src << "Follow your laws."
-			cell.maxcharge = 25000
-			cell.charge = 25000
-			module = new /obj/item/weapon/robot_module/syndicate(src)
-			hands.icon_state = "standard"
-			icon_state = "secborg"
-			modtype = "Synd"
+	if(real_name == "Cyborg")
+		ident = rand(1, 999)
+		real_name += "-[ident]"
+		name = real_name
 
-		radio = new /obj/item/device/radio/borg(src)
-		if(!scrambledcodes)
-			camera = new /obj/machinery/camera(src)
-			camera.c_tag = real_name
-			camera.network = "SS13"
 	if(!cell)
 		var/obj/item/weapon/cell/C = new(src)
 		C.charge = 1500
 		cell = C
-	started = 1
 	..()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -67,26 +20,18 @@
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		add_to_mob_list(mmi.brainmob)
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
-		if(T)
-			mmi.loc = T
+		if(T)	mmi.loc = T
 
-			if(!key)	//if we don't have an associated key, try to find the ghost of this body
-				for(var/mob/dead/observer/ghost in player_list)
-					if(ghost.corpse == src && ghost.client)
-						ghost.client.mob = ghost.corpse
+		if(key && !mind)	//failsafe in case we've somehow lost our mind! (code will do that to you!)
+			if(mmi.brainmob.mind)
+				mind = mmi.brainmob.mind
+			else
+				mind = new /datum/mind()
+				mind.assigned_role = "Cyborg"
+				mind.key = key
 
-			if(key)//If there is a client attached to host.
-				if(client)
-					client.screen.len = null
-				if(mind)//If the cyborg has a mind. It should if it's a player. May not.
-					mind.transfer_to(mmi.brainmob)
-				else if(!mmi.brainmob.mind)//If the brainmob has no mind and neither does the cyborg. Shouldn't happen but can due to admun canspiraucy.
-					mmi.brainmob.mind = new()//Quick mind initialize
-					mmi.brainmob.mind.current = mmi.brainmob
-					mmi.brainmob.mind.assigned_role = "Assistant"//Default to an assistant.
-					mmi.brainmob.key = key
-				else//If the brain does have a mind. Also shouldn't happen but who knows.
-					mmi.brainmob.key = key
+		if(mind)
+			mind.transfer_to(mmi.brainmob)
 
 		mmi = null
 	..()

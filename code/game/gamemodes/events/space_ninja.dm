@@ -153,7 +153,6 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 		new_ninja.wear_suit:randomize_param()//Give them a random set of suit parameters.
 		new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
 		new_ninja.internals.icon_state = "internal1"
-		del(G)
 	else
 		del(new_ninja)
 		return
@@ -420,13 +419,13 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			spawn_list.Add(L)
 
 
-	var/input = input("Pick character to spawn as the Space Ninja", "Key", "")
+	var/input = ckey(input("Pick character to spawn as the Space Ninja", "Key", ""))
 	if(!input)
 		return
 
 	var/mob/dead/observer/G
 	for(var/mob/dead/observer/G_find in player_list)
-		if(ckey(G_find.key)==ckey(input))
+		if(G_find.ckey == input)
 			G = G_find
 			break
 
@@ -453,7 +452,6 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	message_admins("\blue [admin_name] has spawned [new_ninja.key] as a Space Ninja. Hide yo children! \nTheir <b>mission</b> is: [mission]", 1)
 	log_admin("[admin_name] used Spawn Space Ninja.")
 
-	del(G)
 	return
 
 //=======//NINJA CREATION PROCS//=======//

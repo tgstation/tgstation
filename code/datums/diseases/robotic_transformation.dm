@@ -57,8 +57,9 @@
 				gibs(T)
 				src.cure(0)
 				gibbed = 1
-				if(!jobban_isbanned(affected_mob, "Cyborg"))
-					affected_mob:Robotize()
+				var/mob/living/carbon/human/H = affected_mob
+				if(istype(H) && !jobban_isbanned(affected_mob, "Cyborg"))
+					H.Robotize()
 				else
 					affected_mob.death(1)
 

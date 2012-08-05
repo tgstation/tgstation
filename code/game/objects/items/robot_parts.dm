@@ -165,7 +165,17 @@
 			if(!M.brainmob)
 				user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
 				return
-			if(M.brainmob.stat == 2)
+			if(!M.brainmob.key)
+				var/ghost_can_reenter = 0
+				for(var/mob/dead/observer/G in dead_mob_list)
+					if(G.corpse == M.brainmob)
+						ghost_can_reenter = 1
+						break
+				if(!ghost_can_reenter)
+					user << "<span class='notice'>The mmi indicates that their mind is completely unresponsive; there's no point.</span>"
+					return
+
+			if(M.brainmob.stat == DEAD)
 				user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 				return
 
@@ -186,28 +196,14 @@
 			O.name = created_name
 			O.real_name = created_name
 
-			if (M.brainmob && M.brainmob.mind)
-				M.brainmob.mind.transfer_to(O)
-			else
-				for(var/mob/dead/observer/G in player_list)
-					if(G.corpse == M.brainmob && G.corpse.mind)
-						G.corpse.mind.transfer_to(O)
-						del(G)
-						break
+			M.brainmob.mind.transfer_to(O)
 
 
 
-			if(O.mind)
-				ticker.mode.remove_cultist(O.mind, 1)
-				ticker.mode.remove_revolutionary(O.mind, 1)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
-			//O << "<B>You are playing a Cyborg. The Cyborg can interact with most electronic objects in its view point.</B>"
-			//O << "<B>You must follow the laws that the AI has. You must follow orders the AI gives you.</B>"
-			//O << "To use something, simply click on it."
-			//O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
 
 			O.job = "Cyborg"
 

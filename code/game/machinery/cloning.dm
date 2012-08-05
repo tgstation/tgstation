@@ -118,7 +118,7 @@
 		return 0
 
 	var/datum/mind/clonemind = locate(mindref) in ticker.minds
-	if( !(clonemind && istype(clonemind) && clonemind.current && clonemind.current.stat==DEAD) )
+	if( !(istype(clonemind,/datum/mind) && (!clonemind.current || clonemind.current.stat==DEAD)) )
 		return 0
 
 	src.heal_level = rand(75,100) //Randomizes what health the clone is when ejected
@@ -130,76 +130,63 @@
 	spawn(30)
 		src.eject_wait = 0
 
-	src.occupant = new /mob/living/carbon/human(src)
-
-	occupant:UI = UI // set interface preference
-
-	ghost.client.mob = src.occupant
-	src.occupant.hud_used = new/obj/hud( src.occupant )
-		// probably redundant because previous line calls mob/Login() which does this line of code
-		// but until this is proven useless keep it for safety - Doohl
-
-	src.icon_state = "pod_1"
-	//Get the clone body ready
-	src.occupant.adjustCloneLoss(190) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
-	src.occupant.adjustBrainLoss(heal_level)
-	src.occupant.Paralyse(4)
-
-	//Here let's calculate their health so the pod doesn't immediately eject them!!!
-	src.occupant.health = (src.occupant.getBruteLoss() + src.occupant.getToxLoss() + src.occupant.getOxyLoss() + src.occupant.getCloneLoss())
-
-	src.occupant << "\blue <b>Clone generation process initiated.</b>"
-	src.occupant << "\blue This will take a moment, please hold."
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	occupant = H
+	H.UI = UI // set interface preference
 
 	if(!clonename)	//to prevent null names
 		clonename = "clone ([rand(0,999)])"
+	H.real_name = clonename
+	H.original_name = clonename //we don't want random ghost names should we die again.
 
-	occupant.real_name = clonename
-	occupant.original_name = clonename //we don't want random ghost names should we die again.
+	src.icon_state = "pod_1"
+	//Get the clone body ready
+	H.adjustCloneLoss(190) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
+	H.adjustBrainLoss(heal_level)
+	H.Paralyse(4)
 
-	clonemind.transfer_to(src.occupant)
-	clonemind.original = src.occupant
+	//Here let's calculate their health so the pod doesn't immediately eject them!!!
+	H.updatehealth()
+
+	clonemind.transfer_to(H)
+	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like. I wonder what happened to the old me... My memories are kinda fuzzy.</i></span>"
+
 
 	// -- Mode/mind specific stuff goes here
 
 	switch(ticker.mode.name)
 		if("revolution")
-			if(src.occupant.mind in ticker.mode:revolutionaries)
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
-			if(src.occupant.mind in ticker.mode:head_revolutionaries)
-				ticker.mode:update_all_rev_icons()
+			if((H.mind in ticker.mode:revolutionaries) || (H.mind in ticker.mode:head_revolutionaries))
+				ticker.mode.update_all_rev_icons() //So the icon actually appears
 		if("nuclear emergency")
-			if (src.occupant.mind in ticker.mode:syndicates)
-				ticker.mode:update_all_synd_icons()
+			if(H.mind in ticker.mode.syndicates)
+				ticker.mode.update_all_synd_icons()
 		if("cult")
-			if (src.occupant.mind in ticker.mode:cult)
-				ticker.mode:add_cultist(src.occupant.mind)
-				ticker.mode:update_all_cult_icons() //So the icon actually appears
+			if (H.mind in ticker.mode.cult)
+				ticker.mode.add_cultist(src.occupant.mind)
+				ticker.mode.update_all_cult_icons() //So the icon actually appears
 
-	if (changelingClone && occupant.mind in ticker.mode.changelings)
-		occupant.changeling = changelingClone
-		src.occupant.make_changeling()
+	if (changelingClone && H.mind in ticker.mode.changelings)
+		H.changeling = changelingClone
+		H.make_changeling()
 
 	// -- End mode specific stuff
 
-	if(istype(ghost, /mob/dead/observer))
-		del(ghost) //Don't leave ghosts everywhere!!
-
-	if(!src.occupant.dna)
-		src.occupant.dna = new /datum/dna(  )
+	if(!H.dna)
+		H.dna = new /datum/dna()
 	if(ui)
-		src.occupant.dna.uni_identity = ui
-		updateappearance(src.occupant, ui)
+		H.dna.uni_identity = ui
+		updateappearance(H, ui)
 	if(se)
-		src.occupant.dna.struc_enzymes = se
-		randmutb(src.occupant) //Sometimes the clones come out wrong.
+		H.dna.struc_enzymes = se
+		randmutb(H) //Sometimes the clones come out wrong.
 
-	src.occupant:f_style = "Shaved"
-	src.occupant:h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+	H.f_style = "Shaved"
+	H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
-	src.occupant:mutantrace = mrace
-	src.occupant:update_mutantrace()
-	src.occupant:suiciding = 0
+	H.mutantrace = mrace
+	H.update_mutantrace()
+	H.suiciding = 0
 	src.attempting = 0
 	return 1
 

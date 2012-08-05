@@ -264,7 +264,6 @@
 			var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
 			new_xeno.mind_initialize(G,"Larva")
 			new_xeno.key = G.key
-			del(G)
 
 		vents.Remove(vent)
 		spawncount -= 1

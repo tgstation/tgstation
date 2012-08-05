@@ -875,32 +875,24 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 /obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
-
-	if(ckey && config.revival_pod_plants) //if there's human data stored in it, make a human
-		var/mob/ghost = find_dead_player("[ckey]")
-
+	var/make_podman = 0
+	var/mob/ghost
+	if(ckey && config.revival_pod_plants)
+		ghost = find_dead_player("[ckey]")
+		if(ismob(ghost))
+			if(istype(mind,/datum/mind))
+				if(!mind.current || mind.current == DEAD)
+					make_podman = 1
+	if(make_podman)	//all conditions met!
 		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
-		if(ghost)
-			ghost.client.mob = podman
-
-		if (realName)
+		if(realName)
 			podman.real_name = realName
-			podman.original_name = realName	//don't want a random ghost name if we die again
 		else
-			podman.real_name = "pod person"  //No null names!!
-
-		if(mind && istype(mind,/datum/mind) && mind.current && mind.current.stat == 2) //only transfer dead people's minds
-			mind:transfer_to(podman)
-			mind:original = podman
-		else //welp
-			podman.mind = new /datum/mind(  )
-			podman.mind.key = podman.key
-			podman.mind.current = podman
-			podman.mind.original = podman
-			podman.mind.transfer_to(podman)
-			ticker.minds += podman.mind
-
-			// -- Mode/mind specific stuff goes here
+			podman.real_name = "Pod Person [rand(0,999)]"
+		podman.original_name = podman.real_name
+		
+		mind.transfer_to(podman)
+			// -- Mode/mind specific stuff goes here. TODO! Broken :( Should be merged into mob/living/Login
 		switch(ticker.mode.name)
 			if ("revolution")
 				if (podman.mind in ticker.mode:revolutionaries)
@@ -921,18 +913,15 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 			// -- End mode specific stuff
 
-		if(ghost)
-			if (istype(ghost, /mob/dead/observer))
-				del(ghost) //Don't leave ghosts everywhere!!
 
 		podman.gender = gender
 
-		if (!podman.dna)
-			podman.dna = new /datum/dna(  )
-		if (ui)
+		if(!podman.dna)
+			podman.dna = new /datum/dna()
+		if(ui)
 			podman.dna.uni_identity = ui
 			updateappearance(podman, ui)
-		if (se)
+		if(se)
 			podman.dna.struc_enzymes = se
 		if(!prob(potency)) //if it fails, plantman!
 			podman.mutantrace = "plant"

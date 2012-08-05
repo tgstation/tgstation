@@ -396,10 +396,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
 			return
 		else
-			var/mob/dead/observer/ghost = new/mob/dead/observer()
-			ghost.ckey = M.ckey;
+			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
+			ghost.ckey = M.ckey
 	var/mob/adminmob = src.mob
-	M.ckey = src.ckey;
+	M.ckey = src.ckey
 	if( isobserver(adminmob) )
 		del(adminmob)
 	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

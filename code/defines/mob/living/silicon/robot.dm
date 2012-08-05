@@ -1,9 +1,12 @@
 /mob/living/silicon/robot
 	name = "Cyborg"
+	real_name = "Cyborg"
 	icon = 'icons/mob/robots.dmi'//
 	icon_state = "robot"
 	maxHealth = 300
 	health = 300
+	var/started = null//A fix to ensure people don't try to bypass law assignment. Initial assignment sets it to one but it check on login whether they have been initiated -Sieve
+
 
 #define BORGMESON 1
 #define BORGTHERM 2
@@ -41,7 +44,7 @@
 	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
-	var/modtype = null
+	var/modtype = "robot"
 	var/lower_mod = 0
 	var/jetpack = 0
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null

@@ -238,11 +238,11 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 	var/mob/living/carbon/alien/humanoid/new_xeno
 	switch(alien_caste)
 		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/humanoid/hunter (spawn_here)
+			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(spawn_here)
 		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel (spawn_here)
+			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(spawn_here)
 		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone (spawn_here)
+			new_xeno = new /mob/living/carbon/alien/humanoid/drone(spawn_here)
 		else
 			return 0
 
@@ -269,7 +269,6 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 		else//We won't be reporting duds.
 			del(new_xeno)
 
-		del(G)
 		return 1
 
 	alert("There are no available ghosts to throw into the xeno. Aborting command.")
@@ -294,7 +293,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/mob/dead/observer/G_found
 	for(var/mob/dead/observer/G in player_list)
-		if(G.client&&ckey(G.key)==ckey(input))
+		if(G.client&&G.ckey==ckey(input))
 			G_found = G
 			break
 

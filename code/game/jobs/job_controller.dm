@@ -314,26 +314,25 @@ var/global/datum/controller/occupations/job_master
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
 
-		if(H.mind && H.mind.assigned_role == "Cyborg")//This could likely be done somewhere else
-			H.Robotize()
-			return 1
+		if(H.mind)
+			if(H.mind.assigned_role == "Cyborg")//This could likely be done somewhere else
+				H.Robotize()
+				return 1
+
+			if(H.mind.assigned_role != "AI" && H.mind.assigned_role != "Clown")
+				switch(H.backbag)
+					if(1)
+						H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_r_hand)
+					if(2)
+						var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
+						new /obj/item/weapon/storage/box/survival(BPK)
+						H.equip_if_possible(BPK, H.slot_back,1)
+					if(3)
+						var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
+						new /obj/item/weapon/storage/box/survival(BPK)
+						H.equip_if_possible(BPK, H.slot_back,1)
 
 		H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
-
-		if(H.mind && H.mind.assigned_role != "Cyborg" && H.mind.assigned_role != "AI" && H.mind.assigned_role != "Clown")
-			if(H.backbag == 1) //Clown always gets his backbuddy.
-				H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_r_hand)
-
-			if(H.backbag == 2)
-				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
-				new /obj/item/weapon/storage/box/survival(BPK)
-				H.equip_if_possible(BPK, H.slot_back,1)
-
-			if(H.backbag == 3)
-				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
-				new /obj/item/weapon/storage/box/survival(BPK)
-				H.equip_if_possible(BPK, H.slot_back,1)
-
 		H.regenerate_icons()
 		return 1
 

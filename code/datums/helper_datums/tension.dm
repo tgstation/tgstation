@@ -453,7 +453,7 @@ var/global/datum/tension/tension_master
 		sleep(300)
 
 		for(var/mob/dead/observer/G in candidates)
-			if(!G.client || !G.key)
+			if(!G.client)
 				candidates.Remove(G)
 
 		spawn(0)
@@ -464,10 +464,7 @@ var/global/datum/tension/tension_master
 				if(!theghost)
 					return 0
 				var/mob/living/carbon/human/new_character=makeBody(theghost)
-				del(theghost)
 				new_character.mind.make_Wizard()
-
-
 
 		return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
 
@@ -536,7 +533,7 @@ var/global/datum/tension/tension_master
 		sleep(300)
 
 		for(var/mob/dead/observer/G in candidates)
-			if(!G.client || !G.key)
+			if(!G.client)
 				candidates.Remove(G)
 
 		spawn(0)
@@ -551,7 +548,6 @@ var/global/datum/tension/tension_master
 					if(!theghost)
 						break
 					var/mob/living/carbon/human/new_character=makeBody(theghost)
-					del(theghost)
 					new_character.mind.make_Nuke()
 
 
@@ -674,7 +670,6 @@ var/global/datum/tension/tension_master
 					new_syndicate_commando.key = theghost.key
 					new_syndicate_commando.internal = new_syndicate_commando.s_store
 					new_syndicate_commando.internals.icon_state = "internal1"
-					del(theghost)
 
 					//So they don't forget their code or mission.
 
@@ -748,7 +743,6 @@ var/global/datum/tension/tension_master
 
 					new_borg_deathsquad.mind.key = theghost.key//For mind stuff.
 					new_borg_deathsquad.key = theghost.key
-					del(theghost)
 
 					//So they don't forget their code or mission.
 

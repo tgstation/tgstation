@@ -495,7 +495,6 @@
 					new_commando.internal = new_commando.s_store
 					new_commando.internals.icon_state = "internal1"
 					candidates -= G
-					del(G)
 				else
 					break
 

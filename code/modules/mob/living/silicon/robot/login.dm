@@ -2,22 +2,10 @@
 	..()
 	regenerate_icons()
 
-	if(real_name == "Cyborg")
-		ident = rand(1, 999)
-		real_name += " "
-		real_name += "-[ident]"
-		name = real_name
-	/*if(!connected_ai)
-		for(var/mob/living/silicon/ai/A in world)
-			connected_ai = A
-			A.connected_robots += src
-			break
-	*/
 	if(!started)
 		if(!syndie)
-			if (client)
-				connected_ai = activeais()
-			if (connected_ai)
+			connected_ai = activeais()
+			if(connected_ai)
 				connected_ai.connected_robots += src
 	//			laws = connected_ai.laws //The borg inherits its AI's laws
 				laws = new /datum/ai_laws

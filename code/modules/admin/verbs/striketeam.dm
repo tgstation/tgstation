@@ -74,12 +74,11 @@ var/global/sent_strike_team = 0
 
 			if(commandos_list.len)
 				G = pick(commandos_list)
+				commandos_list -= G
 				new_commando.mind.key = G.key//For mind stuff.
 				new_commando.key = G.key
 				new_commando.internal = new_commando.s_store
 				new_commando.internals.icon_state = "internal1"
-				commandos_list -= G
-				del(G)
 
 			//So they don't forget their code or mission.
 			if(nuke_code)

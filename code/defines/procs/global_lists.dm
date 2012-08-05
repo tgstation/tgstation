@@ -1,13 +1,13 @@
 //Since it didn't really belong in any other category, I'm putting this here
 //This is for procs to replace all the goddamn 'in world's that are chilling around the code
 
-var/global/list/player_list = list()//List of all logged in players (Based on mob reference)
-var/global/list/admin_list = list()//List of all logged in admins (Based on mob reference)
-var/global/list/mob_list = list()//List of all mobs, including clientless
-var/global/list/living_mob_list = list()//List of all living mobs, including clientless
-var/global/list/dead_mob_list = list()//List of all dead mobs, including clientless
-var/global/list/client_list = list()//List of all clients, based on ckey
-var/global/list/cable_list = list()//Index for all cables, so that powernets don't have to look through the entire world all the time
+var/global/list/player_list = list()				//List of all logged in players (Based on mob reference)
+var/global/list/admin_list = list()					//List of all logged in admins (Based on mob reference)
+var/global/list/mob_list = list()					//List of all mobs, including clientless
+var/global/list/living_mob_list = list()			//List of all living mobs, including clientless
+var/global/list/dead_mob_list = list()				//List of all dead mobs, including clientless
+var/global/list/client_list = list()				//List of all clients, based on ckey
+var/global/list/cable_list = list()					//Index for all cables, so that powernets don't have to look through the entire world all the time
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
 var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessory/facial_hair indexed by name
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions

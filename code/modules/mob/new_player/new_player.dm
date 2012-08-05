@@ -15,14 +15,6 @@
 
 	anchored = 1	//  don't get pushed around
 
-	Logout()
-		ready = 0
-		..()
-		if(!spawning)//Here so that if they are spawning and log out, the other procs can play out and they will have a mob to come back to.
-			key = null//We null their key before deleting the mob, so they are properly kicked out.
-			del(src)
-		return
-
 	verb/new_player_panel()
 		set src = usr
 		new_player_panel_proc()
@@ -147,7 +139,6 @@
 					preferences.randomize_name()
 				observer.name = preferences.real_name
 				observer.real_name = observer.name
-				observer.original_name = observer.name //Original name is only used in ghost chat! It is not to be edited by anything!
 
 				preferences.copy_to_observer(observer)
 
@@ -377,7 +368,7 @@
 		close_spawn_windows()
 
 		if(ticker.random_players)
-			new_character.gender = pick(MALE, MALE, FEMALE)
+			new_character.gender = pick(MALE, FEMALE)
 			preferences.randomize_name()
 			preferences.randomize_appearance_for(new_character)
 		else
@@ -388,9 +379,8 @@
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = preferences.b_type
 		if(mind)
-			mind.transfer_to(new_character)
 			mind.original = new_character
-
+			mind.transfer_to(new_character)
 		return new_character
 
 

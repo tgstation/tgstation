@@ -72,7 +72,6 @@
 
 /mob/proc/AIize()
 	if(client)
-		client.screen.len = null
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jams for AIs
 	var/mob/living/silicon/ai/O = new (loc, /datum/ai_laws/asimov,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
@@ -89,8 +88,7 @@
 		O.mind.assigned_role = "AI"
 		O.key = key
 
-	if(!(O.mind in ticker.minds))
-		ticker.minds += O.mind//Adds them to regular mind list.
+
 
 	var/obj/loc_landmark
 	for(var/obj/effect/landmark/start/sloc in world)
@@ -164,12 +162,7 @@
 	invisibility = 101
 	for(var/t in organs)
 		del(t)
-	if(client)
-		//client.screen -= main_hud1.contents
-		client.screen -= hud_used.contents
-		client.screen -= hud_used.adding
-		client.screen -= list( oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
-		client.screen -= list( zone_sel, oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
+
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
 
 	// cyborgs produced by Robotize get an automatic power cell
@@ -180,11 +173,9 @@
 
 	O.gender = gender
 	O.invisibility = 0
-	O.name = "Cyborg"
-	O.real_name = "Cyborg"
+
 	O.UI = UI
-	if(client)
-		O.lastKnownIP = client.address ? client.address : null
+
 	if (mind)
 		mind.transfer_to(O)
 		if (mind.assigned_role == "Cyborg")
@@ -197,23 +188,14 @@
 		mind.original = O
 		mind.transfer_to(O)
 
-	if(!(O.mind in ticker.minds))
-		ticker.minds += O.mind//Adds them to regular mind list.
+
 
 	O.loc = loc
-	//O << "<B>You are playing a Cyborg. A Cyborg can interact with most electronic objects in its view point.</B>"
-	//O << "<B>You must follow the laws that the AI has. You must follow orders the AI gives you.</B>"
-	//O << "To use something, simply click on it."
-	//O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
-
 	O.job = "Cyborg"
 
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
-	if(O.mind)
-		ticker.mode.remove_cultist(O.mind, 1)
-		ticker.mode.remove_revolutionary(O.mind, 1)
 
 	spawn(0)//To prevent the proc from returning null.
 		del(src)

@@ -55,8 +55,7 @@
 			if(G.client)
 				G.client.screen.len = null
 				B.ghost_name = G.real_name
-				G.client.mob = B
-				del(G)
+				B.key = G.key
 
 /*
 	Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand

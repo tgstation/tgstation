@@ -543,20 +543,27 @@
 
 				U.whisper("GIN'YU CAPAN")
 				U.verbs -= /mob/proc/swap
+				//Remove special verbs from both mobs
 				if(U.mind.special_verbs.len)
 					for(var/V in U.mind.special_verbs)
 						U.verbs -= V
-
-				var/mob/dead/observer/G = new /mob/dead/observer(H) //To properly transfer clients so no-one gets kicked off the game.
-
-				H.client.mob = G
 				if(H.mind.special_verbs.len)
 					for(var/V in H.mind.special_verbs)
-						H.verbs -= V
-				G.mind = H.mind
+						H.verbs -= V	
 
-				U.client.mob = H
-				H.mind = U.mind
+				//empty out H
+				var/mob/dead/observer/G = new /mob/dead/observer(H) //Temp-mob		
+				G.key = H.key //Stops H.key getting kicked
+				var/datum/mind/temp_mind = H.mind	//ghosts shouldn't hold minds
+				temp_mind.current = null
+				H.mind = null
+
+
+				//Start the Transfer
+				U.mind.transfer_to(H)
+				temp_mind.transfer_to(U)
+	
+				//Re-add those special verbs and stuff			
 				if(H.mind.special_verbs.len)
 					var/spell_loss = 1//Can lose only one spell during transfer.
 					var/probability = 95 //To determine the chance of wizard losing their spell.
@@ -573,19 +580,10 @@
 								spawn(500)
 									H << "The mind transfer has robbed you of a spell."
 
-			/*	//This code SHOULD work to prevent Mind Swap spam since the spell transfer code above instantly resets it.
-				//I can't test this code because I can't test mind stuff on my own :x -- Darem.
-				if(hascall(H, /mob/proc/swap))
-					H.verbs -= /mob/proc/swap
-				*/
-				G.client.mob = U
-				U.mind = G.mind
 				if(U.mind.special_verbs.len)//Basic fix to swap verbs for any mob if needed.
 					for(var/V in U.mind.special_verbs)
 						U.verbs += V
 
-				U.mind.current = U
-				H.mind.current = H
 				spawn(500)
 					U << "Something about your body doesn't seem quite right..."
 
@@ -595,7 +593,6 @@
 				spawn(600)
 					H.verbs += /mob/proc/swap
 
-				del(G)
 			else
 				src << "Their mind is not compatible."
 				return

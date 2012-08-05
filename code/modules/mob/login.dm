@@ -26,11 +26,13 @@
 	player_list |= src
 	update_Login_details()
 	world.update_status()
+
 	client.images = null				//remove the images such as AIs being unable to see runes
 	client.screen = null				//remove hud items just in case
-	if(!dna) dna = new /datum/dna(null)
-	if(hud_used)	del(hud_used)
+	if(hud_used)	del(hud_used)		//remove the hud objects
 	hud_used = new/obj/hud( src )
+
+	if(!dna) 	dna = new /datum/dna(null)
 
 	next_move = 1
 	sight |= SEE_SELF

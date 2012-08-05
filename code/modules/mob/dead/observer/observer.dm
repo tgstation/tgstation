@@ -8,28 +8,28 @@
 
 	dead_mob_list += src
 	add_to_mob_list(src)
-	if(body)
-		var/turf/T = get_turf(body)			//Where is the body located?
-		if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
-		loc = T
-		if(ismob(body))
-			if(body.original_name)
-				original_name = body.original_name
-			else
-				if(body.real_name)
-					original_name = body.real_name
-				else
-					original_name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+	var/turf/T
 
+	if(ismob(body))
+		T = get_turf(body)				//Where is the body located?
+		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
+
+		if(body.original_name)
+			original_name = body.original_name
+		else
 			if(body.real_name)
-				real_name = body.real_name
+				original_name = body.real_name
 			else
-				real_name = original_name
+				original_name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 
-			name = original_name
+		name = original_name
 
-			if(can_reenter_corpse)
-				corpse = body
+		if(can_reenter_corpse)
+			corpse = body
+
+	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
+	loc = T
+
 	if(!name)								//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 		real_name = name
@@ -46,7 +46,6 @@ Works together with spawning an observer, noted above.
 /mob/proc/ghostize(var/can_reenter_corpse = 1)
 	if(key)
 		var/mob/dead/observer/ghost = new(src,can_reenter_corpse)	//Transfer safety to observer spawning proc.
-		ghost.attack_log = attack_log			//preserve our attack logs by copying them to our ghost
 		ghost.key = key
 	return
 
@@ -137,11 +136,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	corpse.ajourn=0
 	if(corpse.key)		//makes sure we don't accidentally kick any clients
 		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
-		return	
+		return
 	corpse.key = key
-	remove_from_mob_list(src)
-	dead_mob_list -= src
-	del(src)
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"

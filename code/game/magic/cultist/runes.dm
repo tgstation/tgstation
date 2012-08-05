@@ -270,7 +270,6 @@ var/list/sacrificed = list()
 			corpse_to_raise.mind.original = corpse_to_raise
 			corpse_to_raise.mind.key = ghost.key
 			corpse_to_raise.key = ghost.key
-			del(ghost)
 			for(var/datum/organ/external/affecting in corpse_to_raise.organs)
 				affecting.heal_damage(1000, 1000)
 			corpse_to_raise.setToxLoss(0)
