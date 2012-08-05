@@ -141,10 +141,12 @@
 */
 								var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
 								for (PRP=1, PRP<=4, PRP++)
-									for (var/obj/machinery/power/apc/APC in loc)
-										if (!(APC.stat & BROKEN))
-											theAPC = APC
-											break
+									var/area/AIarea = get_area(src)
+									for(var/area/A in AIarea.master.related)
+										for (var/obj/machinery/power/apc/APC in A)
+											if (!(APC.stat & BROKEN))
+												theAPC = APC
+												break
 									if (!theAPC)
 										switch(PRP)
 											if (1) src << "Unable to locate APC!"
