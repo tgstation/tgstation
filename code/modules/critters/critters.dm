@@ -172,7 +172,8 @@
 
 	Die()
 		..()
-		new /obj/effect/decal/cleanable/mucus(src.loc)
+		var/obj/effect/decal/cleanable/mucus/M = new (src.loc)
+		M.icon_state = "xfloor[rand(1,7)]"
 		del(src)
 
 /proc/isroach(var/obj/O)

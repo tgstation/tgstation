@@ -188,7 +188,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		//the mouse ai will deactivate itself
 		client.mob = target_mouse
 		target_mouse.original_name = src.original_name
-		target_mouse.voice_name = src.real_name
 
 		//reset admin verbs
 		if(client && client.holder && client.holder.state == 2)
