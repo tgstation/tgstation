@@ -18,10 +18,17 @@
 		if(!body.original_name)
 			body.original_name = real_name
 		original_name = body.original_name
-		name = body.original_name
+		//name = body.original_name		//original
+		name = body.name
+		real_name = body.real_name
+
 		if(!name)
 			name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
 			real_name = name
+
+		if( original_name != real_name )
+			name = name + " (died as [src.real_name])"
+
 		if(!safety)
 			corpse = body
 			verbs += /mob/dead/observer/proc/reenter_corpse
@@ -77,9 +84,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		verbs -= /mob/proc/ghost
 		if (ghost.client)
 			ghost.client.eye = ghost
-		if(issimpleanimal(src))
-			ghost.name  = ghost.name + " ([src.real_name])"
-			ghost.real_name  = ghost.real_name + " ([src.real_name])"
+		/*if(issimpleanimal(src))
+			ghost.name = src.name + " ([src.real_name])"
+			ghost.voice_name = src.name + " ([src.real_name])"*/
 	return
 
 /mob/proc/adminghostize()
@@ -180,7 +187,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		//move player into mouse
 		//the mouse ai will deactivate itself
 		client.mob = target_mouse
-		target_mouse.real_name = src.name
+		target_mouse.original_name = src.original_name
+		target_mouse.voice_name = src.real_name
 
 		//reset admin verbs
 		if(client && client.holder && client.holder.state == 2)
@@ -191,6 +199,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 		//update allowed verbs
 		target_mouse.verbs += /mob/proc/ghost
+		target_mouse.verbs -= /mob/verb/observe
 		target_mouse.verbs -= /client/verb/toggle_ghost_ears
 		target_mouse.verbs -= /client/verb/toggle_ghost_sight
 
