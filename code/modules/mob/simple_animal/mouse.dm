@@ -1,5 +1,6 @@
 /mob/living/simple_animal/mouse
 	name = "mouse"
+	real_name = "mouse"
 	desc = "It's a small, disease-ridden rodent."
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
@@ -45,7 +46,7 @@
 	icon_state = "mouse_[color]"
 	icon_living = "mouse_[color]"
 	icon_dead = "mouse_[color]_dead"
-	desc = "It's a small [color] rodent, often seen hiding in maintenance areas."
+	desc = "It's a small [color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0

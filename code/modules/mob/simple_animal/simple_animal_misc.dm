@@ -1,9 +1,4 @@
 
-/mob/living/simple_animal/New()
-	..()
-	verbs -= /mob/verb/observe
-	real_name = src.name
-
 /mob/living/simple_animal/Login()
 	if(src && src.client)
 		src.client.screen = null
@@ -32,7 +27,7 @@
 			return "<b>[src]</b> [emote], \"[text]\""
 	return "says, \"[text]\"";
 
-//swhen talking, simple_animals can only understand each other
+//when talking, simple_animals can only understand each other
 /mob/living/simple_animal/say(var/message)
 	for(var/mob/M in view(src,7))
 		if(istype(M, src.type) || M.universal_speak)
@@ -199,6 +194,7 @@
 	stat = DEAD
 	density = 0
 	src << "\red You have died!"
+	verbs -= /mob/living/simple_animal/say
 	return
 
 /mob/living/simple_animal/ex_act(severity)
