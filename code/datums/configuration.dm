@@ -233,6 +233,9 @@
 				if ("guest_jobban")
 					config.guest_jobban = 1
 
+				if ("guest_ban")
+					guests_allowed = 0
+
 				if ("usewhitelist")
 					config.usewhitelist = 1
 

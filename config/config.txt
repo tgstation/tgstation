@@ -118,6 +118,9 @@ HOSTEDBY Yournamehere
 ## Set to 1 to jobban them from those positions, set to 0 to allow them.
 # GUEST_JOBBAN
 
+## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
+# GUEST_BAN
+
 ## Set to jobban everyone who's key is not listed in data/whitelist.txt from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)
 # USEWHITELIST
