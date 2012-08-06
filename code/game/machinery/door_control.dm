@@ -68,8 +68,9 @@
 					if(specialfunctions & IDSCAN)
 						D.aiDisabledIdScanner = 0
 					if(specialfunctions & BOLTS)
-						D.locked = 0
-						D.update_icon()
+						if(!D.isWireCut(4) && D.arePowerSystemsOn())
+							D.locked = 0
+							D.update_icon()
 					if(specialfunctions & SHOCK)
 						D.secondsElectrified = 0
 					if(specialfunctions & SAFE)
