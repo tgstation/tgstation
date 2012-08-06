@@ -1009,7 +1009,7 @@ proc/process_ghost_teleport_locs()
 
 /area/security/prison
 	name = "\improper Prison Wing"
-	icon_state = "security"
+	icon_state = "sec_prison"
 
 /area/security/warden
 	name = "\improper Armory"
@@ -1017,7 +1017,7 @@ proc/process_ghost_teleport_locs()
 
 /area/security/hos
 	name = "\improper Head of Security's Office"
-	icon_state = "security"
+	icon_state = "sec_hos"
 
 /area/security/detectives_office
 	name = "\improper Detective's Office"
