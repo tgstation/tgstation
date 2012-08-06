@@ -223,23 +223,12 @@
 
 	msg += "<span class='warning'>"
 
-/*	if (src.getBruteLoss())
-		if (src.getBruteLoss() < 30)
-			usr << "\red [src.name] looks slightly injured!"
-		else
-			usr << "\red <B>[src.name] looks severely injured!</B>"*/
-
 	if (src.cloneloss)
 		if (src.cloneloss < 30)
 			msg += "[t_He] looks slightly... unfinished?\n"
 		else
 			msg += "<B>[t_He] looks very... unfinished?</B>\n"
 
-/*	if (src.getFireLoss())
-		if (src.getFireLoss() < 30)
-			usr << "\red [src.name] looks slightly burned!"
-		else
-			usr << "\red <B>[src.name] looks severely burned!</B>"*/
 	msg += "<span class='warning'>"
 	if (src.nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
@@ -290,14 +279,13 @@
 					if(21 to INFINITY)
 						wound_flavor_text["[temp.display_name]"] += pick(" a lot of burns"," severe melting")
 				wound_flavor_text["[temp.display_name]"] += "!</span>\n"
-			else if(temp.wound_descs.len)
+			else if(temp.wounds.len)
 				var/list/wound_descriptors = list()
-				for(var/time in temp.wound_descs)
-					for(var/wound in temp.wound_descs[time])
-						if(wound in wound_descriptors)
-							wound_descriptors[wound]++
-							continue
-						wound_descriptors[wound] = 1
+				for(var/datum/wound/W in temp.wounds)
+					if(W.desc in wound_descriptors)
+						wound_descriptors[W.desc]++
+						continue
+					wound_descriptors[W.desc] = 1
 				var/list/flavor_text = list()
 				var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
 				"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")

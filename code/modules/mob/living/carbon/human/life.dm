@@ -971,7 +971,12 @@
 									break
 
 						//At this point, we dun care which blood we are adding to, as long as they get more blood.
-						B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
+						var/blood_regen = 0.5
+						if(B.volume < 400)
+							blood_regen = 1
+						if(B.volume < 200)
+							blood_regen = 1.5
+						B.volume = max(min(B.volume + blood_regen,560), 0) //Less blood = More blood generated per tick
 
 				if(blood_volume > 448)
 					if(pale)

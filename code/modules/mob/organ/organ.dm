@@ -2,43 +2,6 @@
 //CONTAINS: ORGANS AND WOUNDS//
 ///////////////////////////////
 
-var/list/wound_progressions = list(
-//cut healing path"
-"cut" = "healing cut", "healing cut" = "small scab",\
-
-//deep cut healing path
-"deep cut" = "clotted cut", "clotted cut" = "scab", "scab" = "fresh skin",\
-
-//flesh wound healing path
-"flesh wound" = "blood soaked clot", "blood soaked clot" = "large scab", "large scab" = "fresh skin",\
-
-//gaping wound healing path
-"gaping wound" = "large blood soaked clot", "large blood soaked clot" = "large clot", "large clot" = "small angry scar",\
-"small angry scar" = "small straight scar",\
-
-//big gaping wound healing path
-"big gaping wound" = "gauze wrapped wound", "gauze wrapped wound" = "blood soaked bandage", "blood soaked bandage" = "large angry scar",\
-"large angry scar" = "large straight scar",\
-
-//massive wound healing path
-"massive wound" = "massive blood soaked bandage", "massive blood soaked bandage" = "huge bloody mess", "huge bloody mess" = "massive angry scar",\
-"massive angry scar" = "massive jagged scar",\
-
-//bruise healing path
-"monumental bruise" = "large bruise", "huge bruise" = "large bruise", "large bruise" = "moderate bruise",\
-"moderate bruise" = "small bruise", "small bruise" = "tiny bruise",\
-
-//moderate burn healing path
-"moderate burn" = "moderate salved burn", "moderate salved burn" = "fresh skin",\
-
-"large burn" = "large salved burn", "large salved burn" = "moderate salved burn",\
-
-"severe burn" = "severe salved burn", "severe salved burn" = "burn scar",\
-
-"deep burn" = "deep salved burn", "deep salved burn" = "large burn scar",\
-
-"carbonised area" = "treated carbonised area", "treated carbonised area" = "massive burn scar")
-
 /datum/organ
 	var/name = "organ"
 	var/mob/living/carbon/human/owner = null
@@ -69,11 +32,196 @@ var/list/wound_progressions = list(
 		W.hits = hits
 		W.time_inflicted = time_inflicted
 		return W
-/* fuckign double defines
-#define CUT 0
-#define BRUISE 1
-#define BURN 2
-*/
+
+/****************************************************
+					WOUNDS
+****************************************************/
+/datum/wound
+	// stages such as "cut", "deep cut", etc.
+	var/list/stages
+	// number representing the current stage
+	var/current_stage = 0
+
+	// description of the wound
+	var/desc = ""
+
+	// amount of damage this wound causes
+	var/damage = 0
+
+	// amount of damage the current wound type requires(less means we need to apply the next healing stage)
+	var/min_damage = 0
+
+	// one of CUTE, BRUISE, BURN
+	var/damage_type = BRUTE
+
+	// whether this wound needs a bandage/salve to heal at all
+	var/needs_treatment = 0
+
+	// is the wound bleeding?
+	var/tmp/bleeding = 0
+	// is the wound bandaged?
+	var/tmp/bandaged = 0
+	// is the wound salved?
+	var/tmp/salved = 0
+	// is the wound disinfected?
+	var/tmp/disinfected = 0
+
+	// helper lists
+	var/tmp/list/desc_list = list()
+	var/tmp/list/damage_list = list()
+	New(var/damage)
+
+		// reading from a list("stage" = damage) is pretty difficult, so build two separate
+		// lists from them instead
+		for(var/V in stages)
+			desc_list += V
+			damage_list += stages[V]
+
+		// initialize with the first stage
+		next_stage()
+
+		// this will ensure the size of the wound matches the damage
+		src.heal_damage(0)
+
+	// returns 1 if there's a next stage, 0 otherwise
+	proc/next_stage()
+		if(current_stage + 1 > src.desc_list.len)
+			return 0
+
+		current_stage++
+
+		src.min_damage = damage_list[current_stage]
+		src.desc = desc_list[current_stage]
+		return 1
+
+	// returns 1 if the wound has started healing
+	proc/started_healing()
+		return (current_stage > 1)
+
+	// checks whether the wound has been appropriately treated
+	// always returns 1 for wounds that don't need to be treated
+	proc/is_treated()
+		if(!needs_treatment) return 1
+
+		if(damage_type == BRUISE || damage_type == CUT)
+			return bandaged
+		else if(damage_type == BURN)
+			return salved
+
+	// heal the given amount of damage, and if the given amount of damage was more
+	// than what needed to be healed, return how much heal was left
+	proc/heal_damage(amount)
+		var/healed_damage = min(src.damage, amount)
+		amount -= healed_damage
+		src.damage -= healed_damage
+
+		while(src.damage > damage[current_stage] && current_stage < src.desc_list.len)
+			current_stage++
+		desc = desc_list[current_stage]
+
+		// return amount of healing still leftover, can be used for other wounds
+		return amount
+
+	// opens the wound again
+	proc/open_wound()
+		if(current_stage > 1)
+			// e.g. current_stage is 2, then reset it to 0 and do next_stage(), bringing it to 1
+			current_stage -= 2
+			next_stage()
+
+/** CUTS **/
+/datum/wound/cut
+	// link wound descriptions to amounts of damage
+	stages = list("cut" = 5, "healing cut" = 2, "small scab" = 0)
+
+/datum/wound/deep_cut
+	stages = list("deep cut" = 15, "clotted cut" = 8, "scab" = 2, "fresh skin" = 0)
+
+/datum/wound/flesh_wound
+	stages = list("flesh wound" = 25, "blood soaked clot" = 15, "large scab" = 5, "fresh skin" = 0)
+
+/datum/wound/gaping_wound
+	stages = list("gaping wound" = 50, "large blood soaked clot" = 25, "large clot" = 15, "small angry scar" = 5, \
+	               "small straight scar" = 0)
+
+/datum/wound/big_gaping_wound
+	stages = list("big gaping wound" = 60, "gauze wrapped wound" = 50, "blood soaked bandage" = 25,\
+				  "large angry scar" = 10, "large straight scar" = 0)
+
+	needs_treatment = 1 // this only heals when bandaged
+
+/datum/wound/massive_wound
+	stages = list("massive wound" = 70, "massive blood soaked bandage" = 40, "huge bloody mess" = 20,\
+				  "massive angry scar" = 10,  "massive jagged scar" = 0)
+
+	needs_treatment = 1 // this only heals when bandaged
+
+/** BRUISES **/
+/datum/wound/bruise
+	stages = list("monumental bruise" = 80, "huge bruise" = 50, "large bruise" = 30,\
+				  "moderate bruise" = 20, "small bruise" = 10, "tiny bruise" = 5)
+
+	needs_treatment = 1 // this only heals when bandaged
+	damage_type = BRUISE
+
+/datum/wound/bruise/monumental_bruise
+
+// implement sub-paths by starting at a later stage
+/datum/wound/bruise/huge_bruise
+	current_stage = 1
+
+/datum/wound/bruise/large_bruise
+	current_stage = 2
+
+/datum/wound/bruise/moderate_bruise
+	current_stage = 3
+	needs_treatment = 0
+
+/datum/wound/bruise/small_bruise
+	current_stage = 4
+	needs_treatment = 0
+
+/datum/wound/bruise/tiny_bruise
+	current_stage = 5
+	needs_treatment = 0
+
+/** BURNS **/
+/datum/wound/moderate_burn
+	stages = list("moderate burn" = 5, "moderate salved burn" = 2, "fresh skin" = 0)
+
+	needs_treatment = 1 // this only heals when bandaged
+
+	damage_type = BURN
+
+/datum/wound/large_burn
+	stages = list("large burn" = 15, "large salved burn" = 5, "fresh skin" = 0)
+
+	needs_treatment = 1 // this only heals when bandaged
+
+	damage_type = BURN
+
+/datum/wound/severe_burn
+	stages = list("severe burn" = 30, "severe salved burn" = 10, "burn scar" = 0)
+
+	needs_treatment = 1 // this only heals when bandaged
+
+	damage_type = BURN
+
+/datum/wound/deep_burn
+	stages = list("deep burn" = 40, "deep salved burn" = 15,  "large burn scar" = 0)
+
+	needs_treatment = 1 // this only heals when bandaged
+
+	damage_type = BURN
+
+/datum/wound/carbonised_area
+	stages = list("carbonised area" = 50, "treated carbonised area" = 20, "massive burn scar" = 0)
+
+	needs_treatment = 1 // this only heals when bandaged
+
+	damage_type = BURN
+
+
 /****************************************************
 				EXTERNAL ORGANS
 ****************************************************/
@@ -90,9 +238,7 @@ var/list/wound_progressions = list(
 	var/tmp/list/obj/item/weapon/implant/implant
 
 	var/display_name
-
-	var/tmp/list/wound_descs = list()
-	var/tmp/next_wound_update = 0
+	var/list/wounds = list()
 
 	var/tmp/perma_injury = 0
 	var/tmp/perma_dmg = 0
@@ -103,7 +249,7 @@ var/list/wound_progressions = list(
 	var/datum/organ/external/parent
 	var/list/datum/organ/external/children
 
-	var/damage_msg = "\red You feel a intense pain"
+	var/damage_msg = "\red You feel an intense pain"
 
 	var/status = 0
 	var/broken_description
@@ -119,6 +265,7 @@ var/list/wound_progressions = list(
 			H.organs[name] = src
 
 	proc/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
+		// TODO: this proc needs to be rewritten to not update damages directly
 		if((brute <= 0) && (burn <= 0))
 			return 0
 		if(status & DESTROYED)
@@ -204,30 +351,62 @@ var/list/wound_progressions = list(
 		return result
 
 
+
 	proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
 		if(status & ROBOT && !robo_repair)
 			return
-	//	var/brute_to_heal = 0
-	//	var/brute_wounds = list()
-	//	var/burn_to_heal = 0
-	//	var/burn_wounds = list()
-	//	for(var/datum/organ/wound/W in brute_wounds)
 
-		brute_dam = max(0, brute_dam-brute)
-		burn_dam = max(0, burn_dam-burn)
+		// heal damage on the individual wounds
+		for(var/datum/wound/W in wounds)
+			if(brute == 0 && burn == 0)
+				break
+
+			// heal brute damage
+			if(W.damage_type == CUT || W.damage_type == BRUISE)
+				burn = W.heal_damage(brute)
+			else if(W.damage_type == BURN)
+				burn = W.heal_damage(burn)
+
+		// sync organ damage with wound damages
+		update_damages()
 
 		if(internal)
 			status &= ~BROKEN
 			perma_injury = 0
+
 		// if all damage is healed, replace the wounds with scars
 		if(brute_dam + burn_dam == 0)
 			for(var/V in autopsy_data)
 				var/datum/autopsy_data/W = autopsy_data[V]
 				del W
 			autopsy_data = list()
+
 		owner.updatehealth()
 		var/result = update_icon()
 		return result
+
+	proc/update_damages()
+		brute_dam = 0
+		burn_dam = 0
+		status &= ~BLEEDING
+		for(var/datum/wound/W in wounds)
+			if(W.damage_type == CUT || W.damage_type == BRUISE)
+				brute_dam += W.damage
+			else if(W.damage_type == BURN)
+				burn_dam += W.damage
+
+			if(W.bleeding && !W.bandaged)
+				status |= BLEEDING
+
+	proc/update_wounds()
+		for(var/datum/wound/W in wounds)
+			if(W.is_treated())
+				// slow healing
+				var/amount = 0.5
+				if(W.bandaged) amount++
+				if(W.salved) amount++
+				if(W.disinfected) amount++
+				W.heal_damage(amount / 10)
 
 	proc/add_wound(var/used_weapon, var/damage)
 		var/datum/autopsy_data/W = autopsy_data[used_weapon]
@@ -253,8 +432,10 @@ var/list/wound_progressions = list(
 		return burn_dam
 
 	process()
-		if(next_wound_update && world.time > next_wound_update)
-			update_wounds()
+		// process wounds, doing healing etc.
+		update_wounds()
+		// update damages from wounds
+		update_damages()
 		if(status & DESTROYED)
 			if(!destspawn)
 				droplimb()
@@ -268,7 +449,6 @@ var/list/wound_progressions = list(
 				return
 		if(brute_dam > min_broken_damage && !(status & ROBOT))
 			if(!(status & BROKEN))
-				//owner.unlock_medal("Broke Yarrr Bones!", 0, "Break a bone.", "easy")
 				owner.visible_message("\red You hear a loud cracking sound coming from \the [owner].","\red <b>Something feels like it shattered in your [display_name]!</b>","You hear a sickening crack.")
 				owner.emote("scream")
 				status |= BROKEN
@@ -411,62 +591,44 @@ var/list/wound_progressions = list(
 
 	proc/createwound(var/type = CUT, var/damage)
 		if(hasorgans(owner))
-			var/wound_name
-			var/update_time = world.time + damage*100
+			var/wound_type
 			var/size = min( max( 1, damage/10 ) , 6)
+
+			// first check whether we can widen an existing wound
+			if((type == CUT || type == BRUISE) && damage >= 5)
+				var/datum/wound/W = pick(wounds)
+				if(W.started_healing())
+					damage -= 5
+					W.open_wound()
+					owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
+					"\red The wound on your [display_name] widens with a nasty ripping voice.",\
+					"You hear a nasty ripping noise, as if flesh is being torn apart.")
+
+			if(damage == 0) return
+
 			switch(type)
 				if(CUT)
 					src.status |= BLEEDING
-					var/list/size_names = list("cut", "deep cut", "flesh wound", "gaping wound", "big gaping wound", "massive wound")
-					wound_name = size_names[size]
-					if(wound_descs["[update_time]"])
-						var/list/update_next = wound_descs["[update_time]"]
-						update_next += wound_name
-					else
-						if (next_wound_update > update_time)
-							next_wound_update = update_time
-						wound_descs["[update_time]"] = list(wound_name)
-				if(BRUISE)
-					var/list/size_names = list("tiny bruise", "small bruise", "moderate bruise", "large bruise", "huge bruise", "monumental bruise")
-					wound_name = size_names[size]
-					if(wound_descs["[update_time]"])
-						var/list/update_next = wound_descs["[update_time]"]
-						update_next += wound_name
-					else
-						if (next_wound_update > update_time)
-							next_wound_update = update_time
-						wound_descs["[update_time]"] = list(wound_name)
-				if(BURN)
-					var/list/size_names = list("small burn", "moderate burn", "large burn", "severe burn", "deep burn", "carbonised area")
-					wound_name = size_names[size]
-					update_time += damage*300
-					if(wound_descs["[update_time]"])
-						var/list/update_next = wound_descs["[update_time]"]
-						update_next += wound_name
-					else
-						if (next_wound_update > update_time)
-							next_wound_update = update_time
-						wound_descs["[update_time]"] = list(wound_name)
+					var/list/size_names = list(/datum/wound/cut, /datum/wound/deep_cut, /datum/wound/flesh_wound, /datum/wound/gaping_wound, /datum/wound/big_gaping_wound, /datum/wound/massive_wound)
+					wound_type = size_names[size]
 
-	proc/update_wounds()
-		var/list/wounds_to_update = wound_descs["[next_wound_update]"]
-		for(var/wound in wounds_to_update)
-			if(wound_progressions[wound])
-				var/wound_name = wound_progressions[wound]
-				var/next_update = world.time + 600*rand(5,13)
-				if(wound_descs["[next_update]"])
-					var/list/update_next = wound_descs["[next_update]"]
-					update_next += wound_name
-				else
-					wound_descs["[next_update]"] = list(wound_name)
-		wound_descs.Remove("[next_wound_update]")
-		if(wound_descs.len)
-			var/next_update = text2num(wound_descs[1])
-			for(var/wound in wound_descs)
-				next_update = min(next_update, text2num(wound))
-			next_wound_update = next_update
-		else
-			next_wound_update = 0
+					var/datum/wound/W = new wound_type()
+					W.damage = damage
+					wounds += W
+				if(BRUISE)
+					var/list/size_names = list(/datum/wound/bruise/tiny_bruise, /datum/wound/bruise/small_bruise, /datum/wound/bruise/moderate_bruise, /datum/wound/bruise/large_bruise, /datum/wound/bruise/huge_bruise, /datum/wound/bruise/monumental_bruise)
+					wound_type = size_names[size]
+
+					var/datum/wound/W = new wound_type()
+					W.damage = damage
+					wounds += W
+				if(BURN)
+					var/list/size_names = list(/datum/wound/moderate_burn, /datum/wound/large_burn, /datum/wound/severe_burn, /datum/wound/deep_burn, /datum/wound/carbonised_area)
+					wound_type = size_names[size]
+
+					var/datum/wound/W = new wound_type()
+					W.damage = damage
+					wounds += W
 
 	proc/emp_act(severity)
 		if(!(status & ROBOT))

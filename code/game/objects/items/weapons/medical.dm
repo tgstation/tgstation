@@ -118,10 +118,18 @@ MEDICAL
 		if (!ointment && (affecting.status & BLEEDING))
 			affecting.status &= ~BLEEDING
 
-		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
-			H.UpdateDamageIcon()
+		if(ointment)
+			for(var/datum/wound/W in affecting.wounds)
+				W.salved = 1
 		else
-			H.UpdateDamage()
+			for(var/datum/wound/W in affecting.wounds)
+				W.bandaged = 1
+
+		// Don't do direct healing
+		//if (affecting.heal_damage(src.heal_brute, src.heal_burn))
+		//	H.UpdateDamageIcon()
+		//else
+		H.UpdateDamage()
 
 		M.updatehealth()
 

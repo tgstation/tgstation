@@ -474,3 +474,4 @@ var/list/liftable_structures = list(\
 #define DESTROYED 64
 #define ROBOT 128
 #define SPLINTED 256
+#define SALVED 512
