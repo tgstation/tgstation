@@ -16,13 +16,18 @@
 		contents -= T
 		if(air)
 			air.group_multiplier--
-		T.zone = null
+		if(T.zone == src)
+			T.zone = null
 
 	proc/AddSpace(turf/space/S)
 		//Adds a space tile to the list, and creates the list if null.
-		if(istype(S,/turf/space))
-			if(!space_tiles) space_tiles = list()
+		if(istype(S))
+			if(!space_tiles)
+				space_tiles = list()
+			else if(S in space_tiles)
+				return
 			space_tiles += S
+			contents -= S
 
 	proc/RemoveSpace(turf/space/S)
 		//Removes a space tile from the list, and deletes the list if length is 0.
@@ -100,9 +105,9 @@ proc/ZMerge(zone/A,zone/B)
 	for(var/connection/C in A.connections)
 		C.Cleanup()
 
-	del B
+	B.SoftDelete()
 
-proc/ZConnect(turf/A,turf/B)
+proc/ZConnect(turf/simulated/A,turf/simulated/B)
 	//Connects two zones by forming a connection object representing turfs A and B.
 
 	//Make sure that if it's space, it gets added to space_tiles instead.
@@ -115,15 +120,19 @@ proc/ZConnect(turf/A,turf/B)
 			B.zone.AddSpace(A)
 		return
 
+	if(!istype(A) || !istype(B))
+		return
+
 	//Make some preliminary checks to see if the connection is valid.
 	if(!A.zone || !B.zone) return
 	if(A.zone == B.zone) return
-	if(!A.CanPass(0,B,0,0) || !B.CanPass(0,A,0,0)) return
+	if(!A.CanPass(null,B,0,0)) return
+	if(A.CanPass(null,B,1.5,1))
+		return ZMerge(A.zone,B.zone)
 
 	//Ensure the connection isn't already made.
-	if(air_master.tiles_with_connections["\ref[A]"])
-		var/list/connections = air_master.tiles_with_connections["\ref[A]"]
-		for(var/connection/C in connections)
+	if("\ref[A]" in air_master.turfs_with_connections)
+		for(var/connection/C in air_master.turfs_with_connections["\ref[A]"])
 			C.Cleanup()
 			if(C && (C.B == B || C.A == B))
 				return

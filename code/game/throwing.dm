@@ -99,12 +99,11 @@
 			if(istype(A,/mob/living))
 				if(A:lying) continue
 				src.throw_impact(A)
-				if(src.throwing == 1)
-					src.throwing = 0
+				throwing = 0
 			if(isobj(A))
 				if(A.density && !A.CanPass(src,target))
 					src.throw_impact(A)
-					src.throwing = 0
+					throwing = 0
 
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
@@ -133,10 +132,20 @@
 			message_admins("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
 
 	else if(isobj(hit_atom))
-		var/obj/O = hit_atom
-		if(!O.anchored)
-			step(O, src.dir)
-		O.hitby(src)
+		if (istype(hit_atom,/obj/machinery/disposal) && istype(src, /obj/item))
+			var/obj/item/I = src
+			if(prob(75))
+				I.loc = hit_atom
+				for(var/mob/M in viewers(hit_atom))
+					M.show_message("\The [I] lands in \the [hit_atom].", 3)
+			else
+				for(var/mob/M in viewers(hit_atom))
+					M.show_message("\The [I] bounces off of \the [hit_atom]'s rim!", 3)
+		else
+			var/obj/O = hit_atom
+			if(!O.anchored)
+				step(O, src.dir)
+			O.hitby(src)
 
 	else if(isturf(hit_atom))
 		var/turf/T = hit_atom

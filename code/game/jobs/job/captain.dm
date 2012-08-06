@@ -5,7 +5,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "Nanotrasen officials and Space law"
+	supervisors = "NanoTrasen officials and Space Law"
 	selection_color = "#ccccff"
 	idtype = /obj/item/weapon/card/id/gold
 
@@ -18,9 +18,10 @@
 		if(H.backbag == 4) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_norm(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/captain(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/captain(H), H.slot_belt)
-		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
+		H.equip_if_possible(new /obj/item/clothing/shoes/jackboots(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/head/caphat(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), H.slot_glasses)
+		H.equip_if_possible(new /obj/item/clothing/gloves/captain(H), H.slot_gloves)
 		if(H.backbag == 1)
 			H.equip_if_possible(new /obj/item/weapon/storage/id_kit(H), H.slot_r_hand)
 		else
@@ -51,9 +52,8 @@
 		H.equip_if_possible(new /obj/item/clothing/under/rank/head_of_personnel(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/heads/hop(H), H.slot_belt)
-		H.equip_if_possible(new /obj/item/clothing/suit/armor/vest(H), H.slot_wear_suit)
-		H.equip_if_possible(new /obj/item/clothing/head/helmet(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/gloves/blue(H), H.slot_gloves)
+		H.equip_if_possible(new /obj/item/weapon/clipboard(H), H.slot_l_hand)
 		if(H.backbag == 1)
 			H.equip_if_possible(new /obj/item/weapon/storage/id_kit(H), H.slot_r_hand)
 		else

@@ -205,16 +205,9 @@ proc/countJob(rank)
 				update_clothing()
 				return
 
-
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, del_on_fail = 1) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
 	//warning: icky code
 	var/equipped = 0
-	if((slot == l_store || slot == r_store || slot == belt || slot == wear_id) && !src.w_uniform)
-		del(W)
-		return
-	if(slot == s_store && !src.wear_suit)
-		del(W)
-		return
 	switch(slot)
 		if(slot_back)
 			if(!src.back)
@@ -237,11 +230,11 @@ proc/countJob(rank)
 				src.r_hand = W
 				equipped = 1
 		if(slot_belt)
-			if(!src.belt)
+			if(!src.belt && src.w_uniform)
 				src.belt = W
 				equipped = 1
 		if(slot_wear_id)
-			if(!src.wear_id)
+			if(!src.wear_id && src.w_uniform)
 				src.wear_id = W
 				equipped = 1
 		if(slot_ears)
@@ -276,15 +269,15 @@ proc/countJob(rank)
 				src.w_uniform = W
 				equipped = 1
 		if(slot_l_store)
-			if(!src.l_store)
+			if(!src.l_store && src.w_uniform)
 				src.l_store = W
 				equipped = 1
 		if(slot_r_store)
-			if(!src.r_store)
+			if(!src.r_store && src.w_uniform)
 				src.r_store = W
 				equipped = 1
 		if(slot_s_store)
-			if(!src.s_store)
+			if(!src.s_store && src.wear_suit)
 				src.s_store = W
 				equipped = 1
 		if(slot_in_backpack)
@@ -296,6 +289,8 @@ proc/countJob(rank)
 
 	if(equipped)
 		W.layer = 20
+		if(src.back && W.loc != src.back)
+			W.loc = src
 	else
 		if (del_on_fail)
 			del(W)

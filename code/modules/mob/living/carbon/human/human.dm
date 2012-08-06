@@ -220,9 +220,10 @@
 
 		//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 		if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove) // mutual brohugs all around!
-			var/turf/oldloc = loc
-			loc = tmob.loc
-			tmob.loc = oldloc
+			if(tmob.swap_on_mobbump)
+				var/turf/oldloc = loc
+				loc = tmob.loc
+				tmob.loc = oldloc
 			now_pushing = 0
 			for(var/mob/living/carbon/metroid/Metroid in view(1,tmob))
 				if(Metroid.Victim == tmob)
@@ -969,7 +970,7 @@
 	// Gloves
 	var/datum/organ/external/lo = organs["l_hand"]
 	var/datum/organ/external/ro = organs["r_hand"]
-	if (!(lo.status & ORGAN_DESTROYED && ro.status & ORGAN_DESTROYED))
+	if (lo && ro && !(lo.status & ORGAN_DESTROYED && ro.status & ORGAN_DESTROYED))
 		if (gloves)
 			var/t1 = gloves.item_state
 			if (!t1)
@@ -1419,7 +1420,7 @@
 	lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
 
 	var/datum/organ/external/head = organs["head"]
-	if(!(head.status & ORGAN_DESTROYED))
+	if(head && !(head.status & ORGAN_DESTROYED))
 		stand_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "head_[g]_l"), ICON_OVERLAY)
 

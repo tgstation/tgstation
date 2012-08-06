@@ -112,20 +112,12 @@ var/global/BSACooldown = 0
 				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob)
 			if("cat")
 				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob)
-			if("runtime")
-				M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob)
 			if("corgi")
 				M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob)
-			if("ian")
-				M.change_mob_type( /mob/living/simple_animal/corgi/Ian , null, null, delmob)
 			if("crab")
 				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob)
-			if("coffee")
-				M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob)
 			if("parrot")
 				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob)
-			if("drprofessor")
-				M.change_mob_type( /mob/living/simple_animal/parrot/DrProfessor , null, null, delmob)
 			if("constructarmoured")
 				M.change_mob_type( /mob/living/simple_animal/constructarmoured , null, null, delmob)
 			if("constructbuilder")
@@ -2589,11 +2581,8 @@ var/global/BSACooldown = 0
 			body += "<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> | "
 			body += "<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> | "
 			body += "<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> | "
-			body += "<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A> | "
 			body += "<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A> | "
-			body += "<A href='?src=\ref[src];simplemake=ian;mob=\ref[M]'>Ian</A> | "
 			body += "<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A> | "
-			body += "<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A> | "
 			//body += "<A href='?src=\ref[src];simplemake=parrot;mob=\ref[M]'>Parrot</A> | "
 			//body += "<A href='?src=\ref[src];simplemake=drprofessor;mob=\ref[M]'>DrProfessor</A> | "
 			body += "\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> , "

@@ -1,11 +1,11 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/global/list/space_surprises = list(		/obj/item/clothing/mask/facehugger/angry		=4,
-											// /obj/item/weapon/pickaxe/hammer					=4, //Waiting on a sprite
+											// /obj/item/weapon/pickaxe/hammer				=4, //Waiting on a sprite
 											/obj/item/weapon/pickaxe/silver					=4,
 											/obj/item/weapon/pickaxe/drill					=4,
 											/obj/item/weapon/pickaxe/jackhammer				=4,
-											/obj/effect/critter/spesscarp/elite				=3,
+											/mob/living/simple_animal/carp/elite			=3,
 											/obj/item/weapon/pickaxe/diamond				=3,
 											/obj/item/weapon/pickaxe/diamonddrill			=3,
 											/obj/item/weapon/pickaxe/gold					=3,

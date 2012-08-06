@@ -3274,7 +3274,7 @@ datum
 			acid_spit
 				name = "Acid Spit"
 				id = "acidspit"
-				description = "A drink by Nanotrasen. Made from live aliens."
+				description = "A drink by NanoTrasen. Made from live aliens."
 				reagent_state = LIQUID
 				color = "#365000" // rgb: 54, 80, 0
 

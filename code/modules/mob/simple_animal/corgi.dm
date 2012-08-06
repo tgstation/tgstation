@@ -3,7 +3,6 @@
 	name = "\improper corgi"
 	real_name = "corgi"
 	desc = "It's a corgi."
-	icon = 'mob.dmi'
 	icon_state = "corgi"
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
@@ -13,41 +12,16 @@
 	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/corgi
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	meat_amount = 3
 	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
+	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
-	var/obj/item/inventory_mouth
-
-/mob/living/simple_animal/corgi/update_clothing()
-	overlays = list()
-
-	if(inventory_head)
-		var/head_icon_state = inventory_head.icon_state
-		if(health <= 0)
-			head_icon_state += "2"
-
-		var/icon/head_icon = icon('corgi_head.dmi',head_icon_state)
-		if(head_icon)
-			overlays += head_icon
-
-	if(inventory_back)
-		var/back_icon_state = inventory_back.icon_state
-		if(health <= 0)
-			back_icon_state += "2"
-
-		var/icon/back_icon = icon('corgi_back.dmi',back_icon_state)
-		if(back_icon)
-			overlays += back_icon
-	return
-
-/mob/living/simple_animal/corgi/Life()
-	..()
-	rebuild_appearance()
+	var/turns_since_scan = 0
+	var/obj/movement_target
 
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	/*
@@ -104,7 +78,6 @@
 					emote_hear = list("barks", "woofs", "yaps","pants")
 					emote_see = list("shakes its head", "shivers")
 					desc = "It's a corgi."
-					src.ul_SetLuminosity(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
 				else
@@ -148,7 +121,7 @@
 						/obj/item/clothing/head/caphat,
 						/obj/item/clothing/head/collectable/captain,
 						/obj/item/clothing/head/that,
-						/obj/item/clothing/head/helmet/that,
+						/obj/item/clothing/head/that,
 						/obj/item/clothing/head/kitty,
 						/obj/item/clothing/head/collectable/kitty,
 						/obj/item/clothing/head/rabbitears,
@@ -166,13 +139,10 @@
 						/obj/item/clothing/head/wizard/fake,
 						/obj/item/clothing/head/wizard,
 						/obj/item/clothing/head/collectable/wizard,
-						/obj/item/clothing/head/helmet/hardhat,
 						/obj/item/clothing/head/collectable/hardhat,
-						/obj/item/clothing/head/helmet/hardhat/white,
 						/obj/item/weapon/bedsheet,
 						/obj/item/clothing/head/helmet/space/santahat,
 						/obj/item/clothing/head/collectable/paper,
-						/obj/item/clothing/head/cargosoft
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -182,6 +152,7 @@
 					usr.drop_item()
 					item_to_add.loc = src
 					src.inventory_head = item_to_add
+					rebuild_appearance()
 
 					//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
 
@@ -239,11 +210,6 @@
 							name = "Rudolph the Red-Nosed Corgi"
 							emote_hear = list("barks christmas songs", "yaps")
 							desc = "He has a very shiny nose."
-							src.ul_SetLuminosity(6)
-						if(/obj/item/clothing/head/cargosoft)
-							name = "Corgi Tech [real_name]"
-							speak = list("Needs a stamp!", "Request DENIED!", "Fill these out in triplicate!")
-							desc = "The reason your yellow gloves have chew-marks."
 
 			if("back")
 				if(inventory_back)
@@ -269,29 +235,18 @@
 					usr.drop_item()
 					item_to_add.loc = src
 					src.inventory_back = item_to_add
-					update_clothing()
+					rebuild_appearance()
 
 		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
 	else
 		..()
 
-//IAN! SQUEEEEEEEEE~
-/mob/living/simple_animal/corgi/Ian
-	name = "Ian"
-	real_name = "Ian"	//Intended to hold the name without altering it.
-	gender = "male"
-	desc = "It's a corgi."
-	var/turns_since_scan = 0
-	var/obj/movement_target
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
-
-/mob/living/simple_animal/corgi/Ian/Life()
+/mob/living/simple_animal/corgi/Life()
 	..()
+	rebuild_appearance()
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(alive && !resting && !buckled)
+	if(!stat && !resting && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0
@@ -338,11 +293,11 @@
 					dir = i
 					sleep(1)
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/corgi
+/obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "Corgi meat"
 	desc = "Tastes like... well you know..."
 
-/mob/living/simple_animal/corgi/Ian/Bump(atom/movable/AM as mob|obj, yes)
+/mob/living/simple_animal/corgi/Bump(atom/movable/AM as mob|obj, yes)
 
 	spawn( 0 )
 		if ((!( yes ) || now_pushing))
@@ -350,11 +305,11 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-/*			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
+			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
 				if(prob(70))
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
-					return*/
+					return
 			if(tmob.nopush)
 				now_pushing = 0
 				return
@@ -388,7 +343,7 @@
 
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/weapon/newspaper))
-		if(alive)
+		if(!stat)
 			for(var/mob/M in viewers(user, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("\blue [user] baps [name] on the nose with the rolled up [O]")
@@ -398,3 +353,13 @@
 					sleep(1)
 	else
 		..()
+
+//IAN! SQUEEEEEEEEE~
+/mob/living/simple_animal/corgi/Ian
+	name = "Ian"
+	real_name = "Ian"	//Intended to hold the name without altering it.
+	gender = "male"
+	desc = "It's a somewhat notorious corgi."
+	response_help  = "pets"
+	response_disarm = "bops"
+	response_harm   = "kicks"

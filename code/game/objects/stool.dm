@@ -106,6 +106,9 @@
 
 /obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
+	if(issimpleanimal(user))
+		user << "\red You are unable to work the complex mechanisms of a buckle!"
+		return
 	buckle_mob(M, user)
 	M.lying = 1
 	return

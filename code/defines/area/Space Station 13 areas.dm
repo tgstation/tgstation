@@ -937,6 +937,10 @@ proc/process_ghost_teleport_locs()
 		name = "\improper Engineering Core"
 		icon_state = "engine_core"
 
+	cooling
+		name = "\improper Emergency Cooling Room"
+		icon_state = "engine"
+
 //reactor areas
 
 	reactor_core
@@ -1131,7 +1135,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "security"
 
 /area/security/warden
-	name = "\improper Warden"
+	name = "\improper Warden's Office"
 	icon_state = "Warden"
 
 /area/security/armoury
@@ -1278,6 +1282,10 @@ proc/process_ghost_teleport_locs()
 	icon_state = "supermatter"
 
 //Anomaly
+
+/area/anomaly/hallway
+	name = "Anomaly Hallway"
+	icon_state = "anomaly"
 
 /area/anomaly/lab
 	name = "Anomaly Lab"

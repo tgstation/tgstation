@@ -313,7 +313,7 @@ It is caused by the unexpected circumstances after awakening in cryo (if cloned 
 				<li>Internal armor is plasteel for additional strength.</li>
 				<li>External armor must be installed in 2 parts, totaling 10 sheets.</li>
 				<li>Completed mech is more resiliant against fire, and is a bit more durable overall</li>
-				<li>Nanotrasen is determined to the safety of its <s>investments</s> employees.</li>
+				<li>NanoTrasen is determined to the safety of its <s>investments</s> employees.</li>
 				</ol>
 				</body>
 				</html>

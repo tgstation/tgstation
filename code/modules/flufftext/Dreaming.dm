@@ -5,7 +5,7 @@ mob/living/carbon/proc/dream()
 		"voices from all around","deep space","a doctor","the engine","a traitor","an ally","darkness",
 		"light","a scientist","a monkey","a catastrophe","a loved one","a gun","warmth","freezing","the sun",
 		"a hat","the Luna","a ruined station","a planet","plasma","air","the medical bay","the bridge","blinking lights",
-		"a blue light","an abandoned laboratory","Nanotrasen","The Syndicate","blood","healing","power","respect",
+		"a blue light","an abandoned laboratory","NanoTrasen","The Syndicate","blood","healing","power","respect",
 		"riches","space","a crash","happiness","pride","a fall","water","flames","ice","melons","flying"
 		)
 	spawn(0)

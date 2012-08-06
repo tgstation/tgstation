@@ -1,8 +1,8 @@
 /datum/event/radiation
 	var/current_iteration = 0
 
-	// 35 - 20 (grace period) seconds lifetime = at least 15*4=60 damage
-	Lifetime = 35
+	// 50 - 20 (grace period) seconds lifetime
+	Lifetime = 50
 	Announce()
 		command_alert("The station is now travelling through a radiation belt. Take shelter in the maintenance tunnels, or in the crew quarters!", "Medical Alert")
 

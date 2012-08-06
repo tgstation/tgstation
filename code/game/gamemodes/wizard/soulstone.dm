@@ -142,7 +142,7 @@
 		if("SHADE")
 			var/mob/living/simple_animal/shade/T = target
 			var/obj/item/device/soulstone/C = src
-			if (T.alive == 0)
+			if (T.stat == DEAD)
 				U << "\red <b>Capture failed!</b>: \black The shade has already been banished!"
 			else
 				if(C.contents.len)

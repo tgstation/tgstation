@@ -34,14 +34,14 @@
 	active_power_usage = 100
 
 /obj/machinery/shield_gen/New()
-	..()
+	spawn(10)
+		for(var/obj/machinery/shield_capacitor/possible_cap in range(1, src))
+			if(get_dir(possible_cap, src) == possible_cap.dir)
+				owned_capacitor = possible_cap
+				possible_cap.target_generator = src
+				break
 	field = new/list()
-	for(var/obj/machinery/shield_capacitor/possible_cap in range(1))
-		if(get_dir(possible_cap, src) == possible_cap.dir)
-			owned_capacitor = possible_cap
-			break
-	/*spawn(10)
-		check_powered()*/
+	..()
 
 //copied from a copypaste. DRY, right?
 /obj/machinery/shield_gen/proc/check_powered()
@@ -77,12 +77,6 @@
 			*/
 
 /obj/machinery/shield_gen/process()
-
-	if(!owned_capacitor)
-		for(var/obj/machinery/shield_capacitor/possible_cap in range(1))
-			if(get_dir(possible_cap, src) == possible_cap.dir)
-				owned_capacitor = possible_cap
-				break
 
 	if(active && field.len)
 		var/stored_renwicks = 0

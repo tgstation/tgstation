@@ -294,3 +294,5 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/list/radar_blips = list() // list of screen objects, radar blips
 	var/radar_open = 0 	// nonzero is radar is open
 
+	var/swap_on_mobbump = 1	//by default, mob collisions will swap the two mobs (if allowed)
+

@@ -171,31 +171,34 @@ turf
 			air_check_directions = 0
 
 			for(var/direction in cardinal)
-				if(CanPass(null, get_step(src,direction), 0, 0))
+				if(ZAirPass(get_step(src,direction)))
 					air_check_directions |= direction
-			var/has_door = HasDoor(src)
 
-			if(!zone && CanPass(null, src, 1.5, 1)) //No zone and not a wall, lets add ourself to a zone.
-				for(var/direction in cardinal)
-					if(has_door && !(direction in DoorDirections))
-						continue
+			if(!zone && !blocks_air) //No zone, but not a wall.
+				for(var/direction in DoorDirections) //Check door directions first.
 					if(air_check_directions&direction)
 						var/turf/simulated/T = get_step(src,direction)
-						if(T.zone && T.CanPass(null, src, 1.5, 1))
+						if(T.zone)
 							T.zone.AddTurf(src)
 							break
-						else if(T.zone && get_dir(T,src) in DoorDirections)
-							T.zone.AddTurf(src)
-							break
+				if(!zone) //Still no zone
+					for(var/direction in CounterDoorDirections) //Check the others second.
+						if(air_check_directions&direction)
+							var/turf/simulated/T = get_step(src,direction)
+							if(T.zone)
+								T.zone.AddTurf(src)
+								break
 				if(!zone) //No zone found, new zone!
 					new/zone(src)
+				if(!zone) //Still no zone, the floodfill determined it is not part of a larger zone.  Force a zone on it.
+					new/zone(list(src))
 
-			if(air_master.tiles_with_connections["\ref[src]"]) //Check pass sanity of the connections.
-				var/list/connections = air_master.tiles_with_connections["\ref[src]"]
-				for(var/connection/C in connections)
-					air_master.connections_checked += C
+			if("\ref[src]" in air_master.turfs_with_connections) //Check pass sanity of the connections.
+				for(var/connection/C in air_master.turfs_with_connections["\ref[src]"])
+					if(!(C in air_master.connections_to_check))
+						air_master.connections_to_check += C
 
-			update_zone_properties(has_door) //Update self zone and adjacent zones.
+			. = update_zone_properties() //Update self zone and adjacent zones.
 
 			if(air_check_directions)
 				processing = 1
@@ -203,34 +206,23 @@ turf
 				processing = 0
 
 
-		proc/update_zone_properties(var/has_door = 0)
+		proc/update_zone_properties()
 			for(var/direction in cardinal)
-				var/turf/simulated/T = get_step(src,direction)
+				var/turf/T = get_step(src,direction)
 				if(air_check_directions&direction) //I can connect air in this direction
-					if(!istype(T)) //Space
-						if(!CanPass(null, T, 1.5, 1) && CanPass(src, T, 0, 0)) //Normally would block it, instead lets make a connection to it.
-							if(zone)
-								zone.AddSpace(T)
-						else if(!CanPass(src, T, 0, 0) || !CanPass(T, src, 0, 0)) //I block the air or it blocks air, disconnect from it if connected.
-							if(zone && T in zone.space_tiles)
-								zone.RemoveSpace(T)
-						else if(zone)
-							zone.rebuild = 1
-							continue
-
-					else if(!T.CanPass(null, src, 1.5, 1) && !T.CanPass(null, src, 0, 0)) //If I block air, we must look to see if the adjacent turfs need rebuilt.
+					if(!CanPass(null, T, 0, 0)) //If I block air, we must look to see if the adjacent turfs need rebuilt.
 						if(T.zone && !T.zone.rebuild)
 							for(var/direction2 in cardinal - direction) //Check all other directions for air that might be connected.
 								var/turf/simulated/NT = get_step(src, direction2)
-								if(NT && NT.zone && NT.zone == T.zone)
+								if(NT && NT.zone && NT.zone == T.zone && !NT.HasDoor())
 									T.zone.rebuild = 1
 
-					else if(T.CanPass(null, src, 0, 0) && (!has_door || direction in DoorDirections))
-						if(T.zone != zone)
-							ZConnect(src,T)
+					else
+						ZConnect(src,T)
+			return 1
 
-				else if(zone && !zone.rebuild)
-					for(var/direction2 in cardinal - reverse_direction(direction)) //Check all other directions for air that might be connected.
-						var/turf/simulated/NT = get_step(T, direction2)
-						if(NT && NT.zone && NT.zone == zone)
-							zone.rebuild = 1
+//				else if(zone && !zone.rebuild)
+//					for(var/direction2 in cardinal - reverse_direction(direction)) //Check all other directions for air that might be connected.
+//						var/turf/simulated/NT = get_step(T, direction2)
+//						if(NT && NT.zone && NT.zone == zone)
+//							zone.rebuild = 1

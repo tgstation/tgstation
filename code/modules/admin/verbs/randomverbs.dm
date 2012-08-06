@@ -865,7 +865,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for(var/area/A in world)
 		A.gravitychange(1,A)
 
-	command_alert("CentComm is now beaming gravitons to your station.  We appoligize for any inconvience.")
+	command_alert("CentComm is now beaming gravitons to your station.  We apologize for any inconvience.")
 	//feedback_add_details("admin_verb","TSGON") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_gravity_off()
@@ -881,7 +881,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for(var/area/A in world)
 		A.gravitychange(0,A)
 
-	command_alert("For budget reasons, Centcomm is no longer beaming gravitons to your station.  We appoligize for any inconvience.")
+	command_alert("For budget reasons, Centcomm is no longer beaming gravitons to your station.  We apologize for any inconvience.")
 	//feedback_add_details("admin_verb","TSGOFF") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

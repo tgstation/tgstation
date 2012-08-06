@@ -1005,9 +1005,20 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 				usr.next_move = world.time + 6
 	return
+////////////////////////////////////////
+///IMPORTANT: CACHE FOR DUMMY OBJECTS///
+//Used to cut down on stupid deletions//
+////////////////////////////////////////
+var/list/DummyCache = list()
 
 /proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
-	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( srcturf )
+
+	var/obj/item/weapon/dummy/D = locate() in DummyCache
+	if(!D)
+		D = new /obj/item/weapon/dummy( srcturf )
+	else
+		DummyCache.Remove(D)
+		D.loc = srcturf
 
 	if(targetturf.density && targetturf != get_turf(target))
 		return 0
@@ -1016,17 +1027,20 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	for(var/obj/border_obstacle in srcturf)
 		if(border_obstacle.flags & ON_BORDER)
 			if(!border_obstacle.CheckExit(D, targetturf))
-				del D
+				D.loc = null
+				DummyCache.Add(D)
 				return 0
 
 	//Next, check objects to block entry that are on the border
 	for(var/obj/border_obstacle in targetturf)
 		if((border_obstacle.flags & ON_BORDER) && (target != border_obstacle))
 			if(!border_obstacle.CanPass(D, srcturf, 1, 0))
-				del D
+				D.loc = null
+				DummyCache.Add(D)
 				return 0
 
-	del D
+	D.loc = null
+	DummyCache.Add(D)
 	return 1
 
 /atom/proc/CtrlClick(var/mob/M as mob)

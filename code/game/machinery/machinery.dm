@@ -114,7 +114,7 @@ Class Procs:
 
 /obj/machinery/emp_act(severity)
 	if(use_power && stat == 0)
-		use_power(7500/severity)
+		use_power(15000/severity)
 
 		var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
 		pulse2.icon = 'effects.dmi'
@@ -147,13 +147,15 @@ Class Procs:
 	if(prob(50))
 		del(src)
 
+#define POWER_USE_MULTIPLIER 3
+
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
 		return 0
 	if(src.use_power == 1)
-		use_power(idle_power_usage,power_channel)
+		use_power(idle_power_usage * POWER_USE_MULTIPLIER,power_channel)
 	else if(src.use_power >= 2)
-		use_power(active_power_usage,power_channel)
+		use_power(active_power_usage * POWER_USE_MULTIPLIER,power_channel)
 	return 1
 
 /obj/machinery/Topic(href, href_list)

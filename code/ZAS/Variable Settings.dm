@@ -1,4 +1,49 @@
 var/global/vs_control/vsc = new
+
+vs_control/var
+	zone_share_percent = 12
+	zone_share_percent_NAME = "Zone Share Percent"
+	zone_share_percent_DESC = "Percentage of air difference to move per tick"
+	IgnitionLevel = 0.5
+	IgnitionLevel_DESC = "Moles of oxygen+plasma - co2 needed to burn."
+	airflow_lightest_pressure = 30
+	airflow_lightest_pressure_NAME = "Airflow - Small Movement Threshold %"
+	airflow_lightest_pressure_DESC = "Percent of 1 Atm. at which items with the small weight classes will move."
+	airflow_light_pressure = 45
+	airflow_light_pressure_NAME = "Airflow - Medium Movement Threshold %"
+	airflow_light_pressure_DESC = "Percent of 1 Atm. at which items with the medium weight classes will move."
+	airflow_medium_pressure = 90
+	airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
+	airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
+	airflow_heavy_pressure = 95
+	airflow_heavy_pressure_NAME = "Airflow - Mob Movement Threshold %"
+	airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which mobs will move."
+	airflow_dense_pressure = 120
+	airflow_dense_pressure_NAME = "Airflow - Dense Movement Threshold %"
+	airflow_dense_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
+	airflow_stun_pressure = 100
+	airflow_stun_pressure_NAME = "Airflow - Mob Stunning Threshold %"
+	airflow_stun_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
+	airflow_stun_cooldown = 60
+	airflow_stun_cooldown_NAME = "Aiflow Stunning - Cooldown"
+	airflow_stun_cooldown_DESC = "How long, in tenths of a second, to wait before stunning them again."
+	airflow_stun = 0.15
+	airflow_stun_NAME = "Airflow Impact - Stunning"
+	airflow_stun_DESC = "How much a mob is stunned when hit by an object."
+	airflow_damage = 0.3
+	airflow_damage_NAME = "Airflow Impact - Damage"
+	airflow_damage_DESC = "Damage from airflow impacts."
+	airflow_speed_decay = 1.5
+	airflow_speed_decay_NAME = "Airflow Speed Decay"
+	airflow_speed_decay_DESC = "How rapidly the speed gained from airflow decays."
+	airflow_delay = 30
+	airflow_delay_NAME = "Airflow Retrigger Delay"
+	airflow_delay_DESC = "Time in deciseconds before things can be moved by airflow again."
+	airflow_mob_slowdown = 1
+	airflow_mob_slowdown_NAME = "Airflow Slowdown"
+	airflow_mob_slowdown_DESC = "Time in tenths of a second to add as a delay to each movement by a mob if they are fighting the pull of the airflow."
+
+
 vs_control
 	var
 		list/settings = list()
@@ -120,12 +165,13 @@ vs_control
 		////world << "Plasma randomized."
 
 	proc/SetDefault(var/mob/user)
-		var/list/setting_choices = list("Original", "Hazard - Low", "Hazard - High", "Oh Shit!")
+		var/list/setting_choices = list("Plasma - Standard", "Plasma - Low Hazard", "Plasma - High Hazard", "Plasma - Oh Shit!",\
+		"ZAS - Normal", "ZAS - Forgiving", "ZAS - Dangerous", "ZAS - Hellish")
 		var/def = input(user, "Which of these presets should be used?") as null|anything in setting_choices
 		if(!def)
 			return
 		switch(def)
-			if("Original")
+			if("Plasma - Standard")
 				plc.CLOTH_CONTAMINATION = 0 //If this is on, plasma does damage by getting into cloth.
 
 				plc.PLASMAGUARD_ONLY = 0
@@ -150,7 +196,7 @@ vs_control
 				//plc.PLASMA_DMG_QUOTIENT = 10
 
 				plc.CONTAMINATION_LOSS = 0
-			if("Hazard - Low")
+			if("Plasma - Low Hazard")
 				plc.CLOTH_CONTAMINATION = 0 //If this is on, plasma does damage by getting into cloth.
 
 				plc.PLASMAGUARD_ONLY = 0
@@ -177,7 +223,7 @@ vs_control
 
 				plc.CONTAMINATION_LOSS = 0
 
-			if("Hazard - High")
+			if("Plasma - High Hazard")
 				plc.CLOTH_CONTAMINATION = 1 //If this is on, plasma does damage by getting into cloth.
 
 				plc.PLASMAGUARD_ONLY = 0
@@ -199,7 +245,7 @@ vs_control
 				//plc.PLASMA_DMG_OFFSET = 3
 				//plc.PLASMA_DMG_QUOTIENT = 5
 
-			if("Oh Shit!")
+			if("Plasma - Oh Shit!")
 				plc.CLOTH_CONTAMINATION = 1 //If this is on, plasma does damage by getting into cloth.
 
 				plc.PLASMAGUARD_ONLY = 1
@@ -220,6 +266,71 @@ vs_control
 
 				//plc.PLASMA_DMG_OFFSET = 3
 				//plc.PLASMA_DMG_QUOTIENT = 5
+
+			if("ZAS - Normal")
+				zone_share_percent = 10
+				IgnitionLevel = 0.5
+				airflow_lightest_pressure = 30
+				airflow_light_pressure = 45
+				airflow_medium_pressure = 90
+				airflow_heavy_pressure = 95
+				airflow_dense_pressure = 120
+				airflow_stun_pressure = 100
+				airflow_stun_cooldown = 60
+				airflow_stun = 0.15
+				airflow_damage = 0.3
+				airflow_speed_decay = 1.5
+				airflow_delay = 30
+				airflow_mob_slowdown = 1
+
+			if("ZAS - Forgiving")
+				zone_share_percent = 6
+				IgnitionLevel = 1
+				airflow_lightest_pressure = 45
+				airflow_light_pressure = 60
+				airflow_medium_pressure = 120
+				airflow_heavy_pressure = 110
+				airflow_dense_pressure = 200
+				airflow_stun_pressure = 150
+				airflow_stun_cooldown = 90
+				airflow_stun = 0.15
+				airflow_damage = 0.15
+				airflow_speed_decay = 1.5
+				airflow_delay = 50
+				airflow_mob_slowdown = 0
+
+			if("ZAS - Dangerous")
+				zone_share_percent = 15
+				IgnitionLevel = 0.4
+				airflow_lightest_pressure = 25
+				airflow_light_pressure = 35
+				airflow_medium_pressure = 75
+				airflow_heavy_pressure = 80
+				airflow_dense_pressure = 100
+				airflow_stun_pressure = 90
+				airflow_stun_cooldown = 50
+				airflow_stun = 2
+				airflow_damage = 1
+				airflow_speed_decay = 1.2
+				airflow_delay = 25
+				airflow_mob_slowdown = 2
+
+			if("ZAS - Hellish")
+				zone_share_percent = 20
+				IgnitionLevel = 0.3
+				airflow_lightest_pressure = 20
+				airflow_light_pressure = 30
+				airflow_medium_pressure = 70
+				airflow_heavy_pressure = 75
+				airflow_dense_pressure = 80
+				airflow_stun_pressure = 70
+				airflow_stun_cooldown = 40
+				airflow_stun = 3
+				airflow_damage = 2
+				airflow_speed_decay = 1
+				airflow_delay = 20
+				airflow_mob_slowdown = 3
+
 
 		world << "\blue <b>[key_name(user)] changed the global plasma/ZAS settings to \"[def]\"</b>"
 

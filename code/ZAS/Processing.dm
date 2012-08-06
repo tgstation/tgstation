@@ -1,16 +1,16 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
-vs_control/var/zone_share_percent = 10
-vs_control/var/zone_share_percent_NAME = "Zone Share Percent"
-vs_control/var/zone_share_percent_DESC = "Percentage of air difference to move per tick"
 zone/proc/process()
+	. = 1
 	//Deletes zone if empty.
 	if(!contents.len)
-		del src
-		return 0
-	//Does rebuilding stuff. Not sure if used.
+		return SoftDelete()
+	//Does rebuilding stuff.
 	if(rebuild)
 		rebuild = 0
 		Rebuild() //Shoving this into a proc.
+
+	if(!contents.len) //If we got soft deleted.
+		return
 
 	//Sometimes explosions will cause the air to be deleted for some reason.
 	if(!air)
@@ -24,11 +24,9 @@ zone/proc/process()
 	if(space_tiles)
 		for(var/T in space_tiles)
 			if(!istype(T,/turf/space))
-				space_tiles -= T
-				continue
-			total_space++
-		if(space_tiles && !space_tiles.len)
-			del space_tiles
+				RemoveSpace(T)
+		if(space_tiles)
+			total_space = space_tiles.len
 
 	//Add checks to ensure that we're not sucking air out of an empty room.
 	if(total_space && air.total_moles > 0.1 && air.temperature > TCMB+0.5)
@@ -82,19 +80,20 @@ zone/proc/process()
 			//Do merging if conditions are met. Specifically, if there's a non-door connection
 			//to somewhere with space, the zones are merged regardless of equilibrium, to speed
 			//up spacing in areas with double-plated windows.
-			if(C && !C.indirect && C.A.zone && C.B.zone)
+			if(C && C.indirect == 2 && C.A.zone && C.B.zone) //indirect = 2 is a direct connection.
 				if(C.A.zone.air.compare(C.B.zone.air) || total_space)
 					ZMerge(C.A.zone,C.B.zone)
 
 		//Share some
 		for(var/zone/Z in connected_zones)
-			//Ensure we're not doing pointless calculations on equilibrium zones.
-			if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
-				if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
-					Airflow(src,Z)
-				ShareRatio( air , Z.air , connected_zones[Z]*vsc.zone_share_percent/200 )
-				//Divided by 200 since each zone is processed.  Each connection is considered twice
-				//Space tiles force it to try and move twice as much air.
+			if(air && Z.air)
+				//Ensure we're not doing pointless calculations on equilibrium zones.
+				if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
+					if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
+						Airflow(src,Z)
+					ShareRatio( air , Z.air , connected_zones[Z]*vsc.zone_share_percent/200 )
+					//Divided by 200 since each zone is processed.  Each connection is considered twice
+					//Space tiles force it to try and move twice as much air.
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
@@ -197,58 +196,32 @@ proc/ShareSpace(datum/gas_mixture/A, ratio)
 
 	return 1
 
-
-zone/proc/connected_zones()
-	//A legacy proc for getting connected zones.
-	. = list()
-	for(var/connection/C in connections)
-		var/zone/Z
-		if(C.A.zone == src)
-			Z = C.B.zone
-		else
-			Z = C.A.zone
-
-		if(Z in .)
-			.[Z]++
-		else
-			. += Z
-			.[Z] = 1
-
 zone/proc/Rebuild()
 	//Choose a random turf and regenerate the zone from it.
 	var
-		turf/simulated/sample = pick(contents)
+		turf/simulated/sample = locate() in contents
 		list/new_contents
 		problem = 0
-
-	if(space_tiles)
-		del(space_tiles)
-
-	contents.Remove(null) //I can't believe this is needed.
-
-	if(!contents.len)
-		del src
 
 	var/list/turfs_to_consider = contents.Copy()
 	do
 		if(sample)
-			turfs_to_consider -= sample
-		if(!turfs_to_consider.len)
+			turfs_to_consider.Remove(sample)
+		sample = locate() in turfs_to_consider
+		if(!sample)
 			break
-		sample = pick(turfs_to_consider)  //Nor this.
-	while(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1))
+	while(!sample.CanPass(null, sample, 1.5, 1))
 
 	if(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1)) //Not a single valid turf.
 		for(var/turf/simulated/T in contents)
 			air_master.tiles_to_update |= T
-		del src
+		return SoftDelete()
 
 	new_contents = FloodFill(sample)
 
 	for(var/turf/space/S in new_contents)
-		if(!space_tiles)
-			space_tiles = list()
-		space_tiles |= S
+		AddSpace(S)
+		new_contents.Remove(S)
 
 	if(contents.len != new_contents.len)
 		problem = 1
@@ -264,23 +237,48 @@ zone/proc/Rebuild()
 		var/list/turf/simulated/rebuild_turfs = contents - new_contents
 		var/list/turf/simulated/reconsider_turfs = list()
 		contents = new_contents
-		for(var/turf/T in rebuild_turfs)
-			if(istype(T,/turf/space))
-				air_master.tiles_to_update |= T
-			else if(!T.zone && T.CanPass(null, T, 1.5, 1))
+		for(var/turf/simulated/T in rebuild_turfs)
+			if(!T.zone && T.CanPass(null, T, 1.5, 1))
 				var/zone/Z = new /zone(T)
 				Z.air.copy_from(air)
 			else
 				reconsider_turfs |= T
-		for(var/turf/T in reconsider_turfs)
-			if(!T.zone)
+		for(var/turf/simulated/T in reconsider_turfs)
+			if(!T.zone && T.CanPass(null, T, 1.5, 1))
 				var/zone/Z = new /zone(T)
 				Z.air.copy_from(air)
+			else if(!T in air_master.tiles_to_update)
+				air_master.tiles_to_update.Add(T)
 
-	for(var/turf/T in contents)
+	for(var/turf/simulated/T in contents)
 		if(T.zone && T.zone != src)
 			T.zone.RemoveTurf(T)
 			T.zone = src
 		else if(!T.zone)
 			T.zone = src
 	air.group_multiplier = contents.len
+
+	if(space_tiles)
+		var/list/new_space_tiles = space_tiles.Copy()
+		space_tiles = null
+		for(var/turf/space/S in new_space_tiles)
+			for(var/direction in cardinal)
+				var/turf/simulated/T = get_step(S,direction)
+				if(istype(T) && T.zone)
+					T.zone.AddSpace(S)
+/*
+zone/proc/connected_zones()
+	//A legacy proc for getting connected zones.
+	. = list()
+	for(var/connection/C in connections)
+		var/zone/Z
+		if(C.A.zone == src)
+			Z = C.B.zone
+		else
+			Z = C.A.zone
+
+		if(Z in .)
+			.[Z]++
+		else
+			. += Z
+			.[Z] = 1*/

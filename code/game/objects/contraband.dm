@@ -13,7 +13,7 @@
 
 /obj/item/weapon/contraband/poster
 	name = "rolled-up poster"
-	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as Contraband aboard Nanotrasen© Space Facilities."
+	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as Contraband aboard NanoTrasen© Space Facilities."
 	icon_state = "rolled_poster"
 	var/serial_number = 0
 	var/obj/effect/decal/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
@@ -118,22 +118,22 @@ obj/effect/decal/poster/New(var/serial)
 			desc += " This particular one is of a couple of ragged gunmen, one male and one female, on top of a mound of rubble. The number \"13\" is visible on their blue jumpsuits."
 		if(8)
 			name += " - Pinup Girl Cindy"
-			desc += " This particular one is of Nanotrasen's PR girl, Cindy, in a particularly feminine pose."
+			desc += " This particular one is of NanoTrasen's PR girl, Cindy, in a particularly feminine pose."
 		if(9)
 			name += " - Pinup Girl Amy"
-			desc += " This particular one is of Amy, the nymphomaniac Urban Legend of Nanotrasen Space Stations. How this photograph came to be is not known."
+			desc += " This particular one is of Amy, the nymphomaniac Urban Legend of NanoTrasen Space Stations. How this photograph came to be is not known."
 		if(10)
 			name += " - Don't Panic"
 			desc += " This particular one depicts some sort of star in a grimace. The \"Don't Panic\" is written in big, friendly letters."
 		if(11)
 			name += " - Underwater Laboratory"
-			desc += " This particular one is of the fabled last crew of Nanotrasen's previous project before going big on Asteroid mining, Sealab."
+			desc += " This particular one is of the fabled last crew of NanoTrasen's previous project before going big on Asteroid mining, Sealab."
 		if(12)
 			name += " - Missing Gloves"
-			desc += " This particular one is about the uproar that followed Nanotrasen's financial cuts towards insulated-glove purchases."
+			desc += " This particular one is about the uproar that followed NanoTrasen's financial cuts towards insulated-glove purchases."
 		if(13)
 			name += " - Rogue AI"
-			desc += " This particular one depicts the shell of the infamous AI that catastropically comandeered one of Nanotrasen's earliest space stations. Back then, the corporation was just known as TriOptimum."
+			desc += " This particular one depicts the shell of the infamous AI that catastropically comandeered one of NanoTrasen's earliest space stations. Back then, the corporation was just known as TriOptimum."
 		if(14)
 			name += " - User of the Arcane Arts"
 			desc += " This particular one depicts a wizard, casting a spell. You can't really make out if it's an actial photograph or a computer-generated image."
@@ -242,6 +242,9 @@ obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user << "<span class='notice'>You start placing the poster on the wall...</span>" //Looks like it's uncluttered enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
+	if(P.resulting_poster.serial_number !=  P.serial_number)
+		del P.resulting_poster
+		P.resulting_poster = new /obj/effect/decal/poster(P, P.serial_number)
 	var/obj/effect/decal/poster/D = P.resulting_poster
 
 	var/temp_loc = user.loc

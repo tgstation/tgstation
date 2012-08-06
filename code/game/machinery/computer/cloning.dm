@@ -208,7 +208,8 @@
 			dat += "<a href='byond://?src=\ref[src];menu=1'>Back</a><br><br>"
 			for(var/id in geneticsrecords)
 				var/datum/data/record/R = geneticsrecords[id]
-				dat += "<a href='byond://?src=\ref[src];view_rec=[id]'>[R.fields["id"]]-[R.fields["name"]]</a><br>"
+				if(R)
+					dat += "<a href='byond://?src=\ref[src];view_rec=[id]'>[R.fields["id"]]-[R.fields["name"]]</a><br>"
 
 		if(3)
 			dat += "<h4>Selected Record</h4>"

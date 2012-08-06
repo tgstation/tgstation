@@ -218,7 +218,7 @@
 				if(src.client.vote == md)
 					text += "<LI><B>[disp]</B>"
 				else
-					text += "<LI><A href='?src=\ref[vote];voter=\ref[src];vote=[md]'>[disp]</A>"
+					text += "<LI><A href='?src=\ref[vote];vote=[md]'>[disp]</A>"
 
 				text += "[votes[md]>0?" - [votes[md]] vote\s":null]<BR>"
 
@@ -324,7 +324,7 @@
 				else
 					text += "Change mode votes are disabled while a round is in progress, vote to restart first.<BR>"
 			if(src.client.holder)			//Strumpetplaya Add - Custom Votes for Admins
-				text += "<A href='?src=\ref[vote];voter=\ref[src];vmode=3'>Begin custom vote.</A><BR>"
+				text += "<A href='?src=\ref[vote];vmode=3'>Begin custom vote.</A><BR>"
 			text += footer
 			usr << browse(text, "window=vote")
 

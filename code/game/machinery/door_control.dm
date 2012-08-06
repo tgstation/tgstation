@@ -4,7 +4,7 @@
 	icon = 'stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
-	var/id = null
+	var/network = null
 	var/range = 10
 	var/normaldoorcontrol = 0
 	var/desiredstate = 0 // Zero is closed, 1 is open.
@@ -74,7 +74,7 @@
 
 	if(normaldoorcontrol)
 		for(var/obj/machinery/door/airlock/D in range(range))
-			if(D.id_tag == src.id)
+			if(D.id_tag == src.network)
 				if(desiredstate == 1)
 					if(specialfunctions & OPEN)
 						if (D.density)
@@ -107,7 +107,8 @@
 
 	else
 		for(var/obj/machinery/door/poddoor/M in world)
-			if (M.id == src.id)
+			if ( M.network == src.network || (!M.network && src.network == M.id))
+				//if the network tags match or the door id tag matcehes the control network tag, go ahead
 				if (M.density)
 					spawn( 0 )
 						M.open()

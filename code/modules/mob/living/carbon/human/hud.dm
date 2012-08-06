@@ -819,6 +819,8 @@ Radar-related things
 	client.screen += closedradar
 
 /mob/living/carbon/human/proc/start_radar()
+	// this proc lags like hell, why is it even in
+	return
 
 	for(var/obj/screen/x in client.screen)
 		if(x.name == "radar closed" && x.icon == 'radar.dmi')
