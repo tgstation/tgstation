@@ -41,6 +41,7 @@
 	var/stance = CARP_STANCE_IDLE	//Used to determine behavior
 	var/stance_step = 0				//Used to delay checks depending on what stance the bear is in
 	var/mob/living/target_mob		//Once the bear enters attack stance, it will try to chase this mob. This it to prevent it changing it's mind between multiple mobs.
+	heat_damage_per_tick = 1
 
 /mob/living/simple_animal/carp/elite
 	desc = "A ferocious, fang-bearing creature that resembles a fish. It has an evil gleam in its eye."
@@ -65,7 +66,8 @@
 					for( var/mob/living/L in viewers(7,src) )
 						if(iscarp(L)) continue
 						if(!L.stat)
-							emote("gnashes at [L]")
+							if(prob(50))
+								src.visible_message("<b>[src]</b> gnashes at [L]!")
 							stance = CARP_STANCE_ATTACK
 							target_mob = L
 							break
@@ -85,7 +87,7 @@
 				stance_step++
 				if(!target_mob || target_mob.stat)
 					stance = CARP_STANCE_IDLE
-					stance_step = 3 //Make it very alert, so it quickly attacks again if a mob returns
+					stance_step = 4 //Make it very alert, so it quickly attacks again if a mob returns
 					target_mob = null
 					walk(src,0)
 					return
@@ -103,7 +105,6 @@
 							L.Weaken(5)
 							L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
-
 /mob/living/simple_animal/carp/Die()
 	..()
 	target_mob = null
@@ -111,4 +112,74 @@
 	walk(src,0)
 
 /mob/living/simple_animal/carp/Process_Spacemove(var/check_drift = 0)
-	return	//No drifting in space for space carp!	//original comments do not steal
+	return 0	//No drifting in space for space carp!	//original comments do not steal
+
+/mob/living/simple_animal/carp/Process_Spaceslipping(var/prob_slip = 5)
+	return 0
+
+//----
+
+/mob/living/simple_animal/carp/cyborg
+	name = "cyborg space carp"
+	desc = "A ferocious, fang-bearing cyborg that resembles a fish. It has glowing red eyes."
+	speak = list("Objective established.","Goal: Terminate.","Mission parameters defined.","All casualties are acceptable.")
+	speak_emote = list("beeps")
+	emote_hear = list("makes a sinister clanking noise.","hisses and steams.","makes a menacing beeping noise.")
+	emote_see = list("sparks slightly.","flashes a red light ominously.")
+	speak_chance = 10
+	var/firing = 0
+
+/mob/living/simple_animal/carp/cyborg/Life()
+	..()
+	walk(src,0)
+
+	if(!stat)
+		if(prob(5))
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, src)
+			s.start()
+		switch(stance)
+			if(CARP_STANCE_ATTACKING)
+				if(target_mob)
+					src.dir = get_dir(src, target_mob)
+					/*if(get_dist(src, target_mob) > 5)
+						step_towards(src,target_mob)*/
+					if(get_dist(src, target_mob) > 1 && !firing)
+						//fire laser eyes
+						firing = 1
+						if(prob(40))
+							emote("auto",1,"[pick("makes an ominous whining noise!","makes a low humming noise!","begins charging up something!")]")
+
+						spawn(40)
+							if(!target_mob)
+								return
+							firing = 0
+							//load_into_chamber()
+							var/obj/item/projectile/beam/B = new(src)
+
+							B.firer = src
+							//B.def_zone = targloc
+							//in_chamber.def_zone = user.zone_sel.selecting
+
+							var/turf/targloc = get_turf(target_mob)
+							var/turf/myloc = get_turf(src)
+
+							B.original = targloc
+							B.loc = myloc
+							B.starting = myloc
+							B.silenced = 0
+							B.current = myloc
+							B.yo = targloc.y - myloc.y
+							B.xo = targloc.x - myloc.x
+							//
+							B.fired()
+
+							//shake the camera? probably not, these lasers don't explode... yet
+							/*for(var/mob/M in view(src,7))
+								shake_camera(user, recoil + 1, recoil)*/
+							playsound(src, pick('pulse.ogg','pulse2.ogg','pulse3.ogg'), 50, 1)
+
+/mob/living/simple_animal/carp/cyborg/Die()
+	if(prob(15))
+		src.say_auto("I'll be back!")
+	..()

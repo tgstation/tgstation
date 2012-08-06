@@ -15,8 +15,11 @@
 	var/stress = 0
 
 /obj/effect/energy_field/ex_act(var/severity)
-	Stress(2)
-	//nothing
+	Stress(0.5 + severity)
+
+/obj/effect/energy_field/bullet_act(var/obj/item/projectile/Proj)
+	Stress(1 + 1 * (Proj.damage / 100))
+
 
 /obj/effect/energy_field/meteorhit(obj/effect/meteor/M as obj)
 	if(M)
@@ -31,6 +34,14 @@
 		invisibility = 2
 		density = 0
 
+/obj/effect/energy_field/proc/Strengthen(var/severity)
+	strength += severity
+
+	//if we take too much damage, drop out - the generator will bring us back up if we have enough power
+	if(strength > 1)
+		invisibility = 0
+		density = 1
+
 /obj/effect/energy_field/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	//Purpose: Determines if the object (or airflow) can pass this atom.
 	//Called by: Movement, airflow.
@@ -38,4 +49,4 @@
 	//Outputs: Boolean if can pass.
 
 	//return (!density || !height || air_group)
-	return 0
+	return density

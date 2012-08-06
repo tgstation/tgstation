@@ -35,7 +35,7 @@
 	icon_state = "ano[icon_num]0"
 
 	// Low-ish random chance to not look like it's origin
-	if(prob(20)) src.icon_state = pick("ano0","ano1","ano2","ano3","ano4","ano5")
+	if(prob(20)) src.icon_state = pick("ano00","ano10","ano20","ano30","ano40","ano50")
 
 	// Power randomisation
 	my_effect.trigger = pick("force","energy","chemical","heat","touch")
@@ -86,6 +86,10 @@
 	display_id += pick("kappa","sigma","antaeres","beta","lorard","omicron","iota","upsilon","omega","gamma","delta")
 	display_id += "-"
 	display_id += num2text(rand(100,999))
+
+/obj/machinery/artifact/Del()
+	..()
+	my_effect.HaltEffect()
 
 /obj/machinery/artifact/attack_hand(var/mob/user as mob)
 	if (istype(user, /mob/living/silicon/ai) || istype(user, /mob/dead/)) return
@@ -176,14 +180,14 @@
 		chargetime -= 1
 	else
 		src.charged = 1
-		my_effect.HaltEffect(src.loc)
 
 	my_effect.UpdateEffect(src.loc)
 
 	//activate
-	if(src.charged && my_effect.DoEffect(src))
-		src.charged = 0
-		src.chargetime = src.recharge
+	if( (my_effect.effectmode == "pulse" || my_effect.effecttype == "worldpulse") && activated)
+		if(src.charged && my_effect.DoEffect(src))
+			src.charged = 0
+			src.chargetime = src.recharge
 
 /obj/machinery/artifact/proc/Artifact_Activate()
 	src.activated = !src.activated
@@ -225,6 +229,11 @@
 
 // this was used in QM for a time but it fell into disuse and wasn't removed, the purpose being to check if an artifact
 // was benevolent or malicious, to determine whether QMs would be paid or punished for shipping it
+
+/obj/machinery/artifact/Move()
+	..()
+	my_effect.update_move(src, src.loc)
+
 
 /proc/artifact_checkgood(var/datum/artifact_effect/A)
 	switch(A.effecttype)

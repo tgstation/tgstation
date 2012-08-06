@@ -32,11 +32,14 @@
 	for(var/mob/M in view(src,7))
 		if(istype(M, src.type) || M.universal_speak)
 			M << say_quote(message)
-		else if(speak.len)
-			M << "<b>[src]</b> [pick(speak)]"
 		else
 			M << "<b>[src]</b> [pick("makes some strange noises.","makes some strange noises.","makes some strange noises.","makes a small commotion.","kicks up a fuss about something.")]"
 	return
+
+//when talking, simple_animals can only understand each other
+/mob/living/simple_animal/proc/say_auto(var/message)
+	for(var/mob/M in view(src,7))
+		M << "<b>[src]</b> [pick(speak_emote)], \"[message]\""
 
 /mob/living/simple_animal/emote(var/act,var/m_type=1,var/message = null)
 	switch(act)
