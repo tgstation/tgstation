@@ -984,11 +984,11 @@
 								B.volume = max(min(10 + blood_volume,560), 0)
 								F.volume -= 1
 						else
-							var/blood_regen = 0.5
+							var/blood_regen = 0.1
 							if(B.volume < 400)
-								blood_regen = 1
+								blood_regen = 0.2
 							if(B.volume < 200)
-								blood_regen = 1.5
+								blood_regen = 0.3
 							B.volume = max(min(B.volume + blood_regen,560), 0)
 
 
