@@ -595,14 +595,15 @@
 			var/size = min( max( 1, damage/10 ) , 6)
 
 			// first check whether we can widen an existing wound
-			if((type == CUT || type == BRUISE) && damage >= 5)
-				var/datum/wound/W = pick(wounds)
-				if(W.started_healing())
-					damage -= 5
-					W.open_wound()
-					owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
-					"\red The wound on your [display_name] widens with a nasty ripping voice.",\
-					"You hear a nasty ripping noise, as if flesh is being torn apart.")
+			if(wounds.len > 0)
+				if((type == CUT || type == BRUISE) && damage >= 5)
+					var/datum/wound/W = pick(wounds)
+					if(W.started_healing())
+						damage -= 5
+						W.open_wound()
+						owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
+						"\red The wound on your [display_name] widens with a nasty ripping voice.",\
+						"You hear a nasty ripping noise, as if flesh is being torn apart.")
 
 			if(damage == 0) return
 
