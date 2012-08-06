@@ -19,7 +19,7 @@
 		H.equip_if_possible(new /obj/item/clothing/under/rank/captain(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/captain(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/shoes/jackboots(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/clothing/head/helmet/cap(H), H.slot_head)
+		H.equip_if_possible(new /obj/item/clothing/head/caphat(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/clothing/gloves/captain(H), H.slot_gloves)
 		if(H.backbag == 1)
