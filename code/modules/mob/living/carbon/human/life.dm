@@ -16,6 +16,9 @@
 	var/lyingcheck = 0
 	var/buckle_check = 0
 
+	// total amount of wounds on mob, used to spread out healing and the like over all wounds
+	var/number_wounds = 0
+
 /mob/living/carbon/human/Life()
 	set invisibility = 0
 	set background = 1
@@ -900,10 +903,15 @@
 		handle_organs()
 			// take care of organ related updates, such as broken and missing limbs
 
+			// recalculate number of wounds
+			number_wounds = 0
+
 			var/leg_tally = 2
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				E.process()
+				for(var/datum/wound/W in E.wounds)
+					number_wounds++
 				if(E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
@@ -954,6 +962,7 @@
 				emote("scream")
 				emote("collapse")
 				paralysis = 10
+
 
 
 		handle_blood()

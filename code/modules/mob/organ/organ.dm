@@ -126,8 +126,9 @@
 	proc/open_wound()
 		if(current_stage > 1)
 			// e.g. current_stage is 2, then reset it to 0 and do next_stage(), bringing it to 1
-			current_stage -= 2
+			src.current_stage -= 2
 			next_stage()
+			src.damage = src.min_damage
 
 /** CUTS **/
 /datum/wound/cut
@@ -406,7 +407,8 @@
 				if(W.bandaged) amount++
 				if(W.salved) amount++
 				if(W.disinfected) amount++
-				W.heal_damage(amount / 20)
+				// amount of healing is spread over all the wounds
+				W.heal_damage(amount / (owner.number_wounds+1))
 
 	proc/add_wound(var/used_weapon, var/damage)
 		var/datum/autopsy_data/W = autopsy_data[used_weapon]
@@ -595,7 +597,7 @@
 			var/size = min( max( 1, damage/10 ) , 6)
 
 			// first check whether we can widen an existing wound
-			if(wounds.len > 0)
+			if(wounds.len > 0 && prob(5))
 				if((type == CUT || type == BRUISE) && damage >= 5)
 					var/datum/wound/W = pick(wounds)
 					if(W.started_healing())
