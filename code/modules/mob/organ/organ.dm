@@ -77,6 +77,8 @@
 			desc_list += V
 			damage_list += stages[V]
 
+		src.damage = damage
+
 		// initialize with the first stage
 		next_stage()
 
@@ -615,21 +617,20 @@
 					var/list/size_names = list(/datum/wound/cut, /datum/wound/deep_cut, /datum/wound/flesh_wound, /datum/wound/gaping_wound, /datum/wound/big_gaping_wound, /datum/wound/massive_wound)
 					wound_type = size_names[size]
 
-					var/datum/wound/W = new wound_type()
-					W.damage = damage
+					var/datum/wound/W = new wound_type(damage)
 					wounds += W
 				if(BRUISE)
 					var/list/size_names = list(/datum/wound/bruise/tiny_bruise, /datum/wound/bruise/small_bruise, /datum/wound/bruise/moderate_bruise, /datum/wound/bruise/large_bruise, /datum/wound/bruise/huge_bruise, /datum/wound/bruise/monumental_bruise)
 					wound_type = size_names[size]
 
-					var/datum/wound/W = new wound_type()
+					var/datum/wound/W = new wound_type(damage)
 					W.damage = damage
 					wounds += W
 				if(BURN)
 					var/list/size_names = list(/datum/wound/moderate_burn, /datum/wound/large_burn, /datum/wound/severe_burn, /datum/wound/deep_burn, /datum/wound/carbonised_area)
 					wound_type = size_names[size]
 
-					var/datum/wound/W = new wound_type()
+					var/datum/wound/W = new wound_type(damage)
 					W.damage = damage
 					wounds += W
 
