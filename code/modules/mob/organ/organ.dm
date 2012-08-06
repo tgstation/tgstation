@@ -115,7 +115,7 @@
 		amount -= healed_damage
 		src.damage -= healed_damage
 
-		while(src.damage > damage_list[current_stage] && current_stage < src.desc_list.len)
+		while(src.damage < damage_list[current_stage] && current_stage < src.desc_list.len)
 			current_stage++
 		desc = desc_list[current_stage]
 
@@ -408,7 +408,7 @@
 				if(W.salved) amount++
 				if(W.disinfected) amount++
 				// amount of healing is spread over all the wounds
-				W.heal_damage(amount / (owner.number_wounds+1))
+				W.heal_damage(amount / (10*owner.number_wounds+1))
 
 	proc/add_wound(var/used_weapon, var/damage)
 		var/datum/autopsy_data/W = autopsy_data[used_weapon]
