@@ -986,11 +986,11 @@
 								B.volume = max(min(10 + blood_volume,560), 0)
 								F.volume -= 1
 						else
-							var/blood_regen = 0.1
+							var/blood_regen = 0.3
 							if(B.volume < 400)
-								blood_regen = 0.2
+								blood_regen = 0.6
 							if(B.volume < 200)
-								blood_regen = 0.3
+								blood_regen = 1
 							B.volume = max(min(B.volume + blood_regen,560), 0)
 
 
@@ -1120,9 +1120,9 @@
 				var/datum/organ/external/temp = organs[name]
 				if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
 					continue
-				blood_max += 2
+				blood_max += 0.5 * (temp.brute_dam + temp.burn_dam) / 5
 				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
-					blood_max += 10 //Yer missing a fucking limb.
+					blood_max += 3 //Yer missing a fucking limb.
 			drip(blood_max)
 			if (eye_blind)
 				eye_blind--

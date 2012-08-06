@@ -57,8 +57,6 @@
 	// whether this wound needs a bandage/salve to heal at all
 	var/needs_treatment = 0
 
-	// is the wound bleeding?
-	var/tmp/bleeding = 0
 	// is the wound bandaged?
 	var/tmp/bandaged = 0
 	// is the wound salved?
@@ -398,7 +396,7 @@
 			else if(W.damage_type == BURN)
 				burn_dam += W.damage
 
-			if(W.bleeding && !W.bandaged)
+			if(!W.bandaged && W.damage > 4)
 				status |= ORGAN_BLEEDING
 
 	proc/update_wounds()
