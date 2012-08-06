@@ -599,7 +599,7 @@
 			var/size = min( max( 1, damage/10 ) , 6)
 
 			// first check whether we can widen an existing wound
-			if(wounds.len > 0 && prob(5))
+			if(wounds.len > 0 && prob(25))
 				if((type == CUT || type == BRUISE) && damage >= 5)
 					var/datum/wound/W = pick(wounds)
 					if(W.started_healing())
