@@ -509,6 +509,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				if(Compiler && autoruncode)
 					Compiler.Run(signal)	// execute the code
 
+			relay_information(signal, "/obj/machinery/telecomms/broadcaster", 1)
 			relay_information(signal, "/obj/machinery/telecomms/hub", 1)
 
 

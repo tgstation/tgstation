@@ -268,4 +268,6 @@ datum/signal
 		newsign.data["vmessage"] = H.voice_message
 		newsign.data["vname"] = H.voice_name
 		newsign.data["vmask"] = 0
+
 		S.relay_information(newsign, "/obj/machinery/telecomms/broadcaster") // send this simple message to broadcasters
+		S.relay_information(newsign, "/obj/machinery/telecomms/hub")
