@@ -968,19 +968,19 @@
 								if(D.data["donor"] == src)
 									B = D
 									break
+
 						var/datum/reagent/nutriment/F = locate() in vessel.reagent_list
 						if(F != null)
 							if(F.volume >= 1)
 								B.volume = max(min(10 + blood_volume,560), 0)
 								F.volume -= 1
 						else
-							//At this point, we dun care which blood we are adding to, as long as they get more blood.
-						var/blood_regen = 0.5
-						if(B.volume < 400)
-							blood_regen = 1
-						if(B.volume < 200)
-							blood_regen = 1.5
-						B.volume = max(min(B.volume + blood_regen,560), 0)
+							var/blood_regen = 0.5
+							if(B.volume < 400)
+								blood_regen = 1
+							if(B.volume < 200)
+								blood_regen = 1.5
+							B.volume = max(min(B.volume + blood_regen,560), 0)
 
 
 				if(blood_volume > 448)

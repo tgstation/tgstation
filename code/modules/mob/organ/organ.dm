@@ -388,7 +388,7 @@
 	proc/update_damages()
 		brute_dam = 0
 		burn_dam = 0
-		status &= ~BLEEDING
+		status &= ~ORGAN_BLEEDING
 		for(var/datum/wound/W in wounds)
 			if(W.damage_type == CUT || W.damage_type == BRUISE)
 				brute_dam += W.damage
@@ -396,7 +396,7 @@
 				burn_dam += W.damage
 
 			if(W.bleeding && !W.bandaged)
-				status |= BLEEDING
+				status |= ORGAN_BLEEDING
 
 	proc/update_wounds()
 		for(var/datum/wound/W in wounds)
