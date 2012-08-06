@@ -14,6 +14,7 @@
 	var/lastbang
 	var/lasttry = 0
 	layer = 2.98
+	var/quantity_max = 15
 
 /obj/structure/closet/detective
 	name = "detective's closet"

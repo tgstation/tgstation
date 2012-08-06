@@ -221,7 +221,7 @@ vs_control
 				//plc.PLASMA_DMG_OFFSET = 3
 				//plc.PLASMA_DMG_QUOTIENT = 5
 
-		/////world << "Plasma color updated."
+		world << "\blue <b>[key_name(user)] changed the global plasma/ZAS settings to \"[def]\"</b>"
 
 pl_control
 	var/list/settings = list()

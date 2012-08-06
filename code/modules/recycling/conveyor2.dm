@@ -2,6 +2,8 @@
 //note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
 //cael - added fix for diverters, not sure if tg has them
 
+#define MAX_MOVED 10
+
 /obj/machinery/conveyor
 	icon = 'recycling.dmi'
 	icon_state = "conveyor0"
@@ -116,9 +118,16 @@
 
 	affecting = loc.contents - src		// moved items will be all in loc
 	spawn(1)	// slight delay to prevent infinite propagation due to map order
+
+		var/items_moved = 0
+
 		for(var/atom/movable/A in affecting)
+			if(items_moved >= MAX_MOVED)
+				break
+
 			if(!A.anchored)
 				if(isturf(A.loc)) // this is to prevent an ugly bug that forces a player to drop what they're holding if they recently pick it up from the conveyer belt
+					items_moved++
 					if(!step(A,movedir))
 						//if it's a crate, move the item into the crate
 						var/turf/T = get_step(A,movedir)

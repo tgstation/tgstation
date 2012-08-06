@@ -431,10 +431,10 @@
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				E.process()
-				if(E.status & BROKEN || E.status & DESTROYED)
+				if(E.status & ORGAN_BROKEN || E.status & ORGAN_DESTROYED)
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
-							if(E.status & SPLINTED && prob(7))
+							if(E.status & ORGAN_SPLINTED && prob(7))
 								drop_item()
 								emote("scream")
 							else
@@ -442,7 +442,7 @@
 								emote("scream")
 					else if(E.name == "r_hand" || E.name == "r_arm")
 						if(!hand && equipped())
-							if(E.status & SPLINTED && prob(7))
+							if(E.status & ORGAN_SPLINTED && prob(7))
 								drop_item()
 								emote("scream")
 							else
@@ -450,7 +450,7 @@
 								emote("scream")
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-						if(!(E.status & SPLINTED))
+						if(!(E.status & ORGAN_SPLINTED))
 							leg_tally--									// let it fail even if just foot&leg
 
 			// can't stand

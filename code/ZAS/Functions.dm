@@ -6,14 +6,16 @@
 		if(T.zone)
 			T.zone.RemoveTurf(T)
 		contents += T
-		air.group_multiplier++
+		if(air)
+			air.group_multiplier++
 		T.zone = src
 	proc/RemoveTurf(turf/T)
 		//Same, but in reverse.
 		if(!(T in contents))
 			return
 		contents -= T
-		air.group_multiplier--
+		if(air)
+			air.group_multiplier--
 		T.zone = null
 
 	proc/AddSpace(turf/space/S)

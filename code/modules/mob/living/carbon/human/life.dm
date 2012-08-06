@@ -904,7 +904,7 @@
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				E.process()
-				if(E.status & ROBOT && prob(E.brute_dam + E.burn_dam))
+				if(E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
 							drop_item()
@@ -928,10 +928,10 @@
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 						leg_tally--									// let it fail even if just foot&leg
-				if(E.status & BROKEN || E.status & DESTROYED)
+				if(E.status & ORGAN_BROKEN || E.status & ORGAN_DESTROYED)
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
-							if(E.status & SPLINTED && prob(10))
+							if(E.status & ORGAN_SPLINTED && prob(10))
 								drop_item()
 								emote("scream")
 							else
@@ -939,7 +939,7 @@
 								emote("scream")
 					else if(E.name == "r_hand" || E.name == "r_arm")
 						if(!hand && equipped())
-							if(E.status & SPLINTED && prob(10))
+							if(E.status & ORGAN_SPLINTED && prob(10))
 								drop_item()
 								emote("scream")
 							else
@@ -947,7 +947,7 @@
 								emote("scream")
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-						if(!(E.status & SPLINTED))
+						if(!(E.status & ORGAN_SPLINTED))
 							leg_tally--									// let it fail even if just foot&leg
 			// can't stand
 			if(leg_tally == 0 && !paralysis && !(lying || resting))
@@ -958,25 +958,30 @@
 
 		handle_blood()
 			// take care of blood and blood loss
-
 			if(stat < 2)
 				var/blood_volume = round(vessel.get_reagent_amount("blood"))
 				if(blood_volume < 560 && blood_volume)
-					var/datum/reagent/blood/B = locate() in vessel //Grab some blood
+					var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 					if(B) // Make sure there's some blood at all
 						if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
-							for(var/datum/reagent/blood/D in vessel)
+							for(var/datum/reagent/blood/D in vessel.reagent_list)
 								if(D.data["donor"] == src)
 									B = D
 									break
-
-						//At this point, we dun care which blood we are adding to, as long as they get more blood.
+						var/datum/reagent/nutriment/F = locate() in vessel.reagent_list
+						if(F != null)
+							if(F.volume >= 1)
+								B.volume = max(min(10 + blood_volume,560), 0)
+								F.volume -= 1
+						else
+							//At this point, we dun care which blood we are adding to, as long as they get more blood.
 						var/blood_regen = 0.5
 						if(B.volume < 400)
 							blood_regen = 1
 						if(B.volume < 200)
 							blood_regen = 1.5
-						B.volume = max(min(B.volume + blood_regen,560), 0) //Less blood = More blood generated per tick
+						B.volume = max(min(B.volume + blood_regen,560), 0)
+
 
 				if(blood_volume > 448)
 					if(pale)
@@ -1102,11 +1107,10 @@
 			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
-        // temp.amputated means it's cleanly healed but the limb is still missing
-				if(!(temp.status & BLEEDING) || temp.status & ROBOT || temp.amputated)
+				if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
 					continue
 				blood_max += 2
-				if(temp.status & DESTROYED && !(temp.status & GAUZED))
+				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
 					blood_max += 10 //Yer missing a fucking limb.
 			drip(blood_max)
 			if (eye_blind)

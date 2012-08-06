@@ -1,6 +1,7 @@
 turf/var/zone/zone
 
 var/list/zones = list()
+var/list/DoorDirections = list(NORTH,WEST) //Which directions doors turfs can connect to zones
 
 zone
 	var

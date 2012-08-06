@@ -1,10 +1,10 @@
 /datum/event/radiation
 	var/current_iteration = 0
 
-	// 1 minute lifetime
-	Lifetime = 60
+	// 35 - 20 (grace period) seconds lifetime = at least 15*4=60 damage
+	Lifetime = 35
 	Announce()
-		command_alert("The station is now travelling through a radiation belt", "Medical Alert")
+		command_alert("The station is now travelling through a radiation belt. Take shelter in the maintenance tunnels, or in the crew quarters!", "Medical Alert")
 
 	Tick()
 		current_iteration++
@@ -15,10 +15,13 @@
 				// check whether they're in a safe place
 				// if they are, do not radiate
 				var/turf/T = get_turf(L)
-				if(T && istype(T.loc, /area/maintenance))
+				if(T && ( istype(T.loc, /area/maintenance) || istype(T.loc, /area/crew_quarters) ))
 					continue
 
-				L.apply_effect(rand(4,10), IRRADIATE)
+				if (istype(L, /mob/living/carbon/monkey)) // So as to stop monkeys from dying in their pens
+					L.apply_effect(rand(3,4), IRRADIATE)
+				else
+					L.apply_effect(rand(4,10), IRRADIATE)
 
 	Die()
 		command_alert("The station has cleared the radiation belt", "Medical Alert")

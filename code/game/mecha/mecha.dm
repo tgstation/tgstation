@@ -965,8 +965,7 @@
 	set category = "Object"
 	set name = "Enter Exosuit"
 	set src in oview(1)
-
-	if (usr.stat || !ishuman(usr))
+	if(usr.stat != 0 || ( !istajaran(usr) && !ishuman(usr) ))
 		return
 	src.log_message("[usr] tries to move in.")
 	if (src.occupant)
@@ -1125,7 +1124,7 @@
 /obj/mecha/proc/go_out()
 	if(!src.occupant) return
 	var/atom/movable/mob_container
-	if(ishuman(occupant))
+	if(ishuman(occupant) || istajaran(occupant))
 		mob_container = src.occupant
 	else if(istype(occupant, /mob/living/carbon/brain))
 		var/mob/living/carbon/brain/brain = occupant
@@ -1134,7 +1133,7 @@
 		return
 	if(mob_container.forceMove(src.loc))//ejecting mob container
 	/*
-		if(ishuman(occupant) && (return_pressure() > HAZARD_HIGH_PRESSURE))
+		if((ishuman(occupant) || istajaran(occupant)) && (return_pressure() > HAZARD_HIGH_PRESSURE))
 			use_internal_tank = 0
 			var/datum/gas_mixture/environment = get_turf_air()
 			if(environment)

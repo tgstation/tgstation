@@ -97,7 +97,7 @@
 					user.weakened += 6
 					return 1
 				else user << "Nothing happens."
-			if("stun")
+			/*if("stun")
 				if (istype(user, /mob/living/carbon/))
 					user << "\red A powerful force overwhelms your consciousness."
 					user.paralysis += 30
@@ -105,7 +105,7 @@
 					user.weakened += 45
 					user.stuttering += 45
 					return 1
-				else user << "Nothing happens."
+				else user << "Nothing happens."*/
 			if("roboheal")
 				if (istype(user, /mob/living/silicon/robot))
 					user << "\blue Your systems report damaged components mending by themselves!"
@@ -195,14 +195,14 @@
 					user << "\red You are suddenly zapped away elsewhere!"
 					user.loc = pick(randomturfs)
 					var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-					sparks.set_up(3, 0, get_turf(src)) //no idea what the 0 is
+					sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
 					sparks.start()
 				return 1
 	else if (src.effectmode == "aura")
 		switch(src.effecttype)
 			if("healing")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					if(prob(10)) M << "\blue You feel a soothing energy radiating from something nearby."
 					M.adjustBruteLoss(-1)
@@ -214,7 +214,7 @@
 				return 1
 			if("injure")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					if(prob(10)) M << "\red You feel a painful force radiating from something nearby."
 					M.adjustBruteLoss(1)
@@ -224,9 +224,9 @@
 					M.adjustBrainLoss(1)
 					M.updatehealth()
 				return 1
-			if("stun")
+			/*if("stun")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					if(prob(10)) M << "\red Energy radiating from the [originator] is making you feel numb."
 					if(prob(20))
@@ -234,7 +234,7 @@
 						M.stunned += 2
 						M.weakened += 2
 						M.stuttering += 2
-				return 1
+				return 1*/
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					if(prob(10)) M << "\blue SYSTEM ALERT: Beneficial energy field detected!"
@@ -290,7 +290,7 @@
 		switch(src.effecttype)
 			if("healing")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\blue A wave of energy invigorates you."
 					M.adjustBruteLoss(-5)
@@ -302,7 +302,7 @@
 				return 1
 			if("injure")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\red A wave of energy causes you great pain!"
 					M.adjustBruteLoss(5)
@@ -314,16 +314,16 @@
 					M.weakened += 3
 					M.updatehealth()
 				return 1
-			if("stun")
+			/*if("stun")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\red A wave of energy overwhelms your senses!"
 					M.paralysis += 3
 					M.stunned += 4
 					M.weakened += 4
 					M.stuttering += 4
-				return 1
+				return 1*/
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
@@ -373,7 +373,7 @@
 				return 1
 			if("teleport")
 				for (var/mob/living/M in range(src.aurarange,originator))
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					var/list/randomturfs = new/list()
 					for(var/turf/T in orange(M, 30))
@@ -393,7 +393,7 @@
 		switch(src.effecttype)
 			if("healing")
 				for (var/mob/living/carbon/M in world)
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\blue Waves of soothing energy wash over you."
 					M.adjustBruteLoss(-3)
@@ -404,7 +404,7 @@
 					M.updatehealth()
 				return 1
 			if("injure")
-				for (var/mob/living/carbon/M in world)
+				for (var/mob/living/carbon/human/M in world)
 					M << "\red A wave of painful energy strikes you!"
 					M.adjustBruteLoss(3)
 					M.adjustFireLoss(3)
@@ -413,16 +413,16 @@
 					M.adjustBrainLoss(3)
 					M.updatehealth()
 				return 1
-			if("stun")
+			/*if("stun")
 				for (var/mob/living/carbon/M in world)
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\red A powerful force causes you to black out momentarily."
 					M.paralysis += 5
 					M.stunned += 8
 					M.weakened += 8
 					M.stuttering += 8
-				return 1
+				return 1*/
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in world)
 					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
@@ -459,7 +459,7 @@
 				return 1
 			if("teleport")
 				for (var/mob/living/M in world)
-					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
+					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					var/list/randomturfs = new/list()
 					for(var/turf/T in orange(M, 15))

@@ -664,6 +664,13 @@ datum
 			reagent_state = SOLID
 			color = "#808080" // rgb: 128, 128, 128, meant to be a silvery grey but idrc
 
+		lithiumsodiumtungstate
+			name = "Lithium Sodium Tungstate"
+			id = "lithiumsodiumtungstate"
+			description = "A reducing agent for geological compounds."
+			reagent_state = LIQUID
+			color = "#808080" // rgb: 128, 128, 128, again, silvery grey
+
 		lithium
 			name = "Lithium"
 			id = "lithium"

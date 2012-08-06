@@ -35,7 +35,7 @@ zone/proc/process()
 		//If there is space, air should flow out of the zone.
 		if(abs(air.return_pressure()) > vsc.airflow_lightest_pressure)
 			AirflowSpace(src)
-		ShareSpace(air,total_space*(vsc.zone_share_percent/100))
+		ShareSpace(air,total_space*vsc.zone_share_percent/200)
 
 	//React the air here.
 	air.react(null,0)
@@ -92,7 +92,7 @@ zone/proc/process()
 			if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
 				if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
 					Airflow(src,Z)
-				ShareRatio( air , Z.air , max(connected_zones[Z]*(vsc.zone_share_percent/200)*(space_tiles || Z.space_tiles ? 2 : 1) , 1) )
+				ShareRatio( air , Z.air , connected_zones[Z]*vsc.zone_share_percent/200 )
 				//Divided by 200 since each zone is processed.  Each connection is considered twice
 				//Space tiles force it to try and move twice as much air.
 
@@ -229,11 +229,10 @@ zone/proc/Rebuild()
 	if(!contents.len)
 		del src
 
-	var/list/tried_turfs = list()
+	var/list/turfs_to_consider = contents.Copy()
 	do
 		if(sample)
-			tried_turfs |= sample
-		var/list/turfs_to_consider = contents - tried_turfs
+			turfs_to_consider -= sample
 		if(!turfs_to_consider.len)
 			break
 		sample = pick(turfs_to_consider)  //Nor this.
@@ -259,8 +258,6 @@ zone/proc/Rebuild()
 		if(!(T in new_contents))
 			T.zone = null
 			problem = 1
-
-	for(var/turf/T in new_contents)
 
 	if(problem)
 		//Build some new zones for stuff that wasn't included.

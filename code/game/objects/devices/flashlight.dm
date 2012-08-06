@@ -183,8 +183,8 @@
 
 /obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
-		ul_SetLuminosity(brightness_on, brightness_on-1, 0)
+		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
+		ul_SetLuminosity(brightness_on, brightness_on - 1, 0)
 
 // the desk lamps are a bit special
 /obj/item/device/flashlight/lamp

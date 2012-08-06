@@ -19,7 +19,7 @@
 	//animation = null
 	var/mob/living/carbon/human/birdman/O = new /mob/living/carbon/human/birdman( loc )
 	del(animation)
-	del(O.organs)
+	O.organs.Cut()
 	O.organs = organs
 	for(var/name in O.organs)
 		var/datum/organ/external/organ = O.organs[name]

@@ -187,7 +187,7 @@
 
 						// Make sure we can't scan a headless person. It breaks the cloner permanently.
 						var/datum/organ/external/temp = src.scanner.occupant.organs["head"]
-						if(temp && !(temp.status & DESTROYED))
+						if(temp && !(temp.status & ORGAN_DESTROYED))
 							dat += "<a href='byond://?src=\ref[src];scan=1'>Scan - [src.scanner.occupant]</a><br>"
 						else
 							dat += "Error: Cannot locate brain for mental indexing. Unable to continue.<br>"

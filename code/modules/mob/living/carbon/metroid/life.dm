@@ -6,6 +6,9 @@
 		return
 
 	..()
+    
+	if (stat == 2)
+		return
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(src.loc)

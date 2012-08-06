@@ -163,6 +163,8 @@
 		rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] whispers, <span class='message'>\"[message]\"</span></span>"
 
 	for (var/mob/M in world)
+		if(!M.client)
+			continue
 		if (istype(M, /mob/new_player))
 			continue
 		if (M.stat > 1 && !(M in heard_a) && M.client.ghost_ears)

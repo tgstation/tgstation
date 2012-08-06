@@ -27,11 +27,11 @@
 	for(var/named in organs)
 		var/datum/organ/external/temp = organs[named]
 		if(temp)
-			if(temp.status & DESTROYED)
+			if(temp.status & ORGAN_DESTROYED)
 				is_destroyed["[temp.display_name]"] = 1
 				wound_flavor_text["[temp.display_name]"] = "<span class='warning'><b>It is missing its [temp.display_name].</b></span>\n"
 				continue
-			if(temp.status & ROBOT)
+			if(temp.status & ORGAN_ROBOT)
 				if(!(temp.brute_dam + temp.burn_dam))
 					wound_flavor_text["[temp.display_name]"] = "<span class='warning'>It has a robot [temp.display_name]!</span>\n"
 					continue

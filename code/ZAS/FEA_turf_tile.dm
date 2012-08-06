@@ -173,12 +173,18 @@ turf
 			for(var/direction in cardinal)
 				if(CanPass(null, get_step(src,direction), 0, 0))
 					air_check_directions |= direction
+			var/has_door = HasDoor(src)
 
 			if(!zone && CanPass(null, src, 1.5, 1)) //No zone and not a wall, lets add ourself to a zone.
 				for(var/direction in cardinal)
+					if(has_door && !(direction in DoorDirections))
+						continue
 					if(air_check_directions&direction)
 						var/turf/simulated/T = get_step(src,direction)
-						if(T.zone)
+						if(T.zone && T.CanPass(null, src, 1.5, 1))
+							T.zone.AddTurf(src)
+							break
+						else if(T.zone && get_dir(T,src) in DoorDirections)
 							T.zone.AddTurf(src)
 							break
 				if(!zone) //No zone found, new zone!
@@ -187,9 +193,9 @@ turf
 			if(air_master.tiles_with_connections["\ref[src]"]) //Check pass sanity of the connections.
 				var/list/connections = air_master.tiles_with_connections["\ref[src]"]
 				for(var/connection/C in connections)
-					air_master.connections_checked |= C
+					air_master.connections_checked += C
 
-			update_zone_properties() //Update self zone and adjacent zones.
+			update_zone_properties(has_door) //Update self zone and adjacent zones.
 
 			if(air_check_directions)
 				processing = 1
@@ -197,7 +203,7 @@ turf
 				processing = 0
 
 
-		proc/update_zone_properties()
+		proc/update_zone_properties(var/has_door = 0)
 			for(var/direction in cardinal)
 				var/turf/simulated/T = get_step(src,direction)
 				if(air_check_directions&direction) //I can connect air in this direction
@@ -219,7 +225,7 @@ turf
 								if(NT && NT.zone && NT.zone == T.zone)
 									T.zone.rebuild = 1
 
-					else if(T.CanPass(null, src, 0, 0))
+					else if(T.CanPass(null, src, 0, 0) && (!has_door || direction in DoorDirections))
 						if(T.zone != zone)
 							ZConnect(src,T)
 
