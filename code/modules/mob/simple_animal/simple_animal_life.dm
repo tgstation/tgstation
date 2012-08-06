@@ -25,7 +25,7 @@
 	if(!ckey && prob(speak_chance))
 		var/length = (speak ? speak.len : 0) + (emote_see ? emote_see.len : 0) + (emote_hear ? emote_hear.len : 0)
 		if(speak && speak.len && prob((speak.len / length) * 100))
-			say(pick(speak))
+			src.say_auto(pick(speak))
 		else if(emote_see && emote_see.len && prob((emote_see.len / length) * 100))
 			emote("auto",1,pick(emote_see))
 		else if(emote_hear && emote_hear.len)
