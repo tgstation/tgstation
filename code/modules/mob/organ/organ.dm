@@ -366,7 +366,7 @@
 
 			// heal brute damage
 			if(W.damage_type == CUT || W.damage_type == BRUISE)
-				burn = W.heal_damage(brute)
+				brute = W.heal_damage(brute)
 			else if(W.damage_type == BURN)
 				burn = W.heal_damage(burn)
 
