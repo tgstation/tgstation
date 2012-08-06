@@ -130,7 +130,7 @@
 			// e.g. current_stage is 2, then reset it to 0 and do next_stage(), bringing it to 1
 			src.current_stage -= 2
 			next_stage()
-			src.damage = src.min_damage
+			src.damage = src.min_damage + 5
 
 /** CUTS **/
 /datum/wound/cut
@@ -603,11 +603,12 @@
 				if((type == CUT || type == BRUISE) && damage >= 5)
 					var/datum/wound/W = pick(wounds)
 					if(W.started_healing())
-						damage -= 5
 						W.open_wound()
 						owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
 						"\red The wound on your [display_name] widens with a nasty ripping voice.",\
 						"You hear a nasty ripping noise, as if flesh is being torn apart.")
+
+						return
 
 			if(damage == 0) return
 
