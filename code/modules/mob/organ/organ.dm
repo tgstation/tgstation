@@ -402,11 +402,11 @@
 		for(var/datum/wound/W in wounds)
 			if(W.is_treated())
 				// slow healing
-				var/amount = 0.5
+				var/amount = 0.2
 				if(W.bandaged) amount++
 				if(W.salved) amount++
 				if(W.disinfected) amount++
-				W.heal_damage(amount / 10)
+				W.heal_damage(amount / 20)
 
 	proc/add_wound(var/used_weapon, var/damage)
 		var/datum/autopsy_data/W = autopsy_data[used_weapon]

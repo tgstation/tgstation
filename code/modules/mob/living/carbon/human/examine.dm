@@ -283,7 +283,7 @@
 					if(21 to INFINITY)
 						wound_flavor_text["[temp.display_name]"] += pick(" a lot of burns"," severe melting")
 				wound_flavor_text["[temp.display_name]"] += "!</span>\n"
-			else if(temp.wounds.len)
+			else if(temp.wounds.len > 0)
 				var/list/wound_descriptors = list()
 				for(var/datum/wound/W in temp.wounds)
 					if(W.desc in wound_descriptors)
