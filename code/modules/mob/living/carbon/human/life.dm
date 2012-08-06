@@ -1120,7 +1120,7 @@
 				var/datum/organ/external/temp = organs[name]
 				if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
 					continue
-				blood_max += 0.5 * (temp.brute_dam + temp.burn_dam) / 5
+				blood_max += round(0.5 * (temp.brute_dam + temp.burn_dam) / 4)
 				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
 					blood_max += 3 //Yer missing a fucking limb.
 			drip(blood_max)
