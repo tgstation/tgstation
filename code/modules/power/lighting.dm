@@ -247,7 +247,7 @@
 				if(prob(10))
 					broken(1)
 			if("bulb")
-				brightness = 3
+				brightness = 4
 				if(prob(25))
 					broken(1)
 		spawn(1)
