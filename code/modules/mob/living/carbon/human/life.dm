@@ -905,13 +905,15 @@
 
 			// recalculate number of wounds
 			number_wounds = 0
+			for(var/name in organs)
+				var/datum/organ/external/E = organs[name]
+				for(var/datum/wound/W in E.wounds)
+					number_wounds++
 
 			var/leg_tally = 2
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				E.process()
-				for(var/datum/wound/W in E.wounds)
-					number_wounds++
 				if(E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
