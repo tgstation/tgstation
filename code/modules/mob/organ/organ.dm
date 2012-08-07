@@ -121,7 +121,7 @@
 		amount -= healed_damage
 		src.damage -= healed_damage
 
-		while(src.damage / amount < damage_list[current_stage] && current_stage < src.desc_list.len)
+		while(src.damage / src.amount < damage_list[current_stage] && current_stage < src.desc_list.len)
 			current_stage++
 		desc = desc_list[current_stage]
 

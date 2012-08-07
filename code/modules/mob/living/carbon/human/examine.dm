@@ -287,9 +287,9 @@
 				var/list/wound_descriptors = list()
 				for(var/datum/wound/W in temp.wounds)
 					if(W.desc in wound_descriptors)
-						wound_descriptors[W.desc]++
+						wound_descriptors[W.desc] += W.amount
 						continue
-					wound_descriptors[W.desc] = 1
+					wound_descriptors[W.desc] = W.amount
 				var/list/flavor_text = list()
 				var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
 				"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")
