@@ -19,8 +19,6 @@
 
 	if (stat != DEAD) //still breathing
 
-		//First, resolve location and get a breath
-
 		if(air_master.current_cycle%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			spawn(0) breathe()
@@ -30,19 +28,9 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
 		//Chemicals in the body
 		handle_chemicals_in_body()
 
-		//Disabilities
-		handle_disabilities()
-
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
 	blinded = null
 
 	//Disease Check
@@ -71,26 +59,6 @@
 
 
 /mob/living/carbon/alien/humanoid
-	proc/handle_disabilities()
-		if (disabilities & EPILEPSY)
-			if ((prob(1) && paralysis < 10))
-				src << "\red You have a seizure!"
-				Paralyse(10)
-		if (disabilities & COUGHING)
-			if ((prob(5) && paralysis <= 1))
-				drop_item()
-				spawn( 0 )
-					emote("cough")
-					return
-		if (disabilities & TOURETTES)
-			if ((prob(10) && paralysis <= 1))
-				Stun(10)
-				spawn( 0 )
-					emote("twitch")
-					return
-		if (disabilities & NERVOUS)
-			if (prob(10))
-				stuttering = max(10, stuttering)
 
 	proc/update_mind()
 		if(!mind && client)
@@ -99,60 +67,6 @@
 			mind.assigned_role = "Hunter"
 			mind.key = key
 
-	proc/handle_mutations_and_radiation()
-
-		if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || prob(50))
-				switch(getFireLoss())
-					if(1 to 50)
-						adjustFireLoss(-1)
-					if(51 to 100)
-						adjustFireLoss(-5)
-
-		if ((HULK in mutations) && health <= 25)
-			mutations.Remove(HULK)
-			src << "\red You suddenly feel very weak."
-			Weaken(3)
-			emote("collapse")
-
-		if (radiation)
-			if (radiation > 100)
-				radiation = 100
-				Weaken(10)
-				src << "\red You feel weak."
-				emote("collapse")
-
-			if (radiation < 0)
-				radiation = 0
-
-			switch(radiation)
-				if(1 to 49)
-					radiation--
-					if(prob(25))
-						adjustToxLoss(1)
-						updatehealth()
-
-				if(50 to 74)
-					radiation -= 2
-					adjustToxLoss(1)
-					if(prob(5))
-						radiation -= 5
-						Weaken(3)
-						src << "\red You feel weak."
-						emote("collapse")
-					updatehealth()
-
-				if(75 to 100)
-					radiation -= 3
-					adjustToxLoss(3)
-					if(prob(1))
-						src << "\red You mutate!"
-						randmutb(src)
-						domutcheck(src,null)
-						emote("gasp")
-					updatehealth()
-
-
 	proc/breathe()
 		if(reagents)
 			if(reagents.has_reagent("lexorin")) return
@@ -160,45 +74,32 @@
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/air_group/breath
-		// HACK NEED CHANGING LATER
-		if(health < 0)
-			losebreath++
 
-		if(losebreath>0) //Suffocating so do not take a breath
-			losebreath--
-			if (prob(75)) //High chance of gasping for air
-				spawn emote("gasp")
+		// This is mostly here for the smoke grenades and getting toxins in the air.
+
+		if(!breath)
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
-		else
-			//First, check for air from internal atmosphere (using an air tank and mask generally)
-			breath = get_breath_from_internal(BREATH_VOLUME)
+				breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
+			else if(istype(loc, /turf/))
+				var/breath_moles = 0
+				/*if(environment.return_pressure() > ONE_ATMOSPHERE)
+					// Loads of air around (pressure effect will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
+					breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
+				else*/
+					// Not enough air around, take a percentage of what's there to model this properly
+				breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
-			//No breath from internal atmosphere so get breath from location
-			if(!breath)
-				if(istype(loc, /obj/))
-					var/obj/location_as_object = loc
-					breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
-				else if(istype(loc, /turf/))
-					var/breath_moles = 0
-					/*if(environment.return_pressure() > ONE_ATMOSPHERE)
-						// Loads of air around (pressure effect will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
-						breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
-					else*/
-						// Not enough air around, take a percentage of what's there to model this properly
-					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+				breath = loc.remove_air(breath_moles)
 
-					breath = loc.remove_air(breath_moles)
-
-					// Handle chem smoke effect  -- Doohl
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1, src))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(src, INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-							break // If they breathe in the nasty stuff once, no need to continue checking
+				// Handle chem smoke effect  -- Doohl
+				for(var/obj/effect/effect/chem_smoke/smoke in view(1, src))
+					if(smoke.reagents.total_volume)
+						smoke.reagents.reaction(src, INGEST)
+						spawn(5)
+							if(smoke)
+								smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
+						break // If they breathe in the nasty stuff once, no need to continue checking
 
 
 			else //Still give containing object the chance to interact
@@ -211,23 +112,8 @@
 		if(breath)
 			loc.assume_air(breath)
 
-
-	proc/get_breath_from_internal(volume_needed)
-		if(internal)
-			if (!contents.Find(internal))
-				internal = null
-			if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
-				internal = null
-			if(internal)
-				if (internals)
-					internals.icon_state = "internal1"
-				return internal.remove_air_volume(volume_needed)
-			else
-				if (internals)
-					internals.icon_state = "internal0"
-		return null
-
 	proc/handle_breath(datum/gas_mixture/breath)
+		// Mostly for getting toxins from the air into your plasma storage.
 		if(nodamage)
 			return
 
@@ -255,15 +141,6 @@
 		breath.toxins -= toxins_used
 		breath.oxygen += toxins_used
 
-		if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
-			if(prob(20))
-				src << "\red You feel a searing heat in your lungs!"
-			fire_alert = max(fire_alert, 1)
-		else
-			fire_alert = 0
-
-		//Temporary fixes to the alerts.
-
 		return 1
 
 	proc/handle_environment()
@@ -274,46 +151,12 @@
 				adjustToxLoss(15)
 
 			else
-				adjustBruteLoss(-15)
-				adjustFireLoss(-15)
-
-
-
-	proc/adjust_body_temperature(current, loc_temp, boost)
-		var/temperature = current
-		var/difference = abs(current-loc_temp)	//get difference
-		var/increments// = difference/10			//find how many increments apart they are
-		if(difference > 50)
-			increments = difference/5
-		else
-			increments = difference/10
-		var/change = increments*boost	// Get the amount to change by (x per increment)
-		var/temp_change
-		if(current < loc_temp)
-			temperature = min(loc_temp, temperature+change)
-		else if(current > loc_temp)
-			temperature = max(loc_temp, temperature-change)
-		temp_change = (temperature - current)
-		return temp_change
+				adjustBruteLoss(-5)
+				adjustFireLoss(-5)
+				adjustOxyLoss(-5) // This shouldn't be needed, it's a failsafe.
 
 	proc/get_thermal_protection()
-		var/thermal_protection = 1.0
-		//Handle normal clothing
-		if(head && (head.body_parts_covered & HEAD))
-			thermal_protection += 0.5
-		if(wear_suit && (wear_suit.body_parts_covered & UPPER_TORSO))
-			thermal_protection += 0.5
-		if(wear_suit && (wear_suit.body_parts_covered & LEGS))
-			thermal_protection += 0.2
-		if(wear_suit && (wear_suit.body_parts_covered & ARMS))
-			thermal_protection += 0.2
-		if(wear_suit && (wear_suit.body_parts_covered & HANDS))
-			thermal_protection += 0.2
-		if(wear_suit && (wear_suit.flags & SUITSPACE))
-			thermal_protection += 3
-		if(COLD_RESISTANCE in mutations)
-			thermal_protection += 5
-
+		var/thermal_protection = 1000.0
 		return thermal_protection
 
 	proc/add_fire_protection(var/temp)
@@ -334,20 +177,6 @@
 	proc/handle_chemicals_in_body()
 
 		if(reagents) reagents.metabolize(src)
-
-		if(FAT in mutations)
-			if(nutrition < 100)
-				if(prob(round((50 - nutrition) / 100)))
-					src << "\blue You feel fit again!"
-					mutations.Remove(FAT)
-		else
-			if(nutrition > 500)
-				if(prob(5 + round((nutrition - 200) / 2)))
-					src << "\red You suddenly feel blubbery!"
-					mutations.Add(FAT)
-
-		if (nutrition > 0)
-			nutrition -= HUNGER_FACTOR
 
 		if (drowsyness)
 			drowsyness--
@@ -385,13 +214,15 @@
 				return 1
 
 			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
+			if( (getOxyLoss() > 75) || (config.health_threshold_crit > health) )
 				if( health <= 20 && prob(1) )
 					spawn(0)
 						emote("gasp")
 				if(!reagents.has_reagent("inaprovaline"))
 					adjustOxyLoss(1)
 				Paralyse(3)
+			else
+				adjustOxyLoss(-1)
 
 			if(paralysis)
 				AdjustParalysis(-1)
@@ -542,4 +373,6 @@
 					if(air_master.current_cycle%3==1)
 						if(!M.nodamage)
 							M.adjustBruteLoss(5)
-						nutrition += 10
+						adjustBruteLoss(-10)
+						adjustFireLoss(-10)
+						adjustOxyLoss(-10)

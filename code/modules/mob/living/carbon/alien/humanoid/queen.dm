@@ -64,7 +64,7 @@
 //Queen verbs
 /mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
 
-	set name = "Lay Egg (200)"
+	set name = "Lay Egg (50)"
 	set desc = "Lay an egg to produce huggers to impregnate prey with."
 	set category = "Alien"
 
@@ -73,7 +73,7 @@
 		return
 
 	if(powerc(50,1))//Can't plant eggs on spess tiles. That's silly.
-		adjustToxLoss(-200)
+		adjustToxLoss(-50)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
 		new /obj/effect/alien/egg(loc)
