@@ -63,11 +63,14 @@
 	var/tmp/salved = 0
 	// is the wound disinfected?
 	var/tmp/disinfected = 0
+	var/tmp/created = 0
 
 	// helper lists
 	var/tmp/list/desc_list = list()
 	var/tmp/list/damage_list = list()
 	New(var/damage)
+
+		created = world.time
 
 		// reading from a list("stage" = damage) is pretty difficult, so build two separate
 		// lists from them instead
@@ -401,6 +404,10 @@
 
 	proc/update_wounds()
 		for(var/datum/wound/W in wounds)
+			// wounds can disappear after 10 minutes at the earliest
+			if(W.damage == 0 && W.created + 10 * 10 * 60 <= world.time)
+				wounds -= W
+				// let the GC handle the deletion of the wound
 			if(W.is_treated())
 				// slow healing
 				var/amount = 0.2
