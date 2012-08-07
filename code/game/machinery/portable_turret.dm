@@ -448,10 +448,13 @@ Status: []<BR>"},
 	var/list/targets = list()		   // list of primary targets
 	var/list/secondarytargets = list() // targets that are least important
 
-	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "crittersssss"
+	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "crittersssss"(And simple_animals)
 		for (var/obj/effect/critter/L in view(7,src))
 			if(L.alive)
 				targets += L
+		for(var/mob/living/simple_animal/C in view(7,src))
+			if(!C.stat)
+				targets += C
 
 	for (var/mob/living/carbon/C in view(7,src)) // loops through all living carbon-based lifeforms in view(12)
 		if(istype(C, /mob/living/carbon/alien) && src.check_anomalies) // git those fukken xenos

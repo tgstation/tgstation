@@ -22,6 +22,8 @@
 		var/obj/mecha/Mech = O
 		if( Mech.occupant )
 			turretTargets |= Mech
+	else if(istype(O,/mob/living/simple_animal))
+		turretTargets |= O
 	return 1
 
 /area/turret_protected/Exited(O)
@@ -137,6 +139,11 @@
 			var/obj/mecha/ME = T
 			if( ME.occupant )
 				return 1
+		else if(istype(T,/mob/living/simple_animal))
+			var/mob/living/simple_animal/A = T
+			if( !A.stat )
+				if(lasers)
+					return 1
 	return 0
 
 /obj/machinery/turret/proc/get_new_target()
