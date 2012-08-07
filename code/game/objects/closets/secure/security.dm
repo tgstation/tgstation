@@ -15,7 +15,6 @@
 		//
 		new /obj/item/device/pda/captain(src)
 		new /obj/item/weapon/storage/id_kit(src)
-		new /obj/item/clothing/suit/armor/captain(src)
 		new /obj/item/clothing/head/helmet/cap(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		new /obj/item/clothing/suit/armor/vest(src)
