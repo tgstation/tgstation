@@ -122,6 +122,10 @@
 /mob/living/simple_animal/carp/cyborg
 	name = "cyborg space carp"
 	desc = "A ferocious, fang-bearing cyborg that resembles a fish. It has glowing red eyes."
+	icon_state = "carpborg"
+	icon_living = "carpborg"
+	icon_dead = "carpborg_dead"
+	icon_gib = "carpborg_gib"
 	speak = list("Objective established.","Goal: Terminate.","Mission parameters defined.","All casualties are acceptable.")
 	speak_emote = list("beeps")
 	emote_hear = list("makes a sinister clanking noise.","hisses and steams.","makes a menacing beeping noise.")
