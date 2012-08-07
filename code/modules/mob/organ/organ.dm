@@ -65,6 +65,9 @@
 	var/tmp/disinfected = 0
 	var/tmp/created = 0
 
+	// number of wounds of this type
+	var/tmp/amount = 1
+
 	// helper lists
 	var/tmp/list/desc_list = list()
 	var/tmp/list/damage_list = list()
@@ -118,7 +121,7 @@
 		amount -= healed_damage
 		src.damage -= healed_damage
 
-		while(src.damage < damage_list[current_stage] && current_stage < src.desc_list.len)
+		while(src.damage / amount < damage_list[current_stage] && current_stage < src.desc_list.len)
 			current_stage++
 		desc = desc_list[current_stage]
 
@@ -604,10 +607,10 @@
 			var/size = min( max( 1, damage/10 ) , 6)
 
 			// first check whether we can widen an existing wound
-			if(wounds.len > 0 && prob(25))
+			if(wounds.len > 0 && prob(50))
 				if((type == CUT || type == BRUISE) && damage >= 5)
 					var/datum/wound/W = pick(wounds)
-					if(W.started_healing())
+					if(W.amount == 1 && W.started_healing())
 						W.open_wound()
 						owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
 						"\red The wound on your [display_name] widens with a nasty ripping voice.",\
@@ -617,28 +620,42 @@
 
 			if(damage == 0) return
 
+			// the wound we will create
+			var/datum/wound/W
+
 			switch(type)
 				if(CUT)
 					src.status |= ORGAN_BLEEDING
 					var/list/size_names = list(/datum/wound/cut, /datum/wound/deep_cut, /datum/wound/flesh_wound, /datum/wound/gaping_wound, /datum/wound/big_gaping_wound, /datum/wound/massive_wound)
 					wound_type = size_names[size]
 
-					var/datum/wound/W = new wound_type(damage)
-					wounds += W
+					W = new wound_type(damage)
+
 				if(BRUISE)
 					var/list/size_names = list(/datum/wound/bruise/tiny_bruise, /datum/wound/bruise/small_bruise, /datum/wound/bruise/moderate_bruise, /datum/wound/bruise/large_bruise, /datum/wound/bruise/huge_bruise, /datum/wound/bruise/monumental_bruise)
 					wound_type = size_names[size]
 
-					var/datum/wound/W = new wound_type(damage)
-					W.damage = damage
-					wounds += W
+					W = new wound_type(damage)
 				if(BURN)
 					var/list/size_names = list(/datum/wound/moderate_burn, /datum/wound/large_burn, /datum/wound/severe_burn, /datum/wound/deep_burn, /datum/wound/carbonised_area)
 					wound_type = size_names[size]
 
-					var/datum/wound/W = new wound_type(damage)
-					W.damage = damage
-					wounds += W
+					W = new wound_type(damage)
+
+
+
+			// check whether we can add the wound to an existing wound
+			for(var/datum/wound/other in wounds)
+				if(other.desc == W.desc)
+					// okay, add it!
+					other.damage += W.damage
+					other.amount += 1
+					W = null // to signify that the wound was added
+					break
+
+			// if we couldn't add the wound to another wound, ignore
+			if(W)
+				wounds += W
 
 	proc/emp_act(severity)
 		if(!(status & ORGAN_ROBOT))

@@ -54,7 +54,7 @@
 				var/list/wound_descriptors = list()
 				for(var/datum/wound/W in temp.wounds)
 					if(W.desc in wound_descriptors)
-						wound_descriptors[W.desc]++
+						wound_descriptors[W.desc] += W.amount
 						continue
 					wound_descriptors[W.desc] = 1
 				var/list/flavor_text = list()
