@@ -41,6 +41,7 @@
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/capspace
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	req_access = list(ACCESS_CAPTAIN)
+	islocked = 1 // otherwise anyone can grab it
 
 
 /obj/machinery/suit_storage_unit/New()
@@ -309,6 +310,7 @@
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
 	if(!src.allowed(user))
 		user << "\red Access denied."
+		return
 	if(src.OCCUPANT && src.safetieson)
 		user << "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>"
 		return
