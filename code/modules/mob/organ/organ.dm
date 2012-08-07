@@ -51,8 +51,8 @@
 	// amount of damage the current wound type requires(less means we need to apply the next healing stage)
 	var/min_damage = 0
 
-	// one of CUTE, BRUISE, BURN
-	var/damage_type = BRUTE
+	// one of CUT, BRUISE, BURN
+	var/damage_type = CUT
 
 	// whether this wound needs a bandage/salve to heal at all
 	var/needs_treatment = 0
