@@ -64,7 +64,7 @@
 /* SmartFridge.  Much todo
 */
 /obj/machinery/smartfridge
-	name = "SmartFridge"
+	name = "\improper SmartFridge"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "smartfridge"
 	layer = 2.9
@@ -100,39 +100,43 @@
 
 /obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(!src.ispowered)
-		user << "\red The [src] is unpowered and useless."
+		user << "<span class='notice'>\The [src] is unpowered and useless.</span>"
 		return
+
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/))
-		if (contents.len>=max_n_of_items)
-			user << "\red This [src] is full of ingredients, you cannot put more."
+		if(contents.len >= max_n_of_items)
+			user << "<span class='notice'>\The [src] is full.</span>"
 			return 1
-		/*todo: plantbag*/
 		else
 			user.before_take_item(O)
 			O.loc = src
 			if(item_quants[O.name])
 				item_quants[O.name]++
 			else
-				item_quants[O.name]=1
-			user.visible_message( \
-				"\blue [user] has added \the [O] to \the [src].", \
-				"\blue You add \the [O] to \the [src].")
-	else if (istype(O, /obj/item/weapon/plantbag))
-		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
-			O.contents -= G
-			G.loc = src
-			if(item_quants[G.name])
-				item_quants[G.name]++
+				item_quants[O.name] = 1
+			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
+								 "<span class='notice'>You add \the [O] to \the [src].")
+
+	else if(istype(O, /obj/item/weapon/plantbag))
+		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+			if(contents.len >= max_n_of_items)
+				user << "<span class='notice'>\The [src] is full.</span>"
+				return 1
 			else
-				item_quants[G.name]=1
-		user.visible_message( \
-			"\blue [user] loads \the [src] with \the [O].", \
-			"\blue You load \the [src] with \the [O].")
+				O.contents -= G
+				G.loc = src
+				if(item_quants[G.name])
+					item_quants[G.name]++
+				else
+					item_quants[G.name] = 1
+				user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
+									 "<span class='notice'>You load \the [src] with \the [O].</span>")
 
 	else
-		user << "\red The [src] smartly refuses [O]."
+		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
 		return 1
-	src.updateUsrDialog()
+
+	updateUsrDialog()
 
 /obj/machinery/smartfridge/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

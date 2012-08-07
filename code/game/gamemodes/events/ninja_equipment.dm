@@ -402,7 +402,7 @@ ________________________________________________________________________________
 					<h4>IMPORTANT:</h4>
 					<ul>
 					<li>*Make sure to toggle Special Interaction from the Ninja Equipment menu to interact differently with certain objects.</li>
-					<li>*Your starting power cell can be replaced if you find one with higher maximum energy capacity by clicking on the new cell with the same hand (super and hyper cells).</li>
+					<li>*Your starting power cell can be replaced if you find one with higher maximum energy capacity by clicking on your suit with the higher capacity cell.</li>
 					<li>*Conserve your energy. Without it, you are very vulnerable.</li>
 					</ul>
 					That is all you will need to know. The rest will come with practice and talent. Good luck!

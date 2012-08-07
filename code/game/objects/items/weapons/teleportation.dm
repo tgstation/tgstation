@@ -104,7 +104,7 @@ Frequency:
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
 	if(!current_location||current_location.z==2||current_location.z>=7)//If turf was not found or they're on z level 2 or >7 which does not currently exist.
-		user << "The [src] is malfunctioning."
+		user << "<span class='notice'>\The [src] is malfunctioning.</span>"
 		return
 	var/list/L = list(  )
 	for(var/obj/machinery/teleport/hub/R in world)
@@ -116,8 +116,8 @@ Frequency:
 				L["[com.id] (Inactive)"] = com.locked
 	var/list/turfs = list(	)
 	for(var/turf/T in orange(10))
-		if(T.x>world.maxx-4 || T.x<4)	continue	//putting them at the edge is dumb
-		if(T.y>world.maxy-4 || T.y<4)	continue
+		if(T.x>world.maxx-8 || T.x<8)	continue	//putting them at the edge is dumb
+		if(T.y>world.maxy-8 || T.y<8)	continue
 		turfs += T
 	if(turfs.len)
 		L["None (Dangerous)"] = pick(turfs)
@@ -128,11 +128,11 @@ Frequency:
 	for(var/obj/effect/portal/PO in world)
 		if(PO.creator == src)	count++
 	if(count >= 3)
-		user.show_message("\red The hand teleporter is recharging!")
+		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/T = L[t1]
 	for(var/mob/O in hearers(user, null))
-		O.show_message("\blue Locked In", 2)
+		O.show_message("<span class='notice'>Locked In.</span>", 2)
 	var/obj/effect/portal/P = new /obj/effect/portal( get_turf(src) )
 	P.target = T
 	P.creator = src
