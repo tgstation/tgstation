@@ -286,3 +286,6 @@
 	set category = "OOC"
 
 	src.update_flavor_text()
+
+
+/mob/living/var/life_tick = 0

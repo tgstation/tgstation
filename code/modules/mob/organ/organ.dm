@@ -246,6 +246,7 @@
 
 	var/display_name
 	var/list/wounds = list()
+	var/number_wounds = 0 // cache the number of wounds, which is NOT wounds.len!
 
 	var/tmp/perma_injury = 0
 	var/tmp/perma_dmg = 0
@@ -354,6 +355,9 @@
 
 		owner.updatehealth()
 
+		// sync the organ's damage with its wounds
+		src.update_damages()
+
 		var/result = update_icon()
 		return result
 
@@ -388,11 +392,15 @@
 				del W
 			autopsy_data = list()
 
+		// sync the organ's damage with its wounds
+		src.update_damages()
+
 		owner.updatehealth()
 		var/result = update_icon()
 		return result
 
 	proc/update_damages()
+		number_wounds = 0
 		brute_dam = 0
 		burn_dam = 0
 		status &= ~ORGAN_BLEEDING
@@ -404,6 +412,8 @@
 
 			if(!W.bandaged && W.damage > 4)
 				status |= ORGAN_BLEEDING
+
+			number_wounds += W.amount
 
 	proc/update_wounds()
 		for(var/datum/wound/W in wounds)
@@ -418,7 +428,10 @@
 				if(W.salved) amount++
 				if(W.disinfected) amount++
 				// amount of healing is spread over all the wounds
-				W.heal_damage((amount * W.amount) / (20*owner.number_wounds+1))
+				W.heal_damage((amount * W.amount) / (5*owner.number_wounds+1))
+
+		// sync the organ's damage with its wounds
+		src.update_damages()
 
 	proc/add_wound(var/used_weapon, var/damage)
 		var/datum/autopsy_data/W = autopsy_data[used_weapon]
@@ -444,10 +457,9 @@
 		return burn_dam
 
 	process()
-		// process wounds, doing healing etc.
-		update_wounds()
-		// update damages from wounds
-		update_damages()
+		// process wounds, doing healing etc., only do this every 4 ticks to save processing power
+		if(owner.life_tick % 4 == 0)
+			update_wounds()
 		if(status & ORGAN_DESTROYED)
 			if(!destspawn)
 				droplimb()
@@ -607,7 +619,7 @@
 			var/size = min( max( 1, damage/10 ) , 6)
 
 			// first check whether we can widen an existing wound
-			if(wounds.len > 0 && prob(50))
+			if(wounds.len > 0 && prob(25))
 				if((type == CUT || type == BRUISE) && damage >= 5)
 					var/datum/wound/W = pick(wounds)
 					if(W.amount == 1 && W.started_healing())

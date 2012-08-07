@@ -118,12 +118,16 @@ MEDICAL
 		if (!ointment && (affecting.status & ORGAN_BLEEDING))
 			affecting.status &= ~ORGAN_BLEEDING
 
+		// handle wound stuff
 		if(ointment)
 			for(var/datum/wound/W in affecting.wounds)
 				W.salved = 1
 		else
 			for(var/datum/wound/W in affecting.wounds)
 				W.bandaged = 1
+
+		// make sure to apply the updates of the wound to the organ
+		affecting.update_damages()
 
 		// Don't do direct healing
 		//if (affecting.heal_damage(src.heal_brute, src.heal_burn))

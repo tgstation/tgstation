@@ -10,7 +10,6 @@
 	var/temperature_alert = 0
 
 		// used to do some stuff only on every X life tick
-	var/life_tick = 0
 	var/isbreathing = 1
 	var/holdbreath = 0
 	var/lyingcheck = 0
@@ -47,6 +46,7 @@
 			update_clothing()
 		return
 
+	// update the current life tick, can be used to e.g. only do something every 4 ticks
 	life_tick++
 
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -913,8 +913,7 @@
 			number_wounds = 0
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
-				for(var/datum/wound/W in E.wounds)
-					number_wounds+=W.amount
+				number_wounds += E.number_wounds
 
 			var/leg_tally = 2
 			for(var/name in organs)
