@@ -914,7 +914,7 @@
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				for(var/datum/wound/W in E.wounds)
-					number_wounds++
+					number_wounds+=W.amount
 
 			var/leg_tally = 2
 			for(var/name in organs)

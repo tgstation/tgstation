@@ -418,7 +418,7 @@
 				if(W.salved) amount++
 				if(W.disinfected) amount++
 				// amount of healing is spread over all the wounds
-				W.heal_damage(amount / (20*owner.number_wounds+1))
+				W.heal_damage((amount * W.amount) / (20*owner.number_wounds+1))
 
 	proc/add_wound(var/used_weapon, var/damage)
 		var/datum/autopsy_data/W = autopsy_data[used_weapon]
