@@ -41,7 +41,7 @@
 	for(var/mob/M in view(src,7))
 		M << "<b>[src]</b> [pick(speak_emote)], \"[message]\""
 
-/mob/living/simple_animal/emote(var/act,var/m_type=1,var/message = null)
+/mob/living/simple_animal/emote(var/message = null, var/m_type=1, var/act = "auto")
 	switch(act)
 		if ("scream")
 			message = "<B>[src]</B> makes a loud and pained whimper"
