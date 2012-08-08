@@ -152,7 +152,7 @@
 						//fire laser eyes
 						firing = 1
 						if(prob(40))
-							emote("auto",1,"[pick("makes an ominous whining noise!","makes a low humming noise!","begins charging up something!")]")
+							emote("[pick("makes an ominous whining noise!","makes a low humming noise!","begins charging up something!")]")
 
 						spawn(40)
 							if(!target_mob)
