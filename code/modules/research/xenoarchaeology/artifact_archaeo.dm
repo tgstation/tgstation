@@ -19,18 +19,21 @@
 
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/weldingtool/))
-		if(!src.method)
-			if(inside)
-				var/obj/A = new src.inside(get_turf(src))
-				for(var/mob/M in viewers(world.view, user))
-					M.show_message("\blue The rock burns away revealing a [A.name].",1)
+		var/obj/item/weapon/weldingtool/w = W
+		if(w.isOn() && (w.get_fuel() > 3))
+			if(!src.method)
+				if(inside)
+					var/obj/A = new src.inside(get_turf(src))
+					for(var/mob/M in viewers(world.view, user))
+						M.show_message("\blue The rock burns away revealing a [A.name].",1)
+				else
+					for(var/mob/M in viewers(world.view, user))
+						M.show_message("\blue The rock burns away into nothing.",1)
+				del src
 			else
 				for(var/mob/M in viewers(world.view, user))
-					M.show_message("\blue The rock burns away into nothing.",1)
-			del src
-		else
-			for(var/mob/M in viewers(world.view, user))
-				M.show_message("\blue A few sparks fly off the rock, but otherwise nothing else happens.",1)
+					M.show_message("\blue A few sparks fly off the rock, but otherwise nothing else happens.",1)
+		w.remove_fuel(4)
 
 /obj/item/weapon/ore/strangerock/acid_act(var/datum/reagent/R)
 	if(src.method)
