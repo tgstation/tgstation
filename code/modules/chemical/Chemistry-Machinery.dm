@@ -117,8 +117,9 @@
 			var/obj/item/weapon/reagent_containers/glass/B = src.beaker
 			var/datum/reagents/R = B.reagents
 			var/space = R.maximum_volume - R.total_volume
+
 			R.add_reagent(data, min(amount, energy * 10, space))
-			energy = max(energy - min(amount, space) / 10, 0)
+			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
 
 	amount = round(amount, 10) // Chem dispenser doesnt really have that much prescion
 	if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
