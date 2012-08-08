@@ -767,7 +767,7 @@
 		kill_air = 1
 		usr << "<b>Disabled air processing.</b>"
 //	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] used 'kill air'.")
+	log_admin("[key_name(usr)] used 'kill air' (toggle), kill_air: [kill_air].")
 	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
 
 /client/proc/show_verbs()

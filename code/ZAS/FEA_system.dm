@@ -107,6 +107,8 @@ datum
 			var/failed_ticks = 0 //How many ticks have runtimed?
 			var/next_stat_check = 10
 
+			var/tick_progress = 0
+
 
 /*				process()
 					//Call this to process air movements for a cycle
@@ -168,6 +170,7 @@ datum
 
 			proc/tick()
 				. = 1 //Set the default return value, for runtime detection.
+				tick_progress = 0
 
 				if(current_cycle >= next_stat_check)
 					var/zone/z = pick(zones)
@@ -175,23 +178,32 @@ datum
 					log_file << "\"\The [get_area(pick(z.contents))]\",[z.air.oxygen],[z.air.nitrogen],[z.air.carbon_dioxide],[z.air.toxins],[z.air.temperature],[z.air.group_multiplier * z.air.volume]"
 					next_stat_check = current_cycle + (rand(5,7)*60)
 
+				tick_progress = 1
+
 				if(tiles_to_update.len) //If there are tiles to update, do so.
 					for(var/turf/simulated/T in tiles_to_update)
 						var/output = T.update_air_properties()
 						if(. && T && !output)
 							. = 0 //If a runtime occured, make sure we can sense it.
 							log_admin("ZASALERT: Either a null turf in list/tiles_to_update, or unable run turf/simualted/update_air_properties()")
+							alerted = 1
 					tiles_to_update = list()
+
+				tick_progress = 2
 
 				if(connections_to_check.len)
 					for(var/connection/C in connections_to_check)
 						C.CheckPassSanity()
 					connections_to_check = list()
 
+				tick_progress = 3
+
 				if(tiles_to_reconsider_zones.len)
 					for(var/turf/simulated/T in tiles_to_reconsider_zones)
 						if(!T.zone)
 							new /zone(T)
+
+				tick_progress = 4
 
 				for(var/zone/Z in zones)
 					if(Z.last_update < current_cycle)
@@ -201,9 +213,15 @@ datum
 						if(. && Z && !output)
 							. = 0
 							log_admin("ZASALERT: Either a null zone in list/zones, or unable run zone/process()")
+							alerted = 1
+
+				tick_progress = 5
 
 				for(var/obj/fire/F in active_hotspots)
 					var/output = F.process()
 					if(. && F && !output)
 						. = 0
 						log_admin("ZASALERT: Either a null fire in list/active_hotspots, or unable run obj/fire/process()")
+						alerted = 1
+
+				tick_progress = 6
