@@ -185,7 +185,6 @@ datum
 						if(. && T && !output)
 							. = 0 //If a runtime occured, make sure we can sense it.
 							log_admin("ZASALERT: Either a null turf in list/tiles_to_update, or unable run turf/simualted/update_air_properties()")
-							alerted = 1
 					tiles_to_update = list()
 
 				tick_progress = 2
@@ -209,7 +208,6 @@ datum
 						if(. && Z && !output)
 							. = 0
 							log_admin("ZASALERT: Either a null zone in list/zones, or unable run zone/process()")
-							alerted = 1
 
 				tick_progress = 5
 				for(var/obj/fire/F in active_hotspots)
@@ -217,6 +215,5 @@ datum
 					if(. && F && !output)
 						. = 0
 						log_admin("ZASALERT: Either a null fire in list/active_hotspots, or unable run obj/fire/process()")
-						alerted = 1
 
 				tick_progress = 6

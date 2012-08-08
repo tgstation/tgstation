@@ -192,7 +192,7 @@ datum/controller/game_controller
 						section = "active_hotspots (fire)"
 					if(6)
 						section = "success"
-				log_admin("ZASALERT: air_system/tick() failed with progress: [air_master.tick_progress]")
+				log_admin("ZASALERT: air_system/tick() failed with progress: [air_master.tick_progress] ([section])")
 				air_master.failed_ticks++
 				if(air_master.failed_ticks > 20)
 					world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
