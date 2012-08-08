@@ -19,7 +19,10 @@
 			body.original_name = real_name
 		original_name = body.original_name
 		//name = body.original_name		//original
-		name = body.name
+		if(issimpleanimal(body))
+			name = original_name
+		else
+			name = body.name
 		real_name = body.real_name
 
 		if(!name)
