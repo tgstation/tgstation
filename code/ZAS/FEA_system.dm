@@ -170,8 +170,8 @@ datum
 
 			proc/tick()
 				. = 1 //Set the default return value, for runtime detection.
-				tick_progress = 0
 
+				tick_progress = 0
 				if(current_cycle >= next_stat_check)
 					var/zone/z = pick(zones)
 					var/log_file = file("[time2text(world.timeofday, "statistics/DD-MM-YYYY-air.txt")]")
@@ -179,7 +179,6 @@ datum
 					next_stat_check = current_cycle + (rand(5,7)*60)
 
 				tick_progress = 1
-
 				if(tiles_to_update.len) //If there are tiles to update, do so.
 					for(var/turf/simulated/T in tiles_to_update)
 						var/output = T.update_air_properties()
@@ -190,21 +189,18 @@ datum
 					tiles_to_update = list()
 
 				tick_progress = 2
-
 				if(connections_to_check.len)
 					for(var/connection/C in connections_to_check)
 						C.CheckPassSanity()
 					connections_to_check = list()
 
 				tick_progress = 3
-
 				if(tiles_to_reconsider_zones.len)
 					for(var/turf/simulated/T in tiles_to_reconsider_zones)
 						if(!T.zone)
 							new /zone(T)
 
 				tick_progress = 4
-
 				for(var/zone/Z in zones)
 					if(Z.last_update < current_cycle)
 						var/output = Z.process()
@@ -216,7 +212,6 @@ datum
 							alerted = 1
 
 				tick_progress = 5
-
 				for(var/obj/fire/F in active_hotspots)
 					var/output = F.process()
 					if(. && F && !output)

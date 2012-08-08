@@ -176,6 +176,22 @@ datum/controller/game_controller
 			air_master.current_cycle++
 			var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
 			if(!success) //Runtimed.
+				var/section = "unknown"
+				switch(air_master.tick_progress)
+					if(0)
+						section = "next_stat_check (atmos statistics)"
+					if(1)
+						section = "update_air_properties"
+					if(2)
+						section = "connections_to_check"
+					if(3)
+						section = "tiles_to_reconsider_zones"
+					if(4)
+						section = "zone/process"
+					if(5)
+						section = "active_hotspots (fire)"
+					if(6)
+						section = "success"
 				log_admin("ZASALERT: air_system/tick() failed with progress: [air_master.tick_progress]")
 				air_master.failed_ticks++
 				if(air_master.failed_ticks > 20)
