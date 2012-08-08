@@ -240,13 +240,25 @@
 		var/turf/ear = get_turf(M)
 		if(!ear) continue
 
+
+		// Checking for a headset on the mob and if it is in radios list
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+
+			if(H.ears != null)
+				var/isHeadsetRadios = 0
+				for(var/obj/item/device/radio/R in radios)
+					if(H.ears == R)
+						isHeadsetRadios = 1
+						break
+				if(isHeadsetRadios)
+					hearers += M
+					continue
+
 		// Now see if they're near any broadcasting radio
 		for(var/obj/item/device/radio/R in radios)
 			var/turf/radio_loc = get_turf(R)
 			if(ear in view(R.canhear_range,radio_loc))
-				hearers += M
-				break
-			else if(ear == radio_loc)
 				hearers += M
 				break
 
