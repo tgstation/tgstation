@@ -10,9 +10,9 @@ var/global/BSACooldown = 0
 		if (C)
 			var/msg = rendered
 			if (admin_ref)
-				msg = dd_replaceText(msg, "%admin_ref%", "\ref[C]")
+				msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
 			if (admin_holder_ref && C.holder)
-				msg = dd_replaceText(msg, "%holder_ref%", "\ref[C.holder]")
+				msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
 			C << msg
 
 

@@ -25,9 +25,9 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 	var/original_msg = msg
 
 	//The symbol × (fancy multiplication sign) will be used to mark where to put replacements, so the original message must not contain it.
-	msg = dd_replaceText(msg, "×", "")
-	msg = dd_replaceText(msg, "HOLDERREF", "HOLDER-REF") //HOLDERREF is a key word which gets replaced with the admin's holder ref later on, so it mustn't be in the original message
-	msg = dd_replaceText(msg, "ADMINREF", "ADMIN-REF") //ADMINREF is a key word which gets replaced with the admin's client's ref. So it mustn't be in the original message.
+	msg = dd_replacetext(msg, "×", "")
+	msg = dd_replacetext(msg, "HOLDERREF", "HOLDER-REF") //HOLDERREF is a key word which gets replaced with the admin's holder ref later on, so it mustn't be in the original message
+	msg = dd_replacetext(msg, "ADMINREF", "ADMIN-REF") //ADMINREF is a key word which gets replaced with the admin's client's ref. So it mustn't be in the original message.
 
 	var/list/msglist = dd_text2list(msg, " ")
 
@@ -50,14 +50,14 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 	for(var/i = 1; i <= msglist.len; i++)
 		var/word = msglist[i]
 		var/original_word = word
-		word = dd_replaceText(word, ".", "")
-		word = dd_replaceText(word, ",", "")
-		word = dd_replaceText(word, "!", "")
-		word = dd_replaceText(word, "?", "")	//Strips some common punctuation characters so the actual word can be better compared.
-		word = dd_replaceText(word, ";", "")
-		word = dd_replaceText(word, ":", "")
-		word = dd_replaceText(word, "(", "")
-		word = dd_replaceText(word, ")", "")
+		word = dd_replacetext(word, ".", "")
+		word = dd_replacetext(word, ",", "")
+		word = dd_replacetext(word, "!", "")
+		word = dd_replacetext(word, "?", "")	//Strips some common punctuation characters so the actual word can be better compared.
+		word = dd_replacetext(word, ";", "")
+		word = dd_replacetext(word, ":", "")
+		word = dd_replacetext(word, "(", "")
+		word = dd_replacetext(word, ")", "")
 		if(lowertext(word) in adminhelp_ignored_words)
 			continue
 		if(lowertext(word) == "ai")
@@ -104,8 +104,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 					check_laws_text = (" (<A HREF='?src=\ref[X.holder];adminchecklaws=[ref_mob]'>CL</A>)")
 
 				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>) [check_laws_text]:</b> [msg]"
-				msg_to_send = dd_replaceText(msg_to_send, "HOLDERREF", "\ref[X.holder]")
-				msg_to_send = dd_replaceText(msg_to_send, "ADMINREF", "\ref[X]")
+				msg_to_send = dd_replacetext(msg_to_send, "HOLDERREF", "\ref[X.holder]")
+				msg_to_send = dd_replacetext(msg_to_send, "ADMINREF", "\ref[X]")
 				X << msg_to_send
 	else
 		var/ref_client = "\ref[src]"
@@ -117,8 +117,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 				if(X.sound_adminhelp)
 					X << 'adminhelp.ogg'
 				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_client]'>VV</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
-				msg_to_send = dd_replaceText(msg_to_send, "HOLDERREF", "\ref[X.holder]")
-				msg_to_send = dd_replaceText(msg_to_send, "ADMINREF", "\ref[X]")
+				msg_to_send = dd_replacetext(msg_to_send, "HOLDERREF", "\ref[X.holder]")
+				msg_to_send = dd_replacetext(msg_to_send, "ADMINREF", "\ref[X]")
 				X << msg_to_send
 
 	src << "<font color='blue'>PM to-<b>Admins</b>: [original_msg]</font>"

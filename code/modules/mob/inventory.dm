@@ -180,3 +180,26 @@
 	O.layer = initial(O.layer)
 	O.screen_loc = null
 	return 1
+
+
+//Outdated but still in use apparently. This should at least be a human proc.
+/mob/proc/get_equipped_items()
+	var/list/items = new/list()
+
+	if(hasvar(src,"back")) if(src:back) items += src:back
+	if(hasvar(src,"belt")) if(src:belt) items += src:belt
+	if(hasvar(src,"ears")) if(src:ears) items += src:ears
+	if(hasvar(src,"glasses")) if(src:glasses) items += src:glasses
+	if(hasvar(src,"gloves")) if(src:gloves) items += src:gloves
+	if(hasvar(src,"head")) if(src:head) items += src:head
+	if(hasvar(src,"shoes")) if(src:shoes) items += src:shoes
+	if(hasvar(src,"wear_id")) if(src:wear_id) items += src:wear_id
+	if(hasvar(src,"wear_mask")) if(src:wear_mask) items += src:wear_mask
+	if(hasvar(src,"wear_suit")) if(src:wear_suit) items += src:wear_suit
+//	if(hasvar(src,"w_radio")) if(src:w_radio) items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN
+	if(hasvar(src,"w_uniform")) if(src:w_uniform) items += src:w_uniform
+
+	//if(hasvar(src,"l_hand")) if(src:l_hand) items += src:l_hand
+	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
+
+	return items
