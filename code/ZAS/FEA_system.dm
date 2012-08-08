@@ -180,6 +180,7 @@ datum
 						var/output = T.update_air_properties()
 						if(. && T && !output)
 							. = 0 //If a runtime occured, make sure we can sense it.
+							log_admin("ZASALERT: Either a null turf in list/tiles_to_update, or unable run turf/simualted/update_air_properties()")
 					tiles_to_update = list()
 
 				if(connections_to_check.len)
@@ -199,8 +200,10 @@ datum
 							Z.last_update = current_cycle
 						if(. && Z && !output)
 							. = 0
+							log_admin("ZASALERT: Either a null zone in list/zones, or unable run zone/process()")
 
 				for(var/obj/fire/F in active_hotspots)
 					var/output = F.process()
 					if(. && F && !output)
 						. = 0
+						log_admin("ZASALERT: Either a null fire in list/active_hotspots, or unable run obj/fire/process()")
