@@ -1,4 +1,3 @@
-abi79 - Game Master
 arcalane - Game Admin
 bobbehluvspropane - Game Admin
 cacophony - Retired Admin
@@ -18,7 +17,6 @@ miniature - Game Master
 misterbook - Game Admin
 misterfox - Game Admin
 mloc - Game Master
-ridley4 - Game Admin
 skymarshal - Retired Admin
 spaceman96 - Retired Admin
 strumpetplaya - Retired Admin
