@@ -167,7 +167,7 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define BLOCKHAIR	32768		// temporarily removes the user's hair icon
 
-#define PLASMAGUARD 65536		//Does not get contaminated by plasma.
+#define PLASMAGUARD 8192		//Does not get contaminated by plasma.
 
 //flags for pass_flags
 #define PASSTABLE	1
@@ -465,12 +465,12 @@ var/list/liftable_structures = list(\
 /////////////////
 //ORGAN DEFINES//
 /////////////////
-#define CUT_AWAY 1
-#define GAUZED 2
-#define ATTACHABLE 4
-#define BLEEDING 8
-#define BANDAGED 16
-#define BROKEN 32
-#define DESTROYED 64
-#define ROBOT 128
-#define SPLINTED 256
+#define ORGAN_CUT_AWAY 1
+#define ORGAN_GAUZED 2
+#define ORGAN_ATTACHABLE 4
+#define ORGAN_BLEEDING 8
+#define ORGAN_BANDAGED 16
+#define ORGAN_BROKEN 32
+#define ORGAN_DESTROYED 64
+#define ORGAN_ROBOT 128
+#define ORGAN_SPLINTED 256

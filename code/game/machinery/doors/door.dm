@@ -81,6 +81,13 @@
 
 	Bumped(atom/AM)
 		if(p_open || operating) return
+
+		if(issimpleanimal(AM))
+			var/mob/living/simple_animal/S = AM
+			if(S.can_open_doors)
+				bumpopen(AM)
+			return
+
 		if(ismob(AM))
 			var/mob/M = AM
 			if(world.time - AM.last_bumped <= 60) return //NOTE do we really need that?

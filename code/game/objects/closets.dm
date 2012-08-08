@@ -55,7 +55,10 @@
 
 	for(var/obj/item/I in src.loc)
 		if(!I.anchored)
-			I.loc = src
+			if(src.contents.len < src.quantity_max)
+				I.loc = src
+			else
+				break
 
 	for(var/obj/mecha/working/ripley/deathripley/I in src.loc)
 		I.loc = src

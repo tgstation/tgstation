@@ -965,8 +965,7 @@
 	set category = "Object"
 	set name = "Enter Exosuit"
 	set src in oview(1)
-
-	if (usr.stat || !ishuman(usr))
+	if (!ishuman(usr) || usr.stat) //Check if playable species and awake.
 		return
 	src.log_message("[usr] tries to move in.")
 	if (src.occupant)

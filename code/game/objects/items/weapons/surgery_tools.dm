@@ -108,11 +108,11 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	var/datum/organ/external/S = M.organs[user.zone_sel.selecting]
 	if (!S)
 		return 0
-	if(S.status & DESTROYED)
-		if(S.status & BLEEDING)
+	if(S.status & ORGAN_DESTROYED)
+		if(S.status & ORGAN_BLEEDING)
 			user << "\red There's too much blood here!"
 			return 0
-		if(!(S.status & CUT_AWAY))
+		if(!(S.status & ORGAN_CUT_AWAY))
 			user << "\red The flesh hasn't been cleanly cut!"
 			return 0
 		M.visible_message( \
@@ -234,10 +234,10 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	if(!S || !istype(S))
 		return 0
 
-	if(S.status & DESTROYED)
+	if(S.status & ORGAN_DESTROYED)
 		return 0
 
-	if(S.status & ROBOT)
+	if(S.status & ORGAN_ROBOT)
 		user << "Medical equipment for a robot arm?  How would that do any good..."
 		return 0
 
@@ -245,7 +245,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 		user << "\red There is skin in the way!"
 		return 0
 
-	if(S.status & BLEEDING)
+	if(S.status & ORGAN_BLEEDING)
 		user << "\red [H] is profusely bleeding in \his [S.display_name]!"
 		return 0
 
@@ -332,11 +332,11 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
 	if (!S)
 		return 0
-	if(S.status & DESTROYED)
-		if(!(S.status & BLEEDING))
+	if(S.status & ORGAN_DESTROYED)
+		if(!(S.status & ORGAN_BLEEDING))
 			user << "\red There is nothing bleeding here!"
 			return 0
-		if(!(S.status & CUT_AWAY))
+		if(!(S.status & ORGAN_CUT_AWAY))
 			user << "\red The flesh hasn't been cleanly cut!"
 			return 0
 		H.visible_message( \
@@ -346,7 +346,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 			H.visible_message( \
 			"\red [user] finishes clamping bleeders in the stump where [H]'s [S.display_name] used to be with [src]!", \
 			"\red [user] finishes clamping bleeders in the stump where your [S.display_name] used to be with [src]!")
-			S.status &= ~BLEEDING
+			S.status &= ~ORGAN_BLEEDING
 			H.updatehealth()
 			H.UpdateDamageIcon()
 			return 1
@@ -426,7 +426,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 				M.face_op_stage = 2.0
 
 				var/datum/organ/external/S = M.organs["head"]
-				S.status &= ~BLEEDING
+				S.status &= ~ORGAN_BLEEDING
 				M.updatehealth()
 				M.UpdateDamageIcon()
 				return 1
@@ -509,10 +509,10 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	if(!S || !istype(S))
 		return 0
 
-	if(S.status & DESTROYED)
+	if(S.status & ORGAN_DESTROYED)
 		return 0
 
-	if(S.status & ROBOT)
+	if(S.status & ORGAN_ROBOT)
 		user << "Medical equipment for a robot arm?  How would that do any good?"
 		return 0
 
@@ -520,7 +520,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 		user << "\red There is skin in the way!"
 		return 0
 
-	if(!(S.status & BLEEDING))
+	if(!(S.status & ORGAN_BLEEDING))
 		if(S.implant)
 			implant_surgery(H,user)
 			return 1
@@ -540,7 +540,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 		if(user.zone_sel.selecting == "head" && H:brain_op_stage == 1)
 			H:brain_op_stage = 0
 
-		S.status &= ~BLEEDING
+		S.status &= ~ORGAN_BLEEDING
 		H.updatehealth()
 		H.UpdateDamageIcon()
 	else
@@ -721,7 +721,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	if(!S.open)
 		usr << "<b>You have to cut the limb open first!</b>"
 		return
-	if(S.status & ROBOT)
+	if(S.status & ORGAN_ROBOT)
 		user << "Medical equipment for a robot arm?  How would that do any good?"
 		return
 	for(var/mob/O in viewers(M))
@@ -769,11 +769,11 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
 	if (!S)
 		return 0
-	if(S.status & DESTROYED)
-		if(S.status & BLEEDING)
+	if(S.status & ORGAN_DESTROYED)
+		if(S.status & ORGAN_BLEEDING)
 			user << "\red There's too much blood here!"
 			return 0
-		if(!(S.status & CUT_AWAY))
+		if(!(S.status & ORGAN_CUT_AWAY))
 			user << "\red The flesh hasn't been cleanly cut!"
 			return 0
 		if(S.open != 3)
@@ -788,7 +788,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 				"\red [user] finishes adjusting the area around your [S.display_name]!")
 			S.open = 0
 			S.stage = 0
-			S.status |= ATTACHABLE
+			S.status |= ORGAN_ATTACHABLE
 			S.amputated = 1 // this should prevent the wound from hurting etc.
 			H.updatehealth()
 			H.UpdateDamageIcon()
@@ -850,10 +850,10 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	if(!S || !istype(S))
 		return 0
 
-	if(S.status & DESTROYED)
+	if(S.status & ORGAN_DESTROYED)
 		user << "What [S.display_name]?"
 
-	if(S.status & ROBOT)
+	if(S.status & ORGAN_ROBOT)
 		user << "Medical equipment for a robot arm?  How would that do any good..."
 		return
 	if(!S.open)
@@ -935,7 +935,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 			return
 		if(istype(H) && H.organs["head"])
 			var/datum/organ/external/affecting = H.organs["head"]
-			if(affecting.status & DESTROYED)
+			if(affecting.status & ORGAN_DESTROYED)
 				return ..()
 		if(brain_surgery(M,user))
 			return
@@ -1047,7 +1047,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	var/datum/organ/external/S = M.organs[user.zone_sel.selecting]
 	if (!S)
 		return
-	if(S.status & DESTROYED)
+	if(S.status & ORGAN_DESTROYED)
 		M.visible_message( \
 			"\red [user] is beginning to cut away at the flesh where [M]'s [S.display_name] used to be with [src].", \
 			"\red [user] begins to cut away at the flesh where [S.display_name] used to be with [src]!")
@@ -1055,7 +1055,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 			M.visible_message( \
 				"\red [user] finishes cutting where [M]'s [S.display_name] used to be with [src]!", \
 				"\red [user] finishes cutting where your [S.display_name] used to be with [src]!")
-			S.status |= BLEEDING|CUT_AWAY
+			S.status |= ORGAN_BLEEDING|ORGAN_CUT_AWAY
 			M.updatehealth()
 			M.UpdateDamageIcon()
 			return 1
@@ -1115,10 +1115,10 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	if(!S || !istype(S))
 		return 0
 
-	if(S.status & DESTROYED)
+	if(S.status & ORGAN_DESTROYED)
 		return 0
 
-	if(S.status & ROBOT)
+	if(S.status & ORGAN_ROBOT)
 		user << "Medical equipment for a robot arm?  How would that do any good..."
 		return 0
 
@@ -1134,7 +1134,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 				"\red [user] cuts open the wound in [H]'s [S.display_name] with [src]!", \
 				"\red [user] cuts open the wound in your [S.display_name] with [src]!")
 
-		S.status |= BLEEDING
+		S.status |= ORGAN_BLEEDING
 		S.open = 1
 		if(S.display_name == "head")
 			H:brain_op_stage = 1.0
@@ -1210,10 +1210,10 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	var/datum/organ/external/S = H:organs[user.zone_sel.selecting]
 	if (!S)
 		return
-	if(S.status & DESTROYED)
+	if(S.status & ORGAN_DESTROYED)
 		return
 
-	if(S.status & ROBOT)
+	if(S.status & ORGAN_ROBOT)
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, H)
 		spark_system.attach(H)
@@ -1348,33 +1348,33 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 		var/datum/organ/external/temp = M.organs[zone]
 		var/msg
 
-		if(temp.status & DESTROYED)
+		if(temp.status & ORGAN_DESTROYED)
 			return ..()
 
         // quickly convert embryo removal to bone surgery
 		if(zone == "chest" && M.embryo_op_stage == 3)
 			M.embryo_op_stage = 0
 			temp.open = 2
-			temp.status &= ~BLEEDING
+			temp.status &= ~ORGAN_BLEEDING
 
 		// quickly convert appendectomy to bone surgery
 		if(zone == "groin" && M.appendix_op_stage == 3)
 			M.appendix_op_stage = 0
 			temp.open = 2
-			temp.status &= ~BLEEDING
+			temp.status &= ~ORGAN_BLEEDING
 
 		msg = get_message(1,M,user,temp)
 		for(var/mob/O in viewers(M,null))
 			O.show_message("\red [msg]",1)
 		if(do_mob(user,M,time))
-			if(temp.open == 2 && !(temp.status & BLEEDING))
+			if(temp.open == 2 && !(temp.status & ORGAN_BLEEDING))
 				if(temp.broken_description in wound)
 					if(temp.stage in stage)
 						temp.stage += 1
 
 						if(IsFinalStage(temp.stage))
-							temp.status &= ~BROKEN
-							temp.status &= ~SPLINTED
+							temp.status &= ~ORGAN_BROKEN
+							temp.status &= ~ORGAN_SPLINTED
 							temp.stage = 0
 							temp.perma_injury = 0
 							temp.brute_dam = temp.min_broken_damage -1
@@ -1472,17 +1472,17 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 		var/mob/living/carbon/human/H = M
 		for(var/name in H.organs)
 			var/datum/organ/external/e = H.organs[name]
-			if(e.status & DESTROYED) // this is nanites, not space magic
+			if(e.status & ORGAN_DESTROYED) // this is nanites, not space magic
 				continue
 			e.brute_dam = 0.0
 			e.burn_dam = 0.0
-			e.status &= ~BANDAGED
+			e.status &= ~ORGAN_BANDAGED
 			e.max_damage = initial(e.max_damage)
-			e.status &= ~BLEEDING
+			e.status &= ~ORGAN_BLEEDING
 			e.open = 0
-			e.status &= ~BROKEN
-			e.status &= ~DESTROYED
-			e.status &= ~SPLINTED
+			e.status &= ~ORGAN_BROKEN
+			e.status &= ~ORGAN_DESTROYED
+			e.status &= ~ORGAN_SPLINTED
 			e.perma_injury = 0
 			e.update_icon()
 		H.update_body()

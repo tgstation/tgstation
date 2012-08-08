@@ -32,6 +32,7 @@
 	var/t_him = "it"
 	var/t_has = "has"
 	var/t_is = "is"
+	var/t_does = "does"
 
 	var/msg = "<span class='info'>*---------*\nThis is "
 
@@ -50,6 +51,7 @@
 			t_him = "them"
 			t_has = "have"
 			t_is = "are"
+			t_does = "do"
 
 	if(mutantrace == "lizard")
 		examine_text = "one of those lizard-like Soghuns"
@@ -129,7 +131,7 @@
 	//splints
 	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
 		var/datum/organ/external/o = organs["[organ]"]
-		if(o.status & SPLINTED)
+		if(o.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on his [o.getDisplayName()]!</span>\n"
 
 	//belt
@@ -196,7 +198,7 @@
 	if (src.stat == 1 || stat == 2)
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((!isbreathing || holdbreath) && distance <= 3)
-			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
+			msg += "<span class='warning'>[t_He] [t_does] not appear to be breathing.</span>\n"
 		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
 			for(var/mob/O in viewers(usr.loc, null))
 				O.show_message("[usr] checks [src]'s pulse.", 1)
@@ -209,17 +211,19 @@
 				for(var/mob/O in viewers(usr.loc, null))
 					O.show_message("[usr] checks [src]'s pulse.", 1)
 			spawn(15)
-				if(!src.client)
-					var/foundghost = 0
+				var/foundghost = 0
+				if(src.client)
+					foundghost = 1
+				else
 					for(var/mob/dead/observer/G in world)
 						if(G.client)
 							if(G.corpse == src)
 								foundghost++
 								break
-					if(!foundghost)
-						usr << "<span class='deadsay'>[t_He] has no pulse and [t_his] soul has departed...</span>"
-					else
-						usr << "<span class='deadsay'>[t_He] has no pulse...</span>"
+				if(!foundghost)
+					usr << "<span class='deadsay'>[t_He] has no pulse and [t_his] soul has departed...</span>"
+				else
+					usr << "<span class='deadsay'>[t_He] has no pulse...</span>"
 
 	msg += "<span class='warning'>"
 
@@ -267,11 +271,11 @@
 	for(var/named in organs)
 		var/datum/organ/external/temp = organs[named]
 		if(temp)
-			if(temp.status & DESTROYED)
+			if(temp.status & ORGAN_DESTROYED)
 				is_destroyed["[temp.display_name]"] = 1
 				wound_flavor_text["[temp.display_name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [temp.display_name].</b></span>\n"
 				continue
-			if(temp.status & ROBOT)
+			if(temp.status & ORGAN_ROBOT)
 				if(!(temp.brute_dam + temp.burn_dam))
 					wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a robot [temp.display_name]!</span>\n"
 					continue
@@ -332,7 +336,7 @@
 					flavor_text_string += flavor_text[text]
 				flavor_text_string += " on [t_his] [named].</span><br>"
 				wound_flavor_text["[named]"] = flavor_text_string
-				if(temp.status & BLEEDING)
+				if(temp.status & ORGAN_BLEEDING)
 					is_bleeding["[named]"] = 1
 			else
 				wound_flavor_text["[temp.display_name]"] = ""

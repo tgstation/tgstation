@@ -179,7 +179,7 @@
 			M.update_clothing()
 			src.add_fingerprint(usr)
 			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+		if( (over_object == usr && in_range(src, usr) || usr.contents.Find(src)) && usr.s_active)
 			usr.s_active.close(usr)
 		src.show_to(usr)
 	return

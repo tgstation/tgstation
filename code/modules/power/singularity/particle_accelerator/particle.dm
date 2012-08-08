@@ -39,16 +39,16 @@
 		if (A)
 			if(ismob(A))
 				toxmob(A)
-			if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/machinery/singularity/)))
+			else if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/machinery/singularity/)))
 				A:energy += energy
 //				energy = 0	//This breaks the current singularity
-			if( istype(A,/obj/machinery/rust/particle_catcher) )
+			else if( istype(A,/obj/machinery/rust/particle_catcher) )
 				var/obj/machinery/rust/particle_catcher/collided_catcher = A
 				if(particle_type && particle_type != "neutron")
 					if(collided_catcher.AddParticles(particle_type, 1 + additional_particles))
 						collided_catcher.parent.AddEnergy(energy,mega_energy)
 						del (src)
-			if( istype(A,/obj/machinery/rust/core) )
+			else if( istype(A,/obj/machinery/rust/core) )
 				var/obj/machinery/rust/core/collided_core = A
 				if(particle_type && particle_type != "neutron")
 					if(collided_core.AddParticles(particle_type, 1 + additional_particles))
@@ -73,6 +73,7 @@
 	proc
 		toxmob(var/mob/living/M)
 			var/radiation = (energy*2)
+			M.adjustToxLoss(radiation)
 /*			if(istype(M,/mob/living/carbon/human))
 				if(M:wear_suit) //TODO: check for radiation protection
 					radiation = round(radiation/2,1)
@@ -80,10 +81,10 @@
 				if(M:wear_suit) //TODO: check for radiation protection
 					radiation = round(radiation/2,1)*/
 			if(ionizing)
-				M.apply_effects((radiation*3),IRRADIATE,0)
+				M.apply_effect((radiation*3),IRRADIATE,0)
 				M.updatehealth()
 			else
-				M.apply_effects((radiation*2),IRRADIATE,0)
+				M.apply_effect((radiation*2),IRRADIATE,0)
 				M.updatehealth()
 			//M << "\red You feel odd."
 			return

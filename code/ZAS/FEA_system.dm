@@ -92,17 +92,15 @@ datum
 	controller
 		air_system
 			//Geoemetry lists
-//			var/list/turf/simulated/active_singletons = list()
+			var/list/turf/simulated/turfs_with_connections = list()
+			var/list/obj/fire/active_hotspots = list()
 
 			//Special functions lists
-//			var/list/turf/simulated/active_super_conductivity = list()
-//			var/list/turf/simulated/high_pressure_delta = list()
+			var/list/turf/simulated/tiles_to_reconsider_zones = list()
 
 			//Geometry updates lists
 			var/list/turf/simulated/tiles_to_update = list()
-			var/list/turf/simulated/tiles_with_connections = list()
-			var/list/connection/connections_checked = list()
-//			var/list/turf/simulated/groups_to_rebuild = list()
+			var/list/connection/connections_to_check = list()
 
 			var/current_cycle = 0
 			var/update_delay = 5 //How long between check should it try to process atmos again.
@@ -137,15 +135,15 @@ datum
 				var/start_time = world.timeofday
 
 				for(var/turf/simulated/S in world)
-					if(S.z < 5)
-						if(!S.zone && !S.blocks_air && S.z < 5) // Added last check to force skipping asteroid z-levels -- TLE
-							if(S.CanPass(null, S, 0, 0))
-								new/zone(S)
+					if(!S.zone && !S.blocks_air)
+						if(S.CanPass(null, S, 0, 0))
+							new/zone(S)
 
-						S.update_air_properties()
+				for(var/turf/simulated/S in world)
+					S.update_air_properties()
 
 				world << "\red \b Geometry processed in [time2text(world.timeofday-start_time, "mm:ss")] minutes!"
-				spawn start()
+//				spawn start()
 
 			proc/start()
 				//Purpose: This is kicked off by the master controller, and controls the processing of all atmosphere.
@@ -169,27 +167,40 @@ datum
 				*/
 
 			proc/tick()
+				. = 1 //Set the default return value, for runtime detection.
 
 				if(current_cycle >= next_stat_check)
 					var/zone/z = pick(zones)
-					var/log_file = file("[time2text(world.timeofday, "statistics/DD-MM-YYYY.txt")]")
-					log_file << "Zone | \The [get_area(pick(z.contents))] | [z.air.oxygen], [z.air.nitrogen], [z.air.carbon_dioxide], [z.air.toxins] | [z.air.temperature] | [z.air.group_multiplier * z.air.volume]"
+					var/log_file = file("[time2text(world.timeofday, "statistics/DD-MM-YYYY-air.txt")]")
+					log_file << "\"\The [get_area(pick(z.contents))]\",[z.air.oxygen],[z.air.nitrogen],[z.air.carbon_dioxide],[z.air.toxins],[z.air.temperature],[z.air.group_multiplier * z.air.volume]"
 					next_stat_check = current_cycle + (rand(5,7)*60)
 
-				if(tiles_to_update.len > 0) //If there are tiles to update, do so.
+				if(tiles_to_update.len) //If there are tiles to update, do so.
 					for(var/turf/simulated/T in tiles_to_update)
-						T.update_air_properties()
+						var/output = T.update_air_properties()
+						if(. && T && !output)
+							. = 0 //If a runtime occured, make sure we can sense it.
 					tiles_to_update = list()
-					for(var/connection/C in connections_checked)
+
+				if(connections_to_check.len)
+					for(var/connection/C in connections_to_check)
 						C.CheckPassSanity()
-					connections_checked = list()
+					connections_to_check = list()
+
+				if(tiles_to_reconsider_zones.len)
+					for(var/turf/simulated/T in tiles_to_reconsider_zones)
+						if(!T.zone)
+							new /zone(T)
 
 				for(var/zone/Z in zones)
 					if(Z.last_update < current_cycle)
-						Z.process()
-						if(Z) Z.last_update = current_cycle
+						var/output = Z.process()
+						if(Z)
+							Z.last_update = current_cycle
+						if(. && Z && !output)
+							. = 0
 
-				for(var/obj/fire/F)
-					F.process()
-
-				return 1
+				for(var/obj/fire/F in active_hotspots)
+					var/output = F.process()
+					if(. && F && !output)
+						. = 0

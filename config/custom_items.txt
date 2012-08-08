@@ -19,6 +19,8 @@ madmalicemccrea: Alice McCrea: /obj/item/clothing/head/helmet/welding/fluff/alic
 mangled: Li Matsuda: /obj/item/weapon/lighter/zippo/fluff/li_matsuda_1
 misterfox: Rashid Siraj: /obj/item/weapon/storage/bible/tajaran
 morrinn: Maye Day: /obj/item/weapon/storage/fluff/maye_daye_1
+nerezza: Asher Spock: /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1
+nerezza: Asher Spock: /obj/item/weapon/card/id/fluff/asher_spock_2
 orangebottle: Lillian Levett: /obj/item/weapon/pen/fluff/fancypen
 orangebottle: Lilliana Reade: /obj/item/weapon/pen/fluff/fancypen
 rawrtaicho: Riley Rohtin: /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1
@@ -40,3 +42,8 @@ whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
 whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1
 jamini: Edwin Atweeke: /obj/item/clothing/suit/storage/labcoat/fluff/burnt
 cubejackal: Barry Sharke: /obj/item/clothing/mask/fluff/electriccig
+sniperyeti: Patrick Harris: /obj/item/weapon/lighter/zippo/fluff/sniperyeti_1
+sniperyeti: Susan Harris: /obj/item/weapon/lighter/zippo/fluff/sniperyeti_1
+bountylord13: Norah Briggs: /obj/item/clothing/head/helmet/welding/fluff/norah_briggs_1
+deusdactyl: James Girard: /obj/item/clothing/suit/armor/vest/fluff/deus_blueshield
+phaux: Tian Yinhu: /obj/item/clothing/under/fluff/tian_dress

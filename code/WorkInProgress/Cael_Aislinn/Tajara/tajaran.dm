@@ -5,8 +5,7 @@
 	icon = 'tajaran.dmi'
 	icon_state = "m_none"
 	var/list/tajspeak_letters = list("~","*","-")
-	//
-	universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
+	//universal_speak = 1 (I think I fixed it, need testy testy) hacky fix until someone can figure out how to make them only understand humans
 	taj_talk_understand = 1
 	voice_message = "mrowls"
 	examine_text = "one of the cat-like Tajarans"
@@ -192,29 +191,29 @@
 	// Gloves
 	var/datum/organ/external/lo = organs["l_hand"]
 	var/datum/organ/external/ro = organs["r_hand"]
-	if (!(lo.status & DESTROYED && ro.status & DESTROYED))
+	if (!(lo.status & ORGAN_DESTROYED && ro.status & ORGAN_DESTROYED))
 		if (gloves)
 			var/t1 = gloves.item_state
 			if (!t1)
 				t1 = gloves.icon_state
 			var/icon/gloves_icon = new /icon("icon" = 'hands.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
-			if(lo.status & DESTROYED)
+			if(lo.status & ORGAN_DESTROYED)
 				gloves_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-			else if(ro.status & DESTROYED)
+			else if(ro.status & ORGAN_DESTROYED)
 				gloves_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			overlays += image(gloves_icon, "layer" = MOB_LAYER)
 			if (gloves.blood_DNA)
 				var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
-				if(lo.status & DESTROYED)
+				if(lo.status & ORGAN_DESTROYED)
 					stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-				else if(ro.status & DESTROYED)
+				else if(ro.status & ORGAN_DESTROYED)
 					stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 		else if (blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
-			if(lo.status & DESTROYED)
+			if(lo.status & ORGAN_DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-			else if(ro.status & DESTROYED)
+			else if(ro.status & ORGAN_DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 	// Glasses
@@ -231,19 +230,19 @@
 	// Shoes
 	lo = organs["l_foot"]
 	ro = organs["r_foot"]
-	if (!(lo.status & DESTROYED && ro.status & DESTROYED) && shoes)
+	if (!(lo.status & ORGAN_DESTROYED && ro.status & ORGAN_DESTROYED) && shoes)
 		var/t1 = shoes.icon_state
 		var/icon/shoes_icon = new /icon("icon" = 'feet.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
-		if(lo.status & DESTROYED && !lying)
+		if(lo.status & ORGAN_DESTROYED && !lying)
 			shoes_icon.Blend(new /icon('limb_mask.dmi', "right[lying?"_l":""]"), ICON_MULTIPLY)
-		else if(ro.status & DESTROYED && !lying)
+		else if(ro.status & ORGAN_DESTROYED && !lying)
 			shoes_icon.Blend(new /icon('limb_mask.dmi', "left[lying?"_l":""]"), ICON_MULTIPLY)
 		overlays += image(shoes_icon, "layer" = MOB_LAYER)
 		if (shoes.blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "shoesblood[!lying ? "" : "2"]")
-			if(lo.status & DESTROYED)
+			if(lo.status & ORGAN_DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-			else if(ro.status & DESTROYED)
+			else if(ro.status & ORGAN_DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)	// Radio
 /*	if (w_radio)
@@ -355,7 +354,7 @@
 		head.screen_loc = ui_head
 	else
 		var/datum/organ/external/head = organs["head"]
-		if(!(head.status & DESTROYED))
+		if(!(head.status & ORGAN_DESTROYED))
 		//if not wearing anything on the head, show the ears
 			overlays += image("icon" = icon('tajaran.dmi', "ears_[gender==FEMALE ? "f" : "m"]_[lying ? "l" : "s"]"), "layer" = MOB_LAYER)
 
@@ -482,7 +481,7 @@
 	lying_icon.Blend(new /icon('tajaran.dmi', "chest_[g]_l"), ICON_OVERLAY)
 
 	var/datum/organ/external/head = organs["head"]
-	if(!(head.status & DESTROYED))
+	if(!(head.status & ORGAN_DESTROYED))
 		stand_icon.Blend(new /icon('tajaran.dmi', "head_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('tajaran.dmi', "head_[g]_l"), ICON_OVERLAY)
 
@@ -491,12 +490,12 @@
 		if(!istype(part, /datum/organ/external/groin) \
 			&& !istype(part, /datum/organ/external/chest) \
 			&& !istype(part, /datum/organ/external/head) \
-			&& !(part.status & DESTROYED))
+			&& !(part.status & ORGAN_DESTROYED))
 			var/icon/temp = new /icon('tajaran.dmi', "[part.icon_name]_s")
-			if(part.status & ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			if(part.status & ORGAN_ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 			stand_icon.Blend(temp, ICON_OVERLAY)
 			temp = new /icon('tajaran.dmi', "[part.icon_name]_l")
-			if(part.status & ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			if(part.status & ORGAN_ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 			lying_icon.Blend(temp , ICON_OVERLAY)
 
 	stand_icon.Blend(new /icon('tajaran.dmi', "groin_[g]_s"), ICON_OVERLAY)
@@ -511,7 +510,7 @@
 			if(!istype(part, /datum/organ/external/groin) \
 				&& !istype(part, /datum/organ/external/chest) \
 				&& !istype(part, /datum/organ/external/head) \
-				&& (part.status & DESTROYED))
+				&& (part.status & ORGAN_DESTROYED))
 				husk_s.Blend(new /icon('dam_mask.dmi', "[part.icon_name]"), ICON_SUBTRACT)
 				husk_l.Blend(new /icon('dam_mask.dmi', "[part.icon_name]2"), ICON_SUBTRACT)
 
@@ -539,7 +538,7 @@
 	if(organs)
 		var/datum/organ/external/head = organs["head"]
 		if(head)
-			if(head.status & DESTROYED)
+			if(head.status & ORGAN_DESTROYED)
 				del(face_standing)
 				del(face_lying)
 				return

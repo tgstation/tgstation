@@ -31,7 +31,7 @@
 			return
 		if(hasorgans(M))
 			var/datum/organ/external/target = M:get_organ(check_zone(user.zone_sel.selecting))
-			if(target.status & DESTROYED)
+			if(target.status & ORGAN_DESTROYED)
 				user << "What [target.display_name]?"
 				return
 			if(!target.implant)
@@ -114,8 +114,7 @@
 	..()
 
 /obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob)
-	if(istype(A,/obj/item))
-		var/obj/item/weapon/implant/compressed/c = imp
-		c.scanned = A
+	if(istype(A,/obj/item) && imp)
+		imp:scanned = A
 		A.loc.contents.Remove(A)
 		update()

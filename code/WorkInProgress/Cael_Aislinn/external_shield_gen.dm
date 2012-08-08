@@ -34,18 +34,3 @@
 			closed += T
 
 	return closed
-
-/obj/machinery/shield_gen/external/process()
-	/*if(stat & (NOPOWER|BROKEN))
-		return*/
-	if(!active)
-		return
-	/*spawn(100)
-		power()*/
-	/*if(src.active >= 1)
-		if(src.power == 0)
-			src.visible_message("\red The [src.name] shuts down due to lack of power!", \
-				"You hear heavy droning fade out")
-			icon_state = "generator0"
-			src.active = 0*/
-	..()

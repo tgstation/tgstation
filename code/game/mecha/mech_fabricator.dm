@@ -221,7 +221,7 @@
 			sleep(15)
 			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
 			sleep(30)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
+			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB truncated. Please contact your NanoTrasen system operator for future assistance.\"")
 			req_access = null
 			emagged = 1
 		if(0.5)

@@ -455,12 +455,12 @@ proc/airborne_can_reach(turf/source, turf/target)
 		var/name = pick(mob.organs)
 		var/datum/organ/external/organ = mob.organs[name]
 
-		if(!(organ.status & BROKEN) && !(organ.status & ROBOT))
+		if(!(organ.status & ORGAN_BROKEN) && !(organ.status & ORGAN_ROBOT))
 			mob.adjustBruteLoss(10)
 			mob.visible_message("\red You hear a loud cracking sound coming from [mob.name].","\red <b>Something feels like it shattered in your [organ.display_name]!</b>","You hear a sickening crack.")
 			mob.emote("scream")
-			organ.status |= BROKEN
-			organ.broken_description = pick("broken","fracture","hairline fracture") //Randomise in future.  Edit: Randomized. --SkyMarshal
+			organ.status |= ORGAN_BROKEN
+			organ.broken_description = pick("broken","fracture","hairline fracture")
 			organ.perma_injury = 10
 
 

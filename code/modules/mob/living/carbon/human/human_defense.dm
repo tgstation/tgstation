@@ -110,7 +110,7 @@ emp_act
 		O.emp_act(severity)
 	for(var/named in organs)
 		var/datum/organ/external/O = organs[named]
-		if(O.status & DESTROYED)	continue
+		if(O.status & ORGAN_DESTROYED)	continue
 		O.emp_act(severity)
 	..()
 
@@ -125,7 +125,7 @@ emp_act
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0
 
-	if(!(affecting.status & DESTROYED))
+	if(!(affecting.status & ORGAN_DESTROYED))
 		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
 	else
 		user << "What [affecting]?"

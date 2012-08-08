@@ -1061,8 +1061,8 @@
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
 			area.poweralert(0, src)
-		else if(cell.percent() < 30)			// <30%, turn off lighting & equipment
-			equipment = autoset(equipment, 2)
+		else if(cell.percent() < 30)			// <30%, turn off lighting and only lighting
+			//equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
 			area.poweralert(0, src)
@@ -1135,6 +1135,7 @@
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
 
+// this function needs more freaking documentation
 /proc/autoset(var/val, var/on)
 
 	if(on==0)

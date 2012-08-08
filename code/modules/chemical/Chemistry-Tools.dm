@@ -1,4 +1,3 @@
-
 //BUG!!!: reactions on splashing etc cause errors because stuff gets deleted before it executes.
 //		  Bandaid fix using spawn - very ugly, need to fix this.
 
@@ -1345,7 +1344,7 @@
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
 	icon = 'syringe.dmi'
 	item_state = "hypo"
-	icon_state = "borghypo"
+	icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = null
@@ -3542,7 +3541,7 @@
 				if("atomicbomb")
 					icon_state = "atomicbombglass"
 					name = "Atomic Bomb"
-					desc = "Nanotrasen cannot take legal responsibility for your actions after imbibing."
+					desc = "NanoTrasen cannot take legal responsibility for your actions after imbibing."
 				if("longislandicedtea")
 					icon_state = "longislandicedteaglass"
 					name = "Long Island Iced Tea"
@@ -3710,7 +3709,7 @@
 				if("acidspit")
 					icon_state = "acidspitglass"
 					name = "Acid Spit"
-					desc = "A drink from Nanotrasen. Made from live aliens."
+					desc = "A drink from NanoTrasen. Made from live aliens."
 				if("amasec")
 					icon_state = "amasecglass"
 					name = "Amasec"

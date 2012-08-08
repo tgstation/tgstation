@@ -137,17 +137,25 @@
 			if("feet")
 				if(!H.shoes)
 					affecting = H.get_organ(pick("l_leg", "r_leg"))
-					if(!(affecting.status & ROBOT))
+					if(!(affecting.status & ORGAN_ROBOT))
 						H.Weaken(3)
 			if("l_hand", "r_hand")
 				if(!H.gloves)
 					affecting = H.get_organ(type)
-					if(!(affecting.status & ROBOT))
+					if(!(affecting.status & ORGAN_ROBOT))
 						H.Stun(3)
-		if(affecting && !(affecting.status & ROBOT))
+		if(affecting && !(affecting.status & ORGAN_ROBOT))
 			affecting.take_damage(1, 0)
 			H.UpdateDamageIcon()
 			H.updatehealth()
+	else if(ismouse(target))
+		var/mob/living/simple_animal/mouse/M = target
+		src.visible_message("\red \icon[src] <b>SPLAT!</b>")
+		M.splat()
+	else if(isroach(target))
+		var/obj/effect/critter/roach/R = target
+		src.visible_message("\red \icon[src] <b>CRUNCH!</b>")
+		R.Die()
 	playsound(target.loc, 'snap.ogg', 50, 1)
 	icon_state = "mousetrap"
 	armed = 0

@@ -32,11 +32,19 @@ var/datum/roundinfo/roundinfo = new()
 
 	var/pregame_timeleft = 0
 
+	//automated spawning of mice and roaches
+	var/spawn_vermin = 1
+	var/vermin_min_spawntime = 3000		//between 5 (3000) and 15 (9000) minutes interval
+	var/vermin_max_spawntime = 9000
+	var/spawning_vermin = 0
+	var/max_vermin = 30
+	var/list/vermin_spawn_turfs
 
 /datum/controller/gameticker/proc/pregame()
 	login_music = pick('title1.ogg', 'title2.ogg') // choose title music!
 
 	do
+
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
@@ -48,6 +56,18 @@ var/datum/roundinfo/roundinfo = new()
 			if(pregame_timeleft <= 0)
 				current_state = GAME_STATE_SETTING_UP
 	while (!setup())
+
+	spawn(10)
+		var/list/vermin_spawn_areas = list("/area/maintenance","/area/mine/maintenance","/area/crew_quarters/locker/locker_toilet","/area/crew_quarters/toilet")
+		vermin_spawn_turfs = new/list()
+		for(var/area_text in vermin_spawn_areas)
+			var/area_base_type = text2path(area_text)
+			for(var/area in typesof(area_base_type))
+				var/list/area_turfs = get_area_turfs(area)
+				for(var/turf/T in area_turfs)
+					if(T.density)
+						area_turfs -= T
+				vermin_spawn_turfs.Add(area_turfs)
 
 /datum/controller/gameticker/proc/setup()
 	//Create and announce mode
@@ -302,6 +322,33 @@ var/datum/roundinfo/roundinfo = new()
 				sleep(restart_timeout)
 				while(!going) sleep(10)
 				world.Reboot()
+
+		//randomly spawn vermin in maintenance and other areas
+		if(spawn_vermin && vermin_spawn_turfs && vermin_spawn_turfs.len)
+			if(!spawning_vermin)
+				spawning_vermin = 1
+
+				spawn(rand(vermin_min_spawntime, vermin_max_spawntime))
+					spawning_vermin = 0
+					var/cur_alive_vermin = 0
+
+					//check to see if there are too many already
+					for(var/obj/effect/critter/roach/R in world)
+						cur_alive_vermin++
+					for(var/mob/living/simple_animal/mouse/M in world)
+						if(!M.stat)
+							cur_alive_vermin++
+
+					if(cur_alive_vermin < max_vermin)
+						var/turf/T = pick(vermin_spawn_turfs)
+						if(T)
+							if(prob(50))
+								new /mob/living/simple_animal/mouse(T)
+							else
+								new /obj/effect/critter/roach(T)
+						else
+							//no turf, skip this time
+							vermin_spawn_turfs.Remove(T)
 
 		return 1
 

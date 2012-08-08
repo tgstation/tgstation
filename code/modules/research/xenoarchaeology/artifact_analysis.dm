@@ -179,7 +179,7 @@
 		switch(cur_artifact.my_effect.effecttype)
 			if("healing")  src.aeffect1 = "Healing Device"
 			if("injure") src.aeffect1 = "Anti-biological Weapon"
-			if("stun") src.aeffect1 = "Non-lethal Stunning Trap"
+			// if("stun") src.aeffect1 = "Non-lethal Stunning Trap"
 			if("roboheal") src.aeffect1 = "Mechanoid Repair Module"
 			if("robohurt") src.aeffect1 = "Mechanoid Deconstruction Device"
 			if("cellcharge") src.aeffect1 = "Power Generator"

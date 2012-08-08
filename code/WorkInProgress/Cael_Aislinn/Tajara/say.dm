@@ -492,3 +492,20 @@
 			M << "\blue [src] speaks into their radio..."
 			M << speech_bubble
 		spawn(30) del(speech_bubble)
+
+/mob/living/carbon/human/tajaran/say_understands(var/other)
+	if (istype(other, /mob/living/silicon/ai))
+		return 1
+	if (istype(other, /mob/living/silicon/decoy))
+		return 1
+	if (istype(other, /mob/living/silicon/pai))
+		return 1
+	if (istype(other, /mob/living/silicon/robot))
+		return 1
+	if (istype(other, /mob/living/carbon/brain))
+		return 1
+	if (istype(other, /mob/living/carbon/metroid))
+		return 1
+	if (istype(other, /mob/living/carbon/human))
+		return 1
+	return ..()

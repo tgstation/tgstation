@@ -54,7 +54,7 @@
 			return
 		rpm = 0.9* rpm + 0.1 * rpmtarget
 		var/datum/gas_mixture/environment = inturf.return_air()
-		var/transfer_moles = environment.total_moles/10
+		var/transfer_moles = environment.total_moles/50
 		//var/transfer_moles = rpm/10000*capacity
 		var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
 		gas_contained.merge(removed)
@@ -274,8 +274,9 @@
 			return
 		user.machine = src
 
-		var/dat = "<TT><B>Gas turbine remote control system</B>"
-		dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A><BR>"
+		var/dat = "<TT><B>Gas turbine remote control system</B>BR"
+		dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><br>"
+		dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 		dat += "<HR>"
 
 		if(src.doors.len)

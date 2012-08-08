@@ -1,4 +1,3 @@
-
 /*
 	apply_damage(a,b,c)
 	args
@@ -51,7 +50,7 @@
 		if(PARALYZE)
 			Paralyse(effect/(blocked+1))
 		if(IRRADIATE)
-			radiation += max((((effect - (effect*(getarmor(null, "rad")/100))))/(blocked+1)),0)//Rads auto check armor
+			radiation += max((((effect - (effect*(getarmor(null, "rad")/15))))/(blocked+1)),0)//Rads auto check armor
 		if(STUTTER)
 			if(canstun) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect/(blocked+1)))

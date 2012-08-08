@@ -357,7 +357,7 @@
 							emote("gasp")
 						updatehealth()
 
-				if(damage)
+				if(damage && organs.len)
 					var/V = pick(organs)
 					var/datum/organ/external/O = organs[V]
 					if(istype(O)) O.add_wound("Radiation Poisoning", damage)
@@ -562,6 +562,8 @@
 				var/ratio = breath.toxins/safe_toxins_max
 				adjustToxLoss(min(ratio, 10))	//Limit amount of damage toxin exposure can do per second
 				toxins_alert = max(toxins_alert, 1)
+				if(vsc.plc.PLASMA_HALLUCINATION && prob(20))
+					hallucination += 20
 			else
 				toxins_alert = 0
 
@@ -575,12 +577,15 @@
 					else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 						if(prob(20) && isbreathing)
 							spawn(0) emote(pick("giggle", "laugh"))
+						if(vsc.plc.N2O_HALLUCINATION && prob(10) && isbreathing)
+							hallucination += 30
 					SA.moles = 0 //Hack to stop the damned surgeon from giggling.
 
 
 			if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 				if(prob(20))
 					src << "\red You feel a searing heat in your lungs!"
+					take_overall_damage(0,2) //burn them a bit.
 				fire_alert = max(fire_alert, 1)
 			else
 				fire_alert = 0
@@ -599,8 +604,6 @@
 			if(istype(loc, /turf/space))
 				environment_heat_capacity = loc:heat_capacity
 				loc_temp = 2.7
-			else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-				loc_temp = loc:air_contents.temperature
 			else
 				loc_temp = environment.temperature
 
@@ -688,7 +691,7 @@
 
 
 			var/pressure = environment.return_pressure()
-			if(!istype(wear_suit, /obj/item/clothing/suit/space) && !istype(wear_suit, /obj/item/clothing/suit/fire))
+			if(!istype(wear_suit, /obj/item/clothing/suit/space) && !istype(wear_suit, /obj/item/clothing/suit/fire) && !istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 					/*if(pressure < 20)
 						if(prob(25))
 							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
@@ -816,6 +819,9 @@
 		handle_chemicals_in_body()
 			if(reagents && stat != 2) reagents.metabolize(src)
 			if(vessel && stat != 2) vessel.metabolize(src)
+			for(var/obj/item/I in src)
+				if(I.contaminated)
+					toxloss += vsc.plc.CONTAMINATION_LOSS
 
 			if(mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 				var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -904,7 +910,7 @@
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				E.process()
-				if(E.status & ROBOT && prob(E.brute_dam + E.burn_dam))
+				if(E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
 							drop_item()
@@ -928,10 +934,10 @@
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 						leg_tally--									// let it fail even if just foot&leg
-				if(E.status & BROKEN || E.status & DESTROYED)
+				if(E.status & ORGAN_BROKEN || E.status & ORGAN_DESTROYED)
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
-							if(E.status & SPLINTED && prob(10))
+							if(E.status & ORGAN_SPLINTED && prob(10))
 								drop_item()
 								emote("scream")
 							else
@@ -939,7 +945,7 @@
 								emote("scream")
 					else if(E.name == "r_hand" || E.name == "r_arm")
 						if(!hand && equipped())
-							if(E.status & SPLINTED && prob(10))
+							if(E.status & ORGAN_SPLINTED && prob(10))
 								drop_item()
 								emote("scream")
 							else
@@ -947,7 +953,7 @@
 								emote("scream")
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-						if(!(E.status & SPLINTED))
+						if(!(E.status & ORGAN_SPLINTED))
 							leg_tally--									// let it fail even if just foot&leg
 			// can't stand
 			if(leg_tally == 0 && !paralysis && !(lying || resting))
@@ -958,20 +964,25 @@
 
 		handle_blood()
 			// take care of blood and blood loss
-
 			if(stat < 2)
 				var/blood_volume = round(vessel.get_reagent_amount("blood"))
 				if(blood_volume < 560 && blood_volume)
-					var/datum/reagent/blood/B = locate() in vessel //Grab some blood
+					var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
 					if(B) // Make sure there's some blood at all
 						if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
-							for(var/datum/reagent/blood/D in vessel)
+							for(var/datum/reagent/blood/D in vessel.reagent_list)
 								if(D.data["donor"] == src)
 									B = D
 									break
+						var/datum/reagent/nutriment/F = locate() in vessel.reagent_list
+						if(F != null)
+							if(F.volume >= 1)
+								B.volume = max(min(10 + blood_volume,560), 0)
+								F.volume -= 1
+						else
+							//At this point, we dun care which blood we are adding to, as long as they get more blood.
+							B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
 
-						//At this point, we dun care which blood we are adding to, as long as they get more blood.
-						B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
 
 				if(blood_volume > 448)
 					if(pale)
@@ -1097,10 +1108,10 @@
 			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
-				if(!(temp.status & BLEEDING) || temp.status & ROBOT)
+				if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
 					continue
 				blood_max += 2
-				if(temp.status & DESTROYED && !(temp.status & GAUZED))
+				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
 					blood_max += 10 //Yer missing a fucking limb.
 			drip(blood_max)
 			if (eye_blind)

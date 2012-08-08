@@ -240,7 +240,7 @@ datum/preferences
 
 				preview_icon.Blend(temp, ICON_OVERLAY)
 
-			preview_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY, "dir" = preview_dir)
+			preview_icon.Blend(new /icon('human.dmi', "groin_[g]_s", "dir" = preview_dir), ICON_OVERLAY)
 
 
 		// Skin tone

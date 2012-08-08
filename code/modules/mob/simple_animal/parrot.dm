@@ -2,26 +2,26 @@
 	name = "\improper Parrot"
 	desc = "It's a parrot!  No dirty words!"
 	icon = 'mob.dmi'
-	icon_state = "cat"
-	icon_living = "cat"
-	icon_dead = "cat_dead"
+	icon_state = "parrot"
+	icon_living = "parrot"
+	icon_dead = "parrot_dead"
 	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
 	speak_emote = list("squawks","says","yells")
-	emote_hear = list("squawks","bawks")
-	emote_see = list("flutters its wings", "glares at you")
-	speak_chance = 1
+	emote_hear = list("squawks.","bawks.")
+	emote_see = list("flutters its wings.", "glares at you.")
+	speak_chance = 5
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
 	response_help  = "pets the"
 	response_disarm = "gently moves aside the"
 	response_harm   = "swats the"
 
-	ears = new /obj/item/device/radio/headset/heads/ce()
+	l_ear = new /obj/item/device/radio/headset/headset_eng()
 
 /mob/living/simple_animal/parrot/DrProfessor
 	name = "Doctor Professor Parrot, PhD"
 	desc = "That's the Doctor Professor.  He has more degrees than all of the engineering team put together, and has several published papers on quantum cracker theory."
-	speak = list(":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN RIG SUIT?",":e OH GOD ITS FREE CALL THE SHUTTLE")
+	speak = list(":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN RIG SUIT?",":e OH GOD ITS FREE CALL THE SHUTTLE",":e Open secure storage please.",":e I think something happened to the containment field...")
 	response_harm   = "is attacked in the face by"
 
 /obj/item/weapon/reagent_containers/food/snacks/cracker/
@@ -33,8 +33,8 @@
 	if(user.stat) return
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
-	if(ears)
-		dat +=	"<br><b>Headset:</b> [ears] (<a href='?src=\ref[src];remove_inv=ears'>Remove</a>)"
+	if(l_ear)
+		dat +=	"<br><b>Headset:</b> [l_ear] (<a href='?src=\ref[src];remove_inv=ears'>Remove</a>)"
 	else
 		dat +=	"<br><b>Headset:</b> <a href='?src=\ref[src];add_inv=ears'>Nothing</a>"
 
@@ -54,10 +54,10 @@
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
 			if("ears")
-				if(ears)
+				if(l_ear)
 					src.say(":e BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
-					ears.loc = src.loc
-					ears = null
+					l_ear.loc = src.loc
+					l_ear = null
 				else
 					usr << "\red There is nothing to remove from its [remove_from]."
 					return
@@ -72,7 +72,7 @@
 			return
 		switch(add_to)
 			if("ears")
-				if(ears)
+				if(l_ear)
 					usr << "\red It's already wearing something."
 					return
 				else
@@ -86,6 +86,6 @@
 
 					usr.drop_item()
 					item_to_add.loc = src
-					src.ears = item_to_add
+					src.l_ear = item_to_add
 	else
 		..()

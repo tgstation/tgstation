@@ -187,7 +187,7 @@
 
 						// Make sure we can't scan a headless person. It breaks the cloner permanently.
 						var/datum/organ/external/temp = src.scanner.occupant.organs["head"]
-						if(temp && !(temp.status & DESTROYED))
+						if(temp && !(temp.status & ORGAN_DESTROYED))
 							dat += "<a href='byond://?src=\ref[src];scan=1'>Scan - [src.scanner.occupant]</a><br>"
 						else
 							dat += "Error: Cannot locate brain for mental indexing. Unable to continue.<br>"
@@ -208,7 +208,8 @@
 			dat += "<a href='byond://?src=\ref[src];menu=1'>Back</a><br><br>"
 			for(var/id in geneticsrecords)
 				var/datum/data/record/R = geneticsrecords[id]
-				dat += "<a href='byond://?src=\ref[src];view_rec=[id]'>[R.fields["id"]]-[R.fields["name"]]</a><br>"
+				if(R)
+					dat += "<a href='byond://?src=\ref[src];view_rec=[id]'>[R.fields["id"]]-[R.fields["name"]]</a><br>"
 
 		if(3)
 			dat += "<h4>Selected Record</h4>"

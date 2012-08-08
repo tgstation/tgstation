@@ -1,7 +1,7 @@
 /obj/machinery/door/firedoor
-	name = "Firelock"
+	name = "Emergency shutter"
 	desc = "Apply crowbar"
-	icon = 'Doorfire.dmi'
+	icon = 'DoorHazard.dmi'
 	icon_state = "door_open"
 	var/blocked = 0
 	opacity = 0

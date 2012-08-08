@@ -253,19 +253,17 @@
 				dat += "<TITLE>Condimaster 3000</TITLE>Condiment infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
 			usr << browse(dat, "window=chem_master;size=575x400")
 			return
+
 		else if (href_list["add1"])
-			R.remove_reagent(href_list["add1"], 1) //Remove/add used instead of trans_to since we're moving a specific reagent.
-			reagents.add_reagent(href_list["add1"], 1)
+			R.trans_id_to(src, href_list["add1"], 1)
 		else if (href_list["add5"])
-			R.remove_reagent(href_list["add5"], 5)
-			reagents.add_reagent(href_list["add5"], 5)
+			R.trans_id_to(src, href_list["add5"], 5)
 		else if (href_list["add10"])
-			R.remove_reagent(href_list["add10"], 10)
-			reagents.add_reagent(href_list["add10"], 10)
+			R.trans_id_to(src, href_list["add10"], 10)
 		else if (href_list["addall"])
 			var/temp_amt = R.get_reagent_amount(href_list["addall"])
-			reagents.add_reagent(href_list["addall"], temp_amt)
-			R.del_reagent(href_list["addall"])
+			R.trans_id_to(src, href_list["addall"], temp_amt)
+
 		else if (href_list["remove1"])
 			reagents.remove_reagent(href_list["remove1"], 1)
 			if(mode) R.add_reagent(href_list["remove1"], 1)
@@ -280,6 +278,7 @@
 				var/temp_amt = reagents.get_reagent_amount(href_list["removeall"])
 				R.add_reagent(href_list["removeall"], temp_amt)
 			reagents.del_reagent(href_list["removeall"])
+
 		else if (href_list["toggle"])
 			if(mode)
 				mode = 0

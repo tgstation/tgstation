@@ -585,7 +585,7 @@
 	lying_icon.Blend(new /icon('monkey.dmi', "chest_l"), ICON_OVERLAY)
 
 	var/datum/organ/external/head = organs["head"]
-	if(!(head.status & DESTROYED))
+	if(!(head.status & ORGAN_DESTROYED))
 		stand_icon.Blend(new /icon('monkey.dmi', "head_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('monkey.dmi', "head_l"), ICON_OVERLAY)
 
@@ -594,12 +594,12 @@
 		if(!istype(part, /datum/organ/external/groin) \
 			&& !istype(part, /datum/organ/external/chest) \
 			&& !istype(part, /datum/organ/external/head) \
-			&& !(part.status & DESTROYED))
+			&& !(part.status & ORGAN_DESTROYED))
 			var/icon/temp = new /icon('monkey.dmi', "[part.icon_name]_s")
-			if(part.status & ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			if(part.status & ORGAN_ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 			stand_icon.Blend(temp, ICON_OVERLAY)
 			temp = new /icon('monkey.dmi', "[part.icon_name]_l")
-			if(part.status & ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			if(part.status & ORGAN_ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 			lying_icon.Blend(temp , ICON_OVERLAY)
 
 	stand_icon.Blend(new /icon('monkey.dmi', "groin_s"), ICON_OVERLAY)
@@ -743,7 +743,7 @@
 				var/count = 0
 				for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
 					var/datum/organ/external/o = target.organs["[organ]"]
-					if(o.status & SPLINTED)
+					if(o.status & ORGAN_SPLINTED)
 						count = 1
 						break
 				if(count == 0)
@@ -890,9 +890,9 @@
 		if("splints")
 			for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
 				var/datum/organ/external/o = target.organs["[organ]"]
-				if (o.status & SPLINTED)
+				if (o.status & ORGAN_SPLINTED)
 					var/obj/item/W = new /obj/item/stack/medical/splint/single()
-					o.status &= ~SPLINTED
+					o.status &= ~ORGAN_SPLINTED
 					if (W)
 						W.loc = target.loc
 						W.layer = initial(W.layer)
@@ -937,7 +937,7 @@
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
 		organ = get_organ(check_zone(def_zone))
-	if(!organ || organ.status & DESTROYED)	return 0
+	if(!organ || organ.status & ORGAN_DESTROYED)	return 0
 	if(blocked)
 		damage = (damage/(blocked+1))
 
@@ -1060,7 +1060,7 @@
 	var/amount = 0.0
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		if(!(O.status & ROBOT)) amount+= O.brute_dam
+		if(!(O.status & ORGAN_ROBOT)) amount+= O.brute_dam
 	return amount
 
 /mob/living/carbon/monkey/adjustBruteLoss(var/amount, var/used_weapon = null)
@@ -1073,7 +1073,7 @@
 	var/amount = 0.0
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		if(!(O.status & ROBOT)) amount+= O.burn_dam
+		if(!(O.status & ORGAN_ROBOT)) amount+= O.burn_dam
 	return amount
 
 /mob/living/carbon/monkey/adjustFireLoss(var/amount,var/used_weapon = null)

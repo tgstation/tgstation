@@ -6,6 +6,9 @@
 		return
 
 	..()
+    
+	if (stat == 2)
+		return
 
 	if(stat == 2)
 		return

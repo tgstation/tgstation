@@ -93,6 +93,7 @@
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/atmos(H), H.slot_l_store)
 		H.equip_if_possible(new /obj/item/weapon/storage/belt/utility/atmostech/(H), H.slot_belt)
+		H.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat/red(H), H.slot_head)
 		if(H.backbag == 1)
 			H.equip_if_possible(new /obj/item/weapon/storage/box/engineer(H), H.slot_r_hand)
 		else

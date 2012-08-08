@@ -124,7 +124,7 @@ steam.start() -- spawns the effect
 		var/i = 0
 		for(i=0, i<src.number, i++)
 			spawn(0)
-				if(holder)
+				if(holder && !istype(holder,/datum))
 					src.location = get_turf(holder)
 				var/obj/effect/effect/steam/steam = new /obj/effect/effect/steam(src.location)
 				var/direction
@@ -195,7 +195,7 @@ steam.start() -- spawns the effect
 			if(src.total_sparks > 20)
 				return
 			spawn(0)
-				if(holder)
+				if(holder && !istype(holder,/datum))
 					src.location = get_turf(holder)
 				var/obj/effect/effect/sparks/sparks = new /obj/effect/effect/sparks(src.location)
 				src.total_sparks++
@@ -265,7 +265,7 @@ steam.start() -- spawns the effect
 			if(src.total_smoke > 20)
 				return
 			spawn(0)
-				if(holder)
+				if(holder && !istype(holder,/datum))
 					src.location = get_turf(holder)
 				var/obj/effect/effect/harmless_smoke/smoke = new /obj/effect/effect/harmless_smoke(src.location)
 				src.total_smoke++
@@ -365,7 +365,7 @@ steam.start() -- spawns the effect
 			if(src.total_smoke > 20)
 				return
 			spawn(0)
-				if(holder)
+				if(holder && !istype(holder,/datum))
 					src.location = get_turf(holder)
 				var/obj/effect/effect/bad_smoke/smoke = new /obj/effect/effect/bad_smoke(src.location)
 				src.total_smoke++
@@ -494,7 +494,7 @@ steam.start() -- spawns the effect
 			if(src.total_smoke > 20)
 				return
 			spawn(0)
-				if(holder)
+				if(holder && !istype(holder,/datum))
 					src.location = get_turf(holder)
 				var/iterator = pick(0,1,1,1,2,2,2,3)
 				var/obj/effect/effect/chem_smoke/smoke = new /obj/effect/effect/chem_smoke(src.location)
@@ -602,7 +602,7 @@ steam.start() -- spawns the effect
 			if(src.total_smoke > 20)
 				return
 			spawn(0)
-				if(holder)
+				if(holder && !istype(holder,/datum))
 					src.location = get_turf(holder)
 				var/obj/effect/effect/sleep_smoke/smoke = new /obj/effect/effect/sleep_smoke(src.location)
 				src.total_smoke++
@@ -688,7 +688,7 @@ steam.start() -- spawns the effect
 			if(src.total_smoke > 20)
 				return
 			spawn(0)
-				if(holder)
+				if(holder && !istype(holder,/datum))
 					src.location = get_turf(holder)
 				var/obj/effect/effect/mustard_gas/smoke = new /obj/effect/effect/mustard_gas(src.location)
 				src.total_smoke++

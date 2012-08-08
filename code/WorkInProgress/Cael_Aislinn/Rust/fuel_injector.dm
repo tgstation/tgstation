@@ -196,7 +196,7 @@
 					//
 					owned_assembly_port.cur_assembly.rod_quantities[reagent] -= amount
 					amount_left += owned_assembly_port.cur_assembly.rod_quantities[reagent]
-			owned_assembly_port.cur_assembly.amount_depleted = amount_left / 300
+			owned_assembly_port.cur_assembly.percent_depleted = amount_left / 300
 			flick("injector-emitting",src)
 			use_power(fuel_usage * 10000 + 100)		//0.0001
 			if(injecting)

@@ -208,11 +208,11 @@
 		new /obj/item/clothing/glasses/sunglasses(src)
 		new /obj/item/clothing/suit/storage/captunic(src)
 		new /obj/item/clothing/suit/armor/vest(src)
-		new /obj/item/clothing/head/caphat(src)
+		new /obj/item/clothing/head/helmet/cap(src)
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/clothing/head/helmet/swat(src)
 		new /obj/item/device/radio/headset/heads/captain(src)
-		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/shoes/jackboots(src)
 		new /obj/item/clothing/under/rank/captain(src)
 
 /obj/item/wardrobe/hop
@@ -224,12 +224,10 @@
 		var/obj/item/weapon/storage/backpack/BPK = new /obj/item/weapon/storage/backpack(src)
 		new /obj/item/weapon/storage/box(BPK)
 		new /obj/item/weapon/pen(src)
+		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/pda/heads/hop(src)
 		new /obj/item/weapon/storage/id_kit(src)
-		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/flash(src)
-		new /obj/item/clothing/suit/armor/vest(src)
-		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		new /obj/item/clothing/gloves/blue(src)
 		new /obj/item/device/radio/headset/heads/hop(src)
@@ -410,6 +408,8 @@
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/clothing/shoes/jackboots(src)
 		new /obj/item/clothing/under/rank/warden(src)
+		new /obj/item/clothing/suit/armor/vest/warden(src)
+		new /obj/item/weapon/pepperspray(src)
 
 /obj/item/wardrobe/detective
 	name = "\improper Detective Wardrobe"
@@ -525,7 +525,7 @@
 		new /obj/item/device/pda/quartermaster(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		new /obj/item/device/radio/headset/heads/qm(src)
-		new /obj/item/clothing/shoes/black(src)
+		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/clothing/under/rank/cargo(src)
 
 /obj/item/wardrobe/cargo_tech
@@ -541,6 +541,7 @@
 		new /obj/item/device/radio/headset/headset_cargo(src)
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/clothing/under/rank/cargotech(src)
+		new /obj/item/clothing/gloves/fingerless/black(src)
 
 /obj/item/wardrobe/mining
 	name = "\improper Shaft Miner Wardrobe"
@@ -561,6 +562,7 @@
 		new /obj/item/device/radio/headset/headset_mine(src)
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/clothing/under/rank/miner(src)
+		new /obj/item/clothing/gloves/fingerless/black(src)
 
 /obj/item/wardrobe/janitor
 	name = "\improper Janitor Wardrobe"
@@ -574,6 +576,7 @@
 		new /obj/item/device/pda/janitor(src)
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/clothing/under/rank/janitor(src)
+		new /obj/item/device/portalathe(src)
 
 /obj/item/wardrobe/librarian
 	name = "\improper Librarian Wardrobe"

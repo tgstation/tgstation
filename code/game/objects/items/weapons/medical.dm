@@ -44,7 +44,7 @@ MEDICAL
 			if(!istype(affecting, /datum/organ/external))
 				affecting = H.get_organ("head")
 
-		if(affecting.status & ROBOT)
+		if(affecting.status & ORGAN_ROBOT)
 			user << "Medical equipment for a robot arm?  Better get a welder..."
 			return
 
@@ -53,10 +53,10 @@ MEDICAL
 			if(!((affecting.name == "l_arm") || (affecting.name == "r_arm") || (affecting.name == "l_leg") || (affecting.name == "r_leg")))
 				user << "\red You can't apply a splint there!"
 				return
-			if(!(affecting.status & BROKEN))
+			if(!(affecting.status & ORGAN_BROKEN))
 				user << "\red [M]'s [limb] isn't broken!"
 				return
-			if(affecting.status & SPLINTED)
+			if(affecting.status & ORGAN_SPLINTED)
 				user << "\red [M]'s [limb] is already splinted!"
 				return
 			if (M != user)
@@ -75,7 +75,7 @@ MEDICAL
 					else
 						user.visible_message("\red [user] fumbles \the [src].", "\red You fumble \the [src].", "\red You hear something being wrapped.")
 						return
-				affecting.status |= SPLINTED
+				affecting.status |= ORGAN_SPLINTED
 				use(1)
 				M.update_clothing()
 			return
@@ -115,8 +115,8 @@ MEDICAL
 					"You hear gauze being ripped.")
 		use(1)
 
-		if (!ointment && (affecting.status & BLEEDING))
-			affecting.status &= ~BLEEDING
+		if (!ointment && (affecting.status & ORGAN_BLEEDING))
+			affecting.status &= ~ORGAN_BLEEDING
 
 		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
 			H.UpdateDamageIcon()

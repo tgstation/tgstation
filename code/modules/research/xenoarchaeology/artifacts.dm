@@ -35,7 +35,7 @@
 	icon_state = "ano[icon_num]0"
 
 	// Low-ish random chance to not look like it's origin
-	if(prob(20)) src.icon_state = pick("ano0","ano1","ano2","ano3","ano4","ano5")
+	if(prob(20)) src.icon_state = pick("ano00","ano10","ano20","ano30","ano40","ano50")
 
 	// Power randomisation
 	my_effect.trigger = pick("force","energy","chemical","heat","touch")
@@ -48,17 +48,17 @@
 	// Precursor Artifacts do everything
 	switch(src.origin)
 		if("ancient") my_effect.effecttype = pick("roboheal","robohurt","cellcharge","celldrain")
-		if("martian") my_effect.effecttype = pick("healing","injure","stun","planthelper")
-		if("wizard") my_effect.effecttype = pick("stun","forcefield","teleport")
-		if("eldritch") my_effect.effecttype = pick("injure","stun","robohurt","celldrain")
-		if("precursor") my_effect.effecttype = pick("healing","injure","stun","roboheal","robohurt","cellcharge","celldrain","planthelper","forcefield","teleport")
+		if("martian") my_effect.effecttype = pick("healing","injure"/*,"stun"*/,"planthelper")
+		if("wizard") my_effect.effecttype = pick(/*"stun",*/"forcefield","teleport")
+		if("eldritch") my_effect.effecttype = pick("injure",/*"stun",*/"robohurt","celldrain")
+		if("precursor") my_effect.effecttype = pick("healing","injure",/*"stun",*/"roboheal","robohurt","cellcharge","celldrain","planthelper","forcefield","teleport")
 
 	// Select range based on the power
 	var/canworldpulse = 1
 	switch(my_effect.effecttype)
 		if("healing") my_effect.effectmode = pick("aura","pulse","contact")
 		if("injure") my_effect.effectmode = pick("aura","pulse","contact")
-		if("stun") my_effect.effectmode = pick("aura","pulse","contact")
+		// if("stun") my_effect.effectmode = pick("aura","pulse","contact")
 		if("roboheal") my_effect.effectmode = pick("aura","pulse","contact")
 		if("robohurt") my_effect.effectmode = pick("aura","pulse","contact")
 		if("cellcharge") my_effect.effectmode = pick("aura","pulse")
@@ -87,13 +87,17 @@
 	display_id += "-"
 	display_id += num2text(rand(100,999))
 
+/obj/machinery/artifact/Del()
+	..()
+	my_effect.HaltEffect()
+
 /obj/machinery/artifact/attack_hand(var/mob/user as mob)
 	if (istype(user, /mob/living/silicon/ai) || istype(user, /mob/dead/)) return
 	if (istype(user, /mob/living/silicon/robot))
 		if (get_dist(user, src) > 1)
 			user << "\red You can't reach [src] from here."
 			return
-	if(istype(user:gloves,/obj/item/clothing/gloves))
+	if(ishuman(user) && istype(user:gloves,/obj/item/clothing/gloves))
 		return ..()
 	for(var/mob/O in viewers(src, null))
 		O.show_message(text("<b>[]</b> touches [].", user, src), 1)
@@ -176,14 +180,14 @@
 		chargetime -= 1
 	else
 		src.charged = 1
-		my_effect.HaltEffect(src.loc)
 
 	my_effect.UpdateEffect(src.loc)
 
 	//activate
-	if(src.charged && my_effect.DoEffect(src))
-		src.charged = 0
-		src.chargetime = src.recharge
+	if( (my_effect.effectmode == "pulse" || my_effect.effecttype == "worldpulse") && activated)
+		if(src.charged && my_effect.DoEffect(src))
+			src.charged = 0
+			src.chargetime = src.recharge
 
 /obj/machinery/artifact/proc/Artifact_Activate()
 	src.activated = !src.activated
@@ -226,11 +230,16 @@
 // this was used in QM for a time but it fell into disuse and wasn't removed, the purpose being to check if an artifact
 // was benevolent or malicious, to determine whether QMs would be paid or punished for shipping it
 
+/obj/machinery/artifact/Move()
+	..()
+	my_effect.update_move(src, src.loc)
+
+
 /proc/artifact_checkgood(var/datum/artifact_effect/A)
 	switch(A.effecttype)
 		if("healing") return 1
 		if("injure") return 0
-		if("stun") return 0
+		// if("stun") return 0
 		if("roboheal") return 1
 		if("robohurt") return 0
 		if("cellcharge") return 1
