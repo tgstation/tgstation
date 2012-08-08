@@ -549,21 +549,17 @@
 						U.verbs -= V
 				if(H.mind.special_verbs.len)
 					for(var/V in H.mind.special_verbs)
-						H.verbs -= V	
+						H.verbs -= V
 
 				//empty out H
-				var/mob/dead/observer/G = new /mob/dead/observer(H) //Temp-mob		
-				G.key = H.key //Stops H.key getting kicked
-				var/datum/mind/temp_mind = H.mind	//ghosts shouldn't hold minds
-				temp_mind.current = null
-				H.mind = null
-
+				var/mob/dead/observer/G = H.ghostize(0) //Transfers H to a temporary mob
 
 				//Start the Transfer
 				U.mind.transfer_to(H)
-				temp_mind.transfer_to(U)
-	
-				//Re-add those special verbs and stuff			
+				G.mind.transfer_to(U)
+				U.key = G.key			//has to be called explicitly since ghostize() set the datum/mind/var/active = 0
+
+				//Re-add those special verbs and stuff
 				if(H.mind.special_verbs.len)
 					var/spell_loss = 1//Can lose only one spell during transfer.
 					var/probability = 95 //To determine the chance of wizard losing their spell.

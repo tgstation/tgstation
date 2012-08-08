@@ -189,12 +189,13 @@
 	if(stat == DEAD || (changeling && (changeling.changeling_fakedeath == 1)))
 		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 
-		if(!client)
+		if(!key)
 			var/foundghost = 0
-			for(var/mob/dead/observer/G in player_list)
-				if(G.corpse == src)
-					foundghost++
-					break
+			if(mind)
+				for(var/mob/dead/observer/G in player_list)
+					if(G.mind == mind)
+						foundghost = 1
+						break
 			if(!foundghost)
 				msg += " and [t_his] soul has departed"
 		msg += "...</span>\n"

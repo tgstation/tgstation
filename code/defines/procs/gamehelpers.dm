@@ -297,6 +297,7 @@ proc
 				if(T.opacity)
 					return 0
 		return 1
+#undef SIGN
 
 proc/isInSight(var/atom/A, var/atom/B)
 	var/turf/Aturf = get_turf(A)

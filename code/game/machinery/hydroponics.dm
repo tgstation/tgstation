@@ -890,7 +890,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			podman.real_name = "Pod Person [rand(0,999)]"
 		podman.original_name = podman.real_name
-		
+
 		mind.transfer_to(podman)
 			// -- Mode/mind specific stuff goes here. TODO! Broken :( Should be merged into mob/living/Login
 		switch(ticker.mode.name)

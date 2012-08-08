@@ -8,13 +8,6 @@
 	real_name = name
 	..()
 
-/mob/living/carbon/alien/humanoid/proc/mind_initialize(mob/G, alien_caste)
-	mind = new
-	mind.current = src
-	mind.assigned_role = "Alien"
-	mind.special_role = alien_caste
-	mind.key = G.key
-
 //This is fine, works the same as a human
 /mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
 	spawn( 0 )

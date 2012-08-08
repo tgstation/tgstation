@@ -9,6 +9,7 @@
 	canmove = 0
 	blinded = 0
 	anchored = 1	//  don't get pushed around
-	var/mob/corpse = null	//	observer mode
+//	var/mob/corpse = null	//	observer mode	//we use mind.current as the 'corpse' now
+	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0

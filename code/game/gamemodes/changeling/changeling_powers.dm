@@ -480,17 +480,12 @@
 			for(var/mob/dead/observer/G in player_list)
 				candidates += G
 
-			for(var/mob/dead/observer/G in candidates)
-				if(!G.client || !G.key)
-					candidates.Remove(G)
-
 			for(var/obj/structure/stool/bed/chair/C in locate(/area/shuttle/escape/transit))
 
 				var/mob/living/carbon/human/new_commando = create_death_commando(C, 0)
 
 				if(candidates.len)
 					var/mob/dead/observer/G = pick(candidates)
-					new_commando.mind.key = G.key//For mind stuff.
 					new_commando.key = G.key
 					new_commando.internal = new_commando.s_store
 					new_commando.internals.icon_state = "internal1"

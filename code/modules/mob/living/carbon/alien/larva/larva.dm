@@ -4,17 +4,10 @@
 	reagents = R
 	R.my_atom = src
 	if(name == "alien larva")
-		name = text("alien larva ([rand(1, 1000)])")
+		name = "alien larva ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
 	..()
-
-/mob/living/carbon/alien/larva/proc/mind_initialize(mob/G, alien_caste)
-	mind = new
-	mind.current = src
-	mind.assigned_role = "Alien"
-	mind.special_role = alien_caste
-	mind.key = G.key
 
 //This is fine, works the same as a human
 /mob/living/carbon/alien/larva/Bump(atom/movable/AM as mob|obj, yes)

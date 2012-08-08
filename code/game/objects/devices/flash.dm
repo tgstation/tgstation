@@ -77,17 +77,16 @@
 						if(L && L.implanted)
 							revsafe = 1
 							break
-					M:update_mind()		//give them a mind datum if they don't have one. won't work if they are logged out/ghosted or something.
-					if(M.mind)
-						if(M.mind.has_been_rev)
-							revsafe = 2
-						if(!revsafe)
-							M.mind.has_been_rev = 1
-							ticker.mode.add_revolutionary(M.mind)
-						else if(revsafe == 1)
-							user << "<span class='warning'>Something seems to be blocking the flash!</span>"
-						else
-							user << "<span class='warning'>This mind seems resistant to the flash!</span>"
+					M.mind_initialize()		//give them a mind datum if they don't have one.
+					if(M.mind.has_been_rev)
+						revsafe = 2
+					if(!revsafe)
+						M.mind.has_been_rev = 1
+						ticker.mode.add_revolutionary(M.mind)
+					else if(revsafe == 1)
+						user << "<span class='warning'>Something seems to be blocking the flash!</span>"
+					else
+						user << "<span class='warning'>This mind seems resistant to the flash!</span>"
 					user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
 		else
 			flashfail = 1

@@ -172,13 +172,12 @@
 		return
 	if(!istype(src, /mob/living/carbon/metroid/adult))
 		if(amount_grown >= 10)
-			var/mob/living/carbon/metroid/adult/new_metroid = new /mob/living/carbon/metroid/adult (loc)
-			new_metroid.mind_initialize(src)
-			new_metroid.key = key
+			var/mob/living/carbon/metroid/adult/new_metroid = new /mob/living/carbon/metroid/adult(loc)
 			new_metroid.nutrition = nutrition
 			new_metroid.powerlevel = max(0, powerlevel-1)
-
 			new_metroid.a_intent = "hurt"
+			new_metroid.key = key
+
 			new_metroid << "<B>You are now an adult Metroid.</B>"
 			del(src)
 		else
@@ -196,31 +195,28 @@
 
 	if(istype(src, /mob/living/carbon/metroid/adult))
 		if(amount_grown >= 10)
-			switch(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced metroid.") in list("Yes","No"))
-				if("Yes")
+			if(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced metroid.") in list("Yes","No")=="Yes")
+				if(stat)
+					src << "<i>I must be conscious to do this...</i>"
+					return
 
-					if(stat)
-						src << "<i>I must be conscious to do this...</i>"
-						return
+				var/list/babies = list()
+				var/number = pick(14;2,3,4)
+				var/new_nutrition = round(nutrition * 0.9)
+				var/new_powerlevel = round(powerlevel / number)
+				for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
+					var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
+					M.nutrition = new_nutrition
+					M.powerlevel = new_powerlevel
+					if(i != 1) step_away(M,src)
+					babies += M
 
-					var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)
-					var/list/babies = list()
-					for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
-						var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
-						M.nutrition = round(nutrition * 0.9)
-						M.powerlevel = round(powerlevel / number)
-						if(i != 1) step_away(M,src)
-						babies += M
+				var/mob/living/carbon/metroid/new_metroid = pick(babies)
+				new_metroid.a_intent = "hurt"
+				new_metroid.key = key
 
-
-					var/mob/living/carbon/metroid/new_metroid = pick(babies)
-
-					new_metroid.mind_initialize(src)
-					new_metroid.key = key
-
-					new_metroid.a_intent = "hurt"
-					new_metroid << "<B>You are now a baby Metroid.</B>"
-					del(src)
+				new_metroid << "<B>You are now a Metroid. Skree!</B>"
+				del(src)
 		else
 			src << "<i>I am not ready to reproduce yet...</i>"
 	else

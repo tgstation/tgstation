@@ -167,10 +167,11 @@
 				return
 			if(!M.brainmob.key)
 				var/ghost_can_reenter = 0
-				for(var/mob/dead/observer/G in dead_mob_list)
-					if(G.corpse == M.brainmob)
-						ghost_can_reenter = 1
-						break
+				if(M.brainmob.mind)
+					for(var/mob/dead/observer/G in player_list)
+						if(G.can_reenter_corpse && G.mind == M.brainmob.mind)
+							ghost_can_reenter = 1
+							break
 				if(!ghost_can_reenter)
 					user << "<span class='notice'>The mmi indicates that their mind is completely unresponsive; there's no point.</span>"
 					return
@@ -198,12 +199,8 @@
 
 			M.brainmob.mind.transfer_to(O)
 
-
-
-
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
-
 
 			O.job = "Cyborg"
 

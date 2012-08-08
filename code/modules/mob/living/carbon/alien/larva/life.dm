@@ -39,9 +39,6 @@
 	//to find it.
 	blinded = null
 
-	//Mind update
-	update_mind()
-
 	//Disease Check
 	//handle_virus_updates() There is no disease that affects larva
 
@@ -66,7 +63,7 @@
 /mob/living/carbon/alien/larva
 	proc/handle_mutations_and_radiation()
 
-		if(amount_grown == 200)
+		if(amount_grown == 200)	//TODO ~Carn
 			src << "\green You are growing into a beautiful alien! It is time to choose a caste."
 			src << "\green There are three to choose from:"
 			src << "\green <B>Hunters</B> are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves."
@@ -77,20 +74,19 @@
 			var/mob/living/carbon/alien/humanoid/new_xeno
 			switch(alien_caste)
 				if("Hunter")
-					new_xeno = new /mob/living/carbon/alien/humanoid/hunter (loc)
+					new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
 				if("Sentinel")
-					new_xeno = new /mob/living/carbon/alien/humanoid/sentinel (loc)
+					new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
 				if("Drone")
-					new_xeno = new /mob/living/carbon/alien/humanoid/drone (loc)
-
-			new_xeno.mind_initialize(src, alien_caste)
-			new_xeno.key = key
-
+					new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
+			new_xeno.UI = UI
+			if(mind)	mind.transfer_to(new_xeno)
 			del(src)
 			return
-		//grow!! but not if metroid or dead
-		if(health>-100)
-			amount_grown++
+		else
+			//grow!! but not if metroid or dead
+			if(health>-100)
+				amount_grown++
 
 		if (radiation)
 			if (radiation > 100)
@@ -123,13 +119,6 @@
 					radiation -= 3
 					adjustToxLoss(3)
 					updatehealth()
-
-	proc/update_mind()
-		if(!mind && client)
-			mind = new
-			mind.current = src
-			mind.assigned_role = "Larva"
-			mind.key = key
 
 	proc/breathe()
 

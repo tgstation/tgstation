@@ -101,12 +101,6 @@
 			if (prob(10))
 				stuttering = max(10, stuttering)
 
-	proc/update_mind()
-		if(!mind && client)
-			mind = new
-			mind.current = src
-			mind.key = key
-
 	proc/handle_mutations_and_radiation()
 
 		if(getFireLoss())

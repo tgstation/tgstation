@@ -36,9 +36,6 @@
 	//Disease Check
 	//handle_virus_updates() There is no disease that affects aliens
 
-	//Update mind
-	update_mind()
-
 	//Handle temperature/pressure differences between body and environment
 	handle_environment()
 
@@ -59,13 +56,6 @@
 
 
 /mob/living/carbon/alien/humanoid
-
-	proc/update_mind()
-		if(!mind && client)
-			mind = new
-			mind.current = src
-			mind.assigned_role = "Hunter"
-			mind.key = key
 
 	proc/breathe()
 		if(reagents)

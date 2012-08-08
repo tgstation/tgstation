@@ -134,28 +134,25 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 	//Here we pick a location and spawn the ninja.
 	var/list/spawn_list = list()
 	for(var/obj/effect/landmark/L in world)
-		if (L.name == "carpspawn")
+		if(L.name == "carpspawn")
 			spawn_list.Add(L)
 
-	var/mob/dead/observer/G
-	var/list/candidates = list()
-	for(G in player_list)
-		if(((G.client.inactivity/10)/60) <= 5)
-			candidates.Add(G)
+
+	var/list/candidates = list()	//list of candidate keys
+	for(var/mob/dead/observer/G in player_list)
+		if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5)
+			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+				candidates += G.key
+	if(!candidates.len)	return
+
 
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))
+	new_ninja.key = pick(candidates)
+	new_ninja.wear_suit:randomize_param()//Give them a random set of suit parameters.
+	new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
+	new_ninja.internals.icon_state = "internal1"
 
-	if(candidates.len)
-		G = pick(candidates)
-		new_ninja.key = G.key
-		new_ninja.mind.key = new_ninja.key
-		new_ninja.wear_suit:randomize_param()//Give them a random set of suit parameters.
-		new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
-		new_ninja.internals.icon_state = "internal1"
-	else
-		del(new_ninja)
-		return
 	//Now for the rest of the stuff.
 
 	var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
@@ -437,7 +434,6 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))
 	new_ninja.wear_suit:randomize_param()
 
-	new_ninja.mind.key = G.key
 	new_ninja.key = G.key
 	new_ninja.mind.store_memory("<B>Mission:</B> \red [mission].<br>")
 
@@ -471,19 +467,12 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	return new_ninja
 
 /mob/living/carbon/human/proc/create_mind_space_ninja()
-	if(mind)
-		mind.assigned_role = "MODE"
-		mind.special_role = "Space Ninja"
-	else
-		mind = new
-		mind.current = src
-		mind.original = src
-		mind.assigned_role = "MODE"
-		mind.special_role = "Space Ninja"
-	if(!(mind in ticker.minds))
-		ticker.minds += mind//Adds them to regular mind list.
-	if(!(mind in ticker.mode.traitors))//If they weren't already an extra traitor.
-		ticker.mode.traitors += mind//Adds them to current traitor list. Which is really the extra antagonist list.
+	mind_initialize()
+	mind.assigned_role = "MODE"
+	mind.special_role = "Space Ninja"
+
+	//Adds them to current traitor list. Which is really the extra antagonist list.
+	ticker.mode.traitors |= mind
 	return 1
 
 /mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.

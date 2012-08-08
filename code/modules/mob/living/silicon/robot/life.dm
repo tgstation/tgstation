@@ -22,7 +22,6 @@
 		process_locks()
 	update_canmove()
 
-	update_mind()
 
 
 
@@ -65,13 +64,6 @@
 			else
 				uneq_all()
 				src.stat = 1
-
-		update_mind()
-			if(!mind && client)
-				mind = new
-				mind.current = src
-				mind.assigned_role = "Hunter"
-				mind.key = key
 
 
 		handle_regular_status_updates()

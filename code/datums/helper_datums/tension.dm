@@ -642,7 +642,7 @@ var/global/datum/tension/tension_master
 		sleep(300)
 
 		for(var/mob/dead/observer/G in candidates)
-			if(!G.client || !G.key)
+			if(!G.key)
 				candidates.Remove(G)
 
 		if(candidates.len)
@@ -657,7 +657,6 @@ var/global/datum/tension/tension_master
 					var/mob/living/carbon/human/new_syndicate_commando = create_syndicate_death_commando(L, syndicate_leader_selected)
 
 
-
 					while((!theghost || !theghost.client) && candidates.len)
 						theghost = pick(candidates)
 						candidates.Remove(theghost)
@@ -666,7 +665,6 @@ var/global/datum/tension/tension_master
 						del(new_syndicate_commando)
 						break
 
-					new_syndicate_commando.mind.key = theghost.key//For mind stuff.
 					new_syndicate_commando.key = theghost.key
 					new_syndicate_commando.internal = new_syndicate_commando.s_store
 					new_syndicate_commando.internals.icon_state = "internal1"
@@ -741,7 +739,6 @@ var/global/datum/tension/tension_master
 						del(new_borg_deathsquad)
 						break
 
-					new_borg_deathsquad.mind.key = theghost.key//For mind stuff.
 					new_borg_deathsquad.key = theghost.key
 
 					//So they don't forget their code or mission.
@@ -762,148 +759,26 @@ var/global/datum/tension/tension_master
 		return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
 
 
-
-
-
-
-
-
-
-
 	proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
-
-		if(!G_found)
-			return
+		if(!G_found || !G_found.key)	return
 
 		//First we spawn a dude.
-		var/mob/living/carbon/human/new_character = new(src)//The mob being spawned.
+		var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
 
-		//Second, we check if they are an alien or monkey.
-		G_found.mind=null//Null their mind so we don't screw things up ahead.
-		G_found.real_name="[pick(pick(first_names_male,first_names_female))] [pick(last_names)]"//Give them a random real name.
+		new_character.gender = pick(MALE,FEMALE)
 
-		new_character.mind = new()
-		ticker.minds += new_character.mind//And we'll add it to the minds database.
-		new_character.mind.original = new_character//If they are respawning with a new character.
-		new_character.mind.assigned_role = "Assistant"//Defaults to assistant.
-		new_character.mind.key = G_found.key//In case it's someone else playing as that character.
-		new_character.mind.current = new_character//So that it can properly reference later if needed.
-		new_character.mind.memory = ""//Memory erased so it doesn't get clunkered up with useless info. This means they may forget their previous mission--this is usually handled through objective code and recalling memory.
-
-		var/datum/data/record/record_found//Referenced to later to either randomize or not randomize the character.
-		if(G_found.mind)//They must have a mind to reference the record. Here we also double check for aliens.
-			var/id = md5("[G_found.real_name][G_found.mind.assigned_role]")
-			for(var/datum/data/record/t in data_core.locked)
-				if(t.fields["id"]==id)
-					record_found = t//We shall now reference the record.
-					break
-
-		//Here we either load their saved appearance or randomize it.
 		var/datum/preferences/A = new()
-		if(A.savefile_load(G_found))//If they have a save file. This will automatically load their parameters.
-		//Note: savefile appearances are overwritten later on if the character has a data_core entry. By appearance, I mean the physical appearance.
-			var/name_safety = G_found.real_name//Their saved parameters may include a random name. Also a safety in case they are playing a character that got their name after round start.
-			A.copy_to(new_character)
-			new_character.real_name = name_safety
-			new_character.name = name_safety
+		A.randomize_appearance_for(new_character)
+		if(new_character.gender == MALE)
+			new_character.real_name = "[pick(first_names_male)] [pick(last_names)]"
 		else
-			if(record_found)//If they have a record we can determine a few things.
-				new_character.real_name = record_found.fields["name"]//Not necessary to reference the record but I like to keep things uniform.
-				new_character.name = record_found.fields["name"]
-				new_character.gender = record_found.fields["sex"]//Sex
-				new_character.age = record_found.fields["age"]//Age
-				new_character.b_type = record_found.fields["b_type"]//Blood type
-				//We will update their appearance when determining DNA.
-			else
-				new_character.gender = FEMALE
-				var/name_safety = G_found.real_name//Default is a random name so we want to save this.
-				A.randomize_appearance_for(new_character)//Now we will randomize their appearance since we have no way of knowing what they look/looked like.
-				new_character.real_name = name_safety
-				new_character.name = name_safety
+			new_character.real_name = "[pick(first_names_female)] [pick(last_names)]"
+		new_character.name = new_character.real_name
+		new_character.age = rand(17,45)
 
-		//After everything above, it's time to initialize their DNA.
-		if(record_found)//Pull up their name from database records if they did have a mind.
-			new_character.dna = new()//Let's first give them a new DNA.
-			new_character.dna.unique_enzymes = record_found.fields["b_dna"]//Enzymes are based on real name but we'll use the record for conformity.
-			new_character.dna.struc_enzymes = record_found.fields["enzymes"]//This is the default of enzymes so I think it's safe to go with.
-			new_character.dna.uni_identity = record_found.fields["identity"]//DNA identity is carried over.
-			updateappearance(new_character,new_character.dna.uni_identity)//Now we configure their appearance based on their unique identity, same as with a DNA machine or somesuch.
-		else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
-			new_character.dna.ready_dna(new_character)
+		new_character.dna.ready_dna(new_character)
+		new_character.key = G_found.key
 
-
-		var/player_key = G_found.key
-
-		//Here we need to find where to spawn them.
-		var/spawn_here = pick(latejoin)//"JoinLate" is a landmark which is deleted on round start. So, latejoin has to be used instead.
-		new_character.loc = spawn_here
-		//If they need to spawn elsewhere, they will be transferred there momentarily.
-
-		/*
-		The code below functions with the assumption that the mob is already a traitor if they have a special role.
-		So all it does is re-equip the mob with powers and/or items. Or not, if they have no special role.
-		If they don't have a mind, they obviously don't have a special role.
-		*/
-
-		new_character.key = player_key//Throw them into the mob.
-/*
-		//Now for special roles and equipment.
-		switch(new_character.mind.special_role)
-			if("Changeling")
-				job_master.EquipRank(new_character, new_character.mind.assigned_role, 1)
-				new_character.make_changeling()
-			if("traitor")
-				job_master.EquipRank(new_character, new_character.mind.assigned_role, 1)
-				ticker.mode.equip_traitor(new_character)
-			if("Wizard")
-				new_character.loc = pick(wizardstart)
-				//ticker.mode.learn_basic_spells(new_character)
-				ticker.mode.equip_wizard(new_character)
-			if("Syndicate")
-				var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
-				if(synd_spawn)
-					new_character.loc = get_turf(synd_spawn)
-				call(/datum/game_mode/proc/equip_syndicate)(new_character)
-			if("Space Ninja")
-				var/ninja_spawn[] = list()
-				for(var/obj/effect/landmark/L in world)
-					if(L.name=="carpspawn")
-						ninja_spawn += L
-				new_character.equip_space_ninja()
-				new_character.internal = new_character.s_store
-				new_character.internals.icon_state = "internal1"
-				if(ninja_spawn.len)
-					var/obj/effect/landmark/ninja_spawn_here = pick(ninja_spawn)
-					new_character.loc = ninja_spawn_here.loc
-			if("Death Commando")//Leaves them at late-join spawn.
-				new_character.equip_death_commando()
-				new_character.internal = new_character.s_store
-				new_character.internals.icon_state = "internal1"
-			else//They may also be a cyborg or AI.
-				switch(new_character.mind.assigned_role)
-					if("Cyborg")//More rigging to make em' work and check if they're traitor.
-						new_character = new_character.Robotize()
-						if(new_character.mind.special_role=="traitor")
-							call(/datum/game_mode/proc/add_law_zero)(new_character)
-					if("AI")
-						new_character = new_character.AIize()
-						if(new_character.mind.special_role=="traitor")
-							call(/datum/game_mode/proc/add_law_zero)(new_character)
-					//Add aliens.
-					else
-						job_master.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
-
-		//Announces the character on all the systems, based on the record.
-		if(!issilicon(new_character))//If they are not a cyborg/AI.
-			if(!record_found&&new_character.mind.assigned_role!="MODE")//If there are no records for them. If they have a record, this info is already in there. MODE people are not announced anyway.
-				//Power to the user!
-				if(alert(new_character,"Warning: No data core entry detected. Would you like to announce the arrival of this character by adding them to various databases, such as medical records?",,"No","Yes")=="Yes")
-					call(/mob/new_player/proc/ManifestLateSpawn)(new_character)
-
-				if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
-					call(/mob/new_player/proc/AnnounceArrival)(new_character, new_character.mind.assigned_role)
-*/
-		del(G_found)//Don't want to leave ghosts around.
 		return new_character
 
 	/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
@@ -918,22 +793,20 @@ var/global/datum/tension/tension_master
 		A.randomize_appearance_for(new_syndicate_commando)
 
 		new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
+		new_syndicate_commando.name = new_syndicate_commando.real_name
 		new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
 
 		new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
 
 		//Creates mind stuff.
-		new_syndicate_commando.mind = new
-		new_syndicate_commando.mind.current = new_syndicate_commando
-		new_syndicate_commando.mind.original = new_syndicate_commando
+		new_syndicate_commando.mind_initialize()
 		new_syndicate_commando.mind.assigned_role = "MODE"
 		new_syndicate_commando.mind.special_role = "Syndicate Commando"
-		if(!(new_syndicate_commando.mind in ticker.minds))
-			ticker.minds += new_syndicate_commando.mind//Adds them to regular mind list.
-		if(!(new_syndicate_commando.mind in ticker.mode.traitors))//If they weren't already an extra traitor.
-			ticker.mode.traitors += new_syndicate_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
+
+		//Adds them to current traitor list. Which is really the extra antagonist list.
+		ticker.mode.traitors += new_syndicate_commando.mind
 		new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
-		//del(spawn_location)  // Commenting this out for multiple commando teams.
+
 		return new_syndicate_commando
 
 
@@ -948,15 +821,12 @@ var/global/datum/tension/tension_master
 		new_borg_deathsquad.name = name
 
 		//Creates mind stuff.
-		new_borg_deathsquad.mind = new
-		new_borg_deathsquad.mind.current = new_borg_deathsquad
-		new_borg_deathsquad.mind.original = new_borg_deathsquad
+		new_borg_deathsquad.mind_initialize()
 		new_borg_deathsquad.mind.assigned_role = "MODE"
 		new_borg_deathsquad.mind.special_role = "Borg Commando"
-		if(!(new_borg_deathsquad.mind in ticker.minds))
-			ticker.minds += new_borg_deathsquad.mind//Adds them to regular mind list.
-		if(!(new_borg_deathsquad.mind in ticker.mode.traitors))//If they weren't already an extra traitor.
-			ticker.mode.traitors += new_borg_deathsquad.mind//Adds them to current traitor list. Which is really the extra antagonist list.
+
+		//Adds them to current traitor list. Which is really the extra antagonist list.
+		ticker.mode.traitors += new_borg_deathsquad.mind
 		//del(spawn_location)  // Commenting this out for multiple commando teams.
 		return new_borg_deathsquad
 

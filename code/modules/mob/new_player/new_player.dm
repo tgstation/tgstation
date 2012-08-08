@@ -254,7 +254,7 @@
 
 		if(character.mind.assigned_role != "Cyborg")
 			ManifestLateSpawn(character,char_icon)
-			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.
+			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 		else
 			character.Robotize()
 		del(src)
@@ -274,7 +274,7 @@
 
 	proc/ManifestLateSpawn(var/mob/living/carbon/human/H, icon/H_icon) // Attempted fix to add late joiners to various databases -- TLE
 		// This is basically ripped wholesale from the normal code for adding people to the databases during a fresh round
-		if (!isnull(H.mind) && (H.mind.assigned_role != "MODE"))
+		if (H.mind && (H.mind.assigned_role != "MODE"))
 			var/datum/data/record/G = new()
 			var/datum/data/record/M = new()
 			var/datum/data/record/S = new()
@@ -379,8 +379,8 @@
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = preferences.b_type
 		if(mind)
-			mind.original = new_character
 			mind.transfer_to(new_character)
+			mind.original = new_character
 		return new_character
 
 

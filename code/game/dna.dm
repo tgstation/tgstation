@@ -509,7 +509,7 @@
 		O.loc = M.loc
 
 		if(M.mind)
-			M.mind.transfer_to(O)
+			M.mind.transfer_to(O)	//transfer our mind to the cute little monkey
 
 		if (connected) //inside dna thing
 			var/obj/machinery/dna_scannernew/C = connected
@@ -578,7 +578,7 @@
 		O.loc = M.loc
 
 		if(M.mind)
-			M.mind.transfer_to(O)
+			M.mind.transfer_to(O)	//transfer our mind to the human
 
 		if (connected) //inside dna thing
 			var/obj/machinery/dna_scannernew/C = connected
@@ -696,19 +696,14 @@
 		user << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
 	var/mob/M = G.affecting
-	if (M.client)
+	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
 	M.loc = src
 	src.occupant = M
 	src.icon_state = "scanner_1"
-	/*
-	for(var/obj/O in src)   // this is stupid too
-		O.loc = src.loc
-		//Foreach goto(154)
-	*/
+
 	src.add_fingerprint(user)
-	//G = null
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 	if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
@@ -716,9 +711,9 @@
 		|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
 		|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
 
-		if (!M.client)
+		if(!M.client && M.mind)
 			for(var/mob/dead/observer/ghost in player_list)
-				if(ghost.corpse == M && ghost.client)
+				if(ghost.mind == M.mind)
 					ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
 					break
 	del(G)

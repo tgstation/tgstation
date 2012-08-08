@@ -49,16 +49,16 @@
 
 
 /obj/item/borg/upgrade/restart/action(var/mob/living/silicon/robot/R)
-	if(!R.key)
-		for(var/mob/dead/observer/ghost in player_list)
-			if(ghost.corpse == R)
-				ghost.client.mob = ghost.corpse
-
 	if(R.health < 0)
 		usr << "You have to repair the borg before using this module!"
 		return 0
 
-	R.stat = 0
+	if(!R.key)
+		for(var/mob/dead/observer/ghost in player_list)
+			if(ghost.mind && ghost.mind.current == R)
+				R.key = ghost.key
+
+	R.stat = CONSCIOUS
 	return 1
 
 

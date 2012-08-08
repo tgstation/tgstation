@@ -7,8 +7,8 @@
 		preferences = new
 
 	if(!mind)
-		mind = new
-		mind.key = key
+		mind = new /datum/mind(key)
+		mind.active = 1
 		mind.current = src
 
 	spawn() Playmusic() // git some tunes up in heeyaa~

@@ -216,60 +216,53 @@ var/list/sacrificed = list()
 		raise()
 			var/mob/living/carbon/human/corpse_to_raise
 			var/mob/living/carbon/human/body_to_sacrifice
-			var/mob/living/carbon/human/ghost
-			var/unsuitable_corpse_found = 0
-			var/corpse_is_target = 0
+
+			var/is_sacrifice_target = 0
 			for(var/mob/living/carbon/human/M in src.loc)
-				if (M.stat>=2)
-					if (M.key)
-						unsuitable_corpse_found = 1
-					else if (ticker.mode.name == "cult" && M.mind == ticker.mode:sacrifice_target)
-						corpse_is_target = 1
+				if(M.stat == DEAD)
+					if(ticker.mode.name == "cult" && M.mind == ticker.mode:sacrifice_target)
+						is_sacrifice_target = 1
 					else
 						corpse_to_raise = M
+						if(M.key)
+							M.ghostize(1)	//kick them out of their body
 						break
-			if (!corpse_to_raise)
-				if (unsuitable_corpse_found)
-					usr << "\red The body still has some earthly ties. It must sever them, if only for them to grow again later."
-				if (corpse_is_target)
+			if(!corpse_to_raise)
+				if(is_sacrifice_target)
 					usr << "\red The Geometer of blood wants this mortal for himself."
 				return fizzle()
 
 
-			var/sacrifice_is_target = 0
+			is_sacrifice_target = 0
 			find_sacrifice:
 				for(var/obj/effect/rune/R in world)
 					if(R.word1==wordblood && R.word2==wordjoin && R.word3==wordhell)
 						for(var/mob/living/carbon/human/N in R.loc)
-							if (ticker.mode.name == "cult" && N.mind && N.mind == ticker.mode:sacrifice_target)
-								sacrifice_is_target = 1
+							if(ticker.mode.name == "cult" && N.mind && N.mind == ticker.mode:sacrifice_target)
+								is_sacrifice_target = 1
 							else
-								if(N.stat<2)
+								if(N.stat!= DEAD)
 									body_to_sacrifice = N
 									break find_sacrifice
 
-			if (!body_to_sacrifice)
-				if (sacrifice_is_target)
+			if(!body_to_sacrifice)
+				if (is_sacrifice_target)
 					usr << "\red The Geometer of blood wants that corpse for himself."
 				else
-					usr << "\red You need a dead corpse as source of energy to put soul in new body."
+					usr << "\red The sacrifical corpse is not dead. You must free it from this world of illusions before it may be used."
 				return fizzle()
 
-			for(var/mob/dead/observer/O in src.loc)
-				if(!O.client)
-					continue
+			var/mob/dead/observer/ghost
+			for(var/mob/dead/observer/O in loc)
+				if(!O.client)	continue
+				if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
 				ghost = O
+				break
 
-			if (!ghost)
-				usr << "\red You do not feel an ethernal immaterial soul here."
+			if(!ghost)
+				usr << "\red You require a restless spirit which clings to this world. Beckon their prescence with the sacred chants of Nar-Sie."
 				return fizzle()
 
-//										rejuvenatedheal(M)
-			corpse_to_raise.mind = new//Mind initialize stuff.
-			corpse_to_raise.mind.current = corpse_to_raise
-			corpse_to_raise.mind.original = corpse_to_raise
-			corpse_to_raise.mind.key = ghost.key
-			corpse_to_raise.key = ghost.key
 			for(var/datum/organ/external/affecting in corpse_to_raise.organs)
 				affecting.heal_damage(1000, 1000)
 			corpse_to_raise.setToxLoss(0)
@@ -278,15 +271,16 @@ var/list/sacrificed = list()
 			corpse_to_raise.SetStunned(0)
 			corpse_to_raise.SetWeakened(0)
 			corpse_to_raise.radiation = 0
-			corpse_to_raise.buckled = null
-			if (corpse_to_raise.handcuffed)
-				del(corpse_to_raise.handcuffed)
-				corpse_to_raise.update_inv_handcuffed(0)
-			corpse_to_raise.stat=0
+//			corpse_to_raise.buckled = null
+//			if(corpse_to_raise.handcuffed)
+//				del(corpse_to_raise.handcuffed)
+//				corpse_to_raise.update_inv_handcuffed(0)
+			corpse_to_raise.stat = CONSCIOUS
 			corpse_to_raise.updatehealth()
 			corpse_to_raise.UpdateDamageIcon()
 
-
+			corpse_to_raise.key = ghost.key	//the corpse will keep its old mind! but a new player takes ownership of it (they are essentially possessed)
+											//This means, should that player leave the body, the original may re-enter
 			usr.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
 			corpse_to_raise.visible_message("\red [corpse_to_raise]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.", \
 			"\red Life... I'm alive again...", \
@@ -295,10 +289,12 @@ var/list/sacrificed = list()
 			"\red You feel as your blood boils, tearing you apart.", \
 			"\red You hear a thousand voices, all crying in pain.")
 			body_to_sacrifice.gib()
-			if (ticker.mode.name == "cult")
-				ticker.mode:add_cultist(body_to_sacrifice.mind)
-			else
-				ticker.mode.cult+=body_to_sacrifice.mind
+
+//			if(ticker.mode.name == "cult")
+//				ticker.mode:add_cultist(corpse_to_raise.mind)
+//			else
+//				ticker.mode.cult |= corpse_to_raise.mind
+
 			corpse_to_raise << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 			corpse_to_raise << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 			return
@@ -344,14 +340,15 @@ var/list/sacrificed = list()
 				usr.visible_message("\red [usr]'s eyes glow blue as \he freezes in place, absolutely motionless.", \
 				"\red The shadow that is your spirit separates itself from your body. You are now in the realm beyond. While this is a great sight, being here strains your mind and body. Hurry...", \
 				"\red You hear only complete silence for a moment.")
-				usr.ghostize()
-				for(L.ajourn=1,L.ajourn)
-					sleep(10)
+				usr.ghostize(1)
+				L.ajourn = 1
+				while(L)
 					if(L.key)
 						L.ajourn=0
 						return
 					else
-						L.take_organ_damage(1, 0)
+						L.take_organ_damage(10, 0)
+					sleep(100)
 			return fizzle()
 
 
@@ -366,8 +363,8 @@ var/list/sacrificed = list()
 				return this_rune.fizzle()
 			var/mob/dead/observer/ghost
 			for(var/mob/dead/observer/O in this_rune.loc)
-				if (!O.client)
-					continue
+				if(!O.client)	continue
+				if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
 				ghost = O
 				break
 			if(!ghost)
@@ -380,38 +377,30 @@ var/list/sacrificed = list()
 			"\red You hear liquid flowing.")
 			D.real_name = "Unknown"
 			for(var/obj/item/weapon/paper/P in this_rune.loc)
-/*
-				if(length(P.info)<=24)
-					D.real_name = P.info
-					break
-*/
 				if(length(P.name)<=24)
 					D.real_name = P.name
 					break
 			D.universal_speak = 1
 			D.nodamage = 0
-			D.mind = new//Mind initialize stuff.
-			D.mind.current = D
-			D.mind.original = D
-			D.mind.key = ghost.key
+
 			D.key = ghost.key
-			ghost.invisibility = 101
-			if (ticker.mode.name == "cult")
+
+			if(ticker.mode.name == "cult")
 				ticker.mode:add_cultist(D.mind)
 			else
 				ticker.mode.cult+=D.mind
+
 			D << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 			D << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+
 			var/mob/living/user = usr
-			while(this_rune && user && user.stat==0 && user.client && user.loc==this_rune.loc)
+			while(this_rune && user && user.stat==CONSCIOUS && user.client && user.loc==this_rune.loc)
 				user.take_organ_damage(1, 0)
 				sleep(30)
 			if(D)
 				D.visible_message("\red [D] slowly dissipates into dust and bones.", \
 				"\red You feel pain, as bonds formed between your soul and this homunculus break.", \
 				"\red You hear faint rustle.")
-				ghost.invisibility = INVISIBILITY_OBSERVER
-				ghost.key = D.key
 				D.dust()
 			return
 

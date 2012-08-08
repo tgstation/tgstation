@@ -58,9 +58,6 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
-	//Update Mind
-	update_mind()
-
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
@@ -101,15 +98,6 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human
-	proc/update_mind()
-		if(!mind && client)
-			mind = new
-			mind.current = src
-			mind.assigned_role = job
-			if(!mind.assigned_role)
-				mind.assigned_role = "Assistant"
-			mind.key = key
-
 
 	proc/handle_disabilities()
 		if (disabilities & EPILEPSY)

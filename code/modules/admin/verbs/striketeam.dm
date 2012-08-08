@@ -51,32 +51,28 @@ var/global/sent_strike_team = 0
 			break
 
 //Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
-	var/mob/dead/observer/G//Basic variable to search for later.
-	var/candidates_list[] = list()//candidates for being a commando out of all the active ghosts in world.
-	var/commandos_list[] = list()//actual commando ghosts as picked by the user.
-	for(G in dead_mob_list)
-		if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5) //Whoever called/has the proc won't be added to the list.
-//		if(((G.client.inactivity/10)/60) <= 5) //Removing it allows even the caller to jump in. Good for testing.
-			candidates_list += G//Add their client to list.
-	for(var/i=commandos_possible,(i>0&&candidates_list.len),i--)//Decrease with every commando selected.
-		var/client/G_client = input("Pick characters to spawn as the commandos. This will go on until there either no more ghosts to pick from or the slots are full.", "Active Players") as null|anything in candidates_list//It will auto-pick a person when there is only one candidate.
-		if(G_client)//They may have logged out when the admin was choosing people. Or were not chosen. Would run time error otherwise.
-			candidates_list -= G_client//Subtract from candidates.
-			commandos_list += G_client.mob//Add their ghost to commandos.
+	var/list/candidates = list()	//candidates for being a commando out of all the active ghosts in world.
+	var/list/commandos = list()			//actual commando ghosts as picked by the user.
+	for(var/mob/dead/observer/G	 in player_list)
+		if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5)	//Whoever called/has the proc won't be added to the list.
+			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+				candidates += G.key
+	for(var/i=commandos_possible,(i>0&&candidates.len),i--)//Decrease with every commando selected.
+		var/candidate = input("Pick characters to spawn as the commandos. This will go on until there either no more ghosts to pick from or the slots are full.", "Active Players") as null|anything in candidates	//It will auto-pick a person when there is only one candidate.
+		candidates -= candidate		//Subtract from candidates.
+		commandos += candidate//Add their ghost to commandos.
 
 //Spawns commandos and equips them.
-	for (var/obj/effect/landmark/L in world)
+	for(var/obj/effect/landmark/L in world)
 		if(commando_number<=0)	break
 		if (L.name == "Commando")
 			leader_selected = commando_number == 1?1:0
 
 			var/mob/living/carbon/human/new_commando = create_death_commando(L, leader_selected)
 
-			if(commandos_list.len)
-				G = pick(commandos_list)
-				commandos_list -= G
-				new_commando.mind.key = G.key//For mind stuff.
-				new_commando.key = G.key
+			if(commandos.len)
+				new_commando.key = pick(commandos)
+				commandos -= new_commando.key
 				new_commando.internal = new_commando.s_store
 				new_commando.internals.icon_state = "internal1"
 
@@ -123,17 +119,11 @@ var/global/sent_strike_team = 0
 	new_commando.dna.ready_dna(new_commando)//Creates DNA.
 
 	//Creates mind stuff.
-	new_commando.mind = new
-	new_commando.mind.current = new_commando
-	new_commando.mind.original = new_commando
+	new_commando.mind_initialize()
 	new_commando.mind.assigned_role = "MODE"
 	new_commando.mind.special_role = "Death Commando"
-	if(!(new_commando.mind in ticker.minds))
-		ticker.minds += new_commando.mind//Adds them to regular mind list.
-	if(!(new_commando.mind in ticker.mode.traitors))//If they weren't already an extra traitor.
-		ticker.mode.traitors += new_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
+	ticker.mode.traitors |= new_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
 	new_commando.equip_death_commando(leader_selected)
-//	del(spawn_location)
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)

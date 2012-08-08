@@ -133,11 +133,7 @@
 	usr << msg
 	return
 
-/mob/living/simple_animal/constructarmoured/proc/mind_initialize(mob/G)
-	mind = new
-	mind.current = src
-	mind.assigned_role = "Juggernaut"
-	mind.key = G.key
+
 
 ////////////////////////Wraith/////////////////////////////////////////////
 
@@ -267,12 +263,6 @@
 	usr << msg
 	return
 
-/mob/living/simple_animal/constructwraith/proc/mind_initialize(mob/G)
-	mind = new
-	mind.current = src
-	mind.assigned_role = "Wraith"
-	mind.key = G.key
-
 /////////////////////////////Artificer/////////////////////////
 
 /mob/living/simple_animal/constructbuilder
@@ -349,9 +339,3 @@
 
 	usr << msg
 	return
-
-/mob/living/simple_animal/constructbuilder/proc/mind_initialize(mob/G)
-	mind = new
-	mind.current = src
-	mind.assigned_role = "Artificer"
-	mind.key = G.key

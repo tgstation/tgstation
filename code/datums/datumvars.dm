@@ -419,7 +419,8 @@ client
 						break
 			M.real_name = new_name
 			M.name = new_name
-			M.original_name = new_name
+			if(M.mind)
+				M.mind.name = new_name
 			href_list["datumrefresh"] = href_list["rename"]
 
 		else if (href_list["varnameedit"])

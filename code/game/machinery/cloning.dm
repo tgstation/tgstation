@@ -113,13 +113,25 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI, var/datum/changeling/changelingClone)
-	if(!(ghost && ghost.client) || src.mess || src.attempting)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI, var/datum/changeling/changelingClone)
+	if(mess || attempting)
 		return 0
+	var/datum/mind/clonemind = locate(mindref)
+	if(!istype(clonemind,/datum/mind))	//not a mind
+		return 0
+	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
+		return 0
+	if(clonemind.active)	//somebody is using that mind
+		if( ckey(clonemind.key)!=ckey )
+			return 0
+	else
+		for(var/mob/dead/observer/G in player_list)
+			if(G.ckey == ckey)
+				if(G.can_reenter_corpse)
+					break
+				else
+					return 0
 
-	var/datum/mind/clonemind = locate(mindref) in ticker.minds
-	if( !(istype(clonemind,/datum/mind) && (!clonemind.current || clonemind.current.stat==DEAD)) )
-		return 0
 
 	src.heal_level = rand(75,100) //Randomizes what health the clone is when ejected
 
@@ -149,8 +161,8 @@
 	H.updatehealth()
 
 	clonemind.transfer_to(H)
+	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like. I wonder what happened to the old me... My memories are kinda fuzzy.</i></span>"
-
 
 	// -- Mode/mind specific stuff goes here
 

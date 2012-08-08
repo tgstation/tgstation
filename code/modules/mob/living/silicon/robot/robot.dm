@@ -21,18 +21,7 @@
 		add_to_mob_list(mmi.brainmob)
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
-
-		if(key && !mind)	//failsafe in case we've somehow lost our mind! (code will do that to you!)
-			if(mmi.brainmob.mind)
-				mind = mmi.brainmob.mind
-			else
-				mind = new /datum/mind()
-				mind.assigned_role = "Cyborg"
-				mind.key = key
-
-		if(mind)
-			mind.transfer_to(mmi.brainmob)
-
+		if(mind)	mind.transfer_to(mmi.brainmob)
 		mmi = null
 	..()
 

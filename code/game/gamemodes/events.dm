@@ -241,32 +241,26 @@
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
 		if(temp_vent.loc.z == 1 && !temp_vent.welded)
-			vents.Add(temp_vent)
+			vents += temp_vent
 
-	if(prob(10)) spawncount++ //rarely, have two larvae spawn instead of one
-	while(spawncount >= 1)
+	var/list/candidates = list() //List of candidate KEYs to control the new larvae. ~Carn
+	for(var/mob/dead/observer/G in player_list)
+		if(G.client.be_alien)
+			if(((G.client.inactivity/10)/60) <= 5)
+				if(!(G.mind && G.mind.current && G.mind.current != DEAD))
+					candidates += G.key
+
+	if(prob(33)) spawncount++ //sometimes, have two larvae spawn instead of one
+	while((spawncount >= 1) && vents.len && candidates.len)
 		var/obj/vent = pick(vents)
+		var/candidate = pick(candidates)
 
-		var/list/candidates = list() // Picks a random ghost in the world to shove in the larva -- TLE; If there's no ghost... well, sucks. Wasted event. -- Urist
+		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
+		new_xeno.key = candidate
 
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client)
-				if(G.client.be_alien)
-					if(((G.client.inactivity/10)/60) <= 5)
-						if(G.corpse)
-							if(G.corpse.stat==2)
-								candidates.Add(G)
-						if(!G.corpse)
-							candidates.Add(G)
-
-		if(candidates.len)
-			var/mob/dead/observer/G = pick(candidates)
-			var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-			new_xeno.mind_initialize(G,"Larva")
-			new_xeno.key = G.key
-
-		vents.Remove(vent)
-		spawncount -= 1
+		candidates -= candidate
+		vents -= vent
+		spawncount--
 
 	spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")

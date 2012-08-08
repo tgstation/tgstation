@@ -22,8 +22,7 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
 		var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
-
-		new_xeno.mind_initialize(src, "Queen")
-		new_xeno.key = key
+		new_xeno.UI = UI
+		mind.transfer_to(new_xeno)
 		del(src)
 	return

@@ -1,4 +1,4 @@
-/mob/dead/observer/New(mob/body, var/can_reenter_corpse = 1)
+/mob/dead/observer/New(mob/body)
 	invisibility = INVISIBILITY_OBSERVER
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
@@ -14,26 +14,27 @@
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
 
+		gender = body.gender
 		if(body.original_name)
-			original_name = body.original_name
+			name = body.original_name
 		else
 			if(body.real_name)
-				original_name = body.real_name
+				name = body.real_name
 			else
-				original_name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+				if(gender == MALE)
+					name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+				else
+					name = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 
-		name = original_name
-
-		if(can_reenter_corpse)
-			corpse = body
+		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
 	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
 	loc = T
 
-	if(!name)								//To prevent nameless ghosts
+	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
-		real_name = name
-		original_name = name
+	real_name = name
+	original_name = name
 	return
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -45,9 +46,10 @@ Works together with spawning an observer, noted above.
 
 /mob/proc/ghostize(var/can_reenter_corpse = 1)
 	if(key)
-		var/mob/dead/observer/ghost = new(src,can_reenter_corpse)	//Transfer safety to observer spawning proc.
+		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
+		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.key = key
-	return
+		return ghost
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
@@ -119,25 +121,25 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
 	if(!client)	return
-	if(!corpse)
+	if(!(mind && mind.current && can_reenter_corpse))
 		src << "<span class='warning'>You have no body.</span>"
 		return
-	if(client.holder && client.holder.state == 2)
+	if(mind.current.key)	//makes sure we don't accidentally kick any clients
+		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
+		return
+	if(mind.current.ajourn && mind.current.stat != DEAD) 	//check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
+		var/obj/effect/rune/R = locate() in mind.current.loc	//whilst corpse is alive, we can only reenter the body if it's on the rune
+		if(!(R && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself))	//astral journeying rune
+			usr << "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>"
+			return
+	mind.current.ajourn=0
+	if(client.holder && client.holder.state == 2)	//TODO: should be handled by Login/Logout ~Carn
 		var/rank = client.holder.rank
 		client.clear_admin_verbs()
 		client.holder.state = 1
 		client.update_admins(rank)
 
-	if(corpse.ajourn && corpse.stat != DEAD) 	//check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
-		var/obj/effect/rune/R = locate() in corpse.loc	//whilst corpse is alive, we can only reenter the body if it's on the rune
-		if(!(R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself))	//astral journeying rune
-			usr << "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>"
-			return
-	corpse.ajourn=0
-	if(corpse.key)		//makes sure we don't accidentally kick any clients
-		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
-		return
-	corpse.key = key
+	mind.current.key = key
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"

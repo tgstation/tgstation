@@ -42,20 +42,14 @@
 		var/list/candidates = list()
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client.be_alien)
-				if(G.corpse)
-					if(G.corpse.stat==2)
-						candidates.Add(G)
-				else
-					candidates.Add(G)
+				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+					candidates += G.key
 
-		for(var/i = 0 to wave_size)
-			if(!candidates.len)	break
-			var/mob/dead/observer/G = pick(candidates)
-			var/mob/living/blob/B = new/mob/living/blob(src.loc)
-			if(G.client)
-				G.client.screen.len = null
-				B.ghost_name = G.real_name
-				B.key = G.key
+		if(candidates.len)
+			for(var/i = 0 to wave_size)
+				var/mob/living/blob/B = new/mob/living/blob(src.loc)
+				B.key = pick(candidates)
+				candidates -= B.key
 
 /*
 	Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand

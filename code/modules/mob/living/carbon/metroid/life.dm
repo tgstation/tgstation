@@ -143,14 +143,6 @@
 
 			AIproc = 0
 
-
-		update_mind()
-			if(!mind && client)
-				mind = new
-				mind.current = src
-				mind.assigned_role = "Metroid"
-				mind.key = key
-
 		handle_environment(datum/gas_mixture/environment)
 			if(!environment)
 				adjustFireLoss(rand(10,20))

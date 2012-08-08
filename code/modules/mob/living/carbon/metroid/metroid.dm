@@ -16,13 +16,6 @@
 	verbs.Remove(/mob/living/carbon/metroid/verb/ventcrawl)
 	..()
 
-/mob/living/carbon/metroid/proc/mind_initialize(mob/G)
-	mind = new
-	mind.current = src
-	mind.assigned_role = "Metroid"
-	//mind.special_role = alien_caste
-	mind.key = G.key
-
 /mob/living/carbon/metroid/movement_delay()
 	var/tally = 0
 

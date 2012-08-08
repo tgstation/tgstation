@@ -12,8 +12,6 @@
 
 		src.updatehealth()
 
-		src.update_mind()
-
 		if(aiPDA && aiPDA.name != name)
 			aiPDA.owner = name
 			aiPDA.name = name + " (" + aiPDA.ownjob + ")"
@@ -185,10 +183,3 @@
 	else
 		src.health = 100
 		src.stat = 0
-
-/mob/living/silicon/ai/proc/update_mind()
-	if(!mind && client)
-		mind = new
-		mind.current = src
-		mind.assigned_role = "AI"
-		mind.key = key

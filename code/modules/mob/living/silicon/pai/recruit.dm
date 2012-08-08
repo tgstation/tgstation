@@ -35,17 +35,13 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				pai.real_name = pai.name
 				pai.key = candidate.key
 
-				pai.mind = new()//Make a new mind for the pai
-				pai.mind.current = pai
-				pai.mind.assigned_role = "Assistant"//Default to an assistant.
-
 				card.setPersonality(pai)
 				card.looking_for_personality = 0
 
 				ticker.mode.update_cult_icons_removed(card.pai.mind)
 				ticker.mode.update_rev_icons_removed(card.pai.mind)
 
-				pai_candidates.Remove(candidate)
+				pai_candidates -= candidate
 				usr << browse(null, "window=findPai")
 
 		if(href_list["new"])

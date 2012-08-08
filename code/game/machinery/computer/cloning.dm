@@ -369,16 +369,25 @@
 		var/datum/data/record/C = locate(href_list["clone"])
 		//Look for that player! They better be dead!
 		if(istype(C))
-			var/mob/selected = find_dead_player("[C.fields["ckey"]]")
-
-//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
-			if ((!selected) || (!src.pod1) || (src.pod1.occupant) || (src.pod1.mess) || !config.revival_cloning)
-				src.temp = "Unable to initiate cloning cycle." // most helpful error message in THE HISTORY OF THE WORLD
-			else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"],C.fields["changeling"]))
-				src.temp = "Cloning cycle activated."
-				src.records.Remove(C)
+			//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
+			if(!pod1)
+				temp = "Error: No Clonepod detected."
+			else if(pod1.occupant)
+				temp = "Error: Clonepod is currently occupied."
+			else if(pod1.mess)
+				temp = "Error: Clonepod malfunction."
+			else if(!config.revival_cloning)
+				temp = "Error: Unable to initiate cloning cycle."
+			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"],C.fields["changeling"]))
+				temp = "Initiating cloning cycle..."
+				records.Remove(C)
 				del(C)
-				src.menu = 1
+				menu = 1
+			else
+				temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
+
+		else
+			temp = "Error: Data corruption."
 
 	else if (href_list["menu"])
 		src.menu = text2num(href_list["menu"])

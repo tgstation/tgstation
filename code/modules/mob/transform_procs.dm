@@ -76,19 +76,12 @@
 	var/mob/living/silicon/ai/O = new (loc, /datum/ai_laws/asimov,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
-	O.lastKnownIP = client.address
 
 	if(mind)
 		mind.transfer_to(O)
 		O.mind.original = O
 	else
-		O.mind = new
-		O.mind.current = O
-		O.mind.original = O
-		O.mind.assigned_role = "AI"
 		O.key = key
-
-
 
 	var/obj/loc_landmark
 	for(var/obj/effect/landmark/start/sloc in world)
@@ -176,19 +169,14 @@
 
 	O.UI = UI
 
-	if (mind)
+	if(mind)		//TODO
 		mind.transfer_to(O)
-		if (mind.assigned_role == "Cyborg")
-			mind.original = O
-		else if (mind.special_role) O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+		if(O.mind.assigned_role == "Cyborg")
+			O.mind.original = O
+		else if(mind.special_role)
+			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 	else
-		mind = new /datum/mind(  )
-		mind.key = key
-		mind.current = O
-		mind.original = O
-		mind.transfer_to(O)
-
-
+		O.key = key
 
 	O.loc = loc
 	O.job = "Cyborg"
@@ -219,25 +207,16 @@
 	var/mob/living/carbon/alien/humanoid/new_xeno
 	switch(alien_caste)
 		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/humanoid/hunter (loc)
+			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
 		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel (loc)
+			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
 		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone (loc)
-
-	//Honestly not sure why it's giving them DNA.
-	/*
-	new_xeno.dna = dna
-	dna = null
-	new_xeno.dna.uni_identity = "00600200A00E0110148FC01300B009"
-	new_xeno.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
-	*/
-
-	new_xeno.mind_initialize(src, alien_caste)
-	new_xeno.key = key
-	new_xeno.UI = UI
+			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 
 	new_xeno.a_intent = "hurt"
+	new_xeno.UI = UI
+	new_xeno.key = key
+
 	new_xeno << "<B>You are now an alien.</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
@@ -256,43 +235,26 @@
 	for(var/t in organs)
 		del(t)
 
+	var/mob/living/carbon/metroid/new_metroid
 	if(reproduce)
-		var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)
+		var/number = pick(14;2,3,4)	//reproduce (has a small chance of producing 3 or 4 offspring)
 		var/list/babies = list()
-		for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
+		for(var/i=1,i<=number,i++)
 			var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
 			M.nutrition = round(nutrition/number)
 			step_away(M,src)
 			babies += M
-
-
-		var/mob/living/carbon/metroid/new_metroid = pick(babies)
-
-		new_metroid.mind_initialize(src)
-		new_metroid.key = key
-		new_metroid.UI = UI
-
-		new_metroid.a_intent = "hurt"
-		new_metroid << "<B>You are now a baby Metroid.</B>"
-
-	if(adult)
-		var/mob/living/carbon/metroid/adult/new_metroid = new /mob/living/carbon/metroid/adult (loc)
-		new_metroid.mind_initialize(src)
-		new_metroid.key = key
-		new_metroid.UI = UI
-
-		new_metroid.a_intent = "hurt"
-		new_metroid << "<B>You are now an adult Metroid.</B>"
-
+		new_metroid = pick(babies)
 	else
-		var/mob/living/carbon/metroid/new_metroid = new /mob/living/carbon/metroid (loc)
+		if(adult)
+			new_metroid = new /mob/living/carbon/metroid/adult(loc)
+		else
+			new_metroid = new /mob/living/carbon/metroid(loc)
+	new_metroid.a_intent = "hurt"
+	new_metroid.UI = UI
+	new_metroid.key = key
 
-		new_metroid.mind_initialize(src)
-		new_metroid.key = key
-		new_metroid.UI = UI
-
-		new_metroid.a_intent = "hurt"
-		new_metroid << "<B>You are now a baby Metroid.</B>"
+	new_metroid << "<B>You are now a Metroid. Skreee!</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
 	return
@@ -307,17 +269,15 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
+	for(var/t in organs)	//this really should not be necessary
 		del(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
-
-	new_corgi.mind_initialize(src)
-	new_corgi.key = key
-	new_corgi.UI = UI
-
 	new_corgi.a_intent = "hurt"
-	new_corgi << "<B>You are now a Corgi!.</B>"
+	new_corgi.UI = UI
+	new_corgi.key = key
+
+	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
 	return

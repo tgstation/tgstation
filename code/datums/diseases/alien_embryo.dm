@@ -69,26 +69,19 @@
 			affected_mob.updatehealth()
 			if(prob(40))
 				if(gibbed != 0) return 0
-				var/list/candidates = list() // Picks a random ghost in the world to shove in the larva -- TLE
+				var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
 				for(var/mob/dead/observer/G in player_list)
-					if(G.client)
-						if(G.client.be_alien)
-							if(((G.client.inactivity/10)/60) <= 5)
-								if(G.corpse)
-									if(G.corpse.stat==DEAD)
-										candidates.Add(G)
-								else
-									candidates.Add(G)
+					if(G.client.be_alien)
+						if(((G.client.inactivity/10)/60) <= 5)
+							if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+								candidates += G.key
 
 				var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
 				if(candidates.len)
-					var/mob/dead/observer/G = pick(candidates)
-					new_xeno.mind_initialize(G,"Larva")
-					new_xeno.key = G.key
-					del(G)
+					new_xeno.key = pick(candidates)
 				else
-					if(affected_mob.client)
-						affected_mob.client.mob = new_xeno
+					new_xeno.key = affected_mob.key
+
 				new_xeno << sound('hiss5.ogg',0,0,0,100)	//To get the player's attention
 				affected_mob.gib()
 				src.cure(0)
