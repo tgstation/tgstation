@@ -240,8 +240,9 @@
 	//world << sound('aliens.ogg')
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
-		if(temp_vent.loc.z == 1 && !temp_vent.welded)
-			vents += temp_vent
+		if(temp_vent.loc.z == 1 && !temp_vent.welded && temp_vent.network)
+			if(temp_vent.network.normal_members.len > 50) // Stops Aliens getting stuck in small networks. See: Security, Virology
+				vents += temp_vent
 
 	var/list/candidates = list() //List of candidate KEYs to control the new larvae. ~Carn
 	for(var/mob/dead/observer/G in player_list)
@@ -252,6 +253,7 @@
 
 	if(prob(33)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
+
 		var/obj/vent = pick(vents)
 		var/candidate = pick(candidates)
 
@@ -262,7 +264,7 @@
 		vents -= vent
 		spawncount--
 
-	spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
+	spawn(rand(5000, 6000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 		world << sound('aliens.ogg')
 

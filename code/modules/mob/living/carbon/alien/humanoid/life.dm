@@ -261,13 +261,13 @@
 
 		//If there are alien weeds on the ground then heal if needed or give some toxins
 		if(locate(/obj/effect/alien/weeds) in loc)
-			if(health >= 100)
-				adjustToxLoss(15)
+			if(health >= maxHealth)
+				adjustToxLoss(plasma_rate)
 
 			else
-				adjustBruteLoss(-5)
-				adjustFireLoss(-5)
-				adjustOxyLoss(-5)
+				adjustBruteLoss(-heal_rate)
+				adjustFireLoss(-heal_rate)
+				adjustOxyLoss(-heal_rate)
 
 
 

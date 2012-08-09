@@ -18,16 +18,6 @@
 
 /mob/living/carbon/alien/humanoid/queen
 
-	updatehealth()
-		if (src.nodamage)
-			src.health = 250
-			src.stat = 0
-		else
-			//oxyloss is only used for suicide
-			//toxloss isn't used for aliens, its actually used as alien powers!!
-			src.health = 250 - src.getOxyLoss() - src.getFireLoss() - src.getBruteLoss()
-
-
 	handle_regular_hud_updates()
 
 		..() //-Yvarov
@@ -50,16 +40,6 @@
 			else
 				src.healths.icon_state = "health6"
 
-	handle_environment()
-
-		//If there are alien weeds on the ground then heal if needed or give some toxins
-		if(locate(/obj/effect/alien/weeds) in loc)
-			if(health >= 250)
-				adjustToxLoss(20)
-			else
-				adjustBruteLoss(-5)
-				adjustFireLoss(-5)
-
 
 //Queen verbs
 /mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
@@ -78,13 +58,3 @@
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
 		new /obj/effect/alien/egg(loc)
 	return
-
-
-/mob/living/carbon/alien/humanoid/queen/updatehealth()
-	if(nodamage)
-		health = 250
-		stat = CONSCIOUS
-	else
-		//oxyloss is only used for suicide
-		//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = 250 - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()

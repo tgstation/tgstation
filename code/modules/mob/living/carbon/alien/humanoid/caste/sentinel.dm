@@ -10,15 +10,6 @@
 
 /mob/living/carbon/alien/humanoid/sentinel
 
-	updatehealth()
-		if(nodamage)
-			health = 125
-			stat = CONSCIOUS
-		else
-		//oxyloss is only used for suicide
-		//toxloss isn't used for aliens, its actually used as alien powers!!
-			health = 125 - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
-
 
 	handle_regular_hud_updates()
 
@@ -41,13 +32,3 @@
 						healths.icon_state = "health5"
 			else
 				healths.icon_state = "health6"
-
-	handle_environment()
-
-		//If there are alien weeds on the ground then heal if needed or give some toxins
-		if(locate(/obj/effect/alien/weeds) in loc)
-			if(health >= 125)
-				adjustToxLoss(10)
-			else
-				adjustBruteLoss(-10)
-				adjustFireLoss(-10)

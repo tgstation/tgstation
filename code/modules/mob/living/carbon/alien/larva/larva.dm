@@ -458,15 +458,6 @@
 	onclose(user, "mob[name]")
 	return
 
-/mob/living/carbon/alien/larva/updatehealth()
-	if(nodamage)
-		health = 25
-		stat = 0
-	else
-	//oxyloss is only used for suicide
-	//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = 25 - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
-
 /* Commented out because it's duplicated in life.dm
 /mob/living/carbon/alien/larva/proc/grow() // Larvae can grow into full fledged Xenos if they survive long enough -- TLE
 	if(icon_state == "larva_l" && !canmove) // This is a shit death check. It is made of shit and death. Fix later.

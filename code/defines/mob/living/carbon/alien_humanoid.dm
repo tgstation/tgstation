@@ -19,6 +19,7 @@
 	storedPlasma = 100
 	max_plasma = 150
 	icon_state = "alienh_s"
+	plasma_rate = 5
 
 /mob/living/carbon/alien/humanoid/sentinel
 	name = "alien sentinel"
@@ -28,6 +29,7 @@
 	storedPlasma = 100
 	max_plasma = 250
 	icon_state = "aliens_s"
+	plasma_rate = 10
 
 /mob/living/carbon/alien/humanoid/drone
 	name = "alien drone"
@@ -35,6 +37,7 @@
 	maxHealth = 100
 	health = 100
 	icon_state = "aliend_s"
+	plasma_rate = 15
 
 /mob/living/carbon/alien/humanoid/queen
 	name = "alien queen"
@@ -43,6 +46,8 @@
 	health = 250
 	icon_state = "alienq_s"
 	nopush = 1
+	heal_rate = 15
+	plasma_rate = 20
 
 /mob/living/carbon/alien/humanoid/rpbody
 	update_icon = 0

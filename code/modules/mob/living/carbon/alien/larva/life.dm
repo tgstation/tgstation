@@ -63,30 +63,9 @@
 /mob/living/carbon/alien/larva
 	proc/handle_mutations_and_radiation()
 
-		if(amount_grown == 200)	//TODO ~Carn
-			src << "\green You are growing into a beautiful alien! It is time to choose a caste."
-			src << "\green There are three to choose from:"
-			src << "\green <B>Hunters</B> are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves."
-			src << "\green <B>Sentinels</B> are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters."
-			src << "\green <B>Drones</B> are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen."
-			var/alien_caste = alert(src, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
-
-			var/mob/living/carbon/alien/humanoid/new_xeno
-			switch(alien_caste)
-				if("Hunter")
-					new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
-				if("Sentinel")
-					new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
-				if("Drone")
-					new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
-			new_xeno.UI = UI
-			if(mind)	mind.transfer_to(new_xeno)
-			del(src)
-			return
-		else
-			//grow!! but not if metroid or dead
-			if(health>-100)
-				amount_grown++
+		//grow!! but not if metroid or dead
+		if(health>-100 && amount_grown < 200)
+			amount_grown++
 
 		if (radiation)
 			if (radiation > 100)

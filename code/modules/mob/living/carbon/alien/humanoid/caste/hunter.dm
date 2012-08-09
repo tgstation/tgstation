@@ -9,15 +9,6 @@
 
 /mob/living/carbon/alien/humanoid/hunter
 
-	updatehealth()
-		if(nodamage)
-			health = 150
-			stat = CONSCIOUS
-		else
-		//oxyloss is only used for suicide
-		//toxloss isn't used for aliens, its actually used as alien powers!!
-			health = 150 - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
-
 
 	handle_regular_hud_updates()
 
@@ -44,15 +35,9 @@
 
 	handle_environment()
 		if(m_intent == "run" || resting)
-			//If there are alien weeds on the ground then heal if needed or give some toxins
-			if(locate(/obj/effect/alien/weeds) in loc)
-				if(health >= 150)
-					adjustToxLoss(5)
-				else
-					adjustBruteLoss(-5)
-					adjustFireLoss(-5)
+			..()
 		else
-			adjustToxLoss(-5)
+			adjustToxLoss(-heal_rate)
 
 
 //Hunter verbs
