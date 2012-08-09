@@ -67,10 +67,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 	return
 
-/mob/proc/adminghostize()
-	if(client)
-		client.mob = new/mob/dead/observer(src)
-	return
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(NewLoc)

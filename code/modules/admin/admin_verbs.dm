@@ -452,7 +452,7 @@
 	holder.state = 2
 	update_admins(rank)
 	if(!istype(mob, /mob/dead/observer))
-		mob.adminghostize()
+		mob.ghostize(1)
 	src << "\blue You are now observing"
 	feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -471,6 +471,7 @@
 	update_admins(rank)
 	if(istype(mob, /mob/dead/observer))
 		var/mob/dead/observer/ghost = mob
+		ghost.can_reenter_corpse = 1	//just in-case.
 		ghost.reenter_corpse()
 	deadchat = 0
 	src << "\blue You are now playing"
