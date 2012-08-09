@@ -149,7 +149,6 @@
 	if(!clonename)	//to prevent null names
 		clonename = "clone ([rand(0,999)])"
 	H.real_name = clonename
-	H.original_name = clonename //we don't want random ghost names should we die again.
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready

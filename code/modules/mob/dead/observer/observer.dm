@@ -15,8 +15,8 @@
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
 
 		gender = body.gender
-		if(body.original_name)
-			name = body.original_name
+		if(body.mind && body.mind.name)
+			name = body.mind.name
 		else
 			if(body.real_name)
 				name = body.real_name
@@ -34,7 +34,6 @@
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
-	original_name = name
 	return
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

@@ -64,7 +64,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 			ai_found = 1
 			continue
 		for(var/mob/M in mobs)
-			var/list/namelist = dd_text2list("[M.name] [M.real_name] [M.original_name] [M.ckey] [M.key]", " ")
+			var/list/namelist = dd_text2list("[M.name] [M.real_name] [(M.mind)?"[M.mind.name]":""] [M.ckey] [M.key]", " ")
 			var/word_is_match = 0 //Used to break from this mob for loop if a match is found
 			for(var/namepart in namelist)
 				if( lowertext(word) == lowertext(namepart) )

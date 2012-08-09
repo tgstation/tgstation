@@ -26,10 +26,12 @@
 	var/name = src.real_name
 	var/alt_name = ""
 
-	if(original_name) //Original name is only used in ghost chat! It is not to be edited by anything!
-		name = src.original_name
-		if( original_name != real_name )
-			alt_name = " (died as [src.real_name])"
+	if(mind && mind.name)
+		name = "[mind.name]"
+	else
+		name = real_name
+	if(name != real_name)
+		alt_name = " (died as [real_name])"
 
 	message = src.say_quote(message)
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"

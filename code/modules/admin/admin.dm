@@ -1206,7 +1206,7 @@ var/global/BSACooldown = 0
 //			world <<"Displaying info about the mob..."
 			src.owner << "<b>Info about [M.name]:</b> "
 			src.owner << "Mob type = [M.type]; Damage = [health_description]"
-			src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Original_name = [M.original_name]; Key = <b>[M.key]</b>;"
+			src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;"
 			src.owner << "Location = [location_description];"
 			src.owner << "[special_role_description]"
 			src.owner << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"

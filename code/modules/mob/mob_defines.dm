@@ -66,7 +66,7 @@
 	var/ear_damage = null	//Carbon
 	var/stuttering = null	//Carbon
 	var/real_name = null
-	var/original_name = null //Original name is only used in ghost chat! It is not to be edited by anything!
+//	var/original_name = null //Original name is only used in ghost chat! Depracated, now used bb
 	var/blinded = null
 	var/bhunger = 0			//Carbon
 	var/ajourn = 0

@@ -31,7 +31,7 @@
 
 datum/mind
 	var/key
-	var/name	//TODO: this will replace mob.original_name
+	var/name	//replaces mob/var/original_name
 	var/mob/living/current
 	var/mob/living/original
 	var/active = 0
@@ -91,7 +91,7 @@ datum/mind
 			alert("Not before round-start!", "Alert")
 			return
 
-		var/out = "<B>[current.real_name]</B><br>"
+		var/out = "<B>[name]</B>[(curent&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 		out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
 		out += "Factions and special roles:<br>"
 
@@ -1100,8 +1100,8 @@ datum/mind
 		if(ticker)
 			ticker.minds += mind
 		else
-			world.log << "## No ticker ready yet! Please inform Carn"
-	mind.name = real_name
+			world.log << "## DEBUG: mind_initialize(): No ticker ready yet! Please inform Carn"
+	if(!mind.name)	mind.name = real_name
 	mind.current = src
 
 //HUMAN

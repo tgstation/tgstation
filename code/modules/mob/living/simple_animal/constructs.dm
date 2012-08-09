@@ -4,7 +4,6 @@
 /mob/living/simple_animal/constructarmoured
 	name = "Juggernaut"
 	real_name = "Juggernaut"
-	original_name = "Juggernaut"
 	desc = "A possessed suit of armour driven by the will of the restless dead"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "behemoth"
@@ -142,7 +141,6 @@
 /mob/living/simple_animal/constructwraith
 	name = "Wraith"
 	real_name = "Wraith"
-	original_name = "Wraith"
 	desc = "A wicked bladed shell contraption piloted by a bound spirit"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "floating"
@@ -268,7 +266,6 @@
 /mob/living/simple_animal/constructbuilder
 	name = "Artificer"
 	real_name = "Artificer"
-	original_name = "Artificer"
 	desc = "A bulbous construct dedicated to building and maintaining The Cult of Nar-Sie's armies"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "artificer"

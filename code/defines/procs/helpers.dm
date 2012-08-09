@@ -278,7 +278,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				return
 		M.real_name = newname
 		M.name = newname
-		M.original_name = newname
+		M.mind.name = newname
 
 //Handles givving the Clown his/her name
 /proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
@@ -309,7 +309,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				return clname(M)
 		M.real_name = newname
 		M.name = newname
-		M.original_name = newname
+		M.mind.name = newname
 
 	for (var/obj/item/device/pda/pda in M.contents)
 		if (pda.owner == oldname)

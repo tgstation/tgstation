@@ -128,7 +128,6 @@
 							S.canmove = 0//Can't move out of the soul stone
 							S.name = "Shade of [T.real_name]"
 							S.real_name = "Shade of [T.real_name]"
-							S.original_name = "Shade of [T.real_name]"
 							if (T.client)
 								T.client.mob = S
 							S.cancel_camera()

@@ -131,7 +131,7 @@
 
 	//Speaking
 	if(speak_chance)
-		if(prob(speak_chance))
+		if(rand(0,200) < speak_chance)
 			if(speak && speak.len)
 				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
 					var/length = speak.len

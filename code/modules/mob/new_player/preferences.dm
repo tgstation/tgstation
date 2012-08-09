@@ -713,7 +713,6 @@ datum/preferences
 				real_name += "[pick(last_names)]"
 
 		character.real_name = real_name
-		character.original_name = real_name //Original name is only used in ghost chat! It is not to be edited by anything!
 
 		character.gender = gender
 

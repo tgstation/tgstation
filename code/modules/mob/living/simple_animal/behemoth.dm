@@ -1,7 +1,6 @@
 /mob/living/simple_animal/constructbehemoth
 	name = "Behemoth"
 	real_name = "Behemoth"
-	original_name = "Behemoth"
 	desc = "The pinnacle of occult technology, Behemoths are the ultimate weapon in the Cult of Nar-Sie's arsenal."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "behemoth"

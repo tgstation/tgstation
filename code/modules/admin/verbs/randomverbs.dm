@@ -361,7 +361,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else
 			new_character.real_name = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 	new_character.name = new_character.real_name
-	new_character.original_name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
 		G_found.mind.transfer_to(new_character)	//be careful when doing stuff like this! I've already checked the mind isn't in use
