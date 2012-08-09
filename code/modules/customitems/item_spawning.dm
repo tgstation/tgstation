@@ -43,6 +43,7 @@
 						I.blood_type = C.blood_type
 						I.dna_hash = C.dna_hash
 						I.fingerprint_hash = C.fingerprint_hash
+						I.pin = C.pin
 
 						//custom stuff
 						if(M.ckey == "fastler" && M.real_name == "Fastler Greay") //This is a Lifetime ID
