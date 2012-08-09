@@ -176,7 +176,7 @@ datum/controller/game_controller
 			air_master.current_cycle++
 			var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
 			if(!success) //Runtimed.
-				log_admin("ZASALERT: air_system/tick() failed: [air_master.tick_progress]")
+				log_adminwarn("ZASALERT: air_system/tick() failed: [air_master.tick_progress]")
 				air_master.failed_ticks++
 				if(air_master.failed_ticks > 10)
 					world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
