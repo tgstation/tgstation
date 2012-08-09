@@ -78,7 +78,7 @@
 			var/datum/objective/mutiny/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Assassinate [head_mind.current.real_name], the [head_mind.assigned_role]."
+			rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
 			rev_mind.objectives += rev_obj
 
 	//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
@@ -109,7 +109,7 @@
 		var/datum/objective/mutiny/rev_obj = new
 		rev_obj.owner = rev_mind
 		rev_obj.target = head_mind
-		rev_obj.explanation_text = "Assassinate [head_mind.current.real_name], the [head_mind.assigned_role]."
+		rev_obj.explanation_text = "Assassinate [head_mind.name], the [head_mind.assigned_role]."
 		rev_mind.objectives += rev_obj
 
 /datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
@@ -344,64 +344,75 @@
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
-	if(head_revolutionaries.len!=0 || istype(ticker.mode,/datum/game_mode/revolution))
-		var/list/names = new
-		for(var/datum/mind/i in head_revolutionaries)
-			if(i.current)
-				var/hstatus = ""
-				if(i.current.stat == 2)
-					hstatus = "Dead"
-				else if(i.current.z != 1)
-					hstatus = "Abandoned the station"
-				names += i.current.real_name + " ([hstatus])"
-			else
-				names += "[i.key] (character destroyed)"
-		world << "<FONT size = 2><B>The head revolutionaries were: </B></FONT>"
-		world << english_list(names)
-	if (revolutionaries.len!=0 || istype(ticker.mode,/datum/game_mode/revolution))
-		var/list/names = new
-		for(var/datum/mind/i in revolutionaries)
-			if(i.current)
-				var/hstatus = ""
-				if(i.current.stat == 2)
-					hstatus = "Dead"
-				else if(i.current.z != 1)
-					hstatus = "Abandoned the station"
-				names += i.current.real_name + " ([hstatus])"
-			else
-				names += "[i.key] (character destroyed)"
-		if (revolutionaries.len!=0)
-			world << "<FONT size = 2><B>The ordinary revolutionaries were: </B></FONT>"
-			world << english_list(names)
-		else
-			world << "The head revolutionaries failed to enlist any <FONT size = 2><B>ordinary revolutionaries</B></FONT>"
-	var/list/heads = get_all_heads()
-	var/list/targets = new
-	for (var/datum/mind/i in head_revolutionaries)
-		for (var/datum/objective/mutiny/o in i.objectives)
-			targets |= o.target
-	if (head_revolutionaries.len!=0                      || \
-		revolutionaries.len!=0                           || \
-		istype(ticker.mode,/datum/game_mode/revolution))
+	var/list/targets = list()
 
-		var/list/names = new
-		for(var/datum/mind/i in heads)
-			if(i.current)
-				var/turf/T = get_turf(i.current)
-				var/hstatus = ""
-				if(i.current.stat == 2)
-					hstatus = "Dead"
-				else if((T) && (T.z != 1))
-					hstatus = "Abandoned the station"
-				names += i.current.real_name + " ([hstatus])" + ((i in targets)?"(target)":"")
-			else
-				names += "[i.key] (character destroyed)" + ((i in targets)?"(target)":"")
-		if (heads.len!=0)
-			world << "<FONT size = 2><B>The heads of staff were: </B></FONT>"
-			world << english_list(names)
-		else
-			world << "There were no any <FONT size = 2><B>heads of staff</B></FONT> on the station."
+	if(head_revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+		var/text = "<FONT size = 2><B>The head revolutionaries were:</B></FONT>"
 
+		for(var/datum/mind/headrev in head_revolutionaries)
+			text += "<br>[headrev.key] was [headrev.name] ("
+			if(headrev.current)
+				if(headrev.current.stat == DEAD)
+					text += "died"
+				else if(headrev.current.z != 1)
+					text += "fled the station"
+				else
+					text += "survived the revolution"
+				if(headrev.current.real_name != headrev.name)
+					text += " as [headrev.current.real_name]"
+			else
+				text += "body destroyed"
+			text += ")"
+
+			for(var/datum/objective/mutiny/objective in headrev.objectives)
+				targets |= objective.target
+
+		world << text
+
+	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+		var/text = "<FONT size = 2><B>The revolutionaries were:</B></FONT>"
+
+		for(var/datum/mind/rev in revolutionaries)
+			text += "<br>[rev.key] was [rev.name] ("
+			if(rev.current)
+				if(rev.current.stat == DEAD)
+					text += "died"
+				else if(rev.current.z != 1)
+					text += "fled the station"
+				else
+					text += "survived the revolution"
+				if(rev.current.real_name != rev.name)
+					text += " as [rev.current.real_name]"
+			else
+				text += "body destroyed"
+			text += ")"
+
+		world << text
+
+
+	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
+		var/text = "<FONT size = 2><B>The heads of staff were:</B></FONT>"
+
+		var/list/heads = get_all_heads()
+		for(var/datum/mind/head in heads)
+			var/target = (head in targets)
+			if(target)
+				text += "<font color='red'>"
+			text += "<br>[head.key] was [head.name] ("
+			if(head.current)
+				if(head.current.stat == DEAD)
+					text += "died"
+				else if(head.current.z != 1)
+					text += "fled the station"
+				else
+					text += "survived the revolution"
+				if(head.current.real_name != head.name)
+					text += " as [head.current.real_name]"
+			else
+				text += "body destroyed"
+			text += ")"
+			if(target)
+				text += "</font>"
 
 /proc/is_convertable_to_rev(datum/mind/mind)
 	return istype(mind) && \

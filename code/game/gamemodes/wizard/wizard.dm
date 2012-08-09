@@ -123,6 +123,8 @@
 
 		wizard_mob.real_name = newname
 		wizard_mob.name = newname
+		if(wizard_mob.mind)
+			wizard_mob.mind.name = newname
 	return
 
 
@@ -207,36 +209,43 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
-	for(var/datum/mind/wizard in wizards)
-		var/wizard_name
-		if(wizard.current)
-			if(wizard.current == wizard.original)
-				wizard_name = "[wizard.current.real_name] (played by [wizard.key])"
-			else if (wizard.original)
-				wizard_name = "[wizard.current.real_name] (originally [wizard.original.real_name]) (played by [wizard.key])"
-			else
-				wizard_name = "[wizard.current.real_name] (original character destroyed) (played by [wizard.key])"
-		else
-			wizard_name = "[wizard.key] (character destroyed)"
-		world << "<B>The wizard was [wizard_name]</B>"
-		var/count = 1
-		var/wizardwin = 1
-		for(var/datum/objective/objective in wizard.objectives)
-			if(objective.check_completion())
-				world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
-				feedback_add_details("wizard_objective","[objective.type]|SUCCESS")
-			else
-				world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
-				feedback_add_details("wizard_objective","[objective.type]|FAIL")
-				wizardwin = 0
-			count++
+	if(wizards.len)
+		var/text = "<FONT size = 2><B>The wizards/witches were:</B></FONT>"
 
-		if(wizard.current && wizard.current.stat!=2 && wizardwin)
-			world << "<B>The wizard was successful!<B>"
-			feedback_add_details("wizard_success","SUCCESS")
-		else
-			world << "<B>The wizard has failed!<B>"
-			feedback_add_details("wizard_success","FAIL")
+		for(var/datum/mind/wizard in wizards)
+
+			text += "<br>[wizard.key] was [wizard.name] ("
+			if(wizard.current)
+				if(wizard.current.stat == DEAD)
+					text += "died"
+				else
+					text += "survived"
+				if(wizard.current.real_name != wizard.name)
+					text += " as [wizard.current.real_name]"
+			else
+				text += "body destroyed"
+			text += ")"
+
+			var/count = 1
+			var/wizardwin = 1
+			for(var/datum/objective/objective in wizard.objectives)
+				if(objective.check_completion())
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+					feedback_add_details("wizard_objective","[objective.type]|SUCCESS")
+				else
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+					feedback_add_details("wizard_objective","[objective.type]|FAIL")
+					wizardwin = 0
+				count++
+
+			if(wizard.current && wizard.current.stat!=2 && wizardwin)
+				text += "<br><B>The wizard was successful!<B>"
+				feedback_add_details("wizard_success","SUCCESS")
+			else
+				text += "<br><B>The wizard has failed!<B>"
+				feedback_add_details("wizard_success","FAIL")
+
+		world << text
 	return 1
 
 //OTHER PROCS

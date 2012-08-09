@@ -156,36 +156,50 @@
 	changeling_mob.make_changeling()
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
-	for(var/datum/mind/changeling in changelings)
-		var/changelingwin = 1
-		var/changeling_name
-		if((changeling.current) && (changeling.current.changeling))
-			changeling_name = "[changeling.current.real_name] (played by [changeling.key])"
-			world << "<B>The changeling was [changeling_name].</B>"
-			world << "<b>[changeling.current.gender=="male"?"His":"Her"] changeling ID was [changeling.current.gender=="male"?"Mr.":"Mrs."] [changeling.current.changeling.changelingID]."
-			world << "<B>Genomes absorbed: [changeling.current.changeling.absorbedcount]</B>"
+	if(changelings.len)
+		var/text = "<FONT size = 2><B>The changelings were:</B></FONT>"
+		for(var/datum/mind/changeling in changelings)
+			var/changelingwin = 1
 
-			var/count = 1
-			for(var/datum/objective/objective in changeling.objectives)
-				if(objective.check_completion())
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
-					feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
+			text += "<br>[changeling.key] was [changeling.name] ("
+			if(changeling.current && changeling.current.changeling)
+				if(changeling.current.stat == DEAD)
+					text += "died"
 				else
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
-					feedback_add_details("changeling_objective","[objective.type]|FAIL")
-					changelingwin = 0
-				count++
+					text += "survived"
+				if(changeling.current.real_name != changeling.name)
+					text += " as [changeling.current.real_name]"
+			else
+				text += "body destroyed"
+				changelingwin = 0
+			text += ")"
 
-		else
-			changeling_name = "[changeling.key] (character destroyed)"
-			changelingwin = 0
+			if(changeling.current && changeling.current.changeling)
+				text += "<br><b>changeling ID:</b> [changeling.current.gender==MALE?"Mr.":"Ms."] [changeling.current.changeling.changelingID]."
+				text += "<br><b>Genomes absorbed:</b> [changeling.current.changeling.absorbedcount]"
 
-		if(changelingwin)
-			world << "<B>The changeling was successful!<B>"
-			feedback_add_details("changeling_success","SUCCESS")
-		else
-			world << "<B>The changeling has failed!<B>"
-			feedback_add_details("changeling_success","FAIL")
+			if(changeling.objectives.len)
+				var/count = 1
+				for(var/datum/objective/objective in changeling.objectives)
+					if(objective.check_completion())
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+						feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+						feedback_add_details("changeling_objective","[objective.type]|FAIL")
+						changelingwin = 0
+					count++
+
+			if(changelingwin)
+				text += "<br><B>The changeling was successful!<B>"
+				feedback_add_details("changeling_success","SUCCESS")
+			else
+				text += "<br><B>The changeling has failed!<B>"
+				feedback_add_details("changeling_success","FAIL")
+
+		world << text
+
+
 	return 1
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)

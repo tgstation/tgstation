@@ -31,13 +31,12 @@
 
 datum/mind
 	var/key
-	var/name	//replaces mob/var/original_name
+	var/name				//replaces mob/var/original_name
 	var/mob/living/current
-	var/mob/living/original
+	var/mob/living/original	//TODO: remove.not used in any meaningful way ~Carn. First I'll need to tweak the way silicon-mobs handle minds.
 	var/active = 0
 
 	var/memory
-	//TODO: store original name --rastaf0
 
 	var/assigned_role
 	var/special_role
@@ -778,16 +777,16 @@ datum/mind
 						ticker.mode.malf_ai -= src
 						special_role = null
 
-						current.verbs -= /mob/living/silicon/ai/proc/choose_modules
-						current.verbs -= /datum/game_mode/malfunction/proc/takeover
-						current.verbs -= /datum/game_mode/malfunction/proc/ai_win
-						current.verbs -= /client/proc/fireproof_core
-						current.verbs -= /client/proc/upgrade_turrets
-						current.verbs -= /client/proc/disable_rcd
-						current.verbs -= /client/proc/overload_machine
-						current.verbs -= /client/proc/blackout
-						current.verbs -= /client/proc/interhack
-						current.verbs -= /client/proc/reactivate_camera
+						current.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
+							/datum/game_mode/malfunction/proc/takeover,
+							/datum/game_mode/malfunction/proc/ai_win,
+							/client/proc/fireproof_core,
+							/client/proc/upgrade_turrets,
+							/client/proc/disable_rcd,
+							/client/proc/overload_machine,
+							/client/proc/blackout,
+							/client/proc/interhack,
+							/client/proc/reactivate_camera)
 
 						current:laws = new /datum/ai_laws/asimov
 						del(current:malf_picker)
@@ -1092,8 +1091,6 @@ datum/mind
 //Initialisation procs
 /mob/living/proc/mind_initialize()
 	if(mind)
-		if(mind.key != key)
-			world.log << "## DEBUG: mind_initialize(): [key] took possession of [mind.key]'s mind"
 		mind.key = key
 	else
 		mind = new /datum/mind(key)

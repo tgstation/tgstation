@@ -164,39 +164,49 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
-	for(var/datum/mind/traitor in traitors)
-		var/traitor_name
-
-		if(traitor.current)
-			if(traitor.current == traitor.original)
-				traitor_name = "[traitor.current.real_name] (played by [traitor.key])"
-			else if (traitor.original)
-				traitor_name = "[traitor.current.real_name] (originally [traitor.original.real_name]) (played by [traitor.key])"
-			else
-				traitor_name = "[traitor.current.real_name] (original character destroyed) (played by [traitor.key])"
-		else
-			traitor_name = "[traitor.key] (character destroyed)"
-		var/special_role_text = traitor.special_role?(lowertext(traitor.special_role)):"antagonist"
-		world << "<B>The [special_role_text] was [traitor_name]</B>"
-		if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
+	if(traitors.len)
+		var/text = "<FONT size = 2><B>The traitors were:</B></FONT>"
+		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
-			var/count = 1
-			for(var/datum/objective/objective in traitor.objectives)
-				if(objective.check_completion())
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
-					feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+
+			text += "<br>[traitor.key] was [traitor.name] ("
+			if(traitor.current)
+				if(traitor.current.stat == DEAD)
+					text += "died"
 				else
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
-					feedback_add_details("traitor_objective","[objective.type]|FAIL")
-					traitorwin = 0
-				count++
+					text += "survived"
+				if(traitor.current.real_name != traitor.name)
+					text += " as [traitor.current.real_name]"
+			else
+				text += "body destroyed"
+			text += ")"
+
+			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
+				var/count = 1
+				for(var/datum/objective/objective in traitor.objectives)
+					if(objective.check_completion())
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+						feedback_add_details("traitor_objective","[objective.type]|FAIL")
+						traitorwin = 0
+					count++
+
+			var/special_role_text
+			if(traitor.special_role)
+				special_role_text = lowertext(traitor.special_role)
+			else
+				special_role_text = "antagonist"
 
 			if(traitorwin)
-				world << "<B>The [special_role_text] was successful!<B>"
+				text += "<br><B>The [special_role_text] was successful!<B>"
 				feedback_add_details("traitor_success","SUCCESS")
 			else
-				world << "<B>The [special_role_text] has failed!<B>"
+				text += "<br><B>The [special_role_text] has failed!<B>"
 				feedback_add_details("traitor_success","FAIL")
+
+		world << text
 	return 1
 
 

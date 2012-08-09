@@ -322,17 +322,25 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
-	if (syndicates.len!=0 || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)))
-		world << "<FONT size = 2><B>The Syndicate operatives were: </B></FONT>"
-		for(var/datum/mind/mind in syndicates)
-			var/text = ""
-			if(mind.current)
-				text += "[mind.key] was [mind.current.real_name]"
-				if(mind.current.stat == 2)
-					text += " (Dead)"
+	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
+		var/text = "<FONT size = 2><B>The syndicate operatives were:</B></FONT>"
+
+		for(var/datum/mind/syndicate in syndicates)
+
+			text += "<br>[syndicate.key] was [syndicate.name] ("
+			if(syndicate.current)
+				if(syndicate.current.stat == DEAD)
+					text += "died"
+				else
+					text += "survived"
+				if(syndicate.current.real_name != syndicate.name)
+					text += " as [syndicate.current.real_name]"
 			else
-				text += "[mind.key] (character destroyed)"
-			world << text
+				text += "body destroyed"
+			text += ")"
+
+		world << text
+	return 1
 
 
 /proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
@@ -353,8 +361,8 @@
 	for(var/datum/mind/synd_mind in syndicates)
 		switch(synd_mind.current.gender)
 			if("male")
-				synd_mind.current.real_name = "[pick(first_names_male)] [lastname]"
+				synd_mind.name = "[pick(first_names_male)] [lastname]"
 			if("female")
-				synd_mind.current.real_name = "[pick(first_names_female)] [lastname]"
-
+				synd_mind.name = "[pick(first_names_female)] [lastname]"
+		synd_mind.current.real_name = synd_mind.name
 	return

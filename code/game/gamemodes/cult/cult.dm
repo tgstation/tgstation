@@ -111,8 +111,8 @@
 			if("survive")
 				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
 			if("sacrifice")
-				if(sacrifice_target && sacrifice_target.current)
-					explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
+				if(sacrifice_target)
+					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
 				else
 					explanation = "Free objective."
 			if("eldergod")
@@ -310,58 +310,60 @@
 		feedback_set("round_end_result",acolytes_survived)
 		world << "\red <FONT size = 3><B> The staff managed to stop the cult!</B></FONT>"
 
-	world << "\b Cultists escaped: [acolytes_survived]"
+	var/text = "<b>Cultists escaped:</b> [acolytes_survived]"
 
-	world << "The cultists' objectives were:"
-
-	for(var/obj_count=1,obj_count <= objectives.len,obj_count++)
-		var/explanation
-		switch(objectives[obj_count])
-			if("survive")
-				if(!check_survive())
-					explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. \green <b>Success!</b>"
-					feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
-				else
-					explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. \red Failed."
-					feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
-			if("sacrifice")
-				if(!sacrifice_target)
-					explanation = "Free objective"
-				else
-					if(sacrificed.Find(sacrifice_target))
-						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. \green <b>Success!</b>"
-						feedback_add_details("cult_objective","cult_sacrifice|SUCCESS")
-					else if(sacrifice_target && sacrifice_target.current)
-						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. \red Failed."
-						feedback_add_details("cult_objective","cult_sacrifice|FAIL")
+	if(objectives.len)
+		text += "<br><b>The cultists' objectives were:</b>"
+		for(var/obj_count=1, obj_count <= objectives.len, obj_count++)
+			var/explanation
+			switch(objectives[obj_count])
+				if("survive")
+					if(!check_survive())
+						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. \green <b>Success!</b>"
+						feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
 					else
-						explanation = "Sacrifice Unknown, the Unknown whos body was likely gibbed. \red Failed."
-						feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
-			if("eldergod")
-				if(!eldergod)
-					explanation = "Summon Nar-Sie. \green <b>Success!</b>"
-					feedback_add_details("cult_objective","cult_narsie|SUCCESS")
-				else
-					explanation = "Summon Nar-Sie. \red Failed."
-					feedback_add_details("cult_objective","cult_narsie|FAIL")
-		world << "<B>Objective #[obj_count]</B>: [explanation]"
+						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. \red Failed."
+						feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
+				if("sacrifice")
+					if(sacrifice_target)
+						if(sacrifice_target in sacrificed)
+							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. \green <b>Success!</b>"
+							feedback_add_details("cult_objective","cult_sacrifice|SUCCESS")
+						else if(sacrifice_target && sacrifice_target.current)
+							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. \red Failed."
+							feedback_add_details("cult_objective","cult_sacrifice|FAIL")
+						else
+							explanation = "Sacrifice Unknown, the Unknown whos body was likely gibbed. \red Failed."
+							feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
+				if("eldergod")
+					if(!eldergod)
+						explanation = "Summon Nar-Sie. \green <b>Success!</b>"
+						feedback_add_details("cult_objective","cult_narsie|SUCCESS")
+					else
+						explanation = "Summon Nar-Sie. \red Failed."
+						feedback_add_details("cult_objective","cult_narsie|FAIL")
+			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 
+	world << text
 	..()
 	return 1
 
 
 /datum/game_mode/proc/auto_declare_completion_cult()
-	if (cult.len!=0 || (ticker && istype(ticker.mode,/datum/game_mode/cult)))
-		world << "<FONT size = 2><B>The cultists were: </B></FONT>"
-		var/text = ""
-		for(var/datum/mind/cult_nh_mind in cult)
-			if(cult_nh_mind.current)
-				text += "[cult_nh_mind.current.real_name]"
-				if(cult_nh_mind.current.stat == 2)
-					text += " (Dead)"
+	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
+		var/text = "<FONT size = 2><B>The cultists were:</B></FONT>"
+		for(var/datum/mind/cultist in cult)
+
+			text += "<br>[cultist.key] was [cultist.name] ("
+			if(cultist.current)
+				if(cultist.current.stat == DEAD)
+					text += "died"
 				else
-					text += " (Survived!)"
+					text += "survived"
+				if(cultist.current.real_name != cultist.name)
+					text += " as [cultist.current.real_name]"
 			else
-				text += "[cult_nh_mind.key] (character destroyed)"
-			text += ", "
+				text += "body destroyed"
+			text += ")"
+
 		world << text

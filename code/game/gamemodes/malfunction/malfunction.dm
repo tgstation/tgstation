@@ -237,21 +237,22 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_malfunction()
-	if (malf_ai.len!=0 || istype(ticker.mode,/datum/game_mode/malfunction))
-		if (malf_ai.len==1)
-			var/text = ""
-			var/datum/mind/ai = malf_ai[1]
-			if(ai.current)
-				text += "[ai.current.real_name]"
-			else
-				text += "[ai.key] (character destroyed)"
-			world << "<FONT size = 2><B>The malfunctioning AI was [text]</B></FONT>"
-		else
-			world << "<FONT size = 2><B>The malfunctioning AI were: </B></FONT>"
-			var/list/ai_names = new
-			for(var/datum/mind/ai in malf_ai)
-				if(ai.current)
-					ai_names += ai.current.real_name + ((ai.current.stat==2)?" (Dead)":"")
+	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
+		var/text = "<FONT size = 2><B>The malfunctioning AI were:</B></FONT>"
+
+		for(var/datum/mind/malf in malf_ai)
+
+			text += "<br>[malf.key] was [malf.name] ("
+			if(malf.current)
+				if(malf.current.stat == DEAD)
+					text += "deactivated"
 				else
-					ai_names += "[ai.key] (character destroyed)"
-			world << english_list(ai_names)
+					text += "operational"
+				if(malf.current.real_name != malf.name)
+					text += " as [malf.current.real_name]"
+			else
+				text += "hardware destroyed"
+			text += ")"
+
+		world << text
+	return 1
