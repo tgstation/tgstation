@@ -1,9 +1,18 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
+
+zone/var/progress = "nothing"
+
 zone/proc/process()
 	. = 1
+
+	progress = "problem with: src.SoftDelete()"
+
 	//Deletes zone if empty.
 	if(!contents.len)
 		return SoftDelete()
+
+	progress = "problem with: src.Rebuild()"
+
 	//Does rebuilding stuff.
 	if(rebuild)
 		rebuild = 0
@@ -12,11 +21,15 @@ zone/proc/process()
 	if(!contents.len) //If we got soft deleted.
 		return
 
+	progress = "problem with: src.air.adjust()"
+
 	//Sometimes explosions will cause the air to be deleted for some reason.
 	if(!air)
 		air = new()
 		air.adjust(MOLES_O2STANDARD, 0, MOLES_N2STANDARD, 0, list())
 		world.log << "Air object lost in zone. Regenerating."
+
+	progress = "problem with: calculating total space tiles"
 
 	//Counting up space.
 	var/total_space = 0
@@ -28,6 +41,8 @@ zone/proc/process()
 		if(space_tiles)
 			total_space = space_tiles.len
 
+	progress = "problem with: src.ShareSpace()"
+
 	//Add checks to ensure that we're not sucking air out of an empty room.
 	if(total_space && air.total_moles > 0.1 && air.temperature > TCMB+0.5)
 		//If there is space, air should flow out of the zone.
@@ -35,10 +50,14 @@ zone/proc/process()
 			AirflowSpace(src)
 		ShareSpace(air,total_space*vsc.zone_share_percent/200)
 
+	progress = "problem with: src.air.react()"
+
 	//React the air here.
 	air.react(null,0)
 
 	//Check the graphic.
+
+	progress = "problem with: modifying turf graphics"
 
 	air.graphic = 0
 	if(air.toxins > MOLES_PLASMA_VISIBLE)
@@ -48,8 +67,12 @@ zone/proc/process()
 		if(sleeping_agent && (sleeping_agent.moles > 1))
 			air.graphic = 2
 
+	progress = "problem with an inbuilt byond function: some conditional checks"
+
 	//Only run through the individual turfs if there's reason to.
 	if(air.graphic != air.graphic_archived || air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+
+		progress = "problem with: turf/simulated/update_visuals()"
 
 		for(var/turf/simulated/S in contents)
 			//Update overlays.
@@ -59,20 +82,31 @@ zone/proc/process()
 				else
 					S.update_visuals(air)
 
+			progress = "problem with: item or turf temperature_expose()"
+
 			//Expose stuff to extreme heat.
 			if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 				for(var/atom/movable/item in S)
 					item.temperature_expose(air, air.temperature, CELL_VOLUME)
 				S.temperature_expose(air, air.temperature, CELL_VOLUME)
 
+	progress = "problem with: calculating air graphic"
+
 	//Archive graphic so we can know if it's different.
 	air.graphic_archived = air.graphic
+
+	progress = "problem with: calculating air temp"
 
 	//Ensure temperature does not reach absolute zero.
 	air.temperature = max(TCMB,air.temperature)
 
+	progress = "problem with an inbuilt byond function: length(connections)"
+
 	//Handle connections to other zones.
 	if(length(connections))
+
+		progress = "problem with: src.ZMerge(), a couple of misc procs"
+
 		for(var/connection/C in connections)
 			//Check if the connection is valid first.
 			if(!C.Cleanup())
@@ -84,6 +118,8 @@ zone/proc/process()
 				if(C.A.zone.air.compare(C.B.zone.air) || total_space)
 					ZMerge(C.A.zone,C.B.zone)
 
+		progress = "problem with: src.ShareRatio(), src.Airflow(), a couple of misc procs"
+
 		//Share some
 		for(var/zone/Z in connected_zones)
 			if(air && Z.air)
@@ -94,6 +130,8 @@ zone/proc/process()
 					ShareRatio( air , Z.air , connected_zones[Z]*vsc.zone_share_percent/200 )
 					//Divided by 200 since each zone is processed.  Each connection is considered twice
 					//Space tiles force it to try and move twice as much air.
+
+	progress = "all components completed successfully, the problem is not here"
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.

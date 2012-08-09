@@ -292,6 +292,7 @@
 			verbs += /client/proc/Force_Event_admin
 			verbs += /client/proc/radioalert
 			verbs += /client/proc/CarbonCopy
+			verbs += /client/proc/kill_air		//formerly game masters only. this should help for zas debugging while we're having these issues
 			//verbs += /client/proc/jump_to_dead_group
 		else	return
 
@@ -311,7 +312,6 @@
 			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/toggle_log_hrefs
 			verbs += /client/proc/enable_debug_verbs
-			verbs += /client/proc/kill_air
 			verbs += /client/proc/callprocgen
 			verbs += /client/proc/callprocobj
 			verbs += /client/proc/rnd_check_designs
