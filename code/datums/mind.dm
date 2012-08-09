@@ -57,7 +57,7 @@ datum/mind
 
 	proc/transfer_to(mob/living/new_character)
 		if(!istype(new_character))
-			world.log << "## Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn"
+			world.log << "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn"
 		if(current)					//remove ourself from our old body's mind variable
 			current.mind = null
 		if(new_character.mind)		//remove any mind currently in our new body's mind variable
@@ -91,7 +91,8 @@ datum/mind
 			alert("Not before round-start!", "Alert")
 			return
 
-		var/out = "<B>[name]</B>[(curent&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
+		var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
+		out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 		out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
 		out += "Factions and special roles:<br>"
 
@@ -513,7 +514,7 @@ datum/mind
 								var/datum/objective/mutiny/rev_obj = new
 								rev_obj.owner = src
 								rev_obj.target = O.target
-								rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."
+								rev_obj.explanation_text = "Assassinate [O.target.name], the [O.target.assigned_role]."
 								objectives += rev_obj
 							ticker.mode.greet_revolutionary(src,0)
 					ticker.mode.head_revolutionaries += src
