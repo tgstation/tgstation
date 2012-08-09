@@ -475,11 +475,11 @@ datum/preferences
 		if(link_tags["age"])
 			switch(link_tags["age"])
 				if("input")
-					var/new_age = input(user, "Please select type in age: 17-80", "Character Generation")  as num
+					var/new_age = input(user, "Please select type in age: 17-45", "Character Generation")  as num
 					if(new_age)
-						age = max(min(round(text2num(new_age)), 80), 17)
+						age = max(min(round(text2num(new_age)), 45), 17)
 				if("random")
-					age = rand (17, 80)
+					age = rand (17, 45)
 
 		if(link_tags["OOC"])
 			var/tempnote = ""
