@@ -470,6 +470,9 @@
 
 	if(get_dist(C, src) > 1 || load || !on)
 		return
+	for(var/obj/structure/plasticflaps/P in src.loc)//Takes flaps into account
+		if(!CanPass(C,P))
+			return
 	mode = 1
 
 	// if a create, close before loading
@@ -517,7 +520,12 @@
 
 
 	if(dirn)
-		step(load, dirn)
+		var/turf/T = src.loc
+		T = get_step(T,dirn)
+		if(CanPass(load,T))//Can't get off onto anything that wouldn't let you pass normally
+			step(load, dirn)
+		else
+			load.loc = src.loc//Drops you right there, so you shouldn't be able to get yourself stuck
 
 	load = null
 
