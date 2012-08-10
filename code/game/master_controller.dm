@@ -178,7 +178,7 @@ datum/controller/game_controller
 			if(!success) //Runtimed.
 				log_admin("ZASALERT: air_system/tick() failed: [air_master.tick_progress]")
 				air_master.failed_ticks++
-				if(air_master.failed_ticks > 10)
+				if(air_master.failed_ticks > 5)
 					world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
 					kill_air = 1
 					air_master.failed_ticks = 0
