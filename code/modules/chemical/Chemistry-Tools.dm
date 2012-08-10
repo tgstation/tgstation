@@ -1473,6 +1473,105 @@
 	else
 		usr << "\blue It is currently empty."
 
+////////////////////////////////////////////////////////////////////////////////
+/// Bunsen Burner
+////////////////////////////////////////////////////////////////////////////////
+
+//make a subclass of this for cooking at some point, allow it to accept multiple containers etc
+//todo: use mini plasma tanks for fuel
+
+/obj/item/device/cooker
+	name = "bunsen burner"
+	desc = "a small, gas-powered cooker."
+	icon = 'chemical.dmi'
+	icon_state = "bunsen1"		//spawns with an empty beaker already on it
+	var/obj/item/weapon/reagent_containers/held_container
+	var/heating_stage = 0
+	var/active = 0
+	var/icon_empty = "bunsen0"
+	var/icon_full = "bunsen1"
+	var/icon_heating = "bunsen2"
+
+/obj/item/device/cooker/verb/toggle()
+	if(held_container)
+		if(!active)
+			usr << "\blue You switch the [src] on."
+			active = 1
+			icon_state = icon_heating
+			spawn(50)
+				heat()
+		else
+			usr << "\blue You switch the [src] off."
+			active = 0
+			icon_state = icon_full
+	else
+		usr << "\red You can not toggle the [src] when it holds no containers!"
+
+/obj/item/device/cooker/proc/heat()
+	if(!held_container)
+		heating_stage = 0
+		active = 0
+		icon_state = icon_empty
+		return
+
+	if(active)
+		icon_state = icon_heating
+		spawn(50)
+			heat()
+	else
+		heating_stage = 0
+		icon_state = icon_full
+		return
+
+	if(heating_stage++ > 5)
+		visible_message("bubbles!")
+		held_container.reagents.handle_reactions(1)
+	else
+		visible_message("hisses and steams!")
+
+/obj/item/device/cooker/New()
+	held_container = new /obj/item/weapon/reagent_containers/glass/large/(src)
+
+/obj/item/device/cooker/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(istype(O, /obj/item/weapon/reagent_containers/))
+		if(held_container)
+			//todo: empty O into held_container
+			user << "\red There is already a [held_container] on the [src]!"
+		else
+			user.drop_item()
+			user << "\blue You place the [O] on the [src]."
+			held_container = O
+			O.loc = src
+			icon_state = icon_full
+		return 1
+	else if(!held_container)
+		user << "\red There is nothing to put [O] in to!"
+		return 1
+	else if (istype(O,/obj/item))
+		if(w_class > 2)
+			user << "\red That won't fit in the [held_container]!"
+		else
+			//add random things to the container. when the burner is activated, they will melt
+			O.loc = held_container
+		return 1
+	else
+		user << "\red That won't fit in the [held_container]!"
+		return 1
+
+	return ..()
+
+/obj/item/device/cooker/attack_hand(var/mob/user as mob)
+	if(held_container)
+		held_container.attack_hand(user)
+		if(held_container.loc != src)
+			held_container = null
+			icon_state = icon_empty
+			user << "\blue You remove the [held_container] from the [src]."
+			return 1
+	else
+		..()
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Food.

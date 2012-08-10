@@ -14,11 +14,14 @@ datum
 		var/result_amount = 0
 		var/secondary = 0 // set to nonzero if secondary reaction
 
+		var/requires_heating = 0	//to avoid lag and other complications, every recipe is restricted to the same heating time (or none)
+
 		proc
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				return
 
 		//I recommend you set the result amount to the total volume of all components.
+		//but obviously that's not mandatory. science!
 
 		explosion_potassium
 			name = "Explosion"

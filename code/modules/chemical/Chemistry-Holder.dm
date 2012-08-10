@@ -176,7 +176,7 @@ datum
 					R.on_update (A)
 				update_total()
 
-			handle_reactions()
+			handle_reactions(var/heated = 0)
 				if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
 				var/reaction_occured = 0
@@ -184,6 +184,8 @@ datum
 					reaction_occured = 0
 					for(var/A in typesof(/datum/chemical_reaction) - /datum/chemical_reaction)
 						var/datum/chemical_reaction/C = new A()
+						if(C.requires_heating && !heated)
+							continue
 						var/total_required_reagents = C.required_reagents.len
 						var/total_matching_reagents = 0
 						var/total_required_catalysts = C.required_catalysts.len
