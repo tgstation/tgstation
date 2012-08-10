@@ -23,7 +23,6 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "pokes the"
-
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 60
 	health = 60
@@ -37,6 +36,7 @@
 	max_co2 = 0
 	min_n2 = 0
 	max_n2 = 0
+	minbodytemp = 0
 
 	var/stance = BEAR_STANCE_IDLE //Used to determine behavior
 	var/stance_step = 0 //Used to delay checks depending on what stance the bear is in

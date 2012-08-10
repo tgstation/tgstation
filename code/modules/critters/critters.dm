@@ -1,7 +1,6 @@
 /obj/effect/critter/creature
 	name = "creature"
 	desc = "A sanity-destroying otherthing."
-	icon = 'icons/obj/otherthing.dmi'
 	icon_state = "otherthing"
 	health = 80
 	max_health = 80
