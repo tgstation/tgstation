@@ -184,7 +184,7 @@ datum
 						var/output = T.update_air_properties()
 						if(. && T && !output)
 							. = 0 //If a runtime occured, make sure we can sense it.
-							log_adminwarn("ZASALERT: Unable run turf/simualted/update_air_properties()")
+							log_admin("ZASALERT: Unable run turf/simualted/update_air_properties()")
 					tiles_to_update = list()
 
 				tick_progress = "connections_to_check"
@@ -207,13 +207,14 @@ datum
 							Z.last_update = current_cycle
 						if(. && Z && !output)
 							. = 0
-							log_adminwarn("ZASALERT: unable run zone/process(), [Z.progress]")
+							log_admin("ZASALERT: unable run zone/process(), [Z.progress]")
+							message_admins("ZASALERT. ZASALERT: unable run zone/proc/process(), [Z.progress], tell someone about this!")
 
 				tick_progress = "active_hotspots (fire)"
 				for(var/obj/fire/F in active_hotspots)
 					var/output = F.process()
 					if(. && F && !output)
 						. = 0
-						log_adminwarn("ZASALERT: Unable run obj/fire/process()")
+						log_admin("ZASALERT: Unable run obj/fire/process()")
 
 				tick_progress = "success"
