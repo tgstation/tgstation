@@ -63,6 +63,7 @@ zone
 			if(C.zone_B == src)
 				C.zone_B = null
 			air_master.connections_to_check += C
+		return 1
 
 
 proc/FloodFill(turf/start)
