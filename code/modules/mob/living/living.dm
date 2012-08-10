@@ -184,7 +184,7 @@
 			affecting.status &= ~ORGAN_BROKEN
 			affecting.status &= ~ORGAN_SPLINTED
 			affecting.status &= ~ORGAN_DESTROYED
-			affecting.wound_descs.Cut()
+			affecting.wounds.Cut()
 		H.UpdateDamageIcon()
 		H.update_body()
 	//src.fireloss = 0
@@ -218,7 +218,7 @@
 				e.status &= ~ORGAN_DESTROYED
 				e.perma_injury = 0
 				e.update_icon()
-				e.wound_descs.Cut()
+				e.wounds.Cut()
 			del(H.vessel)
 			H.vessel = new/datum/reagents(560)
 			H.vessel.my_atom = H
@@ -286,3 +286,6 @@
 	set category = "OOC"
 
 	src.update_flavor_text()
+
+
+/mob/living/var/life_tick = 0
