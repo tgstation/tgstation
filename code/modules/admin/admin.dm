@@ -160,40 +160,45 @@ var/global/BSACooldown = 0
 	if(href_list["unbane"])
 		UpdateTime()
 		var/reason
-		var/mins = 0
+
 		var/banfolder = href_list["unbane"]
 		Banlist.cd = "/base/[banfolder]"
 		var/reason2 = Banlist["reason"]
 		var/temp = Banlist["temp"]
-		var/minutes = (Banlist["minutes"] - CMinutes)
-		if(!minutes || minutes < 0) minutes = 0
+
+		var/minutes = Banlist["minutes"]
+
 		var/banned_key = Banlist["key"]
 		Banlist.cd = "/base"
+
+		var/duration
 
 		switch(alert("Temporary Ban?",,"Yes","No"))
 			if("Yes")
 				temp = 1
-				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",minutes ? minutes : 1440) as num
-				if(!mins)
-					return
-				if(mins >= 525600) mins = 525599
-				reason = input(usr,"Reason?","reason",reason2) as text
-				if(!reason)
-					return
+				var/mins = 0
+				if(minutes > CMinutes)
+					mins = minutes - CMinutes
+				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
+				if(!mins)	return
+				mins = min(525599,mins)
+				minutes = CMinutes + mins
+				duration = GetExp(minutes)
+				reason = input(usr,"Reason?","reason",reason2) as text|null
+				if(!reason)	return
 			if("No")
 				temp = 0
-				reason = input(usr,"Reason?","reason",reason2) as text
-				if(!reason)
-					return
+				duration = "Perma"
+				reason = input(usr,"Reason?","reason",reason2) as text|null
+				if(!reason)	return
 
-		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetExp(mins)]")
-
-		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetExp(mins)]")
-		message_admins("\blue [key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetExp(mins)]", 1)
+		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
+		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
+		message_admins("\blue [key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]", 1)
 		Banlist.cd = "/base/[banfolder]"
 		Banlist["reason"] << reason
 		Banlist["temp"] << temp
-		Banlist["minutes"] << (mins + CMinutes)
+		Banlist["minutes"] << minutes
 		Banlist["bannedby"] << usr.ckey
 		Banlist.cd = "/base"
 		feedback_inc("ban_edit",1)
