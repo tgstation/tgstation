@@ -43,7 +43,7 @@ MONKEY CUBE BOX
 
 /obj/item/kitchen/donut_box/MouseDrop(mob/living/user as mob)
 	if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
-		if(!istype(user, /mob/living/carbon/metroid))
+		if(!istype(user, /mob/living/carbon/metroid) && !istype(user, /mob/living/simple_animal))
 			if( !usr.get_active_hand() )
 				src.attack_hand(usr, usr.hand, 1)
 	return

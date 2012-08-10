@@ -16,9 +16,9 @@
 
 	MouseDrop(mob/user as mob)
 		if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
-
-			if( !usr.get_active_hand() )		//if active hand is empty
-				attack_hand(usr, 1, 1)
+			if(!istype(usr, /mob/living/carbon/metroid) && !istype(usr, /mob/living/simple_animal))
+				if( !usr.get_active_hand() )		//if active hand is empty
+					attack_hand(usr, 1, 1)
 
 		return
 

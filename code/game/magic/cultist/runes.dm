@@ -59,7 +59,7 @@ var/list/sacrificed = list()
 					user.take_overall_damage(5, 0)
 				del(src)
 			for(var/mob/living/carbon/C in orange(1,src))
-				if(iscultist(C))
+				if(iscultist(C) && !C.stat)
 					culcount++
 			if(culcount>=3)
 				user.say("Sas[pick("'","`")]so c'arta forbici tarem!")
@@ -126,7 +126,7 @@ var/list/sacrificed = list()
 		tearreality()
 			var/cultist_count = 0
 			for(var/mob/M in range(1,src))
-				if(iscultist(M))
+				if(iscultist(M) && !M.stat)
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
@@ -541,7 +541,7 @@ var/list/sacrificed = list()
 				if(!(iscultist(V)))
 					victims += V
 			for(var/mob/living/carbon/C in orange(1,src))
-				if(iscultist(C))
+				if(iscultist(C) && !C.stat)
 					cultsinrange += C
 					C.say("Barhah hra zar[pick("'","`")]garis!")
 			for(var/mob/H in victims)
@@ -715,7 +715,7 @@ var/list/sacrificed = list()
 					cultists+=H.current
 			var/list/mob/living/carbon/users = new
 			for(var/mob/living/carbon/C in orange(1,src))
-				if(iscultist(C))
+				if(iscultist(C) && !C.stat)
 					users+=C
 			if(users.len>=3)
 				var/mob/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - users)
@@ -765,7 +765,7 @@ var/list/sacrificed = list()
 					cultists+=H.current
 			var/list/mob/living/carbon/users = new
 			for(var/mob/living/carbon/C in orange(1,src))
-				if(iscultist(C))
+				if(iscultist(C) && !C.stat)
 					users+=C
 			if(users.len>=3)
 				var/mob/cultist = input("Choose the one who you want to summon", "Followers of Geometer") as null|anything in (cultists - user)
@@ -780,7 +780,7 @@ var/list/sacrificed = list()
 				cultist.lying = 1
 				cultist.regenerate_icons()
 				for(var/mob/living/carbon/human/C in orange(1,src))
-					if(iscultist(C))
+					if(iscultist(C) && !C.stat)
 						C.say("N'ath reth sh'yro eth d[pick("'","`")]rekkathnor!")
 						C.take_overall_damage(25, 0)
 				user.visible_message("\red Rune disappears with a flash of red light, and in its place now a body lies.", \
@@ -883,7 +883,7 @@ var/list/sacrificed = list()
 			var/culcount = 0 //also, wording for it is old wording for obscure rune, which is now hide-see-blood.
 //			var/list/cultboil = list(cultists-usr) //and for this words are destroy-see-blood.
 			for(var/mob/living/carbon/C in orange(1,src))
-				if(iscultist(C))
+				if(iscultist(C) && !C.stat)
 					culcount++
 			if(culcount>=3)
 				for(var/mob/living/carbon/M in viewers(usr))
@@ -901,7 +901,7 @@ var/list/sacrificed = list()
 					if(prob(10))
 						explosion(R.loc, -1, 0, 1, 5)
 				for(var/mob/living/carbon/human/C in orange(1,src))
-					if(iscultist(C))
+					if(iscultist(C) && !C.stat)
 						C.say("Dedo ol[pick("'","`")]btoh!")
 						C.take_overall_damage(15, 0)
 				del(src)
@@ -914,7 +914,7 @@ var/list/sacrificed = list()
 		burningblood()
 			var/culcount = 0
 			for(var/mob/living/carbon/C in orange(1,src))
-				if(iscultist(C))
+				if(iscultist(C) && !C.stat)
 					culcount++
 			if(culcount >= 5)
 				for(var/obj/effect/rune/R in world)

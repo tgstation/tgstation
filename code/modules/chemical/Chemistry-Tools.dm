@@ -1002,7 +1002,7 @@
 					finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
 
 			overlay.icon += finalcolor
-			if(!istype(src.loc, /turf))	overlay.layer = 30
+			if(!istype(src.loc, /turf))	overlay.layer = 17
 			overlays += overlay
 
 
