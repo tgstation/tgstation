@@ -388,7 +388,7 @@ atom/proc/sd_StripLum(list/V = view(luminosity,src), center = src)
 		/*	increase the turf's brightness depending on the
 			brightness and distance of the lightsource */
 		T.sd_lumcount -= (luminosity-get_dist(center,T))
-		T.sd_lumcount = max(0, T.sd_lumcount)
+//		T.sd_lumcount = max(0, T.sd_lumcount)
 		//	update the turf's area
 		T.sd_LumUpdate()
 
@@ -450,7 +450,7 @@ atom/proc/sd_SetOpacity(new_opacity as num)
 			if(ATurf)
 				for(T in affected[A]-view(A.luminosity, ATurf))
 					T.sd_lumcount -= (A.luminosity-get_dist(A,T))
-					T.sd_lumcount = max(0, T.sd_lumcount)
+//					T.sd_lumcount = max(0, T.sd_lumcount)
 					T.sd_LumUpdate()
 
 
@@ -544,7 +544,7 @@ area/proc/sd_LightLevel(slevel = sd_light_level as num, keep = 1)
 
 	if(keep) sd_light_level = slevel
 
-	slevel = min(max(slevel,0),sd_dark_shades)	// restrict range
+//	slevel = min(max(slevel,0),sd_dark_shades)	// restrict range
 
 	if(slevel > 0)
 		luminosity = 1
