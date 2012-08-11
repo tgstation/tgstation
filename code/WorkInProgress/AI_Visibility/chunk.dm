@@ -193,7 +193,7 @@
 		if(!(t in visibleTurfs))
 			if(!t.dim)
 				t.dim = image('cameravis.dmi', t, "dim", 15)
-				t.mouse_opacity = 0
+				t.dim.mouse_opacity = 0
 
 			dim += t.dim
 			images_added += t.dim
