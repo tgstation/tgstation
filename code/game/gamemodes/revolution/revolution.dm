@@ -414,6 +414,8 @@
 			if(target)
 				text += "</font>"
 
+		world << text
+
 /proc/is_convertable_to_rev(datum/mind/mind)
 	return istype(mind) && \
 		istype(mind.current, /mob/living/carbon/human) && \
