@@ -6,39 +6,27 @@ proc/FloodFill(turf/start)
 		return list()
 	var
 		list
-			open_directions = list(EAST, WEST)
-			defer_directions = list(NORTH, SOUTH)
 			open = list(start)
-			defer = list()
 			closed = list()
 			doors = list()
 
-	while(open.len || defer.len)
-		if(open.len)
-			for(var/turf/T in open)
-				//Stop if there's a door, even if it's open. These are handled by indirect connection.
-				if(!T.HasDoor())
+	while(open.len)
+		for(var/turf/T in open)
+			//Stop if there's a door, even if it's open. These are handled by indirect connection.
+			if(!T.HasDoor())
 
-					for(var/d in open_directions)
-						var/turf/O = get_step(T,d)
-						//Simple pass check.
-						if(istype(O) && !(O in open || O in closed) && O.ZCanPass(T))
-							defer -= O
-							open += O
-					for(var/d in defer_directions)
-						var/turf/O = get_step(T,d)
-						//Simple pass check.
-						if(istype(O) && !(O in open || O in closed || O in defer) && O.ZCanPass(T))
-							defer += O
-				else
-					doors |= T
-					open -= T
-					continue
-
+				for(var/d in cardinal)
+					var/turf/O = get_step(T,d)
+					//Simple pass check.
+					if(istype(O) && !(O in open || O in closed) && O.ZCanPass(T))
+						open += O
+			else
+				doors |= T
 				open -= T
-				closed += T
-		else
-			open += locate(/turf) in defer
+				continue
+
+			open -= T
+			closed += T
 
 	for(var/turf/T in doors)
 		var/force_connection = 1
