@@ -1666,7 +1666,7 @@ turf/simulated/floor/proc/update_icon()
 
 /turf/space/Entered(atom/movable/A as mob|obj)
 	..()
-	if ((!(A) || src != A.loc || istype(null, /obj/effect/beam)))	return
+	if ((!(A) || src != A.loc))	return
 
 	inertial_drift(A)
 
@@ -1674,7 +1674,7 @@ turf/simulated/floor/proc/update_icon()
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
 		// if(ticker.mode.name == "nuclear emergency")	return
-		if (src.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || src.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
+		if (A.x <= TRANSITIONEDGE + 1 || A.x >= (world.maxx - TRANSITIONEDGE - 1) || A.y <= TRANSITIONEDGE + 1 || A.y >= (world.maxy - TRANSITIONEDGE - 1))
 			if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
 				del(A)
 				return
