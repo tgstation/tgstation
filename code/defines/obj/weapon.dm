@@ -221,19 +221,6 @@
 	details = 1
 	origin_tech = "magnets=4;biotech=2"
 
-/obj/item/weapon/melee/chainofcommand
-	name = "chain of command"
-	desc = "The Captain is first and all other heads are last."
-	icon_state = "chainofcommand"
-	item_state = "chainofcommand"
-	flags = FPRINT | TABLEPASS | CONDUCT
-	slot_flags = SLOT_BELT
-	force = 10
-	throwforce = 7
-	w_class = 3
-	origin_tech = "combat=4"
-	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
-
 /obj/item/weapon/melee/energy
 	var/active = 0
 
@@ -263,11 +250,6 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-
-/obj/item/weapon/melee/energy/sword/chainsword
-	color = "chain"
-	New()
-		return
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
