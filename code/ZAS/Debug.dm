@@ -19,7 +19,7 @@ zone/proc
 			for(var/turf/T in contents)
 				T.overlays += 'debug_group.dmi'
 
-			for(var/turf/space/S in space_tiles)
+			for(var/turf/space/S in unsimulated_tiles)
 				S.overlays += 'debug_space.dmi'
 
 			M << "<u>Zone Air Contents</u>"
@@ -31,7 +31,7 @@ zone/proc
 			M << "Heat Energy: [air.temperature * air.heat_capacity()]"
 			M << "Pressure: [air.return_pressure()]"
 			M << ""
-			M << "Space Tiles: [length(space_tiles)]"
+			M << "Space Tiles: [length(unsimulated_tiles)]"
 			M << "Movable Objects: [length(movable_objects)]"
 			M << "<u>Connections: [length(connections)]</u>"
 
@@ -52,7 +52,7 @@ zone/proc
 			for(var/turf/T in contents)
 				T.overlays -= 'debug_group.dmi'
 
-			for(var/turf/space/S in space_tiles)
+			for(var/turf/space/S in unsimulated_tiles)
 				S.overlays -= 'debug_space.dmi'
 		for(var/zone/Z in zones)
 			if(Z.air == air && Z != src)

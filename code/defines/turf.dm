@@ -14,7 +14,7 @@
 
 		//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
-	var/heat_capacity = 1
+	var/heat_capacity = 200
 
 		//Properties for both
 	var/temperature = T20C
@@ -288,6 +288,11 @@
 	name = "floor"
 	icon = 'floors.dmi'
 	icon_state = "Floor3"
+
+/turf/unsimulated/floor/deadly
+	oxygen = MOLES_O2STANDARD/10
+	nitrogen = MOLES_N2STANDARD/5
+	temperature = TCMB
 
 /turf/unsimulated/wall
 	name = "wall"
