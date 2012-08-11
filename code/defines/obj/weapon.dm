@@ -631,7 +631,7 @@
 	w_class = 2.0
 	m_amt = 50
 	origin_tech = "engineering=1"
-	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/crowbar/red
 	icon = 'icons/obj/items.dmi'
@@ -643,17 +643,13 @@
 	desc = "A cane used by a true gentlemen. Or a clown."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
+	item_state = "cane"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	throwforce = 7.0
-	item_state = "cane"
 	w_class = 2.0
 	m_amt = 50
-	attack_verb = list("bludgeoned", "whacked", "disciplined")
-
-/obj/item/weapon/cane/browncane
-	name = " browncane"
-	icon_state = "browncane"
+	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 /obj/item/weapon/disk
 	name = "disk"
