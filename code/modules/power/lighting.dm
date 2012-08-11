@@ -307,7 +307,7 @@
 
 			var/datum/organ/external/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
 
-			affecting.take_damage( 0, 5 )		// 5 burn damage
+			affecting.take_damage( 0, 2 )		// 5 burn damage
 
 			H.updatehealth()
 			H.UpdateDamageIcon()

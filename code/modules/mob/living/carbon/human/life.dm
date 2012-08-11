@@ -10,11 +10,13 @@
 	var/temperature_alert = 0
 
 		// used to do some stuff only on every X life tick
-	var/life_tick = 0
 	var/isbreathing = 1
 	var/holdbreath = 0
 	var/lyingcheck = 0
 	var/buckle_check = 0
+
+	// total amount of wounds on mob, used to spread out healing and the like over all wounds
+	var/number_wounds = 0
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -44,6 +46,7 @@
 			update_clothing()
 		return
 
+	// update the current life tick, can be used to e.g. only do something every 4 ticks
 	life_tick++
 
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -906,6 +909,12 @@
 		handle_organs()
 			// take care of organ related updates, such as broken and missing limbs
 
+			// recalculate number of wounds
+			number_wounds = 0
+			for(var/name in organs)
+				var/datum/organ/external/E = organs[name]
+				number_wounds += E.number_wounds
+
 			var/leg_tally = 2
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
@@ -962,6 +971,7 @@
 				paralysis = 10
 
 
+
 		handle_blood()
 			// take care of blood and blood loss
 			if(stat < 2)
@@ -974,14 +984,19 @@
 								if(D.data["donor"] == src)
 									B = D
 									break
+
 						var/datum/reagent/nutriment/F = locate() in vessel.reagent_list
 						if(F != null)
 							if(F.volume >= 1)
 								B.volume = max(min(10 + blood_volume,560), 0)
 								F.volume -= 1
 						else
-							//At this point, we dun care which blood we are adding to, as long as they get more blood.
-							B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
+							var/blood_regen = 0.3
+							if(B.volume < 400)
+								blood_regen = 0.6
+							if(B.volume < 200)
+								blood_regen = 1
+							B.volume = max(min(B.volume + blood_regen,560), 0)
 
 
 				if(blood_volume > 448)
@@ -1110,9 +1125,9 @@
 				var/datum/organ/external/temp = organs[name]
 				if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
 					continue
-				blood_max += 2
+				blood_max += round(0.5 * (temp.brute_dam + temp.burn_dam) / 4)
 				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
-					blood_max += 10 //Yer missing a fucking limb.
+					blood_max += 3 //Yer missing a fucking limb.
 			drip(blood_max)
 			if (eye_blind)
 				eye_blind--

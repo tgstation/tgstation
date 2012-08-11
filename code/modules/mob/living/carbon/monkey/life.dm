@@ -26,6 +26,9 @@
 
 	..()
 
+	// update the current life tick, can be used to e.g. only do something every 4 ticks
+	life_tick++
+
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(src.loc)
 		environment = loc.return_air()
