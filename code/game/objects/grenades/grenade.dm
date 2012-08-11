@@ -23,7 +23,7 @@
 			return 0
 		return 1
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+/*	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
 		if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
 		if((user.get_active_hand() == src) && (!active) && (clown_check(user)) && target.loc != src.loc)
@@ -38,7 +38,7 @@
 			user.drop_item()
 			var/t = (isturf(target) ? target : target.loc)
 			walk_towards(src, t, 3)
-		return
+		return*/
 
 
 	attack_self(mob/user as mob)
@@ -48,6 +48,9 @@
 				src.active = 1
 				src.icon_state = initial(icon_state) + "_active"
 				add_fingerprint(user)
+				if(iscarbon(user))
+					var/mob/living/carbon/C = user
+					C.throw_mode_on()
 				spawn(src.det_time)
 					src.prime()
 					return

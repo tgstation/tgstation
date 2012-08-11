@@ -537,9 +537,16 @@ var/list/sacrificed = list()
 		sacrifice()
 			var/list/mob/living/carbon/human/cultsinrange = list()
 			var/list/mob/living/carbon/human/victims = list()
-			for(var/mob/living/carbon/human/V in src.loc)
+			for(var/mob/living/carbon/human/V in src.loc)//Checks for non-cultist humans to sacrifice
 				if(!(iscultist(V)))
 					victims += V
+			for(var/mob/living/carbon/brain/V in src.loc)//Checks for brains to sacrifice
+				victims += V
+			for(var/mob/living/silicon/V in src.loc)//Checks for borgs/AIs to sacrifice
+				victims += V
+			for(var/obj/item/device/mmi/V in src.loc)//Checks for MMIs
+				if(V.brainmob)
+					victims += V.brainmob
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					cultsinrange += C
@@ -549,7 +556,12 @@ var/list/sacrificed = list()
 					if(H.mind == ticker.mode:sacrifice_target)
 						if(cultsinrange.len >= 3)
 							sacrificed += H.mind
-							H.gib()
+							if(isrobot(H))
+								H.dust()//To prevent the MMI from remaining
+							else if(isbrain(H))
+								H.death()//Since they don't have a proper gib
+							else
+								H.gib()
 							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
@@ -562,7 +574,12 @@ var/list/sacrificed = list()
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, this soul was not enough to gain His favor."
-								H.gib()
+								if(isrobot(H))
+									H.dust()//To prevent the MMI from remaining
+								else if(isbrain(H))
+									H.death()//Since they don't have a proper gib
+								else
+									H.gib()
 							else
 								if(prob(40))
 									usr << "\red The Geometer of blood accepts this sacrifice."
@@ -570,7 +587,12 @@ var/list/sacrificed = list()
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
-								H.gib()
+								if(isrobot(H))
+									H.dust()//To prevent the MMI from remaining
+								else if(isbrain(H))
+									H.death()//Since they don't have a proper gib
+								else
+									H.gib()
 						else
 							if(H.stat !=2)
 								usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
@@ -581,7 +603,12 @@ var/list/sacrificed = list()
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
-								H.gib()
+								if(isrobot(H))
+									H.dust()//To prevent the MMI from remaining
+								else if(isbrain(H))
+									H.death()//Since they don't have a proper gib
+								else
+									H.gib()
 				else
 					if(cultsinrange.len >= 3)
 						if(H.stat !=2)
@@ -591,7 +618,12 @@ var/list/sacrificed = list()
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, this soul was not enough to gain His favor."
-							H.gib()
+							if(isrobot(H))
+								H.dust()//To prevent the MMI from remaining
+							else if(isbrain(H))
+								H.death()//Since they don't have a proper gib
+							else
+								H.gib()
 						else
 							if(prob(40))
 								usr << "\red The Geometer of blood accepts this sacrifice."
@@ -599,7 +631,12 @@ var/list/sacrificed = list()
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
-							H.gib()
+							if(isrobot(H))
+								H.dust()//To prevent the MMI from remaining
+							else if(isbrain(H))
+								H.death()//Since they don't have a proper gib
+							else
+								H.gib()
 					else
 						if(H.stat !=2)
 							usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
@@ -610,7 +647,12 @@ var/list/sacrificed = list()
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
-							H.gib()
+							if(isrobot(H))
+								H.dust()//To prevent the MMI from remaining
+							else if(isbrain(H))
+								H.death()//Since they don't have a proper gib
+							else
+								H.gib()
 			for(var/mob/living/carbon/monkey/M in src.loc)
 				if (ticker.mode.name == "cult")
 					if(M.mind == ticker.mode:sacrifice_target)
