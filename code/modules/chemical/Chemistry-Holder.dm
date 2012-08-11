@@ -176,7 +176,7 @@ datum
 					R.on_update (A)
 				update_total()
 
-			handle_reactions()
+			handle_reactions(var/heated = 0)
 				if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
 				var/reaction_occured = 0
@@ -184,6 +184,8 @@ datum
 					reaction_occured = 0
 					for(var/A in typesof(/datum/chemical_reaction) - /datum/chemical_reaction)
 						var/datum/chemical_reaction/C = new A()
+						if(C.requires_heating && !heated)
+							continue
 						var/total_required_reagents = C.required_reagents.len
 						var/total_matching_reagents = 0
 						var/total_required_catalysts = C.required_catalysts.len
@@ -223,13 +225,19 @@ datum
 
 						if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
 							var/multiplier = min(multipliers)
+
+							var/preserved_data
 							for(var/B in C.required_reagents)
-								remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
+								var/result = remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
+								if(result && result != 1)
+									preserved_data = result
 
 							var/created_volume = C.result_amount*multiplier
 							if(C.result)
 								multiplier = max(multiplier, 1) //this shouldnt happen ...
 								add_reagent(C.result, C.result_amount*multiplier)
+								for(var/secondary in C.secondary_results)
+									add_reagent(secondary, C.secondary_results[secondary]*multiplier, preserved_data)
 
 							for(var/mob/M in viewers(4, get_turf(my_atom)) )
 								M << "\blue \icon[my_atom] The solution begins to bubble."
@@ -318,11 +326,22 @@ datum
 
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
-					if(R.id == "blood" && reagent == R.id)
-						if(R.data && data)
-							if(R.data["donor"] != data["donor"])
-								continue
+
 					if (R.id == reagent)
+
+						//handle snowflakes
+						if(R.id == "blood")
+							if(R.data && data)
+								if(R.data["donor"] != data["donor"])
+									continue
+
+						else if(R.id == "ground_rock" || R.id == "density_separated_sample" || R.id == "analysis_sample")
+							if(R.data && data)
+								if(R.data != data)
+									//a researcher mixed up a pair of rock samples, so they lose all the info stored
+									var/datum/geosample/geo_data = R.data
+									geo_data.scrambled = 1
+
 						R.volume += amount
 						update_total()
 						my_atom.on_reagent_change()
@@ -369,21 +388,23 @@ datum
 
 				return 1
 
+
 			remove_reagent(var/reagent, var/amount, var/safety)//Added a safety check for the trans_id_to
 
-				if(!isnum(amount)) return 1
+				if(!isnum(amount)) return 0
 
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
 					if (R.id == reagent)
 						R.volume -= amount
+						var/preserved_data = R.data
 						update_total()
 					//	if(!safety)//So it does not handle reactions when it need not to
 					//		handle_reactions() this proc only removes reagents from src, no reason to check for reactions since they wont happen
 						my_atom.on_reagent_change()
-						return 0
+						return preserved_data ? preserved_data : 1
 
-				return 1
+				return 0
 
 			has_reagent(var/reagent, var/amount = -1)
 

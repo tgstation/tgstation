@@ -405,7 +405,7 @@
 	if ((stat != 2 || !( ticker )))
 		usr << "\blue <B>You must be dead to use this!</B>"
 		return
-	if (ticker.mode.name == "meteor" || ticker.mode.name == "epidemic")
+	if (ticker.check_mode("meteor") || ticker.check_mode("epidemic"))
 		usr << "\blue Respawn is disabled."
 		return
 	else
@@ -596,17 +596,14 @@
 			reset_view(null)
 			client.adminobs = 0
 	else
-		if(ticker && ticker.mode)
-//		 world << "there's a ticker"
-			if(ticker.mode.name == "AI malfunction")
-//				world << "ticker says its malf"
-				var/datum/game_mode/malfunction/malf = ticker.mode
-				for (var/datum/mind/B in malf.malf_ai)
+		if(ticker && ticker.check_mode("AI malfunction"))
+			var/datum/game_mode/malfunction/malf = ticker.mode
+			for (var/datum/mind/B in malf.malf_ai)
 //					world << "comparing [B.current] to [eye]"
-					if (B.current == eye)
-						for (var/mob/living/silicon/decoy/D in world)
-							if (eye)
-								eye = D
+				if (B.current == eye)
+					for (var/mob/living/silicon/decoy/D in world)
+						if (eye)
+							eye = D
 		if (client)
 			if (eye)
 				client.eye = eye

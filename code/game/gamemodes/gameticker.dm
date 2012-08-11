@@ -389,3 +389,7 @@ var/datum/roundinfo/roundinfo = new()
 			call(mode, handler)()
 
 	return 1
+
+/datum/controller/gameticker/proc/check_mode(var/mode_name)
+	if(mode && mode == mode_name)
+		return 1

@@ -1,7 +1,34 @@
-//Ported from lunacode, seems to be functional. Thanks to Alfie275 for the original code + idea
-//talking crystals may quickly turnout to be very annoying
+//original code and idea from Alfie275 (luna) and ISaidNo (goon) - with thanks
 
-//strange rocks have been mostly redone
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// samples
+
+/obj/item/weapon/rocksliver
+	name = "rock sliver"
+	desc = "It looks extremely delicate."
+	icon = 'mining.dmi'
+	icon_state = "sliver0"	//0-4
+	//item_state = "electronic"
+	var/source_rock = "/turf/simulated/mineral/archaeo"
+	item_state = ""
+	var/datum/geosample/geological_data
+
+/obj/item/weapon/rocksliver/New()
+	icon_state = "sliver[rand(0,4)]"
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// strange rocks
+
+/obj/item/weapon/ore/strangerock
+	var/datum/geosample/geological_data
+	var/source_rock = "/turf/simulated/mineral"
+
 /obj/item/weapon/ore/strangerock/New()
 	..()
 	//var/datum/reagents/r = new/datum/reagents(50)
@@ -18,6 +45,7 @@
 	src.visible_message("The [src] crumbles away, leaving some dust and gravel behind.")
 
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
 	if(istype(W,/obj/item/weapon/weldingtool/))
 		var/obj/item/weapon/weldingtool/w = W
 		if(w.isOn() && (w.get_fuel() > 3))
@@ -35,6 +63,22 @@
 					M.show_message("\blue A few sparks fly off the rock, but otherwise nothing else happens.",1)
 		w.remove_fuel(4)
 
+	else if(istype(W,/obj/item/device/core_sampler/))
+		var/obj/item/device/core_sampler/S = W
+		if(S.filled_bag)
+			user << "\red The core sampler is full!"
+		else if(S.num_stored_bags < 1)
+			user << "\red The core sampler is out of sample bags!"
+		else
+			S.filled_bag = new /obj/item/weapon/storage/samplebag(S)
+			S.icon_state = "sampler1"
+
+			for(var/i=0, i<7, i++)
+				var/obj/item/weapon/rocksliver/R = new /obj/item/weapon/rocksliver(S.filled_bag)
+				R.source_rock = src.source_rock
+				R.geological_data = src.geological_data
+			user << "\blue You take a core sample of the [src]."
+
 /obj/item/weapon/ore/strangerock/acid_act(var/datum/reagent/R)
 	if(src.method)
 		if(inside)
@@ -50,6 +94,11 @@
 			M.show_message("\blue The acid splashes harmlessly off the rock, nothing else interesting happens.",1)
 	return 1
 
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// crystals
 
 /obj/item/weapon/crystal
 	name = "Crystal"
@@ -164,6 +213,7 @@
 			world << "[X]"
 
 /obj/item/weapon/talkingcrystal/proc/SaySomething(var/word = null)
+
 	var/msg
 	var/limit = rand(max(5,words.len/2))+3
 	var/text
@@ -223,6 +273,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// fossils
 
 /obj/item/weapon/fossil
 	name = "Fossil"
@@ -241,16 +292,16 @@
 /obj/item/weapon/fossil/bone
 	name = "Fossilised bone"
 	icon_state = "bone"
-	desc = "It's a fossilised bone from an unknown creature."
+	desc = "It's a fossilised bone."
 
 /obj/item/weapon/fossil/shell
 	name = "Fossilised shell"
 	icon_state = "shell"
-	desc = "It's a fossilised shell from some sort of space mollusc."
+	desc = "It's a fossilised shell."
 
 /obj/item/weapon/fossil/skull/horned
 	icon_state = "hskull"
-	desc = "It's a fossilised skull, it has horns."
+	desc = "It's a fossilised, horned skull."
 
 /obj/item/weapon/fossil/skull
 	name = "Fossilised skull"
@@ -278,7 +329,7 @@
 
 /obj/skeleton/New()
 	src.breq = rand(6)+3
-	src.desc = "Incomplete skeleton, looks like it could use [src.breq-src.bnum] more bones."
+	src.desc = "An incomplete skeleton, looks like it could use [src.breq-src.bnum] more bones."
 
 /obj/skeleton/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/fossil/bone))
