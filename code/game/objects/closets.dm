@@ -218,13 +218,6 @@
 			spawn(30)
 				lastbang = 0
 
-/obj/structure/closet/Move()
-	..()
-	for(var/mob/M in contents)
-		for(var/obj/effect/speech_bubble/B in range(1, src))
-			if(B.parent == M)
-				B.loc = loc
-
 
 /obj/structure/closet/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

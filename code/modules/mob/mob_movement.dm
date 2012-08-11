@@ -372,9 +372,6 @@
 			step(mob, pick(cardinal))
 		else
 			. = ..()
-			for(var/obj/effect/speech_bubble/S in range(1, mob))
-				if(S.parent == mob)
-					S.loc = mob.loc
 
 		moving = 0
 

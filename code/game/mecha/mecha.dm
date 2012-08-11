@@ -292,10 +292,6 @@
 		move_result = mechturn(direction)
 	else
 		move_result	= mechstep(direction)
-		if(occupant)
-			for(var/obj/effect/speech_bubble/B in range(1, src))
-				if(B.parent == occupant)
-					B.loc = loc
 	if(move_result)
 		can_move = 0
 		use_power(step_energy_drain)
