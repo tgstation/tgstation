@@ -2,7 +2,11 @@
 
 var/global/list/uneatable = list(
 	/turf/space,
-	/obj/effect,
+	/obj/effect/overlay,
+	/obj/effect/explosion,
+	/obj/effect/expl_particles,
+	/obj/effect/forcefield,
+	/obj/effect/effect,
 	/mob/aiEye,
 	/mob/dead/observer // Stop ghosts being ate and not being able to get back to their bodies
 	)
