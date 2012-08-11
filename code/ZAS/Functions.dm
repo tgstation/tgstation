@@ -1,68 +1,70 @@
-/zone
-	proc/AddTurf(turf/T)
-		//Adds the turf to contents, increases the size of the zone, and sets the zone var.
-		if(T in contents)
-			return
-		if(T.zone)
-			T.zone.RemoveTurf(T)
-		contents += T
-		if(air)
-			air.group_multiplier++
-		T.zone = src
-	proc/RemoveTurf(turf/T)
-		//Same, but in reverse.
-		if(!(T in contents))
-			return
-		contents -= T
-		if(air)
-			air.group_multiplier--
-		if(T.zone == src)
-			T.zone = null
+//Global Functions
+//Contents: FloodFill, ZMerge, ZConnect
 
-	proc/AddSpace(turf/space/S)
-		//Adds a space tile to the list, and creates the list if null.
-		if(istype(S))
-			if(!space_tiles)
-				space_tiles = list()
-			else if(S in space_tiles)
-				return
-			space_tiles += S
-			contents -= S
+proc/FloodFill(turf/start)
+	if(!istype(start))
+		return list()
+	var
+		list
+			open_directions = list(EAST, WEST)
+			defer_directions = list(NORTH, SOUTH)
+			open = list(start)
+			defer = list()
+			closed = list()
+			doors = list()
 
-	proc/RemoveSpace(turf/space/S)
-		//Removes a space tile from the list, and deletes the list if length is 0.
-		if(space_tiles)
-			space_tiles -= S
-			if(!space_tiles.len) space_tiles = null
+	while(open.len || defer.len)
+		if(open.len)
+			for(var/turf/T in open)
+				//Stop if there's a door, even if it's open. These are handled by indirect connection.
+				if(!T.HasDoor())
 
-/turf/proc/HasDoor(turf/O)
-	//Checks for the presence of doors, used for zone spreading and connection.
-	//A positive numerical argument checks only for closed doors.
-	//Another turf as an argument checks for windoors between here and there.
-	for(var/obj/machinery/door/D in src)
-		if(isnum(O) && O)
-			if(!D.density) continue
-		if(istype(D,/obj/machinery/door/window))
-			if(!O) continue
-			if(D.dir == get_dir(D,O)) return 1
+					for(var/d in open_directions)
+						var/turf/O = get_step(T,d)
+						//Simple pass check.
+						if(istype(O) && !(O in open || O in closed) && O.ZCanPass(T))
+							defer -= O
+							open += O
+					for(var/d in defer_directions)
+						var/turf/O = get_step(T,d)
+						//Simple pass check.
+						if(istype(O) && !(O in open || O in closed || O in defer) && O.ZCanPass(T))
+							defer += O
+				else
+					doors |= T
+					open -= T
+					continue
+
+				open -= T
+				closed += T
 		else
-			return 1
+			open += locate(/turf) in defer
 
-/turf/proc/check_connections()
-	//Checks for new connections that can be made.
-	for(var/d in cardinal)
-		var/turf/simulated/T = get_step(src,d)
-		if(!istype(T) || !T.zone || !T.CanPass(0,src,0,0))
+	for(var/turf/T in doors)
+		var/force_connection = 1
+		var/turf/simulated/O = get_step(T,NORTH)
+		if(O in closed)
+			closed += T
 			continue
-		if(T.zone != zone)
-			ZConnect(src,T)
+		else if(T.ZCanPass(O) && istype(O))
+			force_connection = 0
 
-/turf/proc/check_for_space()
-	//Checks for space around the turf.
-	for(var/d in cardinal)
-		var/turf/T = get_step(src,d)
-		if(istype(T,/turf/space) && T.CanPass(0,src,0,0))
-			zone.AddSpace(T)
+		O = get_step(T,WEST)
+		if(O in closed)
+			closed += T
+			continue
+		else if(force_connection && T.ZCanPass(O) && istype(O))
+			force_connection = 0
+
+		if(force_connection)
+			O = get_step(T,SOUTH)
+			if(O in closed)
+				closed += T
+			else if((!T.ZCanPass(O) || !istype(O)) && get_step(T,EAST) in closed)
+				closed += T
+
+	return closed
+
 
 proc/ZMerge(zone/A,zone/B)
 	//Merges two zones so that they are one.
@@ -93,7 +95,7 @@ proc/ZMerge(zone/A,zone/B)
 		A.connections += C
 
 	//Add space tiles.
-	A.space_tiles += B.space_tiles
+	A.unsimulated_tiles += B.unsimulated_tiles
 
 	//Add contents.
 	A.contents = new_contents
@@ -107,17 +109,18 @@ proc/ZMerge(zone/A,zone/B)
 
 	B.SoftDelete()
 
+
 proc/ZConnect(turf/simulated/A,turf/simulated/B)
 	//Connects two zones by forming a connection object representing turfs A and B.
 
-	//Make sure that if it's space, it gets added to space_tiles instead.
-	if(istype(B,/turf/space))
+	//Make sure that if it's space, it gets added to unsimulated_tiles instead.
+	if(!istype(B))
 		if(A.zone)
-			A.zone.AddSpace(B)
+			A.zone.AddTurf(B)
 		return
-	if(istype(A,/turf/space))
+	if(!istype(A))
 		if(B.zone)
-			B.zone.AddSpace(A)
+			B.zone.AddTurf(A)
 		return
 
 	if(!istype(A) || !istype(B))
@@ -192,8 +195,8 @@ proc/ZDisconnect(turf/A,turf/B)
 						C.Cleanup()
 
 				//Add the remaining space tiles to this zone.
-				for(var/turf/space/T in oldzone.space_tiles)
-					if(!(T in Z.space_tiles))
+				for(var/turf/space/T in oldzone.unsimulated_tiles)
+					if(!(T in Z.unsimulated_tiles))
 						Y.AddSpace(T)
 
 				oldzone.air = null

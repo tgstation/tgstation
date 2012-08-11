@@ -193,7 +193,7 @@ proc/AirflowSpace(zone/A)
 
 	if(n < vsc.airflow_lightest_pressure) return
 
-	var/list/connected_turfs = A.space_tiles //The midpoints are now all the space connections.
+	var/list/connected_turfs = A.unsimulated_tiles //The midpoints are now all the space connections.
 	var/list/pplz = A.movables() //We only need to worry about things in the zone, not things in space.
 
 	for(var/atom/movable/M in pplz)

@@ -1,5 +1,8 @@
 atom/var/pressure_resistance = ONE_ATMOSPHERE
 turf
+
+	var/zone/zone
+
 	assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
 		del(giver)
 		return 0
@@ -167,7 +170,8 @@ turf
 			else
 				return ..()
 
-		update_air_properties()//OPTIMIZE
+		update_air_properties()
+			. = 1
 			air_check_directions = 0
 
 			for(var/direction in cardinal)
@@ -198,19 +202,12 @@ turf
 					if(!(C in air_master.connections_to_check))
 						air_master.connections_to_check += C
 
-			. = update_zone_properties() //Update self zone and adjacent zones.
-
-			if(air_check_directions)
-				processing = 1
-			else
-				processing = 0
-
-
-		proc/update_zone_properties()
 			for(var/direction in cardinal)
 				var/turf/T = get_step(src,direction)
+				var/list/zone/adjacent_zones = list()
+
 				if(air_check_directions&direction) //I can connect air in this direction
-					if(!CanPass(null, T, 0, 0)) //If I block air, we must look to see if the adjacent turfs need rebuilt.
+					if(!CanPass(null, T, 0, 0)) //If either block air, we must look to see if the adjacent turfs need rebuilt.
 						if(T.zone && !T.zone.rebuild)
 							for(var/direction2 in cardinal - direction) //Check all other directions for air that might be connected.
 								var/turf/simulated/NT = get_step(src, direction2)
@@ -219,10 +216,95 @@ turf
 
 					else
 						ZConnect(src,T)
+
+				//If I cannot connect to air or whatever, and there is a zone there, I am probably not able to pass air.  Consider zone rebuilding
+				else if(T.zone && !T.zone.rebuild)
+					if(T.zone in adjacent_zones) //Found it more than 1 direction, rebuild
+						T.zone.rebuild = 1
+					else //Add it for later checks.
+						adjacent_zones += T.zone
+
+			if(air_check_directions)
+				processing = 1
+			else
+				processing = 0
+
+
+/turf/proc/HasDoor(turf/O)
+	//Checks for the presence of doors, used for zone spreading and connection.
+	//A positive numerical argument checks only for closed doors.
+	//Another turf as an argument checks for windoors between here and there.
+	for(var/obj/machinery/door/D in src)
+		if(isnum(O) && O)
+			if(!D.density) continue
+		if(istype(D,/obj/machinery/door/window))
+			if(!O) continue
+			if(D.dir == get_dir(D,O)) return 1
+		else
 			return 1
 
-//				else if(zone && !zone.rebuild)
-//					for(var/direction2 in cardinal - reverse_direction(direction)) //Check all other directions for air that might be connected.
-//						var/turf/simulated/NT = get_step(T, direction2)
-//						if(NT && NT.zone && NT.zone == zone)
-//							zone.rebuild = 1
+turf/proc/ZCanPass(turf/T, var/include_space = 0)
+	//Fairly standard pass checks for turfs, objects and directional windows. Also stops at the edge of space.
+	if(!istype(T))
+		return 0
+
+	if(istype(T,/turf/space) && !include_space)
+		return 0
+	else
+		if(T.blocks_air||blocks_air)
+			return 0
+
+		for(var/obj/obstacle in src)
+			if(istype(obstacle,/obj/machinery/door) && !istype(obstacle,/obj/machinery/door/window))
+				continue
+			if(!obstacle.CanPass(null, T, 1.5, 1))
+				return 0
+
+		for(var/obj/obstacle in T)
+			if(istype(obstacle,/obj/machinery/door) && !istype(obstacle,/obj/machinery/door/window))
+				continue
+			if(!obstacle.CanPass(null, src, 1.5, 1))
+				return 0
+
+		return 1
+
+turf/proc/ZAirPass(turf/T)
+	//Fairly standard pass checks for turfs, objects and directional windows.
+	if(!istype(T))
+		return 0
+
+	if(T.blocks_air||blocks_air)
+		return 0
+
+	for(var/obj/obstacle in src)
+		if(istype(obstacle,/obj/machinery/door) && !istype(obstacle,/obj/machinery/door/window))
+			continue
+		if(!obstacle.CanPass(null, T, 0, 0))
+			return 0
+
+	for(var/obj/obstacle in T)
+		if(istype(obstacle,/obj/machinery/door) && !istype(obstacle,/obj/machinery/door/window))
+			continue
+		if(!obstacle.CanPass(null, src, 0, 0))
+			return 0
+
+	return 1
+
+
+/*UNUSED
+/turf/proc/check_connections()
+	//Checks for new connections that can be made.
+	for(var/d in cardinal)
+		var/turf/simulated/T = get_step(src,d)
+		if(istype(T) && ( !T.zone || !T.CanPass(0,src,0,0) ) )
+			continue
+		if(T.zone != zone)
+			ZConnect(src,T)
+
+/turf/proc/check_for_space()
+	//Checks for space around the turf.
+	for(var/d in cardinal)
+		var/turf/T = get_step(src,d)
+		if(istype(T,/turf/space) && T.CanPass(0,src,0,0))
+			zone.AddSpace(T)
+			*/

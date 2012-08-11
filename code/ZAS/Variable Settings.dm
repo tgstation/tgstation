@@ -1,9 +1,9 @@
 var/global/vs_control/vsc = new
 
 vs_control/var
-	zone_share_percent = 12
-	zone_share_percent_NAME = "Zone Share Percent"
-	zone_share_percent_DESC = "Percentage of air difference to move per tick"
+//	zone_share_percent = 12
+//	zone_share_percent_NAME = "Zone Share Percent"
+//	zone_share_percent_DESC = "Percentage of air difference to move per tick"
 	IgnitionLevel = 0.5
 	IgnitionLevel_DESC = "Moles of oxygen+plasma - co2 needed to burn."
 	airflow_lightest_pressure = 30
@@ -268,7 +268,6 @@ vs_control
 				//plc.PLASMA_DMG_QUOTIENT = 5
 
 			if("ZAS - Normal")
-				zone_share_percent = 10
 				IgnitionLevel = 0.5
 				airflow_lightest_pressure = 30
 				airflow_light_pressure = 45
@@ -284,7 +283,6 @@ vs_control
 				airflow_mob_slowdown = 1
 
 			if("ZAS - Forgiving")
-				zone_share_percent = 6
 				IgnitionLevel = 1
 				airflow_lightest_pressure = 45
 				airflow_light_pressure = 60
@@ -300,7 +298,6 @@ vs_control
 				airflow_mob_slowdown = 0
 
 			if("ZAS - Dangerous")
-				zone_share_percent = 15
 				IgnitionLevel = 0.4
 				airflow_lightest_pressure = 25
 				airflow_light_pressure = 35
@@ -316,7 +313,6 @@ vs_control
 				airflow_mob_slowdown = 2
 
 			if("ZAS - Hellish")
-				zone_share_percent = 20
 				IgnitionLevel = 0.3
 				airflow_lightest_pressure = 20
 				airflow_light_pressure = 30
