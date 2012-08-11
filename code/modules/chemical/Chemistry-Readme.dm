@@ -47,6 +47,7 @@ About the Holder:
 			This proc check all recipes and, on a match, uses them.
 			It will also call the recipe's on_reaction proc (for explosions or w/e).
 			Currently, this proc is automatically called by trans_to.
+			- Modified from the original to preserve reagent data across reactions (originally for xenoarchaeology)
 
 		isolate_reagent(var/reagent)
 			Pass it a reagent id and it will remove all reagents but that one.
@@ -85,6 +86,7 @@ About the Holder:
 
 		remove_reagent(var/reagent, var/amount)
 			The exact opposite of the add_reagent proc.
+			- Modified from original to return the reagent's data, in order to preserve reagent data across reactions (originally for xenoarchaeology)
 
 		has_reagent(var/reagent, var/amount)
 			Returns 1 if the holder contains this reagent.

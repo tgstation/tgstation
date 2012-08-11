@@ -4,6 +4,7 @@ datum
 		var/name = null
 		var/id = null
 		var/result = null
+		var/list/secondary_results = new/list()
 		var/list/required_reagents = new/list()
 		var/list/required_catalysts = new/list()
 
@@ -21,7 +22,7 @@ datum
 				return
 
 		//I recommend you set the result amount to the total volume of all components.
-		//but obviously that's not mandatory. science!
+		//obviously that's not mandatory though. science!
 
 		explosion_potassium
 			name = "Explosion"
@@ -321,13 +322,6 @@ datum
 			result = "sodiumchloride"
 			required_reagents = list("sodium" = 1, "chlorine" = 1)
 			result_amount = 2
-
-		lithiumsodiumtungstate	//LiNa2WO4, not the easiest chem to mix
-			name = "Lithium Sodium Tungstate"
-			id = "lithiumsodiumtungstate"
-			result = "lithiumsodiumtungstate"
-			required_reagents = list("lithium" = 1, "sodium" = 2, "tungsten" = 1, "oxygen" = 4)
-			result_amount = 8
 
 		flash_powder
 			name = "Flash powder"
