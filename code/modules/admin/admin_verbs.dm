@@ -187,7 +187,6 @@
 			verbs += /client/proc/spawn_xeno
 			verbs += /client/proc/toggleprayers
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/tension_report
 			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
@@ -398,7 +397,6 @@
 	verbs -= /client/proc/toggle_clickproc 								//TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 	verbs -= /client/proc/toggle_hear_deadcast
 	verbs -= /client/proc/toggle_hear_radio
-	verbs -= /client/proc/tension_report
 	verbs -= /client/proc/player_panel_new
 	verbs -= /client/proc/toggle_gravity_on
 	verbs -= /client/proc/toggle_gravity_off

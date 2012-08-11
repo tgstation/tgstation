@@ -61,25 +61,25 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 
 		switch(startside)
 			if(NORTH)
-				starty = world.maxy-8
-				startx = rand(8, world.maxx-8)
-				endy = 8
-				endx = rand(8, world.maxx-8)
+				starty = world.maxy-(TRANSITIONEDGE+1)
+				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+				endy = TRANSITIONEDGE
+				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
 			if(EAST)
-				starty = rand(8,world.maxy-8)
-				startx = world.maxx-8
-				endy = rand(8, world.maxy-8)
-				endx = 8
+				starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+				startx = world.maxx-(TRANSITIONEDGE+1)
+				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
+				endx = TRANSITIONEDGE
 			if(SOUTH)
-				starty = 8
-				startx = rand(8, world.maxx-8)
-				endy = world.maxy-8
-				endx = rand(1, world.maxx-8)
+				starty = (TRANSITIONEDGE+1)
+				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+				endy = world.maxy-TRANSITIONEDGE
+				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
 			if(WEST)
-				starty = rand(8, world.maxy-8)
-				startx = 8
-				endy = rand(8,world.maxy-8)
-				endx = world.maxx-8
+				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+				startx = (TRANSITIONEDGE+1)
+				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+				endx = world.maxx-TRANSITIONEDGE
 		var/goal = locate(endx, endy, 1)
 		src.x = startx
 		src.y = starty

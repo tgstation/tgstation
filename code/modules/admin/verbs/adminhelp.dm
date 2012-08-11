@@ -123,8 +123,6 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 
 	src << "<font color='blue'>PM to-<b>Admins</b>: [original_msg]</font>"
 	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number] non-AFK admins.")
-	if(tension_master)
-		tension_master.new_adminhelp()
 	if((admin_number - admin_number_afk) <= 0)
 		if(!admin_number_afk)
 			send2irc(ckey, "[original_msg] - No admins online")

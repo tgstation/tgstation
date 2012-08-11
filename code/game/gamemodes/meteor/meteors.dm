@@ -36,25 +36,25 @@
 	do
 		switch(pick(1,2,3,4))
 			if(1) //NORTH
-				starty = world.maxy-8
-				startx = rand(8, world.maxx-8)
-				endy = 8
-				endx = rand(8, world.maxx-8)
+				starty = world.maxy-(TRANSITIONEDGE+1)
+				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+				endy = TRANSITIONEDGE
+				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
 			if(2) //EAST
-				starty = rand(8,world.maxy-8)
-				startx = world.maxx-8
-				endy = rand(8, world.maxy-8)
-				endx = 8
+				starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+				startx = world.maxx-(TRANSITIONEDGE+1)
+				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
+				endx = TRANSITIONEDGE
 			if(3) //SOUTH
-				starty = 8
-				startx = rand(8, world.maxx-8)
-				endy = world.maxy-8
-				endx = rand(8, world.maxx-8)
+				starty = (TRANSITIONEDGE+1)
+				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+				endy = world.maxy-TRANSITIONEDGE
+				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
 			if(4) //WEST
-				starty = rand(8, world.maxy-8)
-				startx = 8
-				endy = rand(8,world.maxy-8)
-				endx = world.maxx-8
+				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+				startx = (TRANSITIONEDGE+1)
+				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+				endx = world.maxx-TRANSITIONEDGE
 
 		pickedstart = locate(startx, starty, 1)
 		pickedgoal = locate(endx, endy, 1)

@@ -49,8 +49,6 @@
 		emote("deathgasp")
 	stat = DEAD
 	update_canmove()
-
-	tension_master.death(src)
 	if(camera)
 		camera.status = 0
 

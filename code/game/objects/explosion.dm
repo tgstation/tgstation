@@ -20,8 +20,6 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		playsound(epicenter, 'explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
 		playsound(epicenter, "explosion", 100, 1, round(devastation_range,1) )
 
-		tension_master.explosion()
-
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 1
 

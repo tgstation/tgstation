@@ -466,22 +466,6 @@ proc/process_ghost_teleport_locs()
 
 
 
-/area/borg_deathsquad
-	name = "\improper Borg Deathsquad"
-	icon_state = "yellow"
-	requires_power = 0
-
-/area/borg_deathsquad/start
-	name = "\improper Borg Deathsquad - Ready"
-
-
-/area/borg_deathsquad/station
-	name = "\improper Borg Deathsquad - Arrived"
-
-
-
-
-
 
 
 

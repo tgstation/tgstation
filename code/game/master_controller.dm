@@ -11,7 +11,6 @@ datum/controller/game_controller
 	var/processing = 1
 
 	var/global/air_master_ready = 0
-	var/global/tension_master_ready = 0
 	var/global/sun_ready = 0
 	var/global/mobs_ready = 0
 	var/global/diseases_ready = 0
@@ -43,9 +42,6 @@ datum/controller/game_controller
 			if(job_master.SetupOccupations())
 				world << "\red \b Job setup complete"
 				job_master.LoadJobs("config/jobs.txt")
-
-		if(!tension_master)
-			tension_master = new /datum/tension()
 
 		world.tick_lag = config.Ticklag
 
@@ -113,7 +109,6 @@ datum/controller/game_controller
 		var/start_time = world.timeofday
 
 		air_master_ready = 0
-		tension_master_ready = 0
 		sun_ready = 0
 		mobs_ready = 0
 		diseases_ready = 0
@@ -126,9 +121,6 @@ datum/controller/game_controller
 		spawn(0)
 			air_master.process()
 			air_master_ready = 1
-		spawn(0)
-			tension_master.process()
-			tension_master_ready = 1
 
 		sleep(1)
 
@@ -193,10 +185,10 @@ datum/controller/game_controller
 		sleep(world.timeofday+12-start_time)
 
 		var/IL_check = 0 //Infinite loop check (To report when the master controller breaks.)
-		while(!air_master_ready || !tension_master_ready || !sun_ready || !mobs_ready || !diseases_ready || !machines_ready || !objects_ready || !networks_ready || !powernets_ready || !ticker_ready)
+		while(!air_master_ready || !sun_ready || !mobs_ready || !diseases_ready || !machines_ready || !objects_ready || !networks_ready || !powernets_ready || !ticker_ready)
 			IL_check++
 			if(IL_check > 600)
-				var/MC_report = "air_master_ready = [air_master_ready]; tension_master_ready = [tension_master_ready]; sun_ready = [sun_ready]; mobs_ready = [mobs_ready]; diseases_ready = [diseases_ready]; machines_ready = [machines_ready]; objects_ready = [objects_ready]; networks_ready = [networks_ready]; powernets_ready = [powernets_ready]; ticker_ready = [ticker_ready];"
+				var/MC_report = "air_master_ready = [air_master_ready]; sun_ready = [sun_ready]; mobs_ready = [mobs_ready]; diseases_ready = [diseases_ready]; machines_ready = [machines_ready]; objects_ready = [objects_ready]; networks_ready = [networks_ready]; powernets_ready = [powernets_ready]; ticker_ready = [ticker_ready];"
 				message_admins("<b><font color='red'>PROC BREAKAGE WARNING:</font> The game's master contorller appears to be stuck in one of it's cycles. It has looped through it's delaying loop [IL_check] times.</b>")
 				message_admins("<b>The master controller reports: [MC_report]</b>")
 				if(!diseases_ready)

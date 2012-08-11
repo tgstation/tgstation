@@ -955,7 +955,6 @@ table tr:first-child th:first-child { border: none;}
 
 	if(alert_level==2)
 		alert_signal.data["alert"] = "severe"
-		tension_master.new_air_alarm() //log this for stats purposes
 	else if (alert_level==1)
 		alert_signal.data["alert"] = "minor"
 	else if (alert_level==0)
