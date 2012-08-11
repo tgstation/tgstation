@@ -12,7 +12,7 @@
 	icon = 'mining.dmi'
 	icon_state = "sliver0"	//0-4
 	//item_state = "electronic"
-	var/source_rock = "/turf/simulated/mineral"
+	var/source_rock = "/turf/simulated/mineral/archaeo"
 	item_state = ""
 	var/datum/geosample/geological_data
 
@@ -27,6 +27,7 @@
 
 /obj/item/weapon/ore/strangerock
 	var/datum/geosample/geological_data
+	var/source_rock = "/turf/simulated/mineral"
 
 /obj/item/weapon/ore/strangerock/New()
 	..()
@@ -44,6 +45,7 @@
 	src.visible_message("The [src] crumbles away, leaving some dust and gravel behind.")
 
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
 	if(istype(W,/obj/item/weapon/weldingtool/))
 		var/obj/item/weapon/weldingtool/w = W
 		if(w.isOn() && (w.get_fuel() > 3))
@@ -60,6 +62,22 @@
 				for(var/mob/M in viewers(world.view, user))
 					M.show_message("\blue A few sparks fly off the rock, but otherwise nothing else happens.",1)
 		w.remove_fuel(4)
+
+	else if(istype(W,/obj/item/device/core_sampler/))
+		var/obj/item/device/core_sampler/S = W
+		if(S.filled_bag)
+			user << "\red The core sampler is full!"
+		else if(S.num_stored_bags < 1)
+			user << "\red The core sampler is out of sample bags!"
+		else
+			S.filled_bag = new /obj/item/weapon/storage/samplebag(S)
+			S.icon_state = "sampler1"
+
+			for(var/i=0, i<7, i++)
+				var/obj/item/weapon/rocksliver/R = new /obj/item/weapon/rocksliver(S.filled_bag)
+				R.source_rock = src.source_rock
+				R.geological_data = src.geological_data
+			user << "\blue You take a core sample of the [src]."
 
 /obj/item/weapon/ore/strangerock/acid_act(var/datum/reagent/R)
 	if(src.method)

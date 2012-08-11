@@ -1,5 +1,7 @@
 
 datum/geosample
+	var/scrambled = 0	//if this sample has been mixed with other samples
+	//
 	var/age_thousand = 1					//age can correspond to different artifacts
 	var/age_million = 0
 	var/age_billion = 0
@@ -36,4 +38,5 @@ datum/geosample/proc/UpdateTurf(var/turf/simulated/mineral/container)
 			age_million = rand(1,999)
 			age_billion = rand(10, 13)
 		if("Archaeo")
-			//speshul
+			//snowflake
+			age_thousand = rand(1,999)

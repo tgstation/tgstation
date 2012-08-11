@@ -49,12 +49,12 @@
 		user << "\red The core sampler is out of sample bags!"
 	else
 		filled_bag = new /obj/item/weapon/storage/samplebag(src)
-		//sampled_turf = src.type
 		icon_state = "sampler1"
 
 		for(var/i=0, i<7, i++)
 			var/obj/item/weapon/rocksliver/R = new(filled_bag)
 			R.source_rock = T.type
+			R.geological_data = T.geological_data
 
 		user << "\blue You take a core sample of the [T]."
 

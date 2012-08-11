@@ -15,6 +15,7 @@
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/artifactChance = 0.3	//percent chance to spawn a xenoarchaelogical artifact
+	var/datum/geosample/geological_data		//todo: set this up
 
 /turf/simulated/mineral/Del()
 	return
