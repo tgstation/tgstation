@@ -229,40 +229,24 @@
 
 
 /proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
-	// Returns a list of mobs who can hear any of the radios given in @radios
+	. = list()
 
-	var/list/hearers = list()
+	// Returns a list of mobs who can hear any of the radios given in @radios
+	var/list/speaker_coverage = list()
+	for(var/obj/item/device/radio/R in radios)
+		var/turf/speaker = get_turf(R)
+		if(speaker)
+			for(var/turf/T in view(R.canhear_range,speaker))
+				speaker_coverage += T
 
 	// Try to find all the players who can hear the message
 	for(var/mob/M in player_list)
-		if(!M) continue
-
 		var/turf/ear = get_turf(M)
-		if(!ear) continue
+		if(ear)
+			if(ear in speaker_coverage)
+				. += M
 
-
-		// Checking for a headset on the mob and if it is in radios list
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-
-			if(H.ears != null)
-				var/isHeadsetRadios = 0
-				for(var/obj/item/device/radio/R in radios)
-					if(H.ears == R)
-						isHeadsetRadios = 1
-						break
-				if(isHeadsetRadios)
-					hearers += M
-					continue
-
-		// Now see if they're near any broadcasting radio
-		for(var/obj/item/device/radio/R in radios)
-			var/turf/radio_loc = get_turf(R)
-			if(ear in view(R.canhear_range,radio_loc))
-				hearers += M
-				break
-
-	return hearers
+	return .
 
 
 #define SIGN(X) ((X<0)?-1:1)
