@@ -15,6 +15,7 @@
 	var/fire_alert = 0
 
 	var/temperature_alert = 0
+	var/number_wounds = 0
 
 
 /mob/living/carbon/monkey/Life()
