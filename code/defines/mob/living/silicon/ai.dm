@@ -30,3 +30,5 @@
 	var/explosive = 0 //does the AI explode when it dies?
 
 	var/mob/living/silicon/ai/parent = null
+
+	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.

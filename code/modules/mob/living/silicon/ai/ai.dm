@@ -1,3 +1,5 @@
+#define AI_CAMERA_LUMINOSITY 6
+
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
 
@@ -35,7 +37,8 @@
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
 		/mob/living/silicon/ai/proc/ai_camera_list, /mob/living/silicon/ai/proc/ai_network_change, \
-		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change)
+		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
+		/mob/living/silicon/ai/proc/toggle_camera_light)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -355,6 +358,14 @@
 		adjustBruteLoss(damage)
 		updatehealth()
 
+/mob/living/silicon/ai/reset_view(atom/A)
+	if(current)
+		current.sd_SetLuminosity(0)
+	if(istype(A,/obj/machinery/camera))
+		current = A
+	..()
+	if(istype(A,/obj/machinery/camera))
+		A.sd_SetLuminosity(camera_light_on * AI_CAMERA_LUMINOSITY)
 
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
@@ -367,7 +378,6 @@
 
 	// ok, we're alive, camera is good and in our network...
 	machine = src
-	src.current = C
 	reset_view(C)
 	return 1
 
@@ -520,3 +530,18 @@
 		src << "\blue You are already in your Main Core."
 		return
 	apc.malfvacate()
+
+//Toggles the luminosity and applies it by re-entereing the camera.
+/mob/living/silicon/ai/proc/toggle_camera_light()
+	set name = "Toggle camera light"
+	set desc = "Toggles the light on the camera the AI is looking through."
+	set category = "AI Commands"
+
+	if(!current)
+		usr << "\red You are not looking through a camera right now."
+		return
+	camera_light_on = !camera_light_on
+	reset_view(current)
+
+
+#undef AI_CAMERA_LUMINOSITY

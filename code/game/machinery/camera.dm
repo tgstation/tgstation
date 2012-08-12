@@ -141,7 +141,6 @@ var/global/list/obj/machinery/camera/Cameras = list()
 				if(isrobot(target))
 					var/mob/living/silicon/robot/R = target
 					C = R.camera
-					U.current = C
 					U.reset_view(C)
 				else
 					var/closestDist = -1
@@ -165,7 +164,6 @@ var/global/list/obj/machinery/camera/Cameras = list()
 						//U << text("Closest camera dist = [], for camera []", closestDist, closest.area.name)
 
 						if (closest != C)
-							U.current = closest
 							U.reset_view(closest)
 							//use_power(50)
 						if (zmatched == 0)
@@ -204,7 +202,6 @@ var/global/list/obj/machinery/camera/Cameras = list()
 	// If they cancel then just put them back to their old camera
 	var/obj/machinery/camera/tempC = src.current
 	user.machine = src
-	src.current = null
 	switchCamera(null)
 
 	var/list/L = list()
@@ -223,10 +220,8 @@ var/global/list/obj/machinery/camera/Cameras = list()
 
 	if (!t || t == "Cancel")
 		if(tempC && tempC.status)
-			src.current = tempC
-			switchCamera(null)
+			switchCamera(tempC)
 		else
-			src.current = null
 			switchCamera(null)
 		return 0
 
@@ -251,7 +246,6 @@ var/global/list/obj/machinery/camera/Cameras = list()
 				var/obj/machinery/computer/security/S = O.machine
 				if (S.current == src)
 					O.machine = null
-					S.current = null
 					O.reset_view(null)
 					O << "The screen bursts into static."
 		..()
@@ -274,7 +268,6 @@ var/global/list/obj/machinery/camera/Cameras = list()
 		return
 	if (src.network != user.network || !(src.status))
 		return
-	user.current = src
 	user.reset_view(src)
 
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
@@ -397,7 +390,6 @@ var/global/list/obj/machinery/camera/Cameras = list()
 			var/obj/machinery/computer/security/S = O.machine
 			if (S.current == src)
 				O.machine = null
-				S.current = null
 				O.reset_view(null)
 				O << "The screen bursts into static."
 

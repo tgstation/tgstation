@@ -6,9 +6,9 @@
 		var/turf/T = get_turf(src)
 
 		if (src.stat!=0)
-			src:cameraFollow = null
-			src:current = null
-			src:machine = null
+			src.cameraFollow = null
+			src.reset_view(null)
+			src.machine = null
 
 		src.updatehealth()
 
