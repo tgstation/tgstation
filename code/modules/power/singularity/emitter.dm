@@ -73,11 +73,11 @@
 
 
 /obj/machinery/emitter/emp_act(var/severity)//Emitters are hardened but still might have issues
-	use_power(50)
-	if((severity == 1)&&prob(1)&&prob(1))
+	use_power(1000)
+/*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
 			src.active = 0
-			src.use_power = 1
+			src.use_power = 1	*/
 	return 1
 
 
