@@ -24,11 +24,12 @@
 		. = ..()
 		spawn(1) //Allow map to load
 			if(!target)
-				target = locate() in locate(x,y,z-1)
+				var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
+				target = locate() in locate(x,y,adjacent_to_me["down"])
 				if (istype(target))
 					icon_state = top_icon_state
 				else
-					target = locate() in locate(x,y,z+1)
+					target = locate() in locate(x,y,adjacent_to_me["up"])
 					if (istype(target))
 						icon_state = bottom_icon_state
 					else
@@ -52,7 +53,8 @@
 	attack_hand(var/mob/M)
 		if(!target || !istype(target.loc, /turf))
 			del src
-		M.visible_message("\blue \The [M] climbs [target.z > z ? "up" : "down"] \the [src]!", "You climb [target.z > z ? "up" : "down"] \the [src]!", "You hear some grunting, and clanging of a metal ladder being used.")
+		var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
+		M.visible_message("\blue \The [M] climbs [target.z == adjacent_to_me["up"] ? "up" : "down"] \the [src]!", "You climb [target.z == adjacent_to_me["up"]  ? "up" : "down"] \the [src]!", "You hear some grunting, and clanging of a metal ladder being used.")
 		M.Move(target.loc)
 
 
@@ -99,7 +101,8 @@
 				if(!target || !istype(target.loc, /turf))
 					del src
 				if(M.z == z && get_dist(src,M) <= 1)
-					M.visible_message("\blue \The [M] scurries [target.z > z ? "up" : "down"] \the [src]!", "You scramble [target.z > z ? "up" : "down"] \the [src]!", "You hear some grunting, and a hatch sealing.")
+					var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
+					M.visible_message("\blue \The [M] scurries [target.z == adjacent_to_me["up"] ? "up" : "down"] \the [src]!", "You scramble [target.z == adjacent_to_me["up"] ? "up" : "down"] \the [src]!", "You hear some grunting, and a hatch sealing.")
 					M.Move(target.loc)
 				flick(top_icon_state_close,top_hatch)
 				bottom_hatch.overlays -= green_overlay
@@ -125,11 +128,12 @@
 			. = ..()
 			spawn(1)
 				if(!target)
-					target = locate() in locate(x,y,z+1)
+					var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
+					target = locate() in locate(x,y,adjacent_to_me["up"])
 					if(istype(target))
 						icon_state = bottom_icon_state
 					else
-						target = locate() in locate(x,y,z-1)
+						target = locate() in locate(x,y,adjacent_to_me["down"])
 						if(istype(target))
 							icon_state = top_icon_state
 						else
