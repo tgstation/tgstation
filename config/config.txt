@@ -135,9 +135,6 @@ HOSTEDBY Yournamehere
 # BANAPPEALS http://justanotherday.example.com
 
 ## In-game features
-## spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
-FEATURE_OBJECT_SPELL_SYSTEM
-
 ##Toggle for having jobs load up from the .txt
 # LOAD_JOBS_FROM_TXT
 

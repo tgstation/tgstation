@@ -10,14 +10,6 @@
 		wabbajack(change)
 
 
-	/*Bump(atom/change)
-		if(istype(change, /mob/living))
-			wabbajack(change)
-		else
-			del(src)*/
-
-
-
 /obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
 	if(istype(M, /mob/living) && M.stat != DEAD)
 		if(M.monkeyizing)	return

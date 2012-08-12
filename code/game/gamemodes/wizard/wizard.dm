@@ -172,10 +172,7 @@
 	wizard_mob.equip_if_possible(new /obj/item/weapon/storage/box(wizard_mob), wizard_mob.slot_in_backpack)
 //	wizard_mob.equip_if_possible(new /obj/item/weapon/scrying_gem(wizard_mob), wizard_mob.slot_l_store) For scrying gem.
 	wizard_mob.equip_if_possible(new /obj/item/weapon/teleportation_scroll(wizard_mob), wizard_mob.slot_r_store)
-	if(config.feature_object_spell_system) //if it's turned on (in config.txt), spawns an object spell spellbook
-		wizard_mob.equip_if_possible(new /obj/item/weapon/spellbook/object_type_spells(wizard_mob), wizard_mob.slot_r_hand)
-	else
-		wizard_mob.equip_if_possible(new /obj/item/weapon/spellbook(wizard_mob), wizard_mob.slot_r_hand)
+	wizard_mob.equip_if_possible(new /obj/item/weapon/spellbook(wizard_mob), wizard_mob.slot_r_hand)
 
 	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
 	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
@@ -251,40 +248,9 @@
 //OTHER PROCS
 
 //To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(var/mob/M as mob, var/spell_type = "verb")
-//	..()
-	if(spell_type == "verb")
-		if(M.verbs.len)
-			M.verbs -= /client/proc/jaunt
-			M.verbs -= /client/proc/magicmissile
-			M.verbs -= /client/proc/fireball
-			M.verbs -= /mob/proc/kill
-			M.verbs -= /mob/proc/tech
-			M.verbs -= /client/proc/smokecloud
-			M.verbs -= /client/proc/blind
-			M.verbs -= /client/proc/forcewall
-			M.verbs -= /mob/proc/teleport
-			M.verbs -= /client/proc/mutate
-			M.verbs -= /client/proc/knock
-			M.verbs -= /mob/proc/swap
-			M.verbs -= /client/proc/blink
-		if(M.mind && M.mind.special_verbs.len)
-			M.mind.special_verbs -= /client/proc/jaunt
-			M.mind.special_verbs -= /client/proc/magicmissile
-			M.mind.special_verbs -= /client/proc/fireball
-			M.mind.special_verbs -= /mob/proc/kill
-			M.mind.special_verbs -= /mob/proc/tech
-			M.mind.special_verbs -= /client/proc/smokecloud
-			M.mind.special_verbs -= /client/proc/blind
-			M.mind.special_verbs -= /client/proc/forcewall
-			M.mind.special_verbs -= /mob/proc/teleport
-			M.mind.special_verbs -= /client/proc/mutate
-			M.mind.special_verbs -= /client/proc/knock
-			M.mind.special_verbs -= /mob/proc/swap
-			M.mind.special_verbs -= /client/proc/blink
-	else if(spell_type == "object")
-		for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
-			del(spell_to_remove)
+/mob/proc/spellremove(var/mob/M as mob)
+	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
+		del(spell_to_remove)
 
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/
