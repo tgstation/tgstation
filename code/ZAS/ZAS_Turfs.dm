@@ -45,46 +45,24 @@ turf
 			datum/gas_mixture/air
 
 			processing = 1
-//			group_border = 0
-//			length_space_border = 0
 
 			air_check_directions = 0 //Do not modify this, just add turf to air_master.tiles_to_update
 
-//			archived_cycle = 0
-//			current_cycle = 0
-
 			obj/fire/active_hotspot
 
-//			temperature_archived //USED ONLY FOR SOLIDS
-//			being_superconductive = 0
 
+		proc/update_visuals()
+			overlays = null
 
-		proc
-			process_cell()
-			update_air_properties()
-			archive()
-
-			mimic_air_with_tile(turf/model)
-			share_air_with_tile(turf/simulated/sharer)
-
-			mimic_temperature_with_tile(turf/model)
-			share_temperature_with_tile(turf/simulated/sharer)
-
-
-			super_conduct()
-
-			update_visuals()
-				overlays = null
-
-				var/siding_icon_state = return_siding_icon_state()
-				if(siding_icon_state)
-					overlays += image('floors.dmi',siding_icon_state)
-				var/datum/gas_mixture/model = return_air()
-				switch(model.graphic)
-					if(1)
-						overlays.Add(plmaster) //TODO: Make invisible plasma an option
-					if(2)
-						overlays.Add(slmaster)
+			var/siding_icon_state = return_siding_icon_state()
+			if(siding_icon_state)
+				overlays += image('floors.dmi',siding_icon_state)
+			var/datum/gas_mixture/model = return_air()
+			switch(model.graphic)
+				if(1)
+					overlays.Add(plmaster) //TODO: Make invisible plasma an option
+				if(2)
+					overlays.Add(slmaster)
 
 
 
@@ -104,8 +82,6 @@ turf
 
 				if(air_master)
 					air_master.tiles_to_update.Add(src)
-
-//				air.parent = src //TODO DEBUG REMOVE
 
 			else
 				if(air_master)
@@ -132,19 +108,6 @@ turf
 			else
 				return ..()
 
-//		archive()
-//			if(air) //For open space like floors
-//				air.archive()
-
-//			temperature_archived = temperature
-//			archived_cycle = air_master.current_cycle
-
-		share_air_with_tile(turf/simulated/T)
-			return air.share(T.air)
-
-		mimic_air_with_tile(turf/T)
-			return air.mimic(T)
-
 		return_air()
 			if(zone)
 				return zone.air
@@ -170,7 +133,7 @@ turf
 			else
 				return ..()
 
-		update_air_properties()
+		proc/update_air_properties()
 			. = 1
 			air_check_directions = 0
 

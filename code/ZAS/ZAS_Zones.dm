@@ -359,6 +359,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 
 	if(sharing_lookup_table.len >= unsimulated_tiles.len) //6 or more interconnecting tiles will max at 42% of air moved per tick.
 		ratio = sharing_lookup_table[unsimulated_tiles.len]
+	ratio *= 2
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
