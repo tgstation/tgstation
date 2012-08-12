@@ -6,12 +6,12 @@
 	if(holder == affected_mob)
 		stage_act()
 
-	if(affected_mob.stat == DEAD)
-		if(prob(50))
-			if(--longevity<=0)
-				cure(0)
-
-	if(!affected_mob) //the virus is in inanimate obj
+	if(affected_mob)
+		if(affected_mob.stat == DEAD)
+			if(prob(50))
+				if(--longevity<=0)
+					cure(0)
+	else //the virus is in inanimate obj
 		cure(0)
 	return
 
