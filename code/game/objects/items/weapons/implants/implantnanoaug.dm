@@ -20,7 +20,7 @@
 
 
 	implanted(mob/M as mob)
-		if(!istype(M, /mob/living/carbon/human))	return
+		if(!istype(M, /mob/living/carbon/human))	return 0
 		var/mob/living/carbon/human/H = M
 		H.augmentations.Add(augmentation) // give them the mutation
 		H << "\blue [augment_text]"
@@ -39,7 +39,7 @@
 
 			spawn()
 				H.start_radar()
-		return
+		return 1
 
 
 /obj/item/weapon/implant/nanoaug/strength

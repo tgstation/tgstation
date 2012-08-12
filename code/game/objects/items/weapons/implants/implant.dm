@@ -10,9 +10,11 @@
 
 	proc/activate()
 		return
-
+	// What does the implant do upon injection?
+	// return 0 if the implant fails to persist (ex. Revhead and loyalty implant.)
+	// return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
 	proc/implanted(source as mob)
-		return
+		return 1
 
 	proc/get_data()
 		return
@@ -28,7 +30,7 @@
 
 
 	implanted(source as mob)
-		return
+		return 1
 
 
 	get_data()
@@ -54,7 +56,7 @@
 		activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 		source.mind.store_memory("Uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		source << "The implanted uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
-		return
+		return 1
 
 
 	trigger(emote, mob/source as mob)
@@ -191,15 +193,15 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 	implanted(M as mob)
-		if(!istype(M, /mob/living/carbon/human))	return
+		if(!istype(M, /mob/living/carbon/human))	return 0
 		var/mob/living/carbon/human/H = M
 		if(H.mind in ticker.mode.head_revolutionaries)
 			H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
-			return
+			return 0
 		else if(H.mind in ticker.mode:revolutionaries)
 			ticker.mode:remove_revolutionary(H.mind)
 		H << "\blue You feel a surge of loyalty towards Nanotrasen."
-		return
+		return 1
 
 
 /obj/item/weapon/implant/adrenalin
@@ -236,4 +238,4 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	implanted(mob/source as mob)
 		source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
 		source << "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate."
-		return
+		return 1
