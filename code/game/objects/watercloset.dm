@@ -245,12 +245,12 @@
 		var/mob/living/carbon/C = M
 
 		if(watertemp == "freezing")
-			C.bodytemperature = min(100, C.bodytemperature - 80)
+			C.bodytemperature = max(80, C.bodytemperature - 80)
 			C << "<span class='warning'>The water is freezing!</span>"
 			return
 		if(watertemp == "boiling")
-			C.bodytemperature = max(500, C.bodytemperature + 35)
-			C.adjustFireLoss(10)
+			C.bodytemperature = min(500, C.bodytemperature + 35)
+			C.adjustFireLoss(5)
 			C << "<span class='danger'>The water is searing!</span>"
 			return
 

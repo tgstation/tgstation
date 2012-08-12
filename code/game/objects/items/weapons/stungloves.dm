@@ -27,14 +27,15 @@
 
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(cell)
+			cell.updateicon()
 			cell.loc = get_turf(src.loc)
-			cell = 0
+			cell = null
 			user << "You cut the cell away from [src]."
 			update_icon()
 			return
 		if(wired) //wires disappear into the void because fuck that shit
 			wired = 0
-			siemens_coefficient = siemens_coefficient_archived
+			siemens_coefficient = initial(siemens_coefficient)
 			user << "You cut the wires away from [src]."
 			update_icon()
 		..()
@@ -47,6 +48,3 @@
 		overlays += "gloves_wire"
 	if(cell)
 		overlays += "gloves_cell"
-
-/obj/item/clothing/gloves/New()
-	siemens_coefficient_archived = siemens_coefficient

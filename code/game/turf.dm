@@ -1868,4 +1868,3 @@ turf/simulated/floor/proc/update_icon()
 	if(flags & NOJAUNT)
 		return
 	flags |= NOJAUNT
-	overlays += image('icons/effects/water.dmi',src,"holywater")

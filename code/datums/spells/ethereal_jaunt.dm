@@ -80,28 +80,8 @@
 	var/turf/newLoc = get_step(src,direction)
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc
-/*
-	switch(direction)
-		if(NORTH)
-			src.y++
-		if(SOUTH)
-			src.y--
-		if(EAST)
-			src.x++
-		if(WEST)
-			src.x--
-		if(NORTHEAST)
-			src.y++
-			src.x++
-		if(NORTHWEST)
-			src.y++
-			src.x--
-		if(SOUTHEAST)
-			src.y--
-			src.x++
-		if(SOUTHWEST)
-			src.y--
-			src.x-- */
+	else
+		user << "<span class='warning'>Some strange aura is blocking the way!</span>"
 	src.canmove = 0
 	spawn(2) src.canmove = 1
 

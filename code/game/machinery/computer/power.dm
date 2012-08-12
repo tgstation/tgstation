@@ -11,6 +11,18 @@
 	idle_power_usage = 20
 	active_power_usage = 80
 
+//fix for issue 521, by QualityVan.
+//someone should really look into why circuits have a powernet var, it's several kinds of retarded.
+/obj/machinery/power/monitor/New()
+	..()
+	var/obj/structure/cable/attached = null
+	var/turf/T = loc
+	if(isturf(T))
+		attached = locate() in T
+	if(attached)
+		powernet = attached.get_powernet()
+
+
 /obj/machinery/power/monitor/attack_ai(mob/user)
 	add_fingerprint(user)
 

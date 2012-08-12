@@ -6,7 +6,6 @@
 	protective_temperature = 400
 	heat_transfer_coefficient = 0.25
 	siemens_coefficient = 0.50
-	var/siemens_coefficient_archived = 0
 	var/wired = 0
 	var/obj/item/weapon/cell/cell = 0
 	body_parts_covered = HANDS
