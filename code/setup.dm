@@ -475,3 +475,15 @@ var/list/liftable_structures = list(\
 #define ORGAN_ROBOT 128
 #define ORGAN_SPLINTED 256
 #define SALVED 512
+
+  ///////////////////////////////////////////////
+ //Important ZAS Functionality.  3D simulation//
+///////////////////////////////////////////////
+
+//Uncomment if you want it enabled
+//#define ZAS_3D
+
+#ifdef ZAS_3D
+var/list/adjacent_z_levels("1" = list("up" = 2, "down" = 7), "2" = list("down" = 1), "7" = list("up" = 1)) //Example.  2 is above 1 which is above 7.
+#endif
+//The above is for a future feature.
