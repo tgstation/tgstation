@@ -48,7 +48,8 @@ datum/mind
 
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
-	var/datum/faction/faction // associated faction
+	var/datum/faction/faction 			//associated faction
+	var/datum/changeling/changeling		//changeling holder
 
 	New(var/key)
 		src.key = key
@@ -58,12 +59,17 @@ datum/mind
 		if(!istype(new_character))
 			world.log << "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn"
 		if(current)					//remove ourself from our old body's mind variable
+			if(changeling)
+				current.remove_changeling_powers()
 			current.mind = null
 		if(new_character.mind)		//remove any mind currently in our new body's mind variable
 			new_character.mind.current = null
 
 		current = new_character		//link ourself to our new body
 		new_character.mind = src	//and link our new body to ourself
+
+		if(changeling)
+			new_character.make_changeling()
 
 		if(active)
 			new_character.key = key		//now transfer the key to link the client to our new body
@@ -183,7 +189,7 @@ datum/mind
 				text += "<b>YES</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
 				if (objectives.len==0)
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-				if (current.changeling && (current.changeling.absorbed_dna.len>0 && current.real_name != current.changeling.absorbed_dna[1]))
+				if( changeling && changeling.absorbed_dna.len && (current.real_name != changeling.absorbed_dna[1]) )
 					text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
 			else
 				text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
@@ -630,25 +636,24 @@ datum/mind
 						ticker.mode.changelings -= src
 						special_role = null
 						current.remove_changeling_powers()
-						if(current.changeling)
-							del(current.changeling)
-						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a changeling!</B></FONT>"
+						if(changeling)	del(changeling)
+						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 				if("changeling")
 					if(!(src in ticker.mode.changelings))
 						ticker.mode.changelings += src
 						ticker.mode.grant_changeling_powers(current)
 						special_role = "Changeling"
-						current << "<B>\red You are a changeling!</B>"
+						current << "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>"
 				if("autoobjectives")
 					ticker.mode.forge_changeling_objectives(src)
 					usr << "\blue The objectives for changeling [key] have been generated. You can edit them and anounce manually."
 
 				if("initialdna")
-					if (!usr.changeling || !usr.changeling.absorbed_dna[1])
+					if( !changeling || !changeling.absorbed_dna.len )
 						usr << "\red Resetting DNA failed!"
 					else
-						usr.dna = usr.changeling.absorbed_dna[usr.changeling.absorbed_dna[1]]
-						usr.real_name = usr.changeling.absorbed_dna[1]
+						usr.dna = changeling.absorbed_dna[changeling.absorbed_dna[1]]
+						usr.real_name = changeling.absorbed_dna[1]
 						updateappearance(usr, usr.dna.uni_identity)
 						domutcheck(usr, null)
 

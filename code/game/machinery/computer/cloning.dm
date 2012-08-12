@@ -378,7 +378,7 @@
 				temp = "Error: Clonepod malfunction."
 			else if(!config.revival_cloning)
 				temp = "Error: Unable to initiate cloning cycle."
-			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"],C.fields["changeling"]))
+			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"]))
 				temp = "Initiating cloning cycle..."
 				records.Remove(C)
 				del(C)
@@ -425,7 +425,6 @@
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)
 	R.fields["UI"] = subject.dna.uni_identity
 	R.fields["SE"] = subject.dna.struc_enzymes
-	R.fields["changeling"] = subject.changeling
 
 	// Preferences stuff
 	R.fields["interface"] = subject.UI

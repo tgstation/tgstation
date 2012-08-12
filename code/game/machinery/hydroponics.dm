@@ -906,12 +906,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if (podman.mind in ticker.mode:cult)
 					ticker.mode:add_cultist(podman.mind)
 					ticker.mode:update_all_cult_icons() //So the icon actually appears
-			if ("changeling")
-				if (podman.mind in ticker.mode:changelings)
-					podman.make_changeling()
 
 			// -- End mode specific stuff
-
 
 		podman.gender = gender
 

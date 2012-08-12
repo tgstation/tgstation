@@ -699,7 +699,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			lying = 0
 		else
 			lying = 1
-	else if( stat || weakened || paralysis || resting || sleeping || (changeling && changeling.changeling_fakedeath) )
+	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) )
 		lying = 1
 		canmove = 0
 	else if( stunned )

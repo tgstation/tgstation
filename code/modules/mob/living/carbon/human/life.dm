@@ -1060,11 +1060,8 @@
 						nutrition += 10
 
 	proc/handle_changeling()
-		if (mind)
-			if (mind.special_role == "Changeling" && changeling)
-				changeling.chem_charges = between(0, ((max((0.9 - (changeling.chem_charges / 50)), 0.1)*changeling.chem_recharge_multiplier) + changeling.chem_charges), changeling.chem_storage)
-				if ((changeling.geneticdamage > 0))
-					changeling.geneticdamage = changeling.geneticdamage-1
+		if(mind && mind.changeling)
+			mind.changeling.regenerate()
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

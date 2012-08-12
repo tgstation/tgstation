@@ -539,7 +539,7 @@ CIRCULAR SAW
 					return
 
 			if(3.0)
-				if(M.changeling && M.changeling.changeling_fakedeath)
+				if(M.mind && M.mind.changeling)
 					user << "\red The neural tissue regrows before your eyes as you cut it."
 					return
 

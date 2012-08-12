@@ -214,9 +214,6 @@
 	var/radar_open = 0 	// nonzero is radar is open
 
 
-	//Datum holding changeling stuff
-	var/datum/changeling/changeling = null //TODO: Move this to living or carbon -Nodrak
-
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 
 	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.

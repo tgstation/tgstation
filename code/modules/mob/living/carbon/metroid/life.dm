@@ -264,7 +264,7 @@
 				src.blinded = 1
 
 			else
-				if (src.paralysis || src.stunned || src.weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
+				if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
 					if (src.stunned > 0)
 						AdjustStunned(-1)
 						src.stat = 0

@@ -895,7 +895,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				user.show_message("\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
 				user.show_message("\blue \t Key: Suffocation/Toxin/Burns/Brute", 1)
 				user.show_message("\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
-				if(!isnull(C.tod) && (C.stat == 2 || (C.reagents && C.reagents.has_reagent("zombiepowder")) || (C.changeling && C.changeling.changeling_fakedeath)))
+				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 					user.show_message("\blue \t Time of Death: [C.tod]")
 				if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C

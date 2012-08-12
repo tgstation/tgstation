@@ -4,9 +4,9 @@
 		return
 
 	//Mimes dont speak! Changeling hivemind and emotes are allowed.
-	if (miming)
+	if(miming)
 		if(length(message) >= 2)
-			if(src.changeling)
+			if(mind && mind.changeling)
 				if(copytext(message, 1, 2) != "*" && copytext(message, 1, 3) != ":g" && copytext(message, 1, 3) != ":G" && copytext(message, 1, 3) != ":ï")
 					return
 				else

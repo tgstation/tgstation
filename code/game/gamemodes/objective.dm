@@ -445,7 +445,7 @@ datum/objective/absorb
 		return target_amount
 
 	check_completion()
-		if(owner && owner.current && owner.current.changeling && owner.current.changeling.absorbed_dna && ((owner.current.changeling.absorbedcount) >= target_amount))
+		if(owner && owner.changeling && owner.changeling.absorbed_dna && (owner.changeling.absorbedcount >= target_amount))
 			return 1
 		else
 			return 0

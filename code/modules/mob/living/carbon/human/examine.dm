@@ -186,7 +186,7 @@
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and [t_has] suffered major bloodloss!</span>\n"
 
-	if(stat == DEAD || (changeling && (changeling.changeling_fakedeath == 1)))
+	if(stat == DEAD || (status_flags & FAKEDEATH))
 		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 
 		if(!key)

@@ -168,15 +168,12 @@
 	var/atom/this = src//detach proc from src
 	src = null
 
-	if (!usr || !isturf(usr.loc))
+	if(!usr || !isturf(usr.loc))
 		return
-	else if (usr.stat != 0 || usr.restrained())
+	if(usr.stat || usr.restrained())
 		return
-	else
-		if(usr.reagents)
-			for(var/datum/reagent/R in usr.reagents.reagent_list) //I'm trying to avoid using canmove() because there are times where it would return 0 when you should still be able to point
-				if(R.id == "zombiepowder")	//This is to counter people spamming point-to when hit by a para-pen or changling's parasting. -Nodrak..
-					return
+	if(usr.status_flags & FAKEDEATH)
+		return
 
 	var/tile = get_turf(this)
 	if (!tile)

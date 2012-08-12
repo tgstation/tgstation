@@ -113,7 +113,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI, var/datum/changeling/changelingClone)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI)
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(mindref)
@@ -176,10 +176,6 @@
 			if (H.mind in ticker.mode.cult)
 				ticker.mode.add_cultist(src.occupant.mind)
 				ticker.mode.update_all_cult_icons() //So the icon actually appears
-
-	if (changelingClone && H.mind in ticker.mode.changelings)
-		H.changeling = changelingClone
-		H.make_changeling()
 
 	// -- End mode specific stuff
 

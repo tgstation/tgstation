@@ -1472,6 +1472,7 @@ datum
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				if(!M) M = holder.my_atom
+				M.status_flags |= FAKEDEATH
 				M.adjustOxyLoss(0.5)
 				M.adjustToxLoss(0.5)
 				M.Weaken(10)
@@ -1479,6 +1480,11 @@ datum
 				M.tod = worldtime2text()
 				..()
 				return
+
+			Del()
+				if(holder && ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					M.status_flags &= ~FAKEDEATH
 
 		LSD
 			name = "LSD"

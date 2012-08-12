@@ -1,3 +1,5 @@
+var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
+
 /datum/game_mode
 	var/list/datum/mind/changelings = list()
 
@@ -150,9 +152,8 @@
 			return ..()
 	return 0*/
 
-/datum/game_mode/proc/grant_changeling_powers(mob/living/carbon/human/changeling_mob)
-	if (!istype(changeling_mob))
-		return
+/datum/game_mode/proc/grant_changeling_powers(mob/living/carbon/changeling_mob)
+	if(!istype(changeling_mob))	return
 	changeling_mob.make_changeling()
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
@@ -162,7 +163,7 @@
 			var/changelingwin = 1
 
 			text += "<br>[changeling.key] was [changeling.name] ("
-			if(changeling.current && changeling.current.changeling)
+			if(changeling.current)
 				if(changeling.current.stat == DEAD)
 					text += "died"
 				else
@@ -174,9 +175,9 @@
 				changelingwin = 0
 			text += ")"
 
-			if(changeling.current && changeling.current.changeling)
-				text += "<br><b>changeling ID:</b> [changeling.current.gender==MALE?"Mr.":"Ms."] [changeling.current.changeling.changelingID]."
-				text += "<br><b>Genomes absorbed:</b> [changeling.current.changeling.absorbedcount]"
+			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
+			text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]."
+			text += "<br><b>Genomes Absorbed:</b> [changeling.changeling.absorbedcount]"
 
 			if(changeling.objectives.len)
 				var/count = 1
@@ -203,32 +204,30 @@
 	return 1
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
-	var/changeling_level = 0
 	var/list/absorbed_dna = list()
-	var/changeling_fakedeath = 0
-	var/chem_charges = 20.00
-	var/chem_recharge_multiplier = 1
+	var/absorbedcount = 0
+	var/chem_charges = 20
+	var/chem_recharge_rate = 0.5
 	var/chem_storage = 50
 	var/sting_range = 1
-	var/changelingID = "none"
-	var/mob/living/host = null
-	var/geneticdamage = 0.0
+	var/changelingID = "Changeling"
+	var/geneticdamage = 0
 	var/isabsorbing = 0
 	var/geneticpoints = 5
 	var/purchasedpowers = list()
-	var/absorbedcount = 0
 
-
-
-/datum/changeling/New()
+/datum/changeling/New(var/gender=FEMALE)
 	..()
-	var/list/possibleIDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
-
-	for(var/mob/living/carbon/aChangeling in player_list)
-		if(aChangeling.changeling)
-			possibleIDs -= aChangeling.changeling.changelingID
-
-	if(possibleIDs.len)
-		changelingID = pick(possibleIDs)
+	var/honorific
+	if(gender == FEMALE)	honorific = "Ms."
+	else					honorific = "Mr."
+	if(possible_changeling_IDs.len)
+		changelingID = pick(possible_changeling_IDs)
+		possible_changeling_IDs -= changelingID
+		changelingID = "[honorific] [changelingID]"
 	else
-		changelingID = "[rand(1,1000)]"
+		changelingID = "[honorific] [rand(1,999)]"
+
+/datum/changeling/proc/regenerate()
+	chem_charges = min(max(0, chem_charges+chem_recharge_rate), chem_storage)
+	geneticdamage = max(0, geneticdamage-1)

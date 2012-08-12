@@ -246,10 +246,10 @@ var/list/department_radio_keys = list(
 			italics = 1
 
 		if("changeling")
-			if(src.changeling)
-				for(var/mob/aChangeling in mob_list)
-					if(aChangeling.changeling || istype(aChangeling, /mob/dead/observer))
-						aChangeling << "<i><font color=#800080><b>[gender=="male"?"Mr.":"Mrs."] [changeling.changelingID]:</b> [message]</font></i>"
+			if(mind && mind.changeling)
+				for(var/mob/Changeling in mob_list)
+					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
+						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				return
 ////SPECIAL HEADSETS START
 		else

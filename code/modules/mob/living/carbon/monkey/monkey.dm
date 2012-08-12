@@ -392,9 +392,9 @@
 	stat(null, text("Move Mode: []", m_intent))
 	if(client && mind)
 		if (client.statpanel == "Status")
-			if (mind.special_role == "Changeling" && changeling)
-				stat("Chemical Storage", changeling.chem_charges)
-				stat("Genetic Damage Time", changeling.geneticdamage)
+			if(mind.changeling)
+				stat("Chemical Storage", mind.changeling.chem_charges)
+				stat("Genetic Damage Time", mind.changeling.geneticdamage)
 	return
 
 

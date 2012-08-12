@@ -393,9 +393,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	//Now for special roles and equipment.
 	switch(new_character.mind.special_role)
-		if("Changeling")
-			job_master.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			new_character.make_changeling()
 		if("traitor")
 			job_master.EquipRank(new_character, new_character.mind.assigned_role, 1)
 			ticker.mode.equip_traitor(new_character)
