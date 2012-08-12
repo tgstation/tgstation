@@ -86,7 +86,7 @@
 		return
 
 	changeling.isabsorbing = 1
-	for(var/stage = 1, stage<=4, stage++)
+	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
 			if(1)
 				usr << "<span class='notice'>This creature is compatible. We must hold still...</span>"
@@ -98,16 +98,16 @@
 				usr.visible_message("<span class='danger'>[usr] stabs [T] with the proboscis!</span>")
 				T << "<span class='danger'>You feel a sharp stabbing pain!</span>"
 				T.take_overall_damage(40)
-			if(4)
-				usr << "<span class='notice'>We have absorbed [T]!</span>"
-				usr.visible_message("<span class='danger'>[usr] sucks the fluids from [T]!</span>")
-				T << "<span class='danger'>You have been absorbed by the changeling!</span>"
 
 		feedback_add_details("changeling_powers","A[stage]")
 		if(!do_mob(usr, T, 150))
 			usr << "<span class='warning'>Our absorption of [T] has been interrupted!</span>"
 			changeling.isabsorbing = 0
 			return
+
+	usr << "<span class='notice'>We have absorbed [T]!</span>"
+	usr.visible_message("<span class='danger'>[usr] sucks the fluids from [T]!</span>")
+	T << "<span class='danger'>You have been absorbed by the changeling!</span>"
 
 	changeling.absorbed_dna[T.real_name] = T.dna
 	if(usr.nutrition < 400) usr.nutrition = min((usr.nutrition + T.nutrition), 400)
