@@ -75,7 +75,7 @@ atom/movable/Move() //Hackish
 	attackby()
 		return //nothing
 
-	proc/set_up() //Update the overlayss to make the openspace turf show what's down a level
+	proc/set_up() //Update the overlays to make the openspace turf show what's down a level
 		if(!overlay_references)
 			overlay_references = list()
 		if(!floorbelow) return
