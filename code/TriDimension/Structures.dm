@@ -23,20 +23,34 @@
 	New()
 		. = ..()
 		spawn(1) //Allow map to load
-			if(!target)
-				var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
-				target = locate() in locate(x,y,adjacent_to_me["down"])
-				if (istype(target))
-					icon_state = top_icon_state
-				else
-					target = locate() in locate(x,y,adjacent_to_me["up"])
-					if (istype(target))
-						icon_state = bottom_icon_state
+			if(z in levels_3d)
+				if(!target)
+					var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
+					if("up" in adjacent_to_me)
+						target = locate() in locate(x,y,adjacent_to_me["up"])
+						if(istype(target))
+							icon_state = bottom_icon_state
+						else if("down" in adjacent_to_me)
+							target = locate() in locate(x,y,adjacent_to_me["down"])
+							if(istype(target))
+								icon_state = top_icon_state
+							else
+								del src
+						else
+							del src
+					else if("down" in adjacent_to_me)
+						target = locate() in locate(x,y,adjacent_to_me["down"])
+						if(istype(target))
+							icon_state = bottom_icon_state
+						else
+							del src
 					else
 						del src
-				if(target)
-					target.icon_state = ( icon_state == top_icon_state ? bottom_icon_state : top_icon_state)
-					target.target = src
+					if(target)
+						target.icon_state = ( icon_state == top_icon_state ? bottom_icon_state : top_icon_state)
+						target.target = src
+			else
+				del src
 
 	Del()
 		spawn(1)
@@ -66,7 +80,7 @@
 		var/top_icon_state_open = "hatchdown-open"
 		var/top_icon_state_close = "hatchdown-close"
 
-		bottom_icon_state = "hatchup"
+		bottom_icon_state = "ladderup"
 
 		var/image/green_overlay
 		var/image/red_overlay
@@ -127,23 +141,37 @@
 		New()
 			. = ..()
 			spawn(1)
-				if(!target)
-					var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
-					target = locate() in locate(x,y,adjacent_to_me["up"])
-					if(istype(target))
-						icon_state = bottom_icon_state
-					else
-						target = locate() in locate(x,y,adjacent_to_me["down"])
-						if(istype(target))
-							icon_state = top_icon_state
+				if(z in levels_3d)
+					if(!target)
+						var/list/adjacent_to_me = global_adjacent_z_levels["[z]"]
+						if("up" in adjacent_to_me)
+							target = locate() in locate(x,y,adjacent_to_me["up"])
+							if(istype(target))
+								icon_state = bottom_icon_state
+							else if("down" in adjacent_to_me)
+								target = locate() in locate(x,y,adjacent_to_me["down"])
+								if(istype(target))
+									icon_state = top_icon_state
+								else
+									del src
+							else
+								del src
+						else if("down" in adjacent_to_me)
+							target = locate() in locate(x,y,adjacent_to_me["down"])
+							if(istype(target))
+								icon_state = bottom_icon_state
+							else
+								del src
 						else
 							del src
-					if(target)
-						target.icon_state = ( icon_state == top_icon_state ? bottom_icon_state : top_icon_state)
-						target.target = src
-					var/obj/multiz/stairs/lead_in = locate() in get_step(src, reverse_direction(dir))
-					if(lead_in)
-						lead_in.icon_state = ( icon_state == top_icon_state ? bottom_icon_state : top_icon_state)
+						if(target)
+							target.icon_state = ( icon_state == top_icon_state ? bottom_icon_state : top_icon_state)
+							target.target = src
+						var/obj/multiz/stairs/lead_in = locate() in get_step(src, reverse_direction(dir))
+						if(lead_in)
+							lead_in.icon_state = ( icon_state == top_icon_state ? bottom_icon_state : top_icon_state)
+				else
+					del src
 
 
 		Del()
