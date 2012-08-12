@@ -18,7 +18,7 @@ proc/FloodFill(turf/start)
 				for(var/d in cardinal)
 					var/turf/O = get_step(T,d)
 					//Simple pass check.
-					if(istype(O) && !(O in open || O in closed || O in doors) && O.ZCanPass(T))
+					if(istype(O) && !(O in open) && !(O in doors) && !(O in closed) && O.ZCanPass(T))
 						open += O
 			else
 				doors |= T
