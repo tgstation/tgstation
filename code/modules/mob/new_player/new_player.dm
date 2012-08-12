@@ -205,7 +205,7 @@
 
 			dbcon.Disconnect()
 
-		if(!ready && href_list["preferences"])
+		if(!ready && href_list["preference"])
 			preferences.process_link(src, href_list)
 		else if(!href_list["late_join"])
 			new_player_panel()

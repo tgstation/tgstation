@@ -1,8 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
-#define UI_OLD 0
-#define UI_NEW 1
-
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
 //some autodetection here.
 	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
@@ -81,8 +78,6 @@ datum/preferences
 	var/g_eyes = 0
 	var/b_eyes = 0
 
-		//UI style
-		//UI = UI_OLD
 	var/UI_style = "Midnight"
 
 		//Mob preview
@@ -120,6 +115,7 @@ datum/preferences
 
 
 	proc/ShowChoices(mob/user)
+		if(!user || !user.client)	return
 		update_preview_icon()
 		user << browse_rsc(preview_icon_front, "previewicon.png")
 		user << browse_rsc(preview_icon_side, "previewicon2.png")
@@ -132,10 +128,10 @@ datum/preferences
 			for(var/i = 1; i <= MAX_SAVE_SLOTS; i += 1)
 				var/savefile/F = new /savefile("data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences[i].sav")
 				F["slotname"] >> n
-				if((n == "") || !n)
-					saves += "<a href=\"byond://?src=\ref[user];preferences=1;changeslot=[i]\">Save Slot [i]</a>"
+				if(!n)
+					saves += "<a href=\"byond://?src=\ref[user];preference=changeslot;num=[i]\">Save Slot [i]</a>"
 				else
-					saves += "<a href=\"byond://?src=\ref[user];preferences=1;changeslot=[i]\">[n]</a>"
+					saves += "<a href=\"byond://?src=\ref[user];preference=changeslot;num=[i]\">[n]</a>"
 
 			for(var/i = 1; i <= MAX_SAVE_SLOTS; i += 1)
 				if(i == user.client.activeslot)
@@ -148,12 +144,12 @@ datum/preferences
 				if(i == default_slot)
 					dat += "(D)"
 				else
-					dat += "<a href=\"byond://?src=\ref[user];preferences=1;defaultslot=[i]\">(D)</a>"
+					dat += "<a href=\"byond://?src=\ref[user];preference=defaultslot;num=[i]\">(D)</a>"
 
 				if(i != MAX_SAVE_SLOTS)
 					dat += " / "
 			dat += "<br>"
-			dat += "<a href=\"byond://?src=\ref[user];preferences=1;slotname=input\">*</a>"
+			dat += "<a href=\"byond://?src=\ref[user];preference=slotname;task=input\">*</a>"
 
 		else
 			dat += "Please create an account to save your preferences."
@@ -161,66 +157,65 @@ datum/preferences
 		dat += "</center><hr><table><tr><td width='300px' height='300px'>"
 
 		dat += "<b>Name:</b> "
-		dat += "<a href=\"byond://?src=\ref[user];preferences=1;real_name=input\"><b>[real_name]</b></a> "
-		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;real_name=random\">&reg;</A>) "
-		dat += "(&reg; = <a href=\"byond://?src=\ref[user];preferences=1;b_random_name=1\">[be_random_name ? "Yes" : "No"]</a>)"
+		dat += "<a href=\"byond://?src=\ref[user];preference=name;task=input\"><b>[real_name]</b></a> "
+		dat += "(<a href=\"byond://?src=\ref[user];preference=name;task=random\">&reg;</A>) "
+		dat += "(&reg; = <a href=\"byond://?src=\ref[user];preference=name\">[be_random_name ? "Yes" : "No"]</a>)"
 		dat += "<br>"
 
-		dat += "<b>Gender:</b> <a href=\"byond://?src=\ref[user];preferences=1;gender=input\"><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
-		dat += "<b>Age:</b> <a href='byond://?src=\ref[user];preferences=1;age=input'>[age]</a>"
+		dat += "<b>Gender:</b> <a href=\"byond://?src=\ref[user];preference=gender\"><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
+		dat += "<b>Age:</b> <a href='byond://?src=\ref[user];preference=age;task=input'>[age]</a>"
 
 		dat += "<br>"
-		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI_style]</b></a><br>"
-		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
-		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
-		dat += "<b>Ghost sight:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_sight=input\"><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
+		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preference=ui\"><b>[UI_style]</b></a><br>"
+		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preference=hear_midis\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
+		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preference=ghost_ears\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
+		dat += "<b>Ghost sight:</b> <a href=\"byond://?src=\ref[user];preference=ghost_sight\"><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
 
 		if(config.allow_Metadata)
-			dat += "<b>OOC Notes:</b> <a href='byond://?src=\ref[user];preferences=1;OOC=input'> Edit </a><br>"
+			dat += "<b>OOC Notes:</b> <a href='byond://?src=\ref[user];preference=metadata;task=input'> Edit </a><br>"
 
 		if((user.client) && (user.client.holder) && (user.client.holder.rank))
 			dat += "<b>Adminhelp sound</b>: "
-			dat += "[(sound_adminhelp)?"On":"Off"] <a href='byond://?src=\ref[user];preferences=1;toggleadminhelpsound=1'>toggle</a><br>"
+			dat += "[(sound_adminhelp)?"On":"Off"] <a href='byond://?src=\ref[user];preference=hear_adminhelps'>toggle</a><br>"
 
 			if(user.client.holder.level >= 5)
 				dat += "<br><b>OOC</b><br>"
-				dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change color</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font><br>"
+				dat += "<a href='byond://?src=\ref[user];preference=ooccolor;task=input'>Change color</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font><br>"
 
 		dat += "<br><b>Occupation Choices</b><br>"
-		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>Set Preferences</b></a><br>"
+		dat += "\t<a href=\"byond://?src=\ref[user];preference=job;task=menu\"><b>Set Preferences</b></a><br>"
 
 		dat += "<br><table><tr><td><b>Body</b> "
-		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;backbag_type=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
+		dat += "(<a href=\"byond://?src=\ref[user];preference=all;task=random\">&reg;</A>)"
 		dat += "<br>"
-		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[b_type]</a><br>"
-		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-s_tone + 35]/220<br></a>"
+		dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
+		dat += "Skin Tone: <a href='byond://?src=\ref[user];preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
 
-	//	if(!IsGuestKey(user.key))//Seeing as it doesn't do anything, it may as well not show up.
 		if(gender == MALE)
-			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=inputmale\"><b>[underwear_m[underwear]]</b></a><br>"
+			dat += "Underwear: <a href =\"byond://?src=\ref[user];preference=underwear;task=input\"><b>[underwear_m[underwear]]</b></a><br>"
 		else
-			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=inputfemale\"><b>[underwear_f[underwear]]</b></a><br>"
+			dat += "Underwear: <a href =\"byond://?src=\ref[user];preference=underwear;task=input\"><b>[underwear_f[underwear]]</b></a><br>"
 
-		dat += "Backpack Type:<br><a href =\"byond://?src=\ref[user];preferences=1;backbag_type=input\"><b>[backbaglist[backbag]]</b></a><br>"
+		dat += "Backpack Type:<br><a href =\"byond://?src=\ref[user];preference=bag;task=input\"><b>[backbaglist[backbag]]</b></a><br>"
 
-		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"	//Carn: Now with profile!
+		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
 
 		dat += "</td><td width='300px' height='300px'>"
 
 		dat += "<br><b>Hair</b><br>"
 
-		dat += "<a href='byond://?src=\ref[user];preferences=1;hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]\"><table style='display:inline;' bgcolor=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]\"><tr><td>__</td></tr></table></font> "
+		dat += "<a href='byond://?src=\ref[user];preference=hair;task=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]\"><table style='display:inline;' bgcolor=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]\"><tr><td>__</td></tr></table></font> "
 
-		dat += "Style: <a href='byond://?src=\ref[user];preferences=1;h_style=input'>[h_style]</a><br>"
+		dat += "Style: <a href='byond://?src=\ref[user];preference=h_style;task=input'>[h_style]</a><br>"
 
 		dat += "<br><b>Facial</b><br>"
 
-		dat += "<a href='byond://?src=\ref[user];preferences=1;facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]\"><tr><td>__</td></tr></table></font> "
+		dat += "<a href='byond://?src=\ref[user];preference=facial;task=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]\"><tr><td>__</td></tr></table></font> "
 
-		dat += "Style: <a href='byond://?src=\ref[user];preferences=1;f_style=input'>[f_style]</a><br>"
+		dat += "Style: <a href='byond://?src=\ref[user];preference=f_style;task=input'>[f_style]</a><br>"
 
 		dat += "<br><b>Eyes</b><br>"
-		dat += "<a href='byond://?src=\ref[user];preferences=1;eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
+		dat += "<a href='byond://?src=\ref[user];preference=eyes;task=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
 
 		dat += "<br><br>"
 		if(jobban_isbanned(user, "Syndicate"))
@@ -236,15 +231,15 @@ datum/preferences
 						if(jobban_isbanned(user, "pAI"))
 							dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
 					else
-						dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_special=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
+						dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preference=be_special;num=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
 				n++
 		dat += "</td></tr></table><hr><center>"
 
 		if(!IsGuestKey(user.key))
-			dat += "<a href='byond://?src=\ref[user];preferences=1;load=1'>Undo</a> - "
-			dat += "<a href='byond://?src=\ref[user];preferences=1;save=1'>Save Setup</a> - "
+			dat += "<a href='byond://?src=\ref[user];preference=load'>Undo</a> - "
+			dat += "<a href='byond://?src=\ref[user];preference=save'>Save Setup</a> - "
 
-		dat += "<a href='byond://?src=\ref[user];preferences=1;reset_all=1'>Reset Setup</a>"
+		dat += "<a href='byond://?src=\ref[user];preference=reset_all'>Reset Setup</a>"
 		dat += "</center></body></html>"
 
 		user << browse(dat, "window=preferences;size=550x545")
@@ -259,7 +254,7 @@ datum/preferences
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
 		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br><br>"
-		HTML += "<a align='center' href=\"byond://?src=\ref[user];preferences=1;occ=0;job=cancel\">\[Done\]</a><br><br>" // Easier to press up here.
+		HTML += "<a align='center' href=\"byond://?src=\ref[user];preference=job;task=close\">\[Done\]</a><br><br>" // Easier to press up here.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -295,7 +290,7 @@ datum/preferences
 
 			HTML += "</td><td width='40%'>"
 
-			HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[rank]\">"
+			HTML += "<a href=\"byond://?src=\ref[user];preference=job;task=input;text=[rank]\">"
 
 			if(rank == "Assistant")//Assistant is special
 				if(job_civilian_low & ASSISTANT)
@@ -319,7 +314,7 @@ datum/preferences
 
 		HTML += "</center></table>"
 
-		HTML += "<center><br><u><a href=\"byond://?src=\ref[user];preferences=1;togglerandjob=1\"><font color=[userandomjob ? "green>Get random job if preferences unavailable" : "red>Be assistant if preference unavailable"]</font></a></u></center>"
+		HTML += "<center><br><u><a href=\"byond://?src=\ref[user];preference=job;task=random\"><font color=[userandomjob ? "green>Get random job if preferences unavailable" : "red>Be assistant if preference unavailable"]</font></a></u></center>"
 
 		HTML += "</tt>"
 
@@ -436,269 +431,231 @@ datum/preferences
 		return 1
 
 
-	proc/process_link(mob/user, list/link_tags)
-		if(!user)
-			return
+	proc/process_link(mob/user, list/href_list)
+		if(!user)	return
 
-		if(link_tags["togglerandjob"])
-			userandomjob = !userandomjob
-			SetChoices(user)
-			return 1
-
-		if(link_tags["occ"])
-			if(link_tags["cancel"])
-				user << browse(null, "window=\ref[user]occupation")
-				return
-			else if(link_tags["job"])
-				SetJob(user, link_tags["job"])
-			else
-				if(job_master)
+		if(href_list["preference"] == "job")
+			switch(href_list["task"])
+				if("close")
+					user << browse(null, "window=mob_occupation")
+					ShowChoices(user)
+				if("random")
+					userandomjob = !userandomjob
 					SetChoices(user)
-
+				if("input")
+					SetJob(user, href_list["text"])
+				else
+					SetChoices(user)
 			return 1
 
+		switch(href_list["task"])
+			if("random")
+				switch(href_list["preference"])
+					if("name")
+						randomize_name()
 
-		if(link_tags["real_name"])
-			var/new_name
+					if("age")
+						age = rand(17, 45)
 
-			switch(link_tags["real_name"])
-				if("input")
-					new_name = reject_bad_name( input(user, "Please select a name:", "Character Generation")  as text|null )
-					if(new_name)
-						real_name = new_name
-					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+					if("b_type")
+						b_type = pick( 31;"A+", 7;"A-", 8;"B+", 2;"B-", 2;"AB+", 1;"AB-", 40;"O+", 9;"O-" )
 
-				if("random")
-					randomize_name()
+					if("hair")
+						randomize_hair_color("hair")
 
-		if(link_tags["age"])
-			switch(link_tags["age"])
-				if("input")
-					var/new_age = input(user, "Please select type in age: 17-45", "Character Generation")  as num
-					if(new_age)
-						age = max(min(round(text2num(new_age)), 45), 17)
-				if("random")
-					age = rand (17, 45)
+					if("h_style")
+						randomize_hair(gender)
 
-		if(link_tags["OOC"])
-			var/tempnote = ""
-			tempnote = copytext(sanitize(input(user, "Please enter your OOC Notes!:", "OOC notes" , metadata)  as text),1,MAX_MESSAGE_LEN)
-			if(tempnote)
-				metadata = tempnote
-			return
+					if("facial")
+						randomize_hair_color("facial")
 
+					if("f_style")
+						randomize_facial(gender)
 
+					if("underwear")
+						underwear = rand(1,12)
 
+					if("eyes")
+						randomize_eyes_color()
 
-		if(link_tags["b_type"])
-			switch(link_tags["b_type"])
-				if("input")
-					var/new_b_type = input(user, "Please select a blood type:", "Character Generation")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
-					if(new_b_type)
-						b_type = new_b_type
-				if("random")
-					b_type = pickweight ( list ("A+" = 31, "A-" = 7, "B+" = 8, "B-" = 2, "AB+" = 2, "AB-" = 1, "O+" = 40, "O-" = 9))
+					if("s_tone")
+						randomize_skin_tone()
 
+					if("bag")
+						backbag = rand(1,3)
 
-		if(link_tags["hair"])
-			switch(link_tags["hair"])
-				if("input")
-					var/new_hair = input(user, "Please select hair color.", "Character Generation") as color
-					if(new_hair)
-						r_hair = hex2num(copytext(new_hair, 2, 4))
-						g_hair = hex2num(copytext(new_hair, 4, 6))
-						b_hair = hex2num(copytext(new_hair, 6, 8))
-				if("random")
-					randomize_hair_color("hair")
+					if("all")
+						gender = pick(MALE,FEMALE)
+						randomize_name()
+						age = rand(17,45)
+						underwear = rand(1,12)
+						backbag = rand(1,3)
+						randomize_hair_color("hair")
+						randomize_hair(gender)
+						randomize_hair_color("facial")
+						randomize_facial(gender)
+						randomize_eyes_color()
+						randomize_skin_tone()
+						b_type = pick( 31;"A+", 7;"A-", 8;"B+", 2;"B-", 2;"AB+", 1;"AB-", 40;"O+", 9;"O-" )
 
-		if(link_tags["facial"])
-			switch(link_tags["facial"])
-				if("input")
-					var/new_facial = input(user, "Please select facial hair color.", "Character Generation") as color
-					if(new_facial)
-						r_facial = hex2num(copytext(new_facial, 2, 4))
-						g_facial = hex2num(copytext(new_facial, 4, 6))
-						b_facial = hex2num(copytext(new_facial, 6, 8))
-				if("random")
-					randomize_hair_color("facial")
+						job_civilian_high = 0
+						job_civilian_med = 0
+						job_civilian_low = 0
+						job_medsci_high = 0
+						job_medsci_med = 0
+						job_medsci_low = 0
+						job_engsec_high = 0
+						job_engsec_med = 0
+						job_engsec_low = 0
+						be_special = 0
+						be_random_name = 0
+						UI_style = "Midnight"
+						midis = 1
+						ghost_ears = 1
+						userandomjob = 1
 
-		if(link_tags["eyes"])
-			switch(link_tags["eyes"])
-				if("input")
-					var/new_eyes = input(user, "Please select eye color.", "Character Generation") as color
-					if(new_eyes)
-						r_eyes = hex2num(copytext(new_eyes, 2, 4))
-						g_eyes = hex2num(copytext(new_eyes, 4, 6))
-						b_eyes = hex2num(copytext(new_eyes, 6, 8))
-				if("random")
-					randomize_eyes_color()
+			if("input")
+				switch(href_list["preference"])
+					if("name")
+						var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
+						if(new_name)
+							real_name = new_name
+						else
+							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
-		if(link_tags["s_tone"])
-			switch(link_tags["s_tone"])
-				if("random")
-					randomize_skin_tone()
-				if("input")
-					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as num
-					if(new_tone)
-						s_tone = max(min(round(new_tone), 220), 1)
-						s_tone = -s_tone + 35
+					if("age")
+						var/new_age = input(user, "Choose your character's age:\n(17-45)", "Character Preference") as num|null
+						if(new_age)
+							age = max(min(round(text2num(new_age)), 45), 17)
 
-		if(link_tags["h_style"])
-			switch(link_tags["h_style"])
+					if("metadata")
+						var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
+						if(new_metadata)
+							metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
-				// New and improved hair selection code, by Doohl
-				if("random") // random hair selection
+					if("b_type")
+						var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+						if(new_b_type)
+							b_type = new_b_type
 
-					randomize_hair(gender) // call randomize_hair() proc with var/gender parameter
-					// see preferences_setup.dm for proc
+					if("hair")
+						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
+						if(new_hair)
+							r_hair = hex2num(copytext(new_hair, 2, 4))
+							g_hair = hex2num(copytext(new_hair, 4, 6))
+							b_hair = hex2num(copytext(new_hair, 6, 8))
 
-				if("input") // input hair selection
-					var/new_style = input(user, "Select a hair style", "Character Generation")  as null|anything in hair_styles_list
-					if(new_style)
-						h_style = new_style
+					if("h_style")
+						var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_list
+						if(new_h_style)
+							h_style = new_h_style
 
+					if("facial")
+						var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as color|null
+						if(new_facial)
+							r_facial = hex2num(copytext(new_facial, 2, 4))
+							g_facial = hex2num(copytext(new_facial, 4, 6))
+							b_facial = hex2num(copytext(new_facial, 6, 8))
 
-		if(link_tags["ooccolor"])
-			var/ooccolor = input(user, "Please select OOC colour.", "OOC colour") as color
+					if("f_style")
+						var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_list
+						if(new_f_style)
+							f_style = new_f_style
 
-			if(ooccolor)
-				src.ooccolor = ooccolor
+					if("underwear")
+						var/list/underwear_options
+						if(gender == MALE)
+							underwear_options = underwear_m
+						else
+							underwear_options = underwear_f
 
-		if(link_tags["toggleadminhelpsound"])
-			src.sound_adminhelp = !src.sound_adminhelp
+						var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
+						if(new_underwear)
+							underwear = underwear_options.Find(new_underwear)
 
-		if(link_tags["f_style"])
-			switch(link_tags["f_style"])
+					if("eyes")
+						var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
+						if(new_eyes)
+							r_eyes = hex2num(copytext(new_eyes, 2, 4))
+							g_eyes = hex2num(copytext(new_eyes, 4, 6))
+							b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-				// see above for commentation. This is just a slight modification of the hair code for facial hairs
-				if("random")
-					randomize_facial(gender)
+					if("s_tone")
+						var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
+						if(new_s_tone)
+							s_tone = max(min(round(new_s_tone), 220), 1)
+							s_tone = -s_tone + 35
 
-				if("input")
-					var/new_style = input(user, "Select a facial hair style", "Character Generation")  as null|anything in facial_hair_styles_list
-					if(new_style)
-						f_style = new_style
+					if("ooccolor")
+						var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+						if(new_ooccolor)
+							ooccolor = new_ooccolor
 
-		if(link_tags["gender"])
-			if(gender == MALE)
-				gender = FEMALE
+					if("bag")
+						var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
+						if(new_backbag)
+							backbag = backbaglist.Find(new_backbag)
+
+					if("slotname")
+						var/new_slotname = input(user, "Please name this savefile:", "Save Slot Name")  as text|null
+						if(ckey(new_slotname))//Checks to make sure there is one letter
+							slot_name = strip_html_simple(new_slotname,16)
+
 			else
-				gender = MALE
+				switch(href_list["preference"])
+					if("gender")
+						if(gender == MALE)
+							gender = FEMALE
+						else
+							gender = MALE
 
-		if(link_tags["UI"])
-			switch(UI_style)
-				if("Midnight")
-					UI_style = "Orange"
-				if("Orange")
-					UI_style = "old"
-				if("old")
-					UI_style = "Midnight"
-				else
-					UI_style = "Midnight"
+					if("hear_adminhelps")
+						sound_adminhelp = !sound_adminhelp
 
-		if(link_tags["midis"])
-			midis = !midis
+					if("ui")
+						switch(UI_style)
+							if("Midnight")
+								UI_style = "Orange"
+							if("Orange")
+								UI_style = "old"
+							else
+								UI_style = "Midnight"
 
-		if(link_tags["ghost_ears"])
-			ghost_ears = !ghost_ears
+					if("be_special")
+						var/num = text2num(href_list["num"])
+						be_special ^= (1<<num)
 
-		if(link_tags["ghost_sight"])
-			ghost_sight = !ghost_sight
+					if("name")
+						be_random_name = !be_random_name
 
-		if(link_tags["underwear"])
-			switch(link_tags["underwear"])
-				if("inputmale")
-					var/tempUnderwear = input(user, "Please select your underwear colour:", "Character Generation")  as null|anything in underwear_m
-					if(tempUnderwear)
-						underwear = underwear_m.Find(tempUnderwear)
-				if("inputfemale")
-					var/tempUnderwear = input(user, "Please select your underwear colour:", "Character Generation")  as null|anything in underwear_f
-					if(tempUnderwear)
-						underwear = underwear_f.Find(tempUnderwear)
-				if("random")
-					underwear = rand(1,12)
+					if("hear_midis")
+						midis = !midis
 
-		if(link_tags["backbag_type"])
-			switch(link_tags["backbag_type"])
-				if("input")
-					var/tempBag = input(user, "Please pick a backpack type:", "Character Generation")  as null|anything in backbaglist
-					if(tempBag)
-						backbag = backbaglist.Find(tempBag)
-				if("random")
-					backbag = pick(1,2,3)
+					if("ghost_ears")
+						ghost_ears = !ghost_ears
 
+					if("ghost_sight")
+						ghost_sight = !ghost_sight
 
-		if(link_tags["be_special"])
-			src.be_special^=(1<<text2num(link_tags["be_special"])) //bitwize magic, sorry for that. --rastaf0
+					if("save")
+						if(!IsGuestKey(user.key))
+							savefile_save(user)
 
-		if(link_tags["b_random_name"])
-			be_random_name = !be_random_name
+					if("load")
+						if(!IsGuestKey(user.key))
+							savefile_load(user)
 
-		if(!IsGuestKey(user.key))
-			if(link_tags["save"])
-				savefile_save(user)
+					if("changeslot")
+						savefile_save(user)
+						user.client.activeslot = min(max(text2num(href_list["num"]), 1), MAX_SAVE_SLOTS)
+						savefile_load(user)
 
-			else if(link_tags["load"])
-				if(!savefile_load(user))
-					alert(user, "You do not have a savefile or a convertable savefile.")
-
-			else if(link_tags["changeslot"])
-				savefile_save(user)
-				user.client.activeslot = min(max(text2num(link_tags["changeslot"]), 1), MAX_SAVE_SLOTS)
-				savefile_load(user)
-
-			else if(link_tags["defaultslot"])
-				default_slot = min(max(text2num(link_tags["defaultslot"]), 1), MAX_SAVE_SLOTS)//Changes the last used slot to be the temp default one
-				savefile_saveslot(user,default_slot)//Mirrors choice across all saves
-
-			else if(link_tags["slotname"])
-				var/sname = ""
-				switch(link_tags["slotname"])
-					if("input")
-						sname = input(user, "Please select a name:", "Save Slot Name")  as text|null
-						if(!(ckey(sname)))//Checks to make sure there is one letter
-							sname = null
-						slot_name = strip_html_simple(sname,16)
-
-		if(link_tags["reset_all"])
-			gender = MALE
-			randomize_name()
-
-			age = 30
-			job_civilian_high = 0
-			job_civilian_med = 0
-			job_civilian_low = 0
-			job_medsci_high = 0
-			job_medsci_med = 0
-			job_medsci_low = 0
-			job_engsec_high = 0
-			job_engsec_med = 0
-			job_engsec_low = 0
-			underwear = 1
-			backbag = 2
-			be_special = 0
-			be_random_name = 0
-			r_hair = 0.0
-			g_hair = 0.0
-			b_hair = 0.0
-			r_facial = 0.0
-			g_facial = 0.0
-			b_facial = 0.0
-			h_style = "Short Hair"
-			f_style = "Shaved"
-			r_eyes = 0.0
-			g_eyes = 0.0
-			b_eyes = 0.0
-			s_tone = 0.0
-			b_type = "A+"
-			//UI = UI_OLD
-			UI_style = "Midnight"
-			midis = 1
-			ghost_ears = 1
-			userandomjob = 1
+					if("defaultslot")
+						default_slot = min(max(text2num(href_list["num"]), 1), MAX_SAVE_SLOTS)
+						savefile_saveslot(user,default_slot)//Mirrors choice across all saves
 
 		ShowChoices(user)
+		return 1
 
 	proc/copy_to(mob/living/carbon/human/character, safety = 0)
 		if(be_random_name)
@@ -773,7 +730,3 @@ datum/preferences
 			if(isnull(src.ghost_ears)) src.ghost_ears = 1 //There were problems where the default was null before someone saved their profile.
 			C.ghost_ears = src.ghost_ears
 			C.ghost_sight = src.ghost_sight
-
-
-#undef UI_OLD
-#undef UI_NEW
