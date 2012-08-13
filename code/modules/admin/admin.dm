@@ -1673,6 +1673,12 @@ var/global/BSACooldown = 0
 					log_admin("[key_name(usr)] made all areas unpowered", 1)
 					message_admins("\blue [key_name_admin(usr)] made all areas unpowered", 1)
 					power_failure()
+				if("quickpower")
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","QP")
+					log_admin("[key_name(usr)] made all SMESs powered", 1)
+					message_admins("\blue [key_name_admin(usr)] made all SMESs powered", 1)
+					power_restore_quick()
 				if("activateprison")
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","AP")
@@ -2460,6 +2466,7 @@ var/global/BSACooldown = 0
 <A href='?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
 <A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
 <A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
+<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
 <A href='?src=\ref[src];secretsfun=toggleprisonstatus'>Toggle Prison Shuttle Status(Use with S/R)</A><BR>
 <A href='?src=\ref[src];secretsfun=activateprison'>Send Prison Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=deactivateprison'>Return Prison Shuttle</A><BR>

@@ -27,7 +27,7 @@
 		src.health = 100
 		src.stat = 0
 	else
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss() - src.halloss
+		src.health = src.maxHealth - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss() - src.halloss
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually

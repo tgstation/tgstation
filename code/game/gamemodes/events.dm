@@ -162,6 +162,19 @@
 			A.power_environ = 1
 			A.power_change()
 
+/proc/power_restore_quick()
+
+	command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal")
+	world << sound('poweron.ogg')
+	for(var/obj/machinery/power/smes/S in world)
+		if(S.z != 1)
+			continue
+		S.charge = S.capacity
+		S.output = 200000
+		S.online = 1
+		S.updateicon()
+		S.power_change()
+
 /proc/appendicitis()
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/foundAlready = 0 // don't infect someone that already has the virus

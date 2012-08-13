@@ -538,15 +538,16 @@ var/list/sacrificed = list()
 			var/list/mob/living/carbon/human/cultsinrange = list()
 			var/list/mob/living/carbon/human/victims = list()
 			for(var/mob/living/carbon/human/V in src.loc)//Checks for non-cultist humans to sacrifice
-				if(!(iscultist(V)))
-					victims += V
-			for(var/mob/living/carbon/brain/V in src.loc)//Checks for brains to sacrifice
-				victims += V
-			for(var/mob/living/silicon/V in src.loc)//Checks for borgs/AIs to sacrifice
-				victims += V
-			for(var/obj/item/device/mmi/V in src.loc)//Checks for MMIs
-				if(V.brainmob)
-					victims += V.brainmob
+				if(ishuman(V) || isbrain(V) || issilicon(V))// || istype(V,/obj/item/device/mmi))
+					if(!(iscultist(V)))
+						victims += V//Checks for cult status and mob type
+			for(var/obj/item/I in src.loc)//Checks for MMIs/brains/Intellicards
+				if(istype(I,/obj/item/brain) || istype(I,/obj/item/device/mmi))
+					if(hasvar(I,"brainmob"))//Makes sure it has a brainmob
+						victims += I:brainmob
+				if(istype(I,/obj/item/device/aicard))
+					for(var/mob/living/silicon/ai/A in I)//Because AIs are just stored inside the card and not attached to a var
+						victims += A
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
 					cultsinrange += C
@@ -558,8 +559,6 @@ var/list/sacrificed = list()
 							sacrificed += H.mind
 							if(isrobot(H))
 								H.dust()//To prevent the MMI from remaining
-							else if(isbrain(H))
-								H.death()//Since they don't have a proper gib
 							else
 								H.gib()
 							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
@@ -576,8 +575,6 @@ var/list/sacrificed = list()
 									usr << "\red However, this soul was not enough to gain His favor."
 								if(isrobot(H))
 									H.dust()//To prevent the MMI from remaining
-								else if(isbrain(H))
-									H.death()//Since they don't have a proper gib
 								else
 									H.gib()
 							else
@@ -589,8 +586,6 @@ var/list/sacrificed = list()
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
 								if(isrobot(H))
 									H.dust()//To prevent the MMI from remaining
-								else if(isbrain(H))
-									H.death()//Since they don't have a proper gib
 								else
 									H.gib()
 						else
@@ -605,8 +600,6 @@ var/list/sacrificed = list()
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
 								if(isrobot(H))
 									H.dust()//To prevent the MMI from remaining
-								else if(isbrain(H))
-									H.death()//Since they don't have a proper gib
 								else
 									H.gib()
 				else
@@ -620,8 +613,6 @@ var/list/sacrificed = list()
 								usr << "\red However, this soul was not enough to gain His favor."
 							if(isrobot(H))
 								H.dust()//To prevent the MMI from remaining
-							else if(isbrain(H))
-								H.death()//Since they don't have a proper gib
 							else
 								H.gib()
 						else
@@ -633,8 +624,6 @@ var/list/sacrificed = list()
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
 							if(isrobot(H))
 								H.dust()//To prevent the MMI from remaining
-							else if(isbrain(H))
-								H.death()//Since they don't have a proper gib
 							else
 								H.gib()
 					else
@@ -649,8 +638,6 @@ var/list/sacrificed = list()
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
 							if(isrobot(H))
 								H.dust()//To prevent the MMI from remaining
-							else if(isbrain(H))
-								H.death()//Since they don't have a proper gib
 							else
 								H.gib()
 			for(var/mob/living/carbon/monkey/M in src.loc)

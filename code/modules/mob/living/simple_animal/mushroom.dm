@@ -6,6 +6,7 @@
 	icon_dead = "mushroom_dead"
 	speak_chance = 0
 	turns_per_move = 1
+	maxHealth = 5
 	health = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	response_help  = "pets the"

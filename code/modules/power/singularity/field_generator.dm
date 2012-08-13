@@ -332,9 +332,12 @@ field_generator power level display
 		if (isnull(FG))
 			continue
 		FG.connected_gens.Remove(src)
+		if(!FG.clean_up)//Makes the other gens clean up as well
+			FG.cleanup()
 		connected_gens.Remove(FG)
 	connected_gens = list()
 	clean_up = 0
+	update_icon()
 
 	//This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
 	//singulo eats the evidence". It's not fool-proof but better than nothing.
