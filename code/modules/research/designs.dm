@@ -51,6 +51,7 @@ datum/design						//Datum for object designs, used in construction
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/build_path = ""					//The file path of the object that gets created
 	var/locked = 0						//If true it will spawn inside a lockbox with currently sec access
+	var/category = null //Primarily used for Mech Fabricators, but can be used for anything
 
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
@@ -718,6 +719,7 @@ datum/design/mech_scattershot
 	build_type = MECHFAB
 	req_tech = list("combat" = 4)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot"
+	category = "Exosuit Equipment"
 
 datum/design/mech_laser
 	name = "Exosuit Weapon Design (CH-PS \"Immolator\" Laser)"
@@ -726,6 +728,7 @@ datum/design/mech_laser
 	build_type = MECHFAB
 	req_tech = list("combat" = 3, "magnets" = 3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser"
+	category = "Exosuit Equipment"
 
 datum/design/mech_laser_heavy
 	name = "Exosuit Weapon Design (CH-LC \"Solaris\" Laser Cannon)"
@@ -734,6 +737,7 @@ datum/design/mech_laser_heavy
 	build_type = MECHFAB
 	req_tech = list("combat" = 4, "magnets" = 4)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy"
+	category = "Exosuit Equipment"
 
 datum/design/mech_grenade_launcher
 	name = "Exosuit Weapon Design (SGL-6 Grenade Launcher)"
@@ -742,6 +746,7 @@ datum/design/mech_grenade_launcher
 	build_type = MECHFAB
 	req_tech = list("combat" = 3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang"
+	category = "Exosuit Equipment"
 
 datum/design/mech_wormhole_gen
 	name = "Exosuit Module Design (Localized Wormhole Generator)"
@@ -750,6 +755,7 @@ datum/design/mech_wormhole_gen
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 3, "magnets" = 2)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/wormhole_generator"
+	category = "Exosuit Equipment"
 
 datum/design/mech_teleporter
 	name = "Exosuit Module Design (Teleporter Module)"
@@ -758,6 +764,7 @@ datum/design/mech_teleporter
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 10, "magnets" = 5)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/teleporter"
+	category = "Exosuit Equipment"
 
 datum/design/mech_rcd
 	name = "Exosuit Module Design (RCD Module)"
@@ -766,6 +773,7 @@ datum/design/mech_rcd
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "bluespace" = 3, "magnets" = 4, "powerstorage"=4, "engineering" = 4)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/tool/rcd"
+	category = "Exosuit Equipment"
 
 datum/design/mech_gravcatapult
 	name = "Exosuit Module Design (Gravitational Catapult Module)"
@@ -774,6 +782,7 @@ datum/design/mech_gravcatapult
 	build_type = MECHFAB
 	req_tech = list("bluespace" = 2, "magnets" = 3, "engineering" = 3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/gravcatapult"
+	category = "Exosuit Equipment"
 
 datum/design/mech_repair_droid
 	name = "Exosuit Module Design (Repair Droid Module)"
@@ -782,6 +791,7 @@ datum/design/mech_repair_droid
 	build_type = MECHFAB
 	req_tech = list("magnets" = 3, "programming" = 3, "engineering" = 3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/repair_droid"
+	category = "Exosuit Equipment"
 
 datum/design/mech_plasma_generator
 	name = "Exosuit Module Design (Plasma Converter Module)"
@@ -790,6 +800,7 @@ datum/design/mech_plasma_generator
 	build_type = MECHFAB
 	req_tech = list("plasmatech" = 2, "powerstorage"= 2, "engineering" = 2)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/plasma_generator"
+	category = "Exosuit Equipment"
 
 datum/design/mech_energy_relay
 	name = "Exosuit Module Design (Tesla Energy Relay)"
@@ -798,6 +809,7 @@ datum/design/mech_energy_relay
 	build_type = MECHFAB
 	req_tech = list("magnets" = 4, "syndicate" = 3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay"
+	category = "Exosuit Equipment"
 
 datum/design/mech_ccw_armor
 	name = "Exosuit Module Design(Reactive Armor Booster Module)"
@@ -806,6 +818,7 @@ datum/design/mech_ccw_armor
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "combat" = 4)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster"
+	category = "Exosuit Equipment"
 
 datum/design/mech_proj_armor
 	name = "Exosuit Module Design(Reflective Armor Booster Module)"
@@ -814,6 +827,7 @@ datum/design/mech_proj_armor
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "combat" = 5, "engineering"=3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster"
+	category = "Exosuit Equipment"
 
 datum/design/mech_syringe_gun
 	name = "Exosuit Module Design(Syringe Gun)"
@@ -822,6 +836,7 @@ datum/design/mech_syringe_gun
 	build_type = MECHFAB
 	req_tech = list("materials" = 3, "biotech"=4, "magnets"=4, "programming"=3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun"
+	category = "Exosuit Equipment"
 
 datum/design/mech_diamond_drill
 	name = "Exosuit Module Design (Diamond Mining Drill)"
@@ -830,6 +845,7 @@ datum/design/mech_diamond_drill
 	build_type = MECHFAB
 	req_tech = list("materials" = 4, "engineering" = 3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill"
+	category = "Exosuit Equipment"
 
 datum/design/mech_generator_nuclear
 	name = "Exosuit Module Design (ExoNuclear Reactor)"
@@ -838,6 +854,7 @@ datum/design/mech_generator_nuclear
 	build_type = MECHFAB
 	req_tech = list("powerstorage"= 3, "engineering" = 3, "materials" = 3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/generator/nuclear"
+	category = "Exosuit Equipment"
 
 
 ////////////////////////////////////////
@@ -1082,6 +1099,7 @@ datum/design/basic_cell
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
 	materials = list("$metal" = 700, "$glass" = 50)
 	build_path = "/obj/item/weapon/cell"
+	category = "Misc"
 
 datum/design/high_cell
 	name = "High-Capacity Power Cell"
@@ -1091,6 +1109,7 @@ datum/design/high_cell
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
 	materials = list("$metal" = 700, "$glass" = 60)
 	build_path = "/obj/item/weapon/cell/high"
+	category = "Misc"
 
 datum/design/super_cell
 	name = "Super-Capacity Power Cell"
@@ -1101,6 +1120,7 @@ datum/design/super_cell
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 700, "$glass" = 70)
 	build_path = "/obj/item/weapon/cell/super"
+	category = "Misc"
 
 datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
@@ -1111,6 +1131,7 @@ datum/design/hyper_cell
 	build_type = PROTOLATHE | MECHFAB
 	materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
 	build_path = "/obj/item/weapon/cell/hyper"
+	category = "Misc"
 
 datum/design/light_replacer
 	name = "Light Replacer"
@@ -1257,6 +1278,7 @@ datum/design/mmi
 	materials = list("$metal" = 1000, "$glass" = 500)
 	reliability_base = 76
 	build_path = "/obj/item/device/mmi"
+	category = "Misc"
 
 datum/design/mmi_radio
 	name = "Radio-enabled Man-Machine Interface"
@@ -1267,6 +1289,7 @@ datum/design/mmi_radio
 	materials = list("$metal" = 1200, "$glass" = 500)
 	reliability_base = 74
 	build_path = "/obj/item/device/mmi/radio_enabled"
+	category = "Misc"
 
 datum/design/synthetic_flash
 	name = "Synthetic Flash"
@@ -1277,6 +1300,7 @@ datum/design/synthetic_flash
 	materials = list("$metal" = 750, "$glass" = 750)
 	reliability_base = 76
 	build_path = "/obj/item/device/flash/synthetic"
+	category = "Misc"
 
 /////////////////////////////////////////
 /////////////////Weapons/////////////////

@@ -538,15 +538,18 @@ var/list/sacrificed = list()
 			var/list/mob/living/carbon/human/cultsinrange = list()
 			var/list/mob/living/carbon/human/victims = list()
 			for(var/mob/living/carbon/human/V in src.loc)//Checks for non-cultist humans to sacrifice
-				if(ishuman(V) || isbrain(V) || issilicon(V))// || istype(V,/obj/item/device/mmi))
+				if(ishuman(V))
 					if(!(iscultist(V)))
 						victims += V//Checks for cult status and mob type
 			for(var/obj/item/I in src.loc)//Checks for MMIs/brains/Intellicards
-				if(istype(I,/obj/item/brain) || istype(I,/obj/item/device/mmi))
-					if(hasvar(I,"brainmob"))//Makes sure it has a brainmob
-						victims += I:brainmob
-				if(istype(I,/obj/item/device/aicard))
-					for(var/mob/living/silicon/ai/A in I)//Because AIs are just stored inside the card and not attached to a var
+				if(istype(I,/obj/item/brain))
+					var/obj/item/brain/B = I
+					victims += B.brainmob
+				else if(istype(I,/obj/item/device/mmi))
+					var/obj/item/device/mmi/B = I
+					victims += B.brainmob
+				else if(istype(I,/obj/item/device/aicard))
+					for(var/mob/living/silicon/ai/A in I)
 						victims += A
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C) && !C.stat)
