@@ -13,7 +13,7 @@
 	// What does the implant do upon injection?
 	// return 0 if the implant fails to persist (ex. Revhead and loyalty implant.)
 	// return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
-	proc/implanted(source as mob)
+	proc/implanted(var/mob/source)
 		return 1
 
 	proc/get_data()
@@ -29,7 +29,7 @@
 		return
 
 
-	implanted(source as mob)
+	implanted(mob/source)
 		return 1
 
 
@@ -52,7 +52,7 @@
 		return
 
 
-	implanted(mob/source as mob)
+	implanted(mob/source)
 		activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 		source.mind.store_memory("Uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		source << "The implanted uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
@@ -192,7 +192,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		return dat
 
 
-	implanted(M as mob)
+	implanted(mob/M)
 		if(!istype(M, /mob/living/carbon/human))	return 0
 		var/mob/living/carbon/human/H = M
 		if(H.mind in ticker.mode.head_revolutionaries)
@@ -235,7 +235,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		return
 
 
-	implanted(mob/source as mob)
+	implanted(mob/source)
 		source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
 		source << "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate."
 		return 1
