@@ -412,8 +412,11 @@
 
 		if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 			if(prob(20))
-				src << "\red You feel a searing heat in your lungs!"
+				src << "\red You feel your face burning and a searing heat in your lungs!"
 			fire_alert = max(fire_alert, 1)
+			var/transfer_coefficient = 100000 // Burning air is being forced into your lungs and mouth
+			handle_temperature_damage(HEAD, breath.temperature, breath.heat_capacity()*transfer_coefficient)
+			handle_temperature_damage(UPPER_TORSO, breath.temperature, breath.heat_capacity()*transfer_coefficient)
 		else
 			fire_alert = 0
 

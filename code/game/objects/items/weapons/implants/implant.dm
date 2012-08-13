@@ -10,8 +10,9 @@
 
 	proc/activate()
 		return
+
 	// What does the implant do upon injection?
-	// return 0 if the implant fails to persist (ex. Revhead and loyalty implant.)
+	// return 0 if the implant fails (ex. Revhead and loyalty implant.)
 	// return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
 	proc/implanted(var/mob/source)
 		return 1
