@@ -152,11 +152,11 @@
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(!WT.remove_fuel(0,user))
-				user << "\blue You need more welding fuel to complete this task."
+				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 			new /obj/item/stack/sheet/metal(src.loc)
 			for(var/mob/M in viewers(src))
-				M.show_message("\red [src] has been cut apart by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
+				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
 			del(src)
 			return
 
@@ -173,11 +173,11 @@
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.remove_fuel(0,user))
-			user << "\blue You need more welding fuel to complete this task."
+			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 		src.welded =! src.welded
 		for(var/mob/M in viewers(src))
-			M.show_message("\red [src] has been [welded?"welded shut":"unwelded"] by [user.name].", 3, "\red You hear welding.", 2)
+			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
 	else
 		src.attack_hand(user)
 	return
@@ -201,7 +201,7 @@
 		return
 	step_towards(O, src.loc)
 	if(user != O)
-		user.show_viewers("\red [user] stuffs [O] into [src]!")
+		user.show_viewers("<span class='danger'>[user] stuffs [O] into [src]!</span>")
 	src.add_fingerprint(user)
 	return
 
@@ -210,7 +210,7 @@
 		return
 
 	if(!src.open())
-		user << "\blue It won't budge!"
+		user << "<span class='notice'>It won't budge!</span>"
 		if(!lastbang)
 			lastbang = 1
 			for (var/mob/M in hearers(src, null))
@@ -226,7 +226,7 @@
 	src.add_fingerprint(user)
 
 	if(!src.toggle())
-		usr << "\blue It won't budge!"
+		usr << "<span class='notice'>It won't budge!</span>"
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)
@@ -239,4 +239,4 @@
 	if(ishuman(usr))
 		src.attack_hand(usr)
 	else
-		usr << "\red This mob type can't use this verb."
+		usr << "<span class='warning'>This mob type can't use this verb.</span>"

@@ -689,7 +689,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "-Nutrition level: \blue [src.nutrilevel]/10"
 			user << ""
 
-	else if (istype(O, /obj/item/weapon/plantbgone))
+	else if (istype(O, /obj/item/weapon/reagent_containers/spray/plantbgone))
 		if(src.planted && src.myseed)
 			src.health -= rand(5,20)
 

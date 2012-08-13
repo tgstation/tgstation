@@ -62,7 +62,7 @@
 	return
 
 /atom/proc/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/cleaner)) && !(istype(W, /obj/item/weapon/chemsprayer)) && !(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !(istype(W, /obj/item/weapon/packageWrap)) && !istype(W, /obj/item/device/detective_scanner))
+	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/reagent_containers/spray)) && !(istype(W, /obj/item/weapon/packageWrap)) && !istype(W, /obj/item/device/detective_scanner))
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O << "\red <B>[src] has been hit by [user] with [W]</B>"

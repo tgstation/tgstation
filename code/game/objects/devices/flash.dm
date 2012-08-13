@@ -2,12 +2,12 @@
 	name = "flash"
 	desc = "Used for blinding and being an asshole."
 	icon_state = "flash"
+	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
 	throwforce = 5
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 10
 	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
 	origin_tech = "magnets=2;combat=1"
 
 	var/times_used = 0 //Number of times it's been used.
@@ -16,7 +16,7 @@
 
 /obj/item/device/flash/proc/clown_check(var/mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
-		user << "\red The Flash slips out of your hand."
+		user << "\red \The [src] slips out of your hand."
 		user.drop_item()
 		return 0
 	return 1
@@ -42,7 +42,7 @@
 
 	if(!clown_check(user))	return
 	if(broken)
-		user.show_message("<span class='warning'>The [src.name] is broken.</span>", 2)
+		user << "<span class='warning'>\The [src] is broken.</span>"
 		return
 
 	flash_recharge()
@@ -59,7 +59,7 @@
 				return
 			times_used++
 		else	//can only use it  5 times a minute
-			user.show_message("<span class='warning'>*click* *click*</span>", 2)
+			user << "<span class='warning'>*click* *click*</span>"
 			return
 	playsound(src.loc, 'flash.ogg', 100, 1)
 	var/flashfail = 0
@@ -111,16 +111,13 @@
 		flick("flash2", src)
 		if(!issilicon(M))
 
-			for(var/mob/O in viewers(user, null))
-				O.show_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 		else
 
-			for(var/mob/O in viewers(user, null))
-				O.show_message("<span class='notice'>[user] overloads [M]'s sensors with the flash!</span>")
+			user.visible_message("<span class='notice'>[user] overloads [M]'s sensors with the flash!</span>")
 	else
 
-		for(var/mob/O in viewers(user, null))
-			O.show_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
+		user.visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
 
 	return
 

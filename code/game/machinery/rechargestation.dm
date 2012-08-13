@@ -1,5 +1,5 @@
 /obj/machinery/recharge_station
-	name = "Cyborg Recharging Station"
+	name = "cyborg recharging station"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = 1
@@ -55,7 +55,7 @@
 						R.cell.charge = R.cell.maxcharge
 						return
 					else
-						R.cell.charge += 200
+						R.cell.charge = min(R.cell.charge + 200, R.cell.maxcharge)
 						return
 
 		go_out()
@@ -102,7 +102,7 @@
 							//Service
 							if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
 								if(O.reagents.get_reagent_amount("enzyme") < 50)
-									O.reagents.add_reagent("enzyme", 1)
+									O.reagents.add_reagent("enzyme", 2)
 							//Medical
 							if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/robot))
 								var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
@@ -116,6 +116,15 @@
 						if(R)
 							if(R.module)
 								R.module.respawn_consumable(R)
+
+						//Emagged items for janitor and medical borg
+						if(R.module.emag)
+							if(istype(R.module.emag, /obj/item/weapon/reagent_containers/spray))
+								var/obj/item/weapon/reagent_containers/spray/S = R.module.emag
+								if(S.name == "Polyacid spray")
+									S.reagents.add_reagent("pacid", 2)
+								else if(S.name == "Lube spray")
+									S.reagents.add_reagent("lube", 2)
 
 
 	verb

@@ -10,82 +10,37 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 
 
 // Plant-B-Gone
-/obj/item/weapon/plantbgone/New()
-	var/datum/reagents/R = new/datum/reagents(100) // 100 units of solution
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("plantbgone", 100)
-
-/obj/item/weapon/plantbgone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
-	return
-
-/obj/item/weapon/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
-
-	if (istype(A, /obj/item/weapon/storage/backpack ))
-		return
-
-	else if (locate (/obj/structure/table, src.loc))
-		return
-
-	else if (src.reagents.total_volume < 1)
-		src.empty = 1
-		user << "\blue Add more Plant-B-Gone mixture!"
-		return
-
-	else
-		src.empty = 0
-
-		if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
-			return
-
-		else if (istype(A, /obj/effect/blob)) // blob damage in blob code
-			return
-
-		else
-			var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src)) // Targeting elsewhere
-			D.name = "chemicals"
-			D.icon = 'icons/obj/chemical.dmi'
-			D.icon_state = "weedpuff"
-			D.create_reagents(5)
-			src.reagents.trans_to(D, 5) // 5 units of solution used at a time => 20 uses
-			playsound(src.loc, 'spray3.ogg', 50, 1, -6)
-
-			spawn(0)
-				for(var/i=0, i<3, i++) // Max range = 3 tiles
-					step_towards(D,A) // Moves towards target as normally (not thru walls)
-					D.reagents.reaction(get_turf(D))
-					for(var/atom/T in get_turf(D))
-						D.reagents.reaction(T)
-					sleep(4)
-				del(D)
+/obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
+	name = "Plant-B-Gone"
+	desc = "Kills those pesky weeds!"
+	icon = 'icons/obj/hydroponics.dmi'
+	icon_state = "plantbgone"
+	item_state = "plantbgone"
+	volume = 100
 
 
-			if((src.reagents.has_reagent("pacid")) || (src.reagents.has_reagent("lube"))) 	   				// Messages admins if someone sprays polyacid or space lube from a Plant-B-Gone bottle.
-				message_admins("[key_name_admin(user)] fired Polyacid/Space lube from a PlantBGone bottle.")		// Polymorph
-				log_game("[key_name(user)] fired Polyacid/Space lube from a PlantBGone bottle.")
-
-
-			return
-
-/obj/item/weapon/plantbgone/examine()
-	set src in usr
+/obj/item/weapon/reagent_containers/spray/plantbgone/New()
 	..()
-	if(!(usr in view(2)) && usr!=src.loc) return
-	usr << "\blue The Plant-B-Gone bottle contains:"
-	if(reagents && reagents.reagent_list.len)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			usr << "\blue [R.volume] units of [R.name]"
-	else
-		usr << "\blue Nothing."
-	return
+	reagents.add_reagent("plantbgone", 100)
+
+
+/obj/item/weapon/reagent_containers/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
+	if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
+		return
+
+	if (istype(A, /obj/effect/blob)) // blob damage in blob code
+		return
+
+	..()
+
 
 // Sunflower
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
 	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
 
-// Nettle
 
+// Nettle
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
 		user << "\red The nettle burns your bare hand!"
@@ -110,7 +65,6 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 
 
 // Deathnettle
-
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
 		if(istype(user, /mob/living/carbon/human))
@@ -151,8 +105,8 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 	potency = newValue
 	force = round((5+potency/2.5), 1)
 
-//Crafting
 
+//Crafting
 /obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife))

@@ -1899,21 +1899,6 @@
 // Hydroponics Tools
 // *************************************
 
-/obj/item/weapon/plantbgone // -- Skie
-	desc = "<I>Kill those pesky weeds!</I>"
-	icon = 'icons/obj/hydroponics.dmi'
-	name = "bottle of Plant-B-Gone"
-	icon_state = "plantbgone"
-	item_state = "plantbgone"
-	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
-	slot_flags = SLOT_BELT
-	throwforce = 3
-	w_class = 2.0
-	throw_speed = 2
-	throw_range = 10
-	var/empty = 0
-
-
 /obj/item/weapon/weedspray // -- Skie
 	desc = "It's a toxic mixture, in spray form, to kill small weeds."
 	icon = 'icons/obj/hydroponics.dmi'

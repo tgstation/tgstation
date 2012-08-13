@@ -188,8 +188,8 @@
 	density = 1*/
 	New()
 		..()
-		new /obj/item/weapon/plantbgone(src)
-		new /obj/item/weapon/plantbgone(src)
+		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
+		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 		new /obj/item/weapon/minihoe(src)
 //		new /obj/item/weapon/weedspray(src)
 //		new /obj/item/weapon/weedspray(src)
@@ -264,20 +264,20 @@
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
 	if(locked && !broken)
 		if (allowed(user))
-			user << "\blue You unlock the [src]."
+			user << "<span class='notice'>You unlock \the [src].</span>"
 			src.locked = 0
 			overlays = null
 			overlays += greenlight
 			return
 		else
-			user << "\red It's locked."
+			user << "<span class='notice'>\The [src] is locked.</span>"
 			return
 	else
 		..()
 
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
-		user << "\red You lock the [src]."
+		user << "<span class='notice'>You lock \the [src].</span>"
 		src.locked = 1
 		overlays = null
 		overlays += redlight
@@ -290,7 +290,7 @@
 		playsound(src.loc, "sparks", 60, 1)
 		src.locked = 0
 		src.broken = 1
-		user << "\blue You unlock the [src]."
+		user << "<span class='notice'>You unlock \the [src].</span>"
 		return
 
 	return ..()

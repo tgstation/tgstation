@@ -783,7 +783,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		P.overlays = null
 		P.overlays += image('icons/obj/pda.dmi', "pda-r")
 	else
-		U << "ERROR: Server isn't responding."
+		U << "<span class='notice'>ERROR: Server isn't responding.</span>"
 
 
 /obj/item/device/pda/verb/verb_remove_id()
@@ -795,9 +795,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(id)
 			remove_id()
 		else
-			usr << "\blue This PDA does not have an ID in it."
+			usr << "<span class='notice'>This PDA does not have an ID in it.</span>"
 	else
-		usr << "\blue You cannot do this while restrained."
+		usr << "<span class='notice'>You cannot do this while restrained.</span>"
 
 
 /obj/item/device/pda/verb/verb_remove_pen()
@@ -812,13 +812,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/mob/M = loc
 				if(M.get_active_hand() == null)
 					M.put_in_hands(O)
-					usr << "<span class='notify'>You remove \the [O] from \the [src].</span>"
+					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
 					return
 			O.loc = get_turf(src)
 		else
-			usr << "\blue This PDA does not have a pen in it."
+			usr << "<span class='notice'>This PDA does not have a pen in it.</span>"
 	else
-		usr << "\blue You cannot do this while restrained."
+		usr << "<span class='notice'>You cannot do this while restrained.</span>"
 
 /obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
@@ -843,43 +843,47 @@ var/global/list/obj/item/device/pda/PDAs = list()
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
 	..()
-	if (istype(C, /obj/item/weapon/cartridge) && isnull(src.cartridge))
+	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		user.drop_item()
 		C.loc = src
-		user << "<span class='notify'>You insert [C] into [src].</span>"
+		user << "<span class='notice'>You insert [C] into [src].</span>"
 		cartridge = C
-		if (C:radio)
+		if(C:radio)
 			C:radio.hostpda = src
 
-	else if (istype(C, /obj/item/weapon/card/id) && C:registered_name)
+	else if(istype(C, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/idcard = C
+		if(!idcard.registered_name)
+			user << "<span class='notice'>\The [src] rejects the ID.</span>"
+			return
 		if(!owner)
-			owner = C:registered_name
-			ownjob = C:assignment
+			owner = idcard.registered_name
+			ownjob = idcard.assignment
 			name = "PDA-[owner] ([ownjob])"
-			user << "<span class='notify'>Card scanned.</span>"
+			user << "<span class='notice'>Card scanned.</span>"
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
-			if ( ( (src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
-				if ( !(user.stat || user.restrained()) )//If they can still act.
+			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
+				if(!(user.stat || user.restrained()) )//If they can still act.
 					id_check(user, 2)
-					user << "<span class='notify'>You put the ID into the [src.name]'s slot.</span>"
+					user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
 					updateSelfDialog()//Update self dialog on success.
-			return//Return in case of failed check or when successful.
+			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
-	else if (istype(C, /obj/item/device/paicard) && !src.pai)
+	else if(istype(C, /obj/item/device/paicard) && !src.pai)
 		user.drop_item()
 		C.loc = src
 		pai = C
-		user << "<span class='notify'>You slot \the [C] into [src].</span>"
+		user << "<span class='notice'>You slot \the [C] into [src].</span>"
 		updateUsrDialog()
-	else if( istype(C, /obj/item/weapon/pen) )
+	else if(istype(C, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/O = locate() in src
 		if(O)
-			user << "<span class='notify'>There is already a pen in \the [src].</span>"
+			user << "<span class='notice'>There is already a pen in \the [src].</span>"
 		else
 			user.drop_item()
 			C.loc = src
-			user << "<span class='notify'>You slide \the [C] into \the [src].</span>"
+			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
 	return
 
 /obj/item/device/pda/attack(mob/living/C as mob, mob/living/user as mob)

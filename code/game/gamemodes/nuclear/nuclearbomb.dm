@@ -1,6 +1,6 @@
 /obj/machinery/nuclearbomb
+	name = "\improper Nuclear Fission Explosive"
 	desc = "Uh oh. RUN!!!!"
-	name = "Nuclear Fission Explosive"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
 	density = 1

@@ -78,7 +78,7 @@
 			user << "\red It's broken!"
 			return 1
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
-		if(istype(O, /obj/item/weapon/cleaner)) // If they're trying to clean it then let them
+		if(istype(O, /obj/item/weapon/reagent_containers/spray/cleaner)) // If they're trying to clean it then let them
 			user.visible_message( \
 				"\blue [user] starts to clean the microwave.", \
 				"\blue You start to clean the microwave." \

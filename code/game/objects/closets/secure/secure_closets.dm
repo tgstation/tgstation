@@ -29,13 +29,13 @@
 		src.locked = !src.locked
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
-				O << "\blue The locker has been [src.locked ? null : "un"]locked by [user]."
+				O << "<span class='notice'>The locker has been [locked ? null : "un"]locked by [user].</span>"
 		if(src.locked)
 			src.icon_state = src.icon_locked
 		else
 			src.icon_state = src.icon_closed
 	else
-		user << "\red Access Denied"
+		user << "<span class='notice'>Access Denied</span>"
 
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(src.opened)
@@ -43,12 +43,12 @@
 			if(src.large)
 				src.MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
 			else
-				user << "The locker is too small to stuff [W] into!"
+				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
 		user.drop_item()
 		if(W)
 			W.loc = src.loc
 	else if(src.broken)
-		user << "\red It appears to be broken."
+		user << "<span class='notice'>The locker appears to be broken.</span>"
 		return
 	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
 		broken = 1
@@ -63,10 +63,10 @@
 			playsound(src.loc, 'blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 3))
-				O.show_message("\blue The locker has been sliced open by [user] with an energy blade!", 1, "\red You hear metal being sliced and sparks flying.", 2)
+				O.show_message("<span class='warning'>The locker has been sliced open by [user] with an energy blade!</span>", 1, "You hear metal being sliced and sparks flying.", 2)
 		else
 			for(var/mob/O in viewers(user, 3))
-				O.show_message("\blue The locker has been broken by [user] with an electromagnetic card!", 1, "You hear a faint electrical spark.", 2)
+				O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
 	else
 		togglelock(user)
 
@@ -87,7 +87,7 @@
 		src.icon_state = src.icon_opened
 		src.opened = 1
 	else
-		user << "\blue It's welded shut!"
+		user << "<span class='notice'>The locker is welded shut!</span>"
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in hearers(src, null))
@@ -121,4 +121,4 @@
 		if (!opened)
 			togglelock(usr)
 	else
-		usr << "\red This mob type can't use this verb."
+		usr << "<span class='warning'>This mob type can't use this verb.</span>"

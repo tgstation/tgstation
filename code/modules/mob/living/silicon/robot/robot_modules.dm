@@ -65,12 +65,9 @@
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 		src.modules += new /obj/item/weapon/extinguisher/mini(src)
-		src.emag = new /obj/item/weapon/cleaner(src)
+		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
-		var/datum/reagents/R = new/datum/reagents(1000)
-		src.emag.reagents = R
-		R.my_atom = src.emag
-		R.add_reagent("pacid", 1000)
+		src.emag.reagents.add_reagent("pacid", 250)
 		src.emag.name = "Polyacid spray"
 		return
 
@@ -152,12 +149,9 @@
 		src.modules += new /obj/item/weapon/trashbag(src)
 		src.modules += new /obj/item/weapon/mop(src)
 		src.modules += new /obj/item/device/lightreplacer(src)
-		src.emag = new /obj/item/weapon/cleaner(src)
+		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
-		var/datum/reagents/R = new/datum/reagents(1000)
-		src.emag.reagents = R
-		R.my_atom = src.emag
-		R.add_reagent("lube", 1000)
+		src.emag.reagents.add_reagent("lube", 250)
 		src.emag.name = "Lube spray"
 		return
 

@@ -9,7 +9,7 @@
 	icon_state = "apron"
 	item_state = "apron"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-	allowed = list (/obj/item/weapon/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
+	allowed = list (/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
 
 //Captain
 /obj/item/clothing/suit/captunic
