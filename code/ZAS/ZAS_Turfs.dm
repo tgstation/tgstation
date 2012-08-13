@@ -88,7 +88,7 @@ turf
 					for(var/direction in cardinal)
 						var/turf/simulated/floor/target = get_step(src,direction)
 						if(istype(target))
-							air_master.tiles_to_update.Add(target)
+							air_master.tiles_to_update |= target
 
 		Del()
 			if(active_hotspot)
@@ -172,10 +172,9 @@ turf
 				if(air_check_directions&direction) //I can connect air in this direction
 					if(!CanPass(null, T, 0, 0)) //If either block air, we must look to see if the adjacent turfs need rebuilt.
 						if(T.zone && !T.zone.rebuild)
-							for(var/direction2 in cardinal - direction) //Check all other directions for air that might be connected.
-								var/turf/simulated/NT = get_step(src, direction2)
-								if(NT && NT.zone && NT.zone == T.zone && !NT.HasDoor())
-									T.zone.rebuild = 1
+							var/turf/simulated/NT = get_step(src, reverse_direction(direction))
+							if(istype(NT) && NT.zone && NT.zone == T.zone)
+								T.zone.rebuild = 1
 
 					else
 						ZConnect(src,T)

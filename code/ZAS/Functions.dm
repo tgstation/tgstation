@@ -8,49 +8,35 @@ proc/FloodFill(turf/start)
 		list
 			open = list(start)
 			closed = list()
-			doors = list()
 
 	while(open.len)
-		for(var/turf/T in open)
-			//Stop if there's a door, even if it's open. These are handled by indirect connection.
-			if(!T.HasDoor())
+		var/turf/T = pick(open)
 
-				for(var/d in cardinal)
-					var/turf/O = get_step(T,d)
-					//Simple pass check.
-					if(istype(O) && !(O in open) && !(O in doors) && !(O in closed) && O.ZCanPass(T))
-						open += O
-			else
-				doors |= T
-				open -= T
-				continue
+		for(var/d in cardinal)
+			var/turf/O = get_step(T,d)
 
-			open -= T
-			closed += T
+			if(istype(O) && !(O in open) && !(O in closed) && O.ZCanPass(T))
 
-	if(closed.len)
-		for(var/turf/T in doors)
-			var/force_connection = 1
-			var/turf/simulated/O = get_step(T,NORTH)
-			if(O in closed)
-				closed += T
-				continue
-			else if(T.ZCanPass(O) && istype(O))
-				force_connection = 0
+				if(!T.HasDoor())
+					open += O
 
-			O = get_step(T,WEST)
-			if(O in closed)
-				closed += T
-				continue
-			else if(force_connection && T.ZCanPass(O) && istype(O))
-				force_connection = 0
+				else
+					if(d == SOUTH || d == EAST)
+						//doors prefer connecting to zones to the north north or west
+						closed += O
 
-			if(force_connection)
-				O = get_step(T,SOUTH)
-				if(O in closed)
-					closed += T
-				else if((!T.ZCanPass(O) || !istype(O)) && get_step(T,EAST) in closed)
-					closed += T
+					else
+						//see if we need to force an attempted connection
+						//(there are no potentially viable zones to the north/west of the door)
+						var/turf/W = get_step(O, WEST)
+						var/turf/N = get_step(O, NORTH)
+
+						if( (!istype(N) || !O.ZCanPass(N)) && (!istype(W) || !O.ZCanPass(W)) )
+							//If it cannot connect either to the north or west, connect it!
+							closed += O
+
+		open -= T
+		closed += T
 
 	return closed
 
