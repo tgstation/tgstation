@@ -1098,9 +1098,9 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature-20)
+					M.bodytemperature = max(310, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				else if(M.bodytemperature < 311)
-					M.bodytemperature = min(310, M.bodytemperature+20)
+					M.bodytemperature = min(310, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
 				return
 
@@ -1747,17 +1747,17 @@ datum
 				if(!data) data = 1
 				switch(data)
 					if(1 to 15)
-						M.bodytemperature += 5
+						M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(holder.has_reagent("frostoil"))
 							holder.remove_reagent("frostoil", 5)
 						if(istype(M, /mob/living/carbon/metroid))
 							M.bodytemperature += rand(5,20)
 					if(15 to 25)
-						M.bodytemperature += 10
+						M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/metroid))
 							M.bodytemperature += rand(10,20)
 					if(25 to INFINITY)
-						M.bodytemperature += 15
+						M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/metroid))
 							M.bodytemperature += rand(15,20)
 				data++
@@ -1833,17 +1833,17 @@ datum
 				if(!data) data = 1
 				switch(data)
 					if(1 to 15)
-						M.bodytemperature -= 5
+						M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(holder.has_reagent("capsaicin"))
 							holder.remove_reagent("capsaicin", 5)
 						if(istype(M, /mob/living/carbon/metroid))
 							M.bodytemperature -= rand(5,20)
 					if(15 to 25)
-						M.bodytemperature -= 10
+						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/metroid))
 							M.bodytemperature -= rand(10,20)
 					if(25 to INFINITY)
-						M.bodytemperature -= 15
+						M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(prob(1)) M.emote("shiver")
 						if(istype(M, /mob/living/carbon/metroid))
 							M.bodytemperature -= rand(15,20)
@@ -1892,7 +1892,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature+5)
+					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.nutrition += nutriment_factor
 				..()
 				return
@@ -2046,7 +2046,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature+10)
+					M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
 				return
 
@@ -2060,7 +2060,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				M.bodytemperature += 10
+				M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 				..()
 				return
 
@@ -2303,7 +2303,7 @@ datum
 				M.drowsyness = max(0,M.drowsyness-3)
 				M.sleeping = max(0,M.sleeping - 2)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature+5)
+					M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
 				if(holder.has_reagent("frostoil"))
 					holder.remove_reagent("frostoil", 5)
@@ -2326,7 +2326,7 @@ datum
 				if(M.getToxLoss() && prob(20))
 					M.adjustToxLoss(-1)
 				if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature+5)
+					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
 				return
 
@@ -2343,7 +2343,7 @@ datum
 				M.drowsyness = max(0,M.drowsyness-3)
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature-5)
+					M.bodytemperature = min(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
 				..()
 				return
@@ -2363,7 +2363,7 @@ datum
 				if(M.getToxLoss() && prob(20))
 					M.adjustToxLoss(-1)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature-5)
+					M.bodytemperature = min(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				return
 
 		space_cola
@@ -2376,7 +2376,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.drowsyness = max(0,M.drowsyness-5)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = max(310, M.bodytemperature-5)
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.nutrition += 1
 				..()
 				return
@@ -2395,7 +2395,7 @@ datum
 				M.drowsyness = 0
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = max(310, M.bodytemperature-5)
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.nutrition += 1
 				..()
 				return
@@ -2411,7 +2411,7 @@ datum
 				M.drowsyness = max(0,M.drowsyness-7)
 				M.sleeping = max(0,M.sleeping-1)
 				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature-5)
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
 				M.nutrition += 1
 				..()
@@ -2428,7 +2428,7 @@ datum
 				M.drowsyness = max(0,M.drowsyness-7)
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature-5)
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
 				M.nutrition += 1
 				if(!data) data = 1
@@ -2452,7 +2452,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M.drowsyness = max(0,M.drowsyness-6)
 				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 				M.nutrition += 1
 				..()
 				return
@@ -2466,7 +2466,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
+					M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 				M.nutrition += 1
 				..()
 				return
@@ -2480,7 +2480,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
+					M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 				M.nutrition += 1
 				..()
 				return
@@ -2697,7 +2697,7 @@ datum
 				M.drowsyness = max(0,M.drowsyness-3)
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature-5)
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
 				return
 
@@ -2785,7 +2785,7 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M.drowsyness = max(0,M.drowsyness-3)
 				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature-5)
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
 				return
 
@@ -2798,7 +2798,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.bodytemperature -= 5
+				M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 				..()
 				return
 
@@ -3145,7 +3145,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 330)
-					M.bodytemperature = min(330, M.bodytemperature+15) //310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -3414,7 +3414,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 330)
-					M.bodytemperature = min(330, M.bodytemperature+20) //310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -3538,7 +3538,7 @@ datum
 				else if(data >= 165 && prob(33))
 					M.confused = max(M.confused+2,0)
 				if (M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature-5)
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
 				return
 
@@ -3572,7 +3572,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 360)
-					M.bodytemperature = min(360, M.bodytemperature+50) //310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(360, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
 				data++
 				M.dizziness +=6
@@ -3654,7 +3654,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 270)
-					M.bodytemperature = min(270, M.bodytemperature-40) //310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(270, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
 				data++
 				M.make_dizzy(3)
@@ -3759,7 +3759,7 @@ datum
 				M.drowsyness = max(0,M.drowsyness-3)
 				M.sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature+5)
+					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
 				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 				M.nutrition++
@@ -3779,7 +3779,7 @@ datum
 				M.drowsyness = max(0,M.drowsyness-3)
 				M.sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature+5)
+					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
 				if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 				M.nutrition++

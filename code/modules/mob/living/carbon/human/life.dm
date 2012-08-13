@@ -610,9 +610,9 @@
 			discomfort *= 4
 
 		if(mutantrace == "plant")
-			discomfort *= 3 //I don't like magic numbers. I'll make mutantraces a datum with vars sometime later. -- Urist
+			discomfort *= TEMPERATURE_DAMAGE_COEFFICIENT * 2 //I don't like magic numbers. I'll make mutantraces a datum with vars sometime later. -- Urist
 		else
-			discomfort *= 1.5 //Dangercon 2011 - Upping damage by use of magic numbers - Errorage
+			discomfort *= TEMPERATURE_DAMAGE_COEFFICIENT //Dangercon 2011 - now with less magic numbers!
 		//world <<"[discomfort]"
 
 		switch(body_part)
