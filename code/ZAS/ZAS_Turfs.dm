@@ -145,6 +145,8 @@ turf
 				for(var/direction in DoorDirections) //Check door directions first.
 					if(air_check_directions&direction)
 						var/turf/simulated/T = get_step(src,direction)
+						if(!istype(T))
+							continue
 						if(T.zone)
 							T.zone.AddTurf(src)
 							break
@@ -152,6 +154,8 @@ turf
 					for(var/direction in CounterDoorDirections) //Check the others second.
 						if(air_check_directions&direction)
 							var/turf/simulated/T = get_step(src,direction)
+							if(!istype(T))
+								continue
 							if(T.zone)
 								T.zone.AddTurf(src)
 								break
@@ -167,6 +171,8 @@ turf
 
 			for(var/direction in cardinal)
 				var/turf/T = get_step(src,direction)
+				if(!istype(T))
+					continue
 				var/list/zone/adjacent_zones = list()
 
 				if(air_check_directions&direction) //I can connect air in this direction
