@@ -1,9 +1,8 @@
+
 /obj/item/clothing/suit/armor
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/pepperspray,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags = FPRINT | TABLEPASS
-
-
 
 
 /obj/item/clothing/suit/armor/vest
@@ -14,11 +13,13 @@
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
+
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
 	desc = "An armoured jacket with silver rank pips and livery."
 	icon_state = "warden_jacket"
 	item_state = "armor"
+
 
 /obj/item/clothing/suit/armor/riot
 	name = "Riot Suit"
@@ -47,6 +48,43 @@
 	armor = list(melee = 10, bullet = 10, laser = 80, energy = 50, bomb = 0, bio = 0, rad = 0)
 
 
+/obj/item/clothing/suit/armor/swat
+	name = "swat suit"
+	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
+	icon_state = "deathsquad"
+	item_state = "swat_suit"
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	heat_transfer_coefficient = 0.02
+	protective_temperature = 1000
+	flags = FPRINT | TABLEPASS | SUITSPACE
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = 1
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 0, rad = 0)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+
+/obj/item/clothing/suit/armor/swat/officer
+	name = "officer jacket"
+	desc = "An armored jacket used in special operations."
+	icon_state = "detective"
+	item_state = "det_suit"
+	flags_inv = 0
+
+
+/obj/item/clothing/suit/armor/det_suit
+	name = "armor"
+	desc = "An armored vest with a detective's badge on it."
+	icon_state = "detective-armor"
+	item_state = "armor"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+
+
+//Reactive armor
+//When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive
 	name = "Reactive Teleport Armor"
 	desc = "Someone seperated our Research Director from his own head!"
@@ -61,7 +99,6 @@
 	if(active)
 		return 1
 	return 0
-
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user as mob)
 	src.active = !( src.active )
@@ -83,4 +120,42 @@
 	..()
 
 
+//All of the armor below is mostly unused
 
+
+/obj/item/clothing/suit/armor/centcomm
+	name = "Cent. Com. armor"
+	desc = "A suit that protects against some damage."
+	icon_state = "centcom"
+	item_state = "centcom"
+	w_class = 4//bulky item
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/heavy
+	name = "heavy armor"
+	desc = "A heavily armored suit that protects against moderate damage."
+	icon_state = "heavy"
+	item_state = "swat_suit"
+	w_class = 4//bulky item
+	gas_transfer_coefficient = 0.90
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	slowdown = 3
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/tdome
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/tdome/red
+	name = "Thunderdome suit (red)"
+	desc = "Reddish armor."
+	icon_state = "tdred"
+	item_state = "tdred"
+
+/obj/item/clothing/suit/armor/tdome/green
+	name = "Thunderdome suit (green)"
+	desc = "Pukish armor."
+	icon_state = "tdgreen"
+	item_state = "tdgreen"

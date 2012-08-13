@@ -75,7 +75,6 @@ ENERGY SHIELD (where else should i even put this)
 	return
 
 // AXE
-
 /obj/item/weapon/melee/energy/axe/attack(target as mob, mob/user as mob)
 	..()
 
@@ -93,6 +92,17 @@ ENERGY SHIELD (where else should i even put this)
 		src.w_class = 5
 	src.add_fingerprint(user)
 	return
+
+// CLASSIC BATON
+/obj/item/weapon/melee/classic_baton
+	name = "police baton"
+	desc = "A wooden truncheon for beating criminal scum."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "baton"
+	item_state = "classic_baton"
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
+	force = 10
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -128,6 +138,7 @@ ENERGY SHIELD (where else should i even put this)
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been stunned with the police baton by [user]!</B>", 1, "\red You hear someone fall", 2)
 
+//ENERGY SHIELD
 /obj/item/weapon/shield/energy/IsShield()
 	if(active)
 		return 1

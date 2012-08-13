@@ -1,11 +1,4 @@
-/obj/item/clothing/head/cakehat
-	name = "cake-hat"
-	desc = "It's tasty looking!"
-	icon_state = "cake0"
-	var/onfire = 0.0
-	var/status = 0
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES
-	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
+
 
 /obj/item/clothing/head/centhat
 	name = "\improper CentComm. hat"
@@ -27,14 +20,6 @@
 	item_state = "that"
 	flags = FPRINT|TABLEPASS
 
-/obj/item/clothing/head/chefhat
-	name = "chef's hat"
-	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
-	icon_state = "chef"
-	item_state = "chef"
-	desc = "The commander in chef's head wear."
-	flags = FPRINT | TABLEPASS
-
 /obj/item/clothing/head/redcoat
 	name = "redcoat's hat"
 	icon_state = "redcoat"
@@ -53,24 +38,6 @@
 	icon_state = "plaguedoctor"
 	flags = FPRINT | TABLEPASS
 	permeability_coefficient = 0.01
-
-/obj/item/clothing/head/beret
-	name = "beret"
-	desc = "A beret, a mime's favorite headwear."
-	icon_state = "beret"
-	flags = FPRINT | TABLEPASS
-
-/obj/item/clothing/head/chaplain_hood
-	name = "chaplain's hood"
-	desc = "It's hood that covers the head. It keeps you warm during the space winters."
-	icon_state = "chaplain_hood"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
-
-/obj/item/clothing/head/nun_hood
-	name = "nun hood"
-	desc = "Maximum piety in this star system."
-	icon_state = "nun_hood"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
 
 /obj/item/clothing/head/hasturhood
 	name = "hastur's hood"
@@ -125,3 +92,63 @@
 	item_state = "cardborg_h"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+
+/obj/item/clothing/head/justice
+	name = "justice hat"
+	desc = "fight for what's righteous!"
+	icon_state = "justicered"
+	item_state = "justicered"
+	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+
+/obj/item/clothing/head/justice/blue
+	icon_state = "justiceblue"
+	item_state = "justiceblue"
+
+/obj/item/clothing/head/justice/yellow
+	icon_state = "justiceyellow"
+	item_state = "justiceyellow"
+
+/obj/item/clothing/head/justice/green
+	icon_state = "justicegreen"
+	item_state = "justicegreen"
+
+/obj/item/clothing/head/justice/pink
+	icon_state = "justicepink"
+	item_state = "justicepink"
+
+/obj/item/clothing/head/rabbitears
+	name = "rabbit ears"
+	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
+	icon_state = "bunny"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/head/flatcap
+	name = "flat cap"
+	desc = "A working man's cap."
+	icon_state = "flat_cap"
+	item_state = "detective"
+
+/obj/item/clothing/head/pirate
+	name = "pirate hat"
+	desc = "Yarr."
+	icon_state = "pirate"
+	item_state = "pirate"
+
+/obj/item/clothing/head/hgpiratecap
+	name = "pirate hat"
+	desc = "Yarr."
+	icon_state = "hgpiratecap"
+	item_state = "hgpiratecap"
+
+/obj/item/clothing/head/bandana
+	name = "pirate bandana"
+	desc = "Yarr."
+	icon_state = "bandana"
+	item_state = "bandana"
+
+/obj/item/clothing/head/bowler
+	name = "bowler-hat"
+	desc = "Gentleman, elite aboard!"
+	icon_state = "bowler"
+	item_state = "bowler"
+	flags = FPRINT | TABLEPASS

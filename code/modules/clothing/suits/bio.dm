@@ -1,3 +1,4 @@
+//Biosuit complete with shoes (in the item sprite)
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
 	icon_state = "bio"
@@ -24,6 +25,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
+//Standard biosuit, orange stripe
 /obj/item/clothing/head/bio_hood/general
 	icon_state = "bio_general"
 
@@ -31,6 +33,7 @@
 	icon_state = "bio_general"
 
 
+//Virology biosuit, green stripe
 /obj/item/clothing/head/bio_hood/virology
 	icon_state = "bio_virology"
 
@@ -38,6 +41,7 @@
 	icon_state = "bio_virology"
 
 
+//Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
 	icon_state = "bio_security"
 
@@ -45,6 +49,7 @@
 	icon_state = "bio_security"
 
 
+//Janitor's biosuit, grey with purple arms
 /obj/item/clothing/head/bio_hood/janitor
 	icon_state = "bio_janitor"
 
@@ -52,6 +57,7 @@
 	icon_state = "bio_janitor"
 
 
+//Scientist's biosuit, white with a pink-ish hue
 /obj/item/clothing/head/bio_hood/scientist
 	icon_state = "bio_scientist"
 
@@ -59,6 +65,7 @@
 	icon_state = "bio_scientist"
 
 
+//CMO's biosuit, blue stripe
 /obj/item/clothing/suit/bio_suit/cmo
 	icon_state = "bio_cmo"
 
@@ -66,6 +73,7 @@
 	icon_state = "bio_cmo"
 
 
+//Plague Dr mask can be found in clothing/masks/gasmask.dm
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
 	name = "Plague doctor suit"
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."

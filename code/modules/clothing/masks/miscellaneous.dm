@@ -7,6 +7,15 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
+//Monkeys can not take the muzzle off of themself! Call PETA!
+/obj/item/clothing/mask/muzzle/attack_paw(mob/user as mob)
+	if (src == user.wear_mask)
+		return
+	else
+		..()
+	return
+
+
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."

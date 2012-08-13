@@ -1491,8 +1491,5 @@
 	desc = "You can't resist."
 	// name = ""
 
-/obj/item/clothing
-	name = "clothing"
-
 /obj/effect/spawner
 	name = "object spawner"

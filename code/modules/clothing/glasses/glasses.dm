@@ -28,6 +28,18 @@
 	vision_flags = SEE_TURFS
 	darkness_view = 3
 
+/obj/item/clothing/glasses/eyepatch
+	name = "eyepatch"
+	desc = "Yarr."
+	icon_state = "eyepatch"
+	item_state = "eyepatch"
+
+/obj/item/clothing/glasses/monocle
+	name = "monocle"
+	desc = "Such a dapper eyepiece!"
+	icon_state = "monocle"
+	item_state = "headset" // lol
+
 /obj/item/clothing/glasses/material
 	name = "Optical Material Scanner"
 	desc = "Very confusing glasses."

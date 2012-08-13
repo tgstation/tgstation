@@ -1,3 +1,4 @@
+//Regular rig suits
 /obj/item/clothing/head/helmet/space/rig
 	name = "engineering hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
@@ -35,29 +36,6 @@
 			user.UpdateLuminosity()
 			src.sd_SetLuminosity(brightness_on)
 
-
-/obj/item/clothing/head/helmet/space/rig/mining
-	name = "mining hardsuit helmet"
-	icon_state = "rig0-mining"
-	item_state = "mining_helm"
-	color = "mining"
-
-
-/obj/item/clothing/head/helmet/space/rig/elite
-	name = "advanced hardsuit helmet"
-	icon_state = "rig0-white"
-	item_state = "ce_helm"
-	color = "white"
-
-/obj/item/clothing/head/helmet/space/rig/syndi
-	name = "blood-red hardsuit helmet"
-	icon_state = "rig0-syndi"
-	item_state = "syndie_helm"
-	color = "syndi"
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
-
-////////////////////Suits
-
 /obj/item/clothing/suit/space/rig
 	name = "engineering hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
@@ -68,16 +46,41 @@
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/satchel,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 
-/obj/item/clothing/suit/space/rig/mining
-	icon_state = "rig-mining"
-	name = "mining hardsuit"
-	item_state = "mining_hardsuit"
+
+//Chief Engineer's rig
+/obj/item/clothing/head/helmet/space/rig/elite
+	name = "advanced hardsuit helmet"
+	icon_state = "rig0-white"
+	item_state = "ce_helm"
+	color = "white"
 
 /obj/item/clothing/suit/space/rig/elite
 	icon_state = "rig-white"
 	name = "advanced hardsuit"
 	item_state = "ce_hardsuit"
 	protective_temperature = 10000
+
+
+//Mining rig
+/obj/item/clothing/head/helmet/space/rig/mining
+	name = "mining hardsuit helmet"
+	icon_state = "rig0-mining"
+	item_state = "mining_helm"
+	color = "mining"
+
+/obj/item/clothing/suit/space/rig/mining
+	icon_state = "rig-mining"
+	name = "mining hardsuit"
+	item_state = "mining_hardsuit"
+
+
+//Syndicate rig
+/obj/item/clothing/head/helmet/space/rig/syndi
+	name = "blood-red hardsuit helmet"
+	icon_state = "rig0-syndi"
+	item_state = "syndie_helm"
+	color = "syndi"
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndi"

@@ -1,3 +1,17 @@
+/obj/item/clothing/under/pj/red
+	name = "red pj's"
+	desc = "Sleepwear."
+	icon_state = "red_pyjamas"
+	color = "red_pyjamas"
+	item_state = "w_suit"
+
+/obj/item/clothing/under/pj/blue
+	name = "blue pj's"
+	desc = "Sleepwear."
+	icon_state = "blue_pyjamas"
+	color = "blue_pyjamas"
+	item_state = "w_suit"
+
 /obj/item/clothing/under/scratch
 	name = "white suit"
 	desc = "A white suit, suitable for an excellent host"
@@ -81,3 +95,137 @@
 	flags = FPRINT | TABLEPASS | SUITSPACE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
+
+/obj/item/clothing/under/owl
+	name = "owl uniform"
+	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
+	icon_state = "owl"
+	color = "owl"
+
+/obj/item/clothing/under/johnny
+	name = "johnny~~ jumpsuit"
+	desc = "Johnny~~"
+	icon_state = "johnny"
+	color = "johnny"
+
+/obj/item/clothing/under/rainbow
+	name = "rainbow"
+	desc = "rainbow"
+	icon_state = "rainbow"
+	item_state = "rainbow"
+	color = "rainbow"
+
+/obj/item/clothing/under/cloud
+	name = "cloud"
+	desc = "cloud"
+	icon_state = "cloud"
+	color = "cloud"
+
+/obj/item/clothing/under/gimmick/rank/captain/suit
+	name = "captain's suit"
+	desc = "A green suit and yellow necktie. Exemplifies authority."
+	icon_state = "green_suit"
+	item_state = "dg_suit"
+	color = "green_suit"
+
+/obj/item/clothing/under/gimmick/rank/head_of_personnel/suit
+	name = "head of personnel's suit"
+	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
+	icon_state = "teal_suit"
+	item_state = "g_suit"
+	color = "teal_suit"
+
+/obj/item/clothing/under/suit_jacket
+	name = "black suit"
+	desc = "A black suit and red tie. Very formal."
+	icon_state = "black_suit"
+	item_state = "bl_suit"
+	color = "black_suit"
+
+/obj/item/clothing/under/suit_jacket/really_black
+	name = "executive suit"
+	desc = "A formal black suit and red tie, intended for the station's finest."
+	icon_state = "really_black_suit"
+	item_state = "bl_suit"
+	color = "black_suit"
+
+/obj/item/clothing/under/suit_jacket/female
+	name = "executive suit"
+	desc = "A formal trouser suit for women, intended for the station's finest."
+	icon_state = "black_suit_fem"
+	item_state = "black_suit_fem"
+	color = "black_suit_fem"
+
+/obj/item/clothing/under/suit_jacket/red
+	name = "red suit"
+	desc = "A red suit and blue tie. Somewhat formal."
+	icon_state = "red_suit"
+	item_state = "r_suit"
+	color = "red_suit"
+
+/obj/item/clothing/under/blackskirt
+	name = "black skirt"
+	desc = "A black skirt, very fancy!"
+	icon_state = "blackskirt"
+	color = "blackskirt"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/under/schoolgirl
+	name = "schoolgirl uniform"
+	desc = "It's just like one of my Japanese animes!"
+	icon_state = "schoolgirl"
+	item_state = "schoolgirl"
+	color = "schoolgirl"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/under/overalls
+	name = "laborer's overalls"
+	desc = "A set of durable overalls for getting the job done."
+	icon_state = "overalls"
+	item_state = "lb_suit"
+	color = "overalls"
+
+/obj/item/clothing/under/pirate
+	name = "pirate outfit"
+	desc = "Yarr."
+	icon_state = "pirate"
+	item_state = "pirate"
+	color = "pirate"
+
+/obj/item/clothing/under/soviet
+	name = "soviet uniform"
+	desc = "For the Motherland!"
+	icon_state = "soviet"
+	item_state = "soviet"
+	color = "soviet"
+
+/obj/item/clothing/under/redcoat
+	name = "redcoat uniform"
+	desc = "Looks old."
+	icon_state = "redcoat"
+	item_state = "redcoat"
+	color = "redcoat"
+
+/obj/item/clothing/under/kilt
+	name = "kilt"
+	desc = "Includes shoes and plaid"
+	icon_state = "kilt"
+	item_state = "kilt"
+	color = "kilt"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|FEET
+
+/obj/item/clothing/under/sexymime
+	name = "sexy mime outfit"
+	desc = "The only time when you DON'T enjoy looking at someone's rack."
+	icon_state = "sexymime"
+	item_state = "sexymime"
+	color = "sexymime"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/under/gladiator
+	name = "gladiator uniform"
+	desc = "Are you not entertained? Is that not why you are here?"
+	icon_state = "gladiator"
+	item_state = "gladiator"
+	color = "gladiator"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS

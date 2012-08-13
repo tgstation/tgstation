@@ -1,5 +1,3 @@
-
-//These still need to be broken down into other files or such
 /obj/item/clothing/shoes/syndigaloshes
 	desc = "A pair of brown shoes. They seem to have extra grip."
 	name = "brown shoes"
@@ -10,83 +8,10 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/shoes/syndigaloshes/all
-
-/obj/item/clothing/shoes/black
-	name = "black shoes"
-	icon_state = "black"
-	color = "black"
-	desc = "A pair of black shoes."
-
-	redcoat
-		color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
-
-/obj/item/clothing/shoes/brown
-	name = "brown shoes"
-	desc = "A pair of brown shoes."
-	icon_state = "brown"
-	color = "brown"
-
-	captain
-		color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
-	hop
-		color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
-	ce
-		color = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
-	rd
-		color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
-	cmo
-		color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
-	cmo
-		color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
-
-/obj/item/clothing/shoes/blue
-	name = "blue shoes"
-	icon_state = "blue"
-	color = "blue"
-
-/obj/item/clothing/shoes/green
-	name = "green shoes"
-	icon_state = "green"
-	color = "green"
-
-/obj/item/clothing/shoes/yellow
-	name = "yellow shoes"
-	icon_state = "yellow"
-	color = "yellow"
-
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
 	icon_state = "mime"
 	color = "mime"
-
-/obj/item/clothing/shoes/purple
-	name = "purple shoes"
-	icon_state = "purple"
-	color = "purple"
-
-/obj/item/clothing/shoes/brown
-	name = "brown shoes"
-	icon_state = "brown"
-	color = "brown"
-
-/obj/item/clothing/shoes/orange
-	name = "orange shoes"
-	icon_state = "orange"
-	var/chained = 0
-	color = "orange"
-
-/obj/item/clothing/shoes/red
-	name = "red shoes"
-	desc = "Stylish red shoes."
-	icon_state = "red"
-	color = "red"
-
-/obj/item/clothing/shoes/rainbow
-	name = "rainbow shoes"
-	desc = "Very gay shoes."
-	icon_state = "rain_bow"
-	color = "rainbow"
 
 /obj/item/clothing/shoes/swat
 	name = "\improper SWAT shoes"
@@ -110,12 +35,6 @@
 	permeability_coefficient = 0.01
 	flags = NOSLIP
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-
-/obj/item/clothing/shoes/white
-	name = "white shoes"
-	icon_state = "white"
-	permeability_coefficient = 0.25
-	color = "white"
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -156,3 +75,8 @@
 	icon_state = "cult"
 	item_state = "cult"
 	color = "cult"
+
+/obj/item/clothing/shoes/cyborg
+	name = "cyborg boots"
+	desc = "Shoes for a cyborg costume"
+	icon_state = "boots"

@@ -1,11 +1,17 @@
 
+/obj/item/clothing/gloves/captain
+	desc = "Regal blue gloves, with a nice gold trim. Swanky."
+	name = "captain's gloves"
+	icon_state = "captain"
+	item_state = "egloves"
+	color = "captain"
+
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
 	name = "cyborg gloves"
 	icon_state = "black"
 	item_state = "r_hands"
 	siemens_coefficient = 1.0
-
 
 /obj/item/clothing/gloves/swat
 	desc = "These tactical gloves are somewhat fire and impact-resistant."
