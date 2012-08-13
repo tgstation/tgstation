@@ -128,7 +128,9 @@
 /proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
 
 	//debug_mob += O.contents.len
-	for(var/A as mob|obj in O)
+	for(var/atom/A in O)
+		if(isturf(A))
+			continue
 		if(ismob(A))
 			var/mob/M = A
 			if(client_check && !M.client)
@@ -152,17 +154,18 @@
 
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
-	var/list/range = range(R, T)
+	var/list/range = view(R, T)
 
 	//debug_mob += range.len
-	for(var/A as mob|obj in range)
+	for(var/A in range)
+		if(isturf(A))
+			continue
 		if(ismob(A))
 			var/mob/M = A
-			if(M.client && isInSight(M, source))
+			if(M.client)
 				hear += M
 		else if(istype(A, /obj/item/device/radio))
-			if(isInSight(A, source))
-				hear += A
+			hear += A
 		hear += recursive_mob_check(A)
 	//world.log << "NEW: [debug_mob]"
 	//debug_mob = 0
