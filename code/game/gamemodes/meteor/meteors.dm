@@ -165,7 +165,7 @@
 		return
 	..()
 
-
+/*
 //Testing purposes only!
 /obj/item/weapon/meteorgun
 	name = "Meteor Gun"
@@ -174,7 +174,7 @@
 	icon_state = "lasercannon"
 	item_state = "gun"
 
-/obj/item/weapon/attack_self()
+/obj/item/weapon/meteorgun/attack_self()
 	var/start_x = usr.loc.x
 	var/start_y = usr.loc.y
 	var/start_z = usr.loc.z
@@ -210,3 +210,4 @@
 		walk_towards(M, M.dest, 1)
 
 	return
+*/

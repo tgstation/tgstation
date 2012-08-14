@@ -75,7 +75,7 @@
 		if(!action_checks(target)) return
 		if(isobj(target))
 			var/obj/target_obj = target
-			if(target_obj.unacidable)	return
+			if(!target_obj.vars.Find("unacidable") || target_obj.unacidable)	return
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
 		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")

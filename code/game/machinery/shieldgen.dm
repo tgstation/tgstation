@@ -222,7 +222,7 @@
 
 /obj/machinery/shieldgen/process()
 	if(malfunction && active)
-		if(deployed_shields && prob(5))
+		if(deployed_shields.len && prob(5))
 			del(pick(deployed_shields))
 
 	return

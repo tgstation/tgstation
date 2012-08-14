@@ -21,7 +21,7 @@ SHARDS
 		src.use(1)
 		user << "\blue You attach wire to the [name]."
 		new /obj/item/stack/light_w(user.loc)
-		if(CC.amount <= 0)
+		if(CC && CC.amount <= 0) //CC may have already been deleted by 'CC.use(5)' a few lines up.
 			user.u_equip(CC)
 			del(CC)
 		if(src.amount <= 0)
