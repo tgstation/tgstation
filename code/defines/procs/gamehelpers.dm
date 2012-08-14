@@ -144,9 +144,8 @@
 	//debug_mob += O.contents.len
 	if(!recursion_limit)
 		return L
-	for(var/atom/A in O)
-		if(isturf(A))
-			continue
+	for(var/atom/A in O.contents)
+
 		if(ismob(A))
 			var/mob/M = A
 			if(client_check && !M.client)
@@ -161,7 +160,9 @@
 			if(sight_check && !isInSight(A, O))
 				continue
 			L |= A
-		L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
+
+		if(isobj(A) || ismob(A))
+			L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
 	return L
 
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
@@ -174,17 +175,17 @@
 	var/list/hear = list()
 	var/list/range = hear(R, T)
 
-	for(var/A in range)
-		if(isturf(A) || A == source)
-			continue
+	for(var/atom/A in range)
 		if(ismob(A))
 			var/mob/M = A
 			if(M.client)
-				hear |= M
+				hear += M
 			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 		else if(istype(A, /obj/item/device/radio))
-			hear |= A
-		hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
+			hear += A
+
+		if(isobj(A) || ismob(A))
+			hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
 
 	return hear
 
