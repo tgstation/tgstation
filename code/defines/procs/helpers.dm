@@ -249,78 +249,79 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/format_frequency(var/f)
 	return "[round(f / 10)].[f % 10]"
 
-//Handles giving an AI its name
-/proc/ainame(var/mob/M as mob)
-	var/randomname = M.name
-	var/time_passed = world.time//Pretty basic but it'll do. It's still possible to bypass this by return ainame().
 
-	var/newname
-	var/iterations = 0
-	while(!newname)
-		switch(iterations)
-			if(0)
-			if(1 to 5)	M << "<font color='red'>Invalid name. Your name should be at least 4 alphanumeric characters but under [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
-			else		break
-		newname = reject_bad_name(input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname),1)
-		iterations++
 
-	if((world.time-time_passed)>300)//If more than 20 game seconds passed.
-		M << "You took too long to decide. Default name selected."
-		return
+//This will update a mob's name, real_name, mind.name, data_core records, pda and id
+//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
+/mob/proc/fully_replace_character_name(var/oldname,var/newname)
+	if(!newname)	return 0
+	real_name = newname
+	name = newname
+	if(mind)
+		mind.name = newname
 
-	if(newname)
-		if( newname == "Inactive AI" || findtext(newname,"cyborg") )	//To prevent common meta-gaming name-choices
-			M << "That name is reserved."
+	if(oldname)
+		//update the datacore records! This is goig to be a bit costly.
+		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
+			for(var/datum/data/record/R in L)
+				if(R.fields["name"] == oldname)
+					R.fields["name"] = newname
+					break
+
+		//update our pda and id if we have them on our person
+		var/list/searching = GetAllContents(searchDepth = 3)
+		var/search_id = 1
+		var/search_pda = 1
+
+		for(var/A in searching)
+			if( search_id && istype(A,/obj/item/weapon/card/id) )
+				var/obj/item/weapon/card/id/ID = A
+				if(ID.registered_name == oldname)
+					ID.registered_name = newname
+					ID.name = "[newname]'s ID Card ([ID.assignment])"
+					if(!search_pda)	break
+					search_id = 0
+
+			else if( search_pda && istype(A,/obj/item/device/pda) )
+				var/obj/item/device/pda/PDA = A
+				if(PDA.owner == oldname)
+					PDA.owner = newname
+					PDA.name = "PDA-[newname] ([PDA.ownjob])"
+					if(!search_id)	break
+					search_pda = 0
+	return 1
+
+
+
+//Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
+//Last modified by Carn
+/mob/proc/rename_self(var/role, var/allow_numbers=0)
+	spawn(0)
+		var/oldname = real_name
+
+		var/time_passed = world.time
+		var/newname
+
+		for(var/i=1,i<=3,i++)	//we get 3 attempts to pick a suitable name.
+			newname = input(src,"You are a [role]. Would you like to change your name to something else?", "Name change",oldname) as text
+			if((world.time-time_passed)>300)
+				return	//took too long
+			newname = reject_bad_name(newname,allow_numbers)	//returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
+			if(newname)
+				break	//That's a suitable name!
+			src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short or has bad characters."
+
+		if(!newname)	//we'll stick with the oldname then
 			return
-		for (var/mob/living/silicon/ai/A in player_list)
-			if (A.real_name == newname && newname!=randomname)
-				M << "There's already an AI with that name."
-				return
-		M.real_name = newname
-		M.name = newname
-		M.mind.name = newname
 
-//Handles givving the Clown his/her name
-/proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
-	var/randomname = pick(clown_names)
-	var/newname = copytext(sanitize(input(M,"You are the clown. Would you like to change your name to something else?", "Name change",randomname)),1,MAX_NAME_LEN)
-	var/oldname = M.real_name
+		if(cmptext("ai",role))
+			oldname = null//don't bother with the records update crap
+			world << "<b>[newname] is the AI!</b>"
+			world << sound('newAI.ogg')
 
-	if (!newname)
-		newname = randomname
+		fully_replace_character_name(oldname,newname)
 
-	else
-		var/badname = 0
-		newname = trim_right(trim_left(newname)) // " Abe Butts " becomes "Abe Butts"
-		switch(newname)
-			if("Unknown")	badname = 1
-			if("floor")	badname = 1
-			if("wall")	badname = 1
-			if("r-wall")	badname = 1
-			if("space")	badname = 1
-			if("_")	badname = 1
 
-		if(badname)
-			M << "That name is reserved."
-			return clname(M)
-		for (var/mob/A in player_list)
-			if(A.real_name == newname)
-				M << "That name is reserved."
-				return clname(M)
-		M.real_name = newname
-		M.name = newname
-		M.mind.name = newname
-
-	for (var/obj/item/device/pda/pda in M.contents)
-		if (pda.owner == oldname)
-			pda.owner = newname
-			pda.name = "PDA-[newname] ([pda.ownjob])"
-			break
-	for(var/obj/item/weapon/card/id/id in M.contents)
-		if(id.registered_name == oldname)
-			id.registered_name = newname
-			id.name = "[id.registered_name]'s ID Card ([id.assignment])"
-			break
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
 /proc/ionnum()

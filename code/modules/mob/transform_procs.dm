@@ -123,24 +123,13 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
 	O.verbs += /mob/living/silicon/ai/proc/ai_roster
 
-//	O.verbs += /mob/living/silicon/ai/proc/ai_cancel_call
 	O.job = "AI"
 	O.UI = UI
 
-	if(O.mind)
-		ticker.mode.remove_cultist(O.mind, 1)
-		ticker.mode.remove_revolutionary(O.mind, 1)
+	O.rename_self("ai",1)
+	. = O
+	del(src)
 
-	spawn(0)
-		ainame(O)
-		world << text("<b>[O.real_name] is the AI!</b>")
-
-		spawn(50)
-			world << sound('newAI.ogg')
-
-		del(src)
-
-	return O
 
 //human -> robot
 /mob/living/carbon/human/proc/Robotize()

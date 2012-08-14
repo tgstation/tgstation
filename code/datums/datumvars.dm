@@ -392,34 +392,21 @@ client
 		return html
 
 /client/proc/view_var_Topic(href,href_list,hsrc)
-	//This will all be moved over to datum/admins/Topic() ~Carn
+	//This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client == src) && src.holder )
 		. = 1	//default return
 		if (href_list["Vars"])
 			debug_variables(locate(href_list["Vars"]))
 
-		//~CARN: for renaming mobs (updates their real_name and their ID/PDA if applicable).
+		//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 		else if (href_list["rename"])
-			var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name") as text|null),1,MAX_NAME_LEN)
-			if(!new_name)	return
 			var/mob/M = locate(href_list["rename"])
 			if(!istype(M))	return
+			var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null),1,MAX_NAME_LEN)
+			if( !new_name || !M )	return
 
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].", 1)
-			if(istype(M, /mob/living/carbon/human))
-				for(var/obj/item/weapon/card/id/ID in M.contents)
-					if(ID.registered_name == M.real_name)
-						ID.name = "[new_name]'s ID Card ([ID.assignment])"
-						ID.registered_name = new_name
-						break
-				for(var/obj/item/device/pda/PDA in M.contents)
-					if(PDA.owner == M.real_name)
-						PDA.name = "PDA-[new_name] ([PDA.ownjob])"
-						PDA.owner = new_name
-						break
-			M.real_name = new_name
-			M.name = new_name
-			if(M.mind)	M.mind.name = new_name
+			M.fully_replace_character_name(M.real_name,new_name)
 			href_list["datumrefresh"] = href_list["rename"]
 
 		else if (href_list["varnameedit"])

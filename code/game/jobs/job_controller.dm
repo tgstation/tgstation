@@ -47,7 +47,7 @@ var/global/datum/controller/occupations/job_master
 
 	proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
 		Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
-		if((player) && (player.mind) && (rank))
+		if(player && player.mind && rank)
 			var/datum/job/job = GetJob(rank)
 			if(!job)	return 0
 			if(jobban_isbanned(player, rank))	return 0
@@ -295,12 +295,7 @@ var/global/datum/controller/occupations/job_master
 		else
 			H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
 
-		spawnId(H,rank)
-		H << "<B>You are the [rank].</B>"
-		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
 		H.job = rank
-		if(H.mind)
-			H.mind.assigned_role = rank
 
 		if(!joined_late)
 			var/obj/S = null
@@ -314,26 +309,35 @@ var/global/datum/controller/occupations/job_master
 			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 				H.loc = S.loc
 
-		if(H.mind)
-			if(H.mind.assigned_role == "Cyborg")//This could likely be done somewhere else
-				H.Robotize()
-				return 1
 
-			if(H.mind.assigned_role != "AI" && H.mind.assigned_role != "Clown")
-				switch(H.backbag)
-					if(1)
-						H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_r_hand)
-					if(2)
-						var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_if_possible(BPK, H.slot_back,1)
-					if(3)
-						var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
-						new /obj/item/weapon/storage/box/survival(BPK)
-						H.equip_if_possible(BPK, H.slot_back,1)
+
+		if(H.mind)
+			H.mind.assigned_role = rank
+
+			switch(rank)
+				if("Cyborg")
+					H.Robotize()
+					return 1
+				if("AI","Clown")	//don't need bag preference stuff!
+				else
+					switch(H.backbag)
+						if(1)
+							H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_r_hand)
+						if(2)
+							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
+							new /obj/item/weapon/storage/box/survival(BPK)
+							H.equip_if_possible(BPK, H.slot_back,1)
+						if(3)
+							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
+							new /obj/item/weapon/storage/box/survival(BPK)
+							H.equip_if_possible(BPK, H.slot_back,1)
+
+		H << "<B>You are the [rank].</B>"
+		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+		spawnId(H,rank)
 
 		H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
-		H.regenerate_icons()
+//		H.update_icons()
 		return 1
 
 
@@ -370,10 +374,6 @@ var/global/datum/controller/occupations/job_master
 			pda.owner = H.real_name
 			pda.ownjob = H.wear_id.assignment
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
-
-		if(rank == "Clown")
-			spawn(1)
-				clname(H)
 		return 1
 
 

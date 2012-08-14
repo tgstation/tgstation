@@ -115,11 +115,10 @@ var/global/datum/controller/gameticker/ticker
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				del(S)
-		spawn(-1)
-			world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
-			world << sound('welcome.ogg') // Skie
-			//Holiday Round-start stuff	~Carn
-			Holiday_Game_Start()
+		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+//		world << sound('welcome.ogg') // Skie
+		//Holiday Round-start stuff	~Carn
+		Holiday_Game_Start()
 
 	start_events() //handles random events and space dust.
 
@@ -243,11 +242,11 @@ var/global/datum/controller/gameticker/ticker
 
 	proc/create_characters()
 		for(var/mob/new_player/player in player_list)
-			if(player.ready)
-				if(player.mind && player.mind.assigned_role=="AI")
+			if(player.ready && player.mind)
+				if(player.mind.assigned_role=="AI")
 					player.close_spawn_windows()
 					player.AIize()
-				else if(player.mind)
+				else
 					player.create_character()
 					del(player)
 

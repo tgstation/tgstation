@@ -244,17 +244,17 @@
 			src << alert("[rank] is not available. Please try another.")
 			return 0
 
-		var/mob/living/carbon/human/character = create_character()
-		var/icon/char_icon = getFlatIcon(character,0)//We're creating out own cache so it's not needed.
-		job_master.AssignRole(character, rank, 1)
-		job_master.EquipRank(character, rank, 1)
+		job_master.AssignRole(src, rank, 1)
+
+		var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+		job_master.EquipRank(character, rank, 1)					//equips the human
 		character.loc = pick(latejoin)
 		character.lastarea = get_area(loc)
-		AnnounceArrival(character, rank)
 
 		if(character.mind.assigned_role != "Cyborg")
-			ManifestLateSpawn(character,char_icon)
+			data_core.manifest_inject(character)
 			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
+			AnnounceArrival(character, rank)
 		else
 			character.Robotize()
 		del(src)
@@ -270,71 +270,6 @@
 				if(character.mind)
 					if((character.mind.assigned_role != "Cyborg") && (character.mind.special_role != "MODE"))
 						announcer.say("[character.real_name] has signed up as [rank].")
-
-
-	proc/ManifestLateSpawn(var/mob/living/carbon/human/H, icon/H_icon) // Attempted fix to add late joiners to various databases -- TLE
-		// This is basically ripped wholesale from the normal code for adding people to the databases during a fresh round
-		if (H.mind && (H.mind.assigned_role != "MODE"))
-			var/datum/data/record/G = new()
-			var/datum/data/record/M = new()
-			var/datum/data/record/S = new()
-			var/datum/data/record/L = new()
-			var/obj/item/weapon/card/id/C = H.wear_id
-			if (C)
-				G.fields["rank"] = C.assignment
-			else
-				G.fields["rank"] = "Unassigned"
-			G.fields["name"] = H.real_name
-			G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
-			M.fields["name"] = G.fields["name"]
-			M.fields["id"] = G.fields["id"]
-			S.fields["name"] = G.fields["name"]
-			S.fields["id"] = G.fields["id"]
-			if(H.gender == FEMALE)
-				G.fields["sex"] = "Female"
-			else
-				G.fields["sex"] = "Male"
-			G.fields["age"] = text("[]", H.age)
-			G.fields["fingerprint"] = text("[]", md5(H.dna.uni_identity))
-			G.fields["p_stat"] = "Active"
-			G.fields["m_stat"] = "Stable"
-			M.fields["b_type"] = text("[]", H.b_type)
-			M.fields["b_dna"] = H.dna.unique_enzymes
-			M.fields["mi_dis"] = "None"
-			M.fields["mi_dis_d"] = "No minor disabilities have been declared."
-			M.fields["ma_dis"] = "None"
-			M.fields["ma_dis_d"] = "No major disabilities have been diagnosed."
-			M.fields["alg"] = "None"
-			M.fields["alg_d"] = "No allergies have been detected in this patient."
-			M.fields["cdi"] = "None"
-			M.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
-			M.fields["notes"] = "No notes."
-			S.fields["criminal"] = "None"
-			S.fields["mi_crim"] = "None"
-			S.fields["mi_crim_d"] = "No minor crime convictions."
-			S.fields["ma_crim"] = "None"
-			S.fields["ma_crim_d"] = "No major crime convictions."
-			S.fields["notes"] = "No notes."
-
-			//Begin locked reporting
-			L.fields["name"] = H.real_name
-			L.fields["sex"] = H.gender
-			L.fields["age"] = H.age
-			L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
-			L.fields["rank"] = H.mind.assigned_role
-			L.fields["b_type"] = H.b_type
-			L.fields["b_dna"] = H.dna.unique_enzymes
-			L.fields["enzymes"] = H.dna.struc_enzymes
-			L.fields["identity"] = H.dna.uni_identity
-			L.fields["image"] = H_icon//What the person looks like. Naked, in this case.
-			//End locked reporting
-
-			data_core.general += G
-			data_core.medical += M
-			data_core.security += S
-			data_core.locked += L
-		return
-
 
 	proc/LateChoices()
 		var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
@@ -362,10 +297,10 @@
 
 	proc/create_character()
 		spawning = 1
+		close_spawn_windows()
+
 		var/mob/living/carbon/human/new_character = new(loc)
 		new_character.lastarea = get_area(loc)
-
-		close_spawn_windows()
 
 		if(ticker.random_players)
 			new_character.gender = pick(MALE, FEMALE)
@@ -376,11 +311,20 @@
 
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
+		if(mind)
+			mind.active = 0					//we wish to transfer the key manually
+			if(mind.assigned_role == "Clown")				//give them a clownname if they are a clown
+				new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
+				new_character.rename_self("clown")
+			mind.original = new_character
+			mind.transfer_to(new_character)					//won't transfer key since the mind is not active
+
+		new_character.name = real_name
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = preferences.b_type
-		if(mind)
-			mind.transfer_to(new_character)
-			mind.original = new_character
+
+		new_character.key = key		//Manually transfer the key to log them in
+
 		return new_character
 
 

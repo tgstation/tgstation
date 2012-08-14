@@ -61,7 +61,7 @@
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(var/t_in, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)
-	if(t_in == "" || length(t_in) > max_length)
+	if(!t_in || length(t_in) > max_length)
 		return //Rejects the input if it is null or if it is longer then the max length allowed
 
 	var/number_of_alphanumeric	= 0
@@ -114,7 +114,12 @@
 
 	if(number_of_alphanumeric < 2)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
 
-	trim_right(t_out)//Remove spaces from the end of the name.
+	if(last_char_group == 1)
+		t_out = copytext(t_out,1,length(t_out))	//removes the last character (in this case a space)
+
+	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai"))	//prevents these common metagamey names
+		if(cmptext(t_out,bad_name))	return	//(not case sensitive)
+
 	return t_out
 
 

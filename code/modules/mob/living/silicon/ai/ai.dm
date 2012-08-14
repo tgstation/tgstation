@@ -60,8 +60,6 @@
 
 			job = "AI"
 
-			spawn(0)
-				ainame(src)
 	add_to_mob_list(src)
 	return
 
