@@ -33,6 +33,20 @@
 
 	return 0 //not in range and not telekinetic
 
+// Like view but bypasses luminosity check
+
+/proc/hear(var/range, var/atom/source)
+
+	var/lum = source.luminosity
+	source.luminosity = 6
+
+	var/list/heard = view(range, source)
+	source.luminosity = lum
+
+	return heard
+
+
+
 
 //Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
 //They should approximate pythagoras theorem well enough for our needs.
@@ -125,25 +139,29 @@
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
 
-/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
+/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
 
 	//debug_mob += O.contents.len
+	if(!recursion_limit)
+		return L
 	for(var/atom/A in O)
 		if(isturf(A))
 			continue
 		if(ismob(A))
 			var/mob/M = A
 			if(client_check && !M.client)
-				L = recursive_mob_check(A, L)
+				L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
 				continue
 			if(sight_check && !isInSight(A, O))
 				continue
 			L += M
+			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
-			if(sight_check && isInSight(A, O))
-				L += A
-		L = recursive_mob_check(A, L)
+			if(sight_check && !isInSight(A, O))
+				continue
+			L += A
+		L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
 	return L
 
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
@@ -154,21 +172,19 @@
 
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
-	var/list/range = view(R, T)
+	var/list/range = hear(R, T)
 
-	//debug_mob += range.len
 	for(var/A in range)
-		if(isturf(A))
+		if(isturf(A) || A == source)
 			continue
 		if(ismob(A))
 			var/mob/M = A
 			if(M.client)
 				hear += M
+			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 		else if(istype(A, /obj/item/device/radio))
 			hear += A
-		hear += recursive_mob_check(A)
-	//world.log << "NEW: [debug_mob]"
-	//debug_mob = 0
+		hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
 
 	return hear
 
@@ -181,7 +197,7 @@
 	for(var/obj/item/device/radio/R in radios)
 		var/turf/speaker = get_turf(R)
 		if(speaker)
-			for(var/turf/T in view(R.canhear_range,speaker))
+			for(var/turf/T in hear(R.canhear_range,speaker))
 				speaker_coverage += T
 
 	// Try to find all the players who can hear the message
