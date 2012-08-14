@@ -183,7 +183,7 @@
 			//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
 			if(integrity <= 0)
 				loc.assume_air(air_contents)
-				//TODO: make pop sound
+				playsound(src.loc, 'spray.ogg', 10, 1, -3)
 				del(src)
 			else
 				integrity--
