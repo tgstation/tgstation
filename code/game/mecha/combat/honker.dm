@@ -35,29 +35,39 @@
 	return
 
 /obj/mecha/combat/honker/get_stats_part()
+	var/integrity = health/initial(health)*100
 	var/cell_charge = get_charge()
-	var/output = {"[internal_damage&MECHA_INT_FIRE?"<font color='red'><b>INTERNAL FIRE</b></font><br>":null]
+	var/tank_pressure = internal_tank ? round(internal_tank.return_pressure(),0.01) : "None"
+	var/tank_temperature = internal_tank ? internal_tank.return_temperature() : "Unknown"
+	var/cabin_pressure = round(return_pressure(),0.01)
+	var/output = {"[report_internal_damage()]
+						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font><br>":null]
 						[internal_damage&MECHA_INT_TEMP_CONTROL?"<font color='red'><b>CLOWN SUPPORT SYSTEM MALFUNCTION</b></font><br>":null]
 						[internal_damage&MECHA_INT_TANK_BREACH?"<font color='red'><b>GAS TANK HONK</b></font><br>":null]
 						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>HONK-A-DOODLE</b></font> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a><br>":null]
-						<b>IntegriHONK: </b> [health/initial(health)*100] %) <br>
-						<b>PowerHONK charge: </b>[isnull(cell_charge)?"Someone HONKed powerHonk!!!":"[cell.percent()]%"])<br>
-						<b>Air source: </b>[use_internal_tank?"Internal AirHONK":"EnvironHONK"]<br>
-						<b>AirHONK pressure: </b>[src.return_pressure()]HoNKs<br>
-						<b>Internal HONKature: </b> [src.return_temperature()]&deg;honK|[src.return_temperature() - T0C]&deg;honCk<br>
+						<b>IntegriHONK: </b> [integrity]%<br>
+						<b>PowerHONK charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
+						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
+						<b>AirHONK pressure: </b>[tank_pressure]kPa<br>
+						<b>AirHONK temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
+						<b>HONK pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<font color='red'>[cabin_pressure]</font>": cabin_pressure]kPa<br>
+						<b>HONK temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
+						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
 	return output
-
 
 /obj/mecha/combat/honker/get_stats_html()
 	var/output = {"<html>
 						<head><title>[src.name] data</title>
 						<style>
+						body {color: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
+						hr {border: 1px solid #0f0; color: #fff; background-color: #000;}
+						a {padding:2px 5px;;color:#0f0;}
 						.wr {margin-bottom: 5px;}
 						.header {cursor:pointer;}
 						.open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
-						.links a {margin-bottom: 2px;}
+						.links a {margin-bottom: 2px;padding-top:3px;}
 						.visible {display: block;}
 						.hidden {display: none;}
 						</style>
@@ -68,8 +78,7 @@
 						    setInterval(function(){
 						        window.location='byond://?src=\ref[src]&update_content=1';
 						        document.body.style.color = get_rand_color_string();
-								  document.body.style.background = get_rand_color_string();
-
+						      document.body.style.background = get_rand_color_string();
 						    }, 1000);
 						}
 
@@ -87,7 +96,7 @@
 						}
 						</script>
 						</head>
-						<body style="color: #fff; background: #000; font: 14px 'Courier', monospace;">
+						<body>
 						<div id='content'>
 						[src.get_stats_part()]
 						</div>
@@ -95,7 +104,9 @@
 						[src.get_equipment_list()]
 						</div>
 						<hr>
+						<div id='commands'>
 						[src.get_commands()]
+						</div>
 						</body>
 						</html>
 					 "}

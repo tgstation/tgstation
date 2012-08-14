@@ -902,7 +902,7 @@
 		return
 	if(!istype(usr.loc, /turf))
 		return
-	if(!src || !src.connected || !src.connected.occupant || !src.connected.occupant.dna)
+	if(!src || !src.connected)
 		return
 	if ((usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
 		usr.machine = src
@@ -911,6 +911,10 @@
 				src.connected.locked = !( src.connected.locked )
 		////////////////////////////////////////////////////////
 		if (href_list["genpulse"])
+			if(!src.connected.occupant || !src.connected.occupant.dna)//Makes sure someone is in there (And valid) before trying anything
+				src.temphtml = text("No viable occupant detected.")//More than anything, this just acts as a sanity check in case the option DOES appear for whatever reason
+				usr << browse(temphtml, "window=scannernew;size=550x650")
+				onclose(usr, "scannernew")
 			src.delete = 1
 			src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
 			usr << browse(temphtml, "window=scannernew;size=550x650")
@@ -943,11 +947,19 @@
 			src.temphtml += text("<A href='?src=\ref[];radinminus=1'>--</A> Intesity <A href='?src=\ref[];radinplus=1'>++</A><BR>", src, src)
 			src.delete = 0
 		if (href_list["radleplus"])
+			if(!src.connected.occupant || !src.connected.occupant.dna)
+				src.temphtml = text("No viable occupant detected.")
+				usr << browse(temphtml, "window=scannernew;size=550x650")
+				onclose(usr, "scannernew")
 			if (src.radduration < 20)
 				src.radduration++
 				src.radduration++
 			dopage(src,"radset")
 		if (href_list["radleminus"])
+			if(!src.connected.occupant || !src.connected.occupant.dna)
+				src.temphtml = text("No viable occupant detected.")
+				usr << browse(temphtml, "window=scannernew;size=550x650")
+				onclose(usr, "scannernew")
 			if (src.radduration > 2)
 				src.radduration--
 				src.radduration--
@@ -962,6 +974,10 @@
 			dopage(src,"radset")
 		////////////////////////////////////////////////////////
 		if (href_list["unimenu"])
+			if(!src.connected.occupant || !src.connected.occupant.dna)
+				src.temphtml = text("No viable occupant detected.")
+				usr << browse(temphtml, "window=scannernew;size=550x650")
+				onclose(usr, "scannernew")
 			//src.temphtml = text("Unique Identifier: <font color='blue'>[]</FONT><BR><BR>", src.connected.occupant.dna.uni_identity)
 			//src.temphtml = text("Unique Identifier: <font color='blue'>[getleftblocks(src.connected.occupant.dna.uni_identity,uniblock,3)][src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)][getrightblocks(src.connected.occupant.dna.uni_identity,uniblock,3)]</FONT><BR><BR>")
 
@@ -1090,6 +1106,10 @@
 			src.delete = 0
 		////////////////////////////////////////////////////////
 		if (href_list["rejuv"])
+			if(!src.connected.occupant || !src.connected.occupant.dna)
+				src.temphtml = text("No viable occupant detected.")
+				usr << browse(temphtml, "window=scannernew;size=550x650")
+				onclose(usr, "scannernew")
 			var/mob/living/carbon/human/H = src.connected.occupant
 			if(H)
 				if (H.reagents.get_reagent_amount("inaprovaline") < 60)
