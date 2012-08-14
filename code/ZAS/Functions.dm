@@ -12,6 +12,10 @@ proc/FloodFill(turf/start)
 	while(open.len)
 		var/turf/T = pick(open)
 
+		if(!istype(T))
+			open -= T
+			continue
+
 		for(var/d in cardinal)
 			var/turf/O = get_step(T,d)
 
