@@ -173,7 +173,7 @@ turf
 				var/turf/T = get_step(src,direction)
 				if(!istype(T))
 					continue
-				var/list/zone/adjacent_zones = list()
+//				var/list/zone/adjacent_zones = list()
 
 				if(air_check_directions&direction) //I can connect air in this direction
 					if(!CanPass(null, T, 0, 0)) //If either block air, we must look to see if the adjacent turfs need rebuilt.
@@ -186,11 +186,11 @@ turf
 						ZConnect(src,T)
 
 				//If I cannot connect to air or whatever, and there is a zone there, I am probably not able to pass air.  Consider zone rebuilding
-				else if(T.zone && !T.zone.rebuild)
-					if(T.zone in adjacent_zones) //Found it more than 1 direction, rebuild
-						T.zone.rebuild = 1
-					else //Add it for later checks.
-						adjacent_zones += T.zone
+//				else if(T.zone && !T.zone.rebuild)
+//					if(T.zone in adjacent_zones) //Found it more than 1 direction, rebuild
+//						T.zone.rebuild = 1
+//					else //Add it for later checks.
+//						adjacent_zones += T.zone
 
 			if(air_check_directions)
 				processing = 1
@@ -211,12 +211,12 @@ turf
 		else
 			return 1
 
-turf/proc/ZCanPass(turf/T, var/include_space = 0)
+turf/proc/ZCanPass(turf/simulated/T, var/include_space = 0)
 	//Fairly standard pass checks for turfs, objects and directional windows. Also stops at the edge of space.
 	if(!istype(T))
 		return 0
 
-	if(istype(T,/turf/space) && !include_space)
+	if(!istype(T) && !include_space)
 		return 0
 	else
 		if(T.blocks_air||blocks_air)

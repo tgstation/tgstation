@@ -1,7 +1,7 @@
 //Global Functions
 //Contents: FloodFill, ZMerge, ZConnect
 
-proc/FloodFill(turf/start)
+proc/FloodFill(turf/simulated/start)
 	if(!istype(start))
 		return list()
 	var
@@ -10,32 +10,32 @@ proc/FloodFill(turf/start)
 			closed = list()
 
 	while(open.len)
-		var/turf/T = pick(open)
+		var/turf/simulated/T = pick(open)
 
 		if(!istype(T))
 			open -= T
 			continue
 
 		for(var/d in cardinal)
-			var/turf/O = get_step(T,d)
+			var/turf/simulated/O = get_step(T,d)
 
 			if(istype(O) && !(O in open) && !(O in closed) && O.ZCanPass(T))
 
-				if(!T.HasDoor())
+				if(!O.HasDoor())
 					open += O
 
 				else
 					if(d == SOUTH || d == EAST)
-						//doors prefer connecting to zones to the north north or west
+						//doors prefer connecting to zones to the north  or west
 						closed += O
 
 					else
 						//see if we need to force an attempted connection
 						//(there are no potentially viable zones to the north/west of the door)
-						var/turf/W = get_step(O, WEST)
-						var/turf/N = get_step(O, NORTH)
+						var/turf/simulated/W = get_step(O, WEST)
+						var/turf/simulated/N = get_step(O, NORTH)
 
-						if( (!istype(N) || !O.ZCanPass(N)) && (!istype(W) || !O.ZCanPass(W)) )
+						if( !O.ZCanPass(N) && !O.ZCanPass(W) )
 							//If it cannot connect either to the north or west, connect it!
 							closed += O
 
