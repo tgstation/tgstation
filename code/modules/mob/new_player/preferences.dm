@@ -675,6 +675,8 @@ datum/preferences
 
 		character.age = age
 
+		character.b_type = b_type
+
 		character.r_eyes = r_eyes
 		character.g_eyes = g_eyes
 		character.b_eyes = b_eyes
