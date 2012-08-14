@@ -4,7 +4,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
 	layer = 5.0
-	density = 1
+	density = 0
 	anchored = 0
 	health = 25
 	maxhealth = 25
@@ -640,24 +640,23 @@ Auto Patrol: []"},
 	return threatcount
 
 /obj/machinery/bot/secbot/Bump(M as mob|obj) //Leave no door unopened!
-	spawn(0)
-		if((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
-			var/obj/machinery/door/D = M
-			if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
-				D.open()
-				src.frustration = 0
-		else if((istype(M, /mob/living/)) && (!src.anchored))
-			src.loc = M:loc
+	if((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
+		var/obj/machinery/door/D = M
+		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
+			D.open()
 			src.frustration = 0
-
-		return
+	else if((istype(M, /mob/living/)) && (!src.anchored))
+		src.loc = M:loc
+		src.frustration = 0
 	return
 
+/* terrible
 /obj/machinery/bot/secbot/Bumped(atom/movable/M as mob|obj)
 	spawn(0)
 		if(M)
 			var/turf/T = get_turf(src)
 			M:loc = T
+*/
 
 /obj/machinery/bot/secbot/proc/speak(var/message)
 	for(var/mob/O in hearers(src, null))

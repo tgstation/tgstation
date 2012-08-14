@@ -117,9 +117,10 @@ datum/preferences/proc/savefile_load(mob/user)
 	var/version = null
 	F["version"] >> version
 
-	if (isnull(version) || version < SAVEFILE_VERSION_MIN || version > SAVEFILE_VERSION_MAX)
+	if(isnull(version) || version < SAVEFILE_VERSION_MIN || version > SAVEFILE_VERSION_MAX)
 		fdel(path)
-		alert(user, "Your savefile was incompatible with this version and was deleted.")
+		if(version)
+			alert(user, "Your savefile was incompatible with this version and was deleted.")
 		return 0
 
 	F["real_name"] >> src.real_name

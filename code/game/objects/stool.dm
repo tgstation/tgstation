@@ -121,10 +121,19 @@
 /obj/structure/stool/bed/chair/New()
 	if(anchored)
 		src.verbs -= /atom/movable/verb/pull
-	if(src.dir == NORTH)
-		src.layer = FLY_LAYER
+	handle_rotation()
 	..()
 	return
+
+/obj/structure/stool/bed/chair/proc/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
+	if(src.dir == NORTH)
+		src.layer = FLY_LAYER
+	else
+		src.layer = OBJ_LAYER
+
+	if(buckled_mob)
+		buckled_mob.loc = src.loc
+		buckled_mob.dir = dir
 
 /obj/structure/stool/bed/chair/verb/rotate()
 	set name = "Rotate Chair"
@@ -132,13 +141,7 @@
 	set src in oview(1)
 
 	src.dir = turn(src.dir, 90)
-	if(src.dir == NORTH)
-		src.layer = FLY_LAYER
-	else
-		src.layer = OBJ_LAYER
-
-	if(buckled_mob)
-		buckled_mob.dir = dir
+	handle_rotation()
 	return
 
 /obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)

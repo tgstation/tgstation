@@ -763,10 +763,7 @@
 
 /obj/structure/stool/bed/chair/office/Move()
 	..()
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)
-			buckled_mob.loc = src.loc
-			buckled_mob.dir = src.dir
+	handle_rotation()
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"
