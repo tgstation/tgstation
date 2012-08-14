@@ -149,6 +149,7 @@ zone/proc/process()
 	if(!air)
 		air = new()
 		air.adjust(MOLES_O2STANDARD, 0, MOLES_N2STANDARD, 0, list())
+		air.temperature = T0C
 		world.log << "Air object lost in zone. Regenerating."
 
 	progress = "problem with: ShareSpace()"
