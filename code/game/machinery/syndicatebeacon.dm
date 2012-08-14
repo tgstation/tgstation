@@ -120,6 +120,9 @@
 
 
 	proc/Activate(mob/user = null)
+		if(!checkWirePower())
+			if(user) user << "\blue The connected wire doesn't have enough current."
+			return
 		for(var/obj/machinery/singularity/singulo in world)
 			if(singulo.z == z)
 				singulo.target = src
@@ -180,23 +183,30 @@
 		if(active) Deactivate()
 		..()
 
+	/*
+	* Added for a simple way to check power. Verifies that the beacon
+	* is connected to a wire, the wire is part of a powernet (that part's
+	* sort of redundant, since all wires either join or create one when placed)
+	* and that the powernet has at least 1500 power units available for use.
+	* Doesn't use them, though, just makes sure they're there.
+	* - QualityVan, Aug 11 2012
+	*/
+	proc/checkWirePower()
+		if(!attached)
+			return 0
+		var/datum/powernet/PN = attached.get_powernet()
+		if(!PN)
+			return 0
+		if(PN.avail < 1500)
+			return 0
+		return 1
 
 	process()
-		if(stat & NOPOWER)
-			if(active)
-				Deactivate()
-			return
-
 		if(!active)
 			return
-
-		if(attached)
-			if(!attached.get_powernet())
-				Deactivate()
-				return
-			use_power(1500)
 		else
-			Deactivate()
+			if(!checkWirePower())
+				Deactivate()
 		return
 
 

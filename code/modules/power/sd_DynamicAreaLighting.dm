@@ -576,7 +576,7 @@ mob/sd_ApplyLum(list/V, center = src)
 		if(isturf(loc))
 			V = view(luminosity,loc)
 		else
-			V = view(luminosity,src)
+			V = view(luminosity,get_turf(src))
 	. = ..(V, center)
 
 mob/sd_StripLum(list/V, center = src)
@@ -584,7 +584,7 @@ mob/sd_StripLum(list/V, center = src)
 		if(isturf(loc))
 			V = view(luminosity,loc)
 		else
-			V = view(luminosity,src)
+			V = view(luminosity,get_turf(src))
 	. = ..(V, center)
 
 mob/sd_ApplyLocalLum(list/affected)
