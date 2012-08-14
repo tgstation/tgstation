@@ -80,6 +80,8 @@
 			src.use_power = 1	*/
 	return 1
 
+/obj/machinery/containment_field/meteorhit()
+	return 0
 
 /obj/machinery/emitter/process()
 	if(stat & (NOPOWER|BROKEN))

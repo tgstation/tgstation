@@ -111,7 +111,13 @@
 			A.meteorhit(src)
 			playsound(src.loc, 'meteorimpact.ogg', 40, 1)
 		if (--src.hits <= 0)
-			if(prob(15))// && !istype(A, /obj/structure/grille))
+
+			//Prevent meteors from blowing up the singularity's containment.
+			//Changing emitter and generator ex_act would result in them being bomb and C4 proof.
+			if(!istype(A,/obj/machinery/emitter) && \
+				!istype(A,/obj/machinery/field_generator) && \
+				prob(15))
+
 				explosion(src.loc, 4, 5, 6, 7, 0)
 				playsound(src.loc, "explosion", 50, 1)
 			del(src)
@@ -133,6 +139,13 @@
 
 	Bump(atom/A)
 		spawn(0)
+			//Prevent meteors from blowing up the singularity's containment.
+			//Changing emitter and generator ex_act would result in them being bomb and C4 proof
+			if(!istype(A,/obj/machinery/emitter) && \
+				!istype(A,/obj/machinery/field_generator))
+				if(--src.hits <= 0)
+					del(src) //Dont blow up singularity containment if we get stuck there.
+
 			for(var/mob/M in range(10, src))
 				if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
 					shake_camera(M, 3, 1)
@@ -151,3 +164,49 @@
 		del(src)
 		return
 	..()
+
+
+//Testing purposes only!
+/obj/item/weapon/meteorgun
+	name = "Meteor Gun"
+	desc = "This beast fires meteors!. TESTING PURPOSES ONLY, This gun is <b>incomplete</b>!"
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "lasercannon"
+	item_state = "gun"
+
+/obj/item/weapon/attack_self()
+	var/start_x = usr.loc.x
+	var/start_y = usr.loc.y
+	var/start_z = usr.loc.z
+	var/end_x = 0
+	var/end_y = 0
+	var/end_z = 0
+
+	switch(usr.dir)
+		if(NORTH)
+			end_x = start_x
+			end_y = world.maxy-TRANSITIONEDGE
+		if(SOUTH)
+			end_x = start_x
+			end_y = TRANSITIONEDGE
+		if(EAST)
+			end_x = world.maxx-TRANSITIONEDGE
+			end_y = start_y
+		if(WEST)
+			end_x = TRANSITIONEDGE
+			end_y = start_y
+		else //north
+			end_x = start_x
+			end_y = TRANSITIONEDGE
+	end_z = start_z
+
+	var/start = locate(start_x, start_y, start_z)
+	var/end = locate(end_x, end_y, end_z)
+	var/obj/effect/meteor/M = new /obj/effect/meteor(start)
+
+	M.dest = end
+
+	spawn(0)
+		walk_towards(M, M.dest, 1)
+
+	return
