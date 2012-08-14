@@ -1,31 +1,18 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-var/global/obj/effect/datacore/data_core = null
-var/global/obj/effect/overlay/plmaster = null
-var/global/obj/effect/overlay/slmaster = null
+var/obj/effect/datacore/data_core = null
+var/obj/effect/overlay/plmaster = null
+var/obj/effect/overlay/slmaster = null
 
 	//obj/hud/main_hud1 = null
 
-var/global/list/machines = list()
-var/global/list/processing_objects = list()
-var/global/list/active_diseases = list()
+var/list/machines = list()
+var/list/processing_objects = list()
+var/list/active_diseases = list()
 		//items that ask to be called every cycle
 
-var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
+var/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 
-	//list/global_map = null //Borked, do not touch. DMTG
-	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
-	//Resulting sector map looks like
-	//|_1_|_4_|
-	//|_5_|_3_|
-	//
-	//1 - SS13
-	//4 - Derelict
-	//3 - AI satellite
-	//5 - empty space
-
-
-	//////////////
 
 var/BLINDBLOCK = 0
 var/DEAFBLOCK = 0
@@ -104,10 +91,6 @@ var/list/reg_dna = list(  )
 var/CELLRATE = 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
 var/CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
 
-var/shuttle_z = 2	//default
-var/airtunnel_start = 68 // default
-var/airtunnel_stop = 68 // default
-var/airtunnel_bottom = 72 // default
 var/list/monkeystart = list()
 var/list/wizardstart = list()
 var/list/newplayer_start = list()

@@ -4,19 +4,6 @@
 	tag = text("landmark*[]", name)
 	invisibility = 101
 
-	if (name == "shuttle")
-		shuttle_z = z
-		del(src)
-
-	if (name == "airtunnel_stop")
-		airtunnel_stop = x
-
-	if (name == "airtunnel_start")
-		airtunnel_start = x
-
-	if (name == "airtunnel_bottom")
-		airtunnel_bottom = y
-
 	if (name == "monkey")
 		monkeystart += loc
 		del(src)
@@ -36,8 +23,7 @@
 	if (name == "prisonwarp")
 		prisonwarp += loc
 		del(src)
-//	if (name == "mazewarp")
-//		mazewarp += loc
+
 	if (name == "Holding Facility")
 		holdingfacility += loc
 	if (name == "tdome1")
