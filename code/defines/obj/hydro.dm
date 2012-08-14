@@ -434,7 +434,7 @@
 	yield = 4
 	potency = 15 // Sleeping based on potency?
 	oneharvest = 1
-	growthstages = 3
+	growthstages = 4
 	plant_type = 2
 
 /obj/item/seeds/amanitamycelium
@@ -1551,7 +1551,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = "/obj/item/seeds/reishimycelium"
 	name = "reishi"
-	desc = "<I>Reishi</I>: A special fungus believed to help relieve stress."
+	desc = "<I>Ganoderma lucidum</I>: A special fungus believed to help relieve stress."
 	icon_state = "reishi"
 	potency = 10
 	New()
@@ -1635,7 +1635,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
 	seed = "/obj/item/seeds/walkingmushroom"
 	name = "walking mushroom"
-	desc = "The beginning of the great walk."
+	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
 	New()
 		..()

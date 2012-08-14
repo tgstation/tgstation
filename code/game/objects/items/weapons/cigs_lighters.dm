@@ -27,11 +27,15 @@ ZIPPO
 
 
 	process()
+		var/turf/location = get_turf(src)
 		src.smoketime--
 		if(src.smoketime < 1)
 			src.icon_state = "match_burnt"
 			src.lit = -1
 			processing_objects.Remove(src)
+			return
+		if(location)
+			location.hotspot_expose(700, 5)
 			return
 
 

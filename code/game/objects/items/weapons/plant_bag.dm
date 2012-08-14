@@ -118,6 +118,8 @@
 								 "<span class='notice'>You add \the [O] to \the [src].")
 
 	else if(istype(O, /obj/item/weapon/plantbag))
+		user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
+							 "<span class='notice'>You load \the [src] with \the [O].</span>")
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
 			if(contents.len >= max_n_of_items)
 				user << "<span class='notice'>\The [src] is full.</span>"
@@ -129,8 +131,6 @@
 					item_quants[G.name]++
 				else
 					item_quants[G.name] = 1
-				user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
-									 "<span class='notice'>You load \the [src] with \the [O].</span>")
 
 	else
 		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
