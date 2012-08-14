@@ -154,13 +154,13 @@
 				continue
 			if(sight_check && !isInSight(A, O))
 				continue
-			L += M
+			L |= M
 			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
 			if(sight_check && !isInSight(A, O))
 				continue
-			L += A
+			L |= A
 		L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
 	return L
 
@@ -180,10 +180,10 @@
 		if(ismob(A))
 			var/mob/M = A
 			if(M.client)
-				hear += M
+				hear |= M
 			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 		else if(istype(A, /obj/item/device/radio))
-			hear += A
+			hear |= A
 		hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
 
 	return hear
