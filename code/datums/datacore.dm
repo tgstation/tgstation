@@ -23,14 +23,12 @@
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
 	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
-		if(istype(H.wear_id))
-			var/obj/item/weapon/card/id/Card = H.wear_id
-			assignment = Card.assignment
+		if(H.mind.assigned_role)
+			assignment = H.mind.assigned_role
+		else if(H.job)
+			assignment = H.job
 		else
-			if(H.job)
-				assignment = H.job
-			else
-				assignment = "Unassigned"
+			assignment = "Unassigned"
 
 		var/id = add_zero(num2hex(rand(1, 1.6777215E7)), 6)	//this was the best they could come up with? A large random number? *sigh*
 

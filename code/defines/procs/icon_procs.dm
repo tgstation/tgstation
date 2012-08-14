@@ -415,14 +415,10 @@ as a single icon. Useful for when you want to manipulate an icon via the above a
 The _flatIcons list is a cache for generated icon files.
 */
 
-// Associative list of [md5 values = Icon] for determining if the icon already exists
-var/list/_flatIcons = list()
-
 proc
-	getFlatIcon(atom/A, dir, cache=1) // 1 = use cache, 2 = override cache, 0 = ignore cache
+	getFlatIcon(atom/A, dir) // 1 = use cache, 2 = override cache, 0 = ignore cache
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
-		var/hash = "" // Hash of overlay combination
 
 		// Add the atom's icon itself
 		if(A.icon)
@@ -434,18 +430,17 @@ proc
 		if(!dir) dir = A.dir
 
 		// Loop through the underlays, then overlays, sorting them into the layers list
-		var
-			list/process = A.underlays // Current list being processed
-			pSet=0 // Which list is being processed: 0 = underlays, 1 = overlays
-			curIndex=1 // index of 'current' in list being processed
-			current // Current overlay being sorted
-			currentLayer // Calculated layer that overlay appears on (special case for FLOAT_LAYER)
-			compare // The overlay 'add' is being compared against
-			cmpIndex // The index in the layers list of 'compare'
+		var/list/process = A.underlays // Current list being processed
+		var/pSet=0 // Which list is being processed: 0 = underlays, 1 = overlays
+		var/curIndex=1 // index of 'current' in list being processed
+		var/current // Current overlay being sorted
+		var/currentLayer // Calculated layer that overlay appears on (special case for FLOAT_LAYER)
+		var/compare // The overlay 'add' is being compared against
+		var/cmpIndex // The index in the layers list of 'compare'
 		while(TRUE)
 			if(curIndex<=process.len)
 				current = process[curIndex]
-
+				if(!current)	continue
 				currentLayer = current:layer
 				if(currentLayer<0) // Special case for FLY_LAYER
 					if(currentLayer <= -1000) return 0
@@ -474,28 +469,14 @@ proc
 				else // All done
 					break
 
-		if(cache!=0) // If cache is NOT disabled
-			// Create a hash value to represent this specific flattened icon
-			for(var/I in layers)
-				hash += "\ref[I:icon],[I:icon_state],[I:dir ? I:dir : dir],[I:pixel_x],[I:pixel_y];_;"
-			hash=md5(hash)
-
-			if(cache!=2) // If NOT overriding cache
-				// Check if the icon has already been generated
-				for(var/h in _flatIcons)
-					if(h == hash)
-						// Icon already exists, just return that one
-						return _flatIcons[h]
-
-		var
 			// We start with a blank canvas, otherwise some icon procs crash silently
-			icon/flat = icon('icons/effects/effects.dmi', "icon_state"="nothing") // Final flattened icon
-			icon/add // Icon of overlay being added
+		var/icon/flat = icon('icons/effects/effects.dmi', "icon_state"="nothing") // Final flattened icon
+		var/icon/add // Icon of overlay being added
 
 			// Current dimensions of flattened icon
-			flatX1=1;flatX2=flat.Width();flatY1=1;flatY2=flat.Height()
+		var/{flatX1=1;flatX2=flat.Width();flatY1=1;flatY2=flat.Height()}
 			// Dimensions of overlay being added
-			addX1;addX2;addY1;addY2
+		var/{addX1;addX2;addY1;addY2}
 
 		for(var/I in layers)
 
@@ -532,10 +513,6 @@ proc
 			// Blend the overlay into the flattened icon
 			flat.Blend(add,ICON_OVERLAY,I:pixel_x+2-flatX1,I:pixel_y+2-flatY1)
 
-		if(cache!=0) // If cache is NOT disabled
-			// Cache the generated icon in our list so we don't have to regenerate it
-			_flatIcons[hash] = flat
-
 		return flat
 
 	getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
@@ -557,14 +534,10 @@ proc
 	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
 		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
-			if(1)
-				I.pixel_x -= 1
-			if(2)
-				I.pixel_x += 1
-			if(3)
-				I.pixel_y -= 1
-			if(4)
-				I.pixel_y += 1
+			if(1)	I.pixel_x--
+			if(2)	I.pixel_x++
+			if(3)	I.pixel_y--
+			if(4)	I.pixel_y++
 		overlays += I//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
