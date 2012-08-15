@@ -116,6 +116,7 @@
 	using.icon = 'icons/mob/screen1_alien.dmi'
 	using.icon_state = "equip"
 	using.screen_loc = ui_alien_oclothing
+	using.slot_id = slot_wear_suit
 	using.layer = 19
 	src.adding += using
 
@@ -129,6 +130,7 @@
 	using.screen_loc = ui_rhand
 	using.layer = 19
 	src.r_hand_hud_object = using
+	using.slot_id = slot_r_hand
 	src.adding += using
 
 	using = new src.h_type( src )
@@ -140,6 +142,7 @@
 		using.icon_state = "hand_active"
 	using.screen_loc = ui_lhand
 	using.layer = 19
+	using.slot_id = slot_l_hand
 	src.l_hand_hud_object = using
 	src.adding += using
 
@@ -149,6 +152,7 @@
 	using.icon = 'icons/mob/screen1_alien.dmi'
 	using.icon_state = "pocket"
 	using.screen_loc = ui_storage1
+	using.slot_id = slot_l_store
 	using.layer = 19
 	src.adding += using
 
@@ -158,6 +162,7 @@
 	using.icon = 'icons/mob/screen1_alien.dmi'
 	using.icon_state = "pocket"
 	using.screen_loc = ui_storage2
+	using.slot_id = slot_r_store
 	using.layer = 19
 	src.adding += using
 
@@ -167,6 +172,7 @@
 	using.icon = 'icons/mob/screen1_alien.dmi'
 	using.icon_state = "hair"
 	using.screen_loc = ui_alien_head
+	using.slot_id = slot_head
 	using.layer = 19
 	src.adding += using
 //end of equippable shit

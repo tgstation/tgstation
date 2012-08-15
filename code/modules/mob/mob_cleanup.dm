@@ -108,8 +108,8 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 					Cl = H.wear_suit
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Suit pass [passed]"
-				if(passed && isobj(H.slot_w_uniform))
-					Cl = H.slot_w_uniform
+				if(passed && isobj(slot_w_uniform))
+					Cl = slot_w_uniform
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Uniform pass [passed]"
 			if(3)

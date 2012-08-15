@@ -485,20 +485,20 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		del(gloves)
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	equip_if_possible(R, slot_ears)
+	equip_to_slot_or_del(R, slot_ears)
 	if(gender==FEMALE)
-		equip_if_possible(new /obj/item/clothing/under/color/blackf(src), slot_w_uniform)
+		equip_to_slot_or_del(new /obj/item/clothing/under/color/blackf(src), slot_w_uniform)
 	else
-		equip_if_possible(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
-	equip_if_possible(new /obj/item/clothing/shoes/space_ninja(src), slot_shoes)
-	equip_if_possible(new /obj/item/clothing/suit/space/space_ninja(src), slot_wear_suit)
-	equip_if_possible(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
-	equip_if_possible(new /obj/item/clothing/head/helmet/space/space_ninja(src), slot_head)
-	equip_if_possible(new /obj/item/clothing/mask/gas/voice/space_ninja(src), slot_wear_mask)
-	equip_if_possible(new /obj/item/device/flashlight(src), slot_belt)
-	equip_if_possible(new /obj/item/weapon/plastique(src), slot_r_store)
-	equip_if_possible(new /obj/item/weapon/plastique(src), slot_l_store)
-	equip_if_possible(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
+		equip_to_slot_or_del(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/space_ninja(src), slot_shoes)
+	equip_to_slot_or_del(new /obj/item/clothing/suit/space/space_ninja(src), slot_wear_suit)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
+	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/space_ninja(src), slot_head)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/voice/space_ninja(src), slot_wear_mask)
+	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_belt)
+	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_r_store)
+	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
+	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
 	resistances += "alien_embryo"
 	return 1
 

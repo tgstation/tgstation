@@ -19,7 +19,7 @@
 		l_hand = null
 		update_inv_l_hand(0)
 
-/mob/living/carbon/alien/humanoid/db_click(text, t1)
+/mob/living/carbon/alien/humanoid/attack_ui(slot_id)
 	var/obj/item/W = get_active_hand()
 	if(W)
 		if(!istype(W))	return

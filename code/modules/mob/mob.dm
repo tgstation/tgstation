@@ -29,22 +29,6 @@
 /atom/proc/relaymove()
 	return
 
-/obj/effect/equip_e/process()
-	return
-
-/obj/effect/equip_e/proc/done()
-	return
-
-/obj/effect/equip_e/New()
-	if (!ticker)
-		del(src)
-		return
-	spawn(100)
-		del(src)
-		return
-	..()
-	return
-
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 	if(!client)	return
 	if (type)
@@ -111,34 +95,68 @@
 		return 1
 	return
 
-//Used by monkeys, *chimpers* //TODO: eliminate this convoluted proc it's incredibly shitty. ~Carn
-/mob/proc/db_click(text, t1)
+//This proc is called whenever someone clicks an inventory ui slot.
+/mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
-	if(W)
-		if(!istype(W))	return
-		switch(text)
-			if("mask")
-				if(wear_mask)
-					return
-				if( !(W.slot_flags & SLOT_MASK) )
-					return
-				u_equip(W)
-				wear_mask = W
-				W.equipped(src, text)
-				update_inv_wear_mask()
-			if("back")
-				if(back)
-					return
-				if( !(W.slot_flags & SLOT_BACK) )
-					return
-				if( istype(W,/obj/item/weapon/twohanded) && W:wielded )	//TODO: Carn
-					usr << "<span class='warning'>Unwield the [initial(W.name)] first!</span>"
-					return
-				u_equip(W)
-				back = W
-				W.equipped(src, text)
-				update_inv_back()
+
+	if(istype(W))
+		equip_to_slot_if_possible(W, slot)
+
+//This is a SAFE proc. Use this instead of equip_to_splot()!
+//set del_on_fail to have it delete W if it fails to equip
+//set disable_warning to disable the 'you are unable to equip that' warning.
+//unset redraw_mob to prevent the mob from being redrawn at the end.
+/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+	if(!istype(W)) return 0
+
+	if(!W.mob_can_equip(src, slot, disable_warning))
+		if(del_on_fail)
+			del(W)
+		else
+			if(!disable_warning)
+				src << "\red You are unable to equip that." //Only print if del_on_fail is false
+		return 0
+
+	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+	return 1
+
+//This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
+//In most cases you will want to use equip_to_slot_if_possible()
+/mob/proc/equip_to_slot(obj/item/W as obj, slot)
 	return
+
+//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
+/mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
+	equip_to_slot_if_possible(W, slot, 1, 1, 0)
+
+//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
+var/list/slot_equipment_priority = list( \
+		slot_back,\
+		slot_wear_id,\
+		slot_w_uniform,\
+		slot_wear_suit,\
+		slot_wear_mask,\
+		slot_head,\
+		slot_shoes,\
+		slot_gloves,\
+		slot_ears,\
+		slot_glasses,\
+		slot_belt,\
+		slot_s_store,\
+		slot_l_store,\
+		slot_r_store\
+	)
+
+//puts the item "W" into an appropriate slot in a human's inventory
+//returns 0 if it cannot, 1 if successful
+/mob/proc/equip_to_appropriate_slot(obj/item/W)
+	if(!istype(W)) return 0
+
+	for(var/slot in slot_equipment_priority)
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //del_on_fail = 0; disable_warning = 0; redraw_mob = 1
+			return 1
+
+	return 0
 
 /mob/proc/reset_view(atom/A)
 	if (client)

@@ -130,7 +130,7 @@
 
 
 //can't equip anything
-/mob/living/carbon/alien/larva/db_click(text, t1)
+/mob/living/carbon/alien/larva/attack_ui(slot_id)
 	return
 
 /mob/living/carbon/alien/larva/meteorhit(O as obj)

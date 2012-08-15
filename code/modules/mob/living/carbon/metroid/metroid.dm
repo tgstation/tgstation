@@ -202,7 +202,7 @@
 	return
 
 
-/mob/living/carbon/metroid/db_click(text, t1)
+/mob/living/carbon/metroid/attack_ui(slot)
 	return
 
 /mob/living/carbon/metroid/meteorhit(O as obj)

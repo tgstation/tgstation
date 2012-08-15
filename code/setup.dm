@@ -97,6 +97,7 @@
 var/MAX_EXPLOSION_RANGE = 14
 //#define MAX_EXPLOSION_RANGE		14					// Defaults to 12 (was 8) -- TLE
 
+#define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
 #define NORMPIPERATE 30					//pipe-insulation rate divisor
 #define HEATPIPERATE 8					//heat-exch pipe insulation
@@ -172,9 +173,30 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
 #define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
 #define HIDEMASK	1	//APPLIES ONLY TO HELMETS/MASKS!!
-#define HIDEEARS	2	//APPLIES ONLY TO HELMETS/MASKS!!
-#define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!!
+#define HIDEEARS	2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
+#define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
 #define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
+
+//slots
+#define slot_back 1
+#define slot_wear_mask 2
+#define slot_handcuffed 3
+#define slot_l_hand 4
+#define slot_r_hand 5
+#define slot_belt 6
+#define slot_wear_id 7
+#define slot_ears 8
+#define slot_glasses 9
+#define slot_gloves 10
+#define slot_head 11
+#define slot_shoes 12
+#define slot_wear_suit 13
+#define slot_w_uniform 14
+#define slot_l_store 15
+#define slot_r_store 16
+#define slot_s_store 17
+#define slot_in_backpack 18
+#define slot_legcuffed 19
 
 //Cant seem to find a mob bitflags area other than the powers one
 

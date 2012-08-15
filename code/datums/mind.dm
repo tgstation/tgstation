@@ -589,11 +589,11 @@ datum/mind
 						var/obj/item/weapon/tome/T = new(H)
 
 						var/list/slots = list (
-							"backpack" = H.slot_in_backpack,
-							"left pocket" = H.slot_l_store,
-							"right pocket" = H.slot_r_store,
-							"left hand" = H.slot_l_hand,
-							"right hand" = H.slot_r_hand,
+							"backpack" = slot_in_backpack,
+							"left pocket" = slot_l_store,
+							"right pocket" = slot_r_store,
+							"left hand" = slot_l_hand,
+							"right hand" = slot_r_hand,
 						)
 						var/where = H.equip_in_one_of_slots(T, slots)
 						if (!where)
@@ -1050,11 +1050,11 @@ datum/mind
 			var/obj/item/weapon/tome/T = new(H)
 
 			var/list/slots = list (
-				"backpack" = H.slot_in_backpack,
-				"left pocket" = H.slot_l_store,
-				"right pocket" = H.slot_r_store,
-				"left hand" = H.slot_l_hand,
-				"right hand" = H.slot_r_hand,
+				"backpack" = slot_in_backpack,
+				"left pocket" = slot_l_store,
+				"right pocket" = slot_r_store,
+				"left hand" = slot_l_hand,
+				"right hand" = slot_r_hand,
 			)
 			var/where = H.equip_in_one_of_slots(T, slots)
 			if (!where)

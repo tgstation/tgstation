@@ -833,8 +833,8 @@ var/global/BSACooldown = 0
 				M.loc = pick(prisonwarp)
 				if(istype(M, /mob/living/carbon/human))
 					var/mob/living/carbon/human/prisoner = M
-					prisoner.equip_if_possible(new /obj/item/clothing/under/color/orange(prisoner), prisoner.slot_w_uniform)
-					prisoner.equip_if_possible(new /obj/item/clothing/shoes/orange(prisoner), prisoner.slot_shoes)
+					prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), slot_w_uniform)
+					prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), slot_shoes)
 				spawn(50)
 					M << "\red You have been sent to the prison station!"
 				log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
@@ -984,8 +984,8 @@ var/global/BSACooldown = 0
 							W.layer = initial(W.layer)
 				if(istype(M, /mob/living/carbon/human))
 					var/mob/living/carbon/human/observer = M
-					observer.equip_if_possible(new /obj/item/clothing/under/suit_jacket(observer), observer.slot_w_uniform)
-					observer.equip_if_possible(new /obj/item/clothing/shoes/black(observer), observer.slot_shoes)
+					observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
+					observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(observer), slot_shoes)
 				M.Paralyse(5)
 				sleep(5)
 				M.loc = pick(tdomeobserve)
@@ -1220,9 +1220,9 @@ var/global/BSACooldown = 0
 		var/mob/M = locate(href_list["adminspawncookie"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.equip_if_possible( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), H.slot_l_hand )
+			H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_l_hand )
 			if(!(istype(H.l_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
-				H.equip_if_possible( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), H.slot_r_hand )
+				H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_r_hand )
 				if(!(istype(H.r_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
 					log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 					message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
@@ -1741,8 +1741,8 @@ var/global/BSACooldown = 0
 									W.layer = initial(W.layer)
 							//teleport person to cell
 							H.loc = pick(prisonwarp)
-							H.equip_if_possible(new /obj/item/clothing/under/color/orange(H), H.slot_w_uniform)
-							H.equip_if_possible(new /obj/item/clothing/shoes/orange(H), H.slot_shoes)
+							H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), slot_w_uniform)
+							H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), slot_shoes)
 						else
 							//teleport security person
 							H.loc = pick(prisonsecuritywarp)

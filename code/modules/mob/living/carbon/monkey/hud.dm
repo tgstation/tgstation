@@ -171,6 +171,7 @@
 	using.icon_state = "hand1"
 	using.screen_loc = ui_swaphand1
 	using.layer = 19
+	using.slot_id = slot_l_hand
 	src.adding += using
 
 	using = new src.h_type( src )
@@ -179,6 +180,7 @@
 	using.icon = ui_style
 	using.icon_state = "hand2"
 	using.screen_loc = ui_swaphand2
+	using.slot_id = slot_r_hand
 	using.layer = 19
 	src.adding += using
 /*
@@ -199,6 +201,7 @@
 	using.icon = ui_style
 	using.icon_state = "equip"
 	using.screen_loc = ui_monkey_mask
+	using.slot_id = slot_wear_mask
 	using.layer = 19
 	src.adding += using
 
@@ -208,6 +211,7 @@
 	using.icon = ui_style
 	using.icon_state = "equip"
 	using.screen_loc = ui_back
+	using.slot_id = slot_back
 	using.layer = 19
 	src.adding += using
 /*

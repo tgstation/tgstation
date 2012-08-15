@@ -137,11 +137,11 @@
 	var/obj/item/device/flash/T = new(mob)
 
 	var/list/slots = list (
-		"backpack" = mob.slot_in_backpack,
-		"left pocket" = mob.slot_l_store,
-		"right pocket" = mob.slot_r_store,
-		"left hand" = mob.slot_l_hand,
-		"right hand" = mob.slot_r_hand,
+		"backpack" = slot_in_backpack,
+		"left pocket" = slot_l_store,
+		"right pocket" = slot_r_store,
+		"left hand" = slot_l_hand,
+		"right hand" = slot_r_hand,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	if (!where)

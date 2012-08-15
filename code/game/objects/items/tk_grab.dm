@@ -22,7 +22,7 @@
 
 	//stops TK grabs being equipped anywhere but into hands
 	equipped(var/mob/user, var/slot)
-		if( (slot=="l_hand") || (slot=="r_hand") )	return
+		if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
 		del(src)
 		return
 
@@ -115,7 +115,7 @@
 		return 1
 */
 
-//equip_if_possible(obj/item/W, slot, del_on_fail = 1)
+//equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)
 /*
 		if(istype(user, /mob/living/carbon))
 			if(user:mutations & TK && get_dist(source, user) <= 7)

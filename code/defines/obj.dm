@@ -90,22 +90,6 @@
 	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/locked[] = list()
 
-/obj/effect/equip_e
-	name = "equip e"
-	var/mob/source = null
-	var/s_loc = null
-	var/t_loc = null
-	var/obj/item/item = null
-	var/place = null
-
-/obj/effect/equip_e/human
-	name = "human"
-	var/mob/living/carbon/human/target = null
-
-/obj/effect/equip_e/monkey
-	name = "monkey"
-	var/mob/living/carbon/monkey/target = null
-
 /obj/effect/sign/securearea
 	desc = "A warning sign which reads 'SECURE AREA'. This obviously applies to a nun-Clown."
 	name = "SECURE AREA"
@@ -344,6 +328,181 @@
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
+
+//the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
+//If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
+//Set disable_warning to 1 if you wish it to not give you outputs.
+/obj/item/proc/mob_can_equip(M as mob, slot, disable_warning = 0)
+	if(!slot) return 0
+	if(!M) return 0
+
+	if(ishuman(M))
+		//START HUMAN
+		var/mob/living/carbon/human/H = M
+
+		if(FAT in H.mutations)
+			if(!(flags & ONESIZEFITSALL))
+				if(!disable_warning)
+					H << "\red You're too fat to wear the [name]."
+				return 0
+
+		switch(slot)
+			if(slot_l_hand)
+				if(H.l_hand)
+					return 0
+				return 1
+			if(slot_r_hand)
+				if(H.r_hand)
+					return 0
+				return 1
+			if(slot_wear_mask)
+				if(H.wear_mask)
+					return 0
+				if( !(slot_flags & SLOT_MASK) )
+					return 0
+				return 1
+			if(slot_back)
+				if(H.back)
+					return 0
+				if( !(slot_flags & SLOT_BACK) )
+					return 0
+				return 1
+			if(slot_wear_suit)
+				if(H.wear_suit)
+					return 0
+				if( !(slot_flags & SLOT_OCLOTHING) )
+					return 0
+				return 1
+			if(slot_gloves)
+				if(H.gloves)
+					return 0
+				if( !(slot_flags & SLOT_GLOVES) )
+					return 0
+				return 1
+			if(slot_shoes)
+				if(H.shoes)
+					return 0
+				if( !(slot_flags & SLOT_FEET) )
+					return 0
+				return 1
+			if(slot_belt)
+				if(H.belt)
+					return 0
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if( !(slot_flags & SLOT_BELT) )
+					return
+				return 1
+			if(slot_glasses)
+				if(H.glasses)
+					return 0
+				if( !(slot_flags & SLOT_EYES) )
+					return 0
+				return 1
+			if(slot_head)
+				if(H.head)
+					return 0
+				if( !(slot_flags & SLOT_HEAD) )
+					return 0
+				return 1
+			if(slot_ears)
+				if(H.ears)
+					return 0
+				if( !(slot_flags & SLOT_EARS) )
+					return 0
+				return 1
+			if(slot_w_uniform)
+				if(H.w_uniform)
+					return 0
+				if( !(slot_flags & SLOT_ICLOTHING) )
+					return 0
+				return 1
+			if(slot_wear_id)
+				if(H.wear_id)
+					return 0
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if( !(slot_flags & SLOT_ID) )
+					return 0
+				return 1
+			if(slot_l_store)
+				if(H.l_store)
+					return 0
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if(slot_flags & SLOT_DENYPOCKET)
+					return
+				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+					return 1
+			if(slot_r_store)
+				if(H.r_store)
+					return 0
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if(slot_flags & SLOT_DENYPOCKET)
+					return 0
+				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+					return 1
+				return 0
+			if(slot_s_store)
+				if(H.s_store)
+					return 0
+				if(!H.wear_suit)
+					if(!disable_warning)
+						H << "\red You need a suit before you can attach this [name]."
+					return 0
+				if(!H.wear_suit.allowed)
+					if(!disable_warning)
+						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
+					return 0
+				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
+					return 1
+				return 0
+			if(slot_in_backpack)
+				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
+					var/obj/item/weapon/storage/backpack/B = H.back
+					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
+						return 1
+				return 0
+		return 0 //Unsupported slot
+		//END HUMAN
+
+	else if(ismonkey(M))
+		//START MONKEY
+		var/mob/living/carbon/monkey/MO = M
+		switch(slot)
+			if(slot_l_hand)
+				if(MO.l_hand)
+					return 0
+				return 1
+			if(slot_r_hand)
+				if(MO.r_hand)
+					return 0
+				return 1
+			if(slot_wear_mask)
+				if(MO.wear_mask)
+					return 0
+				if( !(slot_flags & SLOT_MASK) )
+					return 0
+				return 1
+			if(slot_back)
+				if(MO.back)
+					return 0
+				if( !(slot_flags & SLOT_BACK) )
+					return 0
+				return 1
+		return 0 //Unsupported slot
+
+		//END MONKEY
+
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)

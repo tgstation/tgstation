@@ -90,6 +90,15 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
 
+//Suit
+/obj/item/clothing/suit
+	icon = 'icons/obj/clothing/suits.dmi'
+	name = "suit"
+	var/fire_resist = T0C+100
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	slot_flags = SLOT_OCLOTHING
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
@@ -103,7 +112,6 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-
 
 /obj/item/clothing/suit/space
 	name = "Space suit"
@@ -121,17 +129,6 @@ BLIND     // can't see anything
 	slowdown = 3
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
-
-//Suit
-/obj/item/clothing/suit
-	icon = 'icons/obj/clothing/suits.dmi'
-	name = "suit"
-	var/fire_resist = T0C+100
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	slot_flags = SLOT_OCLOTHING
 
 
 //Under clothing

@@ -17,14 +17,11 @@
 
 // called after an item is placed in an equipment slot
 // user is mob that equipped it
-// slot is text of slot type e.g. "head"
+// slot uses the slot_X defines found in setup.dm
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	return
-//
-// ***TODO: implement unget_active_hand()
-//
 
 /obj/item/proc/afterattack()
 

@@ -23,6 +23,14 @@
 	name = "[initial(name)] (Wielded)"
 	update_icon()
 
+/obj/item/weapon/twohanded/mob_can_equip(M as mob, slot)
+	//Cannot equip wielded items.
+	if(wielded)
+		M << "<span class='warning'>Unwield the [initial(name)] first!</span>"
+		return 0
+
+	return ..()
+
 /obj/item/weapon/twohanded/dropped(mob/user as mob)
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)

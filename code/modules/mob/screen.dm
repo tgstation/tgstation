@@ -5,6 +5,7 @@
 	unacidable = 1
 	var/id = 0.0
 	var/obj/master
+	var/slot_id
 
 /obj/screen/close
 	name = "close"
@@ -537,12 +538,12 @@
 			DblClick()
 	return
 
-/obj/screen/attack_hand(mob/user as mob, using)
-	user.db_click(name, using)
+/obj/screen/attack_hand(mob/user as mob)
+	user.attack_ui(slot_id)
 	return
 
-/obj/screen/attack_paw(mob/user as mob, using)
-	user.db_click(name, using)
+/obj/screen/attack_paw(mob/user as mob)
+	user.attack_ui(slot_id)
 	return
 
 

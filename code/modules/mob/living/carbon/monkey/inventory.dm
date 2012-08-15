@@ -185,3 +185,48 @@
 	target.regenerate_icons()
 	del(src)
 	return
+
+
+
+//This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
+//set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
+/mob/living/carbon/monkey/equip_to_slot(obj/item/W as obj, slot, redraw_mob = 1)
+	if(!slot) return
+	if(!istype(W)) return
+
+	if(W == get_active_hand())
+		u_equip(W)
+
+	switch(slot)
+		if(slot_back)
+			src.back = W
+			W.equipped(src, slot)
+			update_inv_back(redraw_mob)
+		if(slot_wear_mask)
+			src.wear_mask = W
+			W.equipped(src, slot)
+			update_inv_wear_mask(redraw_mob)
+		if(slot_handcuffed)
+			src.handcuffed = W
+			update_inv_handcuffed(redraw_mob)
+		if(slot_legcuffed)
+			src.legcuffed = W
+			W.equipped(src, slot)
+			update_inv_legcuffed(redraw_mob)
+		if(slot_l_hand)
+			src.l_hand = W
+			W.equipped(src, slot)
+			update_inv_l_hand(redraw_mob)
+		if(slot_r_hand)
+			src.r_hand = W
+			W.equipped(src, slot)
+			update_inv_r_hand(redraw_mob)
+		if(slot_in_backpack)
+			W.loc = src.back
+		else
+			usr << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
+			return
+
+	W.layer = 20
+
+	return
