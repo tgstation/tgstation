@@ -317,7 +317,7 @@
 	set category = "Changeling"
 	set name = "Regenerative Stasis (20)"
 
-	var/datum/changeling/changeling = changeling_power(20,0,100)
+	var/datum/changeling/changeling = changeling_power(20,0,100,UNCONSCIOUS)
 	if(!changeling)	return
 
 	changeling.chem_charges -= 20
@@ -331,7 +331,7 @@
 	C.emote("gasp")
 	C.tod = worldtime2text()
 
-	spawn(1200)
+	spawn(rand(800,2000))
 		if(C.stat == DEAD)
 			dead_mob_list -= C
 			living_mob_list += C
