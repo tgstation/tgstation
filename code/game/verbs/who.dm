@@ -26,10 +26,32 @@ proc/get_all_admin_clients()
 	var/list/peeps = list()
 
 	for (var/client/C in client_list)
+		var/entry = ""
 		if (C.stealth && !usr.client.holder)
-			peeps += "\t[C.fakekey]"
+			entry += "\t[C.fakekey]"
 		else
-			peeps += "\t[C.key][C.stealth ? " <i>(as [C.fakekey])</i>" : ""]"
+			entry += "\t[C.key][C.stealth ? " <i>(as [C.fakekey])</i>" : ""]"
+
+		if(usr.client.holder)
+			var/mob/M = C.mob
+			entry += " - Playing as [M.real_name]"
+			switch(M.stat)
+				if(UNCONSCIOUS)
+					entry += " - <font color='darkgray'><b>Unconscious</b></font>"
+				if(DEAD)
+					if(isobserver(M))
+						var/mob/dead/observer/O = M
+						if(O.started_as_observer)
+							entry += " - <font color='gray'>Observing</font>"
+						else
+							entry += " - <font color='black'><b>DEAD</b></font>"
+					else
+						entry += " - <font color='black'><b>DEAD</b></font>"
+			if(is_special_character(C.mob))
+				entry += " - <b><font color='red'>Antagonist</font></b>"
+			entry += " (<A HREF='?src=\ref[src.client.holder];adminmoreinfo=\ref[M]'>?</A>)"
+
+		peeps += entry
 
 	peeps = sortList(peeps)
 

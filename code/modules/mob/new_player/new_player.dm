@@ -130,6 +130,7 @@
 				spawning = 1
 				src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
+				observer.started_as_observer = 1
 				close_spawn_windows()
 				var/obj/O = locate("landmark*Observer-Start")
 				src << "\blue Now teleporting."

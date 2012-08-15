@@ -50,31 +50,6 @@
 /mob/proc/death(gibbed)
 	timeofdeath = world.time
 
-	var/cancel = 0
-	for(var/mob/M in player_list)
-		if(M.stat != DEAD)
-			cancel = 1
-			break
-	if(!cancel)
-		world << "<B>Everyone is dead! Resetting in 30 seconds!</B>"
-
-		spawn(300)
-			for(var/mob/M in player_list)
-				if(M.stat != DEAD)
-					world << "Aborting world restart!"
-					return
-
-			feedback_set_details("end_error","no live players")
-
-			if(blackbox)
-				blackbox.save_all_data_to_sql()
-
-			sleep(50)
-
-			log_game("Rebooting because of no live players")
-			world.Reboot()
-			return
-
 	living_mob_list -= src
 	dead_mob_list += src
 	return ..(gibbed)

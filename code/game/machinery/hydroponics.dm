@@ -218,9 +218,8 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	src.harvest = 0
 	src.weedlevel = 0 // Reset
 	src.pestlevel = 0 // Reset
-	spawn(5) // Wait a while
 	src.updateicon()
-	src.visible_message("\red[src] has been overtaken by \blue [src.myseed.plantname]!")
+	src.visible_message("\blue [src] has been overtaken by [src.myseed.plantname].")
 
 	return
 
