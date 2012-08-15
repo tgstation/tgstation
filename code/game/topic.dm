@@ -36,8 +36,7 @@
 			n++
 		s["players"] = n
 
-		// 7 + s["players"] + 1 = index of s["revinfo"]
-		s["revision"] = revdata.revision
+		if(revdata)	s["revision"] = revdata.revision
 		s["admins"] = admins
 
 		return list2params(s)

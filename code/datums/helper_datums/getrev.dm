@@ -25,7 +25,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 
 		var/text = file2text(file(filename))
 		if(!text)
-			diary << "Unable to get [filename] contents, aborting"
+			world.log << "Unable to get [filename] contents, aborting"
 			return abort()
 
 		var/list/CL = tg_text2list(text, "\n")
