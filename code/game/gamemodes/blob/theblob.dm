@@ -3,6 +3,7 @@
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob"
+	luminosity = 3
 	desc = "Some blob creature thingy"
 	density = 1
 	opacity = 0
