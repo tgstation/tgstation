@@ -125,5 +125,5 @@
 	rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 
 	for (var/mob/M in dead_mob_list)
-		if(!istype(M,/mob/new_player))
+		if(!istype(M,/mob/new_player) && !(istype(M,/mob/living/carbon/brain)))//No meta-evesdropping
 			M.show_message(rendered, 2)
