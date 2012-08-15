@@ -979,7 +979,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 	return 0
 
 /obj/item/weapon/scalpel/proc/core_surgery(mob/living/carbon/metroid/M as mob, mob/living/user as mob)
-	if (istype(M) || M.stat != 2)
+	if (!istype(M) || M.stat != 2)
 		return 0
 	switch(M:brain_op_stage)
 		if(0.0)
@@ -1239,7 +1239,7 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 			M.cores--
 			M << "\red [user] begins to remove one of your cores with [src]! ([M.cores] cores remaining)"
 			user << "\red You cut one of [M]'s cores out with [src]! ([M.cores] cores remaining)"
-			if(!do_after(user, rand(20,80)))
+			if(do_after(user, rand(20,80)))
 				new/obj/item/metroid_core(M.loc)
 				if(M.cores <= 0)
 					M.icon_state = "baby metroid dead-nocore"

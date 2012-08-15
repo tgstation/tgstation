@@ -88,7 +88,7 @@ turf
 					for(var/direction in cardinal)
 						var/turf/simulated/floor/target = get_step(src,direction)
 						if(istype(target))
-							air_master.tiles_to_update.Add(target)
+							air_master.tiles_to_update |= target
 
 		Del()
 			if(active_hotspot)
@@ -145,6 +145,8 @@ turf
 				for(var/direction in DoorDirections) //Check door directions first.
 					if(air_check_directions&direction)
 						var/turf/simulated/T = get_step(src,direction)
+						if(!istype(T))
+							continue
 						if(T.zone)
 							T.zone.AddTurf(src)
 							break
@@ -152,6 +154,8 @@ turf
 					for(var/direction in CounterDoorDirections) //Check the others second.
 						if(air_check_directions&direction)
 							var/turf/simulated/T = get_step(src,direction)
+							if(!istype(T))
+								continue
 							if(T.zone)
 								T.zone.AddTurf(src)
 								break
@@ -167,25 +171,26 @@ turf
 
 			for(var/direction in cardinal)
 				var/turf/T = get_step(src,direction)
-				var/list/zone/adjacent_zones = list()
+				if(!istype(T))
+					continue
+//				var/list/zone/adjacent_zones = list()
 
 				if(air_check_directions&direction) //I can connect air in this direction
 					if(!CanPass(null, T, 0, 0)) //If either block air, we must look to see if the adjacent turfs need rebuilt.
 						if(T.zone && !T.zone.rebuild)
-							for(var/direction2 in cardinal - direction) //Check all other directions for air that might be connected.
-								var/turf/simulated/NT = get_step(src, direction2)
-								if(NT && NT.zone && NT.zone == T.zone && !NT.HasDoor())
-									T.zone.rebuild = 1
+							var/turf/simulated/NT = get_step(src, reverse_direction(direction))
+							if(istype(NT) && NT.zone && NT.zone == T.zone)
+								T.zone.rebuild = 1
 
 					else
 						ZConnect(src,T)
 
 				//If I cannot connect to air or whatever, and there is a zone there, I am probably not able to pass air.  Consider zone rebuilding
-				else if(T.zone && !T.zone.rebuild)
-					if(T.zone in adjacent_zones) //Found it more than 1 direction, rebuild
-						T.zone.rebuild = 1
-					else //Add it for later checks.
-						adjacent_zones += T.zone
+//				else if(T.zone && !T.zone.rebuild)
+//					if(T.zone in adjacent_zones) //Found it more than 1 direction, rebuild
+//						T.zone.rebuild = 1
+//					else //Add it for later checks.
+//						adjacent_zones += T.zone
 
 			if(air_check_directions)
 				processing = 1
@@ -206,12 +211,12 @@ turf
 		else
 			return 1
 
-turf/proc/ZCanPass(turf/T, var/include_space = 0)
+turf/proc/ZCanPass(turf/simulated/T, var/include_space = 0)
 	//Fairly standard pass checks for turfs, objects and directional windows. Also stops at the edge of space.
 	if(!istype(T))
 		return 0
 
-	if(istype(T,/turf/space) && !include_space)
+	if(!istype(T) && !include_space)
 		return 0
 	else
 		if(T.blocks_air||blocks_air)
