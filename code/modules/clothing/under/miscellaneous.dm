@@ -15,7 +15,6 @@
 /obj/item/clothing/under/scratch
 	name = "white suit"
 	desc = "A white suit, suitable for an excellent host"
-	flags = FPRINT | TABLEPASS
 	icon_state = "scratch"
 	item_state = "scratch"
 	color = "scratch"
@@ -25,6 +24,7 @@
 	name = "amish suit"
 	icon_state = "sl_suit"
 	color = "sl_suit"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -32,6 +32,7 @@
 	icon_state = "waiter"
 	item_state = "waiter"
 	color = "waiter"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -101,6 +102,7 @@
 	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
 	icon_state = "owl"
 	color = "owl"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/johnny
 	name = "johnny~~ jumpsuit"

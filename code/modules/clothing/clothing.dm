@@ -142,7 +142,7 @@ BLIND     // can't see anything
 	protective_temperature = T0C + 50
 	heat_transfer_coefficient = 0.30
 	permeability_coefficient = 0.90
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
