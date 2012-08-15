@@ -3,6 +3,7 @@
 //NOTE: hidden packs only show up when the computer has been hacked.
 //ANOTER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
+//NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
 /datum/supply_packs/specialops
 	name = "Special Ops supplies"
@@ -31,7 +32,7 @@
 					"/obj/item/weapon/reagent_containers/food/snacks/grown/banana",
 					"/obj/item/weapon/reagent_containers/food/snacks/grown/banana",
 					"/obj/item/weapon/reagent_containers/food/snacks/grown/banana")
-	cost = 5
+	cost = 10
 	containertype = "/obj/structure/closet/crate/freezer"
 	containername = "Food crate"
 
@@ -142,7 +143,7 @@
 	contains = list("/obj/item/weapon/storage/lightbox/mixed",
 					"/obj/item/weapon/storage/lightbox/mixed",
 					"/obj/item/weapon/storage/lightbox/mixed")
-	cost = 5
+	cost = 10
 	containertype = "/obj/structure/closet/crate"
 	containername = "Replacement lights"
 
