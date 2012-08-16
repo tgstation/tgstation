@@ -53,15 +53,13 @@ obj/machinery/hydroponics/process()
 
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
-			src.waterlevel -= rand(1,6)
+			src.waterlevel = max(src.waterlevel - rand(1,6), 0)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
 			if(src.waterlevel <= 10 && src.myseed.plant_type != 2)
 				src.health -= rand(0,1)
 				if(src.waterlevel <= 0)
 					src.health -= rand(0,2)
-					if(src.waterlevel < 0) //Dont let it drop below 0
-						src.waterlevel = 0
 
 			// Sufficient water level and nutrient level = plant healthy
 			else if(src.waterlevel > 10 && src.nutrilevel > 0)
