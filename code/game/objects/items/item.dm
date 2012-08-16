@@ -106,12 +106,12 @@
 	src.throwing = 0
 	if (src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(istype(src, /obj/item/clothing) && !src:canremove)
+		if(!src.canremove)
 			return
 		else
 			user.u_equip(src)
 	else
-		if(istype(src.loc, /mob/living))
+		if(isliving(src.loc))
 			return
 		src.pickup(user)
 		user.lastDblClick = world.time + 2

@@ -817,7 +817,7 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				if(!..())	return
-				if(isrobot(M) || isAI(M)) return // Mutagen doesn't do anything to robutts!
+				if(!M.dna) return //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 				src = null
 				if((method==TOUCH && prob(33)) || method==INGEST)
 					randmuti(M)
@@ -829,7 +829,7 @@ datum
 					updateappearance(M,M.dna.uni_identity)
 				return
 			on_mob_life(var/mob/living/M as mob)
-				if(isrobot(M) || isAI(M)) return // Mutagen doesn't do anything to robutts!
+				if(!M.dna) return //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 				if(!M) M = holder.my_atom
 				M.apply_effect(10,IRRADIATE,0)
 				..()
