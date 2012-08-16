@@ -462,6 +462,14 @@
 	//////////
 	//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
 	//////////
+
+/mob/proc/sting_can_reach(mob/M as mob, sting_range = 1)
+	if(M.loc == src.loc) return 1 //target and source are in the same thing
+	if(!isturf(src.loc) || !isturf(M.loc)) return 0 //One is inside, the other is outside something.
+	if(AStar(src.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, sting_range)) //If a path exists, good!
+		return 1
+	return 0
+
 //Handles the general sting code to reduce on copypasta (seeming as somebody decided to make SO MANY dumb abilities)
 /mob/proc/changeling_sting(var/required_chems=0, var/verb_path)
 	var/datum/changeling/changeling = changeling_power(required_chems)
@@ -472,9 +480,10 @@
 		victims += C
 	var/mob/living/carbon/T = input(usr, "Who will we sting?") as null|anything in victims
 
-	if(!T)										return
-	if(!(T in view(changeling.sting_range)))	return
-	if(!changeling_power(required_chems))		return
+	if(!T) return
+	if(!(T in view(changeling.sting_range))) return
+	if(!sting_can_reach(T, changeling.sting_range)) return
+	if(!changeling_power(required_chems)) return
 
 	changeling.chem_charges -= required_chems
 	changeling.sting_range = 1
