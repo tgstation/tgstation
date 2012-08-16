@@ -52,6 +52,8 @@
 
 /mob/living/simple_animal/bear/Life()
 	..()
+	if(stat)
+		walk(src,0)//Stops the movement
 
 	if(!stat)
 		if(loc && istype(loc,/turf/space))
