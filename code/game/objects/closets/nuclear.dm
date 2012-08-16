@@ -19,6 +19,6 @@
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/device/pda/syndicate(src)
-	var/obj/item/device/uplink/radio/U = new /obj/item/device/uplink/radio(src)
-	U.uses = 40
+	var/obj/item/device/radio/uplink/U = new(src)
+	U.hidden_uplink.uses = 40
 	return

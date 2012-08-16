@@ -221,55 +221,17 @@
 
 	// find a radio! toolbox(es), backpack, belt, headset
 	var/loc = ""
-	var/obj/item/device/R = null //Hide the uplink in a PDA if available, otherwise radio
-	if (!R && istype(traitor_mob.belt, /obj/item/device/pda))
-		R = traitor_mob.belt
-		loc = "on your belt"
-	if (!R && istype(traitor_mob.wear_id, /obj/item/device/pda))
-		R = traitor_mob.wear_id
-		loc = "on your jumpsuit"
-	if (!R && istype(traitor_mob.wear_id, /obj/item/device/pda))
-		R = traitor_mob.wear_id
-		loc = "on your jumpsuit"
-	if (!R && istype(traitor_mob.l_hand, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = traitor_mob.l_hand
-		var/list/L = S.return_inv()
-		for (var/obj/item/device/radio/foo in L)
-			R = foo
-			loc = "in the [S.name] in your left hand"
-			break
-	if (!R && istype(traitor_mob.r_hand, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = traitor_mob.r_hand
-		var/list/L = S.return_inv()
-		for (var/obj/item/device/radio/foo in L)
-			R = foo
-			loc = "in the [S.name] in your right hand"
-			break
-	if (!R && istype(traitor_mob.back, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = traitor_mob.back
-		var/list/L = S.return_inv()
-		for (var/obj/item/device/radio/foo in L)
-			R = foo
-			loc = "in the [S.name] on your back"
-			break
-	if (!R && istype(traitor_mob.l_store, /obj/item/device/pda))
-		R = traitor_mob.l_store
-		loc = "in your pocket"
-	if (!R && istype(traitor_mob.r_store, /obj/item/device/pda))
-		R = traitor_mob.r_store
-		loc = "in your pocket"
-	if (!R && traitor_mob.w_uniform && istype(traitor_mob.belt, /obj/item/device/radio))
-		R = traitor_mob.belt
-		loc = "on your belt"
-	if ((!R && istype(traitor_mob.ears, /obj/item/device/radio)) || prob(10))
-		R = traitor_mob.ears
-		loc = "on your head"
+	var/obj/item/R = locate(/obj/item/device/pda) in traitor_mob.contents //Hide the uplink in a PDA if available, otherwise radio
+	if(!R)
+		R = locate(/obj/item/device/radio) in traitor_mob.contents
+
 	if (!R)
 		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you a radio."
 		. = 0
 	else
 		if (istype(R, /obj/item/device/radio))
 			// generate list of radio freqs
+			var/obj/item/device/radio/target_radio = R
 			var/freq = 1441
 			var/list/freqlist = list()
 			while (freq <= 1489)
@@ -280,22 +242,20 @@
 					freq += 1
 			freq = freqlist[rand(1, freqlist.len)]
 
-			var/obj/item/device/uplink/radio/T = new /obj/item/device/uplink/radio(R)
-			R:traitorradio = T
-			R:traitor_frequency = freq
-			T.name = R.name
-			T.icon_state = R.icon_state
-			T.origradio = R
+			var/obj/item/device/uplink/hidden/T = new(R)
+			target_radio.hidden_uplink = T
+			target_radio.traitor_frequency = freq
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
 		else if (istype(R, /obj/item/device/pda))
 			// generate a passcode if the uplink is hidden in a PDA
 			var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
 
-			var/obj/item/device/uplink/pda/T = new /obj/item/device/uplink/pda(R)
-			R:uplink = T
-			T.lock_code = pda_pass
-			T.hostpda = R
+			var/obj/item/device/uplink/hidden/T = new(R)
+			R.hidden_uplink = T
+			var/obj/item/device/pda/P = R
+			P.lock_code = pda_pass
+
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 	//Begin code phrase.

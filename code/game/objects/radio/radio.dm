@@ -15,7 +15,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
 	var/canhear_range = 3 // the range which mobs can hear this radio from
 	var/obj/item/device/radio/patch_link = null
-	var/obj/item/device/uplink/traitorradio = null
 	var/wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
 	var/b_stat = 0
 	var/broadcasting = 0
@@ -77,6 +76,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/proc/interact(mob/user as mob)
 	if(!on)
+		return
+
+	if(active_uplink_check(user))
 		return
 
 	var/dat = "<html><head><title>[src]</title></head><body><TT>"
@@ -157,23 +159,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		if (!freerange || (frequency < 1200 || frequency > 1600))
 			new_frequency = sanitize_frequency(new_frequency, maxf)
 		set_frequency(new_frequency)
+		if(hidden_uplink)
+			if(hidden_uplink.check_trigger(usr, frequency, traitor_frequency))
+				usr << browse(null, "window=radio")
+				return
 
-		if (traitor_frequency && frequency == traitor_frequency)
-			usr.machine = null
-			usr << browse(null, "window=radio")
-			// now transform the regular radio, into a (disguised)syndicate uplink!
-			var/obj/item/device/uplink/radio/T = traitorradio
-			var/obj/item/device/radio/R = src
-
-			usr.u_equip(R)
-			R.loc = T
-			if(usr.r_hand == R)
-				usr.put_in_r_hand(T)
-			else
-				usr.put_in_l_hand(T)
-
-			T.attack_self(usr)
-			return
 	else if (href_list["talk"])
 		broadcasting = text2num(href_list["talk"])
 	else if (href_list["listen"])
@@ -244,7 +234,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		if (!connection)
 			return
 
-
+		var/turf/position = get_turf(src)
 
 		//#### Tagging the signal with all appropriate identity values ####//
 
@@ -328,24 +318,19 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				"traffic" = 0, // dictates the total traffic sum that the signal went through
 				"type" = 0, // determines what type of radio input it is: normal broadcast
 				"server" = null, // the last server to log this signal
-				"reject" = 0	// if nonzero, the signal will not be accepted by any broadcasting machinery
+				"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
+				"level" = position.z // The source's z level
 			)
 			signal.frequency = connection.frequency // Quick frequency set
 
 		  //#### Sending the signal to all subspace receivers ####//
 
-			var/turf/position = get_turf(src)
-
 			for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
-				var/turf/receiver_turf = get_turf(R)
-				if(position.z == receiver_turf.z)
-					R.receive_signal(signal)
+				R.receive_signal(signal)
 
 			// Allinone can act as receivers.
 			for(var/obj/machinery/telecomms/allinone/R in telecomms_list)
-				var/turf/receiver_turf = get_turf(R)
-				if(position.z == receiver_turf.z)
-					R.receive_signal(signal)
+				R.receive_signal(signal)
 
 			// Receiving code can be located in Telecommunications.dm
 			return
@@ -386,16 +371,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			"traffic" = 0,
 			"type" = 0,
 			"server" = null,
-			"reject" = 0
+			"reject" = 0,
+			"level" = position.z
 		)
 		signal.frequency = connection.frequency // Quick frequency set
 
-		var/turf/position = get_turf(src)
-
 		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
-			var/turf/receiver_turf = get_turf(R)
-			if(position.z == receiver_turf.z)
-				R.receive_signal(signal)
+			R.receive_signal(signal)
 
 
 		sleep(rand(10,25)) // wait a little...

@@ -39,34 +39,6 @@
 
 
 
-/obj/item/weapon/implant/uplink
-	name = "uplink"
-	desc = "Summon things."
-	var/activation_emote = "chuckle"
-	var/obj/item/device/uplink/radio/uplink = null
-
-
-	New()
-		activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
-		uplink = new /obj/item/device/uplink/radio/implanted(src)
-		..()
-		return
-
-
-	implanted(mob/source)
-		activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
-		source.mind.store_memory("Uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
-		return 1
-
-
-	trigger(emote, mob/source as mob)
-		if(emote == activation_emote)
-			uplink.attack_self(source)
-		return
-
-
-
 /obj/item/weapon/implant/tracking
 	name = "tracking"
 	desc = "Track with this."

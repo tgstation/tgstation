@@ -102,6 +102,13 @@
 	if(istype(W))
 		equip_to_slot_if_possible(W, slot)
 
+/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
+	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))
+		return 1
+	else if(equip_to_slot_if_possible(W, slot_r_hand, del_on_fail, disable_warning, redraw_mob))
+		return 1
+	return 0
+
 //This is a SAFE proc. Use this instead of equip_to_splot()!
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
@@ -406,7 +413,7 @@ var/list/slot_equipment_priority = list( \
 
 	for (var/obj/item/weapon/disk/nuclear/D in world)
 		var/name = "Nuclear Disk"
-		if (name in names)
+		if (names.Find(name))
 			namecounts[name]++
 			name = "[name] ([namecounts[name]])"
 		else
@@ -416,7 +423,7 @@ var/list/slot_equipment_priority = list( \
 
 	for (var/obj/machinery/singularity/S in world)
 		var/name = "Singularity"
-		if (name in names)
+		if (names.Find(name))
 			namecounts[name]++
 			name = "[name] ([namecounts[name]])"
 		else
@@ -426,7 +433,7 @@ var/list/slot_equipment_priority = list( \
 
 	for (var/obj/machinery/bot/B in world)
 		var/name = "BOT: [B.name]"
-		if (name in names)
+		if (names.Find(name))
 			namecounts[name]++
 			name = "[name] ([namecounts[name]])"
 		else
@@ -436,7 +443,7 @@ var/list/slot_equipment_priority = list( \
 /*
 	for (var/mob/living/silicon/decoy/D in world)
 		var/name = "[D.name]"
-		if (name in names)
+		if (names.Find(name))
 			namecounts[name]++
 			name = "[name] ([namecounts[name]])"
 		else
@@ -451,54 +458,35 @@ var/list/slot_equipment_priority = list( \
 
 	for(var/mob/M in sortAtom(mob_list))
 		var/name = M.name
-		if (name in names)
+		if (names.Find(name))
 			namecounts[name]++
 			name = "[name] ([namecounts[name]])"
 		else
 			names.Add(name)
 			namecounts[name] = 1
+
 		creatures[name] = M
+
 //THIS IS THE MOBS PART: LOOK IN HELPERS.DM
 
 	client.perspective = EYE_PERSPECTIVE
 
 	var/eye_name = null
 
-	if (is_admin)
-		eye_name = input("Please, select a player!", "Admin Observe", null, null) as null|anything in creatures
-	else
-		eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
+	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
 
 	if (!eye_name)
 		return
 
-	var/mob/eye = creatures[eye_name]
-	if (is_admin)
-		if (eye)
-			reset_view(eye)
+	var/mob/mob_eye = creatures[eye_name]
+
+	if(client && mob_eye)
+		client.eye = mob_eye
+		if (is_admin)
 			client.adminobs = 1
-			if(eye == client.mob)
+			if(mob_eye == client.mob || client.eye == client.mob)
 				client.adminobs = 0
-		else
-			reset_view(null)
-			client.adminobs = 0
-	else
-		if(ticker)
-//		 world << "there's a ticker"
-			if(ticker.mode.name == "AI malfunction")
-//				world << "ticker says its malf"
-				var/datum/game_mode/malfunction/malf = ticker.mode
-				for (var/datum/mind/B in malf.malf_ai)
-//					world << "comparing [B.current] to [eye]"
-					if (B.current == eye)
-						for (var/mob/living/silicon/decoy/D in world)
-							if (eye)
-								eye = D
-		if (client)
-			if (eye)
-				client.eye = eye
-			else
-				client.eye = client.mob
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"

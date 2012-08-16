@@ -30,14 +30,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/last_text //No text spamming
 	var/last_honk //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
+	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
 	var/notehtml = ""
 	var/cart = "" //A place to stick cartridge menu information
 	var/detonate = 1 // Can the PDA be blown up?
-
-	var/obj/item/device/uplink/pda/uplink = null
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -236,6 +235,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	user.machine = src
 
+	if(active_uplink_check(user))
+		return
+
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 
 	dat += "<a href='byond://?src=\ref[src];choice=Close'><img src=pda_exit.png> Close</a>"
@@ -330,10 +332,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if (1)
 				dat += "<h4><img src=pda_notes.png> Notekeeper V2.1</h4>"
-				if ((!isnull(uplink)) && uplink.active)
-					dat += "<a href='byond://?src=\ref[src];choice=Lock'> Lock</a><br>"
-				else
-					dat += "<a href='byond://?src=\ref[src];choice=Edit'> Edit</a><br>"
+				dat += "<a href='byond://?src=\ref[src];choice=Edit'> Edit</a><br>"
 				dat += note
 
 			if (2)
@@ -552,13 +551,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					var/t = input(U, "Please enter new ringtone", name, ttone) as text
 					if (in_range(src, U) && loc == U)
 						if (t)
-							if ((uplink) && (cmptext(t,uplink.lock_code)))
-								if(uplink.active)
-									U << "The PDA uplink is already unlocked."
-									mode = 1
-								else
-									U << "The PDA softly beeps."
-									uplink.unlock()
+							if(src.hidden_uplink && hidden_uplink.check_trigger(U, t, lock_code))
+								U << "The PDA softly beeps."
+								U << browse(null, "window=pda")
 							else
 								t = copytext(sanitize(t), 1, 20)
 								ttone = t
@@ -610,11 +605,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								else
 									spawn(0)
 										M.close()
-				if("Lock")
-					if(uplink)
-						uplink.active = 0
-						note = uplink.orignote
-						mode = 0 // To stop people metagaming that PDAs on the note screen means it is an uplink PDA.
+
 				if("Detonate")//Detonate PDA
 					if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 						var/obj/item/device/pda/P = locate(href_list["target"])
@@ -634,7 +625,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								else
 									difficulty += 2
 
-								if ((prob(difficulty * 12)) || (P.uplink))
+								if ((prob(difficulty * 12)) || (P.hidden_uplink))
 									U.show_message("\red An error flashes on your [src].", 1)
 								else if (prob(difficulty * 3))
 									U.show_message("\red Energy feeds back into your [src]!", 1)
@@ -980,10 +971,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				user << "\blue No significant chemical agents found in [A]."
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
-		if ((!isnull(uplink)) && (uplink.active))
-			uplink.orignote = A:info
-		else
-			note = A:info
+		note = A:info
 		user << "\blue Paper scanned." //concept of scanning paper copyright brainoblivion 2009
 
 
