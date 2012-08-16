@@ -182,7 +182,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_body(var/update_icons=1)
 	if(stand_icon)	del(stand_icon)
 	if(lying_icon)	del(lying_icon)
-	if(mutantrace)	return
+	if(dna && dna.mutantrace)	return
 	var/husk = (HUSK in src.mutations)
 	var/fat = (FAT in src.mutations)
 	var/g = "m"
@@ -233,7 +233,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	overlays_standing[HAIR_LAYER]	= null
 
 	//mutants don't have hair. masks and helmets can obscure our hair too.
-	if( mutantrace || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+	if( (dna && dna.mutantrace) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		if(update_icons)   update_icons()
 		return
 
@@ -306,19 +306,20 @@ Please contact me on #coderbus IRC. ~Carn x
 	if( FAT in mutations )
 		fat = "fat"
 
-	switch(mutantrace)
-		if("lizard","golem","metroid")
-			overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[mutantrace][fat]_l")
-			overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[mutantrace][fat]_s")
-		if("plant")
-			if(stat == DEAD)	//TODO
-				overlays_lying[MUTANTRACE_LAYER] = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[mutantrace]_d")
+	if(dna)
+		switch(dna.mutantrace)
+			if("lizard","golem","metroid")
+				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_l")
+				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_s")
+			if("plant")
+				if(stat == DEAD)	//TODO
+					overlays_lying[MUTANTRACE_LAYER] = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace]_d")
+				else
+					overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_l")
+					overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s")
 			else
-				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[mutantrace][fat]_[gender]_l")
-				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[mutantrace][fat]_[gender]_s")
-		else
-			overlays_lying[MUTANTRACE_LAYER]	= null
-			overlays_standing[MUTANTRACE_LAYER]	= null
+				overlays_lying[MUTANTRACE_LAYER]	= null
+				overlays_standing[MUTANTRACE_LAYER]	= null
 	update_body(0)
 	update_hair(0)
 	if(update_icons)   update_icons()

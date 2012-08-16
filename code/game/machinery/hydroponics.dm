@@ -916,7 +916,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(se)
 			podman.dna.struc_enzymes = se
 		if(!prob(potency)) //if it fails, plantman!
-			podman.mutantrace = "plant"
+			if(podman.dna)
+				podman.dna.mutantrace = "plant"
 		podman.update_mutantrace()
 
 	else //else, one packet of seeds. maybe two

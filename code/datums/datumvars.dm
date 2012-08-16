@@ -735,8 +735,9 @@ client
 			if(!H || !istype(H))
 				usr << "Mob doesn't exist anymore"
 				return
-			H.mutantrace = new_mutantrace
-			H.update_mutantrace()
+			if(H.dna)
+				H.dna.mutantrace = new_mutantrace
+				H.update_mutantrace()
 		else if (href_list["regenerateicons"])
 			var/mob/M = locate(href_list["regenerateicons"])
 			if(!istype(M))

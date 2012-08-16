@@ -191,8 +191,9 @@
 	H.f_style = "Shaved"
 	H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
-	H.mutantrace = mrace
-	H.update_mutantrace()
+	if(H.dna)
+		H.dna.mutantrace = mrace
+		H.update_mutantrace()
 	H.suiciding = 0
 	src.attempting = 0
 	return 1

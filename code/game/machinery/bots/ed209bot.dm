@@ -679,7 +679,7 @@ Auto Patrol: []"},
 		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
 			threatcount += 2
 
-		if(perp.mutantrace && perp.mutantrace != "none")
+		if(perp.dna && perp.dna.mutantrace && perp.dna.mutantrace != "none")
 			threatcount += 2
 
 //Agent cards lower threatlevel when normal idchecking is off.

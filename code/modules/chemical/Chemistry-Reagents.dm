@@ -1053,8 +1053,9 @@ datum
 						C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if(H.mutantrace == "plant") //plantmen take a LOT of damage
-							H.adjustToxLoss(10)
+						if(H.dna)
+							if(H.dna.mutantrace == "plant") //plantmen take a LOT of damage
+								H.adjustToxLoss(10)
 
 		plasma
 			name = "Plasma"

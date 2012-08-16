@@ -4,6 +4,7 @@
 	var/struc_enzymes = null
 	var/uni_identity = null
 	var/b_type = "A+"
+	var/mutantrace = null  //The type of mutant race the player is if applicable (i.e. potato-man)
 
 /datum/dna/proc/check_integrity(var/mob/living/carbon/human/character)
 	if(character)

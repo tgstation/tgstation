@@ -43,8 +43,6 @@
 	var/icon/stand_icon = null
 	var/icon/lying_icon = null
 
-	var/mutantrace = null //The type of mutant race the player is if applicable (i.e. potato-man)
-
 	var/list/organs = list()
 
 	var/miming = null //Toggle for the mime's abilities.

@@ -127,13 +127,14 @@
 
 
 			var/attack_verb
-			switch(M.mutantrace)
-				if("lizard")
-					attack_verb = "scratch"
-				if("plant")
-					attack_verb = "slash"
-				else
-					attack_verb = "punch"
+			if(M.dna)
+				switch(M.dna.mutantrace)
+					if("lizard")
+						attack_verb = "scratch"
+					if("plant")
+						attack_verb = "slash"
+					else
+						attack_verb = "punch"
 
 
 			var/damage = rand(0, 9)

@@ -726,7 +726,7 @@
 	proc/handle_chemicals_in_body()
 		if(reagents) reagents.metabolize(src)
 
-		if(mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
+		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(istype(loc,/turf)) //else, there's considered to be no light
 				light_amount = min(10,loc:sd_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
@@ -768,7 +768,7 @@
 			if(overeatduration > 1)
 				overeatduration -= 2 //doubled the unfat rate
 
-		if(mutantrace == "plant")
+		if(dna && dna.mutantrace == "plant")
 			if(nutrition < 200)
 				take_overall_damage(2,0)
 
@@ -934,12 +934,13 @@
 			if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
 		else
 			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-			switch(mutantrace)
-				if("lizard","metroid")
-					see_in_dark = 3
-					see_invisible = SEE_INVISIBLE_LEVEL_ONE
-				else
-					see_in_dark = 2
+			if(dna)
+				switch(dna.mutantrace)
+					if("lizard","metroid")
+						see_in_dark = 3
+						see_invisible = SEE_INVISIBLE_LEVEL_ONE
+					else
+						see_in_dark = 2
 
 			if(XRAY in mutations)
 				sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS

@@ -16,20 +16,21 @@
 			if (copytext(message, 1, 2) != "*")
 				return
 
-	if(src.mutantrace == "lizard")
-		if(copytext(message, 1, 2) != "*")
-			message = dd_replacetext(message, "s", stutter("ss"))
+	if(src.dna)
+		if(src.dna.mutantrace == "lizard")
+			if(copytext(message, 1, 2) != "*")
+				message = dd_replacetext(message, "s", stutter("ss"))
 
-	if(src.mutantrace == "metroid" && prob(5))
-		if(copytext(message, 1, 2) != "*")
-			if(copytext(message, 1, 2) == ";")
-				message = ";"
-			else
-				message = ""
-			message += "SKR"
-			var/imax = rand(5,20)
-			for(var/i = 0,i<imax,i++)
-				message += "E"
+		if(src.dna.mutantrace == "metroid" && prob(5))
+			if(copytext(message, 1, 2) != "*")
+				if(copytext(message, 1, 2) == ";")
+					message = ";"
+				else
+					message = ""
+				message += "SKR"
+				var/imax = rand(5,20)
+				for(var/i = 0,i<imax,i++)
+					message += "E"
 
 	if(stat != 2)
 		for(var/datum/disease/pierrot_throat/D in viruses)

@@ -447,8 +447,9 @@
 
 								if(istype(L, /mob/living/carbon/human)) //Ignore metroid(wo)men
 									var/mob/living/carbon/human/H = L
-									if(H.mutantrace == "metroid")
-										continue
+									if(H.dna)
+										if(H.dna.mutantrace == "metroid")
+											continue
 
 								if(!istype(src, /mob/living/carbon/metroid/adult)) //Non-starving diciplined adult metroids wont eat things
 									if(!starving && Discipline > 0)
