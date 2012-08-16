@@ -77,22 +77,25 @@
 	lighting_power_usage = new_power
 	return
 */
-/area/proc/poweralert(var/state, var/source)
+/area/proc/poweralert(var/state, var/obj/source as obj)
 	if (state != poweralm)
 		poweralm = state
-		var/list/cameras = list()
-		for (var/obj/machinery/camera/C in src)
-			cameras += C
-		for (var/mob/living/silicon/aiPlayer in player_list)
-			if (state == 1)
-				aiPlayer.cancelAlarm("Power", src, source)
-			else
-				aiPlayer.triggerAlarm("Power", src, cameras, source)
-		for(var/obj/machinery/computer/station_alert/a in player_list)
-			if(state == 1)
-				a.cancelAlarm("Power", src, source)
-			else
-				a.triggerAlarm("Power", src, source)
+		if(istype(source))	//Only report power alarms on the z-level where the thing is located.
+			var/list/cameras = list()
+			for (var/obj/machinery/camera/C in src)
+				cameras += C
+			for (var/mob/living/silicon/aiPlayer in player_list)
+				if(aiPlayer.z == source.z)
+					if (state == 1)
+						aiPlayer.cancelAlarm("Power", src, source)
+					else
+						aiPlayer.triggerAlarm("Power", src, cameras, source)
+			for(var/obj/machinery/computer/station_alert/a in player_list)
+				if(a.z == source.z)
+					if(state == 1)
+						a.cancelAlarm("Power", src, source)
+					else
+						a.triggerAlarm("Power", src, source)
 	return
 
 /area/proc/atmosalert(danger_level)
