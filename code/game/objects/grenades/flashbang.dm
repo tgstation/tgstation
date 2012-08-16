@@ -99,49 +99,74 @@
 		M.update_icons()
 
 
-/obj/item/weapon/grenade/flashbang/clusterbang
+/obj/item/weapon/grenade/flashbang/clusterbang//Created by Polymorph, fixed by Sieve
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
 	name = "clusterbang"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang"
-	var/child = 0
 
-	prime()
-	//world << "Armed!"
-		var/numspawned = rand(4,8)
-		//world << numspawned
-		var/again = 0
-		if(!child)
-			for(var/more = numspawned,more > 0,more--)
-				if(prob(35))
-					again++
-					numspawned --
+/obj/item/weapon/grenade/flashbang/clusterbang/prime()
+	var/numspawned = rand(4,8)
+	var/again = 0
+	for(var/more = numspawned,more > 0,more--)
+		if(prob(35))
+			again++
+			numspawned --
 
-		for(,numspawned > 0, numspawned--)
-			//world << "Spawned Flashbang!"
-			spawn(0)
-				var/obj/item/weapon/grenade/flashbang/F = new /obj/item/weapon/grenade/flashbang(src)
-				F.loc = src.loc
-				F.icon_state = "flashbang_active"
-				playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
-				F.active = 1
-				F.banglet = 1
-				var/stepdist = rand(1,3)
-				walk_away(F,src,stepdist)
-				var/dettime = rand(15,60)
-				spawn(dettime)
-					F.prime()
+	for(,numspawned > 0, numspawned--)
+		spawn(0)
+			new /obj/item/weapon/grenade/flashbang/cluster(src.loc)//Launches flashbangs
+			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
 
-		for(,again > 0, again--)
-			//world << "Spawned CFlashbang!"
-			spawn(0)
-				var/obj/item/weapon/grenade/flashbang/clusterbang/F = new /obj/item/weapon/grenade/flashbang/clusterbang(src)
-				F.loc = src.loc
-				F.active = 1
-				F.child = 1
-				F.icon_state = "clusterbang_active"
-				var/stepdist = rand(1,4)
-				walk_away(F,src,stepdist)
-				spawn(det_time)
-					F.prime()
+	for(,again > 0, again--)
+		spawn(0)
+			new /obj/item/weapon/grenade/flashbang/clusterbang/segment(src.loc)//Creates a 'segment' that launches a few more flashbangs
+			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
+	spawn(0)
+		del(src)
 		return
+
+/obj/item/weapon/grenade/flashbang/clusterbang/segment
+	desc = "A smaller segment of a clusterbang. Better run."
+	name = "clusterbang segment"
+	icon = 'icons/obj/grenade.dmi'
+	icon_state = "clusterbang_segment"
+
+/obj/item/weapon/grenade/flashbang/clusterbang/segment/New()//Segments should never exist except part of the clusterbang, since these immediately 'do their thing' and asplode
+	icon_state = "clusterbang_segment_active"
+	active = 1
+	banglet = 1
+	var/stepdist = rand(1,4)//How far to step
+	var/temploc = src.loc//Saves the current location to know where to step away from
+	walk_away(src,temploc,stepdist)//I must go, my people need me
+	var/dettime = rand(15,60)
+	spawn(dettime)
+		prime()
+	..()
+
+/obj/item/weapon/grenade/flashbang/clusterbang/segment/prime()
+	var/numspawned = rand(4,8)
+	for(var/more = numspawned,more > 0,more--)
+		if(prob(35))
+			numspawned --
+
+	for(,numspawned > 0, numspawned--)
+		spawn(0)
+			new /obj/item/weapon/grenade/flashbang/cluster(src.loc)
+			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
+	spawn(0)
+		del(src)
+		return
+
+/obj/item/weapon/grenade/flashbang/cluster/New()//Same concept as the segments, so that all of the parts don't become reliant on the clusterbang
+	spawn(0)
+		icon_state = "flashbang_active"
+		active = 1
+		banglet = 1
+		var/stepdist = rand(1,3)
+		var/temploc = src.loc
+		walk_away(src,temploc,stepdist)
+		var/dettime = rand(15,60)
+		spawn(dettime)
+		prime()
+	..()

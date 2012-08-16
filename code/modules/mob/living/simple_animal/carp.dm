@@ -42,7 +42,30 @@
 	var/mob/living/target_mob		//Once the bear enters attack stance, it will try to chase this mob. This it to prevent it changing it's mind between multiple mobs.
 
 /mob/living/simple_animal/carp/Life()
-	..()
+	if(stat == DEAD)
+		walk(src,0)//STOP FUCKING MOVING GODDAMN
+		if(health > 0)
+			icon_state = icon_living
+			dead_mob_list -= src
+			living_mob_list += src
+			stat = CONSCIOUS
+			density = 1
+		return
+
+
+	if(health < 1)
+		Die()
+
+	if(health > maxHealth)
+		health = maxHealth
+
+	if(!ckey && !stop_automated_movement)
+		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+			turns_since_move++
+			if(turns_since_move >= turns_per_move)
+				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
+					Move(get_step(src,pick(cardinal)))
+					turns_since_move = 0
 
 	if(!stat)
 		switch(stance)
