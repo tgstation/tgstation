@@ -470,6 +470,18 @@
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
 					return 1
 				return 0
+			if(slot_handcuffed)
+				if(H.handcuffed)
+					return 0
+				if(!istype(src, /obj/item/weapon/handcuffs))
+					return 0
+				return 1
+			if(slot_legcuffed)
+				if(H.legcuffed)
+					return 0
+				if(!istype(src, /obj/item/weapon/legcuffs))
+					return 0
+				return 1
 			if(slot_in_backpack)
 				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
 					var/obj/item/weapon/storage/backpack/B = H.back
