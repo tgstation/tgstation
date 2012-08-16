@@ -362,37 +362,6 @@
 	else
 		return 0
 
-/obj/machinery/alarm/Topic(href, href_list)
-	src.add_fingerprint(usr)
-	usr.machine = src
-
-	if ( (get_dist(src, usr) > 1 ))
-		if (!istype(usr, /mob/living/silicon))
-			usr.machine = null
-			usr << browse(null, "window=air_alarm")
-			usr << browse(null, "window=AAlarmwires")
-			return
-
-	if (href_list["AAlarmwires"])
-		var/t1 = text2num(href_list["AAlarmwires"])
-		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-			usr << "You need wirecutters!"
-			return
-		if (src.isWireColorCut(t1))
-			src.mend(t1)
-		else
-			src.cut(t1)
-	else if (href_list["pulse"])
-		var/t1 = text2num(href_list["pulse"])
-		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			usr << "You need a multitool!"
-			return
-		if (src.isWireColorCut(t1))
-			usr << "You can't pulse a cut wire."
-			return
-		else
-			src.pulse(t1)
-
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -745,12 +714,37 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/alarm/Topic(href, href_list)
 	if(..())
 		return
-
+	src.add_fingerprint(usr)
+	usr.machine = src
 
 	if ( (get_dist(src, usr) > 1 ))
 		if (!istype(usr, /mob/living/silicon))
 			usr.machine = null
 			usr << browse(null, "window=air_alarm")
+			usr << browse(null, "window=AAlarmwires")
+			return
+
+	if (href_list["AAlarmwires"])
+		var/t1 = text2num(href_list["AAlarmwires"])
+		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
+			usr << "You need wirecutters!"
+			return
+		if (src.isWireColorCut(t1))
+			src.mend(t1)
+		else
+			src.cut(t1)
+	else if (href_list["pulse"])
+		var/t1 = text2num(href_list["pulse"])
+		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
+			usr << "You need a multitool!"
+			return
+		if (src.isWireColorCut(t1))
+			usr << "You can't pulse a cut wire."
+			return
+		else
+			src.pulse(t1)
+
+
 
 	if(href_list["command"])
 		var/device_id = href_list["id_tag"]
@@ -776,7 +770,8 @@ table tr:first-child th:first-child { border: none;}
 				var/varname = href_list["var"]
 				var/datum/tlv/tlv = TLV[env]
 				var/newval = input("Enter [varname] for env", "Alarm triggers", tlv.vars[varname]) as num|null
-				if (isnull(newval) || ..() || (locked && issilicon(usr)))
+
+				if (isnull(newval) || ..() || (locked && !issilicon(usr)))
 					return
 				if (newval<0)
 					tlv.vars[varname] = -1.0
