@@ -47,6 +47,8 @@ DBConnection
 		_db_con = _dm_db_new_con()
 	proc
 		Connect(dbi_handler=src.dbi,user_handler=src.user,password_handler=src.password,cursor_handler)
+			if(!sqllogging)
+				return 0
 			if(!src) return 0
 			cursor_handler = src.default_cursor
 			if(!cursor_handler) cursor_handler = Default_Cursor
@@ -54,7 +56,10 @@ DBConnection
 
 		Disconnect() return _dm_db_close(_db_con)
 
-		IsConnected() return _dm_db_is_connected(_db_con)
+		IsConnected()
+			if(!sqllogging) return 0
+			var/success = _dm_db_is_connected(_db_con)
+			return success
 
 		Quote(str) return _dm_db_quote(_db_con,str)
 
