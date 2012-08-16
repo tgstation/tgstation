@@ -15,6 +15,14 @@
 /obj/item/proc/pickup(mob/user)
 	return
 
+// called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
+/obj/item/proc/on_exit_storage(obj/item/weapon/storage/S as obj)
+	return
+
+// called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
+/obj/item/proc/on_enter_storage(obj/item/weapon/storage/S as obj)
+	return
+
 // called after an item is placed in an equipment slot
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm
@@ -91,17 +99,8 @@
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
 	if (istype(src.loc, /obj/item/weapon/storage))
-		for(var/mob/M in range(1, src.loc))
-			if (M.s_active == src.loc)
-				if (M.client)
-					M.client.screen -= src
-		if(istype(src.loc, /obj/item/weapon/storage/backpack/santabag))
-			if(src.loc.contents.len < 5)
-				src.loc.icon_state = "giftbag0"
-			else if(src.loc.contents.len >= 5 && src.loc.contents.len < 15)
-				src.loc.icon_state = "giftbag1"
-			else if(src.loc.contents.len >= 15)
-				src.loc.icon_state = "giftbag2"
+		var/obj/item/weapon/storage/S = src.loc
+		S.remove_from_storage(src)
 
 	src.throwing = 0
 	if (src.loc == user)
@@ -155,6 +154,22 @@
 	return
 
 /obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	if(istype(W,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = W
+		if(S.use_to_pickup)
+			if(!S.can_be_inserted(src))
+				return
+			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
+				if(isturf(src.loc))
+					for(var/obj/item/I in src.loc)
+						if(I != src) //We'll do the one we clicked on last.
+							if(!S.can_be_inserted(src))
+								continue
+							S.handle_item_insertion(I)
+			S.handle_item_insertion(src)
+
+
 	return
 
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)

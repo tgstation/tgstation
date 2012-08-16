@@ -8,6 +8,11 @@
 	var/storage_slots = 7 //The number of storage slots in this container.
 	var/obj/screen/storage/boxes = null
 	var/obj/screen/close/closer = null
+	var/use_to_pickup	//Set this to make it possible to use this item in an inverse way, so you can have the item in your hand and click items on the floor to pick them up.
+	var/display_contents_with_number	//Set this to make the storage item group contents of the same type and display them as a number.
+	var/allow_quick_empty	//Set this variable to allow the object to have the 'empty' verb, which dumps all the contents on the floor.
+	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
+	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	w_class = 3.0
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 
@@ -26,6 +31,8 @@
 	return L
 
 /obj/item/weapon/storage/proc/show_to(mob/user as mob)
+	if(user.s_active)
+		user.s_active.hide_from(user)
 	for(var/obj/item/weapon/mousetrap/MT in src)
 		if(MT.armed)
 			for(var/mob/O in viewers(user, null))
@@ -77,43 +84,82 @@
 	return
 
 //This proc draws out the inventory and places the items on it. It uses the standard position.
-/obj/item/weapon/storage/proc/standard_orient_objs(var/rows,var/cols)
+/obj/item/weapon/storage/proc/standard_orient_objs(var/rows, var/cols, var/list/obj/item/display_contents)
 	var/cx = 4
 	var/cy = 2+rows
 	src.boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
-	for(var/obj/O in src.contents)
-		O.screen_loc = "[cx]:16,[cy]:16"
-		O.layer = 20
-		cx++
-		if (cx > (4+cols))
-			cx = 4
-			cy--
+
+	if(display_contents_with_number)
+		for(var/datum/numbered_display/ND in display_contents)
+			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
+			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
+			ND.sample_object.layer = 20
+			cx++
+			if (cx > (4+cols))
+				cx = 4
+				cy--
+	else
+		for(var/obj/O in contents)
+			O.screen_loc = "[cx]:16,[cy]:16"
+			O.maptext = ""
+			O.layer = 20
+			cx++
+			if (cx > (4+cols))
+				cx = 4
+				cy--
 	src.closer.screen_loc = "[4+cols+1]:16,2:16"
 	return
 
+/datum/numbered_display
+	var/obj/item/sample_object
+	var/number
+
+	New(obj/item/sample as obj)
+		if(!istype(sample))
+			del(src)
+		sample_object = sample
+		number = 1
+
 //This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /obj/item/weapon/storage/proc/orient2hud(mob/user as mob)
+
+	var/adjusted_contents = contents.len
+
+	//Numbered contents display
+	var/list/datum/numbered_display/numbered_contents
+	if(display_contents_with_number)
+		numbered_contents = list()
+		adjusted_contents = 0
+		for(var/obj/item/I in contents)
+			var/found = 0
+			for(var/datum/numbered_display/ND in numbered_contents)
+				if(ND.sample_object.type == I.type)
+					ND.number++
+					found = 1
+					break
+			if(!found)
+				adjusted_contents++
+				numbered_contents.Add( new/datum/numbered_display(I) )
+
 	//var/mob/living/carbon/human/H = user
 	var/row_num = 0
 	var/col_count = min(7,storage_slots) -1
-	if (contents.len > 7)
-		row_num = round((contents.len-1) / 7) // 7 is the maximum allowed width.
-	src.standard_orient_objs(row_num,col_count)
+	if (adjusted_contents > 7)
+		row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
+	src.standard_orient_objs(row_num, col_count, numbered_contents)
 	return
 
-//This proc is called when you want to place an item into the storage item.
-/obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
-	..()
-	if(isrobot(user))
-		user << "\blue You're a robot. No."
-		return //Robots can't interact with storage items.
+//This proc return 1 if the item can be picked up and 0 if it can't.
+//Set the stop_messages to stop it from printing emssages
+/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W as obj, stop_messages = 0)
+	if(!istype(W)) return //Not an item
 
 	if(src.loc == W)
-		return //Means the item is already in the storage item
-
+		return 0 //Means the item is already in the storage item
 	if(contents.len >= storage_slots)
-		user << "\red The [src] is full, make some space."
-		return //Storage item is full
+		if(!stop_messages)
+			usr << "\red The [src] is full, make some space."
+		return 0 //Storage item is full
 
 	if(can_hold.len)
 		var/ok = 0
@@ -122,16 +168,94 @@
 				ok = 1
 				break
 		if(!ok)
-			user << "\red This [src] cannot hold [W]."
-			return
+			if(!stop_messages)
+				usr << "\red This [src] cannot hold [W]."
+			return 0
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
 		if(istype(W, text2path(A) ))
-			user << "\red This [src] cannot hold [W]."
-			return
+			if(!stop_messages)
+				usr << "\red This [src] cannot hold [W]."
+			return 0
 
 	if (W.w_class > max_w_class)
-		user << "\red This [W] is too big for this [src]"
+		if(!stop_messages)
+			usr << "\red This [W] is too big for this [src]"
+		return 0
+
+	var/sum_w_class = W.w_class
+	for(var/obj/item/I in contents)
+		sum_w_class += I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
+
+	if(sum_w_class > max_combined_w_class)
+		if(!stop_messages)
+			usr << "\red The [src] is full, make some space."
+		return 0
+
+	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
+		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
+			if(!stop_messages)
+				usr << "\red The [src] cannot hold [W] as it's a storage item of the same size."
+			return 0 //To prevent the stacking of same sized storage items.
+
+	return 1
+
+//This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
+/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj)
+	if(!istype(W)) return
+	if(usr)
+		usr.u_equip(W)
+		usr.update_icons()	//update our overlays
+	W.loc = src
+	W.on_enter_storage(src)
+	if(usr)
+		if (usr.client && usr.s_active != src)
+			usr.client.screen -= W
+		W.dropped(usr)
+		add_fingerprint(usr)
+
+		if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
+		for(var/mob/M in viewers(usr, null))
+			if (M == usr)
+				usr << "\blue You put the [W] into [src]."
+			else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
+				M.show_message("\blue [usr] puts [W] into [src].")
+			else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
+				M.show_message("\blue [usr] puts [W] into [src].")
+
+		src.orient2hud(usr)
+		if(usr.s_active)
+			src.show_to(usr)
+
+//Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
+/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W as obj, atom/new_location)
+	if(!istype(W)) return
+	for(var/mob/M in range(1, src.loc))
+		if (M.s_active == src.loc)
+			if (M.client)
+				M.client.screen -= src
+
+	if(new_location)
+		W.loc = new_location
+	else
+		W.loc = get_turf(src)
+
+	if(usr)
+		src.orient2hud(usr)
+		if(usr.s_active)
+			src.show_to(usr)
+	if(W.maptext)
+		W.maptext = ""
+	W.on_exit_storage(src)
+
+//This proc is called when you want to place an item into the storage item.
+/obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if(isrobot(user))
+		user << "\blue You're a robot. No."
+		return //Robots can't interact with storage items.
+
+	if(!can_be_inserted(W))
 		return
 
 	if(istype(W, /obj/item/weapon/tray))
@@ -141,52 +265,13 @@
 				user << "\red The tray won't fit in [src]."
 				return
 			else
-
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
 				W.dropped(user)
 				user << "\red God damnit!"
 
-	var/sum_w_class = W.w_class
-	for(var/obj/item/I in contents)
-		sum_w_class += I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
-
-	if(sum_w_class > max_combined_w_class)
-		user << "\red The [src] is full, make some space."
-		return
-
-	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
-		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
-			user << "\red The [src] cannot hold [W] as it's a storage item of the same size."
-			return //To prevent the stacking of the same sized items.
-
-	user.u_equip(W)
-	user.update_icons()	//update our overlays
-	W.loc = src
-	if ((user.client && user.s_active != src))
-		user.client.screen -= W
-	W.dropped(user)
-	add_fingerprint(user)
-
-	if(istype(src, /obj/item/weapon/storage/backpack/santabag)) // update the santa bag icon
-		if(contents.len < 5)
-			src.icon_state = "giftbag0"
-		else if(contents.len >= 5 && contents.len < 15)
-			src.icon_state = "giftbag1"
-		else if(contents.len >= 15)
-			src.icon_state = "giftbag2"
-
-	src.orient2hud(user)
-	src.show_to(user)
-	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
-	for(var/mob/M in viewers(user, null))
-		if (M == user)
-			user << "\blue You put the [W] into [src]."
-		else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
-			M.show_message(text("\blue [user] puts [W] into [src]."))
-		else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
-			M.show_message(text("\blue [user] puts [W] into [src]."))
+	handle_item_insertion(W)
 	return
 
 /obj/item/weapon/storage/dropped(mob/user as mob)
@@ -228,7 +313,40 @@
 	src.add_fingerprint(user)
 	return
 
+/obj/item/weapon/storage/verb/toggle_gathering_mode()
+	set name = "Switch Gathering Method"
+	set category = "Object"
+
+	collection_mode = !collection_mode
+	switch (collection_mode)
+		if(1)
+			usr << "The [src] now picks up all ore in a tile at once."
+		if(0)
+			usr << "The [src] now picks up one ore at a time."
+
+
+/obj/item/weapon/storage/verb/quick_empty()
+	set name = "Empty Contents"
+	set category = "Object"
+
+	if(!ishuman(usr) || usr.stat || usr.restrained())
+		return
+
+	var/turf/T = get_turf(src)
+	for(var/obj/item/I in contents)
+		remove_from_storage(I, T)
+
 /obj/item/weapon/storage/New()
+
+	if(allow_quick_empty)
+		verbs += /obj/item/weapon/storage/verb/quick_empty
+	else
+		verbs -= /obj/item/weapon/storage/verb/quick_empty
+
+	if(allow_quick_gather)
+		verbs += /obj/item/weapon/storage/verb/toggle_gathering_mode
+	else
+		verbs -= /obj/item/weapon/storage/verb/toggle_gathering_mode
 
 	src.boxes = new /obj/screen/storage(  )
 	src.boxes.name = "storage"

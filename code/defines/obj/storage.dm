@@ -578,3 +578,22 @@
 			R.amount = R.max_amount
 
 	return
+
+
+/obj/item/weapon/storage/satchel
+	name = "Mining Satchel"
+	desc = "This little bugger can be used to store and transport ores."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "satchel"
+	w_class = 3
+	storage_slots = 30
+	max_combined_w_class = 100 //Doesn't matter what this is
+	use_to_pickup = 1
+	max_w_class = 3
+	display_contents_with_number = 1
+	allow_quick_empty = 1
+	allow_quick_gather = 1
+
+	can_hold = list(
+		"/obj/item/weapon/ore"
+	)

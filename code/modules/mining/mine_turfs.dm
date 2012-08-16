@@ -380,9 +380,9 @@
 			user << "\blue You dug a hole."
 			gets_dug()
 
-	if(istype(W,/obj/item/weapon/satchel))
-		var/obj/item/weapon/satchel/S = W
-		if(S.mode)
+	if(istype(W,/obj/item/weapon/storage/satchel))
+		var/obj/item/weapon/storage/satchel/S = W
+		if(S.collection_mode)
 			for(var/obj/item/weapon/ore/O in src.contents)
 				O.attackby(W,user)
 				return
@@ -451,11 +451,11 @@
 	if(istype(M,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = M
 		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/satchel/borg))
+			if(istype(R.module_state_1,/obj/item/weapon/storage/satchel))
 				src.attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/satchel/borg))
+			else if(istype(R.module_state_2,/obj/item/weapon/storage/satchel))
 				src.attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/satchel/borg))
+			else if(istype(R.module_state_3,/obj/item/weapon/storage/satchel))
 				src.attackby(R.module_state_3,R)
 			else
 				return

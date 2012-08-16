@@ -1,46 +1,3 @@
-/**********************Satchel**************************/
-
-/obj/item/weapon/satchel
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "satchel"
-	name = "Mining Satchel"
-	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
-	var/capacity = 50; //the number of ore pieces it can carry.
-	flags = FPRINT | TABLEPASS
-	slot_flags = SLOT_BELT
-	w_class = 1
-
-/obj/item/weapon/satchel/attack_self(mob/user as mob)
-	for (var/obj/item/weapon/ore/O in contents)
-		contents -= O
-		O.loc = user.loc
-	user << "\blue You empty the satchel."
-	return
-
-/obj/item/weapon/satchel/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/ore))
-		var/obj/item/weapon/ore/O = W
-		src.contents += O;
-	return
-
-/obj/item/weapon/satchel/verb/toggle_mode()
-	set name = "Switch Satchel Method"
-	set category = "Object"
-
-	mode = !mode
-	switch (mode)
-		if(1)
-			usr << "The satchel now picks up all ore in a tile at once."
-		if(0)
-			usr << "The satchel now picks up one ore at a time."
-
-/obj/item/weapon/satchel/borg
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "satchel"
-	name = "Cyborg Mining Satchel"
-	mode = 1;  //0 = pick one at a time, 1 = pick all on tile
-	capacity = 200; //the number of ore pieces it can carry.
 
 /**********************Ore box**************************/
 
@@ -54,8 +11,10 @@
 /obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/ore))
 		src.contents += W;
-	if (istype(W, /obj/item/weapon/satchel))
-		src.contents += W.contents
+	if (istype(W, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = W
+		for(var/obj/item/weapon/ore/O in S.contents)
+			S.remove_from_storage(W,src) //This will move the item to this item's contents
 		user << "\blue You empty the satchel into the box."
 	return
 
