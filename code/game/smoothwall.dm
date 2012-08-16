@@ -178,6 +178,10 @@
 
 /obj/structure/falsewall/relativewall()
 
+	if(!density)
+		icon_state = "[mineral]fwall_open"
+		return
+
 	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
 
 	for(var/turf/simulated/wall/W in orange(src,1))
@@ -192,12 +196,15 @@
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 			if(src.mineral == W.mineral)
 				junction |= get_dir(src,W)
-	var/obj/structure/falsewall/fwall = src
-	fwall.icon_state = "[fwall.mineral][junction]"
+	icon_state = "[mineral][junction]"
 	return
 
 /obj/structure/falserwall/relativewall()
 
+	if(!density)
+		icon_state = "frwall_open"
+		return
+
 	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
 
 	for(var/turf/simulated/wall/W in orange(src,1))
@@ -212,5 +219,5 @@
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 			if(src.mineral == W.mineral)
 				junction |= get_dir(src,W)
-	src.icon_state = "rwall[junction]"
+	icon_state = "rwall[junction]"
 	return
