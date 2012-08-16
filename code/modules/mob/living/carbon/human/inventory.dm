@@ -41,7 +41,7 @@
 	else if (W == head)
 		head = null
 		if(W.flags & BLOCKHAIR)
-			update_hair()	//rebuild hair
+			update_hair(0)	//rebuild hair
 		success = 1
 		update_inv_head()
 	else if (W == ears)

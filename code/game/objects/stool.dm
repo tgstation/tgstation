@@ -132,8 +132,15 @@
 		src.layer = OBJ_LAYER
 
 	if(buckled_mob)
-		buckled_mob.loc = src.loc
-		buckled_mob.dir = dir
+		if(buckled_mob.loc != src.loc)
+			buckled_mob.buckled = null //Temporary, so Move() succeeds.
+			if(!buckled_mob.Move(loc))
+				unbuckle()
+				buckled_mob = null
+			else
+				buckled_mob.buckled = src //Restoring
+		if(buckled_mob)
+			buckled_mob.dir = dir
 
 /obj/structure/stool/bed/chair/verb/rotate()
 	set name = "Rotate Chair"
