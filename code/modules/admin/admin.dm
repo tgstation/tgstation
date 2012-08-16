@@ -1302,10 +1302,11 @@ var/global/BSACooldown = 0
 		var/mob/M = locate(href_list["CentcommReply"])
 		if(!M)
 			return
-		if(!istype(M, /mob/living/carbon/human))
+		if(!ishuman(M))
 			alert("Centcomm cannot transmit to non-humans.")
 			return
-		if(!istype(M:ears, /obj/item/device/radio/headset))
+		var/mob/living/carbon/human/H = M
+		if(!istype(H.ears, /obj/item/device/radio/headset))
 			alert("The person you're trying to reply to doesn't have a headset!  Centcomm cannot transmit directly to them.")
 			return
 		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their headset.","Outgoing message from Centcomm", "")
@@ -1313,7 +1314,9 @@ var/global/BSACooldown = 0
 			return
 
 		src.owner << "You sent [input] to [M] via a secure channel."
+
 		log_admin("[src.owner] replied to [key_name(M)]'s Centcomm message with the message [input].")
+		message_admins("[src.owner] replied to [key_name(M)]'s Centcom message with: \"[input]\"")
 		M << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\""
 
 		return
