@@ -166,7 +166,6 @@
 	W.loc = src
 	if ((user.client && user.s_active != src))
 		user.client.screen -= W
-	src.orient2hud(user)
 	W.dropped(user)
 	add_fingerprint(user)
 
@@ -178,6 +177,8 @@
 		else if(contents.len >= 15)
 			src.icon_state = "giftbag2"
 
+	src.orient2hud(user)
+	src.show_to(user)
 	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
 	for(var/mob/M in viewers(user, null))
 		if (M == user)
