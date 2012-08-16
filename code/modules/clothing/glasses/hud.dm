@@ -75,7 +75,6 @@
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
 	icon_state = "jensenshades"
 	item_state = "jensenshades"
-	protective_temperature = 1500
 	vision_flags = SEE_MOBS
 	invisa_view = 2
 

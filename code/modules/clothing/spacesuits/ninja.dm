@@ -4,8 +4,6 @@
 	icon_state = "s-ninja"
 	item_state = "s-ninja"
 	siemens_coefficient = 0
-	protective_temperature = 1100
-	heat_transfer_coefficient = 0.05
 	var/draining = 0
 	var/candrain = 0
 	var/mindrain = 200
@@ -26,7 +24,6 @@
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/cell)
-	protective_temperature = 5000
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 

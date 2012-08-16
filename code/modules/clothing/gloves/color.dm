@@ -5,8 +5,6 @@
 	item_state = "ygloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	protective_temperature = 1000
-	heat_transfer_coefficient = 0.01
 	color="yellow"
 
 /obj/item/clothing/gloves/fyellow                             //Cheap Chinese Crap
@@ -16,14 +14,11 @@
 	item_state = "ygloves"
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
-	protective_temperature = 800
 
 	color="yellow"
 
 	New()
 		siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
-		if(siemens_coefficient == 0)
-			heat_transfer_coefficient = 0.01
 
 /obj/item/clothing/gloves/black
 	desc = "These gloves are fire-resistant."
@@ -31,8 +26,12 @@
 	icon_state = "black"
 	item_state = "bgloves"
 	color="brown"
-	protective_temperature = 1500
-	heat_transfer_coefficient = 0.01
+
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECITON_TEMPERATURE
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE
+
 
 	hos
 		color = "hosred"		//Exists for washing machines. Is not different from black gloves in any way.

@@ -4,7 +4,7 @@
 	name = "\improper CentComm. hat"
 	icon_state = "centcom"
 	desc = "It's good to be emperor."
-	flags = FPRINT|TABLEPASS|SUITSPACE
+	flags = FPRINT|TABLEPASS
 	item_state = "centhat"
 
 /obj/item/clothing/head/powdered_wig
@@ -43,7 +43,7 @@
 	name = "hastur's hood"
 	desc = "It's unspeakably stylish"
 	icon_state = "hasturhood"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|BLOCKHAIR
 
 /obj/item/clothing/head/nursehat
 	name = "nurse's hat"
@@ -65,7 +65,7 @@
 	name = "cueball helmet"
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state="cueball"
 	flags_inv = 0
 
@@ -98,7 +98,7 @@
 	desc = "fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"

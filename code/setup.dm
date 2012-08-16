@@ -29,6 +29,25 @@
 #define HAZARD_LOW_PRESSURE 20		//This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
 
 #define TEMPERATURE_DAMAGE_COEFFICIENT 1.5	//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
+#define BODYTEMP_AUTORECOVERY_DIVISOR 12 //This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
+#define BODYTEMP_AUTORECOVERY_MINIMUM 10 //Minimum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 50.
+#define BODYTEMP_COLD_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
+#define BODYTEMP_HEAT_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
+
+#define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
+#define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
+#define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE 15000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
+#define FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 15000 //for fire helmet quality items (red and white hardhats)
+#define HELMET_MIN_COLD_PROTECITON_TEMPERATURE 160	//For normal helmets
+#define HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For normal helmets
+#define ARMOR_MIN_COLD_PROTECITON_TEMPERATURE 160	//For armor
+#define ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For armor
+
+#define GLOVES_MIN_COLD_PROTECITON_TEMPERATURE 2.0	//For some gloves (black and)
+#define GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE 1500		//For some gloves
+#define SHOE_MIN_COLD_PROTECITON_TEMPERATURE 2.0	//For gloves
+#define SHOE_MAX_HEAT_PROTECITON_TEMPERATURE 1500		//For gloves
+
 
 #define PRESSURE_DAMAGE_COEFFICIENT 5 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
 #define MAX_PRESSURE_DAMAGE 7 //This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
@@ -128,10 +147,9 @@ var/MAX_EXPLOSION_RANGE = 14
 //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
 
 #define TABLEPASS 2			// can pass by a table or rack
-#define HEADSPACE 4			// head wear protects against space
 
 #define MASKINTERNALS	8	// mask allows internals
-#define SUITSPACE		8	// suit protects against space
+//#define SUITSPACE		8	// suit protects against space
 
 #define USEDELAY 	16		// 1 second extra delay on use (Can be used once every 2s)
 #define NODELAY 	32768	// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
@@ -217,6 +235,22 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HAND_RIGHT		1024
 #define HANDS			1536
 #define FULL_BODY		2047
+
+// bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
+// Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
+// The values here should add up to 1.
+// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
+#define THERMAL_PROTECTION_HEAD			0.3
+#define THERMAL_PROTECTION_UPPER_TORSO	0.15
+#define THERMAL_PROTECTION_LOWER_TORSO	0.15
+#define THERMAL_PROTECTION_LEG_LEFT		0.075
+#define THERMAL_PROTECTION_LEG_RIGHT	0.075
+#define THERMAL_PROTECTION_FOOT_LEFT	0.025
+#define THERMAL_PROTECTION_FOOT_RIGHT	0.025
+#define THERMAL_PROTECTION_ARM_LEFT		0.075
+#define THERMAL_PROTECTION_ARM_RIGHT	0.075
+#define THERMAL_PROTECTION_HAND_LEFT	0.025
+#define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
 /*
 //bitflags for mutations

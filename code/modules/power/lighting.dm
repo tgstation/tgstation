@@ -492,8 +492,8 @@
 
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
-
-				prot = (G.heat_transfer_coefficient < 0.5)	// *** TODO: better handling of glove heat protection
+				if(G.max_heat_protection_temperature)
+					prot = (G.max_heat_protection_temperature > 360)
 		else
 			prot = 1
 

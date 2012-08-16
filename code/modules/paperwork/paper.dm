@@ -11,7 +11,6 @@
 	pressure_resistance = 1
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
-	protective_temperature = 0
 	attack_verb = list("")
 
 	var/info	//What's actually written on the paper.

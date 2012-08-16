@@ -288,6 +288,7 @@
 		temp_change = (temperature - current)
 		return temp_change
 
+	/*
 	proc/get_thermal_protection()
 		var/thermal_protection = 1.0
 		//Handle normal clothing
@@ -322,6 +323,7 @@
 
 
 		return fire_prot
+	*/
 
 	proc/handle_chemicals_in_body()
 

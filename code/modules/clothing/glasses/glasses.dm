@@ -71,14 +71,12 @@
 	name = "sunglasses"
 	icon_state = "sun"
 	item_state = "sunglasses"
-	protective_temperature = 1300
 	darkness_view = -1
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
-	protective_temperature = 1400
 
 /obj/item/clothing/glasses/sunglasses/sechud
 	name = "HUDSunglasses"

@@ -41,7 +41,6 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
-	protective_temperature = 5000 //For not dying near a fire, but still not being great in a full inferno
 	slowdown = 2
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/satchel,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
@@ -58,7 +57,6 @@
 	icon_state = "rig-white"
 	name = "advanced hardsuit"
 	item_state = "ce_hardsuit"
-	protective_temperature = 10000
 
 
 //Mining rig

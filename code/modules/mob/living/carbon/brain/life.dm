@@ -79,11 +79,7 @@
 			environment_heat_capacity = heat_turf.heat_capacity
 
 		if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-			var/transfer_coefficient
-
-			transfer_coefficient = 1
-			if(wear_mask && (wear_mask.body_parts_covered & HEAD) && (environment.temperature < wear_mask.protective_temperature))
-				transfer_coefficient *= wear_mask.heat_transfer_coefficient
+			var/transfer_coefficient = 1
 
 			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
 

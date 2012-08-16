@@ -27,14 +27,23 @@
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
 
+	cold_protection = FEET
+	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECITON_TEMPERATURE
+	heat_protection = FEET
+	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECITON_TEMPERATURE
+
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
 	icon_state = "s-ninja"
-	protective_temperature = 700
 	permeability_coefficient = 0.01
 	flags = NOSLIP
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+
+	cold_protection = FEET
+	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECITON_TEMPERATURE
+	heat_protection = FEET
+	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -75,6 +84,11 @@
 	icon_state = "cult"
 	item_state = "cult"
 	color = "cult"
+
+	cold_protection = FEET
+	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECITON_TEMPERATURE
+	heat_protection = FEET
+	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"

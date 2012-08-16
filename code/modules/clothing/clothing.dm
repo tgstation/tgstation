@@ -12,7 +12,6 @@
 	name = "earmuffs"
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
-	protective_temperature = 500
 	item_state = "earmuffs"
 
 
@@ -44,8 +43,6 @@ BLIND     // can't see anything
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
-	protective_temperature = 400
-	heat_transfer_coefficient = 0.25
 	siemens_coefficient = 0.50
 	var/wired = 0
 	var/obj/item/weapon/cell/cell = 0
@@ -73,7 +70,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
-
+	flags = MASKINTERNALS
 
 //Shoes
 /obj/item/clothing/shoes
@@ -85,8 +82,6 @@ BLIND     // can't see anything
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
 
-	protective_temperature = 500
-	heat_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
 
@@ -107,11 +102,13 @@ BLIND     // can't see anything
 	name = "Space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE
 
 /obj/item/clothing/suit/space
 	name = "Space suit"
@@ -121,14 +118,14 @@ BLIND     // can't see anything
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	heat_transfer_coefficient = 0.02
-	protective_temperature = 1000
-	flags = FPRINT | TABLEPASS | SUITSPACE
+	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 3
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
 
 
 //Under clothing
@@ -136,8 +133,6 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	protective_temperature = T0C + 50
-	heat_transfer_coefficient = 0.30
 	permeability_coefficient = 0.90
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ICLOTHING

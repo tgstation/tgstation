@@ -3,10 +3,8 @@
 	name = "breath mask"
 	icon_state = "breath"
 	item_state = "breath"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | MASKCOVERSMOUTH
+	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | 
 	w_class = 2
-	protective_temperature = 420
-	heat_transfer_coefficient = 0.90
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 

@@ -22,7 +22,7 @@
 	icon_state = "sterile"
 	item_state = "sterile"
 	w_class = 1
-	flags = FPRINT|TABLEPASS|HEADSPACE|MASKCOVERSMOUTH
+	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.05
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)

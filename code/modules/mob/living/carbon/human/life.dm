@@ -4,6 +4,23 @@
 #define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
 #define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /3) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
 
+#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
+#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 1000K point
+
+#define COLD_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 260.15k safety point
+#define COLD_DAMAGE_LEVEL_2 2 //Amount of damage applied when your body temperature passes the 200K point
+#define COLD_DAMAGE_LEVEL_3 4 //Amount of damage applied when your body temperature passes the 120K point
+
+//Note that gas heat damage is only applied once every FOUR ticks.
+#define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
+#define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
+#define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
+
+#define COLD_GAS_DAMAGE_LEVEL_1 1 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
+#define COLD_GAS_DAMAGE_LEVEL_2 2 //Amount of damage applied when the current breath's temperature passes the 200K point
+#define COLD_GAS_DAMAGE_LEVEL_3 4 //Amount of damage applied when the current breath's temperature passes the 120K point
+
 /mob/living/carbon/human
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
@@ -26,6 +43,7 @@
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
 	blinded = null
+	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
 
 	//TODO: seperate this out
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -33,7 +51,7 @@
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD)
 		if(air_master.current_cycle%4==2 || failed_last_breath) 	//First, resolve location and get a breath
-			spawn(0) breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
+			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj/))
@@ -301,8 +319,7 @@
 			if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 				internal = null
 			if(internal)
-				//if (internals) //should be unnecessary, uncomment if it isn't. -raftaf0
-				//	internals.icon_state = "internal1"
+				world << "Breath from internal"
 				return internal.remove_air_volume(volume_needed)
 			else if(internals)
 				internals.icon_state = "internal0"
@@ -409,18 +426,29 @@
 					if(prob(20))
 						spawn(0) emote(pick("giggle", "laugh"))
 
-
-		if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
-			if(prob(20))
-				src << "\red You feel your face burning and a searing heat in your lungs!"
+		world << "breath temperature = [breath.temperature]"
+		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
+			if(breath.temperature < 260.15)
+				if(prob(20))
+					src << "\red You feel your face freezing and an icicle forming in your lungs!"
+			else if(breath.temperature > 360.15)
+				if(prob(20))
+					src << "\red You feel your face burning and a searing heat in your lungs!"
 			fire_alert = max(fire_alert, 1)
-			var/transfer_coefficient = 100000 // Burning air is being forced into your lungs and mouth
-			handle_temperature_damage(HEAD, breath.temperature, breath.heat_capacity()*transfer_coefficient)
-			handle_temperature_damage(UPPER_TORSO, breath.temperature, breath.heat_capacity()*transfer_coefficient)
-		else
-			fire_alert = 0
 
-
+			switch(breath.temperature)
+				if(-INFINITY to 120)
+					apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
+				if(120 to 200)
+					apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
+				if(200 to 260)
+					apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+				if(360 to 400)
+					apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
+				if(400 to 1000)
+					apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
+				if(1000 to INFINITY)
+					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
 
 		//Temporary fixes to the alerts.
 
@@ -429,103 +457,67 @@
 	proc/handle_environment(datum/gas_mixture/environment)
 		if(!environment)
 			return
-		var/environment_heat_capacity = environment.heat_capacity()
 		var/loc_temp = T0C
 		if(istype(get_turf(src), /turf/space))
 			var/turf/heat_turf = get_turf(src)
-			environment_heat_capacity = heat_turf.heat_capacity
 			loc_temp = heat_turf.temperature
 		else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			loc_temp = loc:air_contents.temperature
 		else
 			loc_temp = environment.temperature
 
-		var/thermal_protection = get_thermal_protection()
-
 		//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)] - Heat capacity: [environment_heat_capacity] - Location: [loc] - src: [src]"
 
-		if(stat != 2 && abs(bodytemperature - 310.15) < 50)
-			bodytemperature += adjust_body_temperature(bodytemperature, 310.15, thermal_protection)
-		if(loc_temp < 310.15) // a cold place -> add in cold protection
-			bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1/thermal_protection)
-		else // a hot place -> add in heat protection
-			thermal_protection += add_fire_protection(loc_temp)
-			bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1/thermal_protection)
+		//Body temperature is adjusted in two steps. Firstly your body tries to stabilize itself a bit.
+		if(stat != 2)
+			stabilize_temperature_from_calories()
 
-		// lets give them a fair bit of leeway so they don't just start dying
-		//as that may be realistic but it's no fun
-		if((bodytemperature > (T0C + 50)) || (bodytemperature < (T0C + 10)) && (!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))) // Last bit is just disgusting, i know
-			if(environment.temperature > (T0C + 50) || (environment.temperature < (T0C + 10)))
-				var/transfer_coefficient
+		//After then, it reacts to the surrounding atmosphere based on your thermal protection
+		if(loc_temp < bodytemperature)
+			//Place is colder than we are
+			var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			if(thermal_protection < 1)
+				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)
+		else
+			//Place is hotter than we are
+			var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			if(thermal_protection < 1)
+				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
-				transfer_coefficient = 1
-				if(head && (head.body_parts_covered & HEAD) && (environment.temperature < head.protective_temperature) && !istype(head, /obj/item/weapon/paper))
-					transfer_coefficient *= head.heat_transfer_coefficient
-				if(wear_mask && (wear_mask.body_parts_covered & HEAD) && (environment.temperature < wear_mask.protective_temperature))
-					transfer_coefficient *= wear_mask.heat_transfer_coefficient
-				if(wear_suit && (wear_suit.body_parts_covered & HEAD) && (environment.temperature < wear_suit.protective_temperature))
-					transfer_coefficient *= wear_suit.heat_transfer_coefficient
+		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
+		if(bodytemperature > 360.15)
+			//Body temperature is too hot.
+			fire_alert = max(fire_alert, 1)
+			switch(bodytemperature)
+				if(360 to 400)
+					apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
+				if(400 to 1000)
+					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+				if(1000 to INFINITY)
+					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
 
-				handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
+		else if(bodytemperature < 260.15)
+			fire_alert = max(fire_alert, 1)
+			if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+				switch(bodytemperature)
+					if(200 to 260)
+						apply_damage(COLD_DAMAGE_LEVEL_1, BURN)
+					if(120 to 200)
+						apply_damage(COLD_DAMAGE_LEVEL_2, BURN)
+					if(-INFINITY to 120)
+						apply_damage(COLD_DAMAGE_LEVEL_3, BURN)
 
-				transfer_coefficient = 1
-				if(wear_suit && (wear_suit.body_parts_covered & UPPER_TORSO) && (environment.temperature < wear_suit.protective_temperature))
-					transfer_coefficient *= wear_suit.heat_transfer_coefficient
-				if(w_uniform && (w_uniform.body_parts_covered & UPPER_TORSO) && (environment.temperature < w_uniform.protective_temperature))
-					transfer_coefficient *= w_uniform.heat_transfer_coefficient
-
-				handle_temperature_damage(UPPER_TORSO, environment.temperature, environment_heat_capacity*transfer_coefficient)
-
-				transfer_coefficient = 1
-				if(wear_suit && (wear_suit.body_parts_covered & LOWER_TORSO) && (environment.temperature < wear_suit.protective_temperature))
-					transfer_coefficient *= wear_suit.heat_transfer_coefficient
-				if(w_uniform && (w_uniform.body_parts_covered & LOWER_TORSO) && (environment.temperature < w_uniform.protective_temperature))
-					transfer_coefficient *= w_uniform.heat_transfer_coefficient
-
-				handle_temperature_damage(LOWER_TORSO, environment.temperature, environment_heat_capacity*transfer_coefficient)
-
-				transfer_coefficient = 1
-				if(wear_suit && (wear_suit.body_parts_covered & LEGS) && (environment.temperature < wear_suit.protective_temperature))
-					transfer_coefficient *= wear_suit.heat_transfer_coefficient
-				if(w_uniform && (w_uniform.body_parts_covered & LEGS) && (environment.temperature < w_uniform.protective_temperature))
-					transfer_coefficient *= w_uniform.heat_transfer_coefficient
-
-				handle_temperature_damage(LEGS, environment.temperature, environment_heat_capacity*transfer_coefficient)
-
-				transfer_coefficient = 1
-				if(wear_suit && (wear_suit.body_parts_covered & ARMS) && (environment.temperature < wear_suit.protective_temperature))
-					transfer_coefficient *= wear_suit.heat_transfer_coefficient
-				if(w_uniform && (w_uniform.body_parts_covered & ARMS) && (environment.temperature < w_uniform.protective_temperature))
-					transfer_coefficient *= w_uniform.heat_transfer_coefficient
-
-				handle_temperature_damage(ARMS, environment.temperature, environment_heat_capacity*transfer_coefficient)
-
-				transfer_coefficient = 1
-				if(wear_suit && (wear_suit.body_parts_covered & HANDS) && (environment.temperature < wear_suit.protective_temperature))
-					transfer_coefficient *= wear_suit.heat_transfer_coefficient
-				if(gloves && (gloves.body_parts_covered & HANDS) && (environment.temperature < gloves.protective_temperature))
-					transfer_coefficient *= gloves.heat_transfer_coefficient
-
-				handle_temperature_damage(HANDS, environment.temperature, environment_heat_capacity*transfer_coefficient)
-
-				transfer_coefficient = 1
-				if(wear_suit && (wear_suit.body_parts_covered & FEET) && (environment.temperature < wear_suit.protective_temperature))
-					transfer_coefficient *= wear_suit.heat_transfer_coefficient
-				if(shoes && (shoes.body_parts_covered & FEET) && (environment.temperature < shoes.protective_temperature))
-					transfer_coefficient *= shoes.heat_transfer_coefficient
-
-				handle_temperature_damage(FEET, environment.temperature, environment_heat_capacity*transfer_coefficient)
-
-		//Account for massive pressure differences.  Done by Polymorph
-		//	Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
+		// Account for massive pressure differences.  Done by Polymorph
+		// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
 
 		var/pressure = environment.return_pressure()
 		if(pressure > HAZARD_HIGH_PRESSURE)
 			var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 			if(adjusted_pressure > HAZARD_HIGH_PRESSURE)
 				adjustBruteLoss( min( (adjusted_pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT , MAX_PRESSURE_DAMAGE) )
-		return //TODO: DEFERRED
+		return
 
+	/*
 	proc/adjust_body_temperature(current, loc_temp, boost)
 		var/temperature = current
 		var/difference = abs(current-loc_temp)	//get difference
@@ -542,35 +534,140 @@
 			temperature = max(loc_temp, temperature-change)
 		temp_change = (temperature - current)
 		return temp_change
+	*/
 
-	proc/get_thermal_protection()
-		var/thermal_protection = 1.0
+	proc/stabilize_temperature_from_calories()
+		switch(bodytemperature)
+			if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
+				if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
+					nutrition -= 2
+				var/body_temperature_difference = 310.15 - bodytemperature
+				bodytemperature += max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
+			if(260.15 to 360.15)
+				var/body_temperature_difference = 310.15 - bodytemperature
+				bodytemperature += body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR
+			if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
+				//We totally need a sweat system cause it totally makes sense...~
+				var/body_temperature_difference = 310.15 - bodytemperature
+				bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+
+	//This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, UPPER_TORSO, LOWER_TORSO, etc. See setup.dm for the full list)
+	proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
+		var/thermal_protection_flags = 0
 		//Handle normal clothing
-		if(head && (head.body_parts_covered & HEAD))
-			thermal_protection += 0.5
-		if(wear_suit && (wear_suit.body_parts_covered & UPPER_TORSO))
-			thermal_protection += 0.5
-		if(w_uniform && (w_uniform.body_parts_covered & UPPER_TORSO))
-			thermal_protection += 0.5
-		if(wear_suit && (wear_suit.body_parts_covered & LEGS))
-			thermal_protection += 0.2
-		if(wear_suit && (wear_suit.body_parts_covered & ARMS))
-			thermal_protection += 0.2
-		if(wear_suit && (wear_suit.body_parts_covered & HANDS))
-			thermal_protection += 0.2
-		if(shoes && (shoes.body_parts_covered & FEET))
-			thermal_protection += 0.2
-		if(wear_suit && (wear_suit.flags & SUITSPACE))
-			thermal_protection += 3
-		if(w_uniform && (w_uniform.flags & SUITSPACE))
-			thermal_protection += 3
-		if(head && (head.flags & HEADSPACE))
-			thermal_protection += 1
+		if(head)
+			if(head.max_heat_protection_temperature && head.max_heat_protection_temperature >= temperature)
+				thermal_protection_flags |= head.heat_protection
+		if(wear_suit)
+			if(wear_suit.max_heat_protection_temperature && wear_suit.max_heat_protection_temperature >= temperature)
+				thermal_protection_flags |= wear_suit.heat_protection
+		if(w_uniform)
+			if(w_uniform.max_heat_protection_temperature && w_uniform.max_heat_protection_temperature >= temperature)
+				thermal_protection_flags |= w_uniform.heat_protection
+		if(shoes)
+			if(shoes.max_heat_protection_temperature && shoes.max_heat_protection_temperature >= temperature)
+				thermal_protection_flags |= shoes.heat_protection
+		if(gloves)
+			if(gloves.max_heat_protection_temperature && gloves.max_heat_protection_temperature >= temperature)
+				thermal_protection_flags |= gloves.heat_protection
+		if(wear_mask)
+			if(wear_mask.max_heat_protection_temperature && wear_mask.max_heat_protection_temperature >= temperature)
+				thermal_protection_flags |= wear_mask.heat_protection
+
+		return thermal_protection_flags
+
+	proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
+		var/thermal_protection_flags = get_heat_protection_flags(temperature)
+
+		var/thermal_protection = 0.0
+		if(thermal_protection_flags)
+			if(thermal_protection_flags & HEAD)
+				thermal_protection += THERMAL_PROTECTION_HEAD
+			if(thermal_protection_flags & UPPER_TORSO)
+				thermal_protection += THERMAL_PROTECTION_UPPER_TORSO
+			if(thermal_protection_flags & LOWER_TORSO)
+				thermal_protection += THERMAL_PROTECTION_LOWER_TORSO
+			if(thermal_protection_flags & LEG_LEFT)
+				thermal_protection += THERMAL_PROTECTION_LEG_LEFT
+			if(thermal_protection_flags & LEG_RIGHT)
+				thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
+			if(thermal_protection_flags & FOOT_LEFT)
+				thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
+			if(thermal_protection_flags & FOOT_RIGHT)
+				thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
+			if(thermal_protection_flags & ARM_LEFT)
+				thermal_protection += THERMAL_PROTECTION_ARM_LEFT
+			if(thermal_protection_flags & ARM_RIGHT)
+				thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
+			if(thermal_protection_flags & HAND_LEFT)
+				thermal_protection += THERMAL_PROTECTION_HAND_LEFT
+			if(thermal_protection_flags & HAND_RIGHT)
+				thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
+
+
+		return min(1,thermal_protection)
+
+	//See proc/get_heat_protection_flags(temperature) for the description of this proc.
+	proc/get_cold_protection_flags(temperature)
+		var/thermal_protection_flags = 0
+		//Handle normal clothing
+
+		if(head)
+			if(head.min_cold_protection_temperature && head.min_cold_protection_temperature <= temperature)
+				thermal_protection_flags |= head.cold_protection
+		if(wear_suit)
+			if(wear_suit.min_cold_protection_temperature && wear_suit.min_cold_protection_temperature <= temperature)
+				thermal_protection_flags |= wear_suit.cold_protection
+		if(w_uniform)
+			if(w_uniform.min_cold_protection_temperature && w_uniform.min_cold_protection_temperature <= temperature)
+				thermal_protection_flags |= w_uniform.cold_protection
+		if(shoes)
+			if(shoes.min_cold_protection_temperature && shoes.min_cold_protection_temperature <= temperature)
+				thermal_protection_flags |= shoes.cold_protection
+		if(gloves)
+			if(gloves.min_cold_protection_temperature && gloves.min_cold_protection_temperature <= temperature)
+				thermal_protection_flags |= gloves.cold_protection
+		if(wear_mask)
+			if(wear_mask.min_cold_protection_temperature && wear_mask.min_cold_protection_temperature <= temperature)
+				thermal_protection_flags |= wear_mask.cold_protection
+
+		return thermal_protection_flags
+
+	proc/get_cold_protection(temperature)
+
 		if(COLD_RESISTANCE in mutations)
-			thermal_protection += 5
+			return 1 //Fully protected from the cold.
 
-		return thermal_protection
+		var/thermal_protection_flags = get_cold_protection_flags(temperature)
 
+		var/thermal_protection = 0.0
+		if(thermal_protection_flags)
+			if(thermal_protection_flags & HEAD)
+				thermal_protection += THERMAL_PROTECTION_HEAD
+			if(thermal_protection_flags & UPPER_TORSO)
+				thermal_protection += THERMAL_PROTECTION_UPPER_TORSO
+			if(thermal_protection_flags & LOWER_TORSO)
+				thermal_protection += THERMAL_PROTECTION_LOWER_TORSO
+			if(thermal_protection_flags & LEG_LEFT)
+				thermal_protection += THERMAL_PROTECTION_LEG_LEFT
+			if(thermal_protection_flags & LEG_RIGHT)
+				thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
+			if(thermal_protection_flags & FOOT_LEFT)
+				thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
+			if(thermal_protection_flags & FOOT_RIGHT)
+				thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
+			if(thermal_protection_flags & ARM_LEFT)
+				thermal_protection += THERMAL_PROTECTION_ARM_LEFT
+			if(thermal_protection_flags & ARM_RIGHT)
+				thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
+			if(thermal_protection_flags & HAND_LEFT)
+				thermal_protection += THERMAL_PROTECTION_HAND_LEFT
+			if(thermal_protection_flags & HAND_RIGHT)
+				thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
+
+		return min(1,thermal_protection)
+
+	/*
 	proc/add_fire_protection(var/temp)
 		var/fire_prot = 0
 		if(head)
@@ -626,6 +723,7 @@
 			if(ARMS)
 				apply_damage(0.4*discomfort, BURN, "l_arm")
 				apply_damage(0.4*discomfort, BURN, "r_arm")
+	*/
 
 	proc/handle_chemicals_in_body()
 		if(reagents) reagents.metabolize(src)

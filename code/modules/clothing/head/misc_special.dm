@@ -15,9 +15,8 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
-	protective_temperature = 1300
 	m_amt = 3000
 	g_amt = 1000
 	var/up = 0
@@ -57,7 +56,7 @@
 	name = "cake-hat"
 	desc = "It's tasty looking!"
 	icon_state = "cake0"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	var/onfire = 0.0
 	var/status = 0
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
