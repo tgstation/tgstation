@@ -122,14 +122,17 @@
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
 
-/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
+/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/client_check = 1, var/sight_check = 1, var/include_radio = 1, var/max_depth = 3)
 
 	//debug_mob += O.contents.len
+	if(max_depth < 1)
+		return L
+
 	for(var/atom/A in O)
 		if(ismob(A))
 			var/mob/M = A
 			if(client_check && !M.client)
-				L = recursive_mob_check(A, L)
+				L = recursive_mob_check(A, L, 1, 1, max_depth - 1)
 				continue
 			if(sight_check && !isInSight(A, O))
 				continue
@@ -138,7 +141,7 @@
 		else if(include_radio && istype(A, /obj/item/device/radio))
 			if(sight_check && isInSight(A, O))
 				L += A
-		L = recursive_mob_check(A, L)
+		L = recursive_mob_check(A, L, 1, 1, max_depth - 1)
 	return L
 
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
