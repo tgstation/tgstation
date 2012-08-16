@@ -1633,6 +1633,7 @@
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(M == user)
 			M << "\blue You swallow [src]."
+			M.drop_from_inventory(src) //icon update
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)
@@ -1649,6 +1650,7 @@
 
 			if(!do_mob(user, M)) return
 
+			user.drop_from_inventory(src) //icon update
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message("\red [user] forces [M] to swallow [src].", 1)
 
