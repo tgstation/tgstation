@@ -319,7 +319,6 @@
 			if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 				internal = null
 			if(internal)
-				world << "Breath from internal"
 				return internal.remove_air_volume(volume_needed)
 			else if(internals)
 				internals.icon_state = "internal0"
@@ -426,7 +425,6 @@
 					if(prob(20))
 						spawn(0) emote(pick("giggle", "laugh"))
 
-		world << "breath temperature = [breath.temperature]"
 		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 			if(breath.temperature < 260.15)
 				if(prob(20))
