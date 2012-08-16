@@ -588,13 +588,17 @@ This method wont take into account storage items developed in the future and doe
 			supply_shuttle_requestlist -= O
 
 			if(supply_shuttle_points >= P.cost)
-				supply_shuttle_points -= P.cost
 				O.object = P
 				O.orderedby = usr.name
 				O.comment = copytext(sanitize(input(usr,"Comment:","Enter comment","")),1,MAX_MESSAGE_LEN)
-				supply_shuttle_shoppinglist += O
-				src.temp = "Thanks for your order.<BR>"
-				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+				if(supply_shuttle_points >= P.cost)
+					supply_shuttle_points -= P.cost
+					supply_shuttle_shoppinglist += O
+					src.temp = "Thanks for your order.<BR>"
+					src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+				else
+					src.temp = "Not enough supply points.<BR>"
+					src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			else
 				src.temp = "Not enough supply points.<BR>"
 				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -604,13 +608,17 @@ This method wont take into account storage items developed in the future and doe
 			var/supplytype = href_list["doorder"]
 			var/datum/supply_packs/P = new supplytype ()
 			if(supply_shuttle_points >= P.cost)
-				supply_shuttle_points -= P.cost
 				O.object = P
 				O.orderedby = usr.name
 				O.comment = copytext(sanitize(input(usr,"Comment:","Enter comment","")),1,MAX_MESSAGE_LEN)
-				supply_shuttle_shoppinglist += O
-				src.temp = "Thanks for your order.<BR>"
-				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+				if(supply_shuttle_points >= P.cost)
+					supply_shuttle_points -= P.cost
+					supply_shuttle_shoppinglist += O
+					src.temp = "Thanks for your order.<BR>"
+					src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+				else
+					src.temp = "Not enough supply points.<BR>"
+					src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			else
 				src.temp = "Not enough supply points.<BR>"
 				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
