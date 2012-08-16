@@ -43,7 +43,7 @@
 	I.pixel_x = x
 	I.pixel_y = y
 	overlays += I
-
+/*
 /obj/item/weapon/firbang
 	desc = "It is set to detonate in 10 seconds."
 	name = "firbang"

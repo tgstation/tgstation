@@ -724,7 +724,7 @@
 
 /obj/machinery/reagentgrinder/New()
 	..()
-	beaker = new /obj/item/weapon/reagent_containers/glass/large(src)
+	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	return
 
 /obj/machinery/reagentgrinder/update_icon()

@@ -44,32 +44,10 @@
 	D.create_reagents(amount_per_transfer_from_this)
 	reagents.trans_to(D, amount_per_transfer_from_this)
 
-	var/list/rgbcolor = list(0,0,0)
-	var/finalcolor
-	for(var/datum/reagent/re in D.reagents.reagent_list) // natural color mixing bullshit/algorithm
-		if(!finalcolor)
-			rgbcolor = GetColors(re.color)
-			finalcolor = re.color
-		else
-			var/newcolor[3]
-			var/prergbcolor[3]
-			prergbcolor = rgbcolor
-			newcolor = GetColors(re.color)
-
-			rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-			rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-			rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
-
-			finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
-			// This isn't a perfect color mixing system, the more reagents that are inside,
-			// the darker it gets until it becomes absolutely pitch black! I dunno, maybe
-			// that's pretty realistic? I don't do a whole lot of color-mixing anyway.
-			// If you add brighter colors to it it'll eventually get lighter, though.
-
 	D.name = "chemicals"
 	D.icon = 'icons/obj/chempuff.dmi'
 
-	D.icon += finalcolor
+	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
 	spawn(0)
 		for(var/i=0, i<3, i++)
@@ -97,8 +75,6 @@
 /obj/item/weapon/reagent_containers/spray/examine()
 	set src in usr
 	..()
-//	usr << "\icon[src] This is \the [src]!"
-//	usr << desc
 	for(var/datum/reagent/R in reagents.reagent_list)
 		usr << "[round(R.volume)] units of [R.name] left."
 	return
@@ -178,25 +154,7 @@
 		D.create_reagents(amount_per_transfer_from_this)
 		src.reagents.trans_to(D, amount_per_transfer_from_this)
 
-		var/rgbcolor[3]
-		var/finalcolor
-		for(var/datum/reagent/re in D.reagents.reagent_list)
-			if(!finalcolor)
-				rgbcolor = GetColors(re.color)
-				finalcolor = re.color
-			else
-				var/newcolor[3]
-				var/prergbcolor[3]
-				prergbcolor = rgbcolor
-				newcolor = GetColors(re.color)
-
-				rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-				rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-				rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
-
-				finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
-
-		D.icon += finalcolor
+		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
 		Sprays[i] = D
 

@@ -975,35 +975,17 @@
 			overlays += injoverlay
 		icon_state = "[rounded_vol]"
 		item_state = "syringe_[rounded_vol]"
+
 		if(reagents.total_volume)
-			var/obj/effect/overlay = new/obj
-			overlay.icon = 'icons/obj/syringefilling.dmi'
+			var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10", src.layer)
+
 			switch(rounded_vol)
-				if(5)	overlay.icon_state = "5"
-				if(10)	overlay.icon_state = "10"
-				if(15)	overlay.icon_state = "15"
+				if(5)	filling.icon_state = "syringe5"
+				if(10)	filling.icon_state = "syringe10"
+				if(15)	filling.icon_state = "syringe15"
 
-			var/list/rgbcolor = list(0,0,0)
-			var/finalcolor
-			for(var/datum/reagent/re in reagents.reagent_list) // natural color mixing bullshit/algorithm
-				if(!finalcolor)
-					rgbcolor = GetColors(re.color)
-					finalcolor = re.color
-				else
-					var/newcolor[3]
-					var/prergbcolor[3]
-					prergbcolor = rgbcolor
-					newcolor = GetColors(re.color)
-
-					rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-					rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-					rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
-
-					finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
-
-			overlay.icon += finalcolor
-			if(!istype(src.loc, /turf))	overlay.layer = 17
-			overlays += overlay
+			filling.icon += mix_color_from_reagents(reagents.reagent_list)
+			overlays += filling
 
 
 /obj/item/weapon/reagent_containers/ld50_syringe
@@ -1029,13 +1011,6 @@
 		update_icon()
 
 	attack_self(mob/user as mob)
-/*
-		switch(mode)
-			if(SYRINGE_DRAW)
-				mode = SYRINGE_INJECT
-			if(SYRINGE_INJECT)
-				mode = SYRINGE_DRAW
-*/
 		mode = !mode
 		update_icon()
 
@@ -1760,61 +1735,49 @@
 	m_amt = 0
 	g_amt = 500
 
+	on_reagent_change()
+		update_icon()
+
 	pickup(mob/user)
-		on_reagent_change(user)
+		..()
+		update_icon()
 
 	dropped(mob/user)
-		on_reagent_change()
+		..()
+		update_icon()
 
-	on_reagent_change(var/mob/user)
-		/*
-		if(reagents.total_volume)
-			icon_state = "beaker1"
-		else
-			icon_state = "beaker0"
-		*/
+	attack_hand()
+		..()
+		update_icon()
+
+	update_icon()
 		overlays = null
 
 		if(reagents.total_volume)
-			var/obj/effect/overlay = new/obj
-			overlay.icon = 'icons/obj/beaker1.dmi'
+			var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10", src.layer)
+
 			var/percent = round((reagents.total_volume / volume) * 100)
 			switch(percent)
-				if(0 to 9)		overlay.icon_state = "-10"
-				if(10 to 24) 	overlay.icon_state = "10"
-				if(25 to 49)	overlay.icon_state = "25"
-				if(50 to 74)	overlay.icon_state = "50"
-				if(75 to 79)	overlay.icon_state = "75"
-				if(80 to 90)	overlay.icon_state = "80"
-				if(91 to 100)	overlay.icon_state = "100"
+				if(0 to 9)		filling.icon_state = "[icon_state]-10"
+				if(10 to 24) 	filling.icon_state = "[icon_state]10"
+				if(25 to 49)	filling.icon_state = "[icon_state]25"
+				if(50 to 74)	filling.icon_state = "[icon_state]50"
+				if(75 to 79)	filling.icon_state = "[icon_state]75"
+				if(80 to 90)	filling.icon_state = "[icon_state]80"
+				if(91 to INFINITY)	filling.icon_state = "[icon_state]100"
 
-			var/list/rgbcolor = list(0,0,0)
-			var/finalcolor
-			for(var/datum/reagent/re in reagents.reagent_list) // natural color mixing bullshit/algorithm
-				if(!finalcolor)
-					rgbcolor = GetColors(re.color)
-					finalcolor = re.color
-				else
-					var/newcolor[3]
-					var/prergbcolor[3]
-					prergbcolor = rgbcolor
-					newcolor = GetColors(re.color)
+			filling.icon += mix_color_from_reagents(reagents.reagent_list)
+			overlays += filling
 
-					rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-					rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-					rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
-
-					finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
-					// This isn't a perfect color mixing system, the more reagents that are inside,
-					// the darker it gets until it becomes absolutely pitch black! I dunno, maybe
-					// that's pretty realistic? I don't do a whole lot of color-mixing anyway.
-					// If you add brighter colors to it it'll eventually get lighter, though.
-
-			overlay.icon += finalcolor
-			if(user || !istype(src.loc, /turf))
-				overlay.layer = 30
-			overlays += overlay
-
+/obj/item/weapon/reagent_containers/glass/beaker/large
+	name = "large beaker"
+	desc = "A large beaker. Can hold up to 100 units."
+	icon_state = "beakerlarge"
+	g_amt = 5000
+	volume = 100
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,50,100)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/blender_jug
 	name = "Blender Jug"
@@ -1831,70 +1794,6 @@
 				icon_state = "blender_jug_h"
 			if(76 to 100)
 				icon_state = "blender_jug_f"
-
-/obj/item/weapon/reagent_containers/glass/large
-	name = "large reagent glass"
-	desc = "A large reagent glass. Can hold up to 100 units."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "beakerlarge"
-	item_state = "beaker"
-	m_amt = 0
-	g_amt = 5000
-	volume = 100
-	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100)
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-
-
-	pickup(mob/user)
-		on_reagent_change(user)
-
-	dropped(mob/user)
-		on_reagent_change()
-
-	on_reagent_change(var/mob/user)
-		overlays = null
-
-		if(reagents.total_volume)
-
-			var/obj/effect/overlay = new/obj
-			overlay.icon = 'icons/obj/beaker2.dmi'
-			var/percent = round((reagents.total_volume / volume) * 100)
-			switch(percent)
-				if(0 to 9)		overlay.icon_state = "-10"
-				if(10 to 24) 	overlay.icon_state = "10"
-				if(25 to 49)	overlay.icon_state = "25"
-				if(50 to 74)	overlay.icon_state = "50"
-				if(75 to 79)	overlay.icon_state = "75"
-				if(80 to 90)	overlay.icon_state = "80"
-				if(91 to 100)	overlay.icon_state = "100"
-
-			var/list/rgbcolor = list(0,0,0)
-			var/finalcolor
-			for(var/datum/reagent/re in reagents.reagent_list) // natural color mixing bullshit/algorithm
-				if(!finalcolor)
-					rgbcolor = GetColors(re.color)
-					finalcolor = re.color
-				else
-					var/newcolor[3]
-					var/prergbcolor[3]
-					prergbcolor = rgbcolor
-					newcolor = GetColors(re.color)
-
-					rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-					rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-					rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
-
-					finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
-					// This isn't a perfect color mixing system, the more reagents that are inside,
-					// the darker it gets until it becomes absolutely pitch black! I dunno, maybe
-					// that's pretty realistic? I don't do a whole lot of color-mixing anyway.
-					// If you add brighter colors to it it'll eventually get lighter, though.
-
-			overlay.icon += finalcolor
-			if(user || !istype(src.loc, /turf))
-				overlay.layer = 30
-			overlays += overlay
 
 /obj/item/weapon/reagent_containers/glass/bottle
 	name = "bottle"

@@ -27,7 +27,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/retractor(),\
 		new /obj/item/weapon/cautery(),\
 		new /obj/item/weapon/reagent_containers/glass/beaker(), \
-		new /obj/item/weapon/reagent_containers/glass/large(), \
+		new /obj/item/weapon/reagent_containers/glass/beaker/large(), \
 		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_magazine/c38(), \

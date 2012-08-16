@@ -47,7 +47,6 @@ datum/controller/game_controller/New()
 			world << "\red \b Job setup complete"
 			job_master.LoadJobs("config/jobs.txt")
 
-	if(!tension_master)				tension_master = new /datum/tension()
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
 	if(!ticker)						ticker = new /datum/controller/gameticker()
@@ -106,9 +105,6 @@ datum/controller/game_controller/proc/process()
 			controller_iteration++
 
 			air_master.process()
-			sleep(breather_ticks)
-
-			tension_master.process()
 			sleep(breather_ticks)
 
 			sun.calc_position()

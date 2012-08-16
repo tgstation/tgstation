@@ -72,7 +72,7 @@
 
 
 /obj/item/weapon/grenade/proc/prime()
-	playsound(loc, 'Welder2.ogg', 25, 1)
+//	playsound(loc, 'Welder2.ogg', 25, 1)
 	var/turf/T = get_turf(src)
 	if(T)
 		T.hotspot_expose(700,125)
@@ -82,12 +82,15 @@
 	if(isscrewdriver(W))
 		switch(det_time)
 			if ("1")
+				det_time = 10
+				user << "<span class='notice'>You set the [name] for 1 second detonation time.</span>"
+			if ("10")
 				det_time = 30
 				user << "<span class='notice'>You set the [name] for 3 second detonation time.</span>"
 			if ("30")
-				det_time = 100
-				user << "<span class='notice'>You set the [name] for 10 second detonation time.</span>"
-			if ("100")
+				det_time = 50
+				user << "<span class='notice'>You set the [name] for 5 second detonation time.</span>"
+			if ("50")
 				det_time = 1
 				user << "<span class='notice'>You set the [name] for instant detonation.</span>"
 		add_fingerprint(user)
