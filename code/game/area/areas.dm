@@ -80,7 +80,7 @@
 /area/proc/poweralert(var/state, var/obj/source as obj)
 	if (state != poweralm)
 		poweralm = state
-		if(istype(source))	//Only report power alarms on the z-level where the thing is located.
+		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			var/list/cameras = list()
 			for (var/obj/machinery/camera/C in src)
 				cameras += C
@@ -90,12 +90,12 @@
 						aiPlayer.cancelAlarm("Power", src, source)
 					else
 						aiPlayer.triggerAlarm("Power", src, cameras, source)
-			for(var/obj/machinery/computer/station_alert/a in player_list)
+			for(var/obj/machinery/computer/station_alert/a in world)
 				if(a.z == source.z)
 					if(state == 1)
 						a.cancelAlarm("Power", src, source)
 					else
-						a.triggerAlarm("Power", src, source)
+						a.triggerAlarm("Power", src, cameras, source)
 	return
 
 /area/proc/atmosalert(danger_level)

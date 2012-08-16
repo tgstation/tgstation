@@ -55,7 +55,7 @@
 
 
 	proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
-		if(stat & (BROKEN|NOPOWER))
+		if(stat & (BROKEN))
 			return
 		var/list/L = src.alarms[class]
 		for (var/I in L)
@@ -78,7 +78,7 @@
 
 
 	proc/cancelAlarm(var/class, area/A as area, obj/origin)
-		if(stat & (BROKEN|NOPOWER))
+		if(stat & (BROKEN))
 			return
 		var/list/L = src.alarms[class]
 		var/cleared = 0
