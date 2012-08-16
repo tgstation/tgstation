@@ -404,6 +404,8 @@
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O.show_message(text("\red <B>[M] [M.attacktext] [src]!</B>"), 1)
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+		//src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		src.health -= M.melee_damage_upper
 		if (src.health <= 0)
 			src.die()

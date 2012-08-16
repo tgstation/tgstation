@@ -112,6 +112,8 @@
 				playsound(loc, M.attack_sound, 50, 1, 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
+			M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
+			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			health -= damage
 
@@ -240,6 +242,8 @@
 				playsound(loc, M.attack_sound, 50, 1, 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
+			M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
+			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			health -= damage
 
@@ -318,6 +322,8 @@
 				playsound(loc, M.attack_sound, 50, 1, 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
+			M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
+			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			health -= damage
 

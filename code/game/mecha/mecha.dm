@@ -466,6 +466,7 @@
 			for (var/mob/V in viewers(src))
 				if(V.client && !(V.blinded))
 					V.show_message("\red <B>[user]</B> [user.attacktext] [src]!", 1)
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 		else
 			src.log_append_to_last("Armor saved.")
 			playsound(src.loc, 'slash.ogg', 50, 1, -1)
@@ -473,6 +474,7 @@
 			for (var/mob/V in viewers(src))
 				if(V.client && !(V.blinded))
 					V.show_message("\blue The [user] rebounds off [src.name]'s armor!", 1)
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	return
 
 

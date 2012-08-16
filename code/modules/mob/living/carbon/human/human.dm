@@ -367,6 +367,8 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
+		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
