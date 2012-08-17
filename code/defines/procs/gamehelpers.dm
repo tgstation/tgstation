@@ -115,6 +115,16 @@
 			turfs += T
 	return turfs
 
+// Like view but bypasses luminosity check
+/proc/hear(var/range, var/atom/source)
+
+	var/lum = source.luminosity
+	source.luminosity = 6
+
+	var/list/heard = view(range, source)
+	source.luminosity = lum
+
+	return heard
 
 //var/debug_mob = 0
 
@@ -152,7 +162,7 @@
 
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
-	var/list/range = view(R, T)
+	var/list/range = hear(R, T)
 
 	//debug_mob += range.len
 	for(var/turf/A in range)
