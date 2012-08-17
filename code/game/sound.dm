@@ -20,6 +20,16 @@
 	if (vary)
 		S.frequency = rand(32000, 55000)
 	for (var/mob/M in range(world.view+extrarange, source))       // Plays for people in range.
+		if(locate(/mob/, M))
+			var/mob/M2 = locate(/mob/, M)
+			if (M2.client)
+				if(M2.ear_deaf <= 0 || !M.ear_deaf)
+					if(isturf(source))
+						var/dx = source.x - M2.x
+						S.pan = max(-100, min(100, dx/8.0 * 100))
+
+					M2 << S
+
 		if (M.client)
 			if(M.ear_deaf <= 0 || !M.ear_deaf)
 				if(isturf(source))
