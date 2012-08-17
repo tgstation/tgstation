@@ -17,6 +17,7 @@ SHARDS
 		var/obj/item/weapon/cable_coil/CC = W
 		if(CC.amount < 5)
 			user << "\b There is not enough wire in this coil. You need 5 lengths."
+			return
 		CC.use(5)
 		src.use(1)
 		user << "\blue You attach wire to the [name]."
