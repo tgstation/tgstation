@@ -86,6 +86,6 @@
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun darts"
 	desc = "A dart for use in shotguns."
-	icon_state = "blshell" //someone, draw the icon, please.
+	icon_state = "dart"
 	projectile_type = "/obj/item/projectile/energy/dart"
 	m_amt = 12500
