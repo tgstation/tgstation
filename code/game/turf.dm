@@ -234,6 +234,7 @@
 
 	E.dir = old_dir
 	E.icon_state = "engine"
+	E.levelupdate()
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if (istype(A,/mob/living/carbon))
@@ -296,6 +297,7 @@
 	var/old_dir = dir
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
 	S.dir = old_dir
+	S.levelupdate()
 	return S
 
 /turf/proc/ReplaceWithLattice()
@@ -304,6 +306,7 @@
 	S.dir = old_dir
 	S.sd_LumReset()
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
+	S.levelupdate()
 	return S
 
 /turf/proc/ReplaceWithWall()
@@ -313,6 +316,7 @@
 	S.opacity = 0
 	S.sd_NewOpacity(1)
 	S.sd_LumReset()
+	S.levelupdate()
 	return S
 
 /turf/proc/ReplaceWithRWall()
@@ -322,6 +326,7 @@
 	S.opacity = 0
 	S.sd_NewOpacity(1)
 	S.sd_LumReset()
+	S.levelupdate()
 	return S
 
 /turf/proc/ReplaceWithMineralWall(var/ore)
@@ -333,6 +338,7 @@
 	S.mineral = ore
 	S.New()//Hackish as fuck, but what can you do? -Sieve
 	S.sd_LumReset()
+	S.levelupdate()
 	return S
 
 //turf/simulated/wall/New()

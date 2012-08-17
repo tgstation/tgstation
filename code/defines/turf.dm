@@ -144,7 +144,9 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
-
+/turf/simulated/New()
+	..()
+	levelupdate()
 
 /turf/simulated/wall
 	name = "wall"
@@ -299,28 +301,27 @@
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
 
-/turf/proc
-	AdjacentTurfs()
-		var/L[] = new()
-		for(var/turf/simulated/t in oview(src,1))
-			if(!t.density)
-				if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-					L.Add(t)
-		return L
-	Distance(turf/t)
-		if(get_dist(src,t) == 1)
-			var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
-			cost *= (pathweight+t.pathweight)/2
-			return cost
-		else
-			return get_dist(src,t)
-	AdjacentTurfsSpace()
-		var/L[] = new()
-		for(var/turf/t in oview(src,1))
-			if(!t.density)
-				if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-					L.Add(t)
-		return L
+/turf/proc/AdjacentTurfs()
+	var/L[] = new()
+	for(var/turf/simulated/t in oview(src,1))
+		if(!t.density)
+			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
+				L.Add(t)
+	return L
+/turf/proc/Distance(turf/t)
+	if(get_dist(src,t) == 1)
+		var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
+		cost *= (pathweight+t.pathweight)/2
+		return cost
+	else
+		return get_dist(src,t)
+/turf/proc/AdjacentTurfsSpace()
+	var/L[] = new()
+	for(var/turf/t in oview(src,1))
+		if(!t.density)
+			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
+				L.Add(t)
+	return L
 
 
 /*
