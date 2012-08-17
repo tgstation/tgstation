@@ -1,5 +1,17 @@
 /obj/structure/closet/secure_closet/freezer
 
+/obj/structure/closet/secure_closet/freezer/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
+
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "Kitchen Cabinet"
 	req_access = list(access_kitchen)

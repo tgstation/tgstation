@@ -187,7 +187,17 @@
 		new /obj/item/weapon/storage/box/evidence(src)
 		return
 
-
+/obj/structure/closet/secure_closet/detective/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
 
 /obj/structure/closet/secure_closet/injection
 	name = "Lethal Injections"

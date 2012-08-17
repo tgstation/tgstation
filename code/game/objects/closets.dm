@@ -176,6 +176,7 @@
 			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 		src.welded =! src.welded
+		src.update_icon()
 		for(var/mob/M in viewers(src))
 			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
 	else
@@ -240,3 +241,12 @@
 		src.attack_hand(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
+
+/obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
+	overlays = null
+	if(!opened)
+		icon_state = icon_closed
+		if(welded)
+			overlays += "welded"
+	else
+		icon_state = icon_opened

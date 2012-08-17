@@ -65,7 +65,7 @@
 						starving = 1
 			else
 				switch(nutrition)
-					if(150 to 800) hungry = 1
+					if(150 to 900) hungry = 1
 					if(0 to 149) starving = 1
 			AIproc = 1
 			while(AIproc && stat != 2 && (attacked > 0 || starving || hungry || rabid || Victim))
@@ -408,12 +408,16 @@
 				var/starving = 0 // determines if the metroid is starving-hungry
 				if(istype(src, /mob/living/carbon/metroid/adult)) // 1200 max nutrition
 					switch(nutrition)
+						if(601 to 900)
+							if(prob(25)) hungry = 1//Ensures they continue eating, but aren't as aggressive at the same time
 						if(301 to 600) hungry = 1
 						if(0 to 300)
 							starving = 1
 
 				else
 					switch(nutrition)			// 1000 max nutrition
+						if(501 to 700)
+							if(prob(25)) hungry = 1
 						if(201 to 500) hungry = 1
 						if(0 to 200) starving = 1
 

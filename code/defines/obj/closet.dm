@@ -29,6 +29,13 @@
 	icon_closed = "cabinet_closed"
 	icon_opened = "cabinet_open"
 
+/obj/structure/closet/cabinet/update_icon()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened
+
+
 /obj/effect/spresent
 	name = "strange present"
 	desc = "It's a ... present?"
@@ -59,6 +66,12 @@
 	icon_closed = "firecloset"
 	icon_opened = "fireclosetopen"
 
+/obj/structure/closet/firecloset/update_icon()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened
+
 /obj/structure/closet/hydrant //wall mounted fire closet
 	name = "fire-safety closet"
 	desc = "It's a storage unit for fire-fighting supplies."
@@ -78,6 +91,12 @@
 	anchored = 1
 	density = 0
 	wall_mounted = 1
+
+/obj/structure/closet/medical_wall/update_icon()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened
 
 /obj/structure/closet/toolcloset
 	name = "tool closet"
@@ -137,6 +156,12 @@
 	icon_state = "coffin"
 	icon_closed = "coffin"
 	icon_opened = "coffin_open"
+
+/obj/structure/closet/coffin/update_icon()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened
 
 /obj/structure/closet/bombcloset
 	name = "\improper EOD closet"
@@ -376,6 +401,18 @@
 	wall_mounted = 1
 	req_access = list(access_medical)
 
+/obj/structure/closet/secure_closet/medical_wall/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
+
 /obj/structure/closet/secure_closet/personal
 	desc = "It's a secure locker for personell. The first card swiped gains control."
 	name = "personal closet"
@@ -387,6 +424,18 @@
 	icon_opened = "cabinetdetective_open"
 	icon_broken = "cabinetdetective_broken"
 	icon_off = "cabinetdetective_broken"
+
+/obj/structure/closet/secure_closet/personal/cabinet/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
 
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
@@ -404,6 +453,18 @@
 
 	//too small to put a man in
 	large = 0
+
+/obj/structure/closet/secure_closet/wall/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
 
 /obj/structure/closet/crate/critter
 	name = "critter crate"
