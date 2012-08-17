@@ -28,6 +28,9 @@
 
 	..()
 
+	if(dna)
+		dna.real_name = real_name
+
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))

@@ -181,6 +181,7 @@
 
 	if(!H.dna)
 		H.dna = new /datum/dna()
+		H.dna.real_name = H.real_name
 	if(ui)
 		H.dna.uni_identity = ui
 		updateappearance(H, ui)

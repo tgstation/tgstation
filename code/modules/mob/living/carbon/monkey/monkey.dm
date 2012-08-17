@@ -2,10 +2,15 @@
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
+
+	if(name == "monkey")
+		name = text("monkey ([rand(1, 1000)])")
+	real_name = name
 	if (!(dna))
 		if(gender == NEUTER)
 			gender = pick(MALE, FEMALE)
 		dna = new /datum/dna( null )
+		dna.real_name = real_name
 		dna.uni_identity = "00600200A00E0110148FC01300B009"
 		dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
 		dna.unique_enzymes = md5(name)
@@ -18,10 +23,6 @@
 		dna.uni_identity += gendervar
 		dna.uni_identity += "12C"
 		dna.uni_identity += "4E2"
-
-	if(name == "monkey")
-		name = text("monkey ([rand(1, 1000)])")
-	real_name = name
 	..()
 	return
 

@@ -13,7 +13,7 @@
 				src.verbs += P.verbpath
 
 	if(!mind.changeling.absorbed_dna.len)
-		mind.changeling.absorbed_dna[real_name] = dna
+		mind.changeling.absorbed_dna += dna
 	return 1
 
 //removes our changeling verbs
@@ -109,7 +109,8 @@
 	usr.visible_message("<span class='danger'>[usr] sucks the fluids from [T]!</span>")
 	T << "<span class='danger'>You have been absorbed by the changeling!</span>"
 
-	changeling.absorbed_dna[T.real_name] = T.dna
+	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
+	changeling.absorbed_dna += T.dna
 	if(usr.nutrition < 400) usr.nutrition = min((usr.nutrition + T.nutrition), 400)
 	changeling.chem_charges += 10
 	changeling.geneticpoints += 2
@@ -119,7 +120,7 @@
 			changeling.absorbed_dna |= T.mind.changeling.absorbed_dna	//steal all their loot
 			changeling.absorbedcount += T.mind.changeling.absorbedcount
 
-			T.mind.changeling.absorbed_dna = list("T.real_name"=T.dna)
+			T.mind.changeling.absorbed_dna = list(T.dna)
 
 		if(T.mind.changeling.purchasedpowers)
 			for(var/datum/power/changeling/Tp in T.mind.changeling.purchasedpowers)
@@ -153,14 +154,27 @@
 	var/datum/changeling/changeling = changeling_power(5,1,0)
 	if(!changeling)	return
 
-	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in changeling.absorbed_dna
+	var/list/names = list()
+	for(var/datum/dna/DNA in changeling.absorbed_dna)
+		names += "[DNA.real_name]"
+
+	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
+
+	var/datum/dna/chosen_dna
+	for(var/datum/dna/DNA in changeling.absorbed_dna)
+		if(S == "[DNA.real_name]")
+			chosen_dna = DNA
+			break
+
+	if(!chosen_dna)
+		return
 
 	changeling.chem_charges -= 5
 	usr.visible_message("<span class='warning'>[usr] transforms!</span>")
 	changeling.geneticdamage = 30
-	usr.dna = changeling.absorbed_dna[S]
-	usr.real_name = S
+	usr.dna = chosen_dna
+	usr.real_name = chosen_dna.real_name
 	updateappearance(usr, usr.dna.uni_identity)
 	domutcheck(usr, null)
 
@@ -243,15 +257,28 @@
 	var/datum/changeling/changeling = changeling_power(1,1,0)
 	if(!changeling)	return
 
-	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in changeling.absorbed_dna
+	var/list/names = list()
+	for(var/datum/dna/DNA in changeling.absorbed_dna)
+		names += "[DNA.real_name]"
+
+	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
+
+	var/datum/dna/chosen_dna
+	for(var/datum/dna/DNA in changeling.absorbed_dna)
+		if(S == "[DNA.real_name]")
+			chosen_dna = DNA
+			break
+
+	if(!chosen_dna)
+		return
 
 	var/mob/living/carbon/C = usr
 
 	changeling.chem_charges--
 	C.remove_changeling_powers()
 	C.visible_message("<span class='warning'>[C] transforms!</span>")
-	C.dna = changeling.absorbed_dna[S]
+	C.dna = chosen_dna
 
 	var/list/implants = list()
 	for (var/obj/item/weapon/implant/I in C) //Still preserving implants
@@ -286,7 +313,7 @@
 		O.gender = MALE
 	O.dna = C.dna
 	C.dna = null
-	O.real_name = S
+	O.real_name = chosen_dna.real_name
 
 	for(var/obj/T in C)
 		del(T)
@@ -566,8 +593,24 @@
 
 	var/datum/changeling/changeling = changeling_power(40)
 	if(!changeling)	return 0
-	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in changeling.absorbed_dna
+
+
+
+	var/list/names = list()
+	for(var/datum/dna/DNA in changeling.absorbed_dna)
+		names += "[DNA.real_name]"
+
+	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
+
+	var/datum/dna/chosen_dna
+	for(var/datum/dna/DNA in changeling.absorbed_dna)
+		if(S == "[DNA.real_name]")
+			chosen_dna = DNA
+			break
+
+	if(!chosen_dna)
+		return
 
 	var/mob/living/carbon/T = changeling_sting(40,/mob/proc/changeling_transformation_sting)
 	if(!T)	return 0
@@ -575,8 +618,8 @@
 		usr << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	T.visible_message("<span class='warning'>[T] transforms!</span>")
-	T.dna = changeling.absorbed_dna[S]
-	T.real_name = S
+	T.dna = chosen_dna
+	T.real_name = chosen_dna.real_name
 	updateappearance(T, T.dna.uni_identity)
 	domutcheck(T, null)
 	feedback_add_details("changeling_powers","TS")

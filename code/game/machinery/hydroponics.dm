@@ -910,6 +910,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 		if(!podman.dna)
 			podman.dna = new /datum/dna()
+			podman.dna.real_name = podman.real_name
 		if(ui)
 			podman.dna.uni_identity = ui
 			updateappearance(podman, ui)

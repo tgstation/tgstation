@@ -671,6 +671,9 @@ datum/preferences
 
 		character.real_name = real_name
 
+		if(character.dna)
+			character.dna.real_name = character.real_name
+
 		character.gender = gender
 
 		character.age = age
