@@ -33,6 +33,9 @@
 				playsound(user.loc, 'attackblob.ogg', 50, 1)
 
 				if(prob(src.getBruteLoss() - 50))
+					for(var/atom/movable/A in stomach_contents)
+						A.loc = loc
+						stomach_contents.Remove(A)
 					src.gib()
 
 /mob/living/carbon/gib()
