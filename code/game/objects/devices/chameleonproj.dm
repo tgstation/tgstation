@@ -86,7 +86,7 @@
 			spawn(8) del(T)
 		else
 			playsound(src, 'pop.ogg', 100, 1, 1)
-			var/obj/O = new saved_item (src)
+			var/obj/O = new saved_item(src)
 			if(!O) return
 			var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
 			C.name = O.name
