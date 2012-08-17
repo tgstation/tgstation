@@ -87,11 +87,11 @@
 		src.icon_state = src.icon_opened
 		src.opened = 1
 	else
-		user << "<span class='notice'>The locker is welded shut!</span>"
+		user << "<span class='notice'>The locker is locked!</span>"
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in hearers(src, null))
-				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
+				M << "<FONT size=[max(0, 5 - get_dist(src, M))]>BANG, bang!</FONT>"
 	return
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user as mob)
