@@ -8,6 +8,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 	item_state = "candle1"
+	w_class = 1
 
 	var/wax = 200
 	var/lit = 0
@@ -88,39 +89,3 @@
 		if(lit)
 			user.total_luminosity -= CANDLE_LUM
 			src.sd_SetLuminosity(CANDLE_LUM)
-
-
-
-///////////////
-//CANDLE PACK//
-///////////////
-/obj/item/weapon/candlepack
-	name = "Candle pack"
-	//desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
-	icon = 'icons/obj/candle.dmi'
-	icon_state = "pack5"
-	item_state = "pack5"
-	w_class = 1
-	throwforce = 2
-	var/candlecount = 5
-	flags = TABLEPASS
-	slot_flags = SLOT_BELT
-
-
-/obj/item/weapon/candlepack/update_icon()
-	src.icon_state = text("pack[]", src.candlecount)
-	src.desc = text("There are [] candles left!", src.candlecount)
-	return
-
-/obj/item/weapon/candlepack/attack_hand(mob/user as mob)
-	if(user.r_hand == src || user.l_hand == src)
-		if(src.candlecount == 0)
-			//user << "\red You're out of cigs, shit! How you gonna get through the rest of the day..."
-			return
-		else
-			src.candlecount--
-			user.put_in_hands(new /obj/item/candle(user))
-	else
-		return ..()
-	src.update_icon()
-	return

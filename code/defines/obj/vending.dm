@@ -139,7 +139,7 @@
 	name = "cigarette machine"
 	desc = "If you want to get cancer, might as well do it in style"
 	icon_state = "cigs"
-	product_paths = "/obj/item/weapon/cigpacket;/obj/item/weapon/matchbox;/obj/item/weapon/lighter/random"
+	product_paths = "/obj/item/weapon/cigpacket;/obj/item/weapon/storage/matchbox;/obj/item/weapon/lighter/random"
 	product_amounts = "10;10;4"
 	product_slogans = "Space cigs taste good like a cigarette should.;I'd rather toolbox than switch.;Smoke!;Don't believe the reports - smoke today!"
 	vend_delay = 34
@@ -205,7 +205,7 @@
 	req_access_txt = "1"
 	product_paths = "/obj/item/weapon/handcuffs;/obj/item/weapon/grenade/flashbang;/obj/item/device/flash;/obj/item/weapon/reagent_containers/food/snacks/donut/normal;/obj/item/weapon/storage/box/evidence"
 	product_amounts = "8;4;5;12;6"
-	product_hidden = "/obj/item/clothing/glasses/sunglasses;/obj/item/kitchen/donut_box"
+	product_hidden = "/obj/item/clothing/glasses/sunglasses;/obj/item/weapon/storage/fancy/donut_box"
 	product_hideamt = "2;2"
 	product_ads = "Crack capitalist skulls!;Beat some heads in!;Don't forget - harm is good!;Your weapons are right here.;Handcuffs!;Freeze, scumbag!;Don't tase me bro!;Tase them, bro.;Why not have a donut?"
 

@@ -334,6 +334,7 @@
 	desc = "Wow!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
+	w_class = 1
 
 	throw_impact(atom/hit_atom)
 		..()
@@ -358,31 +359,6 @@
 			src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
 			playsound(src, 'snap.ogg', 50, 1)
 			del(src)
-
-/obj/item/toy/snappopbox
-	name = "snap pop box"
-	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "spbox"
-	var/amount = 8
-
-	attack_hand(mob/user as mob, unused, flag)
-		add_fingerprint(user)
-
-		if(user.r_hand == src || user.l_hand == src)
-			if(amount>0)
-				user.put_in_active_hand( new /obj/item/toy/snappop(src) )
-				user << "You take a snap pop out of the box."
-				amount--
-			else
-				user << "There are no snap pops left in the box."
-		else
-			..()
-
-		return
-
-	attack_paw(mob/user as mob)
-		return attack_hand(user)
 
 /obj/item/toy/waterflower
 	name = "Water Flower"

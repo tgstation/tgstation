@@ -27,7 +27,7 @@
 					"/obj/item/weapon/reagent_containers/food/snacks/flour",
 					"/obj/item/weapon/reagent_containers/food/drinks/milk",
 					"/obj/item/weapon/reagent_containers/food/drinks/milk",
-					"/obj/item/kitchen/egg_box",
+					"/obj/item/weapon/storage/fancy/egg_box",
 					"/obj/item/weapon/reagent_containers/food/condiment/enzyme",
 					"/obj/item/weapon/reagent_containers/food/snacks/grown/banana",
 					"/obj/item/weapon/reagent_containers/food/snacks/grown/banana",
@@ -38,7 +38,7 @@
 
 /datum/supply_packs/monkey
 	name = "Monkey crate"
-	contains = list ("/obj/item/weapon/monkeycube_box")
+	contains = list ("/obj/item/weapon/storage/monkeycube_box")
 	cost = 20
 	containertype = "/obj/structure/closet/crate/freezer"
 	containername = "Monkey crate"

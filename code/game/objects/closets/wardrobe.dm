@@ -44,7 +44,6 @@
 	return
 
 /obj/structure/closet/wardrobe/chaplain_black/New()
-	//new /obj/item/clothing/suit/imperium_monk(src) //No. -- Urist
 	new /obj/item/clothing/under/rank/chaplain(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/suit/nun(src)
@@ -52,11 +51,9 @@
 	new /obj/item/clothing/suit/chaplain_hoodie(src)
 	new /obj/item/clothing/head/chaplain_hood(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
-	//new /obj/item/clothing/suit/hastur (src) //No. -- Urist
-	//new /obj/item/clothing/head/hasturhood (src) //No. -- Urist
 	new /obj/item/weapon/storage/backpack/cultpack (src)
-	new /obj/item/weapon/candlepack(src)
-	new /obj/item/weapon/candlepack(src)
+	new /obj/item/weapon/storage/fancy/candle_box(src)
+	new /obj/item/weapon/storage/fancy/candle_box(src)
 	return
 
 /obj/structure/closet/wardrobe/green/New()
