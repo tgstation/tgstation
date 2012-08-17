@@ -446,7 +446,7 @@
 //	if (!can_use(user)) This already gets called in interact() and in topic()
 //		return
 	src.add_fingerprint(user)
-	if(opened && (!istype(user, /mob/living/silicon)))
+	if(opened && (!issilicon(user)))
 		if(cell)
 			usr.put_in_hands(cell)
 			cell.add_fingerprint(user)
@@ -527,11 +527,13 @@
 			return
 		else if (istype(user, /mob/living/silicon) && src.aidisabled && !src.malfhack)
 			user << "AI control for this APC interface has been disabled."
+			user.machine = null
 			user << browse(null, "window=apc")
 			return
 		else if (src.malfai)
 			if ((src.malfai != user && src.malfai != user:parent) && !islinked(user, malfai))
 				user << "AI control for this APC interface has been disabled."
+				user.machine = null
 				user << browse(null, "window=apc")
 				return
 
