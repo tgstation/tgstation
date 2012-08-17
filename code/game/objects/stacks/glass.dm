@@ -19,15 +19,9 @@ SHARDS
 			user << "\b There is not enough wire in this coil. You need 5 lengths."
 			return
 		CC.use(5)
-		src.use(1)
 		user << "\blue You attach wire to the [name]."
 		new /obj/item/stack/light_w(user.loc)
-		if(CC && CC.amount <= 0) //CC may have already been deleted by 'CC.use(5)' a few lines up.
-			user.u_equip(CC)
-			del(CC)
-		if(src.amount <= 0)
-			user.u_equip(src)
-			del(src)
+		src.use(1)
 	else if( istype(W, /obj/item/stack/rods) )
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)

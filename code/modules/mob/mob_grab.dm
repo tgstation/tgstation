@@ -21,17 +21,17 @@
 	if(affecting)
 		if(state >= 2)
 			var/grabee = affecting
-			spawn(0)
+			spawn(1)
 				del(src)
 			return grabee
 		else
-			spawn(0)
+			spawn(1)
 				del(src)
 			return null
 
 	else if(structure)
 		var/grabee = structure
-		spawn(0)
+		spawn(1)
 			del(src)
 		return grabee
 
