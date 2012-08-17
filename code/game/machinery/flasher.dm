@@ -82,8 +82,9 @@
 			flick("e_flash", O:flash)
 			O.eye_stat += rand(1, 2)
 		else
-			flick("flash", O:flash)
-			O.eye_stat += rand(0, 2)
+			if(!O.blinded)
+				flick("flash", O:flash)
+				O.eye_stat += rand(0, 2)
 
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)

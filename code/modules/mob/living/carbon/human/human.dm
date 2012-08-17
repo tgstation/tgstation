@@ -164,7 +164,8 @@
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
 /mob/living/carbon/human/ex_act(severity)
-	flick("flash", flash)
+	if(!blinded)
+		flick("flash", flash)
 
 // /obj/item/clothing/suit/bomb_suit(src)
 // /obj/item/clothing/head/bomb_hood(src)
@@ -247,7 +248,7 @@
 /mob/living/carbon/human/meteorhit(O as obj)
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
-			M.show_message(text("\red [] has been hit by []", src, O), 1)
+			M.show_message("\red [src] has been hit by [O]", 1)
 	if (health > 0)
 		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
 		if(!affecting)	return

@@ -90,7 +90,8 @@
 			src << "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>"
 
 /mob/living/silicon/pai/ex_act(severity)
-	flick("flash", src.flash)
+	if(!blinded)
+		flick("flash", src.flash)
 
 	switch(severity)
 		if(1.0)

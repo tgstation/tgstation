@@ -373,7 +373,8 @@
 	return
 
 /mob/living/simple_animal/ex_act(severity)
-	flick("flash", flash)
+	if(!blinded)
+		flick("flash", flash)
 	switch (severity)
 		if (1.0)
 			health -= 500

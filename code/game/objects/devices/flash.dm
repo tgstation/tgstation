@@ -166,7 +166,8 @@
 					S.icon_state = "shield0"
 		var/safety = M:eyecheck()
 		if(!safety)
-			flick("flash", M.flash)
+			if(!M.blinded)
+				flick("flash", M.flash)
 
 	return
 

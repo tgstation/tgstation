@@ -65,7 +65,8 @@
 
 
 /mob/living/carbon/alien/larva/ex_act(severity)
-	flick("flash", flash)
+	if(!blinded)
+		flick("flash", flash)
 
 	if (stat == 2 && client)
 		gib()

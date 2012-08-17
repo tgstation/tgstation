@@ -70,14 +70,15 @@
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))//robots and aliens are unaffected
 			if(M.stat == DEAD || M.sdisabilities & BLIND)//mob is dead or fully blind
 				if(M!=user)
-					user.show_message(text("\red [] pupils does not react to the light!", M),1)
+					user.show_message("\red [M] pupils does not react to the light!",1)
 			else if(XRAY in M.mutations)//mob has X-RAY vision
 				if(M!=user)
-					user.show_message(text("\red [] pupils give an eerie glow!", M),1)
+					user.show_message("\red [M] pupils give an eerie glow!",1)
 			else //nothing wrong
-				flick("flash", M.flash)//flash the affected mob
-				if(M!=user)
-					user.show_message(text("\blue [] pupils narrow", M),1)
+				if(!M.blinded)
+					flick("flash", M.flash)//flash the affected mob
+					if(M!=user)
+						user.show_message("\blue [M] pupils narrow",1)
 	else
 		return ..()
 

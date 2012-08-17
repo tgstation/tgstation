@@ -199,7 +199,8 @@
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
-	flick("flash", flash)
+	if(!blinded)
+		flick("flash", flash)
 
 	switch(severity)
 		if(1.0)

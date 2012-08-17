@@ -58,7 +58,8 @@
 	return 0
 
 /mob/living/silicon/hivebot/ex_act(severity)
-	flick("flash", src.flash)
+	if(!blinded)
+		flick("flash", src.flash)
 
 	if (src.stat == 2 && src.client)
 		src.gib(1)
