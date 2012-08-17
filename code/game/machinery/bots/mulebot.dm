@@ -468,6 +468,13 @@
 		playsound(src.loc, 'buzz-sigh.ogg', 50, 0)
 		return		// if not emagged, only allow crates to be loaded
 
+	//I'm sure someone will come along and ask why this is here... well people were dragging screen items onto the mule, and that was not cool.
+	//So this is a simple fix that only allows a selection of item types to be considered. Further narrowing-down is below.
+	if(!istype(C,/obj/item) && !istype(C,/obj/machinery) && !istype(C,/obj/structure) && !ismob(C))
+		return
+	if(!isturf(C.loc)) //To prevent the loading from stuff from someone's inventory, which wouldn't get handled properly.
+		return
+
 	if(get_dist(C, src) > 1 || load || !on)
 		return
 	for(var/obj/structure/plasticflaps/P in src.loc)//Takes flaps into account
@@ -482,6 +489,8 @@
 
 	C.loc = src.loc
 	sleep(2)
+	if(C.loc != src.loc) //To prevent you from going onto more thano ne bot.
+		return
 	C.loc = src
 	load = C
 
