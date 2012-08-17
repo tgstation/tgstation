@@ -40,7 +40,12 @@
 				animation.dir = target.dir
 				flick("phase_shift2",animation)
 				sleep(5)
-				target.loc = mobloc
+				if(!target.Move(mobloc))
+					for(var/direction in list(1,2,4,8,5,6,9,10))
+						var/turf/T = get_step(mobloc, direction)
+						if(T)
+							if(target.Move(T))
+								break
 				target.canmove = 1
 				target.client.eye = target
 				del(animation)
@@ -61,7 +66,12 @@
 				sleep(20)
 				flick("reappear",animation)
 				sleep(5)
-				target.loc = mobloc
+				if(!target.Move(mobloc))
+					for(var/direction in list(1,2,4,8,5,6,9,10))
+						var/turf/T = get_step(mobloc, direction)
+						if(T)
+							if(target.Move(T))
+								break
 				target.canmove = 1
 				target.client.eye = target
 				del(animation)

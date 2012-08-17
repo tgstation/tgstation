@@ -372,10 +372,18 @@
 					break
 			if(clear)
 				L+=T
-	if(L.len)
-		usr.loc = pick(L)
-	else
+
+	if(!L.len)
 		usr <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
+		return
+
+	var/attempt = 0
+	var/success = 0
+	while(!success)
+		success = Move(pick(L))
+		if(attempt > 20) break	//Failsafe
+	if(!success)
+		usr.loc = pick(L)
 
 	smoke.start()
 
@@ -404,12 +412,17 @@
 				L+=T
 
 	if(!L.len)
-		usr <<"Invalid teleport destination."
+		usr <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
 		return
 
-	else
+	var/attempt = 0
+	var/success = 0
+	while(!success)
+		success = Move(pick(L))
+		if(attempt > 20) break	//Failsafe
+	if(!success)
 		usr.loc = pick(L)
-		smoke.start()
+	smoke.start()
 
 //JAUNT
 
@@ -454,7 +467,12 @@
 		sleep(20)
 		flick("reappear",animation)
 		sleep(5)
-		H.loc = mobloc
+		if(!H.Move(mobloc))
+			for(var/direction in list(1,2,4,8,5,6,9,10))
+				var/turf/T = get_step(mobloc, direction)
+				if(T)
+					if(H.Move(T))
+						break
 		H.canmove = 1
 		H.client.eye = H
 		del(animation)

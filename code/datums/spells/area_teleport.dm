@@ -42,7 +42,13 @@
 				if(clear)
 					L+=T
 
-		target.loc = pick(L)
+		var/attempt = 0
+		var/success = 0
+		while(!success)
+			success = target.Move(pick(L))
+			if(attempt > 20) break	//Failsafe
+		if(!success)
+			target.loc = pick(L)
 
 	return
 
