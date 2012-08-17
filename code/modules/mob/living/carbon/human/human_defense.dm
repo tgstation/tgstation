@@ -140,21 +140,22 @@ emp_act
 				location.add_blood(src)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if(H.wear_suit)
-					H.wear_suit.add_blood(src)
-					H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
-				else if(H.w_uniform)
-					H.w_uniform.add_blood(src)
-					H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
-				if (H.gloves)
-					H.gloves.add_blood(H)
-					H.gloves:transfer_blood = 2
-					H.gloves:bloody_hands_mob = H
-				else
-					H.add_blood(H)
-					H.bloody_hands = 2
-					H.bloody_hands_mob = H
-				H.update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
+				if(get_dist(H, src) > 1) //people with TK won't get smeared with blood
+					if(H.wear_suit)
+						H.wear_suit.add_blood(src)
+						H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
+					else if(H.w_uniform)
+						H.w_uniform.add_blood(src)
+						H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
+					if (H.gloves)
+						H.gloves.add_blood(H)
+						H.gloves:transfer_blood = 2
+						H.gloves:bloody_hands_mob = H
+					else
+						H.add_blood(H)
+						H.bloody_hands = 2
+						H.bloody_hands_mob = H
+					H.update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
 		switch(hit_area)
 			if("head")//Harder to score a stun but if you do it lasts a bit longer
