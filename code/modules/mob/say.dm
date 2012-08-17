@@ -39,9 +39,11 @@
 	for (var/mob/M in player_list)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat == 2 || (M.client && M.client.holder && M.client.deadchat)) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
-			if(M.client && !M.client.STFU_ghosts) //Admin shut-off for ghosts chatter
-				M.show_message(rendered, 2)
+		if(M.client && M.client.holder && M.client.deadchat) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
+			if(!M.client.STFU_ghosts) //Admin shut-off for ghosts chatter
+				src << rendered	//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
+		else if (M.stat == DEAD)
+			M.show_message(rendered, 2) //Takes into account blindness and such.
 	return
 
 /mob/proc/say_understands(var/mob/other)
