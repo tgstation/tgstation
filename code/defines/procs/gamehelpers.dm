@@ -152,7 +152,7 @@
 
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
-	var/list/range = range(R, T)
+	var/list/range = view(R, T)
 
 	//debug_mob += range.len
 	for(var/turf/A in range)
