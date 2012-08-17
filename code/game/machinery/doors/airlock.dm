@@ -1207,7 +1207,7 @@ About the new airlock wires panel:
 						src.density = 0
 						update_icon()
 
-						if(!istype(src, /obj/machinery/door/airlock/glass))
+						if(!glass)
 							src.sd_SetOpacity(0)
 						src.operating = 0
 					return
@@ -1224,7 +1224,7 @@ About the new airlock wires panel:
 					src.density = 0
 					update_icon()
 
-					if(!istype(src, /obj/machinery/door/airlock/glass))
+					if(!glass)
 						src.sd_SetOpacity(0)
 					src.operating = 0
 					return
@@ -1243,7 +1243,7 @@ About the new airlock wires panel:
 							sleep(15)
 							update_icon()
 
-							if((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
+							if((src.visible) && (!glass))
 								src.sd_SetOpacity(1)
 							src.operating = 0
 					else
@@ -1258,7 +1258,7 @@ About the new airlock wires panel:
 						sleep(15)
 						update_icon()
 
-						if((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
+						if((src.visible) && (!glass))
 							src.sd_SetOpacity(1)
 						src.operating = 0
 
