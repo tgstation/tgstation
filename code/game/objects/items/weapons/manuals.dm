@@ -10,7 +10,7 @@
 	name = "Station Repairs and Construction"
 	icon_state ="bookEngineering"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-
+	title = "Station Repairs and Construction"
 	dat = {"
 
 		<html><head>
@@ -28,7 +28,7 @@
 	name = "Particle Accelerator User's Guide"
 	icon_state ="bookParticleAccelerator"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-
+	title = "Particle Accelerator User's Guide"
 //big pile of shit below.
 
 	dat = {"<html>
@@ -71,7 +71,7 @@
 	name = "Hacking"
 	icon_state ="bookHacking"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-
+	title = "Hacking"
 //big pile of shit below.
 
 	dat = {"
@@ -91,7 +91,7 @@
 	name = "Singularity Safety in Special Circumstances"
 	icon_state ="bookEngineeringSingularitySafety"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-
+	title = "Singularity Safety in Special Circumstances"
 //big pile of shit below.
 
 	dat = {"<html>
@@ -139,7 +139,7 @@
 	name = "The Human Harvest - From seed to market"
 	icon_state ="bookHydroponicsPodPeople"
 	author = "Farmer John"
-
+	title = "The Human Harvest - From seed to market"
 	dat = {"<html>
 				<head>
 				<style>
@@ -174,7 +174,7 @@
 	name = "Cloning techniques of the 26th century"
 	icon_state ="bookCloning"
 	author = "Medical Journal, volume 3"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-
+	title = "Cloning techniques of the 26th century"
 //big pile of shit below.
 
 	dat = {"<html>
@@ -252,7 +252,7 @@
 	name = "APLU \"Ripley\" Construction and Operation Manual"
 	icon_state ="book"
 	author = "Weyland-Yutani Corp"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-
+	title = "APLU \"Ripley\" Construction and Operation Manual"
 //big pile of shit below.
 
 	dat = {"<html>
@@ -328,7 +328,7 @@
 	name = "Research and Development 101"
 	icon_state = "rdbook"
 	author = "Dr. L. Ight"
-
+	title = "Research and Development 101"
 	dat = {"<html>
 				<head>
 				<style>
@@ -378,7 +378,7 @@
 	name = "Cyborgs for Dummies"
 	icon_state = "borgbook"
 	author = "XISC"
-
+	title = "Cyborgs for Dummies"
 	dat = {"<html>
 				<head>
 				<style>
@@ -581,7 +581,7 @@
 	desc = "A set of Nanotrasen guidelines for keeping law and order on their space stations."
 	icon_state = "bookSpaceLaw"
 	author = "Nanotrasen Inc."
-
+	title = "Space Law"
 	dat = {"
 
 		<html><head>
@@ -599,7 +599,7 @@
 	name = "Engineering Textbook"
 	icon_state ="bookEngineering2"
 	author = "Engineering Encyclopedia"
-
+	title = "Engineering Textbook"
 	dat = {"
 
 		<html><head>
@@ -618,7 +618,7 @@
 	name = "Chef Recipes"
 	icon_state = "cooked_book"
 	author = "Lord Frenrir Cageth"
-
+	title = "Chef Recipes"
 	dat = {"<html>
 				<head>
 				<style>
@@ -670,7 +670,7 @@
 	name = "Barman Recipes"
 	icon_state = "barbook"
 	author = "Sir John Rose"
-
+	title = "Barman Recipes"
 	dat = {"<html>
 				<head>
 				<style>
@@ -723,7 +723,7 @@
 	name = "The Film Noir: Proper Procedures for Investigations"
 	icon_state ="bookHacking"
 	author = "NanoTrasen"
-
+	title = "The Film Noir: Proper Procedures for Investigations"
 	dat = {"<html>
 			<head>
 			<style>
