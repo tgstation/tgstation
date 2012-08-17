@@ -22,6 +22,7 @@
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
+		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		src.timeleft--
 		if (src.timeleft <= 0)
 			explode()
@@ -116,16 +117,24 @@
 				if (href_list["timer"])
 					if (src.timing == -1.0)
 						return
+					if (src.safety)
+						usr << "\red The safety is still on."
+						return
 					src.timing = !( src.timing )
 					if (src.timing)
 						src.icon_state = "nuclearbomb2"
 						if(!src.safety)
 							bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
+						else
+							bomb_set = 0
 					else
 						src.icon_state = "nuclearbomb1"
 						bomb_set = 0
 				if (href_list["safety"])
 					src.safety = !( src.safety )
+					if(safety)
+						src.timing = 0
+						bomb_set = 0
 				if (href_list["anchor"])
 					src.anchored = !( src.anchored )
 		src.add_fingerprint(usr)

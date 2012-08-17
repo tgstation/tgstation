@@ -121,6 +121,7 @@ var/bomb_set = 1
 			syndicate_out_of_moves = 1
 
 /proc/syndicate_can_move()
+	//world << "moving_to_station = [syndicate_station_moving_to_station]; moving_to_space = [syndicate_station_moving_to_space]; out_of_moves = [syndicate_out_of_moves]; bomb_set = [bomb_set]; "
 	if(syndicate_station_moving_to_station || syndicate_station_moving_to_space) return 0
 	if(syndicate_out_of_moves) return 0
 	if(!bomb_set) return 0
