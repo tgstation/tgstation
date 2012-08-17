@@ -173,6 +173,8 @@ obj/machinery/atmospherics/valve
 		if(openDuringInit)
 			open()
 			openDuringInit = 0
+
+		build_network()
 /*
 		var/connect_directions
 		switch(dir)
