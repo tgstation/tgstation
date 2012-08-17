@@ -259,6 +259,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	name = newname
 	if(mind)
 		mind.name = newname
+	if(dna)
+		dna.real_name = real_name
 
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
