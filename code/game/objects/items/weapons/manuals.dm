@@ -1,5 +1,6 @@
 /*********************MANUALS (BOOKS)***********************/
 
+//Oh god what the fuck I am not good at computer
 /obj/item/weapon/book/manual
 	icon = 'icons/obj/library.dmi'
 	due_date = 0 // Game time in 1/10th seconds
