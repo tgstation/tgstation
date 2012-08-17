@@ -413,8 +413,8 @@
 	if (restrained())
 		for(var/mob/M in range(src, 1))
 			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
-				return 0
-	if ((t7 && pulling && get_dist(src, pulling) <= 1))
+				t7 = null
+	if (t7 && (pulling && get_dist(src, pulling) <= 1))
 		if (pulling.anchored)
 			stop_pulling()
 		var/T = loc
@@ -422,7 +422,7 @@
 		if (!( isturf(pulling.loc) ))
 			stop_pulling()
 			return
-		if (!( restrained() ))
+		if (!buckled)
 			var/diag = get_dir(src, pulling)
 			if ((diag - 1) & diag)
 			else
