@@ -20,8 +20,11 @@
 		..()
 
 	say_understands(var/other)//Goddamn is this hackish, but this say code is so odd
-		if (istype(other, /mob/living/silicon/ai))//No eavesdropping on the AI
-			return 0
+		if (istype(other, /mob/living/silicon/ai))
+			if(!(container && istype(container, /obj/item/device/mmi)))
+				return 0
+			else
+				return 1
 		if (istype(other, /mob/living/silicon/decoy))
 			if(!(container && istype(container, /obj/item/device/mmi)))
 				return 0
@@ -32,8 +35,11 @@
 				return 0
 			else
 				return 1
-		if (istype(other, /mob/living/silicon/robot))//Or borgs
-			return 0
+		if (istype(other, /mob/living/silicon/robot))
+			if(!(container && istype(container, /obj/item/device/mmi)))
+				return 0
+			else
+				return 1
 		if (istype(other, /mob/living/carbon/human))
 			return 1
 		if (istype(other, /mob/living/carbon/metroid))
