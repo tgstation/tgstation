@@ -9,30 +9,6 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 */
 
 
-// Plant-B-Gone
-/obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
-	name = "Plant-B-Gone"
-	desc = "Kills those pesky weeds!"
-	icon = 'icons/obj/hydroponics.dmi'
-	icon_state = "plantbgone"
-	item_state = "plantbgone"
-	volume = 100
-
-
-/obj/item/weapon/reagent_containers/spray/plantbgone/New()
-	..()
-	reagents.add_reagent("plantbgone", 100)
-
-
-/obj/item/weapon/reagent_containers/spray/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
-		return
-
-	if (istype(A, /obj/effect/blob)) // blob damage in blob code
-		return
-
-	..()
-
 
 // Sunflower
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
@@ -114,22 +90,3 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 		new /obj/item/clothing/mask/pipe/cobpipe (user.loc)
 		del(src)
 		return
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
-		new /obj/item/clothing/head/pumpkinhead (user.loc)
-		del(src)
-		return
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W, /obj/item/weapon/cable_coil))
-		if(W:amount >= 5)
-			W:amount -= 5
-			if(!W:amount) del(W)
-			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
-			new /obj/item/weapon/cell/potato(user.loc)
-			del(src)
-			return
