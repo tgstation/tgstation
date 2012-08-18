@@ -108,7 +108,7 @@
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 2
-	spawn_positions = 1
+	spawn_positions = 2
 	supervisors = "the chief engineer and research director"
 	selection_color = "#fff5cc"
 
