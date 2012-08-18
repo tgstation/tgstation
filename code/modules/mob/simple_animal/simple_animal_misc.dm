@@ -41,12 +41,11 @@
 	for(var/mob/M in view(src,7))
 		M << "<b>[src]</b> [pick(speak_emote)], \"[message]\""
 
-/mob/living/simple_animal/emote(var/message = null, var/m_type=1, var/act = "auto")
+/mob/living/simple_animal/emote(var/act = "auto", var/m_type=1, var/message = null)
 	switch(act)
 		if ("scream")
 			message = "<B>[src]</B> makes a loud and pained whimper"
 			m_type = 2
-
 		if ("custom")
 			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
 			if (!input)
@@ -60,7 +59,6 @@
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
 			message = "<B>[src]</B> [input]"
-
 		if ("me")
 			if(silent)
 				return
