@@ -441,6 +441,10 @@
 			return
 		if(istype(target,/obj/item/weapon/reagent_containers/syringe))
 			return load_syringe(target)
+		if(istype(target,/obj/item/weapon/storage))//Loads syringes from boxes
+			for(var/obj/item/weapon/reagent_containers/syringe/S in target.contents)
+				load_syringe(S)
+			return
 		if(mode)
 			return analyze_reagents(target)
 		if(!syringes.len)
@@ -591,6 +595,17 @@
 
 	proc/load_syringe(obj/item/weapon/reagent_containers/syringe/S)
 		if(syringes.len<max_syringes)
+			if(get_dist(src,S) >= 2)
+				occupant_message("The syringe is too far away.")
+				return 0
+			for(var/obj/structure/D in S.loc)//Basic level check for structures in the way (Like grilles and windows)
+				if(!(D.CanPass(S,src.loc)))
+					occupant_message("Unable to load syringe.")
+					return 0
+			for(var/obj/machinery/door/D in S.loc)//Checks for doors
+				if(!(D.CanPass(S,src.loc)))
+					occupant_message("Unable to load syringe.")
+					return 0
 			S.reagents.trans_to(src, S.reagents.total_volume)
 			S.forceMove(src)
 			syringes += S
@@ -601,7 +616,10 @@
 		return 0
 
 	proc/analyze_reagents(atom/A)
-		if(!A.reagents)
+		if(get_dist(src,A) >= 4)
+			occupant_message("The object is too far away.")
+			return 0
+		if(!A.reagents || istype(A,/mob))
 			occupant_message("<span class=\"alert\">No reagent info gained from [A].</span>")
 			return 0
 		occupant_message("Analyzing reagents...")
