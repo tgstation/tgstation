@@ -15,6 +15,9 @@
 	response_help  = "pets the"
 	response_disarm = "gently moves aside the"
 	response_harm   = "swats the"
+	min_oxy = 16 //Require atleast 16kPA oxygen
+	minbodytemp = 223		//Below -50 Degrees Celcius
+	maxbodytemp = 323	//Above 50 Degrees Celcius
 
 	l_ear = new /obj/item/device/radio/headset/headset_eng()
 
