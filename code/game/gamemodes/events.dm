@@ -28,7 +28,7 @@
 	switch(pick(eventNumbersToPickFrom))
 		if(1)
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
-			world << sound('meteors.ogg')
+			world << sound('sound/AI/meteors.ogg')
 			spawn(100)
 				meteor_wave()
 				spawn_meteors()
@@ -38,7 +38,7 @@
 
 		if(2)
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			world << sound('granomalies.ogg')
+			world << sound('sound/AI/granomalies.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 			spawn(rand(50, 300))
@@ -46,7 +46,7 @@
 		/*
 		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			world << sound('spanomalies.ogg')
+			world << sound('sound/AI/spanomalies.ogg')
 			var/list/turfs = new
 			var/turf/picked
 			for(var/turf/simulated/floor/T in world)
@@ -95,7 +95,7 @@
 
 /proc/power_failure()
 	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure")
-	world << sound('poweroff.ogg')
+	world << sound('sound/AI/poweroff.ogg')
 	for(var/obj/machinery/power/smes/S in world)
 		if(istype(get_area(S), /area/turret_protected) || S.z != 1)
 			continue
@@ -143,7 +143,7 @@
 /proc/power_restore()
 
 	command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal")
-	world << sound('poweron.ogg')
+	world << sound('sound/AI/poweron.ogg')
 	for(var/obj/machinery/power/apc/C in world)
 		if(C.cell && C.z == 1)
 			C.cell.charge = C.cell.maxcharge
@@ -165,7 +165,7 @@
 /proc/power_restore_quick()
 
 	command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal")
-	world << sound('poweron.ogg')
+	world << sound('sound/AI/poweron.ogg')
 	for(var/obj/machinery/power/smes/S in world)
 		if(S.z != 1)
 			continue
@@ -191,7 +191,7 @@
 
 /proc/viral_outbreak(var/virus = null)
 //	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-//	world << sound('outbreak7.ogg')
+//	world << sound('sound/AI/outbreak7.ogg')
 	var/virus_type
 	if(!virus)
 		virus_type = pick(/datum/disease/dnaspread,/datum/disease/flu,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
@@ -246,11 +246,11 @@
 			break
 	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-		world << sound('outbreak7.ogg')
+		world << sound('sound/AI/outbreak7.ogg')
 
 /proc/alien_infestation(var/spawncount = 1) // -- TLE
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-	//world << sound('aliens.ogg')
+	//world << sound('sound/AI/aliens.ogg')
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
 		if(temp_vent.loc.z == 1 && !temp_vent.welded && temp_vent.network)
@@ -279,7 +279,7 @@
 
 	spawn(rand(5000, 6000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-		world << sound('aliens.ogg')
+		world << sound('sound/AI/aliens.ogg')
 
 /proc/high_radiation_event()
 
@@ -306,7 +306,7 @@
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
 	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
-	world << sound('radiation.ogg')
+	world << sound('sound/AI/radiation.ogg')
 
 
 
@@ -360,7 +360,7 @@
 	//sleep(100)
 	spawn(rand(300, 600)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
-		world << sound('commandreport.ogg')
+		world << sound('sound/AI/commandreport.ogg')
 
 /proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) //leave lightsoutAmount as 0 to break ALL lights
 	if(isEvent)

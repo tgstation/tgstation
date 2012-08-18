@@ -1,6 +1,6 @@
 /obj/machinery/disease2/biodestroyer
 	name = "Biohazard destroyer"
-	icon = 'disposal.dmi'
+	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "disposalbio"
 	var/list/accepts = list(/obj/item/clothing,/obj/item/weapon/virusdish/,/obj/item/weapon/cureimplanter,/obj/item/weapon/diseasedisk,/obj/item/weapon/reagent_containers)
 	density = 1
@@ -11,7 +11,7 @@
 		if(I.type in typesof(path))
 			user.drop_item()
 			del(I)
-			overlays += image('disposal.dmi', "dispover-handle")
+			overlays += image('icons/obj/pipes/disposal.dmi', "dispover-handle")
 			return
 	user.drop_item()
 	I.loc = src.loc

@@ -98,9 +98,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			else
 				usr.say(dd_replacetext(invocation," ","`"))
 			if(usr.gender=="male")
-				playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
+				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			else
-				playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
+				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 		if("whisper")
 			if(prob(50))
 				usr.whisper(invocation)

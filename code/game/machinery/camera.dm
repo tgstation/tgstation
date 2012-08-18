@@ -276,7 +276,7 @@ var/global/list/obj/machinery/camera/Cameras = list()
 	status = 0
 	for(var/mob/O in viewers(user, null))
 		O.show_message("<span class='warning'>\The [user] slashes at [src]!</span>", 1)
-		playsound(src.loc, 'slash.ogg', 100, 1)
+		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	icon_state = "camera1"
 	add_hiddenprint(user)
 	deactivate(user,0)
@@ -343,7 +343,7 @@ var/global/list/obj/machinery/camera/Cameras = list()
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 		spark_system.start()
-		playsound(loc, 'blade1.ogg', 50, 1)
+		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(loc, "sparks", 50, 1)
 
 		var/obj/item/weapon/grenade/chem_grenade/case = new /obj/item/weapon/grenade/chem_grenade(loc)
@@ -369,13 +369,13 @@ var/global/list/obj/machinery/camera/Cameras = list()
 		if (!(src.status))
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [] has deactivated []!", user, src), 1)
-				playsound(src.loc, 'Wirecutter.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "camera1"
 			add_hiddenprint(user)
 		else
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [] has reactivated []!", user, src), 1)
-				playsound(src.loc, 'Wirecutter.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "camera"
 			add_hiddenprint(user)
 	// now disconnect anyone using the camera

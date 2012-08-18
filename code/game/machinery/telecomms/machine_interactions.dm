@@ -23,24 +23,24 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/screwdriver))
 				user << "You unfasten the bolts."
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op ++
 		if(1)
 			if(istype(P, /obj/item/weapon/screwdriver))
 				user << "You fasten the bolts."
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "You dislodge the external plating."
-				playsound(src.loc, 'Ratchet.ogg', 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op ++
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "You secure the external plating."
-				playsound(src.loc, 'Ratchet.ogg', 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				construct_op --
 			if(istype(P, /obj/item/weapon/wirecutters))
-				playsound(src.loc, 'wirecutter.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You remove the cables."
 				construct_op ++
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
@@ -59,7 +59,7 @@
 					stat &= ~BROKEN // the machine's not borked anymore!
 			if(istype(P, /obj/item/weapon/crowbar))
 				user << "You begin prying out the circuit board other components..."
-				playsound(src.loc, 'Crowbar.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,60))
 					user << "You finish prying out the components."
 

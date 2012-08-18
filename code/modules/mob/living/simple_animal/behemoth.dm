@@ -28,7 +28,7 @@
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPARALYSE
-	attack_sound = 'punch4.ogg'
+	attack_sound = 'sound/weapons/punch4.ogg'
 	var/energy = 0
 	var/max_energy = 1000
 

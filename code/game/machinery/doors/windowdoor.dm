@@ -101,7 +101,7 @@
 	if(!src.operating) //in case of emag
 		src.operating = 1
 	flick(text("[]opening", src.base_state), src)
-	playsound(src.loc, 'windowdoor.ogg', 100, 1)
+	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = text("[]open", src.base_state)
 	sleep(10)
 
@@ -118,7 +118,7 @@
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
-	playsound(src.loc, 'windowdoor.ogg', 100, 1)
+	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = text("[]", src.base_state)
 
 	src.density = 1
@@ -142,7 +142,7 @@
 		tforce = 40
 	else
 		tforce = AM:throwforce
-	playsound(src.loc, 'Glasshit.ogg', 100, 1)
+	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	src.health = max(0, src.health - tforce)
 	if (src.health <= 0)
 		new /obj/item/weapon/shard(src.loc)
@@ -163,7 +163,7 @@
 		if(src.operating)
 			return
 		src.health = max(0, src.health - 25)
-		playsound(src.loc, 'Glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[user] smashes against the [src.name].</B>", 1)
 		if (src.health <= 0)
@@ -193,7 +193,7 @@
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
-			playsound(src.loc, 'blade1.ogg', 50, 1)
+			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			for(var/mob/O in viewers(user, 5))
 				O.show_message(text("\blue The glass door was sliced open by []!", user), 1, text("\red You hear glass being sliced and sparks flying."), 2)
 		flick(text("[]spark", src.base_state), src)
@@ -206,7 +206,7 @@
 		var/aforce = I.force
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
-		playsound(src.loc, 'Glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[src] was hit by [I].</B>", 1)
 		if (src.health <= 0)

@@ -931,7 +931,7 @@ proc/process_ghost_teleport_locs()
 /area/medical/medbay
 	name = "Medbay"
 	icon_state = "medbay"
-	music = 'signal.ogg'
+	music = 'sound/ambience/signal.ogg'
 
 /area/medical/patients_rooms
 	name = "\improper Patient's Rooms"
@@ -1515,7 +1515,7 @@ var/list/the_station_areas = list (
 		..()
 		var/sound/S = new/sound()
 		mysound = S
-		S.file = 'shore.ogg'
+		S.file = 'sound/ambience/shore.ogg'
 		S.repeat = 1
 		S.wait = 0
 		S.channel = 123
@@ -1543,7 +1543,7 @@ var/list/the_station_areas = list (
 		var/sound/S = null
 		var/sound_delay = 0
 		if(prob(25))
-			S = sound(file=pick('seag1.ogg','seag2.ogg','seag3.ogg'), volume=100)
+			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
 			sound_delay = rand(0, 50)
 
 		for(var/mob/living/carbon/human/H in src)

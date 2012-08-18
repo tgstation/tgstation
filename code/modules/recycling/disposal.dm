@@ -55,12 +55,12 @@
 					return
 				if(mode==0) // It's off but still not unscrewed
 					mode=-1 // Set it to doubleoff l0l
-					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					user << "You remove the screws around the power connection."
 					return
 				else if(mode==-1)
 					mode=0
-					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					user << "You attach the screws around the power connection."
 					return
 			else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
@@ -69,7 +69,7 @@
 					return
 				var/obj/item/weapon/weldingtool/W = I
 				if(W.remove_fuel(0,user))
-					playsound(src.loc, 'Welder2.ogg', 100, 1)
+					playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 					user << "You start slicing the floorweld off the disposal unit."
 
 					if(do_after(user,20))
@@ -400,7 +400,7 @@
 
 		sleep(10)
 		if(last_sound < world.time + 1)
-			playsound(src, 'disposalflush.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 			last_sound = world.time
 		sleep(5) // wait for animation to finish
 
@@ -427,7 +427,7 @@
 	proc/expel(var/obj/structure/disposalholder/H)
 
 		var/turf/target
-		playsound(src, 'hiss.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
@@ -587,7 +587,7 @@
 			for (var/mob/M in hearers(src.loc.loc))
 				M << "<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>"
 
-		playsound(src.loc, 'clang.ogg', 50, 0, 0)
+		playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
@@ -719,7 +719,7 @@
 			else						// otherwise limit to 10 tiles
 				target = get_ranged_target_turf(T, direction, 10)
 
-			playsound(src, 'hiss.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 			if(H)
 				for(var/atom/movable/AM in H)
 					AM.loc = T
@@ -732,7 +732,7 @@
 
 		else	// no specified direction, so throw in random direction
 
-			playsound(src, 'hiss.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 			if(H)
 				for(var/atom/movable/AM in H)
 					target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
@@ -821,7 +821,7 @@
 			var/obj/item/weapon/weldingtool/W = I
 
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'Welder2.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
 				var/atom/wloc = W.loc
@@ -1113,7 +1113,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 
 		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'Welder2.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
 			var/turf/uloc = user.loc
 			var/atom/wloc = W.loc
@@ -1207,9 +1207,9 @@
 	proc/expel(var/obj/structure/disposalholder/H)
 
 		flick("outlet-open", src)
-		playsound(src, 'warning-buzzer.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
 		sleep(20)	//wait until correct animation frame
-		playsound(src, 'hiss.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 
 		if(H)
 			for(var/atom/movable/AM in H)
@@ -1229,18 +1229,18 @@
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(mode==0)
 				mode=1
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "You remove the screws around the power connection."
 				return
 			else if(mode==1)
 				mode=0
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "You attach the screws around the power connection."
 				return
 		else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'Welder2.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 				user << "You start slicing the floorweld off the disposal outlet."
 				if(do_after(user,20))
 					if(!src || !W.isOn()) return

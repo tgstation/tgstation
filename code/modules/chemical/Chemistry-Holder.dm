@@ -256,7 +256,7 @@ datum
 									for(var/mob/M in viewers(4, get_turf(my_atom)) )
 										M << "\blue \icon[my_atom] The innards begin to boil!"
 
-							playsound(get_turf(my_atom), 'bubbles.ogg', 80, 1)
+							playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 
 							C.on_reaction(src, created_volume)
 							reaction_occured = 1

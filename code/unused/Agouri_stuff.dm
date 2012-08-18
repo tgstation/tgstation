@@ -213,7 +213,7 @@
 						M.stop_pulling()
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
-						playsound(src.loc, 'slip.ogg', 50, 1, -3)
+						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(8)
 						M.Weaken(5)
 					else
@@ -224,7 +224,7 @@
 						M.stop_pulling()
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
-						playsound(src.loc, 'slip.ogg', 50, 1, -3)
+						playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 						M.Stun(8)
 						M.Weaken(5)
 					else
@@ -241,7 +241,7 @@
 					spawn(4) step(M, M.dir)
 					M.take_organ_damage(2) // Was 5 -- TLE
 					M << "\blue You slipped on the floor!"
-					playsound(src.loc, 'slip.ogg', 50, 1, -3)
+					playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 					M.Weaken(10)
 
 	..()
@@ -281,7 +281,7 @@
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(istype(src,/turf/simulated/wall/r_wall))
 		if(!devastated)
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
 			new /obj/item/stack/sheet/plasteel( src )
 		else
@@ -290,14 +290,14 @@
 			new /obj/item/stack/sheet/plasteel( src )
 	else if(istype(src,/turf/simulated/wall/cult))
 		if(!devastated)
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/effect/decal/remains/human(src)
 		else
 			new /obj/effect/decal/remains/human(src)
 
 	else
 		if(!devastated)
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder(src)
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
@@ -382,7 +382,7 @@
 			return
 
 	user << "\blue You push the wall but nothing happens!"
-	playsound(src.loc, 'Genhit.ogg', 25, 1)
+	playsound(src.loc, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -401,7 +401,7 @@
 			var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 			O.name = "Thermite"
 			O.desc = "Looks hot."
-			O.icon = 'fire.dmi'
+			O.icon = 'icons/effects/fire.dmi'
 			O.icon_state = "2"
 			O.anchored = 1
 			O.density = 1
@@ -417,7 +417,7 @@
 		if (W:remove_fuel(0,user))
 			W:welding = 2
 			user << "\blue Now disassembling the outer wall plating."
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			sleep(100)
 			if (W && istype(src, /turf/simulated/wall))
 				if ((get_turf(user) == T && user.equipped() == W))
@@ -437,7 +437,7 @@
 			var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 			O.name = "Thermite"
 			O.desc = "Looks hot."
-			O.icon = 'fire.dmi'
+			O.icon = 'icons/effects/fire.dmi'
 			O.icon_state = "2"
 			O.anchored = 1
 			O.density = 1
@@ -452,7 +452,7 @@
 
 		else
 			user << "\blue Now disassembling the outer wall plating."
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			sleep(60)
 			if (W && istype(src, /turf/simulated/wall))
 				if ((get_turf(user) == T && user.equipped() == W))
@@ -483,7 +483,7 @@
 			if ((user.loc == T && user.equipped() == W))
 				W:spark_system.start()
 				playsound(src.loc, "sparks", 50, 1)
-				playsound(src.loc, 'blade1.ogg', 50, 1)
+				playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 				dismantle_wall(1)
 				for(var/mob/O in viewers(user, 5))
 					O.show_message(text("\blue The wall was sliced apart by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
@@ -516,7 +516,7 @@
 			var/temp = P.resulting_poster.icon_state
 			var/temp_loc = user.loc
 			P.resulting_poster.icon_state = "poster_being_set"
-			playsound(P.resulting_poster.loc, 'poster_being_created.ogg', 100, 1)
+			playsound(P.resulting_poster.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 			sleep(24)
 
 			if(user.loc == temp_loc)//Let's check if he still is there
@@ -553,7 +553,7 @@
 			var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 			O.name = "Thermite"
 			O.desc = "Looks hot."
-			O.icon = 'fire.dmi'
+			O.icon = 'icons/effects/fire.dmi'
 			O.icon_state = "2"
 			O.anchored = 1
 			O.density = 1
@@ -569,7 +569,7 @@
 		if (src.d_state == 2)
 			W:welding = 2
 			user << "\blue Slicing metal cover."
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			sleep(60)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 3
@@ -579,7 +579,7 @@
 		else if (src.d_state == 5)
 			W:welding = 2
 			user << "\blue Removing support rods."
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			sleep(100)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 6
@@ -596,7 +596,7 @@
 			var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 			O.name = "Thermite"
 			O.desc = "Looks hot."
-			O.icon = 'fire.dmi'
+			O.icon = 'icons/effects/fire.dmi'
 			O.icon_state = "2"
 			O.anchored = 1
 			O.density = 1
@@ -611,7 +611,7 @@
 
 		if (src.d_state == 2)
 			user << "\blue Slicing metal cover."
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			sleep(40)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 3
@@ -619,7 +619,7 @@
 
 		else if (src.d_state == 5)
 			user << "\blue Removing support rods."
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			sleep(70)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 6
@@ -634,7 +634,7 @@
 		if (src.d_state == 4)
 			var/turf/T = user.loc
 			user << "\blue Detaching support rods."
-			playsound(src.loc, 'Ratchet.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			sleep(40)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 5
@@ -642,14 +642,14 @@
 
 	else if (istype(W, /obj/item/weapon/wirecutters))
 		if (src.d_state == 0)
-			playsound(src.loc, 'Wirecutter.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			src.d_state = 1
 			new /obj/item/stack/rods( src )
 
 	else if (istype(W, /obj/item/weapon/screwdriver))
 		if (src.d_state == 1)
 			var/turf/T = user.loc
-			playsound(src.loc, 'Screwdriver.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			user << "\blue Removing support lines."
 			sleep(40)
 			if ((user.loc == T && user.equipped() == W))
@@ -661,7 +661,7 @@
 		if (src.d_state == 3)
 			var/turf/T = user.loc
 			user << "\blue Prying cover off."
-			playsound(src.loc, 'Crowbar.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			sleep(100)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 4
@@ -670,7 +670,7 @@
 		else if (src.d_state == 6)
 			var/turf/T = user.loc
 			user << "\blue Prying outer sheath off."
-			playsound(src.loc, 'Crowbar.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			sleep(100)
 			if(src)
 				if ((user.loc == T && user.equipped() == W))
@@ -725,7 +725,7 @@
 			var/temp = P.resulting_poster.icon_state
 			var/temp_loc = user.loc
 			P.resulting_poster.icon_state = "poster_being_set"
-			playsound(P.resulting_poster.loc, 'poster_being_created.ogg', 100, 1)
+			playsound(P.resulting_poster.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 			sleep(24)
 
 			if(user.loc == temp_loc)//Let's check if he still is there
@@ -779,7 +779,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	//Note to coders, the 'intact' var can no longer be used to determine if the floor is a plating or not.
 	//Use the is_plating(), is_plasteel_floor() and is_light_floor() procs instead. --Errorage
 	name = "floor"
-	icon = 'floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
@@ -892,7 +892,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 		name = "plating"
 
 /turf/simulated/floor/grid
-	icon = 'floors.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "circuit"
 
 /turf/simulated/floor/New()
@@ -1017,7 +1017,7 @@ turf/simulated/floor/return_siding_icon_state()
 		return
 	if(istype(C, /obj/item/weapon/wrench))
 		user << "\blue Removing rods..."
-		playsound(src.loc, 'Ratchet.ogg', 80, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)
 			ReplaceWithFloor()
@@ -1202,7 +1202,7 @@ turf/simulated/floor/return_siding_icon_state()
 			new floor_tile.type(src)
 
 		make_plating()
-		playsound(src.loc, 'Crowbar.ogg', 80, 1)
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 80, 1)
 
 		return
 
@@ -1213,7 +1213,7 @@ turf/simulated/floor/return_siding_icon_state()
 				user << "\blue Reinforcing the floor..."
 				if(do_after(user, 30) && R && R.amount >= 2 && is_plating())
 					ReplaceWithEngineFloor()
-					playsound(src.loc, 'Deconstruct.ogg', 80, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
 					return
 			else
@@ -1241,7 +1241,7 @@ turf/simulated/floor/return_siding_icon_state()
 				T.use(1)
 				update_icon()
 				levelupdate()
-				playsound(src.loc, 'Genhit.ogg', 50, 1)
+				playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 			else
 				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
 
@@ -1268,7 +1268,7 @@ turf/simulated/floor/return_siding_icon_state()
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))
 					user << "\red You fix some dents on the broken plating."
-					playsound(src.loc, 'Welder.ogg', 80, 1)
+					playsound(src.loc, 'sound/items/Welder.ogg', 80, 1)
 					icon_state = "plating"
 					burnt = 0
 					broken = 0
@@ -1325,7 +1325,7 @@ turf/simulated/floor/return_siding_icon_state()
 			return
 		var/obj/item/stack/rods/R = C
 		user << "\blue Constructing support lattice ..."
-		playsound(src.loc, 'Genhit.ogg', 50, 1)
+		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
 		R.use(1)
 		return
@@ -1335,7 +1335,7 @@ turf/simulated/floor/return_siding_icon_state()
 		if(L)
 			var/obj/item/stack/tile/plasteel/S = C
 			del(L)
-			playsound(src.loc, 'Genhit.ogg', 50, 1)
+			playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
 			S.use(1)
 			return
@@ -1562,4 +1562,4 @@ turf/simulated/floor/return_siding_icon_state()
 	if(flags & NOJAUNT)
 		return
 	flags |= NOJAUNT
-	overlays += image('water.dmi',src,"holywater")*/
+	overlays += image('icons/effects/water.dmi',src,"holywater")*/

@@ -150,7 +150,7 @@ obj/mecha/combat/honker/Topic(href, href_list)
 	if (href_list["play_sound"])
 		switch(href_list["play_sound"])
 			if("sadtrombone")
-				playsound(src, 'sadtrombone.ogg', 50)
+				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 	return
 
 proc/rand_hex_color()

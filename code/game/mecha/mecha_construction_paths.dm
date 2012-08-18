@@ -6,17 +6,17 @@
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
-			playsound(holder, 'Welder2.ogg', 50, 1)
+			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
-		playsound(holder, 'Ratchet.ogg', 50, 1)
+		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		playsound(holder, 'Screwdriver.ogg', 50, 1)
+		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		playsound(holder, 'Wirecutter.ogg', 50, 1)
+		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/C = used_atom
@@ -25,7 +25,7 @@
 			return 0
 		else
 			C.use(4)
-			playsound(holder, 'Deconstruct.ogg', 50, 1)
+			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.amount < 5)
@@ -39,17 +39,17 @@
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
-			playsound(holder, 'Welder2.ogg', 50, 1)
+			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
-		playsound(holder, 'Ratchet.ogg', 50, 1)
+		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		playsound(holder, 'Screwdriver.ogg', 50, 1)
+		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		playsound(holder, 'Wirecutter.ogg', 50, 1)
+		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/C = used_atom
@@ -58,7 +58,7 @@
 			return 0
 		else
 			C.use(4)
-			playsound(holder, 'Deconstruct.ogg', 50, 1)
+			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.amount < 5)
@@ -834,7 +834,7 @@
 			return 0
 
 		if(istype(used_atom, /obj/item/weapon/bikehorn))
-			playsound(holder, 'bikehorn.ogg', 50, 1)
+			playsound(holder, 'sound/items/bikehorn.ogg', 50, 1)
 			user.visible_message("HONK!")
 
 		//TODO: better messages.

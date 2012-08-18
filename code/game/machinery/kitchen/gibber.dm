@@ -162,7 +162,7 @@
 	src.occupant.ghostize()
 	del(src.occupant)
 	spawn(src.gibtime)
-		playsound(src.loc, 'splat.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
 			var/obj/item/meatslab = allmeat[i]

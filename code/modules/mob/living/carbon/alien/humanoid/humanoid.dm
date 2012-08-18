@@ -259,7 +259,7 @@
 			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
 				return
 			if (health > 0)
-				playsound(loc, 'bite.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
@@ -406,7 +406,7 @@
 
 			LAssailant = M
 
-			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
@@ -433,7 +433,7 @@
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
@@ -442,19 +442,19 @@
 			if (!lying)
 				if (prob(5))//Very small chance to push an alien down.
 					Weaken(2)
-					playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has pushed down []!</B>", M, src), 1)
 				else
 					if (prob(50))
 						drop_item()
-						playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has disarmed []!</B>", M, src), 1)
 					else
-						playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has attempted to disarm []!</B>", M, src), 1)
@@ -490,7 +490,7 @@ In all, this is a lot like the monkey code. /N
 
 		else
 			if (health > 0)
-				playsound(loc, 'bite.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				var/damage = rand(1, 3)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))

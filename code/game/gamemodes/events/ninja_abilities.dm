@@ -60,7 +60,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
-		playsound(U.loc, 'bamf.ogg', 50, 2)
+		playsound(U.loc, 'sound/effects/bamf.ogg', 50, 2)
 		s_bombs--
 		s_coold = 1
 	return
@@ -88,7 +88,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'phasein.ogg', 25, 1)
+				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
 				playsound(U.loc, "sparks", 50, 1)
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 
@@ -114,7 +114,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		var/turf/mobloc = get_turf(U.loc)//To make sure that certain things work properly below.
 		if((!T.density)&&istype(mobloc, /turf))
 			spawn(0)
-				playsound(U.loc, 'sparks4.ogg', 50, 1)
+				playsound(U.loc, 'sound/effects/sparks4.ogg', 50, 1)
 				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
 			handle_teleport_grab(T, U)
@@ -122,8 +122,8 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'phasein.ogg', 25, 1)
-				playsound(U.loc, 'sparks2.ogg', 50, 1)
+				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
+				playsound(U.loc, 'sound/effects/sparks2.ogg', 50, 1)
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 
 			spawn(0)//Any living mobs in teleport area are gibbed.
@@ -145,7 +145,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 	var/C = 250
 	if(!ninjacost(C,1))
 		var/mob/living/carbon/human/U = affecting
-		playsound(U.loc, 'EMPulse.ogg', 60, 2)
+		playsound(U.loc, 'sound/effects/EMPulse.ogg', 60, 2)
 		empulse(U, 4, 6) //Procs sure are nice. Slightly weaker than wizard's disable tch.
 		s_coold = 2
 		cell.charge-=(C*10)
@@ -344,7 +344,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'phasein.ogg', 25, 1)
+				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
 				playsound(U.loc, "sparks", 50, 1)
 				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 			s_coold = 1
@@ -418,7 +418,7 @@ This is so anime it hurts. But that's the point.*/
 
 				spawn(0)
 					spark_system.start()
-					playsound(U.loc, 'phasein.ogg', 25, 1)
+					playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
 					playsound(U.loc, "sparks", 50, 1)
 					anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 				s_coold = 1

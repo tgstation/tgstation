@@ -451,7 +451,7 @@ Buildable meters
 				P.node2.initialize()
 				P.node2.build_network()
 
-	playsound(src.loc, 'Ratchet.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \
 		"[user] fastens the [src].", \
 		"\blue You have fastened the [src].", \
@@ -483,7 +483,7 @@ Buildable meters
 		user << "\red You need to fasten it to a pipe"
 		return 1
 	new/obj/machinery/meter( src.loc )
-	playsound(src.loc, 'Ratchet.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user << "\blue You have fastened the meter to the pipe"
 	del(src)
 

@@ -15,7 +15,7 @@
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
 
-	var/fire_sound = 'Gunshot.ogg'
+	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	var/obj/item/projectile/in_chamber = null
 	var/caliber = ""
 	var/silenced = 0

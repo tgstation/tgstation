@@ -298,7 +298,7 @@ var/list/slot_equipment_priority = list( \
 /*
 /mob/verb/help()
 	set name = "Help"
-	src << browse('help.html', "window=help")
+	src << browse('html/help.html', "window=help")
 	return
 */
 
@@ -347,26 +347,26 @@ var/list/slot_equipment_priority = list( \
 	set name = "Changelog"
 	set category = "OOC"
 	if (client)
-		src.getFiles('postcardsmall.jpg',
-							 'somerights20.png',
-							 '88x31.png',
-							 'bug-minus.png',
-							 'cross-circle.png',
-							 'hard-hat-exclamation.png',
-							 'image-minus.png',
-							 'image-plus.png',
-							 'music-minus.png',
-							 'music-plus.png',
-							 'tick-circle.png',
-							 'wrench-screwdriver.png',
-							 'spell-check.png',
-							 'burn-exclamation.png',
-							 'chevron.png',
-							 'chevron-expand.png',
-							 'changelog.css',
-							 'changelog.js'
+		src.getFiles('html/postcardsmall.jpg',
+							 'html/somerights20.png',
+							 'html/88x31.png',
+							 'html/bug-minus.png',
+							 'html/cross-circle.png',
+							 'html/hard-hat-exclamation.png',
+							 'html/image-minus.png',
+							 'html/image-plus.png',
+							 'html/music-minus.png',
+							 'html/music-plus.png',
+							 'html/tick-circle.png',
+							 'html/wrench-screwdriver.png',
+							 'html/spell-check.png',
+							 'html/burn-exclamation.png',
+							 'html/chevron.png',
+							 'html/chevron-expand.png',
+							 'html/changelog.css',
+							 'html/changelog.js'
 							 )
-		src << browse('changelog.html', "window=changes;size=675x650")
+		src << browse('html/changelog.html', "window=changes;size=675x650")
 		client.changes = 1
 
 /client/var/ghost_ears = 1

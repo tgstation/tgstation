@@ -468,7 +468,7 @@
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('shuttlecalled.ogg')
+	world << sound('sound/AI/shuttlecalled.ogg')
 
 	return
 
@@ -527,7 +527,7 @@
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('shuttlecalled.ogg')
+	world << sound('sound/AI/shuttlecalled.ogg')
 
 	..()
 
@@ -552,6 +552,6 @@
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('shuttlecalled.ogg')
+	world << sound('sound/AI/shuttlecalled.ogg')
 
 	..()

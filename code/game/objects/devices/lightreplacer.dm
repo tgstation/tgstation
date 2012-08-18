@@ -124,11 +124,11 @@
 /obj/item/device/lightreplacer/proc/Use(var/mob/user)
 
 	if(inuse) return
-	playsound(src.loc, 'click.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	var/pass = 0
 	inuse = 1
 	if(do_after(user, 30))
-		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		AddUses(-1)
 		pass = 1
 	inuse = 0

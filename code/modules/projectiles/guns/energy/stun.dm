@@ -3,7 +3,7 @@
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
-	fire_sound = 'Taser.ogg'
+	fire_sound = 'sound/weapons/Taser.ogg'
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/electrode"
 	cell_type = "/obj/item/weapon/cell/crap"
@@ -12,7 +12,7 @@
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
-	fire_sound = 'Taser.ogg'
+	fire_sound = 'sound/weapons/Taser.ogg'
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/electrode"
 	cell_type = "/obj/item/weapon/cell/secborg"
@@ -48,7 +48,7 @@
 	name = "stun revolver"
 	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
 	icon_state = "stunrevolver"
-	fire_sound = 'Gunshot.ogg'
+	fire_sound = 'sound/weapons/Gunshot.ogg'
 	origin_tech = "combat=3;materials=3;powerstorage=2"
 	charge_cost = 125
 	projectile_type = "/obj/item/projectile/energy/electrode"
@@ -65,7 +65,7 @@
 	m_amt = 2000
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	silenced = 1
-	fire_sound = 'Genhit.ogg'
+	fire_sound = 'sound/weapons/Genhit.ogg'
 	projectile_type = "/obj/item/projectile/energy/bolt"
 	cell_type = "/obj/item/weapon/cell/crap"
 	var/charge_tick = 0

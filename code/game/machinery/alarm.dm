@@ -1158,7 +1158,7 @@ table tr:first-child th:first-child { border: none;}
 		return
 	for(var/area/RA in A.related)
 		RA.firealert()
-	//playsound(src.loc, 'signal.ogg', 75, 0)
+	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 
 /obj/machinery/partyalarm/attack_paw(mob/user as mob)

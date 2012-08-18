@@ -1,6 +1,6 @@
 /obj/item/weapon/cureimplanter
 	name = "Hypospray injector"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "implanter1"
 	var/datum/disease2/resistance/resistance = null
 	var/works = 0

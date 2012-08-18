@@ -3,7 +3,7 @@
 	desc = "a basic weapon designed kill with concentrated energy bolts"
 	icon_state = "laser"
 	item_state = "laser"
-	fire_sound = 'Laser.ogg'
+	fire_sound = 'sound/weapons/Laser.ogg'
 	w_class = 3.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
@@ -67,7 +67,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser cannon"
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
-	fire_sound = 'lasercannonfire.ogg'
+	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	projectile_type = "/obj/item/projectile/beam/heavylaser"
 
@@ -76,7 +76,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "xray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
 	icon_state = "xray"
-	fire_sound = 'laser3.ogg'
+	fire_sound = 'sound/weapons/laser3.ogg'
 	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
 	projectile_type = "/obj/item/projectile/beam/xray"
 	charge_cost = 50

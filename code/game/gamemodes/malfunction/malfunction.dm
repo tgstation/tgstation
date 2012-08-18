@@ -165,7 +165,7 @@
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
-	world << sound('aimalf.ogg')
+	world << sound('sound/AI/aimalf.ogg')
 
 
 /datum/game_mode/malfunction/proc/ai_win()
@@ -179,7 +179,7 @@
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
 	ticker.mode:explosion_in_progress = 1
 	for(var/mob/M in player_list)
-		M << 'Alarm.ogg'
+		M << 'sound/machines/Alarm.ogg'
 	world << "Self-destructing in 10"
 	for (var/i=9 to 1 step -1)
 		sleep(10)

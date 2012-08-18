@@ -91,7 +91,7 @@
 
 					src.messages += "<i><b>&larr; From [sender]:</b></i><br>[signal.data["data"]]<br>"
 					if(src.master.active_program == src)
-						playsound(src.master.loc, 'twobeep.ogg', 50, 1)
+						playsound(src.master.loc, 'sound/machines/twobeep.ogg', 50, 1)
 						src.master.updateUsrDialog()
 
 		return

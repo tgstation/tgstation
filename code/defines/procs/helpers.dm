@@ -319,7 +319,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(cmptext("ai",role))
 			oldname = null//don't bother with the records update crap
 			world << "<b>[newname] is the AI!</b>"
-			world << sound('newAI.ogg')
+			world << sound('sound/AI/newAI.ogg')
 
 		fully_replace_character_name(oldname,newname)
 

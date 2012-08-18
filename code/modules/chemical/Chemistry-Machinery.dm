@@ -624,7 +624,7 @@
 
 /obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
@@ -921,7 +921,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src.loc, 'juicer.ogg', 20, 1)
+	playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
 	inuse = 1
 	spawn(50)
 		inuse = 0
@@ -954,7 +954,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src.loc, 'blender.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 	inuse = 1
 	spawn(60)
 		inuse = 0

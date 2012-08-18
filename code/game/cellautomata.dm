@@ -120,15 +120,15 @@
 //Crispy fullban
 /world/Reboot(var/reason)
 	spawn(0)
-		world << sound(pick('newroundsexy.ogg','apcdestroyed.ogg','bangindonk.ogg')) // random end sounds!! - LastyBatsy
+		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
 		//if(prob(40))
 		//	for(var/mob/M in world)
 		//		if(M.client)
-		//			M << sound('newroundsexy.ogg')
+		//			M << sound('sound/AI/newroundsexy.ogg')
 		//else
 		//	for(var/mob/M in world)
 		//		if(M.client)
-		//			M << sound('apcdestroyed.ogg')
+		//			M << sound('sound/misc/apcdestroyed.ogg')
 
 	for(var/client/C)
 		if (config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite

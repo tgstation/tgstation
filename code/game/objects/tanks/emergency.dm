@@ -21,7 +21,7 @@
 		..()
 		if(air_contents.oxygen < 0.2 && loc==usr)
 			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			usr << sound('alert.ogg')
+			usr << sound('sound/effects/alert.ogg')
 
 /obj/item/weapon/tank/emergency_oxygen/engi
 	icon_state = "emergency_engi"

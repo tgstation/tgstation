@@ -1007,7 +1007,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( usr.loc )
 				A.icon = 'icons/effects/genetics.dmi'
 				A.icon_state = "eyelasers"
-				playsound(usr.loc, 'taser2.ogg', 75, 1)
+				playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 
 				A.firer = usr
 				A.def_zone = usr:get_organ_target()

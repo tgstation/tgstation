@@ -36,7 +36,7 @@
 		..()
 		if(air_contents.oxygen < 1 && loc==usr)
 			usr << "\red <B>The meter on the [src.name] indicates you are almost out of air!</B>"
-			usr << sound('alert.ogg')
+			usr << sound('sound/effects/alert.ogg')
 
 
 /obj/item/weapon/tank/plasma
@@ -183,7 +183,7 @@
 			//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
 			if(integrity <= 0)
 				loc.assume_air(air_contents)
-				playsound(src.loc, 'spray.ogg', 10, 1, -3)
+				playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 				del(src)
 			else
 				integrity--

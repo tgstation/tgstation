@@ -256,7 +256,7 @@
 	name = "MEGAMADCRAB"
 	real_name = "MEGAMADCRAB"
 	desc = "OH NO YOU DUN IT NOW."
-	icon = 'mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "madcrab"
 	icon_living = "madcrab"
 	icon_dead = "madcrab_dead"

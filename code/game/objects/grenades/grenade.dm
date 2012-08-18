@@ -17,7 +17,7 @@
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
 		active = 1
 		icon_state = initial(icon_state) + "_active"
-		playsound(loc, 'armbomb.ogg', 75, 1, -3)
+		playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 		spawn(5)
 			if(user)
 				user.drop_item()
@@ -33,7 +33,7 @@
 		user << "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>"
 		active = 1
 		icon_state = initial(icon_state) + "_active"
-		playsound(loc, 'armbomb.ogg', 75, 1, -3)
+		playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 		spawn(det_time)
 			prime()
 			return
@@ -72,7 +72,7 @@
 
 
 /obj/item/weapon/grenade/proc/prime()
-//	playsound(loc, 'Welder2.ogg', 25, 1)
+//	playsound(loc, 'sound/items/Welder2.ogg', 25, 1)
 	var/turf/T = get_turf(src)
 	if(T)
 		T.hotspot_expose(700,125)

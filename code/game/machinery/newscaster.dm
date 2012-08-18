@@ -623,7 +623,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				src.screen=2*/  //Obsolete after autorecognition
 
 	if (src.isbroken)
-		playsound(src.loc, 'hit_on_shattered_glass.ogg', 100, 1)
+		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
 		for (var/mob/O in hearers(5, src.loc))
 			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
 	else
@@ -632,18 +632,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))
 					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
-					playsound(src.loc, 'Glasshit.ogg', 100, 1)
+					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 			else
 				src.hitstaken++
 				if(src.hitstaken==3)
 					for (var/mob/O in hearers(5, src.loc))
 						O.show_message("[user.name] smashes the [src.name]!" )
 					src.isbroken=1
-					playsound(src.loc, 'Glassbr3.ogg', 100, 1)
+					playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 				else
 					for (var/mob/O in hearers(5, src.loc))
 						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
-					playsound(src.loc, 'Glasshit.ogg', 100, 1)
+					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
 			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
 	src.update_icon()
@@ -849,4 +849,4 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	else
 		for(var/mob/O in hearers(world.view-1, T))
 			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Wanted notice posted!\"</span>",2)
-	playsound(src.loc, 'twobeep.ogg', 75, 1)
+	playsound(src.loc, 'sound/machines/twobeep.ogg', 75, 1)

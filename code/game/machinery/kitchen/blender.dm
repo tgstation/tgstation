@@ -94,7 +94,7 @@ the blender or the processor: Processor items are solid objects and Blender resu
 	if(!src.container)
 		usr << "\red The blender doesn't have an attached container!"
 		return
-	playsound(src.loc, 'blender.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 	src.processing = 1
 	usr << "\blue You turn on the blender."
 	use_power(250)

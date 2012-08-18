@@ -69,7 +69,7 @@
 
 	proc/Open()
 		isSwitchingStates = 1
-		playsound(loc, 'stonedoor_openclose.ogg', 100, 1)
+		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
 		flick("[mineralType]opening",src)
 		sleep(10)
 		density = 0
@@ -80,7 +80,7 @@
 
 	proc/Close()
 		isSwitchingStates = 1
-		playsound(loc, 'stonedoor_openclose.ogg', 100, 1)
+		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
 		flick("[mineralType]closing",src)
 		sleep(10)
 		density = 1
@@ -256,7 +256,7 @@
 
 	Open()
 		isSwitchingStates = 1
-		playsound(loc, 'doorcreaky.ogg', 100, 1)
+		playsound(loc, 'sound/effects/doorcreaky.ogg', 100, 1)
 		flick("[mineralType]opening",src)
 		sleep(10)
 		density = 0
@@ -267,7 +267,7 @@
 
 	Close()
 		isSwitchingStates = 1
-		playsound(loc, 'doorcreaky.ogg', 100, 1)
+		playsound(loc, 'sound/effects/doorcreaky.ogg', 100, 1)
 		flick("[mineralType]closing",src)
 		sleep(10)
 		density = 1
@@ -293,7 +293,7 @@
 
 	Open()
 		isSwitchingStates = 1
-		playsound(loc, 'attackblob.ogg', 100, 1)
+		playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		flick("[mineralType]opening",src)
 		sleep(10)
 		density = 0
@@ -308,7 +308,7 @@
 
 	Close()
 		isSwitchingStates = 1
-		playsound(loc, 'attackblob.ogg', 100, 1)
+		playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		flick("[mineralType]closing",src)
 		sleep(10)
 		density = 1

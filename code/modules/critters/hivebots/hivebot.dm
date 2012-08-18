@@ -127,7 +127,7 @@
 			return
 
 		var/obj/item/projectile/hivebotbullet/A = new /obj/item/projectile/hivebotbullet(user:loc)
-		playsound(user, 'Gunshot.ogg', 100, 1)
+		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 
 		if(!A)	return
 
@@ -203,7 +203,7 @@
 		smoke.start()
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>The [src] warps in!</B>", 1)
-		playsound(src.loc, 'EMPulse.ogg', 25, 1)
+		playsound(src.loc, 'sound/effects/EMPulse.ogg', 25, 1)
 		if(auto_spawn)
 			spawn(spawn_delay)
 				turn_on = 1

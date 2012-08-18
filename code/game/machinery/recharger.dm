@@ -40,7 +40,7 @@ obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 			return
 		anchored = !anchored
 		user << "You [anchored ? "attached" : "detached"] the recharger."
-		playsound(loc, 'Ratchet.ogg', 75, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 
 obj/machinery/recharger/attack_hand(mob/user as mob)
 	add_fingerprint(user)

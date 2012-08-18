@@ -709,7 +709,7 @@
 		return
 	if (opened)
 		if(istype(W, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'Crowbar.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"

@@ -268,7 +268,7 @@ Auto Patrol: []"},
 
 			if (target)		// make sure target exists
 				if (get_dist(src, src.target) <= 1)		// if right next to perp
-					playsound(src.loc, 'Egloves.ogg', 50, 1, -1)
+					playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 					src.icon_state = "[lasercolor]ed209-c"
 					spawn(2)
 						src.icon_state = "[lasercolor]ed209[src.on]"
@@ -317,7 +317,7 @@ Auto Patrol: []"},
 				return
 
 			if (!src.target.handcuffed && !src.arrest_type)
-				playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+				playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 				mode = SECBOT_ARREST
 				for(var/mob/O in viewers(src, null))
 					O.show_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>", 1)
@@ -337,7 +337,7 @@ Auto Patrol: []"},
 						src.last_found = world.time
 						src.frustration = 0
 
-	//					playsound(src.loc, pick('bgod.ogg', 'biamthelaw.ogg', 'bsecureday.ogg', 'bradio.ogg', 'binsult.ogg', 'bcreep.ogg'), 50, 0)
+	//					playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 	//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
 	//					src.speak(arrest_message)
 
@@ -639,7 +639,7 @@ Auto Patrol: []"},
 			src.oldtarget_name = C.name
 			src.speak("Level [src.threatlevel] infraction alert!")
 			if(!src.lasercolor)
-				playsound(src.loc, pick('ed209_20sec.ogg', 'EDPlaceholder.ogg'), 50, 0)
+				playsound(src.loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
 			src.visible_message("<b>[src]</b> points at [C.name]!")
 			mode = SECBOT_HUNT
 			spawn(0)
@@ -990,7 +990,7 @@ Auto Patrol: []"},
 
 		if(8)
 			if( istype(W, /obj/item/weapon/screwdriver) )
-				playsound(src.loc, 'Screwdriver.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
 				user << "<span class='notice'>Now attaching the gun to the frame...</span>"
 				sleep(40)

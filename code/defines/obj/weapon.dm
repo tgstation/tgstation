@@ -657,7 +657,7 @@
 	icon_state = "fire_extinguisher0"
 	var/last_use = 1.0
 	var/safety = 1
-	hitsound = 'smash.ogg'
+	hitsound = 'sound/weapons/smash.ogg'
 	flags = FPRINT | USEDELAY | TABLEPASS | CONDUCT
 	throwforce = 10
 	w_class = 3.0
@@ -1484,7 +1484,7 @@
 	desc = "You can drill using this item. You dig?"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
-	hitsound = 'circsawhit.ogg'
+	hitsound = 'sound/weapons/circsawhit.ogg'
 	m_amt = 15000
 	g_amt = 10000
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1498,7 +1498,7 @@
 	desc = "For heavy duty cutting."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw3"
-	hitsound = 'circsawhit.ogg'
+	hitsound = 'sound/weapons/circsawhit.ogg'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0

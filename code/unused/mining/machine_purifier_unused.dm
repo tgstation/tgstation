@@ -3,7 +3,7 @@
 /obj/machinery/mineral/purifier
 	name = "Ore Purifier"
 	desc = "A machine which makes building material out of ores"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "aiupload"
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null

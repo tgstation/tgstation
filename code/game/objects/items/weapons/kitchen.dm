@@ -115,10 +115,10 @@ KNIFE
 		M.Weaken(1)
 		user.take_organ_damage(2)
 		if(prob(50))
-			playsound(M, 'trayhit1.ogg', 50, 1)
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			return
 		else
-			playsound(M, 'trayhit2.ogg', 50, 1) //sound playin'
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1) //sound playin'
 			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
 
 	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
@@ -143,12 +143,12 @@ KNIFE
 		else
 			M.take_organ_damage(5)
 		if(prob(50))
-			playsound(M, 'trayhit1.ogg', 50, 1)
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 			return
 		else
-			playsound(M, 'trayhit2.ogg', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 			return
@@ -171,11 +171,11 @@ KNIFE
 				location.add_blood(H)
 
 		if(prob(50))
-			playsound(M, 'trayhit1.ogg', 50, 1)
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		else
-			playsound(M, 'trayhit2.ogg', 50, 1)  //sound playin'
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //sound playin'
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		if(prob(10))
@@ -195,11 +195,11 @@ KNIFE
 				location.add_blood(H)
 
 		if(prob(50))
-			playsound(M, 'trayhit1.ogg', 50, 1)
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		else
-			playsound(M, 'trayhit2.ogg', 50, 1)  //sound playin' again
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //sound playin' again
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		if(prob(30))

@@ -445,7 +445,7 @@
 							src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[src]'>[customsender]</a> ([customjob]):</b></i><br>[custommessage]<br>"
 							if (!customrecepient.silent)
-								playsound(customrecepient.loc, 'twobeep.ogg', 50, 1)
+								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
 								for (var/mob/O in hearers(3, customrecepient.loc))
 									O.show_message(text("\icon[customrecepient] *[customrecepient.ttone]*"))
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
@@ -459,7 +459,7 @@
 							src.linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[PDARec]'>[PDARec.owner]</a> ([customjob]):</b></i><br>[custommessage]<br>"
 							if (!customrecepient.silent)
-								playsound(customrecepient.loc, 'twobeep.ogg', 50, 1)
+								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
 								for (var/mob/O in hearers(3, customrecepient.loc))
 									O.show_message(text("\icon[customrecepient] *[customrecepient.ttone]*"))
 								if( customrecepient.loc && ishuman(customrecepient.loc) )

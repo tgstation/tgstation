@@ -39,7 +39,7 @@
 		usr << "\red [src.name] cannot be placed on this spot."
 		return
 	usr << "Attaching [src] to the wall."
-	playsound(src.loc, 'click.ogg', 75, 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
 	var/constrdir = usr.dir
 	var/constrloc = usr.loc
 	if (!do_after(usr, 30))
@@ -103,14 +103,14 @@
 	src.add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
-			playsound(src.loc, 'Ratchet.ogg', 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			usr << "You begin deconstructing [src]."
 			if (!do_after(usr, 30))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
-			playsound(src.loc, 'Deconstruct.ogg', 75, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
 			del(src)
 		if (src.stage == 2)
 			usr << "You have to remove the wires first."
@@ -131,7 +131,7 @@
 		new /obj/item/weapon/cable_coil(get_turf(src.loc), 1, "red")
 		user.visible_message("[user.name] removes the wiring from [src].", \
 			"You remove the wiring from [src].", "You hear a noise.")
-		playsound(src.loc, 'Wirecutter.ogg', 100, 1)
+		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
 	if(istype(W, /obj/item/weapon/cable_coil))
@@ -158,7 +158,7 @@
 			src.stage = 3
 			user.visible_message("[user.name] closes [src]'s casing.", \
 				"You close [src]'s casing.", "You hear a noise.")
-			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 
 			switch(fixture_type)
 
@@ -395,7 +395,7 @@
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
-			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
 			var/obj/machinery/light_construct/newlight = null
@@ -535,7 +535,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src.loc, 'Glasshit.ogg', 75, 1)
+			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(on)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -722,7 +722,7 @@
 		src.visible_message("\red [name] shatters.","\red You hear a small glass object shatter.")
 		status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, 'Glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		update()
 
 

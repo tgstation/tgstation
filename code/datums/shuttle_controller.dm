@@ -39,7 +39,7 @@ datum/shuttle_controller
 			if(timeleft >= 600)
 				return
 			captain_announce("The emergency shuttle has been recalled.")
-			world << sound('shuttlerecalled.ogg')
+			world << sound('sound/AI/shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
 
@@ -257,7 +257,7 @@ datum/shuttle_controller
 						settimeleft(SHUTTLELEAVETIME)
 						send2irc("Server", "The Emergency Shuttle has docked with the station.")
 						captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
-						world << sound('shuttledock.ogg')
+						world << sound('sound/AI/shuttledock.ogg')
 
 						return 1
 

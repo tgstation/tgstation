@@ -462,7 +462,7 @@
 		syringes -= S
 		S.icon = 'icons/obj/chemical.dmi'
 		S.icon_state = "syringeproj"
-		playsound(chassis, 'syringeproj.ogg', 50, 1)
+		playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
 		log_message("Launched [S] from [src], targeting [target].")
 		spawn(-1)
 			src = null //if src is deleted, still process the syringe

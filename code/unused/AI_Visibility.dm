@@ -96,7 +96,7 @@
 
 		if(!(t in visibleTurfs))
 			if(!t.obscured)
-				t.obscured = image('cameravis.dmi', t, "black", 15)
+				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
 
 			obscured += t.obscured
 			for(var/mob/aiEye/m in seenby)
@@ -106,7 +106,7 @@
 	for(var/turf/t in dimAdded)
 		if(!(t in visibleTurfs))
 			if(!t.dim)
-				t.dim = image('cameravis.dmi', t, "dim", 15)
+				t.dim = image('icons/effects/cameravis.dmi', t, "dim", 15)
 				t.mouse_opacity = 0
 
 			dim += t.dim
@@ -130,7 +130,7 @@
 	for(var/turf/t in visRemoved)
 		if(t in obscuredTurfs)
 			if(!t.obscured)
-				t.obscured = image('cameravis.dmi', t, "black", 15)
+				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
 
 			obscured += t.obscured
 			for(var/mob/aiEye/m in seenby)
@@ -169,14 +169,14 @@
 
 	for(var/turf/t in obscuredTurfs)
 		if(!t.obscured)
-			t.obscured = image('cameravis.dmi', t, "black", 15)
+			t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
 
 		obscured += t.obscured
 
 	for(var/turf/t in dimTurfs)
 		if(!(t in visibleTurfs))
 			if(!t.dim)
-				t.dim = image('cameravis.dmi', t, "dim", TURF_LAYER)
+				t.dim = image('icons/effects/cameravis.dmi', t, "dim", TURF_LAYER)
 
 			dim += t.dim
 

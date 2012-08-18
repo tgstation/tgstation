@@ -16,7 +16,7 @@
 		src.smoke.set_up(10, 0, usr.loc)
 
 	prime()
-		playsound(src.loc, 'smoke.ogg', 50, 1, -3)
+		playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 		spawn(0)
 			src.smoke.start()
 			sleep(10)

@@ -22,7 +22,7 @@
 			G.synch()
 			LAssailant = M
 
-			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
@@ -32,13 +32,13 @@
 				w_uniform.add_fingerprint(M)
 			var/damage = rand(15, 30)
 			if(!damage)
-				playsound(loc, 'slashmiss.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			playsound(loc, 'slice.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
@@ -50,20 +50,20 @@
 		if("disarm")
 			var/randn = rand(1, 100)
 			if (randn <= 90)
-				playsound(loc, 'pierce.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Weaken(rand(10,15))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1)
 			else
 				if (randn <= 99)
-					playsound(loc, 'slash.ogg', 25, 1, -1)
+					playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 					drop_item()
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] disarmed []!</B>", M, src), 1)
 				else
-					playsound(loc, 'slashmiss.ogg', 50, 1, -1)
+					playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has tried to disarm []!</B>", M, src), 1)

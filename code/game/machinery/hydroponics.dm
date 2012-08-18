@@ -444,7 +444,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				b_amount = 100 - src.waterlevel
 			O.reagents.remove_reagent("water", b_amount)
 			src.waterlevel += b_amount
-			playsound(src.loc, 'slosh.ogg', 25, 1)
+			playsound(src.loc, 'sound/effects/slosh.ogg', 25, 1)
 			user << "You fill the [src] with [b_amount] units of water."
 
 	//		Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
@@ -701,7 +701,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				src.weedlevel = 0
 			src.toxic += 4 // Oops
 			src.visible_message("\red <B>\The [src] has been sprayed with \the [O][(user ? " by [user]." : ".")]")
-			playsound(src.loc, 'spray3.ogg', 50, 1, -6)
+			playsound(src.loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 
 	else if (istype(O, /obj/item/weapon/minihoe))  // The minihoe
 		//var/deweeding
@@ -721,7 +721,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (src.toxic > 100 ) // Make sure it won't go overoboard
 			src.toxic = 100
 		user << "You apply the weedkiller solution into the [src]."
-		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
+		playsound(src.loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
 		src.updateicon()
 
@@ -735,11 +735,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (src.toxic > 100 ) // Make sure it won't go overoboard
 			src.toxic = 100
 		user << "You apply the pestkiller solution into the [src]."
-		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
+		playsound(src.loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
 		src.updateicon()
 	else if(istype(O, /obj/item/weapon/wrench))
-		playsound(loc, 'Ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		user << "You [anchored ? "wrench" : "unwrench"] \the [src]."
 	else if(istype(O, /obj/item/weapon/shovel))

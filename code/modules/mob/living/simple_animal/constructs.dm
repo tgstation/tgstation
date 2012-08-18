@@ -31,7 +31,7 @@
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPARALYSE
-	attack_sound = 'punch3.ogg'
+	attack_sound = 'sound/weapons/punch3.ogg'
 
 
 	Life()
@@ -168,7 +168,7 @@
 	stop_automated_movement = 1
 	status_flags = CANPARALYSE
 	see_in_dark = 7
-	attack_sound = 'bladeslice.ogg'
+	attack_sound = 'sound/weapons/bladeslice.ogg'
 
 	Life()
 		..()
@@ -297,7 +297,7 @@
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPARALYSE
-	attack_sound = 'punch2.ogg'
+	attack_sound = 'sound/weapons/punch2.ogg'
 
 	Life()
 		..()

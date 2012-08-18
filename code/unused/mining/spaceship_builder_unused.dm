@@ -38,7 +38,7 @@
 
 /obj/machinery/spaceship_builder
 	name = "Robotic Fabricator"
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fab-idle"
 	density = 1
 	anchored = 1

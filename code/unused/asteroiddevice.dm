@@ -1,6 +1,6 @@
 /obj/item/device/gps
 	name = "GPS"
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	slot_flags = SLOT_BELT

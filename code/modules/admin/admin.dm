@@ -1929,7 +1929,7 @@ var/global/BSACooldown = 0
 						meteor_wave()
 						message_admins("[key_name_admin(usr)] has spawned meteors", 1)
 						command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
-						world << sound('meteors.ogg')
+						world << sound('sound/AI/meteors.ogg')
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 						return
@@ -1937,7 +1937,7 @@ var/global/BSACooldown = 0
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","GA")
 					command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-					world << sound('granomalies.ogg')
+					world << sound('sound/AI/granomalies.ogg')
 					var/turf/T = pick(blobstart)
 					var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 					spawn(rand(100, 600))
@@ -2057,7 +2057,7 @@ var/global/BSACooldown = 0
 							W.item_state = "w_suit"
 							W.color = "schoolgirl"
 						message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
-						world << sound('animes.ogg')
+						world << sound('sound/AI/animes.ogg')
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
 						return
@@ -2081,7 +2081,7 @@ var/global/BSACooldown = 0
 						var/show_log = alert(usr, "Show ion message?", "Message", "Yes", "No")
 						if(show_log == "Yes")
 							command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
-							world << sound('ionstorm.ogg')
+							world << sound('sound/AI/ionstorm.ogg')
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
 						return

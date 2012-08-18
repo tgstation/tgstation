@@ -593,7 +593,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 /mob/proc/NinjaStealthMalf()
 	invisibility = 0//Set ninja invis to 0.
 	overlays += image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
-	playsound(loc, 'stealthoff.ogg', 75, 1)
+	playsound(loc, 'sound/effects/stealthoff.ogg', 75, 1)
 
 //=======//GENERIC VERB MODIFIERS//=======//
 

@@ -244,7 +244,7 @@
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
-				playsound(src.loc, 'Ratchet.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You wrench the frame into place."
 					src.anchored = 1
@@ -254,7 +254,7 @@
 				if(!WT.remove_fuel(0, user))
 					user << "The welding tool must be on to complete this task."
 					return
-				playsound(src.loc, 'Welder.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20))
 					if(!src || !WT.isOn()) return
 					user << "\blue You deconstruct the frame."
@@ -262,7 +262,7 @@
 					del(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
-				playsound(src.loc, 'Ratchet.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You unfasten the frame."
 					src.anchored = 0
@@ -270,7 +270,7 @@
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
-					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "\blue You place the circuit board inside the frame."
 					src.icon_state = "1"
 					src.circuit = P
@@ -279,12 +279,12 @@
 				else
 					user << "\red This frame does not accept circuit boards of this type!"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You screw the circuit board into place."
 				src.state = 2
 				src.icon_state = "2"
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
-				playsound(src.loc, 'Crowbar.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the circuit board."
 				src.state = 1
 				src.icon_state = "0"
@@ -292,13 +292,13 @@
 				src.circuit = null
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You unfasten the circuit board."
 				src.state = 1
 				src.icon_state = "1"
 			if(istype(P, /obj/item/weapon/cable_coil))
 				if(P:amount >= 5)
-					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(P)
 							P:amount -= 5
@@ -308,7 +308,7 @@
 							src.icon_state = "3"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
-				playsound(src.loc, 'wirecutter.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "\blue You remove the cables."
 				src.state = 2
 				src.icon_state = "2"
@@ -317,7 +317,7 @@
 
 			if(istype(P, /obj/item/stack/sheet/glass))
 				if(P:amount >= 2)
-					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(P)
 							P:use(2)
@@ -326,13 +326,13 @@
 							src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'Crowbar.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the glass panel."
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
 			if(istype(P, /obj/item/weapon/screwdriver))
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
 				var/B = new src.circuit.build_path ( src.loc )
 				if(circuit.powernet) B:powernet = circuit.powernet

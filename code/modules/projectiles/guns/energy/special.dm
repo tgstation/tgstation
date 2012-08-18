@@ -2,7 +2,7 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
 	icon_state = "ionrifle"
-	fire_sound = 'Laser.ogg'
+	fire_sound = 'sound/weapons/Laser.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
@@ -21,7 +21,7 @@
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
-	fire_sound = 'pulse3.ogg'
+	fire_sound = 'sound/weapons/pulse3.ogg'
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/declone"
@@ -32,7 +32,7 @@ obj/item/weapon/gun/energy/staff
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
-	fire_sound = 'emitter.ogg'
+	fire_sound = 'sound/weapons/emitter.ogg'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BACK
 	w_class = 4.0
@@ -67,7 +67,7 @@ obj/item/weapon/gun/energy/staff
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
 	icon_state = "floramut100"
 	item_state = "gun"
-	fire_sound = 'stealthoff.ogg'
+	fire_sound = 'sound/effects/stealthoff.ogg'
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/floramut"
 	origin_tech = "materials=2;biotech=3;powerstorage=3"

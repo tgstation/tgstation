@@ -82,7 +82,7 @@
 				else
 					new_xeno.key = affected_mob.key
 
-				new_xeno << sound('hiss5.ogg',0,0,0,100)	//To get the player's attention
+				new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
 				affected_mob.gib()
 				src.cure(0)
 				gibbed = 1

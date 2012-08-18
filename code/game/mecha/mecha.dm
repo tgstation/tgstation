@@ -306,20 +306,20 @@
 
 /obj/mecha/proc/mechturn(direction)
 	dir = direction
-	playsound(src,'mechturn.ogg',40,1)
+	playsound(src,'sound/mecha/mechturn.ogg',40,1)
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
 	var/result = step(src,direction)
 	if(result)
-		playsound(src,'mechstep.ogg',40,1)
+		playsound(src,'sound/mecha/mechstep.ogg',40,1)
 	return result
 
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
 	if(result)
-		playsound(src,'mechstep.ogg',40,1)
+		playsound(src,'sound/mecha/mechstep.ogg',40,1)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
@@ -370,7 +370,7 @@
 	internal_damage |= int_dam_flag
 	pr_internal_damage.start()
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
-	occupant << sound('warning-buzzer.ogg',wait=0)
+	occupant << sound('sound/machines/warning-buzzer.ogg',wait=0)
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -438,14 +438,14 @@
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		playsound(src.loc, 'slash.ogg', 50, 1, -1)
+		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 		user << "\red You slash at the armored suit!"
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
 				V.show_message("\red The [user] slashes at [src.name]'s armor!", 1)
 	else
 		src.log_append_to_last("Armor saved.")
-		playsound(src.loc, 'slash.ogg', 50, 1, -1)
+		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 		user << "\green Your claws had no effect!"
 		src.occupant_message("\blue The [user]'s claws are stopped by the armor.")
 		for (var/mob/V in viewers(src))
@@ -469,7 +469,7 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 		else
 			src.log_append_to_last("Armor saved.")
-			playsound(src.loc, 'slash.ogg', 50, 1, -1)
+			playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 			src.occupant_message("\blue The [user]'s attack is stopped by the armor.")
 			for (var/mob/V in viewers(src))
 				if(V.client && !(V.blinded))
@@ -620,14 +620,14 @@
 	if(!prob(src.deflect_chance))
 		src.take_damage(6)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		playsound(src.loc, 'blobattack.ogg', 50, 1, -1)
+		playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1, -1)
 		user << "\red You smash at the armored suit!"
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
 				V.show_message("\red The [user] smashes against [src.name]'s armor!", 1)
 	else
 		src.log_append_to_last("Armor saved.")
-		playsound(src.loc, 'blobattack.ogg', 50, 1, -1)
+		playsound(src.loc, 'sound/effects/blobattack.ogg', 50, 1, -1)
 		user << "\green Your attack had no effect!"
 		src.occupant_message("\blue The [user]'s attack is stopped by the armor.")
 		for (var/mob/V in viewers(src))
@@ -1028,9 +1028,9 @@
 		src.log_append_to_last("[H] moved in as pilot.")
 		src.icon_state = initial(icon_state)
 		dir = dir_in
-		playsound(src, 'windowdoor.ogg', 50, 1)
+		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!hasInternalDamage())
-			src.occupant << sound('nominal.ogg',volume=50)
+			src.occupant << sound('sound/mecha/nominal.ogg',volume=50)
 		return 1
 	else
 		return 0
@@ -1091,7 +1091,7 @@
 		dir = dir_in
 		src.log_message("[mmi_as_oc] moved in as pilot.")
 		if(!hasInternalDamage())
-			src.occupant << sound('nominal.ogg',volume=50)
+			src.occupant << sound('sound/mecha/nominal.ogg',volume=50)
 		return 1
 	else
 		return 0

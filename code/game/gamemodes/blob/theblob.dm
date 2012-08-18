@@ -133,7 +133,7 @@
 
 	update_icon()//Needs to be updated with the types
 		if(health <= 0)
-			playsound(src.loc, 'splat.ogg', 50, 1)
+			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 			del(src)
 			return
 		if(health <= 15)
@@ -157,14 +157,14 @@
 
 
 	attackby(var/obj/item/weapon/W, var/mob/user)
-		playsound(src.loc, 'attackblob.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 		src.visible_message("\red <B>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 		var/damage = 0
 		switch(W.damtype)
 			if("fire")
 				damage = (W.force / max(src.fire_resist,1))
 				if(istype(W, /obj/item/weapon/weldingtool))
-					playsound(src.loc, 'Welder.ogg', 100, 1)
+					playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			if("brute")
 				damage = (W.force / max(src.brute_resist,1))
 

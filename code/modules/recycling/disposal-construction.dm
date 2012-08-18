@@ -187,14 +187,14 @@
 				else
 					density = 1 // We don't want disposal bins or outlets to go density 0
 				user << "You attach the [nicetype] to the underfloor."
-			playsound(src.loc, 'Ratchet.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			update()
 
 		else if(istype(I, /obj/item/weapon/weldingtool))
 			if(anchored)
 				var/obj/item/weapon/weldingtool/W = I
 				if(W.remove_fuel(0,user))
-					playsound(src.loc, 'Welder2.ogg', 100, 1)
+					playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 					user << "Welding the [nicetype] in place."
 					if(do_after(user, 20))
 						if(!src || !W.isOn()) return

@@ -45,7 +45,7 @@
 
 
 	attack_hand(var/mob/user)
-		playsound(src.loc, 'grillehit.ogg', 80, 1)
+		playsound(src.loc, 'sound/effects/grillehit.ogg', 80, 1)
 		user.visible_message("[user.name] kicks the [src.name].", \
 							"You kick the [src.name].", \
 							"You hear a noise")
@@ -63,7 +63,7 @@
 
 	attack_alien(var/mob/user)
 		if (istype(usr, /mob/living/carbon/alien/larva))	return
-		playsound(src.loc, 'grillehit.ogg', 80, 1)
+		playsound(src.loc, 'sound/effects/grillehit.ogg', 80, 1)
 		user.visible_message("[user.name] mangles the [src.name].", \
 							"You mangle the [src.name].", \
 							"You hear a noise")
@@ -74,7 +74,7 @@
 
 	attack_metroid(var/mob/user)
 		if(!istype(usr, /mob/living/carbon/metroid/adult))	return
-		playsound(src.loc, 'grillehit.ogg', 80, 1)
+		playsound(src.loc, 'sound/effects/grillehit.ogg', 80, 1)
 		user.visible_message("[user.name] smashes against the [src.name].", \
 							"You smash against the [src.name].", \
 							"You hear a noise")
@@ -84,7 +84,7 @@
 
 	attack_animal(var/mob/living/simple_animal/M as mob)
 		if(M.melee_damage_upper == 0)	return
-		playsound(src.loc, 'grillehit.ogg', 80, 1)
+		playsound(src.loc, 'sound/effects/grillehit.ogg', 80, 1)
 		M.visible_message("[M.name] smashes against the [src.name].", \
 							"You smash against the [src.name].", \
 							"You hear a noise")
@@ -106,13 +106,13 @@
 	attackby(obj/item/weapon/W, mob/user)
 		if(iswirecutter(W))
 			if(!shock(user, 100))
-				playsound(src.loc, 'Wirecutter.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 				src.health = 0
 				if(!destroyed)
 					src.health = -100
 		else if ((isscrewdriver(W)) && (istype(src.loc, /turf/simulated) || src.anchored))
 			if(!shock(user, 90))
-				playsound(src.loc, 'Screwdriver.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				src.anchored = !( src.anchored )
 				user << (src.anchored ? "You have fastened the grille to the floor." : "You have unfastened the grill.")
 				for(var/mob/O in oviewers())
@@ -164,7 +164,7 @@
 		else if(istype(W, /obj/item/weapon/shard))
 			src.health -= W.force * 0.1
 		else if(!shock(user, 70))
-			playsound(src.loc, 'grillehit.ogg', 80, 1)
+			playsound(src.loc, 'sound/effects/grillehit.ogg', 80, 1)
 			switch(W.damtype)
 				if("fire")
 					src.health -= W.force

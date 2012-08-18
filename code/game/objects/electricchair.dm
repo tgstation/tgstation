@@ -14,7 +14,7 @@
 
 	if(istype(W, /obj/item/weapon/wrench))
 		var/obj/structure/stool/bed/chair/C = new /obj/structure/stool/bed/chair(src.loc)
-		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		C.dir = src.dir
 		src.part.loc = src.loc
 		src.part.master = null

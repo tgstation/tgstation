@@ -167,7 +167,7 @@
 	src.yes_code = 0
 	src.safety = 1
 	src.icon_state = "nuclearbomb3"
-	playsound(src,'Alarm.ogg',100,0,5)
+	playsound(src,'sound/machines/Alarm.ogg',100,0,5)
 	if (ticker && ticker.mode)
 		ticker.mode.explosion_in_progress = 1
 	sleep(100)

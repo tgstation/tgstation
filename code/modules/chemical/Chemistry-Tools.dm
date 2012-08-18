@@ -73,7 +73,7 @@
 			log_game("[key_name_admin(user)] used a grenade ([src.name]).")
 			F.active = 1
 			F.icon_state = initial(icon_state) + "_active"
-			playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+			playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 			spawn(15)
 				F.prime()
 
@@ -133,7 +133,7 @@
 				del(S)
 				D.icon_state = "syringeproj"
 				D.name = "syringe"
-				playsound(user.loc, 'syringeproj.ogg', 50, 1)
+				playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
 
 				for(var/i=0, i<6, i++)
 					if(!D) break
@@ -899,7 +899,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user as mob)
-	playsound(src.loc, 'pop.ogg', 50, 0)		//Change the mode
+	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)		//Change the mode
 	if(mode == 1)
 		mode = 2
 		charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
@@ -1020,7 +1020,7 @@
 					return
 
 			if(reagents)								//Handle ingestion of the reagent.
-				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
+				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				if(reagents.total_volume)
 					reagents.reaction(M, INGEST)
 					spawn(5)
@@ -1166,7 +1166,7 @@
 				spawn(5)
 					reagents.trans_to(M, gulp_size)
 
-			playsound(M.loc,'drink.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 			return 1
 		else if( istype(M, /mob/living/carbon/human) )
 
@@ -1194,7 +1194,7 @@
 				spawn(600)
 					R.add_reagent(refill, fillevel)
 
-			playsound(M.loc,'drink.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 			return 1
 
 		return 0
@@ -1863,7 +1863,7 @@
 				spawn(5)
 					reagents.trans_to(M, 10)
 
-			playsound(M.loc,'drink.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 			return 1
 		else if( istype(M, /mob/living/carbon/human) )
 
@@ -1884,7 +1884,7 @@
 				spawn(5)
 					reagents.trans_to(M, 10)
 
-			playsound(M.loc,'drink.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 			return 1
 		return 0
 

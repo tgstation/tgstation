@@ -1118,7 +1118,7 @@
 
 					for(var/mob/O in viewers(world.view, src))
 						O.show_message(text("<b>\red [] throws up!</b>", src), 1)
-					playsound(loc, 'splat.ogg', 50, 1)
+					playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 					var/turf/location = loc
 					if (istype(location, /turf/simulated))

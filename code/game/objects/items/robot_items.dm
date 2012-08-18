@@ -236,12 +236,12 @@
 	proc/activate()
 //		spark_system.set_up(5, 0, src)
 //		src.spark_system.start()
-		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 
 	attack_self(mob/user as mob)
 		//Change the mode
-		playsound(src.loc, 'pop.ogg', 50, 0)
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 		if(mode == 1)
 			mode = 2
 			user << "Changed mode to 'Airlock'"
@@ -284,7 +284,7 @@
 					if(istype(A, /turf/simulated/floor))
 						if(!cell.use(90))	return
 						user << "Building Wall (3)..."
-						playsound(src.loc, 'click.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 20))
 							activate()
 							A:ReplaceWithWall()
@@ -294,7 +294,7 @@
 					if(istype(A, /turf/simulated/floor))
 						if(!cell.use(300))	return
 						user << "Building Airlock..."
-						playsound(src.loc, 'click.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							activate()
 							if(locate(/obj/machinery/door) in get_turf(src))	return
@@ -306,7 +306,7 @@
 					if(istype(A, /turf/simulated/wall))
 						if(!cell.use(150))	return
 						user << "Deconstructing Wall..."
-						playsound(src.loc, 'click.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 40))
 							activate()
 							A:ReplaceWithPlating()
@@ -317,7 +317,7 @@
 
 					if(istype(A, /turf/simulated/floor))
 						user << "Deconstructing Floor..."
-						playsound(src.loc, 'click.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							activate()
 							A:ReplaceWithSpace()
@@ -325,9 +325,9 @@
 
 					if(istype(A, /obj/machinery/door/airlock))
 						user << "Deconstructing Airlock..."
-						playsound(src.loc, 'click.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
-							playsound(src.loc, 'click.ogg', 50, 1)
+							playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 							del(A)
 						return
 		return

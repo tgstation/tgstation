@@ -62,7 +62,7 @@
 			user << "\red You prime the smoke bomb! [det_time/10] seconds!"
 			src.state = 1
 			src.icon_state = "flashbang1"
-			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
+			playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 			spawn( src.det_time )
 				prime()
 				return
@@ -82,7 +82,7 @@
 	return
 
 /obj/item/weapon/smokebomb/proc/prime()
-	playsound(src.loc, 'smoke.ogg', 50, 1, -3)
+	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 	spawn(0)
 		src.smoke.start()
 		sleep(10)
@@ -131,7 +131,7 @@
 			user << "\red You prime the mustard gas bomb! [det_time/10] seconds!"
 			src.state = 1
 			src.icon_state = "flashbang1"
-			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
+			playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 			spawn( src.det_time )
 				prime()
 				return
@@ -151,7 +151,7 @@
 	return
 
 /obj/item/weapon/mustardbomb/proc/prime()
-	playsound(src.loc, 'smoke.ogg', 50, 1, -3)
+	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 	spawn(0)
 		src.mustard_gas.start()
 		sleep(10)

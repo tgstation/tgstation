@@ -1,7 +1,7 @@
 /obj/machinery/sec_lock//P'sure this was part of the tunnel
 	name = "Security Pad"
 	desc = "A lock, for doors. Used by security."
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "sec_lock"
 	var/obj/item/weapon/card/id/scan = null
 	var/a_type = 0.0

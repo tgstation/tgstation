@@ -75,7 +75,7 @@
 			<html>
 			<head>
 				<style type=\"text/css\">
-					body { background-image:url('paigrid.png'); }
+					body { background-image:url('html/paigrid.png'); }
 
 					#header { text-align:center; color:white; font-size: 30px; height: 35px; width: 100%; letter-spacing: 2px; z-index: 5}
 					#content {position: relative; left: 10px; height: 400px; width: 100%; z-index: 0}

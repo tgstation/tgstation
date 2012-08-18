@@ -14,7 +14,7 @@
 		if(spawner_type && deliveryamt)
 			// Make a quick flash
 			var/turf/T = get_turf(src)
-			playsound(T, 'phasein.ogg', 100, 1)
+			playsound(T, 'sound/effects/phasein.ogg', 100, 1)
 			for(var/mob/living/carbon/human/M in viewers(T, null))
 				if(M:eyecheck() <= 0)
 					flick("e_flash", M.flash) // flash dose faggots

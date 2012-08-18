@@ -32,7 +32,7 @@
 		if(!loaded.len && empty_mag)
 			empty_mag.loc = get_turf(src.loc)
 			empty_mag = null
-			playsound(user, 'smg_empty_alarm.ogg', 40, 1)
+			playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
 			update_icon()
 		return
 
@@ -61,6 +61,6 @@
 	icon_state = "gyropistol"
 	max_shells = 8
 	caliber = "a75"
-	fire_sound = 'Explosion1.ogg'
+	fire_sound = 'sound/effects/Explosion1.ogg'
 	origin_tech = "combat=3"
 	ammo_type = "/obj/item/ammo_casing/a75"

@@ -6,7 +6,7 @@
 /obj/item/weapon/disk/data/cartridge
 	name = "Cart 2.0"
 	desc = "A data cartridge for portable microcomputers."
-	icon = 'pda.dmi'
+	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
 	file_amount = 80.0
@@ -30,7 +30,7 @@
 /obj/item/device/pda2
 	name = "PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by an EEPROM cartridge."
-	icon = 'pda.dmi'
+	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
 	w_class = 2.0
@@ -249,12 +249,12 @@
 
 	display_alert(var/alert_message) //Add alert overlay and beep
 		if (alert_message)
-			playsound(src.loc, 'twobeep.ogg', 50, 1)
+			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
 			for (var/mob/O in hearers(3, src.loc))
 				O.show_message(text("\icon[src] *[alert_message]*"))
 
 		src.overlays = null
-		src.overlays += image('pda.dmi', "pda-r")
+		src.overlays += image('icons/obj/pda.dmi', "pda-r")
 		return
 
 	run_program(datum/computer/file/pda_program/program)

@@ -233,7 +233,7 @@
 	new /obj/item/clothing/head/radiation(src)
 
 /obj/structure/closet/crate/open()
-	playsound(src.loc, 'click.ogg', 15, 1, -3)
+	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 
 	for(var/obj/O in src)
 		O.loc = get_turf(src)
@@ -242,7 +242,7 @@
 	src.opened = 1
 
 /obj/structure/closet/crate/close()
-	playsound(src.loc, 'click.ogg', 15, 1, -3)
+	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 
 	var/itemcount = 0
 
@@ -322,7 +322,7 @@
 			overlays += emag
 			overlays += sparks
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
-			playsound(src.loc, 'sparks4.ogg', 75, 1)
+			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			src.locked = 0
 	if(!opened && prob(20/severity))
 		if(!locked)

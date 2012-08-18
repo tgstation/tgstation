@@ -350,20 +350,20 @@ var/linenums = 0
 	if(node1 && node2)
 		overlays = null
 	else if(!node1 && !node2)
-		overlays += image('pipes.dmi', "discon", FLY_LAYER, dirs[1])
-		overlays += image('pipes.dmi', "discon", FLY_LAYER, dirs[2])
+		overlays += image('icons/obj/pipes.dmi', "discon", FLY_LAYER, dirs[1])
+		overlays += image('icons/obj/pipes.dmi', "discon", FLY_LAYER, dirs[2])
 	else if(!node1)
 		var/d2 = get_dir(src, node2)
 		if(dirs[1] == d2)
-			overlays += image('pipes.dmi', "discon", FLY_LAYER, dirs[2])
+			overlays += image('icons/obj/pipes.dmi', "discon", FLY_LAYER, dirs[2])
 		else
-			overlays += image('pipes.dmi', "discon", FLY_LAYER, dirs[1])
+			overlays += image('icons/obj/pipes.dmi', "discon", FLY_LAYER, dirs[1])
 	else if(!node2)
 		var/d1 = get_dir(src, node1)
 		if(dirs[1] == d1)
-			overlays += image('pipes.dmi', "discon", FLY_LAYER, dirs[2])
+			overlays += image('icons/obj/pipes.dmi', "discon", FLY_LAYER, dirs[2])
 		else
-			overlays += image('pipes.dmi', "discon", FLY_LAYER, dirs[1])
+			overlays += image('icons/obj/pipes.dmi', "discon", FLY_LAYER, dirs[1])
 
 
 	return
