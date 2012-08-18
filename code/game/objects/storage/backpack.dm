@@ -3,8 +3,10 @@
 		var/mob/M = usr
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()
+		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+			return
 		playsound(src.loc, "rustle", 50, 1, -5)
-		if ((!( M.restrained() ) && !( M.stat ))
+		if (!( M.restrained() ) && !( M.stat ))
 			switch(over_object.name)
 				if("r_hand")
 					M.u_equip(src)
