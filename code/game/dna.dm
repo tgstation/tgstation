@@ -399,31 +399,6 @@
 
 /proc/domutcheck(mob/living/M as mob, connected, inj)
 	if (!M) return
-	//mutations
-	/*
-	TK				=(1<<0)	1
-	COLD_RESISTANCE	=(1<<1)	2
-	XRAY			=(1<<2)	4
-	HULK			=(1<<3)	8
-	CLUMSY			=(1<<4)	16
-	//FAT				=(1<<5) 32
-	HUSK			=(1<<6)	64
-	LASER			=(1<<7)	128
-	HEAL			=(1<<8)	256
-	mNobreath		=(1<<9)	512
-	mRemote			=(1<<10)	1024
-	mRegen			=(1<<11)	2048
-	mRun			=(1<<12)	4096
-	mRemotetalk		=(1<<13)	8192
-	mMorph			=(1<<14)	16384
-	mBlend			=(1<<15)	32768
-
-	mutations2:
-	mHallucination	=(1<<0) 1
-	mFingerprints	=(1<<1) 2
-	mShock			=(1<<2) 4
-	mSmallsize		=(1<<3)	8
-	*/
 
 	//disabilities
 	//1 = blurry eyes
@@ -447,47 +422,47 @@
 	if(ismuton(NOBREATHBLOCK,M))
 		if(prob(50))
 			M << "\blue You feel no need to breathe."
-			M.mutations.Add(mNobreath)
+			M.mutations.Add(MNOBREATH)
 	if(ismuton(REMOTEVIEWBLOCK,M))
 		if(prob(50))
 			M << "\blue Your mind expands"
-			M.mutations.Add(mRemote)
+			M.mutations.Add(MREMOTEVIEW)
 	if(ismuton(REGENERATEBLOCK,M))
 		if(prob(50))
 			M << "\blue You feel strange"
-			M.mutations.Add(mRegen)
+			M.mutations.Add(MREGENERATE)
 	if(ismuton(INCREASERUNBLOCK,M))
 		if(prob(50))
 			M << "\blue You feel quick"
-			M.mutations.Add(mRun)
+			M.mutations.Add(MINCREASERUN)
 	if(ismuton(REMOTETALKBLOCK,M))
 		if(prob(50))
 			M << "\blue You expand your mind outwards"
-			M.mutations.Add(mRemotetalk)
+			M.mutations.Add(MREMOTETALK)
 	if(ismuton(MORPHBLOCK,M))
 		if(prob(50))
-			M.mutations.Add(mMorph)
+			M.mutations.Add(MMORPH)
 			M << "\blue Your skin feels strange"
 	if(ismuton(BLENDBLOCK,M))
 		if(prob(50))
-			M.mutations.Add(mBlend)
+			M.mutations.Add(MBLEND)
 			M << "\blue You feel alone"
 	if(ismuton(HALLUCINATIONBLOCK,M))
 		if(prob(50))
-			M.mutations.Add(mHallucination)
+			M.mutations.Add(MHALLUCINATION)
 			M << "\blue Your mind says 'Hello'"
 	if(ismuton(NOPRINTSBLOCK,M))
 		if(prob(50))
-			M.mutations.Add(mFingerprints)
+			M.mutations.Add(MFINGERPRINTS)
 			M << "\blue Your fingers feel numb"
 	if(ismuton(SHOCKIMMUNITYBLOCK,M))
 		if(prob(50))
-			M.mutations.Add(mShock)
+			M.mutations.Add(MSHOCK)
 			M << "\blue You feel strange"
 	if(ismuton(SMALLSIZEBLOCK,M))
 		if(prob(50))
 			M << "\blue Your skin feels rubbery"
-			M.mutations.Add(mSmallsize)
+			M.mutations.Add(MSMALLSIZE)
 
 
 

@@ -158,6 +158,20 @@ obj/structure/meteorhit(obj/O as obj)
 						del(src)
 						return
 
+				if(/obj/item/stack/sheet/metal/cyborg)
+					user << "\blue Now adding plating..."
+					if (do_after(user,40))
+						user << "\blue You added the plating!"
+						var/turf/Tsrc = get_turf(src)
+						Tsrc.ReplaceWithWall()
+						for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+							P.layer = 1
+						for(var/turf/simulated/wall/X in Tsrc.loc)
+							if(X)	X.add_hiddenprint(usr)
+						if (W)	W:use(2)
+						del(src)
+						return
+
 				if (/obj/item/stack/sheet/plasteel)
 					if (src.icon_state == "reinforced") //Time to finalize!
 						user << "\blue Now finalising reinforced wall."

@@ -694,6 +694,8 @@
 					M.weakened += 2
 					if(prob(20))
 						M.paralysis += 2
+					if(istype(M,/mob/living/simple_animal/mouse))
+						continue
 					if(istype(M,/mob/living/carbon/human))
 						var/name = pick(M:organs)
 						var/datum/organ/external/temp = M:organs[name]

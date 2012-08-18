@@ -305,17 +305,17 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NANOREGEN		28 	// regenerative nanobots, -3 all damage types per second
 
 	// Other Mutations:
-#define mNobreath		100 	// no need to breathe
-#define mRemote			101 	// remote viewing
-#define mRegen			102 	// health regen
-#define mRun			103 	// no slowdown
-#define mRemotetalk		104 	// remote talking
-#define mMorph			105 	// changing appearance
-#define mBlend			106 	// nothing (seriously nothing)
-#define mHallucination	107 	// hallucinations
-#define mFingerprints	108 	// no fingerprints
-#define mShock			109 	// insulated hands
-#define mSmallsize		110 	// table climbing
+#define MNOBREATH		100 	// no need to breathe
+#define MREMOTEVIEW			101 	// remote viewing
+#define MREGENERATE			102 	// health regen
+#define MINCREASERUN			103 	// no slowdown
+#define MREMOTETALK		104 	// remote talking
+#define MMORPH			105 	// changing appearance
+#define MBLEND			106 	// nothing (seriously nothing)
+#define MHALLUCINATION	107 	// hallucinations
+#define MFINGERPRINTS	108 	// no fingerprints
+#define MSHOCK			109 	// insulated hands
+#define MSMALLSIZE		110 	// table climbing
 
 //mob/var/stat things
 #define CONSCIOUS	0

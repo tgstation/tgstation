@@ -58,7 +58,7 @@
 
 /obj/structure/closet/secure_closet/miner_personal
 	name = "Miner's Locker"
-	req_access = list(ACCESS_CARGO)
+	req_access = list(ACCESS_MINING)
 
 	New()
 		..()

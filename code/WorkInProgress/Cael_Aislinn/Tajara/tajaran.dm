@@ -26,6 +26,11 @@
 
 	..()
 
+	spawn(33)
+		update_clothing()
+		update_body()
+		update_face()
+
 /mob/living/carbon/human/tajaran/rebuild_appearance()
 	update_clothing()
 
