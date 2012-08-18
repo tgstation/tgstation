@@ -56,34 +56,34 @@ MONKEY CUBE BOX
 	if (flag)
 		return ..()
 	src.add_fingerprint(user)
-	if (locate(/obj/item/weapon/reagent_containers/food/snacks/donut, src))
-		for(var/obj/item/weapon/reagent_containers/food/snacks/donut/P in src)
-			if (!usr.l_hand)
-				P.loc = usr
+	if (locate(/obj/item/weapon/reagent_containers/food/snacks/donut, user))
+		for(var/obj/item/weapon/reagent_containers/food/snacks/donut/P in user)
+			if (!user.l_hand)
+				P.loc = user
 				P.layer = 20
-				usr.l_hand = P
-				usr.update_clothing()
-				usr << "You take a donut out of the box."
+				user.l_hand = P
+				user.update_clothing()
+				user << "You take a donut out of the box."
 				break
-			else if (!usr.r_hand)
-				P.loc = usr
+			else if (!user.r_hand)
+				P.loc = user
 				P.layer = 20
-				usr.r_hand = P
-				usr.update_clothing()
-				usr << "You take a donut out of the box."
+				user.r_hand = P
+				user.update_clothing()
+				user << "You take a donut out of the box."
 				break
 	else
 		if (src.amount >= 1)
 			src.amount--
 			var/obj/item/weapon/reagent_containers/food/snacks/donut/D = new /obj/item/weapon/reagent_containers/food/snacks/donut
-			D.loc = usr.loc
-			if(ishuman(usr))
-				if(!usr.get_active_hand())
-					usr.put_in_hand(D)
-					usr << "You take a donut out of the box."
+			D.loc = user.loc
+			if(ishuman(user))
+				if(!user.get_active_hand())
+					user.put_in_hand(D)
+					user << "You take a donut out of the box."
 			else
 				D.loc = get_turf(src)
-				usr << "You take a donut out of the box."
+				user << "You take a donut out of the box."
 
 	src.update()
 	return
@@ -131,29 +131,35 @@ MONKEY CUBE BOX
 	if (flag)
 		return ..()
 	src.add_fingerprint(user)
-	if (locate(/obj/item/weapon/reagent_containers/food/snacks/egg, src))
-		for(var/obj/item/weapon/reagent_containers/food/snacks/egg/P in src)
-			if (!usr.l_hand)
-				P.loc = usr.loc
+	if (locate(/obj/item/weapon/reagent_containers/food/snacks/egg, user))
+		for(var/obj/item/weapon/reagent_containers/food/snacks/egg/P in user)
+			if (!user.l_hand)
+				P.loc = user
 				P.layer = 20
-				usr.l_hand = P
-				P = null
-				usr.update_clothing()
+				user.l_hand = P
+				user.update_clothing()
 				usr << "You take an egg out of the box."
 				break
-			else if (!usr.r_hand)
-				P.loc = usr.loc
+			else if (!user.r_hand)
+				P.loc = user
 				P.layer = 20
-				usr.r_hand = P
-				P = null
-				usr.update_clothing()
+				user.r_hand = P
+				user.update_clothing()
 				usr << "You take an egg out of the box."
 				break
 	else
 		if (src.amount >= 1)
 			src.amount--
-			new /obj/item/weapon/reagent_containers/food/snacks/egg( src.loc )
-			usr << "You take an egg out of the box."
+			var/obj/item/weapon/reagent_containers/food/snacks/egg/D = new /obj/item/weapon/reagent_containers/food/snacks/egg
+			D.loc = user.loc
+			if(ishuman(user))
+				if(!user.get_active_hand())
+					user.put_in_hand(D)
+					user << "You take an egg out of the box."
+			else
+				D.loc = get_turf(src)
+				user << "You take an egg out of the box."
+
 	src.update()
 	return
 
