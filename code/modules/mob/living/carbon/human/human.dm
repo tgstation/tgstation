@@ -136,6 +136,9 @@
 		lying_icon = new /icon('human.dmi', "body_[g]_l")
 		icon = stand_icon
 		rebuild_appearance()
+		update_clothing()
+		update_body()
+		update_face()
 
 		src << "\blue Your icons have been generated!"
 
@@ -151,9 +154,10 @@
 
 	..()
 
-	spawn(5) // Failsafe for.. weirdness.
-		update_clothing()
+	spawn(33)
 		update_body()
+		update_clothing()
+		update_face()
 
 	/*var/known_languages = list()
 	known_languages.Add("english")*/
@@ -315,7 +319,7 @@
 	if(istype(M) && M.lying) //Pulling lying down people is slower
 		tally += 3
 
-	if(mRun in mutations)
+	if(MINCREASERUN in mutations)
 		tally = 0
 
 	return tally
@@ -2692,7 +2696,7 @@ It can still be worn/put on as normal.
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
 	set category = "Superpower"
-	if(!(mMorph in mutations))
+	if(!(MMORPH in mutations))
 		src.verbs -= /mob/living/carbon/human/proc/morph
 		return
 
@@ -2772,17 +2776,21 @@ It can still be worn/put on as normal.
 			gender = MALE
 		else
 			gender = FEMALE
-	rebuild_appearance()
-	update_body()
 	check_dna()
 
 	for(var/mob/M in view())
 		visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
 
+	spawn(10)
+		rebuild_appearance()
+		update_body()
+		update_clothing()
+		update_face()
+
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
 	set category = "Superpower"
-	if(!(mRemotetalk in src.mutations))
+	if(!(MREMOTETALK in src.mutations))
 		src.verbs -= /mob/living/carbon/human/proc/remotesay
 		return
 	var/list/creatures = list()
@@ -2793,7 +2801,7 @@ It can still be worn/put on as normal.
 		return
 
 	var/say = input ("What do you wish to say")
-	if(mRemotetalk in target.mutations)
+	if(MREMOTETALK in target.mutations)
 		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
 		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
@@ -2807,7 +2815,7 @@ It can still be worn/put on as normal.
 	set name = "Remote View"
 	set category = "Superpower"
 
-	if(!(mRemote in src.mutations))
+	if(!(MREMOTEVIEW in src.mutations))
 		reset_view(0)
 		remoteobserve = null
 		src.verbs -= /mob/living/carbon/human/proc/remoteobserve

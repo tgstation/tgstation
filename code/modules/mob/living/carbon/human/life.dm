@@ -56,19 +56,20 @@
 
 	if (stat != 2) //still breathing
 
+		if(!(MNOBREATH in mutations)) //No breathing needed
 
-		//First, resolve location and get a breath
+			//First, resolve location and get a breath
 
-		if(air_master.current_cycle%4==2)
-			//Only try to take a breath every 4 seconds, unless suffocating
-			spawn(0) breathe()
+			if(air_master.current_cycle%4==2)
+				//Only try to take a breath every 4 seconds, unless suffocating
+				spawn(0) breathe()
 
-		else //Still give containing object the chance to interact
-			if(istype(loc, /obj/))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
+			else //Still give containing object the chance to interact
+				if(istype(loc, /obj/))
+					var/obj/location_as_object = loc
+					location_as_object.handle_internal_lifeform(src, 0)
 
-		src.handle_shock()
+			src.handle_shock()
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -168,7 +169,7 @@
 
 
 		handle_disabilities()
-			if(mHallucination in mutations)
+			if(MHALLUCINATION in mutations)
 				hallucination = 100
 				halloss = 0
 
@@ -198,7 +199,7 @@
 					Paralyse(15)
 					setHalLoss(99)
 
-			if(mSmallsize in mutations)
+			if(MSMALLSIZE in mutations)
 				if(!(pass_flags & PASSTABLE))
 					pass_flags |= PASSTABLE
 			else
@@ -207,7 +208,7 @@
 
 
 
-			if (mRegen in mutations)
+			if (MREGENERATE in mutations)
 				adjustBruteLoss(-2)
 				adjustToxLoss(-2)
 				adjustOxyLoss(-2)
@@ -215,24 +216,24 @@
 				updatehealth()
 
 			if(!(/mob/living/carbon/human/proc/morph in src.verbs))
-				if(mMorph in mutations)
+				if(MMORPH in mutations)
 					src.verbs += /mob/living/carbon/human/proc/morph
 			else
-				if(!(mMorph in mutations))
+				if(!(MMORPH in mutations))
 					src.verbs -= /mob/living/carbon/human/proc/morph
 
 			if(!(/mob/living/carbon/human/proc/remoteobserve in src.verbs))
-				if(mRemote in mutations)
+				if(MREMOTEVIEW in mutations)
 					src.verbs += /mob/living/carbon/human/proc/remoteobserve
 			else
-				if(!(mRemote in mutations))
+				if(!(MREMOTEVIEW in mutations))
 					src.verbs -= /mob/living/carbon/human/proc/remoteobserve
 
 			if(!(/mob/living/carbon/human/proc/remotesay in src.verbs))
-				if(mRemotetalk in mutations)
+				if(MREMOTETALK in mutations)
 					src.verbs += /mob/living/carbon/human/proc/remotesay
 			else
-				if(!(mRemotetalk in mutations))
+				if(!(MREMOTETALK in mutations))
 					src.verbs -= /mob/living/carbon/human/proc/remotesay
 
 
@@ -380,6 +381,7 @@
 		**/
 		breathe()
 
+			if(MNOBREATH in mutations) return
 			if(reagents.has_reagent("lexorin")) return
 			if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
@@ -487,7 +489,7 @@
 				canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
-			if(nodamage || REBREATHER in augmentations || (mNobreath in mutations))
+			if(nodamage || REBREATHER in augmentations || MNOBREATH in mutations)
 				return
 
 			if(!breath || (breath.total_moles == 0))
@@ -1456,7 +1458,7 @@
 				if (machine)
 					if (!( machine.check_eye(src) ))
 						reset_view(null)
-				else if(!(mRemote in mutations) && !client.adminobs)
+				else if(!(MREMOTEVIEW in mutations) && !client.adminobs)
 					reset_view(null)
 					if(remoteobserve)
 						remoteobserve = null

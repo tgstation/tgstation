@@ -134,7 +134,7 @@
 	if(istype(M) && M.lying) //Pulling lying down people is slower
 		tally += 3
 
-	if(mRun in mutations)
+	if(MINCREASERUN in mutations)
 		tally = 0
 
 	return tally
