@@ -6,7 +6,7 @@
 		src.name = text("alien sentinel ([rand(1, 1000)])")
 	src.real_name = src.name
 	spawn (1)
-		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
+//		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode
 		src.stand_icon = new /icon('alien.dmi', "aliens_s")
 		src.lying_icon = new /icon('alien.dmi', "aliens_l")
 		src.resting_icon = new /icon('alien.dmi', "aliens_sleep")
@@ -182,5 +182,5 @@
 		A.current = U
 		A.yo = U.y - T.y
 		A.xo = U.x - T.x
-		A.process()
+		A.fired()
 	return

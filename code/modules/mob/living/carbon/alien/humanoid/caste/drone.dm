@@ -6,7 +6,7 @@
 		src.name = text("alien drone ([rand(1, 1000)])")
 	src.real_name = src.name
 	spawn (1)
-		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
+//		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode
 		src.verbs -= /mob/living/carbon/alien/humanoid/verb/ActivateHuggers
 		src.stand_icon = new /icon('alien.dmi', "aliend_s")
 		src.lying_icon = new /icon('alien.dmi', "aliend_l")
