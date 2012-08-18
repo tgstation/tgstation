@@ -710,3 +710,59 @@ obj/item/clothing/suit/justice
 	icon_state = "creamsuit"
 	item_state = "creamsuit"
 	flags = FPRINT | TABLEPASS
+
+
+/obj/item/clothing/under/wedding/bride_orange
+	name = "orange wedding dress"
+	desc = "A big and puffy orange dress."
+	icon_state = "bride_orange"
+	item_state = "creamsuit"
+	color = "bride_orange"
+	flags_inv = HIDESHOES
+
+/obj/item/clothing/under/wedding/bridesmaid
+	name = "yellow dress"
+	desc = "A big and puffy orange dress."
+	icon_state = "bridesmaid"
+	item_state = "creamsuit"
+	color = "bridesmaid"
+
+/obj/item/clothing/under/wedding/firedress
+	name = "flaming hot black dress"
+	desc = "A small black dress with blue flames print on it."
+	icon_state = "dress_fire"
+	item_state = "creamsuit"
+	color = "dress_fire"
+
+/obj/item/clothing/under/wedding/orangedress
+	name = "orange dress"
+	desc = "A small and not puffy orange dress."
+	icon_state = "dress_orange"
+	item_state = "creamsuit"
+	color = "dress_orange"
+
+	flags_inv = HIDESHOES
+
+/obj/item/clothing/under/stripper/stripper_pink
+	name = "pink swimsuit"
+	desc = "A rather skimpy pink swimsuit."
+	icon_state = "stripper_p_under"
+	color = "stripper_p"
+
+/obj/item/clothing/under/stripper/stripper_green
+	name = "green swimsuit"
+	desc = "A rather skimpy green swimsuit."
+	icon_state = "stripper_g_under"
+	color = "stripper_g"
+
+/obj/item/clothing/suit/stripper/stripper_pink
+	name = "pink skimpy dress"
+	desc = "A rather skimpy pink dress."
+	icon_state = "stripper_p_over"
+	item_state = "stripper_p"
+
+/obj/item/clothing/suit/stripper/stripper_green
+	name = "green skimpy dress"
+	desc = "A rather skimpy green dress."
+	icon_state = "stripper_g_over"
+	item_state = "stripper_g"
