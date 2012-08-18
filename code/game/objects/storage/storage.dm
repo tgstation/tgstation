@@ -225,7 +225,8 @@
 
 		src.orient2hud(usr)
 		if(usr.s_active)
-			src.show_to(usr)
+			usr.s_active.show_to(usr)
+	update_icon()
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W as obj, atom/new_location)
@@ -248,10 +249,11 @@
 	if(usr)
 		src.orient2hud(usr)
 		if(usr.s_active)
-			src.show_to(usr)
+			usr.s_active.show_to(usr)
 	if(W.maptext)
 		W.maptext = ""
 	W.on_exit_storage(src)
+	update_icon()
 
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)

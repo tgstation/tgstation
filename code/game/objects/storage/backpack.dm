@@ -1,10 +1,10 @@
-/obj/item/weapon/storage/backpack/MouseDrop(obj/over_object as obj)
+/obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()
 		playsound(src.loc, "rustle", 50, 1, -5)
-		if ((!( M.restrained() ) && !( M.stat ) && M.back == src))
+		if ((!( M.restrained() ) && !( M.stat ))
 			switch(over_object.name)
 				if("r_hand")
 					M.u_equip(src)

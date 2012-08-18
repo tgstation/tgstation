@@ -10,9 +10,9 @@ CRAYONS
 	new /obj/item/toy/crayon/green(src)
 	new /obj/item/toy/crayon/blue(src)
 	new /obj/item/toy/crayon/purple(src)
-	updateIcon()
+	update_icon()
 
-/obj/item/weapon/storage/crayonbox/proc/updateIcon()
+/obj/item/weapon/storage/crayonbox/update_icon()
 	overlays = list() //resets list
 	overlays += image('icons/obj/crayons.dmi',"crayonbox")
 	for(var/obj/item/toy/crayon/crayon in contents)
@@ -28,34 +28,6 @@ CRAYONS
 				usr << "This crayon is too powerful to be contained in this box."
 				return
 	..()
-	updateIcon()
-
-/obj/item/weapon/storage/crayonbox/attack_hand(mob/user as mob)
-	updateIcon()
-	..()
-
-/obj/item/weapon/storage/crayonbox/MouseDrop(obj/over_object as obj)
-
-	if (ishuman(usr) || ismonkey(usr))
-		var/mob/M = usr
-		if (!( istype(over_object, /obj/screen) ))
-			return ..()
-		if ((!( M.restrained() ) && !( M.stat )))
-			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src)
-					M.put_in_r_hand(src)
-				if("l_hand")
-					M.u_equip(src)
-					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
-			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if (usr.s_active)
-				usr.s_active.close(usr)
-			src.show_to(usr)
-			return
-	return
 
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
@@ -156,14 +128,6 @@ CRAYONS
 				del(src)
 	else
 		..()
-
-/obj/item/toy/crayon/attack_hand(mob/user as mob)
-	var/obj/item/weapon/storage/crayonbox/CB
-	if(istype(src.loc, /obj/item/weapon/storage/crayonbox))
-		CB = src.loc
-	..()
-	if(CB)
-		CB.updateIcon()
 
 /obj/effect/decal/cleanable/crayon
 	name = "rune"

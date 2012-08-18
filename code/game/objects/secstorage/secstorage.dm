@@ -186,9 +186,11 @@
 		usr << "\red [src] is locked and cannot be opened!"
 	else if ((src.loc == user) && (!src.locked))
 		playsound(src.loc, "rustle", 50, 1, -5)
-		if (user.s_active)
-			user.s_active.close(user)
-		src.show_to(user)
+		if (user.s_active == src)
+			user.s_active.close(user) //Close and re-open
+			src.show_to(user)
+		else
+			user.s_active.close(user) //Just close
 	else
 		..()
 		for(var/mob/M in range(1))

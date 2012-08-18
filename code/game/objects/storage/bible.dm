@@ -86,26 +86,3 @@
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)
 	..()
-
-/obj/item/weapon/storage/bible/MouseDrop(obj/over_object as obj)
-
-	if (ishuman(usr) || ismonkey(usr))
-		var/mob/M = usr
-		if (!( istype(over_object, /obj/screen) ))
-			return ..()
-		if ((!( M.restrained() ) && !( M.stat )))
-			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src)
-					M.put_in_r_hand(src)
-				if("l_hand")
-					M.u_equip(src)
-					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
-			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if (usr.s_active)
-				usr.s_active.close(usr)
-			src.show_to(usr)
-			return
-	return

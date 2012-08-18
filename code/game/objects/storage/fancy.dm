@@ -16,16 +16,6 @@
 	name = "donut box"
 	var/icon_type = "donut"
 
-/obj/item/weapon/storage/fancy/attack_hand(mob/user as mob)
-	..()
-	update_icon()
-	return
-
-/obj/item/weapon/storage/fancy/attackby(obj/item/W as obj, mob/user as mob)
-	..()
-	update_icon()
-	return
-
 /obj/item/weapon/storage/fancy/update_icon(var/itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "[src.icon_type]box[total_contents]"
