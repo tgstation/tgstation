@@ -83,6 +83,7 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["sound_adminhelp"] << src.sound_adminhelp
 	F["default_slot"] << src.default_slot
 	F["slotname"] << src.slot_name
+	F["lobby_music"] << src.lobby_music
 
 	return 1
 
@@ -179,6 +180,9 @@ datum/preferences/proc/savefile_load(mob/user)
 	if(isnull(default_slot))
 		default_slot = 1
 	F["slotname"] >> src.slot_name
+	F["lobby_music"] >> src.lobby_music
+	if(isnull(lobby_music))
+		lobby_music = 1
 
 	if(isnull(metadata))
 		metadata = ""

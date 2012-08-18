@@ -106,6 +106,7 @@ datum/preferences
 	var/metadata = ""
 
 	var/sound_adminhelp = 0
+	var/lobby_music = 1//Whether or not to play the lobby music(Defaults yes)
 
 
 
@@ -168,6 +169,7 @@ datum/preferences
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preference=ui\"><b>[UI_style]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preference=hear_midis\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
+		dat += "<b>Play lobby music:</b> <a href=\"byond://?src=\ref[user];preference=lobby_music\"><b>[lobby_music == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preference=ghost_ears\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
 		dat += "<b>Ghost sight:</b> <a href=\"byond://?src=\ref[user];preference=ghost_sight\"><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
 
@@ -630,6 +632,13 @@ datum/preferences
 
 					if("hear_midis")
 						midis = !midis
+
+					if("lobby_music")
+						lobby_music = !lobby_music
+						if(lobby_music)
+							user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
+						else
+							user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 					if("ghost_ears")
 						ghost_ears = !ghost_ears

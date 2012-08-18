@@ -11,7 +11,7 @@
 		mind.active = 1
 		mind.current = src
 
-	spawn() Playmusic() // git some tunes up in heeyaa~
+	//spawn() Playmusic() // git some tunes up in heeyaa~
 
 	var/starting_loc = pick(newplayer_start)
 	if(!starting_loc)	starting_loc = locate(1,1,1)
@@ -48,6 +48,8 @@
 					preferences.savefile_save(src)
 			handle_privacy_poll()
 			new_player_panel()
+			if(preferences.lobby_music)
+				Playmusic()
 	//PDA Resource Initialisation =======================================================>
 	/*
 	Quick note: local dream daemon instances don't seem to cache images right. Might be
