@@ -39,6 +39,7 @@
 	src.druggy.mouse_opacity = 0
 
 	var/obj/screen/using
+	var/obj/screen/inventory/inv_box
 
 	using = new src.h_type( src )
 	using.name = "act_intent"
@@ -109,62 +110,62 @@
 	using.layer = 19
 	src.hotkeybuttons += using
 
-	using = new src.h_type( src )
-	using.name = "i_clothing"
-	using.dir = SOUTH
-	using.icon = ui_style
-	using.slot_id = slot_w_uniform
-	using.icon_state = "center"
-	using.screen_loc = ui_iclothing
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "i_clothing"
+	inv_box.dir = SOUTH
+	inv_box.icon = ui_style
+	inv_box.slot_id = slot_w_uniform
+	inv_box.icon_state = "center"
+	inv_box.screen_loc = ui_iclothing
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "o_clothing"
-	using.dir = SOUTH
-	using.icon = ui_style
-	using.slot_id = slot_wear_suit
-	using.icon_state = "equip"
-	using.screen_loc = ui_oclothing
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "o_clothing"
+	inv_box.dir = SOUTH
+	inv_box.icon = ui_style
+	inv_box.slot_id = slot_wear_suit
+	inv_box.icon_state = "equip"
+	inv_box.screen_loc = ui_oclothing
+	inv_box.layer = 19
+	src.other += inv_box
 
-/*	using = new src.h_type( src )
-	using.name = "headset"
-	using.dir = SOUTHEAST
-	using.icon_state = "equip"
-	using.screen_loc = ui_headset
-	using.layer = 19
-	if(istype(mymob,/mob/living/carbon/monkey)) using.overlays += blocked
-	src.other += using*/
+/*	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "headset"
+	inv_box.dir = SOUTHEAST
+	inv_box.icon_state = "equip"
+	inv_box.screen_loc = ui_headset
+	inv_box.layer = 19
+	if(istype(mymob,/mob/living/carbon/monkey)) inv_box.overlays += blocked
+	src.other += inv_box*/
 
-	using = new src.h_type( src )
-	using.name = "r_hand"
-	using.dir = WEST
-	using.icon = ui_style
-	using.icon_state = "hand_inactive"
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "r_hand"
+	inv_box.dir = WEST
+	inv_box.icon = ui_style
+	inv_box.icon_state = "hand_inactive"
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		using.icon_state = "hand_active"
-	using.screen_loc = ui_rhand
-	using.slot_id = slot_r_hand
-	using.layer = 19
-	src.r_hand_hud_object = using
-	src.adding += using
+		inv_box.icon_state = "hand_active"
+	inv_box.screen_loc = ui_rhand
+	inv_box.slot_id = slot_r_hand
+	inv_box.layer = 19
+	src.r_hand_hud_object = inv_box
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "l_hand"
-	using.dir = EAST
-	using.icon = ui_style
-	using.icon_state = "hand_inactive"
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "l_hand"
+	inv_box.dir = EAST
+	inv_box.icon = ui_style
+	inv_box.icon_state = "hand_inactive"
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		using.icon_state = "hand_active"
-	using.screen_loc = ui_lhand
-	using.slot_id = slot_l_hand
-	using.layer = 19
-	src.l_hand_hud_object = using
-	src.adding += using
+		inv_box.icon_state = "hand_active"
+	inv_box.screen_loc = ui_lhand
+	inv_box.slot_id = slot_l_hand
+	inv_box.layer = 19
+	src.l_hand_hud_object = inv_box
+	src.adding += inv_box
 
-	using = new src.h_type( src )
+	using = new /obj/screen/inventory( src )
 	using.name = "hand"
 	using.dir = SOUTH
 	using.icon = ui_style
@@ -173,7 +174,7 @@
 	using.layer = 19
 	src.adding += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen/inventory( src )
 	using.name = "hand"
 	using.dir = SOUTH
 	using.icon = ui_style
@@ -182,63 +183,63 @@
 	using.layer = 19
 	src.adding += using
 
-	using = new src.h_type( src )
-	using.name = "id"
-	using.dir = NORTH
-	using.icon = ui_style
-	using.icon_state = "id"
-	using.screen_loc = ui_id
-	using.slot_id = slot_wear_id
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "id"
+	inv_box.dir = NORTH
+	inv_box.icon = ui_style
+	inv_box.icon_state = "id"
+	inv_box.screen_loc = ui_id
+	inv_box.slot_id = slot_wear_id
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "mask"
-	using.dir = NORTH
-	using.icon = ui_style
-	using.icon_state = "equip"
-	using.screen_loc = ui_mask
-	using.slot_id = slot_wear_mask
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "mask"
+	inv_box.dir = NORTH
+	inv_box.icon = ui_style
+	inv_box.icon_state = "equip"
+	inv_box.screen_loc = ui_mask
+	inv_box.slot_id = slot_wear_mask
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "back"
-	using.dir = NORTH
-	using.icon = ui_style
-	using.icon_state = "back"
-	using.screen_loc = ui_back
-	using.slot_id = slot_back
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "back"
+	inv_box.dir = NORTH
+	inv_box.icon = ui_style
+	inv_box.icon_state = "back"
+	inv_box.screen_loc = ui_back
+	inv_box.slot_id = slot_back
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "storage1"
-	using.icon = ui_style
-	using.icon_state = "pocket"
-	using.screen_loc = ui_storage1
-	using.slot_id = slot_l_store
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "storage1"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "pocket"
+	inv_box.screen_loc = ui_storage1
+	inv_box.slot_id = slot_l_store
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "storage2"
-	using.icon = ui_style
-	using.icon_state = "pocket"
-	using.screen_loc = ui_storage2
-	using.slot_id = slot_r_store
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "storage2"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "pocket"
+	inv_box.screen_loc = ui_storage2
+	inv_box.slot_id = slot_r_store
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "suit storage"
-	using.icon = ui_style
-	using.dir = 8 //The sprite at dir=8 has the background whereas the others don't.
-	using.icon_state = "belt"
-	using.screen_loc = ui_sstore1
-	using.slot_id = slot_s_store
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "suit storage"
+	inv_box.icon = ui_style
+	inv_box.dir = 8 //The sprite at dir=8 has the background whereas the others don't.
+	inv_box.icon_state = "belt"
+	inv_box.screen_loc = ui_sstore1
+	inv_box.slot_id = slot_s_store
+	inv_box.layer = 19
+	src.adding += inv_box
 
 	using = new src.h_type( src )
 	using.name = "resist"
@@ -280,59 +281,59 @@
 	src.adding += using
 */
 
-	using = new src.h_type( src )
-	using.name = "gloves"
-	using.icon = ui_style
-	using.icon_state = "gloves"
-	using.screen_loc = ui_gloves
-	using.slot_id = slot_gloves
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "gloves"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "gloves"
+	inv_box.screen_loc = ui_gloves
+	inv_box.slot_id = slot_gloves
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "eyes"
-	using.icon = ui_style
-	using.icon_state = "glasses"
-	using.screen_loc = ui_glasses
-	using.slot_id = slot_glasses
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "eyes"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "glasses"
+	inv_box.screen_loc = ui_glasses
+	inv_box.slot_id = slot_glasses
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "ears"
-	using.icon = ui_style
-	using.icon_state = "ears"
-	using.screen_loc = ui_ears
-	using.slot_id = slot_ears
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "ears"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "ears"
+	inv_box.screen_loc = ui_ears
+	inv_box.slot_id = slot_ears
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "head"
-	using.icon = ui_style
-	using.icon_state = "hair"
-	using.screen_loc = ui_head
-	using.slot_id = slot_head
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "head"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "hair"
+	inv_box.screen_loc = ui_head
+	inv_box.slot_id = slot_head
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "shoes"
-	using.icon = ui_style
-	using.icon_state = "shoes"
-	using.screen_loc = ui_shoes
-	using.slot_id = slot_shoes
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "shoes"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "shoes"
+	inv_box.screen_loc = ui_shoes
+	inv_box.slot_id = slot_shoes
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "belt"
-	using.icon = ui_style
-	using.icon_state = "belt"
-	using.screen_loc = ui_belt
-	using.slot_id = slot_belt
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "belt"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "belt"
+	inv_box.screen_loc = ui_belt
+	inv_box.slot_id = slot_belt
+	inv_box.layer = 19
+	src.adding += inv_box
 
 /*
 	using = new src.h_type( src )

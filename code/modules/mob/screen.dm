@@ -5,6 +5,8 @@
 	unacidable = 1
 	var/id = 0.0
 	var/obj/master
+
+/obj/screen/inventory
 	var/slot_id
 
 /obj/screen/close
@@ -538,11 +540,11 @@
 			DblClick()
 	return
 
-/obj/screen/attack_hand(mob/user as mob)
+/obj/screen/inventory/attack_hand(mob/user as mob)
 	user.attack_ui(slot_id)
 	return
 
-/obj/screen/attack_paw(mob/user as mob)
+/obj/screen/inventory/attack_paw(mob/user as mob)
 	user.attack_ui(slot_id)
 	return
 

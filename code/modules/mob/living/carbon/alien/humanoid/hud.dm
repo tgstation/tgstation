@@ -34,6 +34,7 @@
 	src.druggy.mouse_opacity = 0
 
 	var/obj/screen/using
+	var/obj/screen/inventory/inv_box
 
 	using = new src.h_type( src )
 	using.name = "act_intent"
@@ -110,71 +111,71 @@
 
 //equippable shit
 	//suit
-	using = new src.h_type( src )
-	using.name = "o_clothing"
-	using.dir = SOUTH
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "equip"
-	using.screen_loc = ui_alien_oclothing
-	using.slot_id = slot_wear_suit
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "o_clothing"
+	inv_box.dir = SOUTH
+	inv_box.icon = 'icons/mob/screen1_alien.dmi'
+	inv_box.icon_state = "equip"
+	inv_box.screen_loc = ui_alien_oclothing
+	inv_box.slot_id = slot_wear_suit
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "r_hand"
-	using.dir = WEST
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "hand_inactive"
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "r_hand"
+	inv_box.dir = WEST
+	inv_box.icon = 'icons/mob/screen1_alien.dmi'
+	inv_box.icon_state = "hand_inactive"
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
 		using.icon_state = "hand_active"
-	using.screen_loc = ui_rhand
-	using.layer = 19
-	src.r_hand_hud_object = using
-	using.slot_id = slot_r_hand
-	src.adding += using
+	inv_box.screen_loc = ui_rhand
+	inv_box.layer = 19
+	src.r_hand_hud_object = inv_box
+	inv_box.slot_id = slot_r_hand
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "l_hand"
-	using.dir = EAST
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "hand_inactive"
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "l_hand"
+	inv_box.dir = EAST
+	inv_box.icon = 'icons/mob/screen1_alien.dmi'
+	inv_box.icon_state = "hand_inactive"
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		using.icon_state = "hand_active"
-	using.screen_loc = ui_lhand
-	using.layer = 19
-	using.slot_id = slot_l_hand
-	src.l_hand_hud_object = using
-	src.adding += using
+		inv_box.icon_state = "hand_active"
+	inv_box.screen_loc = ui_lhand
+	inv_box.layer = 19
+	inv_box.slot_id = slot_l_hand
+	src.l_hand_hud_object = inv_box
+	src.adding += inv_box
 
 	//pocket 1
-	using = new src.h_type( src )
-	using.name = "storage1"
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "pocket"
-	using.screen_loc = ui_storage1
-	using.slot_id = slot_l_store
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "storage1"
+	inv_box.icon = 'icons/mob/screen1_alien.dmi'
+	inv_box.icon_state = "pocket"
+	inv_box.screen_loc = ui_storage1
+	inv_box.slot_id = slot_l_store
+	inv_box.layer = 19
+	src.adding += inv_box
 
 	//pocket 2
-	using = new src.h_type( src )
-	using.name = "storage2"
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "pocket"
-	using.screen_loc = ui_storage2
-	using.slot_id = slot_r_store
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "storage2"
+	inv_box.icon = 'icons/mob/screen1_alien.dmi'
+	inv_box.icon_state = "pocket"
+	inv_box.screen_loc = ui_storage2
+	inv_box.slot_id = slot_r_store
+	inv_box.layer = 19
+	src.adding += inv_box
 
 	//head
-	using = new src.h_type( src )
-	using.name = "head"
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "hair"
-	using.screen_loc = ui_alien_head
-	using.slot_id = slot_head
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "head"
+	inv_box.icon = 'icons/mob/screen1_alien.dmi'
+	inv_box.icon_state = "hair"
+	inv_box.screen_loc = ui_alien_head
+	inv_box.slot_id = slot_head
+	inv_box.layer = 19
+	src.adding += inv_box
 //end of equippable shit
 
 /*

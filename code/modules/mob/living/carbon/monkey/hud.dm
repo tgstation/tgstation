@@ -42,6 +42,7 @@
 	src.druggy.mouse_opacity = 0
 
 	var/obj/screen/using
+	var/obj/screen/inventory/inv_box
 
 	using = new src.h_type( src )
 	using.name = "act_intent"
@@ -140,29 +141,31 @@
 	if(istype(mymob,/mob/living/carbon/monkey)) using.overlays += blocked
 	src.other += using*/
 
-	using = new src.h_type( src )
-	using.name = "r_hand"
-	using.dir = WEST
-	using.icon = ui_style
-	using.icon_state = "hand_inactive"
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "r_hand"
+	inv_box.dir = WEST
+	inv_box.icon = ui_style
+	inv_box.icon_state = "hand_inactive"
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		using.icon_state = "hand_active"
-	using.screen_loc = ui_rhand
-	using.layer = 19
-	src.r_hand_hud_object = using
-	src.adding += using
+		inv_box.icon_state = "hand_active"
+	inv_box.screen_loc = ui_rhand
+	inv_box.slot_id = slot_r_hand
+	inv_box.layer = 19
+	src.r_hand_hud_object = inv_box
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "l_hand"
-	using.dir = EAST
-	using.icon = ui_style
-	using.icon_state = "hand_inactive"
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "l_hand"
+	inv_box.dir = EAST
+	inv_box.icon = ui_style
+	inv_box.icon_state = "hand_inactive"
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		using.icon_state = "hand_active"
-	using.screen_loc = ui_lhand
-	using.layer = 19
-	src.l_hand_hud_object = using
-	src.adding += using
+		inv_box.icon_state = "hand_active"
+	inv_box.screen_loc = ui_lhand
+	inv_box.slot_id = slot_l_hand
+	inv_box.layer = 19
+	src.l_hand_hud_object = inv_box
+	src.adding += inv_box
 
 	using = new src.h_type( src )
 	using.name = "hand"
@@ -171,7 +174,6 @@
 	using.icon_state = "hand1"
 	using.screen_loc = ui_swaphand1
 	using.layer = 19
-	using.slot_id = slot_l_hand
 	src.adding += using
 
 	using = new src.h_type( src )
@@ -180,7 +182,6 @@
 	using.icon = ui_style
 	using.icon_state = "hand2"
 	using.screen_loc = ui_swaphand2
-	using.slot_id = slot_r_hand
 	using.layer = 19
 	src.adding += using
 /*
@@ -195,25 +196,25 @@
 	src.adding += using
 */
 
-	using = new src.h_type( src )
-	using.name = "mask"
-	using.dir = NORTH
-	using.icon = ui_style
-	using.icon_state = "equip"
-	using.screen_loc = ui_monkey_mask
-	using.slot_id = slot_wear_mask
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "mask"
+	inv_box.dir = NORTH
+	inv_box.icon = ui_style
+	inv_box.icon_state = "equip"
+	inv_box.screen_loc = ui_monkey_mask
+	inv_box.slot_id = slot_wear_mask
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "back"
-	using.dir = NORTHEAST
-	using.icon = ui_style
-	using.icon_state = "equip"
-	using.screen_loc = ui_back
-	using.slot_id = slot_back
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "back"
+	inv_box.dir = NORTHEAST
+	inv_box.icon = ui_style
+	inv_box.icon_state = "equip"
+	inv_box.screen_loc = ui_back
+	inv_box.slot_id = slot_back
+	inv_box.layer = 19
+	src.adding += inv_box
 /*
 	using = new src.h_type( src )
 	using.name = "storage1"
