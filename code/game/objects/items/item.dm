@@ -166,7 +166,7 @@
 						if(I != src) //We'll do the one we clicked on last.
 							if(!S.can_be_inserted(src))
 								continue
-							S.handle_item_insertion(I)
+							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 			S.handle_item_insertion(src)
 
 

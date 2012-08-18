@@ -59,6 +59,8 @@
 	user.client.screen -= src.boxes
 	user.client.screen -= src.closer
 	user.client.screen -= src.contents
+	if(user.s_active == src)
+		user.s_active = null
 	return
 
 /obj/item/weapon/storage/proc/close(mob/user as mob)
@@ -201,7 +203,9 @@
 	return 1
 
 //This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
-/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj)
+//The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
+//such as when picking up all the items on a tile with one click.
+/obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
 	if(!istype(W)) return
 	if(usr)
 		usr.u_equip(W)
@@ -214,14 +218,14 @@
 		W.dropped(usr)
 		add_fingerprint(usr)
 
-		if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
-		for(var/mob/M in viewers(usr, null))
-			if (M == usr)
-				usr << "\blue You put the [W] into [src]."
-			else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
-				M.show_message("\blue [usr] puts [W] into [src].")
-			else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
-				M.show_message("\blue [usr] puts [W] into [src].")
+		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
+			for(var/mob/M in viewers(usr, null))
+				if (M == usr)
+					usr << "\blue You put the [W] into [src]."
+				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
+					M.show_message("\blue [usr] puts [W] into [src].")
+				else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
+					M.show_message("\blue [usr] puts [W] into [src].")
 
 		src.orient2hud(usr)
 		if(usr.s_active)
@@ -242,6 +246,12 @@
 				M.client.screen -= src
 
 	if(new_location)
+		if(ismob(loc))
+			W.dropped(usr)
+		if(ismob(new_location))
+			W.layer = 20
+		else
+			W.layer = initial(W.layer)
 		W.loc = new_location
 	else
 		W.loc = get_turf(src)
@@ -258,6 +268,7 @@
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
 	..()
+
 	if(isrobot(user))
 		user << "\blue You're a robot. No."
 		return //Robots can't interact with storage items.
@@ -298,7 +309,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.l_store == src && !H.get_active_hand())
+		if(H.l_store == src && !H.get_active_hand())	//Prevents opening if it's in a pocket.
 			H.put_in_hands(src)
 			H.l_store = null
 			return
@@ -376,8 +387,17 @@
 
 // BubbleWrap - A box can be folded up to make card
 /obj/item/weapon/storage/attack_self(mob/user as mob)
+
+	//Clicking on itself will empty it, if it has the verb to do that.
+	if(user.get_active_hand() == src)
+		if(src.verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
+			src.quick_empty()
+			return
+
+	//Otherwise we'll try to fold it.
 	if ( contents.len )
 		return
+
 	if ( !ispath(src.foldable) )
 		return
 	var/found = 0
