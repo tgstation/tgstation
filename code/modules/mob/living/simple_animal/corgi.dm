@@ -313,10 +313,6 @@
 					dir = i
 					sleep(1)
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/corgi
-	name = "Corgi meat"
-	desc = "Tastes like... well you know..."
-
 /mob/living/simple_animal/corgi/Ian/Bump(atom/movable/AM as mob|obj, yes)
 
 	spawn( 0 )

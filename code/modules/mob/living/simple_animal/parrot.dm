@@ -24,10 +24,6 @@
 	speak = list(":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN RIG SUIT?",":e OH GOD ITS FREE CALL THE SHUTTLE")
 	response_harm   = "is attacked in the face by"
 
-/obj/item/weapon/reagent_containers/food/snacks/cracker/
-	name = "Cracker"
-	desc = "It's a salted cracker."
-
 /mob/living/simple_animal/parrot/show_inv(mob/user as mob)
 	user.machine = src
 	if(user.stat) return
