@@ -2600,8 +2600,108 @@ It can still be worn/put on as normal.
 
 				if(!modified)
 					usr << "\red Unable to locate a data core entry for this person."
+
+	if (href_list["secrecord"])
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+				var/perpname = "wot"
+				var/read = 0
+
+				if(wear_id)
+					if(istype(wear_id,/obj/item/weapon/card/id))
+						perpname = wear_id:registered_name
+					else if(istype(wear_id,/obj/item/device/pda))
+						var/obj/item/device/pda/tempPda = wear_id
+						perpname = tempPda.owner
+				else
+					perpname = src.name
+				for (var/datum/data/record/E in data_core.general)
+					if (E.fields["name"] == perpname)
+						for (var/datum/data/record/R in data_core.security)
+							if (R.fields["id"] == E.fields["id"])
+								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+									usr << "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]"
+									usr << "<b>Minor Crimes:</b> [R.fields["mi_crim"]]"
+									usr << "<b>Details:</b> [R.fields["mi_crim_d"]]"
+									usr << "<b>Major Crimes:</b> [R.fields["ma_crim"]]"
+									usr << "<b>Details:</b> [R.fields["ma_crim_d"]]"
+									usr << "<b>Notes:</b> [R.fields["notes"]]"
+									read = 1
+
+				if(!read)
+					usr << "\red Unable to locate a data core entry for this person."
+
+
+	if (href_list["medical"])
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
+				var/perpname = "wot"
+				var/modified = 0
+
+				if(wear_id)
+					if(istype(wear_id,/obj/item/weapon/card/id))
+						perpname = wear_id:registered_name
+					else if(istype(wear_id,/obj/item/device/pda))
+						var/obj/item/device/pda/tempPda = wear_id
+						perpname = tempPda.owner
+				else
+					perpname = src.name
+
+				for (var/datum/data/record/E in data_core.general)
+					if (E.fields["name"] == perpname)
+						for (var/datum/data/record/R in data_core.general)
+							if (R.fields["id"] == E.fields["id"])
+
+								var/setmedical = input(usr, "Specify a new criminal status for this person.", "Medical HUD", R.fields["p_stat"]) in list("*Deceased*", "*Unconscious*", "Physically Unfit", "Active", "Cancel")
+
+								if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
+									if(setmedical != "Cancel")
+										R.fields["p_stat"] = setmedical
+										modified = 1
+
+										spawn()
+											H.handle_regular_hud_updates()
+
+				if(!modified)
+					usr << "\red Unable to locate a data core entry for this person."
+
+	if (href_list["medrecord"])
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
+				var/perpname = "wot"
+				var/read = 0
+
+				if(wear_id)
+					if(istype(wear_id,/obj/item/weapon/card/id))
+						perpname = wear_id:registered_name
+					else if(istype(wear_id,/obj/item/device/pda))
+						var/obj/item/device/pda/tempPda = wear_id
+						perpname = tempPda.owner
+				else
+					perpname = src.name
+				for (var/datum/data/record/E in data_core.general)
+					if (E.fields["name"] == perpname)
+						for (var/datum/data/record/R in data_core.medical)
+							if (R.fields["id"] == E.fields["id"])
+								if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
+									usr << "<b>Name:</b> [R.fields["name"]]	<b>Blood Type:</b> [R.fields["b_type"]]"
+									usr << "<b>DNA:</b> [R.fields["b_dna"]]"
+									usr << "<b>Minor Disabilities:</b> [R.fields["mi_dis"]]"
+									usr << "<b>Details:</b> [R.fields["mi_dis_d"]]"
+									usr << "<b>Major Disabilities:</b> [R.fields["ma_dis"]]"
+									usr << "<b>Details:</b> [R.fields["ma_dis_d"]]"
+									usr << "<b>Notes:</b> [R.fields["notes"]]"
+									read = 1
+
+				if(!read)
+					usr << "\red Unable to locate a data core entry for this person."
+
 	..()
 	return
+
 
 
 ///eyecheck()
