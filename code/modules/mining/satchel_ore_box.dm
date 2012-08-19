@@ -51,6 +51,14 @@
 	desc = "A heavy box used for storing ore."
 	density = 1
 	var/capacity = 200
+	var/amt_gold = 0
+	var/amt_silver = 0
+	var/amt_diamond = 0
+	var/amt_glass = 0
+	var/amt_iron = 0
+	var/amt_plasma = 0
+	var/amt_uranium = 0
+	var/amt_clown = 0
 
 	New()
 		if(prob(50))
@@ -69,8 +77,44 @@
 			user << "\blue You empty the satchel into the box."
 		else
 			user << "\blue The ore box is full."
-
 	return
+
+/obj/structure/ore_box/proc/update(obj, mob/user as mob)
+	for (var/obj/item/weapon/ore/C in contents)
+		if (istype(C,/obj/item/weapon/ore/diamond))
+			amt_diamond++
+			del(C)
+			continue
+		else if (istype(C,/obj/item/weapon/ore/glass))
+			amt_glass++
+			del(C)
+			continue
+		else if (istype(C,/obj/item/weapon/ore/plasma))
+			amt_plasma++
+			del(C)
+			continue
+		else if (istype(C,/obj/item/weapon/ore/iron))
+			amt_iron++
+			del(C)
+			continue
+		else if (istype(C,/obj/item/weapon/ore/silver))
+			amt_silver++
+			del(C)
+			continue
+		else if (istype(C,/obj/item/weapon/ore/gold))
+			amt_gold++
+			del(C)
+			continue
+		else if (istype(C,/obj/item/weapon/ore/uranium))
+			amt_uranium++
+			del(C)
+			continue
+		else if (istype(C,/obj/item/weapon/ore/clown))
+			amt_clown++
+			del(C)
+			continue
+	return
+
 
 /obj/structure/ore_box/attack_hand(obj, mob/user as mob)
 	var/amt_gold = 0
@@ -126,12 +170,53 @@
 	user << browse("[dat]", "window=orebox")
 	return
 
+
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
 		return
 	usr.machine = src
 	src.add_fingerprint(usr)
 	if(href_list["removeall"])
+		if (amt_diamond > 0)
+			var/obj/item/weapon/ore/diamond/G = new /obj/item/weapon/ore/diamond
+			G.amount = src.amt_diamond
+			G.loc = src.loc
+			src.amt_diamond = 0
+		if (amt_glass > 0)
+			var/obj/item/weapon/ore/glass/G = new /obj/item/weapon/ore/glass
+			G.amount = src.amt_glass
+			G.loc = src.loc
+			src.amt_glass = 0
+		if (amt_plasma > 0)
+			var/obj/item/weapon/ore/plasma/G = new /obj/item/weapon/ore/plasma
+			G.amount = src.amt_plasma
+			G.loc = src.loc
+			src.amt_plasma = 0
+		if (amt_iron > 0)
+			var/obj/item/weapon/ore/iron/G = new /obj/item/weapon/ore/iron
+			G.amount = src.amt_iron
+			G.loc = src.loc
+			src.amt_iron = 0
+		if (amt_silver > 0)
+			var/obj/item/weapon/ore/silver/G = new /obj/item/weapon/ore/silver
+			G.amount = src.amt_silver
+			G.loc = src.loc
+			src.amt_silver = 0
+		if (amt_gold > 0)
+			var/obj/item/weapon/ore/gold/G = new /obj/item/weapon/ore/gold
+			G.amount = src.amt_gold
+			G.loc = src.loc
+			src.amt_gold = 0
+		if (amt_uranium > 0)
+			var/obj/item/weapon/ore/uranium/G = new /obj/item/weapon/ore/uranium
+			G.amount = src.amt_uranium
+			G.loc = src.loc
+			src.amt_uranium = 0
+		if (amt_clown > 0)
+			var/obj/item/weapon/ore/clown/G = new /obj/item/weapon/ore/clown
+			G.amount = src.amt_clown
+			G.loc = src.loc
+			src.amt_clown = 0
 		for (var/obj/item/weapon/ore/O in contents)
 			contents -= O
 			O.loc = src.loc

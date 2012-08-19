@@ -362,35 +362,35 @@
 			O = locate(/obj/item, input.loc)
 			if (O)
 				if (istype(O,/obj/item/weapon/ore/iron))
-					ore_iron++;
+					ore_iron = ore_iron + O:amount;
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/glass))
-					ore_glass++;
+					ore_glass = ore_glass + O:amount;
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/diamond))
-					ore_diamond++;
+					ore_diamond = ore_diamond + O:amount;
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/plasma))
-					ore_plasma++
+					ore_plasma = ore_plasma + O:amount
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/gold))
-					ore_gold++
+					ore_gold = ore_gold + O:amount
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/silver))
-					ore_silver++
+					ore_silver = ore_silver + O:amount
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/uranium))
-					ore_uranium++
+					ore_uranium = ore_uranium + O:amount
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/clown))
-					ore_clown++
+					ore_clown = ore_clown + O:amount
 					del(O)
 					continue
 				O.loc = src.output.loc
