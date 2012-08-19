@@ -636,6 +636,7 @@
 		if(COLD_RESISTANCE in mutations)
 			return 1 //Fully protected from the cold.
 
+		temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 		var/thermal_protection_flags = get_cold_protection_flags(temperature)
 
 		var/thermal_protection = 0.0
