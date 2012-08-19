@@ -2,6 +2,7 @@ botanistpower - Tajaran
 bountylord13 - Soghun
 bowlsoldier - Tajaran
 bluefishie - Skrell
+cubejackal - Soghun
 danny220 - Skrell
 danny220 - Soghun
 deciusreln - Skrell
@@ -10,6 +11,8 @@ dopeghoti - Tajaran
 duntadaman - Skrell
 fenrisian - Tajaran
 firefishie - Skrell
+focksinabocks - Skrell
+focksinabocks - Tajaran
 foolamancer - Skrell
 forsamori - Tajaran
 forsamori - Soghun
@@ -17,10 +20,13 @@ galenus - Soghun
 galenus - Skrell
 masterofstuff - Skrell
 mangled - Skrell
+nerezza - Skrell
+philphil123 - Soghun
 quilan - Tajaran
 searif - Soghun
 searif - Tajaran
 searif - Skrell
+sniperyeti - Skrell
 succubusy - Skrell
 teddybehr - Soghun
 whitellama - Skrell
@@ -29,3 +35,4 @@ spaceman96 - Soghun
 spaceman96 - Skrell
 sparklysheep - Skrell
 watermelonstorm - Tajaran
+whitellama - Skrell

@@ -164,6 +164,8 @@
 	atkcarbon = 1
 	atksilicon = 0
 	attacktext = "bites"
+	melee_damage_lower = 0.1
+	melee_damage_upper = 0.5 //They're just roaches!
 	layer = 2.5		//so they can hide under objects
 
 	Bump(var/mob/M)

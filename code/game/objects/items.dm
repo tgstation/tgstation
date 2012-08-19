@@ -255,10 +255,10 @@
 	return
 
 /obj/item/weapon/pen/sleepypen/New()
-	var/datum/reagents/R = new/datum/reagents(60) //Used to be 300
+	var/datum/reagents/R = new/datum/reagents(18) //Used to be 300
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("stoxin", 60)
+	R.add_reagent("stoxin", 18)
 	..()
 	return
 
@@ -267,7 +267,7 @@
 		return
 	..()
 	if(reagents.total_volume)
-		if(M.reagents) reagents.trans_to(M, 20) //used to be 150
+		if(M.reagents) reagents.trans_to(M, 6) //used to be 150, 6 gives around 2 minutes of knock out.
 	return
 
 //NEW STYLE PARAPEN

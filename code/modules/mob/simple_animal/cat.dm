@@ -18,6 +18,9 @@
 	response_harm   = "kicks the"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
+	min_oxy = 16 //Require atleast 16kPA oxygen
+	minbodytemp = 223		//Below -50 Degrees Celcius
+	maxbodytemp = 323	//Above 50 Degrees Celcius
 
 /mob/living/simple_animal/cat/Life()
 	//MICE!

@@ -53,6 +53,9 @@ mob/proc/airflow_stun()
 	if(stat == 2)
 		return 0
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
+	if(!canstun || !canweaken)
+		src << "\blue You stay upright as the air rushes past you."
+		return 0
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 	weakened = max(weakened,5)
 	last_airflow_stun = world.time
@@ -70,6 +73,9 @@ mob/living/carbon/human/airflow_stun()
 		if(wear_suit.flags & SUITSPACE) return 0
 	if(shoes)
 		if(shoes.flags & NOSLIP) return 0
+	if(!canstun || !canweaken)
+		src << "\blue You stay upright as the air rushes past you."
+		return 0
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 	weakened = max(weakened,rand(1,5))
 	last_airflow_stun = world.time

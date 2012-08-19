@@ -31,6 +31,8 @@
 	contents = list()
 	new /obj/item/clothing/suit/bio_suit/janitor( src )
 	new /obj/item/clothing/head/bio_hood/janitor( src )
+	new /obj/item/clothing/gloves/latex ( src )
+	new /obj/item/clothing/mask/surgical( src )
 
 /obj/structure/closet/l3closet/scientist/New()
 	..()

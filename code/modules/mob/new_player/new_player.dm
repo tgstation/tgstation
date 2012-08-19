@@ -358,14 +358,17 @@
 			preferences.randomize_appearance_for(new_character)
 		else
 			preferences.copy_to(new_character)
-			if((preferences.species == "Soghun") && (is_alien_whitelisted(src, "Soghun"))) //This probably shouldn't be here, but I can't think of any other way
+			if((preferences.species == "Soghun") && ((is_alien_whitelisted(src, "Soghun")) || !config.usealienwhitelist)) //This probably shouldn't be here, but I can't think of any other way
 				new_character.mutantrace = "lizard"
 				new_character.soghun_talk_understand = 1
 				new_character.voice_name = "Soghun"
-			if((preferences.species == "Skrell") && (is_alien_whitelisted(src, "Skrell")))
+			if((preferences.species == "Skrell") && ((is_alien_whitelisted(src, "Skrell")) || !config.usealienwhitelist))
 				new_character.mutantrace = "skrell"
 				new_character.skrell_talk_understand = 1
 				new_character.voice_name = "Skrell"
+			new_character.update_clothing()
+			new_character.update_body()
+			new_character.update_face() //Hotfix for non-updating sprites.
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 		new_character.dna.ready_dna(new_character)

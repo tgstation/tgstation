@@ -720,6 +720,13 @@ obj/item/clothing/suit/justice
 	color = "bride_orange"
 	flags_inv = HIDESHOES
 
+/obj/item/clothing/under/wedding/suit_white
+	name = "white suit"
+	desc = "A fabulous white suit with orange shirt."
+	icon_state = "white_suit"
+	item_state = "creamsuit"
+	color = "white_suit"
+
 /obj/item/clothing/under/wedding/bridesmaid
 	name = "yellow dress"
 	desc = "A big and puffy orange dress."

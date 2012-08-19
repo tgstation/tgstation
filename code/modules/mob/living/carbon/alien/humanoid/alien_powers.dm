@@ -85,6 +85,8 @@ I kind of like the right click only--the window version can get a little confusi
 		M.show_message(text("\green <B>[user] vomits globs of vile stuff all over [src]!</B>"), 1)
 	A.tick()
 
+// This one is currently broken, however the other one isn't. And they both do the same thing. Weird.
+/*
 /mob/living/carbon/alien/humanoid/proc/corrode_target() //Aliens only see items on the list of objects that they can actually spit on./N
 	set name = "Spit Corrosive Acid (200)"
 	set desc = "Drench an object in acid, destroying it over time."
@@ -106,7 +108,7 @@ I kind of like the right click only--the window version can get a little confusi
 				else
 					src << "\green Target is too far away."
 	return
-
+*/
 /mob/living/carbon/alien/humanoid/verb/corrode(obj/O as anything in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
 	set name = "Corrode with Acid (200)"
 	set desc = "Drench an object in acid, destroying it over time."
