@@ -4,6 +4,7 @@
 	name = "Rock"
 	icon = 'Mining.dmi'
 	icon_state = "ore"
+	var/amount = 1
 
 /obj/item/weapon/ore/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
