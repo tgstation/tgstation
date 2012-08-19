@@ -906,7 +906,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 			// -- End mode specific stuff
 
-		podman.gender = gender
+		podman.gender = ghost.gender
+		if(podman.gender in list(NEUTER, PLURAL))	//Sanity check, which should never actually happen.
+			podman.gender = pick(MALE,FEMALE)
 
 		if(!podman.dna)
 			podman.dna = new /datum/dna()

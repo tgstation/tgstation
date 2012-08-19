@@ -97,7 +97,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				usr.say(invocation)
 			else
 				usr.say(dd_replacetext(invocation," ","`"))
-			if(usr.gender=="male")
+			if(usr.gender==MALE)
 				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			else
 				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)

@@ -254,7 +254,7 @@
 /mob/living/simple_animal/corgi/Ian
 	name = "Ian"
 	real_name = "Ian"	//Intended to hold the name without altering it.
-	gender = "male"
+	gender = MALE
 	desc = "It's a corgi."
 	var/turns_since_scan = 0
 	var/obj/movement_target

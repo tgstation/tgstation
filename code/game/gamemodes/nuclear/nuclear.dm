@@ -360,9 +360,9 @@
 /proc/NukeNameAssign(var/lastname,var/list/syndicates)
 	for(var/datum/mind/synd_mind in syndicates)
 		switch(synd_mind.current.gender)
-			if("male")
+			if(MALE)
 				synd_mind.name = "[pick(first_names_male)] [lastname]"
-			if("female")
+			if(FEMALE)
 				synd_mind.name = "[pick(first_names_female)] [lastname]"
 		synd_mind.current.real_name = synd_mind.name
 	return

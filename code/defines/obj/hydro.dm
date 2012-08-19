@@ -73,7 +73,7 @@
 	var/ckey = null
 	var/realName = null
 	var/datum/mind/mind = null
-	gender = "male"
+	gender = MALE
 
 /obj/item/seeds/grapeseed
 	name = "pack of grape seeds"

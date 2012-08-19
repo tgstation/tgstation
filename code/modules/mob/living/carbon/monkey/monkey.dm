@@ -16,7 +16,7 @@
 		dna.unique_enzymes = md5(name)
 				//////////blah
 		var/gendervar
-		if (gender == "male")
+		if (gender == MALE)
 			gendervar = add_zero2(num2hex((rand(1,2049)),1), 3)
 		else
 			gendervar = add_zero2(num2hex((rand(2051,4094)),1), 3)

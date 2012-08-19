@@ -103,9 +103,9 @@
 
 			if(ELECTRICHANDS in M.augmentations)
 				var/gendertxt = "their"
-				if(M.gender == "male")
+				if(M.gender == MALE)
 					gendertxt = "his"
-				if(M.gender == "female")
+				if(M.gender == FEMALE)
 					gendertxt = "her"
 
 				visible_message("\red <B>[M] has shocked [src] with [gendertxt] bare hands!</B>")

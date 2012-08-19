@@ -29,7 +29,7 @@
 				dat += "<TT>Connection severed.</TT><BR>"
 			else
 				var/honorific = "Mr."
-				if(user.gender == "female")
+				if(user.gender == FEMALE)
 					honorific = "Ms."
 				dat += "<font color=red><i>Identity not found in operative database. What can the Syndicate do for you today, [honorific] [user.name]?</i></font><br>"
 				if(!selfdestructing)

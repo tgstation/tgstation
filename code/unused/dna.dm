@@ -721,9 +721,9 @@
 					M.primary = null
 					var/t1 = hex2num(copytext(O.primary.uni_identity, 25, 28))
 					if (t1 < 125)
-						O.gender = "male"
+						O.gender = MALE
 					else
-						O.gender = "female"
+						O.gender = FEMALE
 					M << "Genetic Transversal Complete!"
 					if (M.client)
 						M << "Transferring..."
@@ -792,11 +792,11 @@
 			if (length(H.primary.uni_identity) >= 20)
 				t1 = copytext(H.primary.uni_identity, 19, 21)
 				if (hex2num(t1) > 127)
-					H.gender = "female"
+					H.gender = FEMALE
 				else
-					H.gender = "male"
+					H.gender = MALE
 			else
-				H.gender = "neuter"
+				H.gender = NEUTER
 			if (length(H.primary.uni_identity) >= 18)
 				t1 = copytext(H.primary.uni_identity, 17, 19)
 				H.ns_tone = hex2num(t1)
@@ -847,7 +847,7 @@
 				var/i
 				while (!i)
 					var/randomname
-					if (src.gender == "male")
+					if (src.gender == MALE)
 						randomname = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
 					else
 						randomname = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
