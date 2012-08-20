@@ -45,11 +45,12 @@
 	var/version = null
 	F["version"] >> version
 
+	/*
 	if (isnull(version) || version != 1)
 		fdel(path)
 		if (!silent)
 			alert(user, "Your savefile was incompatible with this version and was deleted.")
-		return 0
+		return 0*/
 
 	F["name"] >> src.name
 	F["description"] >> src.description
