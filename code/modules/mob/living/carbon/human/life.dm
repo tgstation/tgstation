@@ -432,21 +432,26 @@
 			else if(breath.temperature > 360.15)
 				if(prob(20))
 					src << "\red You feel your face burning and a searing heat in your lungs!"
-			fire_alert = max(fire_alert, 1)
 
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					fire_alert = max(fire_alert, 1)
 				if(120 to 200)
 					apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					fire_alert = max(fire_alert, 1)
 				if(200 to 260)
 					apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					fire_alert = max(fire_alert, 1)
 				if(360 to 400)
 					apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					fire_alert = max(fire_alert, 2)
 				if(400 to 1000)
 					apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					fire_alert = max(fire_alert, 2)
 				if(1000 to INFINITY)
 					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					fire_alert = max(fire_alert, 2)
 
 		//Temporary fixes to the alerts.
 
@@ -489,10 +494,13 @@
 			switch(bodytemperature)
 				if(360 to 400)
 					apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
+					fire_alert = max(fire_alert, 2)
 				if(400 to 1000)
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+					fire_alert = max(fire_alert, 2)
 				if(1000 to INFINITY)
 					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+					fire_alert = max(fire_alert, 2)
 
 		else if(bodytemperature < 260.15)
 			fire_alert = max(fire_alert, 1)
@@ -500,10 +508,13 @@
 				switch(bodytemperature)
 					if(200 to 260)
 						apply_damage(COLD_DAMAGE_LEVEL_1, BURN)
+						fire_alert = max(fire_alert, 1)
 					if(120 to 200)
 						apply_damage(COLD_DAMAGE_LEVEL_2, BURN)
+						fire_alert = max(fire_alert, 1)
 					if(-INFINITY to 120)
 						apply_damage(COLD_DAMAGE_LEVEL_3, BURN)
+						fire_alert = max(fire_alert, 1)
 
 		// Account for massive pressure differences.  Done by Polymorph
 		// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
@@ -1070,7 +1081,7 @@
 				if(hal_screwyhud == 3 || oxygen_alert)	oxygen.icon_state = "oxy1"
 				else									oxygen.icon_state = "oxy0"
 			if(fire)
-				if(fire_alert)							fire.icon_state = "fire1"
+				if(fire_alert)							fire.icon_state = "fire[fire_alert]" //fire_alert is either 0 if no alert, 1 for cold and 2 for heat.
 				else									fire.icon_state = "fire0"
 
 			if(bodytemp)
