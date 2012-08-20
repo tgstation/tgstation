@@ -313,8 +313,8 @@
 /obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/obj/item/part)
 	var/i = 0
 	var/output
-	if(has_var(part,"construction_time") && has_var(part,"construction_cost"))//The most efficient way to go about this. Not all objects have these vars, but if they don't then they CANNOT be made by the mech fab. Doing it this way reduces a major amount of typecasting and switches, while cutting down maintenece for them as well -Sieve
-		for(var/c in part:construction_cost)//The has_var should ensure that anything without the var doesn't make it to this point
+	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))//The most efficient way to go about this. Not all objects have these vars, but if they don't then they CANNOT be made by the mech fab. Doing it this way reduces a major amount of typecasting and switches, while cutting down maintenece for them as well -Sieve
+		for(var/c in part:construction_cost)//The check should ensure that anything without the var doesn't make it to this point
 			if(c in resources)
 				output += "[i?" | ":null][get_resource_cost_w_coeff(part,c)] [c]"
 				i++
@@ -334,7 +334,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/remove_resources(var/obj/item/part)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(has_var(part,"construction_time") && has_var(part,"construction_cost"))
+	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
 		for(var/resource in part:construction_cost)
 			if(resource in src.resources)
 				src.resources[resource] -= get_resource_cost_w_coeff(part,resource)
@@ -344,7 +344,7 @@
 /obj/machinery/mecha_part_fabricator/proc/check_resources(var/obj/item/part)
 //		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts) || istype(part,/obj/item/borg/upgrade))
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(has_var(part,"construction_time") && has_var(part,"construction_cost"))
+	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
 		for(var/resource in part:construction_cost)
 			if(resource in src.resources)
 				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
@@ -398,8 +398,8 @@
 	return 1
 
 /obj/machinery/mecha_part_fabricator/proc/process_queue()
-	var/part = listgetindex(src.queue, 1)
-	if(!(has_var(part,"construction_time")) || !(has_var(part,"construction_cost")))//If it shouldn't be printed
+	var/obj/item/part = listgetindex(src.queue, 1)
+	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")))//If it shouldn't be printed
 		remove_from_queue(1)//Take it out of the quene
 		return process_queue()//Then reprocess it
 	temp = null
@@ -426,9 +426,9 @@
 		for(var/i=1;i<=queue.len;i++)
 			var/obj/item/part = listgetindex(src.queue, i)
 			if(istype(part))
-				if(has_var(part,"construction_time") && has_var(part,"construction_cost"))//Prevents junk items from even appearing in the list, and they will be silently removed when the fab processes
+				if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
 					output += "<li[!check_resources(part)?" style='color: #f00;'":null]>[part.name] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
-				else
+				else//Prevents junk items from even appearing in the list, and they will be silently removed when the fab processes
 					remove_from_queue(i)//Trash it
 					return list_queue()//Rebuild it
 		output += "</ol>"
@@ -510,14 +510,14 @@
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(has_var(part,"construction_time") && has_var(part,"construction_cost"))
+	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
 		return round(part:construction_cost[resource]*resource_coeff, roundto)
 	else
 		return 0
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/obj/item/part as obj, var/roundto=1)
 //Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
-	if(has_var(part,"construction_time") && has_var(part,"construction_cost"))
+	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
 		return round(part:construction_time*time_coeff, roundto)
 	else
 		return 0
