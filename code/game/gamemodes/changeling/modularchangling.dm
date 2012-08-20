@@ -28,6 +28,7 @@ var/list/datum/power/changeling/powerinstances = list()
 /datum/power/changeling/fakedeath
 	name = "Regenerative Stasis"
 	desc = "We fake our death while we regenerate our form, even through death."
+	helptext = "Must be used before death."
 	genomecost = 0
 	allowduringlesserform = 1
 	verbpath = /mob/proc/changeling_fakedeath

@@ -5,6 +5,8 @@
 	circuit = "/obj/item/weapon/circuitboard/teleporter"
 	var/obj/item/locked = null
 	var/id = null
+	var/one_time_use = 0 //Used for one-time-use teleport cards (such as clown planet coordinates.)
+						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
@@ -12,36 +14,39 @@
 	return
 
 
-//TODO: Merge this proc with attack_hand() code so that this actually uses the teleporter procs instead of just bypassing everything
 /obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob)
-	if (istype(I, /obj/item/weapon/card/data/))
-		var/obj/item/weapon/card/data/M = I
-		if(stat & (NOPOWER|BROKEN) & (M.function != "teleporter"))
+	if(istype(I, /obj/item/weapon/card/data/))
+		var/obj/item/weapon/card/data/C = I
+		if(stat & (NOPOWER|BROKEN) & (C.function != "teleporter"))
 			src.attack_hand()
 
-		//Quickfix for hiding nuke disks and people getting to centcomm until I can get the attack_hand() stuff to incorperate this.
-		for(var/obj/O in user.get_contents())
-			if(istype(O, /obj/item/weapon/disk/nuclear) || istype(O, /obj/item/device/radio/beacon) || istype(O, /obj/item/weapon/storage/backpack/holding))
-				user << "<span class='notice'>Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>"
-				return
+		var/obj/L = null
 
-		var/obj/S = null
 		for(var/obj/effect/landmark/sloc in world)
-			if (sloc.name != M.data)
-				continue
-			if (locate(/mob/living) in sloc.loc)
-				continue
-			S = sloc
+			if(sloc.name != C.data) continue
+			if(locate(/mob/living) in sloc.loc) continue
+			L = sloc
 			break
-		if(!S)
-			S = locate("landmark*[M.data]") // use old stype
-		if(istype(S, /obj/effect/landmark/) && istype(S.loc, /turf))
-			user.loc = S.loc
+
+		if(!L)
+			L = locate("landmark*[C.data]") // use old stype
+
+
+		if(istype(L, /obj/effect/landmark/) && istype(L.loc, /turf))
+			src.locked = L
+			one_time_use = 1
+
+			usr << "You insert the coordinates into the machine."
+			usr << "A message flashes across the screen reminding the traveller that the nuclear authentication disk is to remain on the station at all times."
 			user.drop_item()
 			del(I)
-		return
+
+			for(var/mob/O in hearers(src, null))
+				O.show_message("\blue Locked In", 2)
+			src.add_fingerprint(usr)
 	else
 		..()
+
 	return
 
 /obj/machinery/computer/teleporter/attack_paw()
@@ -136,6 +141,10 @@
 			do_teleport(M, locate(rand((2*TRANSITIONEDGE), world.maxx - (2*TRANSITIONEDGE)), rand((2*TRANSITIONEDGE), world.maxy - (2*TRANSITIONEDGE)), 3), 2)
 		else
 			do_teleport(M, com.locked) //dead-on precision
+
+		if(com.one_time_use) //Make one-time-use cards only usable one time!
+			com.one_time_use = 0
+			com.locked = null
 	else
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
