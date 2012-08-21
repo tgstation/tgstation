@@ -167,7 +167,8 @@ zone/proc/process()
 	progress = "problem with: air.react()"
 
 	//React the air here.
-	air.react(null,0)
+	//Handled by fire, no need for this.
+//	air.react(null,0)
 
 	//Check the graphic.
 
@@ -454,7 +455,7 @@ zone/proc/Rebuild()
 				continue
 			for(var/direction in cardinal)
 				var/turf/simulated/T = get_step(S,direction)
-				if(istype(T) && T.zone)
+				if(istype(T) && T.zone && S.CanPass(null, T, 0, 0))
 					T.zone.AddTurf(S)
 
 //UNUSED
