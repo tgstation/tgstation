@@ -7,7 +7,7 @@
 	anchored = 1
 	opacity = 1
 
-	icon = 'mineral_doors.dmi'
+	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 
 	var/mineralType = "metal"
@@ -69,7 +69,7 @@
 
 	proc/Open()
 		isSwitchingStates = 1
-		playsound(loc, 'stonedoor_openclose.ogg', 100, 1)
+		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
 		flick("[mineralType]opening",src)
 		sleep(10)
 		density = 0
@@ -80,7 +80,7 @@
 
 	proc/Close()
 		isSwitchingStates = 1
-		playsound(loc, 'stonedoor_openclose.ogg', 100, 1)
+		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
 		flick("[mineralType]closing",src)
 		sleep(10)
 		density = 1
@@ -174,7 +174,7 @@
 
 	New()
 		..()
-		ul_SetLuminosity(0,3,0)
+		sd_SetLuminosity(3)
 
 /obj/structure/mineral_door/sandstone
 	mineralType = "sandstone"
@@ -201,8 +201,11 @@
 		if(exposed_temperature > 300)
 			TemperatureAct(exposed_temperature)
 
+	//skytodo:
 	proc/TemperatureAct(temperature)
 		for(var/turf/simulated/floor/target_tile in range(2,loc))
+			/*if(target_tile.parent && target_tile.parent.group_processing)
+				target_tile.parent.suspend_group_processing()*/
 
 			var/datum/gas_mixture/napalm = new
 
@@ -210,7 +213,6 @@
 
 			napalm.toxins = toxinsToDeduce
 			napalm.temperature = 200+T0C
-			napalm.update_values()
 
 			target_tile.assume_air(napalm)
 			spawn (0) target_tile.hotspot_expose(temperature, 400)
@@ -228,7 +230,7 @@
 
 	Open()
 		isSwitchingStates = 1
-		playsound(loc, 'doorcreaky.ogg', 100, 1)
+		playsound(loc, 'sound/effects/doorcreaky.ogg', 100, 1)
 		flick("[mineralType]opening",src)
 		sleep(10)
 		density = 0
@@ -239,7 +241,7 @@
 
 	Close()
 		isSwitchingStates = 1
-		playsound(loc, 'doorcreaky.ogg', 100, 1)
+		playsound(loc, 'sound/effects/doorcreaky.ogg', 100, 1)
 		flick("[mineralType]closing",src)
 		sleep(10)
 		density = 1
@@ -257,10 +259,15 @@
 /obj/structure/mineral_door/resin
 	mineralType = "resin"
 	hardness = 5
+	var/close_delay = 100
+
+	TryToSwitchState(atom/user)
+		if(isalien(user))
+			return ..()
 
 	Open()
 		isSwitchingStates = 1
-		playsound(loc, 'attackblob.ogg', 100, 1)
+		playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		flick("[mineralType]opening",src)
 		sleep(10)
 		density = 0
@@ -269,9 +276,13 @@
 		update_icon()
 		isSwitchingStates = 0
 
+		spawn(close_delay)
+			if(!isSwitchingStates && state == 1)
+				Close()
+
 	Close()
 		isSwitchingStates = 1
-		playsound(loc, 'attackblob.ogg', 100, 1)
+		playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		flick("[mineralType]closing",src)
 		sleep(10)
 		density = 1

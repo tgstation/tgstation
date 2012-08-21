@@ -1,10 +1,10 @@
 /obj/item/weapon/cable_coil/heavyduty
 	name = "heavy cable coil"
-	icon = 'power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "wire"
 
 /obj/structure/cable/heavyduty
-	icon = 'power_cond_heavy.dmi'
+	icon = 'icons/obj/power_cond_heavy.dmi'
 	name = "large power cable"
 	desc = "This cable is tough. It cannot be cut with simple hand tools."
 

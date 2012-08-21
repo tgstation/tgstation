@@ -2,22 +2,24 @@
 /obj/item/device/encryptionkey/
 	name = "Standard Encrpytion Key"
 	desc = "An encyption key for a radio headset.  Has no special codes in it.  WHY DOES IT EXIST?  ASK NANOTRASEN."
-	icon = 'radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
 	item_state = ""
 	var/translate_binary = 0
 	var/translate_hive = 0
+	var/syndie = 0
 	var/list/channels = list()
 
 
 /obj/item/device/encryptionkey/New()
 
-/obj/item/device/radio/headset/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/encryptionkey/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-/obj/item/device/encryptionkey/traitor
+/obj/item/device/encryptionkey/syndicate
 	icon_state = "cypherkey"
 	channels = list("Syndicate" = 1)
 	origin_tech = "syndicate=3"
+	syndie = 1//Signifies that it de-crypts Syndicate transmissions
 
 /obj/item/device/encryptionkey/binary
 	icon_state = "cypherkey"
@@ -100,7 +102,7 @@
 	name = "Head of Personnel's Encryption Key"
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	icon_state = "hop_cypherkey"
-	channels = list("Command" = 1, "Cargo" = 1, "Mining" = 0)
+	channels = list("Command" = 1, "Security" = 0, "Cargo" = 1, "Mining" = 0)
 
 /obj/item/device/encryptionkey/headset_mine
 	name = "Mining Radio Encryption Key"
@@ -119,10 +121,6 @@
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	icon_state = "cargo_cypherkey"
 	channels = list("Cargo" = 1)
-
-/obj/item/device/encryptionkey/nuclear
-	channels = list("Nuclear" = 1)
-	origin_tech = "syndicate=3"
 
 /obj/item/device/encryptionkey/ert
 	name = "NanoTrasen ERT Radio Encryption Key"

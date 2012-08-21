@@ -1,94 +1,139 @@
 
 // fun if you want to typecast humans/monkeys/etc without writing long path-filled lines.
 /proc/ishuman(A)
-	return istype(A, /mob/living/carbon/human)
-
-/proc/isamorph(A)
-	return istype(A, /mob/living/carbon/amorph)
+	if(istype(A, /mob/living/carbon/human))
+		return 1
+	return 0
 
 /proc/ismonkey(A)
-	return istype(A, /mob/living/carbon/monkey)
+	if(A && istype(A, /mob/living/carbon/monkey))
+		return 1
+	return 0
 
 /proc/isbrain(A)
-	return istype(A, /mob/living/carbon/brain)
+	if(A && istype(A, /mob/living/carbon/brain))
+		return 1
+	return 0
 
 /proc/isalien(A)
-	return istype(A, /mob/living/carbon/alien)
+	if(istype(A, /mob/living/carbon/alien))
+		return 1
+	return 0
 
 /proc/isalienadult(A)
-	return istype(A, /mob/living/carbon/alien/humanoid)
+	if(istype(A, /mob/living/carbon/alien/humanoid))
+		return 1
+	return 0
 
 /proc/islarva(A)
-	return istype(A, /mob/living/carbon/alien/larva)
+	if(istype(A, /mob/living/carbon/alien/larva))
+		return 1
+	return 0
 
 /proc/ismetroid(A)
-	return istype(A, /mob/living/carbon/metroid)
+	if(istype(A, /mob/living/carbon/metroid))
+		return 1
+	return 0
 
 /proc/isrobot(A)
-	return istype(A, /mob/living/silicon/robot)
+	if(istype(A, /mob/living/silicon/robot))
+		return 1
+	return 0
 
 /proc/isanimal(A)
-	return istype(A, /mob/living/simple_animal)
+	if(istype(A, /mob/living/simple_animal))
+		return 1
+	return 0
 
 /proc/iscorgi(A)
-	return istype(A, /mob/living/simple_animal/corgi)
+	if(istype(A, /mob/living/simple_animal/corgi))
+		return 1
+	return 0
 
 /proc/iscrab(A)
-	return istype(A, /mob/living/simple_animal/crab)
+	if(istype(A, /mob/living/simple_animal/crab))
+		return 1
+	return 0
 
 /proc/iscat(A)
-	return istype(A, /mob/living/simple_animal/cat/)
+	if(istype(A, /mob/living/simple_animal/cat))
+		return 1
+	return 0
 
-/proc/istajaran(A)
-	return istype(A, /mob/living/carbon/human/tajaran)
+/proc/ismouse(A)
+	if(istype(A, /mob/living/simple_animal/mouse))
+		return 1
+	return 0
 
-/*proc/ishivebot(A)
-	return istype(A, /mob/living/silicon/hivebot)*/
+/proc/isbear(A)
+	if(istype(A, /mob/living/simple_animal/bear))
+		return 1
+	return 0
 
-/*proc/ishivemainframe(A)
-	return istype(A, /mob/living/silicon/hive_mainframe)*/
+/proc/iscarp(A)
+	if(istype(A, /mob/living/simple_animal/carp))
+		return 1
+	return 0
 
 /proc/isAI(A)
-	return istype(A, /mob/living/silicon/ai)
+	if(istype(A, /mob/living/silicon/ai))
+		return 1
+	return 0
 
 /proc/ispAI(A)
-	return istype(A, /mob/living/silicon/pai)
+	if(istype(A, /mob/living/silicon/pai))
+		return 1
+	return 0
 
 /proc/iscarbon(A)
-	return istype(A, /mob/living/carbon)
+	if(istype(A, /mob/living/carbon))
+		return 1
+	return 0
 
 /proc/issilicon(A)
-	return istype(A, /mob/living/silicon)
+	if(istype(A, /mob/living/silicon))
+		return 1
+	return 0
 
 /proc/isliving(A)
-	return istype(A, /mob/living)
+	if(istype(A, /mob/living))
+		return 1
+	return 0
 
 proc/isobserver(A)
-	return istype(A, /mob/dead/observer)
+	if(istype(A, /mob/dead/observer))
+		return 1
+	return 0
 
 proc/isorgan(A)
-	return istype(A, /datum/organ/external)
-
-proc/hasorgans(A)
-	return (ishuman(A) || ismonkey(A))
-
-
-
+	if(istype(A, /datum/organ/external))
+		return 1
+	return 0
 
 /proc/hsl2rgb(h, s, l)
 	return
 
+/proc/istajaran(A)
+	return istype(A, /mob/living/carbon/human/tajaran)
+
 
 /proc/check_zone(zone)
-	if(!zone)
-		return "chest"
+	if(!zone)	return "chest"
 	switch(zone)
 		if("eyes")
 			zone = "head"
 		if("mouth")
 			zone = "head"
-//		if("groin")
-//			zone = "chest"
+		if("l_hand")
+			zone = "l_arm"
+		if("r_hand")
+			zone = "r_arm"
+		if("l_foot")
+			zone = "l_leg"
+		if("r_foot")
+			zone = "r_leg"
+		if("groin")
+			zone = "chest"
 	return zone
 
 
@@ -105,7 +150,7 @@ proc/hasorgans(A)
 			if(4 to 6)	return "l_arm"
 			if(7 to 9)	return "r_arm"
 
-	if(prob(probability))	return zone
+	if(prob(probability * 0.75))	return zone
 	return "chest"
 
 
@@ -117,7 +162,7 @@ proc/hasorgans(A)
 	else
 		if (pr >= 100)
 			return n
-	var/te = html_decode(n)
+	var/te = n
 	var/t = ""
 	n = length(n)
 	var/p = null
@@ -128,67 +173,8 @@ proc/hasorgans(A)
 		else
 			t = text("[]*", t)
 		p++
-	return html_encode(t)
+	return t
 
-/*proc/NewStutter(phrase,stunned)
-	phrase = html_decode(phrase)
-
-	var/list/split_phrase = dd_text2list(phrase," ") //Split it up into words.
-
-	var/list/unstuttered_words = split_phrase.Copy()
-	var/i = rand(1,3)
-	if(stunned) i = split_phrase.len
-	for(,i > 0,i--) //Pick a few words to stutter on.
-
-		if (!unstuttered_words.len)
-			break
-		var/word = pick(unstuttered_words)
-		unstuttered_words -= word //Remove from unstuttered words so we don't stutter it again.
-		var/index = split_phrase.Find(word) //Find the word in the split phrase so we can replace it.
-
-		//Search for dipthongs (two letters that make one sound.)
-		var/first_sound = copytext(word,1,3)
-		var/first_letter = copytext(word,1,2)
-		if(lowertext(first_sound) in list("ch","th","sh"))
-			first_letter = first_sound
-
-		//Repeat the first letter to create a stutter.
-		var/rnum = rand(1,3)
-		switch(rnum)
-			if(1)
-				word = "[first_letter]-[word]"
-			if(2)
-				word = "[first_letter]-[first_letter]-[word]"
-			if(3)
-				word = "[first_letter]-[word]"
-
-		split_phrase[index] = word
-
-	return sanitize(dd_list2text(split_phrase," "))*/
-
-
-proc/slur(phrase)
-	phrase = html_decode(phrase)
-	var/leng=lentext(phrase)
-	var/counter=lentext(phrase)
-	var/newphrase=""
-	var/newletter=""
-	while(counter>=1)
-		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")	newletter="u"
-			if(lowertext(newletter)=="s")	newletter="ch"
-			if(lowertext(newletter)=="a")	newletter="ah"
-			if(lowertext(newletter)=="c")	newletter="k"
-		switch(rand(1,15))
-			if(1,3,5,8)	newletter="[lowertext(newletter)]"
-			if(2,4,6,15)	newletter="[uppertext(newletter)]"
-			if(7)	newletter+="'"
-			if(9,10)	newletter="<b>[newletter]</b>"
-			if(11,12)	newletter="<big>[newletter]</big>"
-			if(13)	newletter="<small>[newletter]</small>"
-		newphrase+="[newletter]";counter-=1
-	return newphrase
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -214,7 +200,7 @@ proc/slur(phrase)
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 
-proc/Gibberish(t, p)
+proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
 	for(var/i = 1, i <= length(t), i++)
@@ -276,43 +262,71 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/findname(msg)
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if (M.real_name == text("[msg]"))
 			return 1
 	return 0
 
 
 /mob/proc/abiotic(var/full_body = 0)
-	if(full_body && ((l_hand && !( l_hand.abstract )) || (r_hand && !( r_hand.abstract )) || (back || wear_mask)))
+	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
 		return 1
 
-	if((l_hand && !( l_hand.abstract )) || (r_hand && !( r_hand.abstract )))
-		return 1
-
-	return 0
-
-/mob/proc/abiotic2(var/full_body2 = 0)
-	if(full_body2 && ((l_hand && !( l_hand.abstract )) || (r_hand && !( r_hand.abstract )) || (back || wear_mask)))
-		return 1
-
-	if((l_hand && !( l_hand.abstract )) || (r_hand && !( r_hand.abstract )))
+	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
 		return 1
 
 	return 0
 
-/mob/proc/put_in_hands(var/obj/item/I) //A suprisingly useful proc.  Allows a simple way to place an object in a mob's hands, or, if they are full, on the ground below them.
-	if(!r_hand)
-		I.loc = src
-		r_hand = I
-		I.layer = 20
-	else if(!l_hand)
-		I.loc = src
-		l_hand = I
-		I.layer = 20
+//Triggered when F12 is pressed (Unless someone changed something in the DMF)
+/mob/verb/button_pressed_F12()
+	set name = "F12"
+	set hidden = 1
+
+	if(hud_used)
+		if(ishuman(src))
+			if(!src.client) return
+
+			if(hud_used.hud_shown)
+				hud_used.hud_shown = 0
+				if(src.hud_used.adding)
+					src.client.screen -= src.hud_used.adding
+				if(src.hud_used.other)
+					src.client.screen -= src.hud_used.other
+				if(src.hud_used.hotkeybuttons)
+					src.client.screen -= src.hud_used.hotkeybuttons
+				if(src.hud_used.item_action_list)
+					src.client.screen -= src.hud_used.item_action_list
+
+				//Due to some poor coding some things need special treatment:
+				//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
+				src.client.screen += src.hud_used.l_hand_hud_object	//we want the hands to be visible
+				src.client.screen += src.hud_used.r_hand_hud_object	//we want the hands to be visible
+				src.client.screen += src.hud_used.action_intent		//we want the intent swticher visible
+				src.hud_used.action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+
+				//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
+				src.client.screen -= src.zone_sel	//zone_sel is a mob variable for some reason.
+
+			else
+				hud_used.hud_shown = 1
+				if(src.hud_used.adding)
+					src.client.screen += src.hud_used.adding
+				if(src.hud_used.other && src.hud_used.inventory_shown)
+					src.client.screen += src.hud_used.other
+				if(src.hud_used.hotkeybuttons && !src.hud_used.hotkey_ui_hidden)
+					src.client.screen += src.hud_used.hotkeybuttons
+
+
+				src.hud_used.action_intent.screen_loc = ui_acti //Restore intent selection to the original position
+				src.client.screen += src.zone_sel				//This one is a special snowflake
+
+			hud_used.hidden_inventory_update()
+			hud_used.persistant_inventory_update()
+			update_action_buttons()
+		else
+			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
 	else
-		I.loc = get_turf(src)
-	update_clothing()
-
+		usr << "\red This mob type does not use a HUD."
 
 /mob/proc/is_player_active()
 	if(!src.client) return 0

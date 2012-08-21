@@ -58,7 +58,7 @@ MASS SPECTROMETER
 			M.invisibility = 0
 			spawn(2)
 				if(M)
-					M.invisibility = 2
+					M.invisibility = INVISIBILITY_LEVEL_TWO
 
 
 /obj/item/device/healthanalyzer
@@ -76,9 +76,24 @@ MASS SPECTROMETER
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1;
 
-/obj/item/device/healthanalyzer/proc/analyze_health_less_info(mob/living/carbon/M as mob, mob/user as mob)
+/obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
+	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
+		user << text("\red You try to analyze the floor's vitals!")
+		for(var/mob/O in viewers(M, null))
+			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
+		user.show_message(text("\blue Analyzing Results for The floor:\n\t Overall Status: Healthy"), 1)
+		user.show_message(text("\blue \t Damage Specifics: [0]-[0]-[0]-[0]"), 1)
+		user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
+		user.show_message("\blue Body Temperature: ???", 1)
+		return
+	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		usr << "\red You don't have the dexterity to do this!"
+		return
+	for(var/mob/O in viewers(M, null))
+		O.show_message(text("\red [] has analyzed []'s vitals!", user, M), 1)
+		//Foreach goto(67)
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
-	if((M.reagents && M.reagents.has_reagent("zombiepowder")) || (M.changeling && M.changeling.changeling_fakedeath))
+	if(M.status_flags & FAKEDEATH)
 		user.show_message(text("\blue Analyzing Results for []:\n\t Overall Status: []", M, "dead"), 1)
 		user.show_message(text("\blue \t Damage Specifics: []-[]-[]-[]", fake_oxy < 50 ? "\red [fake_oxy]" : fake_oxy , M.getToxLoss() > 50 ? "\red [M.getToxLoss()]" : M.getToxLoss(), M.getFireLoss() > 50 ? "\red[M.getFireLoss()]" : M.getFireLoss(), M.getBruteLoss() > 50 ? "\red[M.getBruteLoss()]" : M.getBruteLoss()), 1)
 	else
@@ -86,7 +101,9 @@ MASS SPECTROMETER
 		user.show_message(text("\blue \t Damage Specifics: []-[]-[]-[]", M.getOxyLoss() > 50 ? "\red [M.getOxyLoss()]" : M.getOxyLoss(), M.getToxLoss() > 50 ? "\red [M.getToxLoss()]" : M.getToxLoss(), M.getFireLoss() > 50 ? "\red[M.getFireLoss()]" : M.getFireLoss(), M.getBruteLoss() > 50 ? "\red[M.getBruteLoss()]" : M.getBruteLoss()), 1)
 	user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
 	user.show_message("\blue Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
-	if(mode == 1 && istype(M, /mob/living/carbon/human))
+	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
+		user.show_message("\blue Time of Death: [M.tod]")
+	if(istype(M, /mob/living/carbon/human) && mode == 1)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_organs(1,1)
 		user.show_message("\blue Localized Damage, Brute/Burn:",1)
@@ -96,7 +113,7 @@ MASS SPECTROMETER
 		else
 			user.show_message("\blue \t Limbs are OK.",1)
 
-	if((M.changeling && M.changeling.changeling_fakedeath) ||  (M.reagents && M.reagents.has_reagent("zombiepowder")))
+	if(M.status_flags & FAKEDEATH)
 		user.show_message(text("\blue [] | [] | [] | []", fake_oxy > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", M.getToxLoss() > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", M.getFireLoss() > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", M.getBruteLoss() > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
 	else
 		user.show_message(text("\blue [] | [] | [] | []", M.getOxyLoss() > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", M.getToxLoss() > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", M.getFireLoss() > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", M.getBruteLoss() > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
@@ -113,51 +130,6 @@ MASS SPECTROMETER
 		user.show_message(text("\red Severe brain damage detected. Subject likely to have mental retardation."), 1)
 	else if (M.getBrainLoss() >= 10)
 		user.show_message(text("\red Significant brain damage detected. Subject may have had a concussion."), 1)
-	if (M.virus2 || M.reagents.reagent_list.len > 0)
-		user.show_message(text("\red Foreign substances detected in bloodstream."), 1)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		for(var/name in H.organs)
-			var/datum/organ/external/e = H.organs[name]
-			var/limb = e.getDisplayName()
-			if(e.status & ORGAN_BROKEN)
-				if(((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg")) && (!(e.status & ORGAN_SPLINTED)))
-					user << "\red Unsecured fracture in subject [limb]. Splinting recommended for transport."
-		for(var/name in H.organs)
-			var/datum/organ/external/e = H.organs[name]
-			if(e.status & ORGAN_BROKEN)
-				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
-				break
-	if(ishuman(M))
-		if(M:vessel)
-			var/blood_volume = round(M:vessel.get_reagent_amount("blood"))
-			var/blood_percent =  blood_volume / 560
-			blood_percent *= 100
-			if(blood_volume <= 448)
-				user.show_message("\red <b>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl")
-			else if(blood_volume <= 336)
-				user.show_message("\red <b>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl")
-			else
-				user.show_message("\blue Blood Level Normal: [blood_percent]% [blood_volume]cl")
-	return
-
-/obj/item/device/healthanalyzer/attack(mob/M as mob, mob/user as mob)
-	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		user << text("\red You try to analyze the floor's vitals!")
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
-		user.show_message(text("\blue Analyzing Results for The floor:\n\t Overall Status: Healthy"), 1)
-		user.show_message(text("\blue \t Damage Specifics: [0]-[0]-[0]-[0]"), 1)
-		user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
-		user.show_message("\blue Body Temperature: ???", 1)
-		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
-		return
-	for(var/mob/O in viewers(M, null))
-		O.show_message(text("\red [] has analyzed []'s vitals!", user, M), 1)
-		//Foreach goto(67)
-	analyze_health_less_info(M, user)
 	src.add_fingerprint(user)
 	return
 
@@ -203,7 +175,7 @@ MASS SPECTROMETER
 	var/datum/gas_mixture/environment = location.return_air()
 
 	var/pressure = environment.return_pressure()
-	var/total_moles = environment.total_moles
+	var/total_moles = environment.total_moles()
 
 	user.show_message("\blue <B>Results:</B>", 1)
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)

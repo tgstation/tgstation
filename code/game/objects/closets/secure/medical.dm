@@ -1,4 +1,4 @@
-/obj/structure/closet/secure_closet/medicine
+/obj/structure/closet/secure_closet/medical1
 	name = "Medicine Closet"
 	desc = "Filled with medical junk."
 	icon_state = "medical1"
@@ -7,7 +7,7 @@
 	icon_opened = "medicalopen"
 	icon_broken = "medicalbroken"
 	icon_off = "medicaloff"
-	req_access = list(ACCESS_MEDICAL)
+	req_access = list(access_medical)
 
 
 	New()
@@ -18,15 +18,15 @@
 		new /obj/item/weapon/reagent_containers/dropper(src)
 		new /obj/item/weapon/reagent_containers/glass/beaker(src)
 		new /obj/item/weapon/reagent_containers/glass/beaker(src)
-		new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
-		new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
 		new /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline(src)
 		new /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline(src)
+		new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
+		new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
 		return
 
 
 
-/obj/structure/closet/secure_closet/anaesthetic
+/obj/structure/closet/secure_closet/medical2
 	name = "Anesthetic"
 	desc = "Used to knock people out."
 	icon_state = "medical1"
@@ -35,7 +35,7 @@
 	icon_opened = "medicalopen"
 	icon_broken = "medicalbroken"
 	icon_off = "medicaloff"
-	req_access = list(ACCESS_MEDICAL)
+	req_access = list(access_surgery)
 
 
 	New()
@@ -51,9 +51,9 @@
 
 
 
-/obj/structure/closet/secure_closet/doctor_personal
+/obj/structure/closet/secure_closet/medical3
 	name = "Medical Doctor's Locker"
-	req_access = list(ACCESS_MEDICAL)
+	req_access = list(access_surgery)
 	icon_state = "securemed1"
 	icon_closed = "securemed"
 	icon_locked = "securemed1"
@@ -64,14 +64,12 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/wardrobe/doctor(src)
-		//
-		var/obj/item/weapon/storage/backpack/medic/BPK = new /obj/item/weapon/storage/backpack/medic(src)
-		var/obj/item/weapon/storage/box/B = new(BPK)
-		new /obj/item/weapon/pen(B)
-		new /obj/item/device/pda/medical(src)
-		new /obj/item/weapon/storage/firstaid/adv(src)
-		new /obj/item/device/flashlight/pen(src)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/medic(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_med(src)
+		new /obj/item/clothing/under/rank/nursesuit (src)
+		new /obj/item/clothing/head/nursehat (src)
 		switch(pick("blue", "green", "purple"))
 			if ("blue")
 				new /obj/item/clothing/under/rank/medical/blue(src)
@@ -86,62 +84,19 @@
 				new /obj/item/clothing/under/rank/medical/green(src)
 			if ("purple")
 				new /obj/item/clothing/under/rank/medical/purple(src)
+		new /obj/item/clothing/under/rank/medical(src)
+		new /obj/item/clothing/suit/labcoat(src)
+		new /obj/item/clothing/shoes/white(src)
 //		new /obj/item/weapon/cartridge/medical(src)
 		new /obj/item/device/radio/headset/headset_med(src)
+		new /obj/item/weapon/storage/belt/medical(src)
 		return
 
-/obj/structure/closet/secure_closet/chemist_personal
-	name = "Chemist's Locker"
-	req_access = list(ACCESS_CHEMISTRY)
 
-	New()
-		..()
-		sleep(2)
-		new /obj/item/wardrobe/chemist(src)
-		//
-		var/obj/item/weapon/storage/backpack/medic/BPK = new /obj/item/weapon/storage/backpack/medic(src)
-		var/obj/item/weapon/storage/box/B = new(BPK)
-		new /obj/item/weapon/pen(B)
-		new /obj/item/device/radio/headset/headset_medsci(src)
-		new /obj/item/device/pda/toxins(src)
-		return
-
-/obj/structure/closet/secure_closet/genetics_personal
-	name = "Geneticist's Locker"
-	req_access = list(ACCESS_GENETICS)
-
-	New()
-		..()
-		sleep(2)
-		new /obj/item/wardrobe/geneticist(src)
-		//
-		var/obj/item/weapon/storage/backpack/medic/BPK = new /obj/item/weapon/storage/backpack/medic(src)
-		var/obj/item/weapon/storage/box/B = new(BPK)
-		new /obj/item/weapon/pen(B)
-		new /obj/item/device/pda/medical(src)
-		new /obj/item/device/flashlight/pen(src)
-		new /obj/item/device/radio/headset/headset_medsci(src)
-
-/obj/structure/closet/secure_closet/viro_personal
-	name = "Virologist's Locker"
-	req_access = list(ACCESS_VIROLOGY)
-
-	New()
-		..()
-		sleep(2)
-		new /obj/item/wardrobe/virologist(src)
-		//
-		var/obj/item/weapon/storage/backpack/medic/BPK = new /obj/item/weapon/storage/backpack/medic(src)
-		var/obj/item/weapon/storage/box/B = new(BPK)
-		new /obj/item/weapon/pen(B)
-		new /obj/item/device/flashlight/pen(src)
-		new /obj/item/device/pda/medical(src)
-		new /obj/item/clothing/mask/surgical(src)
-		new /obj/item/device/radio/headset/headset_med(src)
 
 /obj/structure/closet/secure_closet/CMO
 	name = "Chief Medical Officer's Locker"
-	req_access = list(ACCESS_CMO)
+	req_access = list(access_cmo)
 	icon_state = "cmosecure1"
 	icon_closed = "cmosecure"
 	icon_locked = "cmosecure1"
@@ -152,15 +107,17 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/wardrobe/cmo(src)
-		//
-		var/obj/item/weapon/storage/backpack/medic/BPK = new /obj/item/weapon/storage/backpack/medic(src)
-		var/obj/item/weapon/storage/box/B = new(BPK)
-		new /obj/item/weapon/pen(B)
-		new /obj/item/device/pda/heads/cmo(src)
-		new /obj/item/weapon/storage/firstaid/adv(src)
-		new /obj/item/device/flashlight/pen(src)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/medic(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_med(src)
+		new /obj/item/clothing/suit/bio_suit/cmo(src)
+		new /obj/item/clothing/head/bio_hood/cmo(src)
+		new /obj/item/clothing/under/rank/chief_medical_officer(src)
+		new /obj/item/clothing/suit/labcoat/cmo(src)
 		new /obj/item/weapon/cartridge/cmo(src)
+		new /obj/item/clothing/gloves/latex(src)
+		new /obj/item/clothing/shoes/brown	(src)
 		new /obj/item/device/radio/headset/heads/cmo(src)
 		new /obj/item/weapon/storage/belt/medical(src)
 		new /obj/item/device/flash(src)
@@ -170,7 +127,7 @@
 
 /obj/structure/closet/secure_closet/animal
 	name = "Animal Control"
-	req_access = list(ACCESS_MEDICAL)
+	req_access = list(access_surgery)
 
 
 	New()
@@ -193,7 +150,7 @@
 	icon_opened = "medicalopen"
 	icon_broken = "medicalbroken"
 	icon_off = "medicaloff"
-	req_access = list(ACCESS_MEDICAL)
+	req_access = list(access_chemistry)
 
 
 	New()

@@ -1,7 +1,7 @@
 /datum/game_mode/sandbox
 	name = "sandbox"
 	config_tag = "sandbox"
-	votable = 0
+	required_players = 0
 
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
@@ -11,9 +11,8 @@
 	world << "<B>Build your own station with the sandbox-panel command!</B>"
 
 /datum/game_mode/sandbox/pre_setup()
-	for(var/mob/M in world)
-		if(M.client)
-			M.CanBuild()
+	for(var/mob/M in player_list)
+		M.CanBuild()
 	return 1
 
 /datum/game_mode/sandbox/check_finished()

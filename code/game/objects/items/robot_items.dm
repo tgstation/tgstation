@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /**********************************************************************
 						Cyborg Spec Items
@@ -6,15 +6,13 @@
 //Might want to move this into several files later but for now it works here
 /obj/item/borg/stun
 	name = "Electrified Arm"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
 	attack(mob/M as mob, mob/living/silicon/robot/user as mob)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
-		log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-		message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
 		log_attack(" <font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
 		user.cell.charge -= 30
@@ -30,14 +28,14 @@
 
 /obj/item/borg/overdrive
 	name = "Overdrive"
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
 /**********************************************************************
 						HUD/SIGHT things
 ***********************************************************************/
 /obj/item/borg/sight
-	icon = 'decals.dmi'
+	icon = 'icons/obj/decals.dmi'
 	icon_state = "securearea"
 	var/sight_mode = null
 
@@ -87,137 +85,20 @@
 						Chemical things
 ***********************************************************************/
 
-/obj/item/weapon/reagent_containers/glass/bottle/robot
-	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50,100)
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	volume = 60
-	var/reagent = ""
-
-
-/obj/item/weapon/reagent_containers/glass/bottle/robot/inaprovaline
-	name = "internal inaprovaline bottle"
-	desc = "A small bottle. Contains inaprovaline - used to stabilize patients."
-	icon = 'chemical.dmi'
-	icon_state = "bottle16"
-	reagent = "inaprovaline"
-
-	New()
-		..()
-		reagents.add_reagent("inaprovaline", 60)
-		return
-
-
-/obj/item/weapon/reagent_containers/glass/bottle/robot/antitoxin
-	name = "internal anti-toxin bottle"
-	desc = "A small bottle of Anti-toxins. Counters poisons, and repairs damage, a wonder drug."
-	icon = 'chemical.dmi'
-	icon_state = "bottle17"
-	reagent = "anti_toxin"
-
-	New()
-		..()
-		reagents.add_reagent("anti_toxin", 60)
-		return
+//Moved to modules/chemistry
 
 
 
-/obj/item/weapon/reagent_containers/robodropper
-	name = "Industrial Dropper"
-	desc = "A larger dropper. Transfers 10 units."
-	icon = 'chemical.dmi'
-	icon_state = "dropper0"
-	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(1,2,3,4,5,6,7,8,9,10)
-	volume = 10
-	var/filled = 0
 
-	afterattack(obj/target, mob/user , flag)
-		if(!target.reagents) return
-
-		if(filled)
-
-			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "\red [target] is full."
-				return
-
-			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food)) //You can inject humans and food but you cant remove the shit.
-				user << "\red You cannot directly fill this object."
-				return
-
-
-			var/trans = 0
-
-			if(ismob(target))
-				if(istype(target , /mob/living/carbon/human))
-					var/mob/living/carbon/human/victim = target
-
-					var/obj/item/safe_thing = null
-					if( victim.wear_mask )
-						if ( victim.wear_mask.flags & MASKCOVERSEYES )
-							safe_thing = victim.wear_mask
-					if( victim.head )
-						if ( victim.head.flags & MASKCOVERSEYES )
-							safe_thing = victim.head
-					if(victim.glasses)
-						if ( !safe_thing )
-							safe_thing = victim.glasses
-
-					if(safe_thing)
-						if(!safe_thing.reagents)
-							safe_thing.create_reagents(100)
-						trans = src.reagents.trans_to(safe_thing, amount_per_transfer_from_this)
-
-						for(var/mob/O in viewers(world.view, user))
-							O.show_message(text("\red <B>[] tries to squirt something into []'s eyes, but fails!</B>", user, target), 1)
-						spawn(5)
-							src.reagents.reaction(safe_thing, TOUCH)
-
-
-						user << "\blue You transfer [trans] units of the solution."
-						if (src.reagents.total_volume<=0)
-							filled = 0
-							icon_state = "dropper[filled]"
-						return
-
-
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("\red <B>[] squirts something into []'s eyes!</B>", user, target), 1)
-				src.reagents.reaction(target, TOUCH)
-
-			trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			user << "\blue You transfer [trans] units of the solution."
-			if (src.reagents.total_volume<=0)
-				filled = 0
-				icon_state = "dropper[filled]"
-
-		else
-
-			if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
-				user << "\red You cannot directly remove reagents from [target]."
-				return
-
-			if(!target.reagents.total_volume)
-				user << "\red [target] is empty."
-				return
-
-			var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
-
-			user << "\blue You fill the dropper with [trans] units of the solution."
-
-			filled = 1
-			icon_state = "dropper[filled]"
-
-		return
 
 
 /**********************************************************************
-						Chemical things
+						RCD
 ***********************************************************************/
 /obj/item/borg/rcd
 	name = "robotic rapid-construction-device"
 	desc = "A device used to rapidly build walls/floor."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
@@ -238,12 +119,12 @@
 	proc/activate()
 //		spark_system.set_up(5, 0, src)
 //		src.spark_system.start()
-		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 
 	attack_self(mob/user as mob)
 		//Change the mode
-		playsound(src.loc, 'pop.ogg', 50, 0)
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 		if(mode == 1)
 			mode = 2
 			user << "Changed mode to 'Airlock'"
@@ -286,7 +167,7 @@
 					if(istype(A, /turf/simulated/floor))
 						if(!cell.use(90))	return
 						user << "Building Wall (3)..."
-						playsound(src.loc, 'click.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 20))
 							activate()
 							A:ReplaceWithWall()
@@ -296,7 +177,7 @@
 					if(istype(A, /turf/simulated/floor))
 						if(!cell.use(300))	return
 						user << "Building Airlock..."
-						playsound(src.loc, 'click.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							activate()
 							if(locate(/obj/machinery/door) in get_turf(src))	return
@@ -308,7 +189,7 @@
 					if(istype(A, /turf/simulated/wall))
 						if(!cell.use(150))	return
 						user << "Deconstructing Wall..."
-						playsound(src.loc, 'click.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 40))
 							activate()
 							A:ReplaceWithPlating()
@@ -319,7 +200,7 @@
 
 					if(istype(A, /turf/simulated/floor))
 						user << "Deconstructing Floor..."
-						playsound(src.loc, 'click.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							activate()
 							A:ReplaceWithSpace()
@@ -327,9 +208,9 @@
 
 					if(istype(A, /obj/machinery/door/airlock))
 						user << "Deconstructing Airlock..."
-						playsound(src.loc, 'click.ogg', 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
-							playsound(src.loc, 'click.ogg', 50, 1)
+							playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 							del(A)
 						return
 		return

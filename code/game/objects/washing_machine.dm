@@ -1,6 +1,6 @@
 /obj/machinery/washing_machine
 	name = "Washing Machine"
-	icon = 'washing_machine.dmi'
+	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_10"
 	density = 1
 	anchored = 1.0
@@ -40,6 +40,13 @@
 	for(var/atom/A in contents)
 		A.clean_blood()
 
+	//Tanning!
+	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
+		var/obj/item/stack/sheet/wetleather/WL = new(src)
+		WL.amount = HH.amount
+		del(HH)
+
+
 	if(crayon)
 		var/color
 		if(istype(crayon,/obj/item/toy/crayon))
@@ -60,6 +67,8 @@
 			var/new_shoe_name = ""
 			var/new_sheet_icon_state = ""
 			var/new_sheet_name = ""
+			var/new_softcap_icon_state = ""
+			var/new_softcap_name = ""
 			var/new_desc = "The colors are a bit dodgy."
 			for(var/T in typesof(/obj/item/clothing/under))
 				var/obj/item/clothing/under/J = new T
@@ -103,6 +112,16 @@
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				del(B)
+			for(var/T in typesof(/obj/item/clothing/head/soft))
+				var/obj/item/clothing/head/soft/H = new T
+				//world << "DEBUG: [color] == [J.color]"
+				if(color == H.color)
+					new_softcap_icon_state = H.icon_state
+					new_softcap_name = H.name
+					del(H)
+					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					break
+				del(H)
 			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
 				for(var/obj/item/clothing/under/J in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
@@ -133,6 +152,13 @@
 					B.color = color
 					B.name = new_sheet_name
 					B.desc = new_desc
+			if(new_softcap_icon_state && new_softcap_name)
+				for(var/obj/item/clothing/head/soft/H in contents)
+					//world << "DEBUG: YUP! FOUND IT!"
+					H.icon_state = new_softcap_icon_state
+					H.color = color
+					H.name = new_softcap_name
+					H.desc = new_desc
 		del(crayon)
 		crayon = null
 
@@ -180,7 +206,14 @@
 				state = 3
 		else
 			..()
-	else if(istype(W,/obj/item/clothing/under) || istype(W,/obj/item/clothing/mask) || istype(W,/obj/item/clothing/head) || istype(W,/obj/item/clothing/gloves) || istype(W,/obj/item/clothing/shoes) || istype(W,/obj/item/clothing/suit) || istype(W,/obj/item/weapon/bedsheet))
+	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
+		istype(W,/obj/item/clothing/under) || \
+		istype(W,/obj/item/clothing/mask) || \
+		istype(W,/obj/item/clothing/head) || \
+		istype(W,/obj/item/clothing/gloves) || \
+		istype(W,/obj/item/clothing/shoes) || \
+		istype(W,/obj/item/clothing/suit) || \
+		istype(W,/obj/item/weapon/bedsheet))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
 		if ( istype(W,/obj/item/clothing/suit/space ) )

@@ -1,6 +1,6 @@
 /obj/structure/lamarr
 	name = "Lab Cage"
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "labcage1"
 	desc = "A glass lab container for storing interesting creatures."
 	density = 1
@@ -55,7 +55,7 @@
 			playsound(src, "shatter", 70, 1)
 			Break()
 	else
-		playsound(src.loc, 'Glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	return
 
 /obj/structure/lamarr/update_icon()

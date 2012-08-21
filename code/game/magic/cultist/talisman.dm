@@ -12,6 +12,7 @@
 
 	attack_self(mob/living/user as mob)
 		if(iscultist(user))
+			var/delete = 1
 			switch(imbue)
 				if("newtome")
 					call(/obj/effect/rune/proc/tomesummon)()
@@ -26,7 +27,8 @@
 				if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
 					call(/obj/effect/rune/proc/teleport)(imbue)
 				if("communicate")
-					call(/obj/effect/rune/proc/communicate)()
+					//If the user cancels the talisman this var will be set to 0
+					delete = call(/obj/effect/rune/proc/communicate)()
 				if("deafen")
 					call(/obj/effect/rune/proc/deafen)()
 				if("blind")
@@ -38,7 +40,8 @@
 					supply()
 			user.take_organ_damage(5, 0)
 			if(src && src.imbue!="supply" && src.imbue!="runestun")
-				del(src)
+				if(delete)
+					del(src)
 			return
 		else
 			user << "You see strange symbols on the paper. Are they supposed to mean something?"

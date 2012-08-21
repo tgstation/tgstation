@@ -63,7 +63,7 @@
 		var/datum/gas_mixture/env = L.return_air()
 
 		//Remove gas from surrounding area
-		var/transfer_moles = gasefficency * env.total_moles
+		var/transfer_moles = gasefficency * env.total_moles()
 		var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
 		if (!removed)
@@ -88,8 +88,8 @@
 				explosion(loc,explosion_power,explosion_power*2,explosion_power*3,explosion_power*4,1)
 				del src
 
-		var/nitrogen_mod = abs((removed.nitrogen / removed.total_moles)) * NITROGEN_RETARDATION_FACTOR
-		var/oxygen = max(min(removed.oxygen / removed.total_moles - nitrogen_mod, 1), 0)
+		var/nitrogen_mod = abs((removed.nitrogen / removed.total_moles())) * NITROGEN_RETARDATION_FACTOR
+		var/oxygen = max(min(removed.oxygen / removed.total_moles() - nitrogen_mod, 1), 0)
 
 		var/temp_factor = 0
 		if(oxygen > 0.8)

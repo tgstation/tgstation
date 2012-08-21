@@ -1,30 +1,50 @@
 /mob/living/carbon/human/say(var/message)
-/*	if(src.mutantrace == "lizard")
-		if(copytext(message, 1, 2) != "*")
-			message = dd_replaceText(message, "s", stutter("ss"))*///Just here for reference. -- Erthilo
-	if(src.mutantrace == "metroid" && prob(5))
-		if(copytext(message, 1, 2) != "*")
-			if(copytext(message, 1, 2) == ";")
-				message = ";"
-			else
-				message = ""
-			message += "SKR"
-			var/imax = rand(5,20)
-			for(var/i = 0,i<imax,i++)
-				message += "E"
 
-	for(var/datum/disease/pierrot_throat/D in viruses)
-		var/list/temp_message = dd_text2list(message, " ")
-		var/list/pick_list = list()
-		for(var/i = 1, i <= temp_message.len, i++)
-			pick_list += i
-		for(var/i=1, ((i <= D.stage) && (i <= temp_message.len)), i++)
-			if(prob(5 * D.stage))
-				var/H = pick(pick_list)
-				if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
-				temp_message[H] = "HONK"
-				pick_list -= H
-			message = dd_list2text(temp_message, " ")
+	if (silent)
+		return
+
+	//Mimes dont speak! Changeling hivemind and emotes are allowed.
+	if(miming)
+		if(length(message) >= 2)
+			if(mind && mind.changeling)
+				if(copytext(message, 1, 2) != "*" && copytext(message, 1, 3) != ":g" && copytext(message, 1, 3) != ":G" && copytext(message, 1, 3) != ":ï")
+					return
+				else
+					return ..(message)
+
+		if(length(message) >= 1) //In case people forget the '*help' command, this will slow them the message and prevent people from saying one letter at a time
+			if (copytext(message, 1, 2) != "*")
+				return
+
+	if(src.dna)
+		if(src.dna.mutantrace == "lizard")
+			if(copytext(message, 1, 2) != "*")
+				message = dd_replacetext(message, "s", stutter("ss"))
+
+		if(src.dna.mutantrace == "metroid" && prob(5))
+			if(copytext(message, 1, 2) != "*")
+				if(copytext(message, 1, 2) == ";")
+					message = ";"
+				else
+					message = ""
+				message += "SKR"
+				var/imax = rand(5,20)
+				for(var/i = 0,i<imax,i++)
+					message += "E"
+
+	if(stat != 2)
+		for(var/datum/disease/pierrot_throat/D in viruses)
+			var/list/temp_message = dd_text2list(message, " ") //List each word in the message
+			var/list/pick_list = list()
+			for(var/i = 1, i <= temp_message.len, i++) //Create a second list for excluding words down the line
+				pick_list += i
+			for(var/i=1, ((i <= D.stage) && (i <= temp_message.len)), i++) //Loop for each stage of the disease or until we run out of words
+				if(prob(3 * D.stage)) //Stage 1: 3% Stage 2: 6% Stage 3: 9% Stage 4: 12%
+					var/H = pick(pick_list)
+					if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
+					temp_message[H] = "HONK"
+					pick_list -= H //Make sure that you dont HONK the same word twice
+				message = dd_list2text(temp_message, " ")
 
 	if(istype(src.wear_mask, /obj/item/clothing/mask/luchador))
 		if(copytext(message, 1, 2) != "*")
@@ -62,37 +82,37 @@
 				temp_message[H] = ninjaspeak(temp_message[H])
 				pick_list -= H
 			message = dd_list2text(temp_message, " ")
-			message = dd_replaceText(message, "o", "¤")
-			message = dd_replaceText(message, "p", "þ")
-			message = dd_replaceText(message, "l", "£")
-			message = dd_replaceText(message, "s", "§")
-			message = dd_replaceText(message, "u", "µ")
-			message = dd_replaceText(message, "b", "ß")
+			message = dd_replacetext(message, "o", "¤")
+			message = dd_replacetext(message, "p", "þ")
+			message = dd_replacetext(message, "l", "£")
+			message = dd_replacetext(message, "s", "§")
+			message = dd_replacetext(message, "u", "µ")
+			message = dd_replacetext(message, "b", "ß")
 			/*This text is hilarious but also absolutely retarded.
-			message = dd_replaceText(message, "l", "r")
-			message = dd_replaceText(message, "rr", "ru")
-			message = dd_replaceText(message, "v", "b")
-			message = dd_replaceText(message, "f", "hu")
-			message = dd_replaceText(message, "'t", "")
-			message = dd_replaceText(message, "t ", "to ")
-			message = dd_replaceText(message, " I ", " ai ")
-			message = dd_replaceText(message, "th", "z")
-			message = dd_replaceText(message, "ish", "isu")
-			message = dd_replaceText(message, "is", "izu")
-			message = dd_replaceText(message, "ziz", "zis")
-			message = dd_replaceText(message, "se", "su")
-			message = dd_replaceText(message, "br", "bur")
-			message = dd_replaceText(message, "ry", "ri")
-			message = dd_replaceText(message, "you", "yuu")
-			message = dd_replaceText(message, "ck", "cku")
-			message = dd_replaceText(message, "eu", "uu")
-			message = dd_replaceText(message, "ow", "au")
-			message = dd_replaceText(message, "are", "aa")
-			message = dd_replaceText(message, "ay", "ayu")
-			message = dd_replaceText(message, "ea", "ii")
-			message = dd_replaceText(message, "ch", "chi")
-			message = dd_replaceText(message, "than", "sen")
-			message = dd_replaceText(message, ".", "")
+			message = dd_replacetext(message, "l", "r")
+			message = dd_replacetext(message, "rr", "ru")
+			message = dd_replacetext(message, "v", "b")
+			message = dd_replacetext(message, "f", "hu")
+			message = dd_replacetext(message, "'t", "")
+			message = dd_replacetext(message, "t ", "to ")
+			message = dd_replacetext(message, " I ", " ai ")
+			message = dd_replacetext(message, "th", "z")
+			message = dd_replacetext(message, "ish", "isu")
+			message = dd_replacetext(message, "is", "izu")
+			message = dd_replacetext(message, "ziz", "zis")
+			message = dd_replacetext(message, "se", "su")
+			message = dd_replacetext(message, "br", "bur")
+			message = dd_replacetext(message, "ry", "ri")
+			message = dd_replacetext(message, "you", "yuu")
+			message = dd_replacetext(message, "ck", "cku")
+			message = dd_replacetext(message, "eu", "uu")
+			message = dd_replacetext(message, "ow", "au")
+			message = dd_replacetext(message, "are", "aa")
+			message = dd_replacetext(message, "ay", "ayu")
+			message = dd_replacetext(message, "ea", "ii")
+			message = dd_replacetext(message, "ch", "chi")
+			message = dd_replacetext(message, "than", "sen")
+			message = dd_replacetext(message, ".", "")
 			message = lowertext(message)
 			*/
 	..(message)
@@ -109,7 +129,5 @@
 	if (istype(other, /mob/living/carbon/brain))
 		return 1
 	if (istype(other, /mob/living/carbon/metroid))
-		return 1
-	if (istype(other, /mob/living/carbon/human/tajaran))
 		return 1
 	return ..()

@@ -1,8 +1,3 @@
-/atom/Del()
-	var/log_file = file("[time2text(world.timeofday, "deletions/DD-MM-YYYY.txt")]")
-	log_file << "[type] named [name] - [x],[y],[z]"
-	. = ..()
-
 /atom/proc/MouseDrop_T()
 	return
 
@@ -67,7 +62,7 @@
 	return
 
 /atom/proc/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/cleaner)) && !(istype(W, /obj/item/weapon/chemsprayer)) && !(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !istype(W, /obj/item/device/detective_scanner) && !(istype(W, /obj/item/weapon/reagent_containers/glass/rag)) )
+	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/reagent_containers/spray)) && !(istype(W, /obj/item/weapon/packageWrap)) && !istype(W, /obj/item/device/detective_scanner))
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O << "\red <B>[src] has been hit by [user] with [W]</B>"
@@ -109,34 +104,29 @@
 			fingerprintshidden = list()
 		//Fibers~
 		add_fibers(M)
-		//He has no prints!
-		if (MFINGERPRINTS in M.mutations)
-			if(fingerprintslast != M.key)
-				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
-				fingerprintslast = M.key
-			return 0
 		//Now, lets get to the dirty work.
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
 				H.dna = new /datum/dna(null)
+				H.dna.real_name = H.real_name
 		H.check_dna()
 		//Now, deal with gloves.
 		if (H.gloves && H.gloves != src)
 			if(fingerprintslast != H.key)
-				fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
+				fingerprintshidden += text("\[[]\](Wearing gloves). Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 				fingerprintslast = H.key
 			H.gloves.add_fingerprint(M)
 		//Deal with gloves the pass finger/palm prints.
 		if(H.gloves != src)
 			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
-			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex) && !istype(H.gloves, /obj/item/clothing/gloves/fingerless))
+			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
 		//More adminstuffz
 		if(fingerprintslast != H.key)
-			fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
+			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 			fingerprintslast = H.key
 		//Make the list if it does not exist.
 		if(!fingerprints)
@@ -169,7 +159,7 @@
 			else
 				fingerprints[P] = test_print
 		if(fingerprintslast != M.key)
-			fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
+			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key)
 			fingerprintslast = M.key
 	//Cleaning up shit.
 	if(fingerprints && !fingerprints.len)
@@ -182,6 +172,7 @@
 		return 0
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
+		M.dna.real_name = M.real_name
 	M.check_dna()
 	if (!( src.flags ) & FPRINT)
 		return 0
@@ -195,8 +186,8 @@
 		//if we haven't made our blood_overlay already
 		if( !O.blood_overlay )
 			var/icon/I = new /icon(O.icon, O.icon_state)
-			I.Blend(new /icon('blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
-			I.Blend(new /icon('blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+			I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
+			I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 
 			//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
 			for(var/obj/item/A in world)
@@ -222,8 +213,6 @@
 		for(var/obj/effect/decal/cleanable/blood/B in T.contents)
 			if(!B.blood_DNA[M.dna.unique_enzymes])
 				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			if(!B.virus2)
-				B.virus2 = M.virus2
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				B.viruses += newDisease
@@ -233,8 +222,6 @@
 		//if there isn't a blood decal already, make one.
 		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
 		newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-//		newblood.blood_owner = M
-		newblood.virus2 = M.virus2
 		for(var/datum/disease/D in M.viruses)
 			var/datum/disease/newDisease = new D.type
 			newblood.viruses += newDisease
@@ -248,6 +235,7 @@
 		if(blood_DNA[H.dna.unique_enzymes])
 			return 0 //already bloodied with this blood. Cannot add more.
 		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+		H.update_inv_gloves()	//handles bloody hands overlays and updating
 		return 1 //we applied blood to the item
 	return
 
@@ -271,7 +259,6 @@
 			var/turf/simulated/source1 = src
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
 			this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			this.OriginalMob = M.dna.original_name
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
@@ -296,46 +283,8 @@
 				this.viruses += newDisease
 				newDisease.holder = this
 
-
-
-/atom/proc/clean_blood()
-
-	if (!( src.flags ) & FPRINT)
-		return
-	if (blood_DNA)
-
-		//Cleaning blood off of mobs
-		if (istype (src, /mob/living/carbon))
-			var/mob/living/carbon/M = src
-			del(M.blood_DNA)
-			if(ishuman(src))
-				var/mob/living/carbon/human/H = src
-				H.bloody_hands = 0
-
-		//Cleaning blood off of items
-		else if (istype (src, /obj/item))
-			var/obj/item/O = src
-			del(O.blood_DNA)
-			if(O.blood_overlay)
-				O.overlays.Remove(O.blood_overlay)
-
-			if(istype(src, /obj/item/clothing/gloves))
-				var/obj/item/clothing/gloves/G = src
-				G.transfer_blood = 0
-
-		//Cleaning blood off of turfs
-		else if (istype(src, /turf/simulated))
-			var/turf/simulated/T = src
-			del(T.blood_DNA)
-			if(T.icon_old)
-				var/icon/I = new /icon(T.icon_old, T.icon_state)
-				T.icon = I
-			else
-				T.icon = initial(icon)
-
-	if(blood_DNA && istype(blood_DNA, /list) && !blood_DNA.len)
-		del(blood_DNA)
-	if(fingerprints && fingerprints.len)
+/atom/proc/clean_prints()
+	if(istype(fingerprints, /list))
 		//Smudge up dem prints some
 		for(var/P in fingerprints)
 			var/test_print = stars(fingerprints[P], rand(10,20))
@@ -343,11 +292,48 @@
 				fingerprints.Remove(P)
 			else
 				fingerprints[P] = test_print
-	if(fingerprints && !fingerprints.len)
-		del(fingerprints)
-	if(istype(src, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src
-		M.rebuild_appearance() // both clothes and hands need to be cleaned, so just rebuild all
+		if(!fingerprints.len)
+			del(fingerprints)
+
+/atom/proc/clean_blood()
+	clean_prints()
+
+	if(istype(blood_DNA, /list))
+		del(blood_DNA)
+		.=1
+
+	//Cleaning blood off of mobs
+	if(istype(src, /mob/living/carbon))
+		var/mob/living/carbon/M = src
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.gloves)
+				if(H.gloves.clean_blood())
+					H.update_inv_gloves(0)
+			else
+				if(H.bloody_hands)
+					H.bloody_hands = 0
+					H.update_inv_gloves(0)
+		M.update_icons()	//apply the now updated overlays to the mob
+
+	//Cleaning blood off of items
+	else if(istype(src, /obj/item))
+		var/obj/item/O = src
+		if(O.blood_overlay)
+			O.overlays.Remove(O.blood_overlay)
+
+		if(istype(src, /obj/item/clothing/gloves))
+			var/obj/item/clothing/gloves/G = src
+			G.transfer_blood = 0
+
+	//Cleaning blood off of turfs
+	else if(istype(src, /turf/simulated))
+		var/turf/simulated/T = src
+		if(T.icon_old)
+			var/icon/I = new /icon(T.icon_old, T.icon_state)
+			T.icon = I
+		else
+			T.icon = initial(icon)
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)
@@ -362,20 +348,17 @@
 
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
-	if(!istype(src,/obj/item/weapon/gun))
-		usr.last_target_click = world.time
 	if(usr.client.buildmode)
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
-
-	if(using_new_click_proc)  //TODO ERRORAGE (see message below)
-		return DblClickNew()
+//	if(using_new_click_proc)  //TODO ERRORAGE (see message below)
+//		return DblClickNew()
 	return DblClick(location, control, params)
 
 var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblClickNew() proc is being tested)
 
 /atom/proc/DblClickNew()
-
+	if(!usr)	return
 // TODO DOOHL: Intergrate params to new proc. Saved for another time because var/valid_place is a fucking brainfuck
 
 	//Spamclick server-overloading prevention delay... THING
@@ -435,12 +418,12 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		return
 
 	//Gets equipped item or used module of robots
-	var/obj/item/W = usr.equipped()
+	var/obj/item/W = usr.get_active_hand()
 
 	//Attack self
 	if (W == src && usr.stat == 0)
-		spawn (0)
-			W.attack_self(usr)
+//		spawn (0)		//causes runtimes under heavy lag
+		W.attack_self(usr)
 		return
 
 	//Attackby, attack_hand, afterattack, etc. can only be done once every 1 second, unless an object has the NODELAY or USEDELAY flags set
@@ -507,7 +490,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		var/in_range = in_range(src, human) || src.loc == human
 
 		if (in_range)
-			if ( !human.restrained() )
+			if (!( human.restrained() || human.lying ))
 				if (W)
 					attackby(W,human)
 					if (W)
@@ -665,8 +648,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				attack_animal(animal)
 
 /atom/DblClick(location, control, params) //TODO: DEFERRED: REWRITE
-//	world << "checking if this shit gets called at all"
-
+	if(!usr)	return
 
 	// ------- TIME SINCE LAST CLICK -------
 	if (world.time <= usr:lastDblClick+1)
@@ -676,49 +658,47 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 //		world << "atom.DblClick() on [src] by [usr] : src.type is [src.type]"
 		usr:lastDblClick = world.time
 
-	// ------- DIR CHANGING WHEN CLICKING (changes facting direction) ------
+	//Putting it here for now. It diverts stuff to the mech clicking procs. Putting it here stops us drilling items in our inventory Carn
+	if(istype(usr.loc,/obj/mecha))
+		if(usr.client && (src in usr.client.screen))
+			return
+		var/obj/mecha/Mech = usr.loc
+		Mech.click_action(src,usr)
+		return
 
-	if( usr && iscarbon(usr) && !usr.buckled )
+	// ------- DIR CHANGING WHEN CLICKING ------
+	if( iscarbon(usr) && !usr.buckled )
 		if( src.x && src.y && usr.x && usr.y )
 			var/dx = src.x - usr.x
 			var/dy = src.y - usr.y
 
-			if( dy > 0 && abs(dx) < dy ) //North
-				usr.dir = 1
-			if( dy < 0 && abs(dx) < abs(dy) ) //South
-				usr.dir = 2
-			if( dx > 0 && abs(dy) <= dx ) //East
-				usr.dir = 4
-			if( dx < 0 && abs(dy) <= abs(dx) ) //West
-				usr.dir = 8
-			if( dx == 0 && dy == 0 )
-				if(src.pixel_y > 16)
-					usr.dir = 1
-				if(src.pixel_y < -16)
-					usr.dir = 2
-				if(src.pixel_x > 16)
-					usr.dir = 4
-				if(src.pixel_x < -16)
-					usr.dir = 8
+			if(dy || dx)
+				if(abs(dx) < abs(dy))
+					if(dy > 0)	usr.dir = NORTH
+					else		usr.dir = SOUTH
+				else
+					if(dx > 0)	usr.dir = EAST
+					else		usr.dir = WEST
+			else
+				if(pixel_y > 16)		usr.dir = NORTH
+				else if(pixel_y < -16)	usr.dir = SOUTH
+				else if(pixel_x > 16)	usr.dir = EAST
+				else if(pixel_x < -16)	usr.dir = WEST
 
 
 
 
 	// ------- AI -------
-	if (istype(usr, /mob/living/silicon/ai))
+	else if (istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/ai = usr
 		if (ai.control_disabled)
 			return
 
 	// ------- CYBORG -------
-	if (istype (usr, /mob/living/silicon/robot))
+	else if (istype(usr, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/bot = usr
 		if (bot.lockcharge) return
 	..()
-
-
-
-
 
 
 	// ------- SHIFT-CLICK -------
@@ -752,7 +732,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			else
 				AICtrlClick(usr)
 			return
-			}
+		}
 
 		// ------- MIDDLE-CLICK -------
 
@@ -767,19 +747,22 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		return usr:throw_item(src)
 
 	// ------- ITEM IN HAND DEFINED -------
-	var/obj/item/W = usr.equipped()
-
+	var/obj/item/W = usr.get_active_hand()
+/*	Now handled by get_active_hand()
 	// ------- ROBOT -------
 	if(istype(usr, /mob/living/silicon/robot))
 		if(!isnull(usr:module_active))
 			W = usr:module_active
 		else
 			W = null
-
+*/
 	// ------- ATTACK SELF -------
 	if (W == src && usr.stat == 0)
-		spawn (0)
-			W.attack_self(usr)
+		W.attack_self(usr)
+		if(usr.hand)
+			usr.update_inv_l_hand()	//update in-hand overlays
+		else
+			usr.update_inv_r_hand()
 		return
 
 	// ------- PARALYSIS, STUN, WEAKENED, DEAD, (And not AI) -------
@@ -796,19 +779,15 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			return
 
 	// ------- 1 TILE AWAY -------
-	var/t5 = in_range(src, usr) || src.loc == usr
-
+	var/t5
 	// ------- AI CAN CLICK ANYTHING -------
-	if (istype(usr, /mob/living/silicon/ai))
+	if(istype(usr, /mob/living/silicon/ai))
 		t5 = 1
-
 	// ------- CYBORG CAN CLICK ANYTHING WHEN NOT HOLDING STUFF -------
-	if ((istype(usr, /mob/living/silicon/robot)) && W == null)
+	else if(istype(usr, /mob/living/silicon/robot) && !W)
 		t5 = 1
-
-	// ------- CLICKING ON ORGANS -------
-	if (istype(src, /datum/organ) && src in usr.contents)
-		return
+	else
+		t5 = in_range(src, usr) || src.loc == usr
 
 //	world << "according to dblclick(), t5 is [t5]"
 
@@ -831,6 +810,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			// ------- CLICKED OBJECT EXISTS IN GAME WORLD, DISTANCE FROM PERSON TO OBJECT IS 1 SQUARE OR THEY'RE ON THE SAME SQUARE -------
 
 			var/direct = get_dir(usr, src)
+			var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( usr.loc )
 			var/ok = 0
 			if ( (direct - 1) & direct)
 
@@ -862,12 +842,35 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 					var/check_1 = 0
 					var/check_2 = 0
-					check_1 = CanReachThrough(get_turf(usr), Step_1, src) && CanReachThrough(Step_1, get_turf(src), src)
+					if(step_to(D, Step_1))
+						check_1 = 1
+						for(var/obj/border_obstacle in Step_1)
+							if(border_obstacle.flags & ON_BORDER)
+								if(!border_obstacle.CheckExit(D, src))
+									check_1 = 0
+									// ------- YOU TRIED TO CLICK ON AN ITEM THROUGH A WINDOW (OR SIMILAR THING THAT LIMITS ON BORDERS) ON ONE OF THE DIRECITON TILES -------
+						for(var/obj/border_obstacle in get_turf(src))
+							if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
+								if(!border_obstacle.CanPass(D, D.loc, 1, 0))
+									// ------- YOU TRIED TO CLICK ON AN ITEM THROUGH A WINDOW (OR SIMILAR THING THAT LIMITS ON BORDERS) ON THE TILE YOU'RE ON -------
+									check_1 = 0
 
-					check_2 = CanReachThrough(get_turf(usr), Step_2, src) && CanReachThrough(Step_2, get_turf(src), src)
+					D.loc = usr.loc
+					if(step_to(D, Step_2))
+						check_2 = 1
 
-					ok = (check_1 || check_2)
+						for(var/obj/border_obstacle in Step_2)
+							if(border_obstacle.flags & ON_BORDER)
+								if(!border_obstacle.CheckExit(D, src))
+									check_2 = 0
+						for(var/obj/border_obstacle in get_turf(src))
+							if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
+								if(!border_obstacle.CanPass(D, D.loc, 1, 0))
+									check_2 = 0
 
+
+					if(check_1 || check_2)
+						ok = 1
 						// ------- YOU CAN REACH THE ITEM THROUGH AT LEAST ONE OF THE TWO DIRECTIONS. GOOD. -------
 
 					/*
@@ -880,16 +883,34 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					*/
 			else
 				// ------- OBJECT IS ON A CARDINAL TILE (NORTH, SOUTH, EAST OR WEST OR THE TILE YOU'RE ON) -------
-				ok = CanReachThrough(get_turf(usr), get_turf(src), src)
+				if(loc == usr.loc)
+					ok = 1
+					// ------- OBJECT IS ON THE SAME TILE AS YOU -------
+				else
+					ok = 1
+
+					//Now, check objects to block exit that are on the border
+					for(var/obj/border_obstacle in usr.loc)
+						if(border_obstacle.flags & ON_BORDER)
+							if(!border_obstacle.CheckExit(D, src))
+								ok = 0
+
+					//Next, check objects to block entry that are on the border
+					for(var/obj/border_obstacle in get_turf(src))
+						if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
+							if(!border_obstacle.CanPass(D, D.loc, 1, 0))
+								ok = 0
 				/*
 					See the previous More info, for... more info...
 				*/
 
+			del(D)
+			// ------- DUMMY OBJECT'S SERVED IT'S PURPOSE, IT'S REWARDED WITH A SWIFT DELETE -------
 			if (!( ok ))
 				// ------- TESTS ABOVE DETERMINED YOU CANNOT REACH THE TILE -------
 				return 0
 
-		if (!( usr.restrained() ))
+		if (!( usr.restrained() || (usr.lying && usr.buckled!=src) ))
 			// ------- YOU ARE NOT REASTRAINED -------
 
 			if (W)
@@ -903,22 +924,16 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				// ------- YOU DO NOT HAVE AN ITEM IN YOUR HAND -------
 				if (istype(usr, /mob/living/carbon/human))
 					// ------- YOU ARE HUMAN -------
-/*					if(usr.hand) // if he's using his left hand.
-						var/datum/organ/external/temp = usr:get_organ("l_hand")
-						if(temp.destroyed)
-							usr << "\blue You look at your stump."
-							return
-					else
-						var/datum/organ/external/temp = usr:get_organ("r_hand")
-						if(temp.destroyed)
-							usr << "\blue You look at your stump."
-							return*/
 					src.attack_hand(usr, usr.hand)
 				else
 					// ------- YOU ARE NOT HUMAN. WHAT ARE YOU - DETERMINED HERE AND PROPER ATTACK_MOBTYPE CALLED -------
 					if (istype(usr, /mob/living/carbon/monkey))
 						src.attack_paw(usr, usr.hand)
 					else if (istype(usr, /mob/living/carbon/alien/humanoid))
+						if(usr.m_intent == "walk" && istype(usr, /mob/living/carbon/alien/humanoid/hunter))
+							usr.m_intent = "run"
+							usr.hud_used.move_intent.icon_state = "running"
+							usr.update_icons()
 						src.attack_alien(usr, usr.hand)
 					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
 						src.attack_ai(usr, usr.hand)
@@ -990,9 +1005,9 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					usr:handle_regular_hud_updates()
 
 				var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( usr.loc )
-				A.icon = 'genetics.dmi'
+				A.icon = 'icons/effects/genetics.dmi'
 				A.icon_state = "eyelasers"
-				playsound(usr.loc, 'taser2.ogg', 75, 1)
+				playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 
 				A.firer = usr
 				A.def_zone = usr:get_organ_target()
@@ -1005,56 +1020,24 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 				usr.next_move = world.time + 6
 	return
-////////////////////////////////////////
-///IMPORTANT: CACHE FOR DUMMY OBJECTS///
-//Used to cut down on stupid deletions//
-////////////////////////////////////////
-var/list/DummyCache = list()
 
-/proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
+/atom/proc/ShiftClick(var/mob/M as mob)
 
-	var/obj/item/weapon/dummy/D = locate() in DummyCache
-	if(!D)
-		D = new /obj/item/weapon/dummy( srcturf )
-	else
-		DummyCache.Remove(D)
-		D.loc = srcturf
+	if(istype(M.machine, /obj/machinery/computer/security)) //No examining by looking through cameras
+		return
 
-	if(targetturf.density && targetturf != get_turf(target))
-		return 0
-
-	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle in srcturf)
-		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CheckExit(D, targetturf))
-				D.loc = null
-				DummyCache.Add(D)
-				return 0
-
-	//Next, check objects to block entry that are on the border
-	for(var/obj/border_obstacle in targetturf)
-		if((border_obstacle.flags & ON_BORDER) && (target != border_obstacle))
-			if(!border_obstacle.CanPass(D, srcturf, 1, 0))
-				D.loc = null
-				DummyCache.Add(D)
-				return 0
-
-	D.loc = null
-	DummyCache.Add(D)
-	return 1
-
-/atom/proc/CtrlClick(var/mob/M as mob)
+	//I dont think this was ever really a problem and it's only creating more bugs...
+//	if(( abs(src.x-M.x)<8 || abs(src.y-M.y)<8 ) && src.z == M.z ) //This should prevent non-observers to examine stuff from outside their view.
 	examine()
+
 	return
 
 /atom/proc/AltClick()
-	if(hascall(src,"pull"))
-		src:pull()
 
 	/* // NOT UNTIL I FIGURE OUT A GOOD WAY TO DO THIS SHIT
 	if((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 		if(!istype(src, /obj/item) && !istype(src, /mob) && !istype(src, /turf))
-			if(!usr.equipped())
+			if(!usr.get_active_hand())
 
 				var/liftable = 0
 				for(var/x in liftable_structures)
@@ -1067,11 +1050,7 @@ var/list/DummyCache = list()
 					add_fingerprint(usr)
 					var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(usr)
 					G.assailant = usr
-					if (usr.hand)
-						usr.l_hand = G
-					else
-						usr.r_hand = G
-					G.layer = 20
+					usr.put_in_active_hand(G)
 					G.structure = src
 					G.synch()
 
@@ -1084,7 +1063,7 @@ var/list/DummyCache = list()
 
 	return
 
-/atom/proc/ShiftClick()
+/atom/proc/CtrlClick()
 	if(hascall(src,"pull"))
 		src:pull()
 	return
@@ -1134,32 +1113,95 @@ var/list/DummyCache = list()
 		var/mob/living/carbon/U = M
 		U.swap_hand()
 
+
+/atom/proc/get_global_map_pos()
+	if(!islist(global_map) || isemptylist(global_map)) return
+	var/cur_x = null
+	var/cur_y = null
+	var/list/y_arr = null
+	for(cur_x=1,cur_x<=global_map.len,cur_x++)
+		y_arr = global_map[cur_x]
+		cur_y = y_arr.Find(src.z)
+		if(cur_y)
+			break
+//	world << "X = [cur_x]; Y = [cur_y]"
+	if(cur_x && cur_y)
+		return list("x"=cur_x,"y"=cur_y)
+	else
+		return 0
+
+/atom/proc/checkpass(passflag)
+	return pass_flags&passflag
+
+
 //Could not find object proc defines and this could almost be an atom level one.
 
 /obj/proc/process()
 	processing_objects.Remove(src)
 	return 0
 
-// Show a message to all mobs in sight of this one
-// This would be for visible actions by the src mob
-// message is the message output to anyone who can see e.g. "[src] does something!"
-// self_message (optional) is what the src mob sees  e.g. "You do something!"
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/mob/visible_message(var/message, var/self_message, var/blind_message)
-	for(var/mob/M in viewers(src))
-		var/msg = message
-		if(self_message && M==src)
-			msg = self_message
-		M.show_message( msg, 1, blind_message, 2)
+/*Really why was this in the click proc of all the places you could put it
+					if (usr:a_intent == "help")
+						// ------- YOU HAVE THE HELP INTENT SELECTED -------
+						if(istype(src, /mob/living/carbon))
+							// ------- YOUR TARGET IS LIVING CARBON CREATURE (NOT AI OR CYBORG OR SIMPLE ANIMAL) -------
+							var/mob/living/carbon/C = src
+							if(HEAL in usr:mutations)
+								// ------- YOU ARE HUMAN, WITH THE HELP INTENT TARGETING A HUMAN AND HAVE THE 'HEAT' GENETIC MUTATION -------
 
-// Show a message to all mobs in sight of this atom
-// Use for objects performing visible actions
-// message is output to anyone who can see, e.g. "The [src] does something!"
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(var/message, var/blind_message)
-	for(var/mob/M in viewers(src))
-		M.show_message( message, 1, blind_message, 2)
+								if(C.stat != 2)
+									// ------- THE PERSON YOU'RE TOUCHING IS NOT DEAD -------
+
+									var/t_him = "it"
+									if (src.gender == MALE)
+										t_him = "his"
+									else if (src.gender == FEMALE)
+										t_him = "her"
+									var/u_him = "it"
+									if (usr.gender == MALE)
+										t_him = "him"
+									else if (usr.gender == FEMALE)
+										t_him = "her"
+
+									if(src != usr)
+										usr.visible_message( \
+										"\blue <i>[usr] places [u_him] palms on [src], healing [t_him]!</i>", \
+										"\blue You place your palms on [src] and heal [t_him].", \
+										)
+									else
+										usr.visible_message( \
+										"\blue <i>[usr] places [u_him] palms on [u_him]self and heals.</i>", \
+										"\blue You place your palms on yourself and heal.", \
+										)
+
+									C.adjustOxyLoss(-25)
+									C.adjustToxLoss(-25)
+
+									if(istype(C, /mob/living/carbon/human))
+										// ------- YOUR TARGET IS HUMAN -------
+										var/mob/living/carbon/human/H = C
+										var/datum/organ/external/affecting = H.get_organ(check_zone(usr:zone_sel:selecting))
+										if(affecting && affecting.heal_damage(25, 25))
+											H.UpdateDamageIcon()
+									else
+										C.heal_organ_damage(25, 25)
+									C.adjustCloneLoss(-25)
+									C.stunned = max(0, C.stunned-5)
+									C.paralysis = max(0, C.paralysis-5)
+									C.stuttering = max(0, C.stuttering-5)
+									C.drowsyness = max(0, C.drowsyness-5)
+									C.weakened = max(0, C.weakened-5)
+									usr:nutrition -= rand(1,10)
+									usr.next_move = world.time + 6
+								else
+									// ------- PERSON YOU'RE TOUCHING IS ALREADY DEAD -------
+									usr << "\red [src] is dead and can't be healed."
+								return
+
+					// ------- IF YOU DON'T HAVE THE SILLY ABILITY ABOVE OR FAIL ON ANY OTHER CHECK, THEN YOU'RE CLICKING ON SOMETHING WITH AN EMPTY HAND. ATTACK_HAND IT IS THEN -------
+*/
+
 
 
 

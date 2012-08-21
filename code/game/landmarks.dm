@@ -61,10 +61,6 @@
 		xeno_spawn += loc
 		del(src)
 
-	if(name == "emcloset")
-		emclosets += loc
-		del(src)
-
 	return 1
 
 /obj/effect/landmark/start/New()

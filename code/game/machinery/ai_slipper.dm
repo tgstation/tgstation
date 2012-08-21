@@ -1,6 +1,6 @@
 /obj/machinery/ai_slipper
 	name = "AI Liquid Dispenser"
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
 	layer = 3
 	anchored = 1.0
@@ -11,7 +11,7 @@
 	var/cooldown_time = 0
 	var/cooldown_timeleft = 0
 	var/cooldown_on = 0
-	req_access = list(ACCESS_AI_UPLOAD)
+	req_access = list(access_ai_upload)
 
 /obj/machinery/ai_slipper/power_change()
 	if(stat & BROKEN)

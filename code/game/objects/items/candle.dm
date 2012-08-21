@@ -5,9 +5,10 @@
 /obj/item/candle
 	name = "red candle"
 	desc = "a candle"
-	icon = 'candle.dmi'
+	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 	item_state = "candle1"
+	w_class = 1
 
 	var/wax = 200
 	var/lit = 0
@@ -51,7 +52,7 @@
 			//src.damtype = "fire"
 			for(var/mob/O in viewers(usr, null))
 				O.show_message(flavor_text, 1)
-			ul_SetLuminosity(CANDLE_LUM, CANDLE_LUM -2, 0)
+			sd_SetLuminosity(CANDLE_LUM)
 			processing_objects.Add(src)
 
 
@@ -74,53 +75,17 @@
 		if(lit)
 			lit = 0
 			update_icon()
-			ul_SetLuminosity(0)
-			user.ul_SetLuminosity(user.LuminosityRed - CANDLE_LUM, user.LuminosityGreen - (CANDLE_LUM - 2), user.LuminosityBlue)
+			sd_SetLuminosity(0)
+			user.total_luminosity -= CANDLE_LUM
 
 
 	pickup(mob/user)
 		if(lit)
-			ul_SetLuminosity(0)
-			user.ul_SetLuminosity(user.LuminosityRed + CANDLE_LUM, user.LuminosityGreen + (CANDLE_LUM - 2), user.LuminosityBlue)
+			src.sd_SetLuminosity(0)
+			user.total_luminosity += CANDLE_LUM
+
 
 	dropped(mob/user)
 		if(lit)
-			user.ul_SetLuminosity(user.LuminosityRed - CANDLE_LUM, user.LuminosityGreen - (CANDLE_LUM - 2), user.LuminosityBlue)
-			src.ul_SetLuminosity(CANDLE_LUM, CANDLE_LUM, 0)
-
-
-
-///////////////
-//CANDLE PACK//
-///////////////
-/obj/item/weapon/candlepack
-	name = "Candle pack"
-	//desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
-	icon = 'candle.dmi'
-	icon_state = "pack5"
-	item_state = "pack5"
-	w_class = 1
-	throwforce = 2
-	var/candlecount = 5
-	flags = TABLEPASS
-	slot_flags = SLOT_BELT
-
-
-/obj/item/weapon/candlepack/update_icon()
-	src.icon_state = text("pack[]", src.candlecount)
-	src.desc = text("There are [] candles left!", src.candlecount)
-	return
-
-/obj/item/weapon/candlepack/attack_hand(mob/user as mob)
-	if(user.r_hand == src || user.l_hand == src)
-		if(src.candlecount == 0)
-			//user << "\red You're out of cigs, shit! How you gonna get through the rest of the day..."
-			return
-		else
-			src.candlecount--
-			var/obj/item/candle/W = new /obj/item/candle(user)
-			user.put_in_hand(W)
-	else
-		return ..()
-	src.update_icon()
-	return
+			user.total_luminosity -= CANDLE_LUM
+			src.sd_SetLuminosity(CANDLE_LUM)

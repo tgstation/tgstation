@@ -1,41 +1,23 @@
+#define AI_CAMERA_LUMINOSITY 6
+
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names
 
 	var/pickedName = null
 	while(!pickedName)
 		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in world)
+		for (var/mob/living/silicon/ai/A in mob_list)
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
 
-	networks = list("SS13",
-					"Medbay",
-					"Research",
-					"Engineering",
-					"Command",
-					"Singularity",
-					"Tcomsat",
-					"Solars",
-					"Security",
-					"Cargo",
-					"Bomb Testing",
-					"Research",
-					"Medbay",
-					"Atmospherics",
-					"Mess Hall",
-					"Arrivals",
-					"Singularity",
-					"Arrivals",
-					"Mine")
-
 	real_name = pickedName
 	name = real_name
-	original_name = real_name
 	anchored = 1
 	canmove = 0
 	loc = loc
-	holo_icon = getHologramIcon(icon('AI.dmi',"holo1"))
+
+	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 
 	proc_holder_list = new()
 
@@ -43,12 +25,20 @@
 		if (istype(L, /datum/ai_laws))
 			laws = L
 	else
-		laws = new /datum/ai_laws/nanotrasen
+		laws = new /datum/ai_laws/asimov
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 
-	if (istype(loc, /turf)) //If you add a verb here, make sure to add it to transform_procs.dm too.
-		verbs += AI_VERB_LIST
+	aiPDA = new/obj/item/device/pda/ai(src)
+	aiPDA.owner = name
+	aiPDA.ownjob = "AI"
+	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
+
+	if (istype(loc, /turf))
+		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
+		/mob/living/silicon/ai/proc/ai_camera_list, /mob/living/silicon/ai/proc/ai_network_change, \
+		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
+		/mob/living/silicon/ai/proc/toggle_camera_light)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -60,56 +50,18 @@
 				B.brainmob.mind.transfer_to(src)
 
 			src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
-			src << "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>"
+			src << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
 			src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
-			src << "To use something, simply double-click it."
-			src << "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI."
-			src << "Remember to <b>adjust your camera network</b> if you are having difficulty navigating the camera networks with the arrow keys or clicking on certain objects.<br>"
-
+			src << "To use something, simply click on it."
+			src << "Use say :b to speak to your cyborgs through binary."
 			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
 				show_laws()
 				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
-				src << "<br><b><font color=red>IMPORTANT GAMEPLAY ASPECTS:</font></b>"
-				src << "1.) Act like an AI.  If someone is breaking into your upload, say something like \"Alert.  Unauthorised Access Detected: AI Upload.\" not \"Help! Urist is trying to subvert me!\""
-				src << "2.) Do not watch the traitor like a hawk alerting the station to his/her every move.  This relates to 1."
-				src << "3.) You are theoretically omniscient, but you should not be Beepsky 5000, laying down the law left and right.  That is security's job.  Instead, try to keep the station productive and effective.  (Feel free to report the location of major violence and crimes and all that, just do not be the evil thing looking over peoples shoulders)"
-				src << "<br>We want everyone to have a good time, so we, the admins, will try to correct you if you stray from these rules.  Just try to keep it sensible."
+
 			job = "AI"
 
-			spawn(0)
-				ainame(src)
-
-	if(src.mind)
-		ticker.mode.remove_revolutionary(src.mind)
-
-	if(client)
-		for(var/obj/effect/rune/rune in world)
-			var/image/blood = image('blood.dmi', loc = rune, icon_state = "floor[rand(1,7)]")
-			blood.override = 1
-			client.images += blood
-
+	add_to_mob_list(src)
 	return
-
-/mob/living/silicon/ai/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench))
-		if(anchored)
-			user.visible_message("\blue [user] starts to unbolt [src] from the plating...")
-			if(!do_after(user,40))
-				user.visible_message("\blue [user] decides not to unbolt [src]")
-				return
-			user.visible_message("\blue [user] finishes unfastening [src]")
-			anchored = 0
-			return
-		else
-			user.visible_message("\blue [user] starts to bolt [src] to the plating...")
-			if(!do_after(user,40))
-				user.visible_message("\blue [user] decides not to bolt [src]")
-				return
-			user.visible_message("\blue [user] finishes fastening down [src]")
-			anchored = 1
-			return
-	else
-		return ..()
 
 
 /mob/living/silicon/ai/verb/pick_icon()
@@ -119,46 +71,23 @@
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = ""
-	var/list/icons = list("Blue", "Monochrome", "Rainbow", "Inverted", "Firewall", "Green", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Red", "Static")
-	if (src.name == "B.A.N.N.E.D." && src.ckey == "spaceman96")
-		icons += "B.A.N.N.E.D."
-	if (src.name == "M00X-BC" && src.ckey == "searif")
-		icons += "M00X-BC"
-	icontype = input("Please, select a display!", "AI", null/*, null*/) in icons
-	if(icontype == "Blue")
-		icon_state = "ai"
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static")
+	if(icontype == "Clown")
+		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
 		icon_state = "ai-mono"
-	else if(icontype == "Rainbow")
-		icon_state = "ai-clown"
+	else if(icontype == "Blue")
+		icon_state = "ai"
 	else if(icontype == "Inverted")
 		icon_state = "ai-u"
 	else if(icontype == "Firewall")
 		icon_state = "ai-magma"
 	else if(icontype == "Green")
 		icon_state = "ai-wierd"
-	else if(icontype == "Text")
-		icon_state = "ai-text"
-	else if(icontype == "Smiley")
-		icon_state = "ai-smiley"
-	else if(icontype == "Angry")
-		icon_state = "ai-angryface"
-	else if(icontype == "Dorf")
-		icon_state = "ai-dorf"
-	else if(icontype == "Bliss")
-		icon_state = "ai-bliss"
-	else if(icontype == "B.A.N.N.E.D.")
-		icon_state = "ai-banned"
-	else if(icontype == "M00X-BC")
-		icon_state = "ai-searif"
 	else if(icontype == "Red")
 		icon_state = "ai-malf"
 	else if(icontype == "Static")
 		icon_state = "ai-static"
-	else//(icontype == "Matrix")
-		icon_state = "ai-matrix"
-
 	//else
 			//usr <<"You can only change your display once!"
 			//return
@@ -223,12 +152,14 @@
 /mob/living/silicon/ai/proc/ai_roster()
 	set category = "AI Commands"
 	set name = "Show Crew Manifest"
-
 	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
 
+	var/list/L = list()
 	for (var/datum/data/record/t in data_core.general)
-		dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
-
+		var/R = t.fields["name"] + " - " + t.fields["rank"]
+		L += R
+	for(var/R in sortList(L))
+		dat += "[R]<br>"
 	dat += "</body></html>"
 
 	src << browse(dat, "window=airoster")
@@ -268,7 +199,8 @@
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
-	flick("flash", flash)
+	if(!blinded)
+		flick("flash", flash)
 
 	switch(severity)
 		if(1.0)
@@ -339,12 +271,12 @@
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
 		if(A && target)
 
-			A:cameraFollow = target
+			A.cameraFollow = target
 			A << text("Now tracking [] on camera.", target.name)
 			if (usr.machine == null)
 				usr.machine = usr
 
-			while (usr:cameraFollow == target)
+			while (src.cameraFollow == target)
 				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
 				sleep(40)
 				continue
@@ -388,7 +320,7 @@
 		else //harm
 			var/damage = rand(10, 20)
 			if (prob(90))
-				playsound(loc, 'slash.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
@@ -397,7 +329,7 @@
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				playsound(loc, 'slashmiss.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
@@ -417,66 +349,37 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
+		if(M.attack_sound)
+			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
+		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		updatehealth()
 
+/mob/living/silicon/ai/reset_view(atom/A)
+	if(current)
+		current.sd_SetLuminosity(0)
+	if(istype(A,/obj/machinery/camera))
+		current = A
+	..()
+	if(istype(A,/obj/machinery/camera))
+		A.sd_SetLuminosity(camera_light_on * AI_CAMERA_LUMINOSITY)
 
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
-	usr:cameraFollow = null
-	if (!C)
+
+	src.cameraFollow = null
+	if (!C || stat == 2 || !C.status || C.network != network)
 		machine = null
 		reset_view(null)
 		return 0
-	if (stat == 2 || !C.status || !(C.network in src.networks) ) return 0
 
 	// ok, we're alive, camera is good and in our network...
-
-	if(client.eye == eyeobj)
-		eyeobj.loc = C.loc
-		cameranet.visibility(eyeobj)
-	else
-		machine = src
-		src:current = C
-		reset_view(C)
-	return 1
-
-/mob/living/silicon/ai/proc/triggerUnmarkedAlarm(var/class, area/A, var/O)
-	if(stat == 2) // stat = 2 = dead AI
-		return 1
-	var/obj/machinery/camera/C = null
-	var/list/CL = null
-	var/alarmtext = ""
-	if(class == "AirlockHacking") // In case more unmarked alerts would be added eventually;
-		alarmtext = "--- Unauthorized remote access detected"
-	if (O && istype(O, /list))
-		CL = O
-		if (CL.len == 1)
-			C = CL[1]
-	else if (O && istype(O, /obj/machinery/camera))
-		C = O
-	if (A)
-		alarmtext += " in " + A.name
-		if (O)
-			if (C && C.status)
-				alarmtext += text("! (<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>)", src, C, C.c_tag)
-			else if (CL && CL.len)
-				var/foo = 0
-				var/dat2 = ""
-				for (var/obj/machinery/camera/I in CL)
-					dat2 += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (!foo) ? "" : " | ", src, I, I.c_tag)
-					foo = 1
-				alarmtext += text("! ([])", dat2)
-			else
-				alarmtext += "! (No Camera)"
-		else
-			alarmtext += "! (No Camera)"
-	else
-		alarmtext += "!"
-	src << alarmtext
+	machine = src
+	reset_view(C)
 	return 1
 
 /mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
@@ -501,12 +404,12 @@
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	if (O)
 		if (C && C.status)
-			src << text("--- [] alarm detected in []! (<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>)", class, A.name, src, C, C.c_tag)
+			src << "--- [class] alarm detected in [A.name]! (<A HREF=?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>)"
 		else if (CL && CL.len)
 			var/foo = 0
 			var/dat2 = ""
 			for (var/obj/machinery/camera/I in CL)
-				dat2 += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (!foo) ? "" : " | ", src, I, I.c_tag)
+				dat2 += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (!foo) ? "" : " | ", src, I, I.c_tag)	//I'm not fixing this shit...
 				foo = 1
 			src << text ("--- [] alarm detected in []! ([])", class, A.name, dat2)
 		else
@@ -538,24 +441,24 @@
 	set name = "Cancel Camera View"
 	reset_view(null)
 	machine = null
-	src:cameraFollow = null
+	src.cameraFollow = null
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
 //Addition by Mord_Sith to define AI's network change ability
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
-	set name = "Jump to Camera Network"
+	set name = "Change Camera Network"
 	reset_view(null)
 	machine = null
-	src:cameraFollow = null
+	src.cameraFollow = null
 	var/cameralist[0]
 
 	if(usr.stat == 2)
 		usr << "You can't change your camera network because you are dead!"
 		return
 
-	for (var/obj/machinery/camera/C in world)
+	for (var/obj/machinery/camera/C in Cameras)
 		if(!C.status)
 			continue
 		if(C.network == "AI Satellite")
@@ -565,23 +468,14 @@
 					if (mind == M)
 						cameralist[C.network] = C.network
 		else
-			if(C.network != "CREED" && C.network != "thunder" && C.network != "Prison" )
+			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison")
 				cameralist[C.network] = C.network
 
-	var/newnet = input(usr, "Which network would you like to view?") as null|anything in cameralist
-
-	cameralist = new/list
-	for(var/obj/machinery/camera/C in world)
-		if(C.network == newnet)
-			cameralist.Add(C)
-
-	if(length(cameralist))
-		switchCamera( pick(cameralist) )
-
-	src << "\blue Jumped to [newnet] camera network."
+	network = input(usr, "Which network would you like to view?") as null|anything in cameralist
+	if(isnull(network))
+		network = initial(network) // If nothing is selected, default to SS13 (or the initial network)
+	src << "\blue Switched to [network] camera network."
 //End of code by Mord_Sith
-//cael - with the multiple onstation networks all linked together, changing networks is legacy functionality
-//so i recycled it to instantly jump to any network
 
 
 /mob/living/silicon/ai/proc/choose_modules()
@@ -623,9 +517,9 @@
 			del(holo_icon)
 			switch(input)
 				if("default")
-					holo_icon = getHologramIcon(icon('AI.dmi',"holo1"))
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 				if("floating face")
-					holo_icon = getHologramIcon(icon('AI.dmi',"holo2"))
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo2"))
 	return
 
 /mob/living/silicon/ai/proc/corereturn()
@@ -637,3 +531,18 @@
 		src << "\blue You are already in your Main Core."
 		return
 	apc.malfvacate()
+
+//Toggles the luminosity and applies it by re-entereing the camera.
+/mob/living/silicon/ai/proc/toggle_camera_light()
+	set name = "Toggle camera light"
+	set desc = "Toggles the light on the camera the AI is looking through."
+	set category = "AI Commands"
+
+	if(!current)
+		usr << "\red You are not looking through a camera right now."
+		return
+	camera_light_on = !camera_light_on
+	reset_view(current)
+
+
+#undef AI_CAMERA_LUMINOSITY

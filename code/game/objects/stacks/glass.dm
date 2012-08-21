@@ -17,16 +17,11 @@ SHARDS
 		var/obj/item/weapon/cable_coil/CC = W
 		if(CC.amount < 5)
 			user << "\b There is not enough wire in this coil. You need 5 lengths."
+			return
 		CC.use(5)
-		src.use(1)
 		user << "\blue You attach wire to the [name]."
-		new/obj/item/stack/light_w(user.loc)
-		if(CC.amount <= 0)
-			user.u_equip(CC)
-			del(CC)
-		if(src.amount <= 0)
-			user.u_equip(src)
-			del(src)
+		new /obj/item/stack/light_w(user.loc)
+		src.use(1)
 	else if( istype(W, /obj/item/stack/rods) )
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
@@ -38,7 +33,7 @@ SHARDS
 		var/replace = (user.get_inactive_hand()==G)
 		G.use(1)
 		if (!G && !RG && replace)
-			user.put_in_hand(RG)
+			user.put_in_hands(RG)
 	else
 		return ..()
 
@@ -67,14 +62,16 @@ SHARDS
 					user << "\red Can't let you do that."
 					return 1
 
-			var/dir_to_set = NORTH
-			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == SOUTH)
-					dir_to_set = EAST
-				if (WT.dir == WEST)
-					dir_to_set = SOUTH
-				if (WT.dir == NORTH)
-					dir_to_set = WEST
+			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
+			var/dir_to_set = 2
+			for(var/direction in list( user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270) ))
+				var/found = 0
+				for(var/obj/structure/window/WT in user.loc)
+					if(WT.dir == direction)
+						found = 1
+				if(!found)
+					dir_to_set = direction
+					break
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window/basic( user.loc, 0 )
@@ -128,16 +125,17 @@ SHARDS
 				if(!(win.ini_dir in cardinal))
 					user << "\red Can't let you do that."
 					return 1
-			var/dir_to_set = NORTH
-			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == SOUTH)
-					dir_to_set = EAST
-				if (WT.dir == WEST)
-					dir_to_set = SOUTH
-				if (WT.dir == NORTH)
-					dir_to_set = WEST
-				/*else
-					dir_to_set stays NORTH*/
+
+			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
+			var/dir_to_set = 2
+			for(var/direction in list( user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270) ))
+				var/found = 0
+				for(var/obj/structure/window/WT in user.loc)
+					if(WT.dir == direction)
+						found = 1
+				if(!found)
+					dir_to_set = direction
+					break
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced( user.loc, 1 )
@@ -256,20 +254,14 @@ SHARDS
 /obj/item/weapon/shard/HasEntered(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
-		if (istype(M, /mob/living/carbon/metroid)) //I mean they float, seriously. - Erthilo
-			return
 		M << "\red <B>You step in the broken glass!</B>"
-		playsound(src.loc, 'glass_step.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.mutantrace == "lizard") //Soghun have... Scales? Yeah that works
-				return
-			if(!((H.shoes) || (H.wear_suit && H.wear_suit.body_parts_covered & FEET)))
-				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
-				if(affecting.status & ORGAN_ROBOT)
-					return
+			if(!H.shoes)
+				var/datum/organ/external/affecting = H.get_organ(pick("l_leg", "r_leg"))
 				H.Weaken(3)
-				affecting.take_damage(5, 0)
-				H.UpdateDamageIcon()
+				if(affecting.take_damage(5, 0))
+					H.UpdateDamageIcon()
 				H.updatehealth()
 	..()

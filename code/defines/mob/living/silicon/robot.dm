@@ -1,8 +1,12 @@
 /mob/living/silicon/robot
 	name = "Cyborg"
-	icon = 'robots.dmi'//
+	real_name = "Cyborg"
+	icon = 'icons/mob/robots.dmi'//
 	icon_state = "robot"
+	maxHealth = 300
 	health = 300
+	var/started = null//A fix to ensure people don't try to bypass law assignment. Initial assignment sets it to one but it check on login whether they have been initiated -Sieve
+
 
 #define BORGMESON 1
 #define BORGTHERM 2
@@ -35,18 +39,18 @@
 	var/emagged = 0
 	var/wiresexposed = 0
 	var/locked = 1
-	var/list/req_access = list(ACCESS_ROBOTICS)
+	var/list/req_access = list(access_robotics)
 	var/ident = 0
 	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
-	var/modtype = null
+	var/modtype = "robot"
 	var/lower_mod = 0
 	var/jetpack = 0
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
 	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
 	var/jeton = 0
-	var/borgwires = 31
+	var/borgwires = 31 // 0b11111
 	var/killswitch = 0
 	var/killswitch_time = 60
 	var/weapon_lock = 0
@@ -55,8 +59,3 @@
 	var/lockcharge //Used when locking down a borg to preserve cell charge
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
-	var/channels = list()
-	var/modlock = 0
-
-	var/lawcheck[1] //For stating laws!
-	var/ioncheck[1]

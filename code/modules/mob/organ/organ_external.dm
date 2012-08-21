@@ -1,31 +1,36 @@
+/datum/organ/external
+	name = "external"
+	var/display_name = "limb"
+	var/icon_name = null
+	var/body_part = null
+	var/brutestate = 0
+	var/burnstate = 0
+	var/brute_dam = 0
+	var/burn_dam = 0
+	var/max_damage = 0
+//	var/bandaged = 0
+//	var/wound_size = 0
+//	var/max_size = 0
+
 /datum/organ/external/chest
 	name = "chest"
+	display_name = "torso"
 	icon_name = "chest"
 	max_damage = 150
-	min_broken_damage = 75
 	body_part = UPPER_TORSO
-
-/datum/organ/external/groin
-	name = "groin"
-	icon_name = "diaper"
-	max_damage = 115
-	min_broken_damage = 70
-	body_part = LOWER_TORSO
 
 /datum/organ/external/head
 	name = "head"
+	display_name = "head"
 	icon_name = "head"
-	max_damage = 75
-	min_broken_damage = 40
+	max_damage = 125
 	body_part = HEAD
-	var/disfigured = 0
 
 /datum/organ/external/l_arm
 	name = "l_arm"
 	display_name = "left arm"
 	icon_name = "l_arm"
 	max_damage = 75
-	min_broken_damage = 30
 	body_part = ARM_LEFT
 
 /datum/organ/external/l_leg
@@ -33,7 +38,6 @@
 	display_name = "left leg"
 	icon_name = "l_leg"
 	max_damage = 75
-	min_broken_damage = 30
 	body_part = LEG_LEFT
 
 /datum/organ/external/r_arm
@@ -41,7 +45,6 @@
 	display_name = "right arm"
 	icon_name = "r_arm"
 	max_damage = 75
-	min_broken_damage = 30
 	body_part = ARM_RIGHT
 
 /datum/organ/external/r_leg
@@ -49,163 +52,98 @@
 	display_name = "right leg"
 	icon_name = "r_leg"
 	max_damage = 75
-	min_broken_damage = 30
 	body_part = LEG_RIGHT
 
+/*Leaving these here in case we want to use them later
 /datum/organ/external/l_foot
-	name = "l_foot"
-	display_name = "left foot"
+	name = "l foot"
 	icon_name = "l_foot"
-	max_damage = 40
-	min_broken_damage = 15
 	body_part = FOOT_LEFT
 
 /datum/organ/external/r_foot
-	name = "r_foot"
-	display_name = "right foot"
+	name = "r foot"
 	icon_name = "r_foot"
-	max_damage = 40
-	min_broken_damage = 15
 	body_part = FOOT_RIGHT
 
 /datum/organ/external/r_hand
-	name = "r_hand"
-	display_name = "right hand"
+	name = "r hand"
 	icon_name = "r_hand"
-	max_damage = 40
-	min_broken_damage = 15
 	body_part = HAND_RIGHT
 
 /datum/organ/external/l_hand
-	name = "l_hand"
-	display_name = "left hand"
+	name = "l hand"
 	icon_name = "l_hand"
-	max_damage = 40
-	min_broken_damage = 15
 	body_part = HAND_LEFT
 
-/*/datum/organ/Del()
-	CRASH("Some dawg tried to delete this sexy datum. Here's the data.")
+/datum/organ/external/groin
+	name = "groin"
+	icon_name = "groin"
+	body_part = LOWER_TORSO
+*/
 
-/obj/item/weapon/organ/Del()
-	CRASH("Some dawg tried to delete this sexy organ. Here's the data.")*/
+//Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
+//Damage will not exceed max_damage using this proc
+//Cannot apply negative damage
+/datum/organ/external/proc/take_damage(brute, burn)
+	if(owner && owner.nodamage)	return 0	//godmode
+	brute	= max(brute,0)
+	burn	= max(burn,0)
 
+	var/can_inflict = max_damage - (brute_dam + burn_dam)
+	if(!can_inflict)	return 0
 
-obj/item/weapon/organ
-	icon = 'human.dmi'
-
-obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
-	..(loc)
-	if(!istype(H))
-		return
-	if(H.dna)
-		if(!blood_DNA)
-			blood_DNA = list()
-		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
-
-	var/icon/I = new /icon(icon, icon_state)
-
-	if (H.s_tone >= 0)
-		I.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
+	if((brute + burn) < can_inflict)
+		brute_dam	+= brute
+		burn_dam	+= burn
 	else
-		I.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
-	icon = I
-
-obj/item/weapon/organ/head
-	name = "head"
-	icon_state = "head_m_l"
-	var/mob/living/carbon/brain/brainmob
-	var/brain_op_stage = 0
-
-obj/item/weapon/organ/head/New()
-	..()
-	spawn(5)
-	if(brainmob && brainmob.client)
-		brainmob.client.screen.len = null //clear the hud
-
-obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
-	brainmob = new(src)
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
-	brainmob.dna = H.dna
-	if(H.mind)
-		H.mind.transfer_to(brainmob)
-	brainmob.container = src
-	if (brainmob.client)
-		spawn(10)
-			if(brainmob.client)
-				verbs += /mob/proc/ghost
-
-obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/scalpel))
-		switch(brain_op_stage)
-			if(0)
-				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] is beginning to have \his head cut open with [src] by [user].", 1)
-				brainmob << "\red [user] begins to cut open your head with [src]!"
-				user << "\red You cut [brainmob]'s head open with [src]!"
-
-				brain_op_stage = 1
-
-			if(2)
-				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] is having \his connections to the brain delicately severed with [src] by [user].", 1)
-				brainmob << "\red [user] begins to cut open your head with [src]!"
-				user << "\red You cut [brainmob]'s head open with [src]!"
-
-				brain_op_stage = 3.0
+		if(brute > 0)
+			if(burn > 0)
+				brute	= round( (brute/(brute+burn)) * can_inflict, 1 )
+				burn	= can_inflict - brute	//gets whatever damage is left over
+				brute_dam	+= brute
+				burn_dam	+= burn
 			else
-				..()
-	else if(istype(W,/obj/item/weapon/circular_saw))
-		switch(brain_op_stage)
-			if(1)
-				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] has \his skull sawed open with [src] by [user].", 1)
-				brainmob << "\red [user] begins to saw open your head with [src]!"
-				user << "\red You saw [brainmob]'s head open with [src]!"
-
-				brain_op_stage = 2
-			if(3)
-				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("\red [brainmob] has \his spine's connection to the brain severed with [src] by [user].", 1)
-				brainmob << "\red [user] severs your brain's connection to the spine with [src]!"
-				user << "\red You sever [brainmob]'s brain's connection to the spine with [src]!"
-
-				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-				brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
-				log_admin("ATTACK: [brainmob] ([brainmob.ckey]) debrained [user] ([user.ckey]).")
-				message_admins("ATTACK: [brainmob] ([brainmob.ckey]) debrained [user] ([user.ckey]).")
-
-				var/obj/item/brain/B = new(loc)
-				B.transfer_identity(brainmob)
-
-				brain_op_stage = 4.0
+				brute_dam	+= can_inflict
+		else
+			if(burn > 0)
+				burn_dam	+= can_inflict
 			else
-				..()
-	else
-		..()
+				return 0
+	return update_icon()
 
-obj/item/weapon/organ/l_arm
-	name = "left arm"
-	icon_state = "l_arm_l"
-obj/item/weapon/organ/l_foot
-	name = "left foot"
-	icon_state = "l_foot_l"
-obj/item/weapon/organ/l_hand
-	name = "left hand"
-	icon_state = "l_hand_l"
-obj/item/weapon/organ/l_leg
-	name = "left leg"
-	icon_state = "l_leg_l"
-obj/item/weapon/organ/r_arm
-	name = "right arm"
-	icon_state = "r_arm_l"
-obj/item/weapon/organ/r_foot
-	name = "right foot"
-	icon_state = "r_foot_l"
-obj/item/weapon/organ/r_hand
-	name = "right hand"
-	icon_state = "r_hand_l"
-obj/item/weapon/organ/r_leg
-	name = "right leg"
-	icon_state = "r_leg_l"
+
+//Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
+//Damage cannot go below zero.
+//Cannot remove negative damage (i.e. apply damage)
+/datum/organ/external/proc/heal_damage(brute, burn)
+	brute	= max(brute, 0)
+	burn	= max(burn, 0)
+	brute_dam	= max(brute_dam - brute, 0)
+	burn_dam	= max(burn_dam - burn, 0)
+	return update_icon()
+
+
+//Returns total damage...kinda pointless really
+/datum/organ/external/proc/get_damage()	//returns total damage
+	return brute_dam + burn_dam
+
+
+//Updates an organ's brute/burn states for use by updateDamageIcon()
+//Returns 1 if we need to update overlays. 0 otherwise.
+/datum/organ/external/proc/update_icon()
+	var/tbrute	= round( (brute_dam/max_damage)*3, 1 )
+	var/tburn	= round( (burn_dam/max_damage)*3, 1 )
+	if((tbrute != brutestate) || (tburn != burnstate))
+		brutestate = tbrute
+		burnstate = tburn
+		return 1
+	return 0
+
+//Returns a display name for the organ
+/datum/organ/external/proc/getDisplayName()
+	switch(name)
+		if("l_leg")		return "left leg"
+		if("r_leg")		return "right leg"
+		if("l_arm")		return "left arm"
+		if("r_arm")		return "right arm"
+		else			return name

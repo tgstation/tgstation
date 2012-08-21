@@ -33,9 +33,9 @@
 			if(0)
 				dat += "<br>[temp]<br><br>"
 				dat += "<br>Current Network: <a href='?src=\ref[src];network=1'>[network]</a><br>"
-				if(machines.len)
+				if(machinelist.len)
 					dat += "<br>Detected Network Entities:<ul>"
-					for(var/obj/machinery/telecomms/T in machines)
+					for(var/obj/machinery/telecomms/T in machinelist)
 						dat += "<li><a href='?src=\ref[src];viewmachine=[T.id]'>\ref[T] [T.name]</a> ([T.id])</li>"
 					dat += "</ul>"
 					dat += "<br><a href='?src=\ref[src];operation=release'>\[Flush Buffer\]</a>"
@@ -52,7 +52,8 @@
 				dat += "Selected Network Entity: [SelectedMachine.name] ([SelectedMachine.id])<br>"
 				dat += "Linked Entities: <ol>"
 				for(var/obj/machinery/telecomms/T in SelectedMachine.links)
-					dat += "<li><a href='?src=\ref[src];viewmachine=[T.id]'>\ref[T.id] [T.name]</a> ([T.id])</li>"
+					if(!T.hide)
+						dat += "<li><a href='?src=\ref[src];viewmachine=[T.id]'>\ref[T.id] [T.name]</a> ([T.id])</li>"
 				dat += "</ol>"
 
 
@@ -74,7 +75,7 @@
 
 		if(href_list["viewmachine"])
 			screen = 1
-			for(var/obj/machinery/telecomms/T in machines)
+			for(var/obj/machinery/telecomms/T in machinelist)
 				if(T.id == href_list["viewmachine"])
 					SelectedMachine = T
 					break
@@ -90,18 +91,18 @@
 					screen = 0
 
 				if("probe")
-					if(machines.len > 0)
+					if(machinelist.len > 0)
 						temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 					else
 						for(var/obj/machinery/telecomms/T in range(25, src))
 							if(T.network == network)
-								machines.Add(T)
+								machinelist.Add(T)
 
-						if(!machines.len)
+						if(!machinelist.len)
 							temp = "<font color = #D70B00>- FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\] -</font color>"
 						else
-							temp = "<font color = #336699>- [machines.len] ENTITIES LOCATED & BUFFERED -</font color>"
+							temp = "<font color = #336699>- [machinelist.len] ENTITIES LOCATED & BUFFERED -</font color>"
 
 						screen = 0
 
@@ -124,7 +125,7 @@
 
 	attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 		if(istype(D, /obj/item/weapon/screwdriver))
-			playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
@@ -150,7 +151,7 @@
 					A.anchored = 1
 					del(src)
 		else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-			playsound(src.loc, 'sparks4.ogg', 75, 1)
+			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			emagged = 1
 			user << "\blue You you disable the security protocols"
 		src.updateUsrDialog()

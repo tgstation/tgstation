@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/unary/vent_pump
-	icon = 'vent_pump.dmi'
+	icon = 'icons/obj/atmospherics/vent_pump.dmi'
 	icon_state = "off"
 
 	name = "Air Vent"
@@ -7,12 +7,11 @@
 
 	level = 1
 	var/area_uid
-	var/id_tag
+	var/id_tag = null
 	power_channel = ENVIRON
 
 	var/on = 0
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
-	var/pump_speed = 1 //Used to adjust speed for siphons
 
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	var/internal_pressure_bound = 0
@@ -39,18 +38,16 @@
 			assign_uid()
 			id_tag = num2text(uid)
 		if(ticker && ticker.current_state == 3)//if the game is running
-			initialize()
-			broadcast_status()
+			src.initialize()
+			src.broadcast_status()
 		..()
 
 	high_volume
 		name = "Large Air Vent"
 		power_channel = EQUIP
-
 		New()
 			..()
 			air_contents.volume = 1000
-
 
 	update_icon()
 		if(welded)
@@ -68,12 +65,11 @@
 
 	process()
 		..()
-//		broadcast_status()
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if (!node)
 			on = 0
-
+		//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 		if(!on)
 			return 0
 
@@ -93,7 +89,7 @@
 
 			if(pressure_delta > 0)
 				if(air_contents.temperature > 0)
-					var/transfer_moles = pressure_delta*environment.volume*environment.group_multiplier*pump_speed/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+					var/transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 					var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -111,7 +107,7 @@
 
 			if(pressure_delta > 0)
 				if(environment.temperature > 0)
-					var/transfer_moles = pressure_delta*air_contents.volume*air_contents.group_multiplier*pump_speed/(environment.temperature * R_IDEAL_GAS_EQUATION)
+					var/transfer_moles = pressure_delta*air_contents.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
 
 					var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 					if (isnull(removed)) //in space
@@ -124,42 +120,39 @@
 
 		return 1
 
-
-
-
 	//Radio remote control
 
-	proc/set_frequency(new_frequency)
-		radio_controller.remove_object(src, frequency)
-		frequency = new_frequency
-		if(frequency)
-			radio_connection = radio_controller.add_object(src, frequency,radio_filter_in)
+	proc
+		set_frequency(new_frequency)
+			radio_controller.remove_object(src, frequency)
+			frequency = new_frequency
+			if(frequency)
+				radio_connection = radio_controller.add_object(src, frequency,radio_filter_in)
 
-	proc/broadcast_status()
-		if(!radio_connection)
-			return 0
+		broadcast_status()
+			if(!radio_connection)
+				return 0
 
-		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
+			var/datum/signal/signal = new
+			signal.transmission_method = 1 //radio signal
+			signal.source = src
 
-		signal.data = list(
-			"area" = src.area_uid,
-			"tag" = src.id_tag,
-			"device" = "AVP",
-			"power" = on,
-			"direction" = pump_direction?("release"):("siphon"),
-			"checks" = pressure_checks,
-			"internal" = internal_pressure_bound,
-			"external" = external_pressure_bound,
-			"timestamp" = world.time,
-			"sigtype" = "status",
-			"setting" = pump_speed
-		)
+			signal.data = list(
+				"area" = src.area_uid,
+				"tag" = src.id_tag,
+				"device" = "AVP",
+				"power" = on,
+				"direction" = pump_direction?("release"):("siphon"),
+				"checks" = pressure_checks,
+				"internal" = internal_pressure_bound,
+				"external" = external_pressure_bound,
+				"timestamp" = world.time,
+				"sigtype" = "status"
+			)
 
-		radio_connection.post_signal(src, signal, radio_filter_out)
+			radio_connection.post_signal(src, signal, radio_filter_out)
 
-		return 1
+			return 1
 
 
 	initialize()
@@ -170,7 +163,6 @@
 		radio_filter_out = frequency==1439?(RADIO_TO_AIRALARM):null
 		if(frequency)
 			set_frequency(frequency)
-
 
 	receive_signal(datum/signal/signal)
 		if(stat & (NOPOWER|BROKEN))
@@ -199,29 +191,47 @@
 		if("checks_toggle" in signal.data)
 			pressure_checks = (pressure_checks?0:3)
 
-		if("direction" in signal)
+		if("direction" in signal.data)
 			pump_direction = text2num(signal.data["direction"])
 
 		if("set_internal_pressure" in signal.data)
-			internal_pressure_bound = between(0, text2num(signal.data["set_internal_pressure"]), ONE_ATMOSPHERE*50)
+			internal_pressure_bound = between(
+				0,
+				text2num(signal.data["set_internal_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
 		if("set_external_pressure" in signal.data)
-			external_pressure_bound = between(0, text2num(signal.data["set_external_pressure"]), ONE_ATMOSPHERE*50)
+			external_pressure_bound = between(
+				0,
+				text2num(signal.data["set_external_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
 		if("adjust_internal_pressure" in signal.data)
-			internal_pressure_bound = between(0, internal_pressure_bound +  text2num(signal.data["adjust_internal_pressure"]), ONE_ATMOSPHERE*50)
+			internal_pressure_bound = between(
+				0,
+				internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
 		if("adjust_external_pressure" in signal.data)
-			external_pressure_bound = between(0, external_pressure_bound +  text2num(signal.data["adjust_external_pressure"]), ONE_ATMOSPHERE*50)
+			external_pressure_bound = between(
+				0,
+				external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
 		if("init" in signal.data)
 			name = signal.data["init"]
 			return
 
-		if("setting" in signal.data)
-			pump_speed = text2num(signal.data["setting"])
+		if("status" in signal.data)
+			spawn(2)
+				broadcast_status()
+			return //do not update_icon
 
-			//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal["command"]]\"\n[signal.debug_print()]")
+			//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 		spawn(2)
 			broadcast_status()
 		update_icon()
@@ -248,7 +258,7 @@
 				user << "\blue Now welding the vent."
 				if(do_after(user, 20))
 					if(!src || !WT.isOn()) return
-					playsound(src.loc, 'Welder2.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					if(!welded)
 						user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
 						welded = 1
@@ -262,7 +272,6 @@
 			else
 				user << "\blue You need more welding fuel to complete this task."
 				return 1
-
 	examine()
 		set src in oview(1)
 		..()
@@ -292,7 +301,7 @@
 			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
-		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \

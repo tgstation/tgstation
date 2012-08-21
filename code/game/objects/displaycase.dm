@@ -47,7 +47,7 @@
 			playsound(src, "shatter", 70, 1)
 			update_icon()
 	else
-		playsound(src.loc, 'Glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	return
 
 /obj/structure/displaycase/update_icon()
@@ -59,26 +59,6 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/gun/energy/laser/captain))
-		if(!src.occupied)
-			user << "\b You put the [W] back into the display case."
-			del(W)
-			src.occupied = 1
-			update_icon()
-			return
-	if(istype(W, /obj/item/stack/sheet/glass))
-		if(src.occupied && src.destroyed)
-			var/obj/item/stack/sheet/glass/G = W
-			user << "\b You repair the display case."
-			G.amount--
-			if (G.amount <= 0)
-				user.update_clothing()
-				del(G)
-			src.destroyed = 0
-			src.density = 1
-			src.health = 30
-			update_icon()
-			return
 	src.health -= W.force
 	src.healthcheck()
 	..()
@@ -101,7 +81,6 @@
 			if ((O.client && !( O.blinded )))
 				O << text("\red [] kicks the display case.", usr)
 		src.health -= 2
-		src.add_fingerprint(user)
 		healthcheck()
 		return
 

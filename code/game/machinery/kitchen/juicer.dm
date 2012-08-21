@@ -1,7 +1,7 @@
 
 /obj/machinery/juicer
 	name = "Juicer"
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = 2.9
 	density = 0
@@ -21,12 +21,10 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = "limejuice",
 		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = "watermelonjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = "poisonberryjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = "grapejuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes = "grapejuice",
 	)
 
 /obj/machinery/juicer/New()
-	beaker = new /obj/item/weapon/reagent_containers/glass/large(src)
+	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/juicer/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))
@@ -149,7 +147,7 @@
 		return
 	if (!beaker || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
-	playsound(src.loc, 'juicer.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in src.contents)
 		var/r_id = get_juice_id(O)
 		beaker.reagents.add_reagent(r_id,get_juice_amount(O))

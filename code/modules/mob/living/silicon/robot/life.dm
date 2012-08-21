@@ -16,13 +16,12 @@
 		UpdateLuminosity()
 		handle_regular_hud_updates()
 		update_items()
-	if (src.stat != 2) //still using power
+	if (src.stat != DEAD) //still using power
 		use_power()
 		process_killswitch()
 		process_locks()
 	update_canmove()
 
-	update_mind()
 
 
 
@@ -30,9 +29,9 @@
 	proc
 		clamp_values()
 
-			SetStunned(min(stunned, 30))
+//			SetStunned(min(stunned, 30))
 			SetParalysis(min(paralysis, 30))
-			SetWeakened(min(weakened, 20))
+//			SetWeakened(min(weakened, 20))
 			sleeping = 0
 			adjustBruteLoss(0)
 			adjustToxLoss(0)
@@ -54,12 +53,12 @@
 					src.cell.use(1)
 				else
 					if(src.module_state_1)
-						src.cell.use(5.5)
+						src.cell.use(5)
 					if(src.module_state_2)
-						src.cell.use(5.5)
+						src.cell.use(5)
 					if(src.module_state_3)
-						src.cell.use(5.5)
-					src.cell.use(0.1)
+						src.cell.use(5)
+					src.cell.use(1)
 					src.blinded = 0
 					src.stat = 0
 			else
@@ -67,25 +66,13 @@
 				src.stat = 1
 
 
-		update_canmove()
-			if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
-			else canmove = 1
-
-
-		update_mind()
-			if(!mind && client)
-				mind = new
-				mind.current = src
-				mind.assigned_role = "Hunter"
-				mind.key = key
-
-
 		handle_regular_status_updates()
 
-			if(camera)
-				src.camera.status = 1//bluh bluh ugly fix but it will work till this whole thing gets recoded
-				if(src.stat)
+			if(src.camera && !scrambledcodes)
+				if(src.stat == 2 || isWireCut(5))
 					src.camera.status = 0
+				else
+					src.camera.status = 1
 
 			health = 200 - (getOxyLoss() + getFireLoss() + getBruteLoss())
 
@@ -93,8 +80,7 @@
 
 			if(src.sleeping)
 				Paralyse(3)
-				if(!src.sleeping_willingly)
-					src.sleeping--
+				src.sleeping--
 
 			if(src.resting)
 				Weaken(5)
@@ -123,7 +109,6 @@
 				src.stat = 2
 
 			if (src.stuttering) src.stuttering--
-			if (src.slurring) src.slurring--
 
 			if (src.eye_blind)
 				src.eye_blind--
@@ -136,9 +121,9 @@
 
 			src.density = !( src.lying )
 
-			if ((src.disabilities & 128))
+			if ((src.sdisabilities & BLIND))
 				src.blinded = 1
-			if ((src.disabilities & 32))
+			if ((src.sdisabilities & DEAF))
 				src.ear_deaf = 1
 
 			if (src.eye_blurry > 0)
@@ -158,36 +143,32 @@
 				src.sight |= SEE_MOBS
 				src.sight |= SEE_OBJS
 				src.see_in_dark = 8
-				src.see_invisible = 2
+				src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			else if (src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS
 				src.see_in_dark = 8
-				src.see_invisible = 2
+				src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			else if (src.sight_mode & BORGMESON)
 				src.sight |= SEE_TURFS
 				src.see_in_dark = 8
-				src.see_invisible = 2
+				src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			else if (src.sight_mode & BORGTHERM)
 				src.sight |= SEE_MOBS
 				src.see_in_dark = 8
-				src.see_invisible = 2
+				src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			else if (src.stat != 2)
 				src.sight &= ~SEE_MOBS
 				src.sight &= ~SEE_TURFS
 				src.sight &= ~SEE_OBJS
 				src.see_in_dark = 8
-				src.see_invisible = 2
+				src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 			var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
 			if(hud && hud.hud)	hud.hud.process_hud(src)
 
 
-			if (src.sleep)
-				src.sleep.icon_state = text("sleep[]", src.sleeping > 0 ? 1 : 0)
-				src.sleep.overlays = null
-				if(src.sleeping_willingly)
-					src.sleep.overlays += icon(src.sleep.icon, "sleep_willing")
+			if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
 			if (src.rest) src.rest.icon_state = text("rest[]", src.resting)
 
 			if (src.healths)
@@ -214,7 +195,7 @@
 				if(ticker.mode.name == "traitor")
 					for(var/datum/mind/tra in ticker.mode.traitors)
 						if(tra.current)
-							var/I = image('mob.dmi', loc = tra.current, icon_state = "traitor")
+							var/I = image('icons/mob/mob.dmi', loc = tra.current, icon_state = "traitor")
 							src.client.images += I
 				if(src.connected_ai)
 					src.connected_ai.connected_robots -= src
@@ -271,7 +252,7 @@
 				else
 					src.blind.layer = 0
 
-					if (src.disabilities & 1)
+					if (src.disabilities & NEARSIGHTED)
 						src.client.screen += src.hud_used.vimpaired
 
 					if (src.eye_blurry)
@@ -321,3 +302,8 @@
 						src << "\red <B>Weapon Lock Timed Out!"
 					weapon_lock = 0
 					weaponlock_time = 120
+
+	update_canmove()
+		if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
+		else canmove = 1
+		return canmove

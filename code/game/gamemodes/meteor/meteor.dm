@@ -5,6 +5,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/const/meteordelay = 2000
 	var/nometeors = 1
+	required_players = 0
 
 	uplink_welcome = "EVIL METEOR Uplink Console:"
 	uplink_uses = 10
@@ -36,37 +37,28 @@
 
 
 /datum/game_mode/meteor/declare_completion()
-	var/list/survivors = list()
-	var/area/escape_zone = locate(/area/shuttle/escape/centcom)
-	var/area/pod_zone = list( /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom )
-
-	for(var/mob/living/player in world)
-		if (player.client)
-			if (player.stat != 2)
-				var/turf/location = get_turf(player.loc)
-				if (location in escape_zone)
-					survivors[player.real_name] = "shuttle"
-				else if (location.loc.type in pod_zone)
-					survivors[player.real_name] = "pod"
+	var/text
+	var/survivors = 0
+	for(var/mob/living/player in player_list)
+		if(player.stat != DEAD)
+			var/turf/location = get_turf(player.loc)
+			if(!location)	continue
+			switch(location.loc.type)
+				if( /area/shuttle/escape/centcom )
+					text += "<br><b><font size=2>[player.real_name] escaped on the emergency shuttle</font></b>"
+				if( /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom )
+					text += "<br><font size=2>[player.real_name] escaped in a life pod.</font>"
 				else
-					survivors[player.real_name] = "alive"
+					text += "<br><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
+			survivors++
 
-	//feedback_set_details("round_end_result","end - evacuation")
-	//feedback_set("round_end_result",survivors.len)
-
-	if (survivors.len)
-		world << "\blue <B>The following survived the meteor attack!</B>"
-		for(var/survivor in survivors)
-			var/condition = survivors[survivor]
-			switch(condition)
-				if("shuttle")
-					world << "\t <B><FONT size = 2>[survivor] escaped on the shuttle!</FONT></B>"
-				if("pod")
-					world << "\t <FONT size = 2>[survivor] escaped on an escape pod!</FONT>"
-				if("alive")
-					world << "\t <FONT size = 1>[survivor] stayed alive. Whereabouts unknown.</FONT>"
+	if(survivors)
+		world << "\blue <B>The following survived the meteor storm</B>:[text]"
 	else
-		world << "\blue <B>No one survived the meteor attack!</B>"
+		world << "\blue <B>Nobody survived the meteor storm!</B>"
+
+	feedback_set_details("round_end_result","end - evacuation")
+	feedback_set("round_end_result",survivors)
 
 	..()
 	return 1

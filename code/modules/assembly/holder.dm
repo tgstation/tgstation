@@ -1,7 +1,7 @@
 /obj/item/device/assembly_holder
 	name = "Assembly"
 	desc = "Holds various devices"//Fix this by adding dynamic desc
-	icon = 'new_assemblies.dmi'
+	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "holder"
 	item_state = "assembly"
 	flags = FPRINT | TABLEPASS| CONDUCT

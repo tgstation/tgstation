@@ -24,8 +24,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 
 /obj/machinery/newscaster
 	name = "newscaster"
-	desc = "A standard NanoTrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
-	icon = 'terminals.dmi'
+	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
+	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
 	var/isbroken = 0  //1 if someone banged it with something heavy
 	var/ispowered = 1 //starts powered, changes with power_change()
@@ -170,11 +170,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 					dat+="<HR><B>Feed Security functions:</B><BR>"
 					dat+="<BR><A href='?src=\ref[src];menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
 					dat+="<BR><A href='?src=\ref[src];menu_censor_story=1'>Censor Feed Stories</A>"
-					dat+="<BR><A href='?src=\ref[src];menu_censor_channel=1'>Mark Feed Channel with NanoTrasen D-Notice</A>"
+					dat+="<BR><A href='?src=\ref[src];menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice</A>"
 				dat+="<BR><HR>The newscaster recognises you as: <FONT COLOR='green'>[src.scanned_user]</FONT>"
 			if(1)
 				dat+= "Station Feed Channels<HR>"
-				if(!channel_list.len)
+				if( isemptylist(src.channel_list) )
 					dat+="<I>No active channels found...</I>"
 				else
 					for(var/datum/feed_channel/CHANNEL in src.channel_list)
@@ -252,10 +252,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 			if(9)
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT>\]</FONT><HR>"
 				if(src.viewing_channel.censored)
-					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a NanoTrasen D-Notice.<BR>"
+					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 					dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
 				else
-					if(!viewing_channel.messages.len)
+					if( isemptylist(src.viewing_channel.messages) )
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
 						for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
@@ -263,22 +263,22 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
-				dat+="<B>NanoTrasen Feed Censorship Tool</B><BR>"
+				dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
 				dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
 				dat+="Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>"
 				dat+="<HR>Select Feed channel to get Stories from:<BR>"
-				if(!channel_list.len)
+				if(isemptylist(src.channel_list))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in src.channel_list)
 						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
 			if(11)
-				dat+="<B>NanoTrasen D-Notice Handler</B><HR>"
+				dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
 				dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
 				dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
 				dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
-				if(!channel_list.len)
+				if(isemptylist(src.channel_list))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in src.channel_list)
@@ -290,7 +290,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>[(src.viewing_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
 
 
-				if( !viewing_channel.messages.len )
+				if( isemptylist(src.viewing_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
 					for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
@@ -301,10 +301,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<B>[src.viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT> \]</FONT><BR>"
 				dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];toggle_d_notice=\ref[src.viewing_channel]'>Bestow a D-Notice upon the channel</A>.<HR>"
 				if(src.viewing_channel.censored)
-					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a NanoTrasen D-Notice.<BR>"
+					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 					dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
 				else
-					if( !viewing_channel.messages.len )
+					if( isemptylist(src.viewing_channel.messages) )
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
 						for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
@@ -445,8 +445,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 						break                                      // Another for to go through newscasters is not needed. Due to the nature of submit_new_CHANNEL, every reference
 				src.screen=4                                       // to a channel in ANY newscaster is the same. Editing one will edit them all.
 
-				for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
-					NEWSCASTER.newsAlert(src.channel_name)
+			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+				NEWSCASTER.newsAlert(src.channel_name)
 
 			src.updateUsrDialog()
 
@@ -623,7 +623,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				src.screen=2*/  //Obsolete after autorecognition
 
 	if (src.isbroken)
-		playsound(src.loc, 'hit_on_shattered_glass.ogg', 100, 1)
+		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
 		for (var/mob/O in hearers(5, src.loc))
 			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
 	else
@@ -632,18 +632,18 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))
 					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
-					playsound(src.loc, 'Glasshit.ogg', 100, 1)
+					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 			else
 				src.hitstaken++
 				if(src.hitstaken==3)
 					for (var/mob/O in hearers(5, src.loc))
 						O.show_message("[user.name] smashes the [src.name]!" )
 					src.isbroken=1
-					playsound(src.loc, 'Glassbr3.ogg', 100, 1)
+					playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 				else
 					for (var/mob/O in hearers(5, src.loc))
 						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
-					playsound(src.loc, 'Glasshit.ogg', 100, 1)
+					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
 			user << "<FONT COLOR='blue'>This does nothing.</FONT>"
 	src.update_icon()
@@ -666,9 +666,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 
 /obj/item/weapon/newspaper
 	name = "newspaper"
-	desc = "An issue of The Griffon, the newspaper circulating aboard NanoTrasen Space Stations."
+	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon_state = "newspaper"
 	w_class = 2	//Let's make it fit in trashbags!
+	attack_verb = list("bapped")
 	var/screen = 0
 	var/pages = 0
 	var/curr_page = 0
@@ -676,6 +677,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 	var/datum/feed_message/important_message = null
 	var/scribble=""
 	var/scribble_page = null
+
+/*obj/item/weapon/newspaper/attack_hand(mob/user as mob)
+	..()
+	world << "derp"*/
 
 obj/item/weapon/newspaper/attack_self(mob/user as mob)
 	if(ishuman(user))
@@ -685,8 +690,8 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 		switch(screen)
 			if(0) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
-				dat+="<DIV ALIGN='center'><FONT SIZE=2>NanoTrasen-standard newspaper, for use on NanoTrasen© Space Facilities</FONT></div><HR>"
-				if(!news_content.len)
+				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen© Space Facilities</FONT></div><HR>"
+				if(isemptylist(src.news_content))
 					if(src.important_message)
 						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR></ul>"
 					else
@@ -713,7 +718,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 				if(C.censored)
 					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red'>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
 				else
-					if(!C.messages.len)
+					if(isemptylist(C.messages))
 						dat+="No Feed stories stem from this channel..."
 					else
 						dat+="<ul>"
@@ -844,4 +849,4 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	else
 		for(var/mob/O in hearers(world.view-1, T))
 			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Wanted notice posted!\"</span>",2)
-	playsound(src.loc, 'twobeep.ogg', 75, 1)
+	playsound(src.loc, 'sound/machines/twobeep.ogg', 75, 1)

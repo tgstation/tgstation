@@ -1,87 +1,57 @@
 //conveyor2 is pretty much like the original, except it supports corners, but not diverters.
 //note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
-//cael - added fix for diverters, not sure if tg has them
-
-#define MAX_MOVED 10
 
 /obj/machinery/conveyor
-	icon = 'recycling.dmi'
+	icon = 'icons/obj/recycling.dmi'
 	icon_state = "conveyor0"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
-	layer = 2.97
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
-	var/forwards		// this is the default (forward) direction, set by the map dir, can be 0
-	var/backwards		// hopefully self-explanatory, can be 0
+	var/forwards		// this is the default (forward) direction, set by the map dir
+	var/backwards		// hopefully self-explanatory
 	var/movedir			// the actual direction to move stuff in
 
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 
-	//these ones below for backwards compatibility
-
-	// following two only used if a diverter is present
-	var/divert_from = 0 		// if non-zero, direction to divert items
-	var/divert_to = 0			// if diverting, will be conveyer dir needed to divert (otherwise dense)
-	var/basedir					// this is the default (forward) direction, set by the map dir
-								// note dir var can vary when the direction changes
-
-	//cael - corner icon bug that needs a manual fix
-	//note: for now, the sprites/anis and their directions are mostly independant from the actual conveyor move directions
-	//if no conveyor move directions are specified, they are calculated from the sprite dir
-	var/reverseSpriteMoveDir = 0
+/obj/machinery/conveyor/centcom_auto
+	id = "round_end_belt"
 
 	// create a conveyor
 /obj/machinery/conveyor/New()
 	..()
-	//added these to allow for custom conveyor dirs defined in map
-	if(!forwards)
-		switch(dir)
-			if(NORTH)
-				forwards = NORTH
-			if(SOUTH)
-				forwards = SOUTH
-			if(EAST)
-				forwards = EAST
-			if(WEST)
-				forwards = WEST
-			if(NORTHEAST)
-				forwards = EAST
-			if(NORTHWEST)
-				forwards = WEST
-			if(SOUTHEAST)
-				forwards = EAST
-			if(SOUTHWEST)
-				forwards = WEST
-	if(!backwards)
-		switch(dir)
-			if(NORTH)
-				backwards = SOUTH
-			if(SOUTH)
-				backwards = NORTH
-			if(EAST)
-				backwards = WEST
-			if(WEST)
-				backwards = EAST
-			if(NORTHEAST)
-				backwards = SOUTH
-			if(NORTHWEST)
-				backwards = SOUTH
-			if(SOUTHEAST)
-				backwards = NORTH
-			if(SOUTHWEST)
-				backwards = NORTH
-	if(operating > 0)
-		movedir = forwards
-	else if(operating < 0)
-		movedir = backwards
+	switch(dir)
+		if(NORTH)
+			forwards = NORTH
+			backwards = SOUTH
+		if(SOUTH)
+			forwards = SOUTH
+			backwards = NORTH
+		if(EAST)
+			forwards = EAST
+			backwards = WEST
+		if(WEST)
+			forwards = WEST
+			backwards = EAST
+		if(NORTHEAST)
+			forwards = EAST
+			backwards = SOUTH
+		if(NORTHWEST)
+			forwards = SOUTH
+			backwards = WEST
+		if(SOUTHEAST)
+			forwards = NORTH
+			backwards = EAST
+		if(SOUTHWEST)
+			forwards = WEST
+			backwards = NORTH
 
 /obj/machinery/conveyor/proc/setmove()
-	if(operating > 0)
+	if(operating == 1)
 		movedir = forwards
-	else if(operating < 0)
+	else
 		movedir = backwards
 	update()
 
@@ -94,7 +64,7 @@
 		operating = 0
 	if(stat & NOPOWER)
 		operating = 0
-	icon_state = "conveyor[operating * (reverseSpriteMoveDir?-1:1)]"
+	icon_state = "conveyor[operating]"
 
 	// machine process
 	// move items to the target location
@@ -105,36 +75,16 @@
 		return
 	use_power(100)
 
-	// update if diverter present
-	// if movedir == forwards, therefore if divert_to != 0 and divert_from == backwards, then set movedir = divert_to
-	// if movedir == backwards, therefore if divert_to != 0 and divert_from == forwards, then set movedir = divert_to
-	//if(divert_to && divert_from == (movedir == backwards ? forwards : backwards ) )
-		//movedir = divert_to
-	if(divert_to)
-		if( movedir == forwards && divert_from == backwards )
-			movedir = divert_to
-		else if( movedir == backwards && divert_from == forwards )
-			movedir = divert_to
-
 	affecting = loc.contents - src		// moved items will be all in loc
 	spawn(1)	// slight delay to prevent infinite propagation due to map order
-
 		var/items_moved = 0
-
 		for(var/atom/movable/A in affecting)
-			if(items_moved >= MAX_MOVED)
-				break
-
 			if(!A.anchored)
 				if(isturf(A.loc)) // this is to prevent an ugly bug that forces a player to drop what they're holding if they recently pick it up from the conveyer belt
+					step(A,movedir)
 					items_moved++
-					if(!step(A,movedir))
-						//if it's a crate, move the item into the crate
-						var/turf/T = get_step(A,movedir)
-						for(var/obj/structure/closet/crate/C in T)
-							if(C && C.opened && !istype(A, /obj/structure/closet/crate))
-								A.loc = C.loc
-								break
+			if(items_moved >= 10)
+				break
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
@@ -153,12 +103,12 @@
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
-		M.pulling = null
+		M.stop_pulling()
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.pulling = null
+		user.stop_pulling()
 	else
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.pulling = null
+		user.stop_pulling()
 	return
 
 
@@ -208,7 +158,7 @@
 
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
-	icon = 'recycling.dmi'
+	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
@@ -295,129 +245,3 @@
 		if(S.id == src.id)
 			S.position = position
 			S.update()
-
-// converyor diverter
-// extendable arm that can be switched so items on the conveyer are diverted sideways
-// situate in same turf as conveyor
-// only works if belts is running proper direction
-//
-//
-/obj/machinery/diverter
-	icon = 'recycling.dmi'
-	icon_state = "diverter0"
-	name = "diverter"
-	desc = "A diverter arm for a conveyor belt."
-	anchored = 1
-	layer = FLY_LAYER
-	var/obj/machinery/conveyor/conv // the conveyor this diverter works on
-	var/deployed = 0	// true if diverter arm is extended
-	var/operating = 0	// true if arm is extending/contracting
-	var/divert_to	// the dir that diverted items will be moved
-	var/divert_from // the dir items must be moving to divert
-
-// create a diverter
-// set up divert_to and divert_from directions depending on dir state
-/obj/machinery/diverter/New()
-	..()
-	//cael - the icon states are all derped, so these won't make sense.
-	//just place the diverter according to which icon state is correct
-	switch(dir)
-		if(NORTH)
-			divert_to = WEST//
-			divert_from = SOUTH//
-		if(SOUTH)
-			divert_to = EAST//
-			divert_from = SOUTH//NORTH
-		if(EAST)
-			divert_to = EAST//
-			divert_from = NORTH//SOUTH
-		if(WEST)
-			divert_to = WEST//
-			divert_from = NORTH//
-		if(NORTHEAST)
-			divert_to = NORTH//
-			divert_from = WEST//EAST
-		if(NORTHWEST)
-			divert_to = NORTH//
-			divert_from = EAST//WEST
-		if(SOUTHEAST)
-			divert_to = SOUTH//
-			divert_from = WEST//EAST
-		if(SOUTHWEST)
-			divert_to = SOUTH//
-			divert_from = EAST//WEST
-	spawn(2)
-		// wait for map load then find the conveyor in this turf
-		conv = locate() in src.loc
-		if(conv)	// divert_from dir must match possible conveyor movement
-			if(conv.backwards != divert_from && conv.backwards != turn(divert_from,180) )
-				del(src)	// if no dir match, then delete self
-		set_divert()
-		update()
-
-// update the icon state depending on whether the diverter is extended
-/obj/machinery/diverter/proc/update()
-	icon_state = "diverter[deployed]"
-
-// call to set the diversion vars of underlying conveyor
-/obj/machinery/diverter/proc/set_divert()
-	if(conv)
-		if(deployed)
-			conv.divert_to = divert_to
-			conv.divert_from = divert_from
-		else
-			conv.divert_to = 0
-			conv.divert_from = 0
-		conv.setmove()
-
-
-// *** TESTING click to toggle
-/obj/machinery/diverter/Click()
-	toggle()
-
-
-// toggle between arm deployed and not deployed, showing animation
-//
-/obj/machinery/diverter/proc/toggle()
-	if( stat & (NOPOWER|BROKEN))
-		return
-
-	if(operating)
-		return
-
-	use_power(50)
-	operating = 1
-	if(deployed)
-		flick("diverter10",src)
-		icon_state = "diverter0"
-		sleep(10)
-		deployed = 0
-	else
-		flick("diverter01",src)
-		icon_state = "diverter1"
-		sleep(10)
-		deployed = 1
-	operating = 0
-	update()
-	set_divert()
-
-// don't allow movement into the 'backwards' direction if deployed
-/obj/machinery/diverter/CanPass(atom/movable/O, var/turf/target)
-	var/direct = get_dir(O, target)
-	if(direct == divert_to)	// prevent movement through body of diverter
-		return 0
-	if(!deployed)
-		return 1
-	return(direct != divert_from)
-
-// don't allow movement through the arm if deployed
-/obj/machinery/diverter/CheckExit(atom/movable/O, var/turf/target)
-	var/direct = get_dir(O, target)
-	if(direct == turn(divert_to,180))	// prevent movement through body of diverter
-		return 0
-	if(!deployed)
-		return 1
-	return(direct != turn(divert_from,180))
-
-	//divert_to = NORTH
-	//divert_from = EAST

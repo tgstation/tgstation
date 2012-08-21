@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /datum/game_mode/blob/send_intercept(var/report = 1)
 	var/intercepttext = ""
@@ -32,6 +32,12 @@
 			intercepttext += "2. Detonate the Nuke located in the Station's Vault.<BR>"
 			intercepttext += "Nuclear Authentication Code: [nukecode] <BR>"
 			intercepttext += "Message ends."
+
+			for (var/mob/living/silicon/ai/aiPlayer in player_list)
+				if (aiPlayer.client)
+					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
+					aiPlayer.set_zeroth_law(law)
+					aiPlayer << "Laws Updated: [law]"
 
 	for(var/obj/machinery/computer/communications/comm in world)
 		comm.messagetitle.Add(interceptname)

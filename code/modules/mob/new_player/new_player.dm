@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /mob/new_player
 	var/datum/preferences/preferences = null
@@ -15,35 +15,56 @@
 
 	anchored = 1	//  don't get pushed around
 
-	Logout()
-		ready = 0
-		..()
-		if(!spawning)//Here so that if they are spawning and log out, the other procs can play out and they will have a mob to come back to.
-			key = null//We null their key before deleting the mob, so they are properly kicked out.
-			del(src)
-		return
-
 	verb/new_player_panel()
 		set src = usr
 		new_player_panel_proc()
 
 
 	proc/new_player_panel_proc()
+		//no db for now
+		/*var/user = sqlfdbklogin
+		var/pass = sqlfdbkpass
+		var/db = sqlfdbkdb
+		var/address = sqladdress
+		var/port = sqlport*/
+
 		var/output = "<B>New Player Options</B>"
 		output +="<hr>"
-		output += "<br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
+		output += "<br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><br><br>"
 
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-			if(!ready)	output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><BR>"
-			else	output += "<b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)<BR>"
+			if(!ready)
+				output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><br><br>"
+			else
+				output += "<b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)<br><br>"
 
 		else
-			output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><BR><BR>"
-			output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><BR>"
+			output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
+			output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><br><br>"
 
-		output += "<BR><a href='byond://?src=\ref[src];observe=1'>Observe</A><BR>"
+		output += "<a href='byond://?src=\ref[src];observe=1'>Observe</A><br><br>"
+		output += "<a href='byond://?src=\ref[src];pregame_music=1'>Lobby Music</A>"
 
-		output += "<BR><a href='byond://?src=\ref[src];pregame_music=1'>Lobby Music</A><BR>"
+		/*if(!IsGuestKey(src.key))
+			var/DBConnection/dbcon = new()
+			dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+
+			if(dbcon.IsConnected())
+				var/isadmin = 0
+				if(src.client && src.client.holder)
+					isadmin = 1
+				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\")")
+				query.Execute()
+				var/newpoll = 0
+				while(query.NextRow())
+					newpoll = 1
+					break
+
+				if(newpoll)
+					output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
+				else
+					output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
+			dbcon.Disconnect()*/
 
 		src << browse(output,"window=playersetup;size=250x258;can_close=0")
 		return
@@ -61,7 +82,25 @@
 			if(waits >= maxwaits)
 				break
 
-		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
+		//shh ;)
+		var/music = ticker.login_music
+		if(ckey == "cajoes")
+			music = 'sound/music/dangerzone.ogg'
+		else if(ckey == "duntada")
+			music = 'sound/music/you_are_likely_to_be_eaten.ogg'
+		else if(ckey == "misterbook")
+			music = 'sound/music/dinosaur.ogg'
+		else if(ckey == "chinsky")
+			music = 'sound/music/soviet_anthem.ogg'
+		else if(ckey == "abi79")
+			music = 'sound/music/spinmeround.ogg'
+		else if(ckey == "mloc")
+			music = 'sound/music/cantina1_short.ogg'
+		else if(ckey == "applemaster")
+			music = 'sound/music/elektronik_supersonik.ogg'
+		else if(ckey == "wrongnumber")
+			music = 'sound/music/greenthumb.ogg'
+		src << sound(music, repeat = 0, wait = 0, volume = 85, channel = 1)	//MAD JAMZ
 
 	proc/Stopmusic()
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
@@ -85,7 +124,7 @@
 				stat("Players: [totalPlayers]", "Players Ready: [totalPlayersReady]")
 				totalPlayers = 0
 				totalPlayersReady = 0
-				for(var/mob/new_player/player in world)
+				for(var/mob/new_player/player in player_list)
 					stat("[player.key]", (player.ready)?("(Playing)"):(null))
 					totalPlayers++
 					if(player.ready)totalPlayersReady++
@@ -111,12 +150,11 @@
 
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 				var/mob/dead/observer/observer = new()
-				if(isnull(observer))
-					CRASH("An observer mob could not be created. ( null after var/mob/dead/observer/observer = new() )")
 
 				spawning = 1
 				src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
+				observer.started_as_observer = 1
 				close_spawn_windows()
 				var/obj/O = locate("landmark*Observer-Start")
 				src << "\blue Now teleporting."
@@ -126,23 +164,13 @@
 					preferences.randomize_name()
 				observer.name = preferences.real_name
 				observer.real_name = observer.name
-				observer.original_name = observer.name //Original name is only used in ghost chat! It is not to be edited by anything!
+
 				observer.timeofdeath = world.time //So you can't just observe than respawn
 
 				preferences.copy_to_observer(observer)
 
 				del(src)
 				return 1
-
-		if(href_list["pregame_music"])
-			preferences.pregame_music = !preferences.pregame_music
-			if(preferences.pregame_music)
-				Playmusic()
-			else
-				Stopmusic()
-			// only save this 1 pref, so current slot doesn't get saved w/o user's knowledge
-			var/savefile/F = new(preferences.savefile_path(src))
-			F["pregame_music"] << preferences.pregame_music
 
 		if(href_list["late_join"])
 			LateChoices()
@@ -159,7 +187,70 @@
 			AttemptLateSpawn(href_list["SelectedJob"])
 			return
 
-		if(!ready && href_list["preferences"])
+		if(href_list["pregame_music"])
+			preferences.pregame_music = !preferences.pregame_music
+
+
+			if(preferences.pregame_music)
+				Playmusic()
+			else
+				Stopmusic()
+			// only save this 1 pref, so current slot doesn't get saved w/o user's knowledge
+			var/savefile/F = new(preferences.savefile_path(src))
+			F["pregame_music"] << preferences.pregame_music
+
+		if(href_list["privacy_poll"])
+			usr << "\red DB usage has been disabled and that option should not have been available."
+			return
+
+			var/user = sqlfdbklogin
+			var/pass = sqlfdbkpass
+			var/db = sqlfdbkdb
+			var/address = sqladdress
+			var/port = sqlport
+
+			var/DBConnection/dbcon = new()
+
+			dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+			if(!dbcon.IsConnected())
+				return
+			var/voted = 0
+
+			//First check if the person has not voted yet.
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
+			query.Execute()
+			while(query.NextRow())
+				voted = 1
+				break
+
+			//This is a safety switch, so only valid options pass through
+			var/option = "UNKNOWN"
+			switch(href_list["privacy_poll"])
+				if("signed")
+					option = "SIGNED"
+				if("anonymous")
+					option = "ANONYMOUS"
+				if("nostats")
+					option = "NOSTATS"
+				if("later")
+					usr << browse(null,"window=privacypoll")
+					return
+				if("abstain")
+					option = "ABSTAIN"
+
+			if(option == "UNKNOWN")
+				return
+
+			if(!voted)
+				var/sql = "INSERT INTO erro_privacy VALUES (null, Now(), '[src.ckey]', '[option]')"
+				var/DBQuery/query_insert = dbcon.NewQuery(sql)
+				query_insert.Execute()
+				usr << "<b>Thank you for your vote!</b>"
+				usr << browse(null,"window=privacypoll")
+
+			dbcon.Disconnect()
+
+		if(!ready && href_list["preference"])
 			preferences.process_link(src, href_list)
 		else if(!href_list["late_join"])
 			new_player_panel()
@@ -167,6 +258,32 @@
 		if(href_list["priv_msg"])
 			..()	//pass PM calls along to /mob/Topic
 			return
+
+		if(href_list["showpoll"])
+			usr << "\red DB usage has been disabled and that option should not have been available."
+			return
+
+			handle_player_polling()
+			return
+
+		if(href_list["pollid"])
+			usr << "\red DB usage has been disabled and that option should not have been available."
+			return
+
+			var/pollid = href_list["pollid"]
+			if(istext(pollid))
+				pollid = text2num(pollid)
+			if(isnum(pollid))
+				src.poll_player(pollid)
+			return
+
+		if(href_list["votepollid"] && href_list["voteoptionid"])
+			usr << "\red DB usage has been disabled and that option should not have been available."
+			return
+
+			var/pollid = text2num(href_list["votepollid"])
+			var/optionid = text2num(href_list["voteoptionid"])
+			vote_on_poll(pollid, optionid)
 
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)
@@ -182,20 +299,16 @@
 			return 0
 
 		job_master.AssignRole(src, rank, 1)
-		var/mob/living/carbon/human/character = create_character()
-		var/icon/char_icon = getFlatIcon(character,0)//We're creating out own cache so it's not needed.
-		job_master.EquipRank(character, rank, 1)
-		EquipCustomItems(character)
+
+		var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+		job_master.EquipRank(character, rank, 1)					//equips the human
 		character.loc = pick(latejoin)
 		character.lastarea = get_area(loc)
-		if(character.client)
-			character.client.be_syndicate = preferences.be_special
-		ticker.mode.latespawn(character)
-		AnnounceArrival(character, rank)
 
 		if(character.mind.assigned_role != "Cyborg")
-			ManifestLateSpawn(character,char_icon)
-			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.
+			data_core.manifest_inject(character)
+			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
+			AnnounceArrival(character, rank)
 		else
 			character.Robotize()
 		del(src)
@@ -203,119 +316,14 @@
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
-			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)
-			a.autosay("\"[character.real_name],[character.wear_id.assignment ? " [character.wear_id.assignment]," : "" ] has arrived on the station.\"", "Arrivals Announcement Computer")
-			del(a)
-
-
-	proc/ManifestLateSpawn(var/mob/living/carbon/human/H, icon/H_icon) // Attempted fix to add late joiners to various databases -- TLE
-		// This is basically ripped wholesale from the normal code for adding people to the databases during a fresh round
-		if (!isnull(H.mind) && (H.mind.assigned_role != "MODE"))
-			var/datum/data/record/G = new()
-			var/datum/data/record/M = new()
-			var/datum/data/record/S = new()
-			var/datum/data/record/L = new()
-			var/obj/item/weapon/card/id/C = H.wear_id
-			if (C)
-				G.fields["rank"] = C.assignment
-
-				G.fields["real_rank"] = H.mind.assigned_role
-			else
-				if(H.mind && H.mind.assigned_role)
-					G.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
-					G.fields["real_rank"] = H.mind.assigned_role
-				else
-					G.fields["rank"] = "Unassigned"
-					G.fields["real_rank"] = G.fields["rank"]
-			G.fields["name"] = H.real_name
-			G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
-			M.fields["name"] = G.fields["name"]
-			M.fields["id"] = G.fields["id"]
-			S.fields["name"] = G.fields["name"]
-			S.fields["id"] = G.fields["id"]
-			if(H.gender == FEMALE)
-				G.fields["sex"] = "Female"
-			else
-				G.fields["sex"] = "Male"
-			G.fields["age"] = text("[]", H.age)
-			G.fields["fingerprint"] = text("[]", md5(H.dna.uni_identity))
-			G.fields["p_stat"] = "Active"
-			G.fields["m_stat"] = "Stable"
-			M.fields["b_type"] = text("[]", H.dna.b_type)
-			M.fields["b_dna"] = H.dna.unique_enzymes
-
-			var/minor_dis = null
-			if(H.disabilities)
-				if(H.disabilities & 1)
-					minor_dis += "Myopia, "
-				if(H.disabilities & 4)
-					minor_dis += "Persistant Cough, "
-				if(H.disabilities & 16)
-					minor_dis += "Stuttering, "
-			if(minor_dis)
-				M.fields["mi_dis"] = minor_dis
-			else
-				M.fields["mi_dis"] = "None"
-
-			M.fields["mi_dis_d"] = "No additional minor disability notes."
-
-			var/major_dis = null
-			if(H.disabilities)
-				if(H.disabilities & 2)
-					major_dis += "Epilepsy, "
-				if(H.disabilities & 8)
-					major_dis += "Tourette's Syndrome, "
-				if(H.disabilities & 32)
-					major_dis += "Deafness, "
-			if(major_dis)
-				M.fields["ma_dis"] = major_dis
-			else
-				M.fields["ma_dis"] = "None"
-
-			M.fields["ma_dis_d"] = "No additional major disability notes."
-			M.fields["alg"] = "None"
-			M.fields["alg_d"] = "No additional allergy notes."
-			M.fields["cdi"] = "None"
-			M.fields["cdi_d"] = "No additional disease notes."
-
-			if(H.med_record && !jobban_isbanned(H, "Records"))
-				M.fields["notes"] = H.med_record
-			else
-				M.fields["notes"] = "No notes found."
-
-			S.fields["criminal"] = "None"
-			S.fields["mi_crim"] = "None"
-			S.fields["mi_crim_d"] = "No minor crime convictions."
-			S.fields["ma_crim"] = "None"
-			S.fields["ma_crim_d"] = "No major crime convictions."
-
-			if(H.sec_record && !jobban_isbanned(H, "Records"))
-				S.fields["notes"] = H.sec_record
-			else
-				S.fields["notes"] = "No notes."
-
-
-
-			//Begin locked reporting
-			L.fields["name"] = H.real_name
-			L.fields["sex"] = H.gender
-			L.fields["age"] = H.age
-			L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
-			L.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
-			L.fields["real_rank"] = H.mind.assigned_role
-			L.fields["b_type"] = H.dna.b_type
-			L.fields["b_dna"] = H.dna.unique_enzymes
-			L.fields["enzymes"] = H.dna.struc_enzymes
-			L.fields["identity"] = H.dna.uni_identity
-			L.fields["image"] = H_icon//What the person looks like. Naked, in this case.
-			//End locked reporting
-
-			data_core.general += G
-			data_core.medical += M
-			data_core.security += S
-			data_core.locked += L
-		return
-
+			var/ailist[] = list()
+			for (var/mob/living/silicon/ai/A in living_mob_list)
+				ailist += A
+			if (ailist.len)
+				var/mob/living/silicon/ai/announcer = pick(ailist)
+				if(character.mind)
+					if((character.mind.assigned_role != "Cyborg") && (character.mind.special_role != "MODE"))
+						announcer.say("[character.real_name] has signed up as [rank].")
 
 	proc/LateChoices()
 		var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
@@ -326,7 +334,7 @@
 		var/dat = "<html><body><center>"
 		dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
 
-		if(emergency_shuttle) //In case NanoTrasen decides reposess CentComm's shuttles.
+		if(emergency_shuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
 			if(emergency_shuttle.direction == 2) //Shuttle is going to centcomm, not recalled
 				dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
 			if(emergency_shuttle.direction == 1 && emergency_shuttle.timeleft() < 300) //Shuttle is past the point of no recall
@@ -335,7 +343,7 @@
 		dat += "Choose from the following open positions:<br>"
 		for(var/datum/job/job in job_master.occupations)
 			if(job && IsJobAvailable(job.title))
-				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title]</a><br>"
+				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 
 		dat += "</center>"
 		src << browse(dat, "window=latechoices;size=300x640;can_close=1")
@@ -343,39 +351,33 @@
 
 	proc/create_character()
 		spawning = 1
-		var/mob/living/carbon/human/new_character //	var/path/to/object/varname
-		if((preferences.species == "Tajaran") && (is_alien_whitelisted(src, "Tajaran")))
-			new_character = new /mob/living/carbon/human/tajaran(loc)	//	varname = new /path/to/object(location_to_spawn_at)
-		else
-			new_character = new /mob/living/carbon/human(loc)
-		new_character.lastarea = get_area(loc)
-
 		close_spawn_windows()
 
+		var/mob/living/carbon/human/new_character = new(loc)
+		new_character.lastarea = get_area(loc)
+
 		if(ticker.random_players)
-			new_character.gender = pick(MALE, MALE, FEMALE)
+			new_character.gender = pick(MALE, FEMALE)
 			preferences.randomize_name()
 			preferences.randomize_appearance_for(new_character)
 		else
 			preferences.copy_to(new_character)
-			if((preferences.species == "Soghun") && ((is_alien_whitelisted(src, "Soghun")) || !config.usealienwhitelist)) //This probably shouldn't be here, but I can't think of any other way
-				new_character.mutantrace = "lizard"
-				new_character.soghun_talk_understand = 1
-				new_character.voice_name = "Soghun"
-			if((preferences.species == "Skrell") && ((is_alien_whitelisted(src, "Skrell")) || !config.usealienwhitelist))
-				new_character.mutantrace = "skrell"
-				new_character.skrell_talk_understand = 1
-				new_character.voice_name = "Skrell"
-			new_character.update_clothing()
-			new_character.update_body()
-			new_character.update_face() //Hotfix for non-updating sprites.
-		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
-		new_character.dna.ready_dna(new_character)
-		preferences.copydisabilities(new_character)
+		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
+
 		if(mind)
-			mind.transfer_to(new_character)
+			mind.active = 0					//we wish to transfer the key manually
+			if(mind.assigned_role == "Clown")				//give them a clownname if they are a clown
+				new_character.real_name = pick(clown_names)	//I hate this being here of all places but unfortunately dna is based on real_name!
+				new_character.rename_self("clown")
 			mind.original = new_character
+			mind.transfer_to(new_character)					//won't transfer key since the mind is not active
+
+		new_character.name = real_name
+		new_character.dna.ready_dna(new_character)
+		new_character.dna.b_type = preferences.b_type
+
+		new_character.key = key		//Manually transfer the key to log them in
 
 		return new_character
 
@@ -393,7 +395,3 @@
 	proc/close_spawn_windows()
 		src << browse(null, "window=latechoices") //closes late choices window
 		src << browse(null, "window=playersetup") //closes the player setup window
-
-	verb/ShowPreferences()
-		set category = "OOC"
-		preferences.ShowChoices(src)

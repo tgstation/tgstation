@@ -13,7 +13,7 @@
 
 /obj/effect/alien/weeds/node/New()
 	..()
-	ul_SetLuminosity(NODERANGE)
+	sd_SetLuminosity(NODERANGE)
 	return
 
 /obj/effect/alien/weeds/proc/Life()
@@ -69,7 +69,10 @@ Alien plants should do something if theres a lot of poison
 	return
 
 /obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
-	visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+	if(W.attack_verb.len)
+		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
+	else
+		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
 
 	var/damage = W.force / 4.0
 
@@ -78,7 +81,7 @@ Alien plants should do something if theres a lot of poison
 
 		if(WT.remove_fuel(0, user))
 			damage = 15
-			playsound(loc, 'Welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 	health -= damage
 	healthcheck()

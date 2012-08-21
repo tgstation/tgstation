@@ -56,7 +56,7 @@
 		tforce = 10
 	else
 		tforce = AM:throwforce
-	playsound(loc, 'attackblob.ogg', 100, 1)
+	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	health = max(0, health - tforce)
 	healthcheck()
 	..()
@@ -80,7 +80,7 @@
 	usr << "\green You claw at the [name]."
 	for(var/mob/O in oviewers(src))
 		O.show_message("\red [usr] claws at the resin!", 1)
-	playsound(loc, 'attackblob.ogg', 100, 1)
+	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	health -= rand(10, 20)
 	if(health <= 0)
 		usr << "\green You slice the [name] to pieces."
@@ -113,12 +113,12 @@
 
 	var/aforce = W.force
 	health = max(0, health - aforce)
-	playsound(loc, 'attackblob.ogg', 100, 1)
+	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	healthcheck()
 	..()
 	return
 
-/obj/effect/alien/resin/process() //Buggy and irrelevant now that you're able to just make nice little infection chambers - Urist
+///obj/effect/alien/resin/process() //Buggy and irrelevant now that you're able to just make nice little infection chambers - Urist
 	/*if(affecting)
 		var/mob/living/carbon/M = affecting
 		var/check = 0
@@ -157,10 +157,10 @@
 		else
 			for(var/mob/O in viewers(src, 3))
 				O.show_message(text("\red An alien larva bursts from the resin wall!"), 1, text("\red You hear a high, alien screech nearby!"), 2)*/
-	return
+//	return
 
 /obj/effect/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return 0
-	if(istype(mover) && mover.pass_flags & PASSGLASS)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density

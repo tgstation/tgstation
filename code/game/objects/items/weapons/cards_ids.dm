@@ -28,17 +28,6 @@ FINGERPRINT CARD
 
 
 // ID CARDS
-/obj/item/weapon/card/id/examine()
-	..()
-	read()
-
-/obj/item/weapon/card/id/New()
-	..()
-	spawn(30)
-	if(istype(loc, /mob/living/carbon/human))
-		blood_type = loc:dna:b_type
-		dna_hash = loc:dna:unique_enzymes
-		fingerprint_hash = md5(loc:dna:uni_identity)
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
@@ -61,11 +50,8 @@ FINGERPRINT CARD
 	set src in usr
 
 	usr << text("\icon[] []: The current assignment on the card is [].", src, src.name, src.assignment)
-	usr << "The blood type on the card is [blood_type]."
-	usr << "The DNA hash on the card is [dna_hash]."
-	usr << "The fingerprint hash on the card is [fingerprint_hash]."
 	return
-/obj/item/weapon/card/id/syndicate/var/mob/registered_user = null
+
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered_name)
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
@@ -83,36 +69,9 @@ FINGERPRINT CARD
 		src.assignment = u
 		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
 		user << "\blue You successfully forge the ID card."
-		registered_user = user
-	else if(registered_user == user)
-		switch(alert("Would you like to display the ID, or retitle it?","Choose.","Rename","Show"))
-			if("Rename")
-				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)),1,26)
-				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
-					alert("Invalid name.")
-					return
-				src.registered_name = t
-		
-				var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")),1,MAX_MESSAGE_LEN)
-				if(!u)
-					alert("Invalid assignment.")
-					src.registered_name = ""
-					return
-				src.assignment = u
-				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-				user << "\blue You successfully forge the ID card."
-				return
-			if("Show")
-				..()
 	else
 		..()
 
-/obj/item/weapon/card/id/proc/checkaccess(p,var/mob/user)
-	if(p == pin)
-		user << "\green Access granted"
-		return 1
-	user << "\red Access denied"
-	return 0
 
 // FINGERPRINT HOLDER
 
@@ -133,17 +92,7 @@ FINGERPRINT CARD
 		if (href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
 			if ((P && P.loc == src))
-				if ((usr.hand && !( usr.l_hand )))
-					usr.l_hand = P
-					P.loc = usr
-					P.layer = 20
-					usr.update_clothing()
-				else
-					if (!( usr.r_hand ))
-						usr.r_hand = P
-						P.loc = usr
-						P.layer = 20
-						usr.update_clothing()
+				usr.put_in_hands(P)
 				src.add_fingerprint(usr)
 				P.add_fingerprint(usr)
 			src.update()
@@ -191,7 +140,7 @@ FINGERPRINT CARD
 	else
 		if (istype(P, /obj/item/weapon/pen))
 			var/t = input(user, "Holder Label:", text("[]", src.name), null)  as text
-			if (user.equipped() != P)
+			if (user.get_active_hand() != P)
 				return
 			if ((!in_range(src, usr) && src.loc != user))
 				return
@@ -250,11 +199,7 @@ FINGERPRINT CARD
 		var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user )
 		F.amount = 1
 		src.amount--
-		if (user.hand)
-			user.l_hand = F
-		else
-			user.r_hand = F
-		F.layer = 20
+		user.put_in_hands(F)
 		F.add_fingerprint(user)
 		if (src.amount < 1)
 			//SN src = null
@@ -285,7 +230,7 @@ FINGERPRINT CARD
 	else
 		if (istype(W, /obj/item/weapon/pen))
 			var/t = input(user, "Card Label:", text("[]", src.name), null)  as text
-			if (user.equipped() != W)
+			if (user.get_active_hand() != W)
 				return
 			if ((!in_range(src, usr) && src.loc != user))
 				return

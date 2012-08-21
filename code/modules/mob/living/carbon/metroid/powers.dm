@@ -76,6 +76,7 @@
 				if(Victim.health <= 0)
 					Victim.adjustToxLoss(rand(2,4))
 
+				// Heal yourself
 				adjustToxLoss(-10)
 				adjustOxyLoss(-10)
 				adjustBruteLoss(-10)
@@ -136,7 +137,8 @@
 			if(Victim && !rabid && !attacked)
 				if(Victim.LAssailant && Victim.LAssailant != Victim)
 					if(prob(50))
-						Friends |= Victim.LAssailant
+						if(!(Victim.LAssailant in Friends))
+							Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
 
 		if(M.client && istype(src, /mob/living/carbon/human))
 			if(prob(85))
@@ -170,13 +172,12 @@
 		return
 	if(!istype(src, /mob/living/carbon/metroid/adult))
 		if(amount_grown >= 10)
-			var/mob/living/carbon/metroid/adult/new_metroid = new /mob/living/carbon/metroid/adult (loc)
-			new_metroid.mind_initialize(src)
-			new_metroid.key = key
+			var/mob/living/carbon/metroid/adult/new_metroid = new /mob/living/carbon/metroid/adult(loc)
 			new_metroid.nutrition = nutrition
 			new_metroid.powerlevel = max(0, powerlevel-1)
-
 			new_metroid.a_intent = "hurt"
+			new_metroid.key = key
+
 			new_metroid << "<B>You are now an adult Metroid.</B>"
 			del(src)
 		else
@@ -194,31 +195,28 @@
 
 	if(istype(src, /mob/living/carbon/metroid/adult))
 		if(amount_grown >= 10)
-			switch(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced metroid.") in list("Yes","No"))
-				if("Yes")
+			if(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced metroid.") in list("Yes","No")=="Yes")
+				if(stat)
+					src << "<i>I must be conscious to do this...</i>"
+					return
 
-					if(stat)
-						src << "<i>I must be conscious to do this...</i>"
-						return
+				var/list/babies = list()
+				var/number = pick(14;2,3,4)
+				var/new_nutrition = round(nutrition * 0.9)
+				var/new_powerlevel = round(powerlevel / number)
+				for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
+					var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
+					M.nutrition = new_nutrition
+					M.powerlevel = new_powerlevel
+					if(i != 1) step_away(M,src)
+					babies += M
 
-					var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)
-					var/list/babies = list()
-					for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
-						var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
-						M.nutrition = round(nutrition/number)
-						M.powerlevel = round(powerlevel / number)
-						if(i != 1) step_away(M,src)
-						babies += M
+				var/mob/living/carbon/metroid/new_metroid = pick(babies)
+				new_metroid.a_intent = "hurt"
+				new_metroid.key = key
 
-
-					var/mob/living/carbon/metroid/new_metroid = pick(babies)
-
-					new_metroid.mind_initialize(src)
-					new_metroid.key = key
-
-					new_metroid.a_intent = "hurt"
-					new_metroid << "<B>You are now a baby Metroid.</B>"
-					del(src)
+				new_metroid << "<B>You are now a Metroid. Skree!</B>"
+				del(src)
 		else
 			src << "<i>I am not ready to reproduce yet...</i>"
 	else
@@ -230,56 +228,5 @@
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Metroid"
-
-
-	if(istype(src, /mob/living/carbon/metroid/adult))
-		src << "<i>I am much too big to fit in this small vent...</i>"
-		return
-
-	if(!stat)
-
-		if(Victim)
-			src << "<i>Not while I am a feeding...</i>"
-			return
-		var/obj/machinery/atmospherics/unary/vent_pump/vent_found
-		for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
-			if(!v.welded)
-				vent_found = v
-			else
-				src << "\red <i>That vent is welded...</i>"
-		if(vent_found)
-			if(vent_found.network&&vent_found.network.normal_members.len)
-				var/list/vents = list()
-				for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in vent_found.network.normal_members)
-					if(temp_vent.loc == loc)
-						continue
-					vents.Add(temp_vent)
-				var/list/choices = list()
-				for(var/obj/machinery/atmospherics/unary/vent_pump/vent in vents)
-					if(vent.loc.z != loc.z)
-						continue
-					var/atom/a = get_turf(vent)
-					choices.Add(a.loc)
-				var/turf/startloc = loc
-				var/obj/selection = input("Select a destination.", "Duct System") in choices
-				var/selection_position = choices.Find(selection)
-				if(loc==startloc)
-					var/obj/target_vent = vents[selection_position]
-					if(target_vent)
-						for(var/mob/O in oviewers())
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
-						loc = target_vent.loc
-				else
-					src << "<i>I must remain still while entering a vent...</i>"
-			else
-				src << "<i>This vent is not connected to anything...</i>"
-		else
-			src << "<i>I must be standing on or beside an air vent to enter it...</i>"
-	else
-		src << "<i>I must be conscious to do this...</i>"
-	return
-
-
-
-
+	if(Victim)	return
+	handle_ventcrawl()

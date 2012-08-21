@@ -7,6 +7,16 @@
 		p++
 	return t
 
+/obj/machinery/computer/dna
+	name = "DNA operations computer"
+	desc = "A Computer used to advanced DNA stuff."
+	icon_state = "dna"
+	var/obj/item/weapon/card/data/scan = null
+	var/obj/item/weapon/card/data/modify = null
+	var/obj/item/weapon/card/data/modify2 = null
+	var/mode = null
+	var/temp = null
+
 /obj/machinery/computer/dna/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
@@ -237,10 +247,10 @@
 	if (src.occupant)
 		usr << "\blue <B>The scanner is already occupied!</B>"
 		return
-	if (usr.abiotic2())
+	if (usr.abiotic())
 		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
-	usr.pulling = null
+	usr.stop_pulling()
 	usr.client.perspective = EYE_PERSPECTIVE
 	usr.client.eye = src
 	usr.loc = src
@@ -259,7 +269,7 @@
 	if (src.occupant)
 		user << "\blue <B>The scanner is already occupied!</B>"
 		return
-	if (G.affecting.abiotic2())
+	if (G.affecting.abiotic())
 		user << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
 	var/mob/M = G.affecting
@@ -711,9 +721,9 @@
 					M.primary = null
 					var/t1 = hex2num(copytext(O.primary.uni_identity, 25, 28))
 					if (t1 < 125)
-						O.gender = "male"
+						O.gender = MALE
 					else
-						O.gender = "female"
+						O.gender = FEMALE
 					M << "Genetic Transversal Complete!"
 					if (M.client)
 						M << "Transferring..."
@@ -782,11 +792,11 @@
 			if (length(H.primary.uni_identity) >= 20)
 				t1 = copytext(H.primary.uni_identity, 19, 21)
 				if (hex2num(t1) > 127)
-					H.gender = "female"
+					H.gender = FEMALE
 				else
-					H.gender = "male"
+					H.gender = MALE
 			else
-				H.gender = "neuter"
+				H.gender = NEUTER
 			if (length(H.primary.uni_identity) >= 18)
 				t1 = copytext(H.primary.uni_identity, 17, 19)
 				H.ns_tone = hex2num(t1)
@@ -837,7 +847,7 @@
 				var/i
 				while (!i)
 					var/randomname
-					if (src.gender == "male")
+					if (src.gender == MALE)
 						randomname = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
 					else
 						randomname = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
@@ -858,10 +868,10 @@
 	if (src.occupant)
 		usr << "\blue <B>The scanner is already occupied!</B>"
 		return
-	if (usr.abiotic2())
+	if (usr.abiotic())
 		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
-	usr.pulling = null
+	usr.stop_pulling()
 	usr.client.perspective = EYE_PERSPECTIVE
 	usr.client.eye = src
 	usr.loc = src
@@ -888,7 +898,7 @@
 	if (src.occupant)
 		user << "\blue <B>The machine is already occupied!</B>"
 		return
-	if (G.affecting.abiotic2())
+	if (G.affecting.abiotic())
 		user << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
 	var/mob/M = G.affecting

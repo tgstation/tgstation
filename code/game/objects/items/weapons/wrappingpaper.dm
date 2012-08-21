@@ -19,6 +19,9 @@ PHOTOGRAPHS
 				user << "\blue You need more paper!"
 				return
 			else
+				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
+					return
+
 				src.amount -= a_used
 				user.drop_item()
 				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )
@@ -32,7 +35,6 @@ PHOTOGRAPHS
 				src.add_fingerprint(user)
 			if (src.amount <= 0)
 				new /obj/item/weapon/c_tube( src.loc )
-				//SN src = null
 				del(src)
 				return
 		else
@@ -51,23 +53,25 @@ PHOTOGRAPHS
 
 /obj/item/weapon/wrapping_paper/attack(mob/target as mob, mob/user as mob)
 	if (!istype(target, /mob/living/carbon/human)) return
-	if (istype(target:wear_suit, /obj/item/clothing/suit/straight_jacket) || target:stat)
+	var/mob/living/carbon/human/H = target
+
+	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat)
 		if (src.amount > 2)
-			var/obj/effect/spresent/present = new /obj/effect/spresent (target:loc)
+			var/obj/effect/spresent/present = new /obj/effect/spresent (H.loc)
 			src.amount -= 2
 
-			if (target:client)
-				target:client:perspective = EYE_PERSPECTIVE
-				target:client:eye = present
+			if (H.client)
+				H.client.perspective = EYE_PERSPECTIVE
+				H.client.eye = present
 
-			target:loc = present
-			target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [target.name] ([target.ckey])</font>")
+			H.loc = present
+			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
 
-			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [target.name] ([target.ckey])</font>")
+			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])</font>")
 
 		else
-			user << "/blue You need more paper."
+			user << "\blue You need more paper."
 	else
 		user << "Theyre moving around too much. a Straitjacket would help."
 
@@ -78,16 +82,12 @@ PHOTOGRAPHS
 // GIFTS
 
 /obj/item/weapon/gift/attack_self(mob/user as mob)
-	if(!src.gift)
-		user << "\blue The gift was empty!"
-		del(src)
-	src.gift.loc = user
-	if (user.hand)
-		user.l_hand = src.gift
+	user.drop_item()
+	if(src.gift)
+		user.put_in_active_hand(gift)
+		src.gift.add_fingerprint(user)
 	else
-		user.r_hand = src.gift
-	src.gift.layer = 20
-	src.gift.add_fingerprint(user)
+		user << "\blue The gift was empty!"
 	del(src)
 	return
 
@@ -105,7 +105,7 @@ PHOTOGRAPHS
 	..()
 
 	if (!istype(W, /obj/item/weapon/wirecutters))
-		user << "/blue I need wirecutters for that."
+		user << "\blue I need wirecutters for that."
 		return
 
 	user << "\blue You cut open the present."
@@ -123,57 +123,32 @@ PHOTOGRAPHS
 	switch(pick("flash", "t_gun", "l_gun", "shield", "sword", "axe"))
 		if("flash")
 			var/obj/item/device/flash/W = new /obj/item/device/flash( M )
-			if (M.hand)
-				M.l_hand = W
-			else
-				M.r_hand = W
-			W.layer = 20
+			M.put_in_active_hand(W)
 			W.add_fingerprint(M)
-			//SN src = null
 			del(src)
 			return
 		if("l_gun")
 			var/obj/item/weapon/gun/energy/laser/W = new /obj/item/weapon/gun/energy/laser( M )
-			if (M.hand)
-				M.l_hand = W
-			else
-				M.r_hand = W
-			W.layer = 20
+			M.put_in_active_hand(W)
 			W.add_fingerprint(M)
-			//SN src = null
 			del(src)
 			return
 		if("t_gun")
 			var/obj/item/weapon/gun/energy/taser/W = new /obj/item/weapon/gun/energy/taser( M )
-			if (M.hand)
-				M.l_hand = W
-			else
-				M.r_hand = W
-			W.layer = 20
+			M.put_in_active_hand(W)
 			W.add_fingerprint(M)
-			//SN src = null
 			del(src)
 			return
 		if("sword")
 			var/obj/item/weapon/melee/energy/sword/W = new /obj/item/weapon/melee/energy/sword( M )
-			if (M.hand)
-				M.l_hand = W
-			else
-				M.r_hand = W
-			W.layer = 20
+			M.put_in_active_hand(W)
 			W.add_fingerprint(M)
-			//SN src = null
 			del(src)
 			return
 		if("axe")
 			var/obj/item/weapon/melee/energy/axe/W = new /obj/item/weapon/melee/energy/axe( M )
-			if (M.hand)
-				M.l_hand = W
-			else
-				M.r_hand = W
-			W.layer = 20
+			M.put_in_active_hand(W)
 			W.add_fingerprint(M)
-			//SN src = null
 			del(src)
 			return
 		else
@@ -183,7 +158,6 @@ PHOTOGRAPHS
 
 /obj/structure/bedsheetbin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/bedsheet))
-		//W = null
 		del(W)
 		src.amount++
 	return

@@ -127,15 +127,15 @@ obj
 							if(firelevel > 6)
 								icon_state = "3"
 								if(LuminosityRed != 11)
-									ul_SetLuminosity(11,9,0)
+									sd_SetLuminosity(11,9,0)
 							else if(firelevel > 2.5)
 								icon_state = "2"
 								if(LuminosityRed != 8)
-									ul_SetLuminosity(8,7,0)
+									sd_SetLuminosity(8,7,0)
 							else
 								icon_state = "1"
 								if(LuminosityRed != 5)
-									ul_SetLuminosity(5,4,0)
+									sd_SetLuminosity(5,4,0)
 
 							//Ensure flow temperature is higher than minimum fire temperatures.
 							flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
@@ -164,7 +164,7 @@ obj
 		New(newLoc,fl)
 			..()
 			dir = pick(cardinal)
-			ul_SetLuminosity(3,2,0)
+			sd_SetLuminosity(3,2,0)
 			firelevel = fl
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(min(max(0.1,firelevel / 20),10)) //Burn the humans!
@@ -172,7 +172,7 @@ obj
 
 		Del()
 			if (istype(loc, /turf/simulated))
-				ul_SetLuminosity(0)
+				sd_SetLuminosity(0)
 
 				loc = null
 			air_master.active_hotspots.Remove(src)
@@ -322,7 +322,8 @@ datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 		arms_exposure = 1
 
 	//Get heat transfer coefficients for clothing.
-	for(var/obj/item/clothing/C in src)
+	//skytodo: this is handled different in tg
+	/*for(var/obj/item/clothing/C in src)
 		if(l_hand == C || r_hand == C) continue
 		if(C.body_parts_covered & HEAD)
 			head_exposure *= C.heat_transfer_coefficient
@@ -333,7 +334,7 @@ datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 		if(C.body_parts_covered & LEGS)
 			legs_exposure *= C.heat_transfer_coefficient
 		if(C.body_parts_covered & ARMS)
-			arms_exposure *= C.heat_transfer_coefficient
+			arms_exposure *= C.heat_transfer_coefficient*/
 
 	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 

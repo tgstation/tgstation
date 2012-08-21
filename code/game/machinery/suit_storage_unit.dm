@@ -6,7 +6,7 @@
 /obj/machinery/suit_storage_unit
 	name = "Suit Storage Unit"
 	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a UV-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
-	icon = 'suitstorage.dmi'
+	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "suitstorage000000100" //order is: [has helmet][has suit][has human][is open][is locked][is UV cycling][is powered][is dirty/broken] [is superUVcycling]
 	anchored = 1
 	density = 1
@@ -34,14 +34,6 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space
 	MASK_TYPE = /obj/item/clothing/mask/breath
-
-/obj/machinery/suit_storage_unit/captain_unit
-	name = "Captain's Suit Storage Unit"
-	SUIT_TYPE = /obj/item/clothing/suit/armor/captain
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/capspace
-	MASK_TYPE = /obj/item/clothing/mask/breath
-	req_access = list(ACCESS_CAPTAIN)
-	islocked = 1 // otherwise anyone can grab it
 
 
 /obj/machinery/suit_storage_unit/New()
@@ -308,9 +300,6 @@
 
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
-	if(!src.allowed(user))
-		user << "\red Access denied."
-		return
 	if(src.OCCUPANT && src.safetieson)
 		user << "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>"
 		return
@@ -463,7 +452,7 @@
 	for (var/mob/V in viewers(usr))
 		V.show_message("[usr] starts squeezing into the suit storage unit!", 3)
 	if(do_after(usr, 10))
-		usr.pulling = null
+		usr.stop_pulling()
 		usr.client.perspective = EYE_PERSPECTIVE
 		usr.client.eye = src
 		usr.loc = src
@@ -488,7 +477,7 @@
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
 		src.panelopen = !src.panelopen
-		playsound(src.loc, 'Screwdriver.ogg', 100, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user << text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") )
 		src.updateUsrDialog()
 		return

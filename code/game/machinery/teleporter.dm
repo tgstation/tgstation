@@ -7,28 +7,37 @@
 	var/id = null
 
 /obj/machinery/computer/teleporter/New()
-	src.id = text("[]", rand(1000, 9999))
+	src.id = "[rand(1000, 9999)]"
 	..()
 	return
 
-/obj/machinery/computer/teleporter/attackby(I as obj, user as mob)
+
+//TODO: Merge this proc with attack_hand() code so that this actually uses the teleporter procs instead of just bypassing everything
+/obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob)
 	if (istype(I, /obj/item/weapon/card/data/))
 		var/obj/item/weapon/card/data/M = I
 		if(stat & (NOPOWER|BROKEN) & (M.function != "teleporter"))
 			src.attack_hand()
 
+		//Quickfix for hiding nuke disks and people getting to centcomm until I can get the attack_hand() stuff to incorperate this.
+		for(var/obj/O in user.get_contents())
+			if(istype(O, /obj/item/weapon/disk/nuclear) || istype(O, /obj/item/device/radio/beacon) || istype(O, /obj/item/weapon/storage/backpack/holding))
+				user << "<span class='notice'>Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>"
+				return
+
 		var/obj/S = null
 		for(var/obj/effect/landmark/sloc in world)
 			if (sloc.name != M.data)
 				continue
-			if (locate(/mob) in sloc.loc)
+			if (locate(/mob/living) in sloc.loc)
 				continue
 			S = sloc
 			break
-		if (!S)
+		if(!S)
 			S = locate("landmark*[M.data]") // use old stype
-		if (istype(S, /obj/effect/landmark/) && istype(S.loc, /turf))
-			usr.loc = S.loc
+		if(istype(S, /obj/effect/landmark/) && istype(S.loc, /turf))
+			user.loc = S.loc
+			user.drop_item()
 			del(I)
 		return
 	else
@@ -36,12 +45,6 @@
 	return
 
 /obj/machinery/computer/teleporter/attack_paw()
-	src.attack_hand()
-
-/obj/machinery/computer/teleporter/security/attackby(obj/item/weapon/W)
-	src.attack_hand()
-
-/obj/machinery/computer/teleporter/security/attack_paw()
 	src.attack_hand()
 
 /obj/machinery/teleport/station/attack_ai()
@@ -68,7 +71,7 @@
 		L[tmpname] = R
 
 	for (var/obj/item/weapon/implant/tracking/I in world)
-		if (!I.implanted || !(istype(I.loc,/datum/organ/external) || ismob(loc)))
+		if (!I.implanted || !ismob(I.loc))
 			continue
 		else
 			var/mob/M = I.loc
@@ -85,11 +88,10 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = I
 
-	var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
-	if(desc)
-		src.locked = L[desc]
-		for(var/mob/O in hearers(src, null))
-			O.show_message("\blue Locked In", 2)
+	var/desc = input("Please select a location to lock in.", "Locking Computer") in L
+	src.locked = L[desc]
+	for(var/mob/O in hearers(src, null))
+		O.show_message("\blue Locked In", 2)
 	src.add_fingerprint(usr)
 	return
 
@@ -104,6 +106,14 @@
 	if (t)
 		src.id = t
 	return
+
+/proc/find_loc(obj/R as obj)
+	if (!R)	return null
+	var/turf/T = R.loc
+	while(!istype(T, /turf))
+		T = T.loc
+		if(!T || istype(T, /area))	return null
+	return T
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn()
@@ -123,7 +133,7 @@
 		return
 	if (istype(M, /atom/movable))
 		if(prob(5) && !accurate) //oh dear a problem, put em in deep space
-			do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy - 5), 3), 2)
+			do_teleport(M, locate(rand((2*TRANSITIONEDGE), world.maxx - (2*TRANSITIONEDGE)), rand((2*TRANSITIONEDGE), world.maxy - (2*TRANSITIONEDGE)), 3), 2)
 		else
 			do_teleport(M, com.locked) //dead-on precision
 	else

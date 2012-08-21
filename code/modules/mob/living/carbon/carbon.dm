@@ -5,34 +5,37 @@
 			src.nutrition -= HUNGER_FACTOR/10
 			if(src.m_intent == "run")
 				src.nutrition -= HUNGER_FACTOR/10
-/*		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
+		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
-*/
+
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
 			for(var/mob/M in hearers(4, src))
 				if(M.client)
 					M.show_message(text("\red You hear something rumbling inside [src]'s stomach..."), 2)
-			var/obj/item/I = user.equipped()
+			var/obj/item/I = user.get_active_hand()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
-				if(ishuman(src))
+				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
 					var/organ = H.get_organ("chest")
 					if (istype(organ, /datum/organ/external))
 						var/datum/organ/external/temp = organ
-						temp.take_damage(d, 0)
-					H.UpdateDamageIcon()
+						if(temp.take_damage(d, 0))
+							H.UpdateDamageIcon()
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
 						M.show_message(text("\red <B>[user] attacks [src]'s stomach wall with the [I.name]!"), 2)
-				playsound(user.loc, 'attackblob.ogg', 50, 1)
+				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
 
 				if(prob(src.getBruteLoss() - 50))
+					for(var/atom/movable/A in stomach_contents)
+						A.loc = loc
+						stomach_contents.Remove(A)
 					src.gib()
 
 /mob/living/carbon/gib()
@@ -46,19 +49,6 @@
 	. = ..()
 
 /mob/living/carbon/attack_hand(mob/M as mob)
-	if (M.hand)
-		if(ishuman(M) || ismonkey(M))
-			var/datum/organ/external/temp = M:organs["l_hand"]
-			if(temp.status & ORGAN_DESTROYED)
-				M << "\red Yo- wait a minute."
-				return
-	else
-		if(ishuman(M) || ismonkey(M))
-			var/datum/organ/external/temp = M:organs["r_hand"]
-			if(temp.status & ORGAN_DESTROYED)
-				M << "\red Yo- wait a minute."
-				return
-
 	if(!istype(M, /mob/living/carbon)) return
 
 	for(var/datum/disease/D in viruses)
@@ -97,18 +87,6 @@
 
 /mob/living/carbon/attack_paw(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
-	if (M.hand)
-		if(ishuman(M) || ismonkey(M))
-			var/datum/organ/external/temp = M:organs["l_hand"]
-			if(temp.status & ORGAN_DESTROYED)
-				M << "\red Yo- wait a minute."
-				return
-	else
-		if(ishuman(M) || ismonkey(M))
-			var/datum/organ/external/temp = M:organs["r_hand"]
-			if(temp.status & ORGAN_DESTROYED)
-				M << "\red Yo- wait a minute."
-				return
 
 
 	for(var/datum/disease/D in viruses)
@@ -149,7 +127,7 @@
 	shock_damage *= siemens_coeff
 	if (shock_damage<1)
 		return 0
-	src.take_overall_damage(0,shock_damage,"Electrocution")
+	src.take_overall_damage(0,shock_damage)
 	//src.burn_skin(shock_damage)
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
@@ -200,15 +178,15 @@
 		swap_hand()
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if (src.health > config.health_threshold_crit)
+	if (src.health > 0)
 		if(src == M && istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			var/list/damaged = H.get_damaged_organs(1,1)
-			visible_message("\blue [src] examines [get_visible_gender() == MALE ? "himself" : get_visible_gender() == FEMALE ? "herself" : "themselves"].", \
-				"\blue You check yourself for injuries.", \
-				"You hear a rustle, as someone checks about their person.")
+			var/mob/living/carbon/human/H = src
+			src.visible_message( \
+				text("\blue [src] examines [].",src.gender==MALE?"himself":"herself"), \
+				"\blue You check yourself for injuries." \
+				)
 
-			for(var/datum/organ/external/org in damaged)
+			for(var/datum/organ/external/org in H.organs)
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
@@ -221,11 +199,9 @@
 				if(brutedamage > 0)
 					status = "bruised"
 				if(brutedamage > 20)
-					status = "blugeoned"
+					status = "bleeding"
 				if(brutedamage > 40)
 					status = "mangled"
-				if(org.status & ORGAN_BLEEDING && brutedamage)
-					status += ",[burndamage ? "" : " and"] bleeding[burndamage ? "," : ""]"
 				if(brutedamage > 0 && burndamage > 0)
 					status += " and "
 				if(burndamage > 40)
@@ -235,106 +211,117 @@
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
-				if(org.status & ORGAN_DESTROYED)
-					status = "MISSING!"
-
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.getDisplayName(),status),1)
-			src.show_message(text("\blue You finish checking yourself."),1)
 		else
+			var/t_him = "it"
+			if (src.gender == MALE)
+				t_him = "him"
+			else if (src.gender == FEMALE)
+				t_him = "her"
 			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
-			if(!src.sleeping_willingly)
-				src.sleeping = max(0,src.sleeping-5)
+			src.sleeping = max(0,src.sleeping-5)
 			if(src.sleeping == 0)
 				src.resting = 0
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
-			playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+			playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			M.visible_message( \
-				"\blue \The [M] shakes \the [src] trying to wake them up!", \
-				"\blue You shake \the [src] trying to wake them up!", \
-				"You hear someone get shaken.") //Using it or its here have he or his, which made no sense, so sticking with gender neutral for now
+				"\blue [M] shakes [src] trying to wake [t_him] up!", \
+				"\blue You shake [src] trying to wake [t_him] up!", \
+				)
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
 
-// in a coma from logitis!
-/mob/living/carbon/Logout()
-	..()
+// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
+// Stop! ... Hammertime! ~Carn
 
-	if(!src.sleeping && !src.admin_observing) // would be exploited by stoxin'd people otherwise ;)
-					   // (also make admins set-observing not sleep)
-		src.sleeping = 1
-		src.sleeping_willingly = 1
+/mob/living/carbon/proc/getDNA()
+	return dna
 
-/mob/living/carbon/Login()
-	..()
+/mob/living/carbon/proc/setDNA(var/datum/dna/newDNA)
+	dna = newDNA
 
-	src.admin_observing = 0
-	if(src.sleeping_willingly)
-		src.sleeping = 0
-		src.sleeping_willingly = 0
-/*	// Update the hands-indicator on re-join.
-	if (!( src.hand ))
-		src.hands.dir = NORTH
+// ++++ROCKDTBEN++++ MOB PROCS //END
+
+/mob/living/carbon/proc/handle_ventcrawl() // -- TLE -- Merged by Carn
+
+	if(!stat)
+		if(!lying)
+
+			var/obj/machinery/atmospherics/unary/vent_pump/vent_found
+			for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
+				if(!v.welded)
+					vent_found = v
+				else
+					src << "\red That vent is welded."
+
+			if(vent_found)
+				if(vent_found.network&&vent_found.network.normal_members.len)
+					var/list/vents[0]
+					for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in vent_found.network.normal_members)
+						if(temp_vent.loc == loc)
+							continue
+						var/turf/T = get_turf(temp_vent)
+
+						if(!T || T.z != loc.z)
+							continue
+
+						var/i = 1
+						var/index = "[T.loc.name]\[[i]\]"
+						while(index in vents)
+							i++
+							index = "[T.loc.name]\[[i]\]"
+						vents[index] = temp_vent
+
+					var/turf/startloc = loc
+					var/obj/selection = input("Select a destination.", "Duct System") as null|anything in sortList(vents)
+					if(!selection)	return
+					if(loc==startloc)
+						if(contents.len)
+							for(var/obj/item/carried_item in contents)//If the monkey got on objects.
+								if( !istype(carried_item, /obj/item/weapon/implant) && !istype(carried_item, /obj/item/clothing/mask/facehugger) )//If it's not an implant or a facehugger
+									src << "\red You can't be carrying items or have items equipped when vent crawling!"
+									return
+						var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection]
+						if(target_vent)
+							for(var/mob/O in viewers(src, null))
+								O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
+							loc = target_vent
+
+							var/travel_time = round(get_dist(loc, target_vent.loc) / 2)
+
+							spawn(travel_time)
+
+								if(!target_vent)	return
+								for(var/mob/O in hearers(target_vent,null))
+									O.show_message("You hear something squeezing through the ventilation ducts.",2)
+
+								sleep(travel_time)
+
+								if(!target_vent)	return
+								if(target_vent.welded)			//the vent can be welded while alien scrolled through the list or travelled.
+									target_vent = vent_found 	//travel back. No additional time required.
+									src << "\red The vent you were heading to appears to be welded."
+								loc = target_vent.loc
+
+					else
+						src << "You need to remain still while entering a vent."
+				else
+					src << "This vent is not connected to anything."
+
+			else
+				src << "You must be standing on or beside an air vent to enter it."
+
+		else
+			src << "You can't vent crawl while you're stunned!"
+
 	else
-		src.hands.dir = SOUTH
-*/
-
-/mob/living/carbon/human/proc/GetOrgans()
-	var/list/L = list(  )
-	for(var/t in organs)
-		if (istype(organs[text("[]", t)], /datum/organ/external))
-			L += organs[text("[]", t)]
-	return L
-
-/mob/living/carbon/proc/UpdateDamage()
-
-	if (!(istype(src, /mob/living/carbon/human)))	//Added by Strumpetplaya - Invincible Monkey Fix
-		return										//Possibly helps with other invincible mobs like Aliens?
-	var/list/L = list(  )
-	for(var/t in organs)
-		if (istype(organs[text("[]", t)], /datum/organ/external))
-			L += organs[text("[]", t)]
-	bruteloss = 0
-	fireloss = 0
-	for(var/datum/organ/external/O in L)
-		bruteloss += O.get_damage_brute()
-		fireloss += O.get_damage_fire()
+		src << "You must be conscious to do this!"
 	return
-
-/mob/living/carbon/proc/check_dna()
-	dna.check_integrity(src)
-	return
-
-/mob/living/carbon/proc/get_organ(var/zone)
-	if(!zone)	zone = "chest"
-	for(var/name in organs)
-		var/datum/organ/external/O = organs[name]
-		if(O.name == zone)
-			return O
-	return null
-
-/mob/living/carbon/proc/drip()
-
-/mob/living/carbon/proc/vomit()
-	// only humanoids and monkeys can vomit
-	if(!istype(src,/mob/living/carbon/human) && !istype(src,/mob/living/carbon/monkey))
-		return
-
-	// Make the human vomit on the floor
-	for(var/mob/O in viewers(world.view, src))
-		O.show_message(text("<b>\red [] throws up!</b>", src), 1)
-	playsound(src.loc, 'splat.ogg', 50, 1)
-
-	var/turf/location = loc
-	if (istype(location, /turf/simulated))
-		location.add_vomit_floor(src, 1)
-
-	nutrition -= 20
-	adjustToxLoss(-3)
 

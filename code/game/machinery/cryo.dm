@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryo cell"
-	icon = 'Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = 1
 	anchored = 1.0
@@ -15,9 +15,6 @@
 
 	var/current_heat_capacity = 50
 
-
-	return_air()
-		return air_contents
 
 
 	New()
@@ -47,7 +44,7 @@
 
 		if(air_contents)
 			temperature_archived = air_contents.temperature
-//			heat_gas_contents()
+			heat_gas_contents()
 			expel_gas()
 
 		if(abs(temperature_archived-air_contents.temperature) > 1)
@@ -149,7 +146,7 @@
 			else
 				icon_state = "celltop-p"
 			O1 = new /obj/effect/overlay(  )
-			O1.icon = 'Cryogenic2.dmi'
+			O1.icon = 'icons/obj/Cryogenic2.dmi'
 			if(src.node)
 				O1.icon_state = "cryo_bottom_[src.on]"
 			else
@@ -159,7 +156,7 @@
 			add_overlays()
 
 		process_occupant()
-			if(air_contents.total_moles < 10)
+			if(air_contents.total_moles() < 10)
 				return
 			if(occupant)
 				if(occupant.stat == 2)
@@ -188,24 +185,22 @@
 			if(next_trans == 10)
 				next_trans = 0
 
-//Fucking ghost-heating.
-//		heat_gas_contents()
-//			if(air_contents.total_moles < 1)
-//				return
-//			var/air_heat_capacity = air_contents.heat_capacity()
-//			var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
-//			if(combined_heat_capacity > 0)
-//				var/combined_energy = T20C*current_heat_capacity + air_heat_capacity*air_contents.temperature
-//				air_contents.temperature = combined_energy/combined_heat_capacity
+		heat_gas_contents()
+			if(air_contents.total_moles() < 1)
+				return
+			var/air_heat_capacity = air_contents.heat_capacity()
+			var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
+			if(combined_heat_capacity > 0)
+				var/combined_energy = T20C*current_heat_capacity + air_heat_capacity*air_contents.temperature
+				air_contents.temperature = combined_energy/combined_heat_capacity
 
 		expel_gas()
-			if(air_contents.total_moles < 1)
+			if(air_contents.total_moles() < 1)
 				return
 			var/datum/gas_mixture/expel_gas = new
-			var/remove_amount = air_contents.total_moles/100
+			var/remove_amount = air_contents.total_moles()/100
 			expel_gas = air_contents.remove(remove_amount)
 			expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
-			expel_gas.update_values()
 			loc.assume_air(expel_gas)
 
 		go_out()
@@ -232,12 +227,12 @@
 				usr << "\red Subject may not have abiotic items on."
 				return
 			if(!src.node)
-				usr << "\red The cell is not corrrectly connected to its pipe network!"
+				usr << "\red The cell is not correctly connected to its pipe network!"
 				return
 			if (M.client)
 				M.client.perspective = EYE_PERSPECTIVE
 				M.client.eye = src
-			M.pulling = null
+			M.stop_pulling()
 			M.loc = src
 			if(M.health > -100 && (M.health < 0 || M.sleeping))
 				M << "\blue <b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>"
@@ -252,9 +247,18 @@
 			set name = "Eject occupant"
 			set category = "Object"
 			set src in oview(1)
-			if (usr.stat != 0)
-				return
-			src.go_out()
+			if(usr == src.occupant)//If the user is inside the tube...
+				if (usr.stat == 2)//and he's not dead....
+					return
+				usr << "\blue Release sequence activated. This will take two minutes."
+				sleep(1200)
+				if(!src || !usr || !src.occupant || (src.occupant != usr)) //Check if someone's released/replaced/bombed him already
+					return
+				src.go_out()//and release him from the eternal prison.
+			else
+				if (usr.stat != 0)
+					return
+				src.go_out()
 			add_fingerprint(usr)
 			return
 

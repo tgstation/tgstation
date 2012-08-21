@@ -20,11 +20,6 @@ TABLE AND RACK OBJECT INTERATIONS
 		else
 	return
 
-/obj/structure/table/examine()
-	set src in oview()
-	..()
-	if(dented)
-		usr << "It looks to have [dented] [prob(30) ? "face shaped " : ""] dents in it."
 
 /obj/structure/table/blob_act()
 	if(prob(75))
@@ -122,7 +117,7 @@ TABLE AND RACK OBJECT INTERATIONS
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
-	if(istype(mover) && (mover.pass_flags & PASSTABLE || (mover.flags & TABLEPASS) || mover.throwing)) //WTF do things hit tables like that?  Jeez.
+	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
 		return 0
@@ -130,7 +125,7 @@ TABLE AND RACK OBJECT INTERATIONS
 
 /obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
 
-	if ((!( istype(O, /obj/item/weapon) ) || user.equipped() != O))
+	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
 	if(isrobot(user))
 		return
@@ -144,47 +139,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
-			if(ishuman(G.affecting))
-				G.affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed on a table by [G.assailant.name] ([G.assailant.ckey])</font>")
-				G.assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Smashed [G.affecting.name] ([G.affecting.ckey]) on a table.</font>")
-
-				log_admin("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
-				message_admins("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
-				log_attack("<font color='red'>[G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.</font>")
-
-				var/mob/living/carbon/human/H = G.affecting
-				var/datum/organ/external/affecting = H.get_organ("head")
-				if(prob(25))
-					add_blood(G.affecting)
-					affecting.take_damage(rand(10,15), 0)
-					H.Weaken(2)
-					if(prob(20)) // One chance in 20 to DENT THE TABLE
-						affecting.take_damage(rand(5,10), 0) //Extra damage
-						if(dented)
-							G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] with enough force to further deform \the [src]!\nYou wish you could unhear that sound.",\
-							"\red You smash \the [H]'s head on \the [src] with enough force to leave another dent!\n[prob(50)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
-							"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
-						else
-							G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] so hard it left a dent!\nYou wish you could unhear that sound.",\
-							"\red You smash \the [H]'s head on \the [src] with enough force to leave a dent!\n[prob(5)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
-							"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
-						dented++
-					else if(prob(50))
-						G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.get_visible_gender() == MALE ? "his" : H.get_visible_gender() == FEMALE ? "her" : "their"] bone and cartilage making a loud crunch!",\
-						"\red You smash \the [H]'s head on \the [src], [H.get_visible_gender() == MALE ? "his" : H.get_visible_gender() == FEMALE ? "her" : "their"] bone and cartilage making a loud crunch!",\
-						"\red You hear the nauseating crunch of bone and gristle on solid metal, the noise echoing through the room.")
-					else
-						G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.get_visible_gender() == MALE ? "his" : H.get_visible_gender() == FEMALE ? "her" : "their"] nose smashed and face bloodied!",\
-						"\red You smash \the [H]'s head on \the [src], [H.get_visible_gender() == MALE ? "his" : H.get_visible_gender() == FEMALE ? "her" : "their"] nose smashed and face bloodied!",\
-						"\red You hear the nauseating crunch of bone and gristle on solid metal and the gurgling gasp of someone who is trying to breathe through their own blood.")
-				else
-					affecting.take_damage(rand(5,10), 0)
-					G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src]!",\
-					"\red You smash \the [H]'s head on \the [src]!",\
-					"\red You hear the nauseating crunch of bone and gristle on solid metal.")
-				H.UpdateDamageIcon()
-				H.updatehealth()
-				playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
+			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
@@ -196,10 +151,10 @@ TABLE AND RACK OBJECT INTERATIONS
 
 	if (istype(W, /obj/item/weapon/wrench))
 		user << "\blue Now disassembling table"
-		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50))
 			new /obj/item/weapon/table_parts( src.loc )
-			playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			//SN src = null
 			del(src)
 		return
@@ -211,7 +166,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
-		playsound(src.loc, 'blade1.ogg', 50, 1)
+		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
 			O.show_message("\blue The table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
@@ -241,10 +196,10 @@ TABLE AND RACK OBJECT INTERATIONS
 		return
 	if (istype(W, /obj/item/weapon/wrench))
 		user << "\blue Now disassembling the wooden table"
-		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		sleep(50)
 		new /obj/item/weapon/table_parts/wood( src.loc )
-		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		del(src)
 		return
 	if(isrobot(user))
@@ -253,7 +208,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
-		playsound(src.loc, 'blade1.ogg', 50, 1)
+		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
 			O.show_message("\blue The wooden table was sliced apart by [user]!", 1, "\red You hear wood coming apart.", 2)
@@ -287,14 +242,14 @@ TABLE AND RACK OBJECT INTERATIONS
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
 				user << "\blue Now weakening the reinforced table"
-				playsound(src.loc, 'Welder.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
 					user << "\blue Table weakened"
 					src.status = 1
 			else
 				user << "\blue Now strengthening the reinforced table"
-				playsound(src.loc, 'Welder.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if (do_after(user, 50))
 					if(!src || !WT.isOn()) return
 					user << "\blue Table strengthened"
@@ -309,10 +264,10 @@ TABLE AND RACK OBJECT INTERATIONS
 	if (istype(W, /obj/item/weapon/wrench))
 		if(src.status == 1)
 			user << "\blue Now disassembling the reinforced table"
-			playsound(src.loc, 'Ratchet.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 50))
 				new /obj/item/weapon/table_parts/reinforced( src.loc )
-				playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				del(src)
 			return
 	if(isrobot(user))
@@ -322,7 +277,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
-		playsound(src.loc, 'blade1.ogg', 50, 1)
+		playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
 			O.show_message("\blue The reinforced table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
@@ -362,13 +317,13 @@ TABLE AND RACK OBJECT INTERATIONS
 	if(air_group || (height==0)) return 1
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
-	if(istype(mover) && (mover.pass_flags & PASSTABLE || mover.flags & TABLEPASS || mover.throwing))
+	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
 		return 0
 
 /obj/structure/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
-	if ((!( istype(O, /obj/item/weapon) ) || user.equipped() != O))
+	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
 	if(isrobot(user))
 		return
@@ -380,7 +335,7 @@ TABLE AND RACK OBJECT INTERATIONS
 /obj/structure/rack/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/weapon/rack_parts( src.loc )
-		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		//SN src = null
 		del(src)
 		return

@@ -3,7 +3,7 @@
 
 /obj/machinery/navbeacon
 
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "navbeacon0-f"
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
@@ -18,7 +18,7 @@
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_access = list(ACCESS_ENGINE)
+	req_access = list(access_engine)
 
 	New()
 		..()
@@ -39,7 +39,7 @@
 
 		codes = new()
 
-		var/list/entries = dd_text2List(codes_txt, ";")	// entries are separated by semicolons
+		var/list/entries = dd_text2list(codes_txt, ";")	// entries are separated by semicolons
 
 		for(var/e in entries)
 			var/index = findtext(e, "=")		// format is "key=value"

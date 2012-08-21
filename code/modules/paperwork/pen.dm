@@ -1,8 +1,9 @@
 /obj/item/weapon/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
-	icon = 'bureaucracy.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
+	item_state = "pen"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 0

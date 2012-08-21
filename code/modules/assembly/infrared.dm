@@ -9,7 +9,7 @@
 	w_amt = 100
 	origin_tech = "magnets=2"
 
-	secured = 1
+	secured = 0
 	small_icon_state_left = "infrared_left"
 	small_icon_state_right = "infrared_right"
 
@@ -46,13 +46,7 @@
 		if(scanning)
 			src.overlays += text("infrared_old2")
 			src.small_icon_state_overlays += text("infrared_on")
-			if(master && istype(master, /obj/item/weapon/chem_grenade))
-				var/obj/item/weapon/chem_grenade/M = master
-				M.c_state(1)
-		else
-			if(master && istype(master, /obj/item/weapon/chem_grenade))
-				var/obj/item/weapon/chem_grenade/M = master
-				M.c_state(0)
+
 		if(holder)
 			holder.update_icon()
 		return
@@ -137,7 +131,6 @@
 		if (href_list["state"])
 			src.scanning = !(src.scanning)
 			update_icon()
-			processing_objects.Add(src)
 
 		if (href_list["visible"])
 			src.visible = !(src.visible)
@@ -169,7 +162,7 @@
 
 /obj/effect/beam/i_beam
 	name = "i beam"
-	icon = 'projectiles.dmi'
+	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
 	var/obj/effect/beam/i_beam/next = null
 	var/obj/item/device/assembly/infra/master = null

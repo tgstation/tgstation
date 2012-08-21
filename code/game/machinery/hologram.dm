@@ -19,7 +19,7 @@ Possible to do for anyone motivated enough:
 			last_request = world.time
 			user << "<span class='notice'>You request an AI's presence.</span>"
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in world)
+			for(var/mob/living/silicon/ai/AI in player_list)
 				if(!AI.client)	continue
 				AI << "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>"
 		else
@@ -31,8 +31,8 @@ Possible to do for anyone motivated enough:
 	/*There are pretty much only three ways to interact here.
 	I don't need to check for client since they're clicking on an object.
 	This may change in the future but for now will suffice.*/
-	if(user.eyeobj.loc!=src.loc)//Set client eye on the object if it's not already.
-		user.eyeobj.loc = src.loc
+	if(user.client.eye!=src)//Set client eye on the object if it's not already.
+		user.current = src
 		user.reset_view(src)
 	else if(!hologram)//If there is no hologram, possibly make one.
 		activate_holo(user)
@@ -41,10 +41,9 @@ Possible to do for anyone motivated enough:
 	return
 
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
-	if(!(stat & NOPOWER)&&user.eyeobj.loc==src.loc)//If the projector has power and client eye is on it.
+	if(!(stat & NOPOWER)&&user.client.eye==src)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
-			user.current = src
 			for(var/mob/M in viewers())
 				M.show_message("A holographic image of [user] flicks to life right before your eyes!",1)
 		else
@@ -72,27 +71,27 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.icon = A.holo_icon
 	hologram.mouse_opacity = 0//So you can't click on it.
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	hologram.ul_SetLuminosity(0,0,2)//To make it glowy.
+	hologram.sd_SetLuminosity(1)//To make it glowy.
 	hologram.anchored = 1//So space wind cannot drag it.
 	hologram.name = "AI hologram"//If someone decides to right click.
-	ul_SetLuminosity(0,0,1)//To make the pad glowy.
+	sd_SetLuminosity(1)//To make the pad glowy.
 	icon_state = "holopad1"
 	master = A//AI is the master.
 	use_power = 2//Active power usage.
 	return 1
 
 /obj/machinery/hologram/holopad/proc/clear_holo()
-	hologram.ul_SetLuminosity(0)//Clear lighting.
+	hologram.sd_SetLuminosity(0)//Clear lighting.
 	del(hologram)//Get rid of hologram.
 	master = null//Null the master, since no-one is using it now.
-	ul_SetLuminosity(0)//Clear lighting for the parent.
+	sd_SetLuminosity(0)//Clear lighting for the parent.
 	icon_state = "holopad0"
 	use_power = 1//Passive power usage.
 	return 1
 
 /obj/machinery/hologram/holopad/process()
 	if(hologram)//If there is a hologram.
-		if(master&&!master.stat&&master.client&&master.eyeobj.loc==src.loc)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
+		if(master&&!master.stat&&master.client&&master.client.eye==src)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
 			if( !(get_dist(src,hologram.loc)>3||stat & NOPOWER) )//If the hologram is not out of bounds and the machine has power.
 				return 1
 		clear_holo()//If not, we want to get rid of the hologram.
@@ -143,7 +142,7 @@ Holographic project of everything else.
 	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
 	var/input = input("Select what icon state to use in effect.",,"")
 	if(input)
-		var/icon/alpha_mask = new('effects.dmi', "[input]")
+		var/icon/alpha_mask = new('icons/effects/effects.dmi', "[input]")
 		flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
 		hologram.icon = flat_icon
 

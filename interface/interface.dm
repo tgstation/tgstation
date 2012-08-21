@@ -27,4 +27,5 @@
 	set name = "Rules"
 	set desc = "Show Server Rules."
 	set hidden = 1
-	src << browse(file(RULES_FILE), "window=rules;size=480x480")
+	src << browse(file(RULES_FILE), "window=rules;size=480x320")
+#undef RULES_FILE

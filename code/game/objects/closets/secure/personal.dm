@@ -1,22 +1,20 @@
 /obj/structure/closet/secure_closet/personal/var/registered_name = null
-/obj/structure/closet/secure_closet/personal/req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
+/obj/structure/closet/secure_closet/personal/req_access = list(access_all_personal_lockers)
 
 /obj/structure/closet/secure_closet/personal/New()
 	..()
 	spawn(2)
-		new /obj/item/device/assembly/signaler(src)
-		new /obj/item/wardrobe/assistant(src)
-
-		var/obj/item/weapon/storage/backpack/BPK = new /obj/item/weapon/storage/backpack(src)
-		var/obj/item/weapon/storage/box/newbox = new(BPK)
-		new /obj/item/weapon/pen(newbox)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_norm(src)
+		new /obj/item/device/radio/headset( src )
 	return
 
 /obj/structure/closet/secure_closet/personal/patient/New()
 	..()
-	contents = list()
 	spawn(4)
-		new /obj/item/clothing/suit/patientgown( src )
+		contents = list()
 		new /obj/item/clothing/under/color/white( src )
 		new /obj/item/clothing/shoes/white( src )
 	return
@@ -51,16 +49,9 @@
 			if(!src.registered_name)
 				src.registered_name = I.registered_name
 				src.desc = "Owned by [I.registered_name]."
-				src.name = "Personal Closet - [I.registered_name]"
 		else
 			user << "\red Access Denied"
 	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
-		if(istype(W, /obj/item/weapon/card/emag))
-			var/obj/item/weapon/card/emag/E = W
-			if(E.uses)
-				E.uses--
-			else
-				return
 		broken = 1
 		locked = 0
 		desc = "It appears to be broken."
@@ -69,7 +60,7 @@
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, 'blade1.ogg', 50, 1)
+			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 3))
 				O.show_message("\blue The locker has been sliced open by [user] with an energy blade!", 1, "\red You hear metal being sliced and sparks flying.", 2)

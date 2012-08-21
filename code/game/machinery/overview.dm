@@ -5,8 +5,9 @@
 	set category = "Object"
 	set src in view(1)
 	usr.machine = src
+	if(!mapping)	return
 
-	log_game("[usr]([usr.key]) used station map L[maplevel] in [src.loc.loc]")
+	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
 
 	src.drawmap(usr)
 
@@ -26,8 +27,8 @@
 #ifdef AMAP
 
 	for(var/i = 0; i<icount; i++)
-		imap += icon('imap.dmi', "blank")
-		imap += icon('imap.dmi', "blank")
+		imap += icon('icons/misc/imap.dmi', "blank")
+		imap += icon('icons/misc/imap.dmi', "blank")
 
 	//world << "[icount] images in list"
 
@@ -36,7 +37,7 @@
 
 		for(var/wy = 1; wy <= world.maxy; wy++)
 
-			var/turf/T = locate(wx, wy, maplevel)
+			var/turf/T = locate(wx, wy, z)
 
 			var/colour
 			var/colour2
@@ -122,8 +123,9 @@
 					colour = rgb(red, green, blue)
 
 			if(!colour2 && !T.density)
-
-				var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
+				var/datum/gas_mixture/environment = T.return_air()
+				var/turf_total = environment.total_moles()
+				//var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
 
 
 				var/t1 = turf_total / MOLES_CELLSTANDARD * 150
@@ -186,13 +188,13 @@
 #else
 
 	for(var/i = 0; i<icount; i++)
-		imap += icon('imap.dmi', "blank")
+		imap += icon('icons/misc/imap.dmi', "blank")
 
 	for(var/wx = 1 ; wx <= world.maxx; wx++)
 
 		for(var/wy = 1; wy <= world.maxy; wy++)
 
-			var/turf/T = locate(wx, wy, maplevel)
+			var/turf/T = locate(wx, wy, z)
 
 			var/colour
 
@@ -208,7 +210,7 @@
 
 					if("/turf/simulated/floor", "/turf/simulated/floor/engine")
 						var/datum/gas_mixture/environment = T.return_air()
-						var/turf_total = environment.total_moles
+						var/turf_total = environment.total_moles()
 						var/t1 = turf_total / MOLES_CELLSTANDARD * 175
 
 						if(t1<=100)
@@ -284,7 +286,7 @@
 
 			//world << "icon: \icon[I]"
 
-			I.DrawBox(colour, rx, ry, rx+1, ry+1)
+			I.DrawBox(colour, rx, ry, rx, ry)
 
 
 	user.clearmap()

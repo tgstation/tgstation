@@ -1,9 +1,9 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	icon = 'mob.dmi'//
+	icon = 'icons/mob/mob.dmi'//
 	icon_state = "shadow"
 
-	robot_talk_understand = 1 //pAI's can now use binary
+	robot_talk_understand = 0
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
@@ -35,8 +35,7 @@
 	var/screen				// Which screen our main window displays
 	var/subscreen			// Which specific function of the main screen is being displayed
 
-	var/tnote				// Message history var used for PDA Messaging functions
-	var/poff = 0			// For PDA messanging.
+	var/obj/item/device/pda/pai/pda = null
 
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
 	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
@@ -49,3 +48,5 @@
 
 	var/obj/machinery/door/hackdoor		// The airlock being hacked
 	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+
+	var/obj/item/radio/integrated/signal/sradio // AI's signaller

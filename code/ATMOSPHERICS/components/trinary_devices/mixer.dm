@@ -1,11 +1,11 @@
 obj/machinery/atmospherics/trinary/mixer
-	icon = 'mixer.dmi'
+	icon = 'icons/obj/atmospherics/mixer.dmi'
 	icon_state = "intact_off"
 	density = 1
 
 	name = "Gas mixer"
 
-//	req_access = list(ACCESS_ATMOSPHERICS)
+	req_access = list(access_atmospherics)
 
 	var/on = 0
 
@@ -51,8 +51,8 @@ obj/machinery/atmospherics/trinary/mixer
 		if(air2.temperature > 0)
 			transfer_moles2 = (node2_concentration*pressure_delta)*air3.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
 
-		var/air1_moles = air1.total_moles
-		var/air2_moles = air2.total_moles
+		var/air1_moles = air1.total_moles()
+		var/air2_moles = air2.total_moles()
 
 		if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
 			if(!transfer_moles1 || !transfer_moles2) return
@@ -95,7 +95,7 @@ obj/machinery/atmospherics/trinary/mixer
 			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
-		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \
@@ -137,6 +137,7 @@ obj/machinery/atmospherics/trinary/mixer
 		return
 
 	Topic(href,href_list)
+		if(..()) return
 		if(href_list["power"])
 			on = !on
 		if(href_list["set_press"])

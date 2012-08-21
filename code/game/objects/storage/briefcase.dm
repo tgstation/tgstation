@@ -1,7 +1,14 @@
 /obj/item/weapon/storage/briefcase/New()
 	..()
+	new /obj/item/weapon/paper(src)
+	new /obj/item/weapon/paper(src)
+	new /obj/item/weapon/paper(src)
+	new /obj/item/weapon/paper(src)
+	new /obj/item/weapon/paper(src)
+	new /obj/item/weapon/paper(src)
+	new /obj/item/weapon/pen(src)
 
-/obj/item/weapon/storage/briefcase/attack(mob/M as mob, mob/living/user as mob)
+/obj/item/weapon/storage/briefcase/attack(mob/living/M as mob, mob/living/user as mob)
 	//..()
 
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -14,8 +21,6 @@
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
-	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 	if (M.stat < 2 && M.health < 50 && prob(90))
@@ -37,20 +42,3 @@
 		M.eye_blurry += 3
 
 	return
-
-/obj/item/weapon/storage/briefcase/surgery
-	icon_state = "medbriefcase"
-	name = "surgery equipment bag"
-	desc = "Heavy and full of sharp things."
-
-	New()
-		..()
-		contents = list()
-		sleep(1)
-		new /obj/item/weapon/circular_saw(src)
-		new /obj/item/weapon/hemostat(src)
-		new /obj/item/weapon/scalpel(src)
-		new /obj/item/weapon/retractor(src)
-		new /obj/item/weapon/cautery(src)
-		new /obj/item/weapon/surgical_tool/bonegel(src)
-		new /obj/item/weapon/surgical_tool/bonesetter(src)

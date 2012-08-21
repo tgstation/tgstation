@@ -1,9 +1,3 @@
-/obj/item/Del()
-	if (src.loc && istype(src.loc, /mob/living/carbon/human))
-		//world << "\blue **Beep! Deleted [src] from [src.loc]**"
-		var/mob/living/carbon/human/H = src.loc
-		H.u_equip(src)
-	..()
 
 /obj/item/weapon/bedsheet/ex_act(severity)
 	if (severity <= 2)
@@ -25,14 +19,14 @@
 		if(!M.handcuffed)
 			var/turf/p_loc = user.loc
 			var/turf/p_loc_m = M.loc
-			playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+			playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 			for(var/mob/O in viewers(user, null))
 				O.show_message("\red <B>[user] is trying to put handcuffs on [M]!</B>", 1)
 			spawn(30)
 				if(!M)	return
 				if(p_loc == user.loc && p_loc_m == M.loc)
 					M.handcuffed = new /obj/item/weapon/handcuffs(M)
-					M.update_clothing()
+					M.update_inv_handcuffed()
 
 	else
 		if ((CLUMSY in usr.mutations) && prob(50))
@@ -42,7 +36,7 @@
 					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 					O.source = user
 					O.target = user
-					O.item = user.equipped()
+					O.item = user.get_active_hand()
 					O.s_loc = user.loc
 					O.t_loc = user.loc
 					O.place = "handcuff"
@@ -59,24 +53,23 @@
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [M.name] ([M.ckey])</font>")
 
-				log_admin("ATTACK: [user] ([user.ckey]) handcuffed [M] ([M.ckey]).")
 				log_attack("<font color='red'>[user.name] ([user.ckey]) Attempted to handcuff [M.name] ([M.ckey])</font>")
 
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 				O.source = user
 				O.target = M
-				O.item = user.equipped()
+				O.item = user.get_active_hand()
 				O.s_loc = user.loc
 				O.t_loc = M.loc
 				O.place = "handcuff"
 				M.requests += O
 				spawn( 0 )
 					if(istype(src, /obj/item/weapon/handcuffs/cable))
-//						feedback_add_details("handcuffs","C")
-						playsound(src.loc, 'cablecuff.ogg', 30, 1, -2)
+						feedback_add_details("handcuffs","C")
+						playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 					else
-//						feedback_add_details("handcuffs","H")
-						playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+						feedback_add_details("handcuffs","H")
+						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					O.process()
 			return
 		else
@@ -84,16 +77,16 @@
 				var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
 				O.source = user
 				O.target = M
-				O.item = user.equipped()
+				O.item = user.get_active_hand()
 				O.s_loc = user.loc
 				O.t_loc = M.loc
 				O.place = "handcuff"
 				M.requests += O
 				spawn( 0 )
 					if(istype(src, /obj/item/weapon/handcuffs/cable))
-						playsound(src.loc, 'cablecuff.ogg', 30, 1, -2)
+						playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 					else
-						playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					O.process()
 			return
 	return
@@ -128,7 +121,7 @@
 		var/obj/o = target
 		o.reagents.trans_to(src, 50)
 		user << "\blue \The [src] is now refilled"
-		playsound(src.loc, 'refill.ogg', 50, 1, -6)
+		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
 
 	if (!safety)
@@ -141,11 +134,11 @@
 
 		src.last_use = world.time
 
-		playsound(src.loc, 'extinguish.ogg', 75, 1, -3)
+		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && istype(usr.buckled, /obj/structure/stool/bed/chair/office) && !usr.buckled.anchored ) //Making only office chairs fire-extinguishable. Because NO FUN ALLOWED
+		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
 			spawn(0)
 				var/obj/B = usr.buckled
 				var/movementdirection = turn(direction,180)
@@ -236,12 +229,10 @@
 	if(!ismob(M))
 		return
 	user << "\red You stab [M] with the pen."
-//	M << "\red You feel a tiny prick!" //Removed to make tritor pens stealthier
+	M << "\red You feel a tiny prick!"
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
 
-	log_admin("ATTACK: [user] ([user.ckey]) used [src] on [M] ([M.ckey]).")
-	message_admins("ATTACK: [user] ([user.ckey]) used [src] on [M] ([M.ckey]).")
 	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [src.name] to stab [M.name] ([M.ckey])</font>")
 
 
@@ -255,10 +246,12 @@
 	return
 
 /obj/item/weapon/pen/sleepypen/New()
-	var/datum/reagents/R = new/datum/reagents(18) //Used to be 300
+	var/datum/reagents/R = new/datum/reagents(30) //Used to be 300
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("stoxin", 18)
+	R.add_reagent("chloralhydrate", 22)	//Used to be 100 sleep toxin//30 Chloral seems to be fatal, reducing it to 22./N
+//	R.add_reagent("impedrezene", 100)
+//	R.add_reagent("cryptobiolin", 100)
 	..()
 	return
 
@@ -267,7 +260,7 @@
 		return
 	..()
 	if(reagents.total_volume)
-		if(M.reagents) reagents.trans_to(M, 6) //used to be 150, 6 gives around 2 minutes of knock out.
+		if(M.reagents) reagents.trans_to(M, 50) //used to be 150
 	return
 
 //NEW STYLE PARAPEN
@@ -304,15 +297,18 @@
 	return
 
 /obj/effect/manifest/proc/manifest()
+	var/dat = "<B>Crew Manifest</B>:<BR>"
+	for(var/mob/living/carbon/human/M in mob_list)
+		dat += text("    <B>[]</B> -  []<BR>", M.name, M.get_assignment())
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
-	P.info = "<B>Crew Manifest:</B><BR>" + data_core.get_manifest()
-	P.name = "paper - 'Crew Manifest'"
+	P.info = dat
+	P.name = "paper- 'Crew Manifest'"
 	//SN src = null
 	del(src)
 	return
 
 
-//What the fuck is this code  Looks to be the parrying code.  If you're grabbing someone, it might hit them instead... or something.--SkyMarshal
+//What the fuck is this code
 /mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (user.intent != "harm")
 		if (istype(src.l_hand,/obj/item/latexballon) && src.l_hand:air_contents && is_sharp(W))
@@ -394,7 +390,7 @@
 	if(!(user.zone_sel.selecting == ("head")) || !istype(M, /mob/living/carbon/human))
 		return ..()
 
-	if(!(locate(/obj/machinery/optable, M.loc) && M.resting))
+	if(	!(locate(/obj/machinery/optable, M.loc) && M.resting) && ( !(locate(/obj/structure/table/, M.loc) && M.lying) && prob(50) ) )
 		return ..()
 
 	var/mob/living/carbon/human/H = M
@@ -403,15 +399,11 @@
 		user << "\blue You're going to need to remove their head cover first."
 		return
 
-	var/datum/organ/external/head = H.organs["head"]
-	if(head.status & ORGAN_DESTROYED)
-		user << "\blue Put it where? There's no head."
-
 //since these people will be dead M != usr
 
 	if(M:brain_op_stage == 4.0)
 		for(var/mob/O in viewers(M, null))
-			if(O == user || O == M)
+			if(O == (user || M))
 				continue
 			if(M == user)
 				O.show_message(text("\red [user] inserts [src] into his head!"), 1)
@@ -426,20 +418,12 @@
 
 		//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
 		if(M.key)//Revised. /N
-			M.ghostize(1)
+			M.ghostize()
 
 		if(brainmob.mind)
 			brainmob.mind.transfer_to(M)
 		else
 			M.key = brainmob.key
-
-		// force re-entering corpse
-		if (!M.client)
-			for(var/mob/dead/observer/ghost in world)
-				if(ghost.corpse == brainmob && ghost.client)
-					ghost.cancel_camera()
-					ghost.reenter_corpse()
-					break
 
 		M:brain_op_stage = 3.0
 
@@ -495,7 +479,7 @@
 /obj/item/latexballon/proc/burst()
 	if (!air_contents)
 		return
-	playsound(src, 'Gunshot.ogg', 100, 1)
+	playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
 	icon_state = "latexballon_bursted"
 	item_state = "lgloves"
 	loc.assume_air(air_contents)
@@ -540,10 +524,10 @@
 		istype(W, /obj/item/weapon/scalpel)                       || \
 		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
 		istype(W, /obj/item/weapon/shard)                         || \
+		istype(W, /obj/item/weapon/broken_bottle)				  || \
 		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
 		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
-		istype(W, /obj/item/weapon/twohanded/fireaxe)			  || \
-		istype(W,/obj/item/projectile)\
+		istype(W, /obj/item/weapon/twohanded/fireaxe) \
 	)
 
 proc/is_hot(obj/item/W as obj)
@@ -578,49 +562,3 @@ proc/is_hot(obj/item/W as obj)
 
 	return 0
 
-/proc/is_cut(obj/item/W as obj)
-	return ( \
-		istype(W, /obj/item/weapon/wirecutters)                   || \
-		istype(W, /obj/item/weapon/circular_saw)                  || \
-		istype(W, /obj/item/weapon/melee/energy/sword)            && W:active  || \
-		istype(W, /obj/item/weapon/melee/energy/blade)                         || \
-		istype(W, /obj/item/weapon/shovel)                        || \
-		istype(W, /obj/item/weapon/kitchenknife)                  || \
-		istype(W, /obj/item/weapon/butch)						  || \
-		istype(W, /obj/item/weapon/scalpel)                       || \
-		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
-		istype(W, /obj/item/weapon/shard)	|| \
-		istype(W,/obj/item/projectile)	\
-	)
-
-/proc/is_burn(obj/item/W as obj)
-	return ( \
-		istype(W, /obj/item/weapon/weldingtool)      && W:welding || \
-		istype(W, /obj/item/weapon/lighter/zippo)    && W:lit     || \
-		istype(W, /obj/item/weapon/match)            && W:lit     || \
-		istype(W, /obj/item/clothing/mask/cigarette) && W:lit	|| \
-		istype(W,/obj/item/projectile/beam)\
-	)
-
-/obj/item/weapon/paper/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature >= 373.15)
-		for(var/mob/M in viewers(5, src))
-			M << "\red \the [src] burns up."
-		del(src)
-
-/obj/item/weapon/megaphone/attack_self(mob/user as mob)
-	if(!ishuman(user))
-		usr << "\red You don't know how to use this!"
-		return
-	if(cooldown)
-		usr << "\red \The [src] needs to recharge!"
-		return
-	var/message = copytext(sanitize(input(user, "Shout a message?", "Megaphone", null)  as text),1,MAX_MESSAGE_LEN)
-	if(message && !cooldown)
-		if ((src.loc == user && usr.stat == 0))
-			for(var/mob/O in (viewers(user)))
-				O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>",2) // 2 stands for hearable message
-			cooldown = 1
-			spawn(100)
-				cooldown = 0
-			return

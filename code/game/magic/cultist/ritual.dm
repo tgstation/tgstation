@@ -1,10 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 
-
-var/use_uristrunes = 1
-
-
 var/wordtravel = null
 var/wordself = null
 var/wordsee = null
@@ -59,7 +55,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 /obj/effect/rune
 	desc = ""
 	anchored = 1
-	icon = 'rune.dmi'
+	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	var/visibility = 0
 	unacidable = 1
@@ -100,29 +96,30 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 // join hide technology - stun rune. Rune color: bright pink.
 	New()
 		..()
-		for(var/mob/living/silicon/ai/AI in world)
-			if(AI.client)
-				var/image/blood = image('blood.dmi', loc = src, icon_state = "floor[rand(1,7)]")
-				blood.override = 1
-				AI.client.images += blood
+		var/image/blood = image(loc = src)
+		blood.override = 1
+		for(var/mob/living/silicon/ai/AI in player_list)
+			AI.client.images += blood
 
 	examine()
 		set src in view(2)
 
 		if(!iscultist(usr))
 			usr << "A strange collection of symbols drawn in blood."
+			return
+			/* Explosions... really?
 			if(desc && !usr.stat)
 				usr << "It reads: <i>[desc]</i>."
 				sleep(30)
 				explosion(src.loc, 0, 2, 5, 5)
 				if(src)
 					del(src)
-		return
-
+			*/
 		if(!desc)
 			usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
 		else
 			usr << "Explosive Runes inscription in blood. It reads: <i>[desc]</i>."
+
 		return
 
 
@@ -138,14 +135,14 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/living/user as mob)
 		if(!iscultist(user))
 			user << "You can't mouth the arcane scratchings without fumbling over them."
 			return
-		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle) || user.ear_deaf)
-			user << "You need to be able to both speak and hear to use runes."
+		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+			user << "You are unable to speak the words of the rune."
 			return
-		if(!word1 || !word2 || !word3 || prob(usr.getBrainLoss()))
+		if(!word1 || !word2 || !word3 || prob(user.getBrainLoss()))
 			return fizzle()
 //		if(!src.visibility)
 //			src.visibility=1
@@ -212,10 +209,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return
 
 		check_icon()
-			if(use_uristrunes)
-				icon = get_uristrune_cult(word1, word2, word3)
-				return
-
 			if(word1 == wordtravel && word2 == wordself)
 				icon_state = "2"
 				src.icon += rgb(0, 0 , 255)
@@ -468,8 +461,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
 
-		log_admin("ATTACK: [user] ([user.ckey]) used the [name] on [M] ([M.ckey]).")
-		message_admins("ATTACK: [user] ([user.ckey]) used the [name] on [M] ([M.ckey]).")
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])</font>")
 
 
@@ -511,7 +502,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 
 			if (C>=26+runedec+ticker.mode.cult.len) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
-				switch(alert("Too many runes are already in the vicinity.. The cloth of reality can't take that much of a strain. By creating another rune, you risk locally tearing reality apart, which would prove fatal to you. Do you still wish to scribe the rune?",,"Yes","No"))
+				switch(alert("The cloth of reality can't take that much of a strain. By creating another rune, you risk locally tearing reality apart, which would prove fatal to you. Do you still wish to scribe the rune?",,"Yes","No"))
 					if("Yes")
 						if(prob(C*5-105-(runedec-ticker.mode.cult.len)*5)) //including the useless rune at the secret room, shouldn't count against the limit - Urist
 							usr.emote("scream")
@@ -525,12 +516,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					if("Cancel")
 						return
 					if("Read it")
-						if(usr.equipped() != src)
+						if(usr.get_active_hand() != src)
 							return
 						user << browse("[tomedat]", "window=Arcane Tome")
 						return
 					if("Notes")
-						if(usr.equipped() != src)
+						if(usr.get_active_hand() != src)
 							return
 						notedat = {"
 					<br><b>Word translation notes</b> <br>
@@ -548,7 +539,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //						call(/obj/item/weapon/tome/proc/edit_notes)()
 						user << browse("[notedat]", "window=notes")
 						return
-			if(usr.equipped() != src)
+			if(usr.get_active_hand() != src)
 				return
 
 			var/w1
@@ -573,7 +564,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					if (words[w] == w3)
 						w3 = w
 
-			if(usr.equipped() != src)
+			if(usr.get_active_hand() != src)
 				return
 
 			for (var/mob/V in viewers(src))
@@ -581,7 +572,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			user << "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world."
 			user.take_overall_damage(1)
 			if(do_after(user, 50))
-				if(usr.equipped() != src)
+				if(usr.get_active_hand() != src)
 					return
 				var/mob/living/carbon/human/H = user
 				var/obj/effect/rune/R = new /obj/effect/rune(user.loc)
@@ -631,7 +622,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			var/r
 			if (!istype(user.loc,/turf))
 				user << "\red You do not have enough space to write a proper rune."
-			var/list/runes = list("teleport", "itemport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun")
+			var/list/runes = list("teleport", "itemport", "tome", "armor", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 			var/obj/effect/rune/R = new /obj/effect/rune
 			if(istype(user, /mob/living/carbon/human))

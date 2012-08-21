@@ -8,7 +8,7 @@
 	new /obj/item/device/flashlight(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
-	new /obj/item/clothing/head/helmet/space/fire_helmet(src)
+	new /obj/item/clothing/head/hardhat/red(src)
 
 /obj/structure/closet/firecloset/New()
 	..()
@@ -17,7 +17,7 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
-	new /obj/item/clothing/head/helmet/space/fire_helmet(src)
+	new /obj/item/clothing/head/hardhat/red(src)
 
 	/*switch (pickweight(list("nothing" = 5, "bare-bones" = 35, "basic" = 40, "pickpocketed" = 10, "untouched" = 10)))
 		if ("nothing")
@@ -70,4 +70,9 @@
 	if(prob(5))
 		new /obj/item/clothing/gloves/yellow(src)
 	if(prob(40))
-		new /obj/item/clothing/head/helmet/hardhat(src)
+		new /obj/item/clothing/head/hardhat(src)
+
+/obj/structure/closet/radiation/New()
+	..()
+	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/head/radiation(src)

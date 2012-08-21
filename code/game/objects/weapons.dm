@@ -24,33 +24,37 @@
 	spawn(0)
 		del(src)
 
+//skytodo: this doesn't even look like it will work
 /obj/effect/mine/proc/triggern2o(obj)
 	//example: n2o triggerproc
 	//note: im lazy
 
 	for (var/turf/simulated/floor/target in range(1,src))
 		if(!target.blocks_air)
+			/*if(target.parent)
+				target.parent.suspend_group_processing()*/
 
 			var/datum/gas_mixture/payload = new
 			var/datum/gas/sleeping_agent/trace_gas = new
 
 			trace_gas.moles = 30
 			payload += trace_gas
-			payload.update_values()
 
 			target.air.merge(payload)
 
 	spawn(0)
 		del(src)
 
+//skytodo:
 /obj/effect/mine/proc/triggerplasma(obj)
 	for (var/turf/simulated/floor/target in range(1,src))
 		if(!target.blocks_air)
+			/*if(target.parent)
+				target.parent.suspend_group_processing()*/
 
 			var/datum/gas_mixture/payload = new
 
 			payload.toxins = 30
-			payload.update_values()
 
 			target.air.merge(payload)
 
@@ -95,13 +99,6 @@
 /atom/proc/blob_act()
 	return
 
-/atom/proc/acid_act(var/datum/reagent/R)
-	return 0
-/*/obj/proc/acid_act(var/datum/reagent/R)
-	return 0
-/mob/proc/acid_act(var/datum/reagent/R)
-	return 0*/
-
 // bullet_act called when anything is hit buy a projectile (bullet, tazer shot, laser, etc.)
 // flag is projectile type, can be:
 //PROJECTILE_TASER = 1   		taser gun
@@ -137,26 +134,20 @@
 			if("feet")
 				if(!H.shoes)
 					affecting = H.get_organ(pick("l_leg", "r_leg"))
-					if(!(affecting.status & ORGAN_ROBOT))
-						H.Weaken(3)
+					H.Weaken(3)
 			if("l_hand", "r_hand")
 				if(!H.gloves)
 					affecting = H.get_organ(type)
-					if(!(affecting.status & ORGAN_ROBOT))
-						H.Stun(3)
-		if(affecting && !(affecting.status & ORGAN_ROBOT))
-			affecting.take_damage(1, 0)
-			H.UpdateDamageIcon()
+					H.Stun(3)
+		if(affecting)
+			if(affecting.take_damage(1, 0))
+				H.UpdateDamageIcon()
 			H.updatehealth()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target
-		src.visible_message("\red \icon[src] <b>SPLAT!</b>")
+		src.visible_message("\red <b>SPLAT!</b>")
 		M.splat()
-	else if(isroach(target))
-		var/obj/effect/critter/roach/R = target
-		src.visible_message("\red \icon[src] <b>CRUNCH!</b>")
-		R.Die()
-	playsound(target.loc, 'snap.ogg', 50, 1)
+	playsound(target.loc, 'sound/effects/snap.ogg', 50, 1)
 	icon_state = "mousetrap"
 	armed = 0
 /*
@@ -164,7 +155,7 @@
 		target.adjustBruteLoss(100)
 */
 
-/obj/item/weapon/mousetrap/attack_self(mob/user as mob)
+/obj/item/weapon/mousetrap/attack_self(mob/living/user as mob)
 	if(!armed)
 		icon_state = "mousetraparmed"
 		user << "\blue You arm the mousetrap."
@@ -183,9 +174,9 @@
 			return
 		user << "\blue You disarm the mousetrap."
 	armed = !armed
-	playsound(user.loc, 'handcuffs.ogg', 30, 1, -3)
+	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
-/obj/item/weapon/mousetrap/attack_hand(mob/user as mob)
+/obj/item/weapon/mousetrap/attack_hand(mob/living/user as mob)
 	if(armed)
 		if(( (user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
 			var/which_hand = "l_hand"
@@ -201,15 +192,18 @@
 	..()
 
 /obj/item/weapon/mousetrap/HasEntered(AM as mob|obj)
-	if((ishuman(AM)) && (armed))
-		var/mob/living/carbon/H = AM
-		if(H.m_intent == "run")
-			src.triggered(H)
-			H << "\red <B>You accidentally step on the mousetrap!</B>"
-			for(var/mob/O in viewers(H, null))
-				if(O == H)
-					continue
-				O.show_message("\red <B>[H] accidentally steps on the mousetrap.</B>", 1)
+	if(armed)
+		if(ishuman(AM))
+			var/mob/living/carbon/H = AM
+			if(H.m_intent == "run")
+				src.triggered(H)
+				H << "\red <B>You accidentally step on the mousetrap!</B>"
+				for(var/mob/O in viewers(H, null))
+					if(O == H)
+						continue
+					O.show_message("\red <B>[H] accidentally steps on the mousetrap.</B>", 1)
+		if(ismouse(AM))
+			triggered(AM)
 	..()
 
 /obj/item/weapon/mousetrap/hitby(A as mob|obj)

@@ -54,8 +54,6 @@
 					gib.blood_DNA = list()
 					if(MobDNA)
 						gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.b_type
-						if(MobDNA.original_name != "Unknown")
-							gib.OriginalMob = MobDNA.original_name
 					else if(istype(src, /obj/effect/gibspawner/xeno))
 						gib.blood_DNA["UNKNOWN DNA"] = "X*"
 					else if(istype(src, /obj/effect/gibspawner/human)) // Probably a monkey

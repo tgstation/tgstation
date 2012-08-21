@@ -1,5 +1,5 @@
 /obj/item/device/transfer_valve
-	icon = 'assemblies.dmi'
+	icon = 'icons/obj/assemblies.dmi'
 	name = "tank transfer valve"
 	icon_state = "valve_1"
 	desc = "Regulates the transfer of air between two tanks"
@@ -113,9 +113,6 @@
 		toggle_valve()
 		spawn(50) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
 			toggle = 1
-
-/obj/item/device/transfer_valve/process()
-	return
 
 /obj/item/device/transfer_valve/update_icon()
 	overlays = null

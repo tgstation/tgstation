@@ -31,7 +31,7 @@
 	set desc = "Give somebody access to any session logfiles saved to the /log/runtime/ folder."
 	set category = null
 
-	if( !src.holder || holder.rank != "Game Master" )
+	if( !src.holder )
 		src << "<font color='red'>Only Game Masters may use this command.</font>"
 		return
 

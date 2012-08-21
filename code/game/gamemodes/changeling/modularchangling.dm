@@ -1,221 +1,161 @@
 
-var/list/powers = typesof(/obj/effect/proc_holder/power) //needed for the badmin verb for now
-var/list/obj/effect/proc_holder/power/powerinstances = list()
+var/list/powers = typesof(/datum/power/changeling) - /datum/power/changeling	//needed for the badmin verb for now
+var/list/datum/power/changeling/powerinstances = list()
 
-/obj/effect/proc_holder/power
-	name = "Power"
-	desc = "Placeholder"
-	density = 0
-	opacity = 0
-
+/datum/power			//Could be used by other antags too
+	var/name = "Power"
+	var/desc = "Placeholder"
 	var/helptext = ""
+	var/isVerb = 1 	// Is it an active power, or passive?
+	var/verbpath // Path to a verb that contains the effects.
 
+/datum/power/changeling
 	var/allowduringlesserform = 0
-	var/isVerb = 1 // Is it an active power, or passive?
-	var/verbpath = null // Path to a verb that contains the effects.
 	var/genomecost = 500000 // Cost for the changling to evolve this power.
 
-/obj/effect/proc_holder/power/absorb_dna
+/datum/power/changeling/absorb_dna
 	name = "Absorb DNA"
-	desc = "Permits us to syphon the DNA from a human.  They become one with us, and we become stronger."
+	desc = "Permits us to syphon the DNA from a human. They become one with us, and we become stronger."
 	genomecost = 0
+	verbpath = /mob/proc/changeling_absorb_dna
 
-	verbpath = /client/proc/changeling_absorb_dna
-
-
-
-/obj/effect/proc_holder/power/transform
+/datum/power/changeling/transform
 	name = "Transform"
 	desc = "We take on the apperance and voice of one we have absorbed."
 	genomecost = 0
+	verbpath = /mob/proc/changeling_transform
 
-	verbpath = /client/proc/changeling_transform
+/datum/power/changeling/fakedeath
+	name = "Regenerative Stasis"
+	desc = "We fake our death while we regenerate our form, even through death."
+	genomecost = 0
+	allowduringlesserform = 1
+	verbpath = /mob/proc/changeling_fakedeath
 
-
-
-/obj/effect/proc_holder/power/lesser_form
+/datum/power/changeling/lesser_form
 	name = "Lesser Form"
 	desc = "We debase ourselves and become lesser.  We become a monkey."
 	genomecost = 1
+	verbpath = /mob/proc/changeling_lesser_form
 
-	verbpath = /client/proc/changeling_lesser_form
-
-
-/*
-/obj/effect/proc_holder/power/changeling_greater_form
-	name = "Greater Form"
-	desc = "We become the pinnicle of evolution.  We will show the humans what happens when they leave their isle of ignorance."
-	genomecost = 250
-
-	verbpath = /client/proc/changeling_greater_form
-*/
-/obj/effect/proc_holder/power/fakedeath
-	name = "Fake Death"
-	desc = "We fake our death while we heal."
-	genomecost = 0
-	allowduringlesserform = 1
-
-	verbpath = /client/proc/changeling_fakedeath
-
-
-
-/obj/effect/proc_holder/power/deaf_sting
+/datum/power/changeling/deaf_sting
 	name = "Deaf Sting"
 	desc = "We silently sting a human, completely deafening them for a short time."
 	genomecost = 1
 	allowduringlesserform = 1
+	verbpath = /mob/proc/changeling_deaf_sting
 
-	verbpath = /client/proc/changeling_deaf_sting
-
-
-
-/obj/effect/proc_holder/power/blind_sting
+/datum/power/changeling/blind_sting
 	name = "Blind Sting"
 	desc = "We silently sting a human, completely blinding them for a short time."
 	genomecost = 2
 	allowduringlesserform = 1
+	verbpath = /mob/proc/changeling_blind_sting
 
-	verbpath = /client/proc/changeling_blind_sting
-
-
-
-/obj/effect/proc_holder/power/paralysis_sting
-	name = "Paralysis Sting"
-	desc = "We silently sting a human, paralyzing them for a short time.  We must be wary, they can still whisper."
-	genomecost = 5
-
-
-	verbpath = /client/proc/changeling_paralysis_sting
-
-
-
-/obj/effect/proc_holder/power/silence_sting
+/datum/power/changeling/silence_sting
 	name = "Silence Sting"
 	desc = "We silently sting a human, completely silencing them for a short time."
 	helptext = "Does not provide a warning to a victim that they have been stung, until they try to speak and can not."
 	genomecost = 2
 	allowduringlesserform = 1
+	verbpath = /mob/proc/changeling_silence_sting
 
-	verbpath = /client/proc/changeling_silence_sting
-
-
-
-/obj/effect/proc_holder/power/transformation_sting
+/datum/power/changeling/transformation_sting
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform into another."
-	genomecost = 2
+	genomecost = 3
+	verbpath = /mob/proc/changeling_transformation_sting
 
-	verbpath = /client/proc/changeling_transformation_sting
+/datum/power/changeling/paralysis_sting
+	name = "Paralysis Sting"
+	desc = "We silently sting a human, paralyzing them for a short time."
+	genomecost = 3
+	verbpath = /mob/proc/changeling_paralysis_sting
 
+/datum/power/changeling/LSDSting
+	name = "Hallucination Sting"
+	desc = "We evolve the ability to sting a target with a powerful hallunicationary chemical."
+	helptext = "The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
+	genomecost = 3
+	verbpath = /mob/proc/changeling_lsdsting
 
+/datum/power/changeling/DeathSting
+	name = "Death Sting"
+	desc = "We silently sting a human, filling him with potent chemicals. His rapid death is all but assured."
+	genomecost = 10
+	verbpath = /mob/proc/changeling_DEATHsting
 
-/obj/effect/proc_holder/power/unfat_sting
+/datum/power/changeling/unfat_sting
 	name = "Unfat Sting"
 	desc = "We silently sting a human, forcing them to rapidly metobolize their fat."
 	genomecost = 1
+	verbpath = /mob/proc/changeling_unfat_sting
 
-
-	verbpath = /client/proc/changeling_unfat_sting
-
-/obj/effect/proc_holder/power/boost_range
+/datum/power/changeling/boost_range
 	name = "Boost Range"
 	desc = "We evolve the ability to shoot our stingers at humans, with some preperation."
 	genomecost = 2
 	allowduringlesserform = 1
+	verbpath = /mob/proc/changeling_boost_range
 
-	verbpath = /client/proc/changeling_boost_range
-
-
-
-/obj/effect/proc_holder/power/Epinephrine
+/datum/power/changeling/Epinephrine
 	name = "Epinephrine sacs"
 	desc = "We evolve additional sacs of adrenaline throughout our body."
 	helptext = "Gives the ability to instantly recover from stuns.  High chemical cost."
 	genomecost = 4
+	verbpath = /mob/proc/changeling_unstun
 
-	verbpath = /client/proc/changeling_unstun
-
-
-/obj/effect/proc_holder/power/ChemicalSynth
-	name = "Rapid Chemical Synthesis"
+/datum/power/changeling/ChemicalSynth
+	name = "Rapid Chemical-Synthesis"
 	desc = "We evolve new pathways for producing our necessary chemicals, permitting us to naturally create them faster."
 	helptext = "Doubles the rate at which we naturally recharge chemicals."
 	genomecost = 4
 	isVerb = 0
-
-	verbpath = /client/proc/changeling_fastchemical
-
-
-
-/obj/effect/proc_holder/power/EngorgedGlands
+	verbpath = /mob/proc/changeling_fastchemical
+/*
+/datum/power/changeling/AdvChemicalSynth
+	name = "Advanced Chemical-Synthesis"
+	desc = "We evolve new pathways for producing our necessary chemicals, permitting us to naturally create them faster."
+	helptext = "Doubles the rate at which we naturally recharge chemicals."
+	genomecost = 8
+	isVerb = 0
+	verbpath = /mob/proc/changeling_fastchemical
+*/
+/datum/power/changeling/EngorgedGlands
 	name = "Engorged Chemical Glands"
 	desc = "Our chemical glands swell, permitting us to store more chemicals inside of them."
 	helptext = "Allows us to store an extra 25 units of chemicals."
 	genomecost = 4
 	isVerb = 0
+	verbpath = /mob/proc/changeling_engorgedglands
 
-
-	verbpath = /client/proc/changeling_engorgedglands
-
-
-
-/obj/effect/proc_holder/power/DigitalCamoflague
+/datum/power/changeling/DigitalCamoflague
 	name = "Digital Camoflauge"
 	desc = "We evolve the ability to distort our form and proprtions, defeating common altgorthms used to detect lifeforms on cameras."
 	helptext = "We cannot be tracked by camera while using this skill.  However, humans looking at us will find us.. uncanny.  We must constantly expend chemicals to maintain our form like this."
 	genomecost = 4
 	allowduringlesserform = 1
+	verbpath = /mob/proc/changeling_digitalcamo
 
-	verbpath = /client/proc/changeling_digitalcamo
-
-
-
-/obj/effect/proc_holder/power/DeathSting
-	name = "Death Sting"
-	desc = "We silently sting a human, filling him with potent chemicals. His rapid death is all but assured."
-	genomecost = 10
-
-	verbpath = /client/proc/changeling_DEATHsting
-
-
-
-/obj/effect/proc_holder/power/rapidregeneration
+/datum/power/changeling/rapidregeneration
 	name = "Rapid Regeneration"
 	desc = "We evolve the ability to rapidly regenerate, negating the need for stasis."
 	helptext = "Heals a moderate amount of damage every tick."
 	genomecost = 8
-
-	verbpath = /client/proc/changeling_rapidregen
-
-/obj/effect/proc_holder/power/LSDSting
-	name = "Hallucination Sting"
-	desc = "We evolve the ability to sting a target with a powerful hallunicationary chemical."
-	helptext = "The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
-	genomecost = 3
-
-	verbpath = /client/proc/changeling_lsdsting
-
-
-
-
+	verbpath = /mob/proc/changeling_rapidregen
 
 
 // Modularchangling, totally stolen from the new player panel.  YAYY
 /datum/changeling/proc/EvolutionMenu()//The new one
 	set category = "Changeling"
 	set desc = "Level up!"
-	if (!usr.changeling)
-		return
 
-	src = usr.changeling
+	if(!usr || !usr.mind || !usr.mind.changeling)	return
+	src = usr.mind.changeling
 
 	if(!powerinstances.len)
 		for(var/P in powers)
-			var/obj/effect/proc_holder/power/nP = new P
-			if (nP.desc == "Placeholder")
-				del(nP)
-				continue
-			powerinstances += nP
+			powerinstances += new P()
 
 	var/dat = "<html><head><title>Changling Evolution Menu</title></head>"
 
@@ -407,7 +347,7 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 				<td align='center'>
 					<font size='5'><b>Changling Evolution Menu</b></font><br>
 					Hover over a power to see more information<br>
-					Current evolution points left to evolve with: [usr.changeling.geneticpoints]<br>
+					Current evolution points left to evolve with: [geneticpoints]<br>
 					Absorb genomes to acquire more evolution points
 					<p>
 				</td>
@@ -427,10 +367,10 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 		<table width='560' align='center' cellspacing='0' cellpadding='5' id='maintable_data'>"}
 
 	var/i = 1
-	for(var/obj/effect/proc_holder/power/P in powerinstances)
+	for(var/datum/power/changeling/P in powerinstances)
 		var/ownsthis = 0
 
-		if(P in usr.changeling.purchasedpowers)
+		if(P in purchasedpowers)
 			ownsthis = 1
 
 
@@ -477,18 +417,19 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 	..()
 
 	if(href_list["P"])
-		usr.changeling.purchasePower(href_list["P"])
+		purchasePower(href_list["P"])
 		call(/datum/changeling/proc/EvolutionMenu)()
 
 
 
-/datum/changeling/proc/purchasePower(var/obj/effect/proc_holder/power/Pname)
-	if (!usr.changeling)
+/datum/changeling/proc/purchasePower(var/datum/power/changeling/Pname)
+	if(!usr.mind || !usr.mind.changeling)
 		return
+//	src = usr.mind.changeling
 
-	var/obj/effect/proc_holder/power/Thepower = null
+	var/datum/power/changeling/Thepower = null
 
-	for (var/obj/effect/proc_holder/power/P in powerinstances)
+	for (var/datum/power/changeling/P in powerinstances)
 		if(P.name == Pname)
 			Thepower = P
 			break
@@ -497,25 +438,21 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 		usr << "This is awkward.  Changeling power purchase failed, please report this bug to a coder!"
 		return
 
-	if(Thepower in usr.changeling.purchasedpowers)
+	if(Thepower in purchasedpowers)
 		usr << "We have already evolved this ability!"
 		return
 
 
-	if(usr.changeling.geneticpoints < Thepower.genomecost)
+	if(geneticpoints < Thepower.genomecost)
 		usr << "We cannot evolve this... yet.  We must acquire more DNA."
 		return
 
-	usr.changeling.geneticpoints -= Thepower.genomecost
+	geneticpoints -= Thepower.genomecost
 
-	usr.changeling.purchasedpowers += Thepower
+	purchasedpowers += Thepower
 
-	if(!Thepower.isVerb)
+	if(!Thepower.isVerb && Thepower.verbpath)
 		call(Thepower.verbpath)()
-
 	else
-		if(usr.changeling.changeling_level == 1)
-			usr.make_lesser_changeling()
-		else
-			usr.make_changeling()
+		usr.make_changeling()
 

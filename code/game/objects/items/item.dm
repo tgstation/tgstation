@@ -10,22 +10,26 @@
 
 /obj/item/proc/dropped(mob/user as mob)
 	..()
-	user.update_clothing()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	return
 
+// called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
+/obj/item/proc/on_exit_storage(obj/item/weapon/storage/S as obj)
+	return
+
+// called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
+/obj/item/proc/on_enter_storage(obj/item/weapon/storage/S as obj)
+	return
+
 // called after an item is placed in an equipment slot
 // user is mob that equipped it
-// slot is text of slot type e.g. "head"
+// slot uses the slot_X defines found in setup.dm
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	return
-//
-// ***TODO: implement unequipped()
-//
 
 /obj/item/proc/afterattack()
 
@@ -94,73 +98,25 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
-	if (user.hand)
-		if(ishuman(user))
-			var/datum/organ/external/temp = user:organs["l_hand"]
-			if(temp.status & ORGAN_DESTROYED)
-				user << "\blue Yo- wait a minute."
-				return
-	else
-		if(ishuman(user))
-			var/datum/organ/external/temp = user:organs["r_hand"]
-			if(temp.status & ORGAN_DESTROYED)
-				user << "\blue Yo- wait a minute."
-
 	if (istype(src.loc, /obj/item/weapon/storage))
-		for(var/mob/M in range(1, src.loc))
-			if (M.s_active == src.loc)
-				if (M.client)
-					M.client.screen -= src
-		if(istype(src.loc, /obj/item/weapon/storage/backpack/santabag))
-			if(src.loc.contents.len < 5)
-				src.loc.icon_state = "giftbag0"
-			else if(src.loc.contents.len >= 5 && src.loc.contents.len < 15)
-				src.loc.icon_state = "giftbag1"
-			else if(src.loc.contents.len >= 15)
-				src.loc.icon_state = "giftbag2"
+		var/obj/item/weapon/storage/S = src.loc
+		S.remove_from_storage(src)
 
 	src.throwing = 0
 	if (src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(istype(src, /obj/item/clothing) && !src:canremove)
+		if(!src.canremove)
 			return
 		else
 			user.u_equip(src)
 	else
-		if(istype(src.loc, /mob/living))
+		if(isliving(src.loc))
 			return
 		src.pickup(user)
 		user.lastDblClick = world.time + 2
 		user.next_move = world.time + 2
-
-	if (user.hand)
-		if(ishuman(user))
-			var/datum/organ/external/temp = user:organs["l_hand"]
-			if(!(temp.status & ORGAN_DESTROYED))
-				user.l_hand = src
-			else
-				user << "\blue You pick \the [src] up with your ha- wait a minute."
-				if(loc == user)
-					user.drop_from_slot(src)
-				return
-		else
-			user.l_hand = src
-	else
-		if(ishuman(user))
-			var/datum/organ/external/temp = user:organs["r_hand"]
-			if(!(temp.status & ORGAN_DESTROYED))
-				user.r_hand = src
-			else
-				user << "\blue You pick \the [src] up with your ha- wait a minute."
-				if(loc == user)
-					user.drop_from_slot(src)
-				return
-		else
-			user.r_hand = src
-	src.loc = user
-	src.layer = 20
 	add_fingerprint(user)
-	user.update_clothing()
+	user.put_in_active_hand(src)
 	return
 
 
@@ -169,21 +125,11 @@
 	if(isalien(user)) // -- TLE
 		var/mob/living/carbon/alien/A = user
 
-		if(!A.has_fine_manipulation || w_class <= 4)
+		if(!A.has_fine_manipulation || w_class >= 4)
+			if(src in A.contents) // To stop Aliens having items stuck in their pockets
+				A.drop_from_inventory(src)
 			user << "Your claws aren't capable of such fine manipulation."
 			return
-
-	if (user.hand)
-		if(ismonkey(user))
-			var/datum/organ/external/temp = user:organs["l_hand"]
-			if(temp.status & ORGAN_DESTROYED)
-				user << "\blue Yo- wait a minute."
-				return
-	else
-		if(ismonkey(user))
-			var/datum/organ/external/temp = user:organs["r_hand"]
-			if(temp.status & ORGAN_DESTROYED)
-				user << "\blue Yo- wait a minute."
 
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
@@ -204,23 +150,27 @@
 		user.lastDblClick = world.time + 2
 		user.next_move = world.time + 2
 
-	if (user.hand)
-		user.l_hand = src
-	else
-		user.r_hand = src
-	src.loc = user
-	src.layer = 20
-	user.update_clothing()
+	user.put_in_active_hand(src)
 	return
 
+/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-/obj/item/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/device/detective_scanner))
-		return
+	if(istype(W,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = W
+		if(S.use_to_pickup)
+			if(!S.can_be_inserted(src))
+				return
+			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
+				if(isturf(src.loc))
+					for(var/obj/item/I in src.loc)
+						if(I != src) //We'll do the one we clicked on last.
+							if(!S.can_be_inserted(src))
+								continue
+							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+			S.handle_item_insertion(src)
 
 
-mob/proc/flash_weak_pain()
-	flick("weak_pain",pain)
+	return
 
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 
@@ -232,41 +182,19 @@ mob/proc/flash_weak_pain()
 		messagesource = M:container
 	if (src.hitsound)
 		playsound(src.loc, hitsound, 50, 1, -1)
-	M.flash_weak_pain()
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user
 
-	var/power = src.force
-
-	// EXPERIMENTAL: scale power and time to the weight class
-	if(w_class >= 4.0 && !istype(src,/obj/item/weapon/melee/energy/blade)) // eswords are an exception, they only have a w_class of 4 to not fit into pockets
-		power = power * 2.5
-
-		user.visible_message("\red [user.name] swings at [M.name] with \the [src]!")
-		user.next_move = max(user.next_move, world.time + 30)
-
-		// if the mob didn't move, he has a 100% chance to hit(given the enemy also didn't move)
-		// otherwise, the chance to hit is lower
-		var/unmoved = 0
-		spawn
-			unmoved = do_after(user, 4)
-		sleep(4)
-		if( (!unmoved && !prob(70)) || (get_dist(user, M) != 1 && user != M))
-			user.visible_message("\red [user.name] misses with \the [src]!")
-			return
-
-
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
-	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
 
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
 
+	var/power = src.force
 	if((HULK in user.mutations) || (SUPRSTR in user.augmentations))
 		power *= 2
 
@@ -280,6 +208,9 @@ mob/proc/flash_weak_pain()
 			if(power > 0)
 				Metroid.attacked += 10
 
+			if(Metroid.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
+				Metroid.Discipline = 0
+
 			if(power >= 3)
 				if(istype(Metroid, /mob/living/carbon/metroid/adult))
 					if(prob(5 + round(power/2)))
@@ -289,9 +220,6 @@ mob/proc/flash_weak_pain()
 								Metroid.Discipline++
 						Metroid.Victim = null
 						Metroid.anchored = 0
-
-						if(prob(80) && !Metroid.client)
-							Metroid.Discipline++
 
 						spawn()
 							if(Metroid)
@@ -349,7 +277,10 @@ mob/proc/flash_weak_pain()
 			showname = "."
 
 		for(var/mob/O in viewers(messagesource, null))
-			O.show_message(text("\red <B>[] has been attacked with [][] </B>", M, src, showname), 1)
+			if(src.attack_verb.len)
+				O.show_message("\red <B>[M] has been [pick(src.attack_verb)] with [src][showname] </B>", 1)
+			else
+				O.show_message("\red <B>[M] has been attacked with [src][showname] </B>", 1)
 
 		if(!showname && user)
 			if(user.client)
@@ -359,11 +290,6 @@ mob/proc/flash_weak_pain()
 
 	if(istype(M, /mob/living/carbon/human))
 		M:attacked_by(src, user, def_zone)
-		var/mob/living/carbon/human/H = M
-		if(H)
-			H.UpdateDamageIcon()
-			H.update_clothing()
-		user.update_clothing()
 	else
 		switch(src.damtype)
 			if("brute")
@@ -383,7 +309,6 @@ mob/proc/flash_weak_pain()
 					M << "Aargh it burns!"
 		M.updatehealth()
 	src.add_fingerprint(user)
-	M.react_to_attack(user)
 	return 1
 
 
@@ -417,8 +342,6 @@ mob/proc/flash_weak_pain()
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 
-	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
 	log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 	src.add_fingerprint(user)
@@ -426,7 +349,7 @@ mob/proc/flash_weak_pain()
 	//	M = user
 		/*
 		M << "\red You stab yourself in the eye."
-		M.sdisabilities |= 1
+		M.sdisabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
 		*/
@@ -442,14 +365,15 @@ mob/proc/flash_weak_pain()
 		)
 	if(istype(M, /mob/living/carbon/human))
 		var/datum/organ/external/affecting = M:get_organ("head")
-		affecting.take_damage(7)
+		if(affecting.take_damage(7))
+			M:UpdateDamageIcon()
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)
-	M.eye_stat += rand(5,9)
+	M.eye_stat += rand(2,4)
 	if (M.eye_stat >= 10)
 		M.eye_blurry += 15+(0.1*M.eye_blurry)
-		M.disabilities |= 1
+		M.disabilities |= NEARSIGHTED
 		if(M.stat != 2)
 			M << "\red Your eyes start to bleed profusely!"
 		if(prob(50))
@@ -462,7 +386,7 @@ mob/proc/flash_weak_pain()
 		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "\red You go blind!"
-			M.disabilities |= 128
+			M.sdisabilities |= BLIND
 	return
 
 

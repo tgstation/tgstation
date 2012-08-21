@@ -79,17 +79,18 @@
 	var/turf/T = src.loc			// hide if turf is not intact
 
 	if(level==1) hide(T.intact)
+	cable_list += src
 
 
 /obj/structure/cable/Del()		// called when a cable is deleted
 
 	if(!defer_powernet_rebuild)	// set if network will be rebuilt manually
-
-		if(netnum && powernets && powernets.len >= netnum)		// make sure cable & powernet data is valid
+		if(netnum && powernets && (powernets.len >= netnum) && (netnum >= 1) )		// make sure cable & powernet data is valid
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
-	else
-		if(Debug) diary << "Defered cable deletion at [x],[y]: #[netnum]"
+	cable_list -= src
+//	else
+//		if(Debug) diary << "Defered cable deletion at [x],[y]: #[netnum]"
 	..()													// then go ahead and delete the cable
 
 /obj/structure/cable/hide(var/i)
@@ -141,10 +142,6 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
 
-		if(defer_powernet_rebuild)
-			if(netnum && powernets && powernets.len >= netnum)
-				var/datum/powernet/PN = powernets[netnum]
-				PN.cut_cable(src)
 		del(src)
 
 		return	// not needed, but for clarity
@@ -221,7 +218,7 @@
 
 /obj/item/weapon/cable_coil/proc/updateicon()
 	if (!color)
-		color = pick("red", "yellow", "blue", "green", "pink")
+		color = pick("red", "yellow", "blue", "green")
 	if(amount == 1)
 		icon_state = "coil_[color]1"
 		name = "cable piece"
@@ -283,7 +280,7 @@
 			return
 
 		else
-			user << "You transfer [MAXCOIL - C.amount ] length\s of cable from one coil to the other."
+			user << "You transfer [MAXCOIL - src.amount ] length\s of cable from one coil to the other."
 			src.amount -= (MAXCOIL-C.amount)
 			src.updateicon()
 			C.amount = MAXCOIL
@@ -454,28 +451,6 @@
 
 		return
 
-/obj/item/weapon/cable_coil/attack(mob/M as mob, mob/user as mob)
-	if(hasorgans(M))
-		var/datum/organ/external/S = M:organs[user.zone_sel.selecting]
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
-			return ..()
-		if(S.burn_dam > 0)
-			S.heal_damage(0,15,0,1)
-			if(user != M)
-				user.visible_message("\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
-				"\red You repair some burn damage on your [S.display_name]",\
-				"You hear wires being cut.")
-			else
-				user.visible_message("\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
-				"\red You repair some burn damage on your [S.display_name]",\
-				"You hear wires being cut.")
-		else
-			user << "Nothing to fix!"
-	else
-		return ..()
-
-
-
 /obj/structure/cable/proc/mergeConnectedNetworks(var/direction)
 	var/turf/TB
 	if((d1 == direction || d2 == direction) != 1)
@@ -575,18 +550,18 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	color = color_n
 	switch(colorC)
 		if("red")
-			icon = 'power_cond_red.dmi'
+			icon = 'icons/obj/power_cond_red.dmi'
 		if("yellow")
-			icon = 'power_cond_yellow.dmi'
+			icon = 'icons/obj/power_cond_yellow.dmi'
 		if("green")
-			icon = 'power_cond_green.dmi'
+			icon = 'icons/obj/power_cond_green.dmi'
 		if("blue")
-			icon = 'power_cond_blue.dmi'
+			icon = 'icons/obj/power_cond_blue.dmi'
 		if("pink")
-			icon = 'power_cond_pink.dmi'
+			icon = 'icons/obj/power_cond_pink.dmi'
 		if("orange")
-			icon = 'power_cond_orange.dmi'
+			icon = 'icons/obj/power_cond_orange.dmi'
 		if("cyan")
-			icon = 'power_cond_cyan.dmi'
+			icon = 'icons/obj/power_cond_cyan.dmi'
 		if("white")
-			icon = 'power_cond_white.dmi'
+			icon = 'icons/obj/power_cond_white.dmi'

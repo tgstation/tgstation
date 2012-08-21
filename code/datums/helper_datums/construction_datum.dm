@@ -46,11 +46,11 @@
 
 	proc/check_all_steps(atom/used_atom,mob/user as mob) //check all steps, remove matching one.
 		for(var/i=1;i<=steps.len;i++)
-			var/list/L = steps[i]
+			var/list/L = steps[i];
 			if(istype(used_atom, L["key"]))
 				if(custom_action(i, used_atom, user))
-					steps[i]=null//stupid byond list from list removal...
-					steps.Remove(null)
+					steps[i]=null;//stupid byond list from list removal...
+					listclearnulls(steps);
 					if(!steps.len)
 						spawn_result()
 					return 1

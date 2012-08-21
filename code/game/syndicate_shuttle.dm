@@ -17,7 +17,7 @@ var/bomb_set = 1
 
 /obj/machinery/computer/syndicate_station
 	name = "Syndicate Station Terminal"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
 	req_access = list()
 	var/temp = null
@@ -26,7 +26,7 @@ var/bomb_set = 1
 	var/syndicate_break = 0
 
 /proc/syndicate_begin()
-	switch(rand(1,4))
+	switch(rand(1,6))
 		if(1)
 			syndicate_loc = locate(/area/syndicate_station/one)
 		if(2)
@@ -35,6 +35,10 @@ var/bomb_set = 1
 			syndicate_loc = locate(/area/syndicate_station/three)
 		if(4)
 			syndicate_loc = locate(/area/syndicate_station/four)
+		if(5)
+			syndicate_loc = locate(/area/syndicate_station/five)
+		if(6)
+			syndicate_loc = locate(/area/syndicate_station/six)
 
 /proc/syndicate_process()
 	while(syndicate_station_time - world.timeofday > 0)
@@ -117,6 +121,7 @@ var/bomb_set = 1
 			syndicate_out_of_moves = 1
 
 /proc/syndicate_can_move()
+	//world << "moving_to_station = [syndicate_station_moving_to_station]; moving_to_space = [syndicate_station_moving_to_space]; out_of_moves = [syndicate_out_of_moves]; bomb_set = [bomb_set]; "
 	if(syndicate_station_moving_to_station || syndicate_station_moving_to_space) return 0
 	if(syndicate_out_of_moves) return 0
 	if(!bomb_set) return 0

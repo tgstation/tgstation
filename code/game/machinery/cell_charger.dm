@@ -4,7 +4,7 @@
 /obj/machinery/cell_charger
 	name = "cell charger"
 	desc = "It charges power cells."
-	icon = 'power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger0"
 	anchored = 1
 	use_power = 1
@@ -25,7 +25,7 @@
 				if(chargelevel != newlevel)
 
 					overlays = null
-					overlays += image('power.dmi', "ccharger-o[newlevel]")
+					overlays += image('icons/obj/power.dmi', "ccharger-o[newlevel]")
 
 					chargelevel = newlevel
 			else
@@ -50,7 +50,7 @@
 				if(!isarea(a))
 					return
 				if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-					user << "\red \The [src] blinks red as you try to insert the cell!"
+					user << "\red The [name] blinks red as you try to insert the cell!"
 					return
 
 				user.drop_item()
@@ -66,11 +66,11 @@
 
 			anchored = !anchored
 			user << "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground"
-			playsound(src.loc, 'Ratchet.ogg', 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
 	attack_hand(mob/user)
 		if(charging)
-			usr.put_in_hand(charging)
+			usr.put_in_hands(charging)
 			charging.add_fingerprint(user)
 			charging.updateicon()
 

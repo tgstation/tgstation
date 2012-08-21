@@ -6,7 +6,7 @@
 	return (!density)
 
 /obj/structure/closet/proc/can_open()
-	if(src.welded || istype(src.loc,/obj/structure/bigDelivery))
+	if(src.welded)
 		return 0
 	return 1
 
@@ -17,10 +17,11 @@
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
-	for(var/obj/item/I in src)
-		I.loc = src.loc
+	//Cham Projector Exception
+	for(var/obj/effect/dummy/chameleon/AD in src)
+		AD.loc = src.loc
 
-	for(var/obj/mecha/working/ripley/deathripley/I in src)
+	for(var/obj/item/I in src)
 		I.loc = src.loc
 
 	for(var/mob/M in src)
@@ -41,9 +42,9 @@
 	src.icon_state = src.icon_opened
 	src.opened = 1
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src.loc, 'zip.ogg', 15, 1, -3)
+		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
 	else
-		playsound(src.loc, 'click.ogg', 15, 1, -3)
+		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	density = 0
 	return 1
 
@@ -53,17 +54,25 @@
 	if(!src.can_close())
 		return 0
 
-	for(var/obj/item/I in src.loc)
-		if(!I.anchored)
-			if(src.contents.len < src.quantity_max)
-				I.loc = src
-			else
-				break
+	var/itemcount = 0
 
-	for(var/obj/mecha/working/ripley/deathripley/I in src.loc)
-		I.loc = src
+	//Cham Projector Exception
+	for(var/obj/effect/dummy/chameleon/AD in src.loc)
+		if(itemcount >= storage_capacity)
+			break
+		AD.loc = src
+		itemcount++
+
+	for(var/obj/item/I in src.loc)
+		if(itemcount >= storage_capacity)
+			break
+		if(!I.anchored)
+			I.loc = src
+			itemcount++
 
 	for(var/mob/M in src.loc)
+		if(itemcount >= storage_capacity)
+			break
 		if(istype (M, /mob/dead/observer))
 			continue
 		if(M.buckled)
@@ -74,12 +83,14 @@
 			M.client.eye = src
 
 		M.loc = src
+		itemcount++
+
 	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src.loc, 'zip.ogg', 15, 1, -3)
+		playsound(src.loc, 'sound/items/zip.ogg', 15, 1, -3)
 	else
-		playsound(src.loc, 'click.ogg', 15, 1, -3)
+		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	density = 1
 	return 1
 
@@ -92,21 +103,21 @@
 /obj/structure/closet/ex_act(severity)
 	switch(severity)
 		if(1)
-			for(var/atom/movable/A as mob|obj in src)
+			for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
 				A.loc = src.loc
-				ex_act(severity)
+				A.ex_act(severity++)
 			del(src)
 		if(2)
 			if(prob(50))
 				for (var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
-					ex_act(severity)
+					A.ex_act(severity++)
 				del(src)
 		if(3)
 			if(prob(5))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
-					ex_act(severity)
+					A.ex_act(severity++)
 				del(src)
 
 /obj/structure/closet/bullet_act(var/obj/item/projectile/Proj)
@@ -128,6 +139,8 @@
 
 /obj/structure/closet/meteorhit(obj/O as obj)
 	if(O.icon_state == "flaming")
+		for(var/mob/M in src)
+			M.meteorhit(O)
 		src.dump_contents()
 		del(src)
 
@@ -139,18 +152,15 @@
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(!WT.remove_fuel(0,user))
-				user << "\blue You need more welding fuel to complete this task."
+				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 				return
 			new /obj/item/stack/sheet/metal(src.loc)
 			for(var/mob/M in viewers(src))
-				M.show_message("\red [src] has been cut apart by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
+				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
 			del(src)
 			return
 
 		if(isrobot(user))
-			return
-
-		if(istype(W, /obj/item/weapon/packageWrap))
 			return
 
 		usr.drop_item()
@@ -163,11 +173,12 @@
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.remove_fuel(0,user))
-			user << "\blue You need more welding fuel to complete this task."
+			user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
 			return
 		src.welded =! src.welded
+		src.update_icon()
 		for(var/mob/M in viewers(src))
-			M.show_message("\red [src] has been [welded?"welded shut":"unwelded"] by [user.name].", 3, "\red You hear welding.", 2)
+			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
 	else
 		src.attack_hand(user)
 	return
@@ -191,7 +202,7 @@
 		return
 	step_towards(O, src.loc)
 	if(user != O)
-		user.show_viewers("\red [user] stuffs [O] into [src]!")
+		user.show_viewers("<span class='danger'>[user] stuffs [O] into [src]!</span>")
 	src.add_fingerprint(user)
 	return
 
@@ -200,33 +211,13 @@
 		return
 
 	if(!src.open())
-		if(istype(src.loc,/obj/structure/bigDelivery) && lasttry == 0)
-			var/obj/structure/bigDelivery/Pack = src.loc
-			if(istype(Pack.loc,/turf) && Pack.waswelded == 0)
-				for (var/mob/M in hearers(src.loc, null))
-					M << text("<FONT size=[] color=red>BANG, bang, rrrrrip!</FONT>", max(0, 5 - get_dist(src, M)))
-				lasttry = 1
-				sleep(10)
-				src.welded = 0
-				Pack.unwrap()
-				src.open()
-				spawn(30)
-					lasttry = 0
-		else if(!istype(src.loc,/obj/structure/bigDelivery))
-			user << "\blue It won't budge!"
-			if(!lastbang)
-				lastbang = 1
-				for (var/mob/M in hearers(src, null))
-					M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
-				spawn(30)
-					lastbang = 0
-
-/obj/structure/closet/Move()
-	..()
-	for(var/mob/M in contents)
-		for(var/obj/effect/speech_bubble/B in range(1, src))
-			if(B.parent == M)
-				B.loc = loc
+		user << "<span class='notice'>It won't budge!</span>"
+		if(!lastbang)
+			lastbang = 1
+			for (var/mob/M in hearers(src, null))
+				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
+			spawn(30)
+				lastbang = 0
 
 
 /obj/structure/closet/attack_paw(mob/user as mob)
@@ -236,31 +227,26 @@
 	src.add_fingerprint(user)
 
 	if(!src.toggle())
-		usr << "\blue It won't budge!"
+		usr << "<span class='notice'>It won't budge!</span>"
 
 /obj/structure/closet/verb/verb_toggleopen()
-	set src in view(1)
+	set src in oview(1)
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!(usr))
+	if(!usr.canmove || usr.stat || usr.restrained())
 		return
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
-		usr << "\red You can't interact with this!"
-		return
-	if(src.anchored)
-		usr << "\red You can't interact with this!"
-		return
-	if(istype(usr, /mob/living/silicon/robot))
+
+	if(ishuman(usr))
 		src.attack_hand(usr)
-		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))
-		usr << "\red You can't interact with this!"
-		return
-	if(istype(usr, /mob/living/carbon/human))
-		src.attack_hand(usr)
-	if(istype(usr, /mob/living/carbon/alien))
-		src.attack_alien(usr)
-	if(istype(usr, /mob/living/carbon/monkey))
-		src.attack_paw(usr)
-	return
+	else
+		usr << "<span class='warning'>This mob type can't use this verb.</span>"
+
+/obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
+	overlays = null
+	if(!opened)
+		icon_state = icon_closed
+		if(welded)
+			overlays += "welded"
+	else
+		icon_state = icon_opened

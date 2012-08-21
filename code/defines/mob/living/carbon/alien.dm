@@ -3,11 +3,10 @@
 	voice_name = "alien"
 	voice_message = "hisses"
 	say_message = "hisses"
-	icon = 'alien.dmi'
+	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
 
 	var/storedPlasma = 250
-	var/alien_invis = 0.0
 	var/max_plasma = 500
 
 	alien_talk_understand = 1
@@ -17,5 +16,6 @@
 
 	var/move_delay_add = 0 // movement delay to add
 
-	canstun = 0
-	canweaken = 0 // aliens cannot be stunned or knocked down. Massive buff!
+	status_flags = CANPARALYSE
+	var/heal_rate = 5
+	var/plasma_rate = 5

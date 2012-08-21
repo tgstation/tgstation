@@ -1,4 +1,3 @@
-/var/list/geneticsrecords = list()
 //Cloning revival method.
 //The pod handles the actual cloning while the computer manages the clone profiles
 
@@ -9,11 +8,11 @@
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = 1
-	icon = 'cloning.dmi'
+	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
-	req_access = list(ACCESS_GENETICS) //For premature unlocking.
+	req_access = list(access_genetics) //For premature unlocking.
 	var/mob/living/occupant
-	var/heal_level = 10 //The clone is released once its health reaches this level.
+	var/heal_level = 90 //The clone is released once its health reaches this level.
 	var/locked = 0
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
@@ -24,7 +23,7 @@
 //TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
 	name = "Cloning Data Disk"
-	icon = 'cloning.dmi'
+	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
 	w_class = 1.0
@@ -53,7 +52,7 @@
 		return
 
 	var/mob/selected = null
-	for(var/mob/M in world)
+	for(var/mob/M in player_list)
 		//Dead people only thanks!
 		if ((M.stat != 2) || (!M.client))
 			continue
@@ -64,11 +63,6 @@
 		if (M.ckey == find_key)
 			selected = M
 			break
-	if(!selected) //Search for a ghost if dead body with client isn't found.
-		for(var/mob/dead/observer/ghost in world)
-			if (ghost.corpse && ghost.corpse.mind.key == find_key)
-				selected = ghost
-				break
 	return selected
 
 //Disk stuff.
@@ -97,7 +91,9 @@
 	if (!src.implanted)
 		return "ERROR"
 	else
-		src.healthstring = "[round(src.implanted:getOxyLoss())] - [round(src.implanted:getFireLoss())] - [round(src.implanted:getToxLoss())] - [round(src.implanted:getBruteLoss())]"
+		if(isliving(src.implanted))
+			var/mob/living/L = src.implanted
+			src.healthstring = "[round(L.getOxyLoss())] - [round(L.getFireLoss())] - [round(L.getToxLoss())] - [round(L.getBruteLoss())]"
 		if (!src.healthstring)
 			src.healthstring = "ERROR"
 		return src.healthstring
@@ -117,9 +113,27 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI, var/datum/changeling/changelingClone, var/original_name)
-	if(((!ghost) || (!ghost.client)) || src.mess || src.attempting)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI)
+	if(mess || attempting)
 		return 0
+	var/datum/mind/clonemind = locate(mindref)
+	if(!istype(clonemind,/datum/mind))	//not a mind
+		return 0
+	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
+		return 0
+	if(clonemind.active)	//somebody is using that mind
+		if( ckey(clonemind.key)!=ckey )
+			return 0
+	else
+		for(var/mob/dead/observer/G in player_list)
+			if(G.ckey == ckey)
+				if(G.can_reenter_corpse)
+					break
+				else
+					return 0
+
+
+	src.heal_level = rand(75,100) //Randomizes what health the clone is when ejected
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1
@@ -128,87 +142,60 @@
 	spawn(30)
 		src.eject_wait = 0
 
-	if(istajaran(occupant))
-		src.occupant = new /mob/living/carbon/human/tajaran(src)
-	else
-		src.occupant = new /mob/living/carbon/human(src)
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	occupant = H
+	H.UI = UI // set interface preference
 
-	occupant:UI = UI // set interface preference
-
-	ghost.client.mob = src.occupant
+	if(!clonename)	//to prevent null names
+		clonename = "clone ([rand(0,999)])"
+	H.real_name = clonename
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
-	src.occupant.rejuv = 10
-	src.occupant.adjustCloneLoss(190) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
-	src.occupant.adjustBrainLoss(90)
-	src.occupant.Paralyse(4)
+	H.adjustCloneLoss(190) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
+	H.adjustBrainLoss(heal_level)
+	H.Paralyse(4)
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
-	src.occupant.health = (src.occupant.getBruteLoss() + src.occupant.getToxLoss() + src.occupant.getOxyLoss() + src.occupant.getCloneLoss())
+	H.updatehealth()
 
-	src.occupant << "\blue <b>Clone generation process initiated.</b>"
-	src.occupant << "\blue This will take a moment, please hold."
-
-	if(clonename)
-		src.occupant.real_name = clonename
-		src.occupant.original_name = clonename //we don't want random ghost names should we die again.
-	else
-		src.occupant.real_name = "clone"  //No null names!!
-
-
-	var/datum/mind/clonemind = (locate(mindref) in ticker.minds)
-
-	if ((clonemind) && (istype(clonemind))) //Move that mind over!!
-		clonemind.transfer_to(src.occupant)
-		clonemind.original = src.occupant
-	else //welp
-		src.occupant.mind = new /datum/mind(  )
-		src.occupant.mind.key = src.occupant.key
-		src.occupant.mind.current = src.occupant
-		src.occupant.mind.original = src.occupant
-		src.occupant.mind.transfer_to(src.occupant)
-		ticker.minds += src.occupant.mind
+	clonemind.transfer_to(H)
+	H.ckey = ckey
+	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
 	// -- Mode/mind specific stuff goes here
 
 	switch(ticker.mode.name)
 		if("revolution")
-			if(src.occupant.mind in ticker.mode:revolutionaries)
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
-			if(src.occupant.mind in ticker.mode:head_revolutionaries)
-				ticker.mode:update_all_rev_icons()
+			if((H.mind in ticker.mode:revolutionaries) || (H.mind in ticker.mode:head_revolutionaries))
+				ticker.mode.update_all_rev_icons() //So the icon actually appears
 		if("nuclear emergency")
-			if (src.occupant.mind in ticker.mode:syndicates)
-				ticker.mode:update_all_synd_icons()
+			if(H.mind in ticker.mode.syndicates)
+				ticker.mode.update_all_synd_icons()
 		if("cult")
-			if (src.occupant.mind in ticker.mode:cult)
-				ticker.mode:add_cultist(src.occupant.mind)
-				ticker.mode:update_all_cult_icons() //So the icon actually appears
-
-	if (changelingClone && occupant.mind in ticker.mode.changelings)
-		occupant.changeling = changelingClone
-		src.occupant.make_changeling()
+			if (H.mind in ticker.mode.cult)
+				ticker.mode.add_cultist(src.occupant.mind)
+				ticker.mode.update_all_cult_icons() //So the icon actually appears
 
 	// -- End mode specific stuff
 
-	if(istype(ghost, /mob/dead/observer))
-		del(ghost) //Don't leave ghosts everywhere!!
-
-	if(!src.occupant.dna)
-		src.occupant.dna = new /datum/dna()
+	if(!H.dna)
+		H.dna = new /datum/dna()
+		H.dna.real_name = H.real_name
 	if(ui)
-		src.occupant.dna.uni_identity = ui
-		updateappearance(src.occupant, ui)
+		H.dna.uni_identity = ui
+		updateappearance(H, ui)
 	if(se)
-		src.occupant.dna.struc_enzymes = se
-		for(var/i = 0 to 5)
-			randmutb(src.occupant) //Sometimes the clones come out wrong.
-	src.occupant:update_face()
-	src.occupant:update_body()
-	src.occupant:mutantrace = mrace
-	src.occupant:suiciding = 0
-	occupant.brainloss = 100
+		H.dna.struc_enzymes = se
+		randmutb(H) //Sometimes the clones come out wrong.
+
+	H.f_style = "Shaved"
+	H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+
+	if(H.dna)
+		H.dna.mutantrace = mrace
+		H.update_mutantrace()
+	H.suiciding = 0
 	src.attempting = 0
 	return 1
 
@@ -222,7 +209,7 @@
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
-		if((src.occupant.stat == 2) || (src.occupant.suiciding))  //Autoeject corpses and suiciding dudes.
+		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			src.go_out()
 			src.connected_message("Clone Rejected: Deceased.")
@@ -280,11 +267,6 @@
 			user << "System unlocked."
 	else if (istype(W, /obj/item/weapon/card/emag))
 		if (isnull(src.occupant))
-			return
-		var/obj/item/weapon/card/emag/E = W
-		if(E.uses)
-			E.uses--
-		else
 			return
 		user << "You force an emergency ejection."
 		src.locked = 0

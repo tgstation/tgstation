@@ -10,13 +10,13 @@ CRAYONS
 	new /obj/item/toy/crayon/green(src)
 	new /obj/item/toy/crayon/blue(src)
 	new /obj/item/toy/crayon/purple(src)
-	updateIcon()
+	update_icon()
 
-/obj/item/weapon/storage/crayonbox/proc/updateIcon()
+/obj/item/weapon/storage/crayonbox/update_icon()
 	overlays = list() //resets list
-	overlays += image('crayons.dmi',"crayonbox")
+	overlays += image('icons/obj/crayons.dmi',"crayonbox")
 	for(var/obj/item/toy/crayon/crayon in contents)
-		overlays += image('crayons.dmi',crayon.colourName)
+		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
 /obj/item/weapon/storage/crayonbox/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/toy/crayon))
@@ -28,37 +28,6 @@ CRAYONS
 				usr << "This crayon is too powerful to be contained in this box."
 				return
 	..()
-	updateIcon()
-
-/obj/item/weapon/storage/crayonbox/attack_hand(mob/user as mob)
-	updateIcon()
-	..()
-
-/obj/item/weapon/storage/crayonbox/MouseDrop(obj/over_object as obj)
-
-	if (ishuman(usr) || ismonkey(usr))
-		var/mob/M = usr
-		if (!( istype(over_object, /obj/screen) ))
-			return ..()
-		if ((!( M.restrained() ) && !( M.stat )))
-			if (over_object.name == "r_hand")
-				if (!( M.r_hand ))
-					M.u_equip(src)
-					M.r_hand = src
-			else
-				if (over_object.name == "l_hand")
-					if (!( M.l_hand ))
-						M.u_equip(src)
-						M.l_hand = src
-			M.update_clothing()
-			src.add_fingerprint(usr)
-			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if (usr.s_active)
-				usr.s_active.close(usr)
-			src.show_to(usr)
-			return
-	return
 
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
@@ -139,14 +108,13 @@ CRAYONS
 			if("rune")
 				user << "You start drawing a rune on the [target.name]."
 		if(instant || do_after(user, 50))
-			if(user.equipped() == src)
-				new /obj/effect/decal/cleanable/crayon(user.client,target,colour,shadeColour,drawtype)
-				user << "You finish drawing."
-				if(uses)
-					uses--
-					if(!uses)
-						user << "\red You used up your crayon!"
-						del(src)
+			new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+			user << "You finish drawing."
+			if(uses)
+				uses--
+				if(!uses)
+					user << "\red You used up your crayon!"
+					del(src)
 	return
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
@@ -161,21 +129,12 @@ CRAYONS
 	else
 		..()
 
-/obj/item/toy/crayon/attack_hand(mob/user as mob)
-	var/obj/item/weapon/storage/crayonbox/CB
-	if(istype(src.loc, /obj/item/weapon/storage/crayonbox))
-		CB = src.loc
-	..()
-	if(CB)
-		CB.updateIcon()
-
 /obj/effect/decal/cleanable/crayon
 	name = "rune"
 	desc = "A rune drawn in crayon."
-	icon = 'rune.dmi'
+	icon = 'icons/obj/rune.dmi'
 	layer = 2.1
 	anchored = 1
-	var/client/who_drew_this
 
 
 	examine()
@@ -184,10 +143,9 @@ CRAYONS
 		return
 
 
-	New(who,location,main = "#FFFFFF",shade = "#000000",var/type = "rune")
+	New(location,main = "#FFFFFF",shade = "#000000",var/type = "rune")
 		..()
 		loc = location
-		who_drew_this = who
 
 		name = type
 		desc = "A [type] drawn in crayon."
@@ -198,8 +156,8 @@ CRAYONS
 			if("graffiti")
 				type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
 
-		var/icon/mainOverlay = new/icon('crayondecal.dmi',"[type]",2.1)
-		var/icon/shadeOverlay = new/icon('crayondecal.dmi',"[type]s",2.1)
+		var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
+		var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
 
 		mainOverlay.Blend(main,ICON_ADD)
 		shadeOverlay.Blend(shade,ICON_ADD)

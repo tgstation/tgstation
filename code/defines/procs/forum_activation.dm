@@ -77,7 +77,7 @@
 		dbcon.Disconnect()
 		return
 
-	query = dbcon.NewQuery("UPDATE [forumsqldb].phpbb_user_group SET group_id = '[forum_authenticated_group]' WHERE user_id = '[uid]' AND group_id = '[forum_activated_group]'") // Replace 'Registered Users' group with 'Activated Users'
+	query = dbcon.NewQuery("UPDATE [forumsqldb].phpbb_user_group SET group_id = '[forum_authenticated_group]' WHERE user_id = '[uid]' AND group_id = '[forum_activated_group]'") // Replace 'registered_name Users' group with 'Activated Users'
 	if(!query.Execute())
 		src << "Unable to move account into authenticated group. This error shouldn't occur, contact an administrator for help. Authentication failed."
 		dbcon.Disconnect()

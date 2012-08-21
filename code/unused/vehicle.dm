@@ -175,7 +175,7 @@
 					if ((O.client && !( O.blinded )))
 						O << text("\blue <B> [] loads [] into []!</B>", H, H.pulling, src)
 
-				H.pulling = null
+				H.stop_pulling()
 
 
 /obj/machinery/vehicle/space_ship

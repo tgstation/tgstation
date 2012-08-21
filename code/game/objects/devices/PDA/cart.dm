@@ -1,7 +1,7 @@
 /obj/item/weapon/cartridge
 	name = "generic cartridge"
 	desc = "A data cartridge for portable microcomputers."
-	icon = 'pda.dmi'
+	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
 	w_class = 1
@@ -10,6 +10,7 @@
 	var/access_security = 0
 	var/access_engine = 0
 	var/access_medical = 0
+	var/access_manifest = 0
 	var/access_clown = 0
 	var/access_mime = 0
 	var/access_janitor = 0
@@ -61,6 +62,7 @@
 		icon_state = "cart-s"
 		access_security = 1
 		access_medical = 1
+		access_manifest = 1
 
 
 	janitor
@@ -123,11 +125,13 @@
 	head
 		name = "Easy-Record DELUXE"
 		icon_state = "cart-h"
+		access_manifest = 1
 		access_status_display = 1
 
 	hop
 		name = "HumanResources9001"
 		icon_state = "cart-h"
+		access_manifest = 1
 		access_status_display = 1
 		access_quartermaster = 1
 
@@ -139,6 +143,7 @@
 	hos
 		name = "R.O.B.U.S.T. DELUXE"
 		icon_state = "cart-hos"
+		access_manifest = 1
 		access_status_display = 1
 		access_security = 1
 
@@ -150,12 +155,14 @@
 	ce
 		name = "Power-On DELUXE"
 		icon_state = "cart-ce"
+		access_manifest = 1
 		access_status_display = 1
 		access_engine = 1
 
 	cmo
 		name = "Med-U DELUXE"
 		icon_state = "cart-cmo"
+		access_manifest = 1
 		access_status_display = 1
 		access_reagent_scanner = 1
 		access_medical = 1
@@ -163,6 +170,7 @@
 	rd
 		name = "Signal Ace DELUXE"
 		icon_state = "cart-rd"
+		access_manifest = 1
 		access_status_display = 1
 //		access_reagent_scanner = 1
 
@@ -175,6 +183,7 @@
 		name = "Value-PAK Cartridge"
 		desc = "Now with 200% more value!"
 		icon_state = "cart-c"
+		access_manifest = 1
 		access_engine = 1
 		access_security = 1
 		access_medical = 1
@@ -182,7 +191,7 @@
 		access_status_display = 1
 
 	syndicate
-		name = "modified signaler cartridge"
+		name = "Detomatix Cartridge"
 		icon_state = "cart"
 		access_remote_door = 1
 		remote_door_id = "syndicate" //Make sure this matches the syndicate shuttle's shield/door id!!
@@ -247,6 +256,14 @@ Code:
 [radio:code]
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
+			if (41) //crew manifest
+
+				menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
+				menu += "Entries cannot be modified from this terminal.<br><br>"
+				if(!isnull(data_core.general))
+					for (var/datum/data/record/t in sortRecord(data_core.general))
+						menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+				menu += "<br>"
 
 
 			if (42) //status displays
@@ -318,8 +335,9 @@ Code:
 
 			if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
 				menu = "<h4><img src=pda_medical.png> Medical Record List</h4>"
-				for (var/datum/data/record/R in data_core.general)
-					menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
+				if(!isnull(data_core.general))
+					for (var/datum/data/record/R in sortRecord(data_core.general))
+						menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 				menu += "<br>"
 			if(441)
 				menu = "<h4><img src=pda_medical.png> Medical Record</h4>"
@@ -360,9 +378,9 @@ Code:
 				menu += "<br>"
 			if (45) //security records
 				menu = "<h4><img src=pda_cuffs.png> Security Record List</h4>"
-
-				for (var/datum/data/record/R in data_core.general)
-					menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
+				if(!isnull(data_core.general))
+					for (var/datum/data/record/R in sortRecord(data_core.general))
+						menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 
 				menu += "<br>"
 			if(451)
@@ -478,7 +496,7 @@ Code:
 
 					else
 						for(var/obj/machinery/bot/mulebot/B in QC.botlist)
-							menu += "<A href='byond://?src=\ref[QC];op=control;bot=\ref[B]'>[B] at [get_area(B)]</A><BR>"
+							menu += "<A href='byond://?src=\ref[QC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
 
 					menu += "<BR><A href='byond://?src=\ref[QC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
 
@@ -537,8 +555,8 @@ Code:
 						if(ml)
 							if (ml.z != cl.z)
 								continue
-
-							ldat += "Mop - <b>\[[ml.x],[ml.y]\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
+							var/direction = get_dir(src, M)
+							ldat += "Mop - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
 
 					if (!ldat)
 						menu += "None"
@@ -554,8 +572,8 @@ Code:
 						if(bl)
 							if (bl.z != cl.z)
 								continue
-
-							ldat += "Bucket - <b>\[[bl.x],[bl.y]\]</b> - Water level: [B.reagents.total_volume]/100<br>"
+							var/direction = get_dir(src, B)
+							ldat += "Bucket - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
 
 					if (!ldat)
 						menu += "None"
@@ -571,8 +589,8 @@ Code:
 						if(bl)
 							if (bl.z != cl.z)
 								continue
-
-							ldat += "Cleanbot - <b>\[[bl.x],[bl.y]\]</b> - [B.on ? "Online" : "Offline"]<br>"
+							var/direction = get_dir(src, B)
+							ldat += "Cleanbot - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - [B.on ? "Online" : "Offline"]<br>"
 
 					if (!ldat)
 						menu += "None"
@@ -581,6 +599,7 @@ Code:
 
 				else
 					menu += "ERROR: Unable to determine current location."
+				menu += "<br><br><A href='byond://?src=\ref[src];choice=49'>Refresh GPS Locator</a>"
 
 	proc/add_data(atom/A as mob|obj|turf|area)
 		//I love hashtables.
@@ -612,9 +631,9 @@ Code:
 						blood[main_blood] = A.blood_DNA[blood]
 			return 1
 		var/list/sum_list[4]	//Pack it back up!
-		sum_list[1] = A.fingerprints ? A.fingerprints.Copy() : null
-		sum_list[2] = A.suit_fibers ? A.suit_fibers.Copy() : null
-		sum_list[3] = A.blood_DNA ? A.blood_DNA.Copy() : null
+		sum_list[1] = A.fingerprints
+		sum_list[2] = A.suit_fibers
+		sum_list[3] = A.blood_DNA
 		sum_list[4] = "\The [A] in \the [get_area(A)]"
 		stored_data["\ref [A]"] = sum_list
 		return 0

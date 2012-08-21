@@ -2,12 +2,12 @@
 	name = "flash"
 	desc = "Used for blinding and being an asshole."
 	icon_state = "flash"
+	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
 	throwforce = 5
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 10
 	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
 	origin_tech = "magnets=2;combat=1"
 
 	var/times_used = 0 //Number of times it's been used.
@@ -16,7 +16,7 @@
 
 /obj/item/device/flash/proc/clown_check(var/mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
-		user << "\red The Flash slips out of your hand."
+		user << "\red \The [src] slips out of your hand."
 		user.drop_item()
 		return 0
 	return 1
@@ -37,14 +37,12 @@
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [M.name] ([M.ckey])</font>")
 
-	log_admin("ATTACK: [user] ([user.ckey]) flashed [M] ([M.ckey]) with [src].")
-	message_admins("ATTACK: [user] ([user.ckey]) flashed [M] ([M.ckey]) with [src].")
 	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [src.name] to flash [M.name] ([M.ckey])</font>")
 
 
 	if(!clown_check(user))	return
 	if(broken)
-		user.show_message("<span class='warning'>The [src.name] is broken.</span>", 2)
+		user << "<span class='warning'>\The [src] is broken.</span>"
 		return
 
 	flash_recharge()
@@ -61,11 +59,9 @@
 				return
 			times_used++
 		else	//can only use it  5 times a minute
-			user.show_message("<span class='warning'>*click* *click*</span>", 2)
-			for(var/mob/K in viewers(usr))
-				K << 'empty.ogg'
+			user << "<span class='warning'>*click* *click*</span>"
 			return
-	playsound(src.loc, 'flash.ogg', 100, 1)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	var/flashfail = 0
 
 	if(iscarbon(M))
@@ -75,44 +71,37 @@
 			flick("e_flash", M.flash)
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
-				// kill all memes
-				for(var/mob/living/parasite/meme/P in M:parasites)
-					P << "\red <b>The bright flash is unbearable.. You lose consciousness and fade away..</b>"
-					P.death()
-
 				if(user.mind && user.mind in ticker.mode.head_revolutionaries)
 					var/revsafe = 0
 					for(var/obj/item/weapon/implant/loyalty/L in M)
 						if(L && L.implanted)
 							revsafe = 1
 							break
-					M:update_mind()		//give them a mind datum if they don't have one. won't work if they are logged out/ghosted or something.
-					if(M.mind)
-						if(M.mind.has_been_rev)
-							revsafe = 2
-						if(!revsafe)
-							M.mind.has_been_rev = 1
-							ticker.mode.add_revolutionary(M.mind)
-						else if(revsafe == 1)
-							user << "<span class='warning'>Something seems to be blocking the flash!</span>"
-						else
-							user << "<span class='warning'>This mind seems resistant to the flash!</span>"
+					M.mind_initialize()		//give them a mind datum if they don't have one.
+					if(M.mind.has_been_rev)
+						revsafe = 2
+					if(!revsafe)
+						M.mind.has_been_rev = 1
+						ticker.mode.add_revolutionary(M.mind)
+					else if(revsafe == 1)
+						user << "<span class='warning'>Something seems to be blocking the flash!</span>"
+					else
+						user << "<span class='warning'>This mind seems resistant to the flash!</span>"
 					user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
 		else
 			flashfail = 1
 
 	else if(issilicon(M))
-		if(!M:flashproof())
-			M.Weaken(rand(5,10))
-		else
-			flashfail++
+		M.Weaken(rand(5,10))
+	else
+		flashfail = 1
 
 	if(isrobot(user))
 		spawn(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
-			animation.icon = 'mob.dmi'
+			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)
@@ -120,11 +109,16 @@
 
 	if(!flashfail)
 		flick("flash2", src)
-		for(var/mob/O in viewers(user, null))
-			O.show_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+		if(!issilicon(M))
+
+			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+		else
+
+			user.visible_message("<span class='notice'>[user] overloads [M]'s sensors with the flash!</span>")
 	else
-		for(var/mob/O in viewers(user, null))
-			O.show_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
+
+		user.visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
+
 	return
 
 
@@ -150,17 +144,15 @@
 			times_used++
 		else	//can only use it  5 times a minute
 			user.show_message("<span class='warning'>*click* *click*</span>", 2)
-			for(var/mob/K in viewers(usr))
-				K << 'empty.ogg'
 			return
-	playsound(src.loc, 'flash.ogg', 100, 1)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("flash2", src)
 	if(user && isrobot(user))
 		spawn(0)
 			var/atom/movable/overlay/animation = new(user.loc)
 			animation.layer = user.layer + 1
 			animation.icon_state = "blank"
-			animation.icon = 'mob.dmi'
+			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
 			flick("blspell", animation)
 			sleep(5)
@@ -174,7 +166,8 @@
 					S.icon_state = "shield0"
 		var/safety = M:eyecheck()
 		if(!safety)
-			flick("flash", M.flash)
+			if(!M.blinded)
+				flick("flash", M.flash)
 
 	return
 

@@ -48,11 +48,11 @@
 			if(src.meattype == 1)
 				if(src.meat > 1)
 					src.meat--
-					new /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/monkey( src.loc )
+					new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey( src.loc )
 					usr << "You remove some meat from the monkey."
 				else if(src.meat == 1)
 					src.meat--
-					new /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/monkey(src.loc)
+					new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src.loc)
 					usr << "You remove the last piece of meat from the monkey!"
 					src.icon_state = "spike"
 					src.occupied = 0

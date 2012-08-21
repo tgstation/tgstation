@@ -1,6 +1,6 @@
 /obj/effect/expl_particles
 	name = "fire"
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "explosion_particle"
 	opacity = 1
 	anchored = 1
@@ -38,7 +38,7 @@
 
 /obj/effect/explosion
 	name = "fire"
-	icon = '96x96.dmi'
+	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
 	opacity = 1
 	anchored = 1

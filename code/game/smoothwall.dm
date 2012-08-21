@@ -71,7 +71,7 @@
 			if(is_floor) //if is_floor = 1, we use the floor diagonal sprite
 				src.icon = newicon; //we'll set the floor's icon to the floor next to it and overlay the wall segment. shuttle floor sprites have priority
 				src.icon_state = newiconstate; //
-				src.overlays += icon('shuttle.dmi',"swall_f[junction]")
+				src.overlays += icon('icons/turf/shuttle.dmi',"swall_f[junction]")
 			else //otherwise, the space one
 				src.icon_state = "swall_s[junction]"*/
 
@@ -82,6 +82,7 @@
 		W.relativewall()
 	for(var/obj/structure/falsewall/W in range(src,1))
 		W.relativewall()
+		W.update_icon()//Refreshes the wall to make sure the icons don't desync
 	for(var/obj/structure/falserwall/W in range(src,1))
 		W.relativewall()
 	return
@@ -177,6 +178,10 @@
 
 /obj/structure/falsewall/relativewall()
 
+	if(!density)
+		icon_state = "[mineral]fwall_open"
+		return
+
 	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
 
 	for(var/turf/simulated/wall/W in orange(src,1))
@@ -191,12 +196,15 @@
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 			if(src.mineral == W.mineral)
 				junction |= get_dir(src,W)
-	var/obj/structure/falsewall/fwall = src
-	fwall.icon_state = "[fwall.mineral][junction]"
+	icon_state = "[mineral][junction]"
 	return
 
 /obj/structure/falserwall/relativewall()
 
+	if(!density)
+		icon_state = "frwall_open"
+		return
+
 	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
 
 	for(var/turf/simulated/wall/W in orange(src,1))
@@ -211,5 +219,5 @@
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 			if(src.mineral == W.mineral)
 				junction |= get_dir(src,W)
-	src.icon_state = "rwall[junction]"
+	icon_state = "rwall[junction]"
 	return

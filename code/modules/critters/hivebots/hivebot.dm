@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/projectile/hivebotbullet
 	damage = 5
@@ -7,7 +7,7 @@
 /obj/effect/critter/hivebot
 	name = "Hivebot"
 	desc = "A small robot"
-	icon = 'hivebot.dmi'
+	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "basic"
 	health = 10
 	max_health = 10
@@ -127,7 +127,7 @@
 			return
 
 		var/obj/item/projectile/hivebotbullet/A = new /obj/item/projectile/hivebotbullet(user:loc)
-		playsound(user, 'Gunshot.ogg', 100, 1)
+		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 
 		if(!A)	return
 
@@ -170,7 +170,7 @@
 /obj/effect/critter/hivebot/tele//this still needs work
 	name = "Beacon"
 	desc = "Some odd beacon thing"
-	icon = 'Hivebot.dmi'
+	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "def_radar-off"
 	health = 100
 	max_health = 100
@@ -203,7 +203,7 @@
 		smoke.start()
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>The [src] warps in!</B>", 1)
-		playsound(src.loc, 'EMPulse.ogg', 25, 1)
+		playsound(src.loc, 'sound/effects/EMPulse.ogg', 25, 1)
 		if(auto_spawn)
 			spawn(spawn_delay)
 				turn_on = 1

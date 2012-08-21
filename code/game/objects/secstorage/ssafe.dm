@@ -1,6 +1,6 @@
 /obj/item/weapon/secstorage/ssafe
 	name = "secure safe"
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
 	icon_opened = "safe0"
 	icon_locking = "safeb"
@@ -19,7 +19,7 @@
 
 /obj/item/weapon/secstorage/ssafe/HoS/New()
 	..()
-	new /obj/item/weapon/storage/lockbox/clusterbang(src)
+	//new /obj/item/weapon/storage/lockbox/clusterbang(src) This item is currently broken... and probably shouldnt exist to begin with (even though it's cool)
 
 /obj/item/weapon/secstorage/ssafe/attack_hand(mob/user as mob)
 	return attack_self(user)

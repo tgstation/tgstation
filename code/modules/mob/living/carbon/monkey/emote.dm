@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/emote(var/act,var/m_type=1,var/message = null)
+/mob/living/carbon/monkey/emote(var/act)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -6,6 +6,8 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
+	var/m_type = 1
+	var/message
 
 	switch(act)
 		if("sign")
@@ -90,30 +92,13 @@
 		if("deathgasp")
 			message = "<b>The [src.name]</b> lets out a faint chimper as it collapses and stops moving..."
 			m_type = 1
-		if ("me")
-			if(silent)
-				return
-			if (src.client && (client.muted || client.muted_complete))
-				src << "You are muted."
-				return
-			if (stat)
-				return
-			if(!(message))
-				return
-			else
-				if(cmptext(copytext(message, 1, 3), "v "))
-					message = "<B>[src]</B> [copytext(message, 3)]"
-					m_type = 1
-				else if(cmptext(copytext(message, 1, 3), "h "))
-					message = "<B>[src]</B> [copytext(message, 3)]"
-					m_type = 2
-				else
-					message = "<B>[src]</B> [message]"
 		if("help")
 			src << "choke, collapse, dance, deathgasp, drool, gasp, shiver, gnarl, jump, paw, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))
+		if(src.client)
+			log_emote("[name]/[key] : [message]")
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)

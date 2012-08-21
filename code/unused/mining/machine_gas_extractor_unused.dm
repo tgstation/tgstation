@@ -3,7 +3,7 @@
 /obj/machinery/mineral/gasextractor
 	name = "Gas extractor"
 	desc = "A machine which extracts gasses from ores"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "aiupload"
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null

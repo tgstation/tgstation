@@ -40,22 +40,15 @@
 	var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
+		update_icons()
 		src << "\blue Your [C.name] was disrupted!"
 		Stun(2)
-
-	flash_weak_pain()
-
-	if(istype(equipped(),/obj/item/device/assembly/signaler))
-		var/obj/item/device/assembly/signaler/signaler = equipped()
-		if(signaler.deadman && prob(80))
-			src.visible_message("\red [src] triggers their deadman's switch!")
-			signaler.signal()
 
 	var/absorb = run_armor_check(def_zone, P.flag)
 	if(absorb >= 2)
 		P.on_hit(src,2)
 		return 2
 	if(!P.nodamage)
-		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone, sharp = 1, used_weapon = P.name)
+		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone)
 	P.on_hit(src, absorb)
 	return absorb

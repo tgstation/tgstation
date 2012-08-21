@@ -1,8 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/photocopier
-	name = "Photocopier"
-	icon = 'library.dmi'
+	name = "photocopier"
+	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
 	anchored = 1
 	density = 1
@@ -69,8 +69,8 @@
 				if(ishuman(usr))
 					if(!usr.get_active_hand())
 						copy.loc = usr.loc
-						usr.put_in_hand(copy)
-						usr << "You take the paper out of the photocopier."
+						usr.put_in_hands(copy)
+						usr << "<span class='notice'>You take the paper out of the photocopier.</span>"
 						copy = null
 						updateUsrDialog()
 		else if(href_list["min"])
@@ -88,24 +88,24 @@
 				user.drop_item()
 				copy = O
 				O.loc = src
-				user << "You insert the paper into the photocopier."
+				user << "<span class='notice'>You insert the paper into \the [src].</span>"
 				flick("bigscanner1", src)
 				updateUsrDialog()
 			else
-				user << "There is already paper in the photocopier."
+				user << "<span class='notice'>There is already paper in \the [src].</span>"
 		else if(istype(O, /obj/item/device/toner))
 			if(toner == 0)
 				user.drop_item()
 				del(O)
 				toner = 30
-				user << "You insert the toner cartridge into the photocopier."
+				user << "<span class='notice'>You insert the toner cartridge into \the [src].</span>"
 				updateUsrDialog()
 			else
-				user << "This cartridge is not yet ready for replacement! Use up the rest of the toner."
+				user << "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
 		else if(istype(O, /obj/item/weapon/wrench))
-			playsound(loc, 'Ratchet.ogg', 50, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
-			user << "You [anchored ? "wrench" : "unwrench"] \the [src]."
+			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
 		return
 
 	ex_act(severity)

@@ -4,7 +4,7 @@
 	density = 1
 	anchored = 0
 	name = "Computer-frame"
-	icon = 'stock_parts.dmi'
+	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "0"
 	var/state = 0
 	var/obj/item/weapon/circuitboard/circuit = null
@@ -15,7 +15,7 @@
 	anchored = 0
 	w_class = 2.0
 	name = "Circuit board"
-	icon = 'module.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
@@ -27,12 +27,15 @@
 	var/powernet = null
 	var/list/records = null
 	var/frame_desc = null
-	var/contain_parts = 1
+
 
 /obj/item/weapon/circuitboard/message_monitor
 	name = "Circuit board (Message Monitor)"
 	build_path = "/obj/machinery/computer/message_monitor"
 	origin_tech = "programming=3"
+/obj/item/weapon/circuitboard/security
+	name = "Circuit board (Security)"
+	build_path = "/obj/machinery/computer/security"
 /obj/item/weapon/circuitboard/aicore
 	name = "Circuit board (AI core)"
 	origin_tech = "programming=4;biotech=2"
@@ -129,7 +132,7 @@
 	build_path = "/obj/machinery/computer/prisoner"
 /obj/item/weapon/circuitboard/rdconsole
 	name = "Circuit Board (RD Console)"
-	build_path = "/obj/machinery/computer/rdconsole"
+	build_path = "/obj/machinery/computer/rdconsole/core"
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
 	build_path = "/obj/machinery/computer/mecha"
@@ -157,38 +160,10 @@
 	name = "Circuit board (Operating Computer)"
 	build_path = "/obj/machinery/computer/operating"
 	origin_tech = "programming=2;biotech=2"
-
-/obj/item/weapon/circuitboard/camera
-	name = "Circuit board (Camera)"
-	origin_tech = "programming=2"
-	build_path = ""		//build path has to be manually set via circuit interaction
-
-//the following camera circuit boards are for adminspawn / reference
-/obj/item/weapon/circuitboard/securitycam
-	name = "Circuit board (Security Monitoring)"
-	origin_tech = ""	//unresearchable
-	build_path = "/obj/machinery/computer/security"
-/obj/item/weapon/circuitboard/engineeringcam
-	name = "Circuit board (Engineering Monitoring)"
-	origin_tech = ""	//unresearchable
-	build_path = "/obj/machinery/computer/security/engineering"
-/obj/item/weapon/circuitboard/miningcam
-	name = "Circuit board (Mining Outpost Monitoring)"
-	origin_tech = ""	//unresearchable
+/obj/item/weapon/circuitboard/mining
+	name = "Circuit board (Outpost Status Display)"
 	build_path = "/obj/machinery/computer/security/mining"
-/obj/item/weapon/circuitboard/cargocam
-	name = "Circuit board (Cargo Department Monitoring)"
-	origin_tech = ""	//unresearchable
-	build_path = "/obj/machinery/computer/security/cargo"
-/obj/item/weapon/circuitboard/medbaycam
-	name = "Circuit board (Mining Outpost Monitoring)"
-	origin_tech = ""	//unresearchable
-	build_path = "/obj/machinery/computer/security/medbay"
-/obj/item/weapon/circuitboard/researchcam
-	name = "Circuit board (Mining Outpost Monitoring)"
-	origin_tech = ""	//unresearchable
-	build_path = "/obj/machinery/computer/security/research"
-
+	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/comm_monitor
 	name = "Circuit board (Telecommunications Monitor)"
 	build_path = "/obj/machinery/computer/telecomms/monitor"
@@ -213,16 +188,12 @@
 	name = "Circuit board (Mining Shuttle)"
 	build_path = "/obj/machinery/computer/mining_shuttle"
 	origin_tech = "programming=2"
-/obj/item/weapon/circuitboard/research_shuttle
-	name = "Circuit board (Research Shuttle)"
-	build_path = "/obj/machinery/computer/research_shuttle"
-	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "Circuit board (Holodeck Control)"
 	build_path = "/obj/machinery/computer/HolodeckControl"
 	origin_tech = "programming=4"
 /obj/item/weapon/circuitboard/aifixer
-	name = "Circuit board (AI Integrity Fixer)"
+	name = "Circuit board (AI Integrity Restorer)"
 	build_path = "/obj/machinery/computer/aifixer"
 	origin_tech = "programming=3;biotech=2"
 /obj/item/weapon/circuitboard/area_atmos
@@ -233,34 +204,6 @@
 	name = "Circuit board (Prison Shuttle)"
 	build_path = "/obj/machinery/computer/prison_shuttle"
 	origin_tech = "programming=2"
-
-
-//shielding
-/obj/item/weapon/circuitboard/shield_capacitor
-	name = "Circuit Board (Shield Capacitor)"
-	build_path = "/obj/machinery/shield_capacitor"
-	board_type = "machine"
-	origin_tech = "programming=3;electromagnetic=3;engineering=2;power=1"
-	frame_desc = "Requires, 2 Cable Coil, 2 Nano Manipulator, 1 Advanced Matter Bin, 1 Console Screen and 1 High-Power Micro-Laser. "
-	req_components = list(
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/manipulator/nano" = 2,
-							"/obj/item/weapon/stock_parts/matter_bin/adv" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/stock_parts/micro_laser/high" = 1)
-
-/obj/item/weapon/circuitboard/shield_generator_external
-	name = "Circuit Board (Hull Shield Generator)"
-	build_path = "/obj/machinery/shield_generator/external"
-	board_type = "machine"
-	origin_tech = "programming=3;electromagnetic=3;engineering=2;power=1"
-	frame_desc = "Requires, 2 Cable Coil, 2 Nano Manipulator, 1 Advanced Matter Bin, 1 Console Screen and 1 High-Power Micro-Laser. "
-	req_components = list(
-							"/obj/item/weapon/cable_coil" = 2,
-							"/obj/item/weapon/stock_parts/manipulator/nano" = 2,
-							"/obj/item/weapon/stock_parts/matter_bin/adv" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1,
-							"/obj/item/weapon/stock_parts/micro_laser/high" = 1)
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
@@ -277,21 +220,31 @@
 		switch( alert("Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface","Switch to [opposite_catastasis]","Cancel") )
 		//switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
 			if("Switch to STANDARD","Switch to BROAD")
-				if(src.contraband_enabled)
-					src.contraband_enabled = 0
-				else
-					src.contraband_enabled = 1
-			else if("Cancel")
+				src.contraband_enabled = !src.contraband_enabled
+
+			if("Cancel")
 				return
 			else
 				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
+	return
+
+/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I,/obj/item/weapon/screwdriver))
+		if(src.build_path == "/obj/machinery/computer/rdconsole/core")
+			src.name = "Circuit Board (RD Console - Robotics)"
+			src.build_path = "/obj/machinery/computer/rdconsole/robotics"
+			user << "\blue Access protocols succesfully updated."
+		else
+			src.name = "Circuit Board (RD Console)"
+			src.build_path = "/obj/machinery/computer/rdconsole/core"
+			user << "\blue Defaulting access protocols."
 	return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
-				playsound(src.loc, 'Ratchet.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You wrench the frame into place."
 					src.anchored = 1
@@ -301,7 +254,7 @@
 				if(!WT.remove_fuel(0, user))
 					user << "The welding tool must be on to complete this task."
 					return
-				playsound(src.loc, 'Welder.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20))
 					if(!src || !WT.isOn()) return
 					user << "\blue You deconstruct the frame."
@@ -309,7 +262,7 @@
 					del(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
-				playsound(src.loc, 'Ratchet.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You unfasten the frame."
 					src.anchored = 0
@@ -317,24 +270,21 @@
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
-					if(B.build_path != "" && !isnull(B.build_path))
-						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-						user << "\blue You place the circuit board inside the frame."
-						src.icon_state = "1"
-						src.circuit = P
-						user.drop_item()
-						P.loc = src
-					else
-						user << "\red That circuit board requires additional modifications before it can be used."
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					user << "\blue You place the circuit board inside the frame."
+					src.icon_state = "1"
+					src.circuit = P
+					user.drop_item()
+					P.loc = src
 				else
 					user << "\red This frame does not accept circuit boards of this type!"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You screw the circuit board into place."
 				src.state = 2
 				src.icon_state = "2"
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
-				playsound(src.loc, 'Crowbar.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the circuit board."
 				src.state = 1
 				src.icon_state = "0"
@@ -342,13 +292,13 @@
 				src.circuit = null
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You unfasten the circuit board."
 				src.state = 1
 				src.icon_state = "1"
 			if(istype(P, /obj/item/weapon/cable_coil))
 				if(P:amount >= 5)
-					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(P)
 							P:amount -= 5
@@ -358,7 +308,7 @@
 							src.icon_state = "3"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
-				playsound(src.loc, 'wirecutter.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "\blue You remove the cables."
 				src.state = 2
 				src.icon_state = "2"
@@ -367,7 +317,7 @@
 
 			if(istype(P, /obj/item/stack/sheet/glass))
 				if(P:amount >= 2)
-					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						if(P)
 							P:use(2)
@@ -376,22 +326,21 @@
 							src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'Crowbar.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the glass panel."
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
 			if(istype(P, /obj/item/weapon/screwdriver))
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
-				if(circuit && circuit.build_path)
-					var/B = new circuit.build_path (loc)
-					if(circuit.powernet) B:powernet = circuit.powernet
-					if(circuit.id) B:id = circuit.id
-					if(circuit.records) B:records = circuit.records
-					if(circuit.frequency) B:frequency = circuit.frequency
-					if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
-						var/obj/machinery/computer/supplycomp/SC = B
-						var/obj/item/weapon/circuitboard/supplycomp/C = circuit
-						SC.can_order_contraband = C.contraband_enabled
-					del(src)
+				var/B = new src.circuit.build_path ( src.loc )
+				if(circuit.powernet) B:powernet = circuit.powernet
+				if(circuit.id) B:id = circuit.id
+				if(circuit.records) B:records = circuit.records
+				if(circuit.frequency) B:frequency = circuit.frequency
+				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
+					var/obj/machinery/computer/supplycomp/SC = B
+					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
+					SC.can_order_contraband = C.contraband_enabled
+				del(src)

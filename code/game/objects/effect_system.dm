@@ -8,18 +8,14 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /obj/effect/effect
 	name = "effect"
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	mouse_opacity = 0
 	unacidable = 1//So effect are not targeted by alien acid.
 	flags = TABLEPASS
 
-/obj/effect/ex_act(severity)
-	if(severity)
-		del(src)
-
 /obj/effect/effect/water
 	name = "water"
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	var/life = 15.0
 	flags = TABLEPASS
@@ -27,7 +23,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /obj/effect/effect/smoke
 	name = "smoke"
-	icon = 'water.dmi'
+	icon = 'icons/effects/water.dmi'
 	icon_state = "smoke"
 	opacity = 1
 	anchored = 0.0
@@ -107,7 +103,7 @@ steam.start() -- spawns the effect
 /////////////////////////////////////////////
 /obj/effect/effect/steam
 	name = "steam"
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	density = 0
 
@@ -124,7 +120,7 @@ steam.start() -- spawns the effect
 		var/i = 0
 		for(i=0, i<src.number, i++)
 			spawn(0)
-				if(holder && !istype(holder,/datum))
+				if(holder)
 					src.location = get_turf(holder)
 				var/obj/effect/effect/steam/steam = new /obj/effect/effect/steam(src.location)
 				var/direction
@@ -195,7 +191,7 @@ steam.start() -- spawns the effect
 			if(src.total_sparks > 20)
 				return
 			spawn(0)
-				if(holder && !istype(holder,/datum))
+				if(holder)
 					src.location = get_turf(holder)
 				var/obj/effect/effect/sparks/sparks = new /obj/effect/effect/sparks(src.location)
 				src.total_sparks++
@@ -228,7 +224,7 @@ steam.start() -- spawns the effect
 	mouse_opacity = 0
 	var/amount = 6.0
 	//Remove this bit to use the old smoke
-	icon = '96x96.dmi'
+	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
 
@@ -265,7 +261,7 @@ steam.start() -- spawns the effect
 			if(src.total_smoke > 20)
 				return
 			spawn(0)
-				if(holder && !istype(holder,/datum))
+				if(holder)
 					src.location = get_turf(holder)
 				var/obj/effect/effect/harmless_smoke/smoke = new /obj/effect/effect/harmless_smoke(src.location)
 				src.total_smoke++
@@ -295,7 +291,7 @@ steam.start() -- spawns the effect
 	mouse_opacity = 0
 	var/amount = 6.0
 	//Remove this bit to use the old smoke
-	icon = '96x96.dmi'
+	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
 
@@ -365,7 +361,7 @@ steam.start() -- spawns the effect
 			if(src.total_smoke > 20)
 				return
 			spawn(0)
-				if(holder && !istype(holder,/datum))
+				if(holder)
 					src.location = get_turf(holder)
 				var/obj/effect/effect/bad_smoke/smoke = new /obj/effect/effect/bad_smoke(src.location)
 				src.total_smoke++
@@ -393,11 +389,9 @@ steam.start() -- spawns the effect
 	opacity = 1
 	anchored = 0.0
 	mouse_opacity = 0
-	pass_flags = PASSBLOB
 	var/amount = 6.0
-	var/divisor = 1
 
-	icon = 'chemsmoke.dmi'
+	icon = 'icons/effects/chemsmoke.dmi'
 	pixel_x = -32
 	pixel_y = -32
 
@@ -413,29 +407,18 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/chem_smoke/Move()
 	..()
-	var/obj/R = new /obj()
-	R.reagents = new/datum/reagents(500)
-	R.reagents.my_atom = R
-	if(reagents)
-		reagents.trans_to(R, reagents.total_volume/divisor)
-		for(var/atom/A in view(1, src))
-			if(reagents.has_reagent("radium")||reagents.has_reagent("uranium")||reagents.has_reagent("carbon")||reagents.has_reagent("thermite"))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
-				if(prob(5))
-					R.reagents.reaction(A)
-				del(R)
-			else if(R && R.reagents)
-				R.reagents.reaction(A)
-			del(R)
+	for(var/atom/A in view(1, src))
+		if(reagents.has_reagent("radium")||reagents.has_reagent("uranium")||reagents.has_reagent("carbon")||reagents.has_reagent("thermite"))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
+			if(prob(5))
+				reagents.reaction(A)
+		else
+			reagents.reaction(A)
+
 	return
 
 /obj/effect/effect/chem_smoke/HasEntered(mob/living/carbon/M as mob )
 	..()
-	var/obj/R = new /obj()
-	R.reagents = new/datum/reagents(500)
-	R.reagents.my_atom = R
-	reagents.trans_to(R, reagents.total_volume/divisor)
-	R.reagents.reaction(M)
-	del(R)
+	reagents.reaction(M)
 
 	return
 
@@ -458,6 +441,12 @@ steam.start() -- spawns the effect
 		cardinals = c
 		carry.copy_to(chemholder, carry.total_volume)
 
+		/*
+		if((src.reagents.has_reagent("pacid")) || (src.reagents.has_reagent("lube"))) 	   				// Messages admins if someone sprays polyacid or space lube from a Cleaner bottle.
+		message_admins("[key_name_admin(user)] fired Polyacid/Space lube from a Cleaner bottle.")			// Polymorph
+		log_game("[key_name(user)] fired Polyacid/Space lube from a Cleaner bottle.")
+*/
+
 		if(istype(loca, /turf/))
 			location = loca
 		else
@@ -465,40 +454,25 @@ steam.start() -- spawns the effect
 		if(direct)
 			direction = direct
 
+		if(carry.my_atom.fingerprintslast)
+			message_admins("A chemical smoke reaction has taken place in ([location.x], [location.y]). Last associated key is [carry.my_atom.fingerprintslast].")
+			log_game("A chemical smoke reaction has taken place in ([location.x], [location.y]). Last associated key is [carry.my_atom.fingerprintslast].")
+		else
+			message_admins("A chemical smoke reaction has taken place in ([location.x], [location.y]). No associated key.")
+			log_game("A chemical smoke reaction has taken place in ([location.x], [location.y]). No associated key.")
+
 	start()
 		var/i = 0
 
-		// Calculate the smokes' color
-		var/list/rgbcolor = list(0,0,0)
-		var/finalcolor
-		for(var/datum/reagent/re in chemholder.reagents.reagent_list)
-			if(!finalcolor)
-				rgbcolor = GetColors(re.color)
-				finalcolor = re.color
-			else
-				var/newcolor[3]
-				var/prergbcolor[3]
-				prergbcolor = rgbcolor
-				newcolor = GetColors(re.color)
-
-				rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-				rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-				rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
-
-				finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
-
-		if(finalcolor)
-			finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3]) // slightly darker color
+		var/color = mix_color_from_reagents(chemholder.reagents.reagent_list)
 
 		for(i=0, i<src.number, i++)
 			if(src.total_smoke > 20)
 				return
 			spawn(0)
-				if(holder && !istype(holder,/datum))
+				if(holder)
 					src.location = get_turf(holder)
-				var/iterator = pick(0,1,1,1,2,2,2,3)
 				var/obj/effect/effect/chem_smoke/smoke = new /obj/effect/effect/chem_smoke(src.location)
-				smoke.divisor = iterator + 1
 				src.total_smoke++
 				var/direction = src.direction
 				if(!direction)
@@ -508,16 +482,16 @@ steam.start() -- spawns the effect
 						direction = pick(alldirs)
 
 				if(chemholder.reagents.total_volume != 1) // can't split 1 very well
-					chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume*2 / number) // copy reagents to each smoke, divide evenly
+					chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume / number) // copy reagents to each smoke, divide evenly
 
-				if(finalcolor)
-					smoke.icon += finalcolor // give the smoke color, if it has any to begin with
+				if(color)
+					smoke.icon += color // give the smoke color, if it has any to begin with
 				else
 					// if no color, just use the old smoke icon
-					smoke.icon = '96x96.dmi'
+					smoke.icon = 'icons/effects/96x96.dmi'
 					smoke.icon_state = "smoke"
 
-				for(i=0, i<iterator, i++)
+				for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
 					sleep(10)
 					step(smoke,direction)
 				spawn(150+rand(10,30))
@@ -538,7 +512,7 @@ steam.start() -- spawns the effect
 	mouse_opacity = 0
 	var/amount = 6.0
 	//Remove this bit to use the old smoke
-	icon = '96x96.dmi'
+	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
 
@@ -602,7 +576,7 @@ steam.start() -- spawns the effect
 			if(src.total_smoke > 20)
 				return
 			spawn(0)
-				if(holder && !istype(holder,/datum))
+				if(holder)
 					src.location = get_turf(holder)
 				var/obj/effect/effect/sleep_smoke/smoke = new /obj/effect/effect/sleep_smoke(src.location)
 				src.total_smoke++
@@ -641,7 +615,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/mustard_gas/Move()
 	..()
 	for(var/mob/living/carbon/human/R in get_turf(src))
-		if (R.internal != null && usr.wear_mask && (R.wear_mask.flags & MASKINTERNALS) && R.wear_suit != null && !istype(R.wear_suit, /obj/item/clothing/suit/storage/labcoat) && !istype(R.wear_suit, /obj/item/clothing/suit/straight_jacket) && !istype(R.wear_suit, /obj/item/clothing/suit/straight_jacket && !istype(R.wear_suit, /obj/item/clothing/suit/armor)))
+		if (R.internal != null && usr.wear_mask && (R.wear_mask.flags & MASKINTERNALS) && R.wear_suit != null && !istype(R.wear_suit, /obj/item/clothing/suit/labcoat) && !istype(R.wear_suit, /obj/item/clothing/suit/straight_jacket) && !istype(R.wear_suit, /obj/item/clothing/suit/straight_jacket && !istype(R.wear_suit, /obj/item/clothing/suit/armor)))
 		else
 			R.burn_skin(0.75)
 			if (R.coughedtime != 1)
@@ -655,7 +629,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/mustard_gas/HasEntered(mob/living/carbon/human/R as mob )
 	..()
 	if (istype(R, /mob/living/carbon/human))
-		if (R.internal != null && usr.wear_mask && (R.wear_mask.flags & MASKINTERNALS) && R.wear_suit != null && !istype(R.wear_suit, /obj/item/clothing/suit/storage/labcoat) && !istype(R.wear_suit, /obj/item/clothing/suit/straight_jacket) && !istype(R.wear_suit, /obj/item/clothing/suit/straight_jacket && !istype(R.wear_suit, /obj/item/clothing/suit/armor)))
+		if (R.internal != null && usr.wear_mask && (R.wear_mask.flags & MASKINTERNALS) && R.wear_suit != null && !istype(R.wear_suit, /obj/item/clothing/suit/labcoat) && !istype(R.wear_suit, /obj/item/clothing/suit/straight_jacket) && !istype(R.wear_suit, /obj/item/clothing/suit/straight_jacket && !istype(R.wear_suit, /obj/item/clothing/suit/armor)))
 			return
 		R.burn_skin(0.75)
 		if (R.coughedtime != 1)
@@ -688,7 +662,7 @@ steam.start() -- spawns the effect
 			if(src.total_smoke > 20)
 				return
 			spawn(0)
-				if(holder && !istype(holder,/datum))
+				if(holder)
 					src.location = get_turf(holder)
 				var/obj/effect/effect/mustard_gas/smoke = new /obj/effect/effect/mustard_gas(src.location)
 				src.total_smoke++
@@ -829,11 +803,11 @@ steam.start() -- spawns the effect
 	..(loc)
 	icon_state = "[ismetal ? "m":""]foam"
 	metal = ismetal
-	playsound(src, 'bubbles2.ogg', 80, 1, -3)
+	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 	spawn(3 + metal*3)
 		process()
 	spawn(120)
-		expand = 0 // stop expanding
+		processing_objects.Remove(src)
 		sleep(30)
 
 		if(metal)
@@ -860,30 +834,27 @@ steam.start() -- spawns the effect
 		return
 
 
-	while(expand)	// keep trying to expand while true
-
-		for(var/direction in cardinal)
+	for(var/direction in cardinal)
 
 
-			var/turf/T = get_step(src,direction)
-			if(!T)
-				continue
+		var/turf/T = get_step(src,direction)
+		if(!T)
+			continue
 
-			if(!T.Enter(src))
-				continue
+		if(!T.Enter(src))
+			continue
 
-			var/obj/effect/effect/foam/F = locate() in T
-			if(F)
-				continue
+		var/obj/effect/effect/foam/F = locate() in T
+		if(F)
+			continue
 
-			F = new(T, metal)
-			F.amount = amount
-			if(!metal)
-				F.create_reagents(10)
-				if (reagents)
-					for(var/datum/reagent/R in reagents.reagent_list)
-						F.reagents.add_reagent(R.id,1)
-		sleep(15)
+		F = new(T, metal)
+		F.amount = amount
+		if(!metal)
+			F.create_reagents(10)
+			if (reagents)
+				for(var/datum/reagent/R in reagents.reagent_list)
+					F.reagents.add_reagent(R.id,1)
 
 // foam disolves when heated
 // except metal foams
@@ -904,9 +875,9 @@ steam.start() -- spawns the effect
 		if (istype(M, /mob/living/carbon/human) && (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP))
 			return
 
-		M.pulling = null
+		M.stop_pulling()
 		M << "\blue You slipped on the foam!"
-		playsound(src.loc, 'slip.ogg', 50, 1, -3)
+		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		M.Stun(5)
 		M.Weaken(2)
 
@@ -962,7 +933,7 @@ steam.start() -- spawns the effect
 // dense and opaque, but easy to break
 
 /obj/structure/foamedmetal
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
 	density = 1
 	opacity = 0 	// changed in New()
@@ -975,10 +946,10 @@ steam.start() -- spawns the effect
 		..()
 		update_nearby_tiles(1)
 		spawn(1)
-			ul_SetOpacity(1)
+			sd_NewOpacity(1)
 
 	Del()
-		ul_SetOpacity(0)
+		sd_NewOpacity(0)
 		density = 0
 		update_nearby_tiles(1)
 		..()
@@ -1039,13 +1010,10 @@ steam.start() -- spawns the effect
 			user << "\blue You hit the metal foam to no effect."
 
 	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-		if(!istype(mover))
-			return 0
+		if(air_group) return 0
 		return !density
 
 
-	// shouldn't this be a general procedure?
-	// not sure if this neccessary or overkill
 	proc/update_nearby_tiles(need_rebuild)
 		if(!air_master) return 0
 

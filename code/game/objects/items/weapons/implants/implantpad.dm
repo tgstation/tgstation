@@ -1,9 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/weapon/implantpad
 	name = "implantpad"
 	desc = "Used to modify implants."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "implantpad-0"
 	item_state = "electronic"
 	throw_speed = 1
@@ -26,15 +26,11 @@
 
 	attack_hand(mob/user as mob)
 		if ((src.case && (user.l_hand == src || user.r_hand == src)))
-			if (user.hand)
-				user.l_hand = src.case
-			else
-				user.r_hand = src.case
-			src.case.loc = user
-			src.case.layer = 20
+			user.put_in_active_hand(case)
+
 			src.case.add_fingerprint(user)
 			src.case = null
-			user.update_clothing()
+
 			src.add_fingerprint(user)
 			update()
 		else

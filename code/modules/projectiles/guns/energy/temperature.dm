@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/energy/temperature
 	name = "\improper Temperature Gun"
 	icon_state = "freezegun"
-	fire_sound = 'pulse3.ogg'
+	fire_sound = 'sound/weapons/pulse3.ogg'
 	desc = "A gun that changes temperatures."
 	var/temperature = T20C
 	var/current_temperature = T20C

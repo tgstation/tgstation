@@ -36,7 +36,7 @@ rcd light flash thingy on matter drain
 /client/proc/fireproof_core()
 	set category = "Malfunction"
 	set name = "Fireproof Core"
-	for(var/mob/living/silicon/ai/ai in world)
+	for(var/mob/living/silicon/ai/ai in player_list)
 		ai.fire_res_on_core = 1
 	usr.verbs -= /client/proc/fireproof_core
 	usr << "\red Core fireproofed."
@@ -49,7 +49,7 @@ rcd light flash thingy on matter drain
 	set category = "Malfunction"
 	set name = "Upgrade Turrets"
 	usr.verbs -= /client/proc/upgrade_turrets
-	for(var/obj/machinery/turret/turret in world)
+	for(var/obj/machinery/turret/turret in player_list)
 		turret.health += 30
 		turret.shot_delay = 20
 
@@ -93,7 +93,7 @@ rcd light flash thingy on matter drain
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
 	mod_pick_name = "blackout"
-	uses = 1
+	uses = 3
 
 /client/proc/blackout()
 	set category = "Malfunction"
@@ -152,7 +152,6 @@ rcd light flash thingy on matter drain
 	src.possible_modules += new /datum/AI_Module/small/interhack
 	src.possible_modules += new /datum/AI_Module/small/blackout
 	src.possible_modules += new /datum/AI_Module/small/reactivate_camera
-	return
 
 /datum/AI_Module/module_picker/proc/use(user as mob)
 	var/dat
@@ -247,7 +246,7 @@ rcd light flash thingy on matter drain
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/interhack
-			src.temp = "Tricks the station's automated diagnosis suite for a while, giving you more time until you are revealed."
+			src.temp = "Hacks the status upgrade from Cent. Com, removing any information about malfunctioning electrical systems."
 			usr:current_modules += new /datum/AI_Module/small/interhack
 			src.processing_time -= 15
 		else src.temp = "This module is only needed once."

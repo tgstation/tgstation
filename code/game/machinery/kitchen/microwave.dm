@@ -1,7 +1,7 @@
 
 /obj/machinery/microwave
 	name = "Microwave"
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"
 	layer = 2.9
 	density = 1
@@ -78,7 +78,7 @@
 			user << "\red It's broken!"
 			return 1
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
-		if(istype(O, /obj/item/weapon/cleaner)) // If they're trying to clean it then let them
+		if(istype(O, /obj/item/weapon/reagent_containers/spray/cleaner)) // If they're trying to clean it then let them
 			user.visible_message( \
 				"\blue [user] starts to clean the microwave.", \
 				"\blue You start to clean the microwave." \
@@ -128,7 +128,7 @@
 		user << "\red This is ridiculous. You can not fit \the [G.affecting] in this [src]."
 		return 1
 	else
-		user << "\red You have no idea what you can cook with \this [O]."
+		user << "\red You have no idea what you can cook with this [O]."
 		return 1
 	src.updateUsrDialog()
 
@@ -169,7 +169,7 @@
 			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/tofu))
 				items_measures[display_name] = "tofu chunk"
 				items_measures_p[display_name] = "tofu chunks"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat)) //any meat
+			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat)) //any meat
 				items_measures[display_name] = "slab of meat"
 				items_measures_p[display_name] = "slabs of meat"
 			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/donkpocket))
@@ -303,7 +303,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/stop()
-	playsound(src.loc, 'ding.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = "mw"
 	src.updateUsrDialog()
@@ -318,11 +318,11 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()
-	playsound(src.loc, 'splat.ogg', 50, 1) // Play a splat sound
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) // Play a splat sound
 	src.icon_state = "mwbloody1" // Make it look dirty!!
 
 /obj/machinery/microwave/proc/muck_finish()
-	playsound(src.loc, 'ding.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	src.visible_message("\red The microwave gets covered in muck!")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
 	src.flags = null //So you can't add condiments

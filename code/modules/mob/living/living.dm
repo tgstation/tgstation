@@ -1,3 +1,19 @@
+/mob/living/Life()
+
+	..()
+
+	// While I'm doing a terriblly lazy way of initalizing things, why don't I make it so people's preferences tag along with them.  This could be useful in fixing the fucking cloned-as-unknown thing, making me not have to dynamically load them during tensioner, and of course, storing metadata.
+
+	if(!src.storedpreferences)
+		src.storedpreferences = new
+		storedpreferences.savefile_load(src, 0)
+
+
+
+
+	return
+
+
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
@@ -7,26 +23,32 @@
 
 
 /mob/living/proc/updatehealth()
-	if(!src.nodamage)
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss() -src.halloss
-	else
+	if(nodamage)
 		src.health = 100
 		src.stat = 0
+	else
+		src.health = src.maxHealth - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss() - src.halloss
+
+
+//This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
+//affects them once clothing is factored in. ~Errorage
+/mob/living/proc/calculate_affecting_pressure(var/pressure)
+	return 0
 
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
-/mob/living/proc/burn_skin(burn_amount, used_weapon = null)
+/mob/living/proc/burn_skin(burn_amount)
 	if(istype(src, /mob/living/carbon/human))
-		if(MSHOCK in src.mutations)
-			return 0
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = (burn_amount)/(H.organs.len)
-		for(var/name in H.organs)
-			apply_damage(divided_damage, BURN, name, 0, 0, "Skin Burns")
-		H.UpdateDamageIcon()
+		var/extradam = 0	//added to when organ is at max dam
+		for(var/datum/organ/external/affecting in H.organs)
+			if(!affecting)	continue
+			if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
+				H.UpdateDamageIcon()
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
@@ -59,74 +81,137 @@
 //		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 
+
+// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
+// Stop! ... Hammertime! ~Carn
+// I touched them without asking... I'm soooo edgy ~Erro (added nodamage checks)
+
+/mob/living/proc/getBruteLoss()
+	return bruteloss
+
+/mob/living/proc/adjustBruteLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+
+/mob/living/proc/getOxyLoss()
+	return oxyloss
+
+/mob/living/proc/adjustOxyLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
+
+/mob/living/proc/setOxyLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	oxyloss = amount
+
+/mob/living/proc/getToxLoss()
+	return toxloss
+
+/mob/living/proc/adjustToxLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
+
+/mob/living/proc/setToxLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	toxloss = amount
+
+/mob/living/proc/getFireLoss()
+	return fireloss
+
+/mob/living/proc/adjustFireLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+
+/mob/living/proc/getCloneLoss()
+	return cloneloss
+
+/mob/living/proc/adjustCloneLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+
+/mob/living/proc/setCloneLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	cloneloss = amount
+
+/mob/living/proc/getBrainLoss()
+	return brainloss
+
+/mob/living/proc/adjustBrainLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
+
+/mob/living/proc/setBrainLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	brainloss = amount
+
+/mob/living/proc/getHalLoss()
+	return halloss
+
+/mob/living/proc/adjustHalLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	halloss = min(max(halloss + amount, 0),(maxHealth*2))
+
+/mob/living/proc/setHalLoss(var/amount)
+	if(src.nodamage)	return 0	//godmode
+	halloss = amount
+
+/mob/living/proc/getMaxHealth()
+	return maxHealth
+
+/mob/living/proc/setMaxHealth(var/newMaxHealth)
+	maxHealth = newMaxHealth
+
+// ++++ROCKDTBEN++++ MOB PROCS //END
+
+
 /mob/proc/get_contents()
 
-/mob/living/get_contents()
+
+//Recursive function to find everything a mob is holding.
+/mob/living/get_contents(var/obj/item/weapon/storage/Storage = null)
 	var/list/L = list()
-	L += src.contents
-	for(var/obj/item/weapon/storage/S in L)
-		L |= S.return_inv()
-	for(var/obj/item/weapon/gift/G in L)
-		L |= G.gift
-		if (istype(G.gift, /obj/item/weapon/storage))
-			L |= G.gift:return_inv()
-	for(var/obj/item/weapon/evidencebag/E in L)
-		L |= E:contents
-	for(var/obj/item/smallDelivery/S in L)
-		L |= S.wrapped
-	return L
+
+	if(Storage) //If it called itself
+		L += Storage.return_inv()
+
+		//Leave this commented out, it will cause storage items to exponentially add duplicate to the list
+		//for(var/obj/item/weapon/storage/S in Storage.return_inv()) //Check for storage items
+		//	L += get_contents(S)
+
+		for(var/obj/item/weapon/gift/G in Storage.return_inv()) //Check for gift-wrapped items
+			L += G.gift
+			if(istype(G.gift, /obj/item/weapon/storage))
+				L += get_contents(G.gift)
+
+		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
+			L += D.wrapped
+			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
+				L += get_contents(D.wrapped)
+		return L
+
+	else
+
+		L += src.contents
+		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
+			L += get_contents(S)
+
+		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
+			L += G.gift
+			if(istype(G.gift, /obj/item/weapon/storage))
+				L += get_contents(G.gift)
+
+		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
+			L += D.wrapped
+			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
+				L += get_contents(D.wrapped)
+		return L
 
 /mob/living/proc/check_contents_for(A)
-	var/list/L = list()
-	L += src.contents
-	for(var/obj/item/weapon/storage/S in L)
-		L |= S.return_inv()
-	for(var/obj/item/weapon/gift/G in L)
-		L |= G.gift
-		if (istype(G.gift, /obj/item/weapon/storage))
-			L |= G.gift:return_inv()
-	for(var/obj/item/weapon/evidencebag/E in L)
-		L |= E:contents
-	for(var/obj/item/smallDelivery/S in L)
-		L |= S.wrapped
-	if(hasorgans(src))
-		for(var/named in src:organs)
-			var/datum/organ/external/O = src:organs[named]
-			for(var/obj/item/weapon/implant/I in O.implant)
-				L |= I
-				if(istype(I, /obj/item/weapon/implant/compressed))
-					L |= I:scanned
+	var/list/L = src.get_contents()
 
 	for(var/obj/B in L)
 		if(B.type == A)
 			return 1
-	return 0
-
-/mob/living/proc/check_contents_for_reagent(A)
-	var/list/L = list()
-	L += src.contents
-	for(var/obj/item/weapon/storage/S in L)
-		L |= S.return_inv()
-	for(var/obj/item/weapon/gift/G in L)
-		L |= G.gift
-		if (istype(G.gift, /obj/item/weapon/storage))
-			L |= G.gift:return_inv()
-	for(var/obj/item/weapon/evidencebag/E in L)
-		L |= E:contents
-	for(var/obj/item/smallDelivery/S in L)
-		L |= S.wrapped
-	if(hasorgans(src))
-		for(var/named in src:organs)
-			var/datum/organ/external/O = src:organs[named]
-			for(var/obj/item/weapon/implant/I in O.implant)
-				L |= I
-				if(istype(I, /obj/item/weapon/implant/compressed))
-					L |= I:scanned
-
-	for(var/obj/item/weapon/reagent_containers/B in L)
-		for(var/datum/reagent/R in B.reagents.reagent_list)
-			if(R.type == A)
-				return 1
 	return 0
 
 
@@ -173,92 +258,39 @@
 	src.updatehealth()
 
 /mob/living/proc/revive()
-	if(istype(src, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = src
-		for(var/A in H.organs)
-			var/datum/organ/external/affecting = null
-			if(!H.organs[A])    continue
-			affecting = H.organs[A]
-			if(!istype(affecting, /datum/organ/external))    continue
-			affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
-			affecting.status &= ~ORGAN_BROKEN
-			affecting.status &= ~ORGAN_SPLINTED
-			affecting.status &= ~ORGAN_DESTROYED
-			affecting.wounds.Cut()
-		H.UpdateDamageIcon()
-		H.update_body()
-	//src.fireloss = 0
-	src.setToxLoss(0)
-	//src.bruteloss = 0
-	src.setOxyLoss(0)
+	setToxLoss(0)
+	setOxyLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
-	src.radiation = 0
-	src.nutrition = 400
-	src.bodytemperature = initial(src.bodytemperature)
-	//src.health = 100
-	if(ishuman(src))
-		src.heal_overall_damage(1000, 1000)
-		//M.updatehealth()
-		src.buckled = initial(src.buckled)
-		src.handcuffed = initial(src.handcuffed)
-		if(istype(src,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			for(var/name in H.organs)
-				var/datum/organ/external/e = H.organs[name]
-				e.brute_dam = 0.0
-				e.burn_dam = 0.0
-				e.status &= ~ORGAN_BANDAGED
-				e.max_damage = initial(e.max_damage)
-				e.status &= ~ORGAN_BLEEDING
-				e.open = 0
-				e.status &= ~ORGAN_BROKEN
-				e.status &= ~ORGAN_SPLINTED
-				e.status &= ~ORGAN_DESTROYED
-				e.perma_injury = 0
-				e.update_icon()
-				e.wounds.Cut()
-			del(H.vessel)
-			H.vessel = new/datum/reagents(560)
-			H.vessel.my_atom = H
-			H.vessel.add_reagent("blood",560)
-			spawn(1)
-				H.fixblood()
-			H.pale = 0
-			H.update_body()
-			H.update_face()
-			H.UpdateDamageIcon()
-		if (src.stat > 1)
-			src.stat=0
-		..()
-	src.heal_overall_damage(1000, 1000)
-	src.buckled = initial(src.buckled)
-	src.handcuffed = initial(src.handcuffed)
-	if(src.stat > 1)
-		src.stat = CONSCIOUS
+	radiation = 0
+	nutrition = 400
+	bodytemperature = 310
+	sdisabilities = 0
+	disabilities = 0
+	blinded = 0
+	eye_blind = 0
+	eye_blurry = 0
+	ear_deaf = 0
+	ear_damage = 0
+	heal_overall_damage(1000, 1000)
+	buckled = initial(src.buckled)
+	handcuffed = initial(src.handcuffed)
+	if(stat == 2)
+		dead_mob_list -= src
+		living_mob_list += src
+	stat = CONSCIOUS
+	regenerate_icons()
 	..()
 	return
 
 /mob/living/proc/UpdateDamageIcon()
 		return
 
+/*CARN: Deprecated. Please use update_canmove()
 /mob/living/proc/check_if_buckled()
-	if (buckled)
-		if(buckled == /obj/structure/stool/bed || istype(buckled, /obj/machinery/conveyor))
-			lying = 1
-		if(lying)
-			var/h = hand
-			hand = 0
-			drop_item()
-			hand = 1
-			drop_item()
-			hand = h
-		density = 1
-	else
-		density = !lying
-//Bullshit ERP horseshit causing runtimes.  Eat a dick.
-/*
+*/
+
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
 	set category = "OOC"
@@ -276,16 +308,4 @@
 	else
 		usr << "OOC Metadata is not supported by this server!"
 
-	return*/
-
-/mob/living/attack_animal(mob/M)
-	attack_paw(M)	// treat it like a normal non-human attack
-
-/mob/living/verb/change_flavor_text()
-	set name = "Change Flavor Text"
-	set category = "OOC"
-
-	src.update_flavor_text()
-
-
-/mob/living/var/life_tick = 0
+	return

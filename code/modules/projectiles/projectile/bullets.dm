@@ -1,5 +1,5 @@
 /obj/item/projectile/bullet
-	name = "\improper Bullet"
+	name = "bullet"
 	icon_state = "bullet"
 	damage = 60
 	damage_type = BRUTE
@@ -8,37 +8,38 @@
 
 
 /obj/item/projectile/bullet/weakbullet
-	damage = 15
+	damage = 10
 	stun = 5
 	weaken = 5
 
 
 /obj/item/projectile/bullet/midbullet
 	damage = 30
-	stun = 5
-	weaken = 5
-	eyeblur = 3
+/*	stun = 5
+	weaken = 5		// Nope, fuck you, nuke teams.
+	eyeblur = 3		// Use the egun scrubs.
+*/
 
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
-//	name = "\improper ullet"
+	name = "co bullet"
 	damage = 20
 	damage_type = OXY
 
 
 /obj/item/projectile/bullet/cyanideround
-	name = "\improper Poison Bullet"
+	name = "poison bullet"
 	damage = 40
 	damage_type = TOX
 
 
 /obj/item/projectile/bullet/burstbullet//I think this one needs something for the on hit
-	name = "\improper Exploding Bullet"
+	name = "exploding bullet"
 	damage = 20
 
 
 /obj/item/projectile/bullet/stunshot
-	name = "\improper Stunshot"
-	damage = 15
+	name = "stunshot"
+	damage = 5
 	stun = 10
 	weaken = 10
 	stutter = 10

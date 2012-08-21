@@ -34,7 +34,7 @@ ENERGY SHIELD (where else should i even put this)
 		else
 			icon_state = "sword[color]"
 		w_class = 4
-		playsound(user, 'saberon.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		user << "\blue [src] is now active."
 	else
 		force = 3
@@ -43,10 +43,9 @@ ENERGY SHIELD (where else should i even put this)
 		else
 			icon_state = "sword0"
 		w_class = 2
-		playsound(user, 'saberoff.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		user << "\blue [src] can now be concealed."
 	add_fingerprint(user)
-	user.update_clothing()
 	return
 
 /obj/item/weapon/melee/energy/sword/green
@@ -76,7 +75,6 @@ ENERGY SHIELD (where else should i even put this)
 	return
 
 // AXE
-
 /obj/item/weapon/melee/energy/axe/attack(target as mob, mob/user as mob)
 	..()
 
@@ -95,6 +93,17 @@ ENERGY SHIELD (where else should i even put this)
 	src.add_fingerprint(user)
 	return
 
+// CLASSIC BATON
+/obj/item/weapon/melee/classic_baton
+	name = "police baton"
+	desc = "A wooden truncheon for beating criminal scum."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "baton"
+	item_state = "classic_baton"
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
+	force = 10
+
 /obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You club yourself over the head."
@@ -110,8 +119,6 @@ ENERGY SHIELD (where else should i even put this)
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
-	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 
@@ -125,12 +132,13 @@ ENERGY SHIELD (where else should i even put this)
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been beaten with the police baton by [user]!</B>", 1, "\red You hear someone fall", 2)
 	else
-		playsound(src.loc, 'Genhit.ogg', 50, 1, -1)
+		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
 		M.Stun(5)
 		M.Weaken(5)
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been stunned with the police baton by [user]!</B>", 1, "\red You hear someone fall", 2)
 
+//ENERGY SHIELD
 /obj/item/weapon/shield/energy/IsShield()
 	if(active)
 		return 1
@@ -146,13 +154,13 @@ ENERGY SHIELD (where else should i even put this)
 		force = 10
 		icon_state = "eshield[active]"
 		w_class = 4
-		playsound(user, 'saberon.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		user << "\blue [src] is now active."
 	else
 		force = 3
 		icon_state = "eshield[active]"
 		w_class = 1
-		playsound(user, 'saberoff.ogg', 50, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		user << "\blue [src] can now be concealed."
 	add_fingerprint(user)
 	return

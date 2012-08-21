@@ -23,6 +23,8 @@
 		..()
 		master.disrupt()
 	relaymove(var/mob/user, direction)
+		if(istype(loc, /turf/space)) return //No magical space movement!
+
 		if(can_move)
 			can_move = 0
 			switch(usr.bodytemperature)
@@ -40,7 +42,7 @@
 		return
 
 /obj/item/device/chameleon
-	name = "small device"
+	name = "chameleon-projector"
 	icon_state = "shield0"
 	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY
 	slot_flags = SLOT_BELT
@@ -52,7 +54,7 @@
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
-	var/saved_item = "/obj/item/weapon/shard"
+	var/saved_item = "/obj/item/weapon/cigbutt"
 
 	dropped()
 		disrupt()
@@ -62,16 +64,16 @@
 
 	afterattack(atom/target, mob/user , flag)
 		if(istype(target,/obj/item))
-			playsound(src, 'flash.ogg', 100, 1, 1)
+			playsound(src, 'sound/weapons/flash.ogg', 100, 1, 1)
 			user << "\blue Scanned [target]."
 			saved_item = target.type
 
 	proc/toggle()
 		if(!can_use || !saved_item) return
 		if(active_dummy)
-			playsound(src, 'pop.ogg', 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 			for(var/atom/movable/A in active_dummy)
-				A.loc = get_turf(active_dummy)
+				A.loc = active_dummy.loc
 				if(ismob(A))
 					if(A:client)
 						A:client:eye = A
@@ -79,14 +81,14 @@
 			active_dummy = null
 			usr << "\blue You deactivate the [src]."
 			var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
-			T.icon = 'effects.dmi'
+			T.icon = 'icons/effects/effects.dmi'
 			flick("emppulse",T)
 			spawn(8) del(T)
 		else
-			playsound(src, 'pop.ogg', 100, 1, 1)
-			var/obj/O = new saved_item (src)
+			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+			var/obj/O = new saved_item(src)
 			if(!O) return
-			var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(get_turf(src))
+			var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
 			C.name = O.name
 			C.desc = O.desc
 			C.icon = O.icon
@@ -98,7 +100,7 @@
 			del(O)
 			usr << "\blue You activate the [src]."
 			var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
-			T.icon = 'effects.dmi'
+			T.icon = 'icons/effects/effects.dmi'
 			flick("emppulse",T)
 			spawn(8) del(T)
 
@@ -109,7 +111,7 @@
 			spark_system.attach(src)
 			spark_system.start()
 			for(var/atom/movable/A in active_dummy)
-				A.loc = get_turf(active_dummy)
+				A.loc = active_dummy.loc
 				if(ismob(A))
 					if(A:client)
 						A:client:eye = A

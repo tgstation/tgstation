@@ -9,7 +9,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-
+	centcomm_cancast = 0 //Prevent people from getting to centcomm
 
 	var phaseshift = 0
 	var/jaunt_duration = 50 //in deciseconds
@@ -23,7 +23,7 @@
 			animation.name = "water"
 			animation.density = 0
 			animation.anchored = 1
-			animation.icon = 'mob.dmi'
+			animation.icon = 'icons/mob/mob.dmi'
 			animation.icon_state = "liquify"
 			animation.layer = 5
 			animation.master = holder
@@ -40,7 +40,12 @@
 				animation.dir = target.dir
 				flick("phase_shift2",animation)
 				sleep(5)
-				target.loc = mobloc
+				if(!target.Move(mobloc))
+					for(var/direction in list(1,2,4,8,5,6,9,10))
+						var/turf/T = get_step(mobloc, direction)
+						if(T)
+							if(target.Move(T))
+								break
 				target.canmove = 1
 				target.client.eye = target
 				del(animation)
@@ -61,7 +66,12 @@
 				sleep(20)
 				flick("reappear",animation)
 				sleep(5)
-				target.loc = mobloc
+				if(!target.Move(mobloc))
+					for(var/direction in list(1,2,4,8,5,6,9,10))
+						var/turf/T = get_step(mobloc, direction)
+						if(T)
+							if(target.Move(T))
+								break
 				target.canmove = 1
 				target.client.eye = target
 				del(animation)
@@ -69,7 +79,7 @@
 
 /obj/effect/dummy/spell_jaunt
 	name = "water"
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
 	var/canmove = 1
 	density = 0
@@ -80,28 +90,8 @@
 	var/turf/newLoc = get_step(src,direction)
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc
-/*
-	switch(direction)
-		if(NORTH)
-			src.y++
-		if(SOUTH)
-			src.y--
-		if(EAST)
-			src.x++
-		if(WEST)
-			src.x--
-		if(NORTHEAST)
-			src.y++
-			src.x++
-		if(NORTHWEST)
-			src.y++
-			src.x--
-		if(SOUTHEAST)
-			src.y--
-			src.x++
-		if(SOUTHWEST)
-			src.y--
-			src.x-- */
+	else
+		user << "<span class='warning'>Some strange aura is blocking the way!</span>"
 	src.canmove = 0
 	spawn(2) src.canmove = 1
 

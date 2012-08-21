@@ -118,13 +118,13 @@
 		return
 	icon_state = "filter_control"
 	if(src.locked && (stat & BROKEN))
-		overlays += image('stationobjs.dmi', "filter_control00")
+		overlays += image('icons/obj/stationobjs.dmi', "filter_control00")
 		return
 	else if(!src.locked)
 		icon_state = "filter_control-unlocked"
 		if(stat & BROKEN)
-			overlays += image('stationobjs.dmi', "filter_control-wirecut")
-			overlays += image('stationobjs.dmi', "filter_control00")
+			overlays += image('icons/obj/stationobjs.dmi', "filter_control-wirecut")
+			overlays += image('icons/obj/stationobjs.dmi', "filter_control00")
 			return
 
 	var/GoodConnection = 0
@@ -134,22 +134,22 @@
 			break
 
 	if(GoodConnection && src.f_mask)
-		overlays += image('stationobjs.dmi', "filter_control1")
+		overlays += image('icons/obj/stationobjs.dmi', "filter_control1")
 	else if(GoodConnection)
-		overlays += image('stationobjs.dmi', "filter_control10")
+		overlays += image('icons/obj/stationobjs.dmi', "filter_control10")
 	else if(src.f_mask)
-		overlays += image('stationobjs.dmi', "filter_control0")
+		overlays += image('icons/obj/stationobjs.dmi', "filter_control0")
 	else
-		overlays += image('stationobjs.dmi', "filter_control00")
+		overlays += image('icons/obj/stationobjs.dmi', "filter_control00")
 
 	if (src.f_mask & (GAS_N2O|GAS_PL))
-		src.overlays += image('stationobjs.dmi', "filter_control-tox")
+		src.overlays += image('icons/obj/stationobjs.dmi', "filter_control-tox")
 	if (src.f_mask & GAS_O2)
-		src.overlays += image('stationobjs.dmi', "filter_control-o2")
+		src.overlays += image('icons/obj/stationobjs.dmi', "filter_control-o2")
 	if (src.f_mask & GAS_N2)
-		src.overlays += image('stationobjs.dmi', "filter_control-n2")
+		src.overlays += image('icons/obj/stationobjs.dmi', "filter_control-n2")
 	if (src.f_mask & GAS_CO2)
-		src.overlays += image('stationobjs.dmi', "filter_control-co2")
+		src.overlays += image('icons/obj/stationobjs.dmi', "filter_control-co2")
 	return
 
 /obj/machinery/filter_control/power_change()

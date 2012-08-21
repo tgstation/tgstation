@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 // Controls the emergency shuttle
 
@@ -12,8 +12,6 @@
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
 datum/shuttle_controller
-	var/alert = 0 //0 = emergency, 1 = crew cycle
-
 	var/location = 0 //0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13
 	var/online = 0
 	var/direction = 1 //-1 = going back to central command, 1 = going to SS13, 2 = in transit to centcom (not recalled)
@@ -22,52 +20,29 @@ datum/shuttle_controller
 	var/timelimit //important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
 	var/fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
-	var/deny_shuttle = 0 //for admins not allowing it to be called.
-	var/departed = 0
-	//	sound_siren = 1 //if siren should go off  //People hat it :(
+
+
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall(coeff = 1)
-		if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
-			return
-
 		if(endtime)
 			if(direction == -1)
 				setdirection(1)
 		else
 			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
-		//turning on the red lights in hallways
-		if(alert == 0)
-			for(var/area/A in world)
-				if(istype(A, /area/hallway))
-					A.readyalert()
-
-
-	proc/shuttlealert(var/X)
-		alert = X
-
 
 	proc/recall()
 		if(direction == 1)
 			var/timeleft = timeleft()
-			if(alert == 0)
-				if(timeleft >= 600)
-					return
-				captain_announce("The emergency shuttle has been recalled.")
-				world << sound('shuttlerecalled.ogg')
-				setdirection(-1)
-				online = 1
-				for(var/area/A in world)
-					if(istype(A, /area/hallway))
-						A.readyreset()
+			if(timeleft >= 600)
 				return
-			else //makes it possible to send shuttle back.
-				captain_announce("The shuttle has been recalled.")
-				setdirection(-1)
-				online = 1
-				return
+			captain_announce("The emergency shuttle has been recalled.")
+			world << sound('sound/AI/shuttlerecalled.ogg')
+			setdirection(-1)
+			online = 1
+
 
 	// returns the time (in seconds) before shuttle arrival
 	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
@@ -106,11 +81,6 @@ datum/shuttle_controller
 			var/timeleft = timeleft()
 			if(timeleft > 1e5)		// midnight rollover protection
 				timeleft = 0
-		//	if (sound_siren && (direction == 1))	//playing siren every 90 seconds
-		//		sound_siren = 0						//No siren, people hat it
-		//		world << sound('siren.ogg')
-		//		spawn(900)
-		//			sound_siren = 1
 			switch(location)
 				if(0)
 
@@ -135,19 +105,102 @@ datum/shuttle_controller
 
 							start_location.move_contents_to(end_location, null, NORTH)
 
+							for(var/obj/machinery/door/D in world)
+								if( get_area(D) == end_location )
+									spawn(0)
+										D.open()
+
+							for(var/mob/M in end_location)
+								if(M.client)
+									spawn(0)
+										if(M.buckled)
+											shake_camera(M, 4, 1) // buckled, not a lot of shaking
+										else
+											shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+								if(istype(M, /mob/living/carbon))
+									if(!M.buckled)
+										M.Weaken(5)
+
 							//pods
 							start_location = locate(/area/shuttle/escape_pod1/transit)
 							end_location = locate(/area/shuttle/escape_pod1/centcom)
 							start_location.move_contents_to(end_location, null, NORTH)
+
+							for(var/obj/machinery/door/D in world)
+								if( get_area(D) == end_location )
+									spawn(0)
+										D.open()
+
+							for(var/mob/M in end_location)
+								if(M.client)
+									spawn(0)
+										if(M.buckled)
+											shake_camera(M, 4, 1) // buckled, not a lot of shaking
+										else
+											shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+								if(istype(M, /mob/living/carbon))
+									if(!M.buckled)
+										M.Weaken(5)
+
 							start_location = locate(/area/shuttle/escape_pod2/transit)
 							end_location = locate(/area/shuttle/escape_pod2/centcom)
 							start_location.move_contents_to(end_location, null, NORTH)
+
+							for(var/obj/machinery/door/D in world)
+								if( get_area(D) == end_location )
+									spawn(0)
+										D.open()
+
+							for(var/mob/M in end_location)
+								if(M.client)
+									spawn(0)
+										if(M.buckled)
+											shake_camera(M, 4, 1) // buckled, not a lot of shaking
+										else
+											shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+								if(istype(M, /mob/living/carbon))
+									if(!M.buckled)
+										M.Weaken(5)
+
 							start_location = locate(/area/shuttle/escape_pod3/transit)
 							end_location = locate(/area/shuttle/escape_pod3/centcom)
 							start_location.move_contents_to(end_location, null, NORTH)
+
+							for(var/obj/machinery/door/D in world)
+								if( get_area(D) == end_location )
+									spawn(0)
+										D.open()
+
+							for(var/mob/M in end_location)
+								if(M.client)
+									spawn(0)
+										if(M.buckled)
+											shake_camera(M, 4, 1) // buckled, not a lot of shaking
+										else
+											shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+								if(istype(M, /mob/living/carbon))
+									if(!M.buckled)
+										M.Weaken(5)
+
 							start_location = locate(/area/shuttle/escape_pod5/transit)
 							end_location = locate(/area/shuttle/escape_pod5/centcom)
 							start_location.move_contents_to(end_location, null, EAST)
+
+							for(var/obj/machinery/door/D in world)
+								if( get_area(D) == end_location )
+									spawn(0)
+										D.open()
+
+							for(var/mob/M in end_location)
+								if(M.client)
+									spawn(0)
+										if(M.buckled)
+											shake_camera(M, 4, 1) // buckled, not a lot of shaking
+										else
+											shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+								if(istype(M, /mob/living/carbon))
+									if(!M.buckled)
+										M.Weaken(5)
 
 							online = 0
 
@@ -202,11 +255,10 @@ datum/shuttle_controller
 
 						start_location.move_contents_to(end_location)
 						settimeleft(SHUTTLELEAVETIME)
-						if(alert == 0)
-							captain_announce("The Emergency Shuttle has docked with the station. You have [timeleft()/60] minutes to board the Emergency Shuttle.")
-							world << sound('shuttledock.ogg')
-						else
-							captain_announce("The shuttle has docked with the station. You have [timeleft()/60] minutes to board the shuttle.")
+						send2irc("Server", "The Emergency Shuttle has docked with the station.")
+						captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
+						world << sound('sound/AI/shuttledock.ogg')
+
 						return 1
 
 				if(1)
@@ -225,7 +277,6 @@ datum/shuttle_controller
 								spawn() S.startspawn()
 						*/
 
-						departed = 1 // It's going!
 						location = 0 // in deep space
 						direction = 2 // heading to centcom
 
@@ -236,57 +287,95 @@ datum/shuttle_controller
 						settimeleft(SHUTTLETRANSITTIME)
 						start_location.move_contents_to(end_location, null, NORTH)
 
-						for(var/obj/machinery/door/D in world)
-							if( get_area(D) == end_location )
+						for(var/obj/machinery/door/D in end_location)
+							spawn(0)
+								D.close()
+							// Some aesthetic turbulance shaking
+						for(var/mob/M in end_location)
+							if(M.client)
 								spawn(0)
-									D.close()
+									if(M.buckled)
+										shake_camera(M, 4, 1) // buckled, not a lot of shaking
+									else
+										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
 
 						//pods
 						start_location = locate(/area/shuttle/escape_pod1/station)
 						end_location = locate(/area/shuttle/escape_pod1/transit)
 						start_location.move_contents_to(end_location, null, NORTH)
-						for(var/obj/machinery/door/D in world)
-							if( get_area(D) == end_location )
-								spawn(0)
-									D.close()
+						for(var/obj/machinery/door/D in end_location)
+							spawn(0)
+								D.close()
 
-						start_location = locate(/area/shuttle/escape_pod2/station)
-						end_location = locate(/area/shuttle/escape_pod2/transit)
-						start_location.move_contents_to(end_location, null, NORTH)
-						for(var/obj/machinery/door/D in world)
-							if( get_area(D) == end_location )
-								spawn(0)
-									D.close()
-
-						start_location = locate(/area/shuttle/escape_pod3/station)
-						end_location = locate(/area/shuttle/escape_pod3/transit)
-						start_location.move_contents_to(end_location, null, NORTH)
-						for(var/obj/machinery/door/D in world)
-							if( get_area(D) == end_location )
-								spawn(0)
-									D.close()
-
-						start_location = locate(/area/shuttle/escape_pod5/station)
-						end_location = locate(/area/shuttle/escape_pod5/transit)
-						start_location.move_contents_to(end_location, null, EAST)
-						for(var/obj/machinery/door/D in world)
-							if( get_area(D) == end_location )
-								spawn(0)
-									D.close()
-
-						if(alert == 0)
-							captain_announce("The Emergency Shuttle has left the station. Estimate [timeleft()/60] minutes until the shuttle docks at Central Command.")
-						else
-							captain_announce("The shuttle has left the station. Estimate [timeleft()/60] minutes until the shuttle docks at Central Command.")
-
-						// Some aesthetic turbulance shaking
 						for(var/mob/M in end_location)
 							if(M.client)
-								spawn()
+								spawn(0)
 									if(M.buckled)
 										shake_camera(M, 4, 1) // buckled, not a lot of shaking
 									else
 										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
+
+						start_location = locate(/area/shuttle/escape_pod2/station)
+						end_location = locate(/area/shuttle/escape_pod2/transit)
+						start_location.move_contents_to(end_location, null, NORTH)
+						for(var/obj/machinery/door/D in end_location)
+							spawn(0)
+								D.close()
+
+						for(var/mob/M in end_location)
+							if(M.client)
+								spawn(0)
+									if(M.buckled)
+										shake_camera(M, 4, 1) // buckled, not a lot of shaking
+									else
+										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
+
+						start_location = locate(/area/shuttle/escape_pod3/station)
+						end_location = locate(/area/shuttle/escape_pod3/transit)
+						start_location.move_contents_to(end_location, null, NORTH)
+						for(var/obj/machinery/door/D in end_location)
+							spawn(0)
+								D.close()
+
+						for(var/mob/M in end_location)
+							if(M.client)
+								spawn(0)
+									if(M.buckled)
+										shake_camera(M, 4, 1) // buckled, not a lot of shaking
+									else
+										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
+
+						start_location = locate(/area/shuttle/escape_pod5/station)
+						end_location = locate(/area/shuttle/escape_pod5/transit)
+						start_location.move_contents_to(end_location, null, EAST)
+						for(var/obj/machinery/door/D in end_location)
+							spawn(0)
+								D.close()
+
+						for(var/mob/M in end_location)
+							if(M.client)
+								spawn(0)
+									if(M.buckled)
+										shake_camera(M, 4, 1) // buckled, not a lot of shaking
+									else
+										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
+							if(istype(M, /mob/living/carbon))
+								if(!M.buckled)
+									M.Weaken(5)
+
+						captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 
 						return 1
 

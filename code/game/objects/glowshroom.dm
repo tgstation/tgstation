@@ -5,7 +5,7 @@
 	anchored = 1
 	opacity = 0
 	density = 0
-	icon = 'lighting.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroomf"
 	layer = 2.1
 	var/endurance = 30
@@ -41,7 +41,7 @@
 		icon_state = "glowshroomf"
 
 	spawn(2) //allows the luminosity and spread rate to be affected by potency at the moment of creation
-		ul_SetLuminosity(potency/10)
+		sd_SetLuminosity(potency/10)
 		spawn(delay)
 			if(src)
 				Spread()

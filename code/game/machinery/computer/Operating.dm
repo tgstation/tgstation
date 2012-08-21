@@ -1,10 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/operating
 	name = "Operating Computer"
 	density = 1
 	anchored = 1.0
-	desc = "Used to monitor status of people being operated on."
 	icon_state = "operating"
 	circuit = "/obj/item/weapon/circuitboard/operating"
 	var/mob/living/carbon/human/victim = null
@@ -43,34 +42,20 @@
 	dat += "<A HREF='?src=\ref[user];mach_close=op'>Close</A><br><br>" //| <A HREF='?src=\ref[user];update=1'>Update</A>"
 	if(src.table && (src.table.check_victim()))
 		src.victim = src.table.victim
-		if(istype(victim))
-			dat += {"
-	<B>Patient Information:</B><BR>
-	<BR>
-	<B>Name:</B> [src.victim.real_name]<BR>
-	<B>Age:</B> [src.victim.age]<BR>
-	<B>Blood Type:</B> [(victim.dna? victim.dna.b_type : "ERROR")]<BR>
-	<BR>
-	<B>Health:</B> [src.victim.health]<BR>
-	<B>Brute Damage:</B> [src.victim.getBruteLoss()]<BR>
-	<B>Toxins Damage:</B> [src.victim.getToxLoss()]<BR>
-	<B>Fire Damage:</B> [src.victim.getFireLoss()]<BR>
-	<B>Suffocation Damage:</B> [src.victim.getOxyLoss()]<BR>
-	<B>Patient Status:</B> [src.victim.stat ? "Non-Responsive" : "Stable"]<BR>
-	"}
-		else if(istype(victim, /mob/living))
-			dat += {"
-	<B>Patient Information:</B><BR>
-	<BR>
-	<B>Name:</B> [src.victim.real_name]<BR>
-	<B>Age:</B> [src.victim.age]<BR>
-	<B>Health:</B> [src.victim.health]<BR>
-	<B>Brute Damage:</B> [src.victim.getBruteLoss()]<BR>
-	<B>Toxins Damage:</B> [src.victim.getToxLoss()]<BR>
-	<B>Fire Damage:</B> [src.victim.getFireLoss()]<BR>
-	<B>Suffocation Damage:</B> [src.victim.getOxyLoss()]<BR>
-	<B>Patient Status:</B> [src.victim.stat ? "Non-Responsive" : "Stable"]<BR>
-	"}
+		dat += {"
+<B>Patient Information:</B><BR>
+<BR>
+<B>Name:</B> [src.victim.real_name]<BR>
+<B>Age:</B> [src.victim.age]<BR>
+<B>Blood Type:</B> [src.victim.b_type]<BR>
+<BR>
+<B>Health:</B> [src.victim.health]<BR>
+<B>Brute Damage:</B> [src.victim.getBruteLoss()]<BR>
+<B>Toxins Damage:</B> [src.victim.getToxLoss()]<BR>
+<B>Fire Damage:</B> [src.victim.getFireLoss()]<BR>
+<B>Suffocation Damage:</B> [src.victim.getOxyLoss()]<BR>
+<B>Patient Status:</B> [src.victim.stat ? "Non-Responsive" : "Stable"]<BR>
+"}
 	else
 		src.victim = null
 		dat += {"

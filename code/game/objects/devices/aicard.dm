@@ -1,6 +1,6 @@
 /obj/item/device/aicard
 	name = "inteliCard"
-	icon = 'pda.dmi'
+	icon = 'icons/obj/pda.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
 	w_class = 2.0
@@ -17,8 +17,6 @@
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been carded with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to card [M.name] ([M.ckey])</font>")
 
-		log_admin("ATTACK: [user] ([user.ckey]) carded [M] ([M.ckey]) with [src].")
-		message_admins("ATTACK: [user] ([user.ckey]) carded [M] ([M.ckey]) with [src].")
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])</font>")
 
 
@@ -119,9 +117,9 @@
 					A.control_disabled = !A.control_disabled
 					A << "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
 					if (A.control_disabled)
-						overlays -= image('pda.dmi', "aicard-on")
+						overlays -= image('icons/obj/pda.dmi', "aicard-on")
 					else
-						overlays += image('pda.dmi', "aicard-on")
+						overlays += image('icons/obj/pda.dmi', "aicard-on")
 		attack_self(U)
 
 

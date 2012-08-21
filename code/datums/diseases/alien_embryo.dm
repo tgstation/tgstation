@@ -1,9 +1,19 @@
 //affected_mob.contract_disease(new /datum/disease/alien_embryo)
 
+//Our own special process so that dead hosts still chestburst
+/datum/disease/alien_embryo/process()
+	if(!holder) return
+	if(holder == affected_mob)
+		stage_act()
 
-
-
-
+	if(affected_mob)
+		if(affected_mob.stat == DEAD)
+			if(prob(50))
+				if(--longevity<=0)
+					cure(0)
+	else //the virus is in inanimate obj
+		cure(0)
+	return
 
 
 /datum/disease/alien_embryo
@@ -11,7 +21,6 @@
 	max_stages = 5
 	spread = "None"
 	spread_type = SPECIAL
-	stage_prob = 2
 	cure = "Unknown"
 	cure_id = list("lexorin","toxin","gargleblaster")
 	cure_chance = 20
@@ -30,7 +39,7 @@
 			if(prob(1))
 				affected_mob << "\red Your throat feels sore."
 			if(prob(1))
-				affected_mob << "\red Mucus runs down the back of your throat."
+				affected_mob << "\red Mucous runs down the back of your throat."
 		if(3)
 			if(prob(1))
 				affected_mob.emote("sneeze")
@@ -39,7 +48,7 @@
 			if(prob(1))
 				affected_mob << "\red Your throat feels sore."
 			if(prob(1))
-				affected_mob << "\red Mucus runs down the back of your throat."
+				affected_mob << "\red Mucous runs down the back of your throat."
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")
@@ -60,35 +69,22 @@
 			affected_mob.updatehealth()
 			if(prob(40))
 				if(gibbed != 0) return 0
-				var/list/candidates = list() // Picks a random ghost in the world to shove in the larva -- TLE
-				for(var/mob/dead/observer/G in world)
-					if(G.client)
-						if(G.client.be_alien)
-							if(((G.client.inactivity/10)/60) <= 5)
-								if(G.corpse)
-									if(G.corpse.stat==2)
-										candidates.Add(G)
-								if(!G.corpse)
-									candidates.Add(G)
+				var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
+				for(var/mob/dead/observer/G in player_list)
+					if(G.client.be_alien)
+						if(((G.client.inactivity/10)/60) <= 5)
+							if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+								candidates += G.key
+
+				var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
 				if(candidates.len)
-					var/mob/dead/observer/G = pick(candidates)
-					var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
-					new_xeno.mind_initialize(G,"Larva")
-					new_xeno.key = G.key
-					del(G)
+					new_xeno.key = pick(candidates)
 				else
-					if(affected_mob.client)
-						affected_mob.client.mob = new/mob/living/carbon/alien/larva(affected_mob.loc)
+					new_xeno.key = affected_mob.key
+
+				new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
 				affected_mob.gib()
 				src.cure(0)
 				gibbed = 1
-
-			/*
-				if(affected_mob.client)
-					affected_mob.client.mob = new/mob/living/carbon/alien/larva(affected_mob.loc)
-				else
-					new/mob/living/carbon/alien/larva(affected_mob.loc)
-				affected_mob:gib()
-			*/
 				return
 

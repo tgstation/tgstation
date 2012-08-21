@@ -1,7 +1,20 @@
 /world/Topic(T, addr, master, key)
 	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
-	if (T == "status")
+	if (T == "ping")
+		var/x = 1
+		for (var/client/C)
+			x++
+		return x
+
+	else if(T == "players")
+		var/n = 0
+		for(var/mob/M in player_list)
+			if(M.client)
+				n++
+		return n
+
+	else if (T == "status")
 		var/list/s = list()
 		s["version"] = game_version
 		s["mode"] = master_mode
@@ -9,25 +22,21 @@
 		s["enter"] = enter_allowed
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
-		s["host"] = config.hostedby
+		s["host"] = host ? host : null
 		s["players"] = list()
-		s["admins"] = 0
 		var/n = 0
+		var/admins = 0
 
-		for(var/client/C)
-
+		for(var/client/C in client_list)
+			if(C.holder)
+				if(C.stealth)
+					continue	//so stealthmins aren't revealed by the hub
+				admins++
+			s["player[n]"] = C.key
 			n++
-			if(C.holder && C.holder.level >= 0) //not retired admin
-				if(!C.stealth) //stealthmins dont count as admins
-					s["admins"] = 1
-					s["player[n]"] = "[C.key]"
-				else
-					s["player[n]"] = "[C.fakekey]"
-			else
-				s["player[n]"] = "[C.key]"
 		s["players"] = n
-		s["end"] = "#end"
 
-		// 7 + s["players"] + 1 = index of s["revinfo"]
+		if(revdata)	s["revision"] = revdata.revision
+		s["admins"] = admins
 
 		return list2params(s)

@@ -1,19 +1,19 @@
 /obj/machinery/computer/aifixer
 	name = "AI System Integrity Restorer"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "ai-fixer"
-	req_access = list(ACCESS_CAPTAIN, ACCESS_ROBOTICS, ACCESS_HEADS)
+	req_access = list(access_captain, access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupant = null
 	var/active = 0
 
 /obj/machinery/computer/aifixer/New()
-	src.overlays += image('computer.dmi', "ai-fixer-empty")
+	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 
 
 /obj/machinery/computer/aifixer/attackby(I as obj, user as mob)
 /*
 	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
@@ -111,7 +111,6 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 
-
 	src.updateDialog()
 	return
 
@@ -120,7 +119,7 @@
 		return
 	if (href_list["fix"])
 		src.active = 1
-		src.overlays += image('computer.dmi', "ai-fixer-on")
+		src.overlays += image('icons/obj/computer.dmi', "ai-fixer-on")
 		while (src.occupant.health < 100)
 			src.occupant.adjustOxyLoss(-1)
 			src.occupant.adjustFireLoss(-1)
@@ -129,12 +128,12 @@
 			src.occupant.updatehealth()
 			if (src.occupant.health >= 0 && src.occupant.stat == 2)
 				src.occupant.stat = 0
-				src.overlays -= image('computer.dmi', "ai-fixer-404")
-				src.overlays += image('computer.dmi', "ai-fixer-full")
+				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
+				src.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
 			src.updateUsrDialog()
 			sleep(10)
 		src.active = 0
-		src.overlays -= image('computer.dmi', "ai-fixer-on")
+		src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-on")
 
 
 		src.add_fingerprint(usr)

@@ -2,7 +2,7 @@
 /obj/item/weapon/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
 	name = "tiles and toolbox"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "toolbox_tiles"
 	force = 3.0
 	throwforce = 10.0
@@ -15,7 +15,7 @@
 /obj/item/weapon/toolbox_tiles_sensor
 	desc = "It's a toolbox with tiles sticking out the top and a sensor attached"
 	name = "tiles, toolbox and sensor arrangement"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
 	force = 3.0
 	throwforce = 10.0
@@ -29,7 +29,7 @@
 /obj/machinery/bot/floorbot
 	name = "Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "floorbot0"
 	layer = 5.0
 	density = 0
@@ -46,7 +46,7 @@
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
-	req_access = list(ACCESS_ATMOSPHERICS)
+	req_access = list(access_atmospherics)
 	var/path[] = new()
 	var/targetdirection
 
@@ -106,14 +106,14 @@
 		var/loaded = min(50-src.amount, T.amount)
 		T.use(loaded)
 		src.amount += loaded
-		user << "\red You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!"
+		user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
 		src.updateicon()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr))
 			src.locked = !src.locked
-			user << "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls."
+			user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
 		else
-			user << "The [src] doesn't seem to accept your authority."
+			user << "<span class='notice'>The [src] doesn't seem to respect your authority.</span>"
 		src.updateUsrDialog()
 	else
 		..()
@@ -163,30 +163,28 @@
 	if(src.repairing)
 		return
 	var/list/floorbottargets = list()
-	if(!src.target)
-		for(var/obj/machinery/bot/floorbot/bot in world)
-			if(bot != src)
-				floorbottargets += bot.target
-	if(src.amount <= 0 && !src.target)
+	if(src.amount <= 0 && ((src.target == null) || !src.target))
 		if(src.eattiles)
 			for(var/obj/item/stack/tile/plasteel/T in view(7, src))
 				if(T != src.oldtarget && !(target in floorbottargets))
 					src.oldtarget = T
 					src.target = T
 					break
-		if(!src.target && src.maketiles)
-			for(var/obj/item/stack/sheet/metal/M in view(7, src))
-				if(!(M in floorbottargets) && M != src.oldtarget && M.amount == 1 && !(istype(M.loc, /turf/simulated/wall)))
-					src.oldtarget = M
-					src.target = M
-					break
+		if(src.target == null || !src.target)
+			if(src.maketiles)
+				if(src.target == null || !src.target)
+					for(var/obj/item/stack/sheet/metal/M in view(7, src))
+						if(!(M in floorbottargets) && M != src.oldtarget && M.amount == 1 && !(istype(M.loc, /turf/simulated/wall)))
+							src.oldtarget = M
+							src.target = M
+							break
 		else
 			return
 	if(prob(5))
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("[src] makes an excited booping beeping sound!"), 1)
 
-	if(!src.target == null)
+	if(!src.target || src.target == null)
 		if(targetdirection != null)
 			/*
 			for (var/turf/space/D in view(7,src))
@@ -200,31 +198,31 @@
 			if(istype(T, /turf/space))
 				src.oldtarget = T
 				src.target = T
-		if(!src.target)
+		if(!src.target || src.target == null)
 			for (var/turf/space/D in view(7,src))
-				if(!(D in floorbottargets) && D != src.oldtarget && (D.loc.name != "Space") && !istype(D.loc, /area/shuttle))
+				if(!(D in floorbottargets) && D != src.oldtarget && (D.loc.name != "Space"))
 					src.oldtarget = D
 					src.target = D
 					break
-		if(!src.target && src.improvefloors)
+		if((!src.target || src.target == null ) && src.improvefloors)
 			for (var/turf/simulated/floor/F in view(7,src))
 				if(!(F in floorbottargets) && F != src.oldtarget && F.icon_state == "Floor1" && !(istype(F, /turf/simulated/floor/plating)))
 					src.oldtarget = F
 					src.target = F
 					break
-		if(!src.target && src.eattiles)
+		if((!src.target || src.target == null) && src.eattiles)
 			for(var/obj/item/stack/tile/plasteel/T in view(7, src))
 				if(!(T in floorbottargets) && T != src.oldtarget)
 					src.oldtarget = T
 					src.target = T
 					break
 
-	if(!src.target)
+	if(!src.target || src.target == null)
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
 		return
 
-	if(src.target && src.path.len == 0)
+	if(src.target && (src.target != null) && src.path.len == 0)
 		spawn(0)
 			if(!istype(src.target, /turf/))
 				src.path = AStar(src.loc, src.target.loc, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30)
@@ -235,7 +233,7 @@
 				src.oldtarget = src.target
 				src.target = null
 		return
-	if(src.path.len > 0 && src.target)
+	if(src.path.len > 0 && src.target && (src.target != null))
 		step_to(src, src.path[1])
 		src.path -= src.path[1]
 	else if(src.path.len == 1)
@@ -365,42 +363,31 @@
 		..()
 		return
 	if(src.contents.len >= 1)
-		user << "They wont fit in as there is already stuff inside!"
+		user << "<span class='notice'>They wont fit in as there is already stuff inside.</span>"
 		return
-	if (user.s_active)
+	if(user.s_active)
 		user.s_active.close(user)
-	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
-	B.loc = user
-	if (user.r_hand == T)
-		user.u_equip(T)
-		user.r_hand = B
-	else
-		user.u_equip(T)
-		user.l_hand = B
-	B.layer = 20
-	user << "You add the tiles into the empty toolbox. They stick oddly out the top."
 	del(T)
+	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
+	user.put_in_hands(B)
+	user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
+	user.drop_from_inventory(src)
 	del(src)
 
 /obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(isprox(W))
-		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor
-		B.loc = user
-		if (user.r_hand == W)
-			user.u_equip(W)
-			user.r_hand = B
-		else
-			user.u_equip(W)
-			user.l_hand = B
-		B.created_name = src.created_name
-		B.layer = 20
-		user << "You add the sensor to the toolbox and tiles!"
 		del(W)
+		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
+		B.created_name = src.created_name
+		user.put_in_hands(B)
+		user << "<span class='notice'>You add the sensor to the toolbox and tiles!</span>"
+		user.drop_from_inventory(src)
 		del(src)
+
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = copytext(sanitize(t), 1, MAX_NAME_LEN)
+		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)
@@ -411,18 +398,16 @@
 /obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
-		if(user.r_hand == src || user.l_hand == src)
-			A.loc = user.loc
-		else
-			A.loc = src.loc
-		A.name = src.created_name
-		user << "You add the robot arm to the odd looking toolbox assembly! Boop beep!"
 		del(W)
+		var/turf/T = get_turf(user.loc)
+		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
+		A.name = src.created_name
+		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>"
+		user.drop_from_inventory(src)
 		del(src)
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = copytext(sanitize(t), 1, MAX_NAME_LEN)
+		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

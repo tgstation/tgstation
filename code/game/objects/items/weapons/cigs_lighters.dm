@@ -3,7 +3,6 @@
 /*
 CONTAINS:
 MATCHES
-MATCHBOXES
 CIGARETTES
 CIGARS
 SMOKING PIPES
@@ -17,91 +16,37 @@ ZIPPO
 /obj/item/weapon/match
 	name = "Match"
 	desc = "A simple match stick, used for lighting tobacco"
-	icon = 'cigarettes.dmi'
+	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "match_unlit"
 	var/lit = 0
 	var/smoketime = 5
 	w_class = 1.0
 	origin_tech = "materials=1"
+	attack_verb = list("burnt", "singed")
 
 
 	process()
 		var/turf/location = get_turf(src)
-		if(src.lit == 1)
-			if(location)
-				location.hotspot_expose(700, 5)
-			src.smoketime--
-			sleep(10)
-			if(src.smoketime < 1)
-				src.icon_state = "match_burnt"
-				src.lit = -1
-				processing_objects.Remove(src)
-				return
+		src.smoketime--
+		if(src.smoketime < 1)
+			src.icon_state = "match_burnt"
+			src.lit = -1
+			processing_objects.Remove(src)
+			return
+		if(location)
+			location.hotspot_expose(700, 5)
+			return
 
 
 	dropped(mob/user as mob)
 		if(src.lit == 1)
-			spawn(10)
-				var/turf/location = get_turf(src)
-				location.hotspot_expose(700, 5)
-				src.lit = -1
-				src.damtype = "brute"
-				src.icon_state = "match_burnt"
-				src.item_state = "cigoff"
-				src.name = "Burnt match"
-				src.desc = "A match that has been burnt"
-				processing_objects.Remove(src)
+			src.lit = -1
+			src.damtype = "brute"
+			src.icon_state = "match_burnt"
+			src.item_state = "cigoff"
+			src.name = "Burnt match"
+			src.desc = "A match that has been burnt"
 		return ..()
-
-
-
-//////////////
-//MATCHBOXES//
-//////////////
-/obj/item/weapon/matchbox
-	name = "Matchbox"
-	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
-	icon = 'cigarettes.dmi'
-	icon_state = "matchbox"
-	item_state = "zippo"
-	w_class = 1
-	flags = TABLEPASS
-	slot_flags = SLOT_BELT
-	var/matchcount = 10
-	w_class = 1.0
-
-
-	attack_hand(mob/user as mob)
-		if(user.r_hand == src || user.l_hand == src)
-			if(src.matchcount <= 0)
-				user << "\red You're out of matches. Shouldn't have wasted so many..."
-				return
-			else
-				src.matchcount--
-				var/obj/item/weapon/match/W = new /obj/item/weapon/match(user)
-				user.put_in_hand(W)
-		else
-			return ..()
-		if(src.matchcount <= 0)
-			src.icon_state = "matchbox_empty"
-		else if(src.matchcount <= 3)
-			src.icon_state = "matchbox_almostempty"
-		else if(src.matchcount <= 6)
-			src.icon_state = "matchbox_almostfull"
-		else
-			src.icon_state = "matchbox"
-		src.update_icon()
-		return
-
-
-	attackby(obj/item/weapon/match/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/match) && W.lit == 0)
-			W.lit = 1
-			W.icon_state = "match_lit"
-			processing_objects.Add(W)
-		W.update_icon()
-		return
-
 
 
 ///////////////////////
@@ -109,21 +54,21 @@ ZIPPO
 ///////////////////////
 
 /obj/item/clothing/mask/cigarette
-	name = "Cigarette"
+	name = "cigarette"
 	desc = "A roll of tobacco and nicotine."
 	icon_state = "cigoff"
 	throw_speed = 0.5
 	item_state = "cigoff"
 	w_class = 1
 	body_parts_covered = null
+	attack_verb = list("burnt", "singed")
 	var/lit = 0
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
 	var/icon_off = "cigoff"
-	var/icon_butt = "cigbutt"
+	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
 	var/smoketime = 300
 	var/chem_volume = 15
-	var/butt_count = 5  //count of butt sprite variations
 
 /obj/item/clothing/mask/cigarette/New()
 	..()
@@ -160,6 +105,11 @@ ZIPPO
 		var/obj/item/weapon/match/M = W
 		if(M.lit > 0)
 			light("\red [user] lights their [name] with their [W].")
+
+	//can't think of any other way to update the overlays :<
+	user.update_inv_wear_mask(0)
+	user.update_inv_l_hand(0)
+	user.update_inv_r_hand(1)
 	return
 
 
@@ -205,14 +155,14 @@ ZIPPO
 	var/turf/location = get_turf(src)
 	src.smoketime--
 	if(src.smoketime < 1)
+		new type_butt(location)
+		processing_objects.Remove(src)
 		if(ismob(src.loc))
 			var/mob/living/M = src.loc
 			M << "\red Your [src.name] goes out."
-			put_out()
-			M.update_clothing()
-		else
-			put_out()
-		processing_objects.Remove(src)
+			M.u_equip(src)	//un-equip it so the overlays can update
+			M.update_icons()
+		del(src)
 		return
 	if(location)
 		location.hotspot_expose(700, 5)
@@ -229,19 +179,13 @@ ZIPPO
 
 /obj/item/clothing/mask/cigarette/dropped(mob/user as mob)
 	if(src.lit == 1)
-		src.visible_message("\red [user] calmly drops and treads on the lit [src], putting it out instantly.")
-		put_out()
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red [] calmly drops and treads on the lit [], putting it out instantly.", user,src.name), 1)
+			new type_butt(loc)
+			processing_objects.Remove(src)
+			del(src)
 	return ..()
 
-/obj/item/clothing/mask/cigarette/proc/put_out()
-	if (src.lit == -1)
-		return
-	src.lit = -1
-	src.damtype = "brute"
-	src.icon_state = icon_butt + "[rand(0,butt_count)]"
-	src.item_state = icon_off
-	src.desc = "A [src.name] butt."
-	src.name = "[src.name] butt"
 
 
 ////////////
@@ -253,12 +197,11 @@ ZIPPO
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
-	icon_butt = "cigarbutt"
+	type_butt = /obj/item/weapon/cigbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
 	smoketime = 1500
 	chem_volume = 20
-	butt_count = 0
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "Cohiba Robusto Cigar"
@@ -279,7 +222,7 @@ ZIPPO
 /obj/item/weapon/cigbutt
 	name = "cigarette butt"
 	desc = "A manky old cigarette butt."
-	icon = 'masks.dmi'
+	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "cigbutt"
 	w_class = 1
 	throwforce = 1
@@ -289,6 +232,12 @@ ZIPPO
 	desc = "A manky old cigar butt."
 	icon_state = "cigarbutt"
 
+
+/obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/match))
+		..()
+	else
+		user << "\red The [src] straight out REFUSES to be lit by such uncivilized means."
 
 /////////////////
 //SMOKING PIPES//
@@ -347,7 +296,7 @@ ZIPPO
 		var/turf/location = get_turf(src)
 		src.smoketime--
 		if(src.smoketime < 1)
-			new /obj/effect/decal/ash(location)
+			new /obj/effect/decal/cleanable/ash(location)
 			if(ismob(src.loc))
 				var/mob/living/M = src.loc
 				M << "\red Your [src.name] goes out, and you empty the ash."
@@ -375,13 +324,12 @@ ZIPPO
 		user << "\blue You refill the pipe with tobacco."
 		smoketime = maxsmoketime
 	return
-/*
+
 /obj/item/clothing/mask/pipe/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/match))
 		..()
 	else
 		user << "\red The [src] straight out REFUSES to be lit by such means."
-*/// Yeah no. DMTG
 
 
 /obj/item/clothing/mask/pipe/cobpipe
@@ -396,7 +344,7 @@ ZIPPO
 /obj/item/weapon/cigpacket
 	name = "cigarette packet"
 	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
-	icon = 'cigarettes.dmi'
+	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
 	w_class = 1
@@ -408,7 +356,7 @@ ZIPPO
 	New()
 		..()
 		flags |= NOREACT
-		create_reagents(15)//so people can inject cigarettes without opening a packet
+		create_reagents(15*cigcount)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
 
 	Del()
 		..()
@@ -426,10 +374,11 @@ ZIPPO
 				user << "\red You're out of cigs, shit! How you gonna get through the rest of the day..."
 				return
 			else
-				cigcount--
 				var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
-				reagents.trans_to(W, reagents.total_volume)
-				user.put_in_hand(W)
+				reagents.trans_to(W, (reagents.total_volume/cigcount))
+				user.put_in_active_hand(W)
+				src.reagents.maximum_volume = 15*cigcount
+				cigcount--
 		else
 			return ..()
 		update_icon()
@@ -448,7 +397,7 @@ ZIPPO
 /obj/item/weapon/lighter
 	name = "cheap lighter"
 	desc = "A cheap-as-free lighter."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "lighter-g"
 	item_state = "lighter-g"
 	var/icon_on = "lighter-g-on"
@@ -457,10 +406,11 @@ ZIPPO
 	throwforce = 4
 	flags = TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
+	attack_verb = list("burnt", "singed")
 	var/lit = 0
 
 /obj/item/weapon/lighter/zippo
-	name = "\improper Zippo lighter"
+	name = "Zippo lighter"
 	desc = "The zippo."
 	icon_state = "zippo"
 	item_state = "zippo"
@@ -476,7 +426,7 @@ ZIPPO
 
 /obj/item/weapon/lighter
 
-	attack_self(mob/user)
+	attack_self(mob/living/user)
 		if(user.r_hand == src || user.l_hand == src)
 			if(!src.lit)
 				src.lit = 1
@@ -484,18 +434,18 @@ ZIPPO
 				src.item_state = icon_on
 				if( istype(src,/obj/item/weapon/lighter/zippo) )
 					for(var/mob/O in viewers(user, null))
-						O.show_message(text("\red Without even breaking stride, \the [] flips open and lights \the [] in one smooth movement.", user, src), 1)
+						O.show_message(text("\red Without even breaking stride, [] flips open and lights the [] in one smooth movement.", user, src), 1)
 				else
 					if(prob(75))
 						for(var/mob/O in viewers(user, null))
-							O.show_message("\red After a few attempts, \the [user] manages to light \the [src].", 1)
+							O.show_message("\red After a few attempts, [user] manages to light the [src].", 1)
 					else
 						user << "\red <b>You burn yourself while lighting the lighter.</b>"
 						user.adjustFireLoss(5)
 						for(var/mob/O in viewers(user, null))
-							O.show_message("\red After a few attempts, \the [user] manages to light \the [src], they however burn themself in the process.", 1)
+							O.show_message("\red After a few attempts, [user] manages to light the [src], they however burn their finger in the process.", 1)
 
-				user.ul_SetLuminosity(user.LuminosityRed + 2, user.LuminosityGreen + 1, user.LuminosityBlue)
+				user.total_luminosity += 2
 				processing_objects.Add(src)
 			else
 				src.lit = 0
@@ -508,7 +458,7 @@ ZIPPO
 					for(var/mob/O in viewers(user, null))
 						O.show_message("\red [user] quietly shuts off the [src].", 1)
 
-				user.ul_SetLuminosity(user.LuminosityRed - 2, user.LuminosityGreen - 1, user.LuminosityBlue)
+				user.total_luminosity -= 2
 				processing_objects.Remove(src)
 		else
 			return ..()
@@ -537,13 +487,13 @@ ZIPPO
 
 	pickup(mob/user)
 		if(lit)
-			ul_SetLuminosity(0)
-			user.ul_SetLuminosity(user.LuminosityRed + 2, user.LuminosityGreen + 1, user.LuminosityBlue)
+			src.sd_SetLuminosity(0)
+			user.total_luminosity += 2
 		return
 
 
 	dropped(mob/user)
 		if(lit)
-			user.ul_SetLuminosity(user.LuminosityRed - 2, user.LuminosityGreen - 1, user.LuminosityBlue)
-			ul_SetLuminosity(2,1,0)
+			user.total_luminosity -= 2
+			src.sd_SetLuminosity(2)
 		return

@@ -7,7 +7,7 @@
 	internal_damage_threshold = 50
 	maint_access = 0
 	//add_req_access = 0
-	//operation_req_access = list(ACCESS_HOS)
+	//operation_req_access = list(access_hos)
 	damage_absorption = list("brute"=0.7,"fire"=1,"bullet"=0.7,"laser"=0.85,"energy"=1,"bomb"=0.8)
 	var/am = "d3c2fbcadca903a41161ccc9df9cf948"
 
@@ -27,7 +27,7 @@
 	if(istype(target, /mob/living))
 		var/mob/living/M = target
 		if(src.occupant.a_intent == "hurt")
-			playsound(src, 'punch4.ogg', 50, 1)
+			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(damtype == "brute")
 				step_away(M,src,15)
 			/*
@@ -44,12 +44,13 @@
 
 				var/datum/organ/external/temp = H.get_organ(pick("chest", "chest", "chest", "head"))
 				if(temp)
+					var/update = 0
 					switch(damtype)
 						if("brute")
 							H.Paralyse(1)
-							temp.take_damage(rand(force/2, force), 0)
+							update |= temp.take_damage(rand(force/2, force), 0)
 						if("fire")
-							temp.take_damage(0, rand(force/2, force))
+							update |= temp.take_damage(0, rand(force/2, force))
 						if("tox")
 							if(H.reagents)
 								if(H.reagents.get_reagent_amount("carpotoxin") + force < force*2)
@@ -58,7 +59,7 @@
 									H.reagents.add_reagent("cryptobiolin", force)
 						else
 							return
-					H.UpdateDamageIcon()
+					if(update)	H.UpdateDamageIcon()
 				H.updatehealth()
 
 			else
@@ -101,7 +102,7 @@
 						target:dismantle_wall(1)
 						src.occupant_message("\blue You smash through the wall.")
 						src.visible_message("<b>[src.name] smashes through the wall</b>")
-						playsound(src, 'smash.ogg', 50, 1)
+						playsound(src, 'sound/weapons/smash.ogg', 50, 1)
 					melee_can_hit = 0
 					if(do_after(melee_cooldown))
 						melee_can_hit = 1

@@ -20,8 +20,6 @@
 			sleep(3)
 			if (i > 0)
 				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
-				b.blood_DNA = blood_DNA
-				b.OriginalMob = OriginalMob
 				for(var/datum/disease/D in src.viruses)
 					b.viruses += D
 			if (step_to(src, get_step(src, direction), 0))
@@ -34,7 +32,6 @@
 			sleep(3)
 			if (i > 0)
 				var/obj/effect/decal/cleanable/xenoblood/b = new /obj/effect/decal/cleanable/xenoblood/xsplatter(src.loc)
-				b.blood_DNA = blood_DNA
 				for(var/datum/disease/D in src.viruses)
 					b.viruses += D
 			if (step_to(src, get_step(src, direction), 0))
@@ -63,7 +60,7 @@
 
 	New()
 		..()
-		ul_SetLuminosity(0,3,0)
+		sd_SetLuminosity(1)
 
 		spawn(1200)		// 2 minutes
 			del(src)

@@ -1,4 +1,4 @@
-/*/proc/parse_zone(zone)
+/proc/parse_zone(zone)
 	if(zone == "r_hand") return "right hand"
 	else if (zone == "l_hand") return "left hand"
 	else if (zone == "l_arm") return "left arm"
@@ -7,7 +7,7 @@
 	else if (zone == "r_leg") return "right leg"
 	else if (zone == "l_foot") return "left foot"
 	else if (zone == "r_foot") return "right foot"
-	else return zone*/
+	else return zone
 
 /proc/text2dir(direction)
 	switch(uppertext(direction))
@@ -30,17 +30,15 @@
 		else
 	return
 
-/proc/get_turf(turf/location as turf)
-	while (location)
-		if (istype(location))
+/proc/get_turf(turf/location)
+	while(location)
+		if(isturf(location))
 			return location
-
 		location = location.loc
 	return null
 
-/proc/get_turf_or_move(turf/location as turf)
-	location = get_turf(location)
-	return location
+/proc/get_turf_or_move(turf/location)
+	return get_turf(location)
 
 
 

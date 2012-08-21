@@ -24,7 +24,7 @@
 		if (isrobot(usr) || src.locked)
 			if(istype(O, /obj/item/device/multitool))
 				user << "\red Resetting circuitry..."
-				playsound(user, 'lockreset.ogg', 50, 1)
+				playsound(user, 'sound/machines/lockreset.ogg', 50, 1)
 				sleep(50) // Sleeping time~
 				src.locked = 0
 				user << "\blue You disable the locking modules."
@@ -39,13 +39,13 @@
 						spawn(10) update_icon()
 					return
 				else
-					playsound(user, 'Glasshit.ogg', 100, 1) //We don't want this playing every time
+					playsound(user, 'sound/effects/Glasshit.ogg', 100, 1) //We don't want this playing every time
 				if(W.force < 15)
 					user << "\blue The cabinet's protective glass glances off the hit."
 				else
 					src.hitstaken++
 					if(src.hitstaken == 4)
-						playsound(user, 'Glassbr3.ogg', 100, 1) //Break cabinet, receive goodies. Cabinet's fucked for life after that.
+						playsound(user, 'sound/effects/Glassbr3.ogg', 100, 1) //Break cabinet, receive goodies. Cabinet's fucked for life after that.
 						src.smashed = 1
 						src.locked = 0
 						src.localopened = 1
@@ -86,7 +86,7 @@
 					sleep(50)
 					src.locked = 1
 					user << "\blue You re-enable the locking modules."
-					playsound(user, 'lockenable.ogg', 50, 1)
+					playsound(user, 'sound/machines/lockenable.ogg', 50, 1)
 					return
 			else
 				localopened = !localopened
@@ -111,7 +111,7 @@
 			return
 		if(localopened)
 			if(fireaxe)
-				user.put_in_hand(fireaxe)
+				user.put_in_hands(fireaxe)
 				fireaxe = null
 				user << "\blue You take the fire axe from the [name]."
 				src.add_fingerprint(user)
@@ -160,7 +160,7 @@
 
 		if (localopened)
 			if(fireaxe)
-				usr.put_in_hand(fireaxe)
+				usr.put_in_hands(fireaxe)
 				fireaxe = null
 				usr << "\blue You take the Fire axe from the [name]."
 			else

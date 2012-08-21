@@ -2,16 +2,24 @@
 	canmove = 0
 	src.loc = paicard
 	card = paicard
+	sradio = new(src)
 	if(card)
 		if(!card.radio)
 			card.radio = new /obj/item/device/radio(src.card)
 		radio = card.radio
 
+	//PDA
+	pda = new(src)
+	spawn(5)
+		pda.ownjob = "Personal Assistant"
+		pda.owner = text("[]", src)
+		pda.name = pda.owner + " (" + pda.ownjob + ")"
+		pda.toff = 1
 	..()
 
 /mob/living/silicon/pai/Login()
 	..()
-	usr << browse_rsc('paigrid.png')			// Go ahead and cache the interface resources as early as possible
+	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
 
 
 /mob/living/silicon/pai/Stat()
@@ -82,7 +90,8 @@
 			src << "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>"
 
 /mob/living/silicon/pai/ex_act(severity)
-	flick("flash", src.flash)
+	if(!blinded)
+		flick("flash", src.flash)
 
 	switch(severity)
 		if(1.0)
@@ -133,7 +142,7 @@
 		else //harm
 			var/damage = rand(10, 20)
 			if (prob(90))
-				playsound(src.loc, 'slash.ogg', 25, 1, -1)
+				playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
@@ -142,7 +151,7 @@
 				src.adjustBruteLoss(damage)
 				src.updatehealth()
 			else
-				playsound(src.loc, 'slashmiss.ogg', 25, 1, -1)
+				playsound(src.loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
@@ -187,7 +196,7 @@
 		usr << "You can't change your camera network because you are dead!"
 		return
 
-	for (var/obj/machinery/camera/C in world)
+	for (var/obj/machinery/camera/C in Cameras)
 		if(!C.status)
 			continue
 		else
@@ -206,6 +215,6 @@
 	var/obj/item/device/paicard/card = new(t)
 	var/mob/living/silicon/pai/pai = new(card)
 	pai.key = src.key
-	card.pai = pai
+	card.setPersonality(pai)
 
 */

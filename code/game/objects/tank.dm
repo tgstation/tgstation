@@ -1,7 +1,7 @@
 
 /obj/item/weapon/tank
 	name = "tank"
-	icon = 'tank.dmi'
+	icon = 'icons/obj/tank.dmi'
 
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
@@ -36,7 +36,7 @@
 		..()
 		if(air_contents.oxygen < 1 && loc==usr)
 			usr << "\red <B>The meter on the [src.name] indicates you are almost out of air!</B>"
-			usr << sound('alert.ogg')
+			usr << sound('sound/effects/alert.ogg')
 
 
 /obj/item/weapon/tank/plasma
@@ -161,8 +161,8 @@
 		var/pressure = air_contents.return_pressure()
 		if(pressure > TANK_FRAGMENT_PRESSURE)
 			if(!istype(src.loc,/obj/item/device/transfer_valve))
-				message_admins("Explosive tank rupture! last key to touch the tank was [fingerprintslast].")
-				log_game("Explosive tank rupture! last key to touch the tank was [fingerprintslast].")
+				message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
+				log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
 			//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
 			//Give the gas a chance to build up more pressure through reacting
 			air_contents.react()
@@ -183,7 +183,7 @@
 			//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
 			if(integrity <= 0)
 				loc.assume_air(air_contents)
-				//TODO: make pop sound
+				playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 				del(src)
 			else
 				integrity--
@@ -212,7 +212,7 @@
 
 		var/pressure = air_contents.return_pressure()
 
-		var/total_moles = air_contents.total_moles
+		var/total_moles = air_contents.total_moles()
 
 		user << "\blue Results of analysis of \icon[icon]"
 		if (total_moles>0)
@@ -260,7 +260,6 @@
 	..()
 
 /obj/item/weapon/tank/examine()
-	set src in oview()
 	var/obj/icon = src
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
@@ -293,7 +292,6 @@
 
 	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	src.air_contents.nitrogen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-	air_contents.update_values()
 	return
 
 
@@ -306,19 +304,17 @@
 	trace_gas.moles = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
 	src.air_contents.trace_gases += trace_gas
-	air_contents.update_values()
 	return
 
 /obj/item/weapon/tank/plasma/New()
 	..()
 
 	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
-	air_contents.update_values()
 	return
 
 
 /obj/item/weapon/tank/plasma/proc/release()
-	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles)
+	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
 
 	loc.assume_air(removed)
 
@@ -363,5 +359,4 @@
 		F.ptank = src
 		user.before_take_item(src)
 		src.loc = F
-		F.update_icon()
 	return

@@ -60,7 +60,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
-		playsound(U.loc, 'bamf.ogg', 50, 2)
+		playsound(U.loc, 'sound/effects/bamf.ogg', 50, 2)
 		s_bombs--
 		s_coold = 1
 	return
@@ -81,16 +81,16 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		if(destination&&istype(mobloc, /turf))//The turf check prevents unusual behavior. Like teleporting out of cryo pods, cloners, mechs, etc.
 			spawn(0)
 				playsound(U.loc, "sparks", 50, 1)
-				anim(mobloc,src,'mob.dmi',,"phaseout",,U.dir)
+				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
 			handle_teleport_grab(destination, U)
 			U.loc = destination
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'phasein.ogg', 25, 1)
+				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
 				playsound(U.loc, "sparks", 50, 1)
-				anim(U.loc,U,'mob.dmi',,"phasein",,U.dir)
+				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 
 			spawn(0)
 				destination.kill_creatures(U)//Any living mobs in teleport area are gibbed. Check turf procs for how it does it.
@@ -114,17 +114,17 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		var/turf/mobloc = get_turf(U.loc)//To make sure that certain things work properly below.
 		if((!T.density)&&istype(mobloc, /turf))
 			spawn(0)
-				playsound(U.loc, 'sparks4.ogg', 50, 1)
-				anim(mobloc,src,'mob.dmi',,"phaseout",,U.dir)
+				playsound(U.loc, 'sound/effects/sparks4.ogg', 50, 1)
+				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
 			handle_teleport_grab(T, U)
 			U.loc = T
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'phasein.ogg', 25, 1)
-				playsound(U.loc, 'sparks2.ogg', 50, 1)
-				anim(U.loc,U,'mob.dmi',,"phasein",,U.dir)
+				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
+				playsound(U.loc, 'sound/effects/sparks2.ogg', 50, 1)
+				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 
 			spawn(0)//Any living mobs in teleport area are gibbed.
 				T.kill_creatures(U)
@@ -145,7 +145,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 	var/C = 250
 	if(!ninjacost(C,1))
 		var/mob/living/carbon/human/U = affecting
-		playsound(U.loc, 'EMPulse.ogg', 60, 2)
+		playsound(U.loc, 'sound/effects/EMPulse.ogg', 60, 2)
 		empulse(U, 4, 6) //Procs sure are nice. Slightly weaker than wizard's disable tch.
 		s_coold = 2
 		cell.charge-=(C*10)
@@ -167,14 +167,14 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				var/obj/item/weapon/melee/energy/blade/W = new()
 				spark_system.start()
 				playsound(U.loc, "sparks", 50, 1)
-				U.put_in_hand(W)
+				U.put_in_hands(W)
 				cell.charge-=(C*10)
 			else
 				U << "\red You can only summon one blade. Try dropping an item first."
 		else//Else you can run around with TWO energy blades. I don't know why you'd want to but cool factor remains.
 			if(!U.get_active_hand())
 				var/obj/item/weapon/melee/energy/blade/W = new()
-				U.put_in_hand(W)
+				U.put_in_hands(W)
 			if(!U.get_inactive_hand())
 				var/obj/item/weapon/melee/energy/blade/W = new()
 				U.put_in_inactive_hand(W)
@@ -213,7 +213,7 @@ This could be a lot better but I'm too tired atm.*/
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
 			cell.charge-=(C*10)
-			A.fired()
+			A.process()
 		else
 			U << "\red There are no targets in view."
 	return
@@ -329,7 +329,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 			U.say("Ai Satsugai!")
 			spawn(0)
 				playsound(U.loc, "sparks", 50, 1)
-				anim(mobloc,U,'mob.dmi',,"phaseout",,U.dir)
+				anim(mobloc,U,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
 			spawn(0)
 				for(var/turf/T in getline(mobloc, destination))
@@ -337,16 +337,16 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 						T.kill_creatures(U)
 					if(T==mobloc||T==destination)	continue
 					spawn(0)
-						anim(T,U,'mob.dmi',,"phasein",,U.dir)
+						anim(T,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 
 			handle_teleport_grab(destination, U)
 			U.loc = destination
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'phasein.ogg', 25, 1)
+				playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
 				playsound(U.loc, "sparks", 50, 1)
-				anim(U.loc,U,'mob.dmi',,"phasein",,U.dir)
+				anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 			s_coold = 1
 		else
 			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
@@ -401,14 +401,14 @@ This is so anime it hurts. But that's the point.*/
 				var/turf/picked = locate(locx,locy,mobloc.z)
 				spawn(0)
 					playsound(U.loc, "sparks", 50, 1)
-					anim(mobloc,U,'mob.dmi',,"phaseout",,U.dir)
+					anim(mobloc,U,'icons/mob/mob.dmi',,"phaseout",,U.dir)
 
 				spawn(0)
 					var/limit = 4
 					for(var/turf/T in oview(5))
 						if(prob(20))
 							spawn(0)
-								anim(T,U,'mob.dmi',,"phasein",,U.dir)
+								anim(T,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 							limit--
 						if(limit<=0)	break
 
@@ -418,9 +418,9 @@ This is so anime it hurts. But that's the point.*/
 
 				spawn(0)
 					spark_system.start()
-					playsound(U.loc, 'phasein.ogg', 25, 1)
+					playsound(U.loc, 'sound/effects/phasein.ogg', 25, 1)
 					playsound(U.loc, "sparks", 50, 1)
-					anim(U.loc,U,'mob.dmi',,"phasein",,U.dir)
+					anim(U.loc,U,'icons/mob/mob.dmi',,"phasein",,U.dir)
 				s_coold = 1
 			else
 				U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."

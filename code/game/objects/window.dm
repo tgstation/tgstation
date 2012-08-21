@@ -34,7 +34,7 @@
 	del(src)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(istype(mover) && mover.pass_flags & PASSGLASS)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
 		return 0 //full tile window, you can't move into it!
@@ -44,7 +44,7 @@
 		return 1
 
 /obj/structure/window/CheckExit(atom/movable/O as mob|obj, target as turf)
-	if(istype(O) && O.pass_flags & PASSGLASS)
+	if(istype(O) && O.checkpass(PASSGLASS))
 		return 1
 	if (get_dir(O.loc, target) == dir)
 		return 0
@@ -75,7 +75,7 @@
 	else
 		tforce = AM:throwforce
 	if(reinf) tforce /= 4.0
-	playsound(src.loc, 'Glasshit.ogg', 100, 1)
+	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	src.health = max(0, src.health - tforce)
 	if (src.health <= 7 && !reinf)
 		src.anchored = 0
@@ -103,14 +103,7 @@
 		if(reinf) new /obj/item/stack/rods( src.loc)
 		src.density = 0
 		del(src)
-		return
-	else
-		playsound(src.loc, 'Glassknock.ogg', 80, 1)
-		usr.visible_message("[usr.name] knocks on the [src.name].", \
-							"You knock on the [src.name].", \
-							"You hear a knocking sound.")
-		return
-
+	return
 
 /obj/structure/window/attack_paw()
 	if ((HULK in usr.mutations))
@@ -132,7 +125,7 @@
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
 			O << "\red [usr] smashes against the window."
-	playsound(src.loc, 'Glasshit.ogg', 100, 1)
+	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	src.health -= 15
 	if(src.health <= 0)
 		usr << "\green You smash through the window."
@@ -156,7 +149,7 @@
 	for(var/mob/O in viewers(src, null))
 		if ((O.client && !( O.blinded )))
 			O << "\red [M] smashes against the window."
-	playsound(src.loc, 'Glasshit.ogg', 100, 1)
+	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	src.health -= M.melee_damage_upper
 	if(src.health <= 0)
 		M << "\green You smash through the window."
@@ -180,7 +173,7 @@
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
 			O << "\red [usr] smashes against the window."
-	playsound(src.loc, 'Glasshit.ogg', 100, 1)
+	playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 	src.health -= rand(10,15)
 	if(src.health <= 0)
 		usr << "\green You smash through the window."
@@ -197,24 +190,25 @@
 	return
 
 /obj/structure/window/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(!istype(W)) return//I really wish I did not need this
 	if (istype(W, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)
 			state = 3 - state
-			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			usr << ( state==1? "You have unfastened the window from the frame." : "You have fastened the window to the frame." )
 		else if(reinf && state == 0)
 			anchored = !anchored
 			update_nearby_icons()
-			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (src.anchored ? "You have fastened the frame to the floor." : "You have unfastened the frame from the floor.")
 		else if(!reinf)
 			src.anchored = !( src.anchored )
 			update_nearby_icons()
-			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (src.anchored ? "You have fastened the window to the floor." : "You have unfastened the window.")
 	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <=1)
 		state = 1-state;
-		playsound(src.loc, 'Crowbar.ogg', 75, 1)
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
 		user << (state ? "You have pried the window into the frame." : "You have pried the window out of the frame.")
 	else
 
@@ -222,18 +216,19 @@
 		if(reinf) aforce /= 2.0
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			src.health = max(0, src.health - aforce)
-		playsound(src.loc, 'Glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if (src.health <= 7)
 			src.anchored = 0
 			update_nearby_icons()
 			step(src, get_dir(user, src))
 		if (src.health <= 0)
 			if (src.dir == SOUTHWEST)
-				new /obj/item/weapon/shard( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				if(reinf)
-					new /obj/item/stack/rods( src.loc)
-					new /obj/item/stack/rods( src.loc)
+				var/index = null
+				index = 0
+				while(index < 2)
+					new /obj/item/weapon/shard( src.loc )
+					if(reinf) new /obj/item/stack/rods( src.loc)
+					index++
 			else
 				new /obj/item/weapon/shard( src.loc )
 				if(reinf) new /obj/item/stack/rods( src.loc)
@@ -322,7 +317,7 @@
 /obj/structure/window/Del()
 	density = 0
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
 	playsound(src, "shatter", 70, 1)
 

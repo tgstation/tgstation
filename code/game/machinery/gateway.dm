@@ -1,7 +1,7 @@
 /obj/structure/gatewayplaceholder
 	density = 1
 	anchored = 1
-	icon = 'gateway.dmi'
+	icon = 'icons/obj/machines/gateway.dmi'
 
 /obj/structure/gatewayplaceholder/one
 	name = "Gateway"

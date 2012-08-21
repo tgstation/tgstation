@@ -1,21 +1,15 @@
 /world/proc/load_mode()
 	var/text = file2text("data/mode.txt")
-	if (length(text) > 0)
+	if (text)
 		var/list/lines = dd_text2list(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
 			diary << "Saved mode is '[master_mode]'"
-	else
-		master_mode = "traitor" // Default mode, in case of errors
 
 /world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
-	if (length(the_mode) > 0 && the_mode != "none") // "None" is the vote set to dead people
-													// , who can't pick an option in a gamemode vote.
-		F << the_mode
-	else
-		F << "traitor" // Default mode, in case of errors
+	F << the_mode
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
@@ -41,24 +35,6 @@
 				admins[m_key] = a_lev
 				diary << ("ADMIN: [m_key] = [a_lev]")
 
-	// look for moderators in a separate file
-	text = file2text("config/moderators.txt")
-	if (!text)
-		diary << "Failed to load config/moderators.txt\n"
-	else
-		var/list/lines = dd_text2list(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
-
-			if (copytext(line, 1, 2) == ";")
-				continue
-
-			var/m_key = copytext(line, 1, length(line)+1)
-			var/a_lev = "Moderator"
-			admins[m_key] = a_lev
-
-
 /world/proc/load_testers()
 	var/text = file2text("config/testers.txt")
 	if (!text)
@@ -83,7 +59,7 @@
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
-	config.loadsql("config/dbconfig.txt")
+	//config.loadsql("config/dbconfig.txt")
 	//config.loadforumsql("config/forumdbconfig.txt")
 	// apply some settings from config..
 	abandon_allowed = config.respawn
@@ -99,11 +75,14 @@
 	src.load_motd()
 	src.load_admins()
 	investigate_reset()
+
 	if (config.usealienwhitelist)
 		load_alienwhitelist()
 	if (config.usewhitelist)
 		load_whitelist()
+
 	LoadBansjob()
+	//Get_Holiday()	//~Carn, needs to be here when the station is named so :P
 	src.update_status()
 	makepowernets()
 
@@ -121,14 +100,16 @@
 
 	..()
 
+	sleep(50)
+
 	plmaster = new /obj/effect/overlay(  )
-	plmaster.icon = 'tile_effects.dmi'
+	plmaster.icon = 'icons/effects/tile_effects.dmi'
 	plmaster.icon_state = "plasma"
 	plmaster.layer = FLY_LAYER
 	plmaster.mouse_opacity = 0
 
 	slmaster = new /obj/effect/overlay(  )
-	slmaster.icon = 'tile_effects.dmi'
+	slmaster.icon = 'icons/effects/tile_effects.dmi'
 	slmaster.icon_state = "sleeping_agent"
 	slmaster.layer = FLY_LAYER
 	slmaster.mouse_opacity = 0
@@ -143,8 +124,11 @@
 
 //Crispy fullban
 /world/Reboot(var/reason)
-	send2irc(world.url,"Server Rebooting!")
-	socket_talk.send_raw("type=reboot")
+	spawn(0)
+		send2irc(world.url,"Server Rebooting!")
+		socket_talk.send_raw("type=reboot")
+		//world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
+
 	for(var/client/C)
 		if (config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
@@ -183,9 +167,11 @@
 	var/atom/this = src//detach proc from src
 	src = null
 
-	if (!usr || !isturf(usr.loc))
+	if(!usr || !isturf(usr.loc))
 		return
-	else if (usr.stat != 0 || usr.restrained())
+	if(usr.stat || usr.restrained())
+		return
+	if(usr.status_flags & FAKEDEATH)
 		return
 
 	var/tile = get_turf(this)
@@ -194,7 +180,7 @@
 
 	var/P = new /obj/effect/decal/point(tile)
 	spawn (20)
-		del(P)
+		if(P)	del(P)
 
 	usr.visible_message("<b>[usr]</b> points to [this]")
 

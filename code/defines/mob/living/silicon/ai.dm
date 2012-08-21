@@ -1,10 +1,11 @@
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'AI.dmi'//
+	icon = 'icons/mob/AI.dmi'//
 	icon_state = "ai"
 	anchored = 1 // -- TLE
 	density = 1
-	var/list/networks
+	status_flags = CANSTUN|CANPARALYSE
+	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
@@ -14,6 +15,7 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 	var/icon/holo_icon//Default is assigned when AI is created.
+	var/obj/item/device/pda/ai/aiPDA = null
 
 	//MALFUNCTION
 	var/datum/AI_Module/module_picker/malf_picker
@@ -28,3 +30,5 @@
 	var/explosive = 0 //does the AI explode when it dies?
 
 	var/mob/living/silicon/ai/parent = null
+
+	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.

@@ -1,12 +1,5 @@
 /mob/living/carbon/human/Login()
 	..()
-
-	rebuild_appearance()
-
-	if (!isturf(src.loc))
-		src.client.eye = src.loc
-		src.client.perspective = EYE_PERSPECTIVE
-	if (src.stat == 2)
-		src.verbs += /mob/proc/ghost
-
+	update_hud()
+	ticker.mode.update_all_synd_icons()	//This proc only sounds CPU-expensive on paper. It is O(n^2), but the outer for-loop only iterates through syndicates, which are only prsenet in nuke rounds and even when they exist, there's usually 6 of them.
 	return

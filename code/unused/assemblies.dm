@@ -1,6 +1,6 @@
 /*/obj/item/assembly
 	name = "assembly"
-	icon = 'assemblies.dmi'
+	icon = 'icons/obj/assemblies.dmi'
 	item_state = "assembly"
 	var/status = 0.0
 	throwforce = 10
@@ -714,7 +714,7 @@
 
 /obj/item/assembly/m_i_ptank/attack_self(mob/user as mob)
 
-	playsound(src.loc, 'armbomb.ogg', 100, 1)
+	playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.part1.attack_self(user, 1)
 	src.add_fingerprint(user)
 	return
@@ -805,7 +805,7 @@
 /obj/item/assembly/t_i_ptank/attack_self(mob/user as mob)
 
 	src.part1.attack_self(user, 1)
-	playsound(src.loc, 'armbomb.ogg', 100, 1)
+	playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -929,7 +929,7 @@
 	return
 
 /obj/item/assembly/r_i_ptank/attack_self(mob/user as mob)
-	playsound(src.loc, 'armbomb.ogg', 100, 1)
+	playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.part1.attack_self(user, 1)
 	src.add_fingerprint(user)
 	return

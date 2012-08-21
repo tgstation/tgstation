@@ -2,28 +2,8 @@
 
 /obj/item/weapon/ore
 	name = "Rock"
-	icon = 'Mining.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
-	var/amount = 1
-
-/obj/item/weapon/ore/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/satchel))
-		var/obj/item/weapon/satchel/S = W
-		if (S.mode == 1)
-			for (var/obj/item/weapon/ore/O in locate(src.x,src.y,src.z))
-				if (S.contents.len < S.capacity)
-					S.contents += O;
-				else
-					user << "\blue The satchel is full."
-					return
-			user << "\blue You pick up all the ores."
-		else
-			if (S.contents.len < S.capacity)
-				S.contents += src;
-			else
-				user << "\blue The satchel is full."
-	return
 
 
 /obj/item/weapon/ore/uranium
@@ -79,15 +59,6 @@
 	desc = "Completely useless"
 	icon_state = "slag"
 
-/obj/item/weapon/ore/strangerock		//see artifact_archaeo.dm in modules/research for more info
-	name = "Strange rock"
-	desc = "Seems to have some unusal strata evident throughout it."
-	icon_state = "strange"
-	var/obj/inside
-	var/method // 0 = fire, 1+ = acid
-	origin_tech = "materials=5"
-
-
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
@@ -96,7 +67,7 @@
 /*****************************Coin********************************/
 
 /obj/item/weapon/coin
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	name = "Coin"
 	icon_state = "coin"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -157,7 +128,7 @@
 			del(CC)
 			return
 
-		overlays += image('items.dmi',"coin_string_overlay")
+		overlays += image('icons/obj/items.dmi',"coin_string_overlay")
 		string_attached = 1
 		user << "\blue You attach a string to the coin."
 		CC.use(1)

@@ -1,12 +1,12 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 
 /obj/machinery/computer/robotics
 	name = "Robotics Control"
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "robot"
-	req_access = list(ACCESS_ROBOTICS)
+	req_access = list(access_robotics)
 	circuit = "/obj/item/weapon/circuitboard/robotics"
 
 	var/id = 0.0
@@ -38,7 +38,7 @@
 			dat += "<A href='?src=\ref[src];screen=1'>1. Cyborg Status</A><BR>"
 			dat += "<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"
 		if(screen == 1)
-			for(var/mob/living/silicon/robot/R in world)
+			for(var/mob/living/silicon/robot/R in mob_list)
 				if(istype(user, /mob/living/silicon/ai))
 					if (R.connected_ai != user)
 						continue
@@ -97,12 +97,13 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/engine/process()
+//Why is this in robot/computer and why does it exist when /obj/machinery/computer/engine does not? -Nodrak
+/*/obj/machinery/computer/engine/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	use_power(500)
 	src.updateDialog()
-	return
+	return*/
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	if(..())
@@ -116,7 +117,7 @@
 			<A href='?src=\ref[src];temp=1'>Cancel</A>"}
 
 		else if (href_list["eject2"])
-			var/obj/item/weapon/card/id/I = usr.equipped()
+			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -203,7 +204,7 @@
 					var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
 					if(choice == "Confirm")
 						if(R && istype(R))
-							message_admins("\blue [key_name_admin(usr)] emagged [R.name] using robotic console!")
+//							message_admins("\blue [key_name_admin(usr)] emagged [R.name] using robotic console!")
 							log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 							R.emagged = 1
 							if(R.mind.special_role)
@@ -223,7 +224,7 @@
 		sleep(10)
 	while(src.timeleft)
 
-	for(var/mob/living/silicon/robot/R in world)
+	for(var/mob/living/silicon/robot/R in mob_list)
 		if(!R.scrambledcodes)
 			R.self_destruct()
 

@@ -3,7 +3,7 @@
 
 /mob/living/carbon/metroid
 	name = "baby metroid"
-	icon = 'mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "baby metroid"
 	pass_flags = PASSTABLE
 	voice_message = "skree!"
@@ -11,18 +11,18 @@
 
 	layer = 5
 
+	maxHealth = 150
 	health = 150
 	gender = NEUTER
 
 	update_icon = 0
-	nutrition = 800 // 1000 = max
+	nutrition = 700 // 1000 = max
 
 	see_in_dark = 8
 
 	// canstun and canweaken don't affect metroids because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
-	canstun = 0
-	canweaken = 0
+	status_flags = CANPARALYSE
 
 	var/amount_grown = 0// controls how long the metroid has been overfed, if 10, grows into an adult
 		// if adult: if 10: reproduces
@@ -47,12 +47,12 @@
 
 /mob/living/carbon/metroid/adult
 	name = "adult metroid"
-	icon = 'mob.dmi'
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "adult metroid"
 
 	health = 200
 	gender = NEUTER
 
 	update_icon = 0
-	nutrition = 1000 // 1200 = max
+	nutrition = 800 // 1200 = max
 

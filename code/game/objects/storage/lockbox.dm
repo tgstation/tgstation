@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/weapon/storage/lockbox
 	name = "lockbox"
@@ -9,7 +9,7 @@
 	max_w_class = 3
 	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 4
-	req_access = list(ACCESS_ARMORY)
+	req_access = list(access_armory)
 	var/locked = 1
 	var/broken = 0
 	var/icon_locked = "lockbox+l"
@@ -35,12 +35,6 @@
 			else
 				user << "\red Access Denied"
 		else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
-			if(istype(W, /obj/item/weapon/card/emag))
-				var/obj/item/weapon/card/emag/E = W
-				if(E.uses)
-					E.uses--
-				else
-					return
 			broken = 1
 			locked = 0
 			desc = "It appears to be broken."
@@ -49,7 +43,7 @@
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, src.loc)
 				spark_system.start()
-				playsound(src.loc, 'blade1.ogg', 50, 1)
+				playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 				playsound(src.loc, "sparks", 50, 1)
 				for(var/mob/O in viewers(user, 3))
 					O.show_message(text("\blue The locker has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
@@ -74,7 +68,7 @@
 
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "Lockbox (Loyalty Implants)"
-	req_access = list(ACCESS_SECURITY)
+	req_access = list(access_security)
 
 	New()
 		..()
@@ -87,8 +81,8 @@
 /obj/item/weapon/storage/lockbox/clusterbang
 	name = "lockbox (clusterbang)"
 	desc = "You have a bad feeling about opening this."
-	req_access = list(ACCESS_SECURITY)
+	req_access = list(access_security)
 
 	New()
 		..()
-		new /obj/item/weapon/flashbang/clusterbang(src)
+		new /obj/item/weapon/grenade/flashbang/clusterbang(src)

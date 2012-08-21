@@ -1,6 +1,6 @@
 /obj/item/robot_parts
 	name = "robot parts"
-	icon = 'robot_parts.dmi'
+	icon = 'icons/obj/robot_parts.dmi'
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -91,7 +91,7 @@
 	if(src.l_arm && src.r_arm)
 		if(src.l_leg && src.r_leg)
 			if(src.chest && src.head)
-				//feedback_inc("cyborg_frames_built",1)
+				feedback_inc("cyborg_frames_built",1)
 				return 1
 	return 0
 
@@ -165,7 +165,18 @@
 			if(!M.brainmob)
 				user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
 				return
-			if(M.brainmob.stat == 2)
+			if(!M.brainmob.key)
+				var/ghost_can_reenter = 0
+				if(M.brainmob.mind)
+					for(var/mob/dead/observer/G in player_list)
+						if(G.can_reenter_corpse && G.mind == M.brainmob.mind)
+							ghost_can_reenter = 1
+							break
+				if(!ghost_can_reenter)
+					user << "<span class='notice'>The mmi indicates that their mind is completely unresponsive; there's no point.</span>"
+					return
+
+			if(M.brainmob.stat == DEAD)
 				user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 				return
 
@@ -186,25 +197,10 @@
 			O.name = created_name
 			O.real_name = created_name
 
-			if (M.brainmob && M.brainmob.mind)
-				M.brainmob.mind.transfer_to(O)
-			else
-				for(var/mob/dead/observer/G in world)
-					if(G.corpse == M.brainmob && G.client && G.corpse.mind)
-						G.corpse.mind.transfer_to(O)
-						del(G)
-						break
-
-			if(O.mind in ticker.mode:revolutionaries)
-				ticker.mode:remove_revolutionary(O.mind , 1)
+			M.brainmob.mind.transfer_to(O)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
-
-			O << "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>"
-			O << "<B>You must follow the laws that the AI has. You are the AI's assistant to the station basically.</B>"
-			O << "To use something, simply click it."
-			O << {"Use say ":b to speak to fellow cyborgs and the AI through binary."}
 
 			O.job = "Cyborg"
 
@@ -213,7 +209,7 @@
 			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			O.mmi = W
 
-			//feedback_inc("cyborg_birth",1)
+			feedback_inc("cyborg_birth",1)
 
 			del(src)
 		else
@@ -228,7 +224,6 @@
 			return
 
 		src.created_name = t
-	user.update_clothing()
 
 	return
 

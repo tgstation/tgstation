@@ -1,9 +1,8 @@
 /obj/item/bodybag
 	name = "body bag"
 	desc = "A folded bag designed to contain dead things."
-	icon = 'bodybag.dmi'
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
-	w_class = 1.0
 
 	attack_self(mob/user)
 		var/obj/structure/closet/body_bag/R = new /obj/structure/closet/body_bag(user.loc)
@@ -34,7 +33,7 @@
 /obj/structure/closet/body_bag
 	name = "body bag"
 	desc = "A bag designed to contain dead things."
-	icon = 'bodybag.dmi'
+	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_closed"
 	icon_closed = "bodybag_closed"
 	icon_opened = "bodybag_open"
@@ -44,11 +43,11 @@
 	attackby(W as obj, mob/user as mob)
 		if (istype(W, /obj/item/weapon/pen))
 			var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
-			if (user.equipped() != W)
+			if (user.get_active_hand() != W)
 				return
 			if (!in_range(src, user) && src.loc != user)
 				return
-			t = copytext(sanitize(t),1,MAX_NAME_LEN)
+			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if (t)
 				src.name = "body bag - "
 				src.name += t
@@ -83,3 +82,8 @@
 				del(src)
 			return
 
+/obj/structure/closet/bodybag/update_icon()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened

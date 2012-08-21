@@ -1,24 +1,19 @@
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
-	icon = 'closet.dmi'
+	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
 	density = 1
+	flags = FPRINT
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
 	var/wall_mounted = 0 //never solid (You can always pass over it)
-	flags = FPRINT
 	var/health = 100
 	var/lastbang
-	var/lasttry = 0
-	layer = 2.98
-	var/quantity_max = 15
-
-/obj/structure/closet/detective
-	name = "detective's closet"
-	desc = "Holds the detective's clothes while his coat rack is being repaired."
+	var/storage_capacity = 20 //This is so that someone can't pack hundreds of items in a locker/crate
+							  //then open it in a populated area to crash clients.
 
 /obj/structure/closet/acloset
 	name = "strange closet"
@@ -34,10 +29,17 @@
 	icon_closed = "cabinet_closed"
 	icon_opened = "cabinet_open"
 
+/obj/structure/closet/cabinet/update_icon()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened
+
+
 /obj/effect/spresent
 	name = "strange present"
 	desc = "It's a ... present?"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "strangepresent"
 	density = 1
 	anchored = 0
@@ -64,6 +66,12 @@
 	icon_closed = "firecloset"
 	icon_opened = "fireclosetopen"
 
+/obj/structure/closet/firecloset/update_icon()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened
+
 /obj/structure/closet/hydrant //wall mounted fire closet
 	name = "fire-safety closet"
 	desc = "It's a storage unit for fire-fighting supplies."
@@ -84,6 +92,12 @@
 	density = 0
 	wall_mounted = 1
 
+/obj/structure/closet/medical_wall/update_icon()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened
+
 /obj/structure/closet/toolcloset
 	name = "tool closet"
 	desc = "It's a storage unit for tools."
@@ -101,12 +115,6 @@
 /obj/structure/closet/jcloset
 	name = "custodial closet"
 	desc = "It's a storage unit for janitorial clothes and gear."
-	icon_state = "mixed"
-	icon_closed = "mixed"
-
-/obj/structure/closet/jcloset2
-	name = "cleaner's closet"
-	desc = "It's a storage unit for various cleaning items."
 	icon_state = "mixed"
 	icon_closed = "mixed"
 
@@ -148,6 +156,12 @@
 	icon_state = "coffin"
 	icon_closed = "coffin"
 	icon_opened = "coffin_open"
+
+/obj/structure/closet/coffin/update_icon()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened
 
 /obj/structure/closet/bombcloset
 	name = "\improper EOD closet"
@@ -259,7 +273,7 @@
 
 /obj/structure/closet/wardrobe
 	name = "wardrobe"
-	desc = "It's a storage unit for standard-issue NanoTrasen attire."
+	desc = "It's a storage unit for standard-issue Nanotrasen attire."
 	icon_state = "blue"
 	icon_closed = "blue"
 
@@ -270,7 +284,7 @@
 
 /obj/structure/closet/wardrobe/chaplain_black
 	name = "chapel wardrobe"
-	desc = "It's a storage unit for NanoTrasen-approved religious attire."
+	desc = "It's a storage unit for Nanotrasen-approved religious attire."
 	icon_state = "black"
 	icon_closed = "black"
 
@@ -286,7 +300,7 @@
 
 /obj/structure/closet/wardrobe/orange
 	name = "prison wardrobe"
-	desc = "It's a storage unit for NanoTrasen-regulation prisoner attire."
+	desc = "It's a storage unit for Nanotrasen-regulation prisoner attire."
 	icon_state = "orange"
 	icon_closed = "orange"
 
@@ -300,23 +314,13 @@
 	icon_state = "red"
 	icon_closed = "red"
 
-/obj/structure/closet/wardrobe/warden
-	name = "Warden's wardrobe"
-	icon_state = "red"
-	icon_closed = "red"
-
-/obj/structure/closet/wardrobe/hos
-	name = "Head of Security's wardrobe"
-	icon_state = "red"
-	icon_closed = "red"
-
-/obj/structure/closet/wardrobe/hop
-	name = "Head of Personnel's wardrobe"
-	icon_state = "blue"
-	icon_closed = "blue"
-
 /obj/structure/closet/wardrobe/white
 	name = "white wardrobe"
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/pjs
+	name = "Pajama wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
 
@@ -330,11 +334,6 @@
 	icon_state = "black"
 	icon_closed = "black"
 
-/obj/structure/closet/wardrobe/medic_white
-	name = "doctor's wardrobe"
-	icon_state = "white"
-	icon_closed = "white"
-
 /obj/structure/closet/wardrobe/chemistry_white
 	name = "chemistry wardrobe"
 	icon_state = "white"
@@ -342,26 +341,6 @@
 
 /obj/structure/closet/wardrobe/genetics_white
 	name = "genetics wardrobe"
-	icon_state = "white"
-	icon_closed = "white"
-
-/obj/structure/closet/wardrobe/nurse
-	name = "nurse's wardrobe"
-	icon_state = "white"
-	icon_closed = "white"
-
-/obj/structure/closet/wardrobe/cmo
-	name = "Chief Medical Officer's wardrobe"
-	icon_state = "white"
-	icon_closed = "white"
-
-/obj/structure/closet/wardrobe/rd
-	name = "Research Director's wardrobe"
-	icon_state = "white"
-	icon_closed = "white"
-
-/obj/structure/closet/wardrobe/scientist
-	name = "scientist's wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
 
@@ -380,11 +359,6 @@
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
-/obj/structure/closet/wardrobe/robotics_yellow
-	name = "robotics wardrobe"
-	icon_state = "yellow"
-	icon_closed = "yellow"
-
 /obj/structure/closet/wardrobe/atmospherics_yellow
 	name = "atmospherics wardrobe"
 	icon_state = "yellow"
@@ -395,42 +369,10 @@
 	icon_state = "grey"
 	icon_closed = "grey"
 
-/obj/structure/closet/wardrobe/bartender_black
-	name = "Bartender's wardrobe"
-	icon_state = "black"
-	icon_closed = "black"
-
-/obj/structure/closet/wardrobe/chef_white
-	name = "Chef's wardrobe"
-	icon_state = "white"
-	icon_closed = "white"
-
-/obj/structure/closet/wardrobe/hydro_green
-	name = "Hydroponics wardrobe"
-	icon_state = "green"
-	icon_closed = "green"
-
-/obj/structure/closet/wardrobe/librarian_red
-	name = "Librarian's wardrobe"
-	icon_state = "red"
-	icon_closed = "red"
-
-/obj/structure/closet/wardrobe/cargo_yellow
-	name = "Cargo Tech's wardrobe"
-	icon_state = "yellow"
-	icon_closed = "yellow"
-
-/obj/structure/closet/wardrobe/qm_yellow
-	name = "Quartermaster's wardrobe"
-	icon_state = "yellow"
-	icon_closed = "yellow"
-
-
-
 /obj/structure/closet/secure_closet
 	name = "secure locker"
 	desc = "It's an immobile card-locked storage unit."
-	icon = 'closet.dmi'
+	icon = 'icons/obj/closet.dmi'
 	icon_state = "secure1"
 	density = 1
 	opened = 0
@@ -457,14 +399,23 @@
 	anchored = 1
 	density = 0
 	wall_mounted = 1
-	req_access = list(ACCESS_MEDICAL)
+	req_access = list(access_medical)
+
+/obj/structure/closet/secure_closet/medical_wall/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
 
 /obj/structure/closet/secure_closet/personal
-	desc = "It's a secure locker for personnel. The first card swiped gains control."
+	desc = "It's a secure locker for personell. The first card swiped gains control."
 	name = "personal closet"
-
-/obj/structure/closet/secure_closet/personal/patient
-	name = "patient's closet"
 
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinetdetective_locked"
@@ -474,47 +425,24 @@
 	icon_broken = "cabinetdetective_broken"
 	icon_off = "cabinetdetective_broken"
 
-/obj/structure/closet/secure_closet/kitchen
-	name = "kitchen cabinet"
-	req_access = list(ACCESS_KITCHEN)
-
-/obj/structure/closet/secure_closet/kitchen/mining
-	req_access = list()
-
-/obj/structure/closet/secure_closet/meat
-	name = "meat fridge"
-	icon_state = "fridge1"
-	icon_closed = "fridge"
-	icon_locked = "fridge1"
-	icon_opened = "fridgeopen"
-	icon_broken = "fridgebroken"
-	icon_off = "fridge1"
-
-/obj/structure/closet/secure_closet/fridge
-	name = "refrigerator"
-	icon_state = "fridge1"
-	icon_closed = "fridge"
-	icon_locked = "fridge1"
-	icon_opened = "fridgeopen"
-	icon_broken = "fridgebroken"
-	icon_off = "fridge1"
-
-/obj/structure/closet/secure_closet/money_freezer
-	name = "freezer"
-	icon_state = "fridge1"
-	icon_closed = "fridge"
-	icon_locked = "fridge1"
-	icon_opened = "fridgeopen"
-	icon_broken = "fridgebroken"
-	icon_off = "fridge1"
-	req_access = list(ACCESS_HEADS_VAULT)
+/obj/structure/closet/secure_closet/personal/cabinet/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
 
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
 
 /obj/structure/closet/secure_closet/wall
 	name = "wall locker"
-	req_access = list(ACCESS_SECURITY)
+	req_access = list(access_security)
 	icon_state = "wall-locker1"
 	density = 1
 	icon_closed = "wall-locker"
@@ -525,3 +453,22 @@
 
 	//too small to put a man in
 	large = 0
+
+/obj/structure/closet/secure_closet/wall/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
+
+/obj/structure/closet/crate/critter
+	name = "critter crate"
+	desc = "A crate which can sustain life for a while."
+	icon_state = "critter"
+	icon_opened = "critteropen"
+	icon_closed = "critter"

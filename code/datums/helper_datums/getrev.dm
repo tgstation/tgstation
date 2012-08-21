@@ -14,6 +14,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 	var/revhref
 
 	proc/abort()
+		world.log << "Unable to get revision info."
 		spawn()
 			del src
 
@@ -24,7 +25,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 
 		var/text = file2text(file(filename))
 		if(!text)
-			diary << "Unable to get [filename] contents, aborting"
+			world.log << "Unable to get [filename] contents, aborting"
 			return abort()
 
 		var/list/CL = tg_text2list(text, "\n")
@@ -58,6 +59,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 				return abort()
 			revision = filelist[4]
 			commiter = filelist[12]
+			world.log << "Running TG Revision Number: [revision]."
 			diary << "Revision info loaded succesfully"
 			return
 		return abort()
@@ -84,11 +86,10 @@ client/verb/showrevinfo()
 	set category = "OOC"
 	set name = "Show Server Revision"
 	var/output =  "Sorry, the revision info is unavailable."
-	output = file2text("/home/bay12/live/data/gitcommit")
-	output += "Current Infomational Settings: <br>"
-	output += "Tensioner Status: [config.Tensioner_Active]<br>"
-	//output += "Current Tension: [tension_master.score]<br>"
-	//output += "Tensioner Debug Data:  R1:[tension_master.round1] R2:[tension_master.round2] R3:[tension_master.round3] R4:[tension_master.round4] ES: [tension_master.eversupressed] CD: [tension_master.cooldown]<br>"
-	output += "Protect Authority Roles From Tratior: [config.protect_roles_from_antagonist]<br>"
+	if(revdata)
+		output = revdata.showInfo()
+
+		output += "Current Infomational Settings: <br>"
+		output += "Protect Authority Roles From Tratior: [config.protect_roles_from_antagonist]<br>"
 	usr << browse(output,"window=revdata");
 	return

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/weapon/tank/jetpack
 	name = "Jetpack (Empty)"
@@ -11,6 +11,7 @@
 	var/on = 0.0
 	var/stabilization_on = 0
 	var/volume_rate = 500              //Needed for borg jetpack transfer
+	icon_action_button = "action_jetpack"
 
 	New()
 		..()
@@ -24,7 +25,7 @@
 		..()
 		if(air_contents.oxygen < 10)
 			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'alert.ogg', 50, 1)
+			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 		return
 
 
@@ -42,11 +43,11 @@
 		on = !on
 		if(on)
 			icon_state = "[icon_state]-on"
-			item_state = "[item_state]-on"
+//			item_state = "[item_state]-on"
 			ion_trail.start()
 		else
 			icon_state = initial(icon_state)
-			item_state = initial(item_state)
+//			item_state = initial(item_state)
 			ion_trail.stop()
 		return
 
@@ -54,7 +55,7 @@
 	proc/allow_thrust(num, mob/living/user as mob)
 		if(!(src.on))
 			return 0
-		if((num < 0.005 || src.air_contents.total_moles < num))
+		if((num < 0.005 || src.air_contents.total_moles() < num))
 			src.ion_trail.stop()
 			return 0
 
@@ -67,6 +68,9 @@
 		del(G)
 		return
 
+	ui_action_click()
+		toggle()
+
 
 /obj/item/weapon/tank/jetpack/void
 	name = "Void Jetpack (Oxygen)"
@@ -76,7 +80,7 @@
 
 	New()
 		..()
-		air_contents.adjust((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
 /obj/item/weapon/tank/jetpack/oxygen
@@ -87,12 +91,13 @@
 
 	New()
 		..()
-		air_contents.adjust((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "Jetpack (Carbon Dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
+	distribute_pressure = 0
 	icon_state = "jetpack-black"
 	item_state =  "jetpack-black"
 
@@ -100,7 +105,7 @@
 		..()
 		src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
 		src.ion_trail.set_up(src)
-		air_contents.adjust(0,(6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		src.air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
 	examine()
@@ -108,5 +113,5 @@
 		..()
 		if(air_contents.carbon_dioxide < 10)
 			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'alert.ogg', 50, 1)
+			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 		return

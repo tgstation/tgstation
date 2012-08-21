@@ -372,23 +372,23 @@ mob
 
 				var/datum/pipe_network/master = P.return_network()
 				if(master)
-					P.overlays += icon('atmos_testing.dmi',"marker[master.marker]")
+					P.overlays += icon('icons/Testing/atmos_testing.dmi',"marker[master.marker]")
 				else
 					world << "error"
-					P.overlays += icon('atmos_testing.dmi',"marker0")
+					P.overlays += icon('icons/Testing/atmos_testing.dmi',"marker0")
 
 			for(var/obj/machinery/atmospherics/valve/V in world)
 				V.overlays = null
 
 				if(V.network_node1)
-					V.overlays += icon('atmos_testing.dmi',"marker[V.network_node1.marker]")
+					V.overlays += icon('icons/Testing/atmos_testing.dmi',"marker[V.network_node1.marker]")
 				else
-					V.overlays += icon('atmos_testing.dmi',"marker0")
+					V.overlays += icon('icons/Testing/atmos_testing.dmi',"marker0")
 
 				if(V.network_node2)
-					V.overlays += icon('atmos_testing.dmi',"marker[V.network_node2.marker]")
+					V.overlays += icon('icons/Testing/atmos_testing.dmi',"marker[V.network_node2.marker]")
 				else
-					V.overlays += icon('atmos_testing.dmi',"marker0")
+					V.overlays += icon('icons/Testing/atmos_testing.dmi',"marker0")
 
 turf/simulated
 	var/fire_verbose = 0
@@ -399,9 +399,9 @@ turf/simulated
 			overlays = null
 			for(var/direction in list(NORTH,SOUTH,EAST,WEST))
 				if(group_border&direction)
-					overlays += icon('turf_analysis.dmi',"red_arrow",direction)
+					overlays += icon('icons/Testing/turf_analysis.dmi',"red_arrow",direction)
 				else if(air_check_directions&direction)
-					overlays += icon('turf_analysis.dmi',"arrow",direction)
+					overlays += icon('icons/Testing/turf_analysis.dmi',"arrow",direction)
 		air_status()
 			set src in world
 			set category = "Minor"
@@ -442,12 +442,11 @@ turf/simulated
 				trace_gas.moles = amount
 				adding.trace_gases += trace_gas
 				adding.temperature = T20C
-				adding.update_values()
 
 				assume_air(adding)
 
 obj/indicator
-	icon = 'air_meter.dmi'
+	icon = 'icons/Testing/air_meter.dmi'
 	var/measure = "temperature"
 	anchored = 1
 
@@ -476,7 +475,7 @@ obj/indicator
 					return "error"
 				return "[round(GM.nitrogen/MOLES_CELLSTANDARD*10+0.5)]"
 			else
-				return "[round((GM.total_moles)/MOLES_CELLSTANDARD*10+0.5)]"
+				return "[round((GM.total_moles())/MOLES_CELLSTANDARD*10+0.5)]"
 
 
 	Click()
@@ -520,7 +519,7 @@ mob
 			for(var/obj/effect/hotspot/flame in world)
 				usr << "[flame.x],[flame.y]: [flame.temperature]K, [flame.volume] L - [flame.loc:air:temperature]"
 
-/*		process_cycle()
+		process_cycle()
 			set category = "Debug"
 			if(!master_controller)
 				usr << "Cannot find master_controller"
@@ -563,7 +562,7 @@ mob
 				group.marker = 0
 
 			for(var/turf/simulated/floor/S in world)
-				S.icon = 'turf_analysis.dmi'
+				S.icon = 'icons/Testing/turf_analysis.dmi'
 				if(S.parent)
 					if(S.parent.group_processing)
 						if (S.parent.check_delay < 2)
@@ -596,7 +595,7 @@ mob
 					if(S.processing)
 						S.icon_state = "individual_on"
 					else
-						S.icon_state = "individual_off"*/
+						S.icon_state = "individual_off"
 
 
 		mark_groups()
@@ -609,7 +608,7 @@ mob
 				group.marker = 0
 
 			for(var/turf/simulated/floor/S in world)
-				S.icon = 'turf_analysis.dmi'
+				S.icon = 'icons/Testing/turf_analysis.dmi'
 				if(S.parent)
 					if(S.parent.group_processing)
 						if(S.parent.marker == 0)

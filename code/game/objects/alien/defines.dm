@@ -1,16 +1,8 @@
 /obj/effect/alien
 	name = "alien thing"
 	desc = "theres something alien about this"
-	icon = 'alien.dmi'
+	icon = 'icons/mob/alien.dmi'
 //	unacidable = 1 //Aliens won't ment their own.
-
-/obj/effect/alien/head
-	name = "severed head"
-	desc = "a severed head..."
-	icon_state = "weeds"
-
-	density = 0
-	anchored = 0
 
 /obj/effect/alien/resin
 	name = "resin"
@@ -48,8 +40,6 @@
 		icon_state = "weednode"
 		name = "purple sac"
 		desc = "Weird purple octopus-like thing."
-
-		density = 1
 
 /obj/effect/alien/acid
 	name = "acid"

@@ -1,8 +1,7 @@
 /obj/machinery/door/poddoor/shutters
 	name = "Shutters"
-	icon = 'rapid_pdoor.dmi'
+	icon = 'icons/obj/doors/rapid_pdoor.dmi'
 	icon_state = "shutter1"
-	desc = "Steel-reinforced privacy."
 
 /obj/machinery/door/poddoor/shutters/New()
 	..()
@@ -19,7 +18,7 @@
 			src.icon_state = "shutter0"
 			sleep(15)
 			src.density = 0
-			src.ul_SetOpacity(0)
+			src.sd_SetOpacity(0)
 			src.operating = 0
 			return
 	return
@@ -35,7 +34,7 @@
 	src.icon_state = "shutter0"
 	sleep(10)
 	src.density = 0
-	src.ul_SetOpacity(0)
+	src.sd_SetOpacity(0)
 	update_nearby_tiles()
 
 	if(operating == 1) //emag again
@@ -53,7 +52,7 @@
 	src.icon_state = "shutter1"
 	src.density = 1
 	if (src.visible)
-		src.ul_SetOpacity(1)
+		src.sd_SetOpacity(1)
 	update_nearby_tiles()
 
 	sleep(10)

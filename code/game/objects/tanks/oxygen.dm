@@ -8,7 +8,7 @@
 
 	New()
 		..()
-		air_contents.adjust((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
 
@@ -17,7 +17,7 @@
 		..()
 		if(air_contents.oxygen < 10)
 			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'alert.ogg', 50, 1)
+			playsound(usr, 'sound/effects/alert.ogg', 50, 1)
 
 
 /obj/item/weapon/tank/oxygen/yellow

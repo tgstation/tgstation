@@ -21,8 +21,6 @@
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
 
 
-					log_admin("ATTACK: [src] ([src.ckey]) stungloved [M] ([M.ckey]).")
-					message_admins("ATTACK: [src] ([src.ckey]) stungloved [M] ([M.ckey]).")
 					log_attack("<font color='red'>[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])</font>")
 
 
@@ -38,7 +36,7 @@
 
 			var/damage = rand(0, 9)
 			if(!damage)
-				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("\red <B>[M] has attempted to punch [src]!</B>")
 				return 0
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
@@ -55,17 +53,17 @@
 			if(damage >= 9)
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(4, WEAKEN, armor_block)
-			UpdateDamageIcon()
 
 			return
 
 
 	switch(M.a_intent)
 		if("help")
-			if(health > config.health_threshold_crit)
+			if(health > 0)
 				help_shake_act(M)
 				return 1
-//			if(M.health < -75)	return 0
+			if(M.health < -75)	return 0
+
 			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
 				M << "\blue <B>Remove your mask!</B>"
 				return 0
@@ -89,17 +87,15 @@
 			if(w_uniform)	w_uniform.add_fingerprint(M)
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M)
 			G.assailant = M
-			if (M.hand)
-				M.l_hand = G
-			else
-				M.r_hand = G
-			G.layer = 20
 			G.affecting = src
+
+			M.put_in_active_hand(G)
+
 			grabbed_by += G
 			G.synch()
 			LAssailant = M
 
-			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			visible_message("\red [M] has grabbed [src] passively!")
 			return 1
 
@@ -107,18 +103,16 @@
 
 			if(ELECTRICHANDS in M.augmentations)
 				var/gendertxt = "their"
-				if(M.gender == "male")
+				if(M.gender == MALE)
 					gendertxt = "his"
-				if(M.gender == "female")
+				if(M.gender == FEMALE)
 					gendertxt = "her"
 
 				visible_message("\red <B>[M] has shocked [src] with [gendertxt] bare hands!</B>")
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Used Electric Hands nanoaug power on [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been shocked by [M.name] with the Electric Hands nanoaug ([M.ckey])</font>")
 
-				log_admin("ATTACK: [M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them .")
-				message_admins("ATTACK: [M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them .")
-				log_attack("<font color='red'>[M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them </font>")
+				log_attack("<font color='red'>[M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name], shocking them ([src.ckey])</font>")
 
 
 				var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
@@ -126,37 +120,30 @@
 
 				return
 
-			if(M.type != /mob/living/carbon/human/tajaran)
-				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
-				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
-				log_admin("ATTACK: [M] ([M.ckey]) punched [src] ([src.ckey]).")
-				message_admins("ATTACK: [M] ([M.ckey]) punched [src] ([src.ckey]).")
-				log_attack("<font color='red'>[M.name] ([M.ckey]) punched [src.name] ([src.ckey])</font>")
-			else if(M.type == /mob/living/carbon/human/tajaran)
-				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Slashed [src.name] ([src.ckey])</font>")
-				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been slashed by [M.name] ([M.ckey])</font>")
-				log_admin("ATTACK: [M] ([M.ckey]) slashed [src] ([src.ckey]).")
-				message_admins("ATTACK: [M] ([M.ckey]) slashed [src] ([src.ckey]).")
-				log_attack("<font color='red'>[M.name] ([M.ckey]) slashed [src.name] ([src.ckey])</font>")
+			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
+			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
+
+			log_attack("<font color='red'>[M.name] ([M.ckey]) punched [src.name] ([src.ckey])</font>")
+
 
 			var/attack_verb
-			switch(M.mutantrace)
-				if("lizard")
-					attack_verb = "scratch"
-				if("plant")
-					attack_verb = "whip"
-				else
-					attack_verb = "punch"
+			if(M.dna)
+				switch(M.dna.mutantrace)
+					if("lizard")
+						attack_verb = "scratch"
+					if("plant")
+						attack_verb = "slash"
+					else
+						attack_verb = "punch"
 
-			if(istajaran(M))
-				attack_verb = "slash"
 
-			var/damage = rand(0, 5)
+			var/damage = rand(0, 9)
 			if(!damage)
-				if(attack_verb == "scratch" || attack_verb == "slash")
-					playsound(loc, 'slashmiss.ogg', 25, 1, -1)
-				else
-					playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				switch(attack_verb)
+					if("slash")
+						playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+					else
+						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 				visible_message("\red <B>[M] has attempted to [attack_verb] [src]!</B>")
 				return 0
@@ -167,25 +154,25 @@
 
 			if(HULK in M.mutations)			damage += 5
 			if(SUPRSTR in M.augmentations) 	damage += 5
-			if(attack_verb == "scratch" || attack_verb == "slash")
-				damage += 7
-				playsound(loc, 'slice.ogg', 25, 1, -1)
-			else
-				playsound(loc, "punch", 25, 1, -1)
+
+			switch(attack_verb)
+				if("slash")
+					playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+				else
+					playsound(loc, "punch", 25, 1, -1)
 
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if(damage >= 5 && prob(50))
+			if(damage >= 9)
 				visible_message("\red <B>[M] has weakened [src]!</B>")
-				apply_effect(2, WEAKEN, armor_block)
-			UpdateDamageIcon()
+				apply_effect(4, WEAKEN, armor_block)
 
 		if("disarm")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 
-			log_admin("ATTACK: [src] ([src.ckey]) disarmed [M] ([M.ckey]).")
+
 			log_attack("<font color='red'>[M.name] ([M.ckey]) disarmed [src.name] ([src.ckey])</font>")
 
 
@@ -194,8 +181,8 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/randn = rand(1, 100)
 			if (randn <= 25)
-				apply_effect(5, WEAKEN, run_armor_check(affecting, "melee"))
-				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+				apply_effect(2, WEAKEN, run_armor_check(affecting, "melee"))
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has pushed [src]!</B>")
 				return
 
@@ -206,7 +193,7 @@
 				if(pulling)
 					visible_message("\red <b>[M] has broken [src]'s grip on [pulling]!</B>")
 					talked = 1
-					pulling = null
+					stop_pulling()
 
 				//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
 				if(istype(l_hand, /obj/item/weapon/grab))
@@ -228,11 +215,11 @@
 				if(!talked)	//BubbleWrap
 					drop_item()
 					visible_message("\red <B>[M] has disarmed [src]!</B>")
-				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				return
 
 
-			playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] attempted to disarm [src]!</B>")
 	return
 

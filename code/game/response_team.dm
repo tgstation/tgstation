@@ -96,10 +96,15 @@ proc/trigger_armed_response_team(var/force = 0)
 
 /client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
 
+	usr << "\red ERT has been temporarily disabled. Talk to a coder."
+	return
+
 	var/mob/living/carbon/human/M = new(null)
 	response_team_members |= M
 
-	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
+	//todo: god damn this.
+	//make it a panel, like in character creation
+	/*var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
 		M.r_facial = hex2num(copytext(new_facial, 2, 4))
 		M.g_facial = hex2num(copytext(new_facial, 4, 6))
@@ -176,7 +181,7 @@ proc/trigger_armed_response_team(var/force = 0)
 		else
 			M.gender = FEMALE
 	M.rebuild_appearance()
-	M.update_body()
+	M.update_body()*/
 
 	M.real_name = commando_name
 	M.name = commando_name
@@ -200,7 +205,7 @@ proc/trigger_armed_response_team(var/force = 0)
 /mob/living/carbon/human/proc/equip_strike_team(leader_selected = 0)
 
 	//Special radio setup
-	equip_if_possible(new /obj/item/device/radio/headset/ert(src), slot_ears)
+	equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(src), slot_ears)
 
 	//Adding Camera Network
 	var/obj/machinery/camera/camera = new /obj/machinery/camera(src) //Gives all the commandos internals cameras.
@@ -208,27 +213,27 @@ proc/trigger_armed_response_team(var/force = 0)
 	camera.c_tag = real_name
 
 	//Basic Uniform
-	equip_if_possible(new /obj/item/clothing/under/syndicate/tacticool(src), slot_w_uniform)
-	equip_if_possible(new /obj/item/device/flashlight(src), slot_l_store)
-	equip_if_possible(new /obj/item/weapon/clipboard(src), slot_r_store)
-	equip_if_possible(new /obj/item/weapon/gun/energy/gun(src), slot_belt)
-	equip_if_possible(new /obj/item/clothing/mask/gas/swat(src), slot_wear_mask)
+	equip_to_slot_or_del(new /obj/item/clothing/under/syndicate/tacticool(src), slot_w_uniform)
+	equip_to_slot_or_del(new /obj/item/device/flashlight(src), slot_l_store)
+	equip_to_slot_or_del(new /obj/item/weapon/clipboard(src), slot_r_store)
+	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(src), slot_belt)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/swat(src), slot_wear_mask)
 
 	//Glasses
-	equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(src), slot_glasses)
+	equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(src), slot_glasses)
 
 	//Shoes & gloves
-	equip_if_possible(new /obj/item/clothing/shoes/swat(src), slot_shoes)
-	equip_if_possible(new /obj/item/clothing/gloves/swat(src), slot_gloves)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), slot_gloves)
 
 	//Removed
-//	equip_if_possible(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
-//	equip_if_possible(new /obj/item/clothing/head/helmet/space/deathsquad(src), slot_head)
+//	equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
+//	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad(src), slot_head)
 
 	//Backpack
-	equip_if_possible(new /obj/item/weapon/storage/backpack/security(src), slot_back)
-	equip_if_possible(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
-	equip_if_possible(new /obj/item/weapon/storage/firstaid/adv(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), slot_back)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
+	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/adv(src), slot_in_backpack)
 
 	var/obj/item/weapon/card/id/W = new(src)
 	W.name = "[real_name]'s ID Card (Emergency Response Team)"
@@ -236,13 +241,13 @@ proc/trigger_armed_response_team(var/force = 0)
 	if(leader_selected)
 		W.name = "[real_name]'s ID Card (Emergency Response Team Leader)"
 		W.access = get_access("Captain")
-		W.access += list(ACCESS_CENT_TELEPORTER)
+		W.access += list(access_cent_teleporter)
 		W.assignment = "Emergency Response Team Leader"
 	else
 		W.access = get_access("Head of Personnel")
 		W.assignment = "Emergency Response Team"
-	W.access += list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)//Let's add their alloted CentCom access.
+	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
 	W.registered_name = real_name
-	equip_if_possible(W, slot_wear_id)
+	equip_to_slot_or_del(W, slot_wear_id)
 
 	return 1

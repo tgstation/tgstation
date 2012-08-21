@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 
 /proc/isassembly(O)
@@ -35,7 +35,7 @@
 /obj/item/device/assembly
 	name = "assembly"
 	desc = "A small electronic device that should never exist."
-	icon = 'new_assemblies.dmi'
+	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = ""
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
@@ -91,7 +91,7 @@
 		cooldown--
 		if(cooldown <= 0)	return 0
 		spawn(10)
-		process_cooldown()
+			process_cooldown()
 		return 1
 
 
@@ -108,8 +108,6 @@
 			holder.process_activation(src, 1, 0)
 		if(holder && (wires & WIRE_PULSE_SPECIAL))
 			holder.process_activation(src, 0, 1)
-		if(master && (wires & WIRE_PULSE))
-			master.receive_signal("activate")
 //		if(radio && (wires & WIRE_RADIO_PULSE))
 			//Not sure what goes here quite yet send signal?
 		return 1
@@ -207,6 +205,7 @@ Desc:	If true is an object that can be attached to an assembly holder but is a s
 
 	proc
 		Activate()//Called when this assembly is pulsed by another one
+		Process_cooldown()//Call this via spawn(10) to have it count down the cooldown var
 		Attach_Holder(var/obj/H, var/mob/user)//Called when an assembly holder attempts to attach, sets src's loc in here
 
 

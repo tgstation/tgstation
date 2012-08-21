@@ -1,6 +1,6 @@
 /obj/item/weapon/grab
 	name = "grab"
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	var/obj/screen/grab/hud1 = null
 	var/mob/affecting = null
@@ -17,15 +17,21 @@
 
 
 /obj/item/weapon/grab/proc/throw()
+
 	if(affecting)
-		var/grabee = affecting
-		spawn(0)
-			del(src)
-		return grabee
+		if(state >= 2)
+			var/grabee = affecting
+			spawn(1)
+				del(src)
+			return grabee
+		else
+			spawn(1)
+				del(src)
+			return null
 
 	else if(structure)
 		var/grabee = structure
-		spawn(0)
+		spawn(1)
 			del(src)
 		return grabee
 
@@ -62,7 +68,7 @@
 		assailant.client.screen -= hud1
 		assailant.client.screen += hud1
 	if (assailant.pulling == affecting || assailant.pulling == structure)
-		assailant.pulling = null
+		assailant.stop_pulling()
 
 	if (structure)
 		structure.loc = assailant.loc
@@ -99,13 +105,7 @@
 	if ((killing && state == 3))
 		affecting.Stun(5)
 		affecting.Paralyse(3)
-		if(ishuman(affecting))
-			var/mob/living/carbon/human/H = affecting
-			affecting.being_strangled = 1
-			var/datum/organ/external/head = H.organs["head"]
-			head.add_wound("Strangulation", 0)
-		else
-			affecting.losebreath = min(affecting.losebreath + 2, 3)
+		affecting.losebreath = min(affecting.losebreath + 2, 3)
 	return
 
 
@@ -161,12 +161,12 @@
 					return
 			else
 				if (state < 3)
-/*					if(istype(affecting, /mob/living/carbon/human))
+					if(istype(affecting, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = affecting
 						if(FAT in H.mutations)
 							assailant << "\blue You can't strangle [affecting] through all that fat!"
 							return
-*/
+
 						/*Hrm might want to add this back in
 						//we should be able to strangle the Captain if he is wearing a hat
 						for(var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
@@ -203,8 +203,6 @@
 								O.show_message(text("\red [] has tightened his grip on []'s neck!", assailant, affecting), 1)
 							affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>")
 							assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
-							log_admin("ATTACK: [assailant] ([assailant.ckey]) strangled [affecting] ([affecting.ckey]).")
-							message_admins("ATTACK: [assailant] ([assailant.ckey]) strangled [affecting] ([affecting.ckey]).")
 							log_attack("<font color='red'>[assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
 
 							assailant.next_move = world.time + 10

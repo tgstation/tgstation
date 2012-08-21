@@ -5,7 +5,7 @@
 /obj/structure/target_stake
 	name = "target stake"
 	desc = "A thin platform with negatively-magnetized wheels."
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_stake"
 	density = 1
 	flags = CONDUCT
@@ -34,9 +34,6 @@
 			W.layer = 3.1
 			pinned_target = W
 			user << "You slide the target into the stake."
-
-		user.drop_item(src)
-		W.loc = loc
 		return
 
 	attack_hand(mob/user as mob)
@@ -49,10 +46,10 @@
 			pinned_target.loc = user.loc
 			if(ishuman(user))
 				if(!user.get_active_hand())
-					user.put_in_hand(pinned_target)
+					user.put_in_hands(pinned_target)
 					user << "You take the target out of the stake."
 			else
-				pinned_target.loc = get_turf(user)
+				pinned_target.loc = get_turf_loc(user)
 				user << "You take the target out of the stake."
 
 			pinned_target = null
@@ -63,7 +60,7 @@
 /obj/item/target
 	name = "shooting target"
 	desc = "A shooting target."
-	icon = 'objects.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_h"
 	density = 0
 	var/hp = 1800
@@ -119,10 +116,10 @@
 				loc = user.loc
 				if(ishuman(user))
 					if(!user.get_active_hand())
-						user.put_in_hand(src)
+						user.put_in_hands(src)
 						user << "You take the target out of the stake."
 				else
-					src.loc = get_turf(user)
+					src.loc = get_turf_loc(user)
 					user << "You take the target out of the stake."
 
 				stake.pinned_target = null
@@ -164,7 +161,7 @@
 		var/obj/bmark = new
 		bmark.pixel_x = p_x
 		bmark.pixel_y = p_y
-		bmark.icon = 'effects.dmi'
+		bmark.icon = 'icons/effects/effects.dmi'
 		bmark.layer = 3.5
 		bmark.icon_state = "scorch"
 

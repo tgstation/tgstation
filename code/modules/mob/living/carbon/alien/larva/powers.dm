@@ -1,47 +1,3 @@
-/mob/living/carbon/alien/larva/verb/ventcrawl() // -- TLE
-	set name = "Crawl through Vent"
-	set desc = "Enter an air vent and crawl through the pipe system."
-	set category = "Alien"
-
-//	if(!istype(V,/obj/machinery/atmoalter/siphs/fullairsiphon/air_vent))
-//		return
-	if(powerc())
-		var/obj/machinery/atmospherics/unary/vent_pump/vent_found
-		for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
-			if(!v.welded)
-				vent_found = v
-			else
-				src << "\red That vent is welded."
-		if(vent_found)
-			if(vent_found.network&&vent_found.network.normal_members.len)
-				var/list/vents = list()
-				for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in vent_found.network.normal_members)
-					if(temp_vent.loc == loc)
-						continue
-					vents.Add(temp_vent)
-				var/list/choices = list()
-				for(var/obj/machinery/atmospherics/unary/vent_pump/vent in vents)
-					if(vent.loc.z != loc.z)
-						continue
-					var/atom/a = get_turf(vent)
-					choices.Add(a.loc)
-				var/turf/startloc = loc
-				var/obj/selection = input("Select a destination.", "Duct System") in choices
-				var/selection_position = choices.Find(selection)
-				if(loc==startloc)
-					var/obj/target_vent = vents[selection_position]
-					if(target_vent)
-						for(var/mob/O in oviewers(src, null))
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
-						loc = target_vent.loc
-				else
-					src << "\green You need to remain still while entering a vent."
-			else
-				src << "\green This vent is not connected to anything."
-		else
-			src << "\green You must be standing on or beside an air vent to enter it."
-	return
 
 /mob/living/carbon/alien/larva/verb/hide()
 	set name = "Hide"
@@ -60,3 +16,32 @@
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O << text("[] slowly peaks up from the ground...", src)
+
+/mob/living/carbon/alien/larva/verb/evolve()
+	set name = "Evolve"
+	set desc = "Evolve into a fully grown Alien."
+	set category = "Alien"
+
+	if(amount_grown >= 200)	//TODO ~Carn
+		src << "\green You are growing into a beautiful alien! It is time to choose a caste."
+		src << "\green There are three to choose from:"
+		src << "\green <B>Hunters</B> are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves."
+		src << "\green <B>Sentinels</B> are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters."
+		src << "\green <B>Drones</B> are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen."
+		var/alien_caste = alert(src, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
+
+		var/mob/living/carbon/alien/humanoid/new_xeno
+		switch(alien_caste)
+			if("Hunter")
+				new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
+			if("Sentinel")
+				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
+			if("Drone")
+				new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
+		new_xeno.UI = UI
+		if(mind)	mind.transfer_to(new_xeno)
+		del(src)
+		return
+	else
+		src << "\red You are not fully grown."
+		return

@@ -1,9 +1,0 @@
-O Things that need to be resprited:
-	* Put stuff here
-
-O Things with sprites that are ready to be coded:
-	* Bins, secure bins, AK-331, M41 Rifle, eZ-13 Pulse Rifle, AI Display Trollface, 	  	  AI Display friend computer eye, thermal monocle, boxing bell (in objects), minimoog,
-	  head slime xeno
-
-O Things that are coded that need sprites:
-	* Put stuff here too

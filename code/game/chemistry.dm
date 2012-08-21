@@ -1,9 +1,9 @@
 #define REGULATE_RATE 5
 
-/obj/item/weapon/smokebomb
+/*/obj/item/weapon/smokebomb
 	desc = "It is set to detonate in 2 seconds."
 	name = "smoke bomb"
-	icon = 'grenade.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	var/state = null
 	var/det_time = 20.0
@@ -18,7 +18,7 @@
 /obj/item/weapon/mustardbomb
 	desc = "It is set to detonate in 4 seconds."
 	name = "mustard gas bomb"
-	icon = 'grenade.dmi'
+	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	var/state = null
 	var/det_time = 40.0
@@ -57,12 +57,12 @@
 	return
 
 /obj/item/weapon/smokebomb/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-	if (user.equipped() == src)
+	if (user.get_active_hand() == src)
 		if (!( src.state ))
 			user << "\red You prime the smoke bomb! [det_time/10] seconds!"
 			src.state = 1
 			src.icon_state = "flashbang1"
-			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
+			playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 			spawn( src.det_time )
 				prime()
 				return
@@ -82,7 +82,7 @@
 	return
 
 /obj/item/weapon/smokebomb/proc/prime()
-	playsound(src.loc, 'smoke.ogg', 50, 1, -3)
+	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 	spawn(0)
 		src.smoke.start()
 		sleep(10)
@@ -95,7 +95,7 @@
 	for(var/obj/effect/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
 		B.health -= damage
-		B.update()
+		B.update_icon()
 	sleep(80)
 	del(src)
 	return
@@ -126,12 +126,12 @@
 	return
 
 /obj/item/weapon/mustardbomb/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-	if (user.equipped() == src)
+	if (user.get_active_hand() == src)
 		if (!( src.state ))
 			user << "\red You prime the mustard gas bomb! [det_time/10] seconds!"
 			src.state = 1
 			src.icon_state = "flashbang1"
-			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
+			playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 			spawn( src.det_time )
 				prime()
 				return
@@ -151,7 +151,7 @@
 	return
 
 /obj/item/weapon/mustardbomb/proc/prime()
-	playsound(src.loc, 'smoke.ogg', 50, 1, -3)
+	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 	spawn(0)
 		src.mustard_gas.start()
 		sleep(10)
@@ -164,7 +164,7 @@
 	for(var/obj/effect/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
 		B.health -= damage
-		B.update()
+		B.update_icon()
 	sleep(100)
 	del(src)
 	return
@@ -179,7 +179,7 @@
 			prime()
 			return
 	return
-
+*/
 /obj/item/weapon/storage/beakerbox
 	name = "Beaker Box"
 	icon_state = "beaker"
@@ -197,7 +197,7 @@
 	new /obj/item/weapon/reagent_containers/glass/beaker( src )
 
 /obj/item/weapon/paper/alchemy/
-	name = "paper - 'Chemistry Information'"
+	name = "paper- 'Chemistry Information'"
 
 /obj/item/weapon/storage/trashcan
 	name = "disposal unit"
@@ -206,9 +206,9 @@
 	density = 1.0
 	var/processing = null
 	var/locked = 1
-	req_access = list(ACCESS_JANITOR)
+	req_access = list(access_janitor)
 	desc = "A compact incineration device, used to dispose of garbage."
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "trashcan"
 	item_state = "syringe_kit"
 
@@ -232,7 +232,7 @@
 		//Foreach goto(46)
 	t += W.w_class
 	if (t > 30)
-		user << "You cannot fit the item inside. (Remove larger classed items)"
+		user << "You cannot fit the item inside. (Remove the larger items first)"
 		return
 	user.u_equip(W)
 	W.loc = src

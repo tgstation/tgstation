@@ -24,23 +24,23 @@
 
 /obj/item/weapon/storage/flashbang_kit/New()
 
-	new /obj/item/weapon/flashbang(src)
-	new /obj/item/weapon/flashbang(src)
-	new /obj/item/weapon/flashbang(src)
-	new /obj/item/weapon/flashbang(src)
-	new /obj/item/weapon/flashbang(src)
-	new /obj/item/weapon/flashbang(src)
-	new /obj/item/weapon/flashbang(src)
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/weapon/grenade/flashbang(src)
 	..()
 	return
 
 /obj/item/weapon/storage/emp_kit/New()
 
-	new /obj/item/weapon/empgrenade(src)
-	new /obj/item/weapon/empgrenade(src)
-	new /obj/item/weapon/empgrenade(src)
-	new /obj/item/weapon/empgrenade(src)
-	new /obj/item/weapon/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
+	new /obj/item/weapon/grenade/empgrenade(src)
 	..()
 	return
 

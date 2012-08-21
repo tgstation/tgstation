@@ -14,31 +14,28 @@
 	var/list/storedinfo = new/list()
 	var/list/timestamp = new/list()
 	var/canprint = 1
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT
 	throwforce = 2
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/device/taperecorder/hear_talk(mob/M as mob, msg)
+/obj/item/device/taperecorder/hear_talk(mob/living/M as mob, msg)
 	if (recording)
 		var/ending = copytext(msg, length(msg))
 		src.timestamp+= src.timerecorded
-		if (issilicon(M))
-			src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] [M.name] states, \"[msg]\""
-			return
 		if (M.stuttering)
-			src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] [M.name] stammers, \"[msg]\""
+			src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] [M.name] stammers, \"[msg]\""
 			return
 		if (M.getBrainLoss() >= 60)
-			src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] [M.name] gibbers, \"[msg]\""
+			src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] [M.name] gibbers, \"[msg]\""
 			return
 		if (ending == "?")
-			src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] [M.name] asks, \"[msg]\""
+			src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] [M.name] asks, \"[msg]\""
 			return
 		else if (ending == "!")
-			src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] [M.name] exclaims, \"[msg]\""
+			src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] [M.name] exclaims, \"[msg]\""
 			return
-		src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] [M.name] says, \"[msg]\""
+		src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] [M.name] says, \"[msg]\""
 		return
 
 /obj/item/device/taperecorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -73,12 +70,12 @@
 		usr << "\red The tape recorder makes a scratchy noise."
 		return
 	src.icon_state = "taperecorderrecording"
-	if(src.timerecorded < 10800 && src.playing == 0)
+	if(src.timerecorded < 3600 && src.playing == 0)
 		usr << "\blue Recording started."
 		src.recording = 1
 		src.timestamp+= src.timerecorded
-		src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] Recording started."
-		for(src.timerecorded, src.timerecorded<10800)
+		src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] Recording started."
+		for(src.timerecorded, src.timerecorded<3600)
 			if(src.recording == 0)
 				break
 			src.timerecorded++
@@ -100,7 +97,7 @@
 	if (src.recording == 1)
 		src.recording = 0
 		src.timestamp+= src.timerecorded
-		src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] Recording stopped."
+		src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] Recording stopped."
 		usr << "\blue Recording stopped."
 		src.icon_state = "taperecorderidle"
 		return
@@ -153,7 +150,7 @@
 	src.playing = 1
 	src.icon_state = "taperecorderplaying"
 	usr << "\blue Playing started."
-	for(var/i=1,src.timerecorded<10800,sleep(10 * (src.playsleepseconds) ))
+	for(var/i=1,src.timerecorded<3600,sleep(10 * (src.playsleepseconds) ))
 		if (src.playing == 0)
 			break
 		if (src.storedinfo.len < i)
@@ -213,8 +210,7 @@
 	for(var/i=1,src.storedinfo.len >= i,i++)
 		t1 += "[src.storedinfo[i]]<BR>"
 	P.info = t1
-	P.name = "paper - 'Transcript'"
-	P.overlays += "paper_words"
+	P.name = "paper- 'Transcript'"
 	canprint = 0
 	sleep(300)
 	canprint = 1
@@ -229,12 +225,12 @@
 			usr << "\red The tape recorder makes a scratchy noise."
 			return
 		src.icon_state = "taperecorderrecording"
-		if(src.timerecorded < 10800 && src.playing == 0)
+		if(src.timerecorded < 3600 && src.playing == 0)
 			usr << "\blue Recording started."
 			src.recording = 1
 			src.timestamp+= src.timerecorded
-			src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] Recording started."
-			for(src.timerecorded, src.timerecorded<10800)
+			src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] Recording started."
+			for(src.timerecorded, src.timerecorded<3600)
 				if(src.recording == 0)
 					break
 				src.timerecorded++
@@ -251,7 +247,7 @@
 		if (src.recording == 1)
 			src.recording = 0
 			src.timestamp+= src.timerecorded
-			src.storedinfo += "\[[time2text(src.timerecorded*10,"hh:mm:ss")]\] Recording stopped."
+			src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] Recording stopped."
 			usr << "\blue Recording stopped."
 			src.icon_state = "taperecorderidle"
 			return

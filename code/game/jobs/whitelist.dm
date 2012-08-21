@@ -1,6 +1,7 @@
+#define WHITELISTFILE "data/whitelist.txt"
+
 var/list/whitelist
 
-#define WHITELISTFILE "data/whitelist.txt"
 /proc/load_whitelist()
 	var/text = file2text(WHITELISTFILE)
 	if (!text)
@@ -12,8 +13,6 @@ var/list/whitelist
 	if(!whitelist)
 		return 0
 	return ("[M.ckey]" in whitelist)
-
-#undef WHITELISTFILE
 
 proc/load_alienwhitelist()
 	var/text = file2text("config/alienwhitelist.txt")
@@ -32,3 +31,5 @@ proc/load_alienwhitelist()
 			if(findtext(s,"[M.ckey] - [species]"))
 				return 1
 		return 0
+
+#undef WHITELISTFILE

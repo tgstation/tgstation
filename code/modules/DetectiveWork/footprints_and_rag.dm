@@ -1,9 +1,8 @@
-//CONTAINS: Bloody footprints code, code for managing blood incompatability, and a rag to wipe away evidence.
-
+/*
 obj/item/clothing/shoes/var
 	track_blood = 0
 	mob/living/carbon/human/track_blood_mob
-	track_blood_type
+	track_blood_type*/
 mob/var
 	bloody_hands = 0
 	mob/living/carbon/human/bloody_hands_mob
@@ -14,8 +13,8 @@ obj/item/clothing/gloves/var
 	transfer_blood = 0
 	mob/living/carbon/human/bloody_hands_mob
 
-
-/*obj/effect/decal/cleanable/var
+/*
+obj/effect/decal/cleanable/var
 	track_amt = 3
 	mob/blood_owner
 
@@ -102,7 +101,7 @@ turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info,bloodco
 					T.blood_DNA["Non-human DNA"] = "A+"
 				return
 	var/obj/effect/decal/cleanable/blood/tracks/this = new(src)
-	this.icon = 'footprints.dmi'
+	this.icon = 'icons/effects/footprints.dmi'
 
 	var/preiconstate = ""
 
@@ -165,11 +164,17 @@ proc/blood_incompatible(donor,receiver)
 		//AB is a universal receiver.
 	return 0
 
+/obj/item/weapon/rag
+	New() // So I don't have to grab maplock
+		spawn(1)
+			new/obj/item/weapon/reagent_containers/glass/rag(loc)
+			del src
+
 /obj/item/weapon/reagent_containers/glass/rag
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."
 	w_class = 1
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5)
@@ -187,9 +192,9 @@ proc/blood_incompatible(donor,receiver)
 
 	afterattack(atom/A as obj|turf|area, mob/user as mob)
 		if(istype(A) && src in user)
-			user.visible_message("\The [user] starts to wipe down \a [A] with \a [src]!", "You start to wipe down \the [A].", "You hear a damp rag being rubbed against something.")
+			user.visible_message("[user] starts to wipe down [A] with [src]!")
 			if(do_after(user,30))
-				user.visible_message("\The [user] finishes wiping off \a [A]!", "You finish wiping down \the [A].")
+				user.visible_message("[user] finishes wiping off the [A]!")
 				A.clean_blood()
 		return
 

@@ -178,7 +178,7 @@
 	cost = 10
 	containertype = "/obj/structure/closet/critter"
 	containername = "Chicken crate"
-	group = "Hydroponics"
+	//group = "Hydroponics"
 
 /datum/supply_packs/cow
 	name = "\improper Cow crate"
@@ -187,4 +187,4 @@
 	cost = 50
 	containertype = "/obj/structure/closet/critter"
 	containername = "Cow crate"
-	group = "Hydroponics"
+	//group = "Hydroponics"

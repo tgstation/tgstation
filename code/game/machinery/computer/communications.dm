@@ -1,11 +1,11 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 // The communications computer
 /obj/machinery/computer/communications
 	name = "Communications Console"
 	desc = "This can be used for various important functions. Still under developement."
 	icon_state = "comm"
-	req_access = list(ACCESS_HEADS)
+	req_access = list(access_heads)
 	circuit = "/obj/item/weapon/circuitboard/communications"
 	var/prints_intercept = 1
 	var/authenticated = 0
@@ -27,7 +27,6 @@
 	var/const/STATE_STATUSDISPLAY = 7
 	var/const/STATE_ALERT_LEVEL = 8
 	var/const/STATE_CONFIRM_LEVEL = 9
-	var/const/STATE_CREWTRANSFER = 10
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
@@ -54,26 +53,26 @@
 			src.state = STATE_DEFAULT
 		if("login")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.equipped()
+			var/obj/item/weapon/card/id/I = M.get_active_hand()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
 			if (I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
-				if((ACCESS_HOP in I.access) || (ACCESS_CAPTAIN in I.access))
+				if(20 in I.access)
 					authenticated = 2
 		if("logout")
 			authenticated = 0
 
 		if("swipeidseclevel")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.equipped()
+			var/obj/item/weapon/card/id/I = M.get_active_hand()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
 			if (I && istype(I))
-				if((ACCESS_HOP in I.access) || (ACCESS_CAPTAIN in I.access))
+				if(access_captain in I.access)
 					var/old_level = security_level
 					if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
 					if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
@@ -83,7 +82,7 @@
 						//Only notify the admins if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
 						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].", 1)
-						switch(get_security_level())
+						switch(security_level)
 							if(SEC_LEVEL_GREEN)
 								feedback_inc("alert_comms_green",1)
 							if(SEC_LEVEL_BLUE)
@@ -99,7 +98,7 @@
 		if("announce")
 			if(src.authenticated==2)
 				if(message_cooldown)	return
-				var/input = copytext(input(usr, "Please choose a message to announce to the station crew.", "What?", ""),1,MAX_MESSAGE_LEN)
+				var/input = copytext(strip_html_simple(input(usr, "Please choose a message to announce to the station crew.", "What?", "")),1,MAX_MESSAGE_LEN)
 				if(!input || !(usr in view(1,src)))
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
@@ -116,16 +115,6 @@
 		if("callshuttle2")
 			if(src.authenticated)
 				call_shuttle_proc(usr)
-				if(emergency_shuttle.online)
-					post_status("shuttle")
-			src.state = STATE_DEFAULT
-		if("crewtransfer")
-			src.state= STATE_DEFAULT
-			if(src.authenticated)
-				src.state = STATE_CREWTRANSFER
-		if("crewtransfer2")
-			if(src.authenticated)
-				init_shift_change(usr) //key difference here
 				if(emergency_shuttle.online)
 					post_status("shuttle")
 			src.state = STATE_DEFAULT
@@ -193,10 +182,10 @@
 					return
 				Centcomm_announce(input, usr)
 				usr << "Message transmitted."
-				log_say("[key_name(usr)] has sent Centcomm a message: [input]")
+				log_say("[key_name(usr)] has made a Centcomm announcement: [input]")
 				centcomm_message_cooldown = 1
-				spawn(50)//One minute cooldown, nah 5 seconds
-					centcomm_message_cooldown = 0
+				spawn(600)//One minute cooldown
+					message_cooldown = 0
 
 
 		// OMG SYNDICATE ...LETTERHEAD
@@ -210,10 +199,10 @@
 					return
 				Syndicate_announce(input, usr)
 				usr << "Message transmitted."
-				log_say("[key_name(usr)] has sent the Syndicate a message: [input]")
+				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				centcomm_message_cooldown = 1
-				spawn(50)//One minute cooldown, nah 5 seconds
-					centcomm_message_cooldown = 0
+				spawn(600)//One minute cooldown
+					message_cooldown = 0
 
 		if("RestoreBackup")
 			usr << "Backup routing data restored!"
@@ -318,7 +307,6 @@
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
 					else
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=callshuttle'>Call Emergency Shuttle</A> \]"
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crewtransfer'>Initiate Crew Transfer</A> \]"
 
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
 			else
@@ -326,8 +314,6 @@
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += "Are you sure you want to call the shuttle? \[ <A HREF='?src=\ref[src];operation=callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
-		if(STATE_CREWTRANSFER) // this is the shiftchage screen.
-			dat += "Are you sure you want to initiate a crew transfer? This will call the shuttle. \[ <a HREF='?src=\ref[src];operation=crewtransfer2'>OK</a> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
 		if(STATE_CANCELSHUTTLE)
 			dat += "Are you sure you want to cancel the shuttle? \[ <A HREF='?src=\ref[src];operation=cancelshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
 		if(STATE_MESSAGELIST)
@@ -454,10 +440,6 @@
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
 
-	if(emergency_shuttle.deny_shuttle)
-		user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
-		return
-
 	if(sent_strike_team == 1)
 		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
 		return
@@ -478,58 +460,15 @@
 		//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
 		emergency_shuttle.fake_recall = rand(300,500)
 
-	if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
+	if(ticker.mode.name == "blob")
 		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		return
 
-	emergency_shuttle.shuttlealert(0)
 	emergency_shuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('shuttlecalled.ogg')
-
-	return
-
-/proc/init_shift_change(var/mob/user, var/force = 0)
-	if ((!( ticker ) || emergency_shuttle.location))
-		return
-
-	if(emergency_shuttle.direction == -1)
-		user << "The shuttle may not be called while returning to CentCom."
-		return
-
-	if(emergency_shuttle.online)
-		user << "The shuttle is already on its way."
-		return
-
-	// if force is 0, some things may stop the shuttle call
-	if(!force)
-		if(emergency_shuttle.deny_shuttle)
-			user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
-			return
-
-		if(sent_strike_team == 1)
-			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
-			return
-
-		if(world.time < 54000) // 30 minute grace period to let the game get going
-			user << "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again."//may need to change "/600"
-			return
-
-		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
-			//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
-			emergency_shuttle.fake_recall = rand(300,500)
-
-		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
-			user << "Under directive 7-10, [station_name()] is quarantined until further notice."
-			return
-
-	emergency_shuttle.shuttlealert(1)
-	emergency_shuttle.incall()
-	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
-	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
+	world << sound('sound/AI/shuttlecalled.ogg')
 
 	return
 
@@ -577,7 +516,7 @@
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
 			return ..()
 
-	for(var/mob/living/silicon/ai/shuttlecaller in world)
+	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
@@ -588,7 +527,7 @@
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('shuttlecalled.ogg')
+	world << sound('sound/AI/shuttlecalled.ogg')
 
 	..()
 
@@ -602,7 +541,7 @@
 		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)) && commboard != src)
 			return ..()
 
-	for(var/mob/living/silicon/ai/shuttlecaller in world)
+	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
@@ -613,6 +552,6 @@
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
-	world << sound('shuttlecalled.ogg')
+	world << sound('sound/AI/shuttlecalled.ogg')
 
 	..()

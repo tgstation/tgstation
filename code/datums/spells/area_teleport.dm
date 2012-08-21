@@ -42,7 +42,13 @@
 				if(clear)
 					L+=T
 
-		target.loc = pick(L)
+		var/attempt = 0
+		var/success = 0
+		while(!success)
+			success = target.Move(pick(L))
+			if(attempt > 20) break	//Failsafe
+		if(!success)
+			target.loc = pick(L)
 
 	return
 
@@ -53,10 +59,10 @@
 		switch(invocation_type)
 			if("shout")
 				usr.say("[invocation] [uppertext(chosenarea.name)]")
-				if(usr.gender=="male")
-					playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
+				if(usr.gender==MALE)
+					playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 				else
-					playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
+					playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			if("whisper")
 				usr.whisper("[invocation] [uppertext(chosenarea.name)]")
 

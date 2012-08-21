@@ -8,6 +8,7 @@
 	slot_flags = SLOT_BELT
 	m_amt = 50
 	g_amt = 20
+	icon_action_button = "action_flashlight"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
 	var/icon_on = "flight1"
@@ -17,38 +18,39 @@
 	..()
 	if (on)
 		icon_state = icon_on
-		src.ul_SetLuminosity(brightness_on, brightness_on, 0)
+		src.sd_SetLuminosity(brightness_on)
 	else
 		icon_state = icon_off
-		src.ul_SetLuminosity(0)
+		src.sd_SetLuminosity(0)
 
 /obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
 	if (on)
 		icon_state = icon_on
 		if(src.loc == user)
-			user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + brightness_on, user.LuminosityBlue)
+			user.total_luminosity += brightness_on
 		else if (isturf(src.loc))
-			ul_SetLuminosity(brightness_on, brightness_on, 0)
+			src.sd_SetLuminosity(brightness_on)
 
 	else
 		icon_state = icon_off
 		if(src.loc == user)
-			user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - brightness_on, user.LuminosityBlue)
+			user.total_luminosity -= brightness_on
 		else if (isturf(src.loc))
-			ul_SetLuminosity(0)
+			src.sd_SetLuminosity(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
-//	if(!isturf(user.loc))
-//		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-//		return
+	if(!isturf(user.loc))
+		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+		return
 	on = !on
 	update_brightness(user)
 	return
 
 
-/obj/item/device/flashlight/attack(mob/M as mob, mob/user as mob)
+/obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
 	src.add_fingerprint(user)
 	if(src.on && user.zone_sel.selecting == "eyes")
+
 		if (((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))//too dumb to use flashlight properly
 			return ..()//just hit them in the head
 
@@ -66,30 +68,31 @@
 				O.show_message("\blue [(O==user?"You direct":"[user] directs")] [src] to [(M==user? "your":"[M]")] eyes", 1)
 
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))//robots and aliens are unaffected
-			if(M.stat > 1 || M.disabilities & 128)//mob is dead or fully blind
+			if(M.stat == DEAD || M.sdisabilities & BLIND)//mob is dead or fully blind
 				if(M!=user)
-					user.show_message(text("\red [] pupils does not react to the light!", M),1)
+					user.show_message("\red [M] pupils does not react to the light!",1)
 			else if(XRAY in M.mutations)//mob has X-RAY vision
 				if(M!=user)
-					user.show_message(text("\red [] pupils give an eerie glow!", M),1)
+					user.show_message("\red [M] pupils give an eerie glow!",1)
 			else //nothing wrong
-				flick("flash", M.flash)//flash the affected mob
-				if(M!=user)
-					user.show_message(text("\blue [] pupils narrow", M),1)
+				if(!M.blinded)
+					flick("flash", M.flash)//flash the affected mob
+					if(M!=user)
+						user.show_message("\blue [M] pupils narrow",1)
 	else
 		return ..()
 
 
 /obj/item/device/flashlight/pickup(mob/user)
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + brightness_on, user.LuminosityBlue)
-		src.ul_SetLuminosity(0)
+		user.total_luminosity += brightness_on
+		src.sd_SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - brightness_on, user.LuminosityBlue)
-		src.ul_SetLuminosity(brightness_on)
+		user.total_luminosity -= brightness_on
+		src.sd_SetLuminosity(brightness_on)
 
 
 /obj/item/device/flashlight/pen
@@ -101,7 +104,6 @@
 	icon_on = "plight1"
 	icon_off = "plight0"
 	brightness_on = 3
-	w_class = 1
 
 
 
@@ -109,12 +111,10 @@
 	if(!ismob(M))
 		return
 	user << "\red You stab [M] with the pen."
-//	M << "\red You feel a tiny prick!"
+	M << "\red You feel a tiny prick!"
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
 
-	log_admin("ATTACK: [user] ([user.ckey]) stabbed [M] ([M.ckey]) with [src].")
-	message_admins("ATTACK: [user] ([user.ckey]) stabbed [M] ([M.ckey]) with [src].")
 	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [src.name] to stab [M.name] ([M.ckey])</font>")
 
 
@@ -137,60 +137,11 @@
 		if(M.reagents) reagents.trans_to(M, 15)
 	return
 
-
-//Looks like most of the clothing lights are here
-/obj/item/clothing/head/helmet/hardhat/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-		return
-	on = !on
-	icon_state = "hardhat[on]_[color]"
-	item_state = "hardhat[on]_[color]"
-
-	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
-	else
-		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
-
-/obj/item/clothing/head/helmet/hardhat/pickup(mob/user)
-	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
-		ul_SetLuminosity(0)
-
-/obj/item/clothing/head/helmet/hardhat/dropped(mob/user)
-	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
-		ul_SetLuminosity(brightness_on, brightness_on - 1, 0)
-
-//RIG helmet light
-/obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-		return
-	on = !on
-	icon_state = "rig[on]-[color]"
-	item_state = "rig[on]-[color]"
-
-	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
-	else
-		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
-
-/obj/item/clothing/head/helmet/space/rig/pickup(mob/user)
-	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
-		ul_SetLuminosity(0)
-
-/obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
-	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
-		ul_SetLuminosity(brightness_on, brightness_on - 1, 0)
-
 // the desk lamps are a bit special
 /obj/item/device/flashlight/lamp
 	name = "desk lamp"
 	desc = "A desk lamp"
-	icon = 'lighting.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "lamp0"
 	brightness_on = 5
 	icon_on = "lamp1"

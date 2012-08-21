@@ -1,8 +1,8 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/pod
 	name = "Pod Launch Control"
-	desc = "A control for launching pods."
+	desc = "A controll for launching pods. Some people prefer firing Mechas."
 	icon_state = "computer_generic"
 	var/id = 1.0
 	var/obj/machinery/mass_driver/connected = null
@@ -53,7 +53,7 @@
 
 /obj/machinery/computer/pod/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(loc, 'Screwdriver.ogg', 50, 1)
+		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (stat & BROKEN)
 				user << "\blue The broken glass falls out."

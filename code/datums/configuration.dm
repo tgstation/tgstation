@@ -25,22 +25,22 @@
 	var/vote_period = 60				// length of voting period (seconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
-	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 //	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
 	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
 	var/protect_roles_from_antagonist = 0// If security and such can be tratior/cult/other
-	var/Tensioner_Active = 0			// If the tensioner is running.
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/Ticklag = 0.9
 	var/Tickcomp = 0
+	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
+	var/humans_need_surnames = 0
 	var/allow_random_events = 0			// enables random events mid-round when set to 1
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
@@ -49,6 +49,8 @@
 	var/usewhitelist = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
+	var/ToRban = 0
+
 	var/usealienwhitelist = 0
 
 	var/server
@@ -61,7 +63,7 @@
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
 	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
 	var/alert_desc_red_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
-	var/alert_desc_red_downto = "The self-destruct mechanism has been deactivated. However, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
+	var/alert_desc_red_downto = "The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 	var/alert_desc_delta = "The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
 	var/forbid_singulo_possession = 0
@@ -75,9 +77,6 @@
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
-	var/require_heads_alive = 0 //For Rev.
-
-	var/appeal_address = ""
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -236,11 +235,11 @@
 				if ("guest_jobban")
 					config.guest_jobban = 1
 
+				if ("guest_ban")
+					guests_allowed = 0
+
 				if ("usewhitelist")
 					config.usewhitelist = 1
-
-				if ("usealienwhitelist")
-					config.usealienwhitelist = 1
 
 				if ("feature_object_spell_system")
 					config.feature_object_spell_system = 1
@@ -253,9 +252,6 @@
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist = 1
-
-				if("tensioner_active")
-					config.Tensioner_Active = 1
 
 				if ("probability")
 					var/prob_pos = findtext(value, " ")
@@ -304,6 +300,10 @@
 
 				if("popup_admin_pm")
 					config.popup_admin_pm = 1
+
+				if("allow_holidays")
+					Holiday = 1
+
 				if("useircbot")
 					useircbot = 1
 
@@ -316,11 +316,11 @@
 				if("tickcomp")
 					Tickcomp = 1
 
-				if("require_heads_alive")
-					config.require_heads_alive = value
+				if("humans_need_surnames")
+					humans_need_surnames = 1
 
-				if("appeal_address")
-					config.appeal_address = value
+				if("tor_ban")
+					ToRban = 1
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
@@ -400,7 +400,7 @@
 				sqllogging = 1
 			else
 				diary << "Unknown setting in configuration: '[name]'"
-/* //Don't touch this, we don't use it. DMTG
+
 /datum/configuration/proc/loadforumsql(filename)  // -- TLE
 	var/text = file2text(filename)
 
@@ -453,7 +453,7 @@
 				forum_authenticated_group = value
 			else
 				diary << "Unknown setting in configuration: '[name]'"
-*/
+
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).

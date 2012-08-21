@@ -1,5 +1,5 @@
 /obj/item/projectile/change
-	name = "\improper Bolt of Change"
+	name = "bolt of change"
 	icon_state = "ice_1"
 	damage = 0
 	damage_type = BURN
@@ -10,181 +10,82 @@
 		wabbajack(change)
 
 
-	/*Bump(atom/change)
-		if(istype(change, /mob/living))
-			wabbajack(change)
+/obj/item/projectile/change/proc/wabbajack (mob/M as mob in living_mob_list)
+	if(istype(M, /mob/living) && M.stat != DEAD)
+		if(M.monkeyizing)	return
+		M.monkeyizing = 1
+		M.canmove = 0
+		M.icon = null
+		M.overlays = null
+		M.invisibility = 101
+
+		if(istype(M, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/Robot = M
+			if(Robot.mmi)	del(Robot.mmi)
 		else
-			del(src)*/
+			for(var/obj/item/W in M)
+				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
+					del(W)
+					continue
+				W.layer = initial(W.layer)
+				W.loc = M.loc
+				W.dropped(M)
 
+		var/mob/living/new_mob
 
-
-/obj/item/projectile/change/proc/wabbajack (mob/M as mob in world)
-	if(istype(M, /mob/living) && M.stat != 2)
-		for(var/obj/item/W in M)
-			if (istype(M, /mob/living/silicon/robot)||istype(W, /obj/item/weapon/implant))
-				del (W)
-			M.drop_from_slot(W)
-		var/randomize = pick("monkey","robot","metroid","alien","human")
+		var/randomize = pick("monkey","robot","metroid","xeno","human")
 		switch(randomize)
 			if("monkey")
-				if (M.monkeyizing)
-					return
-				M.update_clothing()
-				M.monkeyizing = 1
-				M.canmove = 0
-				M.icon = null
-				M.invisibility = 101
-				var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( M.loc )
-				O.name = "monkey"
-				if (M.client)
-					M.client.mob = O
-				if(M.mind)
-					M.mind.transfer_to(O)
-				O.a_intent = "hurt"
-				O.universal_speak = 1
-				O << "<B>You are now a monkey.</B>"
-				del(M)
-				return O
+				new_mob = new /mob/living/carbon/monkey(M.loc)
+				new_mob.universal_speak = 1
 			if("robot")
-				if (M.monkeyizing)
-					return
-				M.update_clothing()
-				M.monkeyizing = 1
-				M.canmove = 0
-				M.icon = null
-				M.invisibility = 101
-				if(M.client)
-					M.client.screen -= M.hud_used.contents
-					M.client.screen -= M.hud_used.adding
-					M.client.screen -= M.hud_used.mon_blo
-					M.client.screen -= list( M.oxygen, M.throw_icon, M.i_select, M.m_select, M.toxin, M.internals, M.fire, M.hands, M.healths, M.pullin, M.blind, M.flash, M.rest, M.sleep, M.mach )
-					M.client.screen -= list( M.zone_sel, M.oxygen, M.throw_icon, M.i_select, M.m_select, M.toxin, M.internals, M.fire, M.hands, M.healths, M.pullin, M.blind, M.flash, M.rest, M.sleep, M.mach )
-
-				var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( M.loc )
-				O.cell = new(O)
-				O.cell.maxcharge = 7500
-				O.cell.charge = 7500
-				O.gender = M.gender
-				O.invisibility = 0
-				O.name = "Cyborg"
-				O.real_name = "Cyborg"
-				if (M.mind)
-					M.mind.transfer_to(O)
-					if (M.mind.assigned_role == "Cyborg")
-						M.mind.original = O
-					else if (M.mind.special_role) O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
-				else
-					M.mind = new /datum/mind(  )
-					M.mind.key = M.key
-					M.mind.current = O
-					M.mind.original = O
-					M.mind.transfer_to(O)
-
-				if(!(O.mind in ticker.minds))
-					ticker.minds += O.mind//Adds them to regular mind list.
-
-				O.loc = loc
-				O << "<B>You are playing a Robot. A Robot can interact with most electronic objects in its view point.</B>"
-				O << "<B>You must follow the laws that the AI has. You are the AI's assistant to the station basically.</B>"
-				O << "To use something, simply double-click it."
-				O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
-
-				O.job = "Cyborg"
-
-				O.mmi = new /obj/item/device/mmi(O)
-				O.mmi.transfer_identity(M)//Does not transfer key/client.
-				del(M)
-				return O
+				new_mob = new /mob/living/silicon/robot(M.loc)
+				new_mob.gender = M.gender
+				new_mob.invisibility = 0
+				new_mob.job = "Cyborg"
+				var/mob/living/silicon/robot/Robot = new_mob
+				Robot.mmi = new /obj/item/device/mmi(new_mob)
+				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 			if("metroid")
-				if (M.monkeyizing)
-					return
-				M.update_clothing()
-				M.monkeyizing = 1
-				M.canmove = 0
-				M.icon = null
-				M.invisibility = 101
-				if(prob(50))
-					var/mob/living/carbon/metroid/adult/new_metroid = new /mob/living/carbon/metroid/adult (M.loc)
-					if (M.client)
-						M.client.mob = new_metroid
-					if(M.mind)
-						M.mind.transfer_to(new_metroid)
-
-					new_metroid.a_intent = "hurt"
-					new_metroid << "<B>You are now an adult Metroid.</B>"
-					new_metroid.universal_speak = 1
-					del(M)
-					return new_metroid
-				else
-					var/mob/living/carbon/metroid/new_metroid = new /mob/living/carbon/metroid (M.loc)
-					if (M.client)
-						M.client.mob = new_metroid
-					if(M.mind)
-						M.mind.transfer_to(new_metroid)
-					new_metroid.a_intent = "hurt"
-					new_metroid.universal_speak = 1
-					new_metroid << "<B>You are now a baby Metroid.</B>"
-					del(M)
-					return new_metroid
-			if("alien")
-				if (M.monkeyizing)
-					return
-				M.update_clothing()
-				M.monkeyizing = 1
-				M.canmove = 0
-				M.icon = null
-				M.invisibility = 101
-				var/alien_caste = pick("Hunter","Sentinel","Drone")
-				var/mob/living/carbon/alien/humanoid/new_xeno
+				if(prob(50))		new_mob = new /mob/living/carbon/metroid/adult(M.loc)
+				else				new_mob = new /mob/living/carbon/metroid(M.loc)
+				new_mob.universal_speak = 1
+			if("xeno")
+				var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
 				switch(alien_caste)
-					if("Hunter")
-						new_xeno = new /mob/living/carbon/alien/humanoid/hunter (M.loc)
-					if("Sentinel")
-						new_xeno = new /mob/living/carbon/alien/humanoid/sentinel (M.loc)
-					if("Drone")
-						new_xeno = new /mob/living/carbon/alien/humanoid/drone (M.loc)
-				if (M.client)
-					M.client.mob = new_xeno
-				if(M.mind)
-					M.mind.transfer_to(new_xeno)
-				new_xeno.a_intent = "hurt"
-				new_xeno.universal_speak = 1
-				new_xeno << "<B>You are now an alien.</B>"
-				del(M)
-				return new_xeno
+					if("Hunter")	new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+					if("Sentinel")	new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+					if("Drone")		new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
+					else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
+				new_mob.universal_speak = 1
 			if("human")
-				if (M.monkeyizing)
-					return
-				M.update_clothing()
-				M.monkeyizing = 1
-				M.canmove = 0
-				M.icon = null
-				M.invisibility = 101
-				var/mob/living/carbon/human/O = new /mob/living/carbon/human( M.loc )
+				new_mob = new /mob/living/carbon/human(M.loc)
+				if(M.gender == MALE)
+					new_mob.gender = MALE
+					new_mob.name = pick(first_names_male)
+				else
+					new_mob.gender = FEMALE
+					new_mob.name = pick(first_names_female)
+				new_mob.name += " [pick(last_names)]"
+				new_mob.real_name = new_mob.name
 
-				var/first = pick(first_names_male)
-				var/last = pick(last_names)
-				O.name = "[first] [last]"
-				O.real_name = "[first] [last]"
-				var/race = pick("lizard","golem","metroid","plant","normal")
-				switch(race)
-					if("lizard")
-						O.mutantrace = "lizard"
-					if("golem")
-						O.mutantrace = "golem"
-					if("metroid")
-						O.mutantrace = "metroid"
-					if("plant")
-						O.mutantrace = "plant"
-					if("normal")
-						O.mutantrace = ""
-				if (M.client)
-					M.client.mob = O
-				if(M.mind)
-					M.mind.transfer_to(O)
-				O.a_intent = "hurt"
-				O << "<B>You are now a human.</B>"
-				del(M)
-				return O
-		return
+				var/datum/preferences/A = new()	//Randomize appearance for the human
+				A.randomize_appearance_for(new_mob)
+
+				var/mob/living/carbon/human/H = new_mob
+				if(H.dna)
+					H.dna.mutantrace = pick("lizard","golem","metroid","plant",4;"")
+			else
+				return
+
+		new_mob.a_intent = "hurt"
+		if(M.mind)
+			M.mind.transfer_to(new_mob)
+		else
+			new_mob.key = M.key
+
+		new_mob << "<B>Your form morphs into that of a [randomize].</B>"
+
+		del(M)
+		return new_mob
 

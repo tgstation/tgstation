@@ -1,7 +1,7 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
 /obj/machinery/bot
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
 	var/obj/item/weapon/card/id/botcard			// the ID card that the bot "holds"
 	var/on = 1
@@ -36,9 +36,9 @@
 	..()
 	if (src.health < maxhealth)
 		if (src.health > maxhealth/3)
-			usr << text("\red [src]'s parts look loose.")
+			usr << "<span class='warning'>[src]'s parts look loose.</span>"
 		else
-			usr << text("\red <B>[src]'s parts look very loose!</B>")
+			usr << "<span class='danger'>[src]'s parts look very loose!</span>"
 	return
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
@@ -51,7 +51,7 @@
 	*/
 	src.health -= rand(15,30)*brute_dam_coeff
 	src.visible_message("\red <B>[user] has slashed [src]!</B>")
-	playsound(src.loc, 'slice.ogg', 25, 1, -1)
+	playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 	if(prob(10))
 		new /obj/effect/decal/cleanable/oil(src.loc)
 	healthcheck()
@@ -61,6 +61,7 @@
 	if(M.melee_damage_upper == 0)	return
 	src.health -= M.melee_damage_upper
 	src.visible_message("\red <B>[M] has [M.attacktext] [src]!</B>")
+	M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	if(prob(10))
 		new /obj/effect/decal/cleanable/oil(src.loc)
 	healthcheck()
@@ -77,13 +78,8 @@
 				"\blue You repair [src]!"
 			)
 		else
-			user << "\blue [src] does not need a repair!"
+			user << "<span class='notice'>[src] does not need a repair.</span>"
 	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
-		var/obj/item/weapon/card/emag/E = W
-		if(E.uses)
-			E.uses--
-		else
-			return
 		Emag(user)
 	else
 		switch(W.damtype)
@@ -130,7 +126,7 @@
 	var/was_on = on
 	stat |= EMPED
 	var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
-	pulse2.icon = 'effects.dmi'
+	pulse2.icon = 'icons/effects/effects.dmi'
 	pulse2.icon_state = "empdisable"
 	pulse2.name = "emp sparks"
 	pulse2.anchored = 1

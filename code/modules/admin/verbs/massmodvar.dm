@@ -18,7 +18,7 @@
 					return
 
 	src.massmodify_variables(A, var_name, method)
-	//feedback_add_details("admin_verb","MEV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","MEV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/massmodify_variables(var/atom/O, var/var_name = "", var/method = 0)
@@ -138,7 +138,7 @@
 			O.vars[variable] = initial(O.vars[variable])
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
@@ -154,7 +154,7 @@
 
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
@@ -178,7 +178,7 @@
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
@@ -193,7 +193,7 @@
 							A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
@@ -213,16 +213,16 @@
 			if(new_value == null) return
 
 			if(variable=="luminosity")
-				O.ul_SetLuminosity(new_value)
+				O.sd_SetLuminosity(new_value)
 			else
 				O.vars[variable] = new_value
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							if(variable=="luminosity")
-								M.ul_SetLuminosity(new_value)
+								M.sd_SetLuminosity(new_value)
 							else
 								M.vars[variable] = O.vars[variable]
 
@@ -230,7 +230,7 @@
 					for(var/obj/A in world)
 						if ( istype(A , O.type) )
 							if(variable=="luminosity")
-								A.ul_SetLuminosity(new_value)
+								A.sd_SetLuminosity(new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
@@ -238,16 +238,16 @@
 					for(var/turf/A in world)
 						if ( istype(A , O.type) )
 							if(variable=="luminosity")
-								A.ul_SetLuminosity(new_value)
+								A.sd_SetLuminosity(new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							if(variable=="luminosity")
-								M.ul_SetLuminosity(new_value)
+								M.sd_SetLuminosity(new_value)
 							else
 								M.vars[variable] = O.vars[variable]
 
@@ -255,7 +255,7 @@
 					for(var/obj/A in world)
 						if (A.type == O.type)
 							if(variable=="luminosity")
-								A.ul_SetLuminosity(new_value)
+								A.sd_SetLuminosity(new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
@@ -263,7 +263,7 @@
 					for(var/turf/A in world)
 						if (A.type == O.type)
 							if(variable=="luminosity")
-								A.ul_SetLuminosity(new_value)
+								A.sd_SetLuminosity(new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
@@ -274,7 +274,7 @@
 			O.vars[variable] = new_value
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
@@ -289,7 +289,7 @@
 							A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
@@ -310,7 +310,7 @@
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
@@ -325,7 +325,7 @@
 							A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
@@ -345,7 +345,7 @@
 			O.vars[variable] = new_value
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
@@ -361,7 +361,7 @@
 
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 

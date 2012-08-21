@@ -8,44 +8,50 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	alt_titles = list("Counselor")
 
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 
-		var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(H)
-		H.equip_if_possible(B, H.slot_l_hand)
-		H.equip_if_possible(new /obj/item/device/pda/chaplain(H), H.slot_belt)
-		H.equip_if_possible(new /obj/item/clothing/under/rank/chaplain(H), H.slot_w_uniform)
-		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
+		var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(H)
+		H.equip_to_slot_or_del(B, slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), slot_belt)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		spawn(0)
 			var/religion_name = "Christianity"
-			var/new_religion = copytext(sanitize(input(H, "You are the Chaplain / Counselor. For game mechanics purposes, you need to choose a religion either way. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
+			var/new_religion = copytext(sanitize(input(H, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
 
-			if ((length(new_religion) == 0) || (new_religion == "Christianity"))
+			if (!new_religion)
 				new_religion = religion_name
 
-				switch(lowertext(new_religion))
-					if("christianity")
-						B.name = pick("The Holy Bible","The Dead Sea Scrolls")
-					if("satanism")
-						B.name = "The Unholy Bible"
-					if("cthulu")
-						B.name = "The Necronomicon"
-					if("islam")
-						B.name = "Quran"
-					if("scientology")
-						B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
-					if("chaos")
-						B.name = "The Book of Lorgar"
-					if("imperium")
-						B.name = "Uplifting Primer"
-					if("science")
-						B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
-					else
-						B.name = "The Holy Book of [new_religion]"
-//			feedback_set_details("religion_name","[new_religion]")
+			switch(lowertext(new_religion))
+				if("christianity")
+					B.name = pick("The Holy Bible","The Dead Sea Scrolls")
+				if("satanism")
+					B.name = "The Unholy Bible"
+				if("cthulu")
+					B.name = "The Necronomicon"
+				if("islam")
+					B.name = "Quran"
+				if("scientology")
+					B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+				if("chaos")
+					B.name = "The Book of Lorgar"
+				if("imperium")
+					B.name = "Uplifting Primer"
+				if("toolboxia")
+					B.name = "Toolbox Manifesto"
+				if("homosexuality")
+					B.name = "Guys Gone Wild"
+				if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
+					B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
+					H.setBrainLoss(100) // starts off retarded as fuck
+				if("science")
+					B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+				else
+					B.name = "The Holy Book of [new_religion]"
+			feedback_set_details("religion_name","[new_religion]")
 
 		spawn(1)
 			var/deity_name = "Space Jesus"
@@ -122,7 +128,7 @@
 								if(T.icon_state == "carpetsymbol")
 									T.dir = 2
 
-				H:update_clothing() // so that it updates the bible's item_state in his hand
+				H.update_inv_l_hand() // so that it updates the bible's item_state in his hand
 
 				switch(input(H,"Look at your bible - is this what you want?") in list("Yes","No"))
 					if("Yes")
@@ -137,6 +143,6 @@
 				ticker.Bible_item_state = B.item_state
 				ticker.Bible_name = B.name
 				ticker.Bible_deity_name = B.deity_name
-//			feedback_set_details("religion_deity","[new_deity]")
-//			feedback_set_details("religion_book","[new_book_style]")
+			feedback_set_details("religion_deity","[new_deity]")
+			feedback_set_details("religion_book","[new_book_style]")
 		return 1

@@ -1,6 +1,6 @@
 /obj/item/device/soulstone
 	name = "Soul Stone Shard"
-	icon = 'wizard.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	item_state = "electronic"
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
@@ -22,8 +22,6 @@
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
 
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
-		log_admin("ATTACK: [user] ([user.ckey]) captured the soul of [M] ([M.ckey]).")
-		message_admins("ATTACK: [user] ([user.ckey]) captured the soul of [M] ([M.ckey]).")
 
 
 		transfer_soul("VICTIM", M, user)
@@ -84,7 +82,7 @@
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
 	name = "empty shell"
-	icon = 'wizard.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive"
 	flags = FPRINT | TABLEPASS
@@ -115,12 +113,12 @@
 							U << "\red <b>Capture failed!</b>: \black The soul stone is full! Use or free an existing soul to make room."
 						else
 							for(var/obj/item/W in T)
-								T.drop_from_slot(W)
+								T.drop_from_inventory(W)
 							new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 							T.invisibility = 101
 							var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )
 							animation.icon_state = "blank"
-							animation.icon = 'mob.dmi'
+							animation.icon = 'icons/mob/mob.dmi'
 							animation.master = T
 							flick("dust-h", animation)
 							del(animation)
@@ -128,15 +126,16 @@
 							S.loc = C //put shade in stone
 							S.nodamage = 1 //So they won't die inside the stone somehow
 							S.canmove = 0//Can't move out of the soul stone
-							S.name = "Shade of [T.name]"
+							S.name = "Shade of [T.real_name]"
+							S.real_name = "Shade of [T.real_name]"
 							if (T.client)
 								T.client.mob = S
 							S.cancel_camera()
 							C.icon_state = "soulstone2"
-							C.name = "Soul Stone: [S.name]"
+							C.name = "Soul Stone: [S.real_name]"
 							S << "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs."
-							U << "\blue <b>Capture successful!</b>: \black [T.name]'s soul has been ripped from their body and stored within the soul stone."
-							U << "The soulstone has been imprinted with [S.name]'s mind, it will no longer react to other souls."
+							U << "\blue <b>Capture successful!</b>: \black [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
+							U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."
 							C.imprinted = "[S.name]"
 							del T
 		if("SHADE")
@@ -167,18 +166,13 @@
 				switch(construct_class)
 					if("Juggernaut")
 						var/mob/living/simple_animal/constructarmoured/Z = new /mob/living/simple_animal/constructarmoured (get_turf(T.loc))
-						if (A.client)
-							A.client.mob = Z
-							Z.mind_initialize(Z)
-							if(iscultist(U))
-								if (ticker.mode.name == "cult")
-									ticker.mode:add_cultist(Z.mind)
-									Z.mind.special_role = "Cultist"
-									ticker.mode.update_cult_icons_added(Z.mind)
-								else
-									ticker.mode.cult+=Z.mind
-									Z.mind.special_role = "Cultist"
-									ticker.mode.update_cult_icons_added(Z.mind)
+						Z.key = A.key
+						if(iscultist(U))
+							if(ticker.mode.name == "cult")
+								ticker.mode:add_cultist(Z.mind)
+							else
+								ticker.mode.cult+=Z.mind
+							ticker.mode.update_cult_icons_added(Z.mind)
 						del(T)
 						Z << "<B>You are playing a Juggernaut. Though slow, you can withstand extreme punishment, and rip apart enemies and walls alike.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
@@ -188,18 +182,13 @@
 
 					if("Wraith")
 						var/mob/living/simple_animal/constructwraith/Z = new /mob/living/simple_animal/constructwraith (get_turf(T.loc))
-						if (A.client)
-							A.client.mob = Z
-							Z.mind_initialize(Z)
-							if(iscultist(U))
-								if (ticker.mode.name == "cult")
-									ticker.mode:add_cultist(Z.mind)
-									Z.mind.special_role = "Cultist"
-									ticker.mode.update_cult_icons_added(Z.mind)
-								else
-									ticker.mode.cult+=Z.mind
-									Z.mind.special_role = "Cultist"
-									ticker.mode.update_cult_icons_added(Z.mind)
+						Z.key = A.key
+						if(iscultist(U))
+							if(ticker.mode.name == "cult")
+								ticker.mode:add_cultist(Z.mind)
+							else
+								ticker.mode.cult+=Z.mind
+							ticker.mode.update_cult_icons_added(Z.mind)
 						del(T)
 						Z << "<B>You are playing a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
@@ -209,18 +198,13 @@
 
 					if("Artificer")
 						var/mob/living/simple_animal/constructbuilder/Z = new /mob/living/simple_animal/constructbuilder (get_turf(T.loc))
-						if (A.client)
-							A.client.mob = Z
-							Z.mind_initialize(Z)
-							if(iscultist(U))
-								if (ticker.mode.name == "cult")
-									ticker.mode:add_cultist(Z.mind)
-									Z.mind.special_role = "Cultist"
-									ticker.mode.update_cult_icons_added(Z.mind)
-								else
-									ticker.mode.cult+=Z.mind
-									Z.mind.special_role = "Cultist"
-									ticker.mode.update_cult_icons_added(Z.mind)
+						Z.key = A.key
+						if(iscultist(U))
+							if(ticker.mode.name == "cult")
+								ticker.mode:add_cultist(Z.mind)
+							else
+								ticker.mode.cult+=Z.mind
+							ticker.mode.update_cult_icons_added(Z.mind)
 						del(T)
 						Z << "<B>You are playing an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, repair allied constructs (by clicking on them), and even create new constructs</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"

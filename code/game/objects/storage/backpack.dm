@@ -1,20 +1,19 @@
-/obj/item/weapon/storage/backpack/MouseDrop(obj/over_object as obj)
+/obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()
+		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+			return
 		playsound(src.loc, "rustle", 50, 1, -5)
-		if ((!( M.restrained() ) && !( M.stat ) && M.back == src))
-			if (over_object.name == "r_hand")
-				if (!( M.r_hand ))
+		if (!( M.restrained() ) && !( M.stat ))
+			switch(over_object.name)
+				if("r_hand")
 					M.u_equip(src)
-					M.r_hand = src
-			else
-				if (over_object.name == "l_hand")
-					if (!( M.l_hand ))
-						M.u_equip(src)
-						M.l_hand = src
-			M.update_clothing()
+					M.put_in_r_hand(src)
+				if("l_hand")
+					M.u_equip(src)
+					M.put_in_l_hand(src)
 			src.add_fingerprint(usr)
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
@@ -45,7 +44,6 @@
 		if(crit_fail)
 			user << "\red The Bluespace generator isn't working."
 			return
-			/* Remove these comments to re-enable BoH BoH Singuloths.-Hawk.
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 			investigate_log("has become a singularity. Caused by [user.key]","singulo")
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
@@ -56,7 +54,6 @@
 			log_game("[key_name(user)] detonated a bag of holding")
 			del(src)
 			return
-			*/
 		..()
 
 	proc/failcheck(mob/user as mob)

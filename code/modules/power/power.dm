@@ -1,3 +1,15 @@
+/obj/machinery/power
+	name = null
+	icon = 'icons/obj/power.dmi'
+	anchored = 1.0
+	var/datum/powernet/powernet = null
+	var/netnum = 0
+	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
+							// if set to 0, requires a 0-X cable on this turf
+	use_power = 0
+	idle_power_usage = 0
+	active_power_usage = 0
+
 // common helper procs for all power machines
 /obj/machinery/power/proc/add_avail(var/amount)
 	if(powernet)
@@ -45,7 +57,7 @@
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
 										// can override if needed
-	if(powered())
+	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
 
@@ -64,14 +76,14 @@
 	var/netcount = 0
 	powernets = list()
 
-	for(var/obj/structure/cable/PC in world)
+	for(var/obj/structure/cable/PC in cable_list)
 		PC.netnum = 0
 	for(var/obj/machinery/power/M in machines)
 		if(M.netnum >=0)
 			M.netnum = 0
 
 
-	for(var/obj/structure/cable/PC in world)
+	for(var/obj/structure/cable/PC in cable_list)
 		if(!PC.netnum)
 			PC.netnum = ++netcount
 
@@ -86,7 +98,7 @@
 		PN.number = L
 
 
-	for(var/obj/structure/cable/C in world)
+	for(var/obj/structure/cable/C in cable_list)
 		var/datum/powernet/PN = powernets[C.netnum]
 		PN.cables += C
 

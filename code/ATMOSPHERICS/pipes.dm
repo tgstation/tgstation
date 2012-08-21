@@ -569,7 +569,7 @@ obj/machinery/atmospherics/pipe
 					O << "\red [user] has used the analyzer on \icon[icon]"
 
 				var/pressure = parent.air.return_pressure()
-				var/total_moles = parent.air.total_moles
+				var/total_moles = parent.air.total_moles()
 
 				user << "\blue Results of analysis of \icon[icon]"
 				if (total_moles>0)
