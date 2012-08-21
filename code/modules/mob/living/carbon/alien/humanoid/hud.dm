@@ -147,6 +147,24 @@
 	src.l_hand_hud_object = inv_box
 	src.adding += inv_box
 
+	using = new /obj/screen/inventory( src )
+	using.name = "hand"
+	using.dir = SOUTH
+	using.icon = 'icons/mob/screen1_alien.dmi'
+	using.icon_state = "hand1"
+	using.screen_loc = ui_swaphand1
+	using.layer = 19
+	src.adding += using
+
+	using = new /obj/screen/inventory( src )
+	using.name = "hand"
+	using.dir = SOUTH
+	using.icon = 'icons/mob/screen1_alien.dmi'
+	using.icon_state = "hand2"
+	using.screen_loc = ui_swaphand2
+	using.layer = 19
+	src.adding += using
+
 	//pocket 1
 	inv_box = new /obj/screen/inventory( src )
 	inv_box.name = "storage1"
