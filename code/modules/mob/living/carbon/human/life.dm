@@ -321,9 +321,10 @@
 			if (radiation)
 				if (radiation > 100)
 					radiation = 100
-					Weaken(10)
-					src << "\red You feel weak."
-					emote("collapse")
+					if(prob(3))
+						Weaken(10)
+						src << "\red You feel weak."
+						emote("collapse")
 
 				if (radiation < 0)
 					radiation = 0
@@ -541,7 +542,7 @@
 				oxygen_alert = max(oxygen_alert, 1)*/
 			else								// We're in safe limits
 				adjustOxyLoss(-5)
-				oxygen_used = breath.oxygen/6
+				oxygen_used = breath.oxygen
 				oxygen_alert = 0
 
 			breath.oxygen -= oxygen_used

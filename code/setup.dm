@@ -29,7 +29,7 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
 #define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
 
-#define BREATH_VOLUME 0.5	//liters in a normal breath
+#define BREATH_VOLUME 0.5	//liters in a normal breath  Increased to scale to SS13 speeds.
 #define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
 	//Amount of air to take a from a tile
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
