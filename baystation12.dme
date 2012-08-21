@@ -1,6 +1,6 @@
 // DM Environment file for tgstation.dme.
-// All manual changes should be made outside the BEGIN_ and END_ blocks. 
- // New source code should be placed in .dm files: choose File/New --> Code File. 
+// All manual changes should be made outside the BEGIN_ and END_ blocks.
+ // New source code should be placed in .dm files: choose File/New --> Code File.
 // BEGIN_INTERNALS
 // END_INTERNALS
 // BEGIN_FILE_DIR
@@ -88,6 +88,7 @@
 #define FILE_DIR "code/game/objects/storage"
 #define FILE_DIR "code/game/objects/tanks"
 #define FILE_DIR "code/game/player"
+#define FILE_DIR "code/game/structure"
 #define FILE_DIR "code/game/vehicles"
 #define FILE_DIR "code/game/vehicles/airtight"
 #define FILE_DIR "code/game/verbs"
@@ -1263,5 +1264,5 @@
 #include "code\ZAS\ZAS_Zones.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation.2.0.9.dmm"
+#include "maps\tgstation 3.0.0.dmm"
 // END_INCLUDE

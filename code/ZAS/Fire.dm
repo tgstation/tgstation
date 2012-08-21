@@ -320,7 +320,8 @@ datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 		arms_exposure = 1
 
 	//Get heat transfer coefficients for clothing.
-	for(var/obj/item/clothing/C in src)
+	//skytodo: different handling of temp with tg
+	/*for(var/obj/item/clothing/C in src)
 		if(l_hand == C || r_hand == C) continue
 		if(C.body_parts_covered & HEAD)
 			head_exposure *= C.heat_transfer_coefficient
@@ -331,7 +332,7 @@ datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 		if(C.body_parts_covered & LEGS)
 			legs_exposure *= C.heat_transfer_coefficient
 		if(C.body_parts_covered & ARMS)
-			arms_exposure *= C.heat_transfer_coefficient
+			arms_exposure *= C.heat_transfer_coefficient*/
 
 	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 
