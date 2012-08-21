@@ -311,7 +311,7 @@
 		if(breath.temperature > (T0C+66)) // Hot air hurts :(
 			if(prob(20))
 				src << "\red You feel a searing heat in your lungs!"
-			fire_alert = max(fire_alert, 1)
+			fire_alert = max(fire_alert, 2)
 		else
 			fire_alert = 0
 
@@ -510,7 +510,7 @@
 
 		if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
 		if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-		if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
+		if (fire) fire.icon_state = "fire[fire_alert ? 2 : 0]"
 		//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 		//blame the person who coded them. Temporary fix added.
 
