@@ -33,6 +33,11 @@
 
 	spawn()
 		owner.ui_action_click()
+		switch(owner.icon_action_button)
+			if("action_hardhat", "action_welding")
+				usr.update_inv_head()
+			if("action_jetpack")
+				usr.update_inv_back()
 
 //This is the proc used to update all the action buttons. It just returns for all mob types except humans.
 /mob/proc/update_action_buttons()
@@ -274,6 +279,9 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.equip_to_appropriate_slot(I)
+
+			usr.update_inv_l_hand(0)
+			usr.update_inv_r_hand()
 
 		if("resist")
 			if(isliving(usr))
