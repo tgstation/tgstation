@@ -1,3 +1,13 @@
+/mob/living/carbon/alien/humanoid/hunter
+	name = "alien hunter"
+	caste = "h"
+	maxHealth = 150
+	health = 150
+	storedPlasma = 100
+	max_plasma = 150
+	icon_state = "alienh_s"
+	plasma_rate = 5
+
 /mob/living/carbon/alien/humanoid/hunter/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R

@@ -1,3 +1,15 @@
+/mob/living/carbon/alien/humanoid
+	name = "alien"
+	icon_state = "alien_s"
+
+	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
+	var/obj/item/clothing/head/head = null			//
+	var/obj/item/weapon/r_store = null
+	var/obj/item/weapon/l_store = null
+//	var/alien_invis = 0
+	var/caste = ""
+	update_icon = 1
+
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	var/datum/reagents/R = new/datum/reagents(100)

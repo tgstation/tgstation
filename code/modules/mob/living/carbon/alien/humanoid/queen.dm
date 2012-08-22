@@ -1,3 +1,15 @@
+
+/mob/living/carbon/alien/humanoid/queen
+	name = "alien queen"
+	caste = "q"
+	maxHealth = 250
+	health = 250
+	icon_state = "alienq_s"
+	nopush = 1
+	heal_rate = 15
+	plasma_rate = 20
+
+
 /mob/living/carbon/alien/humanoid/queen/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
