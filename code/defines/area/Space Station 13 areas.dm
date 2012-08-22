@@ -297,6 +297,16 @@ proc/process_ghost_teleport_locs()
 	icon_state = "shuttlered2"
 // === Trying to remove these areas:
 
+/area/shuttle/research
+	name = "\improper Research Shuttle"
+	music = "music/escape.ogg"
+
+/area/shuttle/research/station
+	icon_state = "shuttle2"
+
+/area/shuttle/research/outpost
+	icon_state = "shuttle"
+
 /area/airtunnel1/      // referenced in airtunnel.dm:759
 
 /area/dummy/           // Referenced in engine.dm:261

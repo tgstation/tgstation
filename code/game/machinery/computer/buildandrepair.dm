@@ -156,6 +156,10 @@
 	build_path = "/obj/machinery/computer/supplycomp"
 	origin_tech = "programming=3"
 	var/contraband_enabled = 0
+/obj/item/weapon/circuitboard/research_shuttle
+	name = "Circuit board (Research Shuttle)"
+	build_path = "/obj/machinery/computer/research_shuttle"
+	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/operating
 	name = "Circuit board (Operating Computer)"
 	build_path = "/obj/machinery/computer/operating"
