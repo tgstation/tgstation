@@ -535,7 +535,6 @@
 #include "code\game\machinery\embedded_controller\access_controller.dm"
 #include "code\game\machinery\embedded_controller\airlock_controller.dm"
 #include "code\game\machinery\embedded_controller\embedded_controller_base.dm"
-#include "code\game\machinery\kitchen\blender.dm"
 #include "code\game\machinery\kitchen\gibber.dm"
 #include "code\game\machinery\kitchen\juicer.dm"
 #include "code\game\machinery\kitchen\microwave.dm"
