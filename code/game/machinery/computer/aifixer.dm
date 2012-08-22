@@ -128,6 +128,9 @@
 			src.occupant.updatehealth()
 			if (src.occupant.health >= 0 && src.occupant.stat == 2)
 				src.occupant.stat = 0
+				src.occupant.lying = 0
+				dead_mob_list -= src.occupant
+				living_mob_list += src.occupant
 				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 				src.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
 			src.updateUsrDialog()
