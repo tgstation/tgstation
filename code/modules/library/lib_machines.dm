@@ -1,330 +1,25 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
-//*******************************
-//
-//	Library SQL Configuration
-//
-//*******************************
-
-// Deprecated! See global.dm for new SQL config vars -- TLE
-/*
-#define SQL_ADDRESS ""
-#define SQL_DB ""
-#define SQL_PORT "3306"
-#define SQL_LOGIN ""
-#define SQL_PASS ""
-*/
-
-//*******************************
-// Requires Dantom.DB library ( http://www.byond.com/developer/Dantom/DB )
-
+/* Library Machines
+ *
+ * Contains:
+ *		Borrowbook datum
+ *		Library Public Computer
+ *		Library Computer
+ *		Library Scanner
+ *		Book Binder
+ */
 
 /*
-   The Library
-   ------------
-   A place for the crew to go, relax, and enjoy a good book.
-   Aspiring authors can even self publish and, if they're lucky
-   convince the on-staff Librarian to submit it to the Archives
-   to be chronicled in history forever - some say even persisting
-   through alternate dimensions.
-
-
-   Written by TLE for /tg/station 13
-   Feel free to use this as you like. Some credit would be cool.
-   Check us out at http://nanotrasen.com/ if you're so inclined.
-*/
-
-// CONTAINS:
-
-// Objects:
-//  - bookcase
-//  - book
-//  - barcode scanner
-// Machinery:
-//  - library computer
-//  - visitor's computer
-//  - book binder
-//  - book scanner
-// Datum:
-//	- borrowbook
-
-
-// Ideas for the future
-// ---------------------
-// 	- Visitor's computer should be able to search the current in-round library inventory (that the Librarian has stocked and checked in)
-//  -- Give computer other features like an Instant Messenger application, or the ability to edit, save, and print documents.
-//	- Admin interface directly tied to the Archive DB. Right now there's no way to delete uploaded books in-game.
-//  -- If this gets implemented, allow Librarians to "tag" or "suggest" books to be deleted. The DB ID of the tagged books gets saved to a text file (or another table in the DB maybe?).
-//	   The admin interface would automatically take these IDs and SELECT them all from the DB to be displayed along with a Delete link to drop the row from the table.
-//	- When the game sets up and the round begins, have it automatically pick random books from the DB to populate the library with. Even if the Librarian is a useless fuck there are at least a few books around.
-//  - Allow books to be "hollowed out" like the Chaplain's Bible, allowing you to store one pocket-sized item inside.
-//  - Make books/book cases burn when exposed to flame.
-//  - Make book binder hackable.
-//  - Books shouldn't print straight from the library computer. Make it synch with a machine like the book binder to print instead. This should consume some sort of resource.
-
-
-// Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
-/proc/sanitizeSQL(var/t as text)
-	var/sanitized_text = dd_replacetext(t, "'", "\\'")
-	sanitized_text = dd_replacetext(sanitized_text, "\"", "\\\"")
-	return sanitized_text
-
-
-
-/obj/structure/bookcase
-	name = "bookcase"
-	icon = 'icons/obj/library.dmi'
-	icon_state = "book-0"
-	anchored = 1
-	density = 1
-	opacity = 1
-
-/obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
-		update_icon()
-	else if(istype(O, /obj/item/weapon/pen))
-		var/newname = copytext(sanitize(input("What would you like to title this bookshelf?") as text|null),1,MAX_MESSAGE_LEN)
-		if(!newname)
-			return
-		else
-			name = ("bookcase ([sanitize(newname)])")
-	else
-		..()
-
-/obj/structure/bookcase/attack_hand(var/mob/user as mob)
-	if(contents.len)
-		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents as obj|null
-		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-				return
-			if(ishuman(user))
-				if(!user.get_active_hand())
-					user.put_in_hands(choice)
-			else
-				choice.loc = get_turf(src)
-			update_icon()
-
-/obj/structure/bookcase/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/obj/item/weapon/book/b in contents)
-				del(b)
-			del(src)
-			return
-		if(2.0)
-			for(var/obj/item/weapon/book/b in contents)
-				if (prob(50)) b.loc = (get_turf(src))
-				else del(b)
-			del(src)
-			return
-		if(3.0)
-			if (prob(50))
-				for(var/obj/item/weapon/book/b in contents)
-					b.loc = (get_turf(src))
-				del(src)
-			return
-		else
-	return
-
-/obj/structure/bookcase/update_icon()
-	if(contents.len < 5)
-		icon_state = "book-[contents.len]"
-	else
-		icon_state = "book-5"
-
-
-/obj/structure/bookcase/manuals/medical
-	name = "Medical Manuals bookcase"
-
-	New()
-		..()
-		new /obj/item/weapon/book/manual/medical_cloning(src)
-		update_icon()
-
-
-/obj/structure/bookcase/manuals/engineering
-	name = "Engineering Manuals bookcase"
-
-	New()
-		..()
-		new /obj/item/weapon/book/manual/engineering_construction(src)
-		new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
-		new /obj/item/weapon/book/manual/engineering_hacking(src)
-		new /obj/item/weapon/book/manual/engineering_guide(src)
-		new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
-		new /obj/item/weapon/book/manual/robotics_cyborgs(src)
-		update_icon()
-
-/obj/structure/bookcase/manuals/research_and_development
-	name = "R&D Manuals bookcase"
-
-	New()
-		..()
-		new /obj/item/weapon/book/manual/research_and_development(src)
-		update_icon()
-
-
-
-
-
-
-/obj/item/weapon/book
-	name = "book"
-	icon = 'icons/obj/library.dmi'
-	icon_state ="book"
-	throw_speed = 1
-	throw_range = 5
-	w_class = 1.0
-	flags = FPRINT | TABLEPASS
-	attack_verb = list("bashed", "whacked", "educated")
-	var/dat			 // Actual page content
-	var/due_date = 0 // Game time in 1/10th seconds
-	var/author		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-	var/unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
-	var/title		 // The real name of the book.
-
-/obj/item/weapon/book/attack_self(var/mob/user as mob)
-	if(src.dat)
-		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
-		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
-		onclose(user, "book")
-	else
-		user << "This book is completely blank!"
-
-/obj/item/weapon/book/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/pen))
-		if(unique)
-			user << "These pages don't seem to take the ink well. Looks like you can't modify it."
-			return
-		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
-		switch(choice)
-			if("Title")
-				var/newtitle = copytext(reject_bad_text(input("Write a new title:") as text|null),1,MAX_MESSAGE_LEN)
-				if(!newtitle)
-					usr << "The title is invalid."
-					return
-				else
-					src.name = newtitle
-					src.title = newtitle
-			if("Contents")
-				var/content = strip_html(input("Write your book's contents (HTML NOT allowed):"),8192) as message|null
-				if(!content)
-					usr << "The content is invalid."
-					return
-				else
-					src.dat += content
-			if("Author")
-				var/newauthor = copytext(sanitize(input("Write the author's name:") as text|null),1,MAX_NAME_LEN)
-				if(!newauthor)
-					usr << "The name is invalid."
-					return
-				else
-					src.author = newauthor
-			else
-				return
-	else if(istype(W, /obj/item/weapon/barcodescanner))
-		var/obj/item/weapon/barcodescanner/scanner = W
-		if(!scanner.computer)
-			user << "[W]'s screen flashes: 'No associated computer found!'"
-		else
-			switch(scanner.mode)
-				if(0)
-					scanner.book = src
-					user << "[W]'s screen flashes: 'Book stored in buffer.'"
-				if(1)
-					scanner.book = src
-					scanner.computer.buffer_book = src.name
-					user << "[W]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"
-				if(2)
-					scanner.book = src
-					for(var/datum/borrowbook/b in scanner.computer.checkouts)
-						if(b.bookname == src.name)
-							scanner.computer.checkouts.Remove(b)
-							user << "[W]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"
-							return
-					user << "[W]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"
-				if(3)
-					scanner.book = src
-					for(var/obj/item/weapon/book in scanner.computer.inventory)
-						if(book == src)
-							user << "[W]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'"
-							return
-					scanner.computer.inventory.Add(src)
-					user << "[W]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
-	else
-		..()
-
-
-
-
-
-
-
-
-
-
-
-
-/obj/item/weapon/barcodescanner
-	name = "barcode scanner"
-	icon = 'icons/obj/library.dmi'
-	icon_state ="scanner"
-	throw_speed = 1
-	throw_range = 5
-	w_class = 1.0
-	flags = FPRINT | TABLEPASS
-	var/obj/machinery/librarycomp/computer // Associated computer - Modes 1 to 3 use this
-	var/obj/item/weapon/book/book	 //  Currently scanned book
-	var/mode = 0 					// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
-
-	attack_self(mob/user as mob)
-		mode += 1
-		if(mode > 3)
-			mode = 0
-		user << "[src] Status Display:"
-		var/modedesc
-		switch(mode)
-			if(0)
-				modedesc = "Scan book to local buffer."
-			if(1)
-				modedesc = "Scan book to local buffer and set associated computer buffer to match."
-			if(2)
-				modedesc = "Scan book to local buffer, attempt to check in scanned book."
-			if(3)
-				modedesc = "Scan book to local buffer, attempt to add book to general inventory."
-			else
-				modedesc = "ERROR"
-		user << " - Mode [mode] : [modedesc]"
-		if(src.computer)
-			user << "<font color=green>Computer has been associated with this unit.</font>"
-		else
-			user << "<font color=red>No associated computer found. Only local scans will function properly.</font>"
-		user << "\n"
-
-
-
-
-
-
-
-
-
-
+ * Borrowbook datum
+ */
 datum/borrowbook // Datum used to keep track of who has borrowed what when and for how long.
 	var/bookname
 	var/mobname
 	var/getdate
 	var/duedate
 
-
-
-
-
-
-
-
+/*
+ * Library Public Computer
+ */
 /obj/machinery/librarypubliccomp
 	name = "visitor computer"
 	icon = 'icons/obj/library.dmi'
@@ -336,7 +31,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/category = "Any"
 	var/author
 	var/SQLquery
-
 
 /obj/machinery/librarypubliccomp/attack_hand(var/mob/user as mob)
 	usr.machine = src
@@ -373,7 +67,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
 	user << browse(dat, "window=publiclibrary")
 	onclose(user, "publiclibrary")
-
 
 /obj/machinery/librarypubliccomp/Topic(href, href_list)
 	if(..())
@@ -418,9 +111,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	return
 
 
-
+/*
+ * Library Computer
+ */
 // TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
-
+// It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
 /obj/machinery/librarycomp
 	name = "Check-In/Out Computer"
 	icon = 'icons/obj/library.dmi'
@@ -699,6 +394,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	src.updateUsrDialog()
 	return
 
+/*
+ * Library Scanner
+ */
 /obj/machinery/libraryscanner
 	name = "scanner"
 	icon = 'icons/obj/library.dmi'
@@ -707,13 +405,10 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	density = 1
 	var/obj/item/weapon/book/cache		// Last scanned book
 
-
-
 /obj/machinery/libraryscanner/attackby(var/obj/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/book))
 		user.drop_item()
 		O.loc = src
-
 
 /obj/machinery/libraryscanner/attack_hand(var/mob/user as mob)
 	usr.machine = src
@@ -750,12 +445,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	return
 
 
-
-
-
-
-
-
+/*
+ * Book binder
+ */
 /obj/machinery/bookbinder
 	name = "Book Binder"
 	icon = 'icons/obj/library.dmi'

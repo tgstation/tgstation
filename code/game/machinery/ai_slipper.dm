@@ -23,7 +23,6 @@
 			icon_state = "motion0"
 			stat |= NOPOWER
 
-
 /obj/machinery/ai_slipper/proc/setState(var/enabled, var/uses)
 	src.disabled = disabled
 	src.uses = uses
