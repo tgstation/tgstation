@@ -7,7 +7,10 @@
 
 /obj/item/weapon/bedsheet/attack_self(mob/user as mob)
 	user.drop_item()
-	src.layer = 5
+	if(layer == initial(layer))
+		layer = 5
+	else
+		layer = initial(layer)
 	add_fingerprint(user)
 	return
 
