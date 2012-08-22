@@ -498,4 +498,11 @@ var/list/liftable_structures = list(\
 #define INVISIBILITY_OBSERVER 60
 #define SEE_INVISIBLE_OBSERVER 60
 
-#define INVISIBILITY_MAXIMUM 100//Some mob defines below#define AI_CAMERA_LUMINOSITY 6#define BORGMESON 1#define BORGTHERM 2#define BORGXRAY  4
+#define INVISIBILITY_MAXIMUM 100
+
+//Some mob defines below
+#define AI_CAMERA_LUMINOSITY 6
+
+#define BORGMESON 1
+#define BORGTHERM 2
+#define BORGXRAY  4
