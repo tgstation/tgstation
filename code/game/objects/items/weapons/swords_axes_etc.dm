@@ -1,5 +1,6 @@
 /*
 CONTAINS:
+BANHAMMER
 SWORD
 BLADE
 AXE
@@ -7,8 +8,10 @@ CLASSIC BATON
 ENERGY SHIELD (where else should i even put this)
 */
 
-
-
+//BANHAMMER
+/obj/item/weapon/banhammer/attack(mob/M as mob, mob/user as mob)
+	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
+	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
 
 // SWORD
 /obj/item/weapon/melee/energy/sword/IsShield()
