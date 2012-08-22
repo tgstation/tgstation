@@ -403,6 +403,7 @@
 #include "code\game\step_triggers.dm"
 #include "code\game\supplyshuttle.dm"
 #include "code\game\syndicate_shuttle.dm"
+#include "code\game\syndicate_specops_shuttle.dm"
 #include "code\game\throwing.dm"
 #include "code\game\topic.dm"
 #include "code\game\turf.dm"
