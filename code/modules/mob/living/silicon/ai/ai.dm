@@ -199,11 +199,41 @@
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
 
+/mob/living/silicon/ai/proc/ai_call_shuttle()
+	set category = "AI Commands"
+	set name = "Call Emergency Shuttle"
+	if(usr.stat == 2)
+		usr << "You can't call the shuttle because you are dead!"
+		return
+	if(istype(usr,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = usr
+		if(AI.control_disabled)
+			usr << "Wireless control is disabled!"
+			return
+
+	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
+
+	if(confirm == "Yes")
+		call_shuttle_proc(src)
+
+	// hack to display shuttle timer
+	if(emergency_shuttle.online)
+		var/obj/machinery/computer/communications/C = locate() in world
+		if(C)
+			C.post_status("shuttle")
+
+	return
+
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "AI Commands"
 	if(usr.stat == 2)
 		usr << "You can't send the shuttle back because you are dead!"
 		return
+	if(istype(usr,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = usr
+		if(AI.control_disabled)
+			usr << "Wireless control is disabled!"
+			return
 	cancel_call_proc(src)
 	return
 

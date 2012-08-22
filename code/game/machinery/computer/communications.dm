@@ -412,26 +412,6 @@
 	dat += "<BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	return dat
 
-/mob/living/silicon/ai/proc/ai_call_shuttle()
-	set category = "AI Commands"
-	set name = "Call Emergency Shuttle"
-	if(usr.stat == 2)
-		usr << "You can't call the shuttle because you are dead!"
-		return
-
-	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
-
-	if(confirm == "Yes")
-		call_shuttle_proc(src)
-
-	// hack to display shuttle timer
-	if(emergency_shuttle.online)
-		var/obj/machinery/computer/communications/C = locate() in world
-		if(C)
-			C.post_status("shuttle")
-
-	return
-
 /proc/enable_prison_shuttle(var/mob/user)
 	for(var/obj/machinery/computer/prison_shuttle/PS in world)
 		PS.allowedtocall = !(PS.allowedtocall)
