@@ -26,14 +26,14 @@
 	if (on)
 		icon_state = icon_on
 		if(src.loc == user)
-			user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + brightness_on, user.LuminosityBlue)
+			user.ul_SetLuminosity(user.ul_Red + brightness_on, user.ul_Green + brightness_on, user.ul_Blue)
 		else if (isturf(src.loc))
 			ul_SetLuminosity(brightness_on, brightness_on, 0)
 
 	else
 		icon_state = icon_off
 		if(src.loc == user)
-			user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - brightness_on, user.LuminosityBlue)
+			user.ul_SetLuminosity(user.ul_Red - brightness_on, user.ul_Green - brightness_on, user.ul_Blue)
 		else if (isturf(src.loc))
 			ul_SetLuminosity(0)
 
@@ -82,13 +82,13 @@
 
 /obj/item/device/flashlight/pickup(mob/user)
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + brightness_on, user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red + brightness_on, user.ul_Green + brightness_on, user.ul_Blue)
 		src.ul_SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - brightness_on, user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red - brightness_on, user.ul_Green - brightness_on, user.ul_Blue)
 		src.ul_SetLuminosity(brightness_on)
 
 
@@ -148,18 +148,18 @@
 	item_state = "hardhat[on]_[color]"
 
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red + brightness_on, user.ul_Green + (brightness_on - 1), user.ul_Blue)
 	else
-		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red - brightness_on, user.ul_Green - (brightness_on - 1), user.ul_Blue)
 
 /obj/item/clothing/head/helmet/hardhat/pickup(mob/user)
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red + brightness_on, user.ul_Green + (brightness_on - 1), user.ul_Blue)
 		ul_SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/hardhat/dropped(mob/user)
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red - brightness_on, user.ul_Green - (brightness_on - 1), user.ul_Blue)
 		ul_SetLuminosity(brightness_on, brightness_on - 1, 0)
 
 //RIG helmet light
@@ -172,18 +172,18 @@
 	item_state = "rig[on]-[color]"
 
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red + brightness_on, user.ul_Green + (brightness_on - 1), user.ul_Blue)
 	else
-		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red - brightness_on, user.ul_Green - (brightness_on - 1), user.ul_Blue)
 
 /obj/item/clothing/head/helmet/space/rig/pickup(mob/user)
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red + brightness_on, user.ul_Green + (brightness_on - 1), user.ul_Blue)
 		ul_SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
 	if(on)
-		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red - brightness_on, user.ul_Green - (brightness_on - 1), user.ul_Blue)
 		ul_SetLuminosity(brightness_on, brightness_on - 1, 0)
 
 // the desk lamps are a bit special

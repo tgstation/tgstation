@@ -105,7 +105,7 @@
 	handle_random_events()
 
 	//Status updates, death etc.
-	UpdateLuminosity()
+//	UpdateLuminosity()
 	handle_regular_status_updates()
 
 	handle_pain()

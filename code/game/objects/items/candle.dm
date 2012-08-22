@@ -75,17 +75,17 @@
 			lit = 0
 			update_icon()
 			ul_SetLuminosity(0)
-			user.ul_SetLuminosity(user.LuminosityRed - CANDLE_LUM, user.LuminosityGreen - (CANDLE_LUM - 2), user.LuminosityBlue)
+			user.ul_SetLuminosity(user.ul_Red - CANDLE_LUM, user.ul_Green - (CANDLE_LUM - 2), user.ul_Blue)
 
 
 	pickup(mob/user)
 		if(lit)
 			ul_SetLuminosity(0)
-			user.ul_SetLuminosity(user.LuminosityRed + CANDLE_LUM, user.LuminosityGreen + (CANDLE_LUM - 2), user.LuminosityBlue)
+			user.ul_SetLuminosity(user.ul_Red + CANDLE_LUM, user.ul_Green + (CANDLE_LUM - 2), user.ul_Blue)
 
 	dropped(mob/user)
 		if(lit)
-			user.ul_SetLuminosity(user.LuminosityRed - CANDLE_LUM, user.LuminosityGreen - (CANDLE_LUM - 2), user.LuminosityBlue)
+			user.ul_SetLuminosity(user.ul_Red - CANDLE_LUM, user.ul_Green - (CANDLE_LUM - 2), user.ul_Blue)
 			src.ul_SetLuminosity(CANDLE_LUM, CANDLE_LUM, 0)
 
 
