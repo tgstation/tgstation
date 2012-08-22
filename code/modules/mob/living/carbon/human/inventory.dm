@@ -557,7 +557,7 @@ It can still be worn/put on as normal.
 					source.update_icons()
 					target.update_icons()
 
-	if(source)
+	if(source && target)
 		if(source.machine == target)
 			target.show_inv(source)
 	del(src)
