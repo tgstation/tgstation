@@ -125,8 +125,10 @@
 	if(!slot) return
 	if(!istype(W)) return
 
-	if(W == get_active_hand())
-		u_equip(W)
+	if(W == src.l_hand)
+		src.l_hand = null
+	else if(W == src.r_hand)
+		src.r_hand = null
 
 	W.loc = src
 	switch(slot)
@@ -208,6 +210,8 @@
 			W.equipped(src, slot)
 			update_inv_s_store(redraw_mob)
 		if(slot_in_backpack)
+			if(src.get_active_hand() == W)
+				src.u_equip(W)
 			W.loc = src.back
 		else
 			src << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
@@ -553,7 +557,7 @@ It can still be worn/put on as normal.
 					source.update_icons()
 					target.update_icons()
 
-	if(source)
+	if(source && target)
 		if(source.machine == target)
 			target.show_inv(source)
 	del(src)
