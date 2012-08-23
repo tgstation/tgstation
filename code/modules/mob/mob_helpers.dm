@@ -114,7 +114,25 @@ proc/isorgan(A)
 	return
 
 /proc/istajaran(A)
-	return istype(A, /mob/living/carbon/human/tajaran)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = A
+		if(M.dna.mutantrace == "tajaran")
+			return 1
+	return 0
+
+/proc/issoghun(A)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = A
+		if(M.dna.mutantrace == "lizard")
+			return 1
+	return 0
+
+/proc/isskrell(A)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = A
+		if(M.dna.mutantrace == "skrell")
+			return 1
+	return 0
 
 
 /proc/check_zone(zone)
