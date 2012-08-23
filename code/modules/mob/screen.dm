@@ -550,10 +550,14 @@
 
 /obj/screen/inventory/attack_hand(mob/user as mob)
 	user.attack_ui(slot_id)
+	user.update_inv_l_hand(0)
+	user.update_inv_r_hand()
 	return
 
 /obj/screen/inventory/attack_paw(mob/user as mob)
 	user.attack_ui(slot_id)
+	user.update_inv_l_hand(0)
+	user.update_inv_r_hand()
 	return
 
 

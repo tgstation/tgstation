@@ -748,7 +748,6 @@
 #include "code\game\vehicles\airtight\airtight.dm"
 #include "code\game\vehicles\airtight\land.dm"
 #include "code\game\vehicles\airtight\space.dm"
-#include "code\game\verbs\AI_status.dm"
 #include "code\game\verbs\ooc.dm"
 #include "code\game\verbs\sound.dm"
 #include "code\game\verbs\suicide.dm"
