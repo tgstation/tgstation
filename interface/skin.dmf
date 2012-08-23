@@ -68,12 +68,56 @@ macro "macro"
 		command = "drop-item"
 		is-disabled = false
 	elem 
+		name = "CTRL+E"
+		command = "_changeintent 1"
+		is-disabled = false
+	elem 
+		name = "CTRL+Q"
+		command = "_changeintent -1"
+		is-disabled = false
+	elem 
 		name = "CTRL+S"
 		command = "swap-hand"
 		is-disabled = false
 	elem 
 		name = "CTRL+W"
 		command = "attack-self"
+		is-disabled = false
+	elem 
+		name = "NUMPAD2+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "NUMPAD4+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "NUMPAD5+REP"
+		command = ".center"
+		is-disabled = false
+	elem 
+		name = "NUMPAD6+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "NUMPAD8+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "MULTIPLY"
+		command = "swap-hand"
+		is-disabled = false
+	elem 
+		name = "ADD"
+		command = "attack-self"
+		is-disabled = false
+	elem 
+		name = "SUBTRACT"
+		command = "drop-item"
+		is-disabled = false
+	elem 
+		name = "DIVIDE"
+		command = "toggle-throw-mode"
 		is-disabled = false
 	elem 
 		name = "F1"
@@ -84,12 +128,32 @@ macro "macro"
 		command = ".options"
 		is-disabled = false
 	elem 
+		name = "F2"
+		command = "ooc"
+		is-disabled = false
+	elem 
 		name = "F2+REP"
 		command = ".screenshot auto"
 		is-disabled = false
 	elem 
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
+		is-disabled = false
+	elem 
+		name = "F3"
+		command = "say"
+		is-disabled = false
+	elem 
+		name = "F4"
+		command = "me"
+		is-disabled = false
+	elem 
+		name = "F5"
+		command = "asay"
+		is-disabled = false
+	elem 
+		name = "F6"
+		command = "ToggleGunMode"
 		is-disabled = false
 	elem 
 		name = "F12"
@@ -246,6 +310,98 @@ menu "menu"
 		name = "&Admin help\tF1"
 		command = "adminhelp"
 		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = ""
+		command = ""
+		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Rules"
+		command = "Rules"
+		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&News"
+		command = "Read-News"
+		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+
+menu "minimap_menu"
+	elem 
+		name = "Size"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "50%"
+		command = ".winset \"minimap.icon-size=16\""
+		category = "Size"
+		is-checked = false
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "100%"
+		command = ".winset \"minimap.icon-size=32\""
+		category = "Size"
+		is-checked = true
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "200%"
+		command = ".winset \"minimap.icon-size=64\""
+		category = "Size"
+		is-checked = false
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "stretch"
+		command = ".winset \"minimap.icon-size=0\""
+		category = "Size"
+		is-checked = false
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "View"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "Change Z level"
+		command = "Open-Minimap-Z"
+		category = "View"
 		is-checked = false
 		can-check = false
 		group = ""
@@ -496,6 +652,116 @@ window "chemdispenser"
 		macro = ""
 		menu = ""
 		on-close = ""
+	elem "charging"
+		type = BUTTON
+		pos = 72,24
+		size = 88x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "[Not charging]"
+		image = ""
+		command = "skincmd \"chemdispenser;tcharge\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "button4"
+		type = BUTTON
+		pos = 208,4
+		size = 48x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "[Other]"
+		image = ""
+		command = "skincmd \"chemdispenser;amountc\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "child2"
+		type = CHILD
+		pos = 0,48
+		size = 340x432
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "splitter"
+		on-size = ""
+		left = "chemdispenser_reagents"
+		right = ""
+		is-vert = false
+		splitter = 50
+		show-splitter = true
+		lock = none
+	elem "button3"
+		type = BUTTON
+		pos = 208,4
+		size = 48x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "[Other]"
+		image = ""
+		command = "skincmd \"chemdispenser;amountc\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
 	elem "energy"
 		type = LABEL
 		pos = 8,24
@@ -879,7 +1145,7 @@ window "mainwindow"
 	elem "input"
 		type = INPUT
 		pos = 3,420
-		size = 517x20
+		size = 554x20
 		anchor1 = 0,100
 		anchor2 = 100,100
 		font-family = ""
@@ -902,7 +1168,7 @@ window "mainwindow"
 		no-command = false
 	elem "saybutton"
 		type = BUTTON
-		pos = 520,420
+		pos = 557,420
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
@@ -922,16 +1188,16 @@ window "mainwindow"
 		on-size = ""
 		text = "Chat"
 		image = ""
-		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\""
+		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" oocbutton.is-checked=false:input.command=\""
 		is-flat = false
 		stretch = false
 		is-checked = false
 		group = ""
 		button-type = pushbox
-	elem "macrobutton"
+	elem "oocbutton"
 		type = BUTTON
-		pos = 560,420
-		size = 30x20
+		pos = 597,420
+		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
 		font-family = ""
@@ -940,7 +1206,7 @@ window "mainwindow"
 		text-color = #000000
 		background-color = none
 		is-visible = true
-		is-disabled = true
+		is-disabled = false
 		is-transparent = false
 		is-default = false
 		border = none
@@ -948,42 +1214,14 @@ window "mainwindow"
 		right-click = false
 		saved-params = "is-checked"
 		on-size = ""
-		text = "Alt"
+		text = "OOC"
 		image = ""
-		command = ".winset \"macrobutton.is-checked=true?input.command=\"!.alt \" saybutton.is-checked=false:input.command=\""
+		command = ".winset \"oocbutton.is-checked=true?input.command=\"!ooc \\\"\" saybutton.is-checked=false:input.command=\""
 		is-flat = false
 		stretch = false
 		is-checked = false
 		group = ""
 		button-type = pushbox
-	elem "hostb"
-		type = BUTTON
-		pos = 590,420
-		size = 47x20
-		anchor1 = 100,100
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = true
-		is-disabled = true
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "is-checked"
-		on-size = ""
-		text = "Host..."
-		image = ""
-		command = ".host"
-		is-flat = false
-		stretch = false
-		is-checked = false
-		group = ""
-		button-type = pushbutton
 
 window "mapwindow"
 	elem "mapwindow"
@@ -1049,7 +1287,71 @@ window "mapwindow"
 		text-mode = false
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
-		style = ""
+
+window "minimapwindow"
+	elem "minimapwindow"
+		type = MAIN
+		pos = 281,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = ""
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = false
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = "minimap_menu"
+		on-close = ""
+	elem "minimap"
+		type = MAP
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = true
+		right-click = false
+		saved-params = "icon-size"
+		on-size = ""
+		icon-size = 32
+		text-mode = false
+		on-show = ""
+		on-hide = ""
 
 window "outputwindow"
 	elem "outputwindow"
@@ -1653,6 +1955,32 @@ window "vendingwindow_n"
 		macro = "vending"
 		menu = ""
 		on-close = ""
+	elem "label2"
+		type = LABEL
+		pos = 0,0
+		size = 80x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #0000a0
+		background-color = #ff8000
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = sunken
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		text = ""
+		image = ""
+		image-mode = center
+		keep-aspect = false
+		align = center
+		text-wrap = false
 	elem "page"
 		type = LABEL
 		pos = 64,416
