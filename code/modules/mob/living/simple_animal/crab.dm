@@ -1,7 +1,7 @@
 //Look Sir, free crabs!
 /mob/living/simple_animal/crab
 	name = "crab"
-	desc = "Free crabs!"
+	desc = "A hard-shelled crustacean. Seems quite content to lounge around all the time."
 	icon_state = "crab"
 	icon_living = "crab"
 	icon_dead = "crab_dead"

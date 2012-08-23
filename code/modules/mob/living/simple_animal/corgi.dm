@@ -26,6 +26,7 @@
 	regenerate_icons()
 
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
+	/*
 	user.machine = src
 	if(user.stat) return
 
@@ -41,6 +42,7 @@
 
 	user << browse(dat, text("window=mob[];size=325x500", name))
 	onclose(user, "mob[real_name]")
+	*/
 	return
 
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -312,6 +314,10 @@
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
 					sleep(1)
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+	name = "Corgi meat"
+	desc = "Tastes like... well you know..."
 
 /mob/living/simple_animal/corgi/Ian/Bump(atom/movable/AM as mob|obj, yes)
 

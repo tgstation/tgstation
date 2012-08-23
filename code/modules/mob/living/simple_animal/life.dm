@@ -390,3 +390,6 @@
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health -= damage
+
+/proc/issimpleanimal(var/mob/AM)
+	return istype(AM,/mob/living/simple_animal)

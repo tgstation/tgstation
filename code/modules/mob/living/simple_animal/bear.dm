@@ -42,6 +42,9 @@
 	var/stance_step = 0 //Used to delay checks depending on what stance the bear is in
 	var/mob/living/target_mob //Once the bear enters attack stance, it will try to chase this mob. This it to prevent it changing it's mind between multiple mobs.
 
+/proc/isbear(var/mob/M)
+	return istype(M, /mob/living/simple_animal/bear)
+
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/bear/Hudson
 	name = "Hudson"
