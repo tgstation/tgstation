@@ -674,9 +674,9 @@
 /mob/proc/get_damage()
 	return health
 
-/mob/proc/UpdateLuminosity()
-	ul_SetLuminosity(LuminosityRed, LuminosityGreen, LuminosityBlue)//Current hardcode max at 7, should likely be a const somewhere else
-	return 1
+///mob/proc/UpdateLuminosity()
+//	ul_SetLuminosity(ul_Red, ul_Green, ul_Blue)//Current hardcode max at 7, should likely be a const somewhere else
+//	return 1
 
 /mob/proc/pull_damage()
 	if(ishuman(src))

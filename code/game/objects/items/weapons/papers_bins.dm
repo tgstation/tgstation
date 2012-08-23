@@ -24,7 +24,7 @@ NOTEBOOK
 
 /obj/item/weapon/paper/Del()
 	if(burning && istype(loc, /mob))
-		loc.ul_SetLuminosity(loc.LuminosityRed - 8, loc.LuminosityGreen - 6, loc.LuminosityBlue)
+		loc.ul_SetLuminosity(loc.ul_Red - 8, loc.ul_Green - 6, loc.ul_Blue)
 	..()
 
 /obj/item/weapon/paper/process()
@@ -54,11 +54,11 @@ NOTEBOOK
 /obj/item/weapon/paper/pickup(mob/user)
 	if(burning)
 		src.ul_SetLuminosity(0)
-		user.ul_SetLuminosity(user.LuminosityRed + 8, user.LuminosityGreen + 6, user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red + 8, user.ul_Green + 6, user.ul_Blue)
 
 /obj/item/weapon/paper/dropped(mob/user)
 	if(burning)
-		user.ul_SetLuminosity(user.LuminosityRed - 8, user.LuminosityGreen - 6, user.LuminosityBlue)
+		user.ul_SetLuminosity(user.ul_Red - 8, user.ul_Green - 6, user.ul_Blue)
 		src.ul_SetLuminosity(8,6,0)
 
 /obj/item/weapon/paper/examine()
@@ -164,7 +164,7 @@ NOTEBOOK
 		if(is_burn(P))
 			for(var/mob/M in viewers(5, get_turf(src)))
 				M << "\red [user] sets \the [src] on fire."
-			user.ul_SetLuminosity(user.LuminosityRed + 8, user.LuminosityGreen + 6, user.LuminosityBlue)
+			user.ul_SetLuminosity(user.ul_Red + 8, user.ul_Green + 6, user.ul_Blue)
 			burning = 1
 			processing_objects.Add(src)
 			update_icon()

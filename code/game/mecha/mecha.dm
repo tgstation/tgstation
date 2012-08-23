@@ -942,9 +942,9 @@
 		return
 	lights = !lights
 	if(lights)
-		ul_SetLuminosity(LuminosityRed + lights_power, LuminosityGreen + lights_power, LuminosityBlue)
+		ul_SetLuminosity(ul_Red + lights_power, ul_Green + lights_power, ul_Blue)
 	else
-		ul_SetLuminosity(LuminosityRed - lights_power, LuminosityGreen - lights_power, LuminosityBlue)
+		ul_SetLuminosity(ul_Red - lights_power, ul_Green - lights_power, ul_Blue)
 	src.log_message("Toggled lights.")
 	return
 
