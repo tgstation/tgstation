@@ -155,6 +155,7 @@
 			verbs += /client/proc/cmd_admin_create_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
+			verbs += /client/proc/toggle_hear_atklog
 			verbs += /client/proc/deadmin_self
 			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
 		else	return
@@ -397,6 +398,7 @@
 	verbs -= /client/proc/toggle_clickproc 								//TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 	verbs -= /client/proc/toggle_hear_deadcast
 	verbs -= /client/proc/toggle_hear_radio
+	verbs -= /client/proc/toggle_hear_atklog
 	verbs -= /client/proc/player_panel_new
 	verbs -= /client/proc/toggle_gravity_on
 	verbs -= /client/proc/toggle_gravity_off

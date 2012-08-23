@@ -161,7 +161,7 @@
 
 			if(HULK in M.mutations)			damage += 5
 			if(SUPRSTR in M.augmentations) 	damage += 5
-			if(attack_verb == "scratch")	damage += 5
+
 
 			switch(attack_verb)
 				if("slash")
@@ -172,11 +172,14 @@
 					playsound(loc, "punch", 25, 1, -1)
 
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
-
-			apply_damage(damage, BRUTE, affecting, armor_block)
+//Rearranged, so claws don't increase weaken chance.
 			if(damage >= 5 && prob(50))
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(2, WEAKEN, armor_block)
+
+			if(attack_verb == "scratch")	damage += 5
+			apply_damage(damage, BRUTE, affecting, armor_block)
+
 
 		if("disarm")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
