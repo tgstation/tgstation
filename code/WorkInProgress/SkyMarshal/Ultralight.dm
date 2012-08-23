@@ -7,6 +7,7 @@
 #define UL_I_LIT 0
 #define UL_I_EXTINGUISHED 1
 #define UL_I_ONZERO 2
+#define UL_I_CHANGING 3
 
 #define ul_LightingEnabled 1
 //#define ul_LightingResolution 2
@@ -21,8 +22,8 @@
 
 
 #define ul_Clamp(Value) min(max(Value, 0), ul_Steps)
-#define ul_IsLuminous(A) (A.LuminosityRed || A.LuminosityGreen || A.LuminosityBlue)
-#define ul_Luminosity(A) max(A.LuminosityRed, A.LuminosityGreen, A.LuminosityBlue)
+#define ul_IsLuminous(A) (A.ul_Red || A.ul_Green || A.ul_Blue)
+#define ul_Luminosity(A) max(A.ul_Red, A.ul_Green, A.ul_Blue)
 
 
 #ifdef ul_LightingResolution
@@ -35,6 +36,8 @@ var/list/ul_FastRoot = list(0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4
 							5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
 							7, 7)
 
+var/list/ul_IconCache = list()
+
 
 proc/ul_UnblankLocal(var/list/ReApply = view(ul_TopLuminosity, src))
 	for(var/atom/Light in ReApply)
@@ -42,30 +45,34 @@ proc/ul_UnblankLocal(var/list/ReApply = view(ul_TopLuminosity, src))
 			Light.ul_Illuminate()
 	return
 
-atom/var/LuminosityRed = 0
-atom/var/LuminosityGreen = 0
-atom/var/LuminosityBlue = 0
+atom/var/ul_Red = 0
+atom/var/ul_Green = 0
+atom/var/ul_Blue = 0
+atom/var/turf/ul_LastIlluminated
 
 atom/var/ul_Extinguished = UL_I_ONZERO
 
-atom/proc/ul_SetLuminosity(var/Red, var/Green = Red, var/Blue = Red)
+atom/proc/ul_SetLuminosity(var/Red = 0, var/Green = Red, var/Blue = Red)
 
-	if(LuminosityRed == min(Red, ul_TopLuminosity) && LuminosityGreen == min(Green, ul_TopLuminosity) && LuminosityBlue == min(Blue, ul_TopLuminosity))
+	if(ul_Extinguished == UL_I_CHANGING) //Changing state, just supress any changes, to prevent glitches.
+		return
+
+	if(ul_Red == min(Red, ul_TopLuminosity) && ul_Green == min(Green, ul_TopLuminosity) && ul_Blue == min(Blue, ul_TopLuminosity))
 		return //No point doing all that work if it won't have any effect anyways...
 
 	if (ul_Extinguished == UL_I_EXTINGUISHED)
-		LuminosityRed = min(Red,ul_TopLuminosity)
-		LuminosityGreen = min(Green,ul_TopLuminosity)
-		LuminosityBlue = min(Blue,ul_TopLuminosity)
+		ul_Red = min(Red,ul_TopLuminosity)
+		ul_Green = min(Green,ul_TopLuminosity)
+		ul_Blue = min(Blue,ul_TopLuminosity)
 
 		return
 
 	if (ul_IsLuminous(src))
 		ul_Extinguish()
 
-	LuminosityRed = min(Red,ul_TopLuminosity)
-	LuminosityGreen = min(Green,ul_TopLuminosity)
-	LuminosityBlue = min(Blue,ul_TopLuminosity)
+	ul_Red = min(Red,ul_TopLuminosity)
+	ul_Green = min(Green,ul_TopLuminosity)
+	ul_Blue = min(Blue,ul_TopLuminosity)
 
 	ul_Extinguished = UL_I_ONZERO
 
@@ -78,16 +85,16 @@ atom/proc/ul_Illuminate()
 	if (ul_Extinguished == UL_I_LIT)
 		return
 
-	ul_Extinguished = UL_I_LIT
+	ul_Extinguished = UL_I_CHANGING
 
 	luminosity = ul_Luminosity(src)
 
 	for(var/turf/Affected in view(luminosity, src))
-		var/Falloff = src.ul_FalloffAmount(Affected)
+		var/Falloff = ul_FalloffAmount(Affected)
 
-		var/DeltaRed = LuminosityRed - Falloff
-		var/DeltaGreen = LuminosityGreen - Falloff
-		var/DeltaBlue = LuminosityBlue - Falloff
+		var/DeltaRed = ul_Red - Falloff
+		var/DeltaGreen = ul_Green - Falloff
+		var/DeltaBlue = ul_Blue - Falloff
 
 		if(DeltaRed > 0 || DeltaGreen > 0 || DeltaBlue > 0)
 
@@ -115,6 +122,10 @@ atom/proc/ul_Illuminate()
 				for(var/atom/AffectedAtom in Affected)
 					AffectedAtom.ul_LightLevelChanged()
 			#endif
+
+	ul_LastIlluminated = get_turf(src)
+	ul_Extinguished = UL_I_LIT
+
 	return
 
 atom/proc/ul_Extinguish()
@@ -122,33 +133,39 @@ atom/proc/ul_Extinguish()
 	if (ul_Extinguished != UL_I_LIT)
 		return
 
-	ul_Extinguished = UL_I_EXTINGUISHED
+	ul_Extinguished = UL_I_CHANGING
 
-	for(var/turf/Affected in view(ul_Luminosity(src), src))
+	for(var/turf/Affected in view(ul_Luminosity(src), ul_LastIlluminated))
 
-		var/Falloff = ul_FalloffAmount(Affected)
+		var/Falloff = ul_LastIlluminated.ul_FalloffAmount(Affected)
 
-		var/DeltaRed = LuminosityRed - Falloff
-		var/DeltaGreen = LuminosityGreen - Falloff
-		var/DeltaBlue = LuminosityBlue - Falloff
+		var/DeltaRed = ul_Red - Falloff
+		var/DeltaGreen = ul_Green - Falloff
+		var/DeltaBlue = ul_Blue - Falloff
 
 		if(DeltaRed > 0 || DeltaGreen > 0 || DeltaBlue > 0)
 
 			if(DeltaRed > 0)
 				if(Affected.MaxRed)
-					Affected.MaxRed -= DeltaRed
+					var/removed_light_source = Affected.MaxRed.Find(DeltaRed)
+					if(removed_light_source)
+						Affected.MaxRed.Cut(removed_light_source, removed_light_source+1)
 					if(!Affected.MaxRed.len)
 						del Affected.MaxRed
 
 			if(DeltaGreen > 0)
 				if(Affected.MaxGreen)
-					Affected.MaxGreen -= DeltaGreen
+					var/removed_light_source = Affected.MaxGreen.Find(DeltaGreen)
+					if(removed_light_source)
+						Affected.MaxGreen.Cut(removed_light_source, removed_light_source+1)
 					if(!Affected.MaxGreen.len)
 						del Affected.MaxGreen
 
 			if(DeltaBlue > 0)
 				if(Affected.MaxBlue)
-					Affected.MaxBlue -= DeltaBlue
+					var/removed_light_source = Affected.MaxBlue.Find(DeltaBlue)
+					if(removed_light_source)
+						Affected.MaxBlue.Cut(removed_light_source, removed_light_source+1)
 					if(!Affected.MaxBlue.len)
 						del Affected.MaxBlue
 
@@ -162,7 +179,9 @@ atom/proc/ul_Extinguish()
 					AffectedAtom.ul_LightLevelChanged()
 			#endif
 
+	ul_Extinguished = UL_I_EXTINGUISHED
 	luminosity = 0
+	ul_LastIlluminated = null
 
 	return
 
@@ -176,20 +195,20 @@ atom/proc/ul_Extinguish()
 */
 atom/proc/ul_FalloffAmount(var/atom/ref)
 	if (ul_FalloffStyle == UL_I_FALLOFF_ROUND)
-		var/x = (ref.x - src.x)
-		var/y = (ref.y - src.y)
+		var/delta_x = (ref.x - src.x)
+		var/delta_y = (ref.y - src.y)
 
 		#ifdef ul_LightingResolution
-		if (round((x*x + y*y)*ul_LightingResolutionSqrt,1) > ul_FastRoot.len)
-			for(var/i = ul_FastRoot.len, i <= round(x*x+y*y*ul_LightingResolutionSqrt,1), i++)
+		if (round((delta_x*delta_x + delta_y*delta_y)*ul_LightingResolutionSqrt,1) > ul_FastRoot.len)
+			for(var/i = ul_FastRoot.len, i <= round(delta_x*delta_x+delta_y*delta_y*ul_LightingResolutionSqrt,1), i++)
 				ul_FastRoot += round(sqrt(i))
-		return ul_FastRoot[round((x*x + y*y)*ul_LightingResolutionSqrt, 1) + 1]/ul_LightingResolution
+		return ul_FastRoot[round((delta_x*delta_x + delta_y*delta_y)*ul_LightingResolutionSqrt, 1) + 1]/ul_LightingResolution
 
 		#else
-		if ((x*x + y*y) > ul_FastRoot.len)
-			for(var/i = ul_FastRoot.len, i <= x*x+y*y, i++)
+		if ((delta_x*delta_x + delta_y*delta_y) > ul_FastRoot.len)
+			for(var/i = ul_FastRoot.len, i <= delta_x*delta_x+delta_y*delta_y, i++)
 				ul_FastRoot += round(sqrt(i))
-		return ul_FastRoot[x*x + y*y + 1]
+		return ul_FastRoot[delta_x*delta_x + delta_y*delta_y + 1]
 
 		#endif
 
@@ -329,7 +348,12 @@ area/proc/ul_Light(var/Red = LightLevelRed, var/Green = LightLevelGreen, var/Blu
 
 	luminosity = LightLevelRed || LightLevelGreen || LightLevelBlue
 
-	ul_Overlay = image('ULIcons.dmi', , num2text(LightLevelRed) + "-" + num2text(LightLevelGreen) + "-" + num2text(LightLevelBlue), ul_Layer)
+	var/ul_CachedOverlay = ul_IconCache["[LightLevelRed]-[LightLevelGreen]-[LightLevelBlue]"]
+	if(ul_CachedOverlay)
+		ul_Overlay = ul_CachedOverlay
+	else
+		ul_IconCache["[LightLevelRed]-[LightLevelGreen]-[LightLevelBlue]"] = image('ULIcons.dmi', , "[LightLevelRed]-[LightLevelGreen]-[LightLevelBlue]", ul_Layer)
+		ul_Overlay = ul_IconCache["[LightLevelRed]-[LightLevelGreen]-[LightLevelBlue]"]
 
 	overlays += ul_Overlay
 
