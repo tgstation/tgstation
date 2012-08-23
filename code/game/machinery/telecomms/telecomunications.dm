@@ -282,6 +282,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if(signal.transmission_method == 2)
 
 		if(is_freq_listening(signal)) // detect subspace signals
+
+			if(signal.data["type"] == 4) // If a test signal, remove the level and then start adding levels that it is being broadcasted in.
+				signal.data["level"] = list()
+
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/relay") // ideally relay the copied information to relays
 			if(!can_send)
 				relay_information(signal, "/obj/machinery/telecomms/bus") // Send it to a bus instead, if it's linked to one

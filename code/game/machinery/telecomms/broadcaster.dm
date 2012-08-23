@@ -699,7 +699,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 //Use this to test if an obj can communicate with a Telecommunications Network
 
 /atom/proc/test_telecomms()
-	var/datum/signal/signal = telecomms_process()
+	var/datum/signal/signal = src.telecomms_process()
 	var/turf/position = get_turf(src)
 	return (position.z in signal.data["level"] && signal.data["done"])
 
@@ -708,6 +708,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 	// First, we want to generate a new radio signal
 	var/datum/signal/signal = new
 	signal.transmission_method = 2 // 2 would be a subspace transmission.
+	var/turf/pos = get_turf(src)
 
 	// --- Finally, tag the actual signal with the appropriate values ---
 	signal.data = list(
@@ -718,18 +719,17 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 		"type" = 4, // determines what type of radio input it is: test broadcast
 		"reject" = 0,
 		"done" = 0,
-		"level" = list() // The level it is being broadcasted at.
+		"level" = pos.z // The level it is being broadcasted at.
 	)
 	signal.frequency = 1459// Common channel
 
   //#### Sending the signal to all subspace receivers ####//
-	var/turf/position = get_turf(src)
 	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
-		var/turf/receiver_turf = get_turf(R)
-		if(position.z == receiver_turf.z)
-			R.receive_signal(signal)
+		R.receive_signal(signal)
 
 	sleep(rand(10,25))
+
+	//world.log << "Level: [signal.data["level"]] - Done: [signal.data["done"]]"
 
 	return signal
 

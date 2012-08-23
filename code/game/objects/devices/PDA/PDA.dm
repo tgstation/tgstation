@@ -718,7 +718,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				useMS = MS
 				break
 
-	var/datum/signal/signal = telecomms_process()
+	var/datum/signal/signal = src.telecomms_process()
 
 	var/useTC = 0
 	if(signal)
