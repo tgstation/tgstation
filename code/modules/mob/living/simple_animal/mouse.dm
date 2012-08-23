@@ -21,7 +21,6 @@
 	density = 0
 	var/color //brown, gray and white, leave blank for random
 	layer = 2.5		//so they can hide under objects
-	swap_on_mobbump = 0
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
@@ -66,9 +65,6 @@
 	src.stat = DEAD
 	src.icon_dead = "mouse_[color]_splat"
 	src.icon_state = "mouse_[color]_splat"
-
-/proc/ismouse(var/obj/O)
-	return istype(O,/mob/living/simple_animal/mouse)
 
 //copy paste from alien/larva, if that func is updated please update this one also
 /mob/living/simple_animal/mouse/verb/ventcrawl()
