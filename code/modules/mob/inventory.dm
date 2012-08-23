@@ -3,14 +3,21 @@
 
 //Returns the thing in our active hand
 /mob/proc/get_active_hand()
-	if(hand)	return l_hand
-	else		return r_hand
+	if(issilicon(src))
+		if(isrobot(src))
+			if(src:module_active)
+				return src:module_active
+	else
+		if(hand)	return l_hand
+		else		return r_hand
 
 //Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
 	if(hand)	return r_hand
 	else		return l_hand
 
+/mob/proc/equipped()
+	return get_active_hand()
 
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(var/obj/item/W)
@@ -57,8 +64,14 @@
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(var/obj/item/W)
 	if(!W)		return 0
-	if(put_in_active_hand(W))			return 1
-	else if(put_in_inactive_hand(W))	return 1
+	if(put_in_active_hand(W))
+		update_inv_l_hand()
+		update_inv_r_hand()
+		return 1
+	else if(put_in_inactive_hand(W))
+		update_inv_l_hand()
+		update_inv_r_hand()
+		return 1
 	else
 		W.loc = get_turf(src)
 		W.layer = initial(W.layer)

@@ -810,7 +810,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			// ------- CLICKED OBJECT EXISTS IN GAME WORLD, DISTANCE FROM PERSON TO OBJECT IS 1 SQUARE OR THEY'RE ON THE SAME SQUARE -------
 
 			var/direct = get_dir(usr, src)
-			var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( usr.loc )
 			var/ok = 0
 			if ( (direct - 1) & direct)
 
@@ -842,35 +841,12 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 					var/check_1 = 0
 					var/check_2 = 0
-					if(step_to(D, Step_1))
-						check_1 = 1
-						for(var/obj/border_obstacle in Step_1)
-							if(border_obstacle.flags & ON_BORDER)
-								if(!border_obstacle.CheckExit(D, src))
-									check_1 = 0
-									// ------- YOU TRIED TO CLICK ON AN ITEM THROUGH A WINDOW (OR SIMILAR THING THAT LIMITS ON BORDERS) ON ONE OF THE DIRECITON TILES -------
-						for(var/obj/border_obstacle in get_turf(src))
-							if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
-								if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-									// ------- YOU TRIED TO CLICK ON AN ITEM THROUGH A WINDOW (OR SIMILAR THING THAT LIMITS ON BORDERS) ON THE TILE YOU'RE ON -------
-									check_1 = 0
+					check_1 = CanReachThrough(get_turf(usr), Step_1, src) && CanReachThrough(Step_1, get_turf(src), src)
 
-					D.loc = usr.loc
-					if(step_to(D, Step_2))
-						check_2 = 1
+					check_2 = CanReachThrough(get_turf(usr), Step_2, src) && CanReachThrough(Step_2, get_turf(src), src)
 
-						for(var/obj/border_obstacle in Step_2)
-							if(border_obstacle.flags & ON_BORDER)
-								if(!border_obstacle.CheckExit(D, src))
-									check_2 = 0
-						for(var/obj/border_obstacle in get_turf(src))
-							if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
-								if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-									check_2 = 0
+					ok = (check_1 || check_2)
 
-
-					if(check_1 || check_2)
-						ok = 1
 						// ------- YOU CAN REACH THE ITEM THROUGH AT LEAST ONE OF THE TWO DIRECTIONS. GOOD. -------
 
 					/*
@@ -883,29 +859,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					*/
 			else
 				// ------- OBJECT IS ON A CARDINAL TILE (NORTH, SOUTH, EAST OR WEST OR THE TILE YOU'RE ON) -------
-				if(loc == usr.loc)
-					ok = 1
-					// ------- OBJECT IS ON THE SAME TILE AS YOU -------
-				else
-					ok = 1
-
-					//Now, check objects to block exit that are on the border
-					for(var/obj/border_obstacle in usr.loc)
-						if(border_obstacle.flags & ON_BORDER)
-							if(!border_obstacle.CheckExit(D, src))
-								ok = 0
-
-					//Next, check objects to block entry that are on the border
-					for(var/obj/border_obstacle in get_turf(src))
-						if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
-							if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-								ok = 0
+				ok = CanReachThrough(get_turf(usr), get_turf(src), src)
 				/*
 					See the previous More info, for... more info...
 				*/
 
-			del(D)
-			// ------- DUMMY OBJECT'S SERVED IT'S PURPOSE, IT'S REWARDED WITH A SWIFT DELETE -------
 			if (!( ok ))
 				// ------- TESTS ABOVE DETERMINED YOU CANNOT REACH THE TILE -------
 				return 0
@@ -1020,6 +978,43 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 				usr.next_move = world.time + 6
 	return
+////////////////////////////////////////
+///IMPORTANT: CACHE FOR DUMMY OBJECTS///
+//Used to cut down on stupid deletions//
+////////////////////////////////////////
+var/list/DummyCache = list()
+
+/proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
+
+	var/obj/item/weapon/dummy/D = locate() in DummyCache
+	if(!D)
+		D = new /obj/item/weapon/dummy( srcturf )
+	else
+		DummyCache.Remove(D)
+		D.loc = srcturf
+
+	if(targetturf.density && targetturf != get_turf(target))
+		return 0
+
+	//Now, check objects to block exit that are on the border
+	for(var/obj/border_obstacle in srcturf)
+		if(border_obstacle.flags & ON_BORDER)
+			if(!border_obstacle.CheckExit(D, targetturf))
+				D.loc = null
+				DummyCache.Add(D)
+				return 0
+
+	//Next, check objects to block entry that are on the border
+	for(var/obj/border_obstacle in targetturf)
+		if((border_obstacle.flags & ON_BORDER) && (target != border_obstacle))
+			if(!border_obstacle.CanPass(D, srcturf, 1, 0))
+				D.loc = null
+				DummyCache.Add(D)
+				return 0
+
+	D.loc = null
+	DummyCache.Add(D)
+	return 1
 
 /atom/proc/ShiftClick(var/mob/M as mob)
 

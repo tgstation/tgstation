@@ -11,6 +11,7 @@
 	var/obj/effect/organstructure/organStructure = null
 
 //	var/uses_hud = 0
+	var/obj/screen/pain = null
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
@@ -65,6 +66,7 @@
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
 	var/stuttering = null	//Carbon
+	var/slurring = null	//Carbon
 	var/real_name = null
 //	var/original_name = null //Original name is only used in ghost chat! Depracated, now used bb
 	var/blinded = null
@@ -226,3 +228,6 @@
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
+	var/skrell_talk_understand = 0
+	var/tajaran_talk_understand = 0
+	var/soghun_talk_understand = 0

@@ -298,6 +298,11 @@
 			src << alert("[rank] is not available. Please try another.")
 			return 0
 
+		if(preferences.species != "Human")
+			if(!is_alien_whitelisted(src, preferences.species) && config.usealienwhitelist)
+				src << alert("You are currently not whitelisted to play [preferences.species].")
+				return 0
+
 		job_master.AssignRole(src, rank, 1)
 
 		var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
@@ -376,6 +381,19 @@
 		new_character.name = real_name
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = preferences.b_type
+
+		if(preferences.species == "Tajaran") //This is like the worst, but it works, so meh. - Erthilo
+			if(is_alien_whitelisted(src, "Tajaran") || !config.usealienwhitelist)
+				new_character.dna.mutantrace = "tajaran"
+				new_character.tajaran_talk_understand = 1
+		if(preferences.species == "Soghun")
+			if(is_alien_whitelisted(src, "Soghun") || !config.usealienwhitelist)
+				new_character.dna.mutantrace = "lizard"
+				new_character.soghun_talk_understand = 1
+		if(preferences.species == "Skrell")
+			if(is_alien_whitelisted(src, "Skrell") || !config.usealienwhitelist)
+				new_character.dna.mutantrace = "skrell"
+				new_character.skrell_talk_understand = 1
 
 		new_character.key = key		//Manually transfer the key to log them in
 

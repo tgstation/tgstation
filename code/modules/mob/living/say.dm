@@ -141,6 +141,37 @@ var/list/department_radio_keys = list(
 	if (!message)
 		return
 
+	//work out if we're speaking skrell or not
+	var/is_speaking_skrell = 0
+
+	if(copytext(message, 1, 3) == ":k" || copytext(message, 1, 3) == ":K")
+		message = copytext(message, 3)
+		if(skrell_talk_understand || universal_speak)
+			is_speaking_skrell = 1
+
+	//work out if we're speaking soghun or not
+	var/is_speaking_soghun = 0
+	if(copytext(message, 1, 3) == ":o" || copytext(message, 1, 3) == ":O")
+		message = copytext(message, 3)
+		if(soghun_talk_understand || universal_speak)
+			is_speaking_soghun = 1
+
+	//work out if we're speaking tajaran or not
+	var/is_speaking_tajaran = 0
+	if(copytext(message, 1, 3) == ":j" || copytext(message, 1, 3) == ":J")
+		message = copytext(message, 3)
+		if(tajaran_talk_understand || universal_speak)
+			is_speaking_soghun = 1
+
+//	if( !message_mode && (disease_symptoms & DISEASE_WHISPER))
+//		message_mode = "whisper"
+
+	if(src.stunned > 2 /*|| (traumatic_shock > 61 && prob(50))*/)
+		message_mode = "" //Stunned people shouldn't be able to physically turn on their radio/hold down the button to speak into it
+
+
+	message = capitalize(message) //capitalize the first letter of what they actually say
+
 	// :downs:
 	if (getBrainLoss() >= 60)
 		message = dd_replacetext(message, " am ", " ")
@@ -156,10 +187,12 @@ var/list/department_radio_keys = list(
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"
 		if(!stuttering && prob(15))
-			message = stutter(message)
+			message = NewStutter(message,stunned)
 
 	if (stuttering)
-		message = stutter(message)
+		message = NewStutter(message,stunned)
+	if (slurring)
+		message = slur(message)
 
 /* //qw do not have beesease atm.
 	if(virus)
@@ -283,6 +316,13 @@ var/list/department_radio_keys = list(
 	var/list/V = view(message_range, T)
 	var/list/W = V
 
+	var/list/eavesdroppers = get_mobs_in_view(7, src)
+	for(var/mob/M in listening)
+		eavesdroppers.Remove(M)
+	for(var/mob/M in eavesdroppers)
+		if(M.stat || !M.client || istype(M, /mob/living/silicon/pai) || M == src)
+			eavesdroppers.Remove(M)
+
 	for (var/obj/O in ((W | contents)-used_radios))
 		W |= O
 
@@ -312,17 +352,24 @@ var/list/department_radio_keys = list(
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
 
-	for (var/M in listening)
+	for (var/mob/M in listening) //My god this is to terrible and hacky - Erthilo
 		if(hascall(M,"say_understands"))
-			if (M:say_understands(src))
+			if (M:say_understands(src) && !is_speaking_skrell && !is_speaking_soghun && !is_speaking_tajaran) //This could probably be merged into say_understands(), but I'm too lazy
+				heard_a += M
+			else if(is_speaking_skrell && (M.skrell_talk_understand || M.universal_speak))
+				heard_a += M
+			else if(is_speaking_soghun && (M.soghun_talk_understand || M.universal_speak))
+				heard_a += M
+			else if(is_speaking_tajaran && (M.tajaran_talk_understand || M.universal_speak))
 				heard_a += M
 			else
 				heard_b += M
+	var/speech_bubble_test = say_test(message)
+	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = say_quote(message)
-
+		var/message_a = say_quote(message,is_speaking_soghun,is_speaking_skrell,is_speaking_tajaran)
 		if (italics)
 			message_a = "<i>[message_a]</i>"
 		if (!istype(src, /mob/living/carbon/human))
@@ -335,10 +382,17 @@ var/list/department_radio_keys = list(
 		else
 			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 
-		for (var/M in heard_a)
+		for (var/mob/M in heard_a)
+
+			M.show_message(rendered, 2)
+			M << speech_bubble
+		spawn(30) del(speech_bubble)
+		//spawn(30) del(speech_bubble)
+
+/*		for (var/M in heard_a)
 			if(hascall(M,"show_message"))
 				M:show_message(rendered, 2)
-
+*/
 	if (length(heard_b))
 		var/message_b
 
@@ -346,13 +400,17 @@ var/list/department_radio_keys = list(
 			message_b = voice_message
 		else
 			message_b = stars(message)
-			message_b = say_quote(message_b)
+			message_b = say_quote(message_b,is_speaking_soghun,is_speaking_skrell,is_speaking_tajaran)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"
 
 		rendered = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
 
+		for (var/mob/M in heard_b)
+			M.show_message(rendered, 2)
+			M << speech_bubble
+		spawn(30) del(speech_bubble)
 
 		for (var/M in heard_b)
 			if(hascall(M,"show_message"))
@@ -379,7 +437,16 @@ var/list/department_radio_keys = list(
 			del(B)
 		*/
 
+	if (length(eavesdroppers))
+
+		for (var/mob/M in eavesdroppers)
+			M << "\blue [src] speaks into their radio..."
+			M << speech_bubble
+		spawn(30) del(speech_bubble)
 
 	log_say("[name]/[key] : [message]")
 
 
+
+/obj/effect/speech_bubble
+	var/mob/parent

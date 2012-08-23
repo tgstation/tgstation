@@ -44,6 +44,14 @@
 		src << "\blue Your [C.name] was disrupted!"
 		Stun(2)
 
+	flash_weak_pain()
+
+	if(istype(equipped(),/obj/item/device/assembly/signaler))
+		var/obj/item/device/assembly/signaler/signaler = equipped()
+		if(signaler.deadman && prob(80))
+			src.visible_message("\red [src] triggers their deadman's switch!")
+			signaler.signal()
+
 	var/absorb = run_armor_check(def_zone, P.flag)
 	if(absorb >= 2)
 		P.on_hit(src,2)

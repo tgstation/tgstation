@@ -172,6 +172,9 @@
 
 	return
 
+mob/proc/flash_weak_pain()
+	flick("weak_pain",pain)
+
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 
 	if (!istype(M)) // not sure if this is the right thing...
@@ -182,19 +185,41 @@
 		messagesource = M:container
 	if (src.hitsound)
 		playsound(src.loc, hitsound, 50, 1, -1)
+	M.flash_weak_pain()
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user
 
+	var/power = src.force
+
+	// EXPERIMENTAL: scale power and time to the weight class
+	if(w_class >= 4.0 && !istype(src,/obj/item/weapon/melee/energy/blade)) // eswords are an exception, they only have a w_class of 4 to not fit into pockets
+		power = power * 2.5
+
+		user.visible_message("\red [user.name] swings at [M.name] with \the [src]!")
+		user.next_move = max(user.next_move, world.time + 30)
+
+		// if the mob didn't move, he has a 100% chance to hit(given the enemy also didn't move)
+		// otherwise, the chance to hit is lower
+		var/unmoved = 0
+		spawn
+			unmoved = do_after(user, 4)
+		sleep(4)
+		if( (!unmoved && !prob(70)) || (get_dist(user, M) != 1 && user != M))
+			user.visible_message("\red [user.name] misses with \the [src]!")
+			return
+
+
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
+	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)]")
+	msg_admin_attack("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)]")
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
 
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
 
-	var/power = src.force
 	if((HULK in user.mutations) || (SUPRSTR in user.augmentations))
 		power *= 2
 
