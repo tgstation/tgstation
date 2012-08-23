@@ -202,7 +202,7 @@
 	New()
 		..()
 		src.modules += new /obj/item/borg/sight/meson(src)
-		src.emag = new /obj/item/weapon/pickaxe/diamonddrill(src)
+		src.emag = new /obj/item/borg/stun(src)
 		src.modules += new /obj/item/weapon/storage/satchel(src)
 		src.modules += new /obj/item/weapon/pickaxe/borgdrill(src)
 		src.modules += new /obj/item/weapon/sheetsnatcher/borg(src)
