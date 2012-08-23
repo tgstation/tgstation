@@ -244,9 +244,9 @@
 	// Let's double check
 	if(!issilicon(user) && istype(user.get_active_hand(), /obj/item/device/multitool))
 		P = user.get_active_hand()
-	else if(isAI(user))
-		var/mob/living/silicon/ai/U = user
-		P = U.aiMulti
+	//else if(isAI(user))
+	//	var/mob/living/silicon/ai/U = user
+	//	P = U.aiMulti
 	else if(isrobot(user) && in_range(user, src))
 		if(istype(user.get_active_hand(), /obj/item/device/multitool))
 			P = user.get_active_hand()
