@@ -31,10 +31,15 @@
 		return
 
 
-	proc/respawn_consumable(var/mob/living/silicon/robot/R)
-		return
+/obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
+	return
 
-
+/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
+	var/list/temp_list = modules
+	modules = list()
+	for(var/obj/O in temp_list)
+		if(O)
+			modules += O
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
@@ -197,7 +202,7 @@
 	New()
 		..()
 		src.modules += new /obj/item/borg/sight/meson(src)
-		src.emag = new /obj/item/borg/stun(src)
+		src.emag = new /obj/item/weapon/pickaxe/diamonddrill(src)
 		src.modules += new /obj/item/weapon/storage/satchel(src)
 		src.modules += new /obj/item/weapon/pickaxe/borgdrill(src)
 		src.modules += new /obj/item/weapon/sheetsnatcher/borg(src)

@@ -269,7 +269,14 @@
 /mob/living/silicon/robot/proc/update_items()
 	if (src.client)
 		src.client.screen -= src.contents
-		src.client.screen += src.contents
+		for(var/obj/I in src.contents)
+			if(!src.module)//Handles module-less borgs to prevent runtimes
+				if(!(istype(I,/obj/item/weapon/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || istype(I,/obj/item/device/mmi)))
+					src.client.screen += I
+			else
+				if(I && I in src.module.modules)//If it's not a module, don't show it
+					src.client.screen += I
+//		src.client.screen += src.contents
 	if(src.module_state_1)
 		src.module_state_1:screen_loc = ui_inv1
 	if(src.module_state_2)

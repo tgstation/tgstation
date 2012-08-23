@@ -22,7 +22,7 @@
 	var/module_state_2 = null
 	var/module_state_3 = null
 
-	var/obj/item/device/radio/radio = null
+	var/obj/item/device/radio/borg/radio = null
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/cell/cell = null
 	var/obj/machinery/camera/camera = null
@@ -503,9 +503,10 @@
 					sleep(20)
 					src << "\red ERRORERRORERROR"
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
-					if(istype(src.module, /obj/item/weapon/robot_module/miner))
-						src.module.modules -= /obj/item/weapon/pickaxe/borgdrill
-						src.module.modules += /obj/item/weapon/pickaxe/diamonddrill//Buff when emagged, break down walls, kill men, whatever -Sieve
+					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
+						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
+							del(D)
+						src.module.rebuild()
 					updateicon()
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."

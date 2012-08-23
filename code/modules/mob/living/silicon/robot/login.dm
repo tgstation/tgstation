@@ -28,7 +28,7 @@
 			icon_state = "secborg"
 			modtype = "Synd"
 
-		radio = new /obj/item/device/radio(src)
+		radio = new /obj/item/device/radio/borg(src)
 		if(!scrambledcodes)
 			camera = new /obj/machinery/camera(src)
 			camera.c_tag = real_name
