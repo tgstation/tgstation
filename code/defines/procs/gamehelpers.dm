@@ -161,6 +161,8 @@
 	// Returns a list of mobs in range of R from source. Used in radio and say code.
 
 	var/turf/T = get_turf(source)
+	if(!istype(T))
+		return
 	var/list/hear = list()
 	var/list/range = hear(R, T)
 
