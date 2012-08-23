@@ -196,7 +196,7 @@
 		return dat
 
 /obj/effect/sign/securearea
-	desc = "A warning sign which reads 'SECURE AREA'. This obviously applies to a nun-Clown."
+	desc = "A warning sign which reads 'SECURE AREA'."
 	name = "SECURE AREA"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "securearea"
@@ -943,7 +943,7 @@
 
 /obj/effect/portal
 	name = "portal"
-	desc = "Looks unstable. Best to test it with the clown."
+	desc = "Looks unstable."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	density = 1

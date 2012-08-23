@@ -499,7 +499,7 @@
 			for(var/obj/machinery/message_server/server in message_servers)
 				if(!isnull(server))
 					if(!isnull(server.decryptkey))
-						info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+						info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret.<br>If necessary, change the password to a more secure one."
 						info_links = info
 						overlays += "paper_words"
 						break

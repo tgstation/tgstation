@@ -92,7 +92,7 @@
 			shot_delay = 6//Longer shot delay because JESUS CHRIST
 			check_records = 0//Don't actively target people set to arrest
 			arrest_type = 1//Don't even try to cuff
-			req_access = list(access_maint_tunnels,access_clown,access_mime)
+			req_access = list(access_maint_tunnels)
 			arrest_type = 1
 			if((lasercolor == "b") && (name == "ED-209 Security Robot"))//Picks a name if there isn't already a custome one
 				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")

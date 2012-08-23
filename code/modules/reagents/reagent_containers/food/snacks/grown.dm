@@ -426,7 +426,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	seed = "/obj/item/seeds/bananaseed"
 	name = "banana"
-	desc = "It's an excellent prop for a clown."
+	desc = "It's an excellent prop for a comedy."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana"
 	item_state = "banana"

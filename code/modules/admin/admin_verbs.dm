@@ -742,6 +742,16 @@
 	usr << "You will now [STFU_radio ? "not hear" : "hear"] radio chatter from nearby radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/toggle_hear_atklog()
+	set name = "Toggle Hear Attacks"
+	set category = "Admin"
+
+	if(!holder) return
+	STFU_atklog = !STFU_atklog
+	usr << "You will now [STFU_atklog ? "not hear" : "hear"] attack logs"
+	feedback_add_details("admin_verb","THAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
 /client/proc/deadmin_self()
 	set name = "De-admin self"
 	set category = "Admin"

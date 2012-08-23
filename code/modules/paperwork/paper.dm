@@ -284,7 +284,7 @@
 				overlays += "paper_stamped_denied"
 			if(/obj/item/weapon/stamp/clown)
 				if (!clown)
-					usr << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
+					usr << "<span class='notice'>You are unable to use the stamp.</span>"
 					return
 				else
 					overlays += "paper_stamped_clown"

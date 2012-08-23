@@ -43,7 +43,7 @@
 //Mime
 /obj/item/clothing/head/beret
 	name = "beret"
-	desc = "A beret, a mime's favorite headwear."
+	desc = "A beret, an artists favorite headwear."
 	icon_state = "beret"
 	flags = FPRINT | TABLEPASS
 

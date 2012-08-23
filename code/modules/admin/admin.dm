@@ -15,6 +15,15 @@ var/global/BSACooldown = 0
 				msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
 			C << msg
 
+/proc/msg_admin_attack(var/text) //Toggleable Attack Messages
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
+	log_adminwarn(rendered)
+	for (var/client/C in admin_list)
+		if (C)
+			if(!C.STFU_atklog)
+				var/msg = rendered
+				C << msg
+
 
 /obj/admins/Topic(href, href_list)
 	..()

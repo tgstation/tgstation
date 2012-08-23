@@ -87,7 +87,7 @@ var/list/science_positions = list(
 	"Roboticist"	//Part of both engineering and science
 )
 
-
+//BS12 EDIT
 var/list/civilian_positions = list(
 	"Head of Personnel",
 	"Bartender",
@@ -100,8 +100,6 @@ var/list/civilian_positions = list(
 	"Shaft Miner",
 	"Lawyer",
 	"Chaplain",
-	"Clown",
-	"Mime",
 	"Assistant"
 )
 

@@ -728,7 +728,7 @@ client
 			if(!src.holder)
 				usr << "You are not an administrator."
 				return
-			var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","metroid","plant")
+			var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","metroid","plant","tajaran","skrell") //BS12 EDIT TAJ EDIT SKR
 			switch(new_mutantrace)
 				if(null)		return
 				if("NONE")		new_mutantrace = ""

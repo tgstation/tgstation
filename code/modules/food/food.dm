@@ -541,7 +541,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	name = "Banana Cream Pie"
-	desc = "Just like back home, on clown planet! HONK!"
+	desc = "Just like back home!"
 	icon_state = "pie"
 	trash = /obj/item/trash/plate
 
@@ -1739,7 +1739,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake
 	name = "Birthday Cake"
-	desc = "Happy Birthday little clown..."
+	desc = "Happy Birthday..."
 	icon_state = "birthdaycake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/birthdaycakeslice
 	slices_num = 5

@@ -211,7 +211,7 @@
 				This is pretty much vital for the process because without a body, you cannot clone it. Usually, bodies will be brought to you, so you do not need to worry so much about this step. If you already have a body, great! Move on to the next step.
 
 				<a name='2'><H4>Step 2: Strip body</H4>
-				The cloning machine does not like abiotic items. What this means is you can’t clone anyone if they’re wearing clothes, so take all of it off. If it’s just one person, it’s courteous to put their possessions in the closet. If you have about seven people awaiting cloning, just leave the piles where they are, but don’t mix them around and for God’s sake don’t let the Clown in to steal them.
+				The cloning machine does not like abiotic items. What this means is you can’t clone anyone if they’re wearing clothes, so take all of it off. If it’s just one person, it’s courteous to put their possessions in the closet. If you have about seven people awaiting cloning, just leave the piles where they are, but don’t mix them around and for God’s sake don’t let people in to steal them.
 
 				<a name='3'><H4>Step 3: Put body in cloning machine</H4>
 				Grab the body and then put it inside the DNA modifier. If you cannot do this, then you messed up at Step 2. Go back and check you took EVERYTHING off - a commonly missed item is their headset.

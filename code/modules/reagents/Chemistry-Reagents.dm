@@ -3890,7 +3890,7 @@ datum
 		bananahonk
 			name = "Banana Mama"
 			id = "bananahonk"
-			description = "A drink from Clown Heaven."
+			description = "A drink from Banana Heaven."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#664300" // rgb: 102, 67, 0
 
@@ -3924,7 +3924,7 @@ datum
 		silencer
 			name = "Silencer"
 			id = "silencer"
-			description = "A drink from Mime Heaven."
+			description = "A drink from Silent Heaven."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#664300" // rgb: 102, 67, 0
 
