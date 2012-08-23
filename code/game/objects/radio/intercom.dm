@@ -33,9 +33,10 @@
 		return 0
 	if (!(src.wires & WIRE_RECEIVE))
 		return 0
-	var/turf/position = get_turf(src)
-	if(isnull(position) || position.z != level)
-		return 0
+	if(level != 0)
+		var/turf/position = get_turf(src)
+		if(isnull(position) || position.z != level)
+			return 0
 	if (!src.listening)
 		return 0
 	if(freq == SYND_FREQ)

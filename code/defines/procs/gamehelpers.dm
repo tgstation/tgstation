@@ -204,7 +204,7 @@
 	// Try to find all the players who can hear the message
 	for(var/mob/M in player_list)
 		var/turf/ear = get_turf(M)
-		if(ear && (isnull(level) || level == ear.z))
+		if(ear && (level == 0 || level == ear.z))
 			if(ear in speaker_coverage)
 				. += M
 

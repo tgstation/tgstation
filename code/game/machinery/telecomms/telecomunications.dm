@@ -32,9 +32,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/heatgen = 20 // how much heat to transfer to the environment
 	var/delay = 10 // how many process() ticks to delay per heat
 	var/heating_power = 40000
-	var/long_range_link = 0
+	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/circuitboard = null // string pointing to a circuitboard type
 	var/hide = 0				// Is it a hidden machine?
+	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
 
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount)
@@ -60,7 +61,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			continue
 		if(amount && send_count >= amount)
 			break
-		if(machine.loc.z != src.loc.z)
+		if(machine.loc.z != listening_level)
 			if(long_range_link == 0 && machine.long_range_link == 0)
 				continue
 		//Is this a test signal?
@@ -96,7 +97,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"traffic" = signal.data["traffic"],
 			"type" = signal.data["type"],
 			"server" = signal.data["server"],
-			"reject" = signal.data["reject"]
+			"reject" = signal.data["reject"],
+			"level" = signal.data["level"]
 			)
 
 			// Keep the "original" signal constant
@@ -142,11 +144,18 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/New()
 	telecomms_list += src
 	..()
+
+	//Set the listening_level if there's none.
+	if(!listening_level)
+		//Defaults to our Z level!
+		var/turf/position = get_turf(src)
+		listening_level = position.z
+
 	if(autolinkers.len)
 		spawn(15)
 			// Links nearby machines
 			if(!long_range_link)
-				for(var/obj/machinery/telecomms/T in orange(15, src))
+				for(var/obj/machinery/telecomms/T in orange(20, src))
 					add_link(T)
 			else
 				for(var/obj/machinery/telecomms/T in telecomms_list)
@@ -162,7 +171,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	..()
 
 /obj/machinery/telecomms/proc/add_link(var/obj/machinery/telecomms/T)
-	if((src.loc.z && T.loc.z) || (src.long_range_link && T.long_range_link))
+	var/turf/position = get_turf(src)
+	var/turf/T_position = get_turf(T)
+	if((position.z == T_position.z) || (src.long_range_link && T.long_range_link))
 		for(var/x in autolinkers)
 			if(T.autolinkers.Find(x))
 				if(!(T in links) && machinetype != T.machinetype)
@@ -174,15 +185,17 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	else
 		icon_state = "[initial(icon_state)]_off"
 
-
-/obj/machinery/telecomms/process()
+/obj/machinery/telecomms/proc/update_power()
 	if(toggled)
-		if(stat & (BROKEN|NOPOWER) || integrity <= 0) // if powered, on. if not powered, off. if too damaged, off
+		if(stat & (BROKEN|NOPOWER|EMPED) || integrity <= 0) // if powered, on. if not powered, off. if too damaged, off
 			on = 0
 		else
 			on = 1
 	else
 		on = 0
+
+/obj/machinery/telecomms/process()
+	update_power()
 
 	// Check heat and generate some
 	checkheat()
@@ -192,6 +205,14 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 	if(traffic > 0)
 		traffic -= netspeed
+
+/obj/machinery/telecomms/emp_act(severity)
+	if(prob(100/severity))
+		if(!(stat & EMPED))
+			stat |= EMPED
+			spawn(1200/severity)
+				stat &= ~EMPED
+	..()
 
 /obj/machinery/telecomms/proc/checkheat()
 	// Checks heat from the environment and applies any integrity damage
@@ -234,7 +255,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /*
 	The receiver idles and receives messages from subspace-compatible radio equipment;
 	primarily headsets. They then just relay this information to all linked devices,
-	which can would probably be network buses.
+	which can would probably be network hubs.
 
 	Link to Processor Units in case receiver can't send to bus units.
 */
@@ -256,7 +277,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 	if(!on) // has to be on to receive messages
 		return
-
+	if(!signal || signal.data["level"] != listening_level)
+		return
 	if(signal.transmission_method == 2)
 
 		if(is_freq_listening(signal)) // detect subspace signals
@@ -363,7 +385,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/bus/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 	if(is_freq_listening(signal))
-		if(signal.data["compression"]) // if signal is still compressed from subspace transmission
+		if(!istype(machine_from, /obj/machinery/telecomms/processor)) // Signal must be ready (stupid assuming machine), let's send it
 			// send to one linked processor unit
 			var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor", 1)
 
@@ -404,11 +426,17 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	heatgen = 100
 	delay = 5
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/processor"
+	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 		if(is_freq_listening(signal))
-			signal.data["compression"] = 0 // uncompress subspace signal
+
+			if(process_mode)
+				signal.data["compression"] = 0 // uncompress subspace signal
+			else
+				signal.data["compression"] = 100 // even more compressed signal
+
 			if(istype(machine_from, /obj/machinery/telecomms/bus))
 				relay_direct_information(signal, machine_from) // send the signal back to the machine
 			else // no bus detected - send the signal to servers instead
@@ -564,7 +592,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
-	autolinkers = list("s_relay", "s_receiverB", "s_broadcasterB")
+	autolinkers = list("s_relay", "s_receiverA", "s_broadcasterA", "s_receiverB", "s_broadcasterB")
 
 /obj/machinery/telecomms/relay/preset/telecomms
 	id = "Telecomms Relay"
@@ -590,11 +618,20 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 //Receivers
 
+//--PRESET LEFT--//
+
 /obj/machinery/telecomms/receiver/preset_left
 	id = "Receiver A"
 	network = "tcommsat"
 	autolinkers = list("receiverA") // link to relay
 	freq_listening = list(1351, 1355, 1347, 1349) // science, medical, cargo, mining
+
+/obj/machinery/telecomms/receiver/preset_left/station
+	id = "Station Receiver A"
+	autolinkers = list("s_receiverA") // link to relay
+	listening_level = 1
+
+//--PRESET RIGHT--//
 
 /obj/machinery/telecomms/receiver/preset_right
 	id = "Receiver B"
@@ -611,7 +648,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/receiver/preset_right/station
 	id = "Station Receiver B"
 	autolinkers = list("s_receiverB")
-	freq_listening = list(1351, 1355, 1347, 1349, 1353, 1357, 1359) // science, medical, cargo, mining, command, engineering, security
+	listening_level = 1 // Listen to the station remotely
 
 /obj/machinery/telecomms/receiver/preset_right/mining
 	id = "Mining Receiver B"
@@ -727,10 +764,19 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 //Broadcasters
 
+//--PRESET LEFT--//
+
 /obj/machinery/telecomms/broadcaster/preset_left
 	id = "Broadcaster A"
 	network = "tcommsat"
 	autolinkers = list("broadcasterA")
+
+/obj/machinery/telecomms/broadcaster/preset_left/station
+	id = "Station Broadcaster A"
+	autolinkers = list("s_broadcasterA")
+	listening_level = 1 // Station
+
+//--PRESET RIGHT--//
 
 /obj/machinery/telecomms/broadcaster/preset_right
 	id = "Broadcaster B"
@@ -741,7 +787,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/broadcaster/preset_right/station
 	id = "Station Broadcaster B"
 	autolinkers = list("s_broadcasterB")
-
+	listening_level = 1 // Station
 
 /obj/machinery/telecomms/broadcaster/preset_right/mining
 	id = "Mining Broadcaster B"

@@ -543,6 +543,14 @@
 	status = LIGHT_BROKEN
 	update()
 
+/obj/machinery/light/proc/fix()
+	if(status == LIGHT_OK)
+		return
+	status = LIGHT_OK
+	brightness = initial(brightness)
+	on = 1
+	update()
+
 // explosion effect
 // destroy the whole light fixture or just shatter it
 
@@ -598,16 +606,6 @@
 		explosion(T, 0, 0, 2, 2)
 		sleep(1)
 		del(src)
-
-
-
-
-
-
-
-
-
-
 
 // the light item
 // can be tube or bulb subtypes
