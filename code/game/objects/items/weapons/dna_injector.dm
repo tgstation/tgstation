@@ -204,7 +204,7 @@
 ////////////////////////////////////
 /obj/item/weapon/dnainjector/anticough
 	name = "DNA-Injector (Anti-Cough)"
-	desc = "Will stop that aweful noise."
+	desc = "Will stop that awful noise."
 	dnatype = "se"
 	dna = "708"
 	block = 5
@@ -218,7 +218,7 @@
 
 /obj/item/weapon/dnainjector/clumsymut
 	name = "DNA-Injector (Clumsy)"
-	desc = "Makes clown minions."
+	desc = "Makes clumsy minions."
 	dnatype = "se"
 	dna = "FA0"
 	//block = 6
@@ -228,7 +228,7 @@
 
 /obj/item/weapon/dnainjector/anticlumsy
 	name = "DNA-Injector (Anti-Clumy)"
-	desc = "Apply this for Security Clown."
+	desc = "Cleans up confusion."
 	dnatype = "se"
 	dna = "708"
 	//block = 6

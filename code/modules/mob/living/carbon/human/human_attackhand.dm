@@ -20,7 +20,8 @@
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
 
-
+					log_admin("ATTACK: [M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])")
+					msg_admin_attack("ATTACK: [M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])") //BS12 EDIT ALG
 					log_attack("<font color='red'>[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])</font>")
 
 
@@ -59,10 +60,10 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health > 0)
+			if(health > config.health_threshold_crit)
 				help_shake_act(M)
 				return 1
-			if(M.health < -75)	return 0
+//			if(M.health < -75)	return 0
 
 			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
 				M << "\blue <B>Remove your mask!</B>"
@@ -112,7 +113,9 @@
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Used Electric Hands nanoaug power on [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been shocked by [M.name] with the Electric Hands nanoaug ([M.ckey])</font>")
 
-				log_attack("<font color='red'>[M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name], shocking them ([src.ckey])</font>")
+				log_admin("ATTACK: [M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them")
+				msg_admin_attack("ATTACK: [M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them") //BS12 EDIT ALG
+				log_attack("<font color='red'>[M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name]([src.ckey]), shocking them </font>")
 
 
 				var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
@@ -120,27 +123,31 @@
 
 				return
 
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
-
-			log_attack("<font color='red'>[M.name] ([M.ckey]) punched [src.name] ([src.ckey])</font>")
-
-
 			var/attack_verb
 			if(M.dna)
 				switch(M.dna.mutantrace)
 					if("lizard")
+						attack_verb = "scratch"
+					if("tajaran")
 						attack_verb = "scratch"
 					if("plant")
 						attack_verb = "slash"
 					else
 						attack_verb = "punch"
 
+			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[attack_verb]ed [src.name] ([src.ckey])</font>")
+			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [attack_verb]ed by [M.name] ([M.ckey])</font>")
 
-			var/damage = rand(0, 9)
+			log_admin("ATTACK: [M.name] ([M.ckey]) [attack_verb]ed [src.name] ([src.ckey])")
+			msg_admin_attack("ATTACK: [M.name] ([M.ckey]) [attack_verb]ed [src.name] ([src.ckey])") //BS12 EDIT ALG
+			log_attack("<font color='red'>[M.name] ([M.ckey]) [attack_verb]ed [src.name] ([src.ckey])</font>")
+
+			var/damage = rand(0, 5)//BS12 EDIT
 			if(!damage)
 				switch(attack_verb)
 					if("slash")
+						playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+					if("scratch")
 						playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 					else
 						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -155,24 +162,30 @@
 			if(HULK in M.mutations)			damage += 5
 			if(SUPRSTR in M.augmentations) 	damage += 5
 
+
 			switch(attack_verb)
 				if("slash")
+					playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+				if("scratch")
 					playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				else
 					playsound(loc, "punch", 25, 1, -1)
 
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
-
-			apply_damage(damage, BRUTE, affecting, armor_block)
-			if(damage >= 9)
+//Rearranged, so claws don't increase weaken chance.
+			if(damage >= 5 && prob(50))
 				visible_message("\red <B>[M] has weakened [src]!</B>")
-				apply_effect(4, WEAKEN, armor_block)
+				apply_effect(2, WEAKEN, armor_block)
+
+			if(attack_verb == "scratch")	damage += 5
+			apply_damage(damage, BRUTE, affecting, armor_block)
+
 
 		if("disarm")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
 
-
+			log_admin("ATTACK: [M.name] ([M.ckey]) disarmed [src.name] ([src.ckey])")
 			log_attack("<font color='red'>[M.name] ([M.ckey]) disarmed [src.name] ([src.ckey])</font>")
 
 
@@ -181,7 +194,7 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/randn = rand(1, 100)
 			if (randn <= 25)
-				apply_effect(2, WEAKEN, run_armor_check(affecting, "melee"))
+				apply_effect(4, WEAKEN, run_armor_check(affecting, "melee"))
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has pushed [src]!</B>")
 				return

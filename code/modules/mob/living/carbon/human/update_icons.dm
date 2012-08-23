@@ -305,12 +305,17 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/fat
 	if( FAT in mutations )
 		fat = "fat"
-
+	var/g = "m"
+	if (gender == FEMALE)	g = "f"
+//BS12 EDIT
 	if(dna)
 		switch(dna.mutantrace)
-			if("lizard","golem","metroid")
+			if("golem","metroid")
 				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_l")
 				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_s")
+			if("lizard", "tajaran", "skrell")
+				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace]_[g]_l")
+				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace]_[g]_s")
 			if("plant")
 				if(stat == DEAD)	//TODO
 					overlays_lying[MUTANTRACE_LAYER] = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace]_d")

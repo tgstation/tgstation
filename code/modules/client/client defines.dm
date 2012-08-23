@@ -41,6 +41,7 @@
 	var/activeslot		= 1		//Default active slot!
 	var/STFU_ghosts				//80+ people rounds are fun to admin when text flies faster than airport security
 	var/STFU_radio				//80+ people rounds are fun to admin when text flies faster than airport security
+	var/STFU_atklog
 
 		///////////////
 		//SOUND STUFF//
@@ -55,7 +56,7 @@
 		////////////
 	var/next_allowed_topic_time = 10
 	// comment out the line below when debugging locally to enable the options & messages menu
-	control_freak = 1
+	//control_freak = 1
 
 
 

@@ -155,6 +155,7 @@
 			verbs += /client/proc/cmd_admin_create_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
+			verbs += /client/proc/toggle_hear_atklog
 			verbs += /client/proc/deadmin_self
 			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
 		else	return
@@ -397,6 +398,7 @@
 	verbs -= /client/proc/toggle_clickproc 								//TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 	verbs -= /client/proc/toggle_hear_deadcast
 	verbs -= /client/proc/toggle_hear_radio
+	verbs -= /client/proc/toggle_hear_atklog
 	verbs -= /client/proc/player_panel_new
 	verbs -= /client/proc/toggle_gravity_on
 	verbs -= /client/proc/toggle_gravity_off
@@ -741,6 +743,16 @@
 	STFU_radio = !STFU_radio
 	usr << "You will now [STFU_radio ? "not hear" : "hear"] radio chatter from nearby radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/toggle_hear_atklog()
+	set name = "Toggle Hear Attacks"
+	set category = "Admin"
+
+	if(!holder) return
+	STFU_atklog = !STFU_atklog
+	usr << "You will now [STFU_atklog ? "not hear" : "hear"] attack logs"
+	feedback_add_details("admin_verb","THAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 /client/proc/deadmin_self()
 	set name = "De-admin self"

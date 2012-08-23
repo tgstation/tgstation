@@ -146,7 +146,8 @@
 	cost = 10
 	containertype = "/obj/structure/closet/crate"
 	containername = "Replacement lights"
-
+//BS12 EDIT
+/*
 /datum/supply_packs/costume
 	name = "Standard Costume crate"
 	contains = list("/obj/item/weapon/storage/backpack/clown",
@@ -165,7 +166,7 @@
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Standard Costumes"
 	access = access_theatre
-
+*/
 /datum/supply_packs/wizard
 	name = "Wizard costume"
 	contains = list("/obj/item/weapon/staff",

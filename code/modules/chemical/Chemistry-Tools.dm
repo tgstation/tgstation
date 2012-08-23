@@ -3971,11 +3971,11 @@ var/list/grind_products = list()
 				if("bananahonk")
 					icon_state = "bananahonkglass"
 					name = "Banana Honk"
-					desc = "A drink from Clown Heaven."
+					desc = "A drink from Banana Heaven."
 				if("silencer")
 					icon_state = "silencerglass"
 					name = "Silencer"
-					desc = "A drink from mime Heaven."
+					desc = "A drink from silent Heaven."
 				if("nothing")
 					icon_state = "nothing"
 					name = "Nothing"

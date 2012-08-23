@@ -213,7 +213,7 @@
 			walltype = "plasma"
 		if("clown")
 			name = "bananium wall"
-			desc = "A wall with bananium plating. Honk!"
+			desc = "A wall with bananium plating."
 			icon_state = "clown0"
 			walltype = "clown"
 		if("sandstone")

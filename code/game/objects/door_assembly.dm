@@ -244,7 +244,6 @@ obj/structure/door_assembly
 
 	door_assembly_clown
 		name = "Bananium Airlock Assembly"
-		desc = "Honk"
 		icon_state = "door_as_clown1"
 		airlock_type = /obj/machinery/door/airlock/clown
 		anchored = 1
@@ -467,7 +466,7 @@ obj/structure/door_assembly
 							playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 							user.visible_message("[user] adds [G.name] to the airlock assembly.", "You start to install [G.name] into the airlock assembly.")
 							if(do_after(user, 40))
-								user << "\blue You installed bananium plating into the airlock assembly!HONK"
+								user << "\blue You installed bananium plating into the airlock assembly!"
 								G.use(2)
 								playsound(src.loc, 'sound/items/bikehorn.ogg', 15, 1, -3)
 								src.mineral = "clown"

@@ -300,7 +300,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 /obj/machinery/door/airlock/clown
 	name = "Bananium Airlock"
-	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/Doorbananium.dmi'
 	var/mineral = "clown"
 	doortype = 29

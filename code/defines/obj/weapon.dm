@@ -665,7 +665,7 @@
 
 /obj/item/weapon/cane
 	name = "cane"
-	desc = "A cane used by a true gentlemen. Or a clown."
+	desc = "A cane used by a true gentlemen."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	item_state = "cane"
@@ -1398,7 +1398,7 @@
 	name = "butcher's Cleaver"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "butch"
-	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
+	desc = "A huge thing used for chopping and chopping up meat."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 2.0

@@ -162,7 +162,7 @@
 
 /obj/item/seeds/bananaseed
 	name = "pack of banana seeds"
-	desc = "They're seeds that grow into banana trees. When grown, keep away from clown."
+	desc = "They're seeds that grow into banana trees."
 	icon_state = "seed-banana"
 	mypath = "/obj/item/seeds/bananaseed"
 	species = "banana"

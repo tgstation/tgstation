@@ -81,7 +81,7 @@
 					iconholder = null
 					reqpower = 100
 					lasercolor = "b"
-					req_access = list(access_maint_tunnels,access_clown,access_mime)
+					req_access = list(access_maint_tunnels)
 					check_records = 0
 					criminals = 0
 					auth_weapons = 1
@@ -95,7 +95,7 @@
 					iconholder = null
 					reqpower = 100
 					lasercolor = "r"
-					req_access = list(access_maint_tunnels,access_clown,access_mime)
+					req_access = list(access_maint_tunnels)
 					check_records = 0
 					criminals = 0
 					auth_weapons = 1
