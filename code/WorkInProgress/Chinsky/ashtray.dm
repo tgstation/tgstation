@@ -33,8 +33,9 @@
 			else if (cig.lit == 0)
 				user << "You place a [cig] in [src] without even smoking it. Why would you do that?"
 			else if (cig.lit == -1)
-				src.visible_message("[user] places a [cig] in the [src],.")
-			user.update_clothing()
+				src.visible_message("[user] places a [cig] in the [src].")
+			user.update_inv_l_hand()
+			user.update_inv_r_hand()
 			add_fingerprint(user)
 			if (contents.len == max_butts)
 				icon_state = icon_full
