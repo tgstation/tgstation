@@ -91,7 +91,7 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["blood_type"] << src.b_type
 	F["underwear"] << src.underwear
 	F["backbag"] << src.backbag
-	F["backbag"] << src.backbag
+	F["species"] << src.species
 
 
 
@@ -173,6 +173,8 @@ datum/preferences/proc/savefile_load(mob/user)
 	if(underwear == 0) underwear = 12 //For old players who have 0 in their savefile
 	F["backbag"] >> src.backbag
 	if(isnull(backbag)) backbag = 2
+	F["species"] >> src.species
+	if(isnull(species)) species = "human"
 	F["name_is_always_random"] >> src.be_random_name
 	F["midis"] >> src.midis
 	F["ghost_ears"] >> src.ghost_ears

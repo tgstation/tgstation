@@ -287,6 +287,13 @@
 	if(Process_Grab())	return
 	if(!mob.canmove)	return
 
+//Making mob movememnt changes instant.
+	if(mob.paralysis || mob.stunned || mob.resting || mob.weakened || mob.buckled /*|| (mob.changeling && mob.changeling.changeling_fakedeath)*/)
+		mob.canmove = 0
+		return
+	else
+		mob.canmove = 1
+
 
 	//if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
 	//	if(!mob.Process_Spacemove(0))	return 0
@@ -306,7 +313,7 @@
 
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
-				if(M.pulling == mob && !M.restrained() && M.stat == 0 && M.canmove)
+				if(((M.pulling == mob && (!( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
 					src << "\blue You're restrained! You can't move!"
 					return 0
 
@@ -315,14 +322,14 @@
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
-					move_delay += 6
+					move_delay += 5
 //				if(mob.organStructure && mob.organStructure.legs)
 //					move_delay += mob.organStructure.legs.moveRunDelay
-				move_delay += 1
+				move_delay += 2
 			if("walk")
 //				if(mob.organStructure && mob.organStructure.legs)
 //					move_delay += mob.organStructure.legs.moveWalkDelay
-				move_delay += 7
+				move_delay += 5
 		move_delay += mob.movement_delay()
 
 		if(config.Tickcomp)
@@ -368,10 +375,13 @@
 							M.animate_movement = 2
 							return
 
-		else if(mob.confused)
+		else if(mob.confused && prob(30))
 			step(mob, pick(cardinal))
 		else
 			. = ..()
+			for(var/obj/effect/speech_bubble/S in range(1, mob))
+				if(S.parent == mob)
+					S.loc = mob.loc
 
 		moving = 0
 

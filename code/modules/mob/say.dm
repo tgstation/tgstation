@@ -47,20 +47,35 @@
 	return
 
 /mob/proc/say_understands(var/mob/other)
+	if(!other)
+		return 1
 	if (src.stat == 2)
 		return 1
 	else if (istype(other, src.type))
 		return 1
 	else if(other.universal_speak || src.universal_speak)
 		return 1
+	else if(isAI(src) && ispAI(other))
+		return 1
 	return 0
 
-/mob/proc/say_quote(var/text)
+/mob/proc/say_quote(var/text,var/is_speaking_soghun,var/is_speaking_skrell,var/is_speaking_tajaran)
 	if(!text)
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
+	if (is_speaking_soghun)
+		return "hisses, \"<span class='species'>[text]</span>\"";
+	if (is_speaking_skrell)
+		return "warbles, \"<span class='species'>[text]</span>\"";
+	if (is_speaking_tajaran)
+		return "purrs, \"<span class='species'>[text]</span>\"";
+//Needs Virus2
+//	if (src.disease_symptoms & DISEASE_HOARSE)
+//		return "rasps, \"[text]\"";
 	if (src.stuttering)
 		return "stammers, \"[text]\"";
+	if (src.slurring)
+		return "slurrs, \"[text]\"";
 	if(isliving(src))
 		var/mob/living/L = src
 		if (L.getBrainLoss() >= 60)
@@ -82,3 +97,11 @@
 	// should be overloaded for all mobs whose "ear" is separate from their "mob"
 
 	return get_turf(src)
+
+/mob/proc/say_test(var/text)
+	var/ending = copytext(text, length(text))
+	if (ending == "?")
+		return "1"
+	else if (ending == "!")
+		return "2"
+	return "0"

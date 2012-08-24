@@ -24,6 +24,7 @@ em						{font-style: normal;	font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #5c00e6;}
+.species				{color: #803B56;}
 .radio					{color: #008000;}
 .deptradio				{color: #993399;}
 .comradio				{color: #ACA82D;}

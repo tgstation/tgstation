@@ -1,7 +1,7 @@
 //Cat
 /mob/living/simple_animal/cat
 	name = "cat"
-	desc = "Kitty!!"
+	desc = "A domesticated, feline pet. Has a tendency to adopt crewmembers."
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
@@ -16,30 +16,30 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
-
-//RUNTIME IS ALIVE! SQUEEEEEEEE~
-/mob/living/simple_animal/cat/Runtime
-	name = "Runtime"
-	desc = ""
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
+	min_oxy = 16 //Require atleast 16kPA oxygen
+	minbodytemp = 223		//Below -50 Degrees Celcius
+	maxbodytemp = 323	//Above 50 Degrees Celcius
 
-/mob/living/simple_animal/cat/Runtime/Life()
+/mob/living/simple_animal/cat/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
-					emote("splats \the [M]")
+					emote(pick("\red splats the [M]!","\red toys with the [M]","worries the [M]"))
 					movement_target = null
 					stop_automated_movement = 0
 					break
 
 	..()
+
+	for(var/mob/living/simple_animal/mouse/snack in oview(src, 3))
+		if(prob(15))
+			emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
+		break
 
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
@@ -59,3 +59,10 @@
 			if(movement_target)
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
+
+//RUNTIME IS ALIVE! SQUEEEEEEEE~
+/mob/living/simple_animal/cat/Runtime
+	name = "Runtime"
+	desc = "Its fur has the look and feel of velvet, and it's tail quivers occasionally."
+
+

@@ -2,9 +2,9 @@
 	name = "\improper Parrot"
 	desc = "It's a parrot!  No dirty words!"
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "cat"
-	icon_living = "cat"
-	icon_dead = "cat_dead"
+	icon_state = "parrot"
+	icon_living = "parrot"
+	icon_dead = "parrot_dead"
 	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
 	speak_emote = list("squawks","says","yells")
 	emote_hear = list("squawks","bawks")
@@ -15,14 +15,21 @@
 	response_help  = "pets the"
 	response_disarm = "gently moves aside the"
 	response_harm   = "swats the"
+	min_oxy = 16 //Require atleast 16kPA oxygen
+	minbodytemp = 223		//Below -50 Degrees Celcius
+	maxbodytemp = 323	//Above 50 Degrees Celcius
 
 	ears = new /obj/item/device/radio/headset/heads/ce()
 
 /mob/living/simple_animal/parrot/DrProfessor
 	name = "Doctor Professor Parrot, PhD"
 	desc = "That's the Doctor Professor.  He has more degrees than all of the engineering team put together, and has several published papers on quantum cracker theory."
-	speak = list(":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN RIG SUIT?",":e OH GOD ITS FREE CALL THE SHUTTLE")
+	speak = list(":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN RIG SUIT?",":e OH GOD ITS FREE CALL THE SHUTTLE",":e Open secure storage please.",":e I think something happened to the containment field...")
 	response_harm   = "is attacked in the face by"
+
+/obj/item/weapon/reagent_containers/food/snacks/cracker/
+	name = "Cracker"
+	desc = "It's a salted cracker."
 
 /mob/living/simple_animal/parrot/show_inv(mob/user as mob)
 	user.machine = src

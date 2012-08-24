@@ -182,7 +182,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_body(var/update_icons=1)
 	if(stand_icon)	del(stand_icon)
 	if(lying_icon)	del(lying_icon)
-	if(dna && dna.mutantrace)	return
+//	if(dna && dna.mutantrace)	return
 	var/husk = (HUSK in src.mutations)
 	var/fat = (FAT in src.mutations)
 	var/g = "m"
@@ -233,7 +233,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	overlays_standing[HAIR_LAYER]	= null
 
 	//mutants don't have hair. masks and helmets can obscure our hair too.
-	if( (dna && dna.mutantrace) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+	//BS12 EDIT - Mutants can have hair too!
+	if( (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
 		if(update_icons)   update_icons()
 		return
 

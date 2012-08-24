@@ -114,26 +114,37 @@ proc/isorgan(A)
 	return
 
 /proc/istajaran(A)
-	return istype(A, /mob/living/carbon/human/tajaran)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = A
+		if(M.dna.mutantrace == "tajaran")
+			return 1
+	return 0
+
+/proc/issoghun(A)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = A
+		if(M.dna.mutantrace == "lizard")
+			return 1
+	return 0
+
+/proc/isskrell(A)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = A
+		if(M.dna.mutantrace == "skrell")
+			return 1
+	return 0
 
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)
+		return "chest"
 	switch(zone)
 		if("eyes")
 			zone = "head"
 		if("mouth")
 			zone = "head"
-		if("l_hand")
-			zone = "l_arm"
-		if("r_hand")
-			zone = "r_arm"
-		if("l_foot")
-			zone = "l_leg"
-		if("r_foot")
-			zone = "r_leg"
-		if("groin")
-			zone = "chest"
+//		if("groin")
+//			zone = "chest"
 	return zone
 
 
@@ -162,7 +173,7 @@ proc/isorgan(A)
 	else
 		if (pr >= 100)
 			return n
-	var/te = n
+	var/te = html_decode(n)
 	var/t = ""
 	n = length(n)
 	var/p = null
@@ -173,8 +184,67 @@ proc/isorgan(A)
 		else
 			t = text("[]*", t)
 		p++
-	return t
+	return html_encode(t)
 
+/*proc/NewStutter(phrase,stunned)
+	phrase = html_decode(phrase)
+
+	var/list/split_phrase = dd_text2list(phrase," ") //Split it up into words.
+
+	var/list/unstuttered_words = split_phrase.Copy()
+	var/i = rand(1,3)
+	if(stunned) i = split_phrase.len
+	for(,i > 0,i--) //Pick a few words to stutter on.
+
+		if (!unstuttered_words.len)
+			break
+		var/word = pick(unstuttered_words)
+		unstuttered_words -= word //Remove from unstuttered words so we don't stutter it again.
+		var/index = split_phrase.Find(word) //Find the word in the split phrase so we can replace it.
+
+		//Search for dipthongs (two letters that make one sound.)
+		var/first_sound = copytext(word,1,3)
+		var/first_letter = copytext(word,1,2)
+		if(lowertext(first_sound) in list("ch","th","sh"))
+			first_letter = first_sound
+
+		//Repeat the first letter to create a stutter.
+		var/rnum = rand(1,3)
+		switch(rnum)
+			if(1)
+				word = "[first_letter]-[word]"
+			if(2)
+				word = "[first_letter]-[first_letter]-[word]"
+			if(3)
+				word = "[first_letter]-[word]"
+
+		split_phrase[index] = word
+
+	return sanitize(dd_list2text(split_phrase," "))*/
+
+
+proc/slur(phrase)
+	phrase = html_decode(phrase)
+	var/leng=lentext(phrase)
+	var/counter=lentext(phrase)
+	var/newphrase=""
+	var/newletter=""
+	while(counter>=1)
+		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
+		if(rand(1,3)==3)
+			if(lowertext(newletter)=="o")	newletter="u"
+			if(lowertext(newletter)=="s")	newletter="ch"
+			if(lowertext(newletter)=="a")	newletter="ah"
+			if(lowertext(newletter)=="c")	newletter="k"
+		switch(rand(1,15))
+			if(1,3,5,8)	newletter="[lowertext(newletter)]"
+			if(2,4,6,15)	newletter="[uppertext(newletter)]"
+			if(7)	newletter+="'"
+			if(9,10)	newletter="<b>[newletter]</b>"
+			if(11,12)	newletter="<big>[newletter]</big>"
+			if(13)	newletter="<small>[newletter]</small>"
+		newphrase+="[newletter]";counter-=1
+	return newphrase
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -273,6 +343,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 1
 
 	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
+		return 1
+
+	return 0
+
+/mob/proc/abiotic2(var/full_body2 = 0)
+	if(full_body2 && ((l_hand && !( l_hand.abstract )) || (r_hand && !( r_hand.abstract )) || (back || wear_mask)))
+		return 1
+
+	if((l_hand && !( l_hand.abstract )) || (r_hand && !( r_hand.abstract )))
 		return 1
 
 	return 0
