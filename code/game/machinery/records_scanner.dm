@@ -71,7 +71,7 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	<b><u>Black Marks</u></b>:<br> "}
 	for(var/A in marks)
 		text += "\red[A]<br>"
-	user << "\blue You feel a sting as the scanner sucks all your information out of you and sticks it in it's database."
+	user << "\blue You feel a sting as the scanner extracts some of your blood."
 	var/turf/T = get_step(src,outputdir)
 	var/obj/item/weapon/paper/print = new(T)
 	print.name = "[mname] Report"
