@@ -28,7 +28,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
-	sleep_offline = 1
+	//sleep_offline = 1
 
 	spawn(180)		//so we aren't adding to the round-start lag
 		/*if(config.ToRban)

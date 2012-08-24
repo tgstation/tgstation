@@ -100,7 +100,7 @@
 
 	..()
 
-	sleep(50)
+	//sleep(50)
 
 	plmaster = new /obj/effect/overlay(  )
 	plmaster.icon = 'icons/effects/tile_effects.dmi'
