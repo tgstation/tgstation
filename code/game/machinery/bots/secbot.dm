@@ -12,7 +12,6 @@
 	brute_dam_coeff = 0.5
 //	weight = 1.0E7
 	req_access = list(access_security)
-	var/locked = 1 //Behavior Controls lock
 	var/mob/living/carbon/target
 	var/oldtarget_name
 	var/threatlevel = 0
@@ -114,7 +113,8 @@
 	dat += text({"
 <TT><B>Automatic Security Unit v1.3</B></TT><BR><BR>
 Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
+Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
+Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 
 "<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
 
@@ -162,11 +162,16 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if(src.allowed(user))
+		if(src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 		else
-			user << "\red Access denied."
+			if(emagged)
+				user << "<span class='warning'>ERROR</span>"
+			if(open)
+				user << "\red Please close the access panel before locking it."
+			else
+				user << "\red Access denied."
 	else
 		..()
 		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
@@ -174,18 +179,20 @@ Auto Patrol: []"},
 			src.mode = SECBOT_HUNT
 
 /obj/machinery/bot/secbot/Emag(mob/user as mob)
-	if(user) user << "\red You short out [src]'s target assessment circuits."
-	spawn(0)
-		for(var/mob/O in hearers(src, null))
-			O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
-	src.target = null
-	if(user) src.oldtarget_name = user.name
-	src.last_found = world.time
-	src.anchored = 0
-	src.emagged = 1
-	src.on = 1
-	src.icon_state = "secbot[src.on]"
-	mode = SECBOT_IDLE
+	..()
+	if(open && !locked)
+		if(user) user << "\red You short out [src]'s target assessment circuits."
+		spawn(0)
+			for(var/mob/O in hearers(src, null))
+				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+		src.target = null
+		if(user) src.oldtarget_name = user.name
+		src.last_found = world.time
+		src.anchored = 0
+		src.emagged = 2
+		src.on = 1
+		src.icon_state = "secbot[src.on]"
+		mode = SECBOT_IDLE
 
 /obj/machinery/bot/secbot/process()
 	set background = 1
@@ -586,7 +593,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/proc/assess_perp(mob/living/carbon/human/perp as mob)
 	var/threatcount = 0
 
-	if(src.emagged) return 10 //Everyone is a criminal!
+	if(src.emagged == 2) return 10 //Everyone is a criminal!
 
 	if(src.idcheck && !src.allowed(perp))
 

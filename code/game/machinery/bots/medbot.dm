@@ -15,7 +15,6 @@
 	maxhealth = 20
 	req_access =list(access_medical)
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
-	var/locked = 1
 //var/emagged = 0
 	var/obj/machinery/camera/cam = null
 	var/list/botcard_access = list(access_medical, access_morgue, access_genetics, access_robotics)
@@ -106,6 +105,7 @@
 	var/dat
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
+	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
 	dat += "Beaker: "
 	if (src.reagent_glass)
 		dat += "<A href='?src=\ref[src];eject=1'>Loaded \[[src.reagent_glass.reagents.total_volume]/[src.reagent_glass.reagents.maximum_volume]\]</a>"
@@ -181,12 +181,17 @@
 
 /obj/machinery/bot/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if (src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
 			user << "<span class='notice'>Controls are now [src.locked ? "locked." : "unlocked."]</span>"
 			src.updateUsrDialog()
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			if(emagged)
+				user << "<span class='warning'>ERROR</span>"
+			if(open)
+				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+			else
+				user << "<span class='warning'>Access denied.</span>"
 
 	else if (istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(src.locked)
@@ -210,19 +215,20 @@
 
 /obj/machinery/bot/medbot/Emag(mob/user as mob)
 	..()
-	if(user) user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
-	spawn(0)
-		for(var/mob/O in hearers(src, null))
-			O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
-	flick("medibot_spark", src)
-	src.patient = null
-	if(user) src.oldpatient = user
-	src.currently_healing = 0
-	src.last_found = world.time
-	src.anchored = 0
-	src.emagged = 1
-	src.on = 1
-	src.icon_state = "medibot[src.on]"
+	if(open && !locked)
+		if(user) user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
+		spawn(0)
+			for(var/mob/O in hearers(src, null))
+				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+		flick("medibot_spark", src)
+		src.patient = null
+		if(user) src.oldpatient = user
+		src.currently_healing = 0
+		src.last_found = world.time
+		src.anchored = 0
+		src.emagged = 2
+		src.on = 1
+		src.icon_state = "medibot[src.on]"
 
 /obj/machinery/bot/medbot/process()
 	set background = 1
@@ -322,7 +328,7 @@
 	if(C.suiciding)
 		return 0 //Kevorkian school of robotic medical assistants.
 
-	if(src.emagged) //Everyone needs our medicine. (Our medicine is toxins)
+	if(src.emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
 		return 1
 
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
@@ -380,7 +386,7 @@
 	if((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
 		reagent_id = "internal_beaker"
 
-	if(src.emagged) //Emagged! Time to poison everybody.
+	if(src.emagged == 2) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
 
 	var/virus = 0

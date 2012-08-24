@@ -9,6 +9,8 @@
 	var/maxhealth = 0
 	var/fire_dam_coeff = 1.0
 	var/brute_dam_coeff = 1.0
+	var/open = 0//Maint panel
+	var/locked = 1
 	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
 
 
@@ -29,7 +31,12 @@
 		src.explode()
 
 /obj/machinery/bot/proc/Emag(mob/user as mob)
-	if(!emagged) emagged = 1
+	if(locked)
+		locked = 0
+		emagged = 1
+		user << "<span class='warning'>You bypass [src]'s controls.</span>"
+	if(!locked && open)
+		emagged = 2
 
 /obj/machinery/bot/examine()
 	set src in view()
@@ -70,16 +77,20 @@
 
 
 /obj/machinery/bot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/screwdriver))
-		if (src.health < maxhealth)
-			src.health = min(maxhealth, src.health+25)
-			user.visible_message(
-				"\red [user] repairs [src]!",
-				"\blue You repair [src]!"
-			)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(!locked)
+			open = !open
+			user << "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>"
+	else if(istype(W, /obj/item/weapon/weldingtool))
+		if(health < maxhealth)
+			if(open)
+				health = min(maxhealth, health+10)
+				user.visible_message("\red [user] repairs [src]!","\blue You repair [src]!")
+			else
+				user << "<span class='notice'>Unable to repair with the maintenance panel closed.</span>"
 		else
 			user << "<span class='notice'>[src] does not need a repair.</span>"
-	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+	else if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
 		Emag(user)
 	else
 		switch(W.damtype)

@@ -156,26 +156,30 @@
 	var/aco = 0
 	var/atox = 0
 	var/atemp = 0
+	var/turf_count = 0
 
 	var/turf/simulated/floor/W = new /turf/simulated/floor( locate(src.x, src.y, src.z) )
 
-	for(var/direction in cardinal)
+//////Assimilate Air//////
+	for(var/direction in cardinal)//Only use cardinals to cut down on lag
 		var/turf/T = get_step(src,direction)
-		if(istype(T,/turf/space))
+		if(istype(T,/turf/space))//Counted as no air
+			turf_count++//Considered a valid turf for air calcs
 			continue
-		else if(istype(T,/turf/simulated))
+		else if(istype(T,/turf/simulated/floor))
 			var/turf/simulated/S = T
-			if(S.air)
+			if(S.air)//Add the air's contents to the holders
 				aoxy += S.air.oxygen
 				anitro += S.air.nitrogen
 				aco += S.air.carbon_dioxide
 				atox += S.air.toxins
 				atemp += S.air.temperature
-	W.air.oxygen = (aoxy/4)
-	W.air.nitrogen = (anitro/4)
-	W.air.carbon_dioxide = (aco/4)
-	W.air.toxins = (atox/4)
-	W.air.temperature = (atemp/4)
+			turf_count ++
+	W.air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
+	W.air.nitrogen = (anitro/max(turf_count,1))
+	W.air.carbon_dioxide = (aco/max(turf_count,1))
+	W.air.toxins = (atox/max(turf_count,1))
+	W.air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
 
 	W.RemoveLattice()
 	W.dir = old_dir
@@ -197,13 +201,16 @@
 	var/aco = 0
 	var/atox = 0
 	var/atemp = 0
+	var/turf_count = 0
 
+//////Assimilate Air//////
 	var/turf/simulated/floor/plating/W = new /turf/simulated/floor/plating( locate(src.x, src.y, src.z) )
 	for(var/direction in cardinal)
 		var/turf/T = get_step(src,direction)
 		if(istype(T,/turf/space))
+			turf_count++
 			continue
-		else if(istype(T,/turf/simulated))
+		else if(istype(T,/turf/simulated/floor))
 			var/turf/simulated/S = T
 			if(S.air)
 				aoxy += S.air.oxygen
@@ -211,12 +218,12 @@
 				aco += S.air.carbon_dioxide
 				atox += S.air.toxins
 				atemp += S.air.temperature
-	W.air.oxygen = (aoxy/4)
-	W.air.oxygen = (aoxy/4)
-	W.air.nitrogen = (anitro/4)
-	W.air.carbon_dioxide = (aco/4)
-	W.air.toxins = (atox/4)
-	W.air.temperature = (atemp/4)
+			turf_count++
+	W.air.oxygen = (aoxy/max(turf_count,1))
+	W.air.nitrogen = (anitro/max(turf_count,1))
+	W.air.carbon_dioxide = (aco/max(turf_count,1))
+	W.air.toxins = (atox/max(turf_count,1))
+	W.air.temperature = (atemp/max(turf_count,1))
 
 	W.RemoveLattice()
 	W.dir = old_dir

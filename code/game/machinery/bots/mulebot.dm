@@ -17,9 +17,7 @@
 	maxhealth = 150
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
-	var/locked = 1
 	var/atom/movable/load = null		// the loaded crate (usually)
-
 	var/beacon_freq = 1400
 	var/control_freq = 1447
 
@@ -49,7 +47,6 @@
 	var/auto_return = 1	// true if auto return to home beacon after unload
 	var/auto_pickup = 1 // true if auto-pickup at beacon
 
-	var/open = 0		// true if maint hatch is open
 	var/obj/item/weapon/cell/cell
 						// the installed power cell
 
