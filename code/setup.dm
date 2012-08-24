@@ -479,7 +479,10 @@ var/list/liftable_structures = list(\
 //The number of deciseconds which someone needs to be inactive to be classified as AFK:
 #define AFK_THRESHOLD 3000
 
-
+#define MAX_MESSAGE_LEN 1024
+#define MAX_PAPER_MESSAGE_LEN 3072
+#define MAX_BOOK_MESSAGE_LEN 9216
+#define MAX_NAME_LEN 32
 
 #define SEE_INVISIBLE_MINIMUM 5
 

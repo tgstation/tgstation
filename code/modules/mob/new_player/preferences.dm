@@ -107,6 +107,7 @@ datum/preferences
 	var/default_slot = 1//Holder so it doesn't default to slot 1, rather the last one used
 	var/slot_name = ""
 
+
 	var/used_skillpoints = 0
 	var/skill_specialization = null
 	var/list/skills = list() // skills can range from 0 to 3
@@ -118,9 +119,9 @@ datum/preferences
 	var/list/job_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
 	var/flavor_text = ""
-
 	var/med_record = ""
 	var/sec_record = ""
+	var/disabilities = 0
 
 		// OOC Metadata:
 	var/metadata = ""
@@ -283,7 +284,7 @@ datum/preferences
 
 		dat += "<b>Skill Choices</b><br>"
 		dat += "\t<i>[GetSkillClass(used_skillpoints)]</i> ([used_skillpoints])<br>"
-		dat += "\t<a href=\"byond://?src=\ref[user];preference=skills;task=input\"><b>Set Skills</b></a><br><br>"
+		dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b></a><br><br>"
 
 		//column 2
 		dat += "</td><td width='310px'>"	//height='300px'
@@ -345,6 +346,66 @@ datum/preferences
 		dat += "</center></body></html>"
 
 		user << browse(dat, "window=preferences;size=570x650")
+
+	proc/SetDisabilities(mob/user)
+		var/HTML = "<body>"
+		HTML += "<tt><center>"
+		HTML += "<b>Choose disabilities</b><br>"
+
+		HTML += "Need Glasses? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
+		HTML += "Seizures? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
+		HTML += "Coughing? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
+		HTML += "Tourettes/Twitching? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
+		HTML += "Nervousness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
+		HTML += "Deafness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
+
+		HTML += "<br>"
+		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;disabilities=-2\">\[Done\]</a>"
+		HTML += "</center></tt>"
+
+		user << browse(null, "window=preferences")
+		user << browse(HTML, "window=disabil;size=350x300")
+		return
+
+	proc/SetRecords(mob/user)
+		var/HTML = "<body>"
+		HTML += "<tt><center>"
+		HTML += "<b>Set Character Records</b><br>"
+
+		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;med_record=1\">Medical Records</a><br>"
+
+		if(lentext(med_record) <= 40)
+			HTML += "[med_record]"
+		else
+			HTML += "[copytext(med_record, 1, 37)]..."
+
+		HTML += "<br><br><a href=\"byond://?src=\ref[user];preferences=1;sec_record=1\">Security Records</a><br>"
+
+		if(lentext(sec_record) <= 40)
+			HTML += "[sec_record]<br>"
+		else
+			HTML += "[copytext(sec_record, 1, 37)]...<br>"
+
+		HTML += "<br>"
+		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;records=-1\">\[Done\]</a>"
+		HTML += "</center></tt>"
+
+		user << browse(null, "window=preferences")
+		user << browse(HTML, "window=records;size=350x300")
+		return
+
+	proc/GetAltTitle(datum/job/job)
+		return job_alt_titles.Find(job.title) > 0 \
+			? job_alt_titles[job.title] \
+			: job.title
+
+	proc/SetAltTitle(datum/job/job, new_title)
+		// remove existing entry
+		if(job_alt_titles.Find(job.title))
+			job_alt_titles -= job.title
+		// add one if it's not default
+		if(job.title != new_title)
+			job_alt_titles[job.title] = new_title
 
 	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 550, height = 500)
 		 //limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
@@ -548,6 +609,40 @@ datum/preferences
 					SetJob(user, href_list["text"])
 				else
 					SetChoices(user)
+			return 1
+		else if(href_list["preference"] == "skills")
+			if(href_list["cancel"])
+				user << browse(null, "window=show_skills")
+				ShowChoices(user)
+			else if(href_list["skillinfo"])
+				var/datum/skill/S = locate(href_list["skillinfo"])
+				var/HTML = "<b>[S.name]</b><br>[S.desc]"
+				user << browse(HTML, "window=\ref[user]skillinfo")
+			else if(href_list["setskill"])
+				var/datum/skill/S = locate(href_list["setskill"])
+				var/value = text2num(href_list["newvalue"])
+				skills[S.ID] = value
+				CalculateSkillPoints()
+				SetSkills(user)
+			else if(href_list["preconfigured"])
+				var/selected = input(user, "Select a skillset", "Skillset") as null|anything in SKILL_PRE
+				if(!selected) return
+
+				ZeroSkills(1)
+				for(var/V in SKILL_PRE[selected])
+					if(V == "field")
+						skill_specialization = SKILL_PRE[selected]["field"]
+						continue
+					skills[V] = SKILL_PRE[selected][V]
+				CalculateSkillPoints()
+
+				SetSkills(user)
+			else if(href_list["setspecialization"])
+				skill_specialization = href_list["setspecialization"]
+				CalculateSkillPoints()
+				SetSkills(user)
+			else
+				SetSkills(user)
 			return 1
 
 		switch(href_list["task"])
@@ -800,39 +895,41 @@ datum/preferences
 
 							flavor_text = msg
 
-					if("skills")
-						if(href_list["cancel"])
-							user << browse(null, "window=show_skills")
-							ShowChoices(user)
-						else if(href_list["skillinfo"])
-							var/datum/skill/S = locate(href_list["skillinfo"])
-							var/HTML = "<b>[S.name]</b><br>[S.desc]"
-							user << browse(HTML, "window=\ref[user]skillinfo")
-						else if(href_list["setskill"])
-							var/datum/skill/S = locate(href_list["setskill"])
-							var/value = text2num(href_list["newvalue"])
-							skills[S.ID] = value
-							CalculateSkillPoints()
-							SetSkills(user)
-						else if(href_list["preconfigured"])
-							var/selected = input(user, "Select a skillset", "Skillset") as null|anything in SKILL_PRE
-							if(!selected) return
-
-							ZeroSkills(1)
-							for(var/V in SKILL_PRE[selected])
-								if(V == "field")
-									skill_specialization = SKILL_PRE[selected]["field"]
-									continue
-								skills[V] = SKILL_PRE[selected][V]
-							CalculateSkillPoints()
-
-							SetSkills(user)
-						else if(href_list["setspecialization"])
-							skill_specialization = href_list["setspecialization"]
-							CalculateSkillPoints()
-							SetSkills(user)
+					if("disabilities")
+						if(text2num(href_list["disabilities"]) >= -1)
+							if(text2num(href_list["disabilities"]) >= 0)
+								disabilities ^= (1<<text2num(href_list["disabilities"])) //MAGIC
+							SetDisabilities(user)
+							return
 						else
-							SetSkills(user)
+							user << browse(null, "window=disabil")
+
+					if("records")
+						if(text2num(href_list["records"]) >= 1)
+							SetRecords(user)
+							return
+						else
+							user << browse(null, "window=records")
+
+					if("med_record")
+						var/medmsg = input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message
+
+						if(medmsg != null)
+							medmsg = copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN)
+							medmsg = html_encode(medmsg)
+
+							med_record = medmsg
+							SetRecords(user)
+
+					if("sec_record")
+						var/secmsg = input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message
+
+						if(secmsg != null)
+							secmsg = copytext(secmsg, 1, MAX_PAPER_MESSAGE_LEN)
+							secmsg = html_encode(secmsg)
+
+							sec_record = secmsg
+							SetRecords(user)
 
 			else
 				switch(href_list["preference"])
@@ -982,13 +1079,12 @@ datum/preferences
 		character.f_style = f_style
 
 		switch(UI_style)
-			/*if("Midnight")
-				character.UI = 'icons/mob/screen1_Midnight.dmi'*/
 			if("Orange")
 				character.UI = 'icons/mob/screen1_Orange.dmi'
 			if("old")
 				character.UI = 'icons/mob/screen1_old.dmi'
 			else
+				//default
 				character.UI = 'icons/mob/screen1_Midnight.dmi'
 
 		if(underwear > 12 || underwear < 1)

@@ -105,6 +105,11 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["ghost_sight"] << src.ghost_sight
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
+	F["disabilities"] << src.disabilities
+
+	F["used_skillpoints"] << src.used_skillpoints
+	F["skills"] << src.skills
+	F["skill_specialization"] << src.skill_specialization
 
 	F["OOC_Notes"] << src.metadata
 
