@@ -186,7 +186,15 @@ ZIPPO
 			del(src)
 	return ..()
 
-
+/obj/item/clothing/mask/cigarette/proc/put_out()
+	if (src.lit == -1)
+		return
+	src.lit = -1
+	src.damtype = "brute"
+	src.icon_state = "cigbutt"
+	src.item_state = icon_off
+	src.desc = "A [src.name] butt."
+	src.name = "[src.name] butt"
 
 ////////////
 // CIGARS //
@@ -232,13 +240,13 @@ ZIPPO
 	desc = "A manky old cigar butt."
 	icon_state = "cigarbutt"
 
-
+/*
 /obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/match))
 		..()
 	else
 		user << "\red The [src] straight out REFUSES to be lit by such uncivilized means."
-
+*/
 /////////////////
 //SMOKING PIPES//
 /////////////////
