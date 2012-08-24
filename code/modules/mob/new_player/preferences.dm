@@ -797,11 +797,12 @@ datum/preferences
 							b_type = new_b_type
 
 					if("hair")
-						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
-						if(new_hair)
-							r_hair = hex2num(copytext(new_hair, 2, 4))
-							g_hair = hex2num(copytext(new_hair, 4, 6))
-							b_hair = hex2num(copytext(new_hair, 6, 8))
+						if(species == "Human" || species == "Soghun")
+							var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
+							if(new_hair)
+								r_hair = hex2num(copytext(new_hair, 2, 4))
+								g_hair = hex2num(copytext(new_hair, 4, 6))
+								b_hair = hex2num(copytext(new_hair, 6, 8))
 
 					if("h_style")
 						var/list/valid_hairstyles = list()
