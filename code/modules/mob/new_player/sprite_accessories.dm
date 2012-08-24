@@ -49,7 +49,7 @@
 		name = "Bald"
 		icon_state = "bald"
 		choose_female = 0
-		species_allowed = list("Human","Soghun","Tajaran")
+		species_allowed = list("Human","Soghun")
 
 	short
 		name = "Short Hair"	  // try to capatilize the names please~
@@ -290,3 +290,8 @@
 		icon_state = "skrell_hair_f"
 		species_allowed = list("Skrell")
 		choose_male = 0
+
+	taj_ears
+		name = "Tajaran Ears"
+		icon_state = "tajears"
+		species_allowed = list("Tajaran")

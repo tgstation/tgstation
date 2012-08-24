@@ -207,11 +207,10 @@ datum/preferences
 
 		if(species == "Tajaran")
 			preview_icon = new /icon('icons/effects/genetics.dmi', "tajaran_[g]_s")
-			preview_icon.Blend(new /icon('icons/mob/human_face.dmi', "tajears_s"), ICON_OVERLAY)
-			preview_icon.Blend(new /icon('icons/mob/human_face.dmi', "tajtail_s"), ICON_OVERLAY)
+			preview_icon.Blend(new /icon('icons/effects/genetics.dmi', "tajtail_s"), ICON_OVERLAY)
 		else if(species == "Soghun")
 			preview_icon = new /icon('icons/effects/genetics.dmi', "lizard_[g]_s")
-			preview_icon.Blend(new /icon('icons/mob/human_face.dmi', "sogtail_s"), ICON_OVERLAY)
+			preview_icon.Blend(new /icon('icons/effects/genetics.dmi', "sogtail_s"), ICON_OVERLAY)
 		else if(species == "Skrell")
 			preview_icon = new /icon('icons/effects/genetics.dmi', "skrell_[g]_s")
 		else

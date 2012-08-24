@@ -671,3 +671,19 @@
 /mob/living/carbon/human/proc/check_dna()
 	dna.check_integrity(src)
 	return
+
+/mob/living/carbon/human/get_species()
+	if(dna)
+		switch(dna.mutantrace)
+			if("lizard")
+				return "Soghun"
+			if("tajaran")
+				return "Tajaran"
+			if("skrell")
+				return "Skrell"
+			if("plant")
+				return "Mobile vegetation"
+			if("golem")
+				return "Animated Construct"
+			else
+				return "Human"

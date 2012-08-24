@@ -116,7 +116,8 @@ Please contact me on #coderbus IRC. ~Carn x
 #define LEGCUFF_LAYER			18
 #define L_HAND_LAYER			19
 #define R_HAND_LAYER			20
-#define TOTAL_LAYERS			20
+#define TAIL_LAYER				21		//bs12 specific. this is probably gonna come back to haunt me
+#define TOTAL_LAYERS			21
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -223,6 +224,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!fat)
 			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 			lying_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+
+	//tail
+	update_tail_showing(0)
+
 	if(update_icons)	update_icons()
 
 
@@ -551,9 +556,15 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		overlays_lying[SUIT_LAYER]		= lying
 		overlays_standing[SUIT_LAYER]	= standing
+
+		update_tail_showing(0)
+
 	else
 		overlays_lying[SUIT_LAYER]		= null
 		overlays_standing[SUIT_LAYER]	= null
+
+		update_tail_showing(0)
+
 	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/update_inv_pockets(var/update_icons=1)
@@ -642,6 +653,21 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[L_HAND_LAYER] = null
 	if(update_icons)   update_icons()
 
+/mob/living/carbon/human/proc/update_tail_showing(var/update_icons=1)
+	overlays_lying[TAIL_LAYER] 		= null
+	overlays_standing[TAIL_LAYER] 	= null
+	var/cur_species = get_species()
+	if( cur_species == "Tajaran")
+		if(!wear_suit || !(wear_suit.flags_inv & HIDEJUMPSUIT) && !istype(wear_suit, /obj/item/clothing/suit/space))
+			overlays_lying[TAIL_LAYER]		= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "tajtail_l")
+			overlays_standing[TAIL_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "tajtail_s")
+	else if( cur_species == "Soghun")
+		if(!wear_suit || !(wear_suit.flags_inv & HIDEJUMPSUIT) && !istype(wear_suit, /obj/item/clothing/suit/space))
+			overlays_lying[TAIL_LAYER]		= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "sogtail_l")
+			overlays_standing[TAIL_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "sogtail_s")
+
+	if(update_icons)   update_icons()
+
 //Human Overlays Indexes/////////
 #undef MUTANTRACE_LAYER
 #undef MUTATIONS_LAYER
@@ -663,4 +689,5 @@ Please contact me on #coderbus IRC. ~Carn x
 #undef LEGCUFF_LAYER
 #undef L_HAND_LAYER
 #undef R_HAND_LAYER
+#undef TAIL_LAYER
 #undef TOTAL_LAYERS

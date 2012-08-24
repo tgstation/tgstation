@@ -783,6 +783,11 @@ datum/preferences
 								//this shouldn't happen
 								f_style = facial_hair_styles_list["Shaved"]
 
+							//reset hair colour and skin colour
+							r_hair = 0//hex2num(copytext(new_hair, 2, 4))
+							g_hair = 0//hex2num(copytext(new_hair, 4, 6))
+							b_hair = 0//hex2num(copytext(new_hair, 6, 8))
+
 							s_tone = 0
 
 

@@ -413,3 +413,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(src.stat == 2) return 0
 
 	return 1
+
+/mob/proc/get_species()
+	return
