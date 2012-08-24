@@ -31,6 +31,8 @@
 	if(dna)
 		dna.real_name = real_name
 
+	prev_gender = gender // Debug for plural genders
+
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))

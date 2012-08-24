@@ -1970,6 +1970,11 @@ var/global/BSACooldown = 0
 					if(aliens_allowed)
 						alien_infestation()
 						message_admins("[key_name_admin(usr)] has spawned aliens", 1)
+				if("comms_blackout")
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","CB")
+					communications_blackout()
+					message_admins("[key_name_admin(usr)] triggered a communications blackout.", 1)
 				if("spaceninja")
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","SN")
@@ -1998,7 +2003,7 @@ var/global/BSACooldown = 0
 					feedback_add_details("admin_secrets_fun_used","PB")
 					message_admins("[key_name_admin(usr)] has allowed a prison break", 1)
 					prison_break()
-				if("lightsout")
+				if("lightout")
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","LO")
 					message_admins("[key_name_admin(usr)] has broke a lot of lights", 1)
@@ -2008,6 +2013,12 @@ var/global/BSACooldown = 0
 					feedback_add_details("admin_secrets_fun_used","BO")
 					message_admins("[key_name_admin(usr)] broke all lights", 1)
 					lightsout(0,0)
+				if("whiteout")
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","WO")
+					for(var/obj/machinery/light/L in world)
+						L.fix()
+					message_admins("[key_name_admin(usr)] fixed all lights", 1)
 				if("virus")
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","V")
@@ -2468,6 +2479,7 @@ var/global/BSACooldown = 0
 <A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
 <A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
 <A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
+<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
 <BR>
 <B>Fun Secrets</B><BR>
 <BR>
@@ -2492,7 +2504,8 @@ var/global/BSACooldown = 0
 <A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
 <A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
 <A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
-<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>"}
+<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
+<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>"}
 //<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
 
 	if(lvl >= 6)

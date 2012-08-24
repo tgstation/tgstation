@@ -49,6 +49,7 @@
 	name = real_name
 	anchored = 1
 	canmove = 0
+	density = 1
 	loc = loc
 
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
@@ -199,11 +200,41 @@
 	src << browse(dat, "window=airoster")
 	onclose(src, "airoster")
 
+/mob/living/silicon/ai/proc/ai_call_shuttle()
+	set category = "AI Commands"
+	set name = "Call Emergency Shuttle"
+	if(usr.stat == 2)
+		usr << "You can't call the shuttle because you are dead!"
+		return
+	if(istype(usr,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = usr
+		if(AI.control_disabled)
+			usr << "Wireless control is disabled!"
+			return
+
+	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
+
+	if(confirm == "Yes")
+		call_shuttle_proc(src)
+
+	// hack to display shuttle timer
+	if(emergency_shuttle.online)
+		var/obj/machinery/computer/communications/C = locate() in world
+		if(C)
+			C.post_status("shuttle")
+
+	return
+
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "AI Commands"
 	if(usr.stat == 2)
 		usr << "You can't send the shuttle back because you are dead!"
 		return
+	if(istype(usr,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = usr
+		if(AI.control_disabled)
+			usr << "Wireless control is disabled!"
+			return
 	cancel_call_proc(src)
 	return
 
@@ -517,6 +548,27 @@
 	set name = "Choose Module"
 
 	malf_picker.use(src)
+
+/mob/living/silicon/ai/proc/ai_statuschange()
+	set category = "AI Commands"
+	set name = "AI status"
+
+	if(usr.stat == 2)
+		usr <<"You cannot change your emotional status because you are dead!"
+		return
+	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer")
+	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	for (var/obj/machinery/ai_status_display/AISD in world) //change status
+		spawn( 0 )
+		AISD.emotion = emote
+	for (var/obj/machinery/status_display/SD in world) //if Friend Computer, change ALL displays
+		if(emote=="Friend Computer")
+			spawn(0)
+			SD.friendc = 1
+		else
+			spawn(0)
+			SD.friendc = 0
+	return
 
 //I am the icon meister. Bow fefore me.	//>fefore
 /mob/living/silicon/ai/proc/ai_hologram_change()

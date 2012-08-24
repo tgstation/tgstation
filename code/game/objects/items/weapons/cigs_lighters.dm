@@ -106,6 +106,9 @@ ZIPPO
 		if(M.lit > 0)
 			light("\red [user] lights their [name] with their [W].")
 
+	else if(istype(W, /obj/item/device/assembly/igniter))
+		light("\red [user] fiddles with [W], and manages to light their [name].")
+
 	//can't think of any other way to update the overlays :<
 	user.update_inv_wear_mask(0)
 	user.update_inv_l_hand(0)
