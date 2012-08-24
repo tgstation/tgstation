@@ -1016,6 +1016,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	m_amt = 3750
 
+/*	//gtfo my object tree
 /obj/item/weapon/rubber_chicken
 	name = "rubber chicken"
 	desc = "A rubber chicken, isn't that hilarious?"
@@ -1023,6 +1024,7 @@
 	icon_state = "rubber_chicken"
 	item_state = "rubber_chicken"
 	w_class = 2.0
+*/
 
 /obj/item/weapon/screwdriver
 	name = "screwdriver"

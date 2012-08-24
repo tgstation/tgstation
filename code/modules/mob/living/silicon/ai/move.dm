@@ -7,6 +7,7 @@
 
 /client/proc/AIMove(n,direct,var/mob/living/silicon/ai/user)
 	if(!user) return
+	if(user.control_disabled) return
 
 	var/min_dist = 1e8
 	var/obj/machinery/camera/closest = null

@@ -164,12 +164,6 @@ proc/blood_incompatible(donor,receiver)
 		//AB is a universal receiver.
 	return 0
 
-/obj/item/weapon/rag
-	New() // So I don't have to grab maplock
-		spawn(1)
-			new/obj/item/weapon/reagent_containers/glass/rag(loc)
-			del src
-
 /obj/item/weapon/reagent_containers/glass/rag
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."

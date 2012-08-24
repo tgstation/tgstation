@@ -598,9 +598,12 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	if (!(wires & WIRE_RECEIVE))
 		return 0
-	var/turf/position = get_turf(src)
-	if(isnull(position) || position.z != level)
+	if(!listening)
 		return 0
+	if(level != 0)
+		var/turf/position = get_turf(src)
+		if(isnull(position) || position.z != level)
+			return 0
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
 			return 0

@@ -25,7 +25,7 @@
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
 	var/fire_alert = 0
-
+	var/prev_gender = null // Debug for plural genders
 	var/temperature_alert = 0
 
 
@@ -37,6 +37,11 @@
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
+
+	if(prev_gender != gender)
+		prev_gender = gender
+		if(gender in list(PLURAL, NEUTER))
+			message_admins("[src] ([ckey]) gender has been changed to plural or neuter. Please record what has happened recently to the person and then notify coders.")
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
