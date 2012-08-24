@@ -7,7 +7,7 @@
 			manifest_inject(H)
 		return
 
-/obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
+/obj/effect/datacore/proc/manifest_modify(var/name, var/assignment, var/alt_title = null)
 	var/datum/data/record/foundrecord
 
 	for(var/datum/data/record/t in data_core.general)
@@ -17,6 +17,10 @@
 
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
+	if(alt_title)
+		foundrecord.fields["real_rank"] = alt_title
+	else
+		foundrecord.fields["real_rank"] = assignment
 
 
 
@@ -36,12 +40,14 @@
 		var/datum/data/record/G = new()
 		G.fields["id"]			= id
 		G.fields["name"]		= H.real_name
+		G.fields["real_rank"]	= H.mind.assigned_role
 		G.fields["rank"]		= assignment
 		G.fields["age"]			= H.age
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
 		G.fields["p_stat"]		= "Active"
 		G.fields["m_stat"]		= "Stable"
 		G.fields["sex"]			= H.gender
+		G.fields["species"]		= H.get_species()
 		general += G
 
 		//Medical Record

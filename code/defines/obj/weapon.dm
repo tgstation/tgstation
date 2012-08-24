@@ -539,6 +539,7 @@
 	slot_flags = SLOT_ID
 
 	var/assignment = null
+	var/assignment_real_title = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
 /obj/item/weapon/card/id/silver

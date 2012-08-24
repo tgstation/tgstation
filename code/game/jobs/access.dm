@@ -493,14 +493,17 @@
 		return
 
 	var/jobName
+	var/realJobName
 
 	if(istype(src, /obj/item/device/pda))
 		if(src:id)
 			jobName = src:id:assignment
+			realJobName = src:id:assignment_real_title
 	if(istype(src, /obj/item/weapon/card/id))
 		jobName = src:assignment
+		realJobName = src:id:assignment_real_title
 
-	if(jobName in get_all_jobs())
+	if(realJobName in get_all_jobs())
 		return jobName
-	else
-		return "Unknown"
+
+	return "Unknown"
