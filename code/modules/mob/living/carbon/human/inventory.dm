@@ -127,8 +127,10 @@
 
 	if(W == src.l_hand)
 		src.l_hand = null
+		update_inv_l_hand() //So items actually disappear from hands.
 	else if(W == src.r_hand)
 		src.r_hand = null
+		update_inv_r_hand()
 
 	W.loc = src
 	switch(slot)
