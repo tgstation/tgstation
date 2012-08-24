@@ -219,10 +219,39 @@
 			src << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
 			return
 
+
+	//can't quite fit some alien bodyparts
+	var/cur_species = get_species()
+	if( W.body_parts_covered & LOWER_TORSO && W.flags_inv & HIDEJUMPSUIT && (cur_species == "Tajaran" || cur_species == "Soghun"))
+		if(prob(50))
+			src << "\red You twist your tail trying to fit it in!"
+			apply_damage(10)
+	if( W.body_parts_covered & HEAD && W.flags & BLOCKHAIR && (cur_species == "Skrell"))
+		if(prob(50))
+			src << "\red You twist your eartails trying to fit it in!"
+			apply_damage(10)
+
 	W.layer = 20
 
 	return
 
+/*
+/mob/living/carbon/human/proc/update_tail_showing(var/update_icons=1)
+	overlays_lying[TAIL_LAYER] 		= null
+	overlays_standing[TAIL_LAYER] 	= null
+	var/cur_species = get_species()
+	if( cur_species == "Tajaran")
+		if(!wear_suit || !(wear_suit.flags_inv & HIDEJUMPSUIT) && !istype(wear_suit, /obj/item/clothing/suit/space))
+			overlays_lying[TAIL_LAYER]		= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "tajtail_l")
+			overlays_standing[TAIL_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "tajtail_s")
+	else if( cur_species == "Soghun")
+		if(!wear_suit || !(wear_suit.flags_inv & HIDEJUMPSUIT) && !istype(wear_suit, /obj/item/clothing/suit/space))
+			overlays_lying[TAIL_LAYER]		= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "sogtail_l")
+			overlays_standing[TAIL_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "sogtail_s")
+
+	if(update_icons)   update_icons()
+
+*/
 
 
 
