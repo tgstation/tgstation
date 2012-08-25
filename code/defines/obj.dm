@@ -90,6 +90,20 @@
 	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/locked[] = list()
 
+/obj/effect/sign/map
+	desc = "A framed picture of the station."
+	name = "station map"
+	icon = 'icons/obj/decals.dmi'
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+/obj/effect/sign/map/left
+	icon_state = "map-left"
+
+/obj/effect/sign/map/right
+	icon_state = "map-right"
+
 /obj/effect/sign/securearea
 	desc = "A warning sign which reads 'SECURE AREA'. This obviously applies to a nun-Clown."
 	name = "SECURE AREA"
