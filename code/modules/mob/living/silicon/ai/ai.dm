@@ -564,7 +564,7 @@
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"
-	set name = "AI status"
+	set name = "AI Status"
 
 	if(usr.stat == 2)
 		usr <<"You cannot change your emotional status because you are dead!"
