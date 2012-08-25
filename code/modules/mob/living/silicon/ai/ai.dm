@@ -649,24 +649,20 @@
 
 
 // Handled camera lighting, when toggled.
-// It will get the nearest camera via range, it wouldn't matter
+// It will get the nearest camera from the eyeobj, lighting it.
 
-/mob/living/silicon/ai/proc/lightNearbyCamera(var/lum)
+/mob/living/silicon/ai/proc/lightNearbyCamera()
 	if(camera_light_on && camera_light_on < world.timeofday)
 		if(src.current)
-			// I have to use range instead of view or the darkness gets in the way.
 			var/camera = near_range_camera(src.eyeobj)
 			if(camera && src.current != camera)
 				src.current.SetLuminosity(0)
 				src.current = camera
-				src.current.SetLuminosity(lum)
+				src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)
 			else if(isnull(camera))
 				src.current.SetLuminosity(0)
 				src.current = null
-			camera_light_on = world.timeofday + 1 * 10 // Update the light every 2 seconds.
+			camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 		else
 			src.current = near_range_camera(src.eyeobj)
-			if(src.current) src.current.SetLuminosity(lum)
-
-
-#undef AI_CAMERA_LUMINOSITY
+			if(src.current) src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)
