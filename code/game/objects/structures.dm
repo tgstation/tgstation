@@ -470,20 +470,14 @@ obj/structure/meteorhit(obj/O as obj)
 		flick("[mineral]fwall_opening", src)
 		sleep(15)
 		src.density = 0
-		src.sd_SetOpacity(0)
-		var/turf/T = src.loc
-		T.sd_LumReset()
-
+		SetOpacity(0)
 	else
 		flick("[mineral]fwall_closing", src)
 		icon_state = "[mineral]0"
 		sleep(15)
 		src.density = 1
-		src.sd_SetOpacity(1)
-		var/turf/T = src.loc
-		//T.sd_LumUpdate()
+		SetOpacity(1)
 		src.relativewall()
-		T.sd_LumReset()
 
 /obj/structure/falsewall/uranium/attack_hand(mob/user as mob)
 	radiate()
@@ -583,27 +577,21 @@ obj/structure/meteorhit(obj/O as obj)
 			icon_state = "frwall_open"
 			flick("frwall_opening", src)
 			sleep(15)
-			src.density = 0
-			src.sd_SetOpacity(0)
-			var/turf/T = src.loc
-			T.sd_LumReset()
-
+			density = 0
+			SetOpacity(0)
 		else
 			icon_state = "r_wall"
 			flick("frwall_closing", src)
 			sleep(15)
-			src.density = 1
-			src.sd_SetOpacity(1)
-			var/turf/T = src.loc
-			//T.sd_LumUpdate()
-			src.relativewall()
-			T.sd_LumReset()
+			density = 1
+			SetOpacity(1)
+			relativewall()
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/screwdriver))
 			var/turf/T = get_turf(src)
-			user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the r wall.")
+			user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
 			T.ReplaceWithWall() //Intentionally makes a regular wall instead of an r-wall (no cheap r-walls for you).
 			del(src)
 

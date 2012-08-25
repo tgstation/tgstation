@@ -89,14 +89,14 @@
 		if(mode==4)		// supply shuttle timer
 			var/disp1
 			var/disp2
-			if(supply_shuttle_moving)
+			if(supply_shuttle.moving)
 				disp1 = "SPPLY"
 				disp2 = get_supply_shuttle_timer()
 				if(lentext(disp1) > 5)
 					disp1 = "**~**"
 
 			else
-				if(supply_shuttle_at_station)
+				if(supply_shuttle.at_station)
 					disp1 = "SPPLY"
 					disp2 = "STATN"
 				else
@@ -185,8 +185,8 @@
 		return ""
 
 	proc/get_supply_shuttle_timer()
-		if(supply_shuttle_moving)
-			var/timeleft = round((supply_shuttle_time - world.timeofday) / 10,1)
+		if(supply_shuttle.moving)
+			var/timeleft = round((supply_shuttle.eta_timeofday - world.timeofday) / 10,1)
 			return "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
 			// note ~ translates into a blinking :
 		return ""

@@ -165,7 +165,7 @@
 		network = null                   //Not the best way but it will do. I think.
 		cameranet.removeCamera(src)
 		stat |= EMPED
-		sd_SetLuminosity(0)
+		SetLuminosity(0)
 		spawn(900)
 			network = initial(network)
 			icon_state = initial(icon_state)

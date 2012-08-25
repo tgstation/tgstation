@@ -344,7 +344,7 @@
 	set category = "Changeling"
 	set name = "Regenerative Stasis (20)"
 
-	var/datum/changeling/changeling = changeling_power(20,0,100,UNCONSCIOUS)
+	var/datum/changeling/changeling = changeling_power(20,0,100,DEAD)
 	if(!changeling)	return
 
 	changeling.chem_charges -= 20

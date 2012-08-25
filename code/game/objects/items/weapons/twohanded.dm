@@ -134,8 +134,8 @@
 	w_class = 2.0
 	force_unwielded = 3
 	force_wielded = 30
-	wieldsound = 'saberon.ogg'
-	unwieldsound = 'saberoff.ogg'
+	wieldsound = 'sound/weapons/saberon.ogg'
+	unwieldsound = 'sound/weapons/saberoff.ogg'
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")

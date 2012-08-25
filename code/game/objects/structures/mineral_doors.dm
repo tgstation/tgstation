@@ -198,10 +198,7 @@
 /obj/structure/mineral_door/uranium
 	mineralType = "uranium"
 	hardness = 3
-
-	New()
-		..()
-		sd_SetLuminosity(3)
+	luminosity = 2
 
 /obj/structure/mineral_door/sandstone
 	mineralType = "sandstone"

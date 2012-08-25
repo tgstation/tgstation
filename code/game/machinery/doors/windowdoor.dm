@@ -106,7 +106,7 @@
 	sleep(10)
 
 	src.density = 0
-	src.sd_SetOpacity(0)
+//	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
 
 	if(operating == 1) //emag again
@@ -122,8 +122,8 @@
 	src.icon_state = text("[]", src.base_state)
 
 	src.density = 1
-	if (src.visible)
-		src.sd_SetOpacity(1)
+//	if(src.visible)
+//		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
 
 	sleep(10)

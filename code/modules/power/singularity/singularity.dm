@@ -13,6 +13,7 @@ var/global/list/uneatable = list(
 	anchored = 1
 	density = 1
 	layer = 6
+	luminosity = 6
 	unacidable = 1 //Don't comment this out.
 	use_power = 0
 	var/current_size = 1
@@ -279,7 +280,7 @@ var/global/list/uneatable = list(
 					continue
 				if(O.invisibility == 101)
 					src.consume(O)
-		A:ReplaceWithSpace()
+		T.ReplaceWithSpace()
 		gain = 2
 	src.energy += gain
 	return

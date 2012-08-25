@@ -61,7 +61,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user as mob)
-	playsound(src.loc, 'pop.ogg', 50, 0)		//Change the mode
+	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)		//Change the mode
 	if(mode == 1)
 		mode = 2
 		charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.

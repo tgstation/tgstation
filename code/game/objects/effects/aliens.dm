@@ -175,6 +175,7 @@
 		icon_state = "weednode"
 		name = "purple sac"
 		desc = "Weird purple octopus-like thing."
+		luminosity = NODERANGE
 
 /obj/effect/alien/weeds/New()
 	..()
@@ -185,11 +186,6 @@
 	spawn(rand(150,300))
 		if(src)
 			Life()
-	return
-
-/obj/effect/alien/weeds/node/New()
-	..()
-	sd_SetLuminosity(NODERANGE)
 	return
 
 /obj/effect/alien/weeds/proc/Life()

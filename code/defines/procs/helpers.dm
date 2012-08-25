@@ -914,22 +914,22 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 						if(!istype(M,/mob)) continue
 						M.loc = X
 
-					var/area/AR = X.loc
+//					var/area/AR = X.loc
 
-					if(AR.sd_lighting)
-						X.opacity = !X.opacity
-						X.sd_SetOpacity(!X.opacity)
+//					if(AR.lighting_use_dynamic)							//TODO: rewrite this code so it's not messed by lighting ~Carn
+//						X.opacity = !X.opacity
+//						X.SetOpacity(!X.opacity)
 
 					toupdate += X
 
 					if(turftoleave)
 						var/turf/ttl = new turftoleave(T)
 
-						var/area/AR2 = ttl.loc
+//						var/area/AR2 = ttl.loc
 
-						if(AR2.sd_lighting)
-							ttl.opacity = !ttl.opacity
-							ttl.sd_SetOpacity(!ttl.opacity)
+//						if(AR2.lighting_use_dynamic)						//TODO: rewrite this code so it's not messed by lighting ~Carn
+//							ttl.opacity = !ttl.opacity
+//							ttl.sd_SetOpacity(!ttl.opacity)
 
 						fromupdate += ttl
 
@@ -1089,14 +1089,14 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 
 					for(var/V in T.vars)
-						if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity", "sd_light_spill",)))
+						if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")))
 							X.vars[V] = T.vars[V]
 
-					var/area/AR = X.loc
+//					var/area/AR = X.loc
 
-					if(AR.sd_lighting)
-						X.opacity = !X.opacity
-						X.sd_SetOpacity(!X.opacity)
+//					if(AR.lighting_use_dynamic)
+//						X.opacity = !X.opacity
+//						X.sd_SetOpacity(!X.opacity)			//TODO: rewrite this code so it's not messed by lighting ~Carn
 
 					toupdate += X
 

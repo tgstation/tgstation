@@ -505,11 +505,6 @@ var/list/slot_equipment_priority = list( \
 //	..()
 	return
 
-/mob/proc/UpdateLuminosity()
-	if(src.total_luminosity == src.last_luminosity)	return 0//nothing to do here
-	src.last_luminosity = src.total_luminosity
-	sd_SetLuminosity(min(src.total_luminosity,7))//Current hardcode max at 7, should likely be a const somewhere else
-	return 1
 
 /mob/MouseDrop(mob/M as mob)
 	..()

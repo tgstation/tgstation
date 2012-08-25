@@ -106,9 +106,6 @@ ZIPPO
 		if(M.lit > 0)
 			light("\red [user] lights their [name] with their [W].")
 
-	else if(istype(W, /obj/item/device/assembly/igniter))
-		light("\red [user] fiddles with [W], and manages to light their [name].")
-
 	//can't think of any other way to update the overlays :<
 	user.update_inv_wear_mask(0)
 	user.update_inv_l_hand(0)
@@ -448,7 +445,7 @@ ZIPPO
 						for(var/mob/O in viewers(user, null))
 							O.show_message("\red After a few attempts, [user] manages to light the [src], they however burn their finger in the process.", 1)
 
-				user.total_luminosity += 2
+				user.SetLuminosity(user.luminosity + 2)
 				processing_objects.Add(src)
 			else
 				src.lit = 0
@@ -461,7 +458,7 @@ ZIPPO
 					for(var/mob/O in viewers(user, null))
 						O.show_message("\red [user] quietly shuts off the [src].", 1)
 
-				user.total_luminosity -= 2
+				user.SetLuminosity(user.luminosity - 2)
 				processing_objects.Remove(src)
 		else
 			return ..()
@@ -490,13 +487,13 @@ ZIPPO
 
 	pickup(mob/user)
 		if(lit)
-			src.sd_SetLuminosity(0)
-			user.total_luminosity += 2
+			src.SetLuminosity(0)
+			user.SetLuminosity(user.luminosity+2)
 		return
 
 
 	dropped(mob/user)
 		if(lit)
-			user.total_luminosity -= 2
-			src.sd_SetLuminosity(2)
+			user.SetLuminosity(user.luminosity-2)
+			src.SetLuminosity(2)
 		return

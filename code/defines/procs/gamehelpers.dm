@@ -50,20 +50,13 @@
 
 //Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
 //They should approximate pythagoras theorem well enough for our needs.
-//In fact, less accuracy is kinda better for explosions anyway :P Maybe k1=1, k2=0.5?
 #define k1 0.934
 #define k2 0.427
-/proc/approx_dist(center=usr, T) // T is just the second atom to check distance to center with
-	var/turf/centerturf = get_turf(center)
-	var/turf/targetturf = get_turf(T)
-
-	var/a = abs(targetturf.x - centerturf.x)	//sides of right-angled triangle
-	var/b = abs(targetturf.y - centerturf.y)
-
-	if(a>=b)
-		return (k1*a) + (k2*b)	//No sqrt or powers :)
-	else
-		return (k1*b) + (k2*a)
+/proc/cheap_hypotenuse(Ax,Ay,Bx,By) // T is just the second atom to check distance to center with
+	var/dx = abs(Ax - Bx)	//sides of right-angled triangle
+	var/dy = abs(Ay - By)
+	if(dx>=dy)	return (k1*dx) + (k2*dy)	//No sqrt or powers :)
+	else		return (k1*dx) + (k2*dy)
 #undef k1
 #undef k2
 

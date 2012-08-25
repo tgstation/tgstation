@@ -62,7 +62,7 @@
 	if(src.can_use())
 		cameranet.addCamera(src)
 	else
-		src.sd_SetLuminosity(0)
+		src.SetLuminosity(0)
 		cameranet.removeCamera(src)
 
 /obj/machinery/camera/New()

@@ -48,7 +48,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/area/master				// master area used for power calcluations
 								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
-	var/list/lights				// list of all lights on this area
+//	var/list/lights				// list of all lights on this area
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -122,10 +122,10 @@ proc/process_ghost_teleport_locs()
 //place to another. Look at escape shuttle for example.
 //All shuttles show now be under shuttle since we have smooth-wall code.
 
-/area/shuttle //DO NOT TURN THE SD_LIGHTING STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+/area/shuttle //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	requires_power = 0
 	luminosity = 1
-	sd_lighting = 0
+	lighting_use_dynamic = 0
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
@@ -227,14 +227,14 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Alien Shuttle Base"
 	requires_power = 1
 	luminosity = 0
-	sd_lighting = 1
+	lighting_use_dynamic = 1
 
 /area/shuttle/alien/mine
 	icon_state = "shuttle"
 	name = "\improper Alien Shuttle Mine"
 	requires_power = 1
 	luminosity = 0
-	sd_lighting = 1
+	lighting_use_dynamic = 1
 
 /area/shuttle/prison/
 	name = "\improper Prison Shuttle"
@@ -306,7 +306,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "start"
 	requires_power = 0
 	luminosity = 1
-	sd_lighting = 0
+	lighting_use_dynamic = 0
 	has_gravity = 1
 
 // === end remove
@@ -786,7 +786,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Holodeck"
 	icon_state = "Holodeck"
 	luminosity = 1
-	sd_lighting = 0
+	lighting_use_dynamic = 0
 
 /area/holodeck/alphadeck
 	name = "\improper Holodeck Alpha"
@@ -854,7 +854,7 @@ proc/process_ghost_teleport_locs()
 /area/solar
 	requires_power = 0
 	luminosity = 1
-	sd_lighting = 0
+	lighting_use_dynamic = 0
 
 	auxport
 		name = "\improper Fore Port Solar Array"
@@ -1335,25 +1335,25 @@ proc/process_ghost_teleport_locs()
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	sd_lighting = 0
+	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextFS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	sd_lighting = 0
+	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextAS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	sd_lighting = 0
+	lighting_use_dynamic = 0
 
 /area/turret_protected/AIsatextAP
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
-	sd_lighting = 0
+	lighting_use_dynamic = 0
 
 /area/turret_protected/NewAIMain
 	name = "\improper AI Main New"
@@ -1435,7 +1435,7 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/AssistantRoom
 	name = "\improper Assistant Room"
 	icon_state = "storage"
-	sd_lighting = 0
+	lighting_use_dynamic = 0
 
 /////////////////////////////////////////////////////////////////////
 /*
@@ -1507,7 +1507,7 @@ var/list/the_station_areas = list (
 	name = "Keelin's private beach"
 	icon_state = "null"
 	luminosity = 1
-	sd_lighting = 0
+	lighting_use_dynamic = 0
 	requires_power = 0
 	var/sound/mysound = null
 

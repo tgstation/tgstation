@@ -597,6 +597,7 @@
 		anchored = 1
 		density = 1
 		unacidable = 1
+		luminosity = 3
 		var/needs_power = 0
 		var/active = 1
 //		var/power = 10
@@ -612,8 +613,6 @@
 	src.gen_secondary = B
 	if(A && B)
 		needs_power = 1
-	spawn(1)
-		src.sd_SetLuminosity(3)
 
 /obj/machinery/shieldwall/attack_hand(mob/user as mob)
 	return

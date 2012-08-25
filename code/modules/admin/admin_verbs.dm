@@ -222,7 +222,7 @@
 			//verbs += /proc/togglebuildmode 							--Merged with view variables
 			//verbs += /client/proc/cmd_modify_object_variables 		--Merged with view variables
 			verbs += /client/proc/togglebuildmodeself
-			verbs += /client/proc/debug_master_controller
+			verbs += /client/proc/debug_controller
 		else	return
 
 		//Game Admin
@@ -243,7 +243,7 @@
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
 			verbs += /client/proc/send_space_ninja
-			verbs += /client/proc/restartcontroller						//Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
+			verbs += /client/proc/restart_controller						//Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
 			verbs += /client/proc/Blobize								//I need to remember to move/remove this later
 			verbs += /client/proc/Blobcount								//I need to remember to move/remove this later
 			verbs += /client/proc/toggle_clickproc 						//TODO ERRORAGE (Temporary proc while the new clickproc is being tested)
@@ -388,7 +388,7 @@
 	verbs -= /client/proc/air_report
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_gib_self
-	verbs -= /client/proc/restartcontroller
+	verbs -= /client/proc/restart_controller
 	verbs -= /client/proc/play_local_sound
 	verbs -= /client/proc/enable_debug_verbs
 	verbs -= /client/proc/toggleprayers
@@ -429,7 +429,7 @@
 	//verbs -= /client/proc/cmd_switch_radio							--removed because tcommsat is staying
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/kill_airgroup
-	verbs -= /client/proc/debug_master_controller
+	verbs -= /client/proc/debug_controller
 	verbs -= /client/proc/check_ai_laws
 	verbs -= /client/proc/cmd_debug_mob_lists
 	return

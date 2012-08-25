@@ -429,12 +429,13 @@
 
 /mob/living/silicon/ai/reset_view(atom/A)
 	if(current)
-		current.sd_SetLuminosity(0)
+		current.SetLuminosity(0)
 	if(istype(A,/obj/machinery/camera))
 		current = A
 	..()
 	if(istype(A,/obj/machinery/camera))
-		A.sd_SetLuminosity(camera_light_on * AI_CAMERA_LUMINOSITY)
+		if(camera_light_on)	A.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		else				A.SetLuminosity(0)
 
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
@@ -641,7 +642,7 @@
 	src << "Camera lights [camera_light_on ? "activated" : "deactivated"]."
 	if(!camera_light_on)
 		if(src.current)
-			src.current.sd_SetLuminosity(0)
+			src.current.SetLuminosity(0)
 	else
 		src.lightNearbyCamera()
 
@@ -656,16 +657,16 @@
 			// I have to use range instead of view or the darkness gets in the way.
 			var/camera = near_range_camera(src.eyeobj)
 			if(camera && src.current != camera)
-				src.current.sd_SetLuminosity(0)
+				src.current.SetLuminosity(0)
 				src.current = camera
-				src.current.sd_SetLuminosity(lum)
+				src.current.SetLuminosity(lum)
 			else if(isnull(camera))
-				src.current.sd_SetLuminosity(0)
+				src.current.SetLuminosity(0)
 				src.current = null
 			camera_light_on = world.timeofday + 1 * 10 // Update the light every 2 seconds.
 		else
 			src.current = near_range_camera(src.eyeobj)
-			if(src.current) src.current.sd_SetLuminosity(lum)
+			if(src.current) src.current.SetLuminosity(lum)
 
 
 #undef AI_CAMERA_LUMINOSITY

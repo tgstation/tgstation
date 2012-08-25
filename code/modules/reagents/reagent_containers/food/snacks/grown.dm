@@ -216,16 +216,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
 	if(istype(loc,/mob))
-		loc.sd_SetLuminosity(loc.luminosity - potency/5)
+		loc.SetLuminosity(round(loc.luminosity - potency/5,1))
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
-	src.sd_SetLuminosity(0)
-	user.total_luminosity += potency/5
+	src.SetLuminosity(0)
+	user.SetLuminosity(round(user.luminosity + (potency/5),1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	user.total_luminosity -= potency/5
-	src.sd_SetLuminosity(potency/5)
+	user.SetLuminosity(round(user.luminosity - (potency/5),1))
+	src.SetLuminosity(round(potency/5,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed = "/obj/item/seeds/cocoapodseed"
@@ -771,7 +771,7 @@
 		if(istype(src.loc,/mob))
 			pickup(src.loc)
 		else
-			src.sd_SetLuminosity(potency/10)
+			src.SetLuminosity(round(potency/10,1))
 	lifespan = 120 //ten times that is the delay
 	endurance = 30
 	maturation = 15
@@ -795,16 +795,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Del()
 	if(istype(loc,/mob))
-		loc.sd_SetLuminosity(loc.luminosity - potency/10)
+		loc.SetLuminosity(round(loc.luminosity - potency/10,1))
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
-	src.sd_SetLuminosity(0)
-	user.total_luminosity += potency/10
+	SetLuminosity(0)
+	user.SetLuminosity(round(user.luminosity + (potency/10),1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.total_luminosity -= potency/10
-	src.sd_SetLuminosity(potency/10)
+	user.SetLuminosity(round(user.luminosity + (potency/10),1))
+	SetLuminosity(round(potency/10,1))
 
 // *************************************
 // Complex Grown Object Defines -

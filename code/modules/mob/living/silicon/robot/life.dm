@@ -13,7 +13,6 @@
 	handle_regular_status_updates()
 
 	if(client)
-		UpdateLuminosity()
 		handle_regular_hud_updates()
 		update_items()
 	if (src.stat != DEAD) //still using power

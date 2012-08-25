@@ -90,7 +90,7 @@
 	for(var/turf/t in visRemoved)
 		if(t in obscuredTurfs)
 			if(!t.obscured)
-				t.obscured = image('effects/cameravis.dmi', t, "black", 15)
+				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
 
 			obscured += t.obscured
 			for(var/mob/aiEye/m in seenby)
@@ -129,7 +129,7 @@
 
 	for(var/turf/t in obscuredTurfs)
 		if(!t.obscured)
-			t.obscured = image('effects/cameravis.dmi', t, "black", 15)
+			t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
 		obscured += t.obscured
 
 #undef UPDATE_BUFFER

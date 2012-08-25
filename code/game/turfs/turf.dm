@@ -158,7 +158,12 @@
 	var/atemp = 0
 	var/turf_count = 0
 
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/turf/simulated/floor/W = new /turf/simulated/floor( locate(src.x, src.y, src.z) )
+	W.lighting_lumcount += old_lumcount
+	if(old_lumcount != W.lighting_lumcount)
+		W.lighting_changed = 1
+		lighting_controller.changed_turfs += W
 
 //////Assimilate Air//////
 	for(var/direction in cardinal)//Only use cardinals to cut down on lag
@@ -186,10 +191,6 @@
 	if(prior_icon) W.icon_state = prior_icon
 	else W.icon_state = "floor"
 
-	if (!explode)
-		W.opacity = 1
-		W.sd_SetOpacity(0)
-		//This is probably gonna make lighting go a bit wonky in bombed areas, but sd_SetOpacity was the primary reason bombs have been so laggy. --NEO
 	W.levelupdate()
 	return W
 
@@ -204,7 +205,13 @@
 	var/turf_count = 0
 
 //////Assimilate Air//////
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/turf/simulated/floor/plating/W = new /turf/simulated/floor/plating( locate(src.x, src.y, src.z) )
+	W.lighting_lumcount += old_lumcount
+	if(old_lumcount != W.lighting_lumcount)
+		W.lighting_changed = 1
+		lighting_controller.changed_turfs += W
+
 	for(var/direction in cardinal)
 		var/turf/T = get_step(src,direction)
 		if(istype(T,/turf/space))
@@ -229,15 +236,19 @@
 	W.dir = old_dir
 	if(prior_icon) W.icon_state = prior_icon
 	else W.icon_state = "plating"
-	W.opacity = 1
-	W.sd_SetOpacity(0)
+
 	W.levelupdate()
 	return W
 
 /turf/proc/ReplaceWithEngineFloor()
 	var/old_dir = dir
 
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/turf/simulated/floor/engine/E = new /turf/simulated/floor/engine( locate(src.x, src.y, src.z) )
+	E.lighting_lumcount += old_lumcount
+	if(old_lumcount != E.lighting_lumcount)
+		E.lighting_changed = 1
+		lighting_controller.changed_turfs += E
 
 	E.dir = old_dir
 	E.icon_state = "engine"
@@ -302,49 +313,75 @@
 
 /turf/proc/ReplaceWithSpace()
 	var/old_dir = dir
+
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
+	S.lighting_lumcount += old_lumcount
+	if(old_lumcount != S.lighting_lumcount)
+		S.lighting_changed = 1
+		lighting_controller.changed_turfs += S
+
 	S.dir = old_dir
 	S.levelupdate()
 	return S
 
 /turf/proc/ReplaceWithLattice()
 	var/old_dir = dir
+
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
+	S.lighting_lumcount += old_lumcount
+	if(old_lumcount != S.lighting_lumcount)
+		S.lighting_changed = 1
+		lighting_controller.changed_turfs += S
+
 	S.dir = old_dir
-	S.sd_LumReset()
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 	S.levelupdate()
 	return S
 
 /turf/proc/ReplaceWithWall()
 	var/old_icon = icon_state
+
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/turf/simulated/wall/S = new /turf/simulated/wall( locate(src.x, src.y, src.z) )
+	S.lighting_lumcount += old_lumcount
+	if(old_lumcount != S.lighting_lumcount)
+		S.lighting_changed = 1
+		lighting_controller.changed_turfs += S
+
 	S.icon_old = old_icon
-	S.opacity = 0
-	S.sd_NewOpacity(1)
-	S.sd_LumReset()
 	S.levelupdate()
 	return S
 
 /turf/proc/ReplaceWithRWall()
 	var/old_icon = icon_state
+
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/turf/simulated/wall/r_wall/S = new /turf/simulated/wall/r_wall( locate(src.x, src.y, src.z) )
+	S.lighting_lumcount += old_lumcount
+	if(old_lumcount != S.lighting_lumcount)
+		S.lighting_changed = 1
+		lighting_controller.changed_turfs += S
+
 	S.icon_old = old_icon
-	S.opacity = 0
-	S.sd_NewOpacity(1)
-	S.sd_LumReset()
 	S.levelupdate()
 	return S
 
 /turf/proc/ReplaceWithMineralWall(var/ore)
 	var/old_icon = icon_state
+
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/turf/simulated/wall/mineral/S = new /turf/simulated/wall/mineral( locate(src.x, src.y, src.z) )
+	S.lighting_lumcount += old_lumcount
+	if(old_lumcount != S.lighting_lumcount)
+		S.lighting_changed = 1
+		lighting_controller.changed_turfs += S
+
 	S.icon_old = old_icon
-	S.opacity = 0
-	S.sd_NewOpacity(1)
 	S.mineral = ore
-	S.New()//Hackish as fuck, but what can you do? -Sieve
-	S.sd_LumReset()
+	S.New()//Hackish as fuck, but what can you do? -Sieve	//build it into the goddamn new() call up there ^ ~Carn
+															//e.g. new(turf/loc, mineral)
 	S.levelupdate()
 	return S
 
@@ -1010,7 +1047,7 @@
 
 	spawn(100)
 		if(O)	del(O)
-	F.sd_LumReset()
+//	F.sd_LumReset()		//TODO: ~Carn
 	return
 
 /turf/simulated/wall/meteorhit(obj/M as obj)
@@ -1223,19 +1260,19 @@ turf/simulated/floor/proc/update_icon()
 			switch(T.state)
 				if(0)
 					icon_state = "light_on"
-					sd_SetLuminosity(5)
+					SetLuminosity(5)
 				if(1)
 					var/num = pick("1","2","3","4")
 					icon_state = "light_on_flicker[num]"
-					sd_SetLuminosity(5)
+					SetLuminosity(5)
 				if(2)
 					icon_state = "light_on_broken"
-					sd_SetLuminosity(5)
+					SetLuminosity(5)
 				if(3)
 					icon_state = "light_off"
-					sd_SetLuminosity(0)
+					SetLuminosity(0)
 		else
-			sd_SetLuminosity(0)
+			SetLuminosity(0)
 			icon_state = "light_off"
 	if(is_grass_floor())
 		if(!broken && !burnt)
@@ -1401,7 +1438,7 @@ turf/simulated/floor/proc/update_icon()
 	if(!floor_tile) return
 	del(floor_tile)
 	icon_plating = "plating"
-	sd_SetLuminosity(0)
+	SetLuminosity(0)
 	floor_tile = null
 	intact = 0
 	broken = 0
@@ -1417,7 +1454,7 @@ turf/simulated/floor/proc/update_icon()
 	broken = 0
 	burnt = 0
 	intact = 1
-	sd_SetLuminosity(0)
+	SetLuminosity(0)
 	if(T)
 		if(istype(T,/obj/item/stack/tile/plasteel))
 			floor_tile = T

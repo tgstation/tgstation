@@ -936,7 +936,7 @@ steam.start() -- spawns the effect
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "metalfoam"
 	density = 1
-	opacity = 0 	// changed in New()
+	opacity = 1 	// changed in New()
 	anchored = 1
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
@@ -945,11 +945,11 @@ steam.start() -- spawns the effect
 	New()
 		..()
 		update_nearby_tiles(1)
-		spawn(1)
-			sd_NewOpacity(1)
+
+
 
 	Del()
-		sd_NewOpacity(0)
+
 		density = 0
 		update_nearby_tiles(1)
 		..()

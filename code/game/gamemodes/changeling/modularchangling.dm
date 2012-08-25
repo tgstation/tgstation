@@ -27,8 +27,8 @@ var/list/datum/power/changeling/powerinstances = list()
 
 /datum/power/changeling/fakedeath
 	name = "Regenerative Stasis"
-	desc = "We fake our death while we regenerate our form, even through death."
-	helptext = "Must be used before death."
+	desc = "We become weakened to a death-like state, where we will rise again from death."
+	helptext = "Can be used before or after death. Duration varies greatly."
 	genomecost = 0
 	allowduringlesserform = 1
 	verbpath = /mob/proc/changeling_fakedeath
@@ -56,7 +56,7 @@ var/list/datum/power/changeling/powerinstances = list()
 /datum/power/changeling/silence_sting
 	name = "Silence Sting"
 	desc = "We silently sting a human, completely silencing them for a short time."
-	helptext = "Does not provide a warning to a victim that they have been stung, until they try to speak and can not."
+	helptext = "Does not provide a warning to a victim that they have been stung, until they try to speak and cannot."
 	genomecost = 2
 	allowduringlesserform = 1
 	verbpath = /mob/proc/changeling_silence_sting
@@ -64,6 +64,7 @@ var/list/datum/power/changeling/powerinstances = list()
 /datum/power/changeling/transformation_sting
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform into another."
+	helptext = "Does not provide a warning to others. The victim will transform much like a changeling would."
 	genomecost = 3
 	verbpath = /mob/proc/changeling_transformation_sting
 

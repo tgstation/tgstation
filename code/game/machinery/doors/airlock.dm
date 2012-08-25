@@ -1207,8 +1207,7 @@ About the new airlock wires panel:
 						src.density = 0
 						update_icon()
 
-						if(!glass)
-							src.sd_SetOpacity(0)
+						src.SetOpacity(0)	//ugh...lots of lag for something so trivial
 						src.operating = 0
 					return
 				user << "\red You need to be wielding the Fire axe to do that."
@@ -1224,8 +1223,7 @@ About the new airlock wires panel:
 					src.density = 0
 					update_icon()
 
-					if(!glass)
-						src.sd_SetOpacity(0)
+					src.SetOpacity(0)	//ugh...lots of lag for something so trivial
 					src.operating = 0
 					return
 
@@ -1243,8 +1241,7 @@ About the new airlock wires panel:
 							sleep(15)
 							update_icon()
 
-							if((src.visible) && (!glass))
-								src.sd_SetOpacity(1)
+							src.SetOpacity(initial(opacity))
 							src.operating = 0
 					else
 						user << "\red You need to be wielding the Fire axe to do that."
@@ -1258,8 +1255,7 @@ About the new airlock wires panel:
 						sleep(15)
 						update_icon()
 
-						if((src.visible) && (!glass))
-							src.sd_SetOpacity(1)
+						src.SetOpacity(initial(opacity))
 						src.operating = 0
 
 	else

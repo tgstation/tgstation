@@ -53,9 +53,6 @@
 	if(environment)	// More error checking -- TLE
 		handle_environment(environment)
 
-	//Flashlights and such
-	UpdateLuminosity()
-
 	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()

@@ -468,17 +468,17 @@ Code:
 				menu = "<h4><img src=pda_crate.png> Supply Record Interlink</h4>"
 
 				menu += "<BR><B>Supply shuttle</B><BR>"
-				menu += "Location: [supply_shuttle_moving ? "Moving to station ([supply_shuttle_timeleft] Mins.)":supply_shuttle_at_station ? "Station":"Dock"]<BR>"
+				menu += "Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>"
 				menu += "Current approved orders: <BR><ol>"
-				for(var/S in supply_shuttle_shoppinglist)
+				for(var/S in supply_shuttle.shoppinglist)
 					var/datum/supply_order/SO = S
-					menu += "<li>[SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]</li>"
+					menu += "<li>#[SO.ordernum] - [SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]</li>"
 				menu += "</ol>"
 
 				menu += "Current requests: <BR><ol>"
-				for(var/S in supply_shuttle_requestlist)
+				for(var/S in supply_shuttle.requestlist)
 					var/datum/supply_order/SO = S
-					menu += "<li>[SO.object.name] requested by [SO.orderedby]</li>"
+					menu += "<li>#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]</li>"
 				menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
 
 			if (48) //mulebot control

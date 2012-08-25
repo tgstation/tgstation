@@ -56,7 +56,7 @@
 				del(S)
 				D.icon_state = "syringeproj"
 				D.name = "syringe"
-				playsound(user.loc, 'syringeproj.ogg', 50, 1)
+				playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
 
 				for(var/i=0, i<6, i++)
 					if(!D) break

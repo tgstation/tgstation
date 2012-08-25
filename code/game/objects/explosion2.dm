@@ -1,4 +1,6 @@
 //TODO: Flash range does nothing currently
+//NOTE: This has not yet been updated with the lighting deferal stuff. ~Carn
+//Needs some work anyway.
 
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
 	spawn(0)

@@ -113,8 +113,8 @@
 	src.update_status()
 
 	master_controller = new /datum/controller/game_controller()
-	spawn(-1)
-		master_controller.setup()
+	spawn(-1)	master_controller.setup()
+	lighting_controller.Initialize()
 	return
 
 //Crispy fullban

@@ -18,25 +18,24 @@
 	..()
 	if (on)
 		icon_state = icon_on
-		src.sd_SetLuminosity(brightness_on)
+		src.SetLuminosity(brightness_on)
 	else
 		icon_state = icon_off
-		src.sd_SetLuminosity(0)
+		src.SetLuminosity(0)
 
 /obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
-	if (on)
+	if(on)
 		icon_state = icon_on
 		if(src.loc == user)
-			user.total_luminosity += brightness_on
-		else if (isturf(src.loc))
-			src.sd_SetLuminosity(brightness_on)
-
+			user.SetLuminosity(user.luminosity + brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(brightness_on)
 	else
 		icon_state = icon_off
 		if(src.loc == user)
-			user.total_luminosity -= brightness_on
-		else if (isturf(src.loc))
-			src.sd_SetLuminosity(0)
+			user.SetLuminosity(user.luminosity - brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -85,14 +84,14 @@
 
 /obj/item/device/flashlight/pickup(mob/user)
 	if(on)
-		user.total_luminosity += brightness_on
-		src.sd_SetLuminosity(0)
+		user.SetLuminosity(user.luminosity + brightness_on)
+		SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
 	if(on)
-		user.total_luminosity -= brightness_on
-		src.sd_SetLuminosity(brightness_on)
+		user.SetLuminosity(user.luminosity - brightness_on)
+		SetLuminosity(brightness_on)
 
 
 /obj/item/device/flashlight/pen

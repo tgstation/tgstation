@@ -50,7 +50,7 @@
 				for(var/mob/M in viewers(user))
 					if(M == user) continue
 					M << "[user] detaches the power sink from the cable."
-				sd_SetLuminosity(0)
+				SetLuminosity(0)
 				icon_state = "powersink0"
 
 				return
@@ -85,7 +85,7 @@
 					if(M == user) continue
 					M << "[user] deactivates the power sink!"
 				mode = 1
-				sd_SetLuminosity(0)
+				SetLuminosity(0)
 				icon_state = "powersink0"
 				processing_objects.Remove(src)
 
@@ -93,9 +93,7 @@
 		if(attached)
 			var/datum/powernet/PN = attached.get_powernet()
 			if(PN)
-				if(!luminosity)
-					sd_SetLuminosity(12)
-
+				SetLuminosity(12)
 
 				// found a powernet, so drain up to max power from it
 
