@@ -7,9 +7,13 @@
 	var/atom/movable/structure = null // if the grab is not grabbing a mob
 	var/mob/assailant = null
 	var/state = 1.0
-	var/killing = 0.0
+
+	var/killing = 0.0 // 1 = about to kill, 2 = killing
+	var/kill_loc = null
+
 	var/allow_upgrade = 1.0
 	var/last_suffocate = 1.0
+
 	layer = 21
 	abstract = 1.0
 	item_state = "nothing"
@@ -94,7 +98,6 @@
 			for(var/obj/item/weapon/grab/G in affecting.grabbed_by)
 				if (G.state == 2)
 					allow_upgrade = 0
-				//Foreach goto(341)
 		if (allow_upgrade)
 			hud1.icon_state = "reinforce"
 		else
@@ -102,15 +105,23 @@
 	else
 		if (!( affecting.buckled ))
 			affecting.loc = assailant.loc
-	if ((killing && state == 3))
-		affecting.Stun(5)
-		affecting.Paralyse(3)
+	if ((killing == 2 && state == 3))
+		if(assailant.loc != kill_loc)
+			for(var/mob/O in viewers(assailant, null))
+				O.show_message(text("\red [] lost his tightened grip on []'s neck!", assailant, affecting), 1)
+			killing = 0
+			hud1.icon_state = "disarm/kill"
+			return
+		affecting.Weaken(3)
+		affecting.Stun(3) // It will hamper your voice, being choked and all.
 		affecting.losebreath = min(affecting.losebreath + 2, 3)
 	return
 
 
 /obj/item/weapon/grab/proc/s_click(obj/screen/S as obj)
 	if (!affecting)
+		return
+	if(killing)
 		return
 	if (assailant.next_move > world.time)
 		return
@@ -144,6 +155,9 @@
 	if ((!( assailant.canmove ) || assailant.lying))
 		del(src)
 		return
+	if(killing)
+		return
+
 	switch(S.id)
 		if(1.0)
 			if (state < 2)
@@ -196,9 +210,22 @@
 					hud1.icon_state = "disarm/kill"
 					hud1.name = "disarm/kill"
 				else
-					if (state >= 3)
-						killing = !( killing )
-						if (killing)
+					if (state >= 3 && !killing)
+						for(var/mob/O in viewers(assailant, null))
+							O.show_message(text("\red [] starts to tighten his grip on []'s neck!", assailant, affecting), 1)
+						hud1.icon_state = "disarm/kill1"
+						killing = 1
+						if(do_after(assailant, 50))
+							if(killing == 2)
+								return
+							if(!affecting)
+								del(src)
+								return
+							if ((!( assailant.canmove ) || assailant.lying))
+								del(src)
+								return
+							killing = 2
+							kill_loc = assailant.loc
 							for(var/mob/O in viewers(assailant, null))
 								O.show_message(text("\red [] has tightened his grip on []'s neck!", assailant, affecting), 1)
 							affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>")
@@ -207,12 +234,11 @@
 
 							assailant.next_move = world.time + 10
 							affecting.losebreath += 1
-							hud1.icon_state = "disarm/kill1"
 						else
-							hud1.icon_state = "disarm/kill"
 							for(var/mob/O in viewers(assailant, null))
-								O.show_message(text("\red [] has loosened the grip on []'s neck!", assailant, affecting), 1)
-		else
+								O.show_message(text("\red [] was unable to tighten his grip on []'s neck!", assailant, affecting), 1)
+							killing = 0
+							hud1.icon_state = "disarm/kill"
 	return
 
 
