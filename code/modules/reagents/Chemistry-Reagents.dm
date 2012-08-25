@@ -3102,7 +3102,7 @@ datum
 		brave_bull
 			name = "Brave Bull"
 			id = "bravebull"
-			description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
+			description = "It's just as effective as Dutch-Courage!."
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
@@ -3140,7 +3140,7 @@ datum
 		toxins_special
 			name = "Toxins Special"
 			id = "toxinsspecial"
-			description = "This thing is FLAMING!. CALL THE DAMN SHUTTLE!"
+			description = "This thing is ON FIRE!. CALL THE DAMN SHUTTLE!"
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
@@ -3390,7 +3390,7 @@ datum
 		whiskeysoda
 			name = "Whiskey Soda"
 			id = "whiskeysoda"
-			description = "Ultimate refreshment."
+			description = "For the more refined griffon."
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
@@ -3525,7 +3525,7 @@ datum
 		bahama_mama
 			name = "Bahama mama"
 			id = "bahama_mama"
-			description = "Tropic cocktail."
+			description = "Tropical cocktail."
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
@@ -3731,7 +3731,7 @@ datum
 		alliescocktail
 			name = "Allies Cocktail"
 			id = "alliescocktail"
-			description = "A drink made from your allies."
+			description = "A drink made from your allies, not as sweet as when made from your enemies."
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
@@ -3790,7 +3790,7 @@ datum
 		acid_spit
 			name = "Acid Spit"
 			id = "acidspit"
-			description = "A drink by Nanotrasen. Made from live aliens."
+			description = "A drink for the daring, can be deadly if incorrectly prepared!"
 			reagent_state = LIQUID
 			color = "#365000" // rgb: 54, 80, 0
 
@@ -3809,12 +3809,12 @@ datum
 		amasec
 			name = "Amasec"
 			id = "amasec"
-			description = "Official drink of the Imperium."
+			description = "Official drink of the Nanotrasen Gun-Club!"
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
 			on_mob_life(var/mob/living/M as mob)
-				M.stunned = 4
+				M.stunned = 1
 				if(!data) data = 1
 				data++
 				M.dizziness +=4
@@ -3835,10 +3835,7 @@ datum
 
 			on_mob_life(var/mob/living/carbon/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustOxyLoss(0.5)
-				M.adjustOxyLoss(0.5)
-				M.weakened = max(M.weakened, 15)
-				M.silent = max(M.silent, 15)
+				M.weakened = max(M.weakened, 3)
 				if(!data) data = 1
 				data++
 				M.dizziness +=6
@@ -3857,7 +3854,7 @@ datum
 		hippies_delight
 			name = "Hippie's Delight"
 			id = "hippiesdelight"
-			description = "A drink enjoyed by people during the 1960's."
+			description = "You just don't get it maaaan."
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
@@ -3948,7 +3945,7 @@ datum
 		changelingsting
 			name = "Changeling Sting"
 			id = "changelingsting"
-			description = "A stingy drink."
+			description = "You take a tiny sip and feel a burning sensation..."
 			reagent_state = LIQUID
 			color = "#2E6671" // rgb: 46, 102, 113
 
@@ -3986,7 +3983,7 @@ datum
 		syndicatebomb
 			name = "Syndicate Bomb"
 			id = "syndicatebomb"
-			description = "A Syndicate bomb"
+			description = "Tastes like terrorism!"
 			reagent_state = LIQUID
 			color = "#2E6671" // rgb: 46, 102, 113
 
