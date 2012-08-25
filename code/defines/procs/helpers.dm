@@ -320,6 +320,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			oldname = null//don't bother with the records update crap
 			world << "<b>[newname] is the AI!</b>"
 			world << sound('sound/AI/newAI.ogg')
+			for(var/mob/aiEye/E in mob_list)
+				if(E.ai && E.ai == src)
+					E.name = "[newname] (AI Eye)"
+					break
 
 		fully_replace_character_name(oldname,newname)
 

@@ -744,6 +744,8 @@
 	if (user.stat)
 		user << "\red You must be conscious to use this [src]!"
 		return 0
+	if(!user.client)
+		return 0
 	if ( ! (istype(user, /mob/living/carbon/human) || \
 			istype(user, /mob/living/silicon) || \
 			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )

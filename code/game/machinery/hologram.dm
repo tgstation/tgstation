@@ -31,9 +31,8 @@ Possible to do for anyone motivated enough:
 	/*There are pretty much only three ways to interact here.
 	I don't need to check for client since they're clicking on an object.
 	This may change in the future but for now will suffice.*/
-	if(user.client.eye!=src)//Set client eye on the object if it's not already.
-		user.current = src
-		user.reset_view(src)
+	if(user.eyeobj.loc != src.loc)//Set client eye on the object if it's not already.
+		user.eyeobj.setLoc(get_turf(src))
 	else if(!hologram)//If there is no hologram, possibly make one.
 		activate_holo(user)
 	else if(master==user)//If there is a hologram, remove it. But only if the user is the master. Otherwise do nothing.
@@ -41,7 +40,7 @@ Possible to do for anyone motivated enough:
 	return
 
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
-	if(!(stat & NOPOWER)&&user.client.eye==src)//If the projector has power and client eye is on it.
+	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
 			for(var/mob/M in viewers())
@@ -76,6 +75,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.name = "AI hologram"//If someone decides to right click.
 	sd_SetLuminosity(1)//To make the pad glowy.
 	icon_state = "holopad1"
+	A.current = src
 	master = A//AI is the master.
 	use_power = 2//Active power usage.
 	return 1
@@ -83,6 +83,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/holopad/proc/clear_holo()
 	hologram.sd_SetLuminosity(0)//Clear lighting.
 	del(hologram)//Get rid of hologram.
+	if(master.current == src)
+		master.current = null
 	master = null//Null the master, since no-one is using it now.
 	sd_SetLuminosity(0)//Clear lighting for the parent.
 	icon_state = "holopad0"
@@ -91,8 +93,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/hologram/holopad/process()
 	if(hologram)//If there is a hologram.
-		if(master&&!master.stat&&master.client&&master.client.eye==src)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
-			if( !(get_dist(src,hologram.loc)>3||stat & NOPOWER) )//If the hologram is not out of bounds and the machine has power.
+		if(master && !master.stat && master.client && master.eyeobj.loc == src.loc)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
+			if(!(stat & NOPOWER))//If the  machine has power.
 				return 1
 		clear_holo()//If not, we want to get rid of the hologram.
 	return 1
