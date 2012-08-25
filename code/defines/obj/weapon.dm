@@ -27,6 +27,13 @@
 	IsShield()
 		return 1
 
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/melee/baton))
+			user.visible_message("<span class='warning'>[user] bashes their [src] with [W]!</span>")
+			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+		else
+			..()
+
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
@@ -220,6 +227,19 @@
 	icon_state = "adv_spectrometer"
 	details = 1
 	origin_tech = "magnets=4;biotech=2"
+
+/obj/item/weapon/melee/chainofcommand
+	name = "chain of command"
+	desc = "A tool used by great men to placate the frothing masses."
+	icon_state = "chain"
+	item_state = "chain"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
+	force = 10
+	throwforce = 7
+	w_class = 3
+	origin_tech = "combat=4"
+	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 
 /obj/item/weapon/melee/energy
 	var/active = 0
