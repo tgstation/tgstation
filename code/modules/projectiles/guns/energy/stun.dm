@@ -17,7 +17,7 @@
 	projectile_type = "/obj/item/projectile/energy/electrode"
 	cell_type = "/obj/item/weapon/cell/secborg"
 	var/charge_tick = 0
-	var/recharge_time = 10 //Time it takes for shots to recharge (in seconds)
+	var/recharge_time = 10 //Time it takes for shots to recharge (in ticks)
 
 	New()
 		..()
@@ -28,7 +28,7 @@
 		processing_objects.Remove(src)
 		..()
 
-	process() //Every [recharge_time] seconds, recharge a shot for the cyborg
+	process() //Every [recharge_time] ticks, recharge a shot for the cyborg
 		charge_tick++
 		if(charge_tick < recharge_time) return 0
 		charge_tick = 0

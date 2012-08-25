@@ -39,6 +39,36 @@
 			M.bodytemperature = temperature
 		return 1
 
+/obj/item/projectile/meteor
+	name = "meteor"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "smallf"
+	damage = 0
+	damage_type = BRUTE
+	nodamage = 1
+	flag = "bullet"
+
+	Bump(atom/A as mob|obj|turf|area)
+		if(A == firer)
+			loc = A.loc
+			return
+
+		sleep(-1) //Might not be important enough for a sleep(-1) but the sleep/spawn itself is necessary thanks to explosions and metoerhits
+
+		if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
+			if(A)
+
+				A.meteorhit(src)
+				playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+
+				for(var/mob/M in range(10, src))
+					if(!M.stat && !istype(M, /mob/living/silicon/ai))\
+						shake_camera(M, 3, 1)
+				del(src)
+				return 1
+		else
+			return 0
+
 /obj/item/projectile/energy/floramut
 	name = "alpha somatoray"
 	icon_state = "energy"
