@@ -1196,6 +1196,29 @@ obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/u
 		return ..()
 	if (istype(src, /obj/machinery/atmospherics/pipe/vent))
 		return ..()
+
+	// ===== Handle paints =====
+	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/red))
+		src.color = "red"
+		user << "\red You paint the pipe red."
+		update_icon()
+		return 1
+	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/blue))
+		src.color = "blue"
+		user << "\red You paint the pipe blue."
+		update_icon()
+		return 1
+	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/green))
+		src.color = "green"
+		user << "\red You paint the pipe green."
+		update_icon()
+		return 1
+	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/yellow))
+		src.color = "yellow"
+		user << "\red You paint the pipe yellow."
+		update_icon()
+		return 1
+    
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	var/turf/T = src.loc
