@@ -146,7 +146,9 @@
 			W:amount -= 5
 			if(!W:amount) del(W)
 			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
-			new /obj/item/weapon/cell/potato(user.loc)
+			var/obj/item/weapon/cell/potato/pocell = new /obj/item/weapon/cell/potato(user.loc)
+			pocell.maxcharge = src.potency * 10
+			pocell.charge = pocell.maxcharge
 			del(src)
 			return
 
