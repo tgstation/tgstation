@@ -210,7 +210,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if(prob(100/severity))
 		if(!(stat & EMPED))
 			stat |= EMPED
-			spawn(1200/severity)
+			spawn(1600/severity)
 				stat &= ~EMPED
 	..()
 
