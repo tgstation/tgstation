@@ -1,10 +1,12 @@
+/* Teleportation devices.
+ * Contains:
+ *		Locator
+ *		Hand-tele
+ */
+
 /*
-CONTAINS:
-LOCATOR
-HAND_TELE
-
-*/
-
+ * Locator
+ */
 /obj/item/weapon/locator/attack_self(mob/user as mob)
 	user.machine = src
 	var/dat
@@ -99,8 +101,10 @@ Frequency:
 					src.attack_self(M)
 	return
 
-/// HAND TELE
 
+/*
+ * Hand-tele
+ */
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
 	if(!current_location||current_location.z==2||current_location.z>=7)//If turf was not found or they're on z level 2 or >7 which does not currently exist.

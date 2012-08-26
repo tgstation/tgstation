@@ -1,17 +1,16 @@
+/* Cards
+ * Contains:
+ *		DATA CARD
+ *		ID CARD
+ *		FINGERPRINT CARD HOLDER
+ *		FINGERPRINT CARD
+ */
+
+
+
 /*
-CONTAINS:
-DATA CARD
-ID CARD
-FINGERPRINT CARD HOLDER
-FINGERPRINT CARD
-
-*/
-
-
-
-
-// DATA CARDS
-
+ * DATA CARDS - Used for the teleporter
+ */
 /obj/item/weapon/card/data/verb/label(t as text)
 	set name = "Label Disk"
 	set category = "Object"
@@ -25,10 +24,9 @@ FINGERPRINT CARD
 	return
 
 
-
-
-// ID CARDS
-
+/*
+ * ID CARDS
+ */
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
@@ -73,8 +71,9 @@ FINGERPRINT CARD
 		..()
 
 
-// FINGERPRINT HOLDER
-
+/*
+ * FINGERPRINT HOLDER
+ */
 /obj/item/weapon/fcardholder/attack_self(mob/user as mob)
 	var/dat = "<B>Clipboard</B><BR>"
 	for(var/obj/item/weapon/f_card/P in src)
@@ -168,10 +167,9 @@ FINGERPRINT CARD
 
 
 
-
-// FINGERPRINT CARD
-
-
+/*
+ * FINGERPRINT CARD
+ */
 /obj/item/weapon/f_card/examine()
 	set src in view(2)
 
@@ -190,25 +188,6 @@ FINGERPRINT CARD
 			dat += "[name]<BR>"
 		return dat
 	return
-
-/*
-/obj/item/weapon/f_card/attack_hand(mob/user as mob)
-
-	if ((user.r_hand == src || user.l_hand == src))
-		src.add_fingerprint(user)
-		var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user )
-		F.amount = 1
-		src.amount--
-		user.put_in_hands(F)
-		F.add_fingerprint(user)
-		if (src.amount < 1)
-			//SN src = null
-			del(src)
-			return
-	else
-		..()
-	return
-*/
 
 /obj/item/weapon/f_card/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

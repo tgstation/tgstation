@@ -1,10 +1,3 @@
-/*
-CONTAINS:
-MEDICAL
-
-
-*/
-
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if (M.stat == 2)

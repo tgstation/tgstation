@@ -1,10 +1,10 @@
-/*
-CONTAINS:
-FORK
-ROLLING PIN
-KNIFE
-
-*/
+/* Kitchen tools
+ * Contains:
+ *		Forks
+ *		Knives
+ *		Rolling Pins
+ *		Trays
+ */
 
 
 /obj/item/weapon/kitchen/utensil/New()
@@ -15,8 +15,9 @@ KNIFE
 
 
 
-
-// FORK
+/*
+ * Forks
+ */
 
 /obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
@@ -41,10 +42,19 @@ KNIFE
 			M = user
 		return eyestab(M,user)
 
+/*
+ * Knives
+ */
+/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
+	if ((CLUMSY in user.mutations) && prob(50))
+		user << "\red You accidentally cut yourself with the [src]."
+		user.take_organ_damage(20)
+		return
+	return ..()
 
-
-
-// ROLLING PIN
+/*
+ * Rolling Pins
+ */
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -80,21 +90,9 @@ KNIFE
 
 	return
 
-
-
-
-
-// KNIFE
-
-/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You accidentally cut yourself with the [src]."
-		user.take_organ_damage(20)
-		return
-	return ..()
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////// TRAY -Agouri :3   ///////////////////////////////////////////////
-
+/*
+ * Trays - Agouri
+ */
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	// Drop all the things. All of them.

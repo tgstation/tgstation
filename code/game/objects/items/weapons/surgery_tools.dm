@@ -1,17 +1,16 @@
+/* Surgery Tools
+ * Contains:
+ *		Retractor
+ *		Hemostat
+ *		Cautery
+ *		Surgical Drill - MIA!
+ *		Scalpel
+ *		Circular Saw
+ */
+
 /*
-CONTAINS:
-RETRACTOR
-HEMOSTAT
-CAUTERY
-SURGICAL DRILL
-SCALPEL
-CIRCULAR SAW
-
-*/
-
-/////////////
-//RETRACTOR//
-/////////////
+ * Retractor
+ */
 /obj/item/weapon/retractor/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -82,10 +81,9 @@ CIRCULAR SAW
 
 	return
 
-////////////
-//Hemostat//
-////////////
-
+/*
+ * Hemostat
+ */
 /obj/item/weapon/hemostat/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -168,10 +166,9 @@ CIRCULAR SAW
 
 	return
 
-///////////
-//Cautery//
-///////////
-
+/*
+ * Cautery
+ */
 /obj/item/weapon/cautery/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -246,13 +243,15 @@ CIRCULAR SAW
 
 	return
 
-
+/*
+ * Surgical Drill
+ */
 //obj/item/weapon/surgicaldrill
 
 
-///////////
-//SCALPEL//
-///////////
+/*
+ * Scalpel
+ */
 /obj/item/weapon/scalpel/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
@@ -452,9 +451,9 @@ CIRCULAR SAW
 	return
 
 
-////////////////
-//CIRCULAR SAW//
-////////////////
+/*
+ * Circular Saw
+ */
 /obj/item/weapon/circular_saw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()

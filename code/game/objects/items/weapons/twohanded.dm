@@ -1,3 +1,10 @@
+/* Two-handed Weapons
+ * Contains:
+ * 		Twohanded
+ *		Fireaxe
+ *		Double-Bladed Energy Swords
+ */
+
 /*##################################################################
 ##################### TWO HANDED WEAPONS BE HERE~ -Agouri :3 ########
 ####################################################################*/
@@ -6,6 +13,9 @@
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
 //It also tidies stuff up elsewhere.
 
+/*
+ * Twohanded
+ */
 /obj/item/weapon/twohanded
 	var/wielded = 0
 	var/force_unwielded = 0
@@ -91,7 +101,9 @@
 	wield()
 		del(src)
 
-////////////FIREAXE!//////////////
+/*
+ * Fireaxe
+ */
 /obj/item/weapon/twohanded/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon_state = "fireaxe0"
 	name = "fire axe"
@@ -122,7 +134,9 @@
 		del(A)
 
 
-////////////Doublebladed E-sword!//////////////
+/*
+ * Double-Bladed Energy Swords - Cheridan
+ */
 /obj/item/weapon/twohanded/dualsaber
 	icon_state = "dualsaber0"
 	name = "double-bladed energy sword"

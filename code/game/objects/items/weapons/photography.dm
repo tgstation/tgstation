@@ -1,37 +1,13 @@
-/obj/item/weapon/storage/photo_album
-	name = "Photo album"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "album"
-	item_state = "briefcase"
-	can_hold = list("/obj/item/weapon/photo",)
+/* Photography!
+ * Contains:
+ *		Camera
+ *		Photos
+ *		Photo Albums
+ */
 
-/obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
-
-	if ((istype(usr, /mob/living/carbon/human) || (ticker && ticker.mode.name == "monkey")))
-		var/mob/M = usr
-		if (!( istype(over_object, /obj/screen) ))
-			return ..()
-		playsound(src.loc, "rustle", 50, 1, -5)
-		if ((!( M.restrained() ) && !( M.stat ) && M.back == src))
-			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src)
-					M.put_in_r_hand(src)
-				if("l_hand")
-					M.u_equip(src)
-					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
-			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if (usr.s_active)
-				usr.s_active.close(usr)
-			src.show_to(usr)
-			return
-	return
-
-/obj/item/weapon/storage/photo_album/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-
+/*
+ * Camera
+ */
 /obj/item/weapon/camera_test
 	name = "camera"
 	icon = 'icons/obj/items.dmi'
@@ -160,3 +136,59 @@
 	can_use = 0
 	spawn(50) can_use = 1
 
+/*
+ * Photos
+ */
+/obj/item/weapon/paper/photograph/New()
+
+	..()
+	src.pixel_y = 0
+	src.pixel_x = 0
+	return
+
+/obj/item/weapon/paper/photograph/attack_self(mob/user as mob)
+
+	var/n_name = copytext(sanitize(input(user, "What would you like to label the photo?", "Paper Labelling", null)  as text),1,32)
+	if ((src.loc == user && user.stat == 0))
+		src.name = text("photo[]", (n_name ? text("- '[]'", n_name) : null))
+	src.add_fingerprint(user)
+	return
+
+
+
+/*
+ * Photo Albums
+ */
+/obj/item/weapon/storage/photo_album
+	name = "Photo album"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "album"
+	item_state = "briefcase"
+	can_hold = list("/obj/item/weapon/photo",)
+
+/obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
+
+	if ((istype(usr, /mob/living/carbon/human) || (ticker && ticker.mode.name == "monkey")))
+		var/mob/M = usr
+		if (!( istype(over_object, /obj/screen) ))
+			return ..()
+		playsound(src.loc, "rustle", 50, 1, -5)
+		if ((!( M.restrained() ) && !( M.stat ) && M.back == src))
+			switch(over_object.name)
+				if("r_hand")
+					M.u_equip(src)
+					M.put_in_r_hand(src)
+				if("l_hand")
+					M.u_equip(src)
+					M.put_in_l_hand(src)
+			src.add_fingerprint(usr)
+			return
+		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+			if (usr.s_active)
+				usr.s_active.close(usr)
+			src.show_to(usr)
+			return
+	return
+
+/obj/item/weapon/storage/photo_album/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()

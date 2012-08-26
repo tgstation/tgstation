@@ -1,11 +1,3 @@
-/*
-CONTAINS:
-WIRE
-TILES
-
-*/
-
-
 // WIRES
 
 /obj/item/weapon/wire/proc/update()
