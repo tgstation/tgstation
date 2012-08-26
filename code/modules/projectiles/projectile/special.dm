@@ -80,7 +80,7 @@
 	on_hit(var/atom/target, var/blocked = 0)
 		var/mob/living/M = target
 		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
-			var/mob/living/L as mob
+			var/mob/living/L = target
 			if(prob(15))
 				L.apply_effect((rand(30,80)),IRRADIATE)
 				L.Weaken(5)
