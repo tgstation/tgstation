@@ -30,7 +30,7 @@
 	force = 3.0
 	m_amt = 0
 	max_water = 30
-	sprite_name = "mini_FE"
+	sprite_name = "miniFE"
 
 /obj/item/weapon/extinguisher/New()
 	var/datum/reagents/R = new/datum/reagents(max_water)
@@ -47,7 +47,7 @@
 
 /obj/item/weapon/extinguisher/attack_self(mob/user as mob)
 	safety = !safety
-	src.icon_state = "[sprite_name][safety]"
+	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
 	user << "The safety is [safety ? "on" : "off"]."
 	return
