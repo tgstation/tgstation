@@ -26,9 +26,6 @@
 
 	usr.show_message(t, 1)
 
-/atom/proc/relaymove()
-	return
-
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 	if(!client)	return
 	if (type)
@@ -74,6 +71,33 @@
 	for(var/mob/M in viewers(src))
 		M.show_message( message, 1, blind_message, 2)
 
+
+//What the fuck is this code
+/mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (user.intent != "harm")
+		if (istype(src.l_hand,/obj/item/latexballon) && src.l_hand:air_contents && is_sharp(W))
+			return src.l_hand.attackby(W)
+		if (istype(src.r_hand,/obj/item/latexballon) && src.r_hand:air_contents && is_sharp(W))
+			return src.r_hand.attackby(W)
+	var/shielded = 0
+	if (locate(/obj/item/weapon/grab, src))
+		var/mob/safe = null
+		if (istype(src.l_hand, /obj/item/weapon/grab))
+			var/obj/item/weapon/grab/G = src.l_hand
+			if ((G.state == 3 && get_dir(src, user) == src.dir))
+				safe = G.affecting
+		if (istype(src.r_hand, /obj/item/weapon/grab))
+			var/obj/item/weapon/grab/G = src.r_hand
+			if ((G.state == 3 && get_dir(src, user) == src.dir))
+				safe = G.affecting
+		if (safe)
+			return safe.attackby(W, user)
+	if ((!( shielded ) || !( W.flags ) & 32))
+		spawn( 0 )
+			if (W)
+				W.attack(src, user)
+				return
+	return
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
@@ -515,16 +539,6 @@ var/list/slot_equipment_priority = list( \
 	if(LinkBlocked(usr.loc,loc)) return
 	show_inv(usr)
 
-/atom/movable
-	var/mob/pulledby = null
-
-/atom/movable/verb/pull()
-	set name = "Pull"
-	set category = "IC"
-	set src in oview(1)
-
-	usr.start_pulling(src)
-	return
 
 /mob/proc/stop_pulling()
 	if(pulling)
@@ -548,18 +562,6 @@ var/list/slot_equipment_priority = list( \
 			else
 				M.LAssailant = usr
 
-/atom/verb/examine()
-	set name = "Examine"
-	set category = "IC"
-	set src in oview(12)	//make it work from farther away
-
-	if (!( usr ))
-		return
-	usr << "That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
-	usr << desc
-	// *****RM
-	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
-	return
 
 /mob/proc/can_use_hands()
 	if(handcuffed)

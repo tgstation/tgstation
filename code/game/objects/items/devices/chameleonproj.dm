@@ -1,46 +1,3 @@
-/obj/effect/dummy/chameleon
-	name = ""
-	desc = ""
-	density = 0
-	anchored = 1
-	var/can_move = 1
-	var/obj/item/device/chameleon/master = null
-	attackby()
-		for(var/mob/M in src)
-			M << "\red Your chameleon-projector deactivates."
-		master.disrupt()
-	attack_hand()
-		for(var/mob/M in src)
-			M << "\red Your chameleon-projector deactivates."
-		master.disrupt()
-	ex_act()
-		for(var/mob/M in src)
-			M << "\red Your chameleon-projector deactivates."
-		master.disrupt()
-	bullet_act()
-		for(var/mob/M in src)
-			M << "\red Your chameleon-projector deactivates."
-		..()
-		master.disrupt()
-	relaymove(var/mob/user, direction)
-		if(istype(loc, /turf/space)) return //No magical space movement!
-
-		if(can_move)
-			can_move = 0
-			switch(usr.bodytemperature)
-				if(300 to INFINITY)
-					spawn(10) can_move = 1
-				if(295 to 300)
-					spawn(13) can_move = 1
-				if(280 to 295)
-					spawn(16) can_move = 1
-				if(260 to 280)
-					spawn(20) can_move = 1
-				else
-					spawn(25) can_move = 1
-			step(src,direction)
-		return
-
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
@@ -119,3 +76,47 @@
 			active_dummy = null
 			can_use = 0
 			spawn(100) can_use = 1
+
+
+/obj/effect/dummy/chameleon
+	name = ""
+	desc = ""
+	density = 0
+	anchored = 1
+	var/can_move = 1
+	var/obj/item/device/chameleon/master = null
+	attackby()
+		for(var/mob/M in src)
+			M << "\red Your chameleon-projector deactivates."
+		master.disrupt()
+	attack_hand()
+		for(var/mob/M in src)
+			M << "\red Your chameleon-projector deactivates."
+		master.disrupt()
+	ex_act()
+		for(var/mob/M in src)
+			M << "\red Your chameleon-projector deactivates."
+		master.disrupt()
+	bullet_act()
+		for(var/mob/M in src)
+			M << "\red Your chameleon-projector deactivates."
+		..()
+		master.disrupt()
+	relaymove(var/mob/user, direction)
+		if(istype(loc, /turf/space)) return //No magical space movement!
+
+		if(can_move)
+			can_move = 0
+			switch(usr.bodytemperature)
+				if(300 to INFINITY)
+					spawn(10) can_move = 1
+				if(295 to 300)
+					spawn(13) can_move = 1
+				if(280 to 295)
+					spawn(16) can_move = 1
+				if(260 to 280)
+					spawn(20) can_move = 1
+				else
+					spawn(25) can_move = 1
+			step(src,direction)
+		return

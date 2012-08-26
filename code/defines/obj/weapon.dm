@@ -664,41 +664,18 @@
 	item_state = "card-id"
 	w_class = 1.0
 
+//TODO: Figure out wtf this is and possibly remove it -Nodrak
 /obj/item/weapon/dummy
 	name = "dummy"
 	invisibility = 101.0
 	anchored = 1.0
 	flags = TABLEPASS
 
-/obj/item/weapon/extinguisher
-	name = "fire extinguisher"
-	desc = "A traditional red fire extinguisher."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "fire_extinguisher0"
-	var/last_use = 1.0
-	var/safety = 1
-	hitsound = 'sound/weapons/smash.ogg'
-	flags = FPRINT | USEDELAY | TABLEPASS | CONDUCT
-	throwforce = 10
-	w_class = 3.0
-	throw_speed = 2
-	throw_range = 10
-	force = 10.0
-	item_state = "fire_extinguisher"
-	m_amt = 90
-	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
+/obj/item/weapon/dummy/ex_act()
+	return
 
-/obj/item/weapon/extinguisher/mini
-	name = "fire extinguisher"
-	desc = "A light and compact fibreglass-framed model fire extinguisher."
-	icon_state = "miniFE0"
-	hitsound = null	//it is much lighter, after all.
-	flags = FPRINT | USEDELAY | TABLEPASS
-	throwforce = 2
-	w_class = 2.0
-	force = 3.0
-	item_state = "miniFE"
-	m_amt = 0
+/obj/item/weapon/dummy/blob_act()
+	return
 
 /obj/item/weapon/f_card
 	name = "finger print card"

@@ -1,3 +1,5 @@
+//Also contains /obj/structure/closet/body_bag because I doubt anyone would think to look for bodybags in /object/structures
+
 /obj/item/bodybag
 	name = "body bag"
 	desc = "A folded bag designed to contain dead things."

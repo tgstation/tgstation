@@ -1160,11 +1160,133 @@ proc/get_mob_with_client_list()
 			mobs += M
 	return mobs
 
-/atom/proc/transfer_fingerprints_to(var/atom/A)
-	if(!istype(A.fingerprints,/list))
-		A.fingerprints = list()
-	if(!istype(A.fingerprintshidden,/list))
-		A.fingerprintshidden = list()
-	A.fingerprints |= fingerprints            //detective
-	A.fingerprintshidden |= fingerprintshidden    //admin
-	A.fingerprintslast = fingerprintslast
+
+/proc/parse_zone(zone)
+	if(zone == "r_hand") return "right hand"
+	else if (zone == "l_hand") return "left hand"
+	else if (zone == "l_arm") return "left arm"
+	else if (zone == "r_arm") return "right arm"
+	else if (zone == "l_leg") return "left leg"
+	else if (zone == "r_leg") return "right leg"
+	else if (zone == "l_foot") return "left foot"
+	else if (zone == "r_foot") return "right foot"
+	else return zone
+
+
+/proc/get_turf(turf/location)
+	while(location)
+		if(isturf(location))
+			return location
+		location = location.loc
+	return null
+
+/proc/get_turf_or_move(turf/location)
+	return get_turf(location)
+
+
+//Quick type checks for some tools
+var/global/list/common_tools = list(
+/obj/item/weapon/cable_coil,
+/obj/item/weapon/wrench,
+/obj/item/weapon/weldingtool,
+/obj/item/weapon/screwdriver,
+/obj/item/weapon/wirecutters,
+/obj/item/device/multitool,
+/obj/item/weapon/crowbar)
+
+/proc/istool(O)
+	if(O && is_type_in_list(O, common_tools))
+		return 1
+	return 0
+
+/proc/iswrench(O)
+	if(istype(O, /obj/item/weapon/wrench))
+		return 1
+	return 0
+
+/proc/iswelder(O)
+	if(istype(O, /obj/item/weapon/weldingtool))
+		return 1
+	return 0
+
+/proc/iscoil(O)
+	if(istype(O, /obj/item/weapon/cable_coil))
+		return 1
+	return 0
+
+/proc/iswirecutter(O)
+	if(istype(O, /obj/item/weapon/wirecutters))
+		return 1
+	return 0
+
+/proc/isscrewdriver(O)
+	if(istype(O, /obj/item/weapon/screwdriver))
+		return 1
+	return 0
+
+/proc/ismultitool(O)
+	if(istype(O, /obj/item/device/multitool))
+		return 1
+	return 0
+
+/proc/iscrowbar(O)
+	if(istype(O, /obj/item/weapon/crowbar))
+		return 1
+	return 0
+
+proc/is_hot(obj/item/W as obj)
+	switch(W.type)
+		if(/obj/item/weapon/weldingtool)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.isOn())
+				return 3800
+			else
+				return 0
+		if(/obj/item/weapon/lighter)
+			if(W:lit)
+				return 1500
+			else
+				return 0
+		if(/obj/item/weapon/match)
+			if(W:lit)
+				return 1000
+			else
+				return 0
+		if(/obj/item/clothing/mask/cigarette)
+			if(W:lit)
+				return 1000
+			else
+				return 0
+		if(/obj/item/weapon/pickaxe/plasmacutter)
+			return 3800
+		if(/obj/item/weapon/melee/energy)
+			return 3500
+		else
+			return 0
+
+	return 0
+
+//Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
+/proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
+	return ( \
+		istype(W, /obj/item/weapon/screwdriver)                   || \
+		istype(W, /obj/item/weapon/pen)                           || \
+		istype(W, /obj/item/weapon/weldingtool)					  || \
+		istype(W, /obj/item/weapon/lighter/zippo)				  || \
+		istype(W, /obj/item/weapon/match)            		      || \
+		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
+		istype(W, /obj/item/weapon/wirecutters)                   || \
+		istype(W, /obj/item/weapon/circular_saw)                  || \
+		istype(W, /obj/item/weapon/melee/energy/sword)            || \
+		istype(W, /obj/item/weapon/melee/energy/blade)            || \
+		istype(W, /obj/item/weapon/shovel)                        || \
+		istype(W, /obj/item/weapon/kitchenknife)                  || \
+		istype(W, /obj/item/weapon/butch)						  || \
+		istype(W, /obj/item/weapon/scalpel)                       || \
+		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
+		istype(W, /obj/item/weapon/shard)                         || \
+		istype(W, /obj/item/weapon/broken_bottle)				  || \
+		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
+		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
+		istype(W, /obj/item/weapon/twohanded/fireaxe) \
+	)

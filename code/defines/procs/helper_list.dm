@@ -57,6 +57,13 @@ proc/isemptylist(list/list)
 		return 1
 	return 0
 
+//Checks for specific types in a list
+/proc/is_type_in_list(var/atom/A, var/list/L)
+	for(var/type in L)
+		if(istype(A, type))
+			return 1
+	return 0
+
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 proc/clearlist(list/list)
 	if(istype(list))

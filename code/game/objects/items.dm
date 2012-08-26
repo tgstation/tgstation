@@ -1,567 +1,640 @@
-
-/obj/item/weapon/bedsheet/ex_act(severity)
-	if (severity <= 2)
-		del(src)
-		return
-	return
-
-/obj/item/weapon/bedsheet/attack_self(mob/user as mob)
-	user.drop_item()
-	if(layer == initial(layer))
-		layer = 5
-	else
-		layer = initial(layer)
-	add_fingerprint(user)
-	return
-
-
-
-
-/obj/item/weapon/handcuffs/attack(mob/M as mob, mob/user as mob)
-	if(istype(src, /obj/item/weapon/handcuffs/cyborg) && isrobot(user))
-		if(!M.handcuffed)
-			var/turf/p_loc = user.loc
-			var/turf/p_loc_m = M.loc
-			playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-			for(var/mob/O in viewers(user, null))
-				O.show_message("\red <B>[user] is trying to put handcuffs on [M]!</B>", 1)
-			spawn(30)
-				if(!M)	return
-				if(p_loc == user.loc && p_loc_m == M.loc)
-					M.handcuffed = new /obj/item/weapon/handcuffs(M)
-					M.update_inv_handcuffed()
-
-	else
-		if ((CLUMSY in usr.mutations) && prob(50))
-			usr << "\red Uh ... how do those things work?!"
-			if (istype(M, /mob/living/carbon/human))
-				if(!M.handcuffed)
-					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-					O.source = user
-					O.target = user
-					O.item = user.get_active_hand()
-					O.s_loc = user.loc
-					O.t_loc = user.loc
-					O.place = "handcuff"
-					M.requests += O
-					spawn( 0 )
-						O.process()
-				return
-			return
-		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-			usr << "\red You don't have the dexterity to do this!"
-			return
-		if (istype(M, /mob/living/carbon/human))
-			if(!M.handcuffed)
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [M.name] ([M.ckey])</font>")
-
-				log_attack("<font color='red'>[user.name] ([user.ckey]) Attempted to handcuff [M.name] ([M.ckey])</font>")
-
-				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-				O.source = user
-				O.target = M
-				O.item = user.get_active_hand()
-				O.s_loc = user.loc
-				O.t_loc = M.loc
-				O.place = "handcuff"
-				M.requests += O
-				spawn( 0 )
-					if(istype(src, /obj/item/weapon/handcuffs/cable))
-						feedback_add_details("handcuffs","C")
-						playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-					else
-						feedback_add_details("handcuffs","H")
-						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-					O.process()
-			return
-		else
-			if(!M.handcuffed)
-				var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
-				O.source = user
-				O.target = M
-				O.item = user.get_active_hand()
-				O.s_loc = user.loc
-				O.t_loc = M.loc
-				O.place = "handcuff"
-				M.requests += O
-				spawn( 0 )
-					if(istype(src, /obj/item/weapon/handcuffs/cable))
-						playsound(src.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-					else
-						playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-					O.process()
-			return
-	return
-
-
-
-
-
-/obj/item/weapon/extinguisher/New()
-	var/datum/reagents/R = new/datum/reagents(50)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("water", 50)
-
-/obj/item/weapon/extinguisher/mini/New()
-	var/datum/reagents/R = new/datum/reagents(30)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("water", 30)
-
-/obj/item/weapon/extinguisher/examine()
-	set src in usr
-
-	usr << text("\icon[] [] contains [] units of water left!", src, src.name, src.reagents.total_volume)
-	..()
-	return
-
-/obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	//TODO; Add support for reagents in water.
-
-	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
-		var/obj/o = target
-		o.reagents.trans_to(src, 50)
-		user << "\blue \The [src] is now refilled"
-		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-		return
-
-	if (!safety)
-		if (src.reagents.total_volume < 1)
-			usr << "\red \The [src] is empty."
-			return
-
-		if (world.time < src.last_use + 20)
-			return
-
-		src.last_use = world.time
-
-		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
-
-		var/direction = get_dir(src,target)
-
-		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
-			spawn(0)
-				var/obj/B = usr.buckled
-				var/movementdirection = turn(direction,180)
-				B.Move(get_step(usr,movementdirection), movementdirection)
-				sleep(1)
-				B.Move(get_step(usr,movementdirection), movementdirection)
-				sleep(1)
-				B.Move(get_step(usr,movementdirection), movementdirection)
-				sleep(1)
-				B.Move(get_step(usr,movementdirection), movementdirection)
-				sleep(2)
-				B.Move(get_step(usr,movementdirection), movementdirection)
-				sleep(2)
-				B.Move(get_step(usr,movementdirection), movementdirection)
-				sleep(3)
-				B.Move(get_step(usr,movementdirection), movementdirection)
-				sleep(3)
-				B.Move(get_step(usr,movementdirection), movementdirection)
-				sleep(3)
-				B.Move(get_step(usr,movementdirection), movementdirection)
-
-		var/turf/T = get_turf(target)
-		var/turf/T1 = get_step(T,turn(direction, 90))
-		var/turf/T2 = get_step(T,turn(direction, -90))
-
-		var/list/the_targets = list(T,T1,T2)
-
-		for(var/a=0, a<5, a++)
-			spawn(0)
-				var/obj/effect/effect/water/W = new /obj/effect/effect/water( get_turf(src) )
-				var/turf/my_target = pick(the_targets)
-				var/datum/reagents/R = new/datum/reagents(5)
-				if(!W) return
-				W.reagents = R
-				R.my_atom = W
-				if(!W || !src) return
-				src.reagents.trans_to(W,1)
-				for(var/b=0, b<5, b++)
-					step_towards(W,my_target)
-					if(!W) return
-					W.reagents.reaction(get_turf(W))
-					for(var/atom/atm in get_turf(W))
-						if(!W) return
-						W.reagents.reaction(atm)
-					if(W.loc == my_target) break
-					sleep(2)
-
-		if((istype(usr.loc, /turf/space)) || (usr.lastarea.has_gravity == 0))
-			user.inertia_dir = get_dir(target, user)
-			step(user, user.inertia_dir)
-
-	/*
-		if(istype(usr.loc, /turf/space)|| (user.flags & NOGRAV))
-			user.inertia_dir = get_dir(target, user)
-			step(user, user.inertia_dir)
-	*/
-	else
-		return ..()
-	return
-
-/obj/item/weapon/extinguisher/attack_self(mob/user as mob)
-	if (safety)
-		src.icon_state = "fire_extinguisher1"
-		src.desc = "The safety is off."
-		user << "The safety is off."
-		safety = 0
-	else
-		src.icon_state = "fire_extinguisher0"
-		src.desc = "The safety is on."
-		user << "The safety is on."
-		safety = 1
-	return
-
-/obj/item/weapon/extinguisher/mini/attack_self(mob/user as mob)
-	if (safety)
-		src.icon_state = "miniFE1"
-		src.desc = "The safety is off."
-		user << "The safety is off."
-		safety = 0
-	else
-		src.icon_state = "miniFE0"
-		src.desc = "The safety is on."
-		user << "The safety is on."
-		safety = 1
-	return
-
-/obj/item/weapon/pen/attack(mob/M as mob, mob/user as mob)
-	if(!ismob(M))
-		return
-	user << "\red You stab [M] with the pen."
-	M << "\red You feel a tiny prick!"
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
-
-	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [src.name] to stab [M.name] ([M.ckey])</font>")
-
-
-	return
-
-/obj/item/weapon/pen/sleepypen
-	origin_tech = "syndicate=5"
-
-/obj/item/weapon/pen/sleepypen/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-	return
-
-/obj/item/weapon/pen/sleepypen/New()
-	var/datum/reagents/R = new/datum/reagents(30) //Used to be 300
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("chloralhydrate", 22)	//Used to be 100 sleep toxin//30 Chloral seems to be fatal, reducing it to 22./N
-//	R.add_reagent("impedrezene", 100)
-//	R.add_reagent("cryptobiolin", 100)
-	..()
-	return
-
-/obj/item/weapon/pen/sleepypen/attack(mob/M as mob, mob/user as mob)
-	if(!(istype(M,/mob)))
-		return
-	..()
-	if(reagents.total_volume)
-		if(M.reagents) reagents.trans_to(M, 50) //used to be 150
-	return
-
-//NEW STYLE PARAPEN
-/obj/item/weapon/pen/paralysis/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-	return
-
-/obj/item/weapon/pen/paralysis/attack(mob/M as mob, mob/user as mob)
-	if(!(istype(M,/mob)))
-		return
-	..()
-	if(reagents.total_volume)
-		if(M.reagents) reagents.trans_to(M, 50)
-	return
-
-/obj/item/weapon/pen/paralysis/New()
-	var/datum/reagents/R = new/datum/reagents(50)
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("zombiepowder", 10)
-	R.add_reagent("impedrezene", 25)
-	R.add_reagent("cryptobiolin", 15)
-	..()
-	return
-
-/obj/item/weapon/Bump(mob/M as mob)
-	spawn(0)
-		..()
-	return
-
-/obj/effect/manifest/New()
-
-	src.invisibility = 101
-	return
-
-/obj/effect/manifest/proc/manifest()
-	var/dat = "<B>Crew Manifest</B>:<BR>"
-	for(var/mob/living/carbon/human/M in mob_list)
-		dat += text("    <B>[]</B> -  []<BR>", M.name, M.get_assignment())
-	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
-	P.info = dat
-	P.name = "paper- 'Crew Manifest'"
-	//SN src = null
-	del(src)
-	return
-
-
-//What the fuck is this code
-/mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (user.intent != "harm")
-		if (istype(src.l_hand,/obj/item/latexballon) && src.l_hand:air_contents && is_sharp(W))
-			return src.l_hand.attackby(W)
-		if (istype(src.r_hand,/obj/item/latexballon) && src.r_hand:air_contents && is_sharp(W))
-			return src.r_hand.attackby(W)
-	var/shielded = 0
-	if (locate(/obj/item/weapon/grab, src))
-		var/mob/safe = null
-		if (istype(src.l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = src.l_hand
-			if ((G.state == 3 && get_dir(src, user) == src.dir))
-				safe = G.affecting
-		if (istype(src.r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = src.r_hand
-			if ((G.state == 3 && get_dir(src, user) == src.dir))
-				safe = G.affecting
-		if (safe)
-			return safe.attackby(W, user)
-	if ((!( shielded ) || !( W.flags ) & 32))
-		spawn( 0 )
-			if (W)
-				W.attack(src, user)
-				return
-	return
-
-
-
-/obj/item/weapon/teleportation_scroll/attack_self(mob/user as mob)
-	user.machine = src
-	var/dat = "<B>Teleportation Scroll:</B><BR>"
-	dat += "Number of uses: [src.uses]<BR>"
-	dat += "<HR>"
-	dat += "<B>Four uses use them wisely:</B><BR>"
-	dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A><BR>"
-	dat += "Kind regards,<br>Wizards Federation<br><br>P.S. Don't forget to bring your gear, you'll need it to cast most spells.<HR>"
-	user << browse(dat, "window=scroll")
-	onclose(user, "scroll")
-	return
-
-/obj/item/weapon/teleportation_scroll/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
-		return
-	var/mob/living/carbon/human/H = usr
-	if (!( istype(H, /mob/living/carbon/human)))
-		return 1
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
-		if (href_list["spell_teleport"])
-			if (src.uses >= 1)
-				src.uses -= 1
-				usr.teleportscroll()
-		if (istype(src.loc, /mob))
-			attack_self(src.loc)
-		else
-			for(var/mob/M in viewers(1, src))
-				if (M.client)
-					src.attack_self(M)
-	return
-
-/obj/item/brain/examine() // -- TLE
-	set src in oview(12)
-	if (!( usr ))
-		return
-	usr << "This is \icon[src] \an [name]."
-
-	if(brainmob)//if thar be a brain inside... the brain.
-		usr << "You can feel the small spark of life still left in this one."
-	else
-		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later. Probably not."
-
-/obj/item/brain/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M, /mob))
-		return
-
-	add_fingerprint(user)
-
-	if(!(user.zone_sel.selecting == ("head")) || !istype(M, /mob/living/carbon/human))
-		return ..()
-
-	if(	!(locate(/obj/machinery/optable, M.loc) && M.resting) && ( !(locate(/obj/structure/table/, M.loc) && M.lying) && prob(50) ) )
-		return ..()
-
-	var/mob/living/carbon/human/H = M
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "\blue You're going to need to remove their head cover first."
-		return
-
-//since these people will be dead M != usr
-
-	if(M:brain_op_stage == 4.0)
-		for(var/mob/O in viewers(M, null))
-			if(O == (user || M))
-				continue
-			if(M == user)
-				O.show_message(text("\red [user] inserts [src] into his head!"), 1)
-			else
-				O.show_message(text("\red [M] has [src] inserted into his head by [user]."), 1)
-
-		if(M != user)
-			M << "\red [user] inserts [src] into your head!"
-			user << "\red You insert [src] into [M]'s head!"
-		else
-			user << "\red You insert [src] into your head!"
-
-		//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
-		if(M.key)//Revised. /N
-			M.ghostize()
-
-		if(brainmob.mind)
-			brainmob.mind.transfer_to(M)
-		else
-			M.key = brainmob.key
-
-		M:brain_op_stage = 3.0
-
-		del(src)
-	else
-		..()
-	return
-
-/obj/item/weapon/stamp/attack_paw(mob/user as mob)
-
-	return src.attack_hand(user)
-
-/obj/item/weapon/dice/attack_self(mob/user as mob) // Roll the dice -- TLE
-	var/temp_sides
-	if(src.sides < 1)
-		temp_sides = 2
-	else
-		temp_sides = src.sides
-	var/result = rand(1,temp_sides)
-	var/comment = ""
-	if(temp_sides == 20 && result == 20)
-		comment = "Nat 20!"
-	else if(temp_sides == 20 && result == 1)
-		comment = "Ouch, bad luck."
-	user << text("\red You throw a [src]. It lands on a [result]. [comment]")
-	icon_state = "[name][result]"
-	for(var/mob/O in viewers(user, null))
-		if(O == (user))
-			continue
-		else
-			O.show_message(text("\red [user] has thrown a [src]. It lands on [result]. [comment]"), 1)
-
-/obj/item/latexballon
-	name = "Latex glove"
-	desc = "" //todo
-	icon_state = "latexballon"
-	item_state = "lgloves"
-	force = 0
-	throwforce = 0
-	w_class = 1.0
-	throw_speed = 1
-	throw_range = 15
-	var/state
-	var/datum/gas_mixture/air_contents = null
-
-/obj/item/latexballon/proc/blow(obj/item/weapon/tank/tank)
-	if (icon_state == "latexballon_bursted")
-		return
-	src.air_contents = tank.remove_air_volume(3)
-	icon_state = "latexballon_blow"
-	item_state = "latexballon"
-
-/obj/item/latexballon/proc/burst()
-	if (!air_contents)
-		return
-	playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
-	icon_state = "latexballon_bursted"
-	item_state = "lgloves"
-	loc.assume_air(air_contents)
-
-/obj/item/latexballon/ex_act(severity)
-	burst()
+/obj/item
+	name = "item"
+	icon = 'icons/obj/items.dmi'
+	var/icon/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
+	var/abstract = 0
+	var/force = 0
+	var/item_state = null
+	var/damtype = "brute"
+	var/r_speed = 1.0
+	var/health = null
+	var/burn_point = null
+	var/burning = null
+	var/hitsound = null
+	var/w_class = 3.0
+	flags = FPRINT | TABLEPASS
+	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
+	pass_flags = PASSTABLE
+	pressure_resistance = 50
+//	causeerrorheresoifixthis
+	var/obj/item/master = null
+
+	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
+	var/cold_protection = 0 //flags which determine which body parts are protected from cold. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
+	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
+	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
+
+	var/icon_action_button //If this is set, The item will make an action button on the player's HUD when picked up. The button will have the icon_action_button sprite from the screen1_action.dmi file.
+	var/action_button_name //This is the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. Note that icon_action_button needs to be set in order for the action button to appear.
+
+	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
+	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	var/color = null
+	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
+	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
+	var/permeability_coefficient = 1 // for chemicals/diseases
+	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
+	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
+	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
+	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/allowed = null //suit storage stuff.
+	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
+
+
+/obj/item/ex_act(severity)
 	switch(severity)
-		if (1)
+		if(1.0)
 			del(src)
-		if (2)
+			return
+		if(2.0)
 			if (prob(50))
 				del(src)
-
-/obj/item/latexballon/bullet_act()
-	burst()
-
-/obj/item/latexballon/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if(temperature > T0C+100)
-		burst()
+				return
+		if(3.0)
+			if (prob(5))
+				del(src)
+				return
+		else
 	return
 
-/obj/item/latexballon/attackby(obj/item/W as obj, mob/user as mob)
-	if (is_sharp(W))
-		burst()
+/obj/item/blob_act()
+	return
 
-//Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
-/proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	return ( \
-		istype(W, /obj/item/weapon/screwdriver)                   || \
-		istype(W, /obj/item/weapon/pen)                           || \
-		istype(W, /obj/item/weapon/weldingtool)					  || \
-		istype(W, /obj/item/weapon/lighter/zippo)				  || \
-		istype(W, /obj/item/weapon/match)            		      || \
-		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
-		istype(W, /obj/item/weapon/wirecutters)                   || \
-		istype(W, /obj/item/weapon/circular_saw)                  || \
-		istype(W, /obj/item/weapon/melee/energy/sword)            || \
-		istype(W, /obj/item/weapon/melee/energy/blade)            || \
-		istype(W, /obj/item/weapon/shovel)                        || \
-		istype(W, /obj/item/weapon/kitchenknife)                  || \
-		istype(W, /obj/item/weapon/butch)						  || \
-		istype(W, /obj/item/weapon/scalpel)                       || \
-		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
-		istype(W, /obj/item/weapon/shard)                         || \
-		istype(W, /obj/item/weapon/broken_bottle)				  || \
-		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
-		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
-		istype(W, /obj/item/weapon/twohanded/fireaxe) \
-	)
+/obj/item/verb/move_to_top()
+	set name = "Move To Top"
+	set category = "Object"
+	set src in oview(1)
 
-proc/is_hot(obj/item/W as obj)
-	switch(W.type)
-		if(/obj/item/weapon/weldingtool)
-			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.isOn())
-				return 3800
-			else
-				return 0
-		if(/obj/item/weapon/lighter)
-			if(W:lit)
-				return 1500
-			else
-				return 0
-		if(/obj/item/weapon/match)
-			if(W:lit)
-				return 1000
-			else
-				return 0
-		if(/obj/item/clothing/mask/cigarette)
-			if(W:lit)
-				return 1000
-			else
-				return 0
-		if(/obj/item/weapon/pickaxe/plasmacutter)
-			return 3800
-		if(/obj/item/weapon/melee/energy)
-			return 3500
+	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+		return
+
+	var/turf/T = src.loc
+
+	src.loc = null
+
+	src.loc = T
+
+/obj/item/examine()
+	set src in view()
+
+	var/t
+	switch(src.w_class)
+		if(1.0)
+			t = "tiny"
+		if(2.0)
+			t = "small"
+		if(3.0)
+			t = "normal-sized"
+		if(4.0)
+			t = "bulky"
+		if(5.0)
+			t = "huge"
 		else
-			return 0
+	if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
+	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
+	if(src.desc)
+		usr << src.desc
+	return
 
+/obj/item/attack_hand(mob/user as mob)
+	if (!user) return
+	if (istype(src.loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = src.loc
+		S.remove_from_storage(src)
+
+	src.throwing = 0
+	if (src.loc == user)
+		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
+		if(!src.canremove)
+			return
+		else
+			user.u_equip(src)
+	else
+		if(isliving(src.loc))
+			return
+		src.pickup(user)
+		user.lastDblClick = world.time + 2
+		user.next_move = world.time + 2
+	add_fingerprint(user)
+	user.put_in_active_hand(src)
+	return
+
+
+/obj/item/attack_paw(mob/user as mob)
+
+	if(isalien(user)) // -- TLE
+		var/mob/living/carbon/alien/A = user
+
+		if(!A.has_fine_manipulation || w_class >= 4)
+			if(src in A.contents) // To stop Aliens having items stuck in their pockets
+				A.drop_from_inventory(src)
+			user << "Your claws aren't capable of such fine manipulation."
+			return
+
+	if (istype(src.loc, /obj/item/weapon/storage))
+		for(var/mob/M in range(1, src.loc))
+			if (M.s_active == src.loc)
+				if (M.client)
+					M.client.screen -= src
+	src.throwing = 0
+	if (src.loc == user)
+		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
+		if(istype(src, /obj/item/clothing) && !src:canremove)
+			return
+		else
+			user.u_equip(src)
+	else
+		if(istype(src.loc, /mob/living))
+			return
+		src.pickup(user)
+		user.lastDblClick = world.time + 2
+		user.next_move = world.time + 2
+
+	user.put_in_active_hand(src)
+	return
+
+/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	if(istype(W,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = W
+		if(S.use_to_pickup)
+			if(!S.can_be_inserted(src))
+				return
+			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
+				if(isturf(src.loc))
+					for(var/obj/item/I in src.loc)
+						if(I != src) //We'll do the one we clicked on last.
+							if(!S.can_be_inserted(src))
+								continue
+							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+			S.handle_item_insertion(src)
+
+
+	return
+
+/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+
+	if (!istype(M)) // not sure if this is the right thing...
+		return
+	var/messagesource = M
+
+	if (istype(M,/mob/living/carbon/brain))
+		messagesource = M:container
+	if (src.hitsound)
+		playsound(src.loc, hitsound, 50, 1, -1)
+	/////////////////////////
+	user.lastattacked = M
+	M.lastattacker = user
+
+	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
+	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
+	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
+
+	//spawn(1800)            // this wont work right
+	//	M.lastattacker = null
+	/////////////////////////
+
+	var/power = src.force
+	if((HULK in user.mutations) || (SUPRSTR in user.augmentations))
+		power *= 2
+
+	if(!istype(M, /mob/living/carbon/human))
+		if(istype(M, /mob/living/carbon/metroid))
+			var/mob/living/carbon/metroid/Metroid = M
+			if(prob(25))
+				user << "\red [src] passes right through [M]!"
+				return
+
+			if(power > 0)
+				Metroid.attacked += 10
+
+			if(Metroid.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
+				Metroid.Discipline = 0
+
+			if(power >= 3)
+				if(istype(Metroid, /mob/living/carbon/metroid/adult))
+					if(prob(5 + round(power/2)))
+
+						if(Metroid.Victim)
+							if(prob(80) && !Metroid.client)
+								Metroid.Discipline++
+						Metroid.Victim = null
+						Metroid.anchored = 0
+
+						spawn()
+							if(Metroid)
+								Metroid.SStun = 1
+								sleep(rand(5,20))
+								if(Metroid)
+									Metroid.SStun = 0
+
+						spawn(0)
+							if(Metroid)
+								Metroid.canmove = 0
+								step_away(Metroid, user)
+								if(prob(25 + power))
+									sleep(2)
+									if(Metroid && user)
+										step_away(Metroid, user)
+								Metroid.canmove = 1
+
+				else
+					if(prob(10 + power*2))
+						if(Metroid)
+							if(Metroid.Victim)
+								if(prob(80) && !Metroid.client)
+									Metroid.Discipline++
+
+									if(Metroid.Discipline == 1)
+										Metroid.attacked = 0
+
+								spawn()
+									if(Metroid)
+										Metroid.SStun = 1
+										sleep(rand(5,20))
+										if(Metroid)
+											Metroid.SStun = 0
+
+							Metroid.Victim = null
+							Metroid.anchored = 0
+
+
+						spawn(0)
+							if(Metroid && user)
+								step_away(Metroid, user)
+								Metroid.canmove = 0
+								if(prob(25 + power*4))
+									sleep(2)
+									if(Metroid && user)
+										step_away(Metroid, user)
+								Metroid.canmove = 1
+
+
+		var/showname = "."
+		if(user)
+			showname = " by [user]."
+		if(!(user in viewers(M, null)))
+			showname = "."
+
+		for(var/mob/O in viewers(messagesource, null))
+			if(src.attack_verb.len)
+				O.show_message("\red <B>[M] has been [pick(src.attack_verb)] with [src][showname] </B>", 1)
+			else
+				O.show_message("\red <B>[M] has been attacked with [src][showname] </B>", 1)
+
+		if(!showname && user)
+			if(user.client)
+				user << "\red <B>You attack [M] with [src]. </B>"
+
+
+
+	if(istype(M, /mob/living/carbon/human))
+		M:attacked_by(src, user, def_zone)
+	else
+		switch(src.damtype)
+			if("brute")
+				if(istype(src, /mob/living/carbon/metroid))
+					M.adjustBrainLoss(power)
+
+				else
+
+					M.take_organ_damage(power)
+					if (prob(33)) // Added blood for whacking non-humans too
+						var/turf/location = M.loc
+						if (istype(location, /turf/simulated))
+							location.add_blood_floor(M)
+			if("fire")
+				if (!(COLD_RESISTANCE in M.mutations))
+					M.take_organ_damage(0, power)
+					M << "Aargh it burns!"
+		M.updatehealth()
+	src.add_fingerprint(user)
+	return 1
+
+/obj/item/proc/attack_self()
+	return
+
+/obj/item/proc/afterattack()
+	return
+
+/obj/item/proc/talk_into(mob/M as mob, text)
+	return
+
+/obj/item/proc/moved(mob/user as mob, old_loc as turf)
+	return
+
+/obj/item/proc/dropped(mob/user as mob)
+	..()
+
+// called just as an item is picked up (loc is not yet changed)
+/obj/item/proc/pickup(mob/user)
+	return
+
+// called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
+/obj/item/proc/on_exit_storage(obj/item/weapon/storage/S as obj)
+	return
+
+// called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
+/obj/item/proc/on_enter_storage(obj/item/weapon/storage/S as obj)
+	return
+
+// called after an item is placed in an equipment slot
+// user is mob that equipped it
+// slot uses the slot_X defines found in setup.dm
+// for items that can be placed in multiple slots
+// note this isn't called during the initial dressing of a player
+/obj/item/proc/equipped(var/mob/user, var/slot)
+	return
+
+//the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
+//If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
+//Set disable_warning to 1 if you wish it to not give you outputs.
+/obj/item/proc/mob_can_equip(M as mob, slot, disable_warning = 0)
+	if(!slot) return 0
+	if(!M) return 0
+
+	if(ishuman(M))
+		//START HUMAN
+		var/mob/living/carbon/human/H = M
+
+		if(FAT in H.mutations)
+			if(!(flags & ONESIZEFITSALL))
+				if(!disable_warning)
+					H << "\red You're too fat to wear the [name]."
+				return 0
+
+		switch(slot)
+			if(slot_l_hand)
+				if(H.l_hand)
+					return 0
+				return 1
+			if(slot_r_hand)
+				if(H.r_hand)
+					return 0
+				return 1
+			if(slot_wear_mask)
+				if(H.wear_mask)
+					return 0
+				if( !(slot_flags & SLOT_MASK) )
+					return 0
+				return 1
+			if(slot_back)
+				if(H.back)
+					return 0
+				if( !(slot_flags & SLOT_BACK) )
+					return 0
+				return 1
+			if(slot_wear_suit)
+				if(H.wear_suit)
+					return 0
+				if( !(slot_flags & SLOT_OCLOTHING) )
+					return 0
+				return 1
+			if(slot_gloves)
+				if(H.gloves)
+					return 0
+				if( !(slot_flags & SLOT_GLOVES) )
+					return 0
+				return 1
+			if(slot_shoes)
+				if(H.shoes)
+					return 0
+				if( !(slot_flags & SLOT_FEET) )
+					return 0
+				return 1
+			if(slot_belt)
+				if(H.belt)
+					return 0
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if( !(slot_flags & SLOT_BELT) )
+					return
+				return 1
+			if(slot_glasses)
+				if(H.glasses)
+					return 0
+				if( !(slot_flags & SLOT_EYES) )
+					return 0
+				return 1
+			if(slot_head)
+				if(H.head)
+					return 0
+				if( !(slot_flags & SLOT_HEAD) )
+					return 0
+				return 1
+			if(slot_ears)
+				if(H.ears)
+					return 0
+				if( !(slot_flags & SLOT_EARS) )
+					return 0
+				return 1
+			if(slot_w_uniform)
+				if(H.w_uniform)
+					return 0
+				if( !(slot_flags & SLOT_ICLOTHING) )
+					return 0
+				return 1
+			if(slot_wear_id)
+				if(H.wear_id)
+					return 0
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if( !(slot_flags & SLOT_ID) )
+					return 0
+				return 1
+			if(slot_l_store)
+				if(H.l_store)
+					return 0
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if(slot_flags & SLOT_DENYPOCKET)
+					return
+				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+					return 1
+			if(slot_r_store)
+				if(H.r_store)
+					return 0
+				if(!H.w_uniform)
+					if(!disable_warning)
+						H << "\red You need a jumpsuit before you can attach this [name]."
+					return 0
+				if(slot_flags & SLOT_DENYPOCKET)
+					return 0
+				if( w_class <= 2 || (slot_flags & SLOT_POCKET) )
+					return 1
+				return 0
+			if(slot_s_store)
+				if(H.s_store)
+					return 0
+				if(!H.wear_suit)
+					if(!disable_warning)
+						H << "\red You need a suit before you can attach this [name]."
+					return 0
+				if(!H.wear_suit.allowed)
+					if(!disable_warning)
+						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
+					return 0
+				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
+					return 1
+				return 0
+			if(slot_handcuffed)
+				if(H.handcuffed)
+					return 0
+				if(!istype(src, /obj/item/weapon/handcuffs))
+					return 0
+				return 1
+			if(slot_legcuffed)
+				if(H.legcuffed)
+					return 0
+				if(!istype(src, /obj/item/weapon/legcuffs))
+					return 0
+				return 1
+			if(slot_in_backpack)
+				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
+					var/obj/item/weapon/storage/backpack/B = H.back
+					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
+						return 1
+				return 0
+		return 0 //Unsupported slot
+		//END HUMAN
+
+	else if(ismonkey(M))
+		//START MONKEY
+		var/mob/living/carbon/monkey/MO = M
+		switch(slot)
+			if(slot_l_hand)
+				if(MO.l_hand)
+					return 0
+				return 1
+			if(slot_r_hand)
+				if(MO.r_hand)
+					return 0
+				return 1
+			if(slot_wear_mask)
+				if(MO.wear_mask)
+					return 0
+				if( !(slot_flags & SLOT_MASK) )
+					return 0
+				return 1
+			if(slot_back)
+				if(MO.back)
+					return 0
+				if( !(slot_flags & SLOT_BACK) )
+					return 0
+				return 1
+		return 0 //Unsupported slot
+
+		//END MONKEY
+
+
+/obj/item/verb/verb_pickup()
+	set src in oview(1)
+	set category = "Object"
+	set name = "Pick up"
+
+	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(src, usr))
+		return
+
+	if(ishuman(usr))
+		if(usr.get_active_hand() == null)
+			src.Click() // Let me know if this has any problems -Giacom
+		/*
+		if(usr.get_active_hand() == null)
+			src.attack_hand(usr)
+		else
+			usr << "\red You already have something in your hand."
+		*/
+	else
+		usr << "\red This mob type can't use this verb."
+
+//This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
+//The default action is attack_self().
+//Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
+/obj/item/proc/ui_action_click()
+	if( src in usr )
+		attack_self(usr)
+
+
+/obj/item/proc/IsShield()
 	return 0
 
+/obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+
+	var/mob/living/carbon/human/H = M
+	if(istype(H) && ( \
+			(H.head && H.head.flags & HEADCOVERSEYES) || \
+			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
+		))
+		// you can't stab someone in the eyes wearing a mask!
+		user << "\red You're going to need to remove that mask/helmet/glasses first."
+		return
+
+	var/mob/living/carbon/monkey/Mo = M
+	if(istype(Mo) && ( \
+			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
+		))
+		// you can't stab someone in the eyes wearing a mask!
+		user << "\red You're going to need to remove that mask/helmet/glasses first."
+		return
+
+	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N     Metroids also don't have eyes!
+		user << "\red You cannot locate any eyes on this creature!"
+		return
+
+	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+
+	log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+
+	src.add_fingerprint(user)
+	//if((CLUMSY in user.mutations) && prob(50))
+	//	M = user
+		/*
+		M << "\red You stab yourself in the eye."
+		M.sdisabilities |= BLIND
+		M.weakened += 4
+		M.adjustBruteLoss(10)
+		*/
+	if(M != user)
+		for(var/mob/O in (viewers(M) - user - M))
+			O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
+		M << "\red [user] stabs you in the eye with [src]!"
+		user << "\red You stab [M] in the eye with [src]!"
+	else
+		user.visible_message( \
+			"\red [user] has stabbed themself with [src]!", \
+			"\red You stab yourself in the eyes with [src]!" \
+		)
+	if(istype(M, /mob/living/carbon/human))
+		var/datum/organ/external/affecting = M:get_organ("head")
+		if(affecting.take_damage(7))
+			M:UpdateDamageIcon()
+	else
+		M.take_organ_damage(7)
+	M.eye_blurry += rand(3,4)
+	M.eye_stat += rand(2,4)
+	if (M.eye_stat >= 10)
+		M.eye_blurry += 15+(0.1*M.eye_blurry)
+		M.disabilities |= NEARSIGHTED
+		if(M.stat != 2)
+			M << "\red Your eyes start to bleed profusely!"
+		if(prob(50))
+			if(M.stat != 2)
+				M << "\red You drop what you're holding and clutch at your eyes!"
+				M.drop_item()
+			M.eye_blurry += 10
+			M.Paralyse(1)
+			M.Weaken(4)
+		if (prob(M.eye_stat - 10 + 1))
+			if(M.stat != 2)
+				M << "\red You go blind!"
+			M.sdisabilities |= BLIND
+	return

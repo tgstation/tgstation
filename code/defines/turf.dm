@@ -38,6 +38,16 @@
 	proc/return_siding_icon_state()		//used for grass floors, which have siding.
 		return 0
 
+/turf/Entered(atom/A as mob|obj)
+	..()
+	if ((A && A.density && !( istype(A, /obj/effect/beam) )))
+		for(var/obj/effect/beam/i_beam/I in src)
+			spawn( 0 )
+				if (I)
+					I.hit()
+				return
+	return
+
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
