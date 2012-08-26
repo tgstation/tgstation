@@ -2,7 +2,7 @@ var/datum/controller/lighting/lighting_controller = new ()
 
 datum/controller/lighting
 	var/processing = 0
-	var/processing_interval = 4	//setting this too low will probably kill the server. Don't be silly with it!
+	var/processing_interval = 5	//setting this too low will probably kill the server. Don't be silly with it!
 	var/process_cost = 0
 	var/iteration = 0
 
@@ -26,10 +26,10 @@ datum/controller/lighting/proc/process()
 	spawn(0)
 		set background = 1
 		while(1)
-			var/started = world.timeofday
-
 			if(processing)
 				iteration++
+				var/started = world.timeofday
+
 				lights_workload_max = max(lights_workload_max,lights.len)
 				for(var/i=1, i<=lights.len, i++)
 					var/datum/light_source/L = lights[i]
@@ -46,7 +46,7 @@ datum/controller/lighting/proc/process()
 						T.shift_to_subarea()
 				changed_turfs.Cut()		// reset the changed list
 
-			process_cost = (world.timeofday - started)
+				process_cost = (world.timeofday - started)
 
 			sleep(processing_interval)
 

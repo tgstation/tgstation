@@ -8,6 +8,7 @@
 
 
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
+	src = null
 	spawn(0)
 		var/start = world.timeofday
 		epicenter = get_turf(epicenter)
@@ -39,24 +40,21 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		for(var/turf/T in range(epicenter, max(devastation_range, heavy_impact_range, light_impact_range)))
 			var/dist = cheap_pythag(T.x - x0,T.y - y0)
 
-			if(dist < devastation_range)
-				dist = 1
-			else if(dist < heavy_impact_range)
-				dist = 2
-			else if(dist < light_impact_range)
-				dist = 3
-			else
-				continue
+			if(dist < devastation_range)		dist = 1
+			else if(dist < heavy_impact_range)	dist = 2
+			else if(dist < light_impact_range)	dist = 3
+			else								continue
 
 			T.ex_act(dist)
 			if(T)
-				for(var/atom/object in T.contents)
-					object.ex_act(dist)
+				for(var/atom_movable in T.contents)
+					var/atom/movable/AM = atom_movable
+					AM.ex_act(dist)
 
 		//here util we get explosions to be less laggy, might help us identify issues after changes to splosions (because let's face it we've had a few)
 		world.log << "## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [(world.timeofday-start)/10] seconds."
 
-		sleep(10)
+		sleep(8)
 
 		if(!lighting_controller.processing)	lighting_controller.processing = lighting_controller_was_processing
 		if(!powernet_rebuild_was_deferred_already)
