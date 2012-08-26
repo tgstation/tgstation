@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/device/assembly/timer
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
@@ -10,8 +8,6 @@
 	origin_tech = "magnets=1"
 
 	secured = 0
-	small_icon_state_left = "timer_left"
-	small_icon_state_right = "timer_right"
 
 	var/timing = 0
 	var/time = 10
@@ -61,10 +57,10 @@
 
 	update_icon()
 		overlays = null
-		small_icon_state_overlays = list()
+		attached_overlays = list()
 		if(timing)
-			overlays += text("timer_timing")
-			small_icon_state_overlays += text("timer_timing")
+			overlays += "timer_timing"
+			attached_overlays += "timer_timing"
 		if(holder)
 			holder.update_icon()
 		return

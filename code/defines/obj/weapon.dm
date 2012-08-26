@@ -1563,22 +1563,6 @@
 	icon_state = "mousetraparmed"
 	armed = 1
 
-/obj/item/weapon/dice // -- TLE
-	name = "d6"
-	desc = "A dice with six sides."
-	var/sides = 6
-	icon = 'icons/obj/dice.dmi'
-	icon_state = "d66"
-
-/obj/item/weapon/dice/New()
-	icon_state = "[name][rand(sides)]"
-
-/obj/item/weapon/dice/d20 // -- TLE
-	name = "d20"
-	desc = "A dice with twenty sides."
-	sides = 20
-	icon_state = "d2020"
-
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
 	name = "data cable"
