@@ -3,6 +3,7 @@
  *		Monkey Cube Box
  *		Candle Packs
  *		Snap Pop Box
+ *		Crayon Box
  */
 
 /*
@@ -70,3 +71,34 @@
 		processing_objects.Add(W)
 	W.update_icon()
 	return
+
+/*
+ * Crayon Box
+ */
+
+/obj/item/weapon/storage/crayonbox/New()
+	..()
+	new /obj/item/toy/crayon/red(src)
+	new /obj/item/toy/crayon/orange(src)
+	new /obj/item/toy/crayon/yellow(src)
+	new /obj/item/toy/crayon/green(src)
+	new /obj/item/toy/crayon/blue(src)
+	new /obj/item/toy/crayon/purple(src)
+	update_icon()
+
+/obj/item/weapon/storage/crayonbox/update_icon()
+	overlays = list() //resets list
+	overlays += image('icons/obj/crayons.dmi',"crayonbox")
+	for(var/obj/item/toy/crayon/crayon in contents)
+		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
+
+/obj/item/weapon/storage/crayonbox/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/toy/crayon))
+		switch(W:colourName)
+			if("mime")
+				usr << "This crayon is too sad to be contained in this box."
+				return
+			if("rainbow")
+				usr << "This crayon is too powerful to be contained in this box."
+				return
+	..()

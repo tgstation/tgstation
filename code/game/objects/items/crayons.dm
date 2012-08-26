@@ -1,34 +1,3 @@
-/*--------
-//CONTAINS
-CRAYONS
---------*/
-/obj/item/weapon/storage/crayonbox/New()
-	..()
-	new /obj/item/toy/crayon/red(src)
-	new /obj/item/toy/crayon/orange(src)
-	new /obj/item/toy/crayon/yellow(src)
-	new /obj/item/toy/crayon/green(src)
-	new /obj/item/toy/crayon/blue(src)
-	new /obj/item/toy/crayon/purple(src)
-	update_icon()
-
-/obj/item/weapon/storage/crayonbox/update_icon()
-	overlays = list() //resets list
-	overlays += image('icons/obj/crayons.dmi',"crayonbox")
-	for(var/obj/item/toy/crayon/crayon in contents)
-		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
-
-/obj/item/weapon/storage/crayonbox/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/toy/crayon))
-		switch(W:colourName)
-			if("mime")
-				usr << "This crayon is too sad to be contained in this box."
-				return
-			if("rainbow")
-				usr << "This crayon is too powerful to be contained in this box."
-				return
-	..()
-
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
 	colour = "#DA0000"
@@ -128,39 +97,3 @@ CRAYONS
 				del(src)
 	else
 		..()
-
-/obj/effect/decal/cleanable/crayon
-	name = "rune"
-	desc = "A rune drawn in crayon."
-	icon = 'icons/obj/rune.dmi'
-	layer = 2.1
-	anchored = 1
-
-
-	examine()
-		set src in view(2)
-		..()
-		return
-
-
-	New(location,main = "#FFFFFF",shade = "#000000",var/type = "rune")
-		..()
-		loc = location
-
-		name = type
-		desc = "A [type] drawn in crayon."
-
-		switch(type)
-			if("rune")
-				type = "rune[rand(1,6)]"
-			if("graffiti")
-				type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
-
-		var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
-		var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
-
-		mainOverlay.Blend(main,ICON_ADD)
-		shadeOverlay.Blend(shade,ICON_ADD)
-
-		overlays += mainOverlay
-		overlays += shadeOverlay
