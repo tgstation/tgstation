@@ -14,6 +14,22 @@
 /mob/aiEye/Move()
 	return 0
 
+// Hide popout menu verbs
+/mob/aiEye/examine()
+	set popup_menu = 0
+	set src = usr.contents
+	return 0
+
+/mob/aiEye/pull()
+	set popup_menu = 0
+	set src = usr.contents
+	return 0
+
+/mob/aiEye/point()
+	set popup_menu = 0
+	set src = usr.contents
+	return 0
+
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
@@ -29,7 +45,6 @@
 /mob/living/silicon/ai/var/mob/aiEye/eyeobj = new()
 
 // Intiliaze the eye by assigning it's "ai" variable to us. Then set it's loc to us.
-
 /mob/living/silicon/ai/New()
 	..()
 	eyeobj.ai = src
