@@ -105,6 +105,10 @@
 
 /obj/item/weapon/gun/projectile/russian/attack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
 
+	if(!loaded.len)
+		user.visible_message("\red *click*", "\red *click*")
+		return
+
 	if(isliving(target) && isliving(user))
 		if(target == user)
 			var/datum/organ/external/affecting = user.zone_sel.selecting
