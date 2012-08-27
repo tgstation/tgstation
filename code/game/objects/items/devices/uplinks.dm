@@ -276,6 +276,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	name = "Hidden Uplink."
 	desc = "There is something wrong if you're examining this."
 	var/active = 0
+	var/list/purchase_log = list()
 
 // The hidden uplink MUST be inside an obj/item's contents.
 /obj/item/device/uplink/hidden/New()
@@ -336,6 +337,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			if(ishuman(usr))
 				var/mob/living/carbon/human/A = usr
 				A.put_in_any_hand_if_possible(I)
+			purchase_log += "[usr] ([usr.ckey]) bought [I]."
 	interact(usr)
 	return
 

@@ -173,6 +173,29 @@ proc/listclearnulls(list/list)
 			K += item
 	return K
 
+//Mergesort: divides up the list into halves to begin the sort
+/proc/sortKey(var/list/client/L, var/order = 1)
+	if(isnull(L) || L.len < 2)
+		return L
+	var/middle = L.len / 2 + 1
+	return mergeKey(sortKey(L.Copy(0,middle)), sortKey(L.Copy(middle)), order)
+
+//Mergsort: does the actual sorting and returns the results back to sortAtom
+/proc/mergeKey(var/list/client/L, var/list/client/R, var/order = 1)
+	var/Li=1
+	var/Ri=1
+	var/list/result = new()
+	while(Li <= L.len && Ri <= R.len)
+		var/client/rL = L[Li]
+		var/client/rR = R[Ri]
+		if(sorttext(rL.ckey, rR.ckey) == order)
+			result += L[Li++]
+		else
+			result += R[Ri++]
+
+	if(Li <= L.len)
+		return (result + L.Copy(Li, 0))
+	return (result + R.Copy(Ri, 0))
 
 //Mergesort: divides up the list into halves to begin the sort
 /proc/sortAtom(var/list/atom/L, var/order = 1)

@@ -36,6 +36,9 @@
 		del(src)
 		return
 
+	Bumped(atom/user)
+		if(ismob(user)) shock(user, 70)
+
 
 	meteorhit(var/obj/M)
 		if (M.icon_state == "flaming")

@@ -3009,7 +3009,7 @@ var/global/BSACooldown = 0
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/obj/admins/proc/show_traitor_panel(var/mob/M in mob_list)
+/obj/admins/proc/show_traitor_panel(var/mob/M in sortmobs())
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"

@@ -403,30 +403,31 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return creatures
 
-//Orders mobs by type
+//Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
-	for(var/mob/living/silicon/ai/M in mob_list)
+	var/list/sortmob = sortAtom(mob_list)
+	for(var/mob/living/silicon/ai/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/silicon/pai/M in mob_list)
+	for(var/mob/living/silicon/pai/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/silicon/robot/M in mob_list)
+	for(var/mob/living/silicon/robot/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/human/M in mob_list)
+	for(var/mob/living/carbon/human/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/brain/M in mob_list)
+	for(var/mob/living/carbon/brain/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/alien/M in mob_list)
+	for(var/mob/living/carbon/alien/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/dead/observer/M in mob_list)
+	for(var/mob/dead/observer/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/new_player/M in mob_list)
+	for(var/mob/new_player/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/monkey/M in mob_list)
+	for(var/mob/living/carbon/monkey/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/metroid/M in mob_list)
+	for(var/mob/living/carbon/metroid/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/simple_animal/M in mob_list)
+	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
 //	for(var/mob/living/silicon/hivebot/M in world)
 //		mob_list.Add(M)
@@ -765,6 +766,17 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 /proc/hasvar(var/datum/A, var/varname)
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
+
+//Returns: all the areas in the world
+/proc/return_areas()
+	var/list/area/areas = list()
+	for(var/area/A in world)
+		areas += A
+	return areas
+
+//Returns: all the areas in the world, sorted.
+/proc/return_sorted_areas()
+	return sortAtom(return_areas())
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
