@@ -15,7 +15,7 @@
 					"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
 					"<span class='notice'>You hear squelching...</span>")
 				spawn(1200)
-					if(buckled_mob && user.buckled == src)
+					if(user && buckled_mob && user.buckled == src)
 						buckled_mob.pixel_y = 0
 						unbuckle()
 			src.add_fingerprint(user)
