@@ -9,6 +9,7 @@
 #define AIRLOCK_WIRE_ELECTRIFY 9
 #define AIRLOCK_WIRE_SAFETY 10
 #define AIRLOCK_WIRE_SPEED 11
+#define AIRLOCK_WIRE_LIGHT 12
 
 /*
 	New methods:
@@ -32,21 +33,26 @@
 //This generates the randomized airlock wire assignments for the game.
 /proc/RandomAirlockWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
-	var/list/wires = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-	airlockIndexToFlag = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-	airlockIndexToWireColor = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-	airlockWireColorToIndex = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	var/list/wires = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	airlockIndexToFlag = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	airlockIndexToWireColor = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	airlockWireColorToIndex = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 	var/flagIndex = 1
-	for (var/flag=1, flag<2048, flag+=flag)
+	for (var/flag=1, flag<4096, flag+=flag)
 		var/valid = 0
+		var/list/colorList = list(AIRLOCK_WIRE_IDSCAN, AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2, AIRLOCK_WIRE_DOOR_BOLTS,
+		AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2, AIRLOCK_WIRE_OPEN_DOOR, AIRLOCK_WIRE_AI_CONTROL, AIRLOCK_WIRE_ELECTRIFY,
+		AIRLOCK_WIRE_SAFETY, AIRLOCK_WIRE_SPEED, AIRLOCK_WIRE_LIGHT)
+
 		while (!valid)
-			var/colorIndex = rand(1, 11)
+			var/colorIndex = pick(colorList)
 			if(wires[colorIndex]==0)
 				valid = 1
 				wires[colorIndex] = flag
 				airlockIndexToFlag[flagIndex] = flag
 				airlockIndexToWireColor[flagIndex] = colorIndex
 				airlockWireColorToIndex[colorIndex] = flagIndex
+				colorList -= colorIndex
 		flagIndex+=1
 	return wires
 
@@ -69,13 +75,14 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/spawnPowerRestoreRunning = 0
 	var/welded = null
 	var/locked = 0
-	var/wires = 2047
+	var/lights = 1 // bolt lights show by default
+	var/wires = 4095
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = 0
 	var/aiHacking = 0
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
-	var/list/signalers[11]
+	var/list/signalers[12]
 	var/lockdownbyai = 0
 	autoclose = 1
 	var/doortype = 0
@@ -437,6 +444,10 @@ About the new airlock wires panel:
 			normalspeed = !normalspeed
 			src.updateUsrDialog()
 
+		if(AIRLOCK_WIRE_LIGHT)
+			lights = !lights
+			src.updateUsrDialog()
+
 
 /obj/machinery/door/airlock/proc/cut(var/wireColor)
 	var/wireFlag = airlockWireColorToFlag[wireColor]
@@ -481,6 +492,10 @@ About the new airlock wires panel:
 			autoclose = 0
 			src.updateUsrDialog()
 
+		if(AIRLOCK_WIRE_LIGHT)
+			lights = 0
+			src.updateUsrDialog()
+
 /obj/machinery/door/airlock/proc/mend(var/wireColor)
 	var/wireFlag = airlockWireColorToFlag[wireColor]
 	var/wireIndex = airlockWireColorToIndex[wireColor] //not used in this function
@@ -516,6 +531,10 @@ About the new airlock wires panel:
 			autoclose = 1
 			if(!src.density)
 				close()
+			src.updateUsrDialog()
+
+		if(AIRLOCK_WIRE_LIGHT)
+			lights = 1
 			src.updateUsrDialog()
 
 
@@ -614,7 +633,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/update_icon()
 	if(overlays) overlays = null
 	if(density)
-		if(locked)
+		if(locked && lights)
 			icon_state = "door_locked"
 		else
 			icon_state = "door_closed"
@@ -711,6 +730,14 @@ About the new airlock wires panel:
 			t1 += text(" <A href='?src=\ref[];aiEnable=4'>Raise?</a><br>\n", src)
 		else
 			t1 += text(" Cannot raise door bolts due to power failure.<br>\n")
+
+	if(src.isWireCut(AIRLOCK_WIRE_LIGHT))
+		t1 += text("Door bolt lights wire is cut.<br>\n")
+	else if(!src.lights)
+		t1 += text("Door lights are off. <A href='?src=\ref[];aiEnable=10'>Enable?</a><br>\n", src)
+	else
+		t1 += text("Door lights are on. <A href='?src=\ref[];aiDisable=10'>Disable?</a><br>\n", src)
+
 	if(src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
 		t1 += text("Electrification wire is cut.<br>\n")
 	if(src.secondsElectrified==-1)
@@ -843,7 +870,8 @@ About the new airlock wires panel:
 			"Grey" = 8,
 			"Black" = 9,
 			"Gold" = 10,
-			"Aqua" = 11
+			"Aqua" = 11,
+			"Pink" = 12
 		)
 		for(var/wiredesc in wires)
 			var/is_uncut = src.wires & airlockWireColorToFlag[wires[wiredesc]]
@@ -859,7 +887,7 @@ About the new airlock wires panel:
 					t1 += "<a href='?src=\ref[src];signaler=[wires[wiredesc]]'>Attach signaler</a>"
 			t1 += "<br>"
 
-		t1 += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]", (src.locked ? "The door bolts have fallen!" : "The door bolts look up."), ((src.arePowerSystemsOn() && !(stat & NOPOWER)) ? "The test light is on." : "The test light is off!"), (src.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),  (src.safe==0 ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."))
+		t1 += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]", (src.locked ? "The door bolts have fallen!" : "The door bolts look up."), (src.lights ? "The door bolt lights are on." : "The door bolt lights are off!"), ((src.arePowerSystemsOn() && !(stat & NOPOWER)) ? "The test light is on." : "The test light is off!"), (src.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),  (src.safe==0 ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."))
 
 		t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
 
@@ -969,7 +997,7 @@ About the new airlock wires panel:
 				if(5)
 					//un-electrify door
 					if(src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-						usr << text("Can't un-electrify the airlock - The electrification wire is cut.<br>\n")
+						usr << text("Can't un-electrify the airlock - The electrification wire is cut.")
 					else if(src.secondsElectrified==-1)
 						src.secondsElectrified = 0
 					else if(src.secondsElectrified>0)
@@ -978,18 +1006,18 @@ About the new airlock wires panel:
 				if(8)
 					// Safeties!  We don't need no stinking safeties!
 					if (src.isWireCut(AIRLOCK_WIRE_SAFETY))
-						usr << text("Control to door sensors is disabled.</a><br>\n")
+						usr << text("Control to door sensors is disabled.")
 					else if (src.safe)
 						safe = 0
 					else
-						usr << text("Firmware reports safeties already overriden.</a><br>\n")
+						usr << text("Firmware reports safeties already overriden.")
 
 
 
 				if(9)
 					// Door speed control
 					if(src.isWireCut(AIRLOCK_WIRE_SPEED))
-						usr << text("Control to door timing circuitry has been severed.</a><br>\n")
+						usr << text("Control to door timing circuitry has been severed.")
 					else if (src.normalspeed)
 						normalspeed = 0
 					else
@@ -998,13 +1026,22 @@ About the new airlock wires panel:
 				if(7)
 					//close door
 					if(src.welded)
-						usr << text("The airlock has been welded shut!<br>\n")
+						usr << text("The airlock has been welded shut!")
 					else if(src.locked)
-						usr << text("The door bolts are down!<br>\n")
+						usr << text("The door bolts are down!")
 					else if(!src.density)
 						close()
 					else
-						usr << text("The airlock is already closed.<br>\n")
+						open()
+
+				if(10)
+					// Bolt lights
+					if(src.isWireCut(AIRLOCK_WIRE_LIGHT))
+						usr << text("Control to door bolt lights has been severed.</a>")
+					else if (src.lights)
+						lights = 0
+					else
+						usr << text("Door bolt lights are already disabled!")
 
 
 
@@ -1067,17 +1104,17 @@ About the new airlock wires panel:
 				if (8) // Not in order >.>
 					// Safeties!  Maybe we do need some stinking safeties!
 					if (src.isWireCut(AIRLOCK_WIRE_SAFETY))
-						usr << text("Control to door sensors is disabled.<br>\n")
+						usr << text("Control to door sensors is disabled.")
 					else if (!src.safe)
 						safe = 1
 						src.updateUsrDialog()
 					else
-						usr << text("Firmware reports safeties already in place.<br>\n")
+						usr << text("Firmware reports safeties already in place.")
 
 				if(9)
 					// Door speed control
 					if(src.isWireCut(AIRLOCK_WIRE_SPEED))
-						usr << text("Control to door timing circuitry has been severed.</a><br>\n")
+						usr << text("Control to door timing circuitry has been severed.")
 					else if (!src.normalspeed)
 						normalspeed = 1
 						src.updateUsrDialog()
@@ -1087,14 +1124,24 @@ About the new airlock wires panel:
 				if(7)
 					//open door
 					if(src.welded)
-						usr << text("The airlock has been welded shut!<br>\n")
+						usr << text("The airlock has been welded shut!")
 					else if(src.locked)
-						usr << text("The door bolts are down!<br>\n")
+						usr << text("The door bolts are down!")
 					else if(src.density)
 						open()
-	//					close()
 					else
-						usr << text("The airlock is already opened.<br>\n")
+						close()
+
+				if(10)
+					// Bolt lights
+					if(src.isWireCut(AIRLOCK_WIRE_LIGHT))
+						usr << text("Control to door bolt lights has been severed.</a>")
+					else if (!src.lights)
+						lights = 1
+						src.updateUsrDialog()
+					else
+						usr << text("Door bolt lights are already enabled!")
+
 	add_fingerprint(usr)
 	update_icon()
 	if(!nowindow)
