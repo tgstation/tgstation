@@ -291,6 +291,8 @@
 		close()
 	return
 
+/obj/machinery/door/morgue
+	icon = 'icons/obj/doors/doormorgue.dmi'
 
 /*
 /obj/machinery/door/airlock/proc/ion_act()

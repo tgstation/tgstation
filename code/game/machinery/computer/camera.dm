@@ -85,6 +85,15 @@
 	density = 0
 	circuit = null
 
+/obj/machinery/computer/security/telescreen/entertainment
+	name = "entertainment monitor"
+	desc = "Damn, they better have /tg/thechannel on these things."
+	icon = 'icons/obj/status_display.dmi'
+	icon_state = "entertainment"
+	network = "thunder"
+	density = 0
+	circuit = null
+
 
 /obj/machinery/computer/security/wooden_tv
 	name = "Security Cameras"
