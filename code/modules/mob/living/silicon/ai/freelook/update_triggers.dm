@@ -14,6 +14,7 @@
 		if(AI.client.eye == AI.eyeobj)
 			AI.eyeobj.setLoc(src)
 
+/*
 /turf/simulated/Del()
 	visibilityChanged()
 	..()
@@ -41,6 +42,8 @@
 	// don't check then?
 	if(!glass)
 		cameranet.updateVisibility(src, 0)
+
+*/
 
 // ROBOT MOVEMENT
 

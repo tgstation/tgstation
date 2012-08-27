@@ -69,7 +69,7 @@
 			continue
 		var/turf/pos = get_turf(c)
 		if(pos)
-			for(var/turf/t in hear(7, pos))
+			for(var/turf/t in range(7, pos))
 				if(t in turfs)
 					newVisibleTurfs += t
 
@@ -121,7 +121,7 @@
 			continue
 		var/turf/pos = get_turf(c)
 		if(pos)
-			for(var/turf/t in hear(7, pos))
+			for(var/turf/t in range(7, pos))
 				if(t in turfs)
 					visibleTurfs += t
 

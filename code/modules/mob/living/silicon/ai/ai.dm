@@ -448,7 +448,7 @@
 
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
-	machine = src
+	//machine = src
 
 	return 1
 
