@@ -37,6 +37,9 @@
 	T = get_turf(T)
 	loc = T
 	cameranet.visibility(src)
+	if(ai)
+		if(ai.client)
+			ai.client.eye = src
 
 // AI MOVEMENT
 

@@ -44,6 +44,9 @@
 		 		var/obj/item/clothing/head/helmet/space/space_ninja/hood = H.head
 	 			if(!hood.canremove)
 	 				continue
+
+	 	if(!isturf(M.loc))
+	 		continue
 		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
 		if(!cameranet.checkCameraVis(M))
 			continue
@@ -84,7 +87,7 @@
 		while (U.cameraFollow == target)
 			if (U.cameraFollow == null)
 				return
-			else if (istype(target, /mob/living/carbon/human))
+			if (istype(target, /mob/living/carbon/human))
 				if(istype(target:wear_id, /obj/item/weapon/card/id/syndicate))
 					U << "Follow camera mode terminated."
 					U.cameraFollow = null
@@ -98,17 +101,17 @@
 					U.cameraFollow = null
 					return
 
-			else if(istype(target.loc,/obj/effect/dummy))
+			if(istype(target.loc,/obj/effect/dummy))
 				U << "Follow camera mode ended."
 				U.cameraFollow = null
 				return
-			else if (!target || !istype(target.loc, /turf)) //in a closet
+			if (!isturf(target.loc)) //in a closet
 				U << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
-				sleep(30) //because we're sleeping another second after this (a few lines down)
+				sleep(50) //because we're sleeping another second after this (a few lines down)
 				continue
-			else if(!cameranet.checkCameraVis(target))
+			if(!cameranet.checkCameraVis(target))
 				U << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
-				sleep(30) //because we're sleeping another second after this (a few lines down)
+				sleep(50) //because we're sleeping another second after this (a few lines down)
 				continue
 
 			U.eyeobj.setLoc(get_turf(target))
