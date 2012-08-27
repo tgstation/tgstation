@@ -172,6 +172,27 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
+/client/proc/cmd_admin_animalize(var/mob/M in mob_list)
+	set category = "Fun"
+	set name = "Make Simple Animal"
+
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+
+	if(!M)
+		alert("That mob doesn't seem to exist, close the panel and try again.")
+		return
+
+	if(istype(M, /mob/new_player))
+		alert("The mob must not be a new_player.")
+		return
+
+	log_admin("[key_name(src)] has animalized [M.key].")
+	spawn(10)
+		M.Animalize()
+
+
 /client/proc/makepAI(var/turf/T in mob_list)
 	set category = "Fun"
 	set name = "Make pAI"
