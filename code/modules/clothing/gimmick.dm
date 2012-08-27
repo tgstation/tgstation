@@ -738,8 +738,42 @@ obj/item/clothing/suit/justice
 	name = "flaming hot black dress"
 	desc = "A small black dress with blue flames print on it."
 	icon_state = "dress_fire"
-	item_state = "creamsuit"
 	color = "dress_fire"
+
+/obj/item/clothing/under/wedding/dress_orange
+	name = "orange dress"
+	icon_state = "d_orange"
+	color = "d_orange"
+
+/obj/item/clothing/under/wedding/dress_green
+	name = "green dress"
+	icon_state = "d_green"
+	color = "d_green"
+
+/obj/item/clothing/under/wedding/dress_purple
+	name = "purple dress"
+	icon_state = "d_purple"
+	color = "d_purple"
+
+/obj/item/clothing/under/wedding/dress_red
+	name = "red dress"
+	icon_state = "d_red"
+	color = "d_red"
+
+/obj/item/clothing/under/wedding/dress_blue
+	name = "blue dress"
+	icon_state = "d_blue"
+	color = "d_blue"
+
+/obj/item/clothing/under/wedding/officer_blue
+	name = "blue officer dress"
+	icon_state = "officer_blue"
+	color = "officer_blue"
+
+/obj/item/clothing/under/wedding/dress_vampire
+	name = "vampire dress"
+	icon_state = "d_vampire"
+	color = "d_vampire"
 
 /obj/item/clothing/under/wedding/orangedress
 	name = "orange dress"
