@@ -108,7 +108,7 @@
 /obj/machinery/optable/process()
 	check_victim()
 
-/obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/living/carbon/user as mob)
 
 	if (istype(W, /obj/item/weapon/grab))
 		if(ismob(W:affecting))
