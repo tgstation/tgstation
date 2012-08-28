@@ -16,3 +16,25 @@ REVIVAL_CLONING 1
 
 ## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
+
+
+
+### MOB MOVEMENT ###
+
+## We suggest editing these variabled in-game to find a good speed for your server. To do this you must be a high level admin. Open the 'debug' tab ingame. Select "Debug Controller" and then, in the popup, select "Configuration". These variables should have the same name.
+
+## These values get directly added to values and totals in-game. To speed things up make the number negative, to slow things down, make the number positive.
+
+
+## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
+RUN_DELAY 0
+WALK_DELAY 0
+
+
+## The variables below affect the movement of specific mob types.
+HUMAN_DELAY 0
+ROBOT_DELAY 0
+MONKEY_DELAY 0
+ALIEN_DELAY 0
+METROID_DELAY 0
+ANIMAL_DELAY 0

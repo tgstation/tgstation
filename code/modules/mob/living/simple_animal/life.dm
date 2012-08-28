@@ -356,7 +356,7 @@
 
 	tally = speed
 
-	return tally
+	return tally+config.animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()
