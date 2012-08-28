@@ -6359,7 +6359,7 @@
 "cso" = (/obj/machinery/mech_bay_recharge_port,/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_mothership/elite_squad)
 "csp" = (/obj/mecha/combat/marauder/mauler,/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_mothership)
 "csq" = (/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_mothership)
-"csr" = (/turf/space,/area/start)
+"csr" = (/turf/unsimulated/wall{icon = 'icons/misc/fullscreen.dmi'; icon_state = "title"},/area/start)
 "css" = (/obj/structure/closet/acloset,/turf/unsimulated/floor{icon_state = "floor5"},/area/alien)
 "cst" = (/turf/unsimulated/wall{icon_state = "plasma2"},/area/alien)
 "csu" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/unsimulated/floor{name = "plating"},/area/syndicate_mothership/elite_squad)

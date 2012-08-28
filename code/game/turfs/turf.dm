@@ -15,6 +15,10 @@
 
 	return ..()
 
+/turf/Click()
+	if(!isAI(usr))
+		..()
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)
@@ -987,7 +991,7 @@
 	new /obj/structure/girder(src)
 	src.ReplaceWithFloor()
 	for(var/turf/simulated/floor/target_tile in range(0,src))
-		//skytodo:
+		//skytodo
 		/*if(target_tile.parent && target_tile.parent.group_processing)
 			target_tile.parent.suspend_group_processing()*/
 		var/datum/gas_mixture/napalm = new
