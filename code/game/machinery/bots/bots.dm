@@ -3,7 +3,7 @@
 /obj/machinery/bot
 	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
-	luminosity = 2
+	luminosity = 3
 	var/obj/item/weapon/card/id/botcard			// the ID card that the bot "holds"
 	var/on = 1
 	var/health = 0 //do not forget to set health for your bot!
@@ -16,13 +16,14 @@
 
 
 /obj/machinery/bot/proc/turn_on()
-	if (stat)
-		return 0
-	src.on = 1
+	if(stat)	return 0
+	on = 1
+	SetLuminosity(initial(luminosity))
 	return 1
 
 /obj/machinery/bot/proc/turn_off()
-	src.on = 0
+	on = 0
+	SetLuminosity(0)
 
 /obj/machinery/bot/proc/explode()
 	del(src)
