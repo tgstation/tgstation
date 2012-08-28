@@ -209,3 +209,78 @@
 		usr << "You button-up some imaginary buttons on your [src]."
 		return
 	usr.update_inv_wear_suit()
+
+//pyjamas
+//originally intended to be pinstripes >.>
+
+/obj/item/clothing/under/bluepyjamas
+	name = "blue pyjamas"
+	desc = "Slightly old-fashioned sleepwear."
+	icon_state = "blue_pyjamas"
+	item_state = "blue_pyjamas"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/obj/item/clothing/under/redpyjamas
+	name = "red pyjamas"
+	desc = "Slightly old-fashioned sleepwear."
+	icon_state = "red_pyjamas"
+	item_state = "red_pyjamas"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+//coats
+
+/obj/item/clothing/suit/leathercoat
+	name = "leather coat"
+	desc = "A long, thick black leather coat."
+	icon_state = "leathercoat"
+	item_state = "leathercoat"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/suit/browncoat
+	name = "brown leather coat"
+	desc = "A long, brown leather coat."
+	icon_state = "browncoat"
+	item_state = "browncoat"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/suit/neocoat
+	name = "black coat"
+	desc = "A flowing, black coat."
+	icon_state = "neocoat"
+	item_state = "neocoat"
+	flags = FPRINT | TABLEPASS
+
+//actual suits
+
+/obj/item/clothing/suit/creamsuit
+	name = "cream suit"
+	desc = "A cream coloured, genteel suit."
+	icon_state = "creamsuit"
+	item_state = "creamsuit"
+	flags = FPRINT | TABLEPASS
+
+//stripper
+
+/obj/item/clothing/under/stripper/stripper_pink
+	name = "pink swimsuit"
+	desc = "A rather skimpy pink swimsuit."
+	icon_state = "stripper_p_under"
+	color = "stripper_p"
+
+/obj/item/clothing/under/stripper/stripper_green
+	name = "green swimsuit"
+	desc = "A rather skimpy green swimsuit."
+	icon_state = "stripper_g_under"
+	color = "stripper_g"
+
+/obj/item/clothing/suit/stripper/stripper_pink
+	name = "pink skimpy dress"
+	desc = "A rather skimpy pink dress."
+	icon_state = "stripper_p_over"
+	item_state = "stripper_p"
+
+/obj/item/clothing/suit/stripper/stripper_green
+	name = "green skimpy dress"
+	desc = "A rather skimpy green dress."
+	icon_state = "stripper_g_over"
+	item_state = "stripper_g"

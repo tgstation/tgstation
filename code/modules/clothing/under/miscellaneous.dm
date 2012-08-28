@@ -231,3 +231,71 @@
 	item_state = "gladiator"
 	color = "gladiator"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+//
+
+
+//wedding stuff
+/obj/item/clothing/under/wedding/bride_orange
+	name = "orange wedding dress"
+	desc = "A big and puffy orange dress."
+	icon_state = "bride_orange"
+	item_state = "creamsuit"
+	color = "bride_orange"
+	flags_inv = HIDESHOES
+
+/obj/item/clothing/under/wedding/suit_white
+	name = "white suit"
+	desc = "A fabulous white suit with orange shirt."
+	icon_state = "white_suit"
+	item_state = "creamsuit"
+	color = "white_suit"
+
+/obj/item/clothing/under/wedding/bridesmaid
+	name = "yellow dress"
+	desc = "A big and puffy orange dress."
+	icon_state = "bridesmaid"
+	item_state = "creamsuit"
+	color = "bridesmaid"
+
+/obj/item/clothing/under/wedding/firedress
+	name = "flaming hot black dress"
+	desc = "A small black dress with blue flames print on it."
+	icon_state = "dress_fire"
+	item_state = "creamsuit"
+	color = "dress_fire"
+
+/obj/item/clothing/under/wedding/dress_orange
+	name = "orange dress"
+	icon_state = "d_orange"
+	color = "d_orange"
+
+/obj/item/clothing/under/wedding/dress_green
+	name = "green dress"
+	icon_state = "d_green"
+	color = "d_green"
+
+/obj/item/clothing/under/wedding/dress_purple
+	name = "purple dress"
+	icon_state = "d_purple"
+	color = "d_purple"
+
+/obj/item/clothing/under/wedding/dress_red
+	name = "red dress"
+	icon_state = "d_red"
+	color = "d_red"
+
+/obj/item/clothing/under/wedding/dress_blue
+	name = "blue dress"
+	icon_state = "d_blue"
+	color = "d_blue"
+
+/obj/item/clothing/under/wedding/officer_blue
+	name = "blue officer dress"
+	icon_state = "officer_blue"
+	color = "officer_blue"
+
+/obj/item/clothing/under/wedding/dress_vampire
+	name = "vampire dress"
+	icon_state = "d_vampire"
+	color = "d_vampire"

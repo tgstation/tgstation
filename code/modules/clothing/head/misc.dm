@@ -152,3 +152,47 @@
 	icon_state = "bowler"
 	item_state = "bowler"
 	flags = FPRINT | TABLEPASS
+
+//stylish new hats
+
+/obj/item/clothing/head/bowlerhat
+	name = "bowler hat"
+	icon_state = "bowler_hat"
+	item_state = "bowler_hat"
+	desc = "For the gentleman of distinction."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/beaverhat
+	name = "beaver hat"
+	icon_state = "beaver_hat"
+	item_state = "beaver_hat"
+	desc = "Soft felt makes this hat both comfortable and elegant."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/boaterhat
+	name = "boater hat"
+	icon_state = "boater_hat"
+	item_state = "boater_hat"
+	desc = "The ultimate in summer fashion."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/fedora
+	name = "\improper fedora"
+	icon_state = "fedora"
+	item_state = "fedora"
+	desc = "A sharp, stylish hat."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/feathertrilby
+	name = "\improper feather trilby"
+	icon_state = "feather_trilby"
+	item_state = "feather_trilby"
+	desc = "A sharp, stylish hat with a feather."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/fez
+	name = "\improper fez"
+	icon_state = "fez"
+	item_state = "fez"
+	desc = "You should wear a fez. Fezzes are cool."
+	flags = FPRINT|TABLEPASS

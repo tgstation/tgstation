@@ -94,3 +94,10 @@
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume"
 	icon_state = "boots"
+
+/obj/item/clothing/shoes/laceups
+	name = "laceup shoes"
+	desc = "Stylish black leather."
+	icon_state = "laceups"
+	item_state = "laceups"
+	color = "black"
