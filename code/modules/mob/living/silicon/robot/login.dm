@@ -29,7 +29,7 @@
 			modtype = "Synd"
 
 		radio = new /obj/item/device/radio/borg(src)
-		if(!scrambledcodes)
+		if(!scrambledcodes && !camera)
 			camera = new /obj/machinery/camera(src)
 			camera.c_tag = real_name
 			camera.network = "SS13"

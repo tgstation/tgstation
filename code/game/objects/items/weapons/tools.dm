@@ -1,16 +1,18 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
+/* Tools!
+ * Note: Multitools are /obj/item/device
+ *
+ * Contains:
+ * Wrench
+ * Screwdriver
+ * Wirecutters
+ * Welding Tool
+ */
+
 /*
-CONTAINS:
-
-WRENCH
-SCREWDRIVER
-WELDINGTOOOL
-WIRECUTTERS
-*/
-
-
-// WRENCH
+ * Wrench
+ */
 /obj/item/weapon/wrench
 	name = "wrench"
 	desc = "A wrench with common uses. Can be found in your hand."
@@ -26,7 +28,9 @@ WIRECUTTERS
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 
-// SCREWDRIVER
+/*
+ * Screwdriver
+ */
 /obj/item/weapon/screwdriver/New()
 	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
 		if ("red")
@@ -63,9 +67,43 @@ WIRECUTTERS
 		M = user
 	return eyestab(M,user)
 
+/*
+ * Wirecutters
+ */
+/obj/item/weapon/wirecutters
+	name = "wirecutters"
+	desc = "This cuts wires."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "cutters"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
+	force = 6.0
+	throw_speed = 2
+	throw_range = 9
+	w_class = 2.0
+	m_amt = 80
+	origin_tech = "materials=1;engineering=1"
+	attack_verb = list("pinched", "nipped")
 
+/obj/item/weapon/wirecutters/New()
+	if(prob(50))
+		icon_state = "cutters-y"
+		item_state = "cutters_yellow"
 
-// WELDING TOOL
+/obj/item/weapon/wirecutters/attack(mob/M as mob, mob/user as mob)
+	if((M.handcuffed) && (istype(M:handcuffed, /obj/item/weapon/handcuffs/cable)))
+		usr.visible_message("\The [usr] cuts \the [M]'s restraints with \the [src]!",\
+		"You cut \the [M]'s restraints with \the [src]!",\
+		"You hear cable being cut.")
+		M.handcuffed = null
+		M.update_inv_handcuffed()
+		return
+	else
+		..()
+
+/*
+ * Welding Tool
+ */
 /obj/item/weapon/weldingtool
 	name = "welding tool"
 	icon = 'icons/obj/items.dmi'
@@ -356,37 +394,3 @@ WIRECUTTERS
 	reagents += (gen_amount)
 	if(reagents > max_fuel)
 		reagents = max_fuel
-
-
-
-//WIRECUTTERS
-/obj/item/weapon/wirecutters
-	name = "wirecutters"
-	desc = "This cuts wires."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "cutters"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	slot_flags = SLOT_BELT
-	force = 6.0
-	throw_speed = 2
-	throw_range = 9
-	w_class = 2.0
-	m_amt = 80
-	origin_tech = "materials=1;engineering=1"
-	attack_verb = list("pinched", "nipped")
-
-/obj/item/weapon/wirecutters/New()
-	if(prob(50))
-		icon_state = "cutters-y"
-		item_state = "cutters_yellow"
-
-/obj/item/weapon/wirecutters/attack(mob/M as mob, mob/user as mob)
-	if((M.handcuffed) && (istype(M:handcuffed, /obj/item/weapon/handcuffs/cable)))
-		usr.visible_message("\The [usr] cuts \the [M]'s restraints with \the [src]!",\
-		"You cut \the [M]'s restraints with \the [src]!",\
-		"You hear cable being cut.")
-		M.handcuffed = null
-		M.update_inv_handcuffed()
-		return
-	else
-		..()

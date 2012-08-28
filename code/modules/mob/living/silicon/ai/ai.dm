@@ -17,6 +17,7 @@
 	var/ioncheck[1]
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/item/device/pda/ai/aiPDA = null
+	var/obj/item/device/multitool/aiMulti = null
 
 	//MALFUNCTION
 	var/datum/AI_Module/module_picker/malf_picker
@@ -69,6 +70,8 @@
 	aiPDA.ownjob = "AI"
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
+	aiMulti = new(src)
+
 	if (istype(loc, /turf))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_call_shuttle,/mob/living/silicon/ai/proc/ai_camera_track, \
 		/mob/living/silicon/ai/proc/ai_camera_list, /mob/living/silicon/ai/proc/ai_network_change, \
@@ -101,7 +104,7 @@
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
-	set name = "Change AI Core Display"
+	set name = "Set AI Core Display"
 	if(stat || aiRestorePowerRoutine)
 		return
 
@@ -292,7 +295,7 @@
 		machine = null
 		src << browse(null, t1)
 	if (href_list["switchcamera"])
-		switchCamera(locate(href_list["switchcamera"]))
+		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
 		ai_alerts()
 
@@ -325,15 +328,15 @@
 		statelaws()
 
 	if (href_list["track"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
+		var/mob/target = locate(href_list["track"]) in mob_list
+		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
 		if(A && target)
 			A.ai_actual_track(target)
 		return
 
 	else if (href_list["faketrack"])
-		var/mob/target = locate(href_list["track"])
-		var/mob/living/silicon/ai/A = locate(href_list["track2"])
+		var/mob/target = locate(href_list["track"]) in mob_list
+		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
 		if(A && target)
 
 			A.cameraFollow = target
@@ -426,25 +429,27 @@
 
 /mob/living/silicon/ai/reset_view(atom/A)
 	if(current)
-		current.sd_SetLuminosity(0)
+		current.SetLuminosity(0)
 	if(istype(A,/obj/machinery/camera))
 		current = A
 	..()
 	if(istype(A,/obj/machinery/camera))
-		A.sd_SetLuminosity(camera_light_on * AI_CAMERA_LUMINOSITY)
+		if(camera_light_on)	A.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		else				A.SetLuminosity(0)
 
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 
 	src.cameraFollow = null
-	if (!C || stat == 2 || !C.status || C.network != network)
-		machine = null
-		reset_view(null)
+	if (!C || stat == 2 || !C.can_use())
+		//machine = null
+		//reset_view(null)
 		return 0
 
 	// ok, we're alive, camera is good and in our network...
-	machine = src
-	reset_view(C)
+	eyeobj.setLoc(get_turf(C))
+	//machine = src
+
 	return 1
 
 /mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
@@ -468,7 +473,7 @@
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	if (O)
-		if (C && C.status)
+		if (C && C.can_use())
 			src << "--- [class] alarm detected in [A.name]! (<A HREF=?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>)"
 		else if (CL && CL.len)
 			var/foo = 0
@@ -504,17 +509,17 @@
 /mob/living/silicon/ai/cancel_camera()
 	set category = "AI Commands"
 	set name = "Cancel Camera View"
-	reset_view(null)
-	machine = null
+	//reset_view(null)
+	//machine = null
 	src.cameraFollow = null
+
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
 //Addition by Mord_Sith to define AI's network change ability
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
-	set name = "Change Camera Network"
-	reset_view(null)
+	set name = "Jump To Network"
 	machine = null
 	src.cameraFollow = null
 	var/cameralist[0]
@@ -523,8 +528,10 @@
 		usr << "You can't change your camera network because you are dead!"
 		return
 
-	for (var/obj/machinery/camera/C in Cameras)
-		if(!C.status)
+	var/mob/living/silicon/ai/U = usr
+
+	for (var/obj/machinery/camera/C in cameranet.cameras)
+		if(!C.can_use())
 			continue
 		if(C.network == "AI Satellite")
 			if (ticker.mode.name == "AI malfunction")
@@ -535,10 +542,17 @@
 		else
 			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison")
 				cameralist[C.network] = C.network
-
-	network = input(usr, "Which network would you like to view?") as null|anything in cameralist
+	var/old_network = network
+	network = input(U, "Which network would you like to view?") as null|anything in cameralist
 	if(isnull(network))
-		network = initial(network) // If nothing is selected, default to SS13 (or the initial network)
+		network = old_network // If nothing is selected
+	else
+		for(var/obj/machinery/camera/C in cameranet.cameras)
+			if(!C.can_use())
+				continue
+			if(C.network == network)
+				U.eyeobj.setLoc(get_turf(C))
+				break
 	src << "\blue Switched to [network] camera network."
 //End of code by Mord_Sith
 
@@ -551,7 +565,7 @@
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"
-	set name = "AI status"
+	set name = "AI Status"
 
 	if(usr.stat == 2)
 		usr <<"You cannot change your emotional status because you are dead!"
@@ -620,15 +634,35 @@
 
 //Toggles the luminosity and applies it by re-entereing the camera.
 /mob/living/silicon/ai/proc/toggle_camera_light()
-	set name = "Toggle camera light"
+	set name = "Toggle Camera Light"
 	set desc = "Toggles the light on the camera the AI is looking through."
 	set category = "AI Commands"
 
-	if(!current)
-		usr << "\red You are not looking through a camera right now."
-		return
 	camera_light_on = !camera_light_on
-	reset_view(current)
+	src << "Camera lights [camera_light_on ? "activated" : "deactivated"]."
+	if(!camera_light_on)
+		if(src.current)
+			src.current.SetLuminosity(0)
+	else
+		src.lightNearbyCamera()
 
 
-#undef AI_CAMERA_LUMINOSITY
+
+// Handled camera lighting, when toggled.
+// It will get the nearest camera from the eyeobj, lighting it.
+
+/mob/living/silicon/ai/proc/lightNearbyCamera()
+	if(camera_light_on && camera_light_on < world.timeofday)
+		if(src.current)
+			var/camera = near_range_camera(src.eyeobj)
+			if(camera && src.current != camera)
+				src.current.SetLuminosity(0)
+				src.current = camera
+				src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)
+			else if(isnull(camera))
+				src.current.SetLuminosity(0)
+				src.current = null
+			camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
+		else
+			src.current = near_range_camera(src.eyeobj)
+			if(src.current) src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)

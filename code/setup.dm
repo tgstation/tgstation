@@ -503,6 +503,10 @@ var/list/liftable_structures = list(\
 
 #define INVISIBILITY_MAXIMUM 100
 
+//Object specific defines
+#define CANDLE_LUM 3 //For how bright candles are
+
+
 //Some mob defines below
 #define AI_CAMERA_LUMINOSITY 6
 

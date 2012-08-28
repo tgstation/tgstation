@@ -3,80 +3,43 @@
 
 
 // ===
-/area/
+/area
 	var/global/global_uid = 0
 	var/uid
 
 /area/New()
-
+	icon_state = ""
+	layer = 10
 	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references src.loc.loc.master ~Carn
-	src.icon = 'icons/effects/alert.dmi'
 	uid = ++global_uid
-	spawn(1)
-	//world.log << "New: [src] [tag]"
-		var/sd_created = findtext(tag,"sd_L")
-		sd_New(sd_created)
-		if(sd_created)
-			related += src
-			return
-		related = list(src)
+	related = list(src)
 
-		src.icon = 'icons/effects/alert.dmi'
-		src.layer = 10
-	//	update_lights()
-		if(name == "Space")			// override defaults for space
-			requires_power = 1
-			always_unpowered = 1
-			sd_SetLuminosity(1)
-			power_light = 0
-			power_equip = 0
-			power_environ = 0
-			//has_gravity = 0    // Space has gravity.  Because.. because.
+	if(type == /area)	// override defaults for space. TODO: make space areas of type /area/space rather than /area
+		requires_power = 1
+		always_unpowered = 1
+		lighting_use_dynamic = 1
+		power_light = 0
+		power_equip = 0
+		power_environ = 0
+//		lighting_state = 4
+		//has_gravity = 0    // Space has gravity.  Because.. because.
 
-		if(!requires_power)
-			power_light = 0//rastaf0
-			power_equip = 0//rastaf0
-			power_environ = 0//rastaf0
-			luminosity = 1
-			sd_lighting = 0			// *DAL*
-		else
-			luminosity = 0
-			//sd_SetLuminosity(0)		// *DAL*
+	if(requires_power)
+		luminosity = 0
+	else
+		power_light = 0			//rastaf0
+		power_equip = 0			//rastaf0
+		power_environ = 0		//rastaf0
+		luminosity = 1
+		lighting_use_dynamic = 0
+
+	..()
+
+//	spawn(15)
+	power_change()		// all machines set to current power level, also updates lighting icon
+	InitializeLighting()
 
 
-
-
-	/*spawn(5)
-		for(var/turf/T in src)		// count the number of turfs (for lighting calc)
-			if(no_air)
-				T.oxygen = 0		// remove air if so specified for this area
-				T.n2 = 0
-				T.res_vars()
-
-	*/
-
-
-	spawn(15)
-		src.power_change()		// all machines set to current power level, also updates lighting icon
-
-/*
-/proc/get_area(area/A)
-	while (A)
-		if (istype(A, /area))
-			return A
-
-		A = A.loc
-	return null
-*/
-/*
-/area/proc/update_lights()
-	var/new_power = 0
-	for(var/obj/machinery/light/L in src.contents)
-		if(L.on)
-			new_power += (L.luminosity * 20)
-	lighting_power_usage = new_power
-	return
-*/
 /area/proc/poweralert(var/state, var/obj/source as obj)
 	if (state != poweralm)
 		poweralm = state

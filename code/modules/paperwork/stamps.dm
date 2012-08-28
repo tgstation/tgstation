@@ -53,3 +53,7 @@
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
 	color = "clown"
+
+
+/obj/item/weapon/stamp/attack_paw(mob/user as mob)
+	return src.attack_hand(user)

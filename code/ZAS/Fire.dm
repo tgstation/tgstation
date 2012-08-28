@@ -162,7 +162,7 @@ obj
 				del src
 
 			dir = pick(cardinal)
-			sd_SetLuminosity(3,2,0)
+			//sd_SetLuminosity(3,2,0)
 			firelevel = fl
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(min(max(0.1,firelevel / 20),10)) //Burn the humans!
@@ -170,7 +170,7 @@ obj
 
 		Del()
 			if (istype(loc, /turf/simulated))
-				sd_SetLuminosity(0)
+				//sd_SetLuminosity(0)
 
 				loc = null
 			air_master.active_hotspots.Remove(src)

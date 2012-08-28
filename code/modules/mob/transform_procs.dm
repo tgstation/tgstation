@@ -270,3 +270,86 @@
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
 	return
+
+/mob/living/carbon/human/Animalize()
+
+	var/list/mobtypes = typesof(/mob/living/simple_animal)
+	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
+
+	if(bad_animal(mobpath))
+		usr << "\red Sorry but this mob type is currently unavailable."
+		return
+
+	if(monkeyizing)
+		return
+	for(var/obj/item/W in src)
+		drop_from_inventory(W)
+
+	regenerate_icons()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+
+	for(var/t in organs)
+		del(t)
+
+	var/mob/new_mob = new mobpath(src.loc)
+
+	new_mob.key = key
+	new_mob.a_intent = "hurt"
+	new_mob.UI = UI
+
+
+	new_mob << "You suddenly feel more... animalistic."
+	spawn()
+		del(src)
+	return
+
+/mob/proc/Animalize()
+
+	var/list/mobtypes = typesof(/mob/living/simple_animal)
+	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
+
+	if(bad_animal(mobpath))
+		usr << "\red Sorry but this mob type is currently unavailable."
+		return
+
+	var/mob/new_mob = new mobpath(src.loc)
+
+	new_mob.key = key
+	new_mob.a_intent = "hurt"
+	new_mob.UI = UI
+	new_mob << "You feel more... animalistic"
+
+	del(src)
+
+//Certain mob types either do not work, or have major problems and should now be allowed to be controlled by players.
+/mob/proc/bad_animal(var/MP)
+
+	//Sanity, this should never happen.
+	if(!MP || !ispath(MP, /mob/living/simple_animal))
+		return 1
+
+	//It is impossible to pull up the player panel for mice
+	if(ispath(MP, /mob/living/simple_animal/mouse))
+		return 1
+
+	//Bears will auto-attack mobs, even if they're player controlled
+	if(ispath(MP, /mob/living/simple_animal/bear))
+		return 1
+
+	//Parrots are unfinished, they have no sprite, movement, ect...
+	else if(ispath(MP, /mob/living/simple_animal/parrot))
+		return 1
+
+	//Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
+	else if(ispath(MP, /mob/living/simple_animal/space_worm))
+		return 1
+
+	//No problems found!
+	else
+		return 0
+
+
+

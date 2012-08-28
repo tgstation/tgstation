@@ -1090,6 +1090,17 @@ var/global/BSACooldown = 0
 		else
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
+	if (href_list["makeanimal"])
+		if(src.level>=3)
+			var/mob/M = locate(href_list["makeanimal"])
+			if(!istype(M, /mob/new_player))
+				usr.client.cmd_admin_animalize(M)
+			else
+				alert("The mob must not be a new_player.")
+				return
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
 /***************** BEFORE**************
 
 	if (href_list["l_players"])
@@ -1973,7 +1984,11 @@ var/global/BSACooldown = 0
 				if("comms_blackout")
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","CB")
-					communications_blackout()
+					var/answer = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No")
+					if(answer == "Yes")
+						communications_blackout(0)
+					else
+						communications_blackout(1)
 					message_admins("[key_name_admin(usr)] triggered a communications blackout.", 1)
 				if("spaceninja")
 					feedback_inc("admin_secrets_fun_used",1)
@@ -2311,6 +2326,12 @@ var/global/BSACooldown = 0
 				body += "<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | "
 				body += "<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | "
 				body += "<A href='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> "
+
+			//Simple Animals
+			if(isanimal(M))
+				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Re-Animalize</A> | "
+			else
+				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> | "
 
 			body += "<br><br>"
 			body += "<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>"
@@ -2997,7 +3018,7 @@ var/global/BSACooldown = 0
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/obj/admins/proc/show_traitor_panel(var/mob/M in mob_list)
+/obj/admins/proc/show_traitor_panel(var/mob/M in sortmobs())
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"

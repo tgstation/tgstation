@@ -26,11 +26,9 @@
 	health = 25
 	maxhealth = 25
 	var/cleaning = 0
-	var/locked = 1
 	var/screwloose = 0
 	var/oddbutton = 0
 	var/blood = 1
-	var/panelopen = 0
 	var/list/target_types = list()
 	var/obj/effect/decal/cleanable/target
 	var/obj/effect/decal/cleanable/oldtarget
@@ -86,13 +84,14 @@
 	dat += text({"
 <TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
 Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
+Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
+Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
 	if(!src.locked)
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
 	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
-	if(src.panelopen && !src.locked)
+	if(src.open && !src.locked)
 		dat += text({"
 Odd looking screw twiddled: []<BR>
 Weird button pressed: []"},
@@ -138,25 +137,25 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if(src.allowed(usr))
+		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked
 			user << "<span class='notice'>You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
 		else
-			user << "<span class='notice'>This [src] doesn't seem to respect your authority.</span>"
-	else if (istype(W, /obj/item/weapon/screwdriver))
-		if(!src.locked)
-			src.panelopen = !src.panelopen
-			user << "<span class='notice'>You [ src.panelopen ? "open" : "close"] the hidden panel on [src].</span>"
+			if(emagged)
+				user << "<span class='warning'>ERROR</span>"
+			if(open)
+				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+			else
+				user << "<span class='notice'>This [src] doesn't seem to respect your authority.</span>"
 	else
 		return ..()
 
 /obj/machinery/bot/cleanbot/Emag(mob/user as mob)
 	..()
-	if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
-	src.oddbutton = 1
-	src.screwloose = 1
-	src.panelopen = 0
-	src.locked = 1
+	if(open && !locked)
+		if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
+		src.oddbutton = 1
+		src.screwloose = 1
 
 /obj/machinery/bot/cleanbot/process()
 	set background = 1

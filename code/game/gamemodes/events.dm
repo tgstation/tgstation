@@ -92,14 +92,13 @@
 			IonStorm()
 		if(14)
 			spacevine_infestation()
-		// TODO: Uncomment this after feature freeze -Giacom
-		//if(15)
-		//	communications_blackout()
+		if(15)
+			communications_blackout()
 
-/proc/communications_blackout()
+/proc/communications_blackout(var/silent = 1)
 
 	//Uncomment below if you want communication blackouts to have a warning.
-	//command_alert("Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you-BZZT")
+	if(!silent) command_alert("Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you-BZZT")
 	for(var/obj/machinery/telecomms/T in telecomms_list)
 		T.emp_act(1)
 

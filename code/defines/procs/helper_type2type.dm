@@ -199,6 +199,50 @@ proc/tg_list2text(list/list, glue=",")
 		file = file(file_path)
 	return dd_text2list(file2text(file), separator)
 
+//Turns a direction into text
+/proc/dir2text(direction)
+	switch(direction)
+		if(1.0)
+			return "north"
+		if(2.0)
+			return "south"
+		if(4.0)
+			return "east"
+		if(8.0)
+			return "west"
+		if(5.0)
+			return "northeast"
+		if(6.0)
+			return "southeast"
+		if(9.0)
+			return "northwest"
+		if(10.0)
+			return "southwest"
+		else
+	return
+
+//Turns text into proper directions
+/proc/text2dir(direction)
+	switch(uppertext(direction))
+		if("NORTH")
+			return 1
+		if("SOUTH")
+			return 2
+		if("EAST")
+			return 4
+		if("WEST")
+			return 8
+		if("NORTHEAST")
+			return 5
+		if("NORTHWEST")
+			return 9
+		if("SOUTHEAST")
+			return 6
+		if("SOUTHWEST")
+			return 10
+		else
+	return
+
 //Converts an angle (degrees) into an ss13 direction
 /proc/angle2dir(var/degree)
 	degree = ((degree+22.5)%365)

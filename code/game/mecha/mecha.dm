@@ -944,14 +944,11 @@
 	set category = "Exosuit Interface"
 	set src = usr.loc
 	set popup_menu = 0
-	if(usr!=src.occupant)
-		return
+	if(usr!=occupant)	return
 	lights = !lights
-	if(lights)
-		src.sd_SetLuminosity(src.luminosity + src.lights_power)
-	else
-		src.sd_SetLuminosity(src.luminosity - src.lights_power)
-	src.log_message("Toggled lights.")
+	if(lights)	SetLuminosity(luminosity + lights_power)
+	else		SetLuminosity(luminosity - lights_power)
+	log_message("Toggled lights.")
 	return
 
 

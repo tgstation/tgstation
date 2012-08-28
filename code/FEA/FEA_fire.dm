@@ -54,6 +54,7 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = TURF_LAYER
+	luminosity = 3
 
 	var/volume = 125
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
@@ -136,7 +137,6 @@
 	New()
 		..()
 		dir = pick(cardinal)
-		sd_SetLuminosity(3)
 		return
 
 
@@ -144,7 +144,6 @@
 		if (istype(loc, /turf/simulated))
 			var/turf/simulated/T = loc
 			loc:active_hotspot = null
-			src.sd_SetLuminosity(0)
 
 			if(T.to_be_destroyed)
 				var/chance_of_deletion

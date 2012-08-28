@@ -1,39 +1,3 @@
-var/global/list/obj/machinery/camera/Cameras = list()
-
-/obj/machinery/camera/New()
-	Cameras += src
-	..()
-
-/obj/machinery/camera/Del()
-	Cameras -= src
-	..()
-
-
-// Double clicking turfs to move to nearest camera
-
-/turf/proc/move_camera_by_click()
-	if (usr.stat)
-		return ..()
-	if (world.time <= usr:lastDblClick+2)
-		return ..()
-
-	//try to find the closest working camera in the same area, switch to it
-	var/area/A = get_area(src)
-	var/best_dist = INFINITY //infinity
-	var/best_cam = null
-	for(var/obj/machinery/camera/C in A)
-		if(usr:network != C.network)	continue
-		if(!C.status)	continue	//	ignore disabled cameras
-		var/dist = get_dist(src, C)
-		if(dist < best_dist)
-			best_dist = dist
-			best_cam = C
-
-	if(!best_cam)
-		return ..()
-	usr:lastDblClick = world.time
-	usr:switchCamera(best_cam)
-
 /mob/living/silicon/ai/proc/ai_camera_list()
 	set category = "AI Commands"
 	set name = "Show Camera List"
@@ -55,26 +19,36 @@ var/global/list/obj/machinery/camera/Cameras = list()
 	var/list/namecounts = list()
 	var/list/humans = list()
 	var/list/others = list()
+
 	for(var/mob/living/M in mob_list)
-		//Cameras can't track people wearing an agent card or a ninja hood.
-		var/human = 0
-		if(istype(M, /mob/living/carbon/human))
-			human = 1
-			if(istype(M:wear_id, /obj/item/weapon/card/id/syndicate))
-				continue
-		 	if(istype(M:head, /obj/item/clothing/head/helmet/space/space_ninja)&&!M:head:canremove)
-		 		continue
-		if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
-			continue
-		if(istype(M.loc.loc, /area/wizard_station))
-			continue
-		if(M.invisibility)//cloaked
+		// Easy checks first.
+		// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
+		if(M.loc.z == 2)
 			continue
 		if(M == usr)
 			continue
+		if(M.invisibility)//cloaked
+			continue
 		if(M.digitalcamo)
 			continue
-		if(M.loc.z == 2) // Don't detect mobs on Centcom
+
+		// Human check
+		var/human = 0
+		if(istype(M, /mob/living/carbon/human))
+			human = 1
+			var/mob/living/carbon/human/H = M
+			//Cameras can't track people wearing an agent card or a ninja hood.
+			if(istype(H.wear_id, /obj/item/weapon/card/id/syndicate))
+				continue
+		 	if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
+		 		var/obj/item/clothing/head/helmet/space/space_ninja/hood = H.head
+	 			if(!hood.canremove)
+	 				continue
+
+	 	if(!isturf(M.loc))
+	 		continue
+		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
+		if(!cameranet.checkCameraVis(M))
 			continue
 
 		var/name = M.name
@@ -104,20 +78,21 @@ var/global/list/obj/machinery/camera/Cameras = list()
 	var/mob/living/silicon/ai/U = usr
 
 	U.cameraFollow = target
-	U << text("Now tracking [] on camera.", target.name)
-	if (U.machine == null)
-		U.machine = U
+	//U << text("Now tracking [] on camera.", target.name)
+	//if (U.machine == null)
+	//	U.machine = U
+	U << "Now tracking [target.name] on camera."
 
 	spawn (0)
 		while (U.cameraFollow == target)
 			if (U.cameraFollow == null)
 				return
-			else if (istype(target, /mob/living/carbon/human))
+			if (istype(target, /mob/living/carbon/human))
 				if(istype(target:wear_id, /obj/item/weapon/card/id/syndicate))
 					U << "Follow camera mode terminated."
 					U.cameraFollow = null
 					return
-		 		if(istype(target:head, /obj/item/clothing/head/helmet/space/space_ninja)&&!target:head:canremove)
+		 		if(istype(target:head, /obj/item/clothing/head/helmet/space/space_ninja) && !target:head:canremove)
 		 			U << "Follow camera mode terminated."
 					U.cameraFollow = null
 					return
@@ -126,53 +101,20 @@ var/global/list/obj/machinery/camera/Cameras = list()
 					U.cameraFollow = null
 					return
 
-			else if(istype(target.loc,/obj/effect/dummy))
+			if(istype(target.loc,/obj/effect/dummy))
 				U << "Follow camera mode ended."
 				U.cameraFollow = null
 				return
-			else if (!target || !istype(target.loc, /turf)) //in a closet
+			if (!isturf(target.loc)) //in a closet
 				U << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
-				sleep(40) //because we're sleeping another second after this (a few lines down)
+				sleep(50) //because we're sleeping another second after this (a few lines down)
+				continue
+			if(!cameranet.checkCameraVis(target))
+				U << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
+				sleep(50) //because we're sleeping another second after this (a few lines down)
 				continue
 
-			var/obj/machinery/camera/C = U.current
-			if ((C && istype(C, /obj/machinery/camera)) || C==null)
-
-				if(isrobot(target))
-					var/mob/living/silicon/robot/R = target
-					C = R.camera
-					U.reset_view(C)
-				else
-					var/closestDist = -1
-					if (C!=null)
-						if (C.status)
-							closestDist = get_dist(C, target)
-					//U << text("Dist = [] for camera []", closestDist, C.name)
-					var/zmatched = 0
-					if (closestDist > 7 || closestDist == -1)
-						//check other cameras
-						var/obj/machinery/camera/closest = C
-						for(var/obj/machinery/camera/C2 in Cameras)
-							if (C2.network == src.network)
-								if (C2.z == target.z)
-									zmatched = 1
-									if (C2.status)
-										var/dist = get_dist(C2, target)
-										if ((dist < closestDist) || (closestDist == -1))
-											closestDist = dist
-											closest = C2
-						//U << text("Closest camera dist = [], for camera []", closestDist, closest.area.name)
-
-						if (closest != C)
-							U.reset_view(closest)
-							//use_power(50)
-						if (zmatched == 0)
-							U << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
-							sleep(40) //because we're sleeping another second after this (a few lines down)
-			else
-				U << "Follow camera mode ended."
-				U.cameraFollow = null
-
+			U.eyeobj.setLoc(get_turf(target))
 			sleep(10)
 
 /proc/camera_sort(list/L)
@@ -191,7 +133,6 @@ var/global/list/obj/machinery/camera/Cameras = list()
 					L.Swap(j, j + 1)
 	return L
 
-
 /mob/living/silicon/ai/attack_ai(var/mob/user as mob)
 	if (user != src)
 		return
@@ -199,13 +140,8 @@ var/global/list/obj/machinery/camera/Cameras = list()
 	if (stat == 2)
 		return
 
-	// If they cancel then just put them back to their old camera
-	var/obj/machinery/camera/tempC = src.current
-	user.machine = src
-	switchCamera(null)
-
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in Cameras)
+	for (var/obj/machinery/camera/C in cameranet.cameras)
 		L.Add(C)
 
 	camera_sort(L)
@@ -214,19 +150,15 @@ var/global/list/obj/machinery/camera/Cameras = list()
 	D["Cancel"] = "Cancel"
 	for (var/obj/machinery/camera/C in L)
 		if (C.network == src.network)
-			D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
+			D[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 
 	var/t = input(user, "Which camera should you change to?") as null|anything in D
 
 	if (!t || t == "Cancel")
-		if(tempC && tempC.status)
-			switchCamera(tempC)
-		else
-			switchCamera(null)
 		return 0
 
 	var/obj/machinery/camera/C = D[t]
-	switchCamera(C)
+	src.eyeobj.setLoc(C)
 
 	return
 
@@ -234,13 +166,15 @@ var/global/list/obj/machinery/camera/Cameras = list()
 	if(prob(100/(hardened + severity)))
 		icon_state = "cameraemp"
 		network = null                   //Not the best way but it will do. I think.
+		cameranet.removeCamera(src)
+		stat |= EMPED
+		SetLuminosity(0)
 		spawn(900)
 			network = initial(network)
 			icon_state = initial(icon_state)
-		for(var/mob/living/silicon/ai/O in mob_list)
-			if (O.current == src)
-				O.cancel_camera()
-				O << "Your connection to the camera has been lost."
+			stat &= ~EMPED
+			if(can_use())
+				cameranet.addCamera(src)
 		for(var/mob/O in mob_list)
 			if (istype(O.machine, /obj/machinery/computer/security))
 				var/obj/machinery/computer/security/S = O.machine
@@ -266,9 +200,9 @@ var/global/list/obj/machinery/camera/Cameras = list()
 /obj/machinery/camera/attack_ai(var/mob/living/silicon/ai/user as mob)
 	if (!istype(user))
 		return
-	if (src.network != user.network || !(src.status))
+	if (!src.can_use())
 		return
-	user.reset_view(src)
+	user.eyeobj.setLoc(get_turf(src))
 
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
 	if(!istype(user))
@@ -329,7 +263,7 @@ var/global/list/obj/machinery/camera/Cameras = list()
 					case.motion = 1
 				del(src)
 	else if (istype(W, /obj/item/weapon/camera_bug))
-		if (!src.status)
+		if (!src.can_use())
 			user << "\blue Camera non-functional"
 			return
 		if (src.bugged)
@@ -381,10 +315,6 @@ var/global/list/obj/machinery/camera/Cameras = list()
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
 	//I guess that doesn't matter since they can't use it anyway?
-	for(var/mob/living/silicon/ai/O in player_list)
-		if (O.current == src)
-			O.cancel_camera()
-			O << "Your connection to the camera has been lost."
 	for(var/mob/O in player_list)
 		if (istype(O.machine, /obj/machinery/computer/security))
 			var/obj/machinery/computer/security/S = O.machine
@@ -392,6 +322,13 @@ var/global/list/obj/machinery/camera/Cameras = list()
 				O.machine = null
 				O.reset_view(null)
 				O << "The screen bursts into static."
+
+/obj/machinery/camera/proc/can_use()
+	if(!status)
+		return 0
+	if(stat & EMPED)
+		return 0
+	return 1
 
 /atom/proc/auto_turn()
 	//Automatically turns based on nearby walls.
@@ -414,9 +351,16 @@ var/global/list/obj/machinery/camera/Cameras = list()
 //Return a working camera that can see a given mob
 //or null if none
 /proc/seen_by_camera(var/mob/M)
+	for(var/obj/machinery/camera/C in oview(4, M))
+		if(C.can_use())	// check if camera disabled
+			return C
+			break
+	return null
 
-	for(var/obj/machinery/camera/C in oview(M))
-		if(C.status)	// check if camera disabled
+/proc/near_range_camera(var/mob/M)
+
+	for(var/obj/machinery/camera/C in range(4, M))
+		if(C.can_use())	// check if camera disabled
 			return C
 			break
 

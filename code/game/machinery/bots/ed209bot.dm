@@ -20,7 +20,6 @@
 
 	//var/lasers = 0
 
-	var/locked = 1 //Behavior Controls lock
 	var/mob/living/carbon/target
 	var/oldtarget_name
 	var/threatlevel = 0
@@ -124,7 +123,8 @@
 	dat += text({"
 <TT><B>Automatic Security Unit v2.5</B></TT><BR><BR>
 Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
+Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
+Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 
 "<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
 
@@ -186,11 +186,16 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if (src.allowed(user) && !open && !emagged)
 			src.locked = !src.locked
 			user << "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>"
 		else
-			user << "<span class='warning'>Access denied.</span>"
+			if(emagged)
+				user << "<span class='warning'>ERROR</span>"
+			if(open)
+				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+			else
+				user << "<span class='notice'>Access denied.</span>"
 	else
 		..()
 		if (!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
@@ -201,19 +206,20 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/Emag(mob/user as mob)
 	..()
-	if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
-	spawn(0)
-		for(var/mob/O in hearers(src, null))
-			O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
-	src.target = null
-	if(user) src.oldtarget_name = user.name
-	src.last_found = world.time
-	src.anchored = 0
-	src.emagged = 1
-	src.on = 1
-	src.icon_state = "[lasercolor]ed209[src.on]"
-	src.projectile = null
-	mode = SECBOT_IDLE
+	if(open && !locked)
+		if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
+		spawn(0)
+			for(var/mob/O in hearers(src, null))
+				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+		src.target = null
+		if(user) src.oldtarget_name = user.name
+		src.last_found = world.time
+		src.anchored = 0
+		src.emagged = 2
+		src.on = 1
+		src.icon_state = "[lasercolor]ed209[src.on]"
+		src.projectile = null
+		mode = SECBOT_IDLE
 
 /obj/machinery/bot/ed209/process()
 	set background = 1
@@ -654,7 +660,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/ed209/proc/assess_perp(mob/living/carbon/human/perp as mob)
 	var/threatcount = 0
 
-	if(src.emagged) return 10 //Everyone is a criminal!
+	if(src.emagged == 2) return 10 //Everyone is a criminal!
 
 	if((src.idcheck) || (isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/weapon/card/id/syndicate)))
 
@@ -814,17 +820,17 @@ Auto Patrol: []"},
 
 	if(!projectile)
 		if(!lasercolor)
-			if (src.emagged)
+			if (src.emagged == 2)
 				projectile = /obj/item/projectile/beam
 			else
 				projectile = /obj/item/projectile/energy/electrode
 		else if(lasercolor == "b")
-			if (src.emagged)
+			if (src.emagged == 2)
 				projectile = /obj/item/projectile/omnitag
 			else
 				projectile = /obj/item/projectile/bluetag
 		else if(lasercolor == "r")
-			if (src.emagged)
+			if (src.emagged == 2)
 				projectile = /obj/item/projectile/omnitag
 			else
 				projectile = /obj/item/projectile/redtag
@@ -871,8 +877,8 @@ Auto Patrol: []"},
 				var/mob/toshoot = pick(targets)
 				if (toshoot)
 					targets-=toshoot
-					if (prob(50) && !emagged)
-						emagged = 1
+					if (prob(50) && emagged < 2)
+						emagged = 2
 						shootAt(toshoot)
 						emagged = 0
 					else

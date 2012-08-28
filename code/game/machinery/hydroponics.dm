@@ -30,6 +30,18 @@
 			if(src.planted && src.myseed.yield < 2)
 				src.myseed.yield += 1
 
+/obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	..()
+	if (istype(O, /obj/item/weapon/plantbag))
+		src.attack_hand(user)
+		var/obj/item/weapon/plantbag/S = O
+		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
+			if (S.contents.len < S.capacity)
+				S.contents += G;
+			else
+				user << "\blue The plant bag is full."
+				return
+
 obj/machinery/hydroponics/process()
 
 	if(myseed && !(myseed in contents))
@@ -176,14 +188,11 @@ obj/machinery/hydroponics/proc/updateicon()
 		if(src.harvest)
 			overlays += image('icons/obj/hydroponics.dmi', icon_state="over_harvest3")
 
-	if(myseed)
-		if(luminosity && !istype(myseed,/obj/item/seeds/glowshroom)) //revert luminosity to 0
-			sd_SetLuminosity(0)
-		else if(!luminosity && istype(myseed,/obj/item/seeds/glowshroom)) //update luminosity
-			sd_SetLuminosity(myseed.potency/10)
+	if(!luminosity)
+		if(istype(myseed,/obj/item/seeds/glowshroom))
+			SetLuminosity(round(myseed.potency/10))
 	else
-		if(luminosity)
-			sd_SetLuminosity(0)
+		SetLuminosity(0)
 	return
 
 
@@ -978,7 +987,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	updateicon()
 
 ///////////////////////////////////////////////////////////////////////////////
-
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
 	icon = 'icons/obj/hydroponics.dmi'
@@ -1003,12 +1011,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			else
 				overlays += image('icons/obj/hydroponics.dmi', icon_state="[src.myseed.species]-grow[src.myseed.growthstages]")
 
-		if(myseed)
-			if(luminosity && !istype(myseed,/obj/item/seeds/glowshroom))
-				sd_SetLuminosity(0)
-			else if(!luminosity && istype(myseed,/obj/item/seeds/glowshroom))
-				sd_SetLuminosity(myseed.potency/10)
+		if(!luminosity)
+			if(istype(myseed,/obj/item/seeds/glowshroom))
+				SetLuminosity(round(myseed.potency/10))
 		else
-			if(luminosity)
-				sd_SetLuminosity(0)
+			SetLuminosity(0)
 		return

@@ -227,6 +227,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
+	luminosity = 1
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "greenglow"
 

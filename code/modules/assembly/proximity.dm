@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/device/assembly/prox_sensor
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
@@ -10,8 +8,6 @@
 	origin_tech = "magnets=1"
 
 	secured = 0
-	small_icon_state_left = "prox_left"
-	small_icon_state_right = "prox_right"
 
 	var/scanning = 0
 	var/timing = 0
@@ -50,8 +46,7 @@
 	sense()
 		if((!secured)||(!scanning)||(cooldown > 0))	return 0
 		pulse(0)
-		for(var/mob/O in hearers(null, null))
-			O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+		visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
 		cooldown = 2
 		spawn(10)
 			process_cooldown()
@@ -84,13 +79,13 @@
 
 	update_icon()
 		overlays = null
-		small_icon_state_overlays = list()
+		attached_overlays = list()
 		if(timing)
-			overlays += text("prox_timing")
-			small_icon_state_overlays += text("prox_timing")
+			overlays += "prox_timing"
+			attached_overlays += "prox_timing"
 		if(scanning)
-			overlays += text("prox_scanning")
-			small_icon_state_overlays += text("prox_scanning")
+			overlays += "prox_scanning"
+			attached_overlays += "prox_scanning"
 		if(holder)
 			holder.update_icon()
 		return

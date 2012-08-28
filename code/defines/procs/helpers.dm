@@ -320,6 +320,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			oldname = null//don't bother with the records update crap
 			world << "<b>[newname] is the AI!</b>"
 			world << sound('sound/AI/newAI.ogg')
+			for(var/mob/aiEye/E in mob_list)
+				if(E.ai && E.ai == src)
+					E.name = "[newname] (AI Eye)"
+					break
 
 		fully_replace_character_name(oldname,newname)
 
@@ -399,30 +403,31 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return creatures
 
-//Orders mobs by type
+//Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
-	for(var/mob/living/silicon/ai/M in mob_list)
+	var/list/sortmob = sortAtom(mob_list)
+	for(var/mob/living/silicon/ai/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/silicon/pai/M in mob_list)
+	for(var/mob/living/silicon/pai/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/silicon/robot/M in mob_list)
+	for(var/mob/living/silicon/robot/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/human/M in mob_list)
+	for(var/mob/living/carbon/human/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/brain/M in mob_list)
+	for(var/mob/living/carbon/brain/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/alien/M in mob_list)
+	for(var/mob/living/carbon/alien/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/dead/observer/M in mob_list)
+	for(var/mob/dead/observer/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/new_player/M in mob_list)
+	for(var/mob/new_player/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/monkey/M in mob_list)
+	for(var/mob/living/carbon/monkey/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/metroid/M in mob_list)
+	for(var/mob/living/carbon/metroid/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/simple_animal/M in mob_list)
+	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
 //	for(var/mob/living/silicon/hivebot/M in world)
 //		mob_list.Add(M)
@@ -762,6 +767,17 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
+//Returns: all the areas in the world
+/proc/return_areas()
+	var/list/area/areas = list()
+	for(var/area/A in world)
+		areas += A
+	return areas
+
+//Returns: all the areas in the world, sorted.
+/proc/return_sorted_areas()
+	return sortAtom(return_areas())
+
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
 /proc/get_areas(var/areatype)
@@ -907,25 +923,25 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 						if(!istype(O,/obj)) continue
 						O.loc = X
 					for(var/mob/M in T)
-						if(!istype(M,/mob)) continue
+						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
 
-					var/area/AR = X.loc
+//					var/area/AR = X.loc
 
-					if(AR.sd_lighting)
-						X.opacity = !X.opacity
-						X.sd_SetOpacity(!X.opacity)
+//					if(AR.lighting_use_dynamic)							//TODO: rewrite this code so it's not messed by lighting ~Carn
+//						X.opacity = !X.opacity
+//						X.SetOpacity(!X.opacity)
 
 					toupdate += X
 
 					if(turftoleave)
 						var/turf/ttl = new turftoleave(T)
 
-						var/area/AR2 = ttl.loc
+//						var/area/AR2 = ttl.loc
 
-						if(AR2.sd_lighting)
-							ttl.opacity = !ttl.opacity
-							ttl.sd_SetOpacity(!ttl.opacity)
+//						if(AR2.lighting_use_dynamic)						//TODO: rewrite this code so it's not messed by lighting ~Carn
+//							ttl.opacity = !ttl.opacity
+//							ttl.sd_SetOpacity(!ttl.opacity)
 
 						fromupdate += ttl
 
@@ -942,13 +958,19 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 		for(var/turf/simulated/T1 in toupdate)
 			for(var/obj/machinery/door/D2 in T1)
 				doors += D2
-			air_master.tiles_to_update |= T1
+			/*if(T1.parent)
+				air_master.groups_to_rebuild += T1.parent
+			else
+				air_master.tiles_to_update += T1*/
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
 			for(var/obj/machinery/door/D2 in T2)
 				doors += D2
-			air_master.tiles_to_update |= T2
+			/*if(T2.parent)
+				air_master.groups_to_rebuild += T2.parent
+			else
+				air_master.tiles_to_update += T2*/
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
@@ -1062,9 +1084,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 					for(var/mob/M in T)
 
-						if(!istype(M,/mob))
-							continue
-
+						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
 						mobs += M
 
 					for(var/mob/M in mobs)
@@ -1079,14 +1099,14 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 
 					for(var/V in T.vars)
-						if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity", "sd_light_spill",)))
+						if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")))
 							X.vars[V] = T.vars[V]
 
-					var/area/AR = X.loc
+//					var/area/AR = X.loc
 
-					if(AR.sd_lighting)
-						X.opacity = !X.opacity
-						X.sd_SetOpacity(!X.opacity)
+//					if(AR.lighting_use_dynamic)
+//						X.opacity = !X.opacity
+//						X.sd_SetOpacity(!X.opacity)			//TODO: rewrite this code so it's not messed by lighting ~Carn
 
 					toupdate += X
 
@@ -1099,12 +1119,11 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 	var/list/doors = new/list()
 
-	//skytodo: wtf is going on here?
-	/*if(toupdate.len)
+	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
 			for(var/obj/machinery/door/D2 in T1)
 				doors += D2
-			if(T1.parent)
+			/*if(T1.parent)
 				air_master.groups_to_rebuild += T1.parent
 			else
 				air_master.tiles_to_update += T1*/
@@ -1151,26 +1170,152 @@ proc/get_mob_with_client_list()
 			mobs += M
 	return mobs
 
-/atom/proc/transfer_fingerprints_to(var/atom/A)
-	if(!istype(A.fingerprints,/list))
-		A.fingerprints = list()
-	if(!istype(A.fingerprintshidden,/list))
-		A.fingerprintshidden = list()
-	A.fingerprints |= fingerprints            //detective
-	A.fingerprintshidden |= fingerprintshidden    //admin
-	A.fingerprintslast = fingerprintslast
+
+/proc/parse_zone(zone)
+	if(zone == "r_hand") return "right hand"
+	else if (zone == "l_hand") return "left hand"
+	else if (zone == "l_arm") return "left arm"
+	else if (zone == "r_arm") return "right arm"
+	else if (zone == "l_leg") return "left leg"
+	else if (zone == "r_leg") return "right leg"
+	else if (zone == "l_foot") return "left foot"
+	else if (zone == "r_foot") return "right foot"
+	else return zone
 
 
-//todo: this func is missing diagonals
+/proc/get_turf(turf/location)
+	while(location)
+		if(isturf(location))
+			return location
+		location = location.loc
+	return null
+
+/proc/get_turf_or_move(turf/location)
+	return get_turf(location)
+
+
+//Quick type checks for some tools
+var/global/list/common_tools = list(
+/obj/item/weapon/cable_coil,
+/obj/item/weapon/wrench,
+/obj/item/weapon/weldingtool,
+/obj/item/weapon/screwdriver,
+/obj/item/weapon/wirecutters,
+/obj/item/device/multitool,
+/obj/item/weapon/crowbar)
+
+/proc/istool(O)
+	if(O && is_type_in_list(O, common_tools))
+		return 1
+	return 0
+
+/proc/iswrench(O)
+	if(istype(O, /obj/item/weapon/wrench))
+		return 1
+	return 0
+
+/proc/iswelder(O)
+	if(istype(O, /obj/item/weapon/weldingtool))
+		return 1
+	return 0
+
+/proc/iscoil(O)
+	if(istype(O, /obj/item/weapon/cable_coil))
+		return 1
+	return 0
+
+/proc/iswirecutter(O)
+	if(istype(O, /obj/item/weapon/wirecutters))
+		return 1
+	return 0
+
+/proc/isscrewdriver(O)
+	if(istype(O, /obj/item/weapon/screwdriver))
+		return 1
+	return 0
+
+/proc/ismultitool(O)
+	if(istype(O, /obj/item/device/multitool))
+		return 1
+	return 0
+
+/proc/iscrowbar(O)
+	if(istype(O, /obj/item/weapon/crowbar))
+		return 1
+	return 0
+
+proc/is_hot(obj/item/W as obj)
+	switch(W.type)
+		if(/obj/item/weapon/weldingtool)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.isOn())
+				return 3800
+			else
+				return 0
+		if(/obj/item/weapon/lighter)
+			if(W:lit)
+				return 1500
+			else
+				return 0
+		if(/obj/item/weapon/match)
+			if(W:lit)
+				return 1000
+			else
+				return 0
+		if(/obj/item/clothing/mask/cigarette)
+			if(W:lit)
+				return 1000
+			else
+				return 0
+		if(/obj/item/weapon/pickaxe/plasmacutter)
+			return 3800
+		if(/obj/item/weapon/melee/energy)
+			return 3500
+		else
+			return 0
+
+	return 0
+
+//Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
+/proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
+	return ( \
+		istype(W, /obj/item/weapon/screwdriver)                   || \
+		istype(W, /obj/item/weapon/pen)                           || \
+		istype(W, /obj/item/weapon/weldingtool)					  || \
+		istype(W, /obj/item/weapon/lighter/zippo)				  || \
+		istype(W, /obj/item/weapon/match)            		      || \
+		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
+		istype(W, /obj/item/weapon/wirecutters)                   || \
+		istype(W, /obj/item/weapon/circular_saw)                  || \
+		istype(W, /obj/item/weapon/melee/energy/sword)            || \
+		istype(W, /obj/item/weapon/melee/energy/blade)            || \
+		istype(W, /obj/item/weapon/shovel)                        || \
+		istype(W, /obj/item/weapon/kitchenknife)                  || \
+		istype(W, /obj/item/weapon/butch)						  || \
+		istype(W, /obj/item/weapon/scalpel)                       || \
+		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
+		istype(W, /obj/item/weapon/shard)                         || \
+		istype(W, /obj/item/weapon/broken_bottle)				  || \
+		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
+		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
+		istype(W, /obj/item/weapon/twohanded/fireaxe) \
+	)
+
 /proc/reverse_direction(var/dir)
 	switch(dir)
-		if(1)
-			return 2
-		if(4)
-			return 8
-		if(2)
-			return 1
-		if(8)
-			return 4
-		else
-			return dir
+		if(NORTH)
+			return SOUTH
+		if(NORTHEAST)
+			return SOUTHWEST
+		if(EAST)
+			return WEST
+		if(SOUTHEAST)
+			return NORTHWEST
+		if(SOUTH)
+			return NORTH
+		if(SOUTHWEST)
+			return NORTHEAST
+		if(WEST)
+			return EAST
+		if(NORTHWEST)
+			return SOUTHEAST

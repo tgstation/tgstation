@@ -215,7 +215,7 @@
 	icon_state = "bulb1"
 	base_state = "bulb"
 	fitting = "bulb"
-	brightness = 3
+	brightness = 4
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
 
@@ -224,7 +224,7 @@
 	name = "spotlight"
 	fitting = "large tube"
 	light_type = /obj/item/weapon/light/tube/large
-	brightness = 15
+	brightness = 12
 
 /obj/machinery/light/built/New()
 	status = LIGHT_EMPTY
@@ -280,34 +280,28 @@
 /obj/machinery/light/proc/update(var/trigger = 1)
 
 	update_icon()
-	if(!on)
-		use_power = 1
+	if(on)
+		if(luminosity != brightness)
+			switchcount++
+			if(rigged)
+				if(status == LIGHT_OK && trigger)
+					explode()
+			else if( prob( min(60, switchcount*switchcount*0.01) ) )
+				if(status == LIGHT_OK && trigger)
+					status = LIGHT_BURNED
+					icon_state = "[base_state]-burned"
+					on = 0
+					SetLuminosity(0)
+			else
+				use_power = 2
+				SetLuminosity(brightness)
 	else
-		use_power = 2
-	var/oldlum = luminosity
+		use_power = 1
+		SetLuminosity(0)
 
-	//luminosity = on * brightness
-	sd_SetLuminosity(on * brightness)		// *DAL*
-
-	// if the state changed, inc the switching counter
-	if(oldlum != luminosity)
-		switchcount++
-
-		// now check to see if the bulb is burned out
-		if(status == LIGHT_OK && trigger)
-			if(on && rigged)
-				explode()
-			if( prob( min(60, switchcount*switchcount*0.01) ) )
-				status = LIGHT_BURNED
-				icon_state = "[base_state]-burned"
-				on = 0
-				sd_SetLuminosity(0)
-	active_power_usage = (luminosity * 20)
+	active_power_usage = (luminosity * 10)
 	if(on != on_gs)
 		on_gs = on
-//		var/area/A = get_area(src)
-//		if(A)
-//			A.update_lights()
 
 
 // attempt to set the light's on/off status

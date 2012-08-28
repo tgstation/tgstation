@@ -75,7 +75,7 @@
 				return
 
 		if(reagents)								//Handle ingestion of the reagent.
-			playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)

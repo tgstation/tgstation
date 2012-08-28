@@ -30,10 +30,11 @@
 	attack_hand(var/mob/user as mob)
 		if(stat & (NOPOWER|BROKEN))	return
 
-		user.machine = src
+		if(!isAI(user))
+			user.machine = src
 
 		var/list/L = list()
-		for (var/obj/machinery/camera/C in Cameras)
+		for (var/obj/machinery/camera/C in cameranet.cameras)
 			L.Add(C)
 
 		camera_sort(L)
@@ -56,14 +57,20 @@
 			return 0
 
 		if(C)
-			if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.status )) && (!istype(user, /mob/living/silicon/ai)))
-				if(!C.status)
+			if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
+				if(!C.can_use() && !isAI(user))
 					src.current = null
 				return 0
 			else
-				src.current = C
-				use_power(50)
-				spawn( 5 )
+				if(isAI(user))
+					var/mob/living/silicon/ai/A = user
+					A.eyeobj.setLoc(get_turf(C))
+					A.client.eye = A.eyeobj
+				else
+					src.current = C
+					use_power(50)
+
+				spawn(5)
 					attack_hand(user)
 		return
 
@@ -74,6 +81,15 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	network = "thunder"
+	density = 0
+	circuit = null
+
+/obj/machinery/computer/security/telescreen/entertainment
+	name = "entertainment monitor"
+	desc = "Damn, they better have /tg/thechannel on these things."
+	icon = 'icons/obj/status_display.dmi'
+	icon_state = "entertainment"
 	network = "thunder"
 	density = 0
 	circuit = null

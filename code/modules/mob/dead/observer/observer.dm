@@ -174,6 +174,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		L+=T
 	usr.loc = pick(L)
 
+/mob/dead/observer/verb/follow()
+	set category = "Ghost"
+	set name = "Follow" // "Haunt"
+	set desc = "Follow and haunt a mob."
+
+	if(istype(usr, /mob/dead/observer))
+		var/mob/target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in sortAtom(mob_list)
+		if(target)
+			spawn(0)
+				var/turf/pos = get_turf(src)
+				while(src.loc == pos)
+					src.loc = get_turf(target)
+					pos = src.loc
+					sleep(15)
+
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"

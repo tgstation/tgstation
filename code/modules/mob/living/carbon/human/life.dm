@@ -87,9 +87,6 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	//Flashlights and such
-	UpdateLuminosity()
-
 	//Status updates, death etc.
 	handle_regular_status_updates()		//TODO: optimise ~Carn
 	update_canmove()
@@ -745,13 +742,16 @@
 
 		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-			if(istype(loc,/turf)) //else, there's considered to be no light
-				light_amount = min(10,loc:sd_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
-			if(istype(loc,/turf/simulated/shuttle))//Now not only will potatomen not starve on the shuttle, they will actually be fed
-				light_amount =  5
-			if(nutrition < 500) //so they can't store nutrition to survive without light forever
-				nutrition += light_amount
-			if(light_amount > 0) //if there's enough light, heal
+			if(isturf(loc)) //else, there's considered to be no light
+				var/turf/T = loc
+				var/area/A = T.loc
+				if(A)
+					if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
+					else						light_amount =  5
+			nutrition += light_amount
+			if(nutrition > 500)
+				nutrition = 500
+			if(light_amount > 2) //if there's enough light, heal
 				heal_overall_damage(1,1)
 				adjustToxLoss(-1)
 				adjustOxyLoss(-1)
@@ -1150,7 +1150,7 @@
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
 			var/turf/currentTurf = loc
-			if(!currentTurf.sd_lumcount)
+			if(!currentTurf.lighting_lumcount)
 				playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	proc/handle_virus_updates()

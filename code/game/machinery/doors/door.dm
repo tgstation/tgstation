@@ -204,12 +204,12 @@
 
 		animate("opening")
 		icon_state = "door0"
-		src.sd_SetOpacity(0)
+		src.SetOpacity(0)
 		sleep(10)
 		src.layer = 2.7
 		src.density = 0
 		update_icon()
-		src.sd_SetOpacity(0)
+//		src.SetOpacity(0)
 		update_nearby_tiles()
 
 		if(operating)	operating = 0
@@ -235,8 +235,7 @@
 		sleep(10)
 		update_icon()
 
-		if(visible && !glass)
-			src.sd_SetOpacity(1)
+		src.SetOpacity(initial(opacity))
 		operating = 0
 		update_nearby_tiles()
 		return
@@ -265,6 +264,8 @@
 		close()
 	return
 
+/obj/machinery/door/morgue
+	icon = 'icons/obj/doors/doormorgue.dmi'
 
 /*
 /obj/machinery/door/airlock/proc/ion_act()

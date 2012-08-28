@@ -32,9 +32,6 @@
 	var/obj/screen/pressure = null
 	var/obj/screen/damageoverlay = null
 
-	var/total_luminosity = 0 //This controls luminosity for mobs, when you pick up lights and such this is edited.  If you want the mob to use lights it must update its lum in its life proc or such.  Note clamp this value around 7 or such to prevent massive light lag.
-	var/last_luminosity = 0
-
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).
@@ -66,7 +63,7 @@
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
 	var/stuttering = null	//Carbon
-	var/slurring = null	//Carbon
+	var/slurring = null
 	var/real_name = null
 //	var/original_name = null //Original name is only used in ghost chat! Depracated, now used bb
 	var/blinded = null
@@ -85,7 +82,6 @@
 	var/eye_stat = null//Living, potentially Carbon
 	var/lastpuke = 0
 	var/unacidable = 0
-	var/flavor_text = ""
 
 	var/name_archive //For admin things like possession
 
@@ -125,11 +121,6 @@
 	var/obj/item/clothing/mask/wear_mask = null//Carbon
 
 	var/seer = 0 //for cult//Carbon, probably Human
-
-	//skills
-	var/used_skillpoints = 0
-	var/skill_specialization = null
-	var/list/skills = null
 
 	var/obj/hud/hud_used = null
 
@@ -228,6 +219,7 @@
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
-	var/skrell_talk_understand = 0
 	var/tajaran_talk_understand = 0
 	var/soghun_talk_understand = 0
+	var/skrell_talk_understand = 0
+

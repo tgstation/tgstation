@@ -1,4 +1,4 @@
-/client/proc/Jump(var/area/A in world)
+/client/proc/Jump(var/area/A in return_sorted_areas())
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
@@ -30,7 +30,7 @@
 		alert("Admin jumping disabled")
 	return
 
-/client/proc/jumptomob(var/mob/M in mob_list)
+/client/proc/jumptomob(var/mob/M in sortmobs())
 	set category = "Admin"
 	set name = "Jump to Mob"
 
@@ -84,7 +84,7 @@
 		var/list/keys = list()
 		for(var/mob/M in player_list)
 			keys += M.client
-		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in keys
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 		if(!selection)
 			return
 		var/mob/M = selection:mob
@@ -95,7 +95,7 @@
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/Getmob(var/mob/M in mob_list)
+/client/proc/Getmob(var/mob/M in sortmobs())
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
@@ -123,7 +123,7 @@
 		var/list/keys = list()
 		for(var/mob/M in player_list)
 			keys += M.client
-		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in keys
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 		if(!selection)
 			return
 		var/mob/M = selection:mob
@@ -138,7 +138,7 @@
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/sendmob(var/mob/M in mob_list, var/area/A in world)
+/client/proc/sendmob(var/mob/M in sortmobs(), var/area/A in return_sorted_areas())
 	set category = "Admin"
 	set name = "Send Mob"
 	if(!src.holder)

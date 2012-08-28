@@ -38,6 +38,16 @@
 	proc/return_siding_icon_state()		//used for grass floors, which have siding.
 		return 0
 
+/turf/Entered(atom/A as mob|obj)
+	..()
+	if ((A && A.density && !( istype(A, /obj/effect/beam) )))
+		for(var/obj/effect/beam/i_beam/I in src)
+			spawn( 0 )
+				if (I)
+					I.hit()
+				return
+	return
+
 /turf/space
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
@@ -213,7 +223,7 @@
 			walltype = "plasma"
 		if("clown")
 			name = "bananium wall"
-			desc = "A wall with bananium plating."
+			desc = "A wall with bananium plating. Honk!"
 			icon_state = "clown0"
 			walltype = "clown"
 		if("sandstone")
@@ -297,6 +307,12 @@
 	icon_state = "riveted"
 	opacity = 1
 	density = 1
+
+turf/unsimulated/wall/splashscreen
+	name = "Space Station 13"
+	icon = 'icons/misc/fullscreen.dmi'
+	icon_state = "title"
+	layer = FLY_LAYER
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"

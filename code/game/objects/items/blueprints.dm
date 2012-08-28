@@ -236,32 +236,3 @@ move an amendment</a> to the drawing.</p>
 					return ROOM_ERR_SPACE
 		found+=T
 	return found
-
-/*
-/proc/check_apc(var/area/A)
-	for(var/area/RA in A.related)
-		for(var/obj/machinery/power/apc/FINDME in RA)
-			return 1
-	return 0
-
-/proc/fuckingfreemachinery()
-	for(var/obj/machinery/machine in machines)
-		if (istype(machine,/obj/machinery/power/solar))
-			continue
-		var/area/A = machine.loc.loc		// make sure it's in an area
-		if (istype(A,/area/tdome))
-			continue
-		if (istype(A,/area/shuttle))
-			continue
-		if(!A || !isarea(A))
-			world << "DEBUG: @[machine.x],[machine.y],[machine.z] ([A.name]) machine \"[machine.name]\" ([machine.type]) hasnt area!"
-			continue
-		A = A.master
-		if (A.name=="Space")
-			world << "DEBUG: @[machine.x],[machine.y],[machine.z] ([A.name]) machine \"[machine.name]\" ([machine.type]) work in space!"
-			continue
-		if (!check_apc(A))
-			world << "DEBUG: @[machine.x],[machine.y],[machine.z] ([A.name]) machine \"[machine.name]\" ([machine.type]) work without APC!"
-	world << "\red END ====="
-
-*/

@@ -2,7 +2,7 @@ var/global/max_secret_rooms = 3
 
 
 
-
+/*
 proc/spawn_asteroid(var/turf/start_loc,var/type,var/size,var/richness)//type: 0 or null - random, 1 - nothing,  2 - iron, 3 - silicon
 	if(!size)
 		size = pick(100;2,50;3,35;4,25;6,10;12)
@@ -43,7 +43,8 @@ proc/spawn_asteroid(var/turf/start_loc,var/type,var/size,var/richness)//type: 0 
 			max_secret_rooms--
 
 	return 1
-
+*/
+/*
 /proc/populate_w_asteroids(var/z,var/density=null)
 	if(!density)
 		density = pick(10,20,40)
@@ -55,7 +56,7 @@ proc/spawn_asteroid(var/turf/start_loc,var/type,var/size,var/richness)//type: 0 
 		if(start_loc && spawn_asteroid(start_loc))
 			density--
 	return
-
+*/
 //this is terrible!	-Pete
 /*
 /datum/game_mode/proc/setup_sectors()
@@ -79,7 +80,7 @@ proc/spawn_asteroid(var/turf/start_loc,var/type,var/size,var/richness)//type: 0 
 			else
 				break
 	world << "\blue \b Randomization complete."
-/*
+
 	//debug
 	for(x=1,x<=global_map.len,x++)
 		var/list/y_arr = global_map[x]
@@ -92,7 +93,7 @@ proc/spawn_asteroid(var/turf/start_loc,var/type,var/size,var/richness)//type: 0 
 				else t = "Empty Cold Space"
 			world << "Global map [x] - [y] contains [t] (Z = [y_arr[y]])"
 	//debug
-*/
+
 	return
 
 /datum/game_mode/proc/spawn_exporation_packs()

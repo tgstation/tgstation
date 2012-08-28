@@ -262,7 +262,6 @@ proc/move_mining_shuttle()
 		icon_state = "diamonddrill"
 		item_state = "jackhammer"
 		digspeed = 15
-		force = 3
 		desc = ""
 
 /*****************************Shovel********************************/

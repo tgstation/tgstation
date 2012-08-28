@@ -1,6 +1,6 @@
 /obj/item/device/assembly/igniter
 	name = "igniter"
-	desc = "A small electronic device able to ignite combustable substances. Does not function well as a lighter."
+	desc = "A small electronic device able to ignite combustable substances."
 	icon_state = "igniter"
 	m_amt = 500
 	g_amt = 50
@@ -8,8 +8,6 @@
 	origin_tech = "magnets=1"
 
 	secured = 1
-	small_icon_state_left = "igniter_left"
-	small_icon_state_right = "igniter_right"
 
 
 	activate()
@@ -20,8 +18,6 @@
 
 
 	attack_self(mob/user as mob)
+		activate()
 		add_fingerprint(user)
-		spawn( 5 )
-			activate()
-			return
 		return

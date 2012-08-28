@@ -1,22 +1,56 @@
+/* Hydroponic stuff
+ * Contains:
+ *		Plant Bags
+ *		Sunflowers
+ *		Nettle
+ *		Deathnettle
+ *		Corbcob
+ */
+
 /*
+ * Plant Bags
+ */
+/obj/item/weapon/plantbag
+	icon = 'icons/obj/hydroponics.dmi'
+	icon_state = "plantbag"
+	name = "Plant Bag"
+	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
+	var/capacity = 50; //the number of plant pieces it can carry.
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
+	w_class = 1
 
-CONTAINS:
-Plant-B-Gone
-Nettle
-Deathnettle
-Craftables (Cob pipes, potato batteries, pumpkinheads)
+/obj/item/weapon/plantbag/attack_self(mob/user as mob)
+	for (var/obj/item/weapon/reagent_containers/food/snacks/grown/O in contents)
+		contents -= O
+		O.loc = user.loc
+	user << "\blue You empty the plant bag."
+	return
 
-*/
+/obj/item/weapon/plantbag/verb/toggle_mode()
+	set name = "Switch Bagging Method"
+	set category = "Object"
+
+	mode = !mode
+	switch (mode)
+		if(1)
+			usr << "The bag now picks up all plants in a tile at once."
+		if(0)
+			usr << "The bag now picks up one plant at a time."
 
 
+/*
+ * Sunflower
+ */
 
-// Sunflower
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
 	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
 
 
-// Nettle
+/*
+ * Nettle
+ */
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
 		user << "\red The nettle burns your bare hand!"
@@ -39,8 +73,10 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 	potency = newValue
 	force = round((5+potency/5), 1)
 
+/*
+ * Deathnettle
+ */
 
-// Deathnettle
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
 		if(istype(user, /mob/living/carbon/human))
@@ -82,7 +118,9 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 	force = round((5+potency/2.5), 1)
 
 
-//Crafting
+/*
+ * Corncob
+ */
 /obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife))

@@ -68,7 +68,7 @@ obj
 		else
 			return null
 
-/atom/proc/meteorhit(obj/effect/meteor as obj)
+/atom/proc/meteorhit(obj/meteor as obj)
 	return
 
 /atom/proc/allow_drop()

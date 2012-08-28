@@ -87,6 +87,7 @@
 /obj/var/req_one_access_txt = "0"
 
 /obj/New()
+	..()
 	//NOTE: If a room requires more than one access (IE: Morgue + medbay) set the req_acesss_txt to "5;6" if it requires 5 and 6
 	if(src.req_access_txt)
 		var/list/req_access_str = dd_text2list(req_access_txt,";")
@@ -106,7 +107,7 @@
 			if(n)
 				req_one_access += n
 
-	..()
+
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)

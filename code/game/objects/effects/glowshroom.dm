@@ -21,7 +21,7 @@
 	spreadChance = 0
 
 /obj/effect/glowshroom/New()
-	set background = 1
+
 	..()
 
 	dir = CalcDir()
@@ -40,11 +40,9 @@
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = "glowshroomf"
 
-	spawn(2) //allows the luminosity and spread rate to be affected by potency at the moment of creation
-		sd_SetLuminosity(potency/10)
-		spawn(delay)
-			if(src)
-				Spread()
+	spawn(delay)
+		SetLuminosity(round(potency/10))
+		Spread()
 
 /obj/effect/glowshroom/proc/Spread()
 	set background = 1

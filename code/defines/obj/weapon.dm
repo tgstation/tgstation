@@ -27,6 +27,13 @@
 	IsShield()
 		return 1
 
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/melee/baton))
+			user.visible_message("<span class='warning'>[user] bashes their [src] with [W]!</span>")
+			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+		else
+			..()
+
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
@@ -220,6 +227,19 @@
 	icon_state = "adv_spectrometer"
 	details = 1
 	origin_tech = "magnets=4;biotech=2"
+
+/obj/item/weapon/melee/chainofcommand
+	name = "chain of command"
+	desc = "A tool used by great men to placate the frothing masses."
+	icon_state = "chain"
+	item_state = "chain"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
+	force = 10
+	throwforce = 7
+	w_class = 3
+	origin_tech = "combat=4"
+	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 
 /obj/item/weapon/melee/energy
 	var/active = 0
@@ -688,41 +708,18 @@
 	item_state = "card-id"
 	w_class = 1.0
 
+//TODO: Figure out wtf this is and possibly remove it -Nodrak
 /obj/item/weapon/dummy
 	name = "dummy"
 	invisibility = 101.0
 	anchored = 1.0
 	flags = TABLEPASS
 
-/obj/item/weapon/extinguisher
-	name = "fire extinguisher"
-	desc = "A traditional red fire extinguisher."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "fire_extinguisher0"
-	var/last_use = 1.0
-	var/safety = 1
-	hitsound = 'sound/weapons/smash.ogg'
-	flags = FPRINT | USEDELAY | TABLEPASS | CONDUCT
-	throwforce = 10
-	w_class = 3.0
-	throw_speed = 2
-	throw_range = 10
-	force = 10.0
-	item_state = "fire_extinguisher"
-	m_amt = 90
-	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
+/obj/item/weapon/dummy/ex_act()
+	return
 
-/obj/item/weapon/extinguisher/mini
-	name = "fire extinguisher"
-	desc = "A light and compact fibreglass-framed model fire extinguisher."
-	icon_state = "miniFE0"
-	hitsound = null	//it is much lighter, after all.
-	flags = FPRINT | USEDELAY | TABLEPASS
-	throwforce = 2
-	w_class = 2.0
-	force = 3.0
-	item_state = "miniFE"
-	m_amt = 0
+/obj/item/weapon/dummy/blob_act()
+	return
 
 /obj/item/weapon/f_card
 	name = "finger print card"
@@ -1291,7 +1288,7 @@
 
 /obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
 	var/list/cameras = new/list()
-	for (var/obj/machinery/camera/C in Cameras)
+	for (var/obj/machinery/camera/C in cameranet.cameras)
 		if (C.bugged && C.status)
 			cameras.Add(C)
 	if (length(cameras) == 0)
@@ -1609,22 +1606,6 @@
 /obj/item/weapon/mousetrap/armed
 	icon_state = "mousetraparmed"
 	armed = 1
-
-/obj/item/weapon/dice // -- TLE
-	name = "d6"
-	desc = "A dice with six sides."
-	var/sides = 6
-	icon = 'icons/obj/dice.dmi'
-	icon_state = "d66"
-
-/obj/item/weapon/dice/New()
-	icon_state = "[name][rand(sides)]"
-
-/obj/item/weapon/dice/d20 // -- TLE
-	name = "d20"
-	desc = "A dice with twenty sides."
-	sides = 20
-	icon_state = "d2020"
 
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."

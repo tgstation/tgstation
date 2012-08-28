@@ -1,4 +1,39 @@
+//Movable atoms
+/atom/movable
+	var/mob/pulledby = null
+
+/atom/movable/verb/pull()
+	set name = "Pull"
+	set category = "IC"
+	set src in oview(1)
+
+	usr.start_pulling(src)
+	return
+
+//All atoms
+/atom/verb/examine()
+	set name = "Examine"
+	set category = "IC"
+	set src in oview(12)	//make it work from farther away
+
+	if (!( usr ))
+		return
+	usr << "That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
+	usr << desc
+	// *****RM
+	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
+	return
+
 /atom/proc/MouseDrop_T()
+	return
+
+/atom/proc/relaymove()
+	return
+
+/atom/proc/ex_act()
+	return
+
+/atom/proc/blob_act()
 	return
 
 /atom/proc/attack_hand(mob/user as mob)
@@ -31,7 +66,6 @@
 /atom/proc/attack_alien(mob/user as mob)
 	src.attack_paw(user)
 	return
-
 
 // for metroids
 /atom/proc/attack_metroid(mob/user as mob)
@@ -165,6 +199,17 @@
 	if(fingerprints && !fingerprints.len)
 		del(fingerprints)
 	return
+
+
+/atom/proc/transfer_fingerprints_to(var/atom/A)
+	if(!istype(A.fingerprints,/list))
+		A.fingerprints = list()
+	if(!istype(A.fingerprintshidden,/list))
+		A.fingerprintshidden = list()
+	A.fingerprints |= fingerprints            //detective
+	A.fingerprintshidden |= fingerprintshidden    //admin
+	A.fingerprintslast = fingerprintslast
+
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M as mob)

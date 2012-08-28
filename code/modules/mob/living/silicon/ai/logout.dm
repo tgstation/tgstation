@@ -6,4 +6,5 @@
 		if (client)
 			client.eye = loc
 			client.perspective = EYE_PERSPECTIVE
+	src.core()
 	return

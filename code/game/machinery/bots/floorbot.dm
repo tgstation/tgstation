@@ -42,7 +42,6 @@
 	var/improvefloors = 0
 	var/eattiles = 0
 	var/maketiles = 0
-	var/locked = 1
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
@@ -80,6 +79,7 @@
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"
+	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
 	dat += "Tiles left: [src.amount]<BR>"
 	dat += "Behvaiour controls are [src.locked ? "locked" : "unlocked"]<BR>"
 	if(!src.locked)
@@ -109,15 +109,24 @@
 		user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
 		src.updateicon()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if(src.allowed(usr))
+		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked
 			user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
 		else
-			user << "<span class='notice'>The [src] doesn't seem to respect your authority.</span>"
+			if(emagged)
+				user << "<span class='warning'>ERROR</span>"
+			if(open)
+				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+			else
+				user << "<span class='warning'>Access denied.</span>"
 		src.updateUsrDialog()
 	else
 		..()
 
+/obj/machinery/bot/floorbot/Emag(mob/user as mob)
+	..()
+	if(open && !locked)
+		if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
 	if(..())
@@ -184,7 +193,7 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("[src] makes an excited booping beeping sound!"), 1)
 
-	if(!src.target || src.target == null)
+	if((!src.target || src.target == null) && emagged < 2)
 		if(targetdirection != null)
 			/*
 			for (var/turf/space/D in view(7,src))
@@ -217,6 +226,14 @@
 					src.target = T
 					break
 
+	if((!src.target || src.target == null) && emagged == 2)
+		if(!src.target || src.target == null)
+			for (var/turf/simulated/floor/D in view(7,src))
+				if(!(D in floorbottargets) && D != src.oldtarget && D.floor_tile)
+					src.oldtarget = D
+					src.target = D
+					break
+
 	if(!src.target || src.target == null)
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
@@ -245,8 +262,23 @@
 			src.eattile(src.target)
 		else if(istype(src.target, /obj/item/stack/sheet/metal))
 			src.maketile(src.target)
-		else if(istype(src.target, /turf/))
+		else if(istype(src.target, /turf/) && emagged < 2)
 			repair(src.target)
+		else if(emagged == 2 && istype(src.target,/turf/simulated/floor))
+			var/turf/simulated/floor/F = src.target
+			src.anchored = 1
+			src.repairing = 1
+			if(prob(90))
+				F.break_tile_to_plating()
+			else
+				F.ReplaceWithLattice()
+			for(var/mob/O in viewers(src, null))
+				O.show_message(text("\red [src] makes an excited booping sound."), 1)
+			spawn(50)
+				src.amount ++
+				src.anchored = 0
+				src.repairing = 0
+				src.target = null
 		src.path = new()
 		return
 
@@ -348,8 +380,15 @@
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	if (amount)
-		new /obj/item/stack/tile/plasteel(Tsec) // only one tile, yes
+	while (amount)//Dumps the tiles into the appropriate sized stacks
+		if(amount >= 16)
+			var/obj/item/stack/tile/plasteel/T = new (Tsec)
+			T.amount = 16
+			amount -= 16
+		else
+			var/obj/item/stack/tile/plasteel/T = new (Tsec)
+			T.amount = src.amount
+			amount = 0
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)

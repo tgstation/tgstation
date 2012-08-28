@@ -63,6 +63,7 @@
 		if(BORG_WIRE_CAMERA)
 			if (!isnull(src.camera) && !scrambledcodes)
 				src.camera.status = 1
+				src.camera.deactivate(usr, 0) // Will kick anyone who is watching the Cyborg's camera.
 
 	src.interact(usr)
 

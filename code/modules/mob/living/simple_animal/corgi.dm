@@ -80,7 +80,7 @@
 					emote_hear = list("barks", "woofs", "yaps","pants")
 					emote_see = list("shakes its head", "shivers")
 					desc = "It's a corgi."
-					src.sd_SetLuminosity(0)
+					SetLuminosity(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
 				else
@@ -216,7 +216,7 @@
 							name = "Rudolph the Red-Nosed Corgi"
 							emote_hear = list("barks christmas songs", "yaps")
 							desc = "He has a very shiny nose."
-							src.sd_SetLuminosity(6)
+							SetLuminosity(6)
 						if(/obj/item/clothing/head/soft)
 							name = "Corgi Tech [real_name]"
 							speak = list("Needs a stamp!", "Request DENIED!", "Fill these out in triplicate!")

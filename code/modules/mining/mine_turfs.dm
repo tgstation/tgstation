@@ -185,17 +185,16 @@
 				shroom.pixel_x = 0
 				shroom.pixel_y = 0
 
-	W = new /turf/simulated/floor/plating/airless/asteroid( locate(src.x, src.y, src.z) )
-	W.dir = old_dir
-	W.fullUpdateMineralOverlays()
+	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
+	W = new /turf/simulated/floor/plating/airless/asteroid(src)
+	W.lighting_lumcount += old_lumcount
+	if(old_lumcount != W.lighting_lumcount)
+		W.lighting_changed = 1
+		lighting_controller.changed_turfs += W
 
-	/*
-	W.icon_old = old_icon
-	if(old_icon) W.icon_state = old_icon
-	*/
-	W.opacity = 1
-	W.sd_SetOpacity(0)
-	W.sd_LumReset()
+	W.dir = old_dir
+
+	W.fullUpdateMineralOverlays()
 	W.levelupdate()
 	return W
 

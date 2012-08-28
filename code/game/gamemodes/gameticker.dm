@@ -137,11 +137,12 @@ var/global/datum/controller/gameticker/ticker
 	if(admins_number == 0)
 		send2irc("Server", "Round just started with no admins online!")
 
-	spawn() supply_ticker() // Added to kick-off the supply shuttle regenerating points -- TLE
+	supply_shuttle.process() 		//Start the supply shuttle regenerating points -- TLE
+	master_controller.process()		//Start master_controller.process()
+	lighting_controller.process()	//Start processing DynamicAreaLighting updates
 
-	//Start master_controller.process()
-	spawn master_controller.process()
-	if (config.sql_enabled)
+
+	if(config.sql_enabled)
 		spawn(3000)
 		statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
 

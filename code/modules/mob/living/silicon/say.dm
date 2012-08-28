@@ -26,9 +26,10 @@
 			robot_talk(message)
 		else if ((copytext(message, 1, 3) == ":h") || (copytext(message, 1, 3) == ":H"))
 			if(isAI(src)&&client)//For patching directly into AI holopads.
+				var/mob/living/silicon/ai/U = src
 				message = copytext(message, 3)
 				message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-				holopad_talk(message)
+				U.holopad_talk(message)
 			else//Will not allow anyone by an active AI to use this function.
 				src << "This function is not available to you."
 				return
@@ -38,7 +39,7 @@
 		return ..(message)
 
 //For holopads only. Usable by AI.
-/mob/living/proc/holopad_talk(var/message)
+/mob/living/silicon/ai/proc/holopad_talk(var/message)
 
 	log_say("[key_name(src)] : [message]")
 
@@ -47,8 +48,8 @@
 	if (!message)
 		return
 
-	var/obj/machinery/hologram/holopad/T = client.eye//Client eye centers on an object.
-	if(istype(T)&&T.hologram&&T.master==src)//If there is a hologram and its master is the user.
+	var/obj/machinery/hologram/holopad/T = locate(/obj/machinery/hologram/holopad) in src.eyeobj.loc
+	if(istype(T) && T.hologram && T.master==src)//If there is a hologram and its master is the user.
 		var/message_a = say_quote(message)
 
 		//Human-like, sorta, heard by those who understand humans.
