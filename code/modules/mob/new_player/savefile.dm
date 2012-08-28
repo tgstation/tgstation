@@ -179,7 +179,7 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["backbag"] >> src.backbag
 	if(isnull(backbag)) backbag = 2
 	F["species"] >> src.species
-	if(isnull(species)) species = "human"
+	if(isnull(species)) species = "Human"
 	F["name_is_always_random"] >> src.be_random_name
 	F["midis"] >> src.midis
 	F["ghost_ears"] >> src.ghost_ears

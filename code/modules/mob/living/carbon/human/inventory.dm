@@ -132,6 +132,9 @@
 		src.r_hand = null
 		update_inv_r_hand()
 
+	//check later on if our species can't wear some clothes
+	var/cur_species = get_species()
+
 	W.loc = src
 	switch(slot)
 		if(slot_back)
@@ -176,9 +179,21 @@
 			W.equipped(src, slot)
 			update_inv_glasses(redraw_mob)
 		if(slot_gloves)
-			src.gloves = W
-			W.equipped(src, slot)
-			update_inv_gloves(redraw_mob)
+			var/broken = 0
+			if(cur_species == "Tajaran")
+				if(prob(5))
+					src.visible_message("\red Your feet burst out of the [W], ripping them to shreds!", "\red [src]'s feet burst out of the [W], ripping them to shreds!", "\red You hear a ripping, tearing sound!")
+					apply_damage(5)
+					broken = 1
+					spawn(0)
+						del(W)
+				else if(prob(50))
+					src << "\red You hurt your feet forcing them into the [W]!"
+					apply_damage(5)
+			if(!broken)
+				src.gloves = W
+				W.equipped(src, slot)
+				update_inv_gloves(redraw_mob)
 		if(slot_head)
 			src.head = W
 			if(head.flags & BLOCKHAIR)
@@ -188,9 +203,21 @@
 			W.equipped(src, slot)
 			update_inv_head(redraw_mob)
 		if(slot_shoes)
-			src.shoes = W
-			W.equipped(src, slot)
-			update_inv_shoes(redraw_mob)
+			var/broken = 0
+			if(cur_species == "Tajaran")
+				if(prob(5))
+					src.visible_message("\red Your feet burst out of the [W], ripping them to shreds!", "\red [src]'s feet burst out of the [W], ripping them to shreds!", "\red You hear a ripping, tearing sound!")
+					apply_damage(5)
+					broken = 1
+					spawn(0)
+						del(W)
+				else if(prob(50))
+					src << "\red You hurt your feet forcing them into the [W]!"
+					apply_damage(5)
+			if(!broken)
+				src.shoes = W
+				W.equipped(src, slot)
+				update_inv_shoes(redraw_mob)
 		if(slot_wear_suit)
 			src.wear_suit = W
 			W.equipped(src, slot)
@@ -221,15 +248,14 @@
 
 
 	//can't quite fit some alien bodyparts
-	var/cur_species = get_species()
 	if( W.body_parts_covered & LOWER_TORSO && W.flags_inv & HIDEJUMPSUIT && (cur_species == "Tajaran" || cur_species == "Soghun"))
 		if(prob(50))
 			src << "\red You twist your tail trying to fit it in!"
-			apply_damage(10)
+			apply_damage(5)
 	if( W.body_parts_covered & HEAD && W.flags & BLOCKHAIR && (cur_species == "Skrell"))
 		if(prob(50))
 			src << "\red You twist your eartails trying to fit it in!"
-			apply_damage(10)
+			apply_damage(5)
 
 	W.layer = 20
 
