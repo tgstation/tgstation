@@ -20,15 +20,21 @@
 	var/planted = 0 // Is it occupied?
 	var/harvest = 0 //Ready to harvest?
 	var/obj/item/seeds/myseed = null // The currently planted seed
-	New()
+
+/obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
+	if(istype(Proj ,/obj/item/projectile/energy/floramut))
+		if(src.planted)
+			src.mutate()
+	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
+		if(src.planted && src.myseed.yield == 0)//Oh god don't divide by zero you'll doom us all.
+			src.myseed.yield += 1
+			//world << "Yield increased by 1, from 0, to a total of [src.myseed.yield]"
+		else if (src.planted && (prob(1/(src.myseed.yield * src.myseed.yield) *100)))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+			src.myseed.yield += 1
+			//world << "Yield increased by 1, to a total of [src.myseed.yield]"
+	else
 		..()
-	bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
-		if(istype(Proj ,/obj/item/projectile/energy/floramut))
-			if(src.planted)
-				src.mutate()
-		else if(istype(Proj ,/obj/item/projectile/energy/florayield))
-			if(src.planted && src.myseed.yield < 2)
-				src.myseed.yield += 1
+		return
 
 /obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()

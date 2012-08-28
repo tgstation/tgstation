@@ -108,7 +108,7 @@
 	if ((killing == 2 && state == 3))
 		if(assailant.loc != kill_loc)
 			for(var/mob/O in viewers(assailant, null))
-				O.show_message(text("\red [] lost his tightened grip on []'s neck!", assailant, affecting), 1)
+				O.show_message(text("\red [] lost \his tightened grip on []'s neck!", assailant, affecting), 1)
 			killing = 0
 			hud1.icon_state = "disarm/kill"
 			return
@@ -134,7 +134,7 @@
 			if (state >= 3)
 				if (!( killing ))
 					for(var/mob/O in viewers(assailant, null))
-						O.show_message(text("\red [] has temporarily tightened his grip on []!", assailant, affecting), 1)
+						O.show_message(text("\red [] has temporarily tightened \his grip on []!", assailant, affecting), 1)
 						//Foreach goto(97)
 					assailant.next_move = world.time + 10
 					//affecting.stunned = max(2, affecting.stunned)
@@ -198,7 +198,7 @@
 						return
 
 					for(var/mob/O in viewers(assailant, null))
-						O.show_message(text("\red [] has reinforced his grip on [] (now neck)!", assailant, affecting), 1)
+						O.show_message(text("\red [] has reinforced \his grip on [] (now neck)!", assailant, affecting), 1)
 
 					state = 3
 					icon_state = "grabbed+1"
@@ -212,7 +212,7 @@
 				else
 					if (state >= 3 && !killing)
 						for(var/mob/O in viewers(assailant, null))
-							O.show_message(text("\red [] starts to tighten his grip on []'s neck!", assailant, affecting), 1)
+							O.show_message(text("\red [] starts to tighten \his grip on []'s neck!", assailant, affecting), 1)
 						hud1.icon_state = "disarm/kill1"
 						killing = 1
 						if(do_after(assailant, 50))
@@ -227,7 +227,7 @@
 							killing = 2
 							kill_loc = assailant.loc
 							for(var/mob/O in viewers(assailant, null))
-								O.show_message(text("\red [] has tightened his grip on []'s neck!", assailant, affecting), 1)
+								O.show_message(text("\red [] has tightened \his grip on []'s neck!", assailant, affecting), 1)
 							affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>")
 							assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
 							log_attack("<font color='red'>[assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
@@ -236,7 +236,7 @@
 							affecting.losebreath += 1
 						else
 							for(var/mob/O in viewers(assailant, null))
-								O.show_message(text("\red [] was unable to tighten his grip on []'s neck!", assailant, affecting), 1)
+								O.show_message(text("\red [] was unable to tighten \his grip on []'s neck!", assailant, affecting), 1)
 							killing = 0
 							hud1.icon_state = "disarm/kill"
 	return
