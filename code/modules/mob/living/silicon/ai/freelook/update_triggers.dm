@@ -8,13 +8,6 @@
 /turf/proc/visibilityChanged()
 	cameranet.updateVisibility(src)
 
-/atom/proc/move_camera_by_click()
-	if(istype(usr, /mob/living/silicon/ai))
-		var/mob/living/silicon/ai/AI = usr
-		if(AI.client.eye == AI.eyeobj)
-			AI.eyeobj.setLoc(src)
-
-/*
 /turf/simulated/Del()
 	visibilityChanged()
 	..()
@@ -22,6 +15,8 @@
 /turf/simulated/New()
 	..()
 	visibilityChanged()
+
+/*
 
 // STRUCTURES
 

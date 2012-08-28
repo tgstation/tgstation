@@ -65,6 +65,12 @@
 	del(eyeobj) // No AI, no Eye
 	..()
 
+/atom/proc/move_camera_by_click()
+	if(istype(usr, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = usr
+		if(AI.client.eye == AI.eyeobj)
+			AI.eyeobj.setLoc(src)
+
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
 

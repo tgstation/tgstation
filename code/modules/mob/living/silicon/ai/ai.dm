@@ -298,7 +298,6 @@
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
 		ai_alerts()
-
 	//Carn: holopad requests
 	if (href_list["jumptoholopad"])
 		var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
@@ -474,18 +473,18 @@
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	if (O)
 		if (C && C.can_use())
-			src << "--- [class] alarm detected in [A.name]! (<A HREF=?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>)"
+			queueAlarm("--- [class] alarm detected in [A.name]! (<A HREF=?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>)", class)
 		else if (CL && CL.len)
 			var/foo = 0
 			var/dat2 = ""
 			for (var/obj/machinery/camera/I in CL)
 				dat2 += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (!foo) ? "" : " | ", src, I, I.c_tag)	//I'm not fixing this shit...
 				foo = 1
-			src << text ("--- [] alarm detected in []! ([])", class, A.name, dat2)
+			queueAlarm(text ("--- [] alarm detected in []! ([])", class, A.name, dat2), class)
 		else
-			src << text("--- [] alarm detected in []! (No Camera)", class, A.name)
+			queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, A.name), class)
 	else
-		src << text("--- [] alarm detected in []! (No Camera)", class, A.name)
+		queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, A.name), class)
 	if (viewalerts) ai_alerts()
 	return 1
 
@@ -502,7 +501,7 @@
 				cleared = 1
 				L -= I
 	if (cleared)
-		src << text("--- [] alarm in [] has been cleared.", class, A.name)
+		queueAlarm(text("--- [] alarm in [] has been cleared.", class, A.name), class, 0)
 		if (viewalerts) ai_alerts()
 	return !cleared
 

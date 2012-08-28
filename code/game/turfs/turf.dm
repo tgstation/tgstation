@@ -15,6 +15,10 @@
 
 	return ..()
 
+/turf/Click()
+	if(!isAI(usr))
+		..()
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM as mob|obj in src)

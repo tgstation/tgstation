@@ -723,7 +723,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(signal)
 		if(signal.data["done"])
 			useTC = 1
-			if(P.loc.z in signal.data["level"])
+			var/turf/pos = get_turf(P)
+			if(pos.z in signal.data["level"])
 				useTC = 2
 				//Let's make this barely readable
 				if(signal.data["compression"] > 0)

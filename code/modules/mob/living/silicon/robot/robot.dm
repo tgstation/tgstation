@@ -345,7 +345,7 @@
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
-	src << text("--- [class] alarm detected in [A.name]!")
+	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
 //	if (viewalerts) robot_alerts()
 	return 1
 
@@ -363,7 +363,7 @@
 				cleared = 1
 				L -= I
 	if (cleared)
-		src << text("--- [class] alarm in [A.name] has been cleared.")
+		queueAlarm(text("--- [class] alarm in [A.name] has been cleared."), class, 0)
 //		if (viewalerts) robot_alerts()
 	return !cleared
 
@@ -811,6 +811,10 @@
 		var/t1 = text("window=[href_list["mach_close"]]")
 		machine = null
 		src << browse(null, t1)
+		return
+
+	if (href_list["showalerts"])
+		robot_alerts()
 		return
 
 	if (href_list["mod"])
