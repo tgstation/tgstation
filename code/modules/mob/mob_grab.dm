@@ -112,8 +112,8 @@
 			killing = 0
 			hud1.icon_state = "disarm/kill"
 			return
-		affecting.Weaken(3)
-		affecting.Stun(3) // It will hamper your voice, being choked and all.
+		affecting.Weaken(5) // Should keep you down unless you get help.
+		affecting.Stun(5) // It will hamper your voice, being choked and all.
 		affecting.losebreath = min(affecting.losebreath + 2, 3)
 	return
 
