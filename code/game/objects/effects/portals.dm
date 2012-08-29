@@ -1,4 +1,14 @@
-
+/obj/effect/portal
+	name = "portal"
+	desc = "Looks unstable. Best to test it with the clown."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "portal"
+	density = 1
+	unacidable = 1//Can't destroy energy portals.
+	var/failchance = 5
+	var/obj/item/target = null
+	var/creator = null
+	anchored = 1.0
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)
 	spawn(0)

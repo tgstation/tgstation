@@ -1,5 +1,12 @@
 // APC HULL
 
+/obj/item/apc_frame
+	name = "APC frame"
+	desc = "Used for repairing or building APCs"
+	icon = 'icons/obj/apc_repair.dmi'
+	icon_state = "apc_frame"
+	flags = FPRINT | TABLEPASS| CONDUCT
+
 /obj/item/apc_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/wrench))

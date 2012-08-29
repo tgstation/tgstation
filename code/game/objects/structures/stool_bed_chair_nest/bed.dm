@@ -1,57 +1,38 @@
-/obj/structure/stool/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			del(src)
-			return
-		if(2.0)
-			if (prob(50))
-				del(src)
-				return
-		if(3.0)
-			if (prob(5))
-				del(src)
-				return
-	return
+/* Beds... get your mind out of the gutter, they're for sleeping!
+ * Contains:
+ * 		Beds
+ *		Roller beds
+ */
 
-/obj/structure/stool/blob_act()
-	if(prob(75))
-		new /obj/item/stack/sheet/metal(src.loc)
-		del(src)
+/*
+ * Beds
+ */
+/obj/structure/stool/bed
+	name = "bed"
+	desc = "This is used to lie in, sleep in or strap on."
+	icon_state = "bed"
+	var/mob/living/buckled_mob
 
-/obj/structure/stool/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/metal(src.loc)
-		del(src)
-	return
-
-/obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W, /obj/item/assembly/shock_kit))
-		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		E.dir = src.dir
-		E.part = W
-		W.loc = E
-		W.master = E
-		user.u_equip(W)
-		W.layer = initial(W.layer)
-		del(src)
-		return
-	return
-
-
-/obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/wood(src.loc)
-		del(src)
-	else
-		..()
+/obj/structure/stool/bed/alien
+	name = "resting contraption"
+	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
+	icon_state = "abed"
 
 /obj/structure/stool/bed/Del()
 	unbuckle()
 	..()
+	return
+
+/obj/structure/stool/bed/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/structure/stool/bed/attack_hand(mob/user as mob)
+	manual_unbuckle(user)
+	return
+
+/obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
+	if(!istype(M)) return
+	buckle_mob(M, user)
 	return
 
 /obj/structure/stool/bed/proc/unbuckle()
@@ -106,58 +87,9 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if(!istype(M)) return
-	buckle_mob(M, user)
-	return
-
-/obj/structure/stool/bed/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/structure/stool/bed/attack_hand(mob/user as mob)
-	manual_unbuckle(user)
-	return
-
-/obj/structure/stool/bed/chair/New()
-	if(anchored)
-		src.verbs -= /atom/movable/verb/pull
-	handle_rotation()
-	..()
-	return
-
-/obj/structure/stool/bed/chair/proc/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
-	if(src.dir == NORTH)
-		src.layer = FLY_LAYER
-	else
-		src.layer = OBJ_LAYER
-
-	if(buckled_mob)
-		if(buckled_mob.loc != src.loc)
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			if(!buckled_mob.Move(loc))
-				unbuckle()
-				buckled_mob = null
-			else
-				buckled_mob.buckled = src //Restoring
-		if(buckled_mob)
-			buckled_mob.dir = dir
-
-/obj/structure/stool/bed/chair/verb/rotate()
-	set name = "Rotate Chair"
-	set category = "Object"
-	set src in oview(1)
-
-	src.dir = turn(src.dir, 90)
-	handle_rotation()
-	return
-
-/obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if(!istype(M)) return
-	buckle_mob(M, user)
-	return
-
-//roller bed
-
+/*
+ * Roller beds
+ */
 /obj/structure/stool/bed/roller
 	name = "roller bed"
 	icon = 'icons/obj/rollerbed.dmi'

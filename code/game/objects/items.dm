@@ -41,6 +41,8 @@
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
+/obj/item/device
+	icon = 'icons/obj/device.dmi'
 
 /obj/item/ex_act(severity)
 	switch(severity)
