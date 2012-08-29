@@ -65,6 +65,7 @@ Works together with spawning an observer, noted above.
 	if(key)
 		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
 		ghost.can_reenter_corpse = can_reenter_corpse
+		ghost.timeofdeath = timeofdeath //BS12 EDIT
 		ghost.key = key
 		return ghost
 
