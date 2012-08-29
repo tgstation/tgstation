@@ -20,32 +20,13 @@
 	density = 0
 	var/color //brown, gray and white, leave blank for random
 
-/mob/living/simple_animal/mouse/white
-	color = "white"
-	icon_state = "mouse_white"
-
-/mob/living/simple_animal/mouse/gray
-	color = "gray"
-	icon_state = "mouse_gray"
-
-/mob/living/simple_animal/mouse/brown
-	color = "brown"
-	icon_state = "mouse_brown"
-
 /mob/living/simple_animal/mouse/New()
+	..()
 	if(!color)
 		color = pick( list("brown","gray","white") )
 	icon_state = "mouse_[color]"
 	icon_living = "mouse_[color]"
 	icon_dead = "mouse_[color]_dead"
-
-//TOM IS ALIVE! SQUEEEEEEEE~K :)
-/mob/living/simple_animal/mouse/brown/Tom
-	name = "Tom"
-	desc = "Jerry the cat is not amused."
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "splats"
 
 
 /mob/living/simple_animal/mouse/proc/splat()
@@ -62,3 +43,27 @@
 			M << "\blue \icon[src] Squeek!"
 			M << 'sound/effects/mousesqueek.ogg'
 	..()
+
+/*
+ * Mouse types
+ */
+
+/mob/living/simple_animal/mouse/white
+	color = "white"
+	icon_state = "mouse_white"
+
+/mob/living/simple_animal/mouse/gray
+	color = "gray"
+	icon_state = "mouse_gray"
+
+/mob/living/simple_animal/mouse/brown
+	color = "brown"
+	icon_state = "mouse_brown"
+
+//TOM IS ALIVE! SQUEEEEEEEE~K :)
+/mob/living/simple_animal/mouse/brown/Tom
+	name = "Tom"
+	desc = "Jerry the cat is not amused."
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "splats"

@@ -331,19 +331,19 @@
 	if(!MP || !ispath(MP, /mob/living/simple_animal))
 		return 1
 
-	//It is impossible to pull up the player panel for mice
-	if(ispath(MP, /mob/living/simple_animal/mouse))
-		return 1
+	//It is impossible to pull up the player panel for mice (Fixed! - Nodrak)
+//	if(ispath(MP, /mob/living/simple_animal/mouse))
+//		return 1
 
-	//Bears will auto-attack mobs, even if they're player controlled
-	if(ispath(MP, /mob/living/simple_animal/bear))
-		return 1
+	//Bears will auto-attack mobs, even if they're player controlled (Fixed! - Nodrak)
+//	if(ispath(MP, /mob/living/simple_animal/bear))
+//		return 1
 
 	//Parrots are unfinished, they have no sprite, movement, ect...
 	else if(ispath(MP, /mob/living/simple_animal/parrot))
 		return 1
 
-	//Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
+	//Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
 	else if(ispath(MP, /mob/living/simple_animal/space_worm))
 		return 1
 

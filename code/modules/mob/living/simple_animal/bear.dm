@@ -52,6 +52,9 @@
 
 /mob/living/simple_animal/bear/Life()
 	..()
+
+	if(client) return //Player controlled bears shouldnt be processing AI stuff
+
 	if(stat)
 		walk(src,0)//Stops the movement
 
