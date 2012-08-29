@@ -321,14 +321,9 @@
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
-			var/ailist[] = list()
-			for (var/mob/living/silicon/ai/A in living_mob_list)
-				ailist += A
-			if (ailist.len)
-				var/mob/living/silicon/ai/announcer = pick(ailist)
-				if(character.mind)
-					if((character.mind.assigned_role != "Cyborg") && (character.mind.special_role != "MODE"))
-						announcer.say("[character.real_name] has signed up as [rank].")
+			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
+			a.autosay("\"[character.real_name],[character.wear_id.assignment ? " [character.wear_id.assignment]," : "" ] has arrived on the station.\"", "Arrivals Announcement Computer")
+			del(a)
 
 	proc/LateChoices()
 		var/mills = world.time // 1/10 of a second, not real milliseconds but whatever

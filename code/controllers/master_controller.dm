@@ -116,10 +116,26 @@ datum/controller/game_controller
 					powernets_ready = 0
 					ticker_ready = 0
 
-					//skytodo:
-					/*spawn(0)
-						air_master.process()
-						air_master_ready = 1*/
+					// moved this here from air_master.start()
+					// this might make atmos slower
+					// upsides:
+					//  1. atmos won't process if the game is generally lagged out(no deadlocks)
+					//  2. if the server frequently crashes during atmos processing we will know
+					if(!kill_air)
+						src.set_debug_state("Air Master")
+
+						air_master.current_cycle++
+						var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
+						if(!success) //Runtimed.
+							log_adminwarn("ZASALERT: air_system/tick() failed: [air_master.tick_progress]")
+							air_master.failed_ticks++
+							if(air_master.failed_ticks > 5)
+								world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
+								kill_air = 1
+								air_master.failed_ticks = 0
+						/*else if (air_master.failed_ticks > 10)
+							air_master.failed_ticks = 0*/
+					air_master_ready = 1
 
 					sleep(1)
 
@@ -209,3 +225,11 @@ datum/controller/game_controller
 					sleep(world.timeofday+12-start_time)
 				else
 					sleep(10)
+
+
+	proc/set_debug_state(txt)
+		// This should describe what is currently being done by the master controller
+		// Useful for crashlogs and similar, because that way it's easy to tell what
+		// was going on when the server crashed.
+		socket_talk.send_raw("type=ticker_state&message=[txt]")
+		return
