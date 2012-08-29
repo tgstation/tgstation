@@ -65,6 +65,7 @@
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob)
 	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
+		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	else
 		usr << "All the leaves have fallen off the nettle from violent whacking."
 		del(src)
@@ -98,6 +99,8 @@
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
 
 		log_attack("<font color='red'> [user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])</font>")
+
+		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 
 		M.eye_blurry += force/7
 		if(prob(20))
