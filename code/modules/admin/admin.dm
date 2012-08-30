@@ -1189,6 +1189,7 @@ var/global/BSACooldown = 0
 			var/location_description = ""
 			var/special_role_description = ""
 			var/health_description = ""
+			var/gender_description = ""
 			var/turf/T = get_turf(M)
 
 			//Location
@@ -1211,17 +1212,23 @@ var/global/BSACooldown = 0
 				var/status
 				switch (M.stat)
 					if (0) status = "Alive"
-					if (1) status = "\yellow Unconscious"
-					if (2) status = "\red Dead"
-				health_description = "Status - [status]"
+					if (1) status = "<font color='orange'><b>Unconscious</b></font>"
+					if (2) status = "<font color='red'><b>Dead</b></font>"
+				health_description = "Status = [status]"
 				health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()]"
 			else
 //				world <<"Has no health."
 				health_description = "This mob type has no health to speak of."
 
+			//Gener
+			if(M.gender in list(MALE,FEMALE))
+				gender_description = "[M.gender]"
+			else
+				gender_description = "<font color='red'><b>[M.gender]</b></font>"
+
 //			world <<"Displaying info about the mob..."
 			src.owner << "<b>Info about [M.name]:</b> "
-			src.owner << "Mob type = [M.type]; Damage = [health_description]"
+			src.owner << "Mob type = [M.type]; Gender = [gender_description] Damage = [health_description]"
 			src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;"
 			src.owner << "Location = [location_description];"
 			src.owner << "[special_role_description]"
