@@ -28,11 +28,11 @@ datum/puddle/Del()
 		del(O)
 	..()
 
-mob/verb/splash()
+client/proc/splash()
 	var/volume = input("Volume?","Volume?", 0 ) as num
 	if(!isnum(volume)) return
 	if(volume <= LIQUID_TRANSFER_THRESHOLD) return
-	var/turf/T = get_turf(src)
+	var/turf/T = get_turf(src.mob)
 	if(!isturf(T)) return
 	trigger_splash(T, volume)
 
