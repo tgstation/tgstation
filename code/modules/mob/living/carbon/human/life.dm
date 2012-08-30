@@ -98,7 +98,7 @@
 
 	handle_regular_hud_updates()
 
-	gender_archive = gender
+	prev_gender = gender
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
