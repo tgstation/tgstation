@@ -124,6 +124,7 @@ datum
 				if(!istype(T)) return
 				var/datum/reagent/blood/self = src
 				src = null
+				if(!(volume >= 3)) return
 				//var/datum/disease/D = self.data["virus"]
 				if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
 					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
@@ -262,15 +263,16 @@ datum
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
 				src = null
-				if(T.wet >= 2) return
-				T.wet = 2
-				spawn(800)
-					if (!istype(T)) return
-					T.wet = 0
-					if(T.wet_overlay)
-						T.overlays -= T.wet_overlay
-						T.wet_overlay = null
-					return
+				if(volume >= 1)
+					if(T.wet >= 2) return
+					T.wet = 2
+					spawn(800)
+						if (!istype(T)) return
+						T.wet = 0
+						if(T.wet_overlay)
+							T.overlays -= T.wet_overlay
+							T.wet_overlay = null
+						return
 
 		anti_toxin
 			name = "Anti-Toxin (Dylovene)"
@@ -773,9 +775,10 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(!istype(T, /turf/space))
-					new /obj/effect/decal/cleanable/greenglow(T)
-					return
+				if(volume >= 3)
+					if(!istype(T, /turf/space))
+						new /obj/effect/decal/cleanable/greenglow(T)
+						return
 
 
 		ryetalyn
@@ -802,10 +805,17 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(istype(T, /turf/simulated/wall))
-					T:thermite = 1
-					T.overlays = null
-					T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
+				if(volume >= 5)
+					if(istype(T, /turf/simulated/wall))
+						T:thermite = 1
+						T.overlays = null
+						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
+				return
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.adjustFireLoss(1)
+				..()
 				return
 
 		mutagen
@@ -921,8 +931,9 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(!istype(T, /turf/space))
-					new /obj/effect/decal/cleanable/greenglow(T)
+				if(volume >= 3)
+					if(!istype(T, /turf/space))
+						new /obj/effect/decal/cleanable/greenglow(T)
 
 		aluminum
 			name = "Aluminum"
@@ -986,13 +997,14 @@ datum
 					if(O)
 						O.clean_blood()
 			reaction_turf(var/turf/T, var/volume)
-				T.overlays = null
-				T.clean_blood()
-				for(var/obj/effect/decal/cleanable/C in src)
-					del(C)
+				if(volume >= 1)
+					T.overlays = null
+					T.clean_blood()
+					for(var/obj/effect/decal/cleanable/C in src)
+						del(C)
 
-				for(var/mob/living/carbon/metroid/M in T)
-					M.adjustToxLoss(rand(5,10))
+					for(var/mob/living/carbon/metroid/M in T)
+						M.adjustToxLoss(rand(5,10))
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				if(iscarbon(M))
@@ -2626,8 +2638,9 @@ datum
 				return
 
 			reaction_turf(var/turf/simulated/T, var/volume)
-				if(!istype(T)) return
-				T.Bless()
+				if(volume >= 3)
+					if(!istype(T)) return
+					T.Bless()
 
 		tequilla
 			name = "Tequila"

@@ -31,7 +31,20 @@ datum
 				var/datum/effect/effect/system/reagents_explosion/e = new()
 				e.set_up(round (created_volume/10, 1), location, 0, 0)
 				e.start()
+				holder.clear_reagents()
+				return
 
+		emp_pulse
+			name = "EMP Pulse"
+			id = "emp_pulse"
+			result = null
+			required_reagents = list("uranium" = 1, "iron" = 1) // Yes, laugh, it's the best recipe I could think of that makes a little bit of sense
+			result_amount = 2
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				// 100 created volume = 10 heavy range & 20 light range = same as normal EMP grenade
+				empulse(location, round(created_volume / 10), round(created_volume / 5), 1)
 				holder.clear_reagents()
 				return
 /*
