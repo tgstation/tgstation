@@ -29,8 +29,10 @@
 		..()
 		if(density)
 			layer = 3.1 //Above most items if closed
+			explosion_resistance = initial(explosion_resistance)
 		else
 			layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
+			explosion_resistance = 0
 		update_nearby_tiles(need_rebuild=1)
 		return
 
@@ -208,6 +210,7 @@
 		sleep(10)
 		src.layer = 2.7
 		src.density = 0
+		explosion_resistance = 0
 		update_icon()
 //		src.SetOpacity(0)
 		update_nearby_tiles()
@@ -231,6 +234,7 @@
 
 		animate("closing")
 		src.density = 1
+		explosion_resistance = initial(explosion_resistance)
 		src.layer = 3.1
 		sleep(10)
 		update_icon()
