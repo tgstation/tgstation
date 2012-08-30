@@ -1,8 +1,8 @@
-/* - uncomment this to test it out! */
+/* - uncomment this to test it out!
 /mob/verb/kaboom()
 	var/power = input(src, "power?", "power?") as num
 	var/turf/T = get_turf(src)
-	explosion_rec(T, power)
+	explosion_rec(T, power) */
 
 /obj
 	var/explosion_resistance
