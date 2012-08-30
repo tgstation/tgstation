@@ -281,6 +281,45 @@
 
 	return
 
+/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	switch(M.a_intent)
+		if ("help")
+			for(var/mob/O in viewers(src, null))
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+		if ("grab")
+			if(M == src)
+				return
+			if (nopush)
+				return
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
+			G.assailant = M
+			G.affecting = src
+
+			M.put_in_active_hand(G)
+
+			grabbed_by += G
+			G.synch()
+			LAssailant = M
+
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			for(var/mob/O in viewers(src, null))
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+
+		if("hurt")
+			var/damage = rand(15, 30)
+			visible_message("\red <B>[M] has slashed at [src]!</B>")
+			src.health -= damage
+
+
+		if("disarm")
+			var/damage = rand(15, 30)
+			visible_message("\red <B>[M] has slashed at [src]!</B>")
+			src.health -= damage
+
+	return
+
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
 		if(stat != DEAD)
