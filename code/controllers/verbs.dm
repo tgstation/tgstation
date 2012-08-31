@@ -1,5 +1,5 @@
 //TODO: rewrite and standardise all controller datums to the datum/controller type
-//TODO: allow all controllers to be deleted for clean restarts (see WIP master controller stuff)
+//TODO: allow all controllers to be deleted for clean restarts (see WIP master controller stuff) - MC done - lighting done
 
 /client/proc/restart_controller(controller in list("Master","Lighting","Supply Shuttle"))
 	set category = "Debug"
@@ -11,9 +11,11 @@
 	src = null
 	switch(controller)
 		if("Master")
+			new /datum/controller/game_controller()
 			master_controller.process()
 			feedback_add_details("admin_verb","RMC")
 		if("Lighting")
+			new /datum/controller/lighting()
 			lighting_controller.process()
 			feedback_add_details("admin_verb","RLighting")
 		if("Supply Shuttle")

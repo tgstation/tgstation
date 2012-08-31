@@ -510,7 +510,6 @@
 		if(1.0)
 			//SN src = null
 			src.ReplaceWithSpace()
-			del(src)
 			return
 		if(2.0)
 			if (prob(50))

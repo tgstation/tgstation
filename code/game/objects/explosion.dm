@@ -8,7 +8,7 @@
 
 
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
-	src = null
+	src = null	//so we don't abort once src is deleted
 	spawn(0)
 		var/start = world.timeofday
 		epicenter = get_turf(epicenter)
@@ -47,12 +47,12 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 			T.ex_act(dist)
 			if(T)
-				for(var/atom_movable in T.contents)
+				for(var/atom_movable in T.contents)	//bypass type checking since only atom/movable can be contained by turfs anyway
 					var/atom/movable/AM = atom_movable
 					AM.ex_act(dist)
 
-		//here util we get explosions to be less laggy, might help us identify issues after changes to splosions (because let's face it we've had a few)
-		world.log << "## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [(world.timeofday-start)/10] seconds."
+		//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes  to explosion code using this please so we can compare
+		if(Debug2)	world.log << "## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [(world.timeofday-start)/10] seconds."
 
 		sleep(8)
 

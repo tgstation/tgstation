@@ -222,7 +222,6 @@
 			//verbs += /proc/togglebuildmode 							--Merged with view variables
 			//verbs += /client/proc/cmd_modify_object_variables 		--Merged with view variables
 			verbs += /client/proc/togglebuildmodeself
-			verbs += /client/proc/debug_controller
 		else	return
 
 		//Game Admin
@@ -243,9 +242,10 @@
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
 			verbs += /client/proc/send_space_ninja
-			verbs += /client/proc/restart_controller						//Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
-			verbs += /client/proc/Blobize								//I need to remember to move/remove this later
-			verbs += /client/proc/Blobcount								//I need to remember to move/remove this later
+			verbs += /client/proc/restart_controller					//Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
+			verbs += /client/proc/debug_controller
+//			verbs += /client/proc/Blobize								//I need to remember to move/remove this later
+//			verbs += /client/proc/Blobcount								//I need to remember to move/remove this later
 			verbs += /client/proc/toggle_clickproc 						//TODO ERRORAGE (Temporary proc while the new clickproc is being tested)
 			verbs += /client/proc/toggle_gravity_on
 			verbs += /client/proc/toggle_gravity_off
@@ -392,8 +392,8 @@
 	verbs -= /client/proc/play_local_sound
 	verbs -= /client/proc/enable_debug_verbs
 	verbs -= /client/proc/toggleprayers
-	verbs -= /client/proc/Blobize
-	verbs -= /client/proc/Blobcount
+//	verbs -= /client/proc/Blobize
+//	verbs -= /client/proc/Blobcount
 	verbs -= /client/proc/toggle_clickproc 								//TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 	verbs -= /client/proc/toggle_hear_deadcast
 	verbs -= /client/proc/toggle_hear_radio

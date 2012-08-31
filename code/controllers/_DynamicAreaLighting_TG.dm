@@ -37,9 +37,6 @@
 #define LIGHTING_LAYER 10			//Drawing layer for lighting overlays
 #define LIGHTING_ICON 'icons/effects/ss13_dark_alpha7.dmi'	//Icon used for lighting shading effects
 
-datum/controller/lighting/New()			//moved here so its in the define. eek :S
-	lighting_states = max( 0, length(icon_states(LIGHTING_ICON))-1 )
-
 datum/light_source
 	var/atom/owner
 	var/changed = 1
@@ -302,4 +299,4 @@ area
 #undef LIGHTING_MAX_LUMINOSITY
 #undef LIGHTING_MAX_LUMINOSITY_MOB
 #undef LIGHTING_LAYER
-#undef LIGHTING_ICON
+//#undef LIGHTING_ICON
