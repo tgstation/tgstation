@@ -524,9 +524,9 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 		if(S.implant)
 			implant_surgery(H,user)
 			return 1
-		else
+		/*else
 			user << "\red [H] is not bleeding in \his [S.display_name]!"
-			return 0
+			return 0*/
 
 	H.visible_message( \
 		"\red [user] is beginning to clamp bleeders in the wound in [H]'s [S.display_name] with [src].", \
