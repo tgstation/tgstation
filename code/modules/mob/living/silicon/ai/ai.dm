@@ -125,6 +125,9 @@
 		icons += "B.A.N.N.E.D."
 	if (src.name == "M00X-BC" && src.ckey == "searif")
 		icons += "M00X-BC"
+	if (src.name == "TRIBUNAL" && src.ckey == "serithi")
+		icons += "Tribunal"
+		icons += "Tribunal Malfunctioning"
 	icontype = input("Please, select a display!", "AI", null/*, null*/) in icons
 	if(icontype == "Blue")
 		icon_state = "ai"
@@ -156,6 +159,10 @@
 		icon_state = "ai-malf"
 	else if(icontype == "Static")
 		icon_state = "ai-static"
+	else if(icontype == "Tribunal")
+		icon_state = "ai-tribunal"
+	else if(icontype == "Tribunal Malfunctioning")
+		icon_state = "ai-tribunal-malf"
 	else//(icontype == "Matrix")
 		icon_state = "ai-matrix"
 
