@@ -206,11 +206,11 @@
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
-	if(usr.stat == 2)
-		usr << "You can't call the shuttle because you are dead!"
+	if(src.stat == 2)
+		src << "You can't call the shuttle because you are dead!"
 		return
 	if(istype(usr,/mob/living/silicon/ai))
-		var/mob/living/silicon/ai/AI = usr
+		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
 			usr << "Wireless control is disabled!"
 			return
@@ -230,13 +230,13 @@
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "AI Commands"
-	if(usr.stat == 2)
-		usr << "You can't send the shuttle back because you are dead!"
+	if(src.stat == 2)
+		src << "You can't send the shuttle back because you are dead!"
 		return
 	if(istype(usr,/mob/living/silicon/ai))
-		var/mob/living/silicon/ai/AI = usr
+		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
-			usr << "Wireless control is disabled!"
+			src	 << "Wireless control is disabled!"
 			return
 	cancel_call_proc(src)
 	return

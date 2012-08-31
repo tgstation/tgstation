@@ -276,7 +276,7 @@
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
-	if(bad_animal(mobpath))
+	if(!safe_animal(mobpath))
 		usr << "\red Sorry but this mob type is currently unavailable."
 		return
 
@@ -311,7 +311,7 @@
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
-	if(bad_animal(mobpath))
+	if(!safe_animal(mobpath))
 		usr << "\red Sorry but this mob type is currently unavailable."
 		return
 
@@ -324,32 +324,57 @@
 
 	del(src)
 
-//Certain mob types either do not work, or have major problems and should now be allowed to be controlled by players.
-/mob/proc/bad_animal(var/MP)
+/* Certain mob types have problems and should not be allowed to be controlled by players.
+ *
+ * This proc is here to force coders to manually place their mob in this list, hopefully tested.
+ * This also gives a place to explain -why- players shouldnt be turn into certain mobs and hopefully someone can fix them.
+ */
+/mob/proc/safe_animal(var/MP)
 
-	//Sanity, this should never happen.
-	if(!MP || !ispath(MP, /mob/living/simple_animal))
+//Bad mobs! - Remember to add a comment explaining what's wrong with the mob
+	if(!MP)
+		return 0	//Sanity, this should never happen.
+
+	if(ispath(MP, /mob/living/simple_animal/parrot))
+		return 0 //Parrots are unfinished, they have no sprite, movement, ect...(Working on this - Nodrak)
+
+	if(ispath(MP, /mob/living/simple_animal/space_worm))
+		return 0 //Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
+
+	if(ispath(MP, /mob/living/simple_animal/constructbehemoth))
+		return 0 //I think this may have been an unfinished WiP or something. These constructs should really have their own class simple_animal/construct/subtype
+
+	if(ispath(MP, /mob/living/simple_animal/constructarmoured))
+		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+
+	if(ispath(MP, /mob/living/simple_animal/constructwraith))
+		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+
+	if(ispath(MP, /mob/living/simple_animal/constructbuilder))
+		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+
+//Good mobs!
+	if(ispath(MP, /mob/living/simple_animal/cat))
 		return 1
-
-	//It is impossible to pull up the player panel for mice (Fixed! - Nodrak)
-//	if(ispath(MP, /mob/living/simple_animal/mouse))
-//		return 1
-
-	//Bears will auto-attack mobs, even if they're player controlled (Fixed! - Nodrak)
-//	if(ispath(MP, /mob/living/simple_animal/bear))
-//		return 1
-
-	//Parrots are unfinished, they have no sprite, movement, ect...
-	else if(ispath(MP, /mob/living/simple_animal/parrot))
+	if(ispath(MP, /mob/living/simple_animal/corgi))
 		return 1
-
-	//Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
-	else if(ispath(MP, /mob/living/simple_animal/space_worm))
+	if(ispath(MP, /mob/living/simple_animal/crab))
 		return 1
+	if(ispath(MP, /mob/living/simple_animal/carp))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/mushroom))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/shade))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/tomato))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/mouse))
+		return 1 //It is impossible to pull up the player panel for mice (Fixed! - Nodrak)
+	if(ispath(MP, /mob/living/simple_animal/bear))
+		return 1 //Bears will auto-attack mobs, even if they're player controlled (Fixed! - Nodrak)
 
-	//No problems found!
-	else
-		return 0
+	//Not in here? Must be untested!
+	return 0
 
 
 
