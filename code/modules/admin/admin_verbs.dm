@@ -199,6 +199,7 @@
 			verbs += /obj/admins/proc/adrev								//toggle admin revives
 			verbs += /obj/admins/proc/adspawn							//toggle admin item spawning
 			verbs += /client/proc/debug_variables
+			verbs += /obj/admins/proc/access_news_network               //Admin access to the newscaster network
 			verbs += /client/proc/cmd_modify_ticker_variables
 			verbs += /client/proc/Debug2								//debug toggle switch
 			verbs += /client/proc/toggle_view_range

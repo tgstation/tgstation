@@ -104,7 +104,7 @@ Class Procs:
 	/*
 	Big note: if do not call ..() in any machinery subtype process() call or it will
 	be removed from the list of machines to iterate. It is, however, okay to call ..()
-	if the machine has a parent process() call. For instance, machinery/atmosphereics has a
+	if the machine has a parent process() call. For instance, machinery/atmospherics has a
 	root process() call, so things like cryocells can call ..() and not worry about
 	it getting removed from machines.
 	*/

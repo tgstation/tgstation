@@ -2235,6 +2235,220 @@ var/global/BSACooldown = 0
 		return
 		//hahaha
 
+
+	if(href_list["ac_view_wanted"])                 //Admin newscaster Topic() stuff be here
+		src.admincaster_screen = 18                 //The ac_ prefix before the hrefs stands for AdminCaster.
+		src.access_news_network()
+	if(href_list["ac_set_channel_name"])
+		src.admincaster_feed_channel.channel_name = strip_html_simple(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
+		while (findtext(src.admincaster_feed_channel.channel_name," ") == 1)
+			src.admincaster_feed_channel.channel_name = copytext(src.admincaster_feed_channel.channel_name,2,lentext(src.admincaster_feed_channel.channel_name)+1)
+		src.access_news_network()
+
+	if(href_list["ac_set_channel_lock"])
+		src.admincaster_feed_channel.locked = !src.admincaster_feed_channel.locked
+		src.access_news_network()
+
+	if(href_list["ac_submit_new_channel"])
+		var/check = 0
+		for(var/datum/feed_channel/FC in news_network.network_channels)
+			if(FC.channel_name == src.admincaster_feed_channel.channel_name)
+				check = 1
+				break
+		if(src.admincaster_feed_channel.channel_name == "" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]" || check )
+			src.admincaster_screen=7
+		else
+			var/choice = alert("Please confirm Feed channel creation","Network Channel Handler","Confirm","Cancel")
+			if(choice=="Confirm")
+				var/datum/feed_channel/newChannel = new /datum/feed_channel
+				newChannel.channel_name = src.admincaster_feed_channel.channel_name
+				newChannel.author = src.admincaster_signature
+				newChannel.locked = src.admincaster_feed_channel.locked
+				newChannel.is_admin_channel = 1
+				feedback_inc("newscaster_channels",1)
+				news_network.network_channels += newChannel                        //Adding channel to the global network
+				log_admin("[key_name_admin(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
+				src.admincaster_screen=5
+		src.access_news_network()
+
+	if(href_list["ac_set_channel_receiving"])
+		var/list/available_channels = list()
+		for(var/datum/feed_channel/F in news_network.network_channels)
+			available_channels += F.channel_name
+		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels )
+		src.access_news_network()
+
+	if(href_list["ac_set_new_message"])
+		src.admincaster_feed_message.body = adminscrub(input(usr, "Write your Feed story", "Network Channel Handler", ""))
+		while (findtext(src.admincaster_feed_message.body," ") == 1)
+			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.body,2,lentext(src.admincaster_feed_message.body)+1)
+		src.access_news_network()
+
+	if(href_list["ac_submit_new_message"])
+		if(src.admincaster_feed_message.body =="" || src.admincaster_feed_message.body =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
+			src.admincaster_screen = 6
+		else
+			var/datum/feed_message/newMsg = new /datum/feed_message
+			newMsg.author = src.admincaster_signature
+			newMsg.body = src.admincaster_feed_message.body
+			newMsg.is_admin_message = 1
+			feedback_inc("newscaster_stories",1)
+			for(var/datum/feed_channel/FC in news_network.network_channels)
+				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
+					FC.messages += newMsg                  //Adding message to the network's appropriate feed_channel
+					break
+			src.admincaster_screen=4
+
+		for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+			NEWSCASTER.newsAlert(src.admincaster_feed_channel.channel_name)
+
+		log_admin("[key_name_admin(usr)] submitted a feed story to channel: [src.admincaster_feed_channel.channel_name]!")
+		src.access_news_network()
+
+	if(href_list["ac_create_channel"])
+		src.admincaster_screen=2
+		src.access_news_network()
+
+	if(href_list["ac_create_feed_story"])
+		src.admincaster_screen=3
+		src.access_news_network()
+
+	if(href_list["ac_menu_censor_story"])
+		src.admincaster_screen=10
+		src.access_news_network()
+
+	if(href_list["ac_menu_censor_channel"])
+		src.admincaster_screen=11
+		src.access_news_network()
+
+	if(href_list["ac_menu_wanted"])
+		var/already_wanted = 0
+		if(news_network.wanted_issue)
+			already_wanted = 1
+
+		if(already_wanted)
+			src.admincaster_feed_message.author = news_network.wanted_issue.author
+			src.admincaster_feed_message.body = news_network.wanted_issue.body
+		src.admincaster_screen = 14
+		src.access_news_network()
+
+	if(href_list["ac_set_wanted_name"])
+		src.admincaster_feed_message.author = adminscrub(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
+		while (findtext(src.admincaster_feed_message.author," ") == 1)
+			src.admincaster_feed_message.author = copytext(admincaster_feed_message.author,2,lentext(admincaster_feed_message.author)+1)
+		src.access_news_network()
+
+	if(href_list["ac_set_wanted_desc"])
+		src.admincaster_feed_message.body = adminscrub(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
+		while (findtext(src.admincaster_feed_message.body," ") == 1)
+			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.body,2,lentext(src.admincaster_feed_message.body)+1)
+		src.access_news_network()
+
+	if(href_list["ac_submit_wanted"])
+		var/input_param = text2num(href_list["ac_submit_wanted"])
+		if(src.admincaster_feed_message.author == "" || src.admincaster_feed_message.body == "")
+			src.admincaster_screen = 16
+		else
+			var/choice = alert("Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler","Confirm","Cancel")
+			if(choice=="Confirm")
+				if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
+					var/datum/feed_message/WANTED = new /datum/feed_message
+					WANTED.author = src.admincaster_feed_message.author               //Wanted name
+					WANTED.body = src.admincaster_feed_message.body                   //Wanted desc
+					WANTED.backup_author = src.admincaster_signature                  //Submitted by
+					WANTED.is_admin_message = 1
+					news_network.wanted_issue = WANTED
+					for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+						NEWSCASTER.newsAlert()
+						NEWSCASTER.update_icon()
+					src.admincaster_screen = 15
+				else
+					news_network.wanted_issue.author = src.admincaster_feed_message.author
+					news_network.wanted_issue.body = src.admincaster_feed_message.body
+					news_network.wanted_issue.backup_author = src.admincaster_feed_message.backup_author
+					src.admincaster_screen = 19
+				log_admin("[key_name_admin(usr)] issued a Station-wide Wanted Notification for [src.admincaster_feed_message.author]!")
+		src.access_news_network()
+
+	if(href_list["ac_cancel_wanted"])
+		var/choice = alert("Please confirm Wanted Issue removal","Network Security Handler","Confirm","Cancel")
+		if(choice=="Confirm")
+			news_network.wanted_issue = null
+			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+				NEWSCASTER.update_icon()
+			src.admincaster_screen=17
+		src.access_news_network()
+
+	if(href_list["ac_censor_channel_author"])
+		var/datum/feed_channel/FC = locate(href_list["ac_censor_channel_author"])
+		if(FC.author != "<B>\[REDACTED\]</B>")
+			FC.backup_author = FC.author
+			FC.author = "<B>\[REDACTED\]</B>"
+		else
+			FC.author = FC.backup_author
+		src.access_news_network()
+
+	if(href_list["ac_censor_channel_story_author"])
+		var/datum/feed_message/MSG = locate(href_list["ac_censor_channel_story_author"])
+		if(MSG.author != "<B>\[REDACTED\]</B>")
+			MSG.backup_author = MSG.author
+			MSG.author = "<B>\[REDACTED\]</B>"
+		else
+			MSG.author = MSG.backup_author
+		src.access_news_network()
+
+	if(href_list["ac_censor_channel_story_body"])
+		var/datum/feed_message/MSG = locate(href_list["ac_censor_channel_story_body"])
+		if(MSG.body != "<B>\[REDACTED\]</B>")
+			MSG.backup_body = MSG.body
+			MSG.body = "<B>\[REDACTED\]</B>"
+		else
+			MSG.body = MSG.backup_body
+		src.access_news_network()
+
+	if(href_list["ac_pick_d_notice"])
+		var/datum/feed_channel/FC = locate(href_list["ac_pick_d_notice"])
+		src.admincaster_feed_channel = FC
+		src.admincaster_screen=13
+		src.access_news_network()
+
+	if(href_list["ac_toggle_d_notice"])
+		var/datum/feed_channel/FC = locate(href_list["ac_toggle_d_notice"])
+		FC.censored = !FC.censored
+		src.access_news_network()
+
+	if(href_list["ac_view"])
+		src.admincaster_screen=1
+		src.access_news_network()
+
+	if(href_list["ac_setScreen"]) //Brings us to the main menu and resets all fields~
+		src.admincaster_screen = text2num(href_list["ac_setScreen"])
+		if (src.admincaster_screen == 0)
+			if(src.admincaster_feed_channel)
+				src.admincaster_feed_channel = new /datum/feed_channel
+			if(src.admincaster_feed_message)
+				src.admincaster_feed_message = new /datum/feed_message
+		src.access_news_network()
+
+	if(href_list["ac_show_channel"])
+		var/datum/feed_channel/FC = locate(href_list["ac_show_channel"])
+		src.admincaster_feed_channel = FC
+		src.admincaster_screen = 9
+		src.access_news_network()
+
+	if(href_list["ac_pick_censor_channel"])
+		var/datum/feed_channel/FC = locate(href_list["ac_pick_censor_channel"])
+		src.admincaster_feed_channel = FC
+		src.admincaster_screen = 12
+		src.access_news_network()
+
+	if(href_list["ac_refresh"])
+		src.access_news_network()
+
+	if(href_list["ac_set_signature"])
+		src.admincaster_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
+		src.access_news_network()
+
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
 /obj/admins/proc/show_player_panel(var/mob/M in mob_list)
@@ -2373,6 +2587,198 @@ var/global/BSACooldown = 0
 
 	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+/obj/admins/proc/access_news_network() //MARKER
+	set category = "Fun"
+	set name = "Access Newscaster Network"
+	set desc = "Allows you to view, add and edit news feeds."
+
+	if (!istype(src,/obj/admins))
+		src = usr.client.holder
+	if (!istype(src,/obj/admins))
+		usr << "Error: you are not an admin!"
+		return
+	var/dat
+	dat = text("<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>")
+
+	switch(admincaster_screen)
+		if(0)
+			dat += "Welcome to the admin newscaster.<BR> Here you can add, edit and censor every newspiece on the network."
+			dat += "<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units."
+			dat += "<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>"
+			if(news_network.wanted_issue)
+				dat+= "<HR><A href='?src=\ref[src];ac_view_wanted=1'>Read Wanted Issue</A>"
+			dat+= "<HR><BR><A href='?src=\ref[src];ac_create_channel=1'>Create Feed Channel</A>"
+			dat+= "<BR><A href='?src=\ref[src];ac_view=1'>View Feed Channels</A>"
+			dat+= "<BR><A href='?src=\ref[src];ac_create_feed_story=1'>Submit new Feed story</A>"
+			dat+= "<BR><BR><A href='?src=\ref[usr];mach_close=newscaster_main'>Exit</A>"
+			var/wanted_already = 0
+			if(news_network.wanted_issue)
+				wanted_already = 1
+			dat+="<HR><B>Feed Security functions:</B><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
+			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_story=1'>Censor Feed Stories</A>"
+			dat+="<BR><A href='?src=\ref[src];ac_menu_censor_channel=1'>Mark Feed Channel with Nanotrasen D-Notice (disables and locks the channel.</A>"
+			dat+="<BR><HR><A href='?src=\ref[src];ac_set_signature=1'>The newscaster recognises you as:<BR> <FONT COLOR='green'>[src.admincaster_signature]</FONT></A>"
+		if(1)
+			dat+= "Station Feed Channels<HR>"
+			if( isemptylist(news_network.network_channels) )
+				dat+="<I>No active channels found...</I>"
+			else
+				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
+					if(CHANNEL.is_admin_channel)
+						dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen'><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
+					else
+						dat+="<B><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
+			dat+="<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A>"
+		if(2)
+			dat+="Creating new Feed Channel..."
+			dat+="<HR><B><A href='?src=\ref[src];ac_set_channel_name=1'>Channel Name</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>"
+			dat+="<B><A href='?src=\ref[src];ac_set_signature=1'>Channel Author</A>:</B> <FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
+			dat+="<B><A href='?src=\ref[src];ac_set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(src.admincaster_feed_channel.locked) ? ("NO") : ("YES")]<BR><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_submit_new_channel=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>"
+		if(3)
+			dat+="Creating new Feed Message..."
+			dat+="<HR><B><A href='?src=\ref[src];ac_set_channel_receiving=1'>Receiving Channel</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>" //MARK
+			dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
+			dat+="<B><A href='?src=\ref[src];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.body] <BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>"
+		if(4)
+			dat+="Feed story successfully submitted to [src.admincaster_feed_channel.channel_name].<BR><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+		if(5)
+			dat+="Feed Channel [src.admincaster_feed_channel.channel_name] created successfully.<BR><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+		if(6)
+			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
+			if(src.admincaster_feed_channel.channel_name=="")
+				dat+="<FONT COLOR='maroon'>•Invalid receiving channel name.</FONT><BR>"
+			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>•Invalid message body.</FONT><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[3]'>Return</A><BR>"
+		if(7)
+			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
+			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>•Invalid channel name.</FONT><BR>"
+			var/check = 0
+			for(var/datum/feed_channel/FC in news_network.network_channels)
+				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
+					check = 1
+					break
+			if(check)
+				dat+="<FONT COLOR='maroon'>•Channel name already in use.</FONT><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[2]'>Return</A><BR>"
+		if(9)
+			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT>\]</FONT><HR>"
+			if(src.admincaster_feed_channel.censored)
+				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
+				dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
+			else
+				if( isemptylist(src.admincaster_feed_channel.messages) )
+					dat+="<I>No feed messages found in channel...</I><BR>"
+				else
+					for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
+			dat+="<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[1]'>Back</A>"
+		if(10)
+			dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
+			dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
+			dat+="Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>"
+			dat+="<HR>Select Feed channel to get Stories from:<BR>"
+			if(isemptylist(news_network.network_channels))
+				dat+="<I>No feed channels found active...</I><BR>"
+			else
+				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
+					dat+="<A href='?src=\ref[src];ac_pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A>"
+		if(11)
+			dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
+			dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
+			dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
+			dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
+			if(isemptylist(news_network.network_channels))
+				dat+="<I>No feed channels found active...</I><BR>"
+			else
+				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
+					dat+="<A href='?src=\ref[src];ac_pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A>"
+		if(12)
+			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT> \]</FONT><BR>"
+			dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_author=\ref[src.admincaster_feed_channel]'>[(src.admincaster_feed_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
+
+			if( isemptylist(src.admincaster_feed_channel.messages) )
+				dat+="<I>No feed messages found in channel...</I><BR>"
+			else
+				for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+					dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+					dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];ac_censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[10]'>Back</A>"
+		if(13)
+			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT> \]</FONT><BR>"
+			dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];ac_toggle_d_notice=\ref[src.admincaster_feed_channel]'>Bestow a D-Notice upon the channel</A>.<HR>"
+			if(src.admincaster_feed_channel.censored)
+				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
+				dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
+			else
+				if( isemptylist(src.admincaster_feed_channel.messages) )
+					dat+="<I>No feed messages found in channel...</I><BR>"
+				else
+					for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[11]'>Back</A>"
+		if(14)
+			dat+="<B>Wanted Issue Handler:</B>"
+			var/wanted_already = 0
+			var/end_param = 1
+			if(news_network.wanted_issue)
+				wanted_already = 1
+				end_param = 2
+			if(wanted_already)
+				dat+="<FONT SIZE=2><BR><I>A wanted issue is already in Feed Circulation. You can edit or cancel it below.</FONT></I>"
+			dat+="<HR>"
+			dat+="<A href='?src=\ref[src];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_feed_message.author] <BR>"
+			dat+="<A href='?src=\ref[src];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_feed_message.body] <BR>"
+			if(wanted_already)
+				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
+			else
+				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'> [src.admincaster_signature]</FONT><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
+			if(wanted_already)
+				dat+="<BR><A href='?src=\ref[src];ac_cancel_wanted=1'>Take down Issue</A>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A>"
+		if(15)
+			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] is now in Network Circulation.</FONT><BR><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+		if(16)
+			dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
+			if(src.admincaster_feed_message.author =="" || src.admincaster_feed_message.author == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>•Invalid name for person wanted.</FONT><BR>"
+			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>•Invalid description.</FONT><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+		if(17)
+			dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+		if(18)
+			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
+			dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
+			dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A><BR>"
+		if(19)
+			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] successfully edited.</FONT><BR><BR>"
+			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
+		else
+			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
+
+	//world << "Channelname: [src.admincaster_feed_channel.channel_name] [src.admincaster_feed_channel.author]"
+	//world << "Msg: [src.admincaster_feed_message.author] [src.admincaster_feed_message.body]"
+	usr << browse(dat, "window=admincaster_main;size=400x600")
+	onclose(usr, "admincaster_main")
 
 
 
