@@ -26,8 +26,9 @@ orangebottle: Lilliana Reade: /obj/item/weapon/pen/fluff/fancypen
 rawrtaicho: Riley Rohtin: /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1
 roaper: Enos Adlai: /obj/item/clothing/head/fluff/enos_adlai_1
 searif: Yuki Matsuda: /obj/item/clothing/under/fluff/jumpsuitdown, /obj/item/clothing/head/helmet/welding/fluff/yuki_matsuda_1
-searif: Tsiokeriio Tarbell: /obj/item/clothing/mask/fluff/flagmask
+searif: Ara Al-Jazari: /obj/item/clothing/under/rank/bartender/fluff/classy
 serithi: Serithi Artalis: /obj/item/clothing/glasses/fluff/serithi_artalis_1, /obj/item/clothing/shoes/fluff/leatherboots
+sirribbit: /obj/item/weapon/clipboard/fluff/mcreary_journal
 sicktrigger: David Fanning: /obj/item/fluff/david_fanning_1
 silentthunder: Val McNeil: /obj/item/fluff/val_mcneil_1
 spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/suit/storage/labcoat/fluff/pink
