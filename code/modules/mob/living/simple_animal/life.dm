@@ -282,7 +282,9 @@
 	return
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+
 	switch(M.a_intent)
+
 		if ("help")
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
@@ -319,6 +321,22 @@
 			src.health -= damage
 
 	return
+
+/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L as mob)
+
+	switch(L.a_intent)
+		if("help")
+			visible_message("\blue [L] rubs it's head against [src]")
+
+		else
+
+			var/damage = rand(5, 10)
+			visible_message("\red <B>[L] bites [src]!</B>")
+
+			if(stat != DEAD)
+				src.health -= damage
+				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+
 
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))

@@ -67,6 +67,9 @@
 	src.attack_paw(user)
 	return
 
+/atom/proc/attack_larva(mob/user as mob)
+	return
+
 // for metroids
 /atom/proc/attack_metroid(mob/user as mob)
 	return
@@ -654,6 +657,16 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if ( (W) && !alien.restrained() )
 				W.afterattack(src, alien)
 
+	else if(islarva(usr))
+		var/mob/living/carbon/alien/larva/alien = usr
+		if(alien.stat)
+			return
+
+		var/in_range = in_range(src, alien) || src.loc == alien
+
+		if (in_range)
+			if ( !alien.restrained() )
+				attack_larva(alien)
 
 	else if(ismetroid(usr))
 		var/mob/living/carbon/metroid/metroid = usr
@@ -980,6 +993,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 							usr.hud_used.move_intent.icon_state = "running"
 							usr.update_icons()
 						src.attack_alien(usr, usr.hand)
+					else if (istype(usr, /mob/living/carbon/alien/larva))
+						src.attack_larva(usr)
 					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
 						src.attack_ai(usr, usr.hand)
 					else if(istype(usr, /mob/living/carbon/metroid))

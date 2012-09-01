@@ -22,7 +22,7 @@
 	set desc = "Evolve into a fully grown Alien."
 	set category = "Alien"
 
-	if(amount_grown >= 200)	//TODO ~Carn
+	if(amount_grown >= max_grown)	//TODO ~Carn
 		src << "\green You are growing into a beautiful alien! It is time to choose a caste."
 		src << "\green There are three to choose from:"
 		src << "\green <B>Hunters</B> are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves."

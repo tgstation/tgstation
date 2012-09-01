@@ -64,7 +64,7 @@
 	proc/handle_mutations_and_radiation()
 
 		//grow!! but not if metroid or dead
-		if(health>-100 && amount_grown < 200)
+		if(health>-100 && amount_grown < max_grown)
 			amount_grown++
 
 		if (radiation)
@@ -235,7 +235,7 @@
 					mutations.Add(FAT)
 		else
 			if(nutrition > 500)
-				if(prob(5 + round((nutrition - 200) / 2)))
+				if(prob(5 + round((nutrition - max_grown) / 2)))
 					src << "\red You suddenly feel blubbery!"
 					mutations.Add(FAT)
 
