@@ -23,10 +23,10 @@
 	var/obj/item/W = get_active_hand()
 	if(W)
 		if(!istype(W))	return
-		switch(text)
+		switch(slot_id)
 //			if("o_clothing")
 //			if("head")
-			if("storage1")
+			if(slot_l_store)
 				if(l_store)
 					return
 				if(W.w_class > 3)
@@ -34,7 +34,7 @@
 				u_equip(W)
 				l_store = W
 				update_inv_pockets()
-			if("storage2")
+			if(slot_r_store)
 				if(r_store)
 					return
 				if(W.w_class > 3)
@@ -43,12 +43,12 @@
 				r_store = W
 				update_inv_pockets()
 	else
-		switch(text)
-			if("o_clothing")
+		switch(slot_id)
+			if(slot_wear_suit)
 				if(wear_suit)	wear_suit.attack_alien(src)
-			if("head")
+			if(slot_head)
 				if(head)		head.attack_alien(src)
-			if("storage1")
+			if(slot_l_store)
 				if(l_store)		l_store.attack_alien(src)
-			if("storage2")
+			if(slot_r_store)
 				if(r_store)		r_store.attack_alien(src)
