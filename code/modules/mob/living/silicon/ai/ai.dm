@@ -11,7 +11,7 @@
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
 	//var/list/laws = list()
-	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
+	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list())
 	var/viewalerts = 0
 	var/lawcheck[1]
 	var/ioncheck[1]
@@ -261,7 +261,7 @@
 	if (prob(30))
 		switch(pick(1,2))
 			if(1)
-				cancel_camera()
+				core()
 			if(2)
 				ai_call_shuttle()
 	..()
@@ -444,7 +444,9 @@
 		//machine = null
 		//reset_view(null)
 		return 0
-
+	if(!src.eyeobj)
+		core()
+		return
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
 	//machine = src
@@ -543,6 +545,11 @@
 				cameralist[C.network] = C.network
 	var/old_network = network
 	network = input(U, "Which network would you like to view?") as null|anything in cameralist
+
+	if(!U.eyeobj)
+		U.core()
+		return
+
 	if(isnull(network))
 		network = old_network // If nothing is selected
 	else
@@ -653,15 +660,20 @@
 /mob/living/silicon/ai/proc/lightNearbyCamera()
 	if(camera_light_on && camera_light_on < world.timeofday)
 		if(src.current)
-			var/camera = near_range_camera(src.eyeobj)
+			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && src.current != camera)
 				src.current.SetLuminosity(0)
-				src.current = camera
-				src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)
+				if(!camera.light_disabled)
+					src.current = camera
+					src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)
+				else
+					src.current = null
 			else if(isnull(camera))
 				src.current.SetLuminosity(0)
 				src.current = null
-			camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 		else
-			src.current = near_range_camera(src.eyeobj)
-			if(src.current) src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)
+			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
+			if(camera && !camera.light_disabled)
+				src.current = camera
+				src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.

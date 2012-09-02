@@ -68,7 +68,7 @@
 /atom/proc/move_camera_by_click()
 	if(istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = usr
-		if(AI.client.eye == AI.eyeobj)
+		if(AI.eyeobj && AI.client.eye == AI.eyeobj)
 			AI.eyeobj.setLoc(src)
 
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
@@ -106,7 +106,13 @@
 	current = null
 	cameraFollow = null
 	machine = null
-	src.eyeobj.loc = src.loc
+
+	if(src.eyeobj)
+		src.eyeobj.loc = src.loc
+	else
+		src << "ERROR: Eyeobj not found. Please report this to Giacom. Creating new eye..."
+		src.eyeobj = new(src.loc)
+
 	if(client && client.eye)
 		client.eye = src
 	for(var/datum/camerachunk/c in eyeobj.visibleCameraChunks)

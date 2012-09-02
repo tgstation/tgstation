@@ -38,7 +38,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
 
 
-/obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount)
+/obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
 
 	if(!on)
@@ -321,12 +321,12 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		if(istype(machine_from, /obj/machinery/telecomms/relay))
 
 			//If the signal is compressed, send it to the bus.
-			relay_information(signal, "/obj/machinery/telecomms/bus", 1) // ideally relay the copied information to bus units
+			relay_information(signal, "/obj/machinery/telecomms/bus") // ideally relay the copied information to bus units
 		else
 			//The signal is ready to be sent!
-			var/can_send = relay_information(signal, "/obj/machinery/telecomms/relay", 1)
+			var/can_send = relay_information(signal, "/obj/machinery/telecomms/relay")
 			if(!can_send)
-				relay_information(signal, "/obj/machinery/telecomms/broadcaster", 1) // Send it to a broadcaster instead, if it's linked to one
+				relay_information(signal, "/obj/machinery/telecomms/broadcaster") // Send it to a broadcaster instead, if it's linked to one
 /*
 	The relay idles until it receives information. It then passes on that information
 	depending on where it came from.
@@ -356,12 +356,12 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		if(istype(machine_from, /obj/machinery/telecomms/receiver))
 
 			//If the signal is compressed, send it to the bus.
-			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub", 1) // ideally relay the copied information to bus units
+			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub") // ideally relay the copied information to bus units
 			if(!can_send)
-				relay_information(signal, "/obj/machinery/telecomms/bus", 1) // Send it to a bus instead, if it's linked to one
+				relay_information(signal, "/obj/machinery/telecomms/bus") // Send it to a bus instead, if it's linked to one
 		else
 			//The signal is ready to be sent!
-			relay_information(signal, "/obj/machinery/telecomms/broadcaster", 1)
+			relay_information(signal, "/obj/machinery/telecomms/broadcaster")
 
 /*
 	The bus mainframe idles and waits for hubs to relay them signals. They act
@@ -392,7 +392,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if(is_freq_listening(signal))
 		if(!istype(machine_from, /obj/machinery/telecomms/processor)) // Signal must be ready (stupid assuming machine), let's send it
 			// send to one linked processor unit
-			var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor", 1)
+			var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor")
 
 			if(!send_to_processor) // failed to send to a processor, relay information anyway
 				signal.data["slow"] += rand(1, 5) // slow the signal down only slightly
@@ -401,7 +401,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 		else // the signal has been decompressed by a processor unit
 			 // send to all linked server units
-			var/sendserver = relay_information(signal, "/obj/machinery/telecomms/server", 1)
+			var/sendserver = relay_information(signal, "/obj/machinery/telecomms/server")
 
 			// Can't send to a single server, send to a hub instead!
 			if(!sendserver)
@@ -446,7 +446,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				relay_direct_information(signal, machine_from) // send the signal back to the machine
 			else // no bus detected - send the signal to servers instead
 				signal.data["slow"] += rand(5, 10) // slow the signal down
-				relay_information(signal, "/obj/machinery/telecomms/server", 1)
+				relay_information(signal, "/obj/machinery/telecomms/server")
 
 
 /*
@@ -542,8 +542,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				if(Compiler && autoruncode)
 					Compiler.Run(signal)	// execute the code
 
-			relay_information(signal, "/obj/machinery/telecomms/broadcaster", 1)
-			relay_information(signal, "/obj/machinery/telecomms/hub", 1)
+			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub")
+			if(!can_send)
+				relay_information(signal, "/obj/machinery/telecomms/broadcaster")
 
 
 /obj/machinery/telecomms/server/proc/setcode(var/t)

@@ -1,3 +1,5 @@
+#define BORG_CAMERA_BUFFER 30
+
 //UPDATE TRIGGERS, when the chunk (and the surrounding chunks) should update.
 
 // TURFS
@@ -6,7 +8,8 @@
 	var/image/obscured
 
 /turf/proc/visibilityChanged()
-	cameranet.updateVisibility(src)
+	if(cameranet)
+		cameranet.updateVisibility(src)
 
 /turf/simulated/Del()
 	visibilityChanged()
@@ -16,17 +19,19 @@
 	..()
 	visibilityChanged()
 
-/*
+
 
 // STRUCTURES
 
 /obj/structure/Del()
-	cameranet.updateVisibility(src)
+	if(cameranet)
+		cameranet.updateVisibility(src)
 	..()
 
 /obj/structure/New()
 	..()
-	cameranet.updateVisibility(src)
+	if(cameranet)
+		cameranet.updateVisibility(src)
 
 // DOORS
 
@@ -35,21 +40,25 @@
 	. = ..(need_rebuild)
 	// Glass door glass = 1
 	// don't check then?
-	if(!glass)
+	if(!glass && cameranet)
 		cameranet.updateVisibility(src, 0)
 
-*/
 
 // ROBOT MOVEMENT
 
 // Update the portable camera everytime the Robot moves.
 // This might be laggy, comment it out if there are problems.
+/mob/living/silicon/robot/var/updating = 0
 
 /mob/living/silicon/robot/Move()
 	. = ..()
 	if(.)
 		if(src.camera)
-			cameranet.updatePortableCamera(src.camera)
+			if(!updating)
+				updating = 1
+				spawn(BORG_CAMERA_BUFFER)
+					cameranet.updatePortableCamera(src.camera)
+					updating = 0
 
 // CAMERA
 
@@ -72,3 +81,5 @@
 	cameranet.cameras -= src
 	cameranet.removeCamera(src)
 	..()
+
+#undef BORG_CAMERA_BUFFER

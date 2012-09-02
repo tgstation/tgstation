@@ -41,24 +41,6 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 
-/obj/machinery/camera
-	name = "security camera"
-	desc = "It's used to monitor rooms."
-	icon = 'icons/obj/monitors.dmi'
-	icon_state = "camera"
-	var/network = "SS13"
-	layer = 5
-	var/c_tag = null
-	var/c_tag_order = 999
-	var/status = 1.0
-	anchored = 1.0
-	var/invuln = null
-	var/bugged = 0
-	var/hardened = 0
-	use_power = 2
-	idle_power_usage = 5
-	active_power_usage = 10
-
 /obj/machinery/dispenser
 	name = "tank storage unit"
 	desc = "A simple yet bulky one-way storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."

@@ -1,4 +1,4 @@
-#define UPDATE_BUFFER 15
+#define UPDATE_BUFFER 20 // 2 seconds
 
 // CAMERA CHUNK
 //
@@ -67,11 +67,10 @@
 	for(var/obj/machinery/camera/c in cameras)
 		if(!c.can_use())
 			continue
-		var/turf/pos = get_turf(c)
-		if(pos)
-			for(var/turf/t in range(7, pos))
-				if(t in turfs)
-					newVisibleTurfs += t
+
+		for(var/turf/t in c.can_see())
+			if(t in turfs)
+				newVisibleTurfs += t
 
 	var/list/visAdded = newVisibleTurfs - visibleTurfs
 	var/list/visRemoved = visibleTurfs - newVisibleTurfs
@@ -119,11 +118,10 @@
 	for(var/obj/machinery/camera/c in cameras)
 		if(!c.can_use())
 			continue
-		var/turf/pos = get_turf(c)
-		if(pos)
-			for(var/turf/t in range(7, pos))
-				if(t in turfs)
-					visibleTurfs += t
+
+		for(var/turf/t in c.can_see())
+			if(t in turfs)
+				visibleTurfs += t
 
 	obscuredTurfs = turfs - visibleTurfs
 

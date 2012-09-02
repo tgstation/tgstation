@@ -8,8 +8,8 @@
 	var/list/alarms_to_clear = list()
 
 
-	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0)
-	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0)
+	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
+	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 
 /mob/living/silicon/proc/cancelAlarm()
 	return
@@ -43,13 +43,16 @@
 					msg += "MOTION: [alarm_types_show["Motion"]] alarms detected. - "
 
 				if(alarm_types_show["Fire"])
-					msg += "FIRE: [alarm_types_show["Fire"]] Fire alarms detected. - "
+					msg += "FIRE: [alarm_types_show["Fire"]] alarms detected. - "
 
 				if(alarm_types_show["Atmosphere"])
 					msg += "ATMOSPHERE: [alarm_types_show["Atmosphere"]] alarms detected. - "
 
 				if(alarm_types_show["Power"])
 					msg += "POWER: [alarm_types_show["Power"]] alarms detected. - "
+
+				if(alarm_types_show["Camera"])
+					msg += "CAMERA: [alarm_types_show["Power"]] alarms detected. - "
 
 				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
 				src << msg
@@ -65,7 +68,7 @@
 					msg += "MOTION: [alarm_types_clear["Motion"]] alarms cleared. - "
 
 				if(alarm_types_clear["Fire"])
-					msg += "FIRE: [alarm_types_clear["Fire"]] Fire alarms cleared. - "
+					msg += "FIRE: [alarm_types_clear["Fire"]] alarms cleared. - "
 
 				if(alarm_types_clear["Atmosphere"])
 					msg += "ATMOSPHERE: [alarm_types_clear["Atmosphere"]] alarms cleared. - "
@@ -73,14 +76,19 @@
 				if(alarm_types_clear["Power"])
 					msg += "POWER: [alarm_types_clear["Power"]] alarms cleared. - "
 
+				if(alarm_types_show["Camera"])
+					msg += "CAMERA: [alarm_types_show["Power"]] alarms detected. - "
+
 				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
 				src << msg
 
 
 			alarms_to_show = list()
 			alarms_to_clear = list()
-			alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0)
-			alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0)
+			for(var/i = 1; i < alarm_types_show.len; i++)
+				alarm_types_show[i] = 0
+			for(var/i = 1; i < alarm_types_clear.len; i++)
+				alarm_types_clear[i] = 0
 
 /mob/living/silicon/drop_item()
 	return
@@ -88,10 +96,10 @@
 /mob/living/silicon/emp_act(severity)
 	switch(severity)
 		if(1)
-			src.take_organ_damage(40)
+			src.take_organ_damage(20)
 			Stun(rand(5,10))
 		if(2)
-			src.take_organ_damage(20)
+			src.take_organ_damage(10)
 			Stun(rand(1,5))
 	flick("noise", src:flash)
 	src << "\red <B>*BZZZT*</B>"

@@ -136,7 +136,7 @@
 	product_coin_amt = ""
 
 /obj/machinery/vending/cigarette
-	name = "cigarette machine"
+	name = "Cigarette machine" //OCD had to be uppercase to look nice with the new formating
 	desc = "If you want to get cancer, might as well do it in style"
 	icon_state = "cigs"
 	product_paths = "/obj/item/weapon/cigpacket;/obj/item/weapon/storage/matchbox;/obj/item/weapon/lighter/random"

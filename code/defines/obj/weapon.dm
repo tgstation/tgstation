@@ -7,6 +7,19 @@
 /obj/item/weapon/shield
 	name = "shield"
 
+/obj/item/weapon/phone
+	name = "red phone"
+	desc = "Should anything ever go wrong..."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "red_phone"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 3.0
+	throwforce = 2.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = 2
+	attack_verb = list("called", "rang")
+
 /obj/item/weapon/shield/riot
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
