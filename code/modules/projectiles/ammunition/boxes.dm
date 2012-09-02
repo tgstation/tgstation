@@ -6,16 +6,6 @@
 	max_ammo = 7
 	multiple_sprites = 1
 
-
-
-/obj/item/ammo_magazine/a75
-	name = "ammo magazine (.75)"
-	icon_state = "gyro"
-	ammo_type = "/obj/item/ammo_casing/a75"
-	max_ammo = 8
-
-
-
 /obj/item/ammo_magazine/c38
 	name = "speed loader (.38)"
 	icon_state = "38"
@@ -88,4 +78,17 @@
 	name = "magazine (.50)"
 	icon_state = "50ae"
 	ammo_type = "/obj/item/ammo_casing/a50"
+	max_ammo = 0
+
+/obj/item/ammo_magazine/a75
+	name = "ammo magazine (.75)"
+	icon_state = "75"
+	ammo_type = "/obj/item/ammo_casing/a75"
+	multiple_sprites = 1
+	max_ammo = 8
+
+/obj/item/ammo_magazine/a75/empty
+	name = "ammo magazine (.75)"
+	icon_state = "75"
+	ammo_type = "/obj/item/ammo_casing/a75"
 	max_ammo = 0
