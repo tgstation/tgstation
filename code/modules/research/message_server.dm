@@ -82,7 +82,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 /obj/machinery/message_server/process()
 	//if(decryptkey == "password")
 	//	decryptkey = generateKey()
-	if((stat & (BROKEN|NOPOWER)) && active)
+	if(active && (stat & (BROKEN|NOPOWER)))
 		active = 0
 		return
 	update_icon()

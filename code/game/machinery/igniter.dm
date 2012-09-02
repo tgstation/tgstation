@@ -16,7 +16,7 @@
 	src.icon_state = text("igniter[]", src.on)
 	return
 
-/obj/machinery/igniter/process()
+/obj/machinery/igniter/process()	//ugh why is this even in process()?
 	if (src.on && !(stat & NOPOWER) )
 		var/turf/location = src.loc
 		if (isturf(location))

@@ -12,12 +12,6 @@
 		..()
 		spawn(10) del src
 
-/obj/effect/overlay/water
-	name = "water"
-	icon = 'icons/misc/beach.dmi'
-	icon_state = "water2"
-	layer = MOB_LAYER+0.1
-
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"
 	icon = 'icons/misc/beach2.dmi'

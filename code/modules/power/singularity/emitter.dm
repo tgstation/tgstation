@@ -105,22 +105,20 @@
 			s.set_up(5, 1, src)
 			s.start()
 		A.dir = src.dir
-		if(src.dir == 1)//Up
-			A.yo = 20
-			A.xo = 0
-		else if(src.dir == 2)//Down
-			A.yo = -20
-			A.xo = 0
-		else if(src.dir == 4)//Right
-			A.yo = 0
-			A.xo = 20
-		else if(src.dir == 8)//Left
-			A.yo = 0
-			A.xo = -20
-		else // Any other
-			A.yo = -20
-			A.xo = 0
-		A.process()
+		switch(dir)
+			if(NORTH)
+				A.yo = 20
+				A.xo = 0
+			if(EAST)
+				A.yo = 0
+				A.xo = 20
+			if(WEST)
+				A.yo = 0
+				A.xo = -20
+			else // Any other
+				A.yo = -20
+				A.xo = 0
+		A.process()	//TODO: Carn: check this out
 
 
 /obj/machinery/emitter/attackby(obj/item/W, mob/user)

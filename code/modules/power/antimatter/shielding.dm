@@ -80,7 +80,7 @@ proc/cardinalrange(var/center)
 
 
 /obj/machinery/am_shielding/process()
-	if(!processing) ..()
+	if(!processing) . = PROCESS_KILL
 	//TODO: core functions and stability
 	//TODO: think about checking the airmix for plasma and increasing power output
 	return
@@ -174,7 +174,6 @@ proc/cardinalrange(var/center)
 
 /obj/machinery/am_shielding/proc/shutdown_core()
 	processing = 0
-	machines.Remove(src)
 	if(!control_unit)	return
 	control_unit.linked_cores.Remove(src)
 	control_unit.reported_core_efficiency -= efficiency

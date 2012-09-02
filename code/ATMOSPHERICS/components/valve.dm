@@ -131,7 +131,7 @@ obj/machinery/atmospherics/valve
 
 	process()
 		..()
-		machines.Remove(src)
+		. = PROCESS_KILL
 
 /*		if(open && (!node1 || !node2))
 			close()

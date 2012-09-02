@@ -25,9 +25,7 @@ datum/controller/game_controller
 	var/ticker_cost		= 0
 	var/total_cost		= 0
 
-	var/obj/machinery/last_obj_processed		//Used for MC 'proc break' debugging
-	var/datum/disease/last_disease_processed	//Used for MC 'proc break' debugging
-	var/obj/machinery/last_machine_processed	//Used for MC 'proc break' debugging
+	var/last_thing_processed
 
 datum/controller/game_controller/New()
 	//There can be only one master_controller. Out with the old and in with the new.
@@ -101,7 +99,6 @@ datum/controller/game_controller/proc/process()
 			if(!Failsafe)	new /datum/failsafe()
 
 			var/currenttime = world.timeofday
-
 			last_tick_duration = (currenttime - last_tick_timeofday) / 10
 			last_tick_timeofday = currenttime
 
@@ -110,107 +107,128 @@ datum/controller/game_controller/proc/process()
 				var/start_time = world.timeofday
 				controller_iteration++
 
+				//AIR
 				timer = world.timeofday
+				last_thing_processed = air_master.type
 				air_master.process()
 				air_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
+				//SUN
 				timer = world.timeofday
+				last_thing_processed = sun.type
 				sun.calc_position()
 				sun_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
+				//MOBS
 				timer = world.timeofday
-				for(var/i=1,i<=mob_list.len,i++)
+				var/i = 1
+				while(i<=mob_list.len)
 					var/mob/M = mob_list[i]
 					if(M)
+						last_thing_processed = M.type
 						M.Life()
+						i++
 						continue
 					mob_list.Cut(i,i+1)
-					i--
 				mobs_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
+				//DISEASES
 				timer = world.timeofday
-				for(var/i=1,i<=active_diseases.len,i++)
+				i = 1
+				while(i<=active_diseases.len)
 					var/datum/disease/Disease = active_diseases[i]
 					if(Disease)
-						last_disease_processed = Disease
+						last_thing_processed = Disease.type
 						Disease.process()
+						i++
 						continue
 					active_diseases.Cut(i,i+1)
-					i--
 				diseases_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
+				//MACHINES
 				timer = world.timeofday
-				for(var/i=1,i<=machines.len,i++)
+				i = 1
+				while(i<=machines.len)
 					var/obj/machinery/Machine = machines[i]
 					if(Machine)
-						last_machine_processed = Machine
-						Machine.process()
-						if(Machine)
-							if(Machine.use_power)
-								Machine.auto_use_power()
-							continue
+						last_thing_processed = Machine.type
+						if(Machine.process() != PROCESS_KILL)
+							if(Machine)
+								if(Machine.use_power)
+									Machine.auto_use_power()
+								i++
+								continue
 					machines.Cut(i,i+1)
-					i--
 				machines_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
+				//OBJECTS
 				timer = world.timeofday
-				for(var/i=1,i<=processing_objects.len,i++)
+				i = 1
+				while(i<=processing_objects.len)
 					var/obj/Object = processing_objects[i]
 					if(Object)
-						last_obj_processed = Object
+						last_thing_processed = Object.type
 						Object.process()
+						i++
 						continue
 					processing_objects.Cut(i,i+1)
-					i--
 				objects_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
+				//PIPENETS
 				timer = world.timeofday
-				for(var/i=1,i<=pipe_networks.len,i++)
+				last_thing_processed = /datum/pipe_network
+				i = 1
+				while(i<=pipe_networks.len)
 					var/datum/pipe_network/Network = pipe_networks[i]
 					if(Network)
 						Network.process()
+						i++
 						continue
 					pipe_networks.Cut(i,i+1)
-					i--
 				networks_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
+				//POWERNETS
 				timer = world.timeofday
-				for(var/i=1,i<=powernets.len,i++)
+				last_thing_processed = /datum/powernet
+				i = 1
+				while(i<=powernets.len)
 					var/datum/powernet/Powernet = powernets[i]
 					if(Powernet)
 						Powernet.reset()
+						i++
 						continue
 					powernets.Cut(i,i+1)
-					i--
 				powernets_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
+				//TICKER
 				timer = world.timeofday
+				last_thing_processed = ticker.type
 				ticker.process()
 				ticker_cost = (world.timeofday - timer) / 10
 
+				//TIMING
 				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + ticker_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)
 					start_time -= 864000    //deciseconds in a day
 				sleep( round(minimum_ticks - (end_time - start_time),1) )
-
 			else
 				sleep(10)
 
@@ -283,4 +301,10 @@ datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 
 /client/verb/spawn_FS()
 	new /datum/failsafe()
+
+/client/verb/machines_list()
+	for(var/i=1,i<=machines.len,i++)
+		var/machine = machines[i]
+		if(istype(machine,/datum))	world.log << machine:type
+		else						world.log << machine
 */

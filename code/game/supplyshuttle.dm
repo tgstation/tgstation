@@ -592,7 +592,7 @@ var/list/mechtoys = list(
 		O.orderedby = idname
 		supply_shuttle.requestlist += O
 
-		temp = "Order requst placed.<BR>"
+		temp = "Order request placed.<BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A> | <A href='?src=\ref[src];confirmorder=[O.ordernum]'>Authorize Order</A>"
 
 	else if(href_list["confirmorder"])

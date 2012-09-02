@@ -891,8 +891,9 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	src.paper_remaining--
 	return
 
-/obj/machinery/newscaster/process()                 //Was thinking of doing the icon update through process, but multiple iterations per second does not
-	return                                          //bode well with a newscaster network of 10+ machines. Let's just return it, as it's added in the machines list.
+//Removed for now so these aren't even checked every tick. Left this here in-case Agouri needs it later.
+///obj/machinery/newscaster/process()       //Was thinking of doing the icon update through process, but multiple iterations per second does not
+//	return                                  //bode well with a newscaster network of 10+ machines. Let's just return it, as it's added in the machines list.
 
 /obj/machinery/newscaster/proc/newsAlert(channel)   //This isn't Agouri's work, for it is ugly and vile.
 	var/turf/T = get_turf(src)                      //Who the fuck uses spawn(600) anyway, jesus christ

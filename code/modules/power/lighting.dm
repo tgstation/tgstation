@@ -573,7 +573,7 @@
 
 #define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
 
-/obj/machinery/light/process()
+/obj/machinery/light/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
 	if(on)
 		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
 
