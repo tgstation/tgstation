@@ -345,48 +345,44 @@
 
 /atom/proc/clean_blood()
 	clean_prints()
-
 	if(istype(blood_DNA, /list))
 		del(blood_DNA)
-		.=1
+		return 1
 
-	//Cleaning blood off of mobs
-	if(istype(src, /mob/living/carbon))
-		var/mob/living/carbon/M = src
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.gloves)
-				if(H.gloves.clean_blood())
-					H.update_inv_gloves(0)
-			else
-				if(H.bloody_hands)
-					H.bloody_hands = 0
-					H.update_inv_gloves(0)
-		M.update_icons()	//apply the now updated overlays to the mob
-
-	//Cleaning blood off of items
-	else if(istype(src, /obj/item))
-		var/obj/item/O = src
-		if(O.blood_overlay)
-			O.overlays.Remove(O.blood_overlay)
-
-		if(istype(src, /obj/item/clothing/gloves))
-			var/obj/item/clothing/gloves/G = src
-			G.transfer_blood = 0
-
-	//Cleaning blood off of turfs
-	else if(istype(src, /turf/simulated))
-		var/turf/simulated/T = src
-		if(T.icon_old)
-			var/icon/I = new /icon(T.icon_old, T.icon_state)
-			T.icon = I
+/mob/living/carbon/clean_blood()
+	. = ..()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.gloves)
+			if(H.gloves.clean_blood())
+				H.update_inv_gloves(0)
 		else
-			T.icon = initial(icon)
-	return
+			if(H.bloody_hands)
+				H.bloody_hands = 0
+				H.update_inv_gloves(0)
+	update_icons()	//apply the now updated overlays to the mob
+
+/obj/item/clean_blood()
+	. = ..()
+	if(blood_overlay)
+		overlays.Remove(blood_overlay)
+	if(istype(src, /obj/item/clothing/gloves))
+		var/obj/item/clothing/gloves/G = src
+		G.transfer_blood = 0
+
+/*
+/turf/simulated/clean_blood()
+	. = ..()
+	if(icon_old)
+		var/icon/I = new /icon(icon_old, icon_state)
+		icon = I
+	else
+		icon = initial(icon)
+*/
+
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)
-	spawn( 0 )
-
+	spawn(0)
 		if (istype(over_object, /atom))
 			over_object.MouseDrop_T(src, usr)
 		return
