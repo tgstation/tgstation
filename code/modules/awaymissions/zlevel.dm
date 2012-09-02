@@ -7,7 +7,7 @@ proc/createRandomZlevel()
 	if (!text) // No random Z-levels for you.
 		return
 
-	world << "\red \b Reticulating Splines"
+	world << "\red \b Searching for away missions..."
 
 	var/list/CL = dd_text2list(text, "\n")
 
@@ -38,10 +38,20 @@ proc/createRandomZlevel()
 
 
 	if(potentialRandomZlevels.len)
+		world << "\red \b Loading away mission..."
+
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
 		if(isfile(file))
 			maploader.load_map(file)
 
+		for(var/obj/effect/landmark/L in world)
+			if (L.name != "awaystart")
+				continue
+			awaydestinations.Add(L)
+
+		world << "\red \b Away mission loaded."
+
 	else
+		world << "\red \b No away missions found."
 		return

@@ -4,5 +4,6 @@
 #Please ensure that your maps have a minimum distnace from the edge of 10 units, due to 'seamless transition' range
 #SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
 
-#maps/RandomZLevels/assistantChamber.dmm
+#maps/RandomZLevels/example.dmm
+#maps/RandomZLevels/desert.dmm
 

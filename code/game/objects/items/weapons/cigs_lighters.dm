@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /*
 CONTAINS:
 MATCHES
@@ -7,6 +5,7 @@ CIGARETTES
 CIGARS
 SMOKING PIPES
 CIG PACKET
+CHEAP LIGHTERS
 ZIPPO
 */
 
@@ -14,8 +13,8 @@ ZIPPO
 //MATCHES//
 ///////////
 /obj/item/weapon/match
-	name = "Match"
-	desc = "A simple match stick, used for lighting tobacco"
+	name = "match"
+	desc = "A simple match stick, used for lighting fine smokables."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "match_unlit"
 	var/lit = 0
@@ -27,10 +26,10 @@ ZIPPO
 
 	process()
 		var/turf/location = get_turf(src)
-		src.smoketime--
-		if(src.smoketime < 1)
-			src.icon_state = "match_burnt"
-			src.lit = -1
+		smoketime--
+		if(smoketime < 1)
+			icon_state = "match_burnt"
+			lit = -1
 			processing_objects.Remove(src)
 			return
 		if(location)
@@ -39,20 +38,18 @@ ZIPPO
 
 
 	dropped(mob/user as mob)
-		if(src.lit == 1)
-			src.lit = -1
-			src.damtype = "brute"
-			src.icon_state = "match_burnt"
-			src.item_state = "cigoff"
-			src.name = "Burnt match"
-			src.desc = "A match that has been burnt"
+		if(lit == 1)
+			lit = -1
+			damtype = "brute"
+			icon_state = "match_burnt"
+			item_state = "cigoff"
+			name = "burnt match"
+			desc = "A match. This one has seen better days."
 		return ..()
 
-
-///////////////////////
-//CIGARETTES + CIGARS//
-///////////////////////
-
+//////////////////
+//FINE SMOKABLES//
+//////////////////
 /obj/item/clothing/mask/cigarette
 	name = "cigarette"
 	desc = "A roll of tobacco and nicotine."
@@ -115,37 +112,37 @@ ZIPPO
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user as mob)
 	..()
-	if(istype(glass)) // you can dip cigarettes into beakers
+	if(istype(glass))	//you can dip cigarettes into beakers
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
-		if(transfered) // if reagents were transfered, show the message
-			user << "\blue You dip \the [src] into \the [glass]."
-		else // if not, either the beaker was empty, or the cigarette was full
+		if(transfered)	//if reagents were transfered, show the message
+			user << "<span class='notice'>You dip \the [src] into \the [glass].</span>"
+		else			//if not, either the beaker was empty, or the cigarette was full
 			if(!glass.reagents.total_volume)
-				user << "\red [glass] is empty."
+				user << "<span class='notice'>[glass] is empty.</span>"
 			else
-				user << "\red [src] is full."
+				user << "<span class='notice'>[src] is full.</span>"
 
 
 /obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights the [name].")
-	if(!src.lit)
-		src.lit = 1
-		src.damtype = "fire"
+	if(!lit)
+		lit = 1
+		damtype = "fire"
 		if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
 			var/datum/effect/effect/system/reagents_explosion/e = new()
-			e.set_up(round (src.reagents.get_reagent_amount("plasma")/2.5, 1), get_turf(src), 0, 0)
+			e.set_up(round (reagents.get_reagent_amount("plasma")/2.5, 1), get_turf(src), 0, 0)
 			e.start()
 			del(src)
 			return
 		if(reagents.get_reagent_amount("fuel")) // the fuel explodes, too, but much less violently
 			var/datum/effect/effect/system/reagents_explosion/e = new()
-			e.set_up(round (src.reagents.get_reagent_amount("fuel")/5, 1), get_turf(src), 0, 0)
+			e.set_up(round (reagents.get_reagent_amount("fuel")/5, 1), get_turf(src), 0, 0)
 			e.start()
 			del(src)
 			return
-		src.flags &= ~NOREACT // allowing reagents to react after being lit
-		src.reagents.handle_reactions()
-		src.icon_state = icon_on
-		src.item_state = icon_on
+		flags &= ~NOREACT // allowing reagents to react after being lit
+		reagents.handle_reactions()
+		icon_state = icon_on
+		item_state = icon_on
 		for(var/mob/O in viewers(usr, null))
 			O.show_message(flavor_text, 1)
 		processing_objects.Add(src)
@@ -153,13 +150,13 @@ ZIPPO
 
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
-	src.smoketime--
-	if(src.smoketime < 1)
+	smoketime--
+	if(smoketime < 1)
 		new type_butt(location)
 		processing_objects.Remove(src)
-		if(ismob(src.loc))
-			var/mob/living/M = src.loc
-			M << "\red Your [src.name] goes out."
+		if(ismob(loc))
+			var/mob/living/M = loc
+			M << "\red Your [name] goes out."
 			M.u_equip(src)	//un-equip it so the overlays can update
 			M.update_icons()
 		del(src)
@@ -167,7 +164,7 @@ ZIPPO
 	if(location)
 		location.hotspot_expose(700, 5)
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
-		if( iscarbon(src.loc) && (src == loc:wear_mask) ) // if it's in the human/monkey mouth, transfer reagents to the mob
+		if( iscarbon(loc) && (src == loc:wear_mask) ) // if it's in the human/monkey mouth, transfer reagents to the mob
 			var/mob/living/carbon/C = loc
 			if(prob(15)) // so it's not an instarape in case of acid
 				reagents.reaction(C, INGEST)
@@ -178,9 +175,9 @@ ZIPPO
 
 
 /obj/item/clothing/mask/cigarette/dropped(mob/user as mob)
-	if(src.lit == 1)
+	if(lit == 1)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] calmly drops and treads on the lit [], putting it out instantly.", user,src.name), 1)
+			O.show_message(text("\red [] calmly drops and treads on the lit [], putting it out instantly.", user,name), 1)
 			new type_butt(loc)
 			processing_objects.Remove(src)
 			del(src)
@@ -283,26 +280,26 @@ ZIPPO
 				light("\red [user] lights their [name] with their [W].")
 
 	light(var/flavor_text = "[usr] lights the [name].")
-		if(!src.lit)
-			src.lit = 1
-			src.damtype = "fire"
-			src.icon_state = icon_on
-			src.item_state = icon_on
+		if(!lit)
+			lit = 1
+			damtype = "fire"
+			icon_state = icon_on
+			item_state = icon_on
 			for(var/mob/O in viewers(usr, null))
 				O.show_message(flavor_text, 1)
 			processing_objects.Add(src)
 
 	process()
 		var/turf/location = get_turf(src)
-		src.smoketime--
-		if(src.smoketime < 1)
+		smoketime--
+		if(smoketime < 1)
 			new /obj/effect/decal/cleanable/ash(location)
-			if(ismob(src.loc))
-				var/mob/living/M = src.loc
-				M << "\red Your [src.name] goes out, and you empty the ash."
-				src.lit = 0
-				src.icon_state = icon_off
-				src.item_state = icon_off
+			if(ismob(loc))
+				var/mob/living/M = loc
+				M << "\red Your [name] goes out, and you empty the ash."
+				lit = 0
+				icon_state = icon_off
+				item_state = icon_off
 			processing_objects.Remove(src)
 			return
 		if(location)
@@ -310,17 +307,16 @@ ZIPPO
 		return
 
 	dropped(mob/user as mob)
-		if(src.lit == 1)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] puts out the [].", user,src.name), 1)
-				src.lit = 0
-				src.icon_state = icon_off
-				src.item_state = icon_off
+		if(lit == 1)
+			user.visible_message("<span class='notice'>[user] puts out [src].</span>")
+			lit = 0
+			icon_state = icon_off
+			item_state = icon_off
 			processing_objects.Remove(src)
 		return ..()
 
 /obj/item/clothing/mask/pipe/attack_self(mob/user as mob) //Refills the pipe. Can be changed to an attackby later, if loose tobacco is added to vendors or something.
-	if(src.smoketime <= 0)
+	if(smoketime <= 0)
 		user << "\blue You refill the pipe with tobacco."
 		smoketime = maxsmoketime
 	return
@@ -371,13 +367,13 @@ ZIPPO
 	attack_hand(mob/user as mob)
 		if(user.r_hand == src || user.l_hand == src)
 			if(cigcount == 0)
-				user << "\red You're out of cigs, shit! How you gonna get through the rest of the day..."
+				user << "<span class='notice'>You're out of cigs, shit! How you gonna get through the rest of the day...</span>"
 				return
 			else
 				var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
 				reagents.trans_to(W, (reagents.total_volume/cigcount))
 				user.put_in_active_hand(W)
-				src.reagents.maximum_volume = 15*cigcount
+				reagents.maximum_volume = 15*cigcount
 				cigcount--
 		else
 			return ..()
@@ -428,10 +424,10 @@ ZIPPO
 
 	attack_self(mob/living/user)
 		if(user.r_hand == src || user.l_hand == src)
-			if(!src.lit)
-				src.lit = 1
-				src.icon_state = icon_on
-				src.item_state = icon_on
+			if(!lit)
+				lit = 1
+				icon_state = icon_on
+				item_state = icon_on
 				if( istype(src,/obj/item/weapon/lighter/zippo) )
 					for(var/mob/O in viewers(user, null))
 						O.show_message(text("\red Without even breaking stride, [] flips open and lights the [] in one smooth movement.", user, src), 1)
@@ -448,9 +444,9 @@ ZIPPO
 				user.SetLuminosity(user.luminosity + 2)
 				processing_objects.Add(src)
 			else
-				src.lit = 0
-				src.icon_state = icon_off
-				src.item_state = icon_off
+				lit = 0
+				icon_state = icon_off
+				item_state = icon_off
 				if( istype(src,/obj/item/weapon/lighter/zippo) )
 					for(var/mob/O in viewers(user, null))
 						O.show_message(text("\red You hear a quiet click, as [] shuts off the [] without even looking at what they're doing. Wow.", user, src), 1)
@@ -469,11 +465,11 @@ ZIPPO
 		if(!istype(M, /mob))
 			return
 
-		if(istype(M.wear_mask,/obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && src.lit)
+		if(istype(M.wear_mask,/obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
 			if(M == user)
-				M.wear_mask:light("\red With a single flick of their wrist, [user] smoothly lights their [M.wear_mask.name] with their [src.name]. Damn they're cool.")
+				M.wear_mask:light("\red With a single flick of their wrist, [user] smoothly lights their [M.wear_mask.name] with their [name]. Damn they're cool.")
 			else
-				M.wear_mask:light("\red [user] whips the [src.name] out and holds it for [M]. Their arm is as steady as the unflickering flame they light the [M.wear_mask.name] with.")
+				M.wear_mask:light("\red [user] whips the [name] out and holds it for [M]. Their arm is as steady as the unflickering flame they light the [M.wear_mask.name] with.")
 		else
 			..()
 
@@ -487,7 +483,7 @@ ZIPPO
 
 	pickup(mob/user)
 		if(lit)
-			src.SetLuminosity(0)
+			SetLuminosity(0)
 			user.SetLuminosity(user.luminosity+2)
 		return
 
@@ -495,5 +491,5 @@ ZIPPO
 	dropped(mob/user)
 		if(lit)
 			user.SetLuminosity(user.luminosity-2)
-			src.SetLuminosity(2)
+			SetLuminosity(2)
 		return

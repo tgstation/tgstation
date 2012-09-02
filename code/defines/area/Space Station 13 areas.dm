@@ -1423,19 +1423,20 @@ proc/process_ghost_teleport_locs()
 
 
 
+// Away Missions
+/area/awaymission
+	name = "\improper Strange Location"
+	icon_state = "away"
+
+/area/awaymission/example
+	name = "\improper Strange Station"
+	icon_state = "away"
+
+/area/awaymission/desert
+	name = "Mars"
+	icon_state = "away"
 
 
-
-
-
-
-
-
-
-/area/turret_protected/AssistantRoom
-	name = "\improper Assistant Room"
-	icon_state = "storage"
-	lighting_use_dynamic = 0
 
 /////////////////////////////////////////////////////////////////////
 /*

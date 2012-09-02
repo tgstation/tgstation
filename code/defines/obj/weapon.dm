@@ -76,18 +76,6 @@
 	throwforce = 10
 	w_class = 1
 
-/obj/item/weapon/sord
-	name = "\improper SORD"
-	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
-	icon_state = "sord"
-	item_state = "sord"
-	flags = FPRINT | TABLEPASS
-	slot_flags = SLOT_BELT
-	force = 2
-	throwforce = 1
-	w_class = 3
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-
 /obj/item/weapon/sord/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
@@ -720,28 +708,6 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "fcardholder0"
 	item_state = "clipboard"
-
-/obj/item/weapon/flasks
-	name = "flask"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	var/oxygen = 0.0
-	var/plasma = 0.0
-	var/coolant = 0.0
-
-/obj/item/weapon/flasks/coolant
-	name = "light blue flask"
-	icon_state = "coolant-c"
-	coolant = 1000.0
-
-/obj/item/weapon/flasks/oxygen
-	name = "blue flask"
-	icon_state = "oxygen-c"
-	oxygen = 500.0
-
-/obj/item/weapon/flasks/plasma
-	name = "orange flask"
-	icon_state = "plasma-c"
-	plasma = 500.0
 
 /*
 /obj/item/weapon/game_kit
