@@ -8,7 +8,7 @@
 	var/image/obscured
 
 /turf/proc/visibilityChanged()
-	if(cameranet)
+	if(ticker)
 		cameranet.updateVisibility(src)
 
 /turf/simulated/Del()
@@ -24,13 +24,13 @@
 // STRUCTURES
 
 /obj/structure/Del()
-	if(cameranet)
+	if(ticker)
 		cameranet.updateVisibility(src)
 	..()
 
 /obj/structure/New()
 	..()
-	if(cameranet)
+	if(ticker)
 		cameranet.updateVisibility(src)
 
 // DOORS
