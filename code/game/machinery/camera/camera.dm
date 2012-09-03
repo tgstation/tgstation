@@ -49,10 +49,12 @@
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
+			triggerCameraAlarm()
 			spawn(900)
 				network = initial(network)
 				icon_state = initial(icon_state)
 				stat &= ~EMPED
+				cancelCameraAlarm()
 				if(can_use())
 					cameranet.addCamera(src)
 			for(var/mob/O in mob_list)
@@ -99,9 +101,11 @@
 
 	// DECONSTRUCTION
 	if(isscrewdriver(W))
-		if(toggle_panel(user))
-			user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
-			"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
+		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
+		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
+		panel_open = !panel_open
+		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
+		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 
 	else if((iswirecutter(W) || ismultitool(W)) && panel_open)
 		interact(user)
@@ -196,20 +200,20 @@
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
 	for(var/mob/living/silicon/S in mob_list)
-		S.triggerAlarm("Camera", get_area(src), src)
+		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
 	for(var/mob/living/silicon/S in mob_list)
-		S.cancelAlarm("Camera", get_area(src), src)
+		S.cancelAlarm("Camera", get_area(src), list(src), src)
 
 /obj/machinery/camera/proc/toggle_panel(var/mob/user)
 	if(busy)
 		return 0
 	playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 	busy = 1
-	if(do_after(user, 50))
+	if(do_after(user, 30))
 		panel_open = !panel_open
 		busy = 0
 		return 1
@@ -276,10 +280,11 @@
 		return 0
 
 	// Do after stuff here
+	user << "<span class='notice'>You start to weld the [src]..</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1
-	if(do_after(user, 20))
+	if(do_after(user, 100))
 		busy = 0
 		if(!WT.isOn())
 			return 0

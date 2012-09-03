@@ -94,10 +94,7 @@
 			light_disabled = !light_disabled
 
 		if(CAMERA_WIRE_ALARM)
-			if(prob(80))
-				src.visible_message("\icon[src] *beep*", "\icon[src] *beep*")
-			else
-				triggerCameraAlarm()
+			src.visible_message("\icon[src] *beep*", "\icon[src] *beep*")
 
 	src.interact(usr)
 

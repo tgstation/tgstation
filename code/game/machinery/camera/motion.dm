@@ -11,7 +11,7 @@
 /obj/machinery/camera/process()
 	// motion camera event loop
 	if(!isMotion())
-		..()
+		. = PROCESS_KILL
 		return
 	if (detectTime > 0)
 		var/elapsed = world.time - detectTime

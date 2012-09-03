@@ -139,7 +139,7 @@
 	if(!WT.isOn())
 		return 0
 
-	// Do after stuff here
+	user << "<span class='notice'>You start to weld the [src]..</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
 	busy = 1

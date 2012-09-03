@@ -440,10 +440,10 @@
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 
 	src.cameraFollow = null
-	if (!C || stat == 2 || !C.can_use())
-		//machine = null
-		//reset_view(null)
+
+	if (!C || stat == 2) //C.can_use())
 		return 0
+
 	if(!src.eyeobj)
 		core()
 		return
