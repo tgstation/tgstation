@@ -76,6 +76,18 @@
 	throwforce = 10
 	w_class = 1
 
+/obj/item/weapon/sord
+	name = "\improper SORD"
+	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
+	icon_state = "sord"
+	item_state = "sord"
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
+	force = 2
+	throwforce = 1
+	w_class = 3
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
 /obj/item/weapon/sord/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
