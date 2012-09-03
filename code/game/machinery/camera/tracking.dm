@@ -45,10 +45,8 @@
 	 			if(!hood.canremove)
 	 				continue
 
-	 	if(!isturf(M.loc))
-	 		continue
 		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
-		if(!cameranet.checkCameraVis(M))
+		if(!near_camera(M))
 			continue
 
 		var/name = M.name
@@ -105,11 +103,8 @@
 				U << "Follow camera mode ended."
 				U.cameraFollow = null
 				return
-			if (!isturf(target.loc)) //in a closet
-				U << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
-				sleep(50) //because we're sleeping another second after this (a few lines down)
-				continue
-			if(!cameranet.checkCameraVis(target))
+
+			if (!near_camera(target))
 				U << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
 				sleep(50) //because we're sleeping another second after this (a few lines down)
 				continue
@@ -120,6 +115,17 @@
 				core()
 				return
 			sleep(10)
+
+/proc/near_camera(var/mob/M)
+	if (!isturf(M.loc))
+		return 0
+	if(isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		if(!(R.camera && R.camera.can_use()) && !cameranet.checkCameraVis(M))
+			return 0
+	else if(!cameranet.checkCameraVis(M))
+		return 0
+	return 1
 
 /obj/machinery/camera/attack_ai(var/mob/living/silicon/ai/user as mob)
 	if (!istype(user))
