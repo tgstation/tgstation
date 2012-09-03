@@ -63,7 +63,48 @@
 	throwforce = 10
 	w_class = 1
 
-/obj/item/weapon/sord
+//BS12 EDIT
+/obj/item/weapon/nullrod/attack(mob/M as mob, mob/living/user as mob)
+
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
+
+	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
+	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
+	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+
+	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		user << "\red You don't have the dexterity to do this!"
+		return
+
+	if ((CLUMSY in user.mutations) && prob(50))
+		user << "\red The rod slips out of your hand and hits your head."
+		user.take_organ_damage(10)
+		user.Paralyse(20)
+		return
+
+	if (M.stat !=2)
+		if((M.mind in ticker.mode.cult) && prob(33))
+			M << "\red The power of [src] clears your mind of the cult's influence!"
+			user << "\red You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal."
+			ticker.mode.remove_cultist(M.mind)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\red [] waves [] over []'s head.", user, src, M), 1)
+		else if(prob(10))
+			user << "\red The rod slips in your hand."
+			..()
+		else
+			user << "\red The rod appears to do nothing."
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\red [] waves [] over []'s head.", user, src, M), 1)
+			return
+
+/obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob)
+	if (istype(A, /turf/simulated/floor))
+		user << "\blue You hit the floor with the [src]."
+		call(/obj/effect/rune/proc/revealrunes)(src)
+
+/*/obj/item/weapon/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
@@ -74,7 +115,7 @@
 	throwforce = 1
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-
+*/ //BS12 EDIT
 /obj/item/weapon/claymore
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
@@ -160,8 +201,8 @@
 	g_amt = 15000
 
 /obj/item/weapon/spacecash
-	name = "space cash"
-	desc = "It's worth 1 credit."
+	name = "stack of credits"
+	desc = "1 credit."
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "spacecash"
@@ -173,37 +214,140 @@
 	throw_speed = 1
 	throw_range = 2
 	w_class = 1.0
+	var/currency
+	var/worth
+	var/split = 5
+	var/round = 0.01
 	var/access = list()
 	access = access_crate_cash
+
+
+/obj/item/weapon/spacecash/proc/updatedesc()
+	name = "stack of [currency]"
+	desc = "A pile of [worth] [currency]"
+
+/obj/item/weapon/spacecash/New(var/nloc, var/nworth=1,var/ncurrency  = "credits")
+	if(!worth)
+		worth = nworth
+	if(!currency)
+		currency = ncurrency
+	split = round(worth/2,round)
+	updatedesc()
+	return ..(nloc)
 
 /obj/item/weapon/spacecash/c10
 	icon_state = "spacecash10"
 	access = access_crate_cash
-	desc = "It's worth 10 credits."
+	desc = "A pile of 10 credits."
+	worth = 10
+
 /obj/item/weapon/spacecash/c20
 	icon_state = "spacecash20"
 	access = access_crate_cash
-	desc = "It's worth 20 credits."
+	desc = "A pile of 20 credits."
+	worth = 20
+
 /obj/item/weapon/spacecash/c50
 	icon_state = "spacecash50"
 	access = access_crate_cash
-	desc = "It's worth 50 credits."
+	desc = "A pile of 50 credits."
+	worth = 50
+
 /obj/item/weapon/spacecash/c100
 	icon_state = "spacecash100"
 	access = access_crate_cash
-	desc = "It's worth 100 credits."
+	desc = "A pile of 100 credits."
+	worth = 100
+
 /obj/item/weapon/spacecash/c200
 	icon_state = "spacecash200"
 	access = access_crate_cash
-	desc = "It's worth 200 credits."
+	desc = "A pile of 200 credits."
+	worth = 200
+
 /obj/item/weapon/spacecash/c500
 	icon_state = "spacecash500"
 	access = access_crate_cash
-	desc = "It's worth 500 credits."
+	desc = "A pile of 500 credits."
+	worth = 500
+
 /obj/item/weapon/spacecash/c1000
 	icon_state = "spacecash1000"
 	access = access_crate_cash
-	desc = "It's worth 1000 credits."
+	desc = "A pile of 1000 credits."
+	worth = 1000
+
+/obj/item/weapon/spacecash/attack_self(var/mob/user)
+	interact(user)
+
+/obj/item/weapon/spacecash/proc/interact(var/mob/user)
+
+	user.machine = src
+
+	var/dat
+
+	dat += "<BR>[worth] [currency]"
+	dat += "<BR>New pile:"
+
+	dat += "<A href='?src=\ref[src];sd=5'>-</a>"
+	dat += "<A href='?src=\ref[src];sd=1'>-</a>"
+	if(round<=0.1)
+		dat += "<A href='?src=\ref[src];sd=0.1'>-</a>"
+		if(round<=0.01)
+			dat += "<A href='?src=\ref[src];sd=0.01'>-</a>"
+	dat += "[split]"
+	if(round<=0.01)
+		dat += "<A href='?src=\ref[src];su=0.01'>+</a>"
+	if(round<=0.1)
+		dat += "<A href='?src=\ref[src];su=0.1'>+</a>"
+	dat += "<A href='?src=\ref[src];su=1'>+</a>"
+	dat += "<A href='?src=\ref[src];su=5'>+</a>"
+	dat += "<BR><A href='?src=\ref[src];split=1'>split</a>"
+
+
+	user << browse(dat, "window=computer;size=400x500")
+
+	onclose(user, "computer")
+	return
+
+/obj/item/weapon/spacecash/Topic(href, href_list)
+	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+		usr.machine = src
+
+		if (href_list["su"])
+			var/samt = text2num(href_list["su"])
+			if(split+samt<worth)
+				split+=samt
+		if (href_list["sd"])
+			var/samt = text2num(href_list["sd"])
+			if(split-samt>0)
+				split-=samt
+		if(href_list["split"])
+			new /obj/item/weapon/spacecash(get_turf(src),split,currency)
+			worth-=split
+			split = round(worth/2,round)
+			updatedesc()
+
+
+		src.add_fingerprint(usr)
+	src.updateUsrDialog()
+	for (var/mob/M in viewers(1, src.loc))
+		if (M.client && M.machine == src)
+			src.attack_self(M)
+	return
+
+/obj/item/weapon/spacecash/attackby(var/obj/I as obj, var/mob/user as mob)
+	if(istype(I,/obj/item/weapon/spacecash))
+		var/mob/living/carbon/c = user
+		if(!uppertext(I:currency)==uppertext(currency))
+			c<<"You can't mix currencies!"
+			return ..()
+		else
+			worth+=I:worth
+			c<<"You combine the piles."
+			updatedesc()
+			del I
+	return ..()
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
@@ -561,6 +705,9 @@
 	var/assignment = null
 	var/assignment_real_title = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
+
+	var/money
+	var/pin
 
 /obj/item/weapon/card/id/silver
 	name = "identification card"

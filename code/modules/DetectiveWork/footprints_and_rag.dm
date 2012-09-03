@@ -178,7 +178,7 @@ proc/blood_incompatible(donor,receiver)
 	attack(atom/target as obj|turf|area, mob/user as mob , flag)
 		if(ismob(target) && target.reagents && reagents.total_volume)
 			user.visible_message("\red \The [target] has been smothered with \the [src] by \the [user]!", "\red You smother \the [target] with \the [src]!", "You hear some struggling and muffled cries of surprise")
-			src.reagents.reaction(target, TOUCH)
+			src.reagents.reaction(target, INGEST)
 			spawn(5) src.reagents.clear_reagents()
 			return
 		else

@@ -506,30 +506,27 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
+	var/customname = input(usr, "Pick a title for the report.", "Title") as text|null
 	if(!input)
 		return
+	if(!customname)
+		customname = "NanoTrasen Update"
+	for (var/obj/machinery/computer/communications/C in machines)
+		if(! (C.stat & (BROKEN|NOPOWER) ) )
+			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
+			P.name = "'[command_name()] Update.'"
+			P.info = input
+			P.update_icon()
+			C.messagetitle.Add("[command_name()] Update")
+			C.messagetext.Add(P.info)
 
-	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
-	if(confirm == "Yes")
-		command_alert(input);
-		for (var/obj/machinery/computer/communications/C in machines)
-			if(! (C.stat & (BROKEN|NOPOWER) ) )
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
-				P.name = "paper- '[command_name()] Update.'"
-				P.info = input
-				C.messagetitle.Add("[command_name()] Update")
-				C.messagetext.Add(P.info)
-	else
-		command_alert("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message");
-		for (var/obj/machinery/computer/communications/C in machines)
-			if(! (C.stat & (BROKEN|NOPOWER) ) )
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
-				P.name = "paper- 'Classified [command_name()] Update.'"
-				P.info = input
-				C.messagetitle.Add("Classified [command_name()] Update")
-				C.messagetext.Add(P.info)
+	switch(alert("Should this be announced to the general population?",,"Yes","No"))
+		if("Yes")
+			command_alert(input, maintitle=customname);
+		if("No")
+			world << "\red New NanoTrasen Update available at all communication consoles."
 
-	world << sound('sound/AI/commandreport.ogg')
+	world << sound('commandreport.ogg')
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report", 1)
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

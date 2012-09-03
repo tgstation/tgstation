@@ -21,7 +21,7 @@
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 0
-	spawn_positions = 1
+	spawn_positions = 2
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
 
