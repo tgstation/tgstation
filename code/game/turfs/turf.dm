@@ -1739,15 +1739,22 @@ turf/simulated/floor/proc/update_icon()
 
 			if(src.x <= TRANSITIONEDGE)
 				A.x = world.maxx - TRANSITIONEDGE - 2
+				A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
 			else if (A.x >= (world.maxx - TRANSITIONEDGE - 1))
 				A.x = TRANSITIONEDGE + 1
+				A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
 			else if (src.y <= TRANSITIONEDGE)
 				A.y = world.maxy - TRANSITIONEDGE -2
+				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
 			else if (A.y >= (world.maxy - TRANSITIONEDGE - 1))
-				A.y = TRANSITIONEDGE +1
+				A.y = TRANSITIONEDGE + 1
+				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+
+
+
 
 			spawn (0)
 				if ((A && A.loc))

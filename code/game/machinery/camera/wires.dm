@@ -125,6 +125,7 @@
 	t1 += "<br>\n[(src.view_range == initial(view_range) ? "The focus light is on." : "The focus light is off.")]"
 	t1 += "<br>\n[(src.can_use() ? "The power link light is on." : "The power link light is off.")]"
 	t1 += "<br>\n[(light_disabled ? "The camera light is off." : "The camera light is on.")]"
+	t1 += "<br>\n[(alarm_on ? "The alarm light is on." : "The alarm light is off.")]"
 
 	t1 += "<p><a href='?src=\ref[src];close2=1'>Close</a></p>\n"
 	user << browse(t1, "window=wires")
