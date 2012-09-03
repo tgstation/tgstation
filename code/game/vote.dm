@@ -220,8 +220,15 @@
 			usr << browse(text, "window=vote")
 
 		else	// voting to restart
+			text += "Vote to call crew transfer shuttle round in progress.<BR>"
+			text += "[vote.endwait()] until voting is closed.<BR>"
 
-			text += "Restart the world?<BR><UL>"
+			if(vote.instant_restart)
+				text += "Restart the world? <B><font color='red'>ONLY PRESS THIS IF THERE'S A ROUND-BREAKING GLITCH.</font></B><BR>"
+			else
+				text += "Call the Crew Transfer Shuttle?<BR>"
+
+			text += "<B><font color=red>*** Please make sure to only vote 'no' if you yourself are currently enjoying the round. If you find the round to have gone stale, you should always vote 'yes', regardless of how others are feeling about the round.</font></B><BR><UL>"
 
 			var/list/VL = list("default","restart")
 
@@ -259,7 +266,9 @@
 
 		if(!vote.canvote())		// not time to vote yet
 			if(config.allow_vote_restart) text+="Voting to restart is enabled.<BR>"
-			if(config.allow_vote_mode) text+="Voting to change mode is enabled.<BR>"
+			if(config.allow_vote_mode)
+				if(ticker.current_state == 1) text+="Voting to change mode is enabled.<BR>"
+				else text += "Change mode votes are disabled while a round is in progress, vote to restart first.<BR>"
 
 			text+="<BR><P>Next vote can begin in [vote.nextwait()]."
 			text+=footer
@@ -270,13 +279,17 @@
 			if(config.allow_vote_restart)
 				text += "<A href='?src=\ref[vote];vmode=1'>Begin restart vote.</A><BR>"
 			if(config.allow_vote_mode)
-				text += "<A href='?src=\ref[vote];vmode=2'>Begin change mode vote.</A><BR>"
-
+				if(!ticker || ticker.current_state == 1)
+					text += "<A href='?src=\ref[vote];vmode=2'>Begin change mode vote.</A><BR>"
+				else
+					text += "Change mode votes are disabled while a round is in progress, vote to restart first.<BR>"
+			if(src.client.holder)			//Strumpetplaya Add - Custom Votes for Admins
+				text += "<A href='?src=\ref[vote];vmode=3'>Begin custom vote.</A><BR>"
 			text += footer
 			usr << browse(text, "window=vote")
 
 	spawn(20)
-		if(usr.client && usr.client.showvote)
+		if(usr.client && usr.client.showvote && !vote.enteringchoices)
 			usr.vote()
 		else
 			usr << browse(null, "window=vote")
