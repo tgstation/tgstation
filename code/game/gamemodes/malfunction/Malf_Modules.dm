@@ -122,7 +122,7 @@ rcd light flash thingy on matter drain
 	mod_pick_name = "recam"
 	uses = 10
 
-/client/proc/reactivate_camera(obj/machinery/camera/C as obj in world)
+/client/proc/reactivate_camera(obj/machinery/camera/C as obj in cameranet.cameras)
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
 	if (istype (C, /obj/machinery/camera))
@@ -138,6 +138,36 @@ rcd light flash thingy on matter drain
 			else usr << "Out of uses."
 	else usr << "That's not a camera."
 
+/datum/AI_Module/small/upgrade_camera
+	module_name = "Upgrade Camera"
+	mod_pick_name = "upgradecam"
+	uses = 10
+
+/client/proc/upgrade_camera(obj/machinery/camera/C as obj in cameranet.cameras)
+	set name = "Upgrade Camera"
+	set category = "Malfunction"
+	if(istype(C))
+		var/datum/AI_Module/small/upgrade_camera/UC = locate(/datum/AI_Module/small/upgrade_camera) in usr:current_modules
+		if(UC)
+			if(UC.uses > 0)
+				if(C.assembly)
+					var/upgraded = 0
+					if(!C.isXRay())
+						C.upgradeXRay()
+						cameranet.updateVisibility(C)
+						upgraded = 1
+					if(!C.isEmpProof())
+						C.upgradeEmpProof()
+						upgraded = 1
+					if(upgraded)
+						UC.uses --
+						C.visible_message("<span class='notice'>\icon[src] *beep*</span>")
+						usr << "Camera successully upgraded!"
+					else
+						usr << "This camera is already upgraded!"
+			else
+				usr << "Out of uses."
+
 
 /datum/AI_Module/module_picker
 	var/temp = null
@@ -152,6 +182,7 @@ rcd light flash thingy on matter drain
 	src.possible_modules += new /datum/AI_Module/small/interhack
 	src.possible_modules += new /datum/AI_Module/small/blackout
 	src.possible_modules += new /datum/AI_Module/small/reactivate_camera
+	src.possible_modules += new /datum/AI_Module/small/upgrade_camera
 
 /datum/AI_Module/module_picker/proc/use(user as mob)
 	var/dat
@@ -261,6 +292,19 @@ rcd light flash thingy on matter drain
 			usr.verbs += /client/proc/reactivate_camera
 			src.temp = "Reactivates a currently disabled camera. 10 uses."
 			usr:current_modules += new /datum/AI_Module/small/reactivate_camera
+		else src.temp = "Ten additional uses added to ReCam module."
+		src.processing_time -= 15
+
+	else if(href_list["upgradecam"])
+		var/already
+		for (var/datum/AI_Module/mod in usr:current_modules)
+			if(istype(mod, /datum/AI_Module/small/upgrade_camera))
+				mod:uses += 10
+				already = 1
+		if (!already)
+			usr.verbs += /client/proc/upgrade_camera
+			src.temp = "Upgrades a camera to have X-Ray vision and be EMP-Proof. 10 uses."
+			usr:current_modules += new /datum/AI_Module/small/upgrade_camera
 		else src.temp = "Ten additional uses added to ReCam module."
 		src.processing_time -= 15
 

@@ -4,9 +4,6 @@
 	var/detectTime = 0
 	var/locked = 1
 
-/obj/machinery/camera/motion/New()
-	..()
-	assembly.upgrades.Add(new /obj/item/device/assembly/prox_sensor(assembly))
 
 /obj/machinery/camera/process()
 	// motion camera event loop
@@ -49,6 +46,3 @@
 	detectTime = -1
 	return 1
 
-/obj/machinery/camera/proc/isMotion()
-	var/O = locate(/obj/item/device/assembly/prox_sensor) in assembly.upgrades
-	return O
