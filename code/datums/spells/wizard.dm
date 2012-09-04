@@ -84,8 +84,8 @@
 	range = -1
 	include_user = 1
 
-	emp_heavy = 5
-	emp_light = 7
+	emp_heavy = 6
+	emp_light = 10
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
 	name = "Blink"
