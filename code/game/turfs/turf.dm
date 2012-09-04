@@ -510,7 +510,6 @@
 		if(1.0)
 			//SN src = null
 			src.ReplaceWithSpace()
-			del(src)
 			return
 		if(2.0)
 			if (prob(50))
@@ -991,9 +990,8 @@
 	new /obj/structure/girder(src)
 	src.ReplaceWithFloor()
 	for(var/turf/simulated/floor/target_tile in range(0,src))
-		//skytodo
-		/*if(target_tile.parent && target_tile.parent.group_processing)
-			target_tile.parent.suspend_group_processing()*/
+		if(target_tile.parent && target_tile.parent.group_processing)
+			target_tile.parent.suspend_group_processing()
 		var/datum/gas_mixture/napalm = new
 		var/toxinsToDeduce = 20
 		napalm.toxins = toxinsToDeduce
@@ -1120,22 +1118,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				update_icon()
 				name = n
 
-/turf/simulated/floor/grass
-	name = "Grass patch"
-	icon_state = "grass1"
-	floor_tile = new/obj/item/stack/tile/grass
 
-	New()
-		floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
-		icon_state = "grass[pick("1","2","3","4")]"
-		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
 
 /turf/simulated/floor/wood
 	name = "floor"
@@ -1756,15 +1739,22 @@ turf/simulated/floor/proc/update_icon()
 
 			if(src.x <= TRANSITIONEDGE)
 				A.x = world.maxx - TRANSITIONEDGE - 2
+				A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
 			else if (A.x >= (world.maxx - TRANSITIONEDGE - 1))
 				A.x = TRANSITIONEDGE + 1
+				A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
 			else if (src.y <= TRANSITIONEDGE)
 				A.y = world.maxy - TRANSITIONEDGE -2
+				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
 			else if (A.y >= (world.maxy - TRANSITIONEDGE - 1))
-				A.y = TRANSITIONEDGE +1
+				A.y = TRANSITIONEDGE + 1
+				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+
+
+
 
 			spawn (0)
 				if ((A && A.loc))

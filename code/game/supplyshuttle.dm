@@ -44,6 +44,7 @@ var/list/mechtoys = list(
 	density = 0
 	anchored = 1
 	layer = 4
+	explosion_resistance = 5
 
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
@@ -116,17 +117,6 @@ var/list/mechtoys = list(
 	var/datum/supply_packs/object = null
 	var/orderedby = null
 	var/comment = null
-
-/datum/supply_packs
-	var/name = null
-	var/list/contains = new/list()
-	var/amount = null
-	var/cost = null
-	var/containertype = null
-	var/containername = null
-	var/access = null
-	var/hidden = 0
-	var/contraband = 0
 
 /datum/controller/supply_shuttle
 	var/processing = 1
@@ -306,10 +296,9 @@ var/list/mechtoys = list(
 			if(SP.access)
 				A:req_access = list()
 				A:req_access += text2num(SP.access)
-			for(var/B in SP.contains)
-				if(!B)	continue
-				var/thepath = text2path(B)
-				var/atom/B2 = new thepath(A)
+			for(var/typepath in SP.contains)
+				if(!typepath)	continue
+				var/atom/B2 = new typepath(A)
 				if(SP.amount && B2:amount) B2:amount = SP.amount
 				slip.info += "<li>[B2.name]</li>" //add the item to the manifest
 
@@ -415,13 +404,9 @@ var/list/mechtoys = list(
 		reqform.info += "RANK: [idrank]<br>"
 		reqform.info += "REASON: [reason]<br>"
 		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
-		reqform.info += "CONTENTS:<br><ul>"
-
-		for(var/B in P.contains)
-			var/thepath = text2path(B)
-			var/atom/B2 = new thepath()
-			reqform.info += "<li>[B2.name]</li>"
-		reqform.info += "</ul><hr>"
+		reqform.info += "CONTENTS:<br>"
+		reqform.info += P.manifest
+		reqform.info += "<hr>"
 		reqform.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
 
 		reqform.update_icon()	//Fix for appearing blank when printed.
@@ -592,13 +577,9 @@ var/list/mechtoys = list(
 		reqform.info += "RANK: [idrank]<br>"
 		reqform.info += "REASON: [reason]<br>"
 		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
-		reqform.info += "CONTENTS:<br><ul>"
-
-		for(var/B in P.contains)
-			var/thepath = text2path(B)
-			var/atom/B2 = new thepath()
-			reqform.info += "<li>[B2.name]</li>"
-		reqform.info += "</ul><hr>"
+		reqform.info += "CONTENTS:<br>"
+		reqform.info += P.manifest
+		reqform.info += "<hr>"
 		reqform.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
 
 		reqform.update_icon()	//Fix for appearing blank when printed.
@@ -611,7 +592,7 @@ var/list/mechtoys = list(
 		O.orderedby = idname
 		supply_shuttle.requestlist += O
 
-		temp = "Order requst placed.<BR>"
+		temp = "Order request placed.<BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A> | <A href='?src=\ref[src];confirmorder=[O.ordernum]'>Authorize Order</A>"
 
 	else if(href_list["confirmorder"])

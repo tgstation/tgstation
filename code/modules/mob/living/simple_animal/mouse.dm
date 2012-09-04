@@ -31,33 +31,14 @@
 		for(var/mob/M in view())
 			M << 'sound/effects/mousesqueek.ogg'
 
-/mob/living/simple_animal/mouse/white
-	color = "white"
-	icon_state = "mouse_white"
-
-/mob/living/simple_animal/mouse/gray
-	color = "gray"
-	icon_state = "mouse_gray"
-
-/mob/living/simple_animal/mouse/brown
-	color = "brown"
-	icon_state = "mouse_brown"
-
 /mob/living/simple_animal/mouse/New()
+	..()
 	if(!color)
 		color = pick( list("brown","gray","white") )
 	icon_state = "mouse_[color]"
 	icon_living = "mouse_[color]"
 	icon_dead = "mouse_[color]_dead"
 	desc = "It's a small [color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
-
-//TOM IS ALIVE! SQUEEEEEEEE~K :)
-/mob/living/simple_animal/mouse/brown/Tom
-	name = "Tom"
-	desc = "Jerry the cat is not amused."
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "splats"
 
 
 /mob/living/simple_animal/mouse/proc/splat()
@@ -164,3 +145,27 @@ mob/living/simple_animal/mouse/restrained() //Hotfix to stop mice from doing thi
 			M << "\blue \icon[src] Squeek!"
 			M << 'sound/effects/mousesqueek.ogg'
 	..()
+
+/*
+ * Mouse types
+ */
+
+/mob/living/simple_animal/mouse/white
+	color = "white"
+	icon_state = "mouse_white"
+
+/mob/living/simple_animal/mouse/gray
+	color = "gray"
+	icon_state = "mouse_gray"
+
+/mob/living/simple_animal/mouse/brown
+	color = "brown"
+	icon_state = "mouse_brown"
+
+//TOM IS ALIVE! SQUEEEEEEEE~K :)
+/mob/living/simple_animal/mouse/brown/Tom
+	name = "Tom"
+	desc = "Jerry the cat is not amused."
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "splats"

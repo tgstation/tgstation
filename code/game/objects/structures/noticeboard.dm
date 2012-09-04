@@ -1,4 +1,12 @@
 /obj/structure/noticeboard
+	name = "Notice Board"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "nboard00"
+	flags = FPRINT
+	desc = "A board for pinning important notices upon."
+	density = 0
+	anchored = 1
+	var/notices = 0
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)

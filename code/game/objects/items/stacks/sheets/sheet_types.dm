@@ -1,72 +1,15 @@
+/* Diffrent misc types of sheets
+ * Contains:
+ *		Metal
+ *		Plasteel
+ *		Wood
+ *		Cloth
+ *		Cardboard
+ */
+
 /*
-CONTAINS:
-RODS
-METAL
-REINFORCED METAL
-FLOOR TILES
-*/
-
-
-
-// RODS
-
-/obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-
-		if(amount < 2)
-			user << "\red You need at least two rods to do this."
-			return
-
-		if(WT.remove_fuel(0,user))
-			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			new_item.add_to_stacks(usr)
-			for (var/mob/M in viewers(src))
-				M.show_message("\red [src] is shaped into metal by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
-			var/obj/item/stack/rods/R = src
-			src = null
-			var/replace = (user.get_inactive_hand()==R)
-			R.use(2)
-			if (!R && replace)
-				user.put_in_hands(new_item)
-		return
-	..()
-
-
-/obj/item/stack/rods/attack_self(mob/user as mob)
-	src.add_fingerprint(user)
-
-	if(!istype(user.loc,/turf)) return 0
-
-	if (locate(/obj/structure/grille, usr.loc))
-		for(var/obj/structure/grille/G in usr.loc)
-			if (G.destroyed)
-				G.health = 10
-				G.density = 1
-				G.destroyed = 0
-				G.icon_state = "grille"
-				use(1)
-			else
-				return 1
-	else
-		if(amount < 2)
-			user << "\blue You need at least two rods to do this."
-			return
-		usr << "\blue Assembling grille..."
-		if (!do_after(usr, 10))
-			return
-		var/obj/structure/grille/F = new /obj/structure/grille/ ( usr.loc )
-		usr << "\blue You assemble a grille"
-		F.add_fingerprint(usr)
-		use(2)
-	return
-
-
-
-// METAL SHEET
-
-// /datum/stack_recipe/New(title, result_type, req_amount, res_amount, max_res_amount, time, one_per_turf, on_floor = 0)
+ * Metal
+ */
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("chair", /obj/structure/stool/bed/chair, one_per_turf = 1, on_floor = 1), \
@@ -95,58 +38,87 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 )
 
 /obj/item/stack/sheet/metal
-	New(var/loc, var/amount=null)
-		recipes = metal_recipes
-		return ..()
+	name = "metal"
+	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
+	singular_name = "metal sheet"
+	icon_state = "sheet-metal"
+	m_amt = 3750
+	throwforce = 14.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+	origin_tech = "materials=1"
 
-// REINFORCED METAL SHEET
+/obj/item/stack/sheet/metal/cyborg
+	name = "metal"
+	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
+	singular_name = "metal sheet"
+	icon_state = "sheet-metal"
+	m_amt = 0
+	throwforce = 14.0
+	flags = FPRINT | TABLEPASS | CONDUCT
 
-// /datum/stack_recipe/New(title, result_type, req_amount, res_amount, max_res_amount, time, one_per_turf, on_floor = 0)
+/obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
+	recipes = metal_recipes
+	return ..()
+
+
+/*
+ * Plasteel
+ */
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
 	)
 
 /obj/item/stack/sheet/plasteel
-	New(var/loc, var/amount=null)
+	name = "plasteel"
+	singular_name = "plasteel sheet"
+	desc = "This sheet is an alloy of iron and plasma."
+	icon_state = "sheet-plasteel"
+	item_state = "sheet-metal"
+	m_amt = 7500
+	throwforce = 15.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+	origin_tech = "materials=2"
+
+/obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 		recipes = plasteel_recipes
 		return ..()
 
+/*
+ * Wood
+ */
+var/global/list/datum/stack_recipe/wood_recipes = list ( \
+	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
+	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
+	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
+	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1), \
+	)
 
+/obj/item/stack/sheet/wood
+	name = "wooden planks"
+	desc = "One can only guess that this is a bunch of wood."
+	singular_name = "wood plank"
+	icon_state = "sheet-wood"
+	origin_tech = "materials=1;biotech=1"
 
-// TILES
-
-/obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
-	..()
-	src.pixel_x = rand(1, 14)
-	src.pixel_y = rand(1, 14)
-	return
+/obj/item/stack/sheet/wood/New(var/loc, var/amount=null)
+	recipes = wood_recipes
+	return ..()
 
 /*
-/obj/item/stack/tile/plasteel/attack_self(mob/user as mob)
-	if (usr.stat)
-		return
-	var/T = user.loc
-	if (!( istype(T, /turf) ))
-		user << "\red You must be on the ground!"
-		return
-	if (!( istype(T, /turf/space) ))
-		user << "\red You cannot build on or repair this turf!"
-		return
-	src.build(T)
-	src.add_fingerprint(user)
-	use(1)
-	return
-*/
+ * Cloth
+ */
+/obj/item/stack/sheet/cloth
+	name = "cloth"
+	desc = "This roll of cloth is made from only the finest chemicals and bunny rabbits."
+	singular_name = "cloth roll"
+	icon_state = "sheet-cloth"
+	origin_tech = "materials=2"
 
-/obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
-	S.ReplaceWithPlating()
-//	var/turf/simulated/floor/W = S.ReplaceWithFloor()
-//	W.make_plating()
-	return
-
-// CARDBOARD SHEET - BubbleWrap
-
-// /datum/stack_recipe/New(title, result_type, req_amount, res_amount, max_res_amount, time, one_per_turf, on_floor = 0)
+/*
+ * Cardboard
+ */
 var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("box", /obj/item/weapon/storage/box), \
 	new/datum/stack_recipe("light tubes", /obj/item/weapon/storage/lightbox/tubes), \
@@ -157,7 +129,14 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
 )
 
-/obj/item/stack/sheet/cardboard
-	New(var/loc, var/amount=null)
+/obj/item/stack/sheet/cardboard	//BubbleWrap
+	name = "cardboard"
+	desc = "Large sheets of card, like boxes folded flat."
+	singular_name = "cardboard sheet"
+	icon_state = "sheet-card"
+	flags = FPRINT | TABLEPASS
+	origin_tech = "materials=1"
+
+/obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
 		return ..()

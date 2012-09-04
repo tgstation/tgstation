@@ -1,16 +1,19 @@
 /mob/living/simple_animal
 	name = "animal"
 	icon = 'icons/mob/animal.dmi'
+	health = 20
+	maxHealth = 20
+
 	var/icon_living = ""
 	var/icon_dead = ""
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
-	maxHealth = 20
+
 	var/list/speak = list()
 	var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
 	var/speak_chance = 0
 	var/list/emote_hear = list()	//Hearable emotes
 	var/list/emote_see = list()		//Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
-	health = 20
+
 	var/turns_per_move = 1
 	var/turns_since_move = 0
 	universal_speak = 1
@@ -82,40 +85,8 @@
 	if(health > maxHealth)
 		health = maxHealth
 
-/*
-	// Stun/Weaken
-
-	if (paralysis || stunned || weakened) //Stunned etc.
-		if (stunned > 0)
-			AdjustStunned(-1)
-			stat = 0
-		if (weakened > 0)
-			AdjustWeakened(-1)
-			lying = 1
-			stat = 0
-		if (paralysis > 0)
-			AdjustParalysis(-1)
-			blinded = 1
-			lying = 1
-			stat = 1
-		var/h = hand
-		hand = 0
-		drop_item()
-		hand = 1
-		drop_item()
-		hand = h
-
-	else	//Not stunned.
-		lying = 0
-		stat = 0
-
-	if(paralysis || stunned || weakened || buckled)
-		canmove = 0
-	else
-		canmove = 1
-*/
 	//Movement
-	if(!ckey && !stop_automated_movement)
+	if(!client && !stop_automated_movement)
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
@@ -123,14 +94,8 @@
 					Move(get_step(src,pick(cardinal)))
 					turns_since_move = 0
 
-
-
-
-
-
-
 	//Speaking
-	if(speak_chance)
+	if(!client && speak_chance)
 		if(rand(0,200) < speak_chance)
 			if(speak && speak.len)
 				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
@@ -316,6 +281,63 @@
 
 	return
 
+/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+
+	switch(M.a_intent)
+
+		if ("help")
+			for(var/mob/O in viewers(src, null))
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+		if ("grab")
+			if(M == src)
+				return
+			if (nopush)
+				return
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
+			G.assailant = M
+			G.affecting = src
+
+			M.put_in_active_hand(G)
+
+			grabbed_by += G
+			G.synch()
+			LAssailant = M
+
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			for(var/mob/O in viewers(src, null))
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+
+		if("hurt")
+			var/damage = rand(15, 30)
+			visible_message("\red <B>[M] has slashed at [src]!</B>")
+			src.health -= damage
+
+
+		if("disarm")
+			var/damage = rand(15, 30)
+			visible_message("\red <B>[M] has slashed at [src]!</B>")
+			src.health -= damage
+
+	return
+
+/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L as mob)
+
+	switch(L.a_intent)
+		if("help")
+			visible_message("\blue [L] rubs it's head against [src]")
+
+		else
+
+			var/damage = rand(5, 10)
+			visible_message("\red <B>[L] bites [src]!</B>")
+
+			if(stat != DEAD)
+				src.health -= damage
+				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
+
+
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
 		if(stat != DEAD)
@@ -356,7 +378,7 @@
 
 	tally = speed
 
-	return tally
+	return tally+config.animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -390,6 +412,3 @@
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health -= damage
-
-/proc/issimpleanimal(var/mob/AM)
-	return istype(AM,/mob/living/simple_animal)

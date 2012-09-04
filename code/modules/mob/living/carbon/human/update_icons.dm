@@ -389,6 +389,13 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(w_uniform.blood_DNA)
 			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "uniformblood2")
 			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "uniformblood")
+
+		if(w_uniform:hastie)	//WE CHECKED THE TYPE ABOVE. THIS REALLY SHOULD BE FINE.
+			var/tie_color = w_uniform:hastie.color
+			if(!tie_color) tie_color = w_uniform:hastie.icon_state
+			lying.overlays		+= image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[tie_color]2")
+			standing.overlays	+= image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[tie_color]")
+
 		overlays_lying[UNIFORM_LAYER]		= lying
 		overlays_standing[UNIFORM_LAYER]	= standing
 	else

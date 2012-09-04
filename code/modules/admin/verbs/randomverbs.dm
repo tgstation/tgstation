@@ -229,6 +229,8 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 		message_admins("\blue [key_name_admin(usr)] spawned a xeno.", 1)
 	return
 
+
+
 //I use this proc for respawn character too. /N
 /proc/create_xeno(mob/dead/observer/G)
 	var/alien_caste = alert(src, "Please choose which caste to spawn.",,"Hunter","Sentinel","Drone")

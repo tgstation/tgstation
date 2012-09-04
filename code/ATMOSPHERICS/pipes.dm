@@ -106,7 +106,7 @@ obj/machinery/atmospherics/pipe
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 				..()
 			else
-				machines.Remove(src)
+				. = PROCESS_KILL
 
 			/*if(!node1)
 				parent.mingle_with_turf(loc, volume)
@@ -349,7 +349,7 @@ obj/machinery/atmospherics/pipe
 			if(!parent)
 				..()
 			else
-				machines.Remove(src)
+				. = PROCESS_KILL
 /*			if(!node1)
 				parent.mingle_with_turf(loc, 200)
 				if(!nodealert)
@@ -615,7 +615,7 @@ obj/machinery/atmospherics/pipe
 		process()
 			if(!parent)
 				if(build_killswitch <= 0)
-					machines.Remove(src)
+					. = PROCESS_KILL
 				else
 					build_killswitch--
 				..()
@@ -721,7 +721,7 @@ obj/machinery/atmospherics/pipe
 			if(!parent)
 				..()
 			else
-				machines.Remove(src)
+				. = PROCESS_KILL
 /*
 			if(!node1)
 				parent.mingle_with_turf(loc, 70)

@@ -36,9 +36,6 @@
 			update_icon()
 		return
 
-	update_icon()
-		..()
-		return
 /obj/item/weapon/gun/projectile/deagle/gold
 	name = "Desert Eagle"
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
@@ -60,7 +57,31 @@
 	desc = "A bulky pistol designed to fire self propelled rounds"
 	icon_state = "gyropistol"
 	max_shells = 8
-	caliber = "a75"
+	caliber = "75"
 	fire_sound = 'sound/effects/Explosion1.ogg'
 	origin_tech = "combat=3"
 	ammo_type = "/obj/item/ammo_casing/a75"
+	load_method = 2
+	New()
+		..()
+		empty_mag = new /obj/item/ammo_magazine/a75/empty(src)
+		update_icon()
+		return
+
+
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+		..()
+		if(!loaded.len && empty_mag)
+			empty_mag.loc = get_turf(src.loc)
+			empty_mag = null
+			playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+			update_icon()
+		return
+
+	update_icon()
+		..()
+		if(empty_mag)
+			icon_state = "gyropistolloaded"
+		else
+			icon_state = "gyropistol"
+		return

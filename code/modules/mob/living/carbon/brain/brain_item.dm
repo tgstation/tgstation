@@ -1,3 +1,40 @@
+/obj/item/brain
+	name = "brain"
+	desc = "A piece of juicy meat found in a persons head."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "brain2"
+	flags = TABLEPASS
+	force = 1.0
+	w_class = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 5
+	origin_tech = "biotech=3"
+	attack_verb = list("attacked", "slapped", "whacked")
+
+	var/mob/living/carbon/brain/brainmob = null
+
+	New()
+		..()
+		//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
+		//WASSSSSUUUPPPP /N
+		spawn(5)
+			if(brainmob && brainmob.client)
+				brainmob.client.screen.len = null //clear the hud
+
+	proc
+		transfer_identity(var/mob/living/carbon/human/H)
+			name = "[H]'s brain"
+			brainmob = new(src)
+			brainmob.name = H.real_name
+			brainmob.real_name = H.real_name
+			brainmob.dna = H.dna
+			brainmob.timeofhostdeath = H.timeofdeath
+			if(H.mind)
+				H.mind.transfer_to(brainmob)
+			brainmob << "\blue You might feel slightly disoriented. That's normal when your brain gets cut out."
+			return
+
 /obj/item/brain/examine() // -- TLE
 	set src in oview(12)
 	if (!( usr ))

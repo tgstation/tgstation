@@ -83,7 +83,7 @@
 	sunfrac = cos(p_angle) ** 2
 
 
-/obj/machinery/power/solar/process()
+/obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
 	if(stat & BROKEN)	return
 	if(!control)	return
 	if(obscured)	return
@@ -141,7 +141,7 @@
 
 
 /obj/machinery/power/solar/fake/process()
-	machines.Remove(src)
+	. = PROCESS_KILL
 	return
 
 

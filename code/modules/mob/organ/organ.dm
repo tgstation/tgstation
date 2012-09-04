@@ -4,11 +4,11 @@
 	var/name = "organ"
 	var/mob/owner = null
 
-/datum/organ/proc/process()
-	return 0
+///datum/organ/proc/process()
+//	return 0
 
-/datum/organ/proc/receive_chem(chemical as obj)
-	return 0
+///datum/organ/proc/receive_chem(chemical as obj)
+//	return 0
 
 
 

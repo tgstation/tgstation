@@ -13,10 +13,10 @@
 		..()
 		src.smoke = new /datum/effect/effect/system/bad_smoke_spread
 		src.smoke.attach(src)
-		src.smoke.set_up(10, 0, usr.loc)
 
 	prime()
 		playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+		src.smoke.set_up(10, 0, usr.loc)
 		spawn(0)
 			src.smoke.start()
 			sleep(10)

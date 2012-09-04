@@ -263,7 +263,9 @@
 
 	if(moving)	return 0
 
-	if(world.time < move_delay)	return
+	if(move_delay >= 864000) move_delay -= 864000
+
+	if(world.timeofday < move_delay)	return
 
 	if(!mob)	return
 
@@ -287,13 +289,6 @@
 	if(Process_Grab())	return
 	if(!mob.canmove)	return
 
-//Making mob movememnt changes instant.
-	if(mob.paralysis || mob.stunned || mob.resting || mob.weakened || mob.buckled /*|| (mob.changeling && mob.changeling.changeling_fakedeath)*/)
-		mob.canmove = 0
-		return
-	else
-		mob.canmove = 1
-
 
 	//if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
 	//	if(!mob.Process_Spacemove(0))	return 0
@@ -313,23 +308,19 @@
 
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
-				if(((M.pulling == mob && (!( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
+				if(M.pulling == mob && !M.restrained() && M.stat == 0 && M.canmove)
 					src << "\blue You're restrained! You can't move!"
 					return 0
 
-		move_delay = world.time//set move delay
+		move_delay = world.timeofday//set move delay
 
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
-					move_delay += 5
-//				if(mob.organStructure && mob.organStructure.legs)
-//					move_delay += mob.organStructure.legs.moveRunDelay
-				move_delay += 2
+					move_delay += 6
+				move_delay += 1+config.run_speed
 			if("walk")
-//				if(mob.organStructure && mob.organStructure.legs)
-//					move_delay += mob.organStructure.legs.moveWalkDelay
-				move_delay += 5
+				move_delay += 7+config.walk_speed
 		move_delay += mob.movement_delay()
 
 		if(config.Tickcomp)
@@ -344,7 +335,7 @@
 		moving = 1
 		//Something with pulling things
 		if(locate(/obj/item/weapon/grab, mob))
-			move_delay = max(move_delay, world.time + 7)
+			move_delay = max(move_delay, world.timeofday + 7)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
@@ -375,13 +366,10 @@
 							M.animate_movement = 2
 							return
 
-		else if(mob.confused && prob(30))
+		else if(mob.confused)
 			step(mob, pick(cardinal))
 		else
 			. = ..()
-			for(var/obj/effect/speech_bubble/S in range(1, mob))
-				if(S.parent == mob)
-					S.loc = mob.loc
 
 		moving = 0
 
@@ -405,12 +393,12 @@
 		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
 			if((G.state == 1)&&(!grabbing.Find(G.assailant)))	del(G)
 			if(G.state == 2)
-				move_delay = world.time + 10
+				move_delay = world.timeofday + 10
 				if(!prob(25))	return 1
 				mob.visible_message("\red [mob] has broken free of [G.assailant]'s grip!")
 				del(G)
 			if(G.state == 3)
-				move_delay = world.time + 10
+				move_delay = world.timeofday + 10
 				if(!prob(5))	return 1
 				mob.visible_message("\red [mob] has broken free of [G.assailant]'s headlock!")
 				del(G)

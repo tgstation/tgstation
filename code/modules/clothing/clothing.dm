@@ -144,7 +144,22 @@ BLIND     // can't see anything
 		2 = Report detailed damages
 		3 = Report location
 		*/
+	var/obj/item/clothing/tie/hastie = null
 
+/obj/item/clothing/under/attackby(obj/item/I, mob/user)
+	if(!hastie && istype(I, /obj/item/clothing/tie))
+		user.drop_item()
+		hastie = I
+		I.loc = src
+		user << "<span class='notice'>You attach [I] to [src].</span>"
+
+		if(istype(loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = loc
+			H.update_inv_w_uniform()
+
+		return
+
+	..()
 
 /obj/item/clothing/under/examine()
 	set src in view()
@@ -158,6 +173,8 @@ BLIND     // can't see anything
 			usr << "Its vital tracker appears to be enabled."
 		if(3)
 			usr << "Its vital tracker and tracking beacon appear to be enabled."
+	if(hastie)
+		usr << "[hastie] is clipped to it."
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
@@ -170,7 +187,7 @@ BLIND     // can't see anything
 		usr << "The controls are locked."
 		return 0
 	if(src.has_sensor <= 0)
-		usr << "This suit does not have any sensors"
+		usr << "This suit does not have any sensors."
 		return 0
 	src.sensor_mode += 1
 	if(src.sensor_mode > 3)
@@ -185,6 +202,22 @@ BLIND     // can't see anything
 		if(3)
 			usr << "Your suit will now report your vital lifesigns as well as your coordinate position."
 	..()
+
+/obj/item/clothing/under/verb/removetie()
+	set name = "Remove Tie"
+	set category = "Object"
+	set src in usr
+	var/mob/M = usr
+	if (istype(M, /mob/dead/)) return
+	if (usr.stat) return
+
+	if(hastie)
+		hastie.loc = get_turf(src.loc)
+		hastie = null
+
+		if(istype(loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = loc
+			H.update_inv_w_uniform()
 
 /obj/item/clothing/under/rank/New()
 	sensor_mode = pick(0,1,2,3)

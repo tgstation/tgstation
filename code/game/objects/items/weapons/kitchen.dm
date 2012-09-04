@@ -50,6 +50,7 @@
 		user << "\red You accidentally cut yourself with the [src]."
 		user.take_organ_damage(20)
 		return
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
 /*

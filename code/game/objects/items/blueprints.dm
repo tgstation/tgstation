@@ -1,4 +1,9 @@
 /obj/item/blueprints
+	name = "station blueprints"
+	desc = "Blueprints of the station. There's stamp \"Classified\" and several coffee stains on it."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "blueprints"
+	attack_verb = list("attacked", "bapped", "hit")
 	var/const/AREA_ERRNONE = 0
 	var/const/AREA_STATION = 1
 	var/const/AREA_SPACE =   2

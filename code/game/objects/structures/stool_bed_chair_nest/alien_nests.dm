@@ -1,4 +1,12 @@
 //Alium nests. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
+
+/obj/structure/stool/bed/nest
+	name = "alien nest"
+	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
+	icon = 'icons/mob/alien.dmi'
+	icon_state = "nest"
+	var/health = 100
+
 /obj/structure/stool/bed/nest/manual_unbuckle(mob/user as mob)
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
@@ -47,9 +55,6 @@
 	src.buckled_mob = M
 	src.add_fingerprint(user)
 	return
-
-/obj/structure/stool/blob_act()
-	del(src)
 
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	var/aforce = W.force

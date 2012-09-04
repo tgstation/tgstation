@@ -78,6 +78,20 @@
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
 
+	//Used for modifying movement speed for mobs.
+	//Unversal modifiers
+	var/run_speed = 0
+	var/walk_speed = 0
+
+	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
+	var/human_delay = 0
+	var/robot_delay = 0
+	var/monkey_delay = 0
+	var/alien_delay = 0
+	var/metroid_delay = 0
+	var/animal_delay = 0
+
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -341,6 +355,22 @@
 					config.revival_cloning = value
 				if("revival_brain_life")
 					config.revival_brain_life = value
+				if("run_speed")
+					config.run_speed = value
+				if("walk_speed")
+					config.walk_speed = value
+				if("human_delay")
+					config.human_delay = value
+				if("robot_delay")
+					config.robot_delay = value
+				if("monkey_delay")
+					config.monkey_delay = value
+				if("alien_delay")
+					config.alien_delay = value
+				if("metroid_delay")
+					config.metroid_delay = value
+				if("animal_delay")
+					config.animal_delay = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

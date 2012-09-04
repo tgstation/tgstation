@@ -9,6 +9,7 @@
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/airlock_electronics/electronics = null
+	explosion_resistance = 5
 
 
 /obj/machinery/door/window/update_nearby_tiles(need_rebuild)
@@ -93,6 +94,7 @@
 	src.icon_state = text("[]open", src.base_state)
 	sleep(10)
 
+	explosion_resistance = 0
 	src.density = 0
 //	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
@@ -107,9 +109,10 @@
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state = text("[]", src.base_state)
+	src.icon_state = src.base_state
 
 	src.density = 1
+	explosion_resistance = initial(explosion_resistance)
 //	if(src.visible)
 //		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()

@@ -72,13 +72,17 @@
 		M.show_message( message, 1, blind_message, 2)
 
 
-//What the fuck is this code
+//This is aweful
 /mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	//Holding a balloon will shield you from an item that is_sharp() ... cause that makes sense
 	if (user.intent != "harm")
 		if (istype(src.l_hand,/obj/item/latexballon) && src.l_hand:air_contents && is_sharp(W))
 			return src.l_hand.attackby(W)
 		if (istype(src.r_hand,/obj/item/latexballon) && src.r_hand:air_contents && is_sharp(W))
 			return src.r_hand.attackby(W)
+
+	//If src is grabbing someone and facing the attacker, the src will use the grabbed person as a shield
 	var/shielded = 0
 	if (locate(/obj/item/weapon/grab, src))
 		var/mob/safe = null
@@ -92,7 +96,9 @@
 				safe = G.affecting
 		if (safe)
 			return safe.attackby(W, user)
-	if ((!( shielded ) || !( W.flags ) & 32))
+
+	//If the mob is not wearing a shield or otherwise is not shielded
+	if ((!( shielded ) || !( W.flags ) & NOSHIELD))
 		spawn( 0 )
 			if (W)
 				W.attack(src, user)
@@ -659,18 +665,26 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/Stat()
 	..()
 
-	statpanel("Status")
+	if(statpanel("Status"))	//not looking at that panel
 
-	if (client && client.holder)
-		stat(null, "([x], [y], [z])")
-		stat(null, "CPU: [world.cpu]")
-		if (master_controller)
-			stat(null, "Current Iteration: [controller_iteration]")
-			stat(null, "Time between ticks: [last_tick_duration]")
+		if(client && client.holder)
+			stat(null,"Location: \t ([x], [y], [z])")
+			stat(null,"CPU: \t [world.cpu]")
+
+			if(master_controller)
+				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
+				stat(null,"Air-[master_controller.air_cost]\t Sun-[master_controller.sun_cost]")
+				stat(null,"Mob-[master_controller.mobs_cost]\t #[mob_list.len]")
+				stat(null,"Dis-[master_controller.diseases_cost]\t #[active_diseases.len]")
+				stat(null,"Mch-[master_controller.machines_cost]\t #[machines.len]")
+				stat(null,"Obj-[master_controller.objects_cost]\t #[processing_objects.len]")
+				stat(null,"Net-[master_controller.networks_cost]\t Pnet-[master_controller.powernets_cost]")
+				stat(null,"Tick-[master_controller.ticker_cost]\t ALL-[master_controller.total_cost]")
+			else
+				stat(null,"MasterController-ERROR")
 
 
-	if (spell_list.len)
-
+	if(spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
 			switch(S.charge_type)
 				if("recharge")

@@ -8,6 +8,7 @@
 	health = 25
 
 	var/amount_grown = 0
+	var/max_grown = 200
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/New()
@@ -64,7 +65,7 @@
 	stat(null, "Move Mode: [m_intent]")
 
 	if (client.statpanel == "Status")
-		stat(null, "Progress: [amount_grown]/200")
+		stat(null, "Progress: [amount_grown]/[max_grown]")
 		stat(null, "Plasma Stored: [getPlasma()]")
 
 

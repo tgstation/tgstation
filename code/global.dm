@@ -170,6 +170,9 @@ var/list/AAlarmWireColorToIndex
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
+	//away missions
+var/list/awaydestinations = list()
+
 
 
 	// MySQL configuration

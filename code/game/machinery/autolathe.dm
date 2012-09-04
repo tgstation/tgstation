@@ -41,6 +41,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/device/assembly/timer(), \
 		new /obj/item/weapon/light/tube(), \
 		new /obj/item/weapon/light/bulb(), \
+		new /obj/item/weapon/camera_assembly(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \

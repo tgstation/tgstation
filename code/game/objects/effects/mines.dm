@@ -1,3 +1,14 @@
+/obj/effect/mine
+	name = "Mine"
+	desc = "I Better stay away from that thing."
+	density = 1
+	anchored = 1
+	layer = 3
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "uglymine"
+	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
+	var/triggered = 0
+
 /obj/effect/mine/New()
 	icon_state = "uglyminearmed"
 
@@ -85,3 +96,31 @@
 	explosion(loc, 0, 1, 2, 3)
 	spawn(0)
 		del(src)
+
+
+
+
+/obj/effect/mine/dnascramble
+	name = "Radiation Mine"
+	icon_state = "uglymine"
+	triggerproc = "triggerrad"
+
+/obj/effect/mine/plasma
+	name = "Plasma Mine"
+	icon_state = "uglymine"
+	triggerproc = "triggerplasma"
+
+/obj/effect/mine/kick
+	name = "Kick Mine"
+	icon_state = "uglymine"
+	triggerproc = "triggerkick"
+
+/obj/effect/mine/n2o
+	name = "N2O Mine"
+	icon_state = "uglymine"
+	triggerproc = "triggern2o"
+
+/obj/effect/mine/stun
+	name = "Stun Mine"
+	icon_state = "uglymine"
+	triggerproc = "triggerstun"

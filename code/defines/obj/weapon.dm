@@ -7,6 +7,19 @@
 /obj/item/weapon/shield
 	name = "shield"
 
+/obj/item/weapon/phone
+	name = "red phone"
+	desc = "Should anything ever go wrong..."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "red_phone"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 3.0
+	throwforce = 2.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = 2
+	attack_verb = list("called", "rang")
+
 /obj/item/weapon/shield/riot
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
@@ -75,6 +88,10 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/sord/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()
+
 /obj/item/weapon/claymore
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
@@ -90,6 +107,10 @@
 	IsShield()
 		return 1
 
+/obj/item/weapon/claymore/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()
+
 /obj/item/weapon/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20"
@@ -102,9 +123,12 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	IsShield()
+/obj/item/weapon/katana/IsShield()
 		return 1
 
+/obj/item/weapon/katana/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()
 
 /obj/item/weapon/bodybag
 	name = "body bag"
@@ -741,28 +765,6 @@
 	icon_state = "fcardholder0"
 	item_state = "clipboard"
 
-/obj/item/weapon/flasks
-	name = "flask"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	var/oxygen = 0.0
-	var/plasma = 0.0
-	var/coolant = 0.0
-
-/obj/item/weapon/flasks/coolant
-	name = "light blue flask"
-	icon_state = "coolant-c"
-	coolant = 1000.0
-
-/obj/item/weapon/flasks/oxygen
-	name = "blue flask"
-	icon_state = "oxygen-c"
-	oxygen = 500.0
-
-/obj/item/weapon/flasks/plasma
-	name = "orange flask"
-	icon_state = "plasma-c"
-	plasma = 500.0
-
 /*
 /obj/item/weapon/game_kit
 	name = "Gaming Kit"
@@ -1051,6 +1053,10 @@
 	item_state = "shard-glass"
 	g_amt = 3750
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
+
+/obj/item/weapon/shard/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()
 
 /*/obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
@@ -1409,6 +1415,10 @@
 	origin_tech = "materials=1"
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/butch/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()
+
 /obj/item/weapon/tray
 	name = "tray"
 	icon = 'icons/obj/food.dmi'
@@ -1577,6 +1587,9 @@
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 
+/obj/item/weapon/hatchet/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()
 
 /*
 /obj/item/weapon/cigarpacket

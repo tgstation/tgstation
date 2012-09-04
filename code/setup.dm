@@ -17,18 +17,6 @@
 #define MOLES_PLASMA_VISIBLE	0.5 //Moles in a standard cell after which plasma is visible
 
 #define BREATH_VOLUME 0.5	//liters in a normal breath
-
-#define SPECIFIC_HEAT_TOXIN		200
-#define SPECIFIC_HEAT_AIR		20
-#define SPECIFIC_HEAT_CDO		30
-#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
-	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
-
-#define MINIMUM_HEAT_CAPACITY	0.0003
-#define QUANTIZE(variable)		(round(variable,0.0001))
-#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
-
-#define BREATH_VOLUME 0.5	//liters in a normal breath  Increased to scale to SS13 speeds.
 #define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
 	//Amount of air to take a from a tile
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
@@ -137,8 +125,6 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
-#define MIN_PLAYER_AGE 17
-#define MAX_PLAYER_AGE 55
 
 //ITEM INVENTORY SLOT BITMASKS
 #define SLOT_OCLOTHING 1
@@ -198,7 +184,6 @@ var/MAX_EXPLOSION_RANGE = 14
 //turf-only flags
 #define NOJAUNT		1
 
-#define MAX_PLAYER_SAVESLOTS 10
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 #define HIDEGLOVES		1	//APPLIES ONLY TO THE EXTERIOR SUIT!!
@@ -479,10 +464,7 @@ var/list/liftable_structures = list(\
 //The number of deciseconds which someone needs to be inactive to be classified as AFK:
 #define AFK_THRESHOLD 3000
 
-#define MAX_MESSAGE_LEN 1024
-#define MAX_PAPER_MESSAGE_LEN 3072
-#define MAX_BOOK_MESSAGE_LEN 9216
-#define MAX_NAME_LEN 32
+
 
 #define SEE_INVISIBLE_MINIMUM 5
 
@@ -513,3 +495,6 @@ var/list/liftable_structures = list(\
 #define BORGMESON 1
 #define BORGTHERM 2
 #define BORGXRAY  4
+
+//some arbitrary defines to be used by self-pruning global lists. (see master_controller)
+#define PROCESS_KILL 26	//Used to trigger removal from a processing list

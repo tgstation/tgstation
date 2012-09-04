@@ -1,12 +1,21 @@
+/* Glass stack types
+ * Contains:
+ *		Glass sheets
+ *		Reinforced glass sheets
+ *		Glass shards - TODO: Move this into code/game/object/item/weapons
+ */
+
 /*
-CONTAINS:
-GLASS SHEET
-REINFORCED GLASS SHEET
-SHARDS
+ * Glass sheets
+ */
+/obj/item/stack/sheet/glass
+	name = "glass"
+	desc = "HOLY HELL! That is a lot of glass."
+	singular_name = "glass sheet"
+	icon_state = "sheet-glass"
+	g_amt = 3750
+	origin_tech = "materials=1"
 
-*/
-
-// GLASS
 
 /obj/item/stack/sheet/glass/attack_self(mob/user as mob)
 	construct_window(user)
@@ -97,7 +106,25 @@ SHARDS
 	return 0
 
 
-// REINFORCED GLASS
+/*
+ * Reinforced glass sheets
+ */
+/obj/item/stack/sheet/rglass
+	name = "reinforced glass"
+	desc = "Glass which seems to have rods or something stuck in them."
+	singular_name = "reinforced glass sheet"
+	icon_state = "sheet-rglass"
+	g_amt = 3750
+	m_amt = 1875
+	origin_tech = "materials=2"
+
+/obj/item/stack/sheet/rglass/cyborg
+	name = "reinforced glass"
+	desc = "Glass which seems to have rods or something stuck in them."
+	singular_name = "reinforced glass sheet"
+	icon_state = "sheet-rglass"
+	g_amt = 0
+	m_amt = 0
 
 /obj/item/stack/sheet/rglass/attack_self(mob/user as mob)
 	construct_window(user)
@@ -201,8 +228,9 @@ SHARDS
 
 	return 0
 
-// SHARDS
-
+/*
+ * Glass shards - TODO: Move this into code/game/object/item/weapons
+ */
 /obj/item/weapon/shard/Bump()
 
 	spawn( 0 )
@@ -215,9 +243,6 @@ SHARDS
 	return
 
 /obj/item/weapon/shard/New()
-
-	//****RM
-	//world<<"New shard at [x],[y],[z]"
 
 	src.icon_state = pick("large", "medium", "small")
 	switch(src.icon_state)

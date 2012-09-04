@@ -73,7 +73,7 @@
 		R.product_name = capitalize(temp.name)
 		R.product_path = path_list[p]
 		R.display_color = pick("red","blue","green")
-//		R.amount = text2num(amt_list[p])
+//		R. = text2num(amt_list[p])
 //		src.product_records += R
 
 		if(hidden)
@@ -134,7 +134,9 @@
 		if(src.shock(user, 100))
 			return
 
-	var/dat = "<TT><b>Select an item:</b><br>"
+	var/vendorname = (src.name)  //import the machine's name
+	var/dat = "<TT><center><b>[vendorname]</b></center><hr /><br>" //display the name, and added a horizontal rule
+	dat += "<b>Select an item: </b><br><br>" //the rest is just general spacing and bolding
 
 	if (product_coin != "")
 		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] (<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>)<br><br>"
@@ -152,11 +154,11 @@
 
 		for (var/datum/data/vending_product/R in display_records)
 			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:"
-			dat += " [R.amount] </font>"
+			dat += " <b>[R.amount]</b> </font>"
 			if (R.amount > 0)
-				dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
+				dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>(Vend)</A>"
 			else
-				dat += "<font color = 'red'>SOLD OUT</font>"
+				dat += " <font color = 'red'>SOLD OUT</font>"
 			dat += "<br>"
 
 		dat += "</TT>"

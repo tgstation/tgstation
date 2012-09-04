@@ -50,8 +50,8 @@
 
 obj/machinery/hydroponics/process()
 
-	if(myseed && !(myseed in contents))
-		contents += myseed
+	if(myseed && (myseed.loc != src))
+		myseed.loc = src
 
 	if(world.time > (src.lastcycle + src.cycledelay))
 		src.lastcycle = world.time

@@ -1,3 +1,14 @@
+/obj/structure/mopbucket
+	desc = "Fill it with water, but don't forget a mop!"
+	name = "mop bucket"
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "mopbucket"
+	density = 1
+	flags = FPRINT
+	pressure_resistance = ONE_ATMOSPHERE
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
+
 /obj/structure/mopbucket/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R

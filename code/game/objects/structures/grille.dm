@@ -12,9 +12,7 @@
 	layer = 2.9
 	var/health = 10
 	var/destroyed = 0
-	proc
-		healthcheck()
-		shock(mob/user, prb)
+	explosion_resistance = 5
 
 	ex_act(severity)
 		switch(severity)
@@ -178,7 +176,7 @@
 		return
 
 
-	healthcheck()
+	proc/healthcheck()
 		if (src.health <= 0)
 			if (!( src.destroyed ))
 				src.icon_state = "brokengrille"
@@ -197,7 +195,7 @@
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
 
-	shock(mob/user, prb)
+	proc/shock(mob/user, prb)
 		if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
 			return 0
 		if(!prob(prb))

@@ -1,3 +1,24 @@
+/* Morgue stuff
+ * Contains:
+ *		Morgue
+ *		Morgue trays
+ *		Creamatorium
+ *		Creamatorium trays
+ */
+
+/*
+ * Morgue
+ */
+
+/obj/structure/morgue
+	name = "morgue"
+	desc = "Used to keep bodies in untill someone fetches them."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "morgue1"
+	density = 1
+	var/obj/structure/m_tray/connected = null
+	anchored = 1.0
+
 /obj/structure/morgue/proc/update()
 	if (src.connected)
 		src.icon_state = "morgue0"
@@ -99,6 +120,20 @@
 		del(src.connected)
 	return
 
+
+/*
+ * Morgue tray
+ */
+/obj/structure/m_tray
+	name = "morgue tray"
+	desc = "Apply corpse before closing."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "morguet"
+	density = 1
+	layer = 2.0
+	var/obj/structure/morgue/connected = null
+	anchored = 1.0
+
 /obj/structure/m_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover, /obj/item/weapon/dummy))
 		return 1
@@ -133,6 +168,23 @@
 			if ((B.client && !( B.blinded )))
 				B << text("\red [] stuffs [] into []!", user, O, src)
 	return
+
+
+/*
+ * Crematorium
+ */
+
+/obj/structure/crematorium
+	name = "crematorium"
+	desc = "A human incinerator. Works well on barbeque nights."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "crema1"
+	density = 1
+	var/obj/structure/c_tray/connected = null
+	anchored = 1.0
+	var/cremating = 0
+	var/id = 1
+	var/locked = 0
 
 /obj/structure/crematorium/proc/update()
 	if (src.connected)
@@ -286,6 +338,20 @@
 		locked = 0
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	return
+
+
+/*
+ * Crematorium tray
+ */
+/obj/structure/c_tray
+	name = "crematorium tray"
+	desc = "Apply body before burning."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "cremat"
+	density = 1
+	layer = 2.0
+	var/obj/structure/crematorium/connected = null
+	anchored = 1.0
 
 /obj/structure/c_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover, /obj/item/weapon/dummy))
