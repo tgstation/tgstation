@@ -446,7 +446,7 @@
 
 /obj/item/weapon/storage/bible
 	name = "bible"
-	desc = "Apply to head repeatedly."
+	desc = "A holy book." //BS12 EDIT
 	icon_state ="bible"
 	throw_speed = 1
 	throw_range = 5
@@ -457,8 +457,7 @@
 
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
-	desc = "To be applied to the head repeatedly."
-	icon_state ="bible"
+	desc = "A holy book. Smells faintly of alcohol" //BS12 EDIT
 
 /obj/item/weapon/storage/mousetraps
 	name = "box of Pest-B-Gon Mousetraps"

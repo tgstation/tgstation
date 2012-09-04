@@ -195,6 +195,27 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			updateDialog()
 	add_fingerprint(usr)
 
+/obj/item/device/radio/proc/autosay(var/message, var/from, var/channel) //BS12 EDIT
+	var/datum/radio_frequency/connection = null
+	if(channel && channels && channels.len > 0)
+		if (channel == "department")
+			//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
+			channel = channels[1]
+		connection = secure_radio_connections[channel]
+	else
+		connection = radio_connection
+		channel = null
+	if (!istype(connection))
+		return
+	if (!connection)
+		return
+
+	Broadcast_Message(connection, new /mob/living/silicon/ai(src),
+						0, "*garbled automated announcement*", src,
+						message, from, "Automated Announcement", from, "synthesized voice",
+						4, 0, 1)
+	return
+
 /obj/item/device/radio/talk_into(mob/M as mob, message, channel)
 
 	if(!on) return // the device has to be on
