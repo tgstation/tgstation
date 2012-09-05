@@ -133,8 +133,8 @@ var/global/BSACooldown = 0
 				M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob)
 			if("parrot")
 				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob)
-			if("drprofessor")
-				M.change_mob_type( /mob/living/simple_animal/parrot/DrProfessor , null, null, delmob)
+			if("polyparrot")
+				M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob)
 			if("constructarmoured")
 				M.change_mob_type( /mob/living/simple_animal/constructarmoured , null, null, delmob)
 			if("constructbuilder")
@@ -2565,7 +2565,7 @@ var/global/BSACooldown = 0
 			body += "<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A> | "
 			body += "<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A> | "
 			//body += "<A href='?src=\ref[src];simplemake=parrot;mob=\ref[M]'>Parrot</A> | "
-			//body += "<A href='?src=\ref[src];simplemake=drprofessor;mob=\ref[M]'>DrProfessor</A> | "
+			//body += "<A href='?src=\ref[src];simplemake=polyparrot;mob=\ref[M]'>Poly</A> | "
 			body += "\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> , "
 			body += "<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A> , "
 			body += "<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
