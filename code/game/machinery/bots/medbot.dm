@@ -559,13 +559,11 @@
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)
 			return
-
 		src.created_name = t
 	else
 		switch(build_step)

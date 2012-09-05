@@ -71,6 +71,10 @@
 			else			non_whitespace = 1
 	if(non_whitespace)		return text		//only accepts the text if it has some non-spaces
 
+// Used to get a sanitized input.
+/proc/stripped_input(var/mob/user, var/message = "", var/title = "", var/default = "", var/max_length=MAX_MESSAGE_LEN)
+	var/name = input(user, message, title, default)
+	return strip_html_simple(name, max_length)
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(var/t_in, var/allow_numbers=0, var/max_length=MAX_NAME_LEN)

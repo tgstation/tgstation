@@ -261,7 +261,7 @@
 	if (prob(30))
 		switch(pick(1,2))
 			if(1)
-				core()
+				view_core()
 			if(2)
 				ai_call_shuttle()
 	..()
@@ -445,7 +445,7 @@
 		return 0
 
 	if(!src.eyeobj)
-		core()
+		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
@@ -512,7 +512,7 @@
 	set name = "Cancel Camera View"
 
 	//src.cameraFollow = null
-	src.core()
+	src.view_core()
 
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
@@ -547,7 +547,7 @@
 	network = input(U, "Which network would you like to view?") as null|anything in cameralist
 
 	if(!U.eyeobj)
-		U.core()
+		U.view_core()
 		return
 
 	if(isnull(network))

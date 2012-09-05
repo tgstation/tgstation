@@ -166,6 +166,10 @@
 
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
+
+	if(!T)
+		return hear
+
 	var/list/range = hear(R, T)
 
 	for(var/atom/A in range)

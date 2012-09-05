@@ -103,11 +103,17 @@
 /mob/living/silicon/ai/verb/core()
 	set category = "AI Commands"
 	set name = "AI Core"
+
+	view_core()
+
+
+/mob/living/silicon/ai/proc/view_core()
+
 	current = null
 	cameraFollow = null
 	machine = null
 
-	if(src.eyeobj)
+	if(src.eyeobj && src.loc)
 		src.eyeobj.loc = src.loc
 	else
 		src << "ERROR: Eyeobj not found. Please report this to Giacom. Creating new eye..."

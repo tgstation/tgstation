@@ -793,10 +793,11 @@ var/global/BSACooldown = 0
 		if ((src.rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			var/mob/M = locate(href_list["forcespeech"])
 			if (ismob(M))
-				var/speech = copytext(sanitize(input("What will [key_name(M)] say?.", "Force speech", "")),1,MAX_MESSAGE_LEN)
+				var/speech = input("What will [key_name(M)] say?.", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 				if(!speech)
 					return
 				M.say(speech)
+				speech = sanitize(speech) // Nah, we don't trust them
 				log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 				message_admins("\blue [key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]")
 		else
