@@ -273,10 +273,10 @@ datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 							if(0 to 3)
 								defcon++
 							if(4)
-								defcon = 5
 								for(var/client/C in admin_list)
 									if(C.holder)
 										C << "<font color='red' size='2'><b>Warning. The Master Controller has not fired in the last [defcon*ticks_per_spin] ticks. Automatic restart in [ticks_per_spin] ticks.</b></font>"
+								defcon = 5
 							if(5)
 								for(var/client/C in admin_list)
 									if(C.holder)

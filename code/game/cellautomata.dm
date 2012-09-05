@@ -83,15 +83,9 @@
 	makepowernets()
 
 	sun = new /datum/sun()
-
 	vote = new /datum/vote()
-
-//	coffinhandler = new /datum/coffinhandler()
-
 	radio_controller = new /datum/controller/radio()
-	//main_hud1 = new /obj/hud()
 	data_core = new /obj/effect/datacore()
-
 	paiController = new /datum/paiController()
 
 	..()
@@ -113,8 +107,9 @@
 	src.update_status()
 
 	master_controller = new /datum/controller/game_controller()
-	spawn(-1)	master_controller.setup()
-	lighting_controller.Initialize()
+	spawn(-1)
+		master_controller.setup()
+		lighting_controller.Initialize()
 	return
 
 //Crispy fullban

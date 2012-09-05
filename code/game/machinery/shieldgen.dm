@@ -385,19 +385,15 @@
 		power = 0
 		return 0
 	var/turf/T = src.loc
-	var/obj/structure/cable/C = T.get_cable_node()
-	var/net
-	if (C)
-		net = C.netnum		// find the powernet of the connected cable
 
-	if(!net)
-		power = 0
-		return 0
-	var/datum/powernet/PN = powernets[net]			// find the powernet. Magic code, voodoo code.
+	var/obj/structure/cable/C = T.get_cable_node()
+	var/datum/powernet/PN
+	if(C)	PN = C.powernet		// find the powernet of the connected cable
 
 	if(!PN)
 		power = 0
 		return 0
+
 	var/surplus = max(PN.avail-PN.load, 0)
 	var/shieldload = min(rand(50,200), surplus)
 	if(shieldload==0 && !storedpower)		// no cable or no power, and no power stored

@@ -120,7 +120,7 @@ var/list/OOClog = list()
 var/list/adminlog = list()
 
 
-var/list/powernets = null
+var/list/powernets = list()
 
 var/Debug = 0	// global debug switch
 var/Debug2 = 0
