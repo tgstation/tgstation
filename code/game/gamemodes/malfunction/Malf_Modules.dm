@@ -152,13 +152,23 @@ rcd light flash thingy on matter drain
 			if(UC.uses > 0)
 				if(C.assembly)
 					var/upgraded = 0
+
 					if(!C.isXRay())
 						C.upgradeXRay()
+						//Update what it can see.
 						cameranet.updateVisibility(C)
 						upgraded = 1
+
 					if(!C.isEmpProof())
 						C.upgradeEmpProof()
 						upgraded = 1
+
+					if(!C.isMotion())
+						C.upgradeMotion()
+						upgraded = 1
+						// Add it to machines that process
+						machines |= src
+
 					if(upgraded)
 						UC.uses --
 						C.visible_message("<span class='notice'>\icon[src] *beep*</span>")
@@ -303,7 +313,7 @@ rcd light flash thingy on matter drain
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/upgrade_camera
-			src.temp = "Upgrades a camera to have X-Ray vision and be EMP-Proof. 10 uses."
+			src.temp = "Upgrades a camera to have X-Ray vision, Motion and be EMP-Proof. 10 uses."
 			usr:current_modules += new /datum/AI_Module/small/upgrade_camera
 		else src.temp = "Ten additional uses added to ReCam module."
 		src.processing_time -= 15

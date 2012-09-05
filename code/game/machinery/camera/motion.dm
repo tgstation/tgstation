@@ -3,6 +3,7 @@
 	var/list/motionTargets = list()
 	var/detectTime = 0
 	var/area/ai_monitored/area_motion = null
+	var/alarm_delay = 100 // Don't forget, there's another 10 seconds in queueAlarm()
 
 
 /obj/machinery/camera/process()
@@ -12,7 +13,7 @@
 		return
 	if (detectTime > 0)
 		var/elapsed = world.time - detectTime
-		if (elapsed > 300)
+		if (elapsed > alarm_delay)
 			triggerAlarm()
 	else if (detectTime == -1)
 		for (var/mob/target in motionTargets)
