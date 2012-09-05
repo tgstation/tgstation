@@ -510,9 +510,9 @@
 /mob/living/silicon/ai/cancel_camera()
 	set category = "AI Commands"
 	set name = "Cancel Camera View"
-	//reset_view(null)
-	//machine = null
-	src.cameraFollow = null
+
+	//src.cameraFollow = null
+	src.core()
 
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm

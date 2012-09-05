@@ -34,8 +34,6 @@
 
 	var/auto_patrol = 0		// set to make bot automatically patrol
 
-	var/obj/machinery/camera/cam //Camera for the AI to find them I guess
-
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/control_freq = 1447		// bot control frequency
 
@@ -77,9 +75,6 @@
 		spawn(3)
 			src.botcard = new /obj/item/weapon/card/id(src)
 			src.botcard.access = get_access("Detective")
-			src.cam = new /obj/machinery/camera(src)
-			src.cam.c_tag = src.name
-			src.cam.network = "SS13"
 			if(radio_controller)
 				radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 				radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
@@ -701,11 +696,6 @@ Auto Patrol: []"},
 	if(!isalien(target))
 		src.target = user
 		src.mode = SECBOT_HUNT
-
-/obj/machinery/bot/secbot/emp_act(severity)
-	if(cam)
-		cam.emp_act(severity)
-	..()
 
 //Secbot Construction
 
