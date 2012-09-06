@@ -2,17 +2,6 @@
 
 /*
 
-SYNDICATE UPLINKS
-
-TO-DO:
-	Once wizard is fixed, make sure the uplinks work correctly for it. wizard.dm is right now uncompiled and with broken code in it.
-
-	Clean the code up and comment it. Part of it is right now copy-pasted, with the general Topic() and modifications by Abi79.
-
-		I should take a more in-depth look at both the copy-pasted code for the individual uplinks below, and at each gamemode's code
-		to see how uplinks are assigned and if there are any bugs with those.
-
-
 A list of items and costs is stored under the datum of every game mode, alongside the number of crystals, and the welcoming message.
 
 */

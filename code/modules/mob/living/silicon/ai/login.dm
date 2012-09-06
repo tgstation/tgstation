@@ -18,7 +18,7 @@
 	client.screen += list( blind, flash )
 
 	if(stat != DEAD)
-		for(var/obj/machinery/ai_status_display/O in world) //change status
+		for(var/obj/machinery/ai_status_display/O in machines) //change status
 			if(O)
 				O.mode = 1
 				O.emotion = "Neutral"
