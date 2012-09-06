@@ -2033,6 +2033,20 @@ var/global/BSACooldown = 0
 					for(var/obj/machinery/light/L in world)
 						L.fix()
 					message_admins("[key_name_admin(usr)] fixed all lights", 1)
+				if("friendai")
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","FA")
+					for(var/mob/aiEye/aE in mob_list)
+						aE.icon_state = "ai_friend"
+					for(var/obj/machinery/M in machines)
+						if(istype(M, /obj/machinery/ai_status_display))
+							var/obj/machinery/ai_status_display/A = M
+							A.emotion = "Friend Computer"
+						else if(istype(M, /obj/machinery/status_display))
+							var/obj/machinery/status_display/A = M
+							A.friendc = 1
+					message_admins("[key_name_admin(usr)] turned all AIs into best friends.", 1)
+
 				if("virus")
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","V")
@@ -2931,7 +2945,8 @@ var/global/BSACooldown = 0
 <A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
 <A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
-<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>"}
+<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
+<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>"}
 //<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
 
 	if(lvl >= 6)

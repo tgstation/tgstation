@@ -578,16 +578,18 @@
 		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	for (var/obj/machinery/ai_status_display/AISD in world) //change status
-		spawn( 0 )
-		AISD.emotion = emote
-	for (var/obj/machinery/status_display/SD in world) //if Friend Computer, change ALL displays
-		if(emote=="Friend Computer")
-			spawn(0)
-			SD.friendc = 1
-		else
-			spawn(0)
-			SD.friendc = 0
+	for (var/obj/machinery/M in machines) //change status
+		if(istype(M, /obj/machinery/ai_status_display))
+			var/obj/machinery/ai_status_display/AISD = M
+			AISD.emotion = emote
+		//if Friend Computer, change ALL displays
+		else if(istype(M, /obj/machinery/status_display))
+
+			var/obj/machinery/status_display/SD = M
+			if(emote=="Friend Computer")
+				SD.friendc = 1
+			else
+				SD.friendc = 0
 	return
 
 //I am the icon meister. Bow fefore me.	//>fefore
