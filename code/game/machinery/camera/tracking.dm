@@ -112,7 +112,7 @@
 			if(U.eyeobj)
 				U.eyeobj.setLoc(get_turf(target))
 			else
-				core()
+				view_core()
 				return
 			sleep(10)
 

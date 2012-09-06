@@ -2,7 +2,7 @@
 //After it knows this it creates the number of cables from the center to each of the cables attempting to conenct. These cables cannot be removed
 //with wirecutters. When the switch is turned off it removes all the cables on the tile it's on.
 //The switch uses a 5s delay to prevent powernet change spamming.
-
+/*
 /obj/structure/powerswitch
 	name = "power switch"
 	desc = "A switch that controls power."
@@ -82,3 +82,4 @@
 		icon_state = icon_state_off
 		for(var/obj/structure/cable/C in src.loc)
 			del(C)
+*/

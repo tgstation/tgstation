@@ -1,4 +1,5 @@
 /obj/structure/falsewall
+	icon = 'icons/turf/walls.dmi'
 	var/mineral = "metal"
 
 /obj/structure/falsewall/gold

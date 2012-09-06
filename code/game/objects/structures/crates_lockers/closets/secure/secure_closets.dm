@@ -1,3 +1,21 @@
+/obj/structure/closet/secure_closet
+	name = "secure locker"
+	desc = "It's an immobile card-locked storage unit."
+	icon = 'icons/obj/closet.dmi'
+	icon_state = "secure1"
+	density = 1
+	opened = 0
+	var/locked = 1
+	var/broken = 0
+	var/large = 1
+	icon_closed = "secure"
+	var/icon_locked = "secure1"
+	icon_opened = "secureopen"
+	var/icon_broken = "securebroken"
+	var/icon_off = "secureoff"
+	wall_mounted = 0 //never solid (You can always pass over it)
+	health = 200
+
 /obj/structure/closet/secure_closet/can_open()
 	..()
 	if(src.locked)

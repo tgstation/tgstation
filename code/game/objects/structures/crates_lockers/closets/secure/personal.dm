@@ -1,5 +1,8 @@
-/obj/structure/closet/secure_closet/personal/var/registered_name = null
-/obj/structure/closet/secure_closet/personal/req_access = list(access_all_personal_lockers)
+/obj/structure/closet/secure_closet/personal
+	desc = "It's a secure locker for personell. The first card swiped gains control."
+	name = "personal closet"
+	req_access = list(access_all_personal_lockers)
+	var/registered_name = null
 
 /obj/structure/closet/secure_closet/personal/New()
 	..()
@@ -11,6 +14,10 @@
 		new /obj/item/device/radio/headset( src )
 	return
 
+
+/obj/structure/closet/secure_closet/personal/patient
+	name = "patient's closet"
+
 /obj/structure/closet/secure_closet/personal/patient/New()
 	..()
 	spawn(4)
@@ -19,6 +26,27 @@
 		new /obj/item/clothing/shoes/white( src )
 	return
 
+
+
+/obj/structure/closet/secure_closet/personal/cabinet
+	icon_state = "cabinetdetective_locked"
+	icon_closed = "cabinetdetective"
+	icon_locked = "cabinetdetective_locked"
+	icon_opened = "cabinetdetective_open"
+	icon_broken = "cabinetdetective_broken"
+	icon_off = "cabinetdetective_broken"
+
+/obj/structure/closet/secure_closet/personal/cabinet/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
 
 /obj/structure/closet/secure_closet/personal/cabinet/New()
 	..()

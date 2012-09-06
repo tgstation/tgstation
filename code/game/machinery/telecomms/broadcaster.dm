@@ -38,9 +38,10 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 	if(signal.data["message"])
 
 		// Prevents massive radio spam
-		if("[signal.data["message"]]:[signal.data["realname"]]:[listening_level]" in recentmessages)
+		var/signal_message = "[signal.data["message"]]:[signal.data["realname"]]:[listening_level]"
+		if(signal_message in recentmessages)
 			return
-		recentmessages.Add("[signal.data["message"]]:[signal.data["realname"]]:[listening_level]")
+		recentmessages.Add(signal_message)
 
 		signal.data["done"] = 1 // mark the signal as being broadcasted
 
@@ -88,7 +89,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 							  signal.data["name"], signal.data["job"],
 							  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], listening_level)
 
-		spawn(5)
+		spawn(10)
 			recentmessages = list()
 
 		/* --- Do a snazzy animation! --- */
@@ -358,11 +359,7 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
-		var/quotedmsg = "\"" + message + "\"" //BS12 EDIT For Arrivals Computer
-		if(job == "Automated Announcement")
-			quotedmsg = message
-		else if(M)
-			quotedmsg = M.say_quote(message)
+		var/quotedmsg = M.say_quote(message)
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 

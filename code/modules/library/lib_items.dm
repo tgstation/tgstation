@@ -25,7 +25,7 @@
 		O.loc = src
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
-		var/newname = copytext(sanitize(input("What would you like to title this bookshelf?") as text|null),1,MAX_MESSAGE_LEN)
+		var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
 		if(!newname)
 			return
 		else
@@ -140,7 +140,7 @@
 		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
 		switch(choice)
 			if("Title")
-				var/newtitle = copytext(reject_bad_text(input("Write a new title:") as text|null),1,MAX_MESSAGE_LEN)
+				var/newtitle = reject_bad_text(stripped_input(usr, "Write a new title:"))
 				if(!newtitle)
 					usr << "The title is invalid."
 					return
@@ -148,14 +148,14 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = strip_html(input("Write your book's contents (HTML NOT allowed):"),8192) as message|null
+				var/content = strip_html(input(usr, "Write your book's contents (HTML NOT allowed):"),8192) as message|null
 				if(!content)
 					usr << "The content is invalid."
 					return
 				else
 					src.dat += content
 			if("Author")
-				var/newauthor = copytext(sanitize(input("Write the author's name:") as text|null),1,MAX_NAME_LEN)
+				var/newauthor = stripped_input(usr, "Write the author's name:")
 				if(!newauthor)
 					usr << "The name is invalid."
 					return

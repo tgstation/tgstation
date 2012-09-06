@@ -12,6 +12,12 @@ Possible to do for anyone motivated enough:
 	Itegrate EMP effect to disable the unit.
 */
 
+// HOLOPAD MODE
+// 0 = RANGE BASED
+// 1 = AREA BASED
+var/const/HOLOPAD_MODE = 1
+
+
 /obj/machinery/hologram/holopad/attack_hand(var/mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
 		return
@@ -72,7 +78,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.mouse_opacity = 0//So you can't click on it.
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	hologram.anchored = 1//So space wind cannot drag it.
-	hologram.name = "AI hologram"//If someone decides to right click.
+	hologram.name = "[A.name] (Hologram)"//If someone decides to right click.
 	hologram.SetLuminosity(2)	//hologram lighting
 	SetLuminosity(2)			//pad lighting
 	icon_state = "holopad1"
@@ -94,10 +100,26 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/hologram/holopad/process()
 	if(hologram)//If there is a hologram.
-		if(master && !master.stat && master.client && master.eyeobj.loc == src.loc)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
+		if(master && !master.stat && master.client && master.eyeobj)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
 			if(!(stat & NOPOWER))//If the  machine has power.
-				return 1
+				if((HOLOPAD_MODE == 0 && (get_dist(master.eyeobj, src) <= holo_range)))
+					return 1
+
+				else if (HOLOPAD_MODE == 1)
+
+					var/area/holo_area = get_area(src)
+					var/area/eye_area = get_area(master.eyeobj)
+
+					if(eye_area in holo_area.master.related)
+						return 1
+
 		clear_holo()//If not, we want to get rid of the hologram.
+	return 1
+
+/obj/machinery/hologram/holopad/proc/move_hologram()
+	if(hologram)
+		step_to(hologram, master.eyeobj) // So it turns.
+		hologram.loc = get_turf(master.eyeobj)
 	return 1
 
 /obj/machinery/hologram/power_change()

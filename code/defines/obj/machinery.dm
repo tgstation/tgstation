@@ -330,6 +330,7 @@
 	icon_state = "holopad0"
 	var/mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
 	var/last_request = 0 //to prevent request spam. ~Carn
+	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 
 /obj/machinery/hologram/projector
 	name = "hologram projector"

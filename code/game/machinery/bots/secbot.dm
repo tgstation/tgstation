@@ -34,8 +34,6 @@
 
 	var/auto_patrol = 0		// set to make bot automatically patrol
 
-	var/obj/machinery/camera/cam //Camera for the AI to find them I guess
-
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/control_freq = 1447		// bot control frequency
 
@@ -77,9 +75,6 @@
 		spawn(3)
 			src.botcard = new /obj/item/weapon/card/id(src)
 			src.botcard.access = get_access("Detective")
-			src.cam = new /obj/machinery/camera(src)
-			src.cam.c_tag = src.name
-			src.cam.network = "SS13"
 			if(radio_controller)
 				radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 				radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
@@ -702,11 +697,6 @@ Auto Patrol: []"},
 		src.target = user
 		src.mode = SECBOT_HUNT
 
-/obj/machinery/bot/secbot/emp_act(severity)
-	if(cam)
-		cam.emp_act(severity)
-	..()
-
 //Secbot Construction
 
 /obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
@@ -764,11 +754,9 @@ Auto Patrol: []"},
 		del(src)
 
 	else if(istype(W, /obj/item/weapon/pen))
-		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
 		if(!t)
 			return
 		if(!in_range(src, usr) && src.loc != usr)
 			return
-
 		src.created_name = t

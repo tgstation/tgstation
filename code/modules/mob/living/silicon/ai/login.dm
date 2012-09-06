@@ -22,5 +22,5 @@
 			if(O)
 				O.mode = 1
 				O.emotion = "Neutral"
-	src.core()
+	src.view_core()
 	return

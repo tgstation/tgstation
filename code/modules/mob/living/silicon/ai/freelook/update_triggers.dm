@@ -33,6 +33,19 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
+// EFFECTS
+
+/obj/effect/Del()
+	if(ticker)
+		cameranet.updateVisibility(src)
+	..()
+
+/obj/effect/New()
+	..()
+	if(ticker)
+		cameranet.updateVisibility(src)
+
+
 // DOORS
 
 // Simply updates the visibility of the area when it opens/closes/destroyed.

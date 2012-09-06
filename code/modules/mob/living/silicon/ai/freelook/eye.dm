@@ -5,10 +5,12 @@
 
 /mob/aiEye
 	name = "Inactive AI Eye"
+	icon = 'icons/obj/status_display.dmi' // For AI friend secret shh :o
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	density = 0
 	nodamage = 1 // You can't damage it.
+	mouse_opacity = 0
 
 // Movement code. Returns 0 to stop air movement from moving it.
 /mob/aiEye/Move()
@@ -40,6 +42,11 @@
 	if(ai)
 		if(ai.client)
 			ai.client.eye = src
+		//Holopad
+		if(istype(ai.current, /obj/machinery/hologram/holopad))
+			var/obj/machinery/hologram/holopad/H = ai.current
+			H.move_hologram()
+
 
 // AI MOVEMENT
 
@@ -103,11 +110,17 @@
 /mob/living/silicon/ai/verb/core()
 	set category = "AI Commands"
 	set name = "AI Core"
+
+	view_core()
+
+
+/mob/living/silicon/ai/proc/view_core()
+
 	current = null
 	cameraFollow = null
 	machine = null
 
-	if(src.eyeobj)
+	if(src.eyeobj && src.loc)
 		src.eyeobj.loc = src.loc
 	else
 		src << "ERROR: Eyeobj not found. Please report this to Giacom. Creating new eye..."

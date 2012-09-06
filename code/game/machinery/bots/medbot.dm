@@ -16,7 +16,6 @@
 	req_access =list(access_medical)
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 //var/emagged = 0
-	var/obj/machinery/camera/cam = null
 	var/list/botcard_access = list(access_medical, access_morgue, access_genetics, access_robotics)
 	var/obj/item/weapon/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
@@ -75,9 +74,6 @@
 			src.botcard.access = get_access("Medical Doctor")
 		else
 			src.botcard.access = src.botcard_access
-		src.cam = new /obj/machinery/camera(src)
-		src.cam.c_tag = src.name
-		src.cam.network = "SS13"
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()
@@ -456,11 +452,6 @@
 		src.stunned = min(stunned+10,20)
 	..()
 
-/obj/machinery/bot/medbot/emp_act(severity)
-	if (cam)
-		cam.emp_act(severity)
-	..()
-
 /obj/machinery/bot/medbot/explode()
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
@@ -568,13 +559,11 @@
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)
 			return
-
 		src.created_name = t
 	else
 		switch(build_step)

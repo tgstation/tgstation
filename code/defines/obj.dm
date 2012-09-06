@@ -200,7 +200,7 @@
 /obj/structure/cable
 	level = 1
 	anchored =1
-	var/netnum = 0
+	var/datum/powernet/powernet
 	name = "power cable"
 	desc = "A flexible superconducting cable for heavy-duty power transfer"
 	icon = 'icons/obj/power_cond_red.dmi'
