@@ -10,6 +10,7 @@
 	var/mob/living/silicon/ai/ai = null
 	density = 0
 	nodamage = 1 // You can't damage it.
+	mouse_opacity = 0
 
 // Movement code. Returns 0 to stop air movement from moving it.
 /mob/aiEye/Move()
@@ -41,6 +42,11 @@
 	if(ai)
 		if(ai.client)
 			ai.client.eye = src
+		//Holopad
+		if(istype(ai.current, /obj/machinery/hologram/holopad))
+			var/obj/machinery/hologram/holopad/H = ai.current
+			H.move_hologram()
+
 
 // AI MOVEMENT
 
