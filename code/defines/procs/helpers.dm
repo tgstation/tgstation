@@ -362,7 +362,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/names = list()
 	var/list/ais = list()
 	var/list/namecounts = list()
-	for (var/mob/living/silicon/ai/A in player_list)
+	for (var/mob/living/silicon/ai/A in living_mob_list)
 		var/name = A.real_name
 		if (A.stat == 2)
 			continue
@@ -373,7 +373,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			namecounts[name] = 1
 		ais[name] = A
 
-	if (ais.len)
+	if(ais.len)
 		select = input("AI signals detected:", "AI selection") in ais
 		return ais[select]
 
