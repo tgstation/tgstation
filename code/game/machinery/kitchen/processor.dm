@@ -25,10 +25,6 @@
 			del(what)
 
 	/* objs */
-	wheat
-		input = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
-		output = /obj/item/weapon/reagent_containers/food/snacks/flour
-
 	meat
 		input = /obj/item/weapon/reagent_containers/food/snacks/meat
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
@@ -57,9 +53,6 @@
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 		output = /obj/item/weapon/reagent_containers/food/snacks/soydope
 
-	flour
-		input = /obj/item/weapon/reagent_containers/food/snacks/flour
-		output = /obj/item/weapon/reagent_containers/food/snacks/spagetti
 
 	/* mobs */
 	mob

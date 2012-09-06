@@ -33,6 +33,16 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dirt"
 
+/obj/effect/decal/cleanable/flour
+	name = "flour"
+	desc = "It's still good. Four second rule!"
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "flour"
+
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
 	desc = "Jeez. I hope that's not for lunch."

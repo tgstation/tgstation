@@ -163,9 +163,6 @@
 			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg))
 				items_measures[display_name] = "egg"
 				items_measures_p[display_name] = "eggs"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/flour))
-				items_measures[display_name] = "cup of flour"
-				items_measures_p[display_name] = "cups of flour"
 			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/tofu))
 				items_measures[display_name] = "tofu chunk"
 				items_measures_p[display_name] = "tofu chunks"
