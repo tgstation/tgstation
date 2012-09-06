@@ -157,7 +157,7 @@
 		valve_open = 1
 		var/turf/bombturf = get_turf(src)
 		var/bombarea = bombturf.loc.name
-		var/log_str = "Bomb valve opened in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]"
+		var/log_str = "Bomb valve opened in [bombarea] with [attached_device ? attached_device : "no device"] attacher: [attacher]. Last touched by: [src.fingerprintslast]"
 		bombers += log_str
 		message_admins(log_str)
 		log_game(log_str)
