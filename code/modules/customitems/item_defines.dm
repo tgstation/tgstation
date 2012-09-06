@@ -252,6 +252,13 @@
 	icon = 'custom_items.dmi'
 	icon_state = "odysseus_spec_id"
 
+/obj/item/weapon/clipboard/fluff/mcreary_journal //sirribbot: James McReary
+	name = "McReary's journal"
+	desc = "A journal with a warning sticker on the front cover. The initials \"J.M.\" are written on the back."
+	icon = 'custom_items.dmi'
+	icon_state = "mcreary_journal"
+	item_state = "mcreary_journal"
+
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////
@@ -326,7 +333,6 @@
 	desc = "Because when you're the toughest Mother Hubbard on the station, nobody's criticizing your fashion sense."
 	icon = 'custom_items.dmi'
 	icon_state = "enos_adlai_1"
-	flags = FPRINT|TABLEPASS
 
 //////////// Suits ////////////
 
@@ -398,8 +404,17 @@
 	item_state = "tian_dress"
 	color = "tian_dress"
 
+/obj/item/clothing/under/rank/bartender/fluff/classy	//searif: Ara Al-Jazari
+	name = "classy bartender uniform"
+	desc = "A prim and proper uniform that looks very similar to a bartender's, the only differences being a red tie, waistcoat and a rag hanging out of the back pocket."
+	icon = 'custom_items.dmi'
+	icon_state = "ara_bar_uniform"
+	item_state = "ara_bar_uniform"
+	color = "ara_bar_uniform"
+
 //////////// Masks ////////////
 
+/*
 /obj/item/clothing/mask/fluff/flagmask //searif: Tsiokeriio Tarbell
 	name = "\improper First Nations facemask"
 	desc = "A simple cloth rag that bears the flag of the first nations."
@@ -409,6 +424,7 @@
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
+*/
 
 /obj/item/clothing/mask/mara_kilpatrick_1 //staghorn: Mara Kilpatrick
 	name = "shamrock pendant"

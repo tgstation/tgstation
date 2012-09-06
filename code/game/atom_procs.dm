@@ -1,8 +1,3 @@
-/atom/Del()
-	var/log_file = file("[time2text(world.timeofday, "deletions/DD-MM-YYYY.txt")]")
-	log_file << "[type] named [name] - [x],[y],[z]"
-	. = ..()
-
 /atom/proc/MouseDrop_T()
 	return
 
@@ -110,7 +105,7 @@
 		//Fibers~
 		add_fibers(M)
 		//He has no prints!
-		if (mFingerprints in M.mutations)
+		if (MFINGERPRINTS in M.mutations)
 			if(fingerprintslast != M.key)
 				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
 				fingerprintslast = M.key

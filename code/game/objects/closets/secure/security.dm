@@ -155,7 +155,7 @@
 
 
 /obj/structure/closet/secure_closet/detective
-	name = "Detective's Cabinet"
+	name = "detective\'s cabinet"
 	req_access = list(ACCESS_FORENSICS_LOCKERS)
 	icon_state = "cabinetdetective_locked"
 	icon_closed = "cabinetdetective"

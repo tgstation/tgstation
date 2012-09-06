@@ -21,6 +21,9 @@
 	var/color	//brown, gray and white
 	layer = 2.5		//so they can hide under objects
 	swap_on_mobbump = 0
+	min_oxy = 16 //Require atleast 16kPA oxygen
+	minbodytemp = 223		//Below -50 Degrees Celcius
+	maxbodytemp = 323	//Above 50 Degrees Celcius
 
 /mob/living/simple_animal/mouse/Life()
 	..()
@@ -144,3 +147,6 @@
 		if(O.ZCanPass(T, 1) && !(O in open) && !(O in closed) && O in possibles)
 			open += O
 			*/
+
+mob/living/simple_animal/mouse/restrained() //Hotfix to stop mice from doing things with MouseDrop
+	return 1

@@ -333,6 +333,8 @@
 					set_picture("ai_facepalm")
 				if("Friend Computer")
 					set_picture("ai_friend")
+				if("Tribunal")
+					set_picture("tribunal")
 
 			return
 

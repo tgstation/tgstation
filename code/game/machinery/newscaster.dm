@@ -23,7 +23,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 
 
 /obj/machinery/newscaster
-	name = "Newscaster"
+	name = "newscaster"
 	desc = "A standard NanoTrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'terminals.dmi'
 	icon_state = "newscaster_normal"
@@ -174,7 +174,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<BR><HR>The newscaster recognises you as: <FONT COLOR='green'>[src.scanned_user]</FONT>"
 			if(1)
 				dat+= "Station Feed Channels<HR>"
-				if(channel_list.len)
+				if(!channel_list.len)
 					dat+="<I>No active channels found...</I>"
 				else
 					for(var/datum/feed_channel/CHANNEL in src.channel_list)
@@ -278,7 +278,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
 				dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
 				dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
-				if(channel_list.len)
+				if(!channel_list.len)
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in src.channel_list)
@@ -665,7 +665,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 //########################################################################################################################
 
 /obj/item/weapon/newspaper
-	name = "Newspaper"
+	name = "newspaper"
 	desc = "An issue of The Griffon, the newspaper circulating aboard NanoTrasen Space Stations."
 	icon_state = "newspaper"
 	w_class = 2	//Let's make it fit in trashbags!

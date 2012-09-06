@@ -163,8 +163,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(corpse.ajourn)
 		corpse.ajourn=0
 	client.mob = corpse
-	if (corpse.stat==2)
-		verbs += /mob/proc/ghost
+	if (corpse.stat==2 || istype(corpse, /mob/living/simple_animal/mouse ))
+		corpse.verbs += /mob/proc/ghost
 	del(src)
 
 /mob/dead/observer/proc/become_mouse()

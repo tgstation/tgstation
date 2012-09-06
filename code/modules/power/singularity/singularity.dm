@@ -7,6 +7,7 @@ var/global/list/uneatable = list(
 	/obj/effect/expl_particles,
 	/obj/effect/forcefield,
 	/obj/effect/effect,
+	/obj/effect/sign,
 	/mob/aiEye,
 	/mob/dead/observer // Stop ghosts being ate and not being able to get back to their bodies
 	)
@@ -256,8 +257,6 @@ var/global/list/uneatable = list(
 					gain = 100
 				spawn()
 					A:gib()
-//Sleep being called in process() :|
-//				sleep(1)
 			else if(istype(A,/obj/))
 
 				if (istype(A,/obj/item/weapon/storage/backpack/holding))

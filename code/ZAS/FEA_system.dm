@@ -92,15 +92,16 @@ datum
 	controller
 		air_system
 			//Geoemetry lists
-			var/list/turf/simulated/turfs_with_connections = list()
-			var/list/obj/fire/active_hotspots = list()
+			var/list/turfs_with_connections = list()
+			var/list/active_hotspots = list()
 
 			//Special functions lists
-			var/list/turf/simulated/tiles_to_reconsider_zones = list()
+			var/list/tiles_to_reconsider_zones = list()
 
 			//Geometry updates lists
-			var/list/turf/simulated/tiles_to_update = list()
-			var/list/connection/connections_to_check = list()
+			var/list/tiles_to_update = list()
+			var/list/connections_to_check = list()
+			var/list/rebuilds_to_consider = list()
 
 			var/current_cycle = 0
 			var/update_delay = 5 //How long between check should it try to process atmos again.
@@ -184,8 +185,29 @@ datum
 						var/output = T.update_air_properties()
 						if(. && T && !output)
 							. = 0 //If a runtime occured, make sure we can sense it.
-							log_admin("ZASALERT: Unable run turf/simualted/update_air_properties()")
+							//message_admins("ZASALERT: Unable run turf/simualted/update_air_properties()")
 					tiles_to_update = list()
+
+				tick_progress = "reconsider_zones"
+				if(rebuilds_to_consider.len)
+					for(var/turf/T in rebuilds_to_consider)
+						if(istype(T, /turf/simulated) && T.zone && !T.zone.rebuild)
+							var/turf/simulated/other_turf = rebuilds_to_consider[T]
+							if(istype(other_turf))
+								ConsiderRebuild(T,other_turf)
+							else if(istype(other_turf, /list))
+								var/list/temp_turfs = other_turf
+								for(var/turf/NT in temp_turfs)
+									ConsiderRebuild(T,NT)
+						else if (istype(T))
+							var/turf/simulated/other_turf = rebuilds_to_consider[T]
+							if(istype(other_turf))
+								ConsiderRebuild(other_turf,T)
+							else if(istype(other_turf, /list))
+								var/list/temp_turfs = other_turf
+								for(var/turf/simulated/NT in temp_turfs)
+									ConsiderRebuild(NT,T)
+					rebuilds_to_consider = list()
 
 				tick_progress = "connections_to_check"
 				if(connections_to_check.len)
@@ -215,6 +237,137 @@ datum
 					var/output = F.process()
 					if(. && F && !output)
 						. = 0
-						log_admin("ZASALERT: Unable run obj/fire/process()")
+						//message_admins("ZASALERT: Unable run obj/fire/process()")
 
 				tick_progress = "success"
+
+			proc/AddToConsiderRebuild(var/turf/simulated/T, var/turf/NT)
+				var/turf/existing_test = rebuilds_to_consider[T]
+				var/turf/existing_test_alternate = rebuilds_to_consider[NT]
+
+				if(existing_test)
+					if(NT == existing_test)
+						return
+					else if(islist(existing_test) && existing_test[NT])
+						return
+
+				else if(existing_test_alternate)
+					if(T == existing_test_alternate)
+						return
+					else if(islist(existing_test_alternate) && existing_test_alternate[T])
+						return
+
+				if(istype(T))
+					if(istype(existing_test))
+						var/list/temp_list = list(NT = 1, existing_test = 1)
+						rebuilds_to_consider[T] = temp_list
+					else if(istype(existing_test, /list))
+						existing_test[NT] = 1
+					else
+						rebuilds_to_consider[T] = NT
+
+				else if(istype(NT, /turf/simulated))
+					if(istype(existing_test_alternate))
+						var/list/temp_list = list(T = 1, existing_test_alternate = 1)
+						rebuilds_to_consider[NT] = temp_list
+					else if(istype(existing_test_alternate, /list))
+						existing_test_alternate[T] = 1
+					else
+						rebuilds_to_consider[NT] = T
+
+			proc/ConsiderRebuild(var/turf/simulated/T, var/turf/NT)
+
+				if(istype(NT, /turf/simulated) && NT.zone != T.zone)
+					T.zone.RemoveTurf(NT)
+					if(NT.zone)
+						NT.zone.RemoveTurf(T)
+					return
+				if(T.zone.rebuild)
+					return
+
+				var/zone/zone = T.zone
+
+				var/target_dir = get_dir(T, NT)
+				if(target_dir in list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+					T.zone.rebuild = 1
+					return
+				var/test_dir = turn(target_dir, 90)
+
+				var/turf/simulated/current = T
+				var/turf/simulated/next
+				var/stepped_back = 0
+
+				if( !(T.air_check_directions&test_dir || T.air_check_directions&turn(target_dir, 270)) )
+						//Step back, then try to connect.
+					if(!(T.air_check_directions&get_dir(NT, T)))
+						zone.rebuild = 1
+						return
+					current = get_step(T, get_dir(NT, T))
+					if(!istype(current) || !(current.air_check_directions&test_dir || current.air_check_directions&turn(target_dir, 270)) )
+						zone.rebuild = 1
+						return
+					stepped_back = 1
+
+				if ( !(current.air_check_directions&test_dir) && current.air_check_directions&turn(target_dir, 270) )
+						//Try to connect to the right hand side.
+					var/flipped = 0
+					test_dir = turn(target_dir, 270)
+
+					for(var/i = 1, i <= 10, i++)
+						if(get_dir(current, NT) in cardinal)
+							target_dir = get_dir(current, NT)
+
+						if(!istype(current) || !(current.air_check_directions&target_dir || current.air_check_directions&test_dir))
+							if(flipped)
+								zone.rebuild = 1
+								return
+							current = T
+							test_dir = turn(target_dir, 180)
+							i = 0
+							target_dir = get_dir(current, NT)
+							flipped = 1
+							continue
+
+						if(current.air_check_directions&target_dir && !stepped_back)
+							next = get_step(current, target_dir)
+							if(!next.HasDoor())
+								current = next
+
+						if(current.air_check_directions&test_dir && current != next)
+							next = get_step(current, test_dir)
+							if(!next.HasDoor())
+								current = next
+
+						if(current == NT)
+							return //We made it, yaaay~
+						stepped_back = 0
+						zone.rebuild = 1
+
+				else if ( current.air_check_directions&test_dir )
+						//Try to connect to the left hand side.
+					for(var/i = 1, i <= 10, i++)
+						if(get_dir(current, NT) in cardinal)
+							target_dir = get_dir(current, NT)
+
+						if(!istype(current) || !(current.air_check_directions&target_dir || current.air_check_directions&test_dir))
+							zone.rebuild = 1
+							return
+
+						if(current.air_check_directions&target_dir && !stepped_back)
+							next = get_step(current, target_dir)
+							if(!next.HasDoor())
+								current = next
+
+						if(current.air_check_directions&test_dir && current != next)
+							next = get_step(current, test_dir)
+							if(!next.HasDoor())
+								current = next
+
+						if(current == NT)
+							return //We made it, yaaay~
+						stepped_back = 0
+					zone.rebuild = 1
+
+				else
+					//FUCK IT
+					zone.rebuild = 1

@@ -1149,15 +1149,15 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
 	if(istype(loc,/mob))
-		loc.ul_SetLuminosity(loc.LuminosityRed - potency/5, loc.LuminosityGreen - potency/5, loc.LuminosityBlue - potency/5)
+		loc.ul_SetLuminosity(loc.ul_Red - potency/5, loc.ul_Green - potency/5, loc.ul_Blue - potency/5)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
 	ul_SetLuminosity(0)
-	user.ul_SetLuminosity(user.LuminosityRed + potency/5, user.LuminosityGreen + potency/5, user.LuminosityBlue + potency/5)
+	user.ul_SetLuminosity(user.ul_Red + potency/5, user.ul_Green + potency/5, user.ul_Blue + potency/5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	user.ul_SetLuminosity(user.LuminosityRed - potency/5, user.LuminosityGreen - potency/5, user.LuminosityBlue - potency/5)
+	user.ul_SetLuminosity(user.ul_Red - potency/5, user.ul_Green - potency/5, user.ul_Blue - potency/5)
 	ul_SetLuminosity(potency/5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
@@ -1646,15 +1646,15 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Del()
 	if(istype(loc,/mob))
-		loc.ul_SetLuminosity(loc.LuminosityRed - potency/10, loc.LuminosityGreen - potency/10, loc.LuminosityBlue - potency/10)
+		loc.ul_SetLuminosity(loc.ul_Red - potency/10, loc.ul_Green - potency/10, loc.ul_Blue - potency/10)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
 	ul_SetLuminosity(0)
-	user.ul_SetLuminosity(user.LuminosityRed + potency/10, user.LuminosityGreen + potency/10, user.LuminosityBlue + potency/10)
+	user.ul_SetLuminosity(user.ul_Red + potency/10, user.ul_Green + potency/10, user.ul_Blue + potency/10)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.ul_SetLuminosity(user.LuminosityRed - potency/10, user.LuminosityGreen - potency/10, user.LuminosityBlue - potency/10)
+	user.ul_SetLuminosity(user.ul_Red - potency/10, user.ul_Green - potency/10, user.ul_Blue - potency/10)
 	ul_SetLuminosity(potency/10)
 
 // **********************

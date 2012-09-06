@@ -524,9 +524,9 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 		if(S.implant)
 			implant_surgery(H,user)
 			return 1
-		else
+		/*else
 			user << "\red [H] is not bleeding in \his [S.display_name]!"
-			return 0
+			return 0*/
 
 	H.visible_message( \
 		"\red [user] is beginning to clamp bleeders in the wound in [H]'s [S.display_name] with [src].", \
@@ -1236,11 +1236,12 @@ Called when surgeon interupted operation, or was interrupted (was not there with
 		if(M.cores > 0)
 			for(var/mob/O in (viewers(M) - user - M))
 				O.show_message("\red [M.name] is having one of its cores sawed out with [src] by [user].", 1)
-			M.cores--
-			M << "\red [user] begins to remove one of your cores with [src]! ([M.cores] cores remaining)"
-			user << "\red You cut one of [M]'s cores out with [src]! ([M.cores] cores remaining)"
+			M << "\red [user] begins to remove one of your cores with [src]..."
+			user << "\red You begin to cut one of [M]'s cores out with [src]..."
 			if(do_after(user, rand(20,80)))
+				M.cores--
 				new/obj/item/metroid_core(M.loc)
+				user << "\red You cut out the core. ([M.cores] cores remaining)"
 				if(M.cores <= 0)
 					M.icon_state = "baby metroid dead-nocore"
 			else

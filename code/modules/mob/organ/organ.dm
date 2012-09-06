@@ -552,7 +552,8 @@
 						owner.original_name = owner.real_name
 					H.name = "[owner.original_name]'s head"
 
-					owner.update_face()
+					if(ishuman(owner))
+						owner.update_face()
 					owner.update_body()
 					owner.death()
 				if(ARM_RIGHT)

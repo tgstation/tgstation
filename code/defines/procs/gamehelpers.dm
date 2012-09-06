@@ -115,109 +115,62 @@
 			turfs += T
 	return turfs
 
+// Like view but bypasses luminosity check
+/proc/hear(var/range, var/atom/source)
+
+	var/lum = source.luminosity
+	source.luminosity = 6
+
+	var/list/heard = view(range, source)
+	source.luminosity = lum
+
+	return heard
+
+//var/debug_mob = 0
+
+// Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
+// It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
+// being unable to hear people due to being in a box within a bag.
+
+/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/client_check = 1, var/sight_check = 1, var/include_radio = 1, var/max_depth = 3)
+
+	//debug_mob += O.contents.len
+	if(max_depth < 1)
+		return L
+
+	for(var/atom/A in O)
+		if(ismob(A))
+			var/mob/M = A
+			if(client_check && !M.client)
+				L = recursive_mob_check(A, L, 1, 1, max_depth - 1)
+				continue
+			if(sight_check && !isInSight(A, O))
+				continue
+			L += M
+
+		else if(include_radio && istype(A, /obj/item/device/radio))
+			if(sight_check && isInSight(A, O))
+				L += A
+		L = recursive_mob_check(A, L, 1, 1, max_depth - 1)
+	return L
+
+// The old system would loop through lists for a total of 5000 per function call, in an empty server.
+// This new system will loop at around 1000 in an empty server.
 
 /proc/get_mobs_in_view(var/R, var/atom/source)
 	// Returns a list of mobs in range of R from source. Used in radio and say code.
 
 	var/turf/T = get_turf(source)
-	var/list/hear = hearers(R, T)
-	var/list/V = range(R, T)
+	if(!istype(T))
+		return
+	var/list/hear = list()
+	var/list/range = hear(R, T)
 
-	// Search for closets:
-	for(var/obj/structure/closet/C in V)
-		for(var/mob/M in C.contents)
-			if(isInSight(source,C))
-				if(M.client)
-					hear += M
-
-	// Cryos:
-	for(var/obj/machinery/atmospherics/unary/cryo_cell/C in V)
-		if(C.occupant)
-			if(isInSight(source,C))
-				if(C.occupant.client)
-					hear += C.occupant
-
-	// Intelicards
-	for(var/obj/item/device/aicard/C in V)
-		for(var/mob/living/silicon/ai/M in C)
-			if(isInSight(source,C))
-				if(M.client)
-					hear += M
-
-	// Kind of a hacky fix, but should fix most cases without undo issues.
-	for(var/mob/M as mob in V)
-		for(var/obj/item/device/aicard/C in M.contents)
-			for(var/mob/living/silicon/ai/A in C)
-				if(isInSight(source,A))
-					if(A.client)
-						hear += A
-
-	// Soulstones
-	for(var/obj/item/device/soulstone/C in V)
-		for(var/mob/living/simple_animal/shade/M in C)
-			if(isInSight(source,C))
-				if(M.client)
-					hear += M
-
-	// Kind of a hacky fix, but should fix most cases without undo issues.
-	for(var/mob/M as mob in V)
-		for(var/obj/item/device/soulstone/C in M.contents)
-			for(var/mob/living/simple_animal/shade/A in C)
-				if(isInSight(source,A))
-					if(A.client)
-						hear += A
-
-
-
-	// Brains/MMIs/pAIs
-	for(var/mob/living/carbon/brain/C in world)
-		if(get_turf(C) in V)
-			if(isInSight(source,C))
-				hear += C
-	for(var/mob/living/silicon/pai/C in world)
-		if(get_turf(C) in V)
-			if(isInSight(source,C))
-				hear += C
-
-	// Parasites(e.g. Meme)
-	for(var/mob/living/carbon/C in V)
-		for(var/mob/M in C.parasites)
-			hear += M
-
-/*   -- Handled above.  WHY IS THIS HERE?  WHYYYYYYY
-	// Personal AIs
-	for(var/obj/item/device/paicard/C in V)
-		if(C.pai)
-			if(isInSight(source,C))
-				if(C.pai.client)
-					hear += C.pai
-*/
-	// Exosuits
-	for(var/obj/mecha/C in V)
-		if(C.occupant)
-			if(isInSight(source,C))
-				if(C.occupant.client)
-					hear += C.occupant
-
-	// Disposal Machines
-	for(var/obj/machinery/disposal/C in V)
-		for(var/mob/M in C.contents)
-			if(isInSight(source,C))
-				if(M.client)
-					hear += M
-
-	//Borg rechargers
-	for(var/obj/machinery/recharge_station/C in V)
-		if(C.occupant)
-			if(isInSight(source,C))
-				if(C.occupant.client)
-					hear += C.occupant
-
-	for(var/obj/item/device/radio/theradio in V)
-		if(isInSight(source,theradio))
-			hear += theradio
-
-
+	//debug_mob += range.len
+	for(var/turf/A in range)
+		hear += recursive_mob_check(A)
+	//world.log << "NEW: [debug_mob]"
+	//debug_mob = 0
 
 	return hear
 

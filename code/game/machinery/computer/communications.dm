@@ -195,8 +195,8 @@
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has sent Centcomm a message: [input]")
 				centcomm_message_cooldown = 1
-				spawn(600)//One minute cooldown
-					message_cooldown = 0
+				spawn(50)//One minute cooldown, nah 5 seconds
+					centcomm_message_cooldown = 0
 
 
 		// OMG SYNDICATE ...LETTERHEAD
@@ -212,8 +212,8 @@
 				usr << "Message transmitted."
 				log_say("[key_name(usr)] has sent the Syndicate a message: [input]")
 				centcomm_message_cooldown = 1
-				spawn(600)//One minute cooldown
-					message_cooldown = 0
+				spawn(50)//One minute cooldown, nah 5 seconds
+					centcomm_message_cooldown = 0
 
 		if("RestoreBackup")
 			usr << "Backup routing data restored!"

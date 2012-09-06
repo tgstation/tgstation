@@ -92,10 +92,14 @@ obj
 						//Also get liquid fuels on the ground.
 						obj/liquid_fuel/liquid = locate() in S
 
+					var/datum/gas_mixture/flow = air_contents.remove_ratio(0.25)
+					//The reason we're taking a part of the air instead of all of it is so that it doesn't jump to
+					//the fire's max temperature instantaneously.
+
 					firelevel = air_contents.calculate_firelevel(liquid)
 
 					//Ensure that there is an appropriate amount of fuel and O2 here.
-					if(firelevel > 0.25 && (air_contents.toxins || fuel || liquid))
+					if(firelevel > 0.25 && flow.oxygen > 0.3 && (air_contents.toxins || fuel || liquid))
 
 						for(var/direction in cardinal)
 							if(S.air_check_directions&direction) //Grab all valid bordering tiles
@@ -114,10 +118,6 @@ obj
 										if( prob( firelevel*10 ) )
 											new/obj/fire(enemy_tile,firelevel)
 
-					var/datum/gas_mixture/flow = air_contents.remove_ratio(0.25)
-					//The reason we're taking a part of the air instead of all of it is so that it doesn't jump to
-					//the fire's max temperature instantaneously.
-
 					if(flow)
 
 						//Ensure adequate oxygen and fuel.
@@ -126,15 +126,15 @@ obj
 							//Change icon depending on the fuel, and thus temperature.
 							if(firelevel > 6)
 								icon_state = "3"
-								if(LuminosityRed != 11)
+								if(ul_Red != 11)
 									ul_SetLuminosity(11,9,0)
 							else if(firelevel > 2.5)
 								icon_state = "2"
-								if(LuminosityRed != 8)
+								if(ul_Red != 8)
 									ul_SetLuminosity(8,7,0)
 							else
 								icon_state = "1"
-								if(LuminosityRed != 5)
+								if(ul_Red != 5)
 									ul_SetLuminosity(5,4,0)
 
 							//Ensure flow temperature is higher than minimum fire temperatures.
@@ -163,6 +163,10 @@ obj
 
 		New(newLoc,fl)
 			..()
+
+			if(!istype(loc, /turf) || !loc.CanPass(null, loc, 0, 0))
+				del src
+
 			dir = pick(cardinal)
 			ul_SetLuminosity(3,2,0)
 			firelevel = fl

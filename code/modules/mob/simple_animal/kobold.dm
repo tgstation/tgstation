@@ -18,7 +18,9 @@
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
 	minbodytemp = 250
-	min_oxy = 1
+	min_oxy = 16 //Require atleast 16kPA oxygen
+	minbodytemp = 223		//Below -50 Degrees Celcius
+	maxbodytemp = 323	//Above 50 Degrees Celcius
 
 /mob/living/simple_animal/kobold/Life()
 	..()
