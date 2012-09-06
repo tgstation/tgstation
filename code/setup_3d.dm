@@ -9,7 +9,7 @@
 
 var/list/levels_3d = list(1,2) //To expediate calculations, just do "z in levels_3d"
 
-var/list/global_adjacent_z_levels = list(list("up" = 2),list("down" = 1),null,null,null,null) //Example.  2 is above 1
+var/list/global_adjacent_z_levels = list("1" = list("up" = 2), "2" = list("down" = 1)) //Example.  2 is above 1
 
 //Commented out ones are incomplete.
 //#include "TriDimension\Pipes.dm" //Example

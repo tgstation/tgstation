@@ -40,7 +40,7 @@ proc/makejson()
 			players += "[C.key];"
 	F << "{\"mode\":\"[mode]\",\"players\" : \"[players]\",\"playercount\" : \"[playerscount]\",\"admin\" : \"[admins]\",\"time\" : \"[time2text(world.realtime,"MM/DD - hh:mm")]\"}"
 	fcopy("info.json","[jsonpath]/info.json")
-/*
+
 /proc/switchmap(newmap,newpath)
 	var/oldmap
 	var/obj/mapinfo/M = locate()
@@ -95,7 +95,6 @@ client/proc/ChangeMap(var/X as text)
 	set name = "Change Map"
 	set category  = "Admin"
 	switchmap(X,X)
-	*/
 proc/send2irc(msg,msg2)
  	shell("python nudge.py [msg] [msg2]")
 proc/send2adminirc(channel,msg)

@@ -32,6 +32,7 @@
 	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
 	var/protect_roles_from_antagonist = 0// If security and such can be tratior/cult/other
 	var/Tensioner_Active = 0			// If the tensioner is running.
+	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/Ticklag = 0.9
 	var/Tickcomp = 0
@@ -49,7 +50,6 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/usealienwhitelist = 0
-	var/allow_Metadata = 0
 
 	var/server
 	var/banappeals
@@ -185,7 +185,7 @@
 				if ("allow_admin_jump")
 					config.allow_admin_jump = 1
 
-				if ("allow_admin_rev")
+				if("allow_admin_rev")
 					config.allow_admin_rev = 1
 
 				if ("allow_admin_spawning")
