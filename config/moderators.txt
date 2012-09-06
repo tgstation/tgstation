@@ -8,6 +8,7 @@ cubejackal
 dakonic
 densane
 deusdactyl
+fastler
 fenrisian
 madmalicemccrea
 mangled
