@@ -4,6 +4,9 @@ What are the archived variables for?
 	This prevents race conditions that arise based on the order of tile processing.
 */
 
+#define QUANTIZE(variable)		(round(variable,0.0001))
+#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
+
 datum
 	gas //These are used for the "Trace Gases" stuff, but is buggy.
 		sleeping_agent

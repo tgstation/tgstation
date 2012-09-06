@@ -121,7 +121,7 @@
 
 		admin_memo_show()
 
-	//log_client_to_db()
+	log_client_to_db()
 
 
 	//////////////

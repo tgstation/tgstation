@@ -175,7 +175,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		//SPECIFIC_HEAT_TOXIN
 		if(mega_energy > 0 && held_plasma.toxins)
 			var/heat_capacity = held_plasma.heat_capacity()//200 * number of plasma moles
-			if(heat_capacity > MINIMUM_HEAT_CAPACITY)
+			if(heat_capacity > 0.0003)	//formerly MINIMUM_HEAT_CAPACITY
 				held_plasma.temperature = (heat_capacity + mega_energy * 35000)/heat_capacity
 
 		//if there is too much plasma in the field, lose some

@@ -464,7 +464,8 @@ var/list/liftable_structures = list(\
 //The number of deciseconds which someone needs to be inactive to be classified as AFK:
 #define AFK_THRESHOLD 3000
 
-
+#define MIN_PLAYER_AGE 19
+#define MAX_PLAYER_AGE 54
 
 #define SEE_INVISIBLE_MINIMUM 5
 
@@ -498,3 +499,13 @@ var/list/liftable_structures = list(\
 
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
+
+#define SPECIFIC_HEAT_TOXIN		200
+#define SPECIFIC_HEAT_AIR		20
+#define SPECIFIC_HEAT_CDO		30
+#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
+	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
+
+#define MINIMUM_HEAT_CAPACITY	0.0003
+#define QUANTIZE(variable)		(round(variable,0.0001))
+#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer

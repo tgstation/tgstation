@@ -990,8 +990,8 @@
 	new /obj/structure/girder(src)
 	src.ReplaceWithFloor()
 	for(var/turf/simulated/floor/target_tile in range(0,src))
-		if(target_tile.parent && target_tile.parent.group_processing)
-			target_tile.parent.suspend_group_processing()
+//		if(target_tile.parent && target_tile.parent.group_processing) // THESE PROBABLY DO SOMETHING IMPORTANT BUT I DON'T KNOW HOW TO FIX IT - Erthilo
+//			target_tile.parent.suspend_group_processing()
 		var/datum/gas_mixture/napalm = new
 		var/toxinsToDeduce = 20
 		napalm.toxins = toxinsToDeduce
@@ -1008,7 +1008,7 @@
 	for(var/obj/machinery/door/airlock/plasma/D in range(3,src))
 		D.ignite(temperature/4)
 
-/turf/simulated/wall/mineral/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
+/turf/simulated/wall/mineral/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(mineral == "plasma")
 		if(exposed_temperature > 300)
 			PlasmaBurn(exposed_temperature)

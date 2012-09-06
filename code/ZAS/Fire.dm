@@ -344,4 +344,4 @@ datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 	apply_damage(0.4*mx*arms_exposure, BURN, "l_arm", 0, 0, "Fire")
 	apply_damage(0.4*mx*arms_exposure, BURN, "r_arm", 0, 0, "Fire")
 
-	flash_pain()
+	//flash_pain()
