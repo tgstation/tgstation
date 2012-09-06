@@ -15,6 +15,13 @@ var/global/BSACooldown = 0
 				msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
 			C << msg
 
+/obj/admins/proc/player_has_info(var/key as text)
+	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+	var/list/infos
+	info >> infos
+	if(!infos || !infos.len) return 0
+	else return 1
+
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
 	log_adminwarn(rendered)
@@ -2258,6 +2265,15 @@ var/global/BSACooldown = 0
 					message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		return
 		//hahaha
+
+	if(href_list["vsc"])
+		if ((src.rank in list( "Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master" )))
+			if(href_list["vsc"] == "airflow")
+				vsc.ChangeSettingsDialog(usr,vsc.settings)
+			if(href_list["vsc"] == "plasma")
+				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
+			if(href_list["vsc"] == "default")
+				vsc.SetDefault(usr)
 
 
 	if(href_list["ac_view_wanted"])                 //Admin newscaster Topic() stuff be here

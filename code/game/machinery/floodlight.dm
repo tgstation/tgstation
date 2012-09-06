@@ -1,3 +1,5 @@
+//these are probably broken
+
 /obj/machinery/floodlight
 	name = "Emergency Floodlight"
 	icon = 'floodlight.dmi'
@@ -16,17 +18,17 @@
 	if (!on)
 		if (luminosity)
 			updateicon()
-			sd_SetLuminosity(0)
+			//sd_SetLuminosity(0)
 		return
 
 	if(!luminosity && cell && cell.charge > 0)
-		sd_SetLuminosity(10)
+		//sd_SetLuminosity(10)
 		updateicon()
 
 	if(!cell && luminosity)
 		on = 0
 		updateicon()
-		sd_SetLuminosity(0)
+		//sd_SetLuminosity(0)
 		return
 
 	cell.charge -= use
@@ -34,7 +36,7 @@
 	if(cell.charge <= 0 && luminosity)
 		on = 0
 		updateicon()
-		sd_SetLuminosity(0)
+		//sd_SetLuminosity(0)
 		return
 
 /obj/machinery/floodlight/attack_hand(mob/user as mob)

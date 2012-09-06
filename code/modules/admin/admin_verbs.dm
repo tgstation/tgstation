@@ -106,10 +106,27 @@
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/deadmin_self
+		else if (holder.level == -3) // Retired Admin
+			verbs += /client/proc/cmd_admin_say
+			verbs += /client/proc/cmd_mod_say
+			return
 		else	return
 
 		//Moderator
 		if (holder.level >= 0)
+			if (holder.level == 0)
+				verbs -= /client/proc/cmd_admin_say
+				verbs -= /client/proc/investigate_show
+				verbs -= /client/proc/cmd_admin_gib_self
+				verbs += /client/proc/mod_panel
+			verbs += /client/proc/admin_play
+			verbs += /client/proc/admin_observe
+			verbs += /client/proc/cmd_mod_say
+		else	return
+
+		//Temporary Admin
+		if (holder.level >= 1)
+			//--former tg mod commands, moved up a level
 			verbs += /obj/admins/proc/announce
 			verbs += /obj/admins/proc/startnow
 			verbs += /obj/admins/proc/toggleAI							//Toggle the AI
@@ -128,8 +145,6 @@
 			verbs += /client/proc/cmd_admin_subtle_message
 			//verbs += /client/proc/warn	- was never used
 			verbs += /client/proc/dsay
-			verbs += /client/proc/admin_play
-			verbs += /client/proc/admin_observe
 			verbs += /client/proc/game_panel
 			verbs += /client/proc/player_panel
 			verbs += /client/proc/player_panel_new
@@ -144,10 +159,8 @@
 			verbs += /client/proc/check_ai_laws
 			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
 			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
-		else	return
+			//--end tg mod commands
 
-		//Temporary Admin
-		if (holder.level >= 1)
 			verbs += /obj/admins/proc/delay								//game start delay
 			verbs += /obj/admins/proc/immreboot							//immediate reboot
 			verbs += /obj/admins/proc/restart							//restart
@@ -505,6 +518,14 @@
 	if(holder)
 		holder.player_panel_new()
 	feedback_add_details("admin_verb","PPN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
+/client/proc/mod_panel()
+	set name = "Moderator Panel"
+	set category = "Admin"
+	if(holder)
+		holder.mod_panel()
+//	feedback_add_details("admin_verb","MP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/check_antagonists()

@@ -35,6 +35,23 @@
 				admins[m_key] = a_lev
 				diary << ("ADMIN: [m_key] = [a_lev]")
 
+	// look for moderators in a separate file
+	text = file2text("config/moderators.txt")
+	if (!text)
+		diary << "Failed to load config/moderators.txt\n"
+	else
+		var/list/lines = dd_text2list(text, "\n")
+		for(var/line in lines)
+			if (!line)
+				continue
+
+			if (copytext(line, 1, 2) == ";")
+				continue
+
+			var/m_key = copytext(line, 1, length(line)+1)
+			var/a_lev = "Moderator"
+			admins[m_key] = a_lev
+
 /world/proc/load_testers()
 	var/text = file2text("config/testers.txt")
 	if (!text)
