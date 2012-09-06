@@ -119,7 +119,7 @@
 							src.temp = "This spell opens nearby doors and does not require wizard garb."
 						if ("14")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							usr.verbs += /client/proc/rightandwrong
+							usr.rightandwrong()
 							src.max_uses--
 							src.temp = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!"
 						if ("15")
