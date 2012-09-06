@@ -15,7 +15,7 @@ Possible to do for anyone motivated enough:
 // HOLOPAD MODE
 // 0 = RANGE BASED
 // 1 = AREA BASED
-var/const/HOLOPAD_MODE = 1
+var/const/HOLOPAD_MODE = 0
 
 
 /obj/machinery/hologram/holopad/attack_hand(var/mob/living/carbon/human/user) //Carn: Hologram requests.
@@ -120,6 +120,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(hologram)
 		step_to(hologram, master.eyeobj) // So it turns.
 		hologram.loc = get_turf(master.eyeobj)
+
 	return 1
 
 /obj/machinery/hologram/power_change()
