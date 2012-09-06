@@ -1,0 +1,53 @@
+"a" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{icon_state = "intact-r"; dir = 4},/turf/simulated/floor,/area)
+"b" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{icon_state = "intact-r"; dir = 4},/turf/simulated/floor,/area)
+"c" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{tag = "icon-manifold-r (NORTH)"; icon_state = "manifold-r"; dir = 1},/turf/simulated/floor,/area)
+"d" = (/obj/machinery/power/smes,/obj/structure/cable,/obj/structure/cable{d1 = 0; d2 = 2; icon_state = "0-2"},/turf/simulated/floor,/area)
+"e" = (/obj/structure/cable/heavyduty{tag = "icon-0-2"; icon_state = "0-2"},/obj/machinery/power/terminal{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/visible{icon_state = "intact-b"; dir = 6},/turf/simulated/floor,/area)
+"f" = (/obj/machinery/atmospherics/pipe/simple/supply/visible{tag = "icon-intact-b (SOUTHWEST)"; icon_state = "intact-b"; dir = 10},/turf/simulated/floor,/area)
+"g" = (/obj/machinery/atmospherics/unary/generator_input{dir = 1},/turf/simulated/floor,/area)
+"h" = (/obj/machinery/atmospherics/pipe/tank/oxygen{dir = 2},/turf/simulated/floor,/area)
+"i" = (/turf/simulated/floor,/area)
+"j" = (/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{tag = "icon-intact (WEST)"; icon_state = "intact"; dir = 8},/turf/simulated/floor,/area)
+"k" = (/obj/structure/cable/heavyduty{tag = "icon-1-2-4"; icon_state = "1-2-4"},/obj/machinery/power/terminal{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/visible,/turf/simulated/floor,/area)
+"l" = (/obj/structure/cable/heavyduty{tag = "icon-4-8"; icon_state = "4-8"},/obj/machinery/atmospherics/trinary/filter{dir = 1; filter_type = 1; icon_state = "intact_on"; name = "Gas filter (O2 tank)"; on = 1; pressure_resistance = 4500},/turf/simulated/floor,/area)
+"m" = (/obj/machinery/power/generator_type2{dir = 8},/obj/structure/cable/heavyduty{tag = "icon-0-8"; icon_state = "0-8"},/obj/machinery/atmospherics/pipe/simple/supply/visible{tag = "icon-intact-b (WEST)"; icon_state = "intact-b"; dir = 8},/turf/simulated/floor,/area)
+"n" = (/obj/machinery/atmospherics/pipe/manifold/supply/visible{icon_state = "manifold-b"; dir = 4},/turf/simulated/floor,/area)
+"o" = (/obj/machinery/atmospherics/pipe/tank{icon = 'orange_pipe_tank.dmi'},/turf/simulated/floor,/area)
+"p" = (/obj/machinery/power/smes,/obj/structure/cable,/turf/simulated/floor,/area)
+"q" = (/obj/structure/cable/heavyduty,/obj/machinery/power/terminal{dir = 8},/obj/machinery/atmospherics/pipe/simple/supply/visible,/turf/simulated/floor,/area)
+"r" = (/obj/machinery/atmospherics/trinary/filter{dir = 1; icon_state = "intact_on"; name = "Gas filter (Toxins tank)"; on = 1; pressure_resistance = 4500},/turf/simulated/floor,/area)
+"s" = (/obj/machinery/atmospherics/unary/generator_input{layer = 2.5},/obj/machinery/atmospherics/pipe/simple/supply/visible{tag = "icon-intact-b (WEST)"; icon_state = "intact-b"; dir = 8},/turf/simulated/floor,/area)
+"t" = (/obj/machinery/atmospherics/binary/pump,/obj/machinery/atmospherics/pipe/simple/supply/visible{tag = "icon-intact-b (WEST)"; icon_state = "intact-b"; dir = 8},/turf/simulated/floor,/area)
+"u" = (/obj/machinery/atmospherics/pipe/simple/supply/visible{tag = "icon-intact-b (WEST)"; icon_state = "intact-b"; dir = 8},/turf/simulated/floor,/area)
+"v" = (/obj/machinery/atmospherics/pipe/simple/supply/visible{tag = "icon-intact-b (NORTHWEST)"; icon_state = "intact-b"; dir = 9},/turf/simulated/floor,/area)
+"w" = (/obj/machinery/atmospherics/pipe/simple/supply/visible,/turf/simulated/floor,/area)
+"x" = (/obj/machinery/atmospherics/pipe/simple/supply/visible{tag = "icon-intact-b (NORTH)"; icon_state = "intact-b"; dir = 1},/turf/simulated/wall/heatshield,/area)
+"y" = (/obj/machinery/atmospherics/pipe/manifold/general/visible{tag = "icon-manifold-r (WEST)"; icon_state = "manifold-r"; dir = 8},/turf/simulated/wall/heatshield,/area)
+"z" = (/obj/machinery/atmospherics/pipe/simple/supply/visible,/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{icon_state = "intact-r"; dir = 4},/turf/simulated/wall/heatshield,/area)
+"A" = (/obj/machinery/atmospherics/pipe/simple/supply/visible,/turf/simulated/wall/heatshield,/area)
+"B" = (/obj/machinery/atmospherics/unary/thermal_plate{dir = 1},/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area)
+"C" = (/turf/simulated/wall/heatshield,/area)
+"D" = (/obj/machinery/emitter{anchored = 1; dir = 4; state = 2},/turf/simulated/floor,/area)
+"E" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; external_pressure_bound = 101.325; on = 1; pressure_checks = 0; pump_direction = 0},/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area)
+"F" = (/obj/machinery/power/supermatter/shard,/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area)
+"G" = (/obj/machinery/atmospherics/pipe/vent{dir = 1},/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area)
+"H" = (/obj/machinery/emitter{anchored = 1; dir = 8; state = 2},/turf/simulated/floor,/area)
+"I" = (/turf/simulated/wall/cult,/area)
+"J" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall,/area)
+"K" = (/obj/machinery/door/poddoor{id = "syndicate"; name = "Outer Airlock"},/turf/simulated/floor/engine{name = "vacuum floor"; nitrogen = 0.01; oxygen = 0.01},/area)
+"L" = (/turf/simulated/wall,/area)
+"M" = (/turf/space,/area)
+"N" = (/obj/machinery/atmospherics/pipe/vent{dir = 1},/turf/simulated/floor/plating/airless,/area)
+"O" = (/turf/simulated/floor/plating/airless,/area)
+
+(1,1,1) = {"
+abbcbbb
+defghij
+dklmnio
+pqrstuv
+iwxyzji
+iAxBACi
+DAEFGCH
+IJKKKLI
+MNMMMOM
+"}
