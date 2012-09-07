@@ -364,25 +364,32 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return borgs[select]
 
 //When a borg is activated, it can choose which AI it wants to be slaved to
-/proc/activeais()
-	var/select = null
-	var/list/names = list()
-	var/list/ais = list()
-	var/list/namecounts = list()
-	for (var/mob/living/silicon/ai/A in living_mob_list)
-		var/name = A.real_name
-		if (A.stat == 2)
+/proc/active_ais()
+	. = list()
+	for(var/mob/living/silicon/ai/A in living_mob_list)
+		if(A.stat == DEAD)
 			continue
-		if (A.control_disabled == 1)
+		if(A.control_disabled == 1)
 			continue
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		ais[name] = A
+		. += A
+	return .
 
+//Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
+/proc/select_active_ai_with_fewest_borgs()
+	var/mob/living/silicon/ai/selected
+	var/list/active = active_ais()
+	for(var/mob/living/silicon/ai/A in active)
+		if(!selected || (selected.connected_robots > A.connected_robots))
+			selected = A
+
+	return selected
+
+/proc/select_active_ai(var/mob/user)
+	var/list/ais = active_ais()
 	if(ais.len)
-		select = input("AI signals detected:", "AI selection") in ais
-		return ais[select]
+		if(user)	. = input(usr,"AI signals detected:", "AI selection") in ais
+		else		. = pick(ais)
+	return .
 
 //Returns a list of all mobs with their name
 /proc/getmobs()

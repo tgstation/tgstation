@@ -40,7 +40,7 @@
 			usr << "The upload computer is broken!"
 			return
 
-		src.current = activeais()
+		src.current = select_active_ai(user)
 
 		if (!src.current)
 			usr << "No active AIs detected."

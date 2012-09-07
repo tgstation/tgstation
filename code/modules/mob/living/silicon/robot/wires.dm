@@ -77,7 +77,7 @@
 
 		if (BORG_WIRE_AI_CONTROL) //pulse the AI wire to make the borg reselect an AI
 			if(!src.emagged)
-				src.connected_ai = activeais()
+				src.connected_ai = select_active_ai()
 
 		if (BORG_WIRE_CAMERA)
 			if(!isnull(src.camera) && src.camera.status && !scrambledcodes)

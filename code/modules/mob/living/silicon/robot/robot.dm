@@ -5,7 +5,6 @@
 	icon_state = "robot"
 	maxHealth = 300
 	health = 300
-	var/started = null//A fix to ensure people don't try to bypass law assignment. Initial assignment sets it to one but it check on login whether they have been initiated -Sieve
 	var/sight_mode = 0
 
 //Hud stuff
@@ -60,15 +59,43 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	if(real_name == "Cyborg")
+	if(cmptext(real_name,"Cyborg"))
 		ident = rand(1, 999)
 		real_name += "-[ident]"
 		name = real_name
 
 	if(!cell)
-		var/obj/item/weapon/cell/C = new(src)
-		C.charge = 1500
-		cell = C
+		cell = new /obj/item/weapon/cell(src)
+		cell.maxcharge = 7500
+		cell.charge = 7500
+
+	if(syndie)
+		laws = new /datum/ai_laws/antimov()
+		lawupdate = 0
+		scrambledcodes = 1
+		cell.maxcharge = 25000
+		cell.charge = 25000
+		module = new /obj/item/weapon/robot_module/syndicate(src)
+		hands.icon_state = "standard"
+		icon_state = "secborg"
+		modtype = "Synd"
+	else
+		laws = new /datum/ai_laws/asimov()
+		connected_ai = select_active_ai_with_fewest_borgs()
+		if(connected_ai)
+			connected_ai.connected_robots += src
+			lawsync()
+			lawupdate = 1
+		else
+			lawupdate = 0
+
+	radio = new /obj/item/device/radio/borg(src)
+	if(!scrambledcodes && !camera)
+		camera = new /obj/machinery/camera(src)
+		camera.c_tag = real_name
+		camera.network = "SS13"
+		if(isWireCut(5)) // 5 = BORG CAMERA
+			camera.status = 0
 	..()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -102,16 +129,12 @@
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
-			if(icontype== "Waitress")
-				icon_state = "Service"
-			else if(icontype == "Kent")
-				icon_state = "toiletbot"
-			else if(icontype == "Bro")
-				icon_state = "Brobot"
-			else if(icontype == "Rich")
-				icon_state = "maximillion"
-			else
-				icon_state = "Service2"
+			switch(icontype)
+				if("Waitress")	icon_state = "Service"
+				if("Kent")		icon_state = "toiletbot"
+				if("Bro")		icon_state = "Brobot"
+				if("Rich")		icon_state = "maximillion"
+				else				icon_state = "Service2"
 			modtype = "Butler"
 			feedback_inc("cyborg_service",1)
 
@@ -166,7 +189,7 @@
 	//not really necessary but just to avoid annoying people with
 	//unique names seeming as nobody could give me a straight answer as
 	//to whether to remove custom borg names completely.
-	if(copytext(real_name, 1, 7) == "Cyborg")
+	if(cmptext(copytext(real_name, 1, 7),"Cyborg"))
 		real_name = "[prefix] [real_name]"
 		name = real_name
 
