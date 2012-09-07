@@ -18,12 +18,6 @@
 	upgradeXRay()
 	upgradeMotion()
 
-/obj/machinery/camera/maintenance/New()
-	// Maintenance camera that has a 66% chance of not spawning.
-	if(prob(66))
-		del(src)
-		return
-	..()
 
 // CHECKS
 
