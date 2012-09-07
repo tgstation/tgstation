@@ -142,12 +142,13 @@ var/list/mechtoys = list(
 
 	New()
 		ordernum = rand(1,9000)
+
+	//Supply shuttle ticker - handles supply point regenertion and shuttle travelling between centcomm and the station
+	proc/process()
 		for(var/typepath in (typesof(/datum/supply_packs) - /datum/supply_packs))
 			var/datum/supply_packs/P = new typepath()
 			supply_packs[P.name] = P
 
-	//Supply shuttle ticker - handles supply point regenertion and shuttle travelling between centcomm and the station
-	proc/process()
 		spawn(0)
 			set background = 1
 			while(1)
