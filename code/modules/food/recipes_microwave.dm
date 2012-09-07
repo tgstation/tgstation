@@ -195,6 +195,7 @@
 		return being_cooked
 
 /datum/recipe/donkpocket/warm
+	reagents = list() //This is necessary since this is a child object of the above recipe and we don't want donk pockets to need flour
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	)
