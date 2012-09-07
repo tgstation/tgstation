@@ -8,7 +8,7 @@
 */
 
 var/list/recentmessages = list() // global list of recent messages broadcasted : used to circumvent massive radio spam
-
+var/message_delay = 0 // To make sure restarting the recentmessages list is kept in sync
 
 /obj/machinery/telecomms/broadcaster
 	name = "Subspace Broadcaster"
@@ -38,17 +38,17 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 	if(signal.data["message"])
 
 		// Prevents massive radio spam
-		var/signal_message = "[signal.data["message"]]:[signal.data["realname"]]:[listening_level]"
-		if(signal_message in recentmessages)
-			return
-		recentmessages.Add(signal_message)
-
 		signal.data["done"] = 1 // mark the signal as being broadcasted
-
 		// Search for the original signal and mark it as done as well
 		var/datum/signal/original = signal.data["original"]
 		if(original)
 			original.data["done"] = 1
+
+		var/datum/radio_frequency/connection = signal.data["connection"]
+		var/signal_message = "[connection.frequency]:[signal.data["message"]]:[signal.data["realname"]]:[listening_level]"
+		if(signal_message in recentmessages)
+			return
+		recentmessages.Add(signal_message)
 
 		if(signal.data["slow"] > 0)
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
@@ -89,12 +89,19 @@ var/list/recentmessages = list() // global list of recent messages broadcasted :
 							  signal.data["name"], signal.data["job"],
 							  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], listening_level)
 
-		spawn(10)
-			recentmessages = list()
+		if(!message_delay)
+			message_delay = 1
+			spawn(10)
+				message_delay = 0
+				recentmessages = list()
 
 		/* --- Do a snazzy animation! --- */
 		flick("broadcaster_send", src)
 
+/obj/machinery/telecomms/broadcaster/Del()
+	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
+	if(message_delay)
+		message_delay = 0
 
 
 /*
