@@ -100,6 +100,8 @@
 
 
 	signal()
+		if(!radio_connection) return
+
 		var/datum/signal/signal = new
 		signal.source = src
 		signal.encryption = code

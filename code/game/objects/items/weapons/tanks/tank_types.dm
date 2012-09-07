@@ -11,8 +11,8 @@
  * Oxygen
  */
 /obj/item/weapon/tank/oxygen
-	name = "Gas Tank (Oxygen)"
-	desc = "A tank of oxygen"
+	name = "oxygen tank"
+	desc = "A tank of oxygen."
 	icon_state = "oxygen"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
@@ -32,12 +32,10 @@
 
 
 /obj/item/weapon/tank/oxygen/yellow
-	name = "Gas Tank (Oxygen)"
 	desc = "A tank of oxygen, this one is yellow."
 	icon_state = "oxygen_f"
 
 /obj/item/weapon/tank/oxygen/red
-	name = "Gas Tank (Oxygen)"
 	desc = "A tank of oxygen, this one is red."
 	icon_state = "oxygen_fr"
 
@@ -46,8 +44,8 @@
  * Anesthetic
  */
 /obj/item/weapon/tank/anesthetic
-	name = "Gas Tank (Sleeping Agent)"
-	desc = "A N2O/O2 gas mix"
+	name = "anesthetic tank"
+	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	item_state = "an_tank"
 
@@ -66,7 +64,7 @@
  * Air
  */
 /obj/item/weapon/tank/air
-	name = "Gas Tank (Air Mix)"
+	name = "air tank"
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
 
@@ -90,8 +88,8 @@
  * Plasma
  */
 /obj/item/weapon/tank/plasma
-	name = "Gas Tank (BIOHAZARD)"
-	desc = "Contains dangerous plasma. Do not inhale."
+	name = "plasma tank"
+	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
 	icon_state = "plasma"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = null	//they have no straps!
@@ -102,42 +100,6 @@
 
 	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 	return
-
-
-/obj/item/weapon/tank/plasma/proc/release()
-	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
-
-	loc.assume_air(removed)
-
-/obj/item/weapon/tank/plasma/proc/ignite()
-	var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
-	var/strength = 1
-
-	var/turf/ground_zero = get_turf(loc)
-	loc = null
-
-	if(air_contents.temperature > (T0C + 400))
-		strength = fuel_moles/15
-
-		explosion(ground_zero, strength, strength*2, strength*3, strength*4)
-
-	else if(air_contents.temperature > (T0C + 250))
-		strength = fuel_moles/20
-
-		explosion(ground_zero, 0, strength, strength*2, strength*3)
-
-	else if(air_contents.temperature > (T0C + 100))
-		strength = fuel_moles/25
-
-		explosion(ground_zero, 0, 0, strength, strength*3)
-
-	else
-		ground_zero.assume_air(air_contents)
-		ground_zero.hotspot_expose(1000, 125)
-
-	if(src.master)
-		del(src.master)
-	del(src)
 
 /obj/item/weapon/tank/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -180,11 +142,11 @@
 			usr << sound('sound/effects/alert.ogg')
 
 /obj/item/weapon/tank/emergency_oxygen/engi
-	icon_state = "emergency_engi"
 	name = "extended-capacity emergency oxygen tank"
+	icon_state = "emergency_engi"
 	volume = 6
 
 /obj/item/weapon/tank/emergency_oxygen/double
+	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
-	name = "Double Emergency Oxygen Tank"
 	volume = 10

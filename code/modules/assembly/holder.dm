@@ -4,7 +4,6 @@
 	icon_state = "holder"
 	item_state = "assembly"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
 	throwforce = 5
 	w_class = 2.0
 	throw_speed = 3
@@ -70,6 +69,8 @@
 			src.overlays += "[initial(a_right.icon_state)]_right"
 			for(var/O in a_right.attached_overlays)
 				overlays += "[O]_r"
+		if(master)
+			master.update_icon()
 
 /*		if(special_assembly)
 			special_assembly.update_icon()
@@ -176,6 +177,8 @@
 				a_right.pulsed(0)
 			if(a_left != D)
 				a_left.pulsed(0)
+		if(master)
+			master.receive_signal()
 //		if(special && special_assembly)
 //			if(!special_assembly == D)
 //				special_assembly.dothings()

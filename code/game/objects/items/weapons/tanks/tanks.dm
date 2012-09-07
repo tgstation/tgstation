@@ -238,7 +238,10 @@
 	else if(pressure > TANK_RUPTURE_PRESSURE)
 		//world << "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]"
 		if(integrity <= 0)
-			loc.assume_air(air_contents)
+			var/turf/simulated/T = get_turf(src)
+			if(!T)
+				return
+			T.assume_air(air_contents)
 			playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 			del(src)
 		else
@@ -247,8 +250,11 @@
 	else if(pressure > TANK_LEAK_PRESSURE)
 		//world << "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]"
 		if(integrity <= 0)
+			var/turf/simulated/T = get_turf(src)
+			if(!T)
+				return
 			var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
-			loc.assume_air(leaked_gas)
+			T.assume_air(leaked_gas)
 		else
 			integrity--
 
