@@ -147,6 +147,8 @@
 				return 1
 
 		if(href_list["late_join"])
+			if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+				usr << "/red The round is either not ready, or has already finished..."
 			LateChoices()
 
 		if(href_list["SelectedJob"])
