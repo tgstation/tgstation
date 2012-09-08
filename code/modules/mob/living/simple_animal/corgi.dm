@@ -217,7 +217,7 @@
 							SetLuminosity(6)
 						if(/obj/item/clothing/head/soft)
 							name = "Corgi Tech [real_name]"
-							speak = list("Needs a stamp!", "Request DENIED!", "Fill these out in triplicate!")
+	//						speak = list("Needs a stamp!", "Request DENIED!", "Fill these out in triplicate!")
 							desc = "The reason your yellow gloves have chew-marks."
 
 			if("back")
