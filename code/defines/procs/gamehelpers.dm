@@ -253,3 +253,18 @@ proc/isInSight(var/atom/A, var/atom/B)
 
 	else
 		return 0
+
+/proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
+	//returns only NORTH, SOUTH, EAST, or WEST
+	var/dx = finish.x - start.x
+	var/dy = finish.y - start.y
+	if(abs(dy) > abs (dx)) //slope is above 1:1 (move horizontally in a tie)
+		if(dy > 0)
+			return get_step(start, SOUTH)
+		else
+			return get_step(start, NORTH)
+	else
+		if(dx > 0)
+			return get_step(start, WEST)
+		else
+			return get_step(start, EAST)

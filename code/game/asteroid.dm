@@ -1,108 +1,21 @@
+
+var/global/list/space_surprises = list(		/obj/item/clothing/mask/facehugger/angry		=4,
+											/obj/item/weapon/pickaxe/silver					=4,
+											/obj/item/weapon/pickaxe/drill					=4,
+											/obj/item/weapon/pickaxe/jackhammer				=4,
+											/mob/living/simple_animal/carp					=3,
+											/obj/item/weapon/pickaxe/diamond				=3,
+											/obj/item/weapon/pickaxe/diamonddrill			=3,
+											/obj/item/weapon/pickaxe/gold					=3,
+											/obj/item/weapon/pickaxe/plasmacutter			=2,
+											/obj/structure/closet/syndicate/resources		=2,
+											/obj/item/weapon/melee/energy/sword/pirate		=1,
+											/obj/mecha/working/ripley/mining				=1
+											)
+
+var/global/list/spawned_surprises = list()
+
 var/global/max_secret_rooms = 3
-
-
-
-/*
-proc/spawn_asteroid(var/turf/start_loc,var/type,var/size,var/richness)//type: 0 or null - random, 1 - nothing,  2 - iron, 3 - silicon
-	if(!size)
-		size = pick(100;2,50;3,35;4,25;6,10;12)
-	if(start_loc.x - size < 5 || start_loc.x + size >= world.maxx - 5 || start_loc.y - size < 5 || start_loc.y + size > world.maxy -5)
-		return 0
-	if(!type)
-		type = pick(50;1,2,3)
-	if(!richness)
-		richness = rand(10,40)
-//	world << "Asteroid size: [size]; Asteroid type: [type]"
-	var/list/turfs = circlerangeturfs(start_loc,size)
-	if(!islist(turfs) || isemptylist(turfs))
-		return 0
-	var/area/asteroid/AstAr = new
-	AstAr.name = "Asteroid #[start_loc.x][start_loc.y][start_loc.z]"
-	for(var/turf/T in turfs)
-		var/dist = get_dist(start_loc,T)
-		if(abs(GaussRand(dist))<size) //prob(100-(dist*rand(2,4))))//I'm terrible at generating random things.
-			var/turf/simulated/wall/asteroid/A
-			if(type > 1 && prob(richness))
-				switch(type)
-					if(2)
-						A = new /turf/simulated/wall/asteroid/iron(T)
-					if(3)
-						A = new /turf/simulated/wall/asteroid/silicon(T)
-			else
-				A = new /turf/simulated/wall/asteroid(T)
-			A.opacity = 0
-			A.sd_NewOpacity(1)
-			AstAr.contents += A
-
-	if(max_secret_rooms && size >= 10)
-		var/x_len = rand(4,size)
-		var/y_len = pick(4,size)
-		var/st_l = locate(start_loc.x-round(x_len/2),start_loc.y-round(y_len/2),start_loc.z)
-		if(st_l)
-			spawn_room(st_l,x_len,y_len)
-			max_secret_rooms--
-
-	return 1
-*/
-/*
-/proc/populate_w_asteroids(var/z,var/density=null)
-	if(!density)
-		density = pick(10,20,40)
-	while(density)
-		var/x = rand(1,world.maxx)
-		var/y = rand(1,world.maxy)
-//		world << "Asteroid coords: [x], [y], [z]"
-		var/start_loc = locate(x,y,z)
-		if(start_loc && spawn_asteroid(start_loc))
-			density--
-	return
-*/
-//this is terrible!	-Pete
-/*
-/datum/game_mode/proc/setup_sectors()
-	world << "\blue \b Randomizing space sectors."
-	var/list/sectors = list(1,3,4,0,0,0,0,0,0)
-	var/length = sectors.len/3
-	global_map = new/list(length,length)//3x3 map
-	var/x
-	var/y
-
-	for(x=1,x<=length,x++)
-		for(y=1,y<=length,y++)
-			var/sector
-			if(sectors.len)
-				sector = pick(sectors)
-				sectors -= sector
-				if(sector == 0)
-					sector = ++world.maxz
-					populate_w_asteroids(sector)
-				global_map[x][y] = sector
-			else
-				break
-	world << "\blue \b Randomization complete."
-
-	//debug
-	for(x=1,x<=global_map.len,x++)
-		var/list/y_arr = global_map[x]
-		for(y=1,y<=y_arr.len,y++)
-			var/t = ""
-			switch(y_arr[y])
-				if(1) t = "SS13"
-				if(3) t = "AI Satellite"
-				if(4) t = "Derelict"
-				else t = "Empty Cold Space"
-			world << "Global map [x] - [y] contains [t] (Z = [y_arr[y]])"
-	//debug
-
-	return
-
-/datum/game_mode/proc/spawn_exporation_packs()
-	for (var/obj/effect/landmark/L in world)
-		if (L.tag == "landmark*ExplorationPack")
-			new /obj/item/weapon/storage/explorers_box(L.loc)
-			del(L)
-	return
-*/
 
 proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor , var/clean = 0 , var/name)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
@@ -144,7 +57,6 @@ proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor , va
 
 
 	return room_turfs
-
 
 proc/admin_spawn_room_at_pos()
 	var/wall
