@@ -123,6 +123,14 @@
 	icon_on = "redzippoon"
 	icon_off = "redzippo"
 
+/obj/item/weapon/lighter/zippo/fluff/executivekill_1 //executivekill: Hunter Duke
+	name = "Gonzo Fist zippo"
+	desc = "A Zippo lighter with the iconic Gonzo Fist on a matte black finish."
+	icon = 'custom_items.dmi'
+	icon_state = "gonzozippo"
+	icon_on = "gonzozippoon"
+	icon_off = "gonzozippo"
+
 /obj/item/weapon/fluff/cado_keppel_1 //sparklysheep: Cado Keppel
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic. It has a small K etched into its side."
@@ -265,6 +273,22 @@
 	icon = 'custom_items.dmi'
 	icon_state = "mcreary_journal"
 	item_state = "mcreary_journal"
+
+/obj/item/device/flashlight/fluff/thejesster14_1 //thejesster14: Rosa Wolff
+	name = "old red flashlight"
+	desc = "A very old, childlike flashlight."
+	icon = 'custom_items.dmi'
+	icon_state = "wolfflight0"
+	w_class = 2
+	item_state = "wolfflight"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
+	m_amt = 50
+	g_amt = 20
+	on = 0
+	brightness_on = 4 //luminosity when on
+	icon_on = "wolfflight1"
+	icon_off = "wolfflight0"
 
 //////////////////////////////////
 //////////// Clothing ////////////

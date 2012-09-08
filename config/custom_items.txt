@@ -10,6 +10,7 @@ desiderium: Momiji Inubashiri: /obj/item/clothing/under/fluff/olddressuniform
 desiderium: Rook Maudlin: /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat, /obj/item/clothing/head/det_hat/fluff/retpolcap, /obj/item/clothing/under/det/fluff/retpoluniform
 deusdactyl: James Girard: /obj/item/clothing/head/secsoft/fluff/swatcap, /obj/item/clothing/suit/armor/vest/fluff/deus_blueshield
 eternal248: Maximilian Haynes: /obj/item/weapon/paper/certificate
+executivekill: Hunter Duke: /obj/item/weapon/lighter/zippo/fluff/executivekill_1
 fastler: Fastler Greay: /obj/item/weapon/card/id/fluff/lifetime
 fniff: Sarah Calvera: /obj/item/fluff/sarah_calvera_1
 fniff: Angleo Wilkerson: /obj/item/fluff/angelo_wilkerson_1
@@ -43,6 +44,7 @@ staghorn: Mara Kilpatrick: /obj/item/clothing/mask/mara_kilpatrick_1
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
 thebreadbocks: Steve Johnson: /obj/item/fluff/steve_johnson_1
 themij: Taryn Keppel: /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
+thejesster14: Rosa Wolff: /obj/item/device/flashlight/fluff/thejesster14_1
 tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
 vinceluk: Seth Sealis: /obj/item/clothing/suit/storage/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
