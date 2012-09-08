@@ -280,8 +280,7 @@ var/list/department_radio_keys = list(
 			listening|=M
 
 	var/turf/T = get_turf(src)
-	var/list/V = view(message_range, T)
-	var/list/W = V
+	var/list/W = view(message_range, T)
 
 	for (var/obj/O in ((W | contents)-used_radios))
 		W |= O
@@ -289,10 +288,21 @@ var/list/department_radio_keys = list(
 	for (var/mob/M in W)
 		W |= M.contents
 
-	for (var/obj/O in W) //radio in pocket could work, radio in backpack wouldn't --rastaf0
-		spawn (0)
-			if(O && !istype(O.loc, /obj/item/weapon/storage))
-				O.hear_talk(src, message)
+	for (var/atom/A in W)
+		if(istype(A, /mob/living/simple_animal/parrot)) //Parrot speech mimickry
+			if(A == src)
+				continue //Dont imitate ourselves
+
+			var/mob/living/simple_animal/parrot/P = A
+			if(P.speech_buffer.len >= 10)
+				P.speech_buffer.Remove(pick(P.speech_buffer))
+			P.speech_buffer.Add(message)
+
+		if(istype(A, /obj/)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
+			var/obj/O = A
+			spawn (0)
+				if(O && !istype(O.loc, /obj/item/weapon/storage))
+					O.hear_talk(src, message)
 
 
 /*			Commented out as replaced by code above from BS12
