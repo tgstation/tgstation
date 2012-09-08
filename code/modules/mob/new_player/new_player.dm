@@ -137,10 +137,24 @@
 			return 1
 
 		if(href_list["ready"])
+			var/num_old_slots = GetAvailableAlienPlayerSlots()
+			var/new_slots = num_old_slots
 			if(!ready)
-				ready = 1
+				if(num_old_slots >= 1 || preferences.species == "Human")
+					ready = 1
+					new_slots = GetAvailableAlienPlayerSlots()
+				else
+					src << "\red Unable to declare ready. Too many players have already elected to play as aliens."
 			else
 				ready = 0
+				new_slots = GetAvailableAlienPlayerSlots()
+
+			if(num_old_slots < 1 && new_slots >= 1)
+				for(var/mob/new_player/N in world)
+					N << "\blue A new alien player slot has opened."
+			else if(num_old_slots >= 1 && new_slots < 1)
+				for(var/mob/new_player/N in world)
+					N << "\red New alien players can no longer enter the game."
 
 		if(href_list["refresh"])
 			src << browse(null, "window=playersetup") //closes the player setup window
@@ -176,6 +190,14 @@
 			if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 				usr << "/red The round is either not ready, or has already finished..."
 				return
+
+			if(preferences.species != "Human")
+				if(!is_alien_whitelisted(src, preferences.species) && config.usealienwhitelist)
+					src << alert("You are currently not whitelisted to play [preferences.species].")
+					return 0
+				else if(GetAvailableAlienPlayerSlots() >= 1)
+					src << "\red Unable to join game. Too many players have already joined as aliens."
+
 			LateChoices()
 
 		if(href_list["manifest"])
@@ -301,9 +323,14 @@
 			src << alert("[rank] is not available. Please try another.")
 			return 0
 
+		var/num_old_slots = GetAvailableAlienPlayerSlots()
+		var/new_slots = num_old_slots
 		if(preferences.species != "Human")
 			if(!is_alien_whitelisted(src, preferences.species) && config.usealienwhitelist)
 				src << alert("You are currently not whitelisted to play [preferences.species].")
+				return 0
+			else if(num_old_slots < 1)
+				src << "\red Unable to join game. Too many players have already joined as aliens."
 				return 0
 
 		job_master.AssignRole(src, rank, 1)
@@ -317,10 +344,18 @@
 			data_core.manifest_inject(character)
 			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 			AnnounceArrival(character, rank)
+
+			new_slots = GetAvailableAlienPlayerSlots()
+			if(num_old_slots < 1 && new_slots >= 1)
+				for(var/mob/new_player/N in world)
+					N << "\blue A new alien player slot has opened."
+			else if(num_old_slots >= 1 && new_slots < 1)
+				for(var/mob/new_player/N in world)
+					N << "\red New alien players can no longer enter the game."
+
 		else
 			character.Robotize()
 		del(src)
-
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
@@ -411,3 +446,22 @@
 	proc/close_spawn_windows()
 		src << browse(null, "window=latechoices") //closes late choices window
 		src << browse(null, "window=playersetup") //closes the player setup window
+
+#define MAX_ALIEN_PLAYER_PERCENT 20
+
+//cael - this should probably be moved to ticker or somewhere, but it's fine here for now
+//limits the number of alien players in a game
+/proc/GetAvailableAlienPlayerSlots()
+	var/num_players = 0
+
+	//check new players
+	for(var/mob/new_player/N in world)
+		if(N.preferences && N.ready)
+			num_players++
+
+	//check players already spawned, only count humans or aliens
+	for(var/mob/living/carbon/human/H in world)
+		if(H.ckey)
+			num_players++
+
+	return round(num_players * (MAX_ALIEN_PLAYER_PERCENT / 100))
