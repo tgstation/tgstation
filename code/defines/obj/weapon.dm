@@ -1356,6 +1356,12 @@
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/kitchenknife/ritual
+	name = "ritual knife"
+	desc = "The unearthly energies that once powered this blade are now dormant."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "render"
+
 /obj/item/weapon/butch
 	name = "butcher's Cleaver"
 	icon = 'icons/obj/kitchen.dmi'
