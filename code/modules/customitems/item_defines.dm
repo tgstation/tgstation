@@ -252,6 +252,13 @@
 	icon = 'custom_items.dmi'
 	icon_state = "odysseus_spec_id"
 
+/obj/item/weapon/card/id/fluff/ian_colmid //Roaper: Ian Colm
+	name = "Technician"
+	desc = "a ID with the name 'Ian Colm' on it"
+	icon = 'card.dmi'
+	icon_state = "id"
+
+
 /obj/item/weapon/clipboard/fluff/mcreary_journal //sirribbot: James McReary
 	name = "McReary's journal"
 	desc = "A journal with a warning sticker on the front cover. The initials \"J.M.\" are written on the back."
