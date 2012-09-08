@@ -1,4 +1,5 @@
 /obj/structure/falsewall
+	anchored = 1
 	icon = 'icons/turf/walls.dmi'
 	var/mineral = "metal"
 
@@ -73,8 +74,8 @@
 	else
 		flick("[mineral]fwall_closing", src)
 		icon_state = "[mineral]0"
+		density = 1
 		sleep(15)
-		src.density = 1
 		SetOpacity(1)
 		src.relativewall()
 
@@ -170,6 +171,8 @@
 		icon_state = "[mineral]fwall_open"
 
 /obj/structure/falserwall/
+	anchored = 1
+	
 	attack_hand(mob/user as mob)
 		if(density)
 			// Open wall
@@ -181,8 +184,8 @@
 		else
 			icon_state = "r_wall"
 			flick("frwall_closing", src)
-			sleep(15)
 			density = 1
+			sleep(15)
 			SetOpacity(1)
 			relativewall()
 
