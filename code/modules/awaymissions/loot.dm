@@ -9,6 +9,7 @@
 	var/list/things = params2list(loot)
 	if(things && things.len)
 		for(var/i = lootcount, i > 0, i--)
+			if(!things.len) return
 			var/lootspawn = text2path(pick(things))
 			if(!lootdoubles)
 				things.Remove(lootspawn)

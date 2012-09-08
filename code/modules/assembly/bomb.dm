@@ -66,6 +66,8 @@
 		return
 	if(status)
 		bombtank.ignite()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
+	else
+		bombtank.release()
 
 /obj/item/device/onetankbomb/HasProximity(atom/movable/AM as mob|obj)
 	if(bombassembly)

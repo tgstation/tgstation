@@ -170,7 +170,8 @@ var/list/AAlarmWireColorToIndex
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
 	//away missions
-var/list/awaydestinations = list()
+var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
+var/returndestination				//the location immediately south of the station gateway
 
 
 

@@ -1,6 +1,8 @@
-var/list/potentialRandomZlevels = list()
-
 proc/createRandomZlevel()
+	if(awaydestinations.len)	//crude, but it saves another var!
+		return
+
+	var/list/potentialRandomZlevels = list()
 
 	var/text = file2text("maps/RandomZLevels/fileList.txt")
 
