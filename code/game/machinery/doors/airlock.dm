@@ -430,10 +430,8 @@ About the new airlock wires panel:
 			//tries to open the door without ID
 			//will succeed only if the ID wire is cut or the door requires no access
 			if(!src.requiresID() || src.check_access(null))
-				if(src.density)
-					open()
-				else
-					close()
+				if(density)	open()
+				else		close()
 		if(AIRLOCK_WIRE_SAFETY)
 			safe = !safe
 			if(!src.density)
@@ -1235,75 +1233,29 @@ About the new airlock wires panel:
 
 				del(src)
 				return
-		else if(src.arePowerSystemsOn() && !(stat & NOPOWER))
-			user << "\blue The airlock's motors resist your efforts to pry it open."
-		else if(src.locked)
-			user << "\blue The airlock's bolts prevent it from being pried open."
-		if((src.density) && (!( src.welded ) && !( src.operating ) && ((!src.arePowerSystemsOn()) || (stat & NOPOWER)) && !( src.locked )))
-
-			if(beingcrowbarred == 0) //being fireaxe'd
-				var/obj/item/weapon/twohanded/fireaxe/F = C
-				if(F:wielded)
-					spawn( 0 )
-						src.operating = 1
-						animate("opening")
-
-						sleep(15)
-
-						layer = 2.7
-						src.density = 0
-						update_icon()
-
-						src.SetOpacity(0)	//ugh...lots of lag for something so trivial
-						src.operating = 0
-					return
-				user << "\red You need to be wielding the Fire axe to do that."
-				return
-			else
-				spawn( 0 )
-					src.operating = 1
-					animate("opening")
-
-					sleep(15)
-
-					layer = 2.7
-					src.density = 0
-					update_icon()
-
-					src.SetOpacity(0)	//ugh...lots of lag for something so trivial
-					src.operating = 0
-					return
-
-		else
-			if((!src.density) && (!( src.welded ) && !( src.operating ) && !( src.locked )))
-				if(beingcrowbarred == 0)
+		else if(arePowerSystemsOn() && !(stat & NOPOWER))
+			user << "\blue The airlock's motors resist your efforts to force it."
+		else if(locked)
+			user << "\blue The airlock's bolts prevent it from being forced."
+		else if( !welded && !operating )
+			if(density)
+				if(beingcrowbarred == 0) //being fireaxe'd
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)
-						spawn( 0 )
-							src.operating = 1
-							animate("closing")
-
-							layer = 3.1
-							src.density = 1
-							sleep(15)
-							update_icon()
-
-							src.SetOpacity(initial(opacity))
-							src.operating = 0
+						spawn(0)	open(1)
 					else
 						user << "\red You need to be wielding the Fire axe to do that."
 				else
-					spawn( 0 )
-						src.operating = 1
-						animate("closing")
-
-						layer = 3.1
-						src.density = 1
-						sleep(15)
-						update_icon()
-
-						src.SetOpacity(initial(opacity))
-						src.operating = 0
+					spawn(0)	open(1)
+			else
+				if(beingcrowbarred == 0)
+					var/obj/item/weapon/twohanded/fireaxe/F = C
+					if(F:wielded)
+						spawn(0)	close(1)
+					else
+						user << "\red You need to be wielding the Fire axe to do that."
+				else
+					spawn(0)	close(1)
 
 	else
 		..()
@@ -1314,9 +1266,12 @@ About the new airlock wires panel:
 		ignite(is_hot(C))
 	..()
 
-/obj/machinery/door/airlock/open()
-	if(src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR) || src.operating)
+/obj/machinery/door/airlock/open(var/forced=0)
+	if( operating || welded || locked )
 		return 0
+	if(!forced)
+		if( !arePowerSystemsOn() || (stat & NOPOWER) || isWireCut(AIRLOCK_WIRE_OPEN_DOOR) )
+			return 0
 	use_power(50)
 	if(istype(src, /obj/machinery/door/airlock/glass))
 		playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
@@ -1328,9 +1283,12 @@ About the new airlock wires panel:
 		src.closeOther.close()
 	return ..()
 
-/obj/machinery/door/airlock/close()
-	if(src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) || src.operating)
+/obj/machinery/door/airlock/close(var/forced=0)
+	if(operating || welded || locked)
 		return
+	if(!forced)
+		if( !arePowerSystemsOn() || (stat & NOPOWER) || isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) )
+			return
 	if(safe)
 		if(locate(/mob/living) in get_turf(src))
 		//	playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)	//THE BUZZING IT NEVER STOPS	-Pete

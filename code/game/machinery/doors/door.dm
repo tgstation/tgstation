@@ -94,10 +94,9 @@
 		if(!src.requiresID())
 			user = null
 
-		if(allowed(user) && density)
-			open()
-		else if(density)
-			flick("door_deny", src)
+		if(density)
+			if(allowed(user))	open()
+			else				flick("door_deny", src)
 		return
 
 	meteorhit(obj/M as obj)
@@ -199,10 +198,10 @@
 
 
 	open()
-		if(!density)	return 1
+		if(!density)		return 1
 		if(operating > 0)	return
-		if(!ticker)	return 0
-		if(!operating)	operating = 1
+		if(!ticker)			return 0
+		if(!operating)		operating = 1
 
 		animate("opening")
 		icon_state = "door0"
@@ -212,7 +211,7 @@
 		src.density = 0
 		explosion_resistance = 0
 		update_icon()
-//		src.SetOpacity(0)
+		src.SetOpacity(0)
 		update_nearby_tiles()
 
 		if(operating)	operating = 0

@@ -81,10 +81,10 @@ ALLOW_RANDOM_EVENTS
 ALLOW_METADATA
 
 ## allow players to initiate a restart vote
-ALLOW_VOTE_RESTART
+#ALLOW_VOTE_RESTART
 
 ## allow players to initate a mode-change start
-ALLOW_VOTE_MODE
+#ALLOW_VOTE_MODE
 
 ## min delay (seconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 600
