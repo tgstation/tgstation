@@ -18,6 +18,7 @@
 	upgradeXRay()
 	upgradeMotion()
 
+
 // CHECKS
 
 /obj/machinery/camera/proc/isEmpProof()

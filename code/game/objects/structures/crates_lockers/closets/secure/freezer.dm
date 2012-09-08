@@ -19,8 +19,8 @@
 	New()
 		..()
 		sleep(2)
-		for(var/i = 0, i < 16, i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/flour(src)
+		for(var/i = 0, i < 3, i++)
+			new /obj/item/weapon/reagent_containers/food/drinks/flour(src)
 		new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
 		return
 

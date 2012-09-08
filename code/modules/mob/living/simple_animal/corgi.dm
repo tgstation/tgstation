@@ -190,7 +190,7 @@
 							name = "Nurse [real_name]"
 							desc = "[name] needs 100cc of beef jerky...STAT!"
 						if(/obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate)
-							name = "'[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibble","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]'"
+							name = "[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibble","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]"
 							desc = "Yaarghh!! Thar' be a scurvy dog!"
 							emote_see = list("hunts for treasure","stares coldly...","gnashes his tiny corgi teeth")
 							emote_hear = list("growls ferociously", "snarls")
@@ -219,7 +219,7 @@
 							SetLuminosity(6)
 						if(/obj/item/clothing/head/soft)
 							name = "Corgi Tech [real_name]"
-							speak = list("Needs a stamp!", "Request DENIED!", "Fill these out in triplicate!")
+	//						speak = list("Needs a stamp!", "Request DENIED!", "Fill these out in triplicate!")
 							desc = "The reason your yellow gloves have chew-marks."
 
 			if("back")

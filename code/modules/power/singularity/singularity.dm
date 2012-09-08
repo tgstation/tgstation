@@ -435,8 +435,9 @@ var/global/list/uneatable = list(
 
 
 /obj/machinery/singularity/proc/pulse()
-	for(var/obj/machinery/power/rad_collector/R in orange(15,src))
-		if(istype(R,/obj/machinery/power/rad_collector))
+
+	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
+		if(get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(energy)
 	return
 

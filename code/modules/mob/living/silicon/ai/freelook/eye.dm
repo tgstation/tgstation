@@ -63,9 +63,9 @@
 /mob/living/silicon/ai/New()
 	..()
 	eyeobj.ai = src
+	eyeobj.name = "[src.name] (AI Eye)" // Give it a name
 	spawn(5)
 		eyeobj.loc = src.loc
-		eyeobj.name = "[src.name] (AI Eye)" // Give it a name
 
 /mob/living/silicon/ai/Del()
 	eyeobj.ai = null

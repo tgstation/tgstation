@@ -37,8 +37,7 @@
 	timer_end()
 		if((!secured)||(cooldown > 0))	return 0
 		pulse(0)
-		for(var/mob/O in hearers(null, null))
-			O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+		visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
 		cooldown = 2
 		spawn(10)
 			process_cooldown()

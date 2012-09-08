@@ -1,5 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
+var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
@@ -16,6 +16,14 @@
 	var/active = 0
 	var/locked = 0
 	var/drainratio = 1
+
+/obj/machinery/power/rad_collector/New()
+	..()
+	rad_collectors += src
+
+/obj/machinery/power/rad_collector/Del()
+	rad_collectors -= src
+	..()
 
 /obj/machinery/power/rad_collector/process()
 	if(P)
@@ -56,7 +64,7 @@
 		user.drop_item()
 		src.P = W
 		W.loc = src
-		updateicon()
+		update_icons()
 	else if(istype(W, /obj/item/weapon/crowbar))
 		if(P && !src.locked)
 			eject()
@@ -108,7 +116,7 @@
 	if(active)
 		toggle_power()
 	else
-		updateicon()
+		update_icons()
 
 /obj/machinery/power/rad_collector/proc/receive_pulse(var/pulse_strength)
 	if(P && active)
@@ -120,7 +128,7 @@
 	return
 
 
-/obj/machinery/power/rad_collector/proc/updateicon()
+/obj/machinery/power/rad_collector/proc/update_icons()
 	overlays = null
 	if(P)
 		overlays += image('icons/obj/singularity.dmi', "ptank")
@@ -138,6 +146,6 @@
 	else
 		icon_state = "ca"
 		flick("ca_deactive", src)
-	updateicon()
+	update_icons()
 	return
 

@@ -41,11 +41,7 @@
 
 /datum/supply_packs/food
 	name = "Food crate"
-	contains = list(/obj/item/weapon/reagent_containers/food/snacks/flour,
-					/obj/item/weapon/reagent_containers/food/snacks/flour,
-					/obj/item/weapon/reagent_containers/food/snacks/flour,
-					/obj/item/weapon/reagent_containers/food/snacks/flour,
-					/obj/item/weapon/reagent_containers/food/snacks/flour,
+	contains = list(/obj/item/weapon/reagent_containers/food/drinks/flour,
 					/obj/item/weapon/reagent_containers/food/drinks/milk,
 					/obj/item/weapon/reagent_containers/food/drinks/milk,
 					/obj/item/weapon/storage/fancy/egg_box,

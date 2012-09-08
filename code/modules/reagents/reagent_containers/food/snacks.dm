@@ -461,13 +461,13 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/flour
+/*/obj/item/weapon/reagent_containers/food/snacks/flour //Has been converted into a reagent. Use that instead of the item!
 	name = "flour"
 	desc = "Some flour"
 	icon_state = "flour"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("nutriment", 1)*/
 
 /obj/item/weapon/reagent_containers/food/snacks/appendix //yes, this is the same as meat. I might do something different in future
 	name = "appendix"

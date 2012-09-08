@@ -1,10 +1,6 @@
 
 
-/client/proc/rightandwrong()
-	set category = "Spells"
-	set desc = "Summon Guns"
-	set name = "Wizards: No sense of right and wrong!"
-
+/mob/proc/rightandwrong()
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(is_special_character(H)) continue
@@ -51,4 +47,3 @@
 				new /obj/item/weapon/gun/projectile/automatic/mini_uzi(get_turf(H))
 			if("crossbow")
 				new /obj/item/weapon/gun/energy/crossbow(get_turf(H))
-	usr.verbs -= /client/proc/rightandwrong

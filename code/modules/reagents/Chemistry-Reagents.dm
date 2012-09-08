@@ -2077,6 +2077,23 @@ datum
 				..()
 				return
 
+		flour
+			name = "flour"
+			id = "flour"
+			description = "This is what you rub all over yourself to pretend to be a ghost."
+			reagent_state = SOLID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#FFFFFF" // rgb: 0, 0, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				..()
+				return
+
+			reaction_turf(var/turf/T, var/volume)
+				src = null
+				if(!istype(T, /turf/space))
+					new /obj/effect/decal/cleanable/flour(T)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////

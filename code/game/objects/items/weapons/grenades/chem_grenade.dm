@@ -9,7 +9,7 @@
 	var/path = 0
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/list/beakers = new/list()
-	var/list/allowed_containers = list("/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/reagent_containers/glass/dispenser", "/obj/item/weapon/reagent_containers/glass/bottle")
+	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
 	var/affected_area = 3
 
 	New()
@@ -41,7 +41,7 @@
 				stage = 2
 			else
 				user << "\red You need to add at least one beaker before locking the assembly."
-		else if((istype(W,/obj/item/weapon/reagent_containers/glass/beaker) || istype(W,/obj/item/weapon/reagent_containers/glass/bottle)) && stage == 1 && path != 2)
+		else if(is_type_in_list(W, allowed_containers) && stage == 1 && path != 2)
 			path = 1
 			if(beakers.len == 2)
 				user << "\red The grenade can not hold more containers."
@@ -56,46 +56,46 @@
 					user << "\red \the [W] is empty."
 
 	prime()
-		if(prob(reliability))
-			var/has_reagents = 0
-			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-				if(G.reagents.total_volume) has_reagents = 1
+		//if(prob(reliability))
+		var/has_reagents = 0
+		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+			if(G.reagents.total_volume) has_reagents = 1
 
-			if(!has_reagents)
-				playsound(src.loc, 'sound/items/Screwdriver2.ogg', 50, 1)
-				state = 0
-				return
+		if(!has_reagents)
+			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+			state = 0
+			return
 
-			playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 
-			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-				G.reagents.trans_to(src, G.reagents.total_volume)
+		for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+			G.reagents.trans_to(src, G.reagents.total_volume)
 
-			if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
-				var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
-				steam.set_up(10, 0, get_turf(src))
-				steam.attach(src)
-				steam.start()
+		if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
+			var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+			steam.set_up(10, 0, get_turf(src))
+			steam.attach(src)
+			steam.start()
 
-				for(var/atom/A in view(affected_area, src.loc))
-					if( A == src ) continue
-					src.reagents.reaction(A, 1, 10)
+			for(var/atom/A in view(affected_area, src.loc))
+				if( A == src ) continue
+				src.reagents.reaction(A, 1, 10)
 
 
-			invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
-			spawn(50)		   //To make sure all reagents can work
-				del(src)	   //correctly before deleting the grenade.
-		else
+		invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
+		spawn(50)		   //To make sure all reagents can work
+			del(src)	   //correctly before deleting the grenade.
+		/*else
 			icon_state = initial(icon_state) + "_locked"
 			crit_fail = 1
 			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-				G.loc = get_turf(src.loc)
+				G.loc = get_turf(src.loc)*/
 
 /obj/item/weapon/grenade/chem_grenade/large
 	name = "Large Chem Grenade"
 	desc = "An oversized grenade that affects a larger area."
 	icon_state = "large_grenade"
-	allowed_containers = list("/obj/item/weapon/reagent_containers/glass")
+	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
 	origin_tech = "combat=3;materials=3"
 	affected_area = 4
 

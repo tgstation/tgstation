@@ -38,6 +38,11 @@
 	WireColorToFlag = randomCameraWires()
 	assembly = new(src)
 	assembly.state = 4
+	/* // Use this to look for cameras that have the same c_tag.
+	for(var/obj/machinery/camera/C in cameranet.cameras)
+		if(C != src && C.c_tag == src.c_tag && C.network == src.network)
+			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
+	*/
 	..()
 
 
