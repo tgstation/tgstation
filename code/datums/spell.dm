@@ -144,7 +144,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(overlay)
 		for(var/atom/target in targets)
 			var/location
-			if(istype(target,/mob))
+			if(istype(target,/mob/living))
 				location = target.loc
 			else if(istype(target,/turf))
 				location = target
@@ -159,11 +159,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
 		var/location
-		if(istype(target,/mob))
+		if(istype(target,/mob/living))
 			location = target.loc
 		else if(istype(target,/turf))
 			location = target
-		if(istype(target,/mob) && message)
+		if(istype(target,/mob/living) && message)
 			target << text("[message]")
 		if(sparks_spread)
 			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
@@ -235,9 +235,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			if(range < 0)
 				targets += user
 			else
-				var/possible_targets = view_or_range(range, user, selection_type)
-				if(!include_user && user in possible_targets)
-					possible_targets -= user
+				var/possible_targets = list()
+
+				for(var/mob/living/M in view_or_range(range, user, selection_type))
+					if(!include_user && user == M)
+						continue
+					possible_targets += M
+
 				targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
 		else
 			var/list/possible_targets = list()

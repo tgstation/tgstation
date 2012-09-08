@@ -31,7 +31,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "Too many minds! You're not a hive damnit!"//Whaa...aat?
 		return
 
-	var/mob/target = targets[1]
+	var/mob/living/target = targets[1]
 
 	if(!(target in oview(range)))//If they are not in overview after selection. Do note that !() is necessary for in to work because ! takes precedence over it.
 		user << "They are too far away!"
@@ -53,7 +53,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "Their mind is resisting your spell."
 		return
 
-	var/mob/victim = target//The target of the spell whos body will be transferred to.
+	var/mob/living/victim = target//The target of the spell whos body will be transferred to.
 	var/mob/caster = user//The wizard/whomever doing the body transferring.
 
 	//SPELL LOSS BEGIN

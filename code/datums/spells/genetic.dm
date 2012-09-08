@@ -17,7 +17,7 @@
 
 /obj/effect/proc_holder/spell/targeted/genetic/cast(list/targets)
 
-	for(var/mob/target in targets)
+	for(var/mob/living/target in targets)
 		for(var/x in mutations)
 			target.mutations.Add(x)
 		target.disabilities |= disabilities
