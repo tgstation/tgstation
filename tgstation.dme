@@ -106,7 +106,6 @@
 #define FILE_DIR "code/modules/clothing/shoes"
 #define FILE_DIR "code/modules/clothing/spacesuits"
 #define FILE_DIR "code/modules/clothing/suits"
-#define FILE_DIR "code/modules/clothing/ties"
 #define FILE_DIR "code/modules/clothing/under"
 #define FILE_DIR "code/modules/clothing/under/jobs"
 #define FILE_DIR "code/modules/critters"
@@ -206,9 +205,7 @@
 #define FILE_DIR "icons/vending_icons"
 #define FILE_DIR "interface"
 #define FILE_DIR "maps"
-#define FILE_DIR "maps/backup"
 #define FILE_DIR "maps/RandomZLevels"
-#define FILE_DIR "maps/RandomZLevels/backup"
 #define FILE_DIR "sound"
 #define FILE_DIR "sound/AI"
 #define FILE_DIR "sound/ambience"
@@ -231,6 +228,7 @@
 
 // BEGIN_INCLUDE
 #include "code\global.dm"
+#include "code\hub.dm"
 #include "code\names.dm"
 #include "code\setup.dm"
 #include "code\stylesheet.dm"
