@@ -133,6 +133,10 @@ obj/machinery/gateway/center/process()
 	var/turf/T = loc
 	if(tilesafe && T.intact)
 		return
+	if(attached)
+		attached = null
+		user << "<span class='notice'>You detach the cable from [src].</span>"
+		return
 	if(isturf(T))
 		attached = locate() in T
 	if(user)
