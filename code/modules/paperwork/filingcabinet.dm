@@ -7,7 +7,6 @@
 	var/icon_open = "filing_cabinet1"
 	density = 1
 	anchored = 1
-	var/list/items = new/list()
 
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"
@@ -20,9 +19,14 @@
 	icon_closed = "filingcabinet"
 	icon_open = "filingcabinet-open"
 
+/obj/structure/filingcabinet/initialize()
+	for(var/obj/item/I in loc)
+		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder))
+			I.loc = src
+
 /obj/structure/filingcabinet/attackby(obj/item/P as obj, mob/user as mob)
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder))
-		user << "<span class='notice'>You put the [P] in \the [src].</span>"
+		user << "<span class='notice'>You put [P] in [src].</span>"
 		user.drop_item()
 		P.loc = src
 		spawn()
@@ -34,7 +38,7 @@
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
 	else
-		user << "<span class='notice'>You can't put a [P] in \the [src]!</span>"
+		user << "<span class='notice'>You can't put [P] in [src]!</span>"
 
 /obj/structure/filingcabinet/attack_hand(mob/user as mob)
 	if(contents.len <= 0)
