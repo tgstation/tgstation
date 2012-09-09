@@ -499,10 +499,12 @@ turf
 								mimic_temperature_solid(neighbor, neighbor.thermal_conductivity)
 
 			//Radiate excess tile heat to space
-			var/turf/space/sample_space = locate(/turf/space)
-			if(sample_space && (temperature > T0C))
-			//Considering 0 degC as te break even point for radiation in and out
-				mimic_temperature_solid(sample_space, FLOOR_HEAT_TRANSFER_COEFFICIENT)
+			if(temperature > T0C)
+				// Is there a pre-defined Space Tile?
+				if(!Space_Tile)
+					Space_Tile = locate(/turf/space) // Define one
+				//Considering 0 degC as te break even point for radiation in and out
+				mimic_temperature_solid(Space_Tile, FLOOR_HEAT_TRANSFER_COEFFICIENT)
 
 			//Conduct with air on my tile if I have it
 			if(air)
