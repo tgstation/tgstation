@@ -1089,3 +1089,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/validsalad
+
+/datum/recipe/cracker
+	reagents = list("flour" = 5, "sodiumchloride" = 1)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cracker

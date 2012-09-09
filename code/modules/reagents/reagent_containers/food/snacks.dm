@@ -180,6 +180,18 @@
 			something.loc = get_turf(src)
 	..()
 
+/obj/item/weapon/reagent_containers/food/snacks/attack_animal(var/mob/M)
+	if(isanimal(M))
+		if(iscorgi(M))
+			if(bitecount == 0 || prob(50))
+				M.emote("nibbles away at the [src]")
+			bitecount++
+			if(bitecount >= 5)
+				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
+				if(sattisfaction_text)
+					M.emote("[sattisfaction_text]")
+				del(src)
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// FOOD END
@@ -221,18 +233,6 @@
 //		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
 //		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
 //		bitesize = 3													//This is the amount each bite consumes.
-
-/obj/item/weapon/reagent_containers/food/snacks/attack_animal(var/mob/M)
-	if(isanimal(M))
-		if(iscorgi(M))
-			if(bitecount == 0 || prob(50))
-				M.emote("nibbles away at the [src]")
-			bitecount++
-			if(bitecount >= 5)
-				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
-				if(sattisfaction_text)
-					M.emote("[sattisfaction_text]")
-				del(src)
 
 
 
@@ -2278,3 +2278,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/cracker
 	name = "Cracker"
 	desc = "It's a salted cracker."
+	icon_state = "cracker"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
