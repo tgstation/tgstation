@@ -262,9 +262,9 @@
 
 /obj/item/weapon/card/id/fluff/ian_colmid //Roaper: Ian Colm
 	name = "Technician"
-	desc = "a ID with the name 'Ian Colm' on it"
-	icon = 'card.dmi'
-	icon_state = "id"
+	desc = "Ian Colm's ID Card (Technician): The current assignment on the card is Technician.The blood type on the card is B+.The DNA hash on the card is d4ce00a0f13f3630585e5762a0c043be.The fingerprint hash on the card is 30ae0b1f8fededb86a1b8af7bebb1b21."
+	icon = 'custom_items.dmi'
+	icon_state = "technician_id"
 
 
 /obj/item/weapon/clipboard/fluff/mcreary_journal //sirribbot: James McReary
