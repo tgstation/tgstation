@@ -66,7 +66,7 @@
 		var/turf/T = get_turf(R)
 		if (!T)
 			continue
-		if(T.z == 2)
+		if(T.z == 2 || T.z > 7)
 			continue
 		var/tmpname = T.loc.name
 		if(areaindex[tmpname])
