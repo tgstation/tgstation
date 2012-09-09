@@ -69,8 +69,10 @@
 			continue
 
 		for(var/turf/t in c.can_see())
-			if(t in turfs)
-				newVisibleTurfs += t
+			newVisibleTurfs += t
+
+	// Removes turf that isn't in turfs.
+	newVisibleTurfs &= turfs
 
 	var/list/visAdded = newVisibleTurfs - visibleTurfs
 	var/list/visRemoved = visibleTurfs - newVisibleTurfs
@@ -79,20 +81,24 @@
 	obscuredTurfs = turfs - newVisibleTurfs
 
 
-	for(var/turf/t in visAdded)
+	for(var/turf in visAdded)
+		var/turf/t = turf
 		if(t.obscured)
 			obscured -= t.obscured
-			for(var/mob/aiEye/m in seenby)
+			for(var/eye in seenby)
+				var/mob/aiEye/m = eye
 				if(m.ai.client)
 					m.ai.client.images -= t.obscured
 
-	for(var/turf/t in visRemoved)
+	for(var/turf in visRemoved)
+		var/turf/t = turf
 		if(t in obscuredTurfs)
 			if(!t.obscured)
 				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
 
 			obscured += t.obscured
-			for(var/mob/aiEye/m in seenby)
+			for(var/eye in seenby)
+				var/mob/aiEye/m = eye
 				if(!m)
 					seenby -= m
 				if(m.ai.client)
@@ -115,17 +121,21 @@
 		if(t.x >= x && t.y >= y && t.x < x + 16 && t.y < y + 16)
 			turfs += t
 
-	for(var/obj/machinery/camera/c in cameras)
+	for(var/camera in cameras)
+		var/obj/machinery/camera/c = camera
 		if(!c.can_use())
 			continue
 
 		for(var/turf/t in c.can_see())
-			if(t in turfs)
-				visibleTurfs += t
+			visibleTurfs += t
+
+	// Removes turf that isn't in turfs.
+	visibleTurfs &= turfs
 
 	obscuredTurfs = turfs - visibleTurfs
 
-	for(var/turf/t in obscuredTurfs)
+	for(var/turf in obscuredTurfs)
+		var/turf/t = turf
 		if(!t.obscured)
 			t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
 		obscured += t.obscured

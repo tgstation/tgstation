@@ -22,7 +22,7 @@
 	player_list |= src
 
 	var/list/watch_locations = list()
-	for(var/obj/effect/landmark/landmark in world)
+	for(var/obj/effect/landmark/landmark in landmarks_list)
 		if(landmark.tag == "landmark*new_player")
 			watch_locations += landmark.loc
 

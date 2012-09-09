@@ -12,6 +12,7 @@ var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hai
 var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessory/facial_hair indexed by name
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
+var/global/list/landmarks_list = list()				//list of all landmarks created
 
 //////////////////////////
 /////Initial Building/////

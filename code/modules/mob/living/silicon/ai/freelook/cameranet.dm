@@ -47,10 +47,12 @@ var/datum/cameranet/cameranet = new()
 	var/list/remove = ai.visibleCameraChunks - visibleChunks
 	var/list/add = visibleChunks - ai.visibleCameraChunks
 
-	for(var/datum/camerachunk/c in remove)
+	for(var/chunk in remove)
+		var/datum/camerachunk/c = chunk
 		c.remove(ai)
 
-	for(var/datum/camerachunk/c in add)
+	for(var/chunk in add)
+		var/datum/camerachunk/c = chunk
 		c.add(ai)
 
 // Updates the chunks that the turf is located in. Use this when obstacles are destroyed or	when doors open.

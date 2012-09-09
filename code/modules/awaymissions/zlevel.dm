@@ -47,7 +47,7 @@ proc/createRandomZlevel()
 		if(isfile(file))
 			maploader.load_map(file)
 
-		for(var/obj/effect/landmark/L in world)
+		for(var/obj/effect/landmark/L in landmarks_list)
 			if (L.name != "awaystart")
 				continue
 			awaydestinations.Add(L)

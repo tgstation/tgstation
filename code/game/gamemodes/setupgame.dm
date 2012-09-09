@@ -84,7 +84,7 @@
 
 /* This was used for something before, I think, but is not worth the effort to process now.
 /proc/setupcorpses()
-	for (var/obj/effect/landmark/A in world)
+	for (var/obj/effect/landmark/A in landmarks_list)
 		if (A.name == "Corpse")
 			var/mob/living/carbon/human/M = new /mob/living/carbon/human(A.loc)
 			M.real_name = "Corpse"

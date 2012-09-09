@@ -112,7 +112,7 @@
 
 	var/list/turf/synd_spawn = list()
 
-	for(var/obj/effect/landmark/A in world)
+	for(var/obj/effect/landmark/A in landmarks_list)
 		if (A.name == "Syndicate-Gear-Closet")
 			new /obj/structure/closet/syndicate/personal(A.loc)
 			del(A)

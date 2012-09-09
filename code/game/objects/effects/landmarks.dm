@@ -69,7 +69,12 @@
 			xeno_spawn += loc
 			del(src)
 
+	landmarks_list += src
 	return 1
+
+/obj/effect/landmark/Del()
+	landmarks_list -= src
+	..()
 
 /obj/effect/landmark/start
 	name = "start"
