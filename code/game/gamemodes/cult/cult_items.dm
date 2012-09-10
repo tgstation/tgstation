@@ -4,8 +4,8 @@
 	icon_state = "cultblade"
 	item_state = "cultblade"
 	flags = FPRINT | TABLEPASS
-	slot_flags = SLOT_BELT
-	force = 40
+	w_class = 4
+	force = 30
 	throwforce = 10
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
