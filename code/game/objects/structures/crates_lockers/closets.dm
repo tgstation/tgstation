@@ -224,7 +224,7 @@
 	return
 
 /obj/structure/closet/relaymove(mob/user as mob)
-	if(user.stat)
+	if(user.stat || !isturf(src.loc))
 		return
 
 	if(!src.open())

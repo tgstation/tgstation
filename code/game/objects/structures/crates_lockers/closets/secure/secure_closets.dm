@@ -99,11 +99,9 @@
 			togglelock(user)
 
 /obj/structure/closet/secure_closet/relaymove(mob/user as mob)
-	if(user.stat)
+	if(user.stat || !isturf(src.loc))
 		return
 
-	if(user.stat)
-		return
 	if(!(src.locked))
 		for(var/obj/item/I in src)
 			I.loc = src.loc
