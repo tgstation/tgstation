@@ -105,8 +105,8 @@
 				return
 
 			if (!near_camera(target))
-				U << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
-				sleep(50) //because we're sleeping another second after this (a few lines down)
+				U << "Target is not near any active cameras."
+				sleep(100)
 				continue
 
 			if(U.eyeobj)

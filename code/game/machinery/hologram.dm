@@ -26,7 +26,7 @@ var/const/HOLOPAD_MODE = 0
 			last_request = world.time
 			user << "<span class='notice'>You request an AI's presence.</span>"
 			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in player_list)
+			for(var/mob/living/silicon/ai/AI in living_mob_list)
 				if(!AI.client)	continue
 				AI << "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>"
 		else
@@ -50,8 +50,7 @@ var/const/HOLOPAD_MODE = 0
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
-			for(var/mob/M in viewers())
-				M.show_message("A holographic image of [user] flicks to life right before your eyes!",1)
+			src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
 		else
 			user << "\red ERROR: \black Image feed in progress."
 	else

@@ -48,8 +48,8 @@
 	if (!message)
 		return
 
-	var/obj/machinery/hologram/holopad/T = locate(/obj/machinery/hologram/holopad) in src.eyeobj.loc
-	if(istype(T) && T.hologram && T.master==src)//If there is a hologram and its master is the user.
+	var/obj/machinery/hologram/holopad/T = src.current
+	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
 		var/message_a = say_quote(message)
 
 		//Human-like, sorta, heard by those who understand humans.
