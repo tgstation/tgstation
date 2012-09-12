@@ -42,6 +42,7 @@
 			if(iswelder(W))
 				if(weld(W, user))
 					user << "You weld the assembly securely into place."
+					anchored = 1
 					state = 2
 				return
 
@@ -67,6 +68,7 @@
 				if(weld(W, user))
 					user << "You unweld the assembly from it's place."
 					state = 1
+					anchored = 1
 				return
 
 
@@ -96,14 +98,14 @@
 
 			else if(iswirecutter(W))
 
-				new/obj/item/weapon/cable_coil(src.loc, 2)
+				new/obj/item/weapon/cable_coil(get_turf(src), 2)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "You cut the wires from the circuits."
 				state = 2
 				return
 
 	// Upgrades!
-	if(is_type_in_list(W, possible_upgrades))
+	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
 		user << "You attach the [W] into the assembly inner circuits."
 		upgrades += W
 		user.drop_item(W)
@@ -116,7 +118,7 @@
 		if(U)
 			user << "You unattach an upgrade from the assembly."
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			U.loc = src.loc
+			U.loc = get_turf(src)
 			upgrades -= U
 		return
 

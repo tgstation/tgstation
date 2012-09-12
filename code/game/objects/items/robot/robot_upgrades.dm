@@ -33,8 +33,7 @@
 	del(R.module)
 	R.module = null
 	R.modtype = "robot"
-	R.real_name = "Cyborg [R.ident]"
-	R.name = R.real_name
+	R.updatename("Default")
 	R.nopush = 0
 	R.updateicon()
 

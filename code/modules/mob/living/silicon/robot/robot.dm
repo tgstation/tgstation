@@ -6,6 +6,7 @@
 	maxHealth = 300
 	health = 300
 	var/sight_mode = 0
+	var/custom_name = ""
 
 //Hud stuff
 
@@ -59,10 +60,9 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	if(cmptext(real_name,"Cyborg"))
-		ident = rand(1, 999)
-		real_name += "-[ident]"
-		name = real_name
+
+	ident = rand(1, 999)
+	updatename("Default")
 
 	if(!cell)
 		cell = new /obj/item/weapon/cell(src)
@@ -117,7 +117,7 @@
 		return
 	switch(mod)
 		if("Standard")
-			updatename()
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
 			icon_state = "robot"
@@ -185,13 +185,14 @@
 	updateicon()
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
-	if( length(real_name) < 7 || !prefix )	return
-	//not really necessary but just to avoid annoying people with
-	//unique names seeming as nobody could give me a straight answer as
-	//to whether to remove custom borg names completely.
-	if(cmptext(copytext(real_name, 1, 7),"Cyborg"))
-		real_name = "[prefix] [real_name]"
-		name = real_name
+
+	var/changed_name = ""
+	if(custom_name)
+		changed_name = custom_name
+	else
+		changed_name = "[(prefix ? "[prefix] " : "")]Cyborg-[num2text(ident)]"
+	real_name = changed_name
+	name = real_name
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"

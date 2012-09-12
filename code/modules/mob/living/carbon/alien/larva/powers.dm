@@ -4,6 +4,9 @@
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Alien"
 
+	if(stat != CONSCIOUS)
+		return
+
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
 		src << text("\green You are now hiding.")
@@ -21,6 +24,9 @@
 	set name = "Evolve"
 	set desc = "Evolve into a fully grown Alien."
 	set category = "Alien"
+
+	if(stat != CONSCIOUS)
+		return
 
 	if(amount_grown >= max_grown)	//TODO ~Carn
 		src << "\green You are growing into a beautiful alien! It is time to choose a caste."

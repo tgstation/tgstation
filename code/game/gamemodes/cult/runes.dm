@@ -377,8 +377,8 @@ var/list/sacrificed = list()
 			"\red You hear liquid flowing.")
 			D.real_name = "Unknown"
 			for(var/obj/item/weapon/paper/P in this_rune.loc)
-				if(length(P.name)<=24)
-					D.real_name = P.name
+				if(P.info)
+					D.real_name = copytext(P.info, 1, MAX_NAME_LEN)
 					break
 			D.universal_speak = 1
 			D.nodamage = 0
