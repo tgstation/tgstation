@@ -174,7 +174,7 @@ BLIND     // can't see anything
 		if(3)
 			usr << "Its vital tracker and tracking beacon appear to be enabled."
 	if(hastie)
-		usr << "[hastie] is clipped to it."
+		usr << "\A [hastie] is clipped to it."
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
@@ -207,12 +207,11 @@ BLIND     // can't see anything
 	set name = "Remove Tie"
 	set category = "Object"
 	set src in usr
-	var/mob/M = usr
-	if (istype(M, /mob/dead/)) return
-	if (usr.stat) return
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat) return
 
 	if(hastie)
-		hastie.loc = get_turf(src.loc)
+		usr.put_in_hands(hastie)
 		hastie = null
 
 		if(istype(loc, /mob/living/carbon/human))

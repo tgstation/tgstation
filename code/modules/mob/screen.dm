@@ -227,20 +227,11 @@
 /obj/screen/grab/attackby()
 	return
 
+/*
 /obj/screen/MouseEntered(object,location,control,params)
 	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
 		return
 	switch(name)
-		/*
-		if("other")
-			if (usr.hud_used.inventory_shown)
-				usr.hud_used.inventory_shown = 0
-				usr.client.screen -= usr.hud_used.other
-			else
-				usr.hud_used.inventory_shown = 1
-				usr.client.screen += usr.hud_used.other
-
-			usr.hud_used.hidden_inventory_update()*/
 		if("act_intent")
 			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
 				usr.hud_used.action_intent.icon_state = "intent_[usr.a_intent]"
@@ -255,6 +246,7 @@
 				if(intent == "hurt")
 					intent = "harm"	//hurt and harm have different sprite names for some reason.
 				usr.hud_used.action_intent.icon_state = "[intent]"
+*/
 
 /obj/screen/Click(location, control, params)
 	switch(name)
