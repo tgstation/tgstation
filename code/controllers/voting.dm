@@ -30,7 +30,7 @@ datum/controller/vote
 					var/client/C = voting[i]
 					if(C)
 						C << browse(null,"window=vote;can_close=0")
-						i++
+					i++
 				reset()
 			else
 				while(i<=voting.len)
