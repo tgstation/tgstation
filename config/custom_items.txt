@@ -27,7 +27,7 @@ nerezza: Asher Spock: /obj/item/weapon/reagent_containers/hypospray/fluff/asher_
 nerezza: Asher Spock: /obj/item/weapon/card/id/fluff/asher_spock_2
 orangebottle: Lillian Levett: /obj/item/weapon/pen/fluff/fancypen
 orangebottle: Lilliana Reade: /obj/item/weapon/pen/fluff/fancypen
-phaux: Tian Yinhu: /obj/item/clothing/under/fluff/tian_dress
+phaux: Tian Krieger: /obj/item/clothing/under/fluff/tian_dress
 rawrtaicho: Riley Rohtin: /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1
 roaper: Enos Adlai: /obj/item/clothing/head/fluff/enos_adlai_1
 searif: Yuki Matsuda: /obj/item/clothing/under/fluff/jumpsuitdown, /obj/item/clothing/head/helmet/welding/fluff/yuki_matsuda_1
