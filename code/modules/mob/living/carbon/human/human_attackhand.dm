@@ -85,9 +85,7 @@
 		if("grab")
 			if(M == src)	return 0
 			if(w_uniform)	w_uniform.add_fingerprint(M)
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M)
-			G.assailant = M
-			G.affecting = src
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, M, src)
 
 			M.put_in_active_hand(G)
 

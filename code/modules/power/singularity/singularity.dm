@@ -36,10 +36,7 @@ var/global/list/uneatable = list(
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
 	last_warning = world.time
-	var/count = 0
-	for(var/obj/machinery/containment_field/CF in world)
-		count = 1
-		break
+	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 	if(!count)	message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
@@ -215,21 +212,25 @@ var/global/list/uneatable = list(
 	set background = 1
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
-	for(var/atom/movable/X in orange(consume_range,src))
-		consume(X)
-	for(var/turf/X in orange(consume_range,src))
-		consume(X)
-	for(var/atom/movable/X in orange(grav_pull,src))
-		if(is_type_in_list(X, uneatable))	continue
-		if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
-			step_towards(X,src)
-		else if(istype(X,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = X
-			if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-				var/obj/item/clothing/shoes/magboots/M = H.shoes
-				if(M.magpulse)
-					continue
-			step_towards(H,src)
+	// Let's just make this one loop.
+	for(var/atom/X in orange(grav_pull,src))
+		var/dist = get_dist(X, src)
+		// Movable atoms only
+		if(dist > consume_range && istype(X, /atom/movable))
+			if(is_type_in_list(X, uneatable))	continue
+			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
+				step_towards(X,src)
+			else if(istype(X,/mob/living/carbon/human))
+				var/mob/living/carbon/human/H = X
+				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
+					var/obj/item/clothing/shoes/magboots/M = H.shoes
+					if(M.magpulse)
+						continue
+				step_towards(H,src)
+		// Turf and movable atoms
+		else if(dist <= consume_range && (isturf(X) || istype(X, /atom/movable)))
+			consume(X)
+
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
 	return
@@ -242,9 +243,15 @@ var/global/list/uneatable = list(
 	if (istype(A,/mob/living))//Mobs get gibbed
 		gain = 20
 		if(istype(A,/mob/living/carbon/human))
-			if(A:mind)
-				if((A:mind:assigned_role == "Station Engineer") || (A:mind:assigned_role == "Chief Engineer") )
+			var/mob/living/carbon/human/H = A
+			if(H.mind)
+
+				if((H.mind.assigned_role == "Station Engineer") || (H.mind.assigned_role == "Chief Engineer") )
 					gain = 100
+
+				if(H.mind.assigned_role == "Clown")
+					gain = rand(-300, 300) // HONK
+
 		spawn()
 			A:gib()
 		sleep(1)
@@ -269,7 +276,7 @@ var/global/list/uneatable = list(
 			O.y = 2
 			O.z = 2
 		else
-			A:ex_act(1.0)
+			A.ex_act(1.0)
 			if(A) del(A)
 		gain = 2
 	else if(isturf(A))
@@ -532,10 +539,9 @@ var/global/list/uneatable = list(
 	set background = 1
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 1
-	for(var/atom/movable/X in orange(consume_range,src))
-		consume(X)
-	for(var/turf/X in orange(consume_range,src))
-		consume(X)
+	for(var/atom/X in orange(consume_range,src))
+		if(isturf(X) || istype(X, /atom/movable))
+			consume(X)
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0
 	return
