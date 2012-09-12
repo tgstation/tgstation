@@ -28,7 +28,6 @@
 	makepowernets()
 
 	sun = new /datum/sun()
-	vote = new /datum/vote()
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()

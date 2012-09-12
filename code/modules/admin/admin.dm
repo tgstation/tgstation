@@ -1437,14 +1437,6 @@ var/global/BSACooldown = 0
 			return create_mob(usr)
 		else
 			alert("You are not a high enough administrator! Sorry!!!!")
-	if (href_list["vmode"])
-		vmode()
-
-	if (href_list["votekill"])
-		votekill()
-
-	if (href_list["voteres"])
-		voteres()
 
 	if (href_list["prom_demot"])
 		if ((src.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
@@ -2973,134 +2965,11 @@ var/global/BSACooldown = 0
 	usr << browse(dat, "window=secrets")
 	return
 
-/obj/admins/proc/Voting()
-
-	var/dat
-	var/lvl = 0
-	switch(src.rank)
-		if("Moderator")
-			lvl = 1
-		if("Temporary Admin")
-			lvl = 2
-		if("Admin Candidate")
-			lvl = 3
-		if("Trial Admin")
-			lvl = 4
-		if("Badmin")
-			lvl = 5
-		if("Game Admin")
-			lvl = 6
-		if("Game Master")
-			lvl = 7
-
-
-	dat += "<center><B>Voting</B></center><hr>\n"
-
-	if(lvl > 0)
-//			if(lvl >= 2 )
-		dat += {"
-<A href='?src=\ref[src];votekill=1'>Abort Vote</A><br>
-<A href='?src=\ref[src];vmode=1'>Start Vote</A><br>
-<A href='?src=\ref[src];voteres=1'>Toggle Voting</A><br>
-"}
-
-//			if(lvl >= 3 )
-//			if(lvl >= 5)
-//			if(lvl == 6 )
-
-	usr << browse(dat, "window=admin2;size=210x160")
-	return
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
 //i.e. buttons/verbs
 
-
-/obj/admins/proc/vmode()
-	set category = "Server"
-	set name = "Start Vote"
-	set desc="Starts vote"
-	if (!usr.client.holder)
-		return
-	var/confirm = alert("What vote would you like to start?", "Vote", "Restart", "Change Game Mode", "Cancel")
-	if(confirm == "Cancel")
-		return
-	if(confirm == "Restart")
-		vote.mode = 0
-	// hack to yield 0=restart, 1=changemode
-	if(confirm == "Change Game Mode")
-		vote.mode = 1
-		if(!ticker)
-			if(going)
-				world << "<B>The game start has been delayed.</B>"
-				going = 0
-	vote.voting = 1
-						// now voting
-	vote.votetime = world.timeofday + config.vote_period*10
-	// when the vote will end
-	spawn(config.vote_period*10)
-		vote.endvote()
-	world << "\red<B>*** A vote to [vote.mode?"change game mode":"restart"] has been initiated by Admin [usr.key].</B>"
-	world << "\red     You have [vote.timetext(config.vote_period)] to vote."
-
-	log_admin("Voting to [vote.mode?"change mode":"restart round"] forced by admin [key_name(usr)]")
-
-	for(var/mob/CM in player_list)
-		if(config.vote_no_default || (config.vote_no_dead && CM.stat == 2))
-			CM.client.vote = "none"
-		else
-			CM.client.vote = "default"
-
-	for(var/mob/CM in player_list)
-		if(config.vote_no_default || (config.vote_no_dead && CM.stat == 2))
-			CM.client.vote = "none"
-		else
-			CM.client.vote = "default"
-	feedback_add_details("admin_verb","SV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/obj/admins/proc/votekill()
-	set category = "Server"
-	set name = "Abort Vote"
-	set desc="Aborts a vote"
-	if(vote.voting == 0)
-		alert("No votes in progress")
-		return
-	world << "\red <b>*** Voting aborted by [usr.client.stealth ? "Admin Candidate" : usr.key].</b>"
-
-	log_admin("Voting aborted by [key_name(usr)]")
-
-	vote.voting = 0
-	vote.nextvotetime = world.timeofday + 10*config.vote_delay
-
-	for(var/mob/M in player_list)
-		// clear vote window from all clients
-		M << browse(null, "window=vote")
-		M.client.showvote = 0
-	feedback_add_details("admin_verb","AV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/obj/admins/proc/voteres()
-	set category = "Server"
-	set name = "Toggle Voting"
-	set desc="Toggles Votes"
-	var/confirm = alert("What vote would you like to toggle?", "Vote", "Restart [config.allow_vote_restart ? "Off" : "On"]", "Change Game Mode [config.allow_vote_mode ? "Off" : "On"]", "Cancel")
-	if(confirm == "Cancel")
-		return
-	if(confirm == "Restart [config.allow_vote_restart ? "Off" : "On"]")
-		config.allow_vote_restart = !config.allow_vote_restart
-		world << "<b>Player restart voting toggled to [config.allow_vote_restart ? "On" : "Off"]</b>."
-		log_admin("Restart voting toggled to [config.allow_vote_restart ? "On" : "Off"] by [key_name(usr)].")
-
-		if(config.allow_vote_restart)
-			vote.nextvotetime = world.timeofday
-	if(confirm == "Change Game Mode [config.allow_vote_mode ? "Off" : "On"]")
-		config.allow_vote_mode = !config.allow_vote_mode
-		world << "<b>Player mode voting toggled to [config.allow_vote_mode ? "On" : "Off"]</b>."
-		log_admin("Mode voting toggled to [config.allow_vote_mode ? "On" : "Off"] by [key_name(usr)].")
-
-		if(config.allow_vote_mode)
-			vote.nextvotetime = world.timeofday
-	feedback_add_details("admin_verb","TV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/restart()
 	set category = "Server"

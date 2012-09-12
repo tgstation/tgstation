@@ -86,11 +86,11 @@ ALLOW_METADATA
 ## allow players to initate a mode-change start
 #ALLOW_VOTE_MODE
 
-## min delay (seconds) between voting sessions (default 10 minutes)
-VOTE_DELAY 600
+## min delay (deciseconds) between voting sessions (default 10 minutes)
+VOTE_DELAY 6000
 
-## time period (seconds) which voting session will last (default 1 minute)
-VOTE_PERIOD 60
+## time period (deciseconds) which voting session will last (default 1 minute)
+VOTE_PERIOD 600
 
 ## prevents dead players from voting or starting votes
 # NO_DEAD_VOTE

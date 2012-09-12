@@ -107,6 +107,8 @@ datum/controller/game_controller/proc/process()
 				var/start_time = world.timeofday
 				controller_iteration++
 
+				vote.process()
+
 				//AIR
 				timer = world.timeofday
 				last_thing_processed = air_master.type

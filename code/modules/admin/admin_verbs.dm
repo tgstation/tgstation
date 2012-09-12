@@ -117,9 +117,6 @@
 			verbs += /obj/admins/proc/toggleguests						//Toggle guests entering
 			verbs += /obj/admins/proc/toggleooc							//toggle ooc
 			verbs += /obj/admins/proc/toggleoocdead						//toggle ooc for dead/unc
-			verbs += /obj/admins/proc/voteres 							//toggle votes
-			verbs += /obj/admins/proc/vmode
-			verbs += /obj/admins/proc/votekill
 			verbs += /obj/admins/proc/show_player_panel
 			verbs += /client/proc/deadchat								//toggles deadchat
 			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
@@ -136,7 +133,6 @@
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
 			verbs += /client/proc/unjobban_panel
-			verbs += /client/proc/voting
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/general_report
 			verbs += /client/proc/air_report
@@ -290,8 +286,6 @@
 /client/proc/clear_admin_verbs()
 	deadchat = 0
 
-	verbs -= /obj/admins/proc/vmode
-	verbs -= /obj/admins/proc/votekill
 	verbs -= /obj/admins/proc/announce
 	verbs -= /obj/admins/proc/startnow
 	verbs -= /obj/admins/proc/toggleAI									//Toggle the AI
@@ -299,7 +293,6 @@
 	verbs -= /obj/admins/proc/toggleguests								//Toggle guests entering
 	verbs -= /obj/admins/proc/toggleooc									//toggle ooc
 	verbs -= /obj/admins/proc/toggleoocdead         					//toggle ooc for dead/unc
-	verbs -= /obj/admins/proc/voteres 									//toggle votes
 	verbs -= /obj/admins/proc/delay										//game start delay
 	verbs -= /obj/admins/proc/immreboot									//immediate reboot
 	verbs -= /obj/admins/proc/restart									//restart
@@ -383,7 +376,6 @@
 	verbs -= /client/proc/unban_panel
 	verbs -= /client/proc/jobbans
 	verbs -= /client/proc/unjobban_panel
-	verbs -= /client/proc/voting
 	verbs -= /client/proc/hide_verbs
 	verbs -= /client/proc/general_report
 	verbs -= /client/proc/air_report
@@ -545,13 +537,6 @@
 		holder.Secrets()
 	feedback_add_details("admin_verb","S") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
-
-/client/proc/voting()
-	set name = "Voting"
-	set category = "Admin"
-	if (holder)
-		holder.Voting()
-	feedback_add_details("admin_verb","VO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/colorooc()
 	set category = "Fun"
