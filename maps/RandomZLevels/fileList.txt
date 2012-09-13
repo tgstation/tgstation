@@ -5,5 +5,4 @@
 #SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
 
 #maps/RandomZLevels/example.dmm
-#maps/RandomZLevels/desert.dmm
-maps/RandomZLevels/blackmarketpackers.dmm
+#maps/RandomZLevels/blackmarketpackers.dmm
