@@ -264,16 +264,7 @@
 			usr.hud_used.hidden_inventory_update()
 
 		if("equip")
-			var/obj/item/I = usr.get_active_hand()
-			if(!I)
-				usr << "\blue You are not holding anything to equip."
-				return
-			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				H.equip_to_appropriate_slot(I)
-
-			usr.update_inv_l_hand(0)
-			usr.update_inv_r_hand()
+			usr.quick_equip()
 
 		if("resist")
 			if(isliving(usr))
@@ -287,58 +278,6 @@
 				seccomp.drawmap(usr)
 			else
 				usr.clearmap()
-
-		if("arrowleft")
-			switch(usr.a_intent)
-				if("help")
-					if(issilicon(usr))
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
-					else
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
-
-				if("disarm")
-					usr.a_intent = "help"
-					usr.hud_used.action_intent.icon_state = "help"
-
-				if("hurt")
-					if(issilicon(usr))
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
-					else
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
-
-				if("grab")
-					usr.a_intent = "hurt"
-					usr.hud_used.action_intent.icon_state = "harm"
-
-		if("arrowright")
-			switch(usr.a_intent)
-				if("help")
-					if(issilicon(usr))
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
-					else
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
-
-				if("disarm")
-					usr.a_intent = "hurt"
-					usr.hud_used.action_intent.icon_state = "harm"
-
-				if("hurt")
-					if(issilicon(usr))
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
-					else
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
-
-				if("grab")
-					usr.a_intent = "help"
-					usr.hud_used.action_intent.icon_state = "help"
 
 		if("mov_intent")
 			if(usr.legcuffed)
@@ -571,6 +510,18 @@
 	usr.resting = !( usr.resting )
 	usr << "\blue You are now [(usr.resting) ? "resting" : "getting up"]"
 
+/mob/verb/quick_equip()
+	set name = "quick-equip"
+	set hidden = 1
+	var/obj/item/I = usr.get_active_hand()
+	if(!I)
+		usr << "\blue You are not holding anything to equip."
+		return
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.equip_to_appropriate_slot(I)
+		H.update_inv_l_hand(0)
+		H.update_inv_r_hand()
 
 /mob/living/verb/resist()
 	set name = "Resist"
