@@ -19,10 +19,12 @@ var/list/wood_icons = list("wood","wood-broken")
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
+
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
+	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
@@ -70,6 +72,8 @@ var/list/wood_icons = list("wood","wood-broken")
 	return
 
 turf/simulated/floor/proc/update_icon()
+	if(lava)
+		return
 	if(is_plasteel_floor())
 		if(!broken && !burnt)
 			icon_state = icon_regular_floor

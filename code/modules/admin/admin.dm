@@ -1,5 +1,6 @@
 
 var/global/BSACooldown = 0
+var/global/floorIsLava = 0
 
 
 ////////////////////////////////
@@ -2038,7 +2039,59 @@ var/global/BSACooldown = 0
 							var/obj/machinery/status_display/A = M
 							A.friendc = 1
 					message_admins("[key_name_admin(usr)] turned all AIs into best friends.", 1)
+				if("floorlava")
+					if(floorIsLava)
+						usr << "The floor is lava already."
+						return
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","LF")
 
+					//Options
+					var/length = input(usr, "How long will the lava last? (in seconds)", "Length", 180) as num
+					length = min(abs(length), 1200)
+
+					var/damage = input(usr, "How deadly will the lava be?", "Damage", 2) as num
+					damage = min(abs(damage), 100)
+
+					var/sure = alert(usr, "Are you sure you want to do this?", "Confirmation", "YES!", "Nah")
+					if(sure == "Nah")
+						return
+					floorIsLava = 1
+
+					message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.", 1)
+
+					for(var/turf/simulated/floor/F in world)
+						if(F.z == 1)
+							F.name = "lava"
+							F.desc = "The floor is LAVA!"
+							F.overlays += "lava"
+							F.lava = 1
+
+					spawn(0)
+						for(var/i = i, i < length, i++) // 180 = 3 minutes
+							for(var/mob/living/L in living_mob_list)
+								if(istype(L.loc, /turf/simulated/floor)) // Are they on LAVA?!
+									var/turf/simulated/floor/F = L.loc
+									var/safe = 0
+									for(var/obj/structure/O in F.contents)
+										if(O.level > F.level && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
+											safe = 1
+											break
+									if(!safe)
+										L.adjustFireLoss(damage)
+
+
+							sleep(10)
+
+						for(var/turf/simulated/floor/F in world) // Reset everything.
+							if(F.z == 1)
+								F.name = initial(F.name)
+								F.desc = initial(F.desc)
+								F.overlays = null
+								F.lava = 0
+								F.update_icon()
+						floorIsLava = 0
+					return
 				if("virus")
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","V")
@@ -2938,7 +2991,8 @@ var/global/BSACooldown = 0
 <A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 <A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
-<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>"}
+<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
+<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS)</A><BR>"}
 //<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
 
 	if(lvl >= 6)
