@@ -42,6 +42,7 @@ spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/s
 sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
 staghorn: Mara Kilpatrick: /obj/item/clothing/mask/mara_kilpatrick_1
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
+thatoneguy: Hugo Cinderbatch: /obj/item/weapon/fluff/hugo_cinderbacth_1
 thebreadbocks: Steve Johnson: /obj/item/fluff/steve_johnson_1
 themij: Taryn Keppel: /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
 thejesster14: Rosa Wolff: /obj/item/device/flashlight/fluff/thejesster14_1
