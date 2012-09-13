@@ -443,50 +443,39 @@ var/list/slot_equipment_priority = list( \
 	var/list/namecounts = list()
 	var/list/creatures = list()
 
-	for (var/obj/item/weapon/disk/nuclear/D in world)
-		var/name = "Nuclear Disk"
-		if (names.Find(name))
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = D
+	for(var/obj/O in world)
+		if(!O.loc)
+			continue
+		if(istype(O, /obj/item/weapon/disk/nuclear))
+			var/name = "Nuclear Disk"
+			if (names.Find(name))
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			creatures[name] = O
 
-	for (var/obj/machinery/singularity/S in world)
-		var/name = "Singularity"
-		if (names.Find(name))
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = S
+		if(istype(O, /obj/machinery/singularity))
+			var/name = "Singularity"
+			if (names.Find(name))
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			creatures[name] = O
 
-	for (var/obj/machinery/bot/B in world)
-		var/name = "BOT: [B.name]"
-		if (names.Find(name))
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = B
-/*
-	for (var/mob/living/silicon/decoy/D in world)
-		var/name = "[D.name]"
-		if (names.Find(name))
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		creatures[name] = D
-*/
+		if(istype(O, /obj/machinery/bot))
+			var/name = "BOT: [O.name]"
+			if (names.Find(name))
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			creatures[name] = O
 
-
-
-//THIS IS HOW YOU ADD OBJECTS TO BE OBSERVED
 
 	for(var/mob/M in sortAtom(mob_list))
 		var/name = M.name
@@ -499,7 +488,6 @@ var/list/slot_equipment_priority = list( \
 
 		creatures[name] = M
 
-//THIS IS THE MOBS PART: LOOK IN HELPERS.DM
 
 	client.perspective = EYE_PERSPECTIVE
 

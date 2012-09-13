@@ -180,12 +180,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Follow and haunt a mob."
 
 	if(istype(usr, /mob/dead/observer))
-		var/mob/target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in getmobs()
-		if(target)
+		var/list/mobs = getmobs()
+		var/input = input("Please, select a mob!", "Follow Mob", null, null) as null|anything in mobs
+		var/mob/target = mobs[input]
+		if(target && target != usr)
 			spawn(0)
 				var/turf/pos = get_turf(src)
 				while(src.loc == pos)
-					src.loc = get_turf(target)
+					var/turf/T = get_turf(target)
+					if(!T)
+						break
+					src.loc = T
 					pos = src.loc
 					sleep(15)
 

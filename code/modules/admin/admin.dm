@@ -2069,7 +2069,7 @@ var/global/floorIsLava = 0
 
 					spawn(0)
 						for(var/i = i, i < length, i++) // 180 = 3 minutes
-							for(var/mob/living/L in living_mob_list)
+							for(var/mob/living/carbon/L in living_mob_list)
 								if(istype(L.loc, /turf/simulated/floor)) // Are they on LAVA?!
 									var/turf/simulated/floor/F = L.loc
 									var/safe = 0
