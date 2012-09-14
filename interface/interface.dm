@@ -88,41 +88,41 @@
 	set category = "OOC"
 
 	var/hotkey_mode = {"<font color='purple'>
-Hotkey-Mode: (hotkey-mode must be on)\n
-TAB = toggle hotkey-mode\n
-a = left\n
-s = down\n
-d = east\n
-w = up\n
-q = drop\n
-e = equip\n
-r = throw\n
-t = say\n
-x = swap-hand\n
-f = cycle-intents-left\n
-g = cycle-intents-right\n
+Hotkey-Mode: (hotkey-mode must be on)
+\tTAB = toggle hotkey-mode
+\ta = left
+\ts = down
+\td = east
+\tw = up
+\tq = drop
+\te = equip
+\tr = throw
+\tt = say
+\tx = swap-hand
+\tf = cycle-intents-left
+\tg = cycle-intents-right
 </font>"}
 
 	var/other = {"<font color='purple'>
-Any-Mode: (hotkey doesn't need to be on)\n
-Ctrl+a = left\n
-Ctrl+s = down\n
-Ctrl+d = east\n
-Ctrl+w = up\n
-Ctrl+q = drop\n
-Ctrl+e = equip\n
-Ctrl+r = throw\n
-Ctrl+x = swap-hand\n
-Ctrl+f = cycle-intents-left\n
-Ctrl+g = cycle-intents-right\n
+Any-Mode: (hotkey doesn't need to be on)
+\tCtrl+a = left
+\tCtrl+s = down
+\tCtrl+d = east
+\tCtrl+w = up
+\tCtrl+q = drop
+\tCtrl+e = equip
+\tCtrl+r = throw
+\tCtrl+x = swap-hand
+\tCtrl+f = cycle-intents-left
+\tCtrl+g = cycle-intents-right
 </font>"}
 
 	var/admin = {"<font color='purple'>
-Admin:\n
-F5 = toggle-admin-observe (WIP)
-F6 = player-panel-new
-F7 = admin-pm
-F8 = (WIP)
+Admin:
+\tF5 = toggle-admin-observe (WIP)
+\tF6 = player-panel-new
+\tF7 = admin-pm
+\tF8 = (WIP)
 </font>"}
 
 	src << hotkey_mode

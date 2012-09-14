@@ -1,7 +1,7 @@
 macro "macro"
 	elem 
 		name = "TAB"
-		command = ".winset \"hotkey_toggle.is-checked=true ? hotkey_toggle.is-checked=false input.focus=true a_key.is-disabled=true s_key.is-disabled=true d_key.is-disabled=true w_key.is-disabled=true q_key.is-disabled=true e_key.is-disabled=true r_key.is-disabled=true x_key.is-disabled=true t_key.is-disabled=true f_key.is-disabled=true g_key.is-disabled=true : hotkey_toggle.is-checked=true mapwindow.map.focus=true a_key.is-disabled=false s_key.is-disabled=false d_key.is-disabled=false w_key.is-disabled=false q_key.is-disabled=false e_key.is-disabled=false r_key.is-disabled=false x_key.is-disabled=false t_key.is-disabled=false f_key.is-disabled=false g_key.is-disabled=false\""
+		command = ".winset \"mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true\""
 		is-disabled = false
 	elem 
 		name = "CENTER+REP"
@@ -48,6 +48,46 @@ macro "macro"
 		command = ".east"
 		is-disabled = false
 	elem 
+		name = "CTRL+A+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+D+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "CTRL+E"
+		command = "quick-equip"
+		is-disabled = false
+	elem 
+		name = "CTRL+F"
+		command = "a-intent-left"
+		is-disabled = false
+	elem 
+		name = "CTRL+G"
+		command = "a-intent-right"
+		is-disabled = false
+	elem 
+		name = "CTRL+Q"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+R"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+S+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "CTRL+W+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+		is-disabled = false
+	elem 
 		name = "CTRL+SOUTH"
 		command = "southface"
 		is-disabled = false
@@ -62,90 +102,6 @@ macro "macro"
 	elem 
 		name = "DELETE"
 		command = "delete-key-pressed"
-		is-disabled = false
-	elem "a_key"
-		name = "A+REP"
-		command = ".west"
-		is-disabled = true
-	elem 
-		name = "CTRL+A+REP"
-		command = ".west"
-		is-disabled = false
-	elem "d_key"
-		name = "D+REP"
-		command = ".east"
-		is-disabled = true
-	elem 
-		name = "CTRL+D+REP"
-		command = ".east"
-		is-disabled = false
-	elem "e_key"
-		name = "E"
-		command = "quick-equip"
-		is-disabled = true
-	elem 
-		name = "CTRL+E"
-		command = "quick-equip"
-		is-disabled = false
-	elem "f_key"
-		name = "F"
-		command = "a-intent-left"
-		is-disabled = true
-	elem 
-		name = "CTRL+F"
-		command = "a-intent-left"
-		is-disabled = false
-	elem "g_key"
-		name = "G"
-		command = "a-intent-right"
-		is-disabled = true
-	elem 
-		name = "CTRL+G"
-		command = "a-intent-right"
-		is-disabled = false
-	elem "q_key"
-		name = "Q"
-		command = ".northwest"
-		is-disabled = true
-	elem 
-		name = "CTRL+Q"
-		command = ".northwest"
-		is-disabled = false
-	elem "r_key"
-		name = "R"
-		command = ".southwest"
-		is-disabled = true
-	elem 
-		name = "CTRL+R"
-		command = ".southwest"
-		is-disabled = false
-	elem "s_key"
-		name = "S+REP"
-		command = ".south"
-		is-disabled = true
-	elem 
-		name = "CTRL+S+REP"
-		command = ".south"
-		is-disabled = false
-	elem "t_key"
-		name = "T"
-		command = "say"
-		is-disabled = true
-	elem "w_key"
-		name = "W+REP"
-		command = ".north"
-		is-disabled = true
-	elem 
-		name = "CTRL+W+REP"
-		command = ".north"
-		is-disabled = false
-	elem "x_key"
-		name = "X"
-		command = ".northeast"
-		is-disabled = true
-	elem 
-		name = "CTRL+X"
-		command = ".northeast"
 		is-disabled = false
 	elem 
 		name = "F1"
@@ -180,6 +136,187 @@ macro "macro"
 		command = "F12"
 		is-disabled = false
 
+macro "hotkeymode"
+	elem 
+		name = "TAB"
+		command = ".winset \"mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true\""
+		is-disabled = false
+	elem 
+		name = "CENTER+REP"
+		command = ".center"
+		is-disabled = false
+	elem 
+		name = "NORTHEAST"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "SOUTHEAST"
+		command = ".southeast"
+		is-disabled = false
+	elem 
+		name = "SOUTHWEST"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "NORTHWEST"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+WEST"
+		command = "westface"
+		is-disabled = false
+	elem 
+		name = "WEST+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+NORTH"
+		command = "northface"
+		is-disabled = false
+	elem 
+		name = "NORTH+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+EAST"
+		command = "eastface"
+		is-disabled = false
+	elem 
+		name = "EAST+REP"
+		command = ".east"
+		is-disabled = false
+	elem "a_key"
+		name = "A+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+A+REP"
+		command = ".west"
+		is-disabled = false
+	elem "d_key"
+		name = "D+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "CTRL+D+REP"
+		command = ".east"
+		is-disabled = false
+	elem "e_key"
+		name = "E"
+		command = "quick-equip"
+		is-disabled = false
+	elem 
+		name = "CTRL+E"
+		command = "quick-equip"
+		is-disabled = false
+	elem "f_key"
+		name = "F"
+		command = "a-intent-left"
+		is-disabled = false
+	elem 
+		name = "CTRL+F"
+		command = "a-intent-left"
+		is-disabled = false
+	elem "g_key"
+		name = "G"
+		command = "a-intent-right"
+		is-disabled = false
+	elem 
+		name = "CTRL+G"
+		command = "a-intent-right"
+		is-disabled = false
+	elem "q_key"
+		name = "Q"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+Q"
+		command = ".northwest"
+		is-disabled = false
+	elem "r_key"
+		name = "R"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "CTRL+R"
+		command = ".southwest"
+		is-disabled = false
+	elem "s_key"
+		name = "S+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "CTRL+S+REP"
+		command = ".south"
+		is-disabled = false
+	elem "t_key"
+		name = "T"
+		command = "say"
+		is-disabled = false
+	elem "w_key"
+		name = "W+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "CTRL+W+REP"
+		command = ".north"
+		is-disabled = false
+	elem "x_key"
+		name = "X"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "CTRL+SOUTH"
+		command = "southface"
+		is-disabled = false
+	elem 
+		name = "SOUTH+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "INSERT"
+		command = "insert-key-pressed"
+		is-disabled = false
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
+		is-disabled = false
+	elem 
+		name = "F1"
+		command = "adminhelp"
+		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+		is-disabled = false
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+		is-disabled = false
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+		is-disabled = false
+	elem 
+		name = "F5"
+		command = "admin-observe"
+		is-disabled = false
+	elem 
+		name = "F6"
+		command = "Player-Panel-New"
+		is-disabled = false
+	elem 
+		name = "F7"
+		command = "Admin-PM"
+		is-disabled = false
+	elem 
+		name = "F12"
+		command = "F12"
+		is-disabled = false
 
 menu "menu"
 	elem 
@@ -925,11 +1062,11 @@ window "mainwindow"
 		border = none
 		drop-zone = false
 		right-click = false
-		saved-params = "is-checked"
+		saved-params = ""
 		on-size = ""
 		text = "Hotkey Toggle"
 		image = ""
-		command = ".winset \"hotkey_toggle.is-checked=false ? input.focus=true a_key.is-disabled=true s_key.is-disabled=true d_key.is-disabled=true w_key.is-disabled=true q_key.is-disabled=true e_key.is-disabled=true r_key.is-disabled=true x_key.is-disabled=true t_key.is-disabled=true f_key.is-disabled=true g_key.is-disabled=true : mapwindow.map.focus=true a_key.is-disabled=false s_key.is-disabled=false d_key.is-disabled=false w_key.is-disabled=false q_key.is-disabled=false e_key.is-disabled=false r_key.is-disabled=false x_key.is-disabled=false t_key.is-disabled=false f_key.is-disabled=false g_key.is-disabled=false\""
+		command = ".winset \"mainwindow.macro!=macro ? mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true : mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true\""
 		is-flat = false
 		stretch = false
 		is-checked = false
@@ -967,6 +1104,7 @@ window "mainwindow"
 		size = 517x20
 		anchor1 = 0,100
 		anchor2 = 100,100
+		focus = true
 		font-family = ""
 		font-size = 0
 		font-style = ""
@@ -1063,7 +1201,7 @@ window "mapwindow"
 		font-family = ""
 		font-size = 0
 		font-style = ""
-		text-color = #000000
+		text-color = #FFFFFF
 		background-color = none
 		is-visible = true
 		is-disabled = false
