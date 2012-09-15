@@ -169,7 +169,7 @@
 
 	anchored = 1
 	density = 0
-	var/health = 50
+	var/health = 15
 
 	node
 		icon_state = "weednode"
