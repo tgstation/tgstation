@@ -197,7 +197,7 @@ ZIPPO
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
-	type_butt = /obj/item/weapon/cigarbutt
+	type_butt = /obj/item/weapon/cigbutt/cigarbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
 	smoketime = 1500

@@ -472,20 +472,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/appendix //yes, this is the same as meat. I might do something different in future
 	name = "appendix"
 	desc = "An appendix which looks perfectly healthy."
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "appendix"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/appendixinflamed
+/obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed
 	name = "inflamed appendix"
 	desc = "An appendix which appears to be inflamed."
 	icon_state = "appendixinflamed"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 1)
-		src.bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/tofu
 	name = "Tofu"
