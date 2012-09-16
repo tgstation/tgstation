@@ -115,7 +115,7 @@
 		overlays = null
 
 		if(reagents.total_volume)
-			var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10", src.layer)
+			var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
 
 			var/percent = round((reagents.total_volume / volume) * 100)
 			switch(percent)
