@@ -63,11 +63,7 @@
 			var/obj/item/P = locate(href_list["remove"])
 			if(P)
 				P.loc = usr.loc
-				if(ishuman(usr))
-					if(!usr.get_active_hand())
-						usr.put_in_hands(P)
-				else
-					P.loc = get_turf(usr)
+				usr.put_in_hands(P)
 
 		if(href_list["read"])
 			var/obj/item/weapon/paper/P = locate(href_list["read"])

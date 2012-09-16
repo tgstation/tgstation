@@ -21,18 +21,18 @@
 
 /obj/structure/filingcabinet/initialize()
 	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder))
+		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
 			I.loc = src
 
 /obj/structure/filingcabinet/attackby(obj/item/P as obj, mob/user as mob)
-	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder))
+	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo))
 		user << "<span class='notice'>You put [P] in [src].</span>"
 		user.drop_item()
 		P.loc = src
-		spawn()
-			icon_state = icon_open
-			sleep(5)
-			icon_state = icon_closed
+		icon_state = icon_open
+		sleep(5)
+		icon_state = icon_closed
+		updateUsrDialog()
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
@@ -45,6 +45,7 @@
 		user << "<span class='notice'>\The [src] is empty.</span>"
 		return
 
+	user.machine = src
 	var/dat = "<center><table>"
 	var/i
 	for(i=contents.len, i>=1, i--)
@@ -61,12 +62,9 @@
 
 		//var/retrieveindex = text2num(href_list["retrieve"])
 		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
-		if(!isnull(P) && in_range(src,usr))
-			if(!usr.get_active_hand())
-				usr.put_in_hands(P)
-			else
-				P.loc = get_turf_loc(src)
-
+		if(P && in_range(src, usr))
+			usr.put_in_hands(P)
+			updateUsrDialog()
 			icon_state = icon_open
 			sleep(5)
 			icon_state = icon_closed
