@@ -3685,7 +3685,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 270)
-					M.bodytemperature = min(270, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+					M.bodytemperature = max(270, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
 				data++
 				M.make_dizzy(3)
