@@ -193,10 +193,10 @@
 								if(M.id == id)
 									if(M.density)
 										M.open()
-											return
+										return
 									else
 										M.close()
-											return
+										return
 		add_fingerprint(usr)
 		updateUsrDialog()
 	return
