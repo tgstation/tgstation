@@ -311,6 +311,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			newname = reject_bad_name(newname,allow_numbers)	//returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
 
 			for(var/mob/living/M in player_list)
+				if(M == src)
+					continue
 				if(!newname || M.real_name == newname)
 					newname = null
 					break

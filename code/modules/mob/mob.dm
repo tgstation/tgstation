@@ -401,7 +401,7 @@ var/list/slot_equipment_priority = list( \
 		src << browse('html/changelog.html', "window=changes;size=675x650")
 		client.changes = 1
 
-/client/var/ghost_ears = 1
+/client/var/ghost_ears = 0
 /client/verb/toggle_ghost_ears()
 	set name = "Ghost ears"
 	set category = "OOC"
@@ -412,7 +412,7 @@ var/list/slot_equipment_priority = list( \
 	else
 		usr << "\blue Now you hear speech only from nearest creatures."
 
-/client/var/ghost_sight = 1
+/client/var/ghost_sight = 0
 /client/verb/toggle_ghost_sight()
 	set name = "Ghost sight"
 	set category = "OOC"

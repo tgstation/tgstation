@@ -167,11 +167,11 @@ rcd light flash thingy on matter drain
 						C.upgradeMotion()
 						upgraded = 1
 						// Add it to machines that process
-						machines |= src
+						machines |= C
 
 					if(upgraded)
 						UC.uses --
-						C.visible_message("<span class='notice'>\icon[src] *beep*</span>")
+						C.visible_message("<span class='notice'>\icon[C] *beep*</span>")
 						usr << "Camera successully upgraded!"
 					else
 						usr << "This camera is already upgraded!"
