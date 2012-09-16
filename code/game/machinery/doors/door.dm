@@ -211,7 +211,7 @@
 		src.density = 0
 		explosion_resistance = 0
 		update_icon()
-		src.SetOpacity(0)
+		SetOpacity(0)
 		update_nearby_tiles()
 
 		if(operating)	operating = 0
@@ -237,8 +237,8 @@
 		src.layer = 3.1
 		sleep(10)
 		update_icon()
-
-		src.SetOpacity(initial(opacity))
+		if(visible && !glass)
+			SetOpacity(1)	//caaaaarn!
 		operating = 0
 		update_nearby_tiles()
 		return
