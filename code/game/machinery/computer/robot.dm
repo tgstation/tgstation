@@ -28,6 +28,9 @@
 /obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
 	if(..())
 		return
+	if (src.z > 6)
+		user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+		return
 	user.machine = src
 	var/dat
 	if (src.temp)

@@ -41,6 +41,9 @@
 
 	Topic(href, href_list)
 		if(..()) return
+		if (src.z > 6)
+			usr << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+			return
 		if( href_list["close"] )
 			usr << browse(null, "window=crewcomp")
 			usr.machine = null

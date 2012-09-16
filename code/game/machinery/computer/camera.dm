@@ -28,6 +28,9 @@
 
 
 	attack_hand(var/mob/user as mob)
+		if (src.z > 6)
+			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+			return
 		if(stat & (NOPOWER|BROKEN))	return
 
 		if(!isAI(user))
