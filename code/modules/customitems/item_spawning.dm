@@ -52,7 +52,7 @@
 							I.name = "[M.real_name]'s Odysseus Specialist ID Card ([M.mind.role_alt_title ? M.mind.role_alt_title : M.mind.assigned_role])"
 							I.access += list(ACCESS_ROBOTICS) //Station-based mecha pilots need this to access the recharge bay.
 						else if(M.ckey == "roaper" && M.real_name == "Ian Colm") //This is a Technician ID
-						I.name = "[M.real_name]'s Technician ID ([M.mind.role_alt_title ? M.mind.role_alt_title : M.mind.assigned_role])"
+							I.name = "[M.real_name]'s Technician ID ([M.mind.role_alt_title ? M.mind.role_alt_title : M.mind.assigned_role])"
 
 						//replace old ID
 						del(C)
