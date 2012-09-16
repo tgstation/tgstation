@@ -844,6 +844,7 @@
 #include "code\modules\admin\verbs\ticklag.dm"
 #include "code\modules\admin\verbs\tripAI.dm"
 #include "code\modules\assembly\assembly.dm"
+#include "code\modules\assembly\bomb.dm"
 #include "code\modules\assembly\helpers.dm"
 #include "code\modules\assembly\holder.dm"
 #include "code\modules\assembly\igniter.dm"

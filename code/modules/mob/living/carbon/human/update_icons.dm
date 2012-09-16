@@ -274,11 +274,17 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/image/lying		= image("icon" = 'icons/effects/genetics.dmi')
 	var/image/standing	= image("icon" = 'icons/effects/genetics.dmi')
 	var/add_image = 0
+	var/g = "m"
+	if(gender == FEMALE)	g = "f"
 	for(var/mut in mutations)
 		switch(mut)
 			if(HULK)
-				lying.underlays		+= "hulk[fat]_l"
-				standing.underlays	+= "hulk[fat]_s"
+				if(fat)
+					lying.underlays		+= "hulk_[fat]_l"
+					standing.underlays	+= "hulk_[fat]_s"
+				else
+					lying.underlays		+= "hulk_[g]_l"
+					standing.underlays	+= "hulk_[g]_s"
 				add_image = 1
 			if(COLD_RESISTANCE)
 				lying.underlays		+= "fire[fat]_l"
