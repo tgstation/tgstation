@@ -595,15 +595,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //SYNDICATE FUNCTIONS===================================
 
 				if("Toggle Door")
-					if(!isnull(cartridge) && cartridge.access_remote_door)
+					if(cartridge && cartridge.access_remote_door)
 						for(var/obj/machinery/door/poddoor/M in machines)
 							if(M.id == cartridge.remote_door_id)
 								if(M.density)
-									spawn(0)
-										M.open()
+									M.open()
 								else
-									spawn(0)
-										M.close()
+									M.close()
 
 				if("Detonate")//Detonate PDA
 					if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
@@ -614,7 +612,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 								var/difficulty = 0
 
-								if (!isnull(P.cartridge))
+								if(P.cartridge)
 									difficulty += P.cartridge.access_medical
 									difficulty += P.cartridge.access_security
 									difficulty += P.cartridge.access_engine
@@ -624,7 +622,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								else
 									difficulty += 2
 
-								if ((prob(difficulty * 12)) || (P.hidden_uplink))
+								if(prob(difficulty * 12) || (P.hidden_uplink))
 									U.show_message("\red An error flashes on your [src].", 1)
 								else if (prob(difficulty * 3))
 									U.show_message("\red Energy feeds back into your [src]!", 1)

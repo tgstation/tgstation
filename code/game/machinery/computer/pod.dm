@@ -165,41 +165,38 @@
 /obj/machinery/computer/pod/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.machine = src
-		if (href_list["power"])
+		if(href_list["power"])
 			var/t = text2num(href_list["power"])
 			t = min(max(0.25, t), 16)
 			if (connected)
 				connected.power = t
 		else
-			if (href_list["alarm"])
+			if(href_list["alarm"])
 				alarm()
 			else
-				if (href_list["time"])
+				if(href_list["time"])
 					timing = text2num(href_list["time"])
 				else
-					if (href_list["tp"])
+					if(href_list["tp"])
 						var/tp = text2num(href_list["tp"])
 						time += tp
 						time = min(max(round(time), 0), 120)
 					else
-						if (href_list["door"])
+						if(href_list["door"])
 							if(istype(src, /obj/machinery/computer/pod/old/syndicate))//Added here so Nuke ops don't go running naked into space before moving the shuttle.
 								if(syndicate_station_at_station == 0)
 									usr << "\red You need to launch the Syndicate Shuttle via the computer terminal at the head of the ship before departing."
 									return
 							for(var/obj/machinery/door/poddoor/M in world)
-								if (M.id == id)
-									if (M.density)
-										spawn( 0 )
-											M.open()
+								if(M.id == id)
+									if(M.density)
+										M.open()
 											return
 									else
-										spawn( 0 )
-											M.close()
+										M.close()
 											return
-								//Foreach goto(298)
 		add_fingerprint(usr)
 		updateUsrDialog()
 	return
