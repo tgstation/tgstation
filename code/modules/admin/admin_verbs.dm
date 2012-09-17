@@ -22,7 +22,7 @@
 		holder = new /obj/admins(src)
 
 	holder.rank = rank
-
+/*	Unused
 	if(!holder.state)
 		var/state = alert("Which state do you want the admin to begin in?", "Admin-state", "Play", "Observe", "Neither")
 		if(state == "Play")
@@ -35,7 +35,7 @@
 			return
 		else
 			del(holder)
-			return
+			return		*/
 
 	switch (rank)
 		if ("Game Master")
@@ -125,8 +125,7 @@
 			verbs += /client/proc/cmd_admin_subtle_message
 			//verbs += /client/proc/warn	- was never used
 			verbs += /client/proc/dsay
-			verbs += /client/proc/admin_play
-			verbs += /client/proc/admin_observe
+			verbs += /client/proc/admin_ghost
 			verbs += /client/proc/game_panel
 			verbs += /client/proc/player_panel
 			verbs += /client/proc/player_panel_new
@@ -370,8 +369,7 @@
 	verbs -= /client/proc/cmd_admin_subtle_message
 	//verbs -= /client/proc/warn
 	verbs -= /client/proc/dsay
-	verbs -= /client/proc/admin_play
-	verbs -= /client/proc/admin_observe
+	verbs -= /client/proc/admin_ghost
 	verbs -= /client/proc/game_panel
 	verbs -= /client/proc/player_panel
 	verbs -= /client/proc/unban_panel
@@ -424,51 +422,30 @@
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_controller
+	verbs -= /client/proc/startSinglo
 	verbs -= /client/proc/check_ai_laws
 	verbs -= /client/proc/cmd_debug_mob_lists
+	verbs -= /obj/admins/proc/access_news_network
 	verbs -= /client/proc/one_click_antag
 	return
 
-
-/client/proc/admin_observe()
+/client/proc/admin_ghost()
 	set category = "Admin"
-	set name = "Set Observe"
-	if(!holder)
-		alert("You are not an admin")
-		return
-
-	verbs -= /client/proc/admin_play
-	spawn( 1200 )
-		verbs += /client/proc/admin_play
-	var/rank = holder.rank
-	clear_admin_verbs()
-	holder.state = 2
-	update_admins(rank)
-	if(!istype(mob, /mob/dead/observer))
-		mob.ghostize(1)
-	src << "\blue You are now observing"
-	feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/admin_play()
-	set category = "Admin"
-	set name = "Set Play"
-	if(!holder)
-		alert("You are not an admin")
-		return
-	verbs -= /client/proc/admin_observe
-	spawn( 1200 )
-		verbs += /client/proc/admin_observe
-	var/rank = holder.rank
-	clear_admin_verbs()
-	holder.state = 1
-	update_admins(rank)
-	if(istype(mob, /mob/dead/observer))
+	set name = "Aghost"
+	if(!holder)	return
+	if(istype(mob,/mob/dead/observer))
+		//re-enter
 		var/mob/dead/observer/ghost = mob
-		ghost.can_reenter_corpse = 1	//just in-case.
+		ghost.can_reenter_corpse = 1			//just in-case.
 		ghost.reenter_corpse()
-	deadchat = 0
-	src << "\blue You are now playing"
-	feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	else
+		//ghostize
+		var/mob/body = mob
+		body.ghostize(1)
+		body.key = "@[key]"			//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
+		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 /client/proc/get_admin_state()
 	set name = "Get Admin State"
@@ -770,8 +747,7 @@
 		verbs += /client/proc/togglebuildmodeself
 
 	verbs += /client/proc/dsay
-	verbs += /client/proc/admin_play
-	verbs += /client/proc/admin_observe
+	verbs += /client/proc/admin_ghost
 	verbs += /client/proc/game_panel
 	verbs += /client/proc/player_panel
 	verbs += /client/proc/cmd_admin_subtle_message

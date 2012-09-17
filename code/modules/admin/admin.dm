@@ -1205,18 +1205,17 @@ var/global/floorIsLava = 0
 	if (href_list["adminplayerobservejump"])
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 		if(src && src.owner)
+			var/client/C
 			if(istype(src.owner,/client))
-				var/client/cl = src.owner
-				cl.admin_observe()
-				sleep(2)
-				cl.jumptomob(M)
+				C = src.owner
 			else if(ismob(src.owner))
 				var/mob/MO = src.owner
-				if(MO.client)
-					var/client/cl = MO.client
-					cl.admin_observe()
-					sleep(2)
-					cl.jumptomob(M)
+				C = MO.client
+			if(C)
+				if(state == 1)
+					C.admin_ghost()
+				sleep(2)
+				C.jumptomob(M)
 
 	if (href_list["adminchecklaws"])
 		if(src && src.owner)

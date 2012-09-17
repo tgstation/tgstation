@@ -274,11 +274,11 @@ area
 		if(!src) return
 		if(light < 0)
 			light = 0
-			luminosity = 0
+//			luminosity = 0
 		else
 			if(light > lighting_controller.lighting_states)
 				light = lighting_controller.lighting_states
-			luminosity = 1
+//			luminosity = 1
 
 		if(lighting_overlay)
 			overlays -= lighting_overlay

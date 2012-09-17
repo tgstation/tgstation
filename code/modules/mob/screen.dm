@@ -371,12 +371,6 @@
 					if("hurt")
 						usr.a_intent = "help"
 						usr.hud_used.action_intent.icon_state = "intent_help"
-				/*if (usr.hud_used.show_intent_icons)
-					usr.hud_used.show_intent_icons = 0
-					usr.client.screen -= usr.hud_used.intent_small_hud_objects
-				else
-					usr.hud_used.show_intent_icons = 1
-					usr.client.screen += usr.hud_used.intent_small_hud_objects*/ //Small intent icons
 			if(issilicon(usr))
 				if(usr.a_intent == "help")
 					usr.a_intent = "hurt"
@@ -503,12 +497,12 @@
 		if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 			usr.sleeping = 20 //Short nap
 
-/mob/living/carbon/verb/lay_down()
-	set name = "Lay down / Get up"
+/mob/living/verb/lay_down()
+	set name = "Rest"
 	set category = "IC"
 
-	usr.resting = !( usr.resting )
-	usr << "\blue You are now [(usr.resting) ? "resting" : "getting up"]"
+	resting = !resting
+	src << "\blue You are now [resting ? "resting" : "getting up"]"
 
 /mob/verb/quick_equip()
 	set name = "quick-equip"

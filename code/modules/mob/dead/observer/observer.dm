@@ -81,6 +81,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")	return	//didn't want to ghost after-all
+		resting = 1
 		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 	return
 
@@ -137,7 +138,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!(mind && mind.current && can_reenter_corpse))
 		src << "<span class='warning'>You have no body.</span>"
 		return
-	if(mind.current.key)	//makes sure we don't accidentally kick any clients
+	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
 		return
 	if(mind.current.ajourn && mind.current.stat != DEAD) 	//check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
@@ -146,13 +147,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			usr << "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>"
 			return
 	mind.current.ajourn=0
-	if(client.holder && client.holder.state == 2)	//TODO: should be handled by Login/Logout ~Carn
-		var/rank = client.holder.rank
-		client.clear_admin_verbs()
-		client.holder.state = 1
-		client.update_admins(rank)
-
 	mind.current.key = key
+	return 1
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"

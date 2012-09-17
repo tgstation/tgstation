@@ -365,14 +365,8 @@ var/list/slot_equipment_priority = list( \
 		del(M)
 		return
 
-
-
-	if(client && client.holder && (client.holder.state == 2))
-		client.admin_play()
-		return
-
-	M.key = client.key
-	M.Login()
+	M.key = key
+//	M.Login()	//wat
 	return
 
 /mob/verb/changes()
