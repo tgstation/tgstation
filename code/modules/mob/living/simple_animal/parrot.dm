@@ -35,7 +35,7 @@
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
-	icon_dead = "parrot_sit "
+	icon_dead = "parrot_dead"
 	pass_flags = PASSTABLE
 
 	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
