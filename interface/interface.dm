@@ -92,7 +92,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tTAB = toggle hotkey-mode
 \ta = left
 \ts = down
-\td = east
+\td = right
 \tw = up
 \tq = drop
 \te = equip
@@ -107,7 +107,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+a = left
 \tCtrl+s = down
-\tCtrl+d = east
+\tCtrl+d = right
 \tCtrl+w = up
 \tCtrl+q = drop
 \tCtrl+e = equip
