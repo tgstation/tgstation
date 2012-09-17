@@ -62,7 +62,7 @@
 
 		metroid
 			input = /mob/living/carbon/metroid
-			output = /obj/item/weapon/reagent_containers/food/drinks/jar
+			output = /obj/item/weapon/reagent_containers/glass/beaker/roro
 
 		monkey
 			process(loc, what)

@@ -533,7 +533,7 @@
 							new/obj/item/metroid_core(M.loc)
 
 							if(Metroid.cores <= 0)
-								M.icon_state = "baby metroid dead-nocore"
+								M.icon_state = "baby roro dead-nocore"
 
 					return
 

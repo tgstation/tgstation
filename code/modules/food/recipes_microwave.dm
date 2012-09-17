@@ -756,12 +756,12 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/stew
 
-/datum/recipe/metroidtoast
-	reagents = list("metroid" = 5)
+/datum/recipe/rorotoast
+	reagents = list("rorojelly" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/metroidtoast
+	result = /obj/item/weapon/reagent_containers/food/snacks/rorotoast
 
 /datum/recipe/milosoup
 	reagents = list("water" = 10)
@@ -876,12 +876,12 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/applecake
 
-/datum/recipe/metroidburger
-	reagents = list("metroid" = 5, "flour" = 15)
+/datum/recipe/roroburger
+	reagents = list("rorojelly" = 5, "flour" = 15)
 	items = list(
 		// /obj/item/weapon/reagent_containers/food/snacks/flour,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/metroidburger
+	result = /obj/item/weapon/reagent_containers/food/snacks/roroburger
 
 /datum/recipe/twobread
 	reagents = list("wine" = 5)
@@ -891,13 +891,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/twobread
 
-/datum/recipe/metroidsandwich
-	reagents = list("metroid" = 5)
+/datum/recipe/rorosandwich
+	reagents = list("rorojelly" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/metroidsandwich
+	result = /obj/item/weapon/reagent_containers/food/snacks/rorosandwich
 
 /datum/recipe/orangecake
 	reagents = list("milk" = 5, "flour" = 15)
@@ -952,11 +952,11 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
 
 
-/datum/recipe/metroidsoup
-	reagents = list("water" = 10, "metroid" = 5)
+/datum/recipe/rorosoup
+	reagents = list("water" = 10, "rorojelly" = 5)
 	items = list(
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/metroidsoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/rorosoup
 
 /datum/recipe/clownstears
 	reagents = list("water" = 10)
@@ -966,12 +966,12 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/clownstears
 
-/datum/recipe/boiledmetroidcore
+/datum/recipe/boiledrorocore
 	reagents = list("water" = 5)
 	items = list(
 		/obj/item/metroid_core,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/boiledmetroidcore
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledrorocore
 
 /datum/recipe/braincake
 	reagents = list("milk" = 5, "flour" = 15)

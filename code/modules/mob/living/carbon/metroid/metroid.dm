@@ -1,7 +1,7 @@
 /mob/living/carbon/metroid
-	name = "baby metroid"
+	name = "baby roro"
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "baby metroid"
+	icon_state = "baby roro"
 	pass_flags = PASSTABLE
 	voice_message = "skree!"
 	say_message = "hums"
@@ -41,9 +41,9 @@
 	// Metroids pass on genetic data, so all their offspring have the same "Friends",
 
 /mob/living/carbon/metroid/adult
-	name = "adult metroid"
+	name = "adult roro"
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "adult metroid"
+	icon_state = "adult roro"
 
 	health = 200
 	gender = NEUTER
@@ -56,10 +56,10 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "baby metroid")
-		name = text("baby metroid ([rand(1, 1000)])")
+	if(name == "baby roro")
+		name = text("baby roro ([rand(1, 1000)])")
 	else
-		name = text("adult metroid ([rand(1,1000)])")
+		name = text("adult roro ([rand(1,1000)])")
 	real_name = name
 	spawn (1)
 		regenerate_icons()

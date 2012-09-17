@@ -73,12 +73,12 @@ datum
 			on_update(var/atom/A)
 				return
 
-		metroid
-			name = "Metroid Jam"
-			id = "metroid"
-			description = "A green semi-liquid produced from one of the deadliest lifeforms in existence."
+		rorojelly
+			name = "Roro Jelly"
+			id = "rorojelly"
+			description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 			reagent_state = LIQUID
-			color = "#005020" // rgb: 0, 50, 20
+			color = "#801E28" // rgb: 128, 30, 40
 			on_mob_life(var/mob/living/M as mob)
 				if(prob(10))
 					M << "\red Your insides are burning!"
