@@ -24,6 +24,48 @@ var/global/floorIsLava = 0
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
 
+	if(href_list["makeAntag"])
+		switch(href_list["makeAntag"])
+			if("1")
+				log_admin("[key_name(usr)] has spawned a traitor.")
+				if(!src.makeTratiors())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("2")
+				log_admin("[key_name(usr)] has spawned a changeling.")
+				if(!src.makeChanglings())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("3")
+				log_admin("[key_name(usr)] has spawned revolutionaries.")
+				if(!src.makeRevs())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("4")
+				log_admin("[key_name(usr)] has spawned a cultists.")
+				if(!src.makeCult())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("5")
+				log_admin("[key_name(usr)] has spawned a malf AI.")
+				if(!src.makeMalfAImode())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("6")
+				log_admin("[key_name(usr)] has spawned a wizard.")
+				if(!src.makeWizard())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("7")
+				log_admin("[key_name(usr)] has spawned a nuke team.")
+				if(!src.makeNukeTeam())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("8")
+				log_admin("[key_name(usr)] has spawned a ninja.")
+				src.makeSpaceNinja()
+			if("9")
+				log_admin("[key_name(usr)] has spawned aliens.")
+				src.makeAliens()
+			if("10")
+				log_admin("[key_name(usr)] has spawned a death squad.")
+				if(!src.makeDeathsquad())
+					usr << "\red Unfortunatly there were no candidates available"
+		return
+
 	if(href_list["call_shuttle"])
 		if (src.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master"))
 			if( ticker.mode.name == "blob" )

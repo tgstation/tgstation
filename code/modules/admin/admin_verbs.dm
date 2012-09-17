@@ -186,6 +186,7 @@
 			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
+			verbs += /client/proc/one_click_antag
 
 
 		else	return
@@ -425,6 +426,7 @@
 	verbs -= /client/proc/debug_controller
 	verbs -= /client/proc/check_ai_laws
 	verbs -= /client/proc/cmd_debug_mob_lists
+	verbs -= /client/proc/one_click_antag
 	return
 
 
