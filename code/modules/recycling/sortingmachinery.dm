@@ -229,10 +229,12 @@
 		return
 
 	HasEntered(AM as mob|obj) //Go straight into the chute
-		if (istype(AM, /obj))
+		if(istype(AM, /obj/item/projectile) || istype(AM, /obj/item/weapon/dummy))	return
+
+		if(istype(AM, /obj))
 			var/obj/O = AM
 			O.loc = src
-		else if (istype(AM, /mob))
+		else if(istype(AM, /mob))
 			var/mob/M = AM
 			M.loc = src
 		src.flush()
@@ -242,7 +244,7 @@
 		flick("intake-closing", src)
 		var/deliveryCheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
-											// travels through the pipes.
+													// travels through the pipes.
 		for(var/obj/structure/bigDelivery/O in src)
 			deliveryCheck = 1
 			if(O.sortTag == 0)

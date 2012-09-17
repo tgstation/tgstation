@@ -1111,9 +1111,9 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
+					M.bodytemperature = max(310, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				else if(M.bodytemperature < 311)
-					M.bodytemperature = min(310, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
+					M.bodytemperature = min(310, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
 				return
 
@@ -2356,7 +2356,7 @@ datum
 				if(M.getToxLoss() && prob(20))
 					M.adjustToxLoss(-1)
 				if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+					M.bodytemperature = min(310, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
 				return
 
@@ -2373,7 +2373,7 @@ datum
 				M.drowsyness = max(0,M.drowsyness-3)
 				M.sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.make_jittery(5)
 				..()
 				return
@@ -2393,7 +2393,7 @@ datum
 				if(M.getToxLoss() && prob(20))
 					M.adjustToxLoss(-1)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+					M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				return
 
 		space_cola
@@ -3684,7 +3684,7 @@ datum
 			color = "#664300" // rgb: 102, 67, 0
 
 			on_mob_life(var/mob/living/M as mob)
-				if (M.bodytemperature < 270)
+				if(M.bodytemperature > 270)
 					M.bodytemperature = max(270, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
 				data++
