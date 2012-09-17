@@ -122,7 +122,7 @@ Admin:
 \tF5 = Aghost (admin-ghost)
 \tF6 = player-panel-new
 \tF7 = admin-pm
-\tF8 = (WIP)
+\tF8 = Invisimin
 </font>"}
 
 	src << hotkey_mode

@@ -169,6 +169,7 @@
 			deadchat = 1
 			seeprayers = 1
 
+			verbs += /client/proc/invisimin
 			verbs += /obj/admins/proc/view_txt_log
 			verbs += /obj/admins/proc/view_atk_log
 			verbs += /obj/admins/proc/toggleaban						//abandon mob
@@ -427,6 +428,7 @@
 	verbs -= /client/proc/cmd_debug_mob_lists
 	verbs -= /obj/admins/proc/access_news_network
 	verbs -= /client/proc/one_click_antag
+	verbs -= /client/proc/invisimin
 	return
 
 /client/proc/admin_ghost()
@@ -458,6 +460,16 @@
 		else
 			src << "[C.key] is undefined - [C.holder.state]"
 	feedback_add_details("admin_verb","GAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/invisimin()
+	set name = "Invisimin"
+	set category = "Admin"
+	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
+	if(holder && mob)
+		if(mob.invisibility == INVISIBILITY_OBSERVER)
+			mob.invisibility = initial(mob.invisibility)
+		else
+			mob.invisibility = INVISIBILITY_OBSERVER
 
 
 /client/proc/player_panel()

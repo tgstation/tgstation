@@ -132,6 +132,10 @@ macro "macro"
 		command = "Admin-PM"
 		is-disabled = false
 	elem 
+		name = "F8"
+		command = "Invisimin"
+		is-disabled = false
+	elem 
 		name = "F12"
 		command = "F12"
 		is-disabled = false
@@ -312,6 +316,10 @@ macro "hotkeymode"
 	elem 
 		name = "F7"
 		command = "Admin-PM"
+		is-disabled = false
+	elem 
+		name = "F8"
+		command = "Invisimin"
 		is-disabled = false
 	elem 
 		name = "F12"
