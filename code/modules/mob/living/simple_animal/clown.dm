@@ -17,7 +17,7 @@
 	speak = list("HONK", "Honk!", "Welcome to clown planet!")
 	emote_see = list("honks")
 	speak_chance = 1
-
+	a_intent = "harm"
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 75
 	health = 75
@@ -26,6 +26,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "attacks"
+	attack_sound = 'sound/items/bikehorn.ogg'
 
 	min_oxy = 5
 	max_oxy = 0
@@ -40,7 +41,6 @@
 	var/hostile = 0
 
 	var/stance = CLOWN_STANCE_IDLE	//Used to determine behavior
-	var/stance_step = 0				//Used to delay checks depending on what stance the clown is in
 	var/mob/living/target_mob
 
 /mob/living/simple_animal/clown/Life()
@@ -73,39 +73,30 @@
 		switch(stance)
 			if(CLOWN_STANCE_IDLE)
 				if (src.hostile == 0) return
-				stop_automated_movement = 0
-				stance_step++
-				if(stance_step > 5)
-					stance_step = 0
-					for( var/mob/living/L in viewers(7,src) )
-						if(isclown(L)) continue
-						if(!L.stat)
-							emote("honks menacingly at [L]")
-							stance = CLOWN_STANCE_ATTACK
-							target_mob = L
-							break
+				for( var/mob/living/L in viewers(7,src) )
+					if(isclown(L)) continue
+					if(!L.stat)
+						emote("honks menacingly at [L]")
+						stance = CLOWN_STANCE_ATTACK
+						target_mob = L
+						break
 
 			if(CLOWN_STANCE_ATTACK)	//This one should only be active for one tick
 				stop_automated_movement = 1
 				if(!target_mob || target_mob.stat)
 					stance = CLOWN_STANCE_IDLE
-					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
 				if(target_mob in viewers(7,src))
 					walk_to(src, target_mob, 1, 3)
 					stance = CLOWN_STANCE_ATTACKING
-					stance_step = 0
 
 			if(CLOWN_STANCE_ATTACKING)
 				stop_automated_movement = 1
-				stance_step++
 				if(!target_mob || target_mob.stat)
 					stance = CLOWN_STANCE_IDLE
-					stance_step = 3 //Make it very alert, so it quickly attacks again if a mob returns
 					target_mob = null
 					return
 				if(!(target_mob in viewers(7,src)))
 					stance = CLOWN_STANCE_IDLE
-					stance_step = 1
 					target_mob = null
 					return
 				if(get_dist(src, target_mob) <= 1)	//Attacking
@@ -165,3 +156,39 @@
 			var/mob/living/simple_animal/clown/C = Z
 			C.hostile = 1
 	return 0
+
+/mob/living/simple_animal/clown/Bump(atom/movable/AM as mob|obj, yes)
+
+	spawn( 0 )
+		if ((!( yes ) || now_pushing))
+			return
+		now_pushing = 1
+		if(ismob(AM))
+			var/mob/tmob = AM
+			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
+				if(prob(50))
+					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
+					now_pushing = 0
+					return
+			if(tmob.nopush)
+				now_pushing = 0
+				return
+
+			tmob.LAssailant = src
+		now_pushing = 0
+		..()
+		if (!( istype(AM, /atom/movable) ))
+			return
+		if (!( now_pushing ))
+			now_pushing = 1
+			if (!( AM.anchored ))
+				var/t = get_dir(src, AM)
+				if (istype(AM, /obj/structure/window))
+					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+						for(var/obj/structure/window/win in get_step(AM,t))
+							now_pushing = 0
+							return
+				step(AM, t)
+			now_pushing = null
+		return
+	return
