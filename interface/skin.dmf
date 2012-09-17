@@ -121,7 +121,7 @@ macro "macro"
 		is-disabled = false
 	elem 
 		name = "F5"
-		command = "admin-observe"
+		command = "Aghost"
 		is-disabled = false
 	elem 
 		name = "F6"
@@ -303,7 +303,7 @@ macro "hotkeymode"
 		is-disabled = false
 	elem 
 		name = "F5"
-		command = "admin-observe"
+		command = "Aghost"
 		is-disabled = false
 	elem 
 		name = "F6"

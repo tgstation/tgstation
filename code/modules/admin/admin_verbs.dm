@@ -443,7 +443,7 @@
 		//ghostize
 		var/mob/body = mob
 		body.ghostize(1)
-		body.key = "@[key]"			//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
+		if(body)	body.key = "@[key]"			//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

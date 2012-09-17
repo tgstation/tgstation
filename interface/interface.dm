@@ -119,7 +119,7 @@ Any-Mode: (hotkey doesn't need to be on)
 
 	var/admin = {"<font color='purple'>
 Admin:
-\tF5 = toggle-admin-observe (WIP)
+\tF5 = Aghost (admin-ghost)
 \tF6 = player-panel-new
 \tF7 = admin-pm
 \tF8 = (WIP)
