@@ -502,6 +502,9 @@ var/global/list/uneatable = list(
 			continue
 		if(cult_nh_mind.current.stat)
 			continue
+		var/turf/pos = get_turf(cult_nh_mind.current)
+		if(pos.z != src.z)
+			continue
 		cultists += cult_nh_mind.current
 	if(cultists.len)
 		acquire(pick(cultists))
@@ -510,6 +513,9 @@ var/global/list/uneatable = list(
 	for(var/mob/living/carbon/human/food in living_mob_list)
 		if(food.stat)
 			continue
+		var/turf/pos = get_turf(food)
+		if(pos.z != src.z)
+			continue
 		cultists += food
 	if(cultists.len)
 		acquire(pick(cultists))
@@ -517,6 +523,9 @@ var/global/list/uneatable = list(
 		//no living cultists, pick a living human instead.
 	for(var/mob/dead/observer/ghost in player_list)
 		if(!ghost.client)
+			continue
+		var/turf/pos = get_turf(ghost)
+		if(pos.z != src.z)
 			continue
 		cultists += ghost
 	if(cultists.len)
