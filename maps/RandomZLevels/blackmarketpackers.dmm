@@ -76,7 +76,7 @@
 "bx" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/simulated/floor/plating,/area/awaymission/BMPship1)
 "by" = (/obj/structure/closet/crate/freezer,/obj/item/weapon/reagent_containers/food/drinks/beer,/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/simulated/floor/plating,/area/awaymission/BMPship1)
 "bz" = (/obj/machinery/gateway{dir = 8},/turf/simulated/floor/plating,/area/awaymission/BMPship1)
-"bA" = (/obj/machinery/gateway/center,/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating,/area/awaymission/BMPship1)
+"bA" = (/obj/machinery/gateway/centeraway{calibrated = 0},/turf/simulated/floor/plating,/area/awaymission/BMPship1)
 "bB" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = ""},/obj/machinery/gateway{dir = 4},/turf/simulated/floor/plating,/area/awaymission/BMPship1)
 "bC" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/awaymission/BMPship1)
 "bD" = (/obj/structure/largecrate,/turf/simulated/floor/plating{tag = "icon-warnplate (EAST)"; icon_state = "warnplate"; dir = 4},/area/awaymission/BMPship1)

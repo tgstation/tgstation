@@ -171,8 +171,7 @@ var/list/AAlarmWireColorToIndex
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
 var/returndestination				//the location immediately south of the station gateway
-
-
+var/calibrateddestination //If you actually arrive at the away gate
 
 	// MySQL configuration
 

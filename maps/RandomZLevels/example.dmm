@@ -12,7 +12,7 @@
 "al" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/example)
 "am" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/simulated/floor,/area/awaymission/example)
 "an" = (/obj/machinery/gateway{dir = 8},/turf/simulated/floor,/area/awaymission/example)
-"ao" = (/obj/machinery/gateway/center,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/example)
+"ao" = (/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/gateway/centeraway,/turf/simulated/floor,/area/awaymission/example)
 "ap" = (/obj/machinery/gateway{dir = 4},/turf/simulated/floor,/area/awaymission/example)
 "aq" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor,/area/awaymission/example)
 "ar" = (/obj/item/weapon/cigbutt,/turf/simulated/floor,/area/awaymission/example)

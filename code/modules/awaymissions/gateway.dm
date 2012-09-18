@@ -1,6 +1,6 @@
 /obj/machinery/gateway
 	name = "gateway"
-	desc = "It's a Nanotrasen approved one-way experimental teleporter that will take you places. Still has the pricetag on it."
+	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
 	density = 1
@@ -21,53 +21,39 @@
 
 
 //this is da important part wot makes things go
-/obj/machinery/gateway/center
+/obj/machinery/gateway/centerstation
 	density = 1
 	icon_state = "offcenter"
 	use_power = 1
 
 	//warping vars
-	var/list/linked = list()	//a list of the connected gateway chunks
+	var/list/linked = list()
 	var/ready = 0				//have we got all the parts for a gateway?
 	var/wait = 0				//this just grabs world.time at world start
+	var/obj/machinery/gateway/centeraway/awaygate = null //inb4 this doesnt work at all
 
-	//power vars
-	var/obj/structure/cable/attached = null
-
-/obj/machinery/gateway/center/initialize()
+/obj/machinery/gateway/centerstation/initialize()
 	update_icon()
-	attemptAttach()
+	returndestination = get_step(loc, SOUTH)
+	wait = world.time + 18000	//+ thirty minutes
+	awaygate = locate(/obj/machinery/gateway/centeraway, world)
 
-	if(src.z == 1)	//if it's the station gate
-		returndestination = get_step(loc, SOUTH)
-		wait = world.time + 18000	//+ thirty minutes
-
-/obj/machinery/gateway/center/update_icon()
+/obj/machinery/gateway/centerstation/update_icon()
 	if(active)
 		icon_state = "oncenter"
 		return
 	icon_state = "offcenter"
 
-//stolen from syndie beacon code.
-/obj/machinery/gateway/center/proc/checkWirePower()
-	if(!attached)
-		return 0
-	var/datum/powernet/PN = attached.get_powernet()
-	if(!PN)
-		return 0
-	if(PN.avail < 128000)
-		return 0
-	return 1
 
-obj/machinery/gateway/center/process()
+obj/machinery/gateway/centerstation/process()
 	if(stat & (NOPOWER))
 		if(active) toggleoff()
 		return
 
 	if(active)
-		use_power(128000)
+		use_power(5000)
 
-/obj/machinery/gateway/center/proc/detect()
+/obj/machinery/gateway/centerstation/proc/detect()
 	linked = list()	//clear the list
 	var/turf/T = loc
 
@@ -86,18 +72,15 @@ obj/machinery/gateway/center/process()
 	if(linked.len == 8)
 		ready = 1
 
-/obj/machinery/gateway/center/proc/toggleon(mob/user as mob)
+/obj/machinery/gateway/centerstation/proc/toggleon(mob/user as mob)
 	if(!ready) return
 	if(linked.len != 8) return
 	if(!powered()) return
 	if(world.time < wait)
 		user << "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>"
 		return
-	if(!awaydestinations.len)
+	if(awaygate == null)
 		user << "<span class='notice'>Error: No destination found.</span>"
-		return
-	if(!checkWirePower())
-		user << "<span class='notice'>Error: Inadequate electricity reserve.</span>"
 		return
 
 	for(var/obj/machinery/gateway/G in linked)
@@ -107,7 +90,7 @@ obj/machinery/gateway/center/process()
 	update_icon()
 	density = 0
 
-/obj/machinery/gateway/center/proc/toggleoff()
+/obj/machinery/gateway/centerstation/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 0
 		G.update_icon()
@@ -115,7 +98,7 @@ obj/machinery/gateway/center/process()
 	update_icon()
 	density = 1
 
-/obj/machinery/gateway/center/attack_hand(mob/user as mob)
+/obj/machinery/gateway/centerstation/attack_hand(mob/user as mob)
 	if(!ready)
 		detect()
 		return
@@ -124,40 +107,121 @@ obj/machinery/gateway/center/process()
 		return
 	toggleoff()
 
-/obj/machinery/gateway/center/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/screwdriver))
-		attemptAttach(user, 1)
 
-//this is kinda ugly i know, but i want the attach proc seperate so we can call it in initialize()
-/obj/machinery/gateway/center/proc/attemptAttach(mob/user as mob, tilesafe = 0)
-	var/turf/T = loc
-	if(tilesafe && T.intact)
-		return
-	if(attached)
-		attached = null
-		user << "<span class='notice'>You detach the cable from [src].</span>"
-		return
-	if(isturf(T))
-		attached = locate() in T
-	if(user)
-		if(!attached)
-			user << "<span class='notice'>There isn't a cable to connect to [src].</span>"
-			return
-		user << "<span class='notice'>You attach the cable to [src].</span>"
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/center/HasEntered(mob/user as mob)
+/obj/machinery/gateway/centerstation/HasEntered(mob/user as mob)
 	if(!ready) return
 	if(!active) return
-
-	if(src.z == 1)	//if it's the station gate
+	if(awaygate == null) return
+	if(awaygate.calibrated)
+		calibrateddestination = get_step(awaygate.loc, SOUTH)
+		user.loc = calibrateddestination
+		return
+	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
-//i'm sorry did i say good?
 			user.loc = dest.loc
-			use_power(128000)
+			user.dir = SOUTH
+			use_power(5000)
 		return
-	else			//they made it back to the station!
-		user.loc = returndestination
-		user.dir = SOUTH
-		use_power(128000)
+
+
+
+
+
+/////////////////////////////////////Away////////////////////////
+
+
+/obj/machinery/gateway/centeraway
+	density = 1
+	icon_state = "offcenter"
+	use_power = 0
+	var/calibrated = 1
+	var/list/linked = list()	//a list of the connected gateway chunks
+	var/ready = 0
+	var/stationgate = null
+
+/obj/machinery/gateway/centeraway/initialize()
+	update_icon()
+	calibrateddestination = get_step(loc, SOUTH)
+	stationgate = locate(/obj/machinery/gateway/centerstation, world)
+
+
+/obj/machinery/gateway/centeraway/update_icon()
+	if(active)
+		icon_state = "oncenter"
+		return
+	icon_state = "offcenter"
+
+
+/obj/machinery/gateway/centeraway/proc/detect()
+	linked = list()	//clear the list
+	var/turf/T = loc
+
+	for(var/i in alldirs)
+		T = get_step(loc, i)
+		var/obj/machinery/gateway/G = locate(/obj/machinery/gateway) in T
+		if(G)
+			linked.Add(G)
+			continue
+
+		//this is only done if we fail to find a part
+		ready = 0
+		toggleoff()
+		break
+
+	if(linked.len == 8)
+		ready = 1
+
+
+
+/obj/machinery/gateway/centeraway/proc/toggleon(mob/user as mob)
+	if(!ready) return
+	if(linked.len != 8) return
+	if(stationgate == null)
+		user << "<span class='notice'>Error: No destination found.</span>"
+		return
+
+	for(var/obj/machinery/gateway/G in linked)
+		G.active = 1
+		G.update_icon()
+	active = 1
+	update_icon()
+	density = 0
+
+/obj/machinery/gateway/centeraway/proc/toggleoff()
+	for(var/obj/machinery/gateway/G in linked)
+		G.active = 0
+		G.update_icon()
+	active = 0
+	update_icon()
+	density = 1
+
+
+
+/obj/machinery/gateway/centeraway/attack_hand(mob/user as mob)
+	if(!ready)
+		detect()
+		return
+	if(!active)
+		toggleon(user)
+		return
+	toggleoff()
+
+/obj/machinery/gateway/centeraway/HasEntered(mob/user as mob)
+	if(!ready) return
+	if(!active) return
+	user.loc = returndestination
+	user.dir = SOUTH
+
+
+/obj/machinery/gateway/centeraway/attackby(obj/item/device/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/device/multitool))
+		if(calibrated == 1)
+			user << "\black The gate is already calibrated, there is no work for you to do here."
+			return
+		else
+			user << "\blue <b>Recalibration successful!</b>: \black The gates systems have been fine tuned, travel to the gate will now be on target."
+			calibrated = 1
+			return
