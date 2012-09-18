@@ -2922,7 +2922,7 @@
 "bej" = (/obj/structure/rack,/obj/item/weapon/tank/jetpack/oxygen,/obj/item/clothing/mask/gas,/obj/item/clothing/head/helmet/space/capspace,/obj/machinery/firealarm{dir = 8; pixel_x = -24},/obj/machinery/keycard_auth{pixel_x = 0; pixel_y = -24},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "bek" = (/obj/structure/stool/bed,/obj/machinery/light_switch{pixel_y = -25},/obj/item/weapon/bedsheet/captain,/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "bel" = (/obj/structure/closet/secure_closet/captains,/obj/machinery/camera{c_tag = "Captain's Quarters"; dir = 1},/turf/simulated/floor/wood,/area/crew_quarters/captain)
-"bem" = (/obj/structure/table/woodentable,/obj/item/weapon/melee/chainofcommand,/turf/simulated/floor/wood,/area/crew_quarters/captain)
+"bem" = (/obj/structure/table/woodentable,/obj/item/weapon/melee/chainofcommand,/obj/item/clothing/mask/cigarette/cigar,/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "ben" = (/obj/machinery/atmospherics/unary/vent_pump{on = 1},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "beo" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/turf/simulated/wall/r_wall,/area/crew_quarters/captain)
 "bep" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/wall/r_wall,/area/turret_protected/ai)
