@@ -790,9 +790,18 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
+
+				var/needs_update = M.mutations.len > 0
+
 				M.mutations = list()
 				M.disabilities = 0
 				M.sdisabilities = 0
+
+				// Might need to update appearance for hulk etc.
+				if(needs_update && ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.update_mutations()
+
 				..()
 				return
 
