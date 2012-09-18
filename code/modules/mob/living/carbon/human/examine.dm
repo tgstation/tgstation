@@ -290,9 +290,9 @@
 						flavor_text_string += ","
 					flavor_text_string += flavor_text[text]
 				flavor_text_string += " on [t_his] [temp.display_name].</span><br>"
-				wound_flavor_text["[temp.name]"] = flavor_text_string
+				wound_flavor_text["[temp.display_name]"] = flavor_text_string
 				if(temp.status & ORGAN_BLEEDING)
-					is_bleeding["[temp.name]"] = 1
+					is_bleeding["[temp.display_name]"] = 1
 			else
 				wound_flavor_text["[temp.display_name]"] = ""
 

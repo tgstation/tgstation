@@ -59,6 +59,13 @@
 				if(!(status & ORGAN_ROBOT))
 					owner << "You feel something wet on your [display_name]"
 
+		else if(brute_dam > 15)
+			if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
+				if(prob(5 * brute))
+					status |= ORGAN_DESTROYED
+					droplimb()
+					return
+
 		// If the limbs can break, make sure we don't exceed the maximum damage a limb can take before breaking
 		if((brute_dam + burn_dam + brute + burn) < max_damage || !config.limbs_can_break)
 			if(brute)
@@ -208,7 +215,7 @@
 		if(parent)
 			if(parent.status & ORGAN_DESTROYED)
 				status |= ORGAN_DESTROYED
-				owner:update_body()
+				owner.update_body(1)
 				return
 		if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
 			if(!(status & ORGAN_BROKEN))
@@ -222,6 +229,9 @@
 // new damage icon system
 // returns just the brute/burn damage code
 	proc/damage_state_text()
+		if(status & ORGAN_DESTROYED)
+			return "--"
+
 		var/tburn = 0
 		var/tbrute = 0
 
@@ -251,7 +261,7 @@
 		var/n_is = damage_state_text()
 		if (n_is != damage_state)
 			damage_state = n_is
-			owner.update_body()
+			owner.update_body(1)
 			return 1
 		return 0
 
@@ -266,9 +276,11 @@
 					del(implants)
 			//owner.unlock_medal("Lost something?", 0, "Lose a limb.", "easy")
 
-			for(var/datum/organ/external/I in children)
-				if(I && !(I.status & ORGAN_DESTROYED))
-					I.droplimb(1,1)
+			// If any organs are attached to this, destroy them
+			for(var/datum/organ/external/O in owner.organs)
+				if(O.parent == src)
+					O.droplimb(1)
+
 			var/obj/item/weapon/organ/H
 			switch(body_part)
 				if(UPPER_TORSO)
@@ -286,10 +298,13 @@
 					H.pixel_y = 6
 					H.name = "[owner.real_name]'s head"
 
-					// TODO: re-add this when dismemberment has been ported properly
-					//if(ishuman(owner))
-					//	owner.update_face()
-					owner.update_body()
+					owner.u_equip(owner.glasses)
+					owner.u_equip(owner.head)
+					owner.u_equip(owner.ears)
+					owner.u_equip(owner.wear_mask)
+
+					owner.regenerate_icons()
+
 					owner.death()
 				if(ARM_RIGHT)
 					H = new /obj/item/weapon/organ/r_arm(owner.loc, owner)
@@ -311,18 +326,22 @@
 					H = new /obj/item/weapon/organ/r_hand(owner.loc, owner)
 					if(ismonkey(owner))
 						H.icon_state = "r_hand_l"
+					owner.u_equip(owner.gloves)
 				if(HAND_LEFT)
 					H = new /obj/item/weapon/organ/l_hand(owner.loc, owner)
 					if(ismonkey(owner))
 						H.icon_state = "l_hand_l"
+					owner.u_equip(owner.gloves)
 				if(FOOT_RIGHT)
 					H = new /obj/item/weapon/organ/r_foot/(owner.loc, owner)
 					if(ismonkey(owner))
 						H.icon_state = "r_foot_l"
+					owner.u_equip(owner.shoes)
 				if(FOOT_LEFT)
 					H = new /obj/item/weapon/organ/l_foot(owner.loc, owner)
 					if(ismonkey(owner))
 						H.icon_state = "l_foot_l"
+					owner.u_equip(owner.shoes)
 			if(ismonkey(owner))
 				H.icon = 'monkey.dmi'
 			var/lol = pick(cardinal)
@@ -344,8 +363,9 @@
 				owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.",\
 				"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
 				"You hear a terrible sound of ripping tendons and flesh.")
-			owner.update_body()
-			// TODO: also add stuff to update the appropriate clothing
+
+			// force the icon to rebuild
+			owner.regenerate_icons()
 
 	proc/createwound(var/type = CUT, var/damage)
 		if(hasorgans(owner))

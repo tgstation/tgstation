@@ -74,8 +74,8 @@
 	var/organ_health_multiplier = 1
 	var/organ_regeneration_multiplier = 1
 
-	var/bones_can_break = 1
-	var/limbs_can_break = 1
+	var/bones_can_break = 0
+	var/limbs_can_break = 0
 
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1

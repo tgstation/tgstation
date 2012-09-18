@@ -152,14 +152,12 @@
 	if(!zone)	zone = "chest"
 	return organs_by_name[zone]
 
-/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/obj/item/weapon)
+/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0)
 	if((damagetype != BRUTE) && (damagetype != BURN))
 		..(damage, damagetype, def_zone, blocked)
 		return 1
 
 	if(blocked >= 2)	return 0
-
-	var/sharp = weapon.sharp
 
 	var/datum/organ/external/organ = null
 	if(isorgan(def_zone))

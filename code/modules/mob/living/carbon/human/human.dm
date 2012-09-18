@@ -42,6 +42,18 @@
 	organ.parent = organs_by_name["l_leg"]
 	organ = organs_by_name["r_foot"]
 	organ.parent = organs_by_name["r_leg"]
+	organ = organs_by_name["r_foot"]
+	organ.parent = organs_by_name["r_leg"]
+	organ = organs_by_name["head"]
+	organ.parent = organs_by_name["chest"]
+	organ = organs_by_name["r_leg"]
+	organ.parent = organs_by_name["chest"]
+	organ = organs_by_name["l_leg"]
+	organ.parent = organs_by_name["chest"]
+	organ = organs_by_name["r_arm"]
+	organ.parent = organs_by_name["chest"]
+	organ = organs_by_name["l_arm"]
+	organ.parent = organs_by_name["chest"]
 
 	for(var/name in organs_by_name)
 		organs += organs_by_name[name]
@@ -218,6 +230,15 @@
 				Paralyse(10)
 
 	var/update = 0
+
+	// focus most of the blast on one organ
+	var/datum/organ/external/take_blast = pick(organs)
+	update |= take_blast.take_damage(b_loss * 0.9, f_loss * 0.9)
+
+	// distribute the remaining 10% on all limbs equally
+	b_loss *= 0.1
+	f_loss *= 0.1
+
 	for(var/datum/organ/external/temp in organs)
 		switch(temp.name)
 			if("head")
@@ -542,7 +563,7 @@
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
 	var/datum/organ/external/head/head = get_organ("head")
-	if( !head || head.disfigured || !real_name )	//disfigured. use id-name if possible
+	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 

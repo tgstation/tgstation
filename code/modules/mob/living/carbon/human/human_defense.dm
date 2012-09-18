@@ -126,7 +126,7 @@ emp_act
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
 
-	apply_damage(I.force, I.damtype, affecting, armor , I)
+	apply_damage(I.force, I.damtype, affecting, armor , I.sharp)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))

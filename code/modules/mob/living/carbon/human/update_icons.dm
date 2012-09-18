@@ -295,6 +295,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 			lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
 
+	if(update_icons)   update_icons()
 
 
 //HAIR OVERLAY
@@ -303,8 +304,13 @@ Please contact me on #coderbus IRC. ~Carn x
 	overlays_lying[HAIR_LAYER]		= null
 	overlays_standing[HAIR_LAYER]	= null
 
+	var/datum/organ/external/head/head = get_organ("head")
+	if( !head || (head.status & ORGAN_DESTROYED) )
+		if(update_icons)   update_icons()
+		return
+
 	//mutants don't have hair. masks and helmets can obscure our hair too.
-	if( (dna && dna.mutantrace) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+	if( (dna && dna.mutantrace) || (head && (head.status & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
 		if(update_icons)   update_icons()
 		return
 
@@ -425,6 +431,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_inv_handcuffed(0)
 	update_inv_legcuffed(0)
 	update_inv_pockets(0)
+	UpdateDamageIcon()
 	update_icons()
 	//Hud Stuff
 	update_hud()
