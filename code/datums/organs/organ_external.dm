@@ -48,7 +48,7 @@
 
 		if(sharp)
 			var/nux = brute * rand(10,15)
-			if(brute_dam >= max_damage * config.organ_health_multiplier)
+			if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
 				if(prob(5 * brute))
 					status |= ORGAN_DESTROYED
 					droplimb()
@@ -59,7 +59,8 @@
 				if(!(status & ORGAN_ROBOT))
 					owner << "You feel something wet on your [display_name]"
 
-		if((brute_dam + burn_dam + brute + burn) < max_damage)
+		// If the limbs can break, make sure we don't exceed the maximum damage a limb can take before breaking
+		if((brute_dam + burn_dam + brute + burn) < max_damage || !config.limbs_can_break)
 			if(brute)
 				brute_dam += brute
 				if( (prob(brute*2) && !sharp) || sharp )
@@ -70,7 +71,7 @@
 				burn_dam += burn
 				createwound( BURN, burn )
 		else
-			var/can_inflict = max_damage - (brute_dam + burn_dam) //How much damage can we actually cause?
+			var/can_inflict = max_damage * config.organ_health_multiplier - (brute_dam + burn_dam) //How much damage can we actually cause?
 			if(can_inflict)
 				if (brute > 0 && burn > 0)
 					brute = can_inflict/2
@@ -199,7 +200,7 @@
 		if(owner.life_tick % 4 == 0)
 			update_wounds()
 		if(status & ORGAN_DESTROYED)
-			if(!destspawn)
+			if(!destspawn && config.limbs_can_break)
 				droplimb()
 			return
 		if(!(status & ORGAN_BROKEN))
@@ -209,7 +210,7 @@
 				status |= ORGAN_DESTROYED
 				owner:update_body()
 				return
-		if(brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
+		if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
 			if(!(status & ORGAN_BROKEN))
 				owner.visible_message("\red You hear a loud cracking sound coming from \the [owner].","\red <b>Something feels like it shattered in your [display_name]!</b>","You hear a sickening crack.")
 				owner.emote("scream")
