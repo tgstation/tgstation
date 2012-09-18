@@ -203,3 +203,16 @@
 	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
 
 	return items
+
+/** BS12's proc to get the item in the active hand. Couldn't find the /tg/ equivalent. **/
+/mob/proc/equipped()
+	if(issilicon(src))
+		if(isrobot(src))
+			if(src:module_active)
+				return src:module_active
+	else
+		if (hand)
+			return l_hand
+		else
+			return r_hand
+		return

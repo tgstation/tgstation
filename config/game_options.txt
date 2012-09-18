@@ -6,6 +6,14 @@ HEALTH_THRESHOLD_CRIT 0
 ## level of health at which a mob becomes dead
 HEALTH_THRESHOLD_DEAD -100
 
+## multiplier which enables organs to take more damage before bones breaking or limbs being destroyed
+## 100 means normal, 50 means half
+ORGAN_HEALTH_MULTIPLIER 100
+
+## multiplier which influences how fast organs regenerate naturally
+## 100 means normal, 50 means half
+ORGAN_REGENERATION_MULTIPLIER 100
+
 ### REVIVAL ###
 
 ## whether pod plants work or not

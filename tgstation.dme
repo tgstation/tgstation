@@ -223,7 +223,6 @@
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES
-#define DEBUG
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
@@ -307,6 +306,7 @@
 #include "code\datums\helper_datums\topic_input.dm"
 #include "code\datums\organs\organ.dm"
 #include "code\datums\organs\organ_external.dm"
+#include "code\datums\organs\wound.dm"
 #include "code\datums\spells\area_teleport.dm"
 #include "code\datums\spells\conjure.dm"
 #include "code\datums\spells\emplosion.dm"

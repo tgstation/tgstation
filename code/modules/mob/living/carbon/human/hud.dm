@@ -587,6 +587,8 @@
 	mymob.flash.screen_loc = "1,1 to 15,15"
 	mymob.flash.layer = 17
 
+	mymob.pain = new /obj/screen( null )
+
 /*
 	mymob.hands = new /obj/screen( null )
 	mymob.hands.icon = ui_style

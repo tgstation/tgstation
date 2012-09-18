@@ -21,8 +21,31 @@
 		dna = new /datum/dna(null)
 
 	//initialise organs
-	organs = newlist(/datum/organ/external/chest, /datum/organ/external/head, /datum/organ/external/l_arm, \
-						/datum/organ/external/r_arm, /datum/organ/external/r_leg, /datum/organ/external/l_leg)
+	organs = list()
+	organs_by_name["chest"] = new/datum/organ/external/chest()
+	organs_by_name["head"] = new/datum/organ/external/head()
+	organs_by_name["l_arm"] = new/datum/organ/external/l_arm()
+	organs_by_name["r_arm"] = new/datum/organ/external/r_arm()
+	organs_by_name["r_leg"] = new/datum/organ/external/r_leg()
+	organs_by_name["l_leg"] = new/datum/organ/external/l_leg()
+	organs_by_name["l_hand"] = new/datum/organ/external/l_hand()
+	organs_by_name["r_hand"] = new/datum/organ/external/r_hand()
+	organs_by_name["l_foot"] = new/datum/organ/external/l_foot()
+	organs_by_name["r_foot"] = new/datum/organ/external/r_foot()
+
+	// connect feet to legs and hands to arms
+	var/datum/organ/external/organ = organs_by_name["l_hand"]
+	organ.parent = organs_by_name["l_arm"]
+	organ = organs_by_name["r_hand"]
+	organ.parent = organs_by_name["r_arm"]
+	organ = organs_by_name["l_foot"]
+	organ.parent = organs_by_name["l_leg"]
+	organ = organs_by_name["r_foot"]
+	organ.parent = organs_by_name["r_leg"]
+
+	for(var/name in organs_by_name)
+		organs += organs_by_name[name]
+
 	for(var/datum/organ/external/O in organs)
 		O.owner = src
 
@@ -518,8 +541,8 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	var/datum/organ/external/O = get_organ("head")
-	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || !real_name )	//disfigured. use id-name if possible
+	var/datum/organ/external/head/head = get_organ("head")
+	if( !head || head.disfigured || !real_name )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 

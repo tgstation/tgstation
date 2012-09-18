@@ -115,6 +115,9 @@ proc/isorgan(A)
 		return 1
 	return 0
 
+proc/hasorgans(A)
+	return (ishuman(A) || ismonkey(A))
+
 /proc/hsl2rgb(h, s, l)
 	return
 

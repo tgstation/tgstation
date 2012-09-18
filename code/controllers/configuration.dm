@@ -71,6 +71,9 @@
 	var/health_threshold_crit = 0
 	var/health_threshold_dead = -100
 
+	var/organ_health_multiplier = 1
+	var/organ_regeneration_multiplier = 1
+
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
@@ -365,6 +368,10 @@
 					config.metroid_delay = value
 				if("animal_delay")
 					config.animal_delay = value
+				if("organ_health_multiplier")
+					config.organ_health_multiplier = value / 100
+				if("organ_regeneration_multiplier")
+					config.organ_regeneration_multiplier = value / 100
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
