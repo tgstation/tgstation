@@ -27,7 +27,7 @@
 		if(slot_r_hand)
 			return has_organ("r_hand")
 		if(slot_belt)
-			return has_organ("groin")
+			return has_organ("chest")
 		if(slot_wear_id)
 			// the only relevant check for this is the uniform check
 			return 1
@@ -46,7 +46,7 @@
 		if(slot_w_uniform)
 			return has_organ("chest")
 		if(slot_l_store)
-			return has_organ("groin")
+			return has_organ("chest")
 		if(slot_r_store)
 			return has_organ("chest")
 		if(slot_s_store)
