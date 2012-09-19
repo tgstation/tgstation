@@ -25,6 +25,8 @@
 		// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
 		if(M.loc.z == 2)
 			continue
+		if(M.loc.z > 6)
+			continue
 		if(M == usr)
 			continue
 		if(M.invisibility)//cloaked

@@ -21,7 +21,7 @@
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 75
 	health = 75
-
+	speed = -1
 	harm_intent_damage = 8
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -105,7 +105,7 @@
 						L.attack_animal(src)
 						if(prob(10))
 							L.Weaken(5)
-							L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+							L.visible_message("<span class='danger'>\the [src] slips \the [L]!</span>")
 						for(var/mob/M in viewers(src, null))
 							if(istype(M, /mob/living/simple_animal/clown))
 								var/mob/living/simple_animal/clown/C = M
