@@ -63,6 +63,7 @@
 
 	ident = rand(1, 999)
 	updatename("Default")
+	updateicon()
 
 	if(!cell)
 		cell = new /obj/item/weapon/cell(src)
@@ -759,6 +760,9 @@
 	overlays = null
 	if(stat == 0)
 		overlays += "eyes"
+		if(icon_state == "robot")
+			overlays = null
+			overlays += "eyes-standard"
 		if(icon_state == "toiletbot")
 			overlays = null
 			overlays += "eyes-toiletbot"
