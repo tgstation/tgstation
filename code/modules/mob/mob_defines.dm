@@ -2,6 +2,7 @@
 	density = 1
 	layer = 4.0
 	animate_movement = 2
+	glide_size = 8
 //	flags = NOREACT
 //THE SOLUTION BUBBLES was funnier.
 	var/datum/mind/mind

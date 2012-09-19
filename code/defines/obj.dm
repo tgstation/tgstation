@@ -11,6 +11,7 @@
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	var/datum/marked_datum
 	animate_movement = 2
+	glide_size = 8
 	var/throwforce = 1
 
 	proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
