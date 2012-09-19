@@ -160,7 +160,15 @@ Please contact me on #coderbus IRC. ~Carn x
 			for(var/image/I in overlays_standing)
 				overlays += I
 
-
+var/global/list/damage_icon_parts = list()
+proc/get_damage_icon_part(damage_state, body_part)
+	if(damage_icon_parts["[damage_state]/[body_part]"] == null)
+		var/icon/DI = new /icon('icons/mob/dam_human.dmi', damage_state)			// the damage icon for whole human
+		DI.Blend(new /icon('dam_mask.dmi', body_part), ICON_MULTIPLY)		// mask with this organ's pixels
+		damage_icon_parts["[damage_state]/[body_part]"] = DI
+		return DI
+	else
+		return damage_icon_parts["[damage_state]/[body_part]"]
 
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
@@ -182,21 +190,23 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/icon/standing = new /icon('dam_human.dmi', "00")
 	var/icon/lying = new /icon('dam_human.dmi', "00-2")
 
+	var/image/standing_image = new /image("icon" = standing)
+	var/image/lying_image = new /image("icon" = lying)
+
+
 	// blend the individual damage states with our icons
 	for(var/datum/organ/external/O in organs)
 		if(!(O.status & ORGAN_DESTROYED))
 			O.update_icon()
-			var/icon/DI = new /icon('icons/mob/dam_human.dmi', O.damage_state)			// the damage icon for whole human
-			DI.Blend(new /icon('dam_mask.dmi', O.icon_name), ICON_MULTIPLY)		// mask with this organ's pixels
+			if(O.damage_state == "00") continue
 
-			standing.Blend(DI,ICON_OVERLAY)
-			DI = new /icon('icons/mob/dam_human.dmi', "[O.damage_state]-2")				// repeat for lying icons
-			DI.Blend(new /icon('dam_mask.dmi', "[O.icon_name]2"), ICON_MULTIPLY)
+			var/icon/DI = get_damage_icon_part(O.damage_state, O.icon_name)
 
-			lying.Blend(DI,ICON_OVERLAY)
+			standing_image.overlays += DI
 
-	var/image/standing_image = new /image("icon" = standing)
-	var/image/lying_image = new /image("icon" = lying)
+			DI = get_damage_icon_part("[O.damage_state]-2", "[O.icon_name]2")
+			lying_image.overlays += DI
+
 
 	overlays_standing[DAMAGE_LAYER]	= standing_image
 	overlays_lying[DAMAGE_LAYER]	= lying_image
@@ -224,9 +234,15 @@ Please contact me on #coderbus IRC. ~Carn x
 		stand_icon = new /icon('icons/mob/human.dmi', "fatbody_s")
 		lying_icon = new /icon('icons/mob/human.dmi', "fatbody_l")
 		individual_limbs = 0
-	else
+	// If dismemberment is on, draw individual limbs
+	else if(config.limbs_can_break)
 		stand_icon = new /icon('icons/mob/human.dmi', "torso_[g]_s")
 		lying_icon = new /icon('icons/mob/human.dmi', "torso_[g]_l")
+	// Otherwise just draw the full body.
+	else
+		stand_icon = new /icon('icons/mob/human.dmi', "body_[g]_s")
+		lying_icon = new /icon('icons/mob/human.dmi', "body_[g]_l")
+		individual_limbs = 0
 
 	// Draw each individual limb
 	if(individual_limbs)

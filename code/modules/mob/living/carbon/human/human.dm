@@ -253,6 +253,14 @@
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 			if("r_leg")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+			if("r_foot")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+			if("l_foot")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+			if("r_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+			if("l_arm")
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 	if(update)	UpdateDamageIcon()
 
 
