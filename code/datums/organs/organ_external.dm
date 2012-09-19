@@ -59,7 +59,7 @@
 				if(!(status & ORGAN_ROBOT))
 					owner << "You feel something wet on your [display_name]"
 
-		else if(brute_dam > 15)
+		else if(brute > 20)
 			if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
 				if(prob(5 * brute))
 					status |= ORGAN_DESTROYED
