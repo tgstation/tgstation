@@ -139,17 +139,17 @@
 	icon_state = "purplecomb"
 	item_state = "purplecomb"
 
+	attack_self(mob/user)
+		if(user.r_hand == src || user.l_hand == src)
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
+		return
+
 /obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch
 	name = "Old Cane"
 	desc = "An old brown cane made from wood. It has a a large, itallicized H on it's handle."
 	icon = 'custom_items.dmi'
 	icon_state = "special_cane"
-
-	attack_self(mob/user)
-		if(user.r_hand == src || user.l_hand == src)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] uses their [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
-		return
 
 /obj/item/weapon/camera_test/fluff/orange //chinsky: Summer Springfield
 	name = "orange camera"
