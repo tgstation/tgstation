@@ -42,7 +42,6 @@
 /datum/camerachunk/proc/visibilityChanged(turf/loc)
 	if(!(loc in visibleTurfs))
 		return
-
 	hasChanged()
 
 // Updates the chunk, makes sure that it doesn't update too much. If the chunk isn't being watched it will
@@ -61,6 +60,8 @@
 // The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
 
 /datum/camerachunk/proc/update()
+
+	set background = 1
 
 	var/list/newVisibleTurfs = list()
 

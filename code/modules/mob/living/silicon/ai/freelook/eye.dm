@@ -103,7 +103,9 @@
 		user.sprint = initial
 
 	for(var/i = 0; i < max(user.sprint, initial); i += 20)
-		user.eyeobj.setLoc(get_turf(get_step(user.eyeobj, direct)))
+		var/turf/step = get_turf(get_step(user.eyeobj, direct))
+		if(step)
+			user.eyeobj.setLoc(step)
 
 	user.cooldown = world.timeofday + 5
 	if(user.acceleration)
