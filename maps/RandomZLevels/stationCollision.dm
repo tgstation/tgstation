@@ -1,11 +1,15 @@
 /* Station-Collision(sc) away mission map specific stuff
  *
- * Note: Some of this is unnecessary, but I tried adding a small variety of things here to serve as examples
- *       for anyone who wants to make their own stuff.
+ * Notes:
+ *		Feel free to use parts of this map, or even all of it for your own project. Just include me in the credits :)
+ *
+ *		Some of this code unnecessary, but the intent is to add a little bit of everything to serve as examples
+ *		for anyone who wants to make their own stuff.
  *
  * Contains:
  *		Areas
  *		Landmarks
+ *		Guns
  *		Safe code hints
  *		Captain's safe
  *		Modified Nar-Sie
@@ -52,24 +56,81 @@
 	new /obj/item/weapon/pen(B)
 	del(src)
 
+/*
+ * Guns - I'm making these specifically so that I dont spawn a pile of fully loaded weapons on the map.
+ */
+//Captain's retro laser - Fires practice laser shots instead.
+obj/item/weapon/gun/energy/laser/retro/sc_retro
+	name ="retro laser"
+	icon_state = "retro"
+	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
+	projectile_type = "/obj/item/projectile/practice"
+	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
+
+//Syndicate silenced pistol. This definition is not necessary, it's just habit.
+/obj/item/weapon/gun/projectile/silenced/sc_silenced
+
+//Make it so that these guns only spawn with a couple bullets... if any
+/obj/item/weapon/gun/projectile/silenced/sc_silenced/New()
+	for(var/ammo in loaded)
+		if(prob(95)) //95% chance
+			loaded -= ammo
+
+//Syndicate sub-machine guns.
+/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
+
+/obj/item/weapon/gun/projectile/automatic/c20r/New()
+	for(var/ammo in loaded)
+		if(prob(95)) //95% chance
+			loaded -= ammo
+
+//Barman's shotgun
+/obj/item/weapon/gun/projectile/shotgun/pump/sc_pump
+
+/obj/item/weapon/gun/projectile/shotgun/pump/sc_pump/New()
+	for(var/ammo in loaded)
+		if(prob(95)) //95% chance
+			loaded -= ammo
+
+//Lasers
+/obj/item/weapon/gun/energy/laser/practice/sc_laser
+	name = "Old laser"
+	desc = "A once potent weapon, years of dust have collected in the chamber and lens of this weapon, weakening the beam signifigantly."
+	clumsy_check = 0
 
 /*
  * Safe code hints
  */
 
+//These vars hold the code itself, they'll be generated at round-start
+var/sc_safecode1 = "[rand(0,9)]"
+var/sc_safecode2 = "[rand(0,9)]"
+var/sc_safecode3 = "[rand(0,9)]"
+var/sc_safecode4 = "[rand(0,9)]"
+var/sc_safecode5 = "[rand(0,9)]"
+
 //Pieces of paper actually containing the hints
 /obj/item/weapon/paper/sc_safehint_paper_prison
-	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '3**9*'"
+	name = "smudged paper"
+
+/obj/item/weapon/paper/sc_safehint_paper_prison/New()
+	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[sc_safecode1]**[sc_safecode4]*'"
 
 /obj/item/weapon/paper/sc_safehint_paper_hydro
-	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '7'"
+	name = "shredded paper"
+/obj/item/weapon/paper/sc_safehint_paper_hydro/New()
+	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[sc_safecode2]'"
 
 /obj/item/weapon/paper/sc_safehint_paper_caf
+	name = "blood-soaked paper"
+	//This does not have to be in New() because it is a constant. There are no variables in it i.e. [sc_safcode]
 	info = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
 
 /obj/item/weapon/paper/sc_safehint_paper_bible
+	name = "hidden paper"
+/obj/item/weapon/paper/sc_safehint_paper_bible/New()
 	info = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
-			However you can make out the last three digits:</i>'596'
+			However you can make out the last three digits:</i>'[sc_safecode3][sc_safecode4][sc_safecode5]'
 			"}
 
 /obj/item/weapon/paper/sc_safehint_paper_shuttle
@@ -90,11 +151,11 @@
  */
 /obj/item/weapon/secstorage/ssafe/sc_ssafe
 	name = "Captain's secure safe"
-	l_code = "37596"
-	l_set = 1
 
 /obj/item/weapon/secstorage/ssafe/sc_ssafe/New()
 	..()
+	l_code = "[sc_safecode1][sc_safecode2][sc_safecode3][sc_safecode4][sc_safecode5]"
+	l_set = 1
 	new /obj/item/weapon/gun/energy/pulse_rifle(src)
 	new /obj/item/device/soulstone(src)
 	new /obj/item/weapon/teleportation_scroll(src)
