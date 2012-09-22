@@ -18,7 +18,7 @@ This system could be expanded to migrate all of our current mutations to. Maybe.
 	var/list/requirements = list() // list of randomly-genned requirements
 	var/required = 1 // the number of requirements to generate
 
-	var/list/races = list("human") // list of races the mutation effect
+	var/list/races = list("Human") // list of races the mutation effect
 
 	proc/get_mutation(var/mob/living/carbon/M) // Called when check_mutation() is successful
 		..()
@@ -27,7 +27,7 @@ This system could be expanded to migrate all of our current mutations to. Maybe.
 
 		if(! ("all" in races)) // "all" means it affects everyone!
 			if(istype(M, /mob/living/carbon/human))
-				if(! ("human" in races))
+				if(! ("Human" in races))
 					return
 			if(istype(M, /mob/living/carbon/monkey))
 				if(! ("monkey" in races))
