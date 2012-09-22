@@ -64,7 +64,7 @@
 	proc/handle_mutations_and_radiation()
 
 		//grow!! but not if metroid or dead
-		if(health>-100 && amount_grown < max_grown)
+		if(stat != DEAD && amount_grown < max_grown)
 			amount_grown++
 
 		if (radiation)

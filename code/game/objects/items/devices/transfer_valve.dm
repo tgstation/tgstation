@@ -6,7 +6,7 @@
 	var/obj/item/weapon/tank/tank_one
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device
-	var/mob/attacher = "Unknown"
+	var/mob/attacher = null
 	var/valve_open = 0
 	var/toggle = 1
 
@@ -52,7 +52,7 @@
 		bombers += "[key_name(user)] attached a [item] to a transfer valve."
 		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
 		log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
-		attacher = key_name(user)
+		attacher = user
 	return
 
 
@@ -156,10 +156,28 @@
 	if(valve_open==0 && (tank_one && tank_two))
 		valve_open = 1
 		var/turf/bombturf = get_turf(src)
-		var/bombarea = bombturf.loc.name
-		var/log_str = "Bomb valve opened in [bombarea] with [attached_device ? attached_device : "no device"] attacher: [attacher]. Last touched by: [src.fingerprintslast]"
+		var/area/A = get_area(bombturf)
+
+		var/attacher_name = ""
+		if(!attacher)
+			attacher_name = "Unknown"
+		else
+			attacher_name = "[attacher.name]([attacher.ckey])"
+
+		var/log_str = "Bomb valve opened in <A HREF='?src=%holder_ref%;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a> "
+		log_str += "with [attached_device ? attached_device : "no device"] attacher: [attacher_name]"
+
+		if(attacher)
+			log_str += "(<A HREF='?src=%holder_ref%;adminmoreinfo=\ref[attacher]'>?</A>)"
+
+		var/mob/mob = get_mob_by_key(src.fingerprintslast)
+		var/last_touch_info = ""
+		if(mob)
+			last_touch_info = "(<A HREF='?src=%holder_ref%;adminmoreinfo=\ref[mob]'>?</A>)"
+
+		log_str += " Last touched by: [src.fingerprintslast][last_touch_info]"
 		bombers += log_str
-		message_admins(log_str)
+		message_admins(log_str, 0, 1)
 		log_game(log_str)
 		merge_gases()
 		spawn(20) // In case one tank bursts

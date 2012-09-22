@@ -19,6 +19,12 @@
 	density = 1
 	opacity = 1
 
+/obj/structure/bookcase/initialize()
+	for(var/obj/item/I in loc)
+		if(istype(I, /obj/item/weapon/book))
+			I.loc = src
+	update_icon()
+
 /obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/book))
 		user.drop_item()

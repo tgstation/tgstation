@@ -22,7 +22,7 @@
 		holder = new /obj/admins(src)
 
 	holder.rank = rank
-
+/*	Unused
 	if(!holder.state)
 		var/state = alert("Which state do you want the admin to begin in?", "Admin-state", "Play", "Observe", "Neither")
 		if(state == "Play")
@@ -35,7 +35,7 @@
 			return
 		else
 			del(holder)
-			return
+			return		*/
 
 	switch (rank)
 		if ("Game Master")
@@ -106,27 +106,10 @@
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/deadmin_self
-		else if (holder.level == -3) // Retired Admin
-			verbs += /client/proc/cmd_admin_say
-			verbs += /client/proc/cmd_mod_say
-			return
 		else	return
 
 		//Moderator
 		if (holder.level >= 0)
-			if (holder.level == 0)
-				verbs -= /client/proc/cmd_admin_say
-				verbs -= /client/proc/investigate_show
-				verbs -= /client/proc/cmd_admin_gib_self
-				verbs += /client/proc/mod_panel
-			verbs += /client/proc/admin_play
-			verbs += /client/proc/admin_observe
-			verbs += /client/proc/cmd_mod_say
-		else	return
-
-		//Temporary Admin
-		if (holder.level >= 1)
-			//--former tg mod commands, moved up a level
 			verbs += /obj/admins/proc/announce
 			verbs += /obj/admins/proc/startnow
 			verbs += /obj/admins/proc/toggleAI							//Toggle the AI
@@ -134,9 +117,6 @@
 			verbs += /obj/admins/proc/toggleguests						//Toggle guests entering
 			verbs += /obj/admins/proc/toggleooc							//toggle ooc
 			verbs += /obj/admins/proc/toggleoocdead						//toggle ooc for dead/unc
-			verbs += /obj/admins/proc/voteres 							//toggle votes
-			verbs += /obj/admins/proc/vmode
-			verbs += /obj/admins/proc/votekill
 			verbs += /obj/admins/proc/show_player_panel
 			verbs += /client/proc/deadchat								//toggles deadchat
 			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
@@ -145,13 +125,13 @@
 			verbs += /client/proc/cmd_admin_subtle_message
 			//verbs += /client/proc/warn	- was never used
 			verbs += /client/proc/dsay
+			verbs += /client/proc/admin_ghost
 			verbs += /client/proc/game_panel
 			verbs += /client/proc/player_panel
 			verbs += /client/proc/player_panel_new
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
 			verbs += /client/proc/unjobban_panel
-			verbs += /client/proc/voting
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/general_report
 			verbs += /client/proc/air_report
@@ -159,8 +139,10 @@
 			verbs += /client/proc/check_ai_laws
 			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
 			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
-			//--end tg mod commands
+		else	return
 
+		//Temporary Admin
+		if (holder.level >= 1)
 			verbs += /obj/admins/proc/delay								//game start delay
 			verbs += /obj/admins/proc/immreboot							//immediate reboot
 			verbs += /obj/admins/proc/restart							//restart
@@ -168,7 +150,6 @@
 			verbs += /client/proc/cmd_admin_create_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
-			verbs += /client/proc/toggle_hear_atklog
 			verbs += /client/proc/deadmin_self
 			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
 		else	return
@@ -188,6 +169,7 @@
 			deadchat = 1
 			seeprayers = 1
 
+			verbs += /client/proc/invisimin
 			verbs += /obj/admins/proc/view_txt_log
 			verbs += /obj/admins/proc/view_atk_log
 			verbs += /obj/admins/proc/toggleaban						//abandon mob
@@ -204,6 +186,7 @@
 			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
+			verbs += /client/proc/one_click_antag
 
 
 		else	return
@@ -304,8 +287,6 @@
 /client/proc/clear_admin_verbs()
 	deadchat = 0
 
-	verbs -= /obj/admins/proc/vmode
-	verbs -= /obj/admins/proc/votekill
 	verbs -= /obj/admins/proc/announce
 	verbs -= /obj/admins/proc/startnow
 	verbs -= /obj/admins/proc/toggleAI									//Toggle the AI
@@ -313,7 +294,6 @@
 	verbs -= /obj/admins/proc/toggleguests								//Toggle guests entering
 	verbs -= /obj/admins/proc/toggleooc									//toggle ooc
 	verbs -= /obj/admins/proc/toggleoocdead         					//toggle ooc for dead/unc
-	verbs -= /obj/admins/proc/voteres 									//toggle votes
 	verbs -= /obj/admins/proc/delay										//game start delay
 	verbs -= /obj/admins/proc/immreboot									//immediate reboot
 	verbs -= /obj/admins/proc/restart									//restart
@@ -390,14 +370,12 @@
 	verbs -= /client/proc/cmd_admin_subtle_message
 	//verbs -= /client/proc/warn
 	verbs -= /client/proc/dsay
-	verbs -= /client/proc/admin_play
-	verbs -= /client/proc/admin_observe
+	verbs -= /client/proc/admin_ghost
 	verbs -= /client/proc/game_panel
 	verbs -= /client/proc/player_panel
 	verbs -= /client/proc/unban_panel
 	verbs -= /client/proc/jobbans
 	verbs -= /client/proc/unjobban_panel
-	verbs -= /client/proc/voting
 	verbs -= /client/proc/hide_verbs
 	verbs -= /client/proc/general_report
 	verbs -= /client/proc/air_report
@@ -412,7 +390,6 @@
 	verbs -= /client/proc/toggle_clickproc 								//TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 	verbs -= /client/proc/toggle_hear_deadcast
 	verbs -= /client/proc/toggle_hear_radio
-	verbs -= /client/proc/toggle_hear_atklog
 	verbs -= /client/proc/player_panel_new
 	verbs -= /client/proc/toggle_gravity_on
 	verbs -= /client/proc/toggle_gravity_off
@@ -446,50 +423,31 @@
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_controller
+	verbs -= /client/proc/startSinglo
 	verbs -= /client/proc/check_ai_laws
 	verbs -= /client/proc/cmd_debug_mob_lists
+	verbs -= /obj/admins/proc/access_news_network
+	verbs -= /client/proc/one_click_antag
+	verbs -= /client/proc/invisimin
 	return
 
-
-/client/proc/admin_observe()
+/client/proc/admin_ghost()
 	set category = "Admin"
-	set name = "Set Observe"
-	if(!holder)
-		alert("You are not an admin")
-		return
-
-	verbs -= /client/proc/admin_play
-	spawn( 1200 )
-		verbs += /client/proc/admin_play
-	var/rank = holder.rank
-	clear_admin_verbs()
-	holder.state = 2
-	update_admins(rank)
-	if(!istype(mob, /mob/dead/observer))
-		mob.ghostize(1)
-	src << "\blue You are now observing"
-	feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/admin_play()
-	set category = "Admin"
-	set name = "Set Play"
-	if(!holder)
-		alert("You are not an admin")
-		return
-	verbs -= /client/proc/admin_observe
-	spawn( 1200 )
-		verbs += /client/proc/admin_observe
-	var/rank = holder.rank
-	clear_admin_verbs()
-	holder.state = 1
-	update_admins(rank)
-	if(istype(mob, /mob/dead/observer))
+	set name = "Aghost"
+	if(!holder)	return
+	if(istype(mob,/mob/dead/observer))
+		//re-enter
 		var/mob/dead/observer/ghost = mob
-		ghost.can_reenter_corpse = 1	//just in-case.
+		ghost.can_reenter_corpse = 1			//just in-case.
 		ghost.reenter_corpse()
-	deadchat = 0
-	src << "\blue You are now playing"
-	feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	else
+		//ghostize
+		var/mob/body = mob
+		body.ghostize(1)
+		if(body)	body.key = "@[key]"			//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
+		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 /client/proc/get_admin_state()
 	set name = "Get Admin State"
@@ -502,6 +460,16 @@
 		else
 			src << "[C.key] is undefined - [C.holder.state]"
 	feedback_add_details("admin_verb","GAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/invisimin()
+	set name = "Invisimin"
+	set category = "Admin"
+	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
+	if(holder && mob)
+		if(mob.invisibility == INVISIBILITY_OBSERVER)
+			mob.invisibility = initial(mob.invisibility)
+		else
+			mob.invisibility = INVISIBILITY_OBSERVER
 
 
 /client/proc/player_panel()
@@ -518,14 +486,6 @@
 	if(holder)
 		holder.player_panel_new()
 	feedback_add_details("admin_verb","PPN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
-/client/proc/mod_panel()
-	set name = "Moderator Panel"
-	set category = "Admin"
-	if(holder)
-		holder.mod_panel()
-//	feedback_add_details("admin_verb","MP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/check_antagonists()
@@ -568,13 +528,6 @@
 		holder.Secrets()
 	feedback_add_details("admin_verb","S") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
-
-/client/proc/voting()
-	set name = "Voting"
-	set category = "Admin"
-	if (holder)
-		holder.Voting()
-	feedback_add_details("admin_verb","VO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/colorooc()
 	set category = "Fun"
@@ -766,16 +719,6 @@
 	usr << "You will now [STFU_radio ? "not hear" : "hear"] radio chatter from nearby radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggle_hear_atklog()
-	set name = "Toggle Hear Attacks"
-	set category = "Admin"
-
-	if(!holder) return
-	STFU_atklog = !STFU_atklog
-	usr << "You will now [STFU_atklog ? "not hear" : "hear"] attack logs"
-	feedback_add_details("admin_verb","THAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
 /client/proc/deadmin_self()
 	set name = "De-admin self"
 	set category = "Admin"
@@ -816,8 +759,7 @@
 		verbs += /client/proc/togglebuildmodeself
 
 	verbs += /client/proc/dsay
-	verbs += /client/proc/admin_play
-	verbs += /client/proc/admin_observe
+	verbs += /client/proc/admin_ghost
 	verbs += /client/proc/game_panel
 	verbs += /client/proc/player_panel
 	verbs += /client/proc/cmd_admin_subtle_message

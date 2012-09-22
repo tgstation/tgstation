@@ -140,8 +140,8 @@
 			itemname = P.name
 			info = P.notehtml
 		U << "You hold \a [itemname] up to the camera ..."
-		for(var/mob/living/silicon/ai/O in player_list)
-			//if (O.current == src)
+		for(var/mob/living/silicon/ai/O in living_mob_list)
+			if(!O.client) continue
 			if(U.name == "Unknown") O << "<b>[U]</b> holds \a [itemname] up to one of your cameras ..."
 			else O << "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds \a [itemname] up to one of your cameras ..."
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
@@ -246,7 +246,7 @@
 	var/turf/simulated/wall/T = null
 	for(var/i = 1, i <= 8; i += i)
 		T = get_ranged_target_turf(src, i, 1)
-		if(!isnull(T) && istype(T))
+		if(istype(T))
 			//If someone knows a better way to do this, let me know. -Giacom
 			switch(i)
 				if(NORTH)

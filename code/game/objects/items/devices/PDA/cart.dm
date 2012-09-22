@@ -194,7 +194,7 @@
 		name = "Detomatix Cartridge"
 		icon_state = "cart"
 		access_remote_door = 1
-		remote_door_id = "syndicate" //Make sure this matches the syndicate shuttle's shield/door id!!
+		remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
 		var/shock_charges = 4
 
 	proc/unlock()

@@ -165,8 +165,6 @@
 	// Returns a list of mobs in range of R from source. Used in radio and say code.
 
 	var/turf/T = get_turf(source)
-	if(!istype(T))
-		return
 	var/list/hear = list()
 
 	if(!T)
@@ -256,7 +254,23 @@ proc/isInSight(var/atom/A, var/atom/B)
 	else
 		return 0
 
-proc/check_can_reach(atom/user, atom/target)
-	if(!in_range(user,target))
-		return 0
-	return CanReachThrough(get_turf(user), get_turf(target), target)
+/proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
+	//returns only NORTH, SOUTH, EAST, or WEST
+	var/dx = finish.x - start.x
+	var/dy = finish.y - start.y
+	if(abs(dy) > abs (dx)) //slope is above 1:1 (move horizontally in a tie)
+		if(dy > 0)
+			return get_step(start, SOUTH)
+		else
+			return get_step(start, NORTH)
+	else
+		if(dx > 0)
+			return get_step(start, WEST)
+		else
+			return get_step(start, EAST)
+
+/proc/get_mob_by_key(var/key)
+	for(var/mob/M in mob_list)
+		if(M.ckey == lowertext(key))
+			return M
+	return null

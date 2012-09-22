@@ -242,8 +242,12 @@
 	return
 
 
-/obj/item/weapon/grab/New()
+/obj/item/weapon/grab/New(var/location, mob/user as mob, mob/affected as mob)
 	..()
+	src.loc = location
+	src.assailant = user
+	src.affecting = affected
+	// HUD
 	hud1 = new /obj/screen/grab( src )
 	hud1.icon_state = "reinforce"
 	hud1.name = "Reinforce Grab"

@@ -231,7 +231,7 @@ var/list/mechtoys = list(
 
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
-			if(istype(MA,/obj/structure/closet))
+			if(istype(MA,/obj/structure/closet/crate))
 				points += points_per_crate
 				var/find_slip = 1
 

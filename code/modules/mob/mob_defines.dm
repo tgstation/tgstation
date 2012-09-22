@@ -11,7 +11,6 @@
 	var/obj/effect/organstructure/organStructure = null
 
 //	var/uses_hud = 0
-	var/obj/screen/pain = null
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
@@ -31,6 +30,7 @@
 	var/obj/screen/nutrition_icon = null
 	var/obj/screen/pressure = null
 	var/obj/screen/damageoverlay = null
+	var/obj/screen/pain = null
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
@@ -222,4 +222,3 @@
 	var/tajaran_talk_understand = 0
 	var/soghun_talk_understand = 0
 	var/skrell_talk_understand = 0
-

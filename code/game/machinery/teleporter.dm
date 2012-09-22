@@ -22,7 +22,7 @@
 
 		var/obj/L = null
 
-		for(var/obj/effect/landmark/sloc in world)
+		for(var/obj/effect/landmark/sloc in landmarks_list)
 			if(sloc.name != C.data) continue
 			if(locate(/mob/living) in sloc.loc) continue
 			L = sloc
@@ -66,7 +66,7 @@
 		var/turf/T = get_turf(R)
 		if (!T)
 			continue
-		if(T.z == 2)
+		if(T.z == 2 || T.z > 7)
 			continue
 		var/tmpname = T.loc.name
 		if(areaindex[tmpname])

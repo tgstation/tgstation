@@ -23,7 +23,7 @@
 
 /obj/effect/proc_holder/spell/targeted/projectile/cast(list/targets, mob/user = usr)
 
-	for(var/mob/target in targets)
+	for(var/mob/living/target in targets)
 		spawn(0)
 			var/obj/effect/proc_holder/spell/targeted/projectile
 			if(istext(proj_type))

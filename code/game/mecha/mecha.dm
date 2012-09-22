@@ -948,7 +948,8 @@
 	lights = !lights
 	if(lights)	SetLuminosity(luminosity + lights_power)
 	else		SetLuminosity(luminosity - lights_power)
-	log_message("Toggled lights.")
+	src.occupant_message("Toggled lights [lights?"on":"off"].")
+	log_message("Toggled lights [lights?"on":"off"].")
 	return
 
 
@@ -960,6 +961,7 @@
 	if(usr!=src.occupant)
 		return
 	use_internal_tank = !use_internal_tank
+	src.occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	src.log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	return
 

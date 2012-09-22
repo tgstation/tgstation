@@ -18,8 +18,7 @@
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
-	var/herp = 0 //Used for tracking if the syndies got the shuttle off of the z-level
-	//It is so hillarious so I wont rename those two variables --rastaf0
+	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
 
 
 /datum/game_mode/nuclear/announce()
@@ -112,7 +111,7 @@
 
 	var/list/turf/synd_spawn = list()
 
-	for(var/obj/effect/landmark/A in world)
+	for(var/obj/effect/landmark/A in landmarks_list)
 		if (A.name == "Syndicate-Gear-Closet")
 			new /obj/structure/closet/syndicate/personal(A.loc)
 			del(A)
@@ -229,10 +228,10 @@
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
 	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
 	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_magazine/a50(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_magazine/a50(synd_mob), slot_in_backpack)
+	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_magazine/a12mm(synd_mob), slot_in_backpack)
+	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_magazine/a12mm(synd_mob), slot_in_backpack)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/deagle(synd_mob), slot_belt)
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), slot_belt)
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
 	E.imp_in = synd_mob
@@ -269,25 +268,25 @@
 
 	//nukes_left
 	//station_was_nuked
-	//derp //Used for tracking if the syndies actually haul the nuke to the station
-	//herp //Used for tracking if the syndies got the shuttle off of the z-level
+	//derp //Used for tracking if the syndies actually haul the nuke to the station	//no
+	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
 
-	if      (!disk_rescued &&  station_was_nuked &&          !herp)
+	if      (!disk_rescued &&  station_was_nuked &&          !syndies_didnt_escape)
 		feedback_set_details("round_end_result","win - syndicate nuke")
 		world << "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"
 
-	else if (!disk_rescued &&  station_was_nuked &&           herp)
+	else if (!disk_rescued &&  station_was_nuked &&           syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
 		world << "<FONT size = 3><B>Total Annihilation</B></FONT>"
 		world << "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station && !herp)
+	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station")
 		world << "<FONT size = 3><B>Crew Minor Victory</B></FONT>"
 		world << "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station &&  herp)
+	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
 		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
 		world << "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't lose the disk!"

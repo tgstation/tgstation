@@ -309,9 +309,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if((world.time-time_passed)>300)
 				return	//took too long
 			newname = reject_bad_name(newname,allow_numbers)	//returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
+
+			for(var/mob/living/M in player_list)
+				if(M == src)
+					continue
+				if(!newname || M.real_name == newname)
+					newname = null
+					break
 			if(newname)
 				break	//That's a suitable name!
-			src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short or has bad characters."
+			src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken."
 
 		if(!newname)	//we'll stick with the oldname then
 			return
@@ -1220,6 +1227,10 @@ proc/get_mob_with_client_list()
 	else if (zone == "r_arm") return "right arm"
 	else if (zone == "l_leg") return "left leg"
 	else if (zone == "r_leg") return "right leg"
+	else if (zone == "l_foot") return "left foot"
+	else if (zone == "r_foot") return "right foot"
+	else if (zone == "l_hand") return "left hand"
+	else if (zone == "r_hand") return "right hand"
 	else if (zone == "l_foot") return "left foot"
 	else if (zone == "r_foot") return "right foot"
 	else return zone

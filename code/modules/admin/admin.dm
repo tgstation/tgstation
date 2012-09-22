@@ -1,5 +1,6 @@
 
 var/global/BSACooldown = 0
+var/global/floorIsLava = 0
 
 
 ////////////////////////////////
@@ -37,6 +38,48 @@ var/global/BSACooldown = 0
 	if (usr.client != src.owner)
 		world << "\blue [usr.key] has attempted to override the admin panel!"
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
+		return
+
+	if(href_list["makeAntag"])
+		switch(href_list["makeAntag"])
+			if("1")
+				log_admin("[key_name(usr)] has spawned a traitor.")
+				if(!src.makeTratiors())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("2")
+				log_admin("[key_name(usr)] has spawned a changeling.")
+				if(!src.makeChanglings())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("3")
+				log_admin("[key_name(usr)] has spawned revolutionaries.")
+				if(!src.makeRevs())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("4")
+				log_admin("[key_name(usr)] has spawned a cultists.")
+				if(!src.makeCult())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("5")
+				log_admin("[key_name(usr)] has spawned a malf AI.")
+				if(!src.makeMalfAImode())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("6")
+				log_admin("[key_name(usr)] has spawned a wizard.")
+				if(!src.makeWizard())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("7")
+				log_admin("[key_name(usr)] has spawned a nuke team.")
+				if(!src.makeNukeTeam())
+					usr << "\red Unfortunatly there were no candidates available"
+			if("8")
+				log_admin("[key_name(usr)] has spawned a ninja.")
+				src.makeSpaceNinja()
+			if("9")
+				log_admin("[key_name(usr)] has spawned aliens.")
+				src.makeAliens()
+			if("10")
+				log_admin("[key_name(usr)] has spawned a death squad.")
+				if(!src.makeDeathsquad())
+					usr << "\red Unfortunatly there were no candidates available"
 		return
 
 	if(href_list["call_shuttle"])
@@ -1178,18 +1221,36 @@ var/global/BSACooldown = 0
 	if (href_list["adminplayerobservejump"])
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 		if(src && src.owner)
+			var/client/C
 			if(istype(src.owner,/client))
-				var/client/cl = src.owner
-				cl.admin_observe()
-				sleep(2)
-				cl.jumptomob(M)
+				C = src.owner
 			else if(ismob(src.owner))
 				var/mob/MO = src.owner
-				if(MO.client)
-					var/client/cl = MO.client
-					cl.admin_observe()
-					sleep(2)
-					cl.jumptomob(M)
+				C = MO.client
+			if(C)
+				if(state == 1)
+					C.admin_ghost()
+				sleep(2)
+				C.jumptomob(M)
+
+	if (href_list["adminplayerobservecoodjump"])
+
+		var/x = text2num(href_list["X"])
+		var/y = text2num(href_list["Y"])
+		var/z = text2num(href_list["Z"])
+
+		if(src && src.owner)
+			var/client/C
+			if(istype(src.owner,/client))
+				C = src.owner
+			else if(ismob(src.owner))
+				var/mob/MO = src.owner
+				C = MO.client
+			if(C)
+				if(state == 1)
+					C.admin_ghost()
+				sleep(2)
+				C.jumptocoord(x, y, z)
 
 	if (href_list["adminchecklaws"])
 		if(src && src.owner)
@@ -1453,14 +1514,6 @@ var/global/BSACooldown = 0
 			return create_mob(usr)
 		else
 			alert("You are not a high enough administrator! Sorry!!!!")
-	if (href_list["vmode"])
-		vmode()
-
-	if (href_list["votekill"])
-		votekill()
-
-	if (href_list["voteres"])
-		voteres()
 
 	if (href_list["prom_demot"])
 		if ((src.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
@@ -2062,7 +2115,60 @@ var/global/BSACooldown = 0
 							var/obj/machinery/status_display/A = M
 							A.friendc = 1
 					message_admins("[key_name_admin(usr)] turned all AIs into best friends.", 1)
+				if("floorlava")
+					if(floorIsLava)
+						usr << "The floor is lava already."
+						return
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","LF")
 
+					//Options
+					var/length = input(usr, "How long will the lava last? (in seconds)", "Length", 180) as num
+					length = min(abs(length), 1200)
+
+					var/damage = input(usr, "How deadly will the lava be?", "Damage", 2) as num
+					damage = min(abs(damage), 100)
+
+					var/sure = alert(usr, "Are you sure you want to do this?", "Confirmation", "YES!", "Nah")
+					if(sure == "Nah")
+						return
+					floorIsLava = 1
+
+					message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.", 1)
+
+					for(var/turf/simulated/floor/F in world)
+						if(F.z == 1)
+							F.name = "lava"
+							F.desc = "The floor is LAVA!"
+							F.overlays += "lava"
+							F.lava = 1
+
+					spawn(0)
+						for(var/i = i, i < length, i++) // 180 = 3 minutes
+							if(damage)
+								for(var/mob/living/carbon/L in living_mob_list)
+									if(istype(L.loc, /turf/simulated/floor)) // Are they on LAVA?!
+										var/turf/simulated/floor/F = L.loc
+										var/safe = 0
+										for(var/obj/structure/O in F.contents)
+											if(O.level > F.level && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
+												safe = 1
+												break
+										if(!safe)
+											L.adjustFireLoss(damage)
+
+
+							sleep(10)
+
+						for(var/turf/simulated/floor/F in world) // Reset everything.
+							if(F.z == 1)
+								F.name = initial(F.name)
+								F.desc = initial(F.desc)
+								F.overlays = null
+								F.lava = 0
+								F.update_icon()
+						floorIsLava = 0
+					return
 				if("virus")
 					feedback_inc("admin_secrets_fun_used",1)
 					feedback_add_details("admin_secrets_fun_used","V")
@@ -2971,7 +3077,8 @@ var/global/BSACooldown = 0
 <A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 <A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
-<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>"}
+<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
+<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS)</A><BR>"}
 //<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
 
 	if(lvl >= 6)
@@ -2998,134 +3105,11 @@ var/global/BSACooldown = 0
 	usr << browse(dat, "window=secrets")
 	return
 
-/obj/admins/proc/Voting()
-
-	var/dat
-	var/lvl = 0
-	switch(src.rank)
-		if("Moderator")
-			lvl = 1
-		if("Temporary Admin")
-			lvl = 2
-		if("Admin Candidate")
-			lvl = 3
-		if("Trial Admin")
-			lvl = 4
-		if("Badmin")
-			lvl = 5
-		if("Game Admin")
-			lvl = 6
-		if("Game Master")
-			lvl = 7
-
-
-	dat += "<center><B>Voting</B></center><hr>\n"
-
-	if(lvl > 0)
-//			if(lvl >= 2 )
-		dat += {"
-<A href='?src=\ref[src];votekill=1'>Abort Vote</A><br>
-<A href='?src=\ref[src];vmode=1'>Start Vote</A><br>
-<A href='?src=\ref[src];voteres=1'>Toggle Voting</A><br>
-"}
-
-//			if(lvl >= 3 )
-//			if(lvl >= 5)
-//			if(lvl == 6 )
-
-	usr << browse(dat, "window=admin2;size=210x160")
-	return
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
 //i.e. buttons/verbs
 
-
-/obj/admins/proc/vmode()
-	set category = "Server"
-	set name = "Start Vote"
-	set desc="Starts vote"
-	if (!usr.client.holder)
-		return
-	var/confirm = alert("What vote would you like to start?", "Vote", "Restart", "Change Game Mode", "Cancel")
-	if(confirm == "Cancel")
-		return
-	if(confirm == "Restart")
-		vote.mode = 0
-	// hack to yield 0=restart, 1=changemode
-	if(confirm == "Change Game Mode")
-		vote.mode = 1
-		if(!ticker)
-			if(going)
-				world << "<B>The game start has been delayed.</B>"
-				going = 0
-	vote.voting = 1
-						// now voting
-	vote.votetime = world.timeofday + config.vote_period*10
-	// when the vote will end
-	spawn(config.vote_period*10)
-		vote.endvote()
-	world << "\red<B>*** A vote to [vote.mode?"change game mode":"restart"] has been initiated by Admin [usr.key].</B>"
-	world << "\red     You have [vote.timetext(config.vote_period)] to vote."
-
-	log_admin("Voting to [vote.mode?"change mode":"restart round"] forced by admin [key_name(usr)]")
-
-	for(var/mob/CM in player_list)
-		if(config.vote_no_default || (config.vote_no_dead && CM.stat == 2))
-			CM.client.vote = "none"
-		else
-			CM.client.vote = "default"
-
-	for(var/mob/CM in player_list)
-		if(config.vote_no_default || (config.vote_no_dead && CM.stat == 2))
-			CM.client.vote = "none"
-		else
-			CM.client.vote = "default"
-	feedback_add_details("admin_verb","SV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/obj/admins/proc/votekill()
-	set category = "Server"
-	set name = "Abort Vote"
-	set desc="Aborts a vote"
-	if(vote.voting == 0)
-		alert("No votes in progress")
-		return
-	world << "\red <b>*** Voting aborted by [usr.client.stealth ? "Admin Candidate" : usr.key].</b>"
-
-	log_admin("Voting aborted by [key_name(usr)]")
-
-	vote.voting = 0
-	vote.nextvotetime = world.timeofday + 10*config.vote_delay
-
-	for(var/mob/M in player_list)
-		// clear vote window from all clients
-		M << browse(null, "window=vote")
-		M.client.showvote = 0
-	feedback_add_details("admin_verb","AV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/obj/admins/proc/voteres()
-	set category = "Server"
-	set name = "Toggle Voting"
-	set desc="Toggles Votes"
-	var/confirm = alert("What vote would you like to toggle?", "Vote", "Restart [config.allow_vote_restart ? "Off" : "On"]", "Change Game Mode [config.allow_vote_mode ? "Off" : "On"]", "Cancel")
-	if(confirm == "Cancel")
-		return
-	if(confirm == "Restart [config.allow_vote_restart ? "Off" : "On"]")
-		config.allow_vote_restart = !config.allow_vote_restart
-		world << "<b>Player restart voting toggled to [config.allow_vote_restart ? "On" : "Off"]</b>."
-		log_admin("Restart voting toggled to [config.allow_vote_restart ? "On" : "Off"] by [key_name(usr)].")
-
-		if(config.allow_vote_restart)
-			vote.nextvotetime = world.timeofday
-	if(confirm == "Change Game Mode [config.allow_vote_mode ? "Off" : "On"]")
-		config.allow_vote_mode = !config.allow_vote_mode
-		world << "<b>Player mode voting toggled to [config.allow_vote_mode ? "On" : "Off"]</b>."
-		log_admin("Mode voting toggled to [config.allow_vote_mode ? "On" : "Off"] by [key_name(usr)].")
-
-		if(config.allow_vote_mode)
-			vote.nextvotetime = world.timeofday
-	feedback_add_details("admin_verb","TV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/restart()
 	set category = "Server"

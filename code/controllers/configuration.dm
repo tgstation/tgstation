@@ -21,8 +21,8 @@
 	var/allow_admin_jump = 1			// allows admin jumping
 	var/allow_admin_spawning = 1		// allows admin item spawning
 	var/allow_admin_rev = 1				// allows admin revives
-	var/vote_delay = 600				// minimum time between voting sessions (seconds, 10 minute default)
-	var/vote_period = 60				// length of voting period (seconds, default 1 minute)
+	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
+	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
 //	var/enable_authentication = 0		// goon authentication
@@ -73,6 +73,12 @@
 
 	var/health_threshold_crit = 0
 	var/health_threshold_dead = -100
+
+	var/organ_health_multiplier = 1
+	var/organ_regeneration_multiplier = 1
+
+	var/bones_can_break = 0
+	var/limbs_can_break = 0
 
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
@@ -371,6 +377,14 @@
 					config.metroid_delay = value
 				if("animal_delay")
 					config.animal_delay = value
+				if("organ_health_multiplier")
+					config.organ_health_multiplier = value / 100
+				if("organ_regeneration_multiplier")
+					config.organ_regeneration_multiplier = value / 100
+				if("bones_can_break")
+					config.bones_can_break = value
+				if("limbs_can_break")
+					config.limbs_can_break = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

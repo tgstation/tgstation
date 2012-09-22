@@ -1,5 +1,5 @@
 /mob/living/carbon/metroid/verb/Feed()
-	set category = "Metroid"
+	set category = "Roro"
 	set desc = "This will let you feed on any valid creature in the surrounding area. This should also be used to halt the feeding process."
 	if(Victim)
 		Feedstop()
@@ -50,9 +50,9 @@
 	var/lastnut = nutrition
 	//if(M.client) M << "\red You legs become paralyzed!"
 	if(istype(src, /mob/living/carbon/metroid/adult))
-		icon_state = "adult metroid eat"
+		icon_state = "adult roro eat"
 	else
-		icon_state = "baby metroid eat"
+		icon_state = "baby roro eat"
 
 	while(Victim && M.health > -70 && stat != 2)
 		// M.canmove = 0
@@ -120,13 +120,13 @@
 
 	if(stat == 2)
 		if(!istype(src, /mob/living/carbon/metroid/adult))
-			icon_state = "baby metroid dead"
+			icon_state = "baby roro dead"
 
 	else
 		if(istype(src, /mob/living/carbon/metroid/adult))
-			icon_state = "adult metroid"
+			icon_state = "adult roro"
 		else
-			icon_state = "baby metroid"
+			icon_state = "baby roro"
 
 	canmove = 1
 	anchored = 0
@@ -164,7 +164,7 @@
 
 
 /mob/living/carbon/metroid/verb/Evolve()
-	set category = "Metroid"
+	set category = "Roro"
 	set desc = "This will let you evolve from baby to adult metroid."
 
 	if(stat)
@@ -186,7 +186,7 @@
 		src << "<i>I have already evolved...</i>"
 
 /mob/living/carbon/metroid/verb/Reproduce()
-	set category = "Metroid"
+	set category = "Roro"
 	set desc = "This will make you split into a random number of Metroids (usually 2). NOTE: this will KILL you, but you will be transferred into one of the babies."
 
 	if(stat)
@@ -195,7 +195,7 @@
 
 	if(istype(src, /mob/living/carbon/metroid/adult))
 		if(amount_grown >= 10)
-			if(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced metroid.") in list("Yes","No")=="Yes")
+			if(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced rorobeast.") in list("Yes","No")=="Yes")
 				if(stat)
 					src << "<i>I must be conscious to do this...</i>"
 					return
@@ -215,7 +215,7 @@
 				new_metroid.a_intent = "hurt"
 				new_metroid.key = key
 
-				new_metroid << "<B>You are now a Metroid. Skree!</B>"
+				new_metroid << "<B>You are now a Rorobeast. Skree!</B>"
 				del(src)
 		else
 			src << "<i>I am not ready to reproduce yet...</i>"
@@ -227,6 +227,6 @@
 /mob/living/carbon/metroid/verb/ventcrawl()
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
-	set category = "Metroid"
+	set category = "Roro"
 	if(Victim)	return
 	handle_ventcrawl()

@@ -75,6 +75,11 @@
 		return 1
 	return 0
 
+/proc/isclown(A)
+	if(istype(A, /mob/living/simple_animal/clown))
+		return 1
+	return 0
+
 /proc/isAI(A)
 	if(istype(A, /mob/living/silicon/ai))
 		return 1
@@ -109,6 +114,9 @@ proc/isorgan(A)
 	if(istype(A, /datum/organ/external))
 		return 1
 	return 0
+
+proc/hasorgans(A)
+	return (ishuman(A) || ismonkey(A))
 
 /proc/hsl2rgb(h, s, l)
 	return

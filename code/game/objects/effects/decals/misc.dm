@@ -6,6 +6,11 @@
 	layer = 16.0
 	anchored = 1
 
+/obj/effect/decal/point/point()
+	set src in oview()
+	set hidden = 1
+	return
+
 // Used for spray that you spray at walls, tables, hydrovats etc
 /obj/effect/decal/spraystill
 	density = 0

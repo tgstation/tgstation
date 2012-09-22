@@ -253,7 +253,6 @@
 	range = 0
 	summon_type = list("/turf/simulated/floor/engine/cult")
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
-	delay = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Leser Construction"
@@ -267,7 +266,6 @@
 	range = 0
 	summon_type = list("/turf/simulated/wall/cult")
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
-	delay = 20
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"

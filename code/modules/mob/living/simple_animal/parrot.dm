@@ -8,6 +8,10 @@
  *		Sub-types
  */
 
+//TODO List:
+// Make parrots faster (But not retardedly fast like when using byond's walk() procs)
+// See if its possible for parrots to target a human's eyes (peck their eyes out)
+
 /*
  * Defines
  */
@@ -29,17 +33,17 @@
 	name = "\improper Parrot"
 	desc = "The parrot squacks, \"It's a Parrot! BAWWK!\""
 	icon = 'icons/mob/animal.dmi'
-	icon_state = "chick"
-	icon_living = "chick"
-	icon_dead = "chick_dead"
+	icon_state = "parrot_fly"
+	icon_living = "parrot_fly"
+	icon_dead = "parrot_dead"
 	pass_flags = PASSTABLE
 
-	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me") //TODO: make it pick up on what people are saying.
+	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
 	speak_emote = list("squawks","says","yells")
 	emote_hear = list("squawks","bawks")
 	emote_see = list("flutters its wings")
 
-	speak_chance = 1
+	speak_chance = 8//4% (1 in 25) chance every tick
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
 
@@ -52,7 +56,9 @@
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
 	var/parrot_sleep_max = 25 //The time the parrot sits while perched before looking around. Mosly a way to avoid the parrot's AI in life() being run every single tick.
 	var/parrot_sleep_dur = 25 //Same as above, this is the var that physically counts down
-	var/parrot_dam_zone = list("chest", "head", "l_arm", "l_leg", "r_arm", "r_leg") //For humans, select a bodypart to attack TODO: pecking out a mob's eyes
+	var/parrot_dam_zone = list("chest", "head", "l_arm", "l_leg", "r_arm", "r_leg") //For humans, select a bodypart to attack
+
+	var/list/speech_buffer = list()
 
 	//Headset for Poly to yell at engineers :)
 	var/obj/item/device/radio/headset/ears = null
@@ -73,26 +79,28 @@
 									/obj/machinery/suit_storage_unit,	/obj/machinery/telecomms, \
 									/obj/machinery/teleport)
 
-	//Parrots are kleptomaniacs. These vars a used for just that.. holding items and storing items the parrot wants to steal.
+	//Parrots are kleptomaniacs. These vars a used for just that.. holding items and storing a list of items the parrot wants to steal.
 	var/obj/item/held_item = null
 	var/list/desired_items = list(/obj/item/weapon/reagent_containers/food/snacks/cracker/, \
 									/obj/item/smallDelivery, 	/obj/item/weapon/gift, \
-									/obj/item/weapon/soap, 		/obj/item/toy/spinningtoy, \
-									/obj/item/weapon/coin,		/obj/item/weapon/stamp,\
-									/obj/item/weapon/grenade)
+									/obj/item/weapon/soap, 		/obj/item/toy, \
+									/obj/item/weapon/coin,		/obj/item/weapon/stamp, \
+									/obj/item/weapon/grenade,	/obj/item/device/radio/headset, \
+									/obj/item/device/flash,		/obj/item/device/soulstone, \
+									/obj/item/device/assembly,	/obj/item/weapon/bananapeel, \
+									/obj/item/weapon/book,		/obj/item/weapon/caution, \
+									/obj/item/weapon/cigpacket,	/obj/item/weapon/handcuffs,\
+									/obj/item/weapon/pen,		/obj/item/weapon/pinpointer)
 
 
 /mob/living/simple_animal/parrot/New()
-	usr << "\red <B>Sorry parrots are not ready yet!</B>"
-	del(src)
-/*
+	usr << "\red Parrots are still a work in progress, use at your own risk."
 	..()
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
-	ears = new /obj/item/device/radio/headset/headset_eng(src)
 	verbs.Add(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
 			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
 			  /mob/living/simple_animal/parrot/proc/drop_held_item)
-*/
+
 /mob/living/simple_animal/parrot/Die()
 	if(held_item)
 		held_item.loc = src.loc
@@ -161,6 +169,7 @@
 						usr.drop_item()
 						item_to_add.loc = src
 						src.ears = item_to_add
+						usr << "You fit the headset onto [src]."
 		else
 			..()
 
@@ -172,13 +181,16 @@
 	..()
 	if(client) return
 	if(!stat && M.a_intent == "hurt")
+
+		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
+
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
 		parrot_interest = M
 		parrot_state = PARROT_SWOOP //The parrot just got hit, it WILL move, now to pick a direction..
 
-		if(M.getMaxHealth() - M.health < 50) //Weakened mob? Fight back!
+		if(M.health < 50) //Weakened mob? Fight back!
 			parrot_state |= PARROT_ATTACK
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
@@ -195,12 +207,14 @@
 /mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M as mob)
 	if(client) return
 
+
 	if(parrot_state == PARROT_PERCH)
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
 	if(M.melee_damage_upper > 0)
 		parrot_interest = M
 		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
+		icon_state = "parrot_fly"
 
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -212,6 +226,7 @@
 
 			parrot_interest = user
 			parrot_state = PARROT_SWOOP | PARROT_FLEE
+			icon_state = "parrot_fly"
 			drop_held_item(0)
 	return
 
@@ -224,6 +239,7 @@
 
 		parrot_interest = null
 		parrot_state = PARROT_WANDER //OWFUCK, Been shot! RUN LIKE HELL!
+		icon_state = "parrot_fly"
 		drop_held_item(0)
 	return
 
@@ -234,43 +250,51 @@
 /mob/living/simple_animal/parrot/Life()
 	..()
 
-	if(client)
-		return //Lets not force players to move
+	if(client || stat)
+		return //Lets not force players or dead/incap parrots to move
 
 	if(!isturf(src.loc) || !canmove || buckled || pulledby)
 		return //If it can't move, dont let it move. (The buckled check probably isn't necessary)
 
-	world << "State: [parrot_state]"
+	//Parrot speech mimickry! Phrases that the parrot hears in mob/living/say() get added to speach_buffer.
+	//Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
+	//Then it clears the buffer to make sure they dont magically remember something from hours ago.
+	if(speech_buffer.len && prob(10))
+		if(speak.len)
+			speak.Remove(pick(speak))
+
+		speak.Add(pick(speech_buffer))
+		clearlist(speech_buffer)
+
 
 	//Alright, here we go... down the slope
 
 //-----SLEEPING
 	if(parrot_state == PARROT_PERCH)
-		world << "Perched"
 		if(parrot_perch.loc != src.loc) //Make sure someone hasnt moved our perch on us
 			if(parrot_perch in view(src))
 				parrot_state = PARROT_SWOOP | PARROT_RETURN
+				icon_state = "parrot_fly"
 				return
 			else
 				parrot_state = PARROT_WANDER
+				icon_state = "parrot_fly"
 				return
 
 		if(--parrot_sleep_dur) //Zzz
-			world << "Perched: sleeping"
 			return
 
 		else
-			world << "Perched: looking around"
 			parrot_sleep_dur = parrot_sleep_max //This way we only call the loop below once every [sleep_max] ticks.
 			parrot_interest = search_for_item()
 			if(parrot_interest)
 				emote("[src] looks in [parrot_interest]'s direction and takes flight.")
 				parrot_state = PARROT_SWOOP | PARROT_STEAL
+				icon_state = "parrot_fly"
 			return
 
 //-----WANDERING - This is basically a 'I dont know what to do yet' state
 	else if(parrot_state == PARROT_WANDER)
-		world << "Wander"
 		//Stop movement, we'll set it later
 		walk(src, 0)
 		parrot_interest = null
@@ -278,60 +302,48 @@
 		//Wander around aimlessly. This will help keep the loops from searches down
 		//and possibly move the mob into a new are in view of something they can use
 		if(prob(90))
-			world << "Wander: randomly"
 			step(src, pick(cardinal))
 			return
 
 		if(!held_item && !parrot_perch) //If we've got nothing to do.. look for something to do.
-			world << "Wander: looking for perch or item"
-			world << parrot_interest
 			var/atom/movable/AM = search_for_perch_and_item() //This handles checking through lists so we know it's either a perch or stealable item
 			if(AM)
 				if(istype(AM, /obj/item) || isliving(AM))	//If stealable item
 					parrot_interest = AM
 					emote("[src] turns and flies towards [parrot_interest].")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
-					world << parrot_interest
 					return
 				else	//Else it's a perch
 					parrot_perch = AM
 					parrot_state = PARROT_SWOOP | PARROT_RETURN
-					world << parrot_interest
 					return
 			return
 
-		if(parrot_interest)
-			if(parrot_interest in view(src)) //Putting this in a seperate if so it doesnt run the 'in view' loop as often
-				parrot_state = PARROT_SWOOP | PARROT_STEAL
-				return
+		if(parrot_interest && parrot_interest in view(src))
+			parrot_state = PARROT_SWOOP | PARROT_STEAL
+			return
 
-		if(parrot_perch)
-			world << "Wander: returning to perch"
+		if(parrot_perch && parrot_perch in view(src))
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
 		else //Have an item but no perch? Find one!
-			world << "Wander: looking for perch, holding item"
 			parrot_perch = search_for_perch()
 			if(parrot_perch)
 				parrot_state = PARROT_SWOOP | PARROT_RETURN
 				return
 //-----STEALING
 	else if(parrot_state == (PARROT_SWOOP | PARROT_STEAL))
-		world << "Steal"
 		walk(src,0)
 		if(!parrot_interest || held_item)
-			world << "Steal: lost interest or holding an item"
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
 		if(!(parrot_interest in view(src)))
-			world << "Steal: interest not in view"
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
 		if(in_range(src, parrot_interest))
-			world << "Steal: stealing item"
 			if(isliving(parrot_interest))
 				steal_from_mob()
 			else
@@ -341,7 +353,6 @@
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		world << "Steal: swooping closer to target"
 		var/oldloc = src.loc
 		step_towards(src, get_step_towards(src,parrot_interest))
 		if(src.loc == oldloc) //Check if the mob is stuck
@@ -351,22 +362,19 @@
 
 //-----RETURNING TO PERCH
 	else if(parrot_state == (PARROT_SWOOP | PARROT_RETURN))
-		world << "Return"
 		walk(src, 0)
 		if(!parrot_perch || !isturf(parrot_perch.loc)) //Make sure the perch exists and somehow isnt inside of something else.
-			world << "Return: no perch?"
 			parrot_perch = null
 			parrot_state = PARROT_WANDER
 			return
 
 		if(in_range(src, parrot_perch))
-			world << "Return: landing"
 			src.loc = parrot_perch.loc
 			drop_held_item()
 			parrot_state = PARROT_PERCH
+			icon_state = "parrot_sit"
 			return
 
-		world << "Return: returning to perch"
 		var/oldloc = src.loc
 		step_towards(src, get_step_towards(src,parrot_perch))
 		if(src.loc == oldloc) //Check if the mob is stuck
@@ -375,13 +383,10 @@
 
 //-----FLEEING
 	else if(parrot_state == (PARROT_SWOOP | PARROT_FLEE))
-		world << "Flee"
 		walk(src,0)
 		if(!parrot_interest || !isliving(parrot_interest)) //Sanity
-			world << "Flee: lost interest"
 			parrot_state = PARROT_WANDER
 
-		world << "Flee: fleeing"
 		var/oldloc = src.loc
 		step(src, get_step_away(src, parrot_interest))
 		if(src.loc == oldloc) //Check if the mob is stuck
@@ -389,11 +394,9 @@
 
 //-----ATTACKING
 	else if(parrot_state == (PARROT_SWOOP | PARROT_ATTACK))
-		world << "Attack"
 
 		//If we're attacking a nothing, an object, a turf or a ghost for some stupid reason, switch to wander
 		if(!parrot_interest || !isliving(parrot_interest))
-			world << "Attack: lost interest"
 			parrot_interest = null
 			parrot_state = PARROT_WANDER
 			return
@@ -405,7 +408,6 @@
 
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
 			if(L.stat)
-				world << "Attack: looting body"
 				parrot_interest = null
 				if(!held_item)
 					held_item = steal_from_ground()
@@ -421,7 +423,6 @@
 			var/damage = rand(5,10)
 
 			if(ishuman(parrot_interest))
-				world << "Attack: attacking human"
 				var/mob/living/carbon/human/H = parrot_interest
 				var/datum/organ/external/affecting = H.get_organ(ran_zone(pick(parrot_dam_zone)))
 
@@ -429,14 +430,12 @@
 				emote(pick("pecks [H]'s [affecting]", "cuts [H]'s [affecting] with its talons"))
 
 			else
-				world << "Attack: attacking non-human"
 				L.adjustBruteLoss(damage)
 				emote(pick("pecks at [L]", "claws [L]"))
 			return
 
 		//Otherwise, fly towards the mob!
 		else
-			world << "Attack: swooping towards the mob"
 			var/oldloc = src.loc
 			step_towards(src, get_step_towards(src,parrot_interest))
 			if(src.loc == oldloc) //Check if the mob is stuck
@@ -444,7 +443,6 @@
 
 //-----STATE MISHAP
 	else //This should not happen. If it does lets reset everything and try again
-		world << "Unknown state: resetting to wander"
 		walk(src,0)
 		parrot_interest = null
 		parrot_perch = null
@@ -459,7 +457,7 @@
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	for(var/atom/movable/AM in view(src))
 		for(var/path in desired_items)
-			if(parrot_perch && AM.loc == parrot_perch.loc) //Skip items we already stole
+			if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src) //Skip items we already stole or are wearing
 				continue
 
 			if(istype(AM, path))
@@ -486,7 +484,7 @@
 				return AM
 
 		for(var/item_path in desired_items)
-			if(parrot_perch && AM.loc == parrot_perch.loc) //Skip items we already stole
+			if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src) //Skip items we already stole or are wearing
 				continue
 
 			if(istype(AM, item_path))
@@ -516,7 +514,7 @@
 
 	for(var/obj/item/I in view(1,src))
 		for(var/path in desired_items)
-			if(istype(I, path))
+			if(istype(I, path) && I.loc != src)
 				held_item = I
 				I.loc = src
 				visible_message("[src] grabs the [held_item]!", "\blue You grab the [held_item]!", "You hear the sounds of wings flapping furiously.")
@@ -588,3 +586,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS FREE CALL THE SHUTTLE")
+
+/mob/living/simple_animal/parrot/Poly/New()
+	ears = new /obj/item/device/radio/headset/headset_eng(src)
+	..()

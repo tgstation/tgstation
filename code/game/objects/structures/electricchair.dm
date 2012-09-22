@@ -7,18 +7,18 @@
 	var/last_time = 1.0
 
 /obj/structure/stool/bed/chair/e_chair/New()
+	..()
 	overlays += image('icons/obj/objects.dmi', src, "echair_over", MOB_LAYER + 1, dir)
 	return
 
 /obj/structure/stool/bed/chair/e_chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if(istype(W, /obj/item/weapon/wrench))
-		var/obj/structure/stool/bed/chair/C = new /obj/structure/stool/bed/chair(src.loc)
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		C.dir = src.dir
-		src.part.loc = src.loc
-		src.part.master = null
-		src.part = null
+		var/obj/structure/stool/bed/chair/C = new /obj/structure/stool/bed/chair(loc)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		C.dir = dir
+		part.loc = loc
+		part.master = null
+		part = null
 		del(src)
 		return
 	return
@@ -34,6 +34,7 @@
 	else
 		on = 1
 		icon_state = "echair1"
+	usr << "<span class='notice'>You switch [on ? "on" : "off"] [src].</span>"
 	return
 
 /obj/structure/stool/bed/chair/e_chair/rotate()
@@ -43,11 +44,11 @@
 	return
 
 /obj/structure/stool/bed/chair/e_chair/proc/shock()
-	if(!(src.on))
+	if(!on)
 		return
-	if((src.last_time + 50) > world.time)
+	if(last_time + 50 > world.time)
 		return
-	src.last_time = world.time
+	last_time = world.time
 
 	// special power handling
 	var/area/A = get_area(src)
@@ -65,12 +66,11 @@
 	s.start()
 	if(buckled_mob)
 		buckled_mob.burn_skin(85)
-		buckled_mob << "\red <B>You feel a deep shock course through your body!</B>"
+		buckled_mob << "<span class='danger'>You feel a deep shock course through your body!</span>"
 		sleep(1)
 		buckled_mob.burn_skin(85)
 		buckled_mob.Stun(600)
-	for(var/mob/M in hearers(src, null))
-		M.show_message("\red The electric chair went off!.", 3, "\red You hear a deep sharp shock.", 2)
+	visible_message("<span class='danger'>The electric chair went off!</span>", "<span class='danger'>You hear a deep sharp shock!</span>")
 
 	A.power_light = light
 	A.updateicon()

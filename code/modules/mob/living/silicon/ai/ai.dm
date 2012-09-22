@@ -1,3 +1,10 @@
+//Not sure why this is necessary...
+/proc/AutoUpdateAI(obj/subject)
+	if (subject!=null)
+		for(var/mob/living/silicon/ai/M in player_list)
+			if ((M.client && M.machine == subject))
+				subject.attack_ai(M)
+
 
 /mob/living/silicon/ai
 	name = "AI"

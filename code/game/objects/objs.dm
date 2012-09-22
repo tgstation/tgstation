@@ -11,7 +11,31 @@
 	animate_movement = 2
 	var/throwforce = 1
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
+	var/sharp = 0 // whether this object cuts
 
+/obj/proc/process()
+	processing_objects.Remove(src)
+	return 0
+//skytodo
+/*
+/obj/assume_air(datum/air_group/giver)
+	if(loc)
+		return loc.assume_air(giver)
+	else
+		return null
+
+/obj/remove_air(amount)
+	if(loc)
+		return loc.remove_air(amount)
+	else
+		return null
+
+/obj/return_air()
+	if(loc)
+		return loc.return_air()
+	else
+		return null
+*/
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	//Return: (NONSTANDARD)
 	//		null if object handles breathing logic for lifeform
@@ -36,7 +60,7 @@
 				src.attack_ai(usr)
 
 	// check for TK users
-	//AutoUpdateTK(src)
+
 	if (istype(usr, /mob/living/carbon/human))
 		if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab/))
 			if(!(usr in nearby))
@@ -49,7 +73,7 @@
 		if ((M.client && M.machine == src))
 			src.attack_hand(M)
 	AutoUpdateAI(src)
-	//AutoUpdateTK(src)
+
 
 /obj/proc/update_icon()
 	return

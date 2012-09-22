@@ -651,10 +651,10 @@ datum/mind
 					if( !changeling || !changeling.absorbed_dna.len )
 						usr << "\red Resetting DNA failed!"
 					else
-						usr.dna = changeling.absorbed_dna[changeling.absorbed_dna[1]]
-						usr.real_name = changeling.absorbed_dna[1]
-						updateappearance(usr, usr.dna.uni_identity)
-						domutcheck(usr, null)
+						current.dna = changeling.absorbed_dna[1]
+						current.real_name = current.dna.real_name
+						updateappearance(current, current.dna.uni_identity)
+						domutcheck(current, null)
 
 		else if (href_list["nuclear"])
 			switch(href_list["nuclear"])

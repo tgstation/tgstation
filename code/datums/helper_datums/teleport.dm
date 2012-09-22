@@ -168,4 +168,6 @@
 			else
 				teleatom.visible_message("\red <B>The [teleatom] bounces off of the portal!</B>")
 			return 0
+		if(destination.z > 7)
+			return 0
 		return 1

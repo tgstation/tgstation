@@ -180,6 +180,18 @@
 			something.loc = get_turf(src)
 	..()
 
+/obj/item/weapon/reagent_containers/food/snacks/attack_animal(var/mob/M)
+	if(isanimal(M))
+		if(iscorgi(M))
+			if(bitecount == 0 || prob(50))
+				M.emote("nibbles away at the [src]")
+			bitecount++
+			if(bitecount >= 5)
+				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
+				if(sattisfaction_text)
+					M.emote("[sattisfaction_text]")
+				del(src)
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// FOOD END
@@ -221,18 +233,6 @@
 //		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
 //		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
 //		bitesize = 3													//This is the amount each bite consumes.
-
-/obj/item/weapon/reagent_containers/food/snacks/attack_animal(var/mob/M)
-	if(isanimal(M))
-		if(iscorgi(M))
-			if(bitecount == 0 || prob(50))
-				M.emote("nibbles away at the [src]")
-			bitecount++
-			if(bitecount >= 5)
-				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
-				if(sattisfaction_text)
-					M.emote("[sattisfaction_text]")
-				del(src)
 
 
 
@@ -353,7 +353,7 @@
 			if(6)
 				reagents.add_reagent("coco", 3)
 			if(7)
-				reagents.add_reagent("metroid", 3)
+				reagents.add_reagent("rorojelly", 3)
 			if(8)
 				reagents.add_reagent("banana", 3)
 			if(9)
@@ -472,20 +472,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/appendix //yes, this is the same as meat. I might do something different in future
 	name = "appendix"
 	desc = "An appendix which looks perfectly healthy."
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "appendix"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/appendixinflamed
+/obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed
 	name = "inflamed appendix"
 	desc = "An appendix which appears to be inflamed."
 	icon_state = "appendixinflamed"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 1)
-		src.bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/tofu
 	name = "Tofu"
@@ -1120,13 +1117,13 @@
 		reagents.add_reagent("water", 5)
 		bitesize = 5
 
-/obj/item/weapon/reagent_containers/food/snacks/metroidsoup
-	name = "Metroid soup"
-	desc = "Tasty"
-	icon_state = "metroidsoup"
+/obj/item/weapon/reagent_containers/food/snacks/rorosoup
+	name = "Roro soup"
+	desc = "If no water is available, you may substitute tears."
+	icon_state = "rorosoup"
 	New()
 		..()
-		reagents.add_reagent("metroid", 5)
+		reagents.add_reagent("rorojelly", 5)
 		reagents.add_reagent("water", 10)
 		bitesize = 5
 
@@ -1206,7 +1203,7 @@
 				reagents.add_reagent("nutriment", 6)
 				reagents.add_reagent("blood", 10)
 			if(7)
-				reagents.add_reagent("metroid", 10)
+				reagents.add_reagent("rorojelly", 10)
 				reagents.add_reagent("water", 10)
 			if(8)
 				reagents.add_reagent("carbon", 10)
@@ -1443,25 +1440,25 @@
 		reagents.add_reagent("water", 5)
 		bitesize = 10
 
-/obj/item/weapon/reagent_containers/food/snacks/metroidtoast
-	name = "Metroid Toast"
+/obj/item/weapon/reagent_containers/food/snacks/rorotoast
+	name = "Roro Toast"
 	desc = "A slice of bread covered with delicious jam."
-	icon_state = "metroidtoast"
+	icon_state = "rorotoast"
 	trash = /obj/item/trash/plate
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("metroid", 5)
+		reagents.add_reagent("rorojelly", 5)
 		bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/metroidburger
-	name = "Metroid Burger"
+/obj/item/weapon/reagent_containers/food/snacks/roroburger
+	name = "Roro Burger"
 	desc = "A very toxic and tasty burger."
-	icon_state = "metroidburger"
+	icon_state = "roroburger"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("metroid", 5)
+		reagents.add_reagent("rorojelly", 5)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/milosoup
@@ -1581,24 +1578,24 @@
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/metroidsandwich
-	name = "Metroid Sandwich"
-	desc = "A sandwich is green stuff."
-	icon_state = "metroidsandwich"
+/obj/item/weapon/reagent_containers/food/snacks/rorosandwich
+	name = "Roro Sandwich"
+	desc = "You think you can see someone's face in the toast!"
+	icon_state = "rorosandwich"
 	trash = /obj/item/trash/plate
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		reagents.add_reagent("metroid", 5)
+		reagents.add_reagent("rorojelly", 5)
 		bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/boiledmetroidcore
-	name = "Boiled Metroid Core"
+/obj/item/weapon/reagent_containers/food/snacks/boiledrorocore
+	name = "Boiled Roro Core"
 	desc = "A boiled red thing."
-	icon_state = "boiledmetroidcore"
+	icon_state = "boiledrorocore"
 	New()
 		..()
-		reagents.add_reagent("metroid", 5)
+		reagents.add_reagent("rorojelly", 5)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/mint
@@ -2278,3 +2275,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/cracker
 	name = "Cracker"
 	desc = "It's a salted cracker."
+	icon_state = "cracker"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)

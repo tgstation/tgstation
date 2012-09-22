@@ -66,7 +66,7 @@
 	var/obj/item/robot_parts/r_leg/r_leg = null
 	var/obj/item/robot_parts/chest/chest = null
 	var/obj/item/robot_parts/head/head = null
-	var/created_name = "Cyborg"
+	var/created_name = ""
 
 /obj/item/robot_parts/robot_suit/New()
 	..()
@@ -194,8 +194,8 @@
 			user.drop_item()
 
 			O.invisibility = 0
-			O.name = created_name
-			O.real_name = created_name
+			O.custom_name = created_name
+			O.updatename("Default")
 
 			M.brainmob.mind.transfer_to(O)
 

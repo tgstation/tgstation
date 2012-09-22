@@ -5,6 +5,10 @@
 
 	if(!preferences)
 		preferences = new
+		//cael - hackfix for a (minor) annoying loading bug
+		//is there something with cases i'm missing here?
+		if(preferences.species == "human")
+			preferences.species = "Human"
 
 	if(!mind)
 		mind = new /datum/mind(key)
@@ -22,7 +26,7 @@
 	player_list |= src
 
 	var/list/watch_locations = list()
-	for(var/obj/effect/landmark/landmark in world)
+	for(var/obj/effect/landmark/landmark in landmarks_list)
 		if(landmark.tag == "landmark*new_player")
 			watch_locations += landmark.loc
 

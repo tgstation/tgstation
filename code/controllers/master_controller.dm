@@ -3,7 +3,6 @@
 //WIP, needs lots of work still
 
 var/global/datum/controller/game_controller/master_controller //Set in world.New()
-var/global/datum/failsafe/Failsafe
 
 var/global/controller_iteration = 0
 var/global/last_tick_timeofday = world.timeofday
@@ -30,10 +29,12 @@ datum/controller/game_controller
 datum/controller/game_controller/New()
 	//There can be only one master_controller. Out with the old and in with the new.
 	if(master_controller != src)
-		if(istype(master_controller,/datum/controller/game_controller))
+		if(istype(master_controller))
 			Recover()
 			del(master_controller)
 		master_controller = src
+
+	createRandomZlevel()
 
 	if(!air_master)
 		air_master = new /datum/controller/air_system()
@@ -54,7 +55,6 @@ datum/controller/game_controller/New()
 datum/controller/game_controller/proc/setup()
 	world.tick_lag = config.Ticklag
 
-	createRandomZlevel()
 	setup_objects()
 	setupgenetics()
 	setupfactions()
@@ -96,7 +96,7 @@ datum/controller/game_controller/proc/process()
 	spawn(0)
 		set background = 1
 		while(1)	//far more efficient than recursively calling ourself
-			if(!Failsafe)	new /datum/failsafe()
+			if(!Failsafe)	new /datum/controller/failsafe()
 
 			var/currenttime = world.timeofday
 			last_tick_duration = (currenttime - last_tick_timeofday) / 10
@@ -106,6 +106,8 @@ datum/controller/game_controller/proc/process()
 				var/timer
 				var/start_time = world.timeofday
 				controller_iteration++
+
+				vote.process()
 
 				//AIR
 				/*timer = world.timeofday
@@ -266,65 +268,3 @@ datum/controller/game_controller/proc/Recover()		//Mostly a placeholder for now.
 					msg += "\t [varname] = [varval]\n"
 	world.log << msg
 
-/datum/failsafe // This thing pretty much just keeps poking the master controller
-	var/spinning = 1
-	var/current_iteration = 0
-	var/ticks_per_spin = 100	//poke the MC every 10 seconds
-	var/defcon = 0				//alert level. For every poke that fails this is raised by 1. When it reaches 5 the MC is replaced with a new one. (effectively killing any master_controller.process() and starting a new one)
-
-/datum/failsafe/New()
-	//There can be only one failsafe. Out with the old in with the new (that way we can restart the Failsafe by spawning a new one)
-	if(Failsafe && (Failsafe != src))
-		del(Failsafe)
-	Failsafe = src
-
-	current_iteration = controller_iteration
-	Failsafe.spin()
-
-
-/datum/failsafe/proc/spin()
-	spawn(0)
-		set background = 1
-		while(1)	//more efficient than recursivly calling ourself over and over. background = 1 ensures we do not trigger an infinite loop
-			if(master_controller)
-				if(spinning && master_controller.processing)	//only poke if these overrides aren't in effect
-					if(current_iteration == controller_iteration)	//master_controller hasn't finished processing in the defined interval
-						switch(defcon)
-							if(0 to 3)
-								defcon++
-							if(4)
-								for(var/client/C in admin_list)
-									if(C.holder)
-										C << "<font color='red' size='2'><b>Warning. The Master Controller has not fired in the last [defcon*ticks_per_spin] ticks. Automatic restart in [ticks_per_spin] ticks.</b></font>"
-								defcon = 5
-							if(5)
-								for(var/client/C in admin_list)
-									if(C.holder)
-										C << "<font color='red' size='2'><b>Warning. The Master Controller has still not fired within the last [defcon*ticks_per_spin] ticks. Killing and restarting...</b></font>"
-								new /datum/controller/game_controller()	//replace the old master_controller (hence killing the old one's process)
-								master_controller.process()	//Start it rolling again
-								defcon = 0
-					else
-						defcon = 0
-						current_iteration = controller_iteration
-				else
-					defcon = 0
-			else
-				new /datum/controller/game_controller()	//replace the missing master_controller! This should never happen.
-			sleep(ticks_per_spin)
-
-//DEBUG VERBS
-/*
-/client/verb/spawn_MC()
-	new /datum/controller/game_controller()
-
-
-/client/verb/spawn_FS()
-	new /datum/failsafe()
-
-/client/verb/machines_list()
-	for(var/i=1,i<=machines.len,i++)
-		var/machine = machines[i]
-		if(istype(machine,/datum))	world.log << machine:type
-		else						world.log << machine
-*/

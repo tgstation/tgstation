@@ -109,7 +109,7 @@
 						user << "\red You remove [M]'s appendix with [src]!"
 						for(var/datum/disease/D in M.viruses)
 							if(istype(D, /datum/disease/appendicitis))
-								new /obj/item/weapon/reagent_containers/food/snacks/appendixinflamed(get_turf(M))
+								new /obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed(get_turf(M))
 								M:appendix_op_stage = 5.0
 								return
 						new /obj/item/weapon/reagent_containers/food/snacks/appendix(get_turf(M))
@@ -533,7 +533,7 @@
 							new/obj/item/metroid_core(M.loc)
 
 							if(Metroid.cores <= 0)
-								M.icon_state = "baby metroid dead-nocore"
+								M.icon_state = "baby roro dead-nocore"
 
 					return
 

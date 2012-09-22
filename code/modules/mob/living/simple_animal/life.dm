@@ -253,9 +253,8 @@
 				return
 			if (nopush)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
-			G.assailant = M
-			G.affecting = src
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+
 			M.put_in_active_hand(G)
 
 			grabbed_by += G
@@ -293,9 +292,7 @@
 				return
 			if (nopush)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
-			G.assailant = M
-			G.affecting = src
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 
 			M.put_in_active_hand(G)
 

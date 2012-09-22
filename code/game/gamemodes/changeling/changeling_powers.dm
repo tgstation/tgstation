@@ -12,8 +12,7 @@
 			if(!(P in src.verbs))
 				src.verbs += P.verbpath
 
-	if(!mind.changeling.absorbed_dna.len)
-		mind.changeling.absorbed_dna += dna
+	mind.changeling.absorbed_dna |= dna
 	return 1
 
 //removes our changeling verbs
@@ -110,17 +109,19 @@
 	T << "<span class='danger'>You have been absorbed by the changeling!</span>"
 
 	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
-	changeling.absorbed_dna += T.dna
+	changeling.absorbed_dna |= T.dna
 	if(usr.nutrition < 400) usr.nutrition = min((usr.nutrition + T.nutrition), 400)
 	changeling.chem_charges += 10
 	changeling.geneticpoints += 2
 
 	if(T.mind && T.mind.changeling)
 		if(T.mind.changeling.absorbed_dna)
-			changeling.absorbed_dna |= T.mind.changeling.absorbed_dna	//steal all their loot
-			changeling.absorbedcount += T.mind.changeling.absorbedcount
-
-			T.mind.changeling.absorbed_dna = list(T.dna)
+			for(var/dna_data in T.mind.changeling.absorbed_dna)	//steal all their loot
+				if(dna_data in changeling.absorbed_dna)
+					continue
+				changeling.absorbed_dna += dna_data
+				changeling.absorbedcount++
+			T.mind.changeling.absorbed_dna.len = 1
 
 		if(T.mind.changeling.purchasedpowers)
 			for(var/datum/power/changeling/Tp in T.mind.changeling.purchasedpowers)
@@ -137,6 +138,8 @@
 		changeling.chem_charges += T.mind.changeling.chem_charges
 		changeling.geneticpoints += T.mind.changeling.geneticpoints
 		T.mind.changeling.chem_charges = 0
+		T.mind.changeling.geneticpoints = 0
+		T.mind.changeling.absorbedcount = 0
 
 	changeling.absorbedcount++
 	changeling.isabsorbing = 0
@@ -344,12 +347,11 @@
 	set category = "Changeling"
 	set name = "Regenerative Stasis (20)"
 
-	var/datum/changeling/changeling = changeling_power(20,0,100,DEAD)
+	var/datum/changeling/changeling = changeling_power(20,1,100,DEAD)
 	if(!changeling)	return
 
-	changeling.chem_charges -= 20
 	var/mob/living/carbon/C = usr
-	C << "<span class='notice'>We will regenerate our form.</span>"
+	C << "<span class='notice'>We will attempt to regenerate our form.</span>"
 
 	C.status_flags |= FAKEDEATH		//play dead
 	C.update_canmove()
@@ -359,26 +361,28 @@
 	C.tod = worldtime2text()
 
 	spawn(rand(800,2000))
-		if(C.stat == DEAD)
-			dead_mob_list -= C
-			living_mob_list += C
-		C.stat = CONSCIOUS
-		C.tod = null
-		C.setToxLoss(0)
-		C.setOxyLoss(0)
-		C.setCloneLoss(0)
-		C.SetParalysis(0)
-		C.SetStunned(0)
-		C.SetWeakened(0)
-		C.radiation = 0
-		C.heal_overall_damage(C.getBruteLoss(), C.getFireLoss())
-		C.reagents.clear_reagents()
-		C << "<span class='notice'>We have regenerated.</span>"
-		C.visible_message("<span class='warning'>[usr] appears to wake from the dead, having healed all wounds.</span>")
+		if(changeling_power(20,1,100,DEAD))
+			changeling.chem_charges -= 20
+			if(C.stat == DEAD)
+				dead_mob_list -= C
+				living_mob_list += C
+			C.stat = CONSCIOUS
+			C.tod = null
+			C.setToxLoss(0)
+			C.setOxyLoss(0)
+			C.setCloneLoss(0)
+			C.SetParalysis(0)
+			C.SetStunned(0)
+			C.SetWeakened(0)
+			C.radiation = 0
+			C.heal_overall_damage(C.getBruteLoss(), C.getFireLoss())
+			C.reagents.clear_reagents()
+			C << "<span class='notice'>We have regenerated.</span>"
+			C.visible_message("<span class='warning'>[usr] appears to wake from the dead, having healed all wounds.</span>")
 
-		C.status_flags &= ~(FAKEDEATH)
-		C.update_canmove()
-		C.make_changeling()
+			C.status_flags &= ~(FAKEDEATH)
+			C.update_canmove()
+			C.make_changeling()
 	feedback_add_details("changeling_powers","FD")
 	return 1
 

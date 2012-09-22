@@ -1,6 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-
 /obj/machinery/cell_charger
 	name = "cell charger"
 	desc = "It charges power cells."
@@ -19,13 +16,13 @@
 
 			if(charging && !(stat & (BROKEN|NOPOWER)) )
 
-				var/newlevel = 	round( charging.percent() * 4.0 / 99 )
+				var/newlevel = 	round(charging.percent() * 4.0 / 99)
 				//world << "nl: [newlevel]"
 
 				if(chargelevel != newlevel)
 
 					overlays = null
-					overlays += image('icons/obj/power.dmi', "ccharger-o[newlevel]")
+					overlays += "ccharger-o[newlevel]"
 
 					chargelevel = newlevel
 			else
@@ -87,7 +84,7 @@
 		if(!charging || (stat & (BROKEN|NOPOWER)) || !anchored)
 			return
 
-		var/added = charging.give(75)
-		use_power(added / CELLRATE)
+		use_power(200)		//this used to use CELLRATE, but CELLRATE is fucking awful. feel free to fix this properly!
+		charging.give(175)	//inefficiency.
 
 		updateicon()

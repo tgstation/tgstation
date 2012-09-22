@@ -184,7 +184,7 @@
 
 	if (ticker)
 		if(ticker.mode && ticker.mode.name == "nuclear emergency")
-			ticker.mode:herp = syndicate_station_at_station
+			ticker.mode:syndies_didnt_escape = syndicate_station_at_station
 			ticker.mode:nuke_off_station = off_station
 		ticker.station_explosion_cinematic(off_station,null)
 		if(ticker.mode)

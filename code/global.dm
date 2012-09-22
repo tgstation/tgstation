@@ -112,7 +112,6 @@ var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAS
 
 var/datum/station_state/start_state = null
 var/datum/configuration/config = null
-var/datum/vote/vote = null
 var/datum/sun/sun = null
 
 var/list/combatlog = list()
@@ -173,9 +172,9 @@ var/list/AAlarmWireColorToIndex
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
 	//away missions
-var/list/awaydestinations = list()
-
-
+var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
+var/returndestination				//the location immediately south of the station gateway
+var/calibrateddestination //If you actually arrive at the away gate
 
 	// MySQL configuration
 

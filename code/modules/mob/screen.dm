@@ -227,20 +227,11 @@
 /obj/screen/grab/attackby()
 	return
 
+/*
 /obj/screen/MouseEntered(object,location,control,params)
 	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
 		return
 	switch(name)
-		/*
-		if("other")
-			if (usr.hud_used.inventory_shown)
-				usr.hud_used.inventory_shown = 0
-				usr.client.screen -= usr.hud_used.other
-			else
-				usr.hud_used.inventory_shown = 1
-				usr.client.screen += usr.hud_used.other
-
-			usr.hud_used.hidden_inventory_update()*/
 		if("act_intent")
 			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
 				usr.hud_used.action_intent.icon_state = "intent_[usr.a_intent]"
@@ -255,6 +246,7 @@
 				if(intent == "hurt")
 					intent = "harm"	//hurt and harm have different sprite names for some reason.
 				usr.hud_used.action_intent.icon_state = "[intent]"
+*/
 
 /obj/screen/Click(location, control, params)
 	switch(name)
@@ -272,16 +264,7 @@
 			usr.hud_used.hidden_inventory_update()
 
 		if("equip")
-			var/obj/item/I = usr.get_active_hand()
-			if(!I)
-				usr << "\blue You are not holding anything to equip."
-				return
-			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				H.equip_to_appropriate_slot(I)
-
-			usr.update_inv_l_hand(0)
-			usr.update_inv_r_hand()
+			usr.quick_equip()
 
 		if("resist")
 			if(isliving(usr))
@@ -295,58 +278,6 @@
 				seccomp.drawmap(usr)
 			else
 				usr.clearmap()
-
-		if("arrowleft")
-			switch(usr.a_intent)
-				if("help")
-					if(issilicon(usr))
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
-					else
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
-
-				if("disarm")
-					usr.a_intent = "help"
-					usr.hud_used.action_intent.icon_state = "help"
-
-				if("hurt")
-					if(issilicon(usr))
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
-					else
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
-
-				if("grab")
-					usr.a_intent = "hurt"
-					usr.hud_used.action_intent.icon_state = "harm"
-
-		if("arrowright")
-			switch(usr.a_intent)
-				if("help")
-					if(issilicon(usr))
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
-					else
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
-
-				if("disarm")
-					usr.a_intent = "hurt"
-					usr.hud_used.action_intent.icon_state = "harm"
-
-				if("hurt")
-					if(issilicon(usr))
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
-					else
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
-
-				if("grab")
-					usr.a_intent = "help"
-					usr.hud_used.action_intent.icon_state = "help"
 
 		if("mov_intent")
 			if(usr.legcuffed)
@@ -440,12 +371,6 @@
 					if("hurt")
 						usr.a_intent = "help"
 						usr.hud_used.action_intent.icon_state = "intent_help"
-				/*if (usr.hud_used.show_intent_icons)
-					usr.hud_used.show_intent_icons = 0
-					usr.client.screen -= usr.hud_used.intent_small_hud_objects
-				else
-					usr.hud_used.show_intent_icons = 1
-					usr.client.screen += usr.hud_used.intent_small_hud_objects*/ //Small intent icons
 			if(issilicon(usr))
 				if(usr.a_intent == "help")
 					usr.a_intent = "hurt"
@@ -572,13 +497,25 @@
 		if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 			usr.sleeping = 20 //Short nap
 
-/mob/living/carbon/verb/lay_down()
-	set name = "Lay down / Get up"
+/mob/living/verb/lay_down()
+	set name = "Rest"
 	set category = "IC"
 
-	usr.resting = !( usr.resting )
-	usr << "\blue You are now [(usr.resting) ? "resting" : "getting up"]"
+	resting = !resting
+	src << "\blue You are now [resting ? "resting" : "getting up"]"
 
+/mob/verb/quick_equip()
+	set name = "quick-equip"
+	set hidden = 1
+	var/obj/item/I = usr.get_active_hand()
+	if(!I)
+		usr << "\blue You are not holding anything to equip."
+		return
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.equip_to_appropriate_slot(I)
+		H.update_inv_l_hand(0)
+		H.update_inv_r_hand()
 
 /mob/living/verb/resist()
 	set name = "Resist"

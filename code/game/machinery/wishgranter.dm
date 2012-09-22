@@ -1,40 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-var/global/list/space_surprises = list(		/obj/item/clothing/mask/facehugger/angry		=4,
-											// /obj/item/weapon/pickaxe/hammer					=4, //Waiting on a sprite
-											/obj/item/weapon/pickaxe/silver					=4,
-											/obj/item/weapon/pickaxe/drill					=4,
-											/obj/item/weapon/pickaxe/jackhammer				=4,
-											/mob/living/simple_animal/carp				=3,
-											/obj/item/weapon/pickaxe/diamond				=3,
-											/obj/item/weapon/pickaxe/diamonddrill			=3,
-											/obj/item/weapon/pickaxe/gold					=3,
-											/obj/item/weapon/pickaxe/plasmacutter			=2,
-											/obj/structure/closet/syndicate/resources		=2,
-											/obj/item/weapon/melee/energy/sword/pirate		=1,
-											/obj/mecha/working/ripley/mining				=1
-
-											//	/obj/creature									=0,
-											//	/obj/item/weapon/rcd							=0,
-											//	/obj/item/weapon/rcd_ammo						=0,
-											//	/obj/item/weapon/spacecash						=0,
-											//	/obj/item/weapon/cloaking_device				=0,
-											//	/obj/item/weapon/gun/energy/teleport_gun		=0,
-											//	/obj/item/weapon/rubber_chicken					=0,
-											//	/obj/machinery/wish_granter						=0,  // Okayyyy... Mayyyybe Kor is kinda sorta right.  A little.  Tiny bit.  >.>
-											//	/obj/item/clothing/glasses/thermal				=0,	// Could maybe be cool as its own rapid mode, sorta like wizard.  Maybe.
-											//	/obj/item/weapon/storage/box/stealth/			=0
-											//													=11
-											)
-
-var/global/list/spawned_surprises = list()
-
-
-
-
-
-
-
 /obj/machinery/wish_granter
 	name = "Wish Granter"
 	desc = "You're not so sure about this, anymore..."
@@ -107,18 +70,4 @@ var/global/list/spawned_surprises = list()
 
 		user << "You have a very bad feeling about this."
 
-	return
-
-/obj/item/weapon/storage/box/stealth/
-	name = "Infiltration Gear"
-	desc = "An old box full of old equipment.  It doesn't look like it was ever opened."
-
-
-/obj/item/weapon/storage/box/stealth/New()
-	..()
-
-	new /obj/item/clothing/under/chameleon(src)
-	new /obj/item/clothing/mask/gas/voice(src)
-	new /obj/item/weapon/card/id/syndicate(src)
-	new /obj/item/clothing/shoes/syndigaloshes(src)
 	return

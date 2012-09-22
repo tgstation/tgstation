@@ -87,15 +87,21 @@ AI MODULES
 
 /obj/item/weapon/aiModule/safeguard
 	name = "'Safeguard' AI Module"
-	var/targetName = "name"
+	var/targetName = ""
 	desc = "A 'safeguard' AI module: 'Safeguard <name>.  Individuals that threaten <name> are not human and are a threat to humans.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/safeguard/attack_self(var/mob/user as mob)
 	..()
-	var/targName = copytext(sanitize(input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name)),1,MAX_MESSAGE_LEN)
+	var/targName = stripped_input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name)
 	targetName = targName
 	desc = text("A 'safeguard' AI module: 'Safeguard [].  Individuals that threaten [] are not human and are a threat to humans.'", targetName, targetName)
+
+/obj/item/weapon/aiModule/safeguard/install(var/obj/machinery/computer/C)
+	if(!targetName)
+		usr << "No name detected on module, please enter one."
+		return 0
+	..()
 
 /obj/item/weapon/aiModule/safeguard/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -110,15 +116,21 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oneHuman
 	name = "'OneHuman' AI Module"
-	var/targetName = "name"
+	var/targetName = ""
 	desc = "A 'one human' AI module: 'Only <name> is human.'"
 	origin_tech = "programming=3;materials=6" //made with diamonds!
 
 /obj/item/weapon/aiModule/oneHuman/attack_self(var/mob/user as mob)
 	..()
-	var/targName = copytext(sanitize(input(usr, "Please enter the name of the person who is the only human.", "Who?", user.real_name)),1,MAX_MESSAGE_LEN)
+	var/targName = stripped_input(usr, "Please enter the name of the person who is the only human.", "Who?", user.real_name)
 	targetName = targName
 	desc = text("A 'one human' AI module: 'Only [] is human.'", targetName)
+
+/obj/item/weapon/aiModule/oneHuman/install(var/obj/machinery/computer/C)
+	if(!targetName)
+		usr << "No name detected on module, please enter one."
+		return 0
+	..()
 
 /obj/item/weapon/aiModule/oneHuman/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -237,7 +249,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform // Slightly more dynamic freeform module -- TLE
 	name = "'Freeform' AI Module"
-	var/newFreeFormLaw = "freeform"
+	var/newFreeFormLaw = ""
 	var/lawpos = 15
 	desc = "A 'freeform' AI module: '<freeform>'"
 	origin_tech = "programming=4;materials=4"
@@ -249,7 +261,7 @@ AI MODULES
 	if(lawpos < 15) return
 	lawpos = min(lawpos, 50)
 	var/newlaw = ""
-	var/targName = copytext(sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw)),1,MAX_MESSAGE_LEN)
+	var/targName = stripped_input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw, MAX_MESSAGE_LEN)
 	newFreeFormLaw = targName
 	desc = "A 'freeform' AI module: ([lawpos]) '[newFreeFormLaw]'"
 
@@ -262,6 +274,11 @@ AI MODULES
 	target.add_supplied_law(lawpos, law)
 	lawchanges.Add("The law was '[newFreeFormLaw]'")
 
+/obj/item/weapon/aiModule/freeform/install(var/obj/machinery/computer/C)
+	if(!newFreeFormLaw)
+		usr << "No law detected on module, please create one."
+		return 0
+	..()
 
 /******************** Reset ********************/
 
@@ -363,18 +380,18 @@ AI MODULES
 	target.show_laws()
 
 
-/******************** Freeform ******************/
+/******************** Freeform Core ******************/
 
 /obj/item/weapon/aiModule/freeformcore // Slightly more dynamic freeform module -- TLE
 	name = "'Freeform' Core AI Module"
-	var/newFreeFormLaw = "freeform"
+	var/newFreeFormLaw = ""
 	desc = "A 'freeform' Core AI module: '<freeform>'"
 	origin_tech = "programming=3;materials=6"
 
 /obj/item/weapon/aiModule/freeformcore/attack_self(var/mob/user as mob)
 	..()
 	var/newlaw = ""
-	var/targName = copytext(sanitize(input(usr, "Please enter a new core law for the AI.", "Freeform Law Entry", newlaw)),1,MAX_MESSAGE_LEN)
+	var/targName = stripped_input(usr, "Please enter a new core law for the AI.", "Freeform Law Entry", newlaw)
 	newFreeFormLaw = targName
 	desc = "A 'freeform' Core AI module:  '[newFreeFormLaw]'"
 
@@ -384,18 +401,22 @@ AI MODULES
 	target.add_inherent_law(law)
 	lawchanges.Add("The law is '[newFreeFormLaw]'")
 
-
+/obj/item/weapon/aiModule/freeformcore/install(var/obj/machinery/computer/C)
+	if(!newFreeFormLaw)
+		usr << "No law detected on module, please create one."
+		return 0
+	..()
 
 /obj/item/weapon/aiModule/syndicate // Slightly more dynamic freeform module -- TLE
 	name = "Hacked AI Module"
-	var/newFreeFormLaw = "freeform"
+	var/newFreeFormLaw = ""
 	desc = "A hacked AI law module: '<freeform>'"
 	origin_tech = "programming=3;materials=6;syndicate=7"
 
 /obj/item/weapon/aiModule/syndicate/attack_self(var/mob/user as mob)
 	..()
 	var/newlaw = ""
-	var/targName = copytext(sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw)),1,MAX_MESSAGE_LEN)
+	var/targName = stripped_input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw,MAX_MESSAGE_LEN)
 	newFreeFormLaw = targName
 	desc = "A hacked AI law module:  '[newFreeFormLaw]'"
 
@@ -407,6 +428,13 @@ AI MODULES
 	target << "\red BZZZZT"
 	var/law = "[newFreeFormLaw]"
 	target.add_ion_law(law)
+
+/obj/item/weapon/aiModule/syndicate/install(var/obj/machinery/computer/C)
+	if(!newFreeFormLaw)
+		usr << "No law detected on module, please create one."
+		return 0
+	..()
+
 
 
 /******************** Robocop ********************/

@@ -6,25 +6,26 @@
 /obj/structure/stool/bed/chair/New()
 	if(anchored)
 		src.verbs -= /atom/movable/verb/pull
-	handle_rotation()
 	..()
+	spawn(3)	//sorry. i don't think there's a better way to do this.
+		handle_rotation()
 	return
 
 /obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/assembly/shock_kit))
+		var/obj/item/assembly/shock_kit/SK = W
+		if(!SK.status)
+			user << "<span class='notice'>[SK] is not ready to be attached!</span>"
+			return
+		user.drop_item()
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		E.dir = src.dir
-		E.part = W
-		W.loc = E
-		W.master = E
-		user.u_equip(W)
-		W.layer = initial(W.layer)
+		E.dir = dir
+		E.part = SK
+		SK.loc = E
+		SK.master = E
 		del(src)
-		return
-	return
-
 
 /obj/structure/stool/bed/chair/proc/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
 	if(src.dir == NORTH)

@@ -50,8 +50,23 @@
 			if(!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
 				affecting = H.get_organ("head")
 
-		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
-			H.UpdateDamageIcon()
+		// If we're targetting arms or legs, also heal the respective hand/foot
+		if(affecting.name in list("l_arm","r_arm","l_leg","r_leg"))
+			var/datum/organ/external/child
+			if(affecting.name == "l_arm")
+				child = H.get_organ("l_hand")
+			else if(affecting.name == "r_arm")
+				child = H.get_organ("r_hand")
+			else if(affecting.name == "r_leg")
+				child = H.get_organ("r_foot")
+			else if(affecting.name == "l_leg")
+				child = H.get_organ("l_foot")
+
+			if (affecting.heal_damage(src.heal_brute, src.heal_burn) || child.heal_damage(src.heal_brute, src.heal_burn))
+				H.UpdateDamageIcon()
+		else
+			if (affecting.heal_damage(src.heal_brute, src.heal_burn))
+				H.UpdateDamageIcon()
 		M.updatehealth()
 	else
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))

@@ -76,7 +76,20 @@
 	if(istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = usr
 		if(AI.eyeobj && AI.client.eye == AI.eyeobj)
+			AI.cameraFollow = null
 			AI.eyeobj.setLoc(src)
+
+/mob/living/Click()
+	if(isAI(usr))
+		return
+	..()
+
+/mob/living/DblClick()
+	if(isAI(usr) && usr != src)
+		var/mob/living/silicon/ai/A = usr
+		A.ai_actual_track(src)
+		return
+	..()
 
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
@@ -90,7 +103,9 @@
 		user.sprint = initial
 
 	for(var/i = 0; i < max(user.sprint, initial); i += 20)
-		user.eyeobj.setLoc(get_turf(get_step(user.eyeobj, direct)))
+		var/turf/step = get_turf(get_step(user.eyeobj, direct))
+		if(step)
+			user.eyeobj.setLoc(step)
 
 	user.cooldown = world.timeofday + 5
 	if(user.acceleration)

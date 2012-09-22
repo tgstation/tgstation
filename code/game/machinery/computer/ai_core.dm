@@ -154,7 +154,8 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
-				new /mob/living/silicon/ai ( loc, laws, brain )
+				var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
+				A.rename_self("ai", 1)
 				feedback_inc("cyborg_ais_created",1)
 				del(src)
 

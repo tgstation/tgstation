@@ -1,7 +1,7 @@
 /mob/living/carbon/metroid/death(gibbed)
 	if(stat == DEAD)	return
 	stat = DEAD
-	icon_state = "baby metroid dead"
+	icon_state = "baby roro dead"
 
 	if(!gibbed)
 		if(istype(src, /mob/living/carbon/metroid/adult))

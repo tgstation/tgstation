@@ -81,7 +81,8 @@ datum/air_group
 	turf/process_group()
 		current_cycle = air_master.current_cycle
 		if(!group_processing)	 //Revert to individual processing then end
-			for(var/turf/simulated/member in members)
+			for(var/T in members)
+				var/turf/simulated/member = T
 				member.process_cell()
 			return
 
@@ -204,12 +205,14 @@ datum/air_group
 			suspend_group_processing()
 		else
 			if(air.check_tile_graphic())
-				for(var/turf/simulated/member in members)
+				for(var/T in members)
+					var/turf/simulated/member = T
 					member.update_visuals(air)
 
 
 		if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-			for(var/turf/simulated/member in members)
+			for(var/T in members)
+				var/turf/simulated/member = T
 				member.hotspot_expose(air.temperature, CELL_VOLUME)
 				member.consider_superconductivity(starting=1)
 

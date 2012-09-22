@@ -119,7 +119,7 @@ var/global/datum/controller/gameticker/ticker
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
 		//Cleanup some stuff
-		for(var/obj/effect/landmark/start/S in world)
+		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later
 			if (S.name != "AI")
 				del(S)
