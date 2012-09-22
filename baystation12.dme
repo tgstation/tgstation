@@ -570,6 +570,7 @@
 #include "code\game\machinery\computer\atmos_alert.dm"
 #include "code\game\machinery\computer\buildandrepair.dm"
 #include "code\game\machinery\computer\camera.dm"
+#include "code\game\machinery\computer\camera_monitor.dm"
 #include "code\game\machinery\computer\card.dm"
 #include "code\game\machinery\computer\cloning.dm"
 #include "code\game\machinery\computer\communications.dm"

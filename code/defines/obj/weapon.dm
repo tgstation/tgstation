@@ -725,6 +725,10 @@
 	var/access = list()
 	var/registered_name = null // The name registered_name on the card
 	slot_flags = SLOT_ID
+	var/obj/item/weapon/credit_card/card
+	var/blood_type = "\[UNSET\]"
+	var/dna_hash = "\[UNSET\]"
+	var/fingerprint_hash = "\[UNSET\]"
 
 	var/assignment = null
 	var/assignment_real_title = null
