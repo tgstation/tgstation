@@ -37,6 +37,10 @@
 		signal()
 		return 1
 
+	update_icon()
+		if(holder)
+			holder.update_icon()
+		return
 
 	interact(mob/user as mob, flag1)
 		var/t1 = "-------"

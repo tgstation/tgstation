@@ -25,6 +25,8 @@
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
 
+//lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
+
 /obj/item/weapon/paper/New()
 	..()
 	src.pixel_y = rand(-8, 8)

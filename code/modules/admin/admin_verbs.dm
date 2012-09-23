@@ -468,8 +468,10 @@
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
+			usr << "\red <b>You are now visible to other players.</b>"
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
+			usr << "\blue <b>You are now invisible to other players.</b>"
 
 
 /client/proc/player_panel()

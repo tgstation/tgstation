@@ -301,9 +301,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 	stand_icon.Blend(eyes_s, ICON_OVERLAY)
 	lying_icon.Blend(eyes_l, ICON_OVERLAY)
 
-	//Mouth
-	stand_icon.Blend(new/icon('icons/mob/human_face.dmi', "mouth_[g]_s"), ICON_OVERLAY)
-	lying_icon.Blend(new/icon('icons/mob/human_face.dmi', "mouth_[g]_l"), ICON_OVERLAY)
+	//Mouth	(lipstick!)
+	if(lip_style)
+		stand_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
+		lying_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_l"), ICON_OVERLAY)
 
 	//Underwear
 	if(underwear < 6 && underwear > 0)
