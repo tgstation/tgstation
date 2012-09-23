@@ -51,3 +51,17 @@
 	P.stamped = list(/obj/item/weapon/stamp/rd)
 	P.overlays = list("paper_stamped_rd")
 	src.contents += P
+
+//Anomaly
+
+/area/anomaly
+	icon_state = "anomaly"
+
+/area/anomaly/hallway
+	name = "Anomaly Hallway"
+
+/area/anomaly/lab
+	name = "Anomaly Lab"
+
+/area/anomaly/outpost
+	name = "Research Outpost"

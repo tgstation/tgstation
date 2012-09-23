@@ -10,15 +10,15 @@
 
 /obj/item/weapon/pickaxe/hand_pick
 	name = "hand pick"
-	icon_state = "excavation"
-	item_state = "minipick"
+	//icon_state = "excavation"
+	//item_state = "minipick"
 	digspeed = 50
 	desc = "A smaller, more precise version of the pickaxe."
 
 /obj/item/weapon/pickaxe/mini_pick
 	name = "mini pick"
-	icon_state = "excavation"
-	item_state = "minipick"
+	//icon_state = "excavation"
+	//item_state = "minipick"
 	digspeed = 60
 	desc = "A miniature excavation tool for precise digging around delicate finds."
 
