@@ -485,6 +485,7 @@ datum/mind
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT>"
 						ticker.mode.update_rev_icons_removed(src)
 						special_role = null
+					message_admins("[key_name_admin(usr)] has de-rev'ed [current].", 1)
 
 				if("rev")
 					if(src in ticker.mode.head_revolutionaries)
@@ -498,6 +499,7 @@ datum/mind
 					ticker.mode.revolutionaries += src
 					ticker.mode.update_rev_icons_added(src)
 					special_role = "Revolutionary"
+					message_admins("[key_name(usr)] has rev'ed [current].")
 
 				if("headrev")
 					if(src in ticker.mode.revolutionaries)
@@ -522,6 +524,7 @@ datum/mind
 					ticker.mode.head_revolutionaries += src
 					ticker.mode.update_rev_icons_added(src)
 					special_role = "Head Revolutionary"
+					message_admins("[key_name_admin(usr)] has head-rev'ed [current].", 1)
 
 				if("autoobjectives")
 					ticker.mode.forge_revolutionary_objectives(src)
@@ -570,6 +573,7 @@ datum/mind
 							cult.memoize_cult_objectives(src)
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT>"
 						memory = ""
+						message_admins("[key_name_admin(usr)] has de-cult'ed [current].", 1)
 				if("cultist")
 					if(!(src in ticker.mode.cult))
 						ticker.mode.cult += src
@@ -580,6 +584,7 @@ datum/mind
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
 							cult.memoize_cult_objectives(src)
+						message_admins("[key_name_admin(usr)] has cult'ed [current].", 1)
 				if("tome")
 					var/mob/living/carbon/human/H = current
 					if (istype(H))
@@ -610,12 +615,14 @@ datum/mind
 						special_role = null
 						current.spellremove(current, config.feature_object_spell_system? "object":"verb")
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>"
+						message_admins("[key_name_admin(usr)] has de-wizard'ed [current].", 1)
 				if("wizard")
 					if(!(src in ticker.mode.wizards))
 						ticker.mode.wizards += src
 						special_role = "Wizard"
 						//ticker.mode.learn_basic_spells(current)
 						current << "<B>\red You are the Space Wizard!</B>"
+						message_admins("[key_name_admin(usr)] has wizard'ed [current].", 1)
 				if("lair")
 					current.loc = pick(wizardstart)
 				if("dressup")
@@ -635,12 +642,14 @@ datum/mind
 						current.remove_changeling_powers()
 						if(changeling)	del(changeling)
 						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
+						message_admins("[key_name_admin(usr)] has de-changeling'ed [current].", 1)
 				if("changeling")
 					if(!(src in ticker.mode.changelings))
 						ticker.mode.changelings += src
 						ticker.mode.grant_changeling_powers(current)
 						special_role = "Changeling"
 						current << "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>"
+						message_admins("[key_name_admin(usr)] has changeling'ed [current].", 1)
 				if("autoobjectives")
 					ticker.mode.forge_changeling_objectives(src)
 					usr << "\blue The objectives for changeling [key] have been generated. You can edit them and anounce manually."
@@ -664,6 +673,7 @@ datum/mind
 						for (var/datum/objective/nuclear/O in objectives)
 							objectives-=O
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT>"
+						message_admins("[key_name_admin(usr)] has de-nuke op'ed [current].", 1)
 				if("nuclear")
 					if(!(src in ticker.mode.syndicates))
 						ticker.mode.syndicates += src
@@ -676,6 +686,7 @@ datum/mind
 						current << "\blue You are a [syndicate_name()] agent!"
 						ticker.mode.forge_syndicate_objectives(src)
 						ticker.mode.greet_syndicate(src)
+						message_admins("[key_name_admin(usr)] has nuke op'ed [current].", 1)
 				if("lair")
 					current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
 				if("dressup")
@@ -711,12 +722,14 @@ datum/mind
 						ticker.mode.traitors -= src
 						special_role = null
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>"
+						message_admins("[key_name_admin(usr)] has de-traitor'ed [current].", 1)
 
 				if("traitor")
 					if(!(src in ticker.mode.traitors))
 						ticker.mode.traitors += src
 						special_role = "traitor"
 						current << "<B>\red You are a traitor!</B>"
+						message_admins("[key_name_admin(usr)] has traitor'ed [current].", 1)
 
 				if("autoobjectives")
 					ticker.mode.forge_traitor_objectives(src)
@@ -796,9 +809,11 @@ datum/mind
 						current.icon_state = "ai"
 
 						current << "\red <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT>"
+						message_admins("[key_name_admin(usr)] has de-malf'ed [current].", 1)
 
 				if("malf")
 					make_AI_Malf()
+					message_admins("[key_name_admin(usr)] has malf'ed [current].", 1)
 
 				if("unemag")
 					var/mob/living/silicon/robot/R = current
@@ -815,6 +830,7 @@ datum/mind
 						else if(R.module_state_3 == R.module.emag)
 							R.module_state_3 = null
 							R.contents -= R.module.emag
+						message_admins("[key_name_admin(usr)] has unemag'ed [R].", 1)
 
 				if("unemagcyborgs")
 					if (istype(current, /mob/living/silicon/ai))
@@ -833,6 +849,7 @@ datum/mind
 								else if(R.module_state_3 == R.module.emag)
 									R.module_state_3 = null
 									R.contents -= R.module.emag
+						message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.", 1)
 
 		else if (href_list["common"])
 			switch(href_list["common"])
