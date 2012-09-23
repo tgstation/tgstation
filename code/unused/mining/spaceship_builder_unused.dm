@@ -3,7 +3,7 @@
 /area/shipbuilder
 	requires_power = 0
 	luminosity = 1
-	ul_Lighting = 0
+	sd_lighting = 0
 
 /area/shipbuilder/station
 	name = "shipbuilder station"
@@ -38,7 +38,7 @@
 
 /obj/machinery/spaceship_builder
 	name = "Robotic Fabricator"
-	icon = 'surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fab-idle"
 	density = 1
 	anchored = 1

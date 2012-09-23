@@ -33,7 +33,7 @@
 
 /datum/vote/proc/getvotes()
 	var/list/L = list()
-	for(var/mob/M in world)
+	for(var/mob/M in player_list)
 		if(M.client && M.client.inactivity < 1200)		// clients inactive for 2 minutes don't count
 			L[M.client.vote] += 1
 
@@ -51,25 +51,15 @@
 	voting = 0
 	nextvotetime = world.timeofday + 10*config.vote_delay
 
-	for(var/mob/M in world)		// clear vote window from all clients
+	for(var/mob/M in player_list)		// clear vote window from all clients
 		if(M.client)
 			M << browse(null, "window=vote")
 			M.client.showvote = 0
 
 	calcwin()
 
-	if(!winner || winner == "" || winner == "none")
-		winner = "default"
-
-	if(mode == 2)
-		var/wintext = capitalize(winner)
-		world << "Result is [wintext]"
-		for(var/md in vote.choices)
-			vote.choices -= md
-		return
-
-	else if(mode == 1)
-		if(ticker.current_state == 1)
+	if(mode)
+		if(!ticker)
 			if(!going)
 				world << "<B>The game will start soon.</B>"
 				going = 1
@@ -87,7 +77,7 @@
 		if(ticker && ticker.mode)
 			world <<"\red <B>World will reboot in 10 seconds</B>"
 
-			//feedback_set_details("end_error","mode vote - [winner]")
+			feedback_set_details("end_error","mode vote - [winner]")
 
 			if(blackbox)
 				blackbox.save_all_data_to_sql()
@@ -106,20 +96,16 @@
 
 		world << "Result is \red Restart round."
 
-		if(vote.instant_restart)
-			world <<"\red <B>World will reboot in 5 seconds</B>"
+		world <<"\red <B>World will reboot in 5 seconds</B>"
 
-			//feedback_set_details("end_error","restart vote")
+		feedback_set_details("end_error","restart vote")
 
-			if(blackbox)
-				blackbox.save_all_data_to_sql()
+		if(blackbox)
+			blackbox.save_all_data_to_sql()
 
-			sleep(50)
-			log_game("Rebooting due to restart vote")
-			world.Reboot()
-		else
-			// Call the shift change shuttle instead, the 1 is to force the shuttle to come
-			init_shift_change(null, 1)
+		sleep(50)
+		log_game("Rebooting due to restart vote")
+		world.Reboot()
 	return
 
 
@@ -131,7 +117,7 @@
 		var/best = -1
 
 		for(var/v in votes)
-			if(v=="none"||v=="default")
+			if(v=="none")
 				continue
 			if(best < votes[v])
 				best = votes[v]
@@ -140,7 +126,7 @@
 		var/list/winners = list()
 
 		for(var/v in votes)
-			if(votes[v] == best && v != "default" && v != "none")
+			if(votes[v] == best)
 				winners += v
 
 		var/ret = ""
@@ -202,38 +188,12 @@
 	if(vote.voting)
 		// vote in progress, do the current
 
+		text += "Vote to [vote.mode?"change mode":"restart round"] in progress.<BR>"
+		text += "[vote.endwait()] until voting is closed.<BR>"
+
 		var/list/votes = vote.getvotes()
-		if(vote.mode == 2)
-			text += "A custom vote is in progress.<BR>"
-			text += "[vote.endwait()] until voting is closed.<BR>"
-			text += "[vote.customname]"
 
-			for(var/md in vote.choices)
-				var/disp = capitalize(md)
-				if(md=="default")
-					disp = "No change"
-
-				//world << "[md]|[disp]|[src.client.vote]|[votes[md]]"
-
-				if(src.client.vote == md)
-					text += "<LI><B>[disp]</B>"
-				else
-					text += "<LI><A href='?src=\ref[vote];vote=[md]'>[disp]</A>"
-
-				text += "[votes[md]>0?" - [votes[md]] vote\s":null]<BR>"
-
-			text += "</UL>"
-
-			text +="<p>Current winner: <B>[vote.calcwin()]</B><BR>"
-
-			text += footer
-
-			usr << browse(text, "window=vote")
-
-		else if(vote.mode == 1)		// true if changing mode
-
-			text += "Vote to change mode in progress.<BR>"
-			text += "[vote.endwait()] until voting is closed.<BR>"
+		if(vote.mode)		// true if changing mode
 
 			text += "Current game mode is: <B>[master_mode]</B>.<BR>Select the mode to change to:<UL>"
 
@@ -359,7 +319,7 @@
 		if(!vote.canvote() )	// double check even though this shouldn't happen
 			return
 
-		vote.mode = text2num(href_list["vmode"])-1 	// hack to yield 0=restart, 1=changemode
+		vote.mode = text2num(href_list["vmode"])-1 	// hack to yield 0=restart, 1=changemode, 2=admincustom
 
 		if(vote.mode == 2)
 			vote.enteringchoices = 1
@@ -391,6 +351,7 @@
 
 			world << "\red<B>*** A custom vote has been initiated by [usr.key].</B>"
 			world << "\red     You have [vote.timetext(config.vote_period)] to vote."
+			log_vote("A custom vote has been started by [usr.key]")
 
 			//log_vote("Voting to [vote.mode ? "change mode" : "restart round"] started by [M.name]/[M.key]")
 
@@ -403,15 +364,6 @@
 			if(usr) usr.vote()
 			return
 
-		if(vote.mode == 0)
-			var/answer = alert(usr,"Do you want to force an immediate restart? Only do this when there are round-breaking glitches, or risk being banned.","Immediate Reboot?","Yes","No")
-
-			if(answer == "Yes")
-				vote.instant_restart = 1
-				log_admin("[usr.key] has initiated an instant reboot vote! This may be banworthy!")
-				message_admins("[usr.key] has initiated an instant reboot vote! This may be banworthy!")
-			else
-				vote.instant_restart = 0
 
 		if(!ticker && vote.mode == 1)
 			if(going)
@@ -423,12 +375,14 @@
 		spawn(config.vote_period*10)
 			vote.endvote()
 
+
+
 		world << "\red<B>*** A vote to [vote.mode?"change game mode":"restart"] has been initiated by [usr.key].</B>"
 		world << "\red     You have [vote.timetext(config.vote_period)] to vote."
 
 		log_vote("Voting to [vote.mode ? "change mode" : "restart round"] started by [usr.name]/[usr.key]")
 
-		for(var/mob/CM in world)
+		for(var/mob/CM in player_list)
 			if(CM.client)
 				if( config.vote_no_default || (config.vote_no_dead && CM.stat == 2) )
 					CM.client.vote = "none"

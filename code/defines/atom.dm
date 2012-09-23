@@ -2,7 +2,6 @@
 	layer = 2
 	var/level = 2
 	var/flags = FPRINT
-	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
@@ -16,6 +15,9 @@
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
+
+	//Detective Work, used for the duplicate data points kept in the scanners
+	var/list/original_atom
 
 	proc/assume_air(datum/gas_mixture/giver)
 		del(giver)
@@ -66,7 +68,7 @@ obj
 		else
 			return null
 
-/atom/proc/meteorhit(obj/effect/meteor as obj)
+/atom/proc/meteorhit(obj/meteor as obj)
 	return
 
 /atom/proc/allow_drop()
@@ -177,7 +179,7 @@ Also, the icon used for the beam will have to be vertical and 32x32.
 The math involved assumes that the icon is vertical to begin with so unless you want to adjust the math,
 its easier to just keep the beam vertical.
 */
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='beam.dmi',time=50, maxdistance=10)
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10)
 	//BeamTarget represents the target for the beam, basically just means the other end.
 	//Time is the duration to draw the beam
 	//Icon is obviously which icon to use for the beam, default is beam.dmi

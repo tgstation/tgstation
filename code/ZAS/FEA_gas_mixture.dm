@@ -4,10 +4,16 @@ What are the archived variables for?
 	This prevents race conditions that arise based on the order of tile processing.
 */
 
+#define QUANTIZE(variable)		(round(variable,0.0001))
+#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
+
 datum
 	gas //These are used for the "Trace Gases" stuff, but is buggy.
 		sleeping_agent
 			specific_heat = 40
+
+		oxygen_agent_b
+			specific_heat = 300
 
 		volatile_fuel
 			specific_heat = 30
@@ -73,6 +79,18 @@ datum
 			update_values()
 			return
 
+		//tg seems to like using these a lot
+		proc/return_temperature()
+			return temperature
+
+
+		proc/return_volume()
+			return max(0, volume)
+
+
+		proc/thermal_energy()
+			return temperature*heat_capacity()
+
 ///////////////////////////////
 //PV=nRT - related procedures//
 ///////////////////////////////
@@ -106,6 +124,15 @@ datum
 
 			return max(MINIMUM_HEAT_CAPACITY,heat_capacity_archived)
 
+		proc/total_moles()
+			return total_moles
+			/*var/moles = oxygen + carbon_dioxide + nitrogen + toxins
+
+			if(trace_gases.len)
+				for(var/datum/gas/trace_gas in trace_gases)
+					moles += trace_gas.moles
+			return moles*/
+
 		proc/return_pressure()
 			//Purpose: Calculating Current Pressure
 			//Called by:
@@ -113,7 +140,7 @@ datum
 			//Outputs: Gas pressure.
 
 			if(volume>0)
-				return total_moles*R_IDEAL_GAS_EQUATION*temperature/volume
+				return total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume
 			return 0
 
 //		proc/return_temperature()
@@ -346,7 +373,7 @@ datum
 			//Inputs: How many moles to remove.
 			//Outputs: Removed air.
 
-			var/sum = total_moles
+			var/sum = total_moles()
 			amount = min(amount,sum) //Can not take more air than tile has!
 			if(amount <= 0)
 				return null
@@ -422,9 +449,9 @@ datum
 			//Inputs: Number of moles to remove
 			//Outputs: Removed air or 0 if it can remove air or not.
 
-			amount = min(amount,total_moles) //Can not take more air than tile has!
+			amount = min(amount,total_moles()) //Can not take more air than tile has!
 
-			if((amount > MINIMUM_AIR_RATIO_TO_SUSPEND) && (amount > total_moles*MINIMUM_AIR_RATIO_TO_SUSPEND))
+			if((amount > MINIMUM_AIR_RATIO_TO_SUSPEND) && (amount > total_moles()*MINIMUM_AIR_RATIO_TO_SUSPEND))
 				return 0
 
 			return remove(amount)
@@ -439,7 +466,7 @@ datum
 			carbon_dioxide = sample.carbon_dioxide
 			nitrogen = sample.nitrogen
 			toxins = sample.toxins
-			total_moles = sample.total_moles
+			total_moles = sample.total_moles()
 
 			trace_gases.len=null
 			if(sample.trace_gases.len > 0)
@@ -686,7 +713,7 @@ datum
 							temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
 			if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
-				var/delta_pressure = temperature_archived*(total_moles + moved_moles) - sharer.temperature_archived*(sharer.total_moles - moved_moles)
+				var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
 				return delta_pressure*R_IDEAL_GAS_EQUATION/volume
 
 			else
@@ -770,7 +797,7 @@ datum
 				temperature_mimic(model, model.thermal_conductivity, border_multiplier)
 
 			if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
-				var/delta_pressure = temperature_archived*(total_moles + moved_moles) - model.temperature*(model.oxygen+model.carbon_dioxide+model.nitrogen+model.toxins)
+				var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - model.temperature*(model.oxygen+model.carbon_dioxide+model.nitrogen+model.toxins)
 				return delta_pressure*R_IDEAL_GAS_EQUATION/volume
 			else
 				return 0
@@ -951,7 +978,7 @@ datum
 				((toxins < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins) || (toxins > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.toxins)))
 				return 0
 
-			if(total_moles > MINIMUM_AIR_TO_SUSPEND)
+			if(total_moles() > MINIMUM_AIR_TO_SUSPEND)
 				if((abs(temperature-sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
 					((temperature < (1-MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature) || (temperature > (1+MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature)))
 					//world << "temp fail [temperature] & [sample.temperature]"

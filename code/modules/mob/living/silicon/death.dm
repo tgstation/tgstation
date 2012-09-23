@@ -8,12 +8,13 @@
 
 	animation = new(loc)
 	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
+	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
 //	flick("gibbed-r", animation)
 	robogibs(loc, viruses)
 
+	dead_mob_list -= src
 	spawn(15)
 		if(animation)	del(animation)
 		if(src)			del(src)
@@ -28,12 +29,13 @@
 
 	animation = new(loc)
 	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
+	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
 //	flick("dust-r", animation)
 	new /obj/effect/decal/remains/robot(loc)
 
+	dead_mob_list -= src
 	spawn(15)
 		if(animation)	del(animation)
 		if(src)			del(src)

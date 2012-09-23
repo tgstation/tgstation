@@ -12,6 +12,7 @@
 	var/status = 0
 	origin_tech = "combat=2"
 
+
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
 		icon_state = "stunbaton_active"
@@ -48,14 +49,6 @@
 		return
 
 	var/mob/living/carbon/human/H = M
-
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
-
-	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
 	if(isrobot(M))
 		..()
 		return
@@ -82,7 +75,10 @@
 		else
 			charges--
 		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
-		playsound(src.loc, 'Egloves.ogg', 50, 1, -1)
+		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [H.name] ([H.ckey]) with [src.name]</font>"
+		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [src.name]</font>"
+		log_attack("<font color='red'>[user.name] ([user.ckey]) stunned [H.name] ([H.ckey]) with [src.name]</font>" )
+		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 		if(charges < 1)
 			status = 0
 			update_icon()

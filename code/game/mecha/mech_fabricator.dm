@@ -3,7 +3,7 @@
 /////////////////////////////
 
 /obj/machinery/mecha_part_fabricator
-	icon = 'robotics.dmi'
+	icon = 'icons/obj/robotics.dmi'
 	icon_state = "fab-idle"
 	name = "Exosuit Fabricator"
 	desc = "Nothing is being built."
@@ -12,7 +12,7 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
-	req_access = list(ACCESS_ROBOTICS)
+	req_access = list(access_robotics)
 	var/time_coeff = 1.5 //can be upgraded with research
 	var/resource_coeff = 1.5 //can be upgraded with research
 	var/list/resources = list(
@@ -117,9 +117,6 @@
 						/obj/item/borg/upgrade/vtec,
 						/obj/item/borg/upgrade/tasercooler,
 						/obj/item/borg/upgrade/jetpack
-						///obj/item/borg/upgrade/flashproof
-
-
 						),
 
 
@@ -193,7 +190,7 @@
 		return 1
 	else if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		for(var/ID in list(H.equipped(), H.wear_id, H.belt))
+		for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
 			if(src.check_access(ID))
 				return 1
 	M << "<font color='red'>You don't have required permissions to use [src]</font>"
@@ -221,7 +218,7 @@
 			sleep(15)
 			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
 			sleep(30)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB truncated. Please contact your NanoTrasen system operator for future assistance.\"")
+			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
 			req_access = null
 			emagged = 1
 		if(0.5)
@@ -309,18 +306,21 @@
 			output += "<div class='part'>[output_part_info(part)]<br>\[[resources_available?"<a href='?src=\ref[src];part=\ref[part]'>Build</a> | ":null]<a href='?src=\ref[src];add_to_queue=\ref[part]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=\ref[part]'>?</a>\]</div>"
 	return output
 
-/obj/machinery/mecha_part_fabricator/proc/output_part_info(var/obj/item/mecha_parts/part)
+/obj/machinery/mecha_part_fabricator/proc/output_part_info(var/obj/item/part)
 	var/output = "[part.name] (Cost: [output_part_cost(part)]) [get_construction_time_w_coeff(part)/10]sec"
 	return output
 
-/obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/obj/item/mecha_parts/part)
+/obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/obj/item/part)
 	var/i = 0
 	var/output
-	for(var/p in part.construction_cost)
-		if(p in resources)
-			output += "[i?" | ":null][get_resource_cost_w_coeff(part,p)] [p]"
-			i++
-	return output
+	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))//The most efficient way to go about this. Not all objects have these vars, but if they don't then they CANNOT be made by the mech fab. Doing it this way reduces a major amount of typecasting and switches, while cutting down maintenece for them as well -Sieve
+		for(var/c in part:construction_cost)//The check should ensure that anything without the var doesn't make it to this point
+			if(c in resources)
+				output += "[i?" | ":null][get_resource_cost_w_coeff(part,c)] [c]"
+				i++
+		return output
+	else
+		return 0
 
 /obj/machinery/mecha_part_fabricator/proc/output_available_resources()
 	var/output
@@ -332,22 +332,26 @@
 		output += "<br/>"
 	return output
 
-/obj/machinery/mecha_part_fabricator/proc/remove_resources(var/obj/item/mecha_parts/part)
-	if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts))
-		for(var/resource in part.construction_cost)
+/obj/machinery/mecha_part_fabricator/proc/remove_resources(var/obj/item/part)
+//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
+	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+		for(var/resource in part:construction_cost)
 			if(resource in src.resources)
 				src.resources[resource] -= get_resource_cost_w_coeff(part,resource)
-	return
+	else
+		return
 
-/obj/machinery/mecha_part_fabricator/proc/check_resources(var/obj/item/mecha_parts/part)
+/obj/machinery/mecha_part_fabricator/proc/check_resources(var/obj/item/part)
 //		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts) || istype(part,/obj/item/borg/upgrade))
-	if(part.construction_time!=null && part.construction_cost!=null)//Much more efficient way to check the item, since it won't have those vars if it isn't meant to go through the mechfabs -Sieve
-		for(var/resource in part.construction_cost)
+//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
+	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+		for(var/resource in part:construction_cost)
 			if(resource in src.resources)
 				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
 					return 0
 		return 1
-	return 0
+	else
+		return 0
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(var/obj/item/part)
 	if(!part) return
@@ -394,7 +398,19 @@
 	return 1
 
 /obj/machinery/mecha_part_fabricator/proc/process_queue()
-	var/part = listgetindex(src.queue, 1)
+	var/obj/item/part = listgetindex(src.queue, 1)
+	if(!part)
+		if(remove_from_queue(1))
+			return process_queue()
+		else
+			// Most likely means we have an empty queue, so stop processing
+			return 0
+	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")))//If it shouldn't be printed
+		if(remove_from_queue(1))//Take it out of the quene
+			return process_queue()//Then reprocess it
+		else
+			// Most likely means we have an empty queue, so stop processing
+			return 0
 	temp = null
 	while(part)
 		if(stat&(NOPOWER|BROKEN))
@@ -419,7 +435,11 @@
 		for(var/i=1;i<=queue.len;i++)
 			var/obj/item/part = listgetindex(src.queue, i)
 			if(istype(part))
-				output += "<li[!check_resources(part)?" style='color: #f00;'":null]>[part.name] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
+				if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+					output += "<li[!check_resources(part)?" style='color: #f00;'":null]>[part.name] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
+				else//Prevents junk items from even appearing in the list, and they will be silently removed when the fab processes
+					remove_from_queue(i)//Trash it
+					return list_queue()//Rebuild it
 		output += "</ol>"
 		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
 	return output
@@ -429,8 +449,12 @@
 	var/i = 0
 	for(var/datum/design/D in files.known_designs)
 		if(D.build_type&16)
-			if(add_part_to_set("Exosuit Equipment", text2path(D.build_path)))
-				i++
+			if(D.category in part_sets)//Checks if it's a valid category
+				if(add_part_to_set(D.category, text2path(D.build_path)))//Adds it to said category
+					i++
+			else
+				if(add_part_to_set("Misc", text2path(D.build_path)))//If in doubt, chunk it into the Misc
+					i++
 	return i
 
 /obj/machinery/mecha_part_fabricator/proc/update_tech()
@@ -474,7 +498,7 @@
 		temp = "Updating local R&D database..."
 		src.updateUsrDialog()
 		sleep(30) //only sleep if called by user
-	for(var/obj/machinery/computer/rdconsole/RDC in oview(7)) //get_area(src)) is broken due to ULTRALIIIIIGHT
+	for(var/obj/machinery/computer/rdconsole/RDC in get_area(src))
 		if(!RDC.sync)
 			continue
 		for(var/datum/tech/T in RDC.files.known_tech)
@@ -493,11 +517,19 @@
 			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/mecha_parts/part as obj,var/resource as text, var/roundto=1)
-	return round(part.construction_cost[resource]*resource_coeff, roundto)
+/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/obj/item/part as obj,var/resource as text, var/roundto=1)
+//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
+	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+		return round(part:construction_cost[resource]*resource_coeff, roundto)
+	else
+		return 0
 
-/obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/obj/item/mecha_parts/part as obj, var/roundto=1)
-	return round(part.construction_time*time_coeff, roundto)
+/obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/obj/item/part as obj, var/roundto=1)
+//Be SURE to add any new equipment to this switch, but don't be suprised if it spits out children objects
+	if(part.vars.Find("construction_time") && part.vars.Find("construction_cost"))
+		return round(part:construction_time*time_coeff, roundto)
+	else
+		return 0
 
 
 /obj/machinery/mecha_part_fabricator/attack_hand(mob/user as mob)
@@ -686,7 +718,7 @@
 		return
 	if (opened)
 		if(istype(W, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'Crowbar.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -721,7 +753,7 @@
 			del(src)
 			return 1
 		else
-			user << "\red You can't load \the [src] while it's opened."
+			user << "\red You can't load the [src.name] while it's opened."
 			return 1
 
 	if(istype(W, /obj/item/weapon/card/emag))

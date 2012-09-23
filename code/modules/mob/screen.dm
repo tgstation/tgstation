@@ -1,11 +1,13 @@
 /obj/screen
 	name = "screen"
-	icon = 'screen1.dmi'
+	icon = 'icons/mob/screen1.dmi'
 	layer = 20.0
 	unacidable = 1
 	var/id = 0.0
 	var/obj/master
-	var/gun_click_time = -100 //I'm lazy.
+
+/obj/screen/inventory
+	var/slot_id
 
 /obj/screen/close
 	name = "close"
@@ -14,6 +16,31 @@
 /obj/screen/close/DblClick()
 	if (src.master)
 		src.master:close(usr)
+	return
+
+/obj/screen/item_action
+	var/obj/item/owner
+
+/obj/screen/item_action/DblClick()
+	if(!usr || !owner)
+		return
+
+	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
+		return
+
+	if(!(owner in usr))
+		return
+
+	spawn()
+		owner.ui_action_click()
+		switch(owner.icon_action_button)
+			if("action_hardhat", "action_welding")
+				usr.update_inv_head()
+			if("action_jetpack")
+				usr.update_inv_back()
+
+//This is the proc used to update all the action buttons. It just returns for all mob types except humans.
+/mob/proc/update_action_buttons()
 	return
 
 /obj/screen/grab
@@ -30,38 +57,11 @@
 
 /obj/screen/zone_sel
 	name = "Damage Zone"
-	icon = 'zone_sel.dmi'
-	icon_state = "blank"
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "zone_sel"
 	var/selecting = "chest"
 	screen_loc = ui_zonesel
 
-/obj/screen/gun
-	name = "gun"
-	icon = 'screen1.dmi'
-	master = null
-	dir = 2
-
-	move
-		name = "Allow Walking"
-		icon_state = "no_walk"
-		screen_loc = ui_gun2
-
-	run
-		name = "Allow Running"
-		icon_state = "no_run"
-		screen_loc = ui_gun3
-
-	item
-		name = "Allow Item Use"
-		icon_state = "no_item"
-		screen_loc = ui_gun1
-
-	mode
-		name = "Toggle Gun Mode"
-		desc = "The shortcut key for this is \"F6\""
-		icon_state = "gun"
-		screen_loc = ui_gun_select
-		dir = 1
 
 /obj/screen/zone_sel/MouseDown(location, control,params)
 	// Changes because of 4.0
@@ -209,7 +209,7 @@
 		return
 
 	overlays = null
-	overlays += image("icon" = 'zone_sel.dmi', "icon_state" = text("[]", selecting))
+	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
 
 	return
 
@@ -227,66 +227,26 @@
 /obj/screen/grab/attackby()
 	return
 
+/*
 /obj/screen/MouseEntered(object,location,control,params)
 	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
 		return
 	switch(name)
-		/*
-		if("other")
-			if (usr.hud_used.show_otherinventory)
-				usr.hud_used.show_otherinventory = 0
-				usr.client.screen -= usr.hud_used.other
-			else
-				usr.hud_used.show_otherinventory = 1
-				usr.client.screen += usr.hud_used.other
-
-			usr.hud_used.other_update()*/
 		if("act_intent")
-			if(!usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 1
-				usr.client.screen += usr.hud_used.intent_small_hud_objects
-		if("harm")
-			if(!usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 1
-				usr.client.screen += usr.hud_used.intent_small_hud_objects
-		if("help")
-			if(!usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 1
-				usr.client.screen += usr.hud_used.intent_small_hud_objects
-		if("disarm")
-			if(!usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 1
-				usr.client.screen += usr.hud_used.intent_small_hud_objects
-		if("grab")
-			if(!usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 1
-				usr.client.screen += usr.hud_used.intent_small_hud_objects
-
+			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
+				usr.hud_used.action_intent.icon_state = "intent_[usr.a_intent]"
 
 /obj/screen/MouseExited(object,location,control,params)
 	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
 		return
 	switch(name)
 		if("act_intent")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("harm")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("help")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("disarm")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("grab")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
+				var/intent = usr.a_intent
+				if(intent == "hurt")
+					intent = "harm"	//hurt and harm have different sprite names for some reason.
+				usr.hud_used.action_intent.icon_state = "[intent]"
+*/
 
 /obj/screen/Click(location, control, params)
 	switch(name)
@@ -294,23 +254,22 @@
 			usr.clearmap()
 
 		if("other")
-			if (usr.hud_used.show_otherinventory)
-				usr.hud_used.show_otherinventory = 0
+			if (usr.hud_used.inventory_shown)
+				usr.hud_used.inventory_shown = 0
 				usr.client.screen -= usr.hud_used.other
 			else
-				usr.hud_used.show_otherinventory = 1
+				usr.hud_used.inventory_shown = 1
 				usr.client.screen += usr.hud_used.other
 
-			usr.hud_used.other_update()
+			usr.hud_used.hidden_inventory_update()
 
 		if("equip")
-			var/obj/item/I = usr.get_active_hand()
-			if(!I)
-				usr << "\blue You are not holding anything to equip."
-				return
-			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				H.equip_to_appropriate_slot(I)
+			usr.quick_equip()
+
+		if("resist")
+			if(isliving(usr))
+				var/mob/living/L = usr
+				L.resist()
 
 		if("maprefresh")
 			var/obj/machinery/computer/security/seccomp = usr.machine
@@ -320,59 +279,12 @@
 			else
 				usr.clearmap()
 
-		if("arrowleft")
-			switch(usr.a_intent)
-				if("help")
-					if(issilicon(usr))
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
-					else
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
-
-				if("disarm")
-					usr.a_intent = "help"
-					usr.hud_used.action_intent.icon_state = "help"
-
-				if("hurt")
-					if(issilicon(usr))
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
-					else
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
-
-				if("grab")
-					usr.a_intent = "hurt"
-					usr.hud_used.action_intent.icon_state = "harm"
-
-		if("arrowright")
-			switch(usr.a_intent)
-				if("help")
-					if(issilicon(usr))
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
-					else
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
-
-				if("disarm")
-					usr.a_intent = "hurt"
-					usr.hud_used.action_intent.icon_state = "harm"
-
-				if("hurt")
-					if(issilicon(usr))
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
-					else
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
-
-				if("grab")
-					usr.a_intent = "help"
-					usr.hud_used.action_intent.icon_state = "help"
-
 		if("mov_intent")
+			if(usr.legcuffed)
+				usr << "\red You are legcuffed! You cannot run until you get your cuffs removed!"
+				usr.m_intent = "walk"	//Just incase
+				usr.hud_used.move_intent.icon_state = "walking"
+				return
 			switch(usr.m_intent)
 				if("run")
 					usr.m_intent = "walk"
@@ -380,6 +292,7 @@
 				if("walk")
 					usr.m_intent = "run"
 					usr.hud_used.move_intent.icon_state = "running"
+			if(istype(usr,/mob/living/carbon/alien/humanoid))	usr.update_icons()
 		if("m_intent")
 			if (!( usr.m_int ))
 				switch(usr.m_intent)
@@ -415,10 +328,7 @@
 							usr << "\red You are not wearing a mask"
 							return
 						else
-							if (istype(usr.back, /obj/item/weapon/tank))
-								usr << "\blue You are now running on internals from the [usr.back] on your back."
-								usr.internal = usr.back
-							else if (ishuman(usr) && istype(usr:s_store, /obj/item/weapon/tank))
+							if (ishuman(usr) && istype(usr:s_store, /obj/item/weapon/tank))
 								usr << "\blue You are now running on internals from the [usr:s_store] on your [usr:wear_suit]."
 								usr.internal = usr:s_store
 							else if (ishuman(usr) && istype(usr:belt, /obj/item/weapon/tank))
@@ -430,6 +340,9 @@
 							else if (istype(usr:r_store, /obj/item/weapon/tank))
 								usr << "\blue You are now running on internals from the [usr:r_store] in your right pocket."
 								usr.internal = usr:r_store
+							else if (istype(usr.back, /obj/item/weapon/tank))
+								usr << "\blue You are now running on internals from the [usr.back] on your back."
+								usr.internal = usr.back
 							else if (istype(usr.l_hand, /obj/item/weapon/tank))
 								usr << "\blue You are now running on internals from the [usr.l_hand] on your left hand."
 								usr.internal = usr.l_hand
@@ -445,12 +358,19 @@
 								usr << "\blue You don't have an oxygen tank."
 		if("act_intent")
 			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
-				if (usr.hud_used.show_intent_icons)
-					usr.hud_used.show_intent_icons = 0
-					usr.client.screen -= usr.hud_used.intent_small_hud_objects
-				else
-					usr.hud_used.show_intent_icons = 1
-					usr.client.screen += usr.hud_used.intent_small_hud_objects
+				switch(usr.a_intent)
+					if("help")
+						usr.a_intent = "disarm"
+						usr.hud_used.action_intent.icon_state = "intent_disarm"
+					if("disarm")
+						usr.a_intent = "grab"
+						usr.hud_used.action_intent.icon_state = "intent_grab"
+					if("grab")
+						usr.a_intent = "hurt"
+						usr.hud_used.action_intent.icon_state = "intent_hurt"
+					if("hurt")
+						usr.a_intent = "help"
+						usr.hud_used.action_intent.icon_state = "intent_help"
 			if(issilicon(usr))
 				if(usr.a_intent == "help")
 					usr.a_intent = "hurt"
@@ -461,41 +381,21 @@
 		if("help")
 			usr.a_intent = "help"
 			usr.hud_used.action_intent.icon_state = "help"
-			usr.hud_used.hurt_intent.icon_state = "harm_small"
-			usr.hud_used.help_intent.icon_state = "help_small_active"
-			usr.hud_used.grab_intent.icon_state = "grab_small"
-			usr.hud_used.disarm_intent.icon_state = "disarm_small"
 			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("harm")
 			usr.a_intent = "hurt"
 			usr.hud_used.action_intent.icon_state = "harm"
-			usr.hud_used.hurt_intent.icon_state = "harm_small_active"
-			usr.hud_used.help_intent.icon_state = "help_small"
-			usr.hud_used.grab_intent.icon_state = "grab_small"
-			usr.hud_used.disarm_intent.icon_state = "disarm_small"
 			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("grab")
 			usr.a_intent = "grab"
 			usr.hud_used.action_intent.icon_state = "grab"
-			usr.hud_used.hurt_intent.icon_state = "harm_small"
-			usr.hud_used.help_intent.icon_state = "help_small"
-			usr.hud_used.grab_intent.icon_state = "grab_small_active"
-			usr.hud_used.disarm_intent.icon_state = "disarm_small"
 			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("disarm")
 			usr.a_intent = "disarm"
 			usr.hud_used.action_intent.icon_state = "disarm"
-			usr.hud_used.hurt_intent.icon_state = "harm_small"
-			usr.hud_used.help_intent.icon_state = "help_small"
-			usr.hud_used.grab_intent.icon_state = "grab_small"
-			usr.hud_used.disarm_intent.icon_state = "disarm_small_active"
 			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("pull")
-			usr.pulling = null
+			usr.stop_pulling()
 		if("throw")
 			if (!usr.stat && isturf(usr.loc) && !usr.restrained())
 				usr:toggle_throw_mode()
@@ -569,110 +469,68 @@
 		if("radar closed")
 			usr:start_radar()
 
-		if("Allow Walking")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
-				return
-			usr.client.AllowTargetMove()
-			gun_click_time = world.time
-
-		if("Disallow Walking")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
-				return
-			usr.client.AllowTargetMove()
-			gun_click_time = world.time
-
-		if("Allow Running")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
-				return
-			usr.client.AllowTargetRun()
-			gun_click_time = world.time
-
-		if("Disallow Running")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
-				return
-			usr.client.AllowTargetRun()
-			gun_click_time = world.time
-
-		if("Allow Item Use")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
-				return
-			usr.client.AllowTargetClick()
-			gun_click_time = world.time
-
-
-		if("Disallow Item Use")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.equipped(),/obj/item/weapon/gun))
-				usr << "You need your gun in your active hand to do that!"
-				return
-			usr.client.AllowTargetClick()
-			gun_click_time = world.time
-
-		if("Toggle Gun Mode")
-			usr.client.ToggleGunMode()
-
 		else
 			DblClick()
 	return
 
-/obj/screen/attack_hand(mob/user as mob, using)
-	user.db_click(name, using)
+/obj/screen/inventory/attack_hand(mob/user as mob)
+	user.attack_ui(slot_id)
+	user.update_inv_l_hand(0)
+	user.update_inv_r_hand()
 	return
 
-/obj/screen/attack_paw(mob/user as mob, using)
-	user.db_click(name, using)
+/obj/screen/inventory/attack_paw(mob/user as mob)
+	user.attack_ui(slot_id)
+	user.update_inv_l_hand(0)
+	user.update_inv_r_hand()
 	return
 
 
-/mob/living/verb/mob_sleep()
+/mob/living/carbon/verb/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
 
-	if(usr.sleeping && usr.sleeping_willingly)
-		usr << "\blue You start to wake up..."
-		usr.sleeping = 0
-		usr.sleeping_willingly = 0
-	else if(usr.sleeping)
-		usr << "\red You feel unable to wake up..."
+	if(usr.sleeping)
+		usr << "\red You are already sleeping"
 		return
-	else if(!usr.sleeping)
-		usr << "\blue You start to fall asleep..."
-		usr.sleeping = 20 //Short nap
-		usr.sleeping_willingly = 1
+	else
+		if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+			usr.sleeping = 20 //Short nap
 
 /mob/living/verb/lay_down()
-	set name = "Lay down / Get up"
+	set name = "Rest"
 	set category = "IC"
 
-	usr.resting = !( usr.resting )
-	usr << "\blue You are now [(usr.resting) ? "resting" : "getting up"]"
+	resting = !resting
+	src << "\blue You are now [resting ? "resting" : "getting up"]"
+
+/mob/verb/quick_equip()
+	set name = "quick-equip"
+	set hidden = 1
+	var/obj/item/I = usr.get_active_hand()
+	if(!I)
+		usr << "\blue You are not holding anything to equip."
+		return
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.equip_to_appropriate_slot(I)
+		H.update_inv_l_hand(0)
+		H.update_inv_r_hand()
 
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"
 
-	if(usr.next_move > world.time)
+	if(!isliving(usr) || usr.next_move > world.time)
 		return
 	usr.next_move = world.time + 20
-	if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
+
+	var/mob/living/L = usr
+
+	//resisting grabs (as if it helps anyone...)
+	if ((!( L.stat ) && L.canmove && !( L.restrained() )))
 		var/resisting = 0
-		for(var/obj/O in usr.requests)
+		for(var/obj/O in L.requests)
 			del(O)
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
@@ -682,118 +540,180 @@
 			else
 				if (G.state == 2)
 					if (prob(25))
-						for(var/mob/O in viewers(usr, null))
-							O.show_message(text("\red [] has broken free of []'s grip!", usr, G.assailant), 1)
+						for(var/mob/O in viewers(L, null))
+							O.show_message(text("\red [] has broken free of []'s grip!", L, G.assailant), 1)
 						del(G)
 				else
 					if (G.state == 3)
 						if (prob(5))
 							for(var/mob/O in viewers(usr, null))
-								O.show_message(text("\red [] has broken free of []'s headlock!", usr, G.assailant), 1)
+								O.show_message(text("\red [] has broken free of []'s headlock!", L, G.assailant), 1)
 							del(G)
 		if(resisting)
 			for(var/mob/O in viewers(usr, null))
-				O.show_message(text("\red <B>[] resists!</B>", usr), 1)
+				O.show_message(text("\red <B>[] resists!</B>", L), 1)
 
 
-
-	//breaking out of handcuffs
-	if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
-		var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
-		var/displaytime = 2 //Minutes to display in the "this will take X minutes."
-		if(!usr:canmove)
-			breakouttime = 2400
-			displaytime = 4
-		usr.next_move = world.time + 100
-		usr.last_special = world.time + 100
-		if(isalienadult(usr) || (HULK in usr.mutations) || (SUPRSTR in usr.augmentations))//Don't want to do a lot of logic gating here.
-			usr << "\green You attempt to break \the [usr:handcuffed]. (This will take around 5 seconds and you need to stand still)"
-			for(var/mob/O in viewers(usr))
-				O.show_message(text("\red <B>[] is trying to break \the [usr:handcuffed]!</B>", usr), 1)
-			spawn(0)
-				if(do_after(usr, 50))
-					if(!usr:handcuffed || usr:buckled)
-						return
-					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] manages to break \the [usr:handcuffed]!</B>", usr), 1)
-					usr << "\green You successfully break \the [usr:handcuffed]."
-					del(usr:handcuffed)
-					usr:handcuffed = null
-		else
-			var/obj/item/weapon/handcuffs/HC = usr:handcuffed
-			if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
-				breakouttime = HC.breakouttime
-				displaytime = breakouttime / 600 //Minutes
-			usr << "\red You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)"
-			for(var/mob/O in viewers(usr))
-				O.show_message(text("\red <B>[] attempts to remove \the [usr:handcuffed]!</B>", usr), 1)
-			spawn(0)
-				var/increment = 150
-				for(var/i = 0, i < breakouttime, i += increment)
-					if(!do_after(usr, increment))
-						return
-
-					else
-						usr << pick("You hear something click, but it doesn't open yet.",	// - Uristqwerty
-									"The latch resists!",									// - IRC: BowlSoldier
-									"The chain is starting to give!",						// - IRC: BowlSoldier
-									"The chain bends a little.",							// - IRC: STALKER
-									"Your wrist hurts.",									// - IRC: STALKER
-									"Unnng",												// - IRC: Doug_H_Nuts
-									"The chain jangles a bit.",								// - SkyMarshal
-									"\red Hurry up, dammit!",								// - SkyMarshal
-									"This is exhausting!")									// - SkyMarshal
-						for(var/mob/O in viewers(usr))
-							if(prob(50)) //Reduces spam slightly
-								O.show_message(text("\red [] continues to struggle in \the [usr:handcuffed]!", usr), 1)
-				if(!usr:handcuffed) return
-				for(var/mob/O in viewers(usr))
-					O.show_message(text("\red <B>[] manages to remove \the [usr:handcuffed]!</B>", usr), 1)
-				usr << "\blue You successfully remove \the [usr:handcuffed]."
-				usr:handcuffed:loc = usr:loc
-				usr:handcuffed = null
-				usr.update_clothing()
-
-	if(istype(usr, /mob/living/carbon/human) && istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket) && usr:canmove && (usr.last_special <= world.time))
-		usr.next_move = world.time + 200
-		usr.last_special = world.time + 200
-		if(isalienadult(usr) || (HULK in usr.mutations) || (SUPRSTR in usr.augmentations))//Don't want to do a lot of logic gating here.
-			usr << "\green You attempt to break out of your straight jacket. (This will take around 5 seconds and you need to stand still)"
-			for(var/mob/O in viewers(usr))
-				O.show_message(text("\red <B>[] is trying to break out of \his straight jacket!</B>", usr), 1)
-			spawn(0)
-				if(do_after(usr, 50))
-					if(!istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket)) return
-					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] manages to break out of the straight jacket!</B>", usr), 1)
-					usr << "\green You successfully break out of your straight jacket."
-					var/obj/sj = usr:wear_suit
-					usr.remove_from_mob(sj)
-					sj.loc = usr.loc
-		else
-			usr << "\red You attempt to get out of your straight jacket. (This will take around 4 minutes and you need to stand still)"
-			for(var/mob/O in viewers(usr))
-				O.show_message(text("\red <B>[] attempts to get out \his straight jacket!</B>", usr), 1)
+	//unbuckling yourself
+	if(L.buckled && (L.last_special <= world.time) )
+		if( L.handcuffed )
+			L.next_move = world.time + 100
+			L.last_special = world.time + 100
+			L << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
+			for(var/mob/O in viewers(L))
+				O.show_message("\red <B>[usr] attempts to unbuckle themself!</B>", 1)
 			spawn(0)
 				if(do_after(usr, 1200))
-					if(!istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket)) return
-					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] manages to wriggle out of the straight jacket!</B>", usr), 1)
-					usr << "\blue You successfully get out of your straight jacket."
-					var/obj/sj = usr:wear_suit
-					usr.remove_from_mob(sj)
-					sj.loc = usr.loc
-	if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
+					if(!L.buckled)
+						return
+					for(var/mob/O in viewers(L))
+						O.show_message("\red <B>[usr] manages to unbuckle themself!</B>", 1)
+					L << "\blue You successfully unbuckle yourself."
+					L.buckled.manual_unbuckle(L)
+		else
+			L.buckled.manual_unbuckle(L)
+
+	//Breaking out of a locker?
+	else if( src.loc && (istype(src.loc, /obj/structure/closet)) )
+		var/breakout_time = 2 //2 minutes by default
+
+		var/obj/structure/closet/C = L.loc
+		if(C.opened)
+			return //Door's open... wait, why are you in it's contents then?
+		if(istype(L.loc, /obj/structure/closet/secure_closet))
+			var/obj/structure/closet/secure_closet/SC = L.loc
+			if(!SC.locked && !SC.welded)
+				return //It's a secure closet, but isn't locked. Easily escapable from, no need to 'resist'
+		else
+			if(!C.welded)
+				return //closed but not welded...
+		//	else Meh, lets just keep it at 2 minutes for now
+		//		breakout_time++ //Harder to get out of welded lockers than locked lockers
+
+		//okay, so the closet is either welded or locked... resist!!!
 		usr.next_move = world.time + 100
-		usr.last_special = world.time + 100
-		usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
-		for(var/mob/O in viewers(usr))
-			O.show_message(text("\red <B>[] attempts to unbuckle themself!</B>", usr), 1)
+		L.last_special = world.time + 100
+		L << "\red You lean on the back of \the [C] and start pushing the door open. (this will take about [breakout_time] minutes)"
+		for(var/mob/O in viewers(usr.loc))
+			O.show_message("\red <B>The [L.loc] begins to shake violently!</B>", 1)
+
+
 		spawn(0)
-			if(do_after(usr, 1200))
-				if(!usr:buckled)
+			if(do_after(usr,(breakout_time*60*10))) //minutes * 60seconds * 10deciseconds
+				if(!C || !L || L.stat != CONSCIOUS || L.loc != C || C.opened) //closet/user destroyed OR user dead/unconcious OR user no longer in closet OR closet opened
 					return
-				for(var/mob/O in viewers(usr))
-					O.show_message(text("\red <B>[] manages to unbuckle themself!</B>", usr), 1)
-				usr << "\blue You successfully unbuckle yourself."
-				usr:buckled.manual_unbuckle(usr)
+
+				//Perform the same set of checks as above for weld and lock status to determine if there is even still a point in 'resisting'...
+				if(istype(L.loc, /obj/structure/closet/secure_closet))
+					var/obj/structure/closet/secure_closet/SC = L.loc
+					if(!SC.locked && !SC.welded)
+						return
+				else
+					if(!C.welded)
+						return
+
+				//Well then break it!
+				if(istype(usr.loc, /obj/structure/closet/secure_closet))
+					var/obj/structure/closet/secure_closet/SC = L.loc
+					SC.desc = "It appears to be broken."
+					SC.icon_state = SC.icon_off
+					flick(SC.icon_broken, SC)
+					sleep(10)
+					flick(SC.icon_broken, SC)
+					sleep(10)
+					SC.broken = 1
+					SC.locked = 0
+					usr << "\red You successfully break out!"
+					for(var/mob/O in viewers(L.loc))
+						O.show_message("\red <B>\the [usr] successfully broke out of \the [SC]!</B>", 1)
+					if(istype(SC.loc, /obj/structure/bigDelivery)) //Do this to prevent contents from being opened into nullspace (read: bluespace)
+						var/obj/structure/bigDelivery/BD = SC.loc
+						BD.attack_hand(usr)
+					SC.open()
+				else
+					C.welded = 0
+					usr << "\red You successfully break out!"
+					for(var/mob/O in viewers(L.loc))
+						O.show_message("\red <B>\the [usr] successfully broke out of \the [C]!</B>", 1)
+					if(istype(C.loc, /obj/structure/bigDelivery)) //nullspace ect.. read the comment above
+						var/obj/structure/bigDelivery/BD = C.loc
+						BD.attack_hand(usr)
+					C.open()
+
+	//breaking out of handcuffs
+	else if(iscarbon(L))
+		var/mob/living/carbon/CM = L
+		if(CM.handcuffed && CM.canmove && (CM.last_special <= world.time))
+			CM.next_move = world.time + 100
+			CM.last_special = world.time + 100
+			if(isalienadult(CM) || (HULK in usr.mutations) || (SUPRSTR in CM.augmentations))//Don't want to do a lot of logic gating here.
+				usr << "\green You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
+				for(var/mob/O in viewers(CM))
+					O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", CM), 1)
+				spawn(0)
+					if(do_after(CM, 50))
+						if(!CM.handcuffed || CM.buckled)
+							return
+						for(var/mob/O in viewers(CM))
+							O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", CM), 1)
+						CM << "\green You successfully break your handcuffs."
+						del(CM.handcuffed)
+						CM.handcuffed = null
+						CM.update_inv_handcuffed()
+			else
+				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
+				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
+				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
+					breakouttime = HC.breakouttime
+					displaytime = breakouttime / 600 //Minutes
+				CM << "\red You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)"
+				for(var/mob/O in viewers(CM))
+					O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
+				spawn(0)
+					if(do_after(CM, breakouttime))
+						if(!CM.handcuffed || CM.buckled)
+							return // time leniency for lag which also might make this whole thing pointless but the server
+						for(var/mob/O in viewers(CM))//                                         lags so hard that 40s isn't lenient enough - Quarxink
+							O.show_message("\red <B>[CM] manages to remove the handcuffs!</B>", 1)
+						CM << "\blue You successfully remove \the [CM.handcuffed]."
+						CM.handcuffed.loc = usr.loc
+						CM.handcuffed = null
+						CM.update_inv_handcuffed()
+		else if(CM.legcuffed && CM.canmove && (CM.last_special <= world.time))
+			CM.next_move = world.time + 100
+			CM.last_special = world.time + 100
+			if(isalienadult(CM) || (HULK in usr.mutations) || (SUPRSTR in CM.augmentations))//Don't want to do a lot of logic gating here.
+				usr << "\green You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)"
+				for(var/mob/O in viewers(CM))
+					O.show_message(text("\red <B>[] is trying to break the legcuffs!</B>", CM), 1)
+				spawn(0)
+					if(do_after(CM, 50))
+						if(!CM.legcuffed || CM.buckled)
+							return
+						for(var/mob/O in viewers(CM))
+							O.show_message(text("\red <B>[] manages to break the legcuffs!</B>", CM), 1)
+						CM << "\green You successfully break your legcuffs."
+						del(CM.legcuffed)
+						CM.legcuffed = null
+						CM.update_inv_legcuffed()
+			else
+				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
+				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
+				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
+				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
+					breakouttime = HC.breakouttime
+					displaytime = breakouttime / 600 //Minutes
+				CM << "\red You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)"
+				for(var/mob/O in viewers(CM))
+					O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
+				spawn(0)
+					if(do_after(CM, breakouttime))
+						if(!CM.legcuffed || CM.buckled)
+							return // time leniency for lag which also might make this whole thing pointless but the server
+						for(var/mob/O in viewers(CM))//                                         lags so hard that 40s isn't lenient enough - Quarxink
+							O.show_message("\red <B>[CM] manages to remove the legcuffs!</B>", 1)
+						CM << "\blue You successfully remove \the [CM.legcuffed]."
+						CM.legcuffed.loc = usr.loc
+						CM.legcuffed = null
+						CM.update_inv_legcuffed()

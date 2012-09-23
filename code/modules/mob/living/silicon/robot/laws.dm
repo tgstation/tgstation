@@ -4,6 +4,7 @@
 	show_laws()
 
 /mob/living/silicon/robot/show_laws(var/everyone = 0)
+	laws_sanity_check()
 	var/who
 
 	if (everyone)
@@ -37,6 +38,7 @@
 
 
 /mob/living/silicon/robot/proc/lawsync()
+	laws_sanity_check()
 	var/datum/ai_laws/master = connected_ai ? connected_ai.laws : null
 	var/temp
 	if (master)
@@ -65,7 +67,7 @@
 
 /mob/living/silicon/robot/proc/laws_sanity_check()
 	if (!laws)
-		laws = new /datum/ai_laws/nanotrasen
+		laws = new /datum/ai_laws/asimov
 
 /mob/living/silicon/robot/proc/set_zeroth_law(var/law)
 	laws_sanity_check()
@@ -94,96 +96,3 @@
 /mob/living/silicon/robot/proc/clear_ion_laws()
 	laws_sanity_check()
 	laws.clear_ion_laws()
-
-/mob/living/silicon/robot/proc/statelaws() // -- TLE
-//	set category = "AI Commands"
-//	set name = "State Laws"
-	src.say("Current Active Laws:")
-	//src.laws_sanity_check()
-	//src.laws.show_laws(world)
-	var/number = 1
-	sleep(10)
-
-
-
-	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
-			src.say("0. [src.laws.zeroth]")
-			sleep(10)
-
-	for (var/index = 1, index <= src.laws.ion.len, index++)
-		var/law = src.laws.ion[index]
-		var/num = ionnum()
-		if (length(law) > 0)
-			if (src.ioncheck[index] == "Yes")
-				src.say("[num]. [law]")
-				sleep(10)
-
-	for (var/index = 1, index <= src.laws.inherent.len, index++)
-		var/law = src.laws.inherent[index]
-
-		if (length(law) > 0)
-			if (src.lawcheck[index+1] == "Yes")
-				src.say("[number]. [law]")
-				sleep(10)
-			number++
-
-
-	for (var/index = 1, index <= src.laws.supplied.len, index++)
-		var/law = src.laws.supplied[index]
-
-		if (length(law) > 0)
-			if(src.lawcheck.len >= number+1)
-				if (src.lawcheck[number+1] == "Yes")
-					src.say("[number]. [law]")
-					sleep(10)
-				number++
-
-
-/mob/living/silicon/robot/verb/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
-	set category = "Robot Commands"
-	set name = "State Laws"
-
-	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
-
-
-
-	if (src.laws.zeroth)
-		if (!src.lawcheck[1])
-			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
-		list += {"<A href='byond://?src=\ref[src];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws.zeroth]<BR>"}
-
-	for (var/index = 1, index <= src.laws.ion.len, index++)
-		var/law = src.laws.ion[index]
-
-		if (length(law) > 0)
-
-
-			if (!src.ioncheck[index])
-				src.ioncheck[index] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
-			src.ioncheck.len += 1
-
-	var/number = 1
-	for (var/index = 1, index <= src.laws.inherent.len, index++)
-		var/law = src.laws.inherent[index]
-
-		if (length(law) > 0)
-			src.lawcheck.len += 1
-
-			if (!src.lawcheck[number+1])
-				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
-			number++
-
-	for (var/index = 1, index <= src.laws.supplied.len, index++)
-		var/law = src.laws.supplied[index]
-		if (length(law) > 0)
-			src.lawcheck.len += 1
-			if (!src.lawcheck[number+1])
-				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
-			number++
-	list += {"<br><br><A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
-
-	usr << browse(list, "window=laws")

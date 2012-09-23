@@ -1,3 +1,16 @@
+/obj/virus
+	// a virus instance that is placed on the map, moves, and infects
+	invisibility = INVISIBILITY_MAXIMUM
+
+	var/datum/disease2/disease
+
+	New()
+		..()
+		step_rand(src)
+		step_rand(src)
+		anchored = 1
+		spawn(300) del(src)
+
 /mob/living/carbon/proc/get_infection_chance()
 	var/score = 0
 	var/mob/living/carbon/M = src
@@ -31,22 +44,15 @@
 	return 1
 
 
-proc/airborne_can_reach(turf/source, turf/target)
-	var/obj/dummy = new(source)
-	dummy.flags = FPRINT | TABLEPASS
-	dummy.pass_flags = PASSTABLE
-
-	for(var/i=0, i<5, i++) if(!step_towards(dummy, target)) break
-
-	var/rval = (dummy.loc in range(1,target))
-	del dummy
-	return rval
-
 /proc/infect_virus2(var/mob/living/carbon/M,var/datum/disease2/disease/disease,var/forced = 0)
 	if(M.virus2)
 		return
 	if(!disease)
 		return
+	//immunity
+	/*for(var/iii = 1, iii <= M.immunevirus2.len, iii++)
+		if(disease.issame(M.immunevirus2[iii]))
+			return*/
 
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
 	if(M.antibodies & disease.antigen != 0) return
@@ -97,6 +103,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	if(!M.virus2)
 		M.virus2 = new /datum/disease2/disease
 		M.virus2.makerandom()
+		M.virus2.infectionchance = 1
 
 /proc/infect_mob_random_greater(var/mob/living/carbon/M)
 	if(!M.virus2)
@@ -109,7 +116,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	var/infectionchance = 10
 	var/speed = 1
 	var/spreadtype = "Blood" // Can also be "Airborne"
-	var/stage = 0
+	var/stage = 1
 	var/stageprob = 10
 	var/dead = 0
 	var/clicks = 0
@@ -146,7 +153,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 			holder.getrandomeffect_lesser()
 		effects += holder
 		uniqueID = rand(0,10000)
-		infectionchance = rand(4,10)
+		infectionchance = rand(1,10)
 		// pick 2 antigens
 		antigen |= text2num(pick(ANTIGENS))
 		antigen |= text2num(pick(ANTIGENS))
@@ -210,18 +217,19 @@ proc/airborne_can_reach(turf/source, turf/target)
 			return
 		// with a certain chance, the mob may become immune to the disease before it starts properly
 		if(stage <= 1 && clicks == 0)
-			if(prob(3))
-				mob.antibodies |= antigen // 3% chance of spontanous immunity
+			if(prob(20))
+				mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
 			else
 		if(mob.radiation > 50)
 			if(prob(1))
 				majormutate()
 		if(mob.reagents.has_reagent("spaceacillin"))
+			mob.reagents.remove_reagent("spaceacillin",0.3)
 			return
 		if(mob.reagents.has_reagent("virusfood"))
 			mob.reagents.remove_reagent("virusfood",0.1)
 			clicks += 10
-		if(clicks > (stage+1)*100 && prob(10))
+		if(clicks > stage*100 && prob(10))
 			if(stage == 4)
 				var/datum/disease2/resistance/res = new /datum/disease2/resistance(src)
 				src.cure(mob)
@@ -235,20 +243,18 @@ proc/airborne_can_reach(turf/source, turf/target)
 			e.runeffect(mob,stage)
 		clicks+=speed
 
-		if(prob(50)) spread_airborne(mob)
-
 	proc/cure(var/mob/living/carbon/mob)
 		var/datum/disease2/effectholder/E
 		if(stage>1)
 			E = effects[1]
 			E.effect.deactivate(mob)
-		if(stage>=2)
+		if(stage>2)
 			E = effects[2]
 			E.effect.deactivate(mob)
-		if(stage>=3)
+		if(stage>3)
 			E = effects[3]
 			E.effect.deactivate(mob)
-		if(stage>=4)
+		if(stage>4)
 			E = effects[4]
 			E.effect.deactivate(mob)
 
@@ -262,13 +268,14 @@ proc/airborne_can_reach(turf/source, turf/target)
 
 
 	proc/getcopy()
+//		world << "getting copy"
 		var/datum/disease2/disease/disease = new /datum/disease2/disease
 		disease.infectionchance = infectionchance
 		disease.spreadtype = spreadtype
 		disease.stageprob = stageprob
 		disease.antigen   = antigen
-		disease.uniqueID  = uniqueID
 		for(var/datum/disease2/effectholder/holder in effects)
+	//		world << "adding effects"
 			var/datum/disease2/effectholder/newholder = new /datum/disease2/effectholder
 			newholder.effect = new holder.effect.type
 			newholder.chance = holder.chance
@@ -277,29 +284,17 @@ proc/airborne_can_reach(turf/source, turf/target)
 			newholder.happensonce = holder.happensonce
 			newholder.stage = holder.stage
 			disease.effects += newholder
+	//		world << "[newholder.effect.name]"
+	//	world << "[disease]"
 		return disease
-
-	proc/spread_airborne(var/mob/living/carbon/mob)
-		for(var/mob/living/carbon/target in view(null, mob)) if(!target.virus2)
-			if(airborne_can_reach(mob.loc, target.loc))
-				if(mob.get_infection_chance() && target.get_infection_chance())
-					infect_virus2(target,src)
 
 /datum/disease2/effect
 	var/chance_maxm = 100
 	var/name = "Blanking effect"
 	var/stage = 4
 	var/maxm = 1
-	var/happensalways = 0
 	proc/activate(var/mob/living/carbon/mob,var/multiplier)
 	proc/deactivate(var/mob/living/carbon/mob)
-
-// ================================
-// ======= DISEASE SYMPTOMS =======
-// ================================
-
-// Special diseases
-// --------------------------------
 
 /datum/disease2/effect/alien
 	name = "Unidentified Foreign Body"
@@ -317,75 +312,18 @@ proc/airborne_can_reach(turf/source, turf/target)
 			mob:gib()
 			del D
 
-// Greater Diseases, Stage 1
-// --------------------------------
-
-
-/datum/disease2/effect/greater/gunck
-	name = "Flemmingtons"
-	stage = 1
+/datum/disease2/effect/greater/gibbingtons
+	name = "Gibbingtons Syndrome"
+	stage = 4
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob << "\red Mucous runs down the back of your throat."
+		mob.gib()
 
-
-// Greater Diseases, Stage 2
-// --------------------------------
-
-/datum/disease2/effect/greater/cough
-	name = "Anima Syndrome"
-	stage = 2
+/datum/disease2/effect/greater/radian
+	name = "Radian's syndrome"
+	stage = 4
+	maxm = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*cough")
-		if(mob.virus2) mob.virus2.spread_airborne(mob)
-		if(mob.virus2) mob.virus2.spread_airborne(mob)
-		if(prob(2))
-			var/obj/effect/decal/cleanable/mucus/this = new(mob.loc)
-			this.virus2 = mob.virus2
-
-/datum/disease2/effect/greater/vomit
-	name = "Bad Stomach Syndrome"
-	stage = 2
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(prob(20) && mob.nutrition > 200)
-			mob.vomit()
-
-
-/datum/disease2/effect/greater/sneeze
-	name = "Coldingtons Effect"
-	stage = 2
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*sneeze")
-		if(mob.virus2) mob.virus2.spread_airborne(mob)
-		if(mob.virus2) mob.virus2.spread_airborne(mob)
-		if(prob(5))
-			var/obj/effect/decal/cleanable/mucus/this = new(mob.loc)
-			this.anchored = 0
-			step(this, mob.dir)
-			this.anchored = 1
-			this.virus2 = mob.virus2
-
-// Greater Diseases, Stage 3
-// --------------------------------
-
-/datum/disease2/effect/greater/sleepy
-	name = "Resting syndrome"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*collapse")
-
-/datum/disease2/effect/greater/mind
-	name = "Lazy mind syndrome"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.setBrainLoss(50)
-
-
-/datum/disease2/effect/greater/hallucinations
-	name = "Hallucinational Syndrome"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.hallucination += 25
-
+		mob.radiation += (2*multiplier)
 
 /datum/disease2/effect/greater/toxins
 	name = "Hyperacid Syndrome"
@@ -394,9 +332,15 @@ proc/airborne_can_reach(turf/source, turf/target)
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.adjustToxLoss((2*multiplier))
 
+/datum/disease2/effect/greater/scream
+	name = "Random screaming syndrome"
+	stage = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*scream")
+
 /datum/disease2/effect/greater/drowsness
 	name = "Automated sleeping syndrome"
-	stage = 3
+	stage = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.drowsyness += 10
 
@@ -407,6 +351,17 @@ proc/airborne_can_reach(turf/source, turf/target)
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		shake_camera(mob,5*multiplier)
 
+/datum/disease2/effect/greater/deaf
+	name = "Hard of hearing syndrome"
+	stage = 4
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.ear_deaf += 20
+
+/datum/disease2/effect/invisible
+	name = "Waiting Syndrome"
+	stage = 1
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		return
 
 /datum/disease2/effect/greater/telepathic
 	name = "Telepathy Syndrome"
@@ -414,55 +369,13 @@ proc/airborne_can_reach(turf/source, turf/target)
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.mutations |= 512
 
-// Greater Diseases, Stage 4
-// --------------------------------
-
-/datum/disease2/effect/greater/gibbingtons
-	name = "Gibbingtons Syndrome"
+/*/datum/disease2/effect/greater/noface
+	name = "Identity Loss syndrome"
 	stage = 4
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.gib()
-
-
-/datum/disease2/effect/greater/blood_fountain
-	name = "Blood Fountain Syndrome"
-	stage = 4
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(prob(20))
-			mob.visible_message("\red You see a fountain of blood erupt from [mob.name].","\red <b>Something wet is leaking from you.</b>","You hear a loud splash.")
-			mob.drip(50)
-
-/datum/disease2/effect/greater/radian
-	name = "Radian's syndrome"
-	stage = 4
-	maxm = 2
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.radiation += (20*multiplier)
-
-/datum/disease2/effect/greater/fever
-	name = "Fever syndrome"
-	stage = 4
-	maxm = 2
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.adjustFireLoss(10 * multiplier)
-
-
-/datum/disease2/effect/greater/weak_bones
-	name = "Bone Density Syndrome"
-	stage = 4
-	maxm = 2
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		var/name = pick(mob.organs)
-		var/datum/organ/external/organ = mob.organs[name]
-
-		if(!(organ.status & ORGAN_BROKEN) && !(organ.status & ORGAN_ROBOT))
-			mob.adjustBruteLoss(10)
-			mob.visible_message("\red You hear a loud cracking sound coming from [mob.name].","\red <b>Something feels like it shattered in your [organ.display_name]!</b>","You hear a sickening crack.")
-			mob.emote("scream")
-			organ.status |= ORGAN_BROKEN
-			organ.broken_description = pick("broken","fracture","hairline fracture")
-			organ.perma_injury = 10
-
+		mob.face_dmg++
+	deactivate(var/mob/living/carbon/mob)
+		mob.face_dmg--*/
 
 /datum/disease2/effect/greater/monkey
 	name = "Monkism syndrome"
@@ -472,6 +385,17 @@ proc/airborne_can_reach(turf/source, turf/target)
 			var/mob/living/carbon/human/h = mob
 			h.monkeyize()
 
+/datum/disease2/effect/greater/sneeze
+	name = "Coldingtons Effect"
+	stage = 1
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*sneeze")
+
+/datum/disease2/effect/greater/gunck
+	name = "Flemmingtons"
+	stage = 1
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob << "\red Mucous runs down the back of your throat."
 
 /datum/disease2/effect/greater/killertoxins
 	name = "Toxification syndrome"
@@ -479,96 +403,48 @@ proc/airborne_can_reach(turf/source, turf/target)
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.adjustToxLoss(15)
 
-
-// Lesser Diseases, Stage 1
-// --------------------------------
-
-/datum/disease2/effect/lesser/gunck
-	name = "Flemmingtons"
-	stage = 1
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob << "\red Mucous runs down the back of your throat."
-
-/datum/disease2/effect/lesser/fridge
-	name = "Refridgerator Syndrome"
-	stage = 1
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(prob(10)) mob << "\blue You feel extremely cold."
-
-
-/datum/disease2/effect/lesser/pale
-	name = "Ghost Effect"
-	stage = 1
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob << "\blue If you had a mirror, your reflection would probably look very pale.."
-
-/datum/disease2/effect/lesser/hoarse
-	name = "Hoarse Throat"
-	stage = 1
-	happensalways = 1 // the mob will have a permanently sore throat
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.disease_symptoms |= DISEASE_HOARSE
-		if(prob(3)) mob << "\blue Your throat feels very sore.."
-
-
-// Lesser Diseases, Stage 2
-// --------------------------------
-/datum/disease2/effect/lesser/sneeze
-	name = "Coldingtons Effect"
-	stage = 2
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*sneeze")
-		if(mob.virus2) mob.virus2.spread_airborne(mob)
-		if(mob.virus2) mob.virus2.spread_airborne(mob)
-		if(prob(10))
-			var/obj/effect/decal/cleanable/mucus/this = new(mob.loc)
-			this.anchored = 0
-			step(this, mob.dir)
-			this.anchored = 1
-			this.virus2 = mob.virus2
-
-/datum/disease2/effect/lesser/cough
-	name = "Anima Syndrome"
-	stage = 2
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*cough")
-		if(mob.virus2) mob.virus2.spread_airborne(mob)
-		if(mob.virus2) mob.virus2.spread_airborne(mob)
-		if(prob(10))
-			var/obj/effect/decal/cleanable/mucus/this = new(mob.loc)
-			this.virus2 = mob.virus2
-
-
-/datum/disease2/effect/lesser/nosebleed
-	name = "Nosebleed Effect"
-	stage = 2
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(prob(30))
-			mob.drip(1)
-
-// Lesser Diseases, Stage 3
-// --------------------------------
-
-/datum/disease2/effect/lesser/vomit
-	name = "Bad Stomach Syndrome"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(prob(5) && mob.nutrition > 200)
-			mob.vomit()
-
-
-// lesser syndromes, partly just copypastes
-/datum/disease2/effect/lesser/hallucinations
+/*/datum/disease2/effect/greater/hallucinations
 	name = "Hallucinational Syndrome"
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.hallucination += 5
+		mob.hallucination += 25*/
 
+/datum/disease2/effect/greater/sleepy
+	name = "Resting syndrome"
+	stage = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*collapse")
+
+/datum/disease2/effect/greater/mind
+	name = "Lazy mind syndrome"
+	stage = 3
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.setBrainLoss(50)
+
+/datum/disease2/effect/greater/suicide
+	name = "Suicidal syndrome"
+	stage = 4
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.suiciding = 1
+		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
+		viewers(mob) << "\red <b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b>"
+		mob.adjustOxyLoss(175 - mob.getToxLoss() - mob.getFireLoss() - mob.getBruteLoss() - mob.getOxyLoss())
+		mob.updatehealth()
+		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
+			mob.suiciding = 0
+
+// lesser syndromes, partly just copypastes
 /datum/disease2/effect/lesser/mind
 	name = "Lazy mind syndrome"
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.setBrainLoss(20)
+
+/datum/disease2/effect/lesser/drowsy
+	name = "Bedroom Syndrome"
+	stage = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.drowsyness = 5
 
 /datum/disease2/effect/lesser/deaf
 	name = "Hard of hearing syndrome"
@@ -576,40 +452,11 @@ proc/airborne_can_reach(turf/source, turf/target)
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.ear_deaf = 5
 
-/datum/disease2/effect/lesser/hungry
-	name = "Appetiser Effect"
-	stage = 2
+/datum/disease2/effect/lesser/gunck
+	name = "Flemmingtons"
+	stage = 1
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.nutrition = max(0, mob.nutrition - 1)
-
-/datum/disease2/effect/lesser/groan
-	name = "Groaning Syndrome"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*groan")
-
-/datum/disease2/effect/lesser/twitch
-	name = "Twitcher"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(prob(5)) mob.say("*twitch")
-		if(prob(20)) mob << "\blue Your muscles feel twitchy.."
-
-/datum/disease2/effect/lesser/stumble
-	name = "Poor Balance Syndrome"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(!mob.client) return
-
-		// little trick, this way you only stumble while moving
-		if(world.time < mob.client.move_delay + 10)
-			step(mob, pick(cardinal))
-			mob.emote("me",1,"stumbles over their own feet.")
-
-
-// Lesser Diseases, Stage 4
-// --------------------------------
-
+		mob << "\red Mucous runs down the back of your throat."
 
 /datum/disease2/effect/lesser/radian
 	name = "Radian's syndrome"
@@ -618,23 +465,80 @@ proc/airborne_can_reach(turf/source, turf/target)
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.radiation += 1
 
-// ============
-// END SYMPTOMS
-// ============
-
-
-
-
-
-/datum/disease2/effect/invisible
-	name = "Waiting Syndrome"
+/datum/disease2/effect/lesser/sneeze
+	name = "Coldingtons Effect"
 	stage = 1
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		return
+		mob.say("*sneeze")
 
+/datum/disease2/effect/lesser/cough
+	name = "Anima Syndrome"
+	stage = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*cough")
 
-var/global/const/DISEASE_HOARSE  = 2
-var/global/const/DISEASE_WHISPER = 4
+/*/datum/disease2/effect/lesser/hallucinations
+	name = "Hallucinational Syndrome"
+	stage = 3
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.hallucination += 5*/
+
+/*/datum/disease2/effect/lesser/arm
+	name = "Disarming Syndrome"
+	stage = 4
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		var/datum/organ/external/org = mob.organs["r_arm"]
+		org.take_damage(3,0,0,0)
+		mob << "\red You feel a sting in your right arm."*/
+
+/datum/disease2/effect/lesser/hungry
+	name = "Appetiser Effect"
+	stage = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.nutrition = max(0, mob.nutrition - 200)
+
+/datum/disease2/effect/lesser/groan
+	name = "Groaning Syndrome"
+	stage = 3
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*groan")
+
+/datum/disease2/effect/lesser/scream
+	name = "Loudness Syndrome"
+	stage = 4
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*scream")
+
+/datum/disease2/effect/lesser/drool
+	name = "Saliva Effect"
+	stage = 1
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*drool")
+
+/datum/disease2/effect/lesser/fridge
+	name = "Refridgerator Syndrome"
+	stage = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*shiver")
+
+/datum/disease2/effect/lesser/twitch
+	name = "Twitcher"
+	stage = 1
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*twitch")
+
+/*Removed on request by Spaceman, due to it being detrimental to RP. -CN
+/datum/disease2/effect/lesser/deathgasp
+	name = "Zombie Syndrome"
+	stage = 4
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*deathgasp")*/
+
+/datum/disease2/effect/lesser/giggle
+	name = "Uncontrolled Laughter Effect"
+	stage = 3
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*giggle")
 
 
 /datum/disease2/effect/lesser
@@ -650,7 +554,7 @@ var/global/const/DISEASE_WHISPER = 4
 	var/stage = 0
 
 	proc/runeffect(var/mob/living/carbon/human/mob,var/stage)
-		if(effect.stage <= stage) if(effect.happensalways || (happensonce > -1 && prob(chance)))
+		if(happensonce > -1 && effect.stage <= stage && prob(chance))
 			effect.activate(mob)
 			if(happensonce == 1)
 				happensonce = -1

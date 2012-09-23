@@ -1,8 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
 /obj/item/weapon/robot_module
 	name = "robot module"
-	icon = 'module.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
 	w_class = 100.0
 	item_state = "electronic"
@@ -24,6 +22,7 @@
 
 
 	New()
+		src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/device/flash(src)
 		src.emag = new /obj/item/toy/sword(src)
 		src.emag.name = "Placeholder Emag Item"
@@ -32,10 +31,15 @@
 		return
 
 
-	proc/respawn_consumable(var/mob/living/silicon/robot/R)
-		return
+/obj/item/weapon/robot_module/proc/respawn_consumable(var/mob/living/silicon/robot/R)
+	return
 
-
+/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
+	var/list/temp_list = modules
+	modules = list()
+	for(var/obj/O in temp_list)
+		if(O)
+			modules += O
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
@@ -62,11 +66,14 @@
 		src.modules += new /obj/item/borg/sight/hud/med(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/borghypo(src)
-		src.modules += new /obj/item/weapon/reagent_containers/glass/large(src)
+		src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 		src.modules += new /obj/item/weapon/extinguisher/mini(src)
-		src.emag = new /obj/item/weapon/circular_saw(src)
+		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
+
+		src.emag.reagents.add_reagent("pacid", 250)
+		src.emag.name = "Polyacid spray"
 		return
 
 
@@ -81,7 +88,7 @@
 		src.emag = new /obj/item/borg/stun(src)
 		src.modules += new /obj/item/borg/rcd(src)
 		src.modules += new /obj/item/weapon/extinguisher(src)
-		src.modules += new /obj/item/device/flashlight(src)
+//		src.modules += new /obj/item/device/flashlight(src)
 		src.modules += new /obj/item/weapon/weldingtool/largetank(src)
 		src.modules += new /obj/item/weapon/screwdriver(src)
 		src.modules += new /obj/item/weapon/wrench(src)
@@ -145,15 +152,11 @@
 		..()
 		src.modules += new /obj/item/weapon/soap/nanotrasen(src)
 		src.modules += new /obj/item/weapon/trashbag(src)
-		src.modules += new /obj/item/weapon/reagent_containers/glass/bucket(src)
 		src.modules += new /obj/item/weapon/mop(src)
-		src.modules += new /obj/item/device/portalathe(src)
-		src.emag = new /obj/item/weapon/cleaner(src)
+		src.modules += new /obj/item/device/lightreplacer(src)
+		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
-		var/datum/reagents/R = new/datum/reagents(1000)
-		src.emag.reagents = R
-		R.my_atom = src.emag
-		R.add_reagent("lube", 1000)
+		src.emag.reagents.add_reagent("lube", 250)
 		src.emag.name = "Lube spray"
 		return
 
@@ -200,10 +203,10 @@
 		..()
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.emag = new /obj/item/borg/stun(src)
-		src.modules += new /obj/item/weapon/satchel/borg(src)
+		src.modules += new /obj/item/weapon/storage/satchel(src)
 		src.modules += new /obj/item/weapon/pickaxe/borgdrill(src)
+		src.modules += new /obj/item/weapon/sheetsnatcher/borg(src)
 //		src.modules += new /obj/item/weapon/shovel(src) Uneeded due to buffed drill
-//		src.jetpack += new/obj/item/weapon/tank/jetpack/carbondioxide(src)
 		return
 
 

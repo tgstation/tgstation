@@ -1,14 +1,14 @@
 /obj/machinery/sec_lock//P'sure this was part of the tunnel
 	name = "Security Pad"
 	desc = "A lock, for doors. Used by security."
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "sec_lock"
 	var/obj/item/weapon/card/id/scan = null
 	var/a_type = 0.0
 	var/obj/machinery/door/d1 = null
 	var/obj/machinery/door/d2 = null
 	anchored = 1.0
-	req_access = list(ACCESS_BRIG)
+	req_access = list(access_brig)
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4

@@ -3,7 +3,7 @@
 /obj/item/tk_grab
 	name = "Telekinetic Grab"
 	desc = "Magic"
-	icon = 'magic.dmi'//Needs sprites
+	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
 	flags = USEDELAY
 	//item_state = null
@@ -20,7 +20,9 @@
 		return
 
 
+	//stops TK grabs being equipped anywhere but into hands
 	equipped(var/mob/user, var/slot)
+		if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
 		del(src)
 		return
 
@@ -29,14 +31,10 @@
 		if(!istype(focus,/obj/item))	return
 		if(!check_path())	return//No clear path
 
-		if(user.hand == src)
-			user.l_hand = focus
-		else
-			user.r_hand = focus
-		focus.loc = user
-		focus.layer = 20
+		user.put_in_hands(focus)
 		add_fingerprint(user)
-		user.update_clothing()
+		user.update_inv_l_hand(0)
+		user.update_inv_r_hand()
 		spawn(0)
 			del(src)
 		return
@@ -51,6 +49,10 @@
 		if(!(TK in host.mutations))
 			del(src)
 			return
+		if(isobj(target))
+			if(!target.loc || !isturf(target.loc))
+				del(src)
+				return
 		if(!focus)
 			focus_object(target, user)
 			return
@@ -70,6 +72,8 @@
 		if(target.anchored)
 			target.attack_hand(user) // you can use shit now!
 			return//No throwing anchored things
+		if(!isturf(target.loc))
+			return
 		focus = target
 		update_icon()
 		apply_focus_overlay()
@@ -84,7 +88,7 @@
 		O.density = 0
 		O.layer = FLY_LAYER
 		O.dir = pick(cardinal)
-		O.icon = 'effects.dmi'
+		O.icon = 'icons/effects/effects.dmi'
 		O.icon_state = "nothing"
 		flick("empdisable",O)
 		spawn(5)
@@ -111,11 +115,11 @@
 		return 1
 */
 
-//equip_if_possible(obj/item/W, slot, del_on_fail = 1)
+//equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)
 /*
 		if(istype(user, /mob/living/carbon))
-			if((TK in user:mutations) && get_dist(source, user) <= 7)
-				if(user:equipped())	return 0
+			if(user:mutations & TK && get_dist(source, user) <= 7)
+				if(user:get_active_hand())	return 0
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z

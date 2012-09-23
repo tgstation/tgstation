@@ -147,7 +147,7 @@ datum/computer/file/embedded_program/access_controller
 
 
 obj/machinery/embedded_controller/radio/access_controller
-	icon = 'airlock_machines.dmi'
+	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_control_standby"
 
 	name = "Access Console"

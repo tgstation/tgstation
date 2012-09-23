@@ -1,10 +1,7 @@
 /mob/dead/observer/Login()
 	..()
-
-	src.client.screen = null
-
-	if (!isturf(src.loc))
-		src.client.eye = src.loc
-		src.client.perspective = EYE_PERSPECTIVE
-
-	return
+	if(client.holder && client.holder.state != 2)
+		client.holder.state = 2
+		var/rank = client.holder.rank
+		client.clear_admin_verbs()
+		client.update_admins(rank)

@@ -1,11 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
-//todo: merge this with simple_animal?
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/effect/critter
 	name = "Critter"
 	desc = "Generic critter."
-	icon = 'critter.dmi'
+	icon = 'icons/mob/critter.dmi'
 	icon_state = "basic"
 	layer = 5.0
 	density = 1
@@ -13,8 +11,6 @@
 	var/alive = 1
 	var/health = 10
 	var/max_health = 10
-	var/aggression = 100
-	var/speed = 8
 	var/list/access_list = list()//accesses go here
 //AI things
 	var/task = "thinking"
@@ -84,16 +80,8 @@
 	var/attack_speed = 25 // delay of attack
 
 
-	proc
-		patrol_step()
-		seek_target()
-		Die()
-		ChaseAttack()
-		RunAttack()
-		TakeDamage(var/damage = 0)
-		Target_Attacker(var/target)
-		Harvest(var/obj/item/weapon/W, var/mob/living/user)//Controls havesting things from dead critters
-		AfterAttack(var/mob/living/target)
+	proc/AfterAttack(var/mob/living/target)
+		return
 
 
 

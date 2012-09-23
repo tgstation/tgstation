@@ -1,16 +1,9 @@
-/obj/hud/proc/human_hud(var/ui_style='screen1_old.dmi')
-
-	//ui_style='screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
+/obj/hud/proc/human_hud(var/ui_style='icons/mob/screen1_old.dmi')
 
 	src.adding = list(  )
 	src.other = list(  )
-	src.intents = list(  )
-	src.mon_blo = list(  )
-	src.m_ints = list(  )
-	src.mov_int = list(  )
 	src.vimpaired = list(  )
 	src.darkMask = list(  )
-	src.intent_small_hud_objects = list(  )
 	src.hotkeybuttons = list(  ) //These can be disabled for hotkey usersx
 
 	src.g_dither = new src.h_type( src )
@@ -46,6 +39,7 @@
 	src.druggy.mouse_opacity = 0
 
 	var/obj/screen/using
+	var/obj/screen/inventory/inv_box
 
 	using = new src.h_type( src )
 	using.name = "act_intent"
@@ -56,45 +50,6 @@
 	using.layer = 20
 	src.adding += using
 	action_intent = using
-
-//intent small hud objects
-	using = new src.h_type( src )
-	using.name = "help"
-	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "help" ? "help_small_active" : "help_small")
-	using.screen_loc = ui_help_small
-	using.layer = 21
-	src.adding += using
-	help_intent = using
-
-	using = new src.h_type( src )
-	using.name = "disarm"
-	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "disarm" ? "disarm_small_active" : "disarm_small")
-	using.screen_loc = ui_disarm_small
-	using.layer = 21
-	src.adding += using
-	disarm_intent = using
-
-	using = new src.h_type( src )
-	using.name = "grab"
-	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "grab" ? "grab_small_active" : "grab_small")
-	using.screen_loc = ui_grab_small
-	using.layer = 21
-	src.adding += using
-	grab_intent = using
-
-	using = new src.h_type( src )
-	using.name = "harm"
-	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm_small_active" : "harm_small")
-	using.screen_loc = ui_harm_small
-	using.layer = 21
-	src.adding += using
-	hurt_intent = using
-
-//end intent small hud objects
 
 	using = new src.h_type( src )
 	using.name = "mov_intent"
@@ -151,62 +106,66 @@
 	using.name = "drop"
 	using.icon = ui_style
 	using.icon_state = "act_drop"
-	using.screen_loc = ui_dropbutton
+	using.screen_loc = ui_drop_throw
 	using.layer = 19
 	src.hotkeybuttons += using
 
-	using = new src.h_type( src )
-	using.name = "i_clothing"
-	using.dir = SOUTH
-	using.icon = ui_style
-	using.icon_state = "center"
-	using.screen_loc = ui_iclothing
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "i_clothing"
+	inv_box.dir = SOUTH
+	inv_box.icon = ui_style
+	inv_box.slot_id = slot_w_uniform
+	inv_box.icon_state = "center"
+	inv_box.screen_loc = ui_iclothing
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "o_clothing"
-	using.dir = SOUTH
-	using.icon = ui_style
-	using.icon_state = "equip"
-	using.screen_loc = ui_oclothing
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "o_clothing"
+	inv_box.dir = SOUTH
+	inv_box.icon = ui_style
+	inv_box.slot_id = slot_wear_suit
+	inv_box.icon_state = "equip"
+	inv_box.screen_loc = ui_oclothing
+	inv_box.layer = 19
+	src.other += inv_box
 
-/*	using = new src.h_type( src )
-	using.name = "headset"
-	using.dir = SOUTHEAST
-	using.icon_state = "equip"
-	using.screen_loc = ui_headset
-	using.layer = 19
-	if(istype(mymob,/mob/living/carbon/monkey)) using.overlays += blocked
-	src.other += using*/
+/*	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "headset"
+	inv_box.dir = SOUTHEAST
+	inv_box.icon_state = "equip"
+	inv_box.screen_loc = ui_headset
+	inv_box.layer = 19
+	if(istype(mymob,/mob/living/carbon/monkey)) inv_box.overlays += blocked
+	src.other += inv_box*/
 
-	using = new src.h_type( src )
-	using.name = "r_hand"
-	using.dir = WEST
-	using.icon = ui_style
-	using.icon_state = "hand_inactive"
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "r_hand"
+	inv_box.dir = WEST
+	inv_box.icon = ui_style
+	inv_box.icon_state = "hand_inactive"
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		using.icon_state = "hand_active"
-	using.screen_loc = ui_rhand
-	using.layer = 19
-	src.r_hand_hud_object = using
-	src.adding += using
+		inv_box.icon_state = "hand_active"
+	inv_box.screen_loc = ui_rhand
+	inv_box.slot_id = slot_r_hand
+	inv_box.layer = 19
+	src.r_hand_hud_object = inv_box
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "l_hand"
-	using.dir = EAST
-	using.icon = ui_style
-	using.icon_state = "hand_inactive"
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "l_hand"
+	inv_box.dir = EAST
+	inv_box.icon = ui_style
+	inv_box.icon_state = "hand_inactive"
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		using.icon_state = "hand_active"
-	using.screen_loc = ui_lhand
-	using.layer = 19
-	src.l_hand_hud_object = using
-	src.adding += using
+		inv_box.icon_state = "hand_active"
+	inv_box.screen_loc = ui_lhand
+	inv_box.slot_id = slot_l_hand
+	inv_box.layer = 19
+	src.l_hand_hud_object = inv_box
+	src.adding += inv_box
 
-	using = new src.h_type( src )
+	using = new /obj/screen/inventory( src )
 	using.name = "hand"
 	using.dir = SOUTH
 	using.icon = ui_style
@@ -215,7 +174,7 @@
 	using.layer = 19
 	src.adding += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen/inventory( src )
 	using.name = "hand"
 	using.dir = SOUTH
 	using.icon = ui_style
@@ -224,67 +183,71 @@
 	using.layer = 19
 	src.adding += using
 
-	using = new src.h_type( src )
-	using.name = "id"
-	using.dir = NORTH
-	using.icon = ui_style
-	using.icon_state = "id"
-	using.screen_loc = ui_id
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "id"
+	inv_box.dir = NORTH
+	inv_box.icon = ui_style
+	inv_box.icon_state = "id"
+	inv_box.screen_loc = ui_id
+	inv_box.slot_id = slot_wear_id
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "mask"
-	using.dir = NORTH
-	using.icon = ui_style
-	using.icon_state = "equip"
-	using.screen_loc = ui_mask
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "mask"
+	inv_box.dir = NORTH
+	inv_box.icon = ui_style
+	inv_box.icon_state = "equip"
+	inv_box.screen_loc = ui_mask
+	inv_box.slot_id = slot_wear_mask
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "back"
-	using.dir = NORTH
-	using.icon = ui_style
-	using.icon_state = "back"
-	using.screen_loc = ui_back
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "back"
+	inv_box.dir = NORTH
+	inv_box.icon = ui_style
+	inv_box.icon_state = "back"
+	inv_box.screen_loc = ui_back
+	inv_box.slot_id = slot_back
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "storage1"
-	using.icon = ui_style
-	using.icon_state = "pocket"
-	using.screen_loc = ui_storage1
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "storage1"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "pocket"
+	inv_box.screen_loc = ui_storage1
+	inv_box.slot_id = slot_l_store
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "storage2"
-	using.icon = ui_style
-	using.icon_state = "pocket"
-	using.screen_loc = ui_storage2
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "storage2"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "pocket"
+	inv_box.screen_loc = ui_storage2
+	inv_box.slot_id = slot_r_store
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	using = new src.h_type( src )
-	using.name = "suit storage"
-	using.icon = ui_style
-	using.dir = 8 //The sprite at dir=8 has the background whereas the others don't.
-	using.icon_state = "belt"
-	using.screen_loc = ui_sstore1
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "suit storage"
+	inv_box.icon = ui_style
+	inv_box.dir = 8 //The sprite at dir=8 has the background whereas the others don't.
+	inv_box.icon_state = "belt"
+	inv_box.screen_loc = ui_sstore1
+	inv_box.slot_id = slot_s_store
+	inv_box.layer = 19
+	src.adding += inv_box
 
-/*
 	using = new src.h_type( src )
 	using.name = "resist"
 	using.icon = ui_style
 	using.icon_state = "act_resist"
-	using.screen_loc = ui_resist
+	using.screen_loc = ui_pull_resist
 	using.layer = 19
-	src.adding += using
-*/
+	src.hotkeybuttons += using
 
 	using = new src.h_type( src )
 	using.name = "other"
@@ -318,61 +281,59 @@
 	src.adding += using
 */
 
-	using = new src.h_type( src )
-	using.name = "gloves"
-	using.icon = ui_style
-	using.icon_state = "gloves"
-	using.screen_loc = ui_gloves
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "gloves"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "gloves"
+	inv_box.screen_loc = ui_gloves
+	inv_box.slot_id = slot_gloves
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "eyes"
-	using.icon = ui_style
-	using.icon_state = "glasses"
-	using.screen_loc = ui_glasses
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "eyes"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "glasses"
+	inv_box.screen_loc = ui_glasses
+	inv_box.slot_id = slot_glasses
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "l_ear"
-	using.icon = ui_style
-	using.icon_state = "ears"
-	using.screen_loc = ui_lear
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "ears"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "ears"
+	inv_box.screen_loc = ui_ears
+	inv_box.slot_id = slot_ears
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "r_ear"
-	using.icon = ui_style
-	using.icon_state = "ears"
-	using.screen_loc = ui_rear
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "head"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "hair"
+	inv_box.screen_loc = ui_head
+	inv_box.slot_id = slot_head
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "head"
-	using.icon = ui_style
-	using.icon_state = "hair"
-	using.screen_loc = ui_head
-	using.layer = 19
-	src.other += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "shoes"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "shoes"
+	inv_box.screen_loc = ui_shoes
+	inv_box.slot_id = slot_shoes
+	inv_box.layer = 19
+	src.other += inv_box
 
-	using = new src.h_type( src )
-	using.name = "shoes"
-	using.icon = ui_style
-	using.icon_state = "shoes"
-	using.screen_loc = ui_shoes
-	using.layer = 19
-	src.other += using
-
-	using = new src.h_type( src )
-	using.name = "belt"
-	using.icon = ui_style
-	using.icon_state = "belt"
-	using.screen_loc = ui_belt
-	using.layer = 19
-	src.adding += using
+	inv_box = new /obj/screen/inventory( src )
+	inv_box.name = "belt"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "belt"
+	inv_box.screen_loc = ui_belt
+	inv_box.slot_id = slot_belt
+	inv_box.layer = 19
+	src.adding += inv_box
 
 /*
 	using = new src.h_type( src )
@@ -532,7 +493,7 @@
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.icon_state = "act_throw_off"
 	mymob.throw_icon.name = "throw"
-	mymob.throw_icon.screen_loc = ui_throw
+	mymob.throw_icon.screen_loc = ui_drop_throw
 	src.hotkeybuttons += mymob.throw_icon
 
 	mymob.oxygen = new /obj/screen( null )
@@ -600,16 +561,24 @@
 	mymob.pullin.icon = ui_style
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
-	mymob.pullin.screen_loc = ui_pull
+	mymob.pullin.screen_loc = ui_pull_resist
 	src.hotkeybuttons += mymob.pullin
 
 	mymob.blind = new /obj/screen( null )
-	mymob.blind.icon = ui_style
-	mymob.blind.icon_state = "blackanimate"
+	mymob.blind.icon = 'icons/mob/screen1_full.dmi'
+	mymob.blind.icon_state = "blackimageoverlay"
 	mymob.blind.name = " "
-	mymob.blind.screen_loc = "1,1 to 15,15"
-	mymob.blind.layer = 0
+	mymob.blind.screen_loc = "1,1"
 	mymob.blind.mouse_opacity = 0
+	mymob.blind.layer = 0
+
+	mymob.damageoverlay = new /obj/screen( null )
+	mymob.damageoverlay.icon = 'icons/mob/screen1_full.dmi'
+	mymob.damageoverlay.icon_state = "oxydamageoverlay0"
+	mymob.damageoverlay.name = "dmg"
+	mymob.damageoverlay.screen_loc = "1,1"
+	mymob.damageoverlay.mouse_opacity = 0
+	mymob.damageoverlay.layer = 17
 
 	mymob.flash = new /obj/screen( null )
 	mymob.flash.icon = ui_style
@@ -619,10 +588,6 @@
 	mymob.flash.layer = 17
 
 	mymob.pain = new /obj/screen( null )
-	mymob.pain.icon_state = "blank"
-	mymob.pain.name = "pain"
-	mymob.pain.screen_loc = "1,1 to 15,15"
-	mymob.pain.layer = 17
 
 /*
 	mymob.hands = new /obj/screen( null )
@@ -734,16 +699,16 @@
 */
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
+	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.overlays = null
-	mymob.zone_sel.overlays += image("icon" = 'zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
-
-	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
+	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
 	mymob.client.screen = null
 
 	//, mymob.i_select, mymob.m_select
-	mymob.client.screen += list( mymob.pain, mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep, mymob.gun_setting_icon) //, mymob.mach )
-	mymob.client.screen += src.adding + src.other + src.hotkeybuttons
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += src.adding + src.hotkeybuttons
+	inventory_shown = 0;
 
 	//if(istype(mymob,/mob/living/carbon/monkey)) mymob.client.screen += src.mon_blo
 
@@ -804,7 +769,7 @@ Radar-related things
 /mob/living/carbon/human/proc/close_radar()
 	radar_open = 0
 	for(var/obj/screen/x in client.screen)
-		if( (x.name == "radar" && x.icon == 'radar.dmi') || (x in radar_blips) )
+		if( (x.name == "radar" && x.icon == 'icons/misc/radar.dmi') || (x in radar_blips) )
 			client.screen -= x
 			del(x)
 
@@ -812,41 +777,39 @@ Radar-related things
 
 /mob/living/carbon/human/proc/place_radar_closed()
 	var/obj/screen/closedradar = new()
-	closedradar.icon = 'radar.dmi'
+	closedradar.icon = 'icons/misc/radar.dmi'
 	closedradar.icon_state = "radarclosed"
 	closedradar.screen_loc = "WEST,NORTH-1"
 	closedradar.name = "radar closed"
 	client.screen += closedradar
 
 /mob/living/carbon/human/proc/start_radar()
-	// this proc lags like hell, why is it even in
-	return
 
 	for(var/obj/screen/x in client.screen)
-		if(x.name == "radar closed" && x.icon == 'radar.dmi')
+		if(x.name == "radar closed" && x.icon == 'icons/misc/radar.dmi')
 			client.screen -= x
 			del(x)
 
 	var/obj/screen/cornerA = new()
-	cornerA.icon = 'radar.dmi'
+	cornerA.icon = 'icons/misc/radar.dmi'
 	cornerA.icon_state = "radar(1,1)"
 	cornerA.screen_loc = "WEST,NORTH-2"
 	cornerA.name = "radar"
 
 	var/obj/screen/cornerB = new()
-	cornerB.icon = 'radar.dmi'
+	cornerB.icon = 'icons/misc/radar.dmi'
 	cornerB.icon_state = "radar(2,1)"
 	cornerB.screen_loc = "WEST+1,NORTH-2"
 	cornerB.name = "radar"
 
 	var/obj/screen/cornerC = new()
-	cornerC.icon = 'radar.dmi'
+	cornerC.icon = 'icons/misc/radar.dmi'
 	cornerC.icon_state = "radar(1,2)"
 	cornerC.screen_loc = "WEST,NORTH-1"
 	cornerC.name = "radar"
 
 	var/obj/screen/cornerD = new()
-	cornerD.icon = 'radar.dmi'
+	cornerD.icon = 'icons/misc/radar.dmi'
 	cornerD.icon_state = "radar(2,2)"
 	cornerD.screen_loc = "WEST+1,NORTH-1"
 	cornerD.name = "radar"
@@ -913,7 +876,7 @@ Radar-related things
 		var/blip_x = max_dist + (-( distance_ref.x-a_x ) ) + starting_px
 		var/blip_y = max_dist + (-( distance_ref.y-a_y ) ) + starting_py
 		var/obj/screen/blip = new()
-		blip.icon = 'radar.dmi'
+		blip.icon = 'icons/misc/radar.dmi'
 		blip.name = "Blip"
 		blip.layer = 21
 		blip.screen_loc = "WEST:[blip_x-1],NORTH-2:[blip_y-1]" // offset -1 because the center of the blip is not at the bottomleft corner (14)
@@ -956,3 +919,40 @@ Radar-related things
 		client.screen += blip
 
 
+/mob/living/carbon/human/update_action_buttons()
+	var/num = 1
+	if(!src.hud_used) return
+	if(!src.client) return
+
+	if(!hud_used.hud_shown)	//Hud toggled to minimal
+		return
+
+	src.client.screen -= src.hud_used.item_action_list
+	hud_used.item_action_list = list()
+
+	for(var/obj/item/I in src)
+		if(I.icon_action_button)
+			var/obj/screen/item_action/A = new(src.hud_used)
+			A.icon = 'icons/mob/screen1_action.dmi'
+			A.icon_state = I.icon_action_button
+			if(I.action_button_name)
+				A.name = I.action_button_name
+			else
+				A.name = "Use [I.name]"
+			A.owner = I
+			hud_used.item_action_list += A
+			switch(num)
+				if(1)
+					A.screen_loc = ui_action_slot1
+				if(2)
+					A.screen_loc = ui_action_slot2
+				if(3)
+					A.screen_loc = ui_action_slot3
+				if(4)
+					A.screen_loc = ui_action_slot4
+				if(5)
+					A.screen_loc = ui_action_slot5
+					break //5 slots available, so no more can be added.
+			num++
+
+	src.client.screen += src.hud_used.item_action_list

@@ -1,13 +1,18 @@
+/mob/living/silicon/decoy
+	name = "AI"
+	icon = 'icons/mob/AI.dmi'//
+	icon_state = "ai"
+	anchored = 1 // -- TLE
+	canmove = 0
+
 /mob/living/silicon/decoy/New()
-	src.icon = 'AI.dmi'
+	src.icon = 'icons/mob/AI.dmi'
 	src.icon_state = "ai"
 	src.anchored = 1
 	src.canmove = 0
 
 /mob/living/silicon/decoy/say_understands(var/other)
 	if (istype(other, /mob/living/carbon/human))
-		return 1
-	if (istype(other, /mob/living/carbon/human/tajaran))
 		return 1
 	if (istype(other, /mob/living/silicon/robot))
 		return 1

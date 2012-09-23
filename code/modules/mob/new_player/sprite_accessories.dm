@@ -29,6 +29,9 @@
 	var/choose_female = 1
 	var/choose_male = 1
 
+	// Restrict some styles to specific races
+	var/list/species_allowed = list("Human")
+
 
 /*
 ////////////////////////////
@@ -40,30 +43,40 @@
 
 /datum/sprite_accessory/hair
 
-	icon = 'human_face.dmi'	  // default icon for all hairs
+	icon = 'icons/mob/Human_face.dmi'	  // default icon for all hairs
+
+	bald
+		name = "Bald"
+		icon_state = "bald"
+		choose_female = 0
+		species_allowed = list("Human","Soghun")
 
 	short
 		name = "Short Hair"	  // try to capatilize the names please~
 		icon_state = "hair_a" // you do not need to define _s or _l sub-states, game automatically does this for you
 
+	cut
+		name = "Cut Hair"
+		icon_state = "hair_c"
+
 	long
-		name = "Long Hair"
+		name = "Shoulder-length Hair"
 		icon_state = "hair_b"
 
 	longer
-		name = "Longer Hair"
-		icon_state = "hair_b2"
-
-	longest
-		name = "Longest Hair"
+		name = "Long Hair"
 		icon_state = "hair_vlong"
 
-	longalt
-		name = "Long Hair Alt"
+	longest
+		name = "Very Long Hair"
+		icon_state = "hair_longest"
+
+	longfringe
+		name = "Long Fringe"
 		icon_state = "hair_longfringe"
 
 	longestalt
-		name = "Longest Hair Alt"
+		name = "Longer Fringe"
 		icon_state = "hair_vlongfringe"
 
 	halfbang
@@ -74,10 +87,6 @@
 		name = "Half-banged Hair Alt"
 		icon_state = "hair_halfbang_alt"
 
-	kusangi
-		name = "Kusanagi Hair"
-		icon_state = "hair_kusanagi"
-
 	ponytail1
 		name = "Ponytail 1"
 		icon_state = "hair_ponytail"
@@ -85,90 +94,98 @@
 	ponytail2
 		name = "Ponytail 2"
 		icon_state = "hair_pa"
+		choose_male = 0
 
 	ponytail3
 		name = "Ponytail 3"
 		icon_state = "hair_ponytail3"
 
-	cut
-		name = "Cut Hair"
-		icon_state = "hair_c"
-
-	mohawk
-		name = "Mohawk"
-		icon_state = "hair_d"
-		choose_female = 0 // gross
-
-	balding
-		name = "Balding Hair"
-		icon_state = "hair_e"
-		choose_female = 0 // turnoff!
-
-	fag
-		name = "Flow Hair"
-		icon_state = "hair_f"
-
-	bedhead1
-		name = "Bedhead 1"
-		icon_state = "hair_bedheadold"
+	bedhead
+		name = "Bedhead"
+		icon_state = "hair_bedhead"
 
 	bedhead2
 		name = "Bedhead 2"
-		icon_state = "hair_bedhead"
+		icon_state = "hair_bedheadv2"
 
 	bedhead3
 		name = "Bedhead 3"
-		icon_state = "hair_bedheadv2"
-
-	bedhead4
-		name = "Bedhead 4"
-		icon_state = "hair_bedheadalt"
+		icon_state = "hair_bedheadv3"
 
 	dreadlocks
 		name = "Dreadlocks"
 		icon_state = "hair_dreads"
 		choose_female = 0 // okay.jpg
 
+	curls
+		name = "Curls"
+		icon_state = "hair_curls"
+
+	afro
+		name = "Afro"
+		icon_state = "hair_afro"
+
+	afro_large
+		name = "Big Afro"
+		icon_state = "hair_bigafro"
+		choose_female = 0
+
+	sargeant
+		name = "Flat Top"
+		icon_state = "hair_sargeant"
+		choose_female = 0
+
+	fag
+		name = "Flow Hair"
+		icon_state = "hair_f"
+
+	mohawk
+		name = "Mohawk"
+		icon_state = "hair_d"
+		species_allowed = list("Human","Soghun")
+
 	jensen
 		name = "Adam Jensen Hair"
 		icon_state = "hair_jensen"
+		choose_female = 0
+
+	gelled
+		name = "Gelled Back"
+		icon_state = "hair_gelled"
+		choose_male = 0
+
+	spiky
+		name = "Spiky"
+		icon_state = "hair_spikey"
+		species_allowed = list("Human","Soghun")
+
+	kusangi
+		name = "Kusanagi Hair"
+		icon_state = "hair_kusanagi"
+
+	kagami
+		name = "Pigtails"
+		icon_state = "hair_kagami"
+		choose_male = 0
+
+	himecut
+		name = "Hime Cut"
+		icon_state = "hair_himecut"
+		choose_male = 0
+
+	braid
+		name = "Floorlength Braid"
+		icon_state = "hair_braid"
+		choose_male = 0
 
 	skinhead
 		name = "Skinhead"
 		icon_state = "hair_skinhead"
 
-	bald
-		name = "Bald"
-		icon_state = "bald"
-		choose_female = 0
-
-	himecut
-		name = "Hime Cut"
-		icon_state = "hair_himecut"
-
-	curls
-		name = "Curls"
-		icon_state = "hair_curls"
-
-	spikey
-		name = "Spikey"
-		icon_state = "hair_spikey"
-//////
-//Begin Alien Hairstyle
-//////
-	alien
-//Skrell
-		skrell
-
-			male
-				tentacle
-					name = "Skrell Male Tentacles"
-					icon_state = "skrell_hair_m"
-
-			female
-				tentacle
-					name = "Skrell Female Tentacles"
-					icon_state = "skrell_hair_f"
+	balding
+		name = "Balding Hair"
+		icon_state = "hair_e"
+		choose_female = 0 // turnoff!
 
 /*
 ///////////////////////////////////
@@ -180,8 +197,14 @@
 
 /datum/sprite_accessory/facial_hair
 
-	icon = 'human_face.dmi'
+	icon = 'icons/mob/Human_face.dmi'
 	choose_female = 0 // barf (unless you're a dorf, dorfs dig chix /w beards :P)
+
+	shaved
+		name = "Shaved"
+		icon_state = "bald"
+		choose_female = 1 // shaved is the only facial hair on women because why would chicks have beards???
+		species_allowed = list("Human","Soghun","Tajaran","Skrell")
 
 	watson
 		name = "Watson Mustache"
@@ -243,14 +266,32 @@
 		name = "Adam Jensen Beard"
 		icon_state = "facial_jensen"
 
-	shaved
+	dwarf
+		name = "Dwarf Beard"
+		icon_state = "facial_dwarf"
 
-		name = "Shaved"
-		icon_state = "bald"
-		choose_female = 1 // shaved is the only facial hair on women because why would chicks have beards???
+/*
+///////////////////////////////////
+/  =---------------------------=  /
+/  == Alien Style Definitions ==  /
+/  =---------------------------=  /
+///////////////////////////////////
+*/
 
+/datum/sprite_accessory/hair
+	tentacle_m
+		name = "Skrell Male Tentacles"
+		icon_state = "skrell_hair_m"
+		species_allowed = list("Skrell")
+		choose_female = 0
 
+	tentacle_f
+		name = "Skrell Female Tentacles"
+		icon_state = "skrell_hair_f"
+		species_allowed = list("Skrell")
+		choose_male = 0
 
-
-
-
+	taj_ears
+		name = "Tajaran Ears"
+		icon_state = "tajears"
+		species_allowed = list("Tajaran")

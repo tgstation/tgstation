@@ -19,6 +19,7 @@
 															"medical HUD" = 20,
 															"universal translator" = 35,
 															//"projection array" = 15
+															"remote signaller" = 5,
 															)
 
 /mob/living/silicon/pai/verb/paiInterface()
@@ -63,6 +64,8 @@
 				left_part = src.softwareDoor()
 			if("camerajack")
 				left_part = src.softwareCamera()
+			if("signaller")
+				left_part = src.softwareSignal()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -72,7 +75,7 @@
 			<html>
 			<head>
 				<style type=\"text/css\">
-					body { background-image:url('paigrid.png'); }
+					body { background-image:url('html/paigrid.png'); }
 
 					#header { text-align:center; color:white; font-size: 30px; height: 35px; width: 100%; letter-spacing: 2px; z-index: 5}
 					#content {position: relative; left: 10px; height: 400px; width: 100%; z-index: 0}
@@ -141,11 +144,61 @@
 		if("radio")
 			src.card.radio.attack_self(src)
 
+		if("image")
+			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+			var/pID = 1
+
+			switch(newImage)
+				if("Happy")
+					pID = 1
+				if("Cat")
+					pID = 2
+				if("Extremely Happy")
+					pID = 3
+				if("Face")
+					pID = 4
+				if("Laugh")
+					pID = 5
+				if("Off")
+					pID = 6
+				if("Sad")
+					pID = 7
+				if("Angry")
+					pID = 8
+				if("What")
+					pID = 9
+			src.card.setEmotion(pID)
+
+		if("signaller")
+
+			if(href_list["send"])
+
+				sradio.send_signal("ACTIVATE")
+				for(var/mob/O in hearers(1, src.loc))
+					O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+
+			if(href_list["freq"])
+
+				var/new_frequency = (sradio.frequency + text2num(href_list["freq"]))
+				if(new_frequency < 1200 || new_frequency > 1600)
+					new_frequency = sanitize_frequency(new_frequency)
+				sradio.set_frequency(new_frequency)
+
+			if(href_list["code"])
+
+				sradio.code += text2num(href_list["code"])
+				sradio.code = round(sradio.code)
+				sradio.code = min(100, sradio.code)
+				sradio.code = max(1, sradio.code)
+
+
+
 		if("directive")
 			if(href_list["getdna"])
 				var/mob/living/M = src.loc
 				var/count = 0
 				while(!istype(M, /mob/living))
+					if(!M || !M.loc) return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 					M = M.loc
 					count++
 					if(count >= 6)
@@ -154,74 +207,17 @@
 				spawn CheckDNA(M, src)
 
 		if("pdamessage")
-			if(href_list["target"])
-				if(silence_time)
-					return alert("Communications circuits remain unitialized.")
+			if(!isnull(pda))
+				if(href_list["toggler"])
+					pda.toff = !pda.toff
+				else if(href_list["ringer"])
+					pda.silent = !pda.silent
+				else if(href_list["target"])
+					if(silence_time)
+						return alert("Communications circuits remain unitialized.")
 
-				var/t = input(usr, "Please enter message", name, null) as text
-				t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-				if(!t)
-					return
-				var/target = locate(href_list["target"])
-
-				// PDA Message
-				if(istype(target, /obj/item/device/pda))
-					var/obj/item/device/pda/P = target
-					if(isnull(P)||P.toff)
-						return
-
-					var/AnsweringMS = 0
-					for (var/obj/machinery/message_server/MS in world)
-						MS.send_pda_message("[P.owner]","[src]","[t]")
-						if(MS.active)
-							AnsweringMS++
-
-					if(!AnsweringMS)
-						return
-
-					tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
-					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
-
-					if(prob(15)) //Give the AI a chance of intercepting the message
-						var/who = src
-						if(prob(50))
-							who = P:owner
-						for(var/mob/living/silicon/ai/ai in world)
-							ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
-
-					if(!P.silent)
-						playsound(P.loc, 'twobeep.ogg', 50, 1)
-						for (var/mob/O in hearers(3, P.loc))
-							O.show_message(text("\icon[P] *[P.ttone]*"))
-
-					P.overlays = null
-					P.overlays += image('pda.dmi', "pda-r")
-
-				// pAI Message
-				else
-					var/mob/living/silicon/pai/P = target
-
-					var/AnsweringMS = 0
-					for (var/obj/machinery/message_server/MS in world)
-						MS.send_pda_message("[P]","[src]","[t]")
-						if(MS.active)
-							AnsweringMS++
-
-					if(!AnsweringMS)
-						return
-
-
-					tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
-					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
-
-					if (prob(15)) //Give the AI a chance of intercepting the message
-						var/who = src
-						if(prob(50))
-							who = P
-						for (var/mob/living/silicon/ai/ai in world)
-							ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
-
-					playsound(P.loc, 'twobeep.ogg', 50, 1)
+					var/target = locate(href_list["target"])
+					pda.create_message(src, target)
 
 		// Accessing medical records
 		if("medicalrecord")
@@ -277,13 +273,16 @@
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
 
+// MENUS
 
 /mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
 	var/dat = ""
 
+	dat += "<A href='byond://?src=\ref[src];software=refresh'>Refresh</A><br>"
 	// Built-in
 	dat += "<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>"
 	dat += "<A href='byond://?src=\ref[src];software=radio;sub=0'>Radio Configuration</A><br>"
+	dat += "<A href='byond://?src=\ref[src];software=image'>Screen Display</A><br>"
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
 
@@ -300,6 +299,8 @@
 			dat += "<a href='byond://?src=\ref[src];software=securityrecord;sub=0'>Security Records</a> <br>"
 		if(s == "camera")
 			dat += "<a href='byond://?src=\ref[src];software=[s]'>Camera Jack</a> <br>"
+		if(s == "remote signaller")
+			dat += "<a href='byond://?src=\ref[src];software=signaller;sub=0'>Remote Signaller</a> <br>"
 	dat += "<br>"
 
 	// Advanced
@@ -386,12 +387,40 @@
 
 // -=-=-=-= Software =-=-=-=-=- //
 
+//Remote Signaller
+/mob/living/silicon/pai/proc/softwareSignal()
+	var/dat = ""
+	dat += "<h3>Remote Signaller</h3><br><br>"
+	dat += {"<B>Frequency/Code</B> for signaler:<BR>
+	Frequency:
+	<A href='byond://?src=\ref[src];software=signaller;freq=-10;'>-</A>
+	<A href='byond://?src=\ref[src];software=signaller;freq=-2'>-</A>
+	[format_frequency(src.sradio.frequency)]
+	<A href='byond://?src=\ref[src];software=signaller;freq=2'>+</A>
+	<A href='byond://?src=\ref[src];software=signaller;freq=10'>+</A><BR>
+
+	Code:
+	<A href='byond://?src=\ref[src];software=signaller;code=-5'>-</A>
+	<A href='byond://?src=\ref[src];software=signaller;code=-1'>-</A>
+	[src.sradio.code]
+	<A href='byond://?src=\ref[src];software=signaller;code=1'>+</A>
+	<A href='byond://?src=\ref[src];software=signaller;code=5'>+</A><BR>
+
+	<A href='byond://?src=\ref[src];software=signaller;send=1'>Send Signal</A><BR>"}
+	return dat
+
 // Crew Manifest
 /mob/living/silicon/pai/proc/softwareManifest()
 	var/dat = ""
 	dat += "<h2>Crew Manifest</h2><br><br>"
-	for (var/datum/data/record/t in data_core.general)
-		dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+	var/list/L = list()
+	if(!isnull(data_core.general))
+		for (var/datum/data/record/t in sortRecord(data_core.general))
+			var/R = t.fields["name"] + " - " + t.fields["rank"]
+			L += R
+	for(var/R in sortList(L))
+		dat += "[R]<br>"
+	dat += "</body></html>"
 	return dat
 
 // Medical Records
@@ -399,8 +428,9 @@
 	var/dat = ""
 	if(src.subscreen == 0)
 		dat += "<h3>Medical Records</h3><HR>"
-		for(var/datum/data/record/R in data_core.general)
-			dat += text("<A href='?src=\ref[];med_rec=\ref[];software=medicalrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
+		if(!isnull(data_core.general))
+			for(var/datum/data/record/R in sortRecord(data_core.general))
+				dat += text("<A href='?src=\ref[];med_rec=\ref[];software=medicalrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
 		//dat += text("<HR><A href='?src=\ref[];screen=0;softFunction=medical records'>Back</A>", src)
 	if(src.subscreen == 1)
 		dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
@@ -421,8 +451,9 @@
 	var/dat = ""
 	if(src.subscreen == 0)
 		dat += "<h3>Security Records</h3><HR>"
-		for(var/datum/data/record/R in data_core.general)
-			dat += text("<A href='?src=\ref[];sec_rec=\ref[];software=securityrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
+		if(!isnull(data_core.general))
+			for(var/datum/data/record/R in sortRecord(data_core.general))
+				dat += text("<A href='?src=\ref[];sec_rec=\ref[];software=securityrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
 	if(src.subscreen == 1)
 		dat += "<h3>Security Record</h3>"
 		if ((istype(src.securityActive1, /datum/data/record) && data_core.general.Find(src.securityActive1)))
@@ -508,7 +539,7 @@
 		var/datum/gas_mixture/environment = T.return_air()
 
 		var/pressure = environment.return_pressure()
-		var/total_moles = environment.total_moles
+		var/total_moles = environment.total_moles()
 
 		dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
 
@@ -562,7 +593,7 @@
 
 	var/obj/machinery/machine = src.cable.machine
 	dat += "<font color=#55FF55>Connected</font> <br>"
-	if(!istype(machine, /obj/machinery/door) || istype(machine, /obj/machinery/door/airlock/secure/centcom))
+	if(!istype(machine, /obj/machinery/door))
 		dat += "Connected device's firmware does not appear to be compatible with Airlock Jack protocols.<br>"
 		return dat
 //	var/obj/machinery/airlock/door = machine
@@ -579,7 +610,7 @@
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
 	var/turf/T = get_turf_or_move(src.loc)
-	for(var/mob/living/silicon/ai/AI in world)
+	for(var/mob/living/silicon/ai/AI in player_list)
 		if(T.loc)
 			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"
 		else
@@ -603,17 +634,19 @@
 
 // Digital Messenger
 /mob/living/silicon/pai/proc/pdamessage()
+
 	var/dat = "<h3>Digital Messenger</h3>"
+	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;toggler=1'>
+	[(pda.toff) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br>
+	<b>Ringer Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;ringer=1'>
+	[(pda.silent) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
-	for (var/obj/item/device/pda/P in world)
-		if (!P.owner||P.toff||P == src)	continue
-		dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
-		dat += "</li>"
-	for (var/mob/living/silicon/pai/P in world)
-		if(P.stat != 2)
+	if(!pda.toff)
+		for (var/obj/item/device/pda/P in sortAtom(PDAs))
+			if (!P.owner||P.toff||P == src.pda)	continue
 			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"
 	dat += "<br><br>"
-	dat += "Messages: <hr> [tnote]"
+	dat += "Messages: <hr> [pda.tnote]"
 	return dat

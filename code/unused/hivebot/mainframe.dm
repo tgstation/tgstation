@@ -48,7 +48,7 @@
 	src.sight |= SEE_MOBS
 	src.sight |= SEE_OBJS
 	src.see_in_dark = 8
-	src.see_invisible = 2
+	src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	src.lying = 1
 	src.icon_state = "hive_main-crash"
 
@@ -58,7 +58,7 @@
 	if (src.key)
 		spawn(50)
 			if(src.key && src.stat == 2)
-				src.verbs += /mob/proc/ghost
+				src.verbs += /client/proc/ghost
 	return ..(gibbed)
 
 
@@ -110,7 +110,7 @@
 
 	var/list/bodies = new/list()
 
-	for(var/mob/living/silicon/hivebot/H in world)
+	for(var/mob/living/silicon/hivebot/H in mob_list)
 		if(H.z == src.z)
 			if(H.shell)
 				if(!H.stat)
@@ -160,7 +160,7 @@
 		src.client.eye = src.loc
 		src.client.perspective = EYE_PERSPECTIVE
 	if (src.stat == 2)
-		src.verbs += /mob/proc/ghost
+		src.verbs += /client/proc/ghost
 	return
 
 

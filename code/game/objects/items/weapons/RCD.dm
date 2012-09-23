@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /*
 CONTAINS:
@@ -7,7 +7,7 @@ RCD
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build walls/floor."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
@@ -25,11 +25,10 @@ RCD
 	var/working = 0
 	var/mode = 1
 	var/disabled = 0
-	var/max_matter = 30
 
 
 	New()
-		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+		desc = "A RCD. It currently holds [matter]/30 matter-units."
 		src.spark_system = new /datum/effect/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
@@ -39,40 +38,41 @@ RCD
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		..()
 		if(istype(W, /obj/item/weapon/rcd_ammo))
-			var/obj/item/weapon/rcd_ammo/R = W
-			if((matter + R.ammo) > max_matter)
-				user << "The RCD cant hold any more matter."
+			if((matter + 10) > 30)
+				user << "<span class='notice'>The RCD cant hold any more matter-units.</span>"
 				return
-			matter += R.ammo
+			user.drop_item()
 			del(W)
-			playsound(src.loc, 'click.ogg', 50, 1)
-			user << "The RCD now holds [matter]/[max_matter] matter-units."
-			desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+			matter += 10
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			user << "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>"
+			desc = "A RCD. It currently holds [matter]/30 matter-units."
 			return
 
 
 	attack_self(mob/user as mob)
 		//Change the mode
-		playsound(src.loc, 'pop.ogg', 50, 0)
-		if(mode == 1)
-			mode = 2
-			user << "Changed mode to 'Airlock'"
-			src.spark_system.start()
-			return
-		if(mode == 2)
-			mode = 3
-			user << "Changed mode to 'Deconstruct'"
-			src.spark_system.start()
-			return
-		if(mode == 3)
-			mode = 1
-			user << "Changed mode to 'Floor & Walls'"
-			src.spark_system.start()
-			return
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+		switch(mode)
+			if(1)
+				mode = 2
+				user << "<span class='notice'>Changed mode to 'Airlock'</span>"
+				src.spark_system.start()
+				return
+			if(2)
+				mode = 3
+				user << "<span class='notice'>Changed mode to 'Deconstruct'</span>"
+				src.spark_system.start()
+				return
+			if(3)
+				mode = 1
+				user << "<span class='notice'>Changed mode to 'Floor & Walls'</span>"
+				src.spark_system.start()
+				return
 
 
 	afterattack(atom/A, mob/user as mob)
-		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))//NanoTrasen Matter Jammer TM -Sieve
+		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))//Nanotrasen Matter Jammer TM -Sieve
 			disabled = 1
 		else
 			disabled = 0
@@ -81,32 +81,28 @@ RCD
 
 		if(istype(A, /turf) && mode == 1)
 			if(istype(A, /turf/space) && matter >= 1)
-				user << "Building Floor (1)..."
 				if(!disabled && matter >= 1)
-					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					spark_system.set_up(5, 0, src)
 					src.spark_system.start()
 					A:ReplaceWithPlating()
 					matter--
-					user << "The RCD now holds [matter]/[max_matter] matter-units."
-					desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+					desc = "A RCD. It currently holds [matter]/30 matter-units."
 				return
 			if(istype(A, /turf/simulated/floor) && matter >= 3)
-				user << "Building Wall (3)..."
-				playsound(src.loc, 'click.ogg', 50, 1)
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 20))
 					if(!disabled && matter >= 3)
 						spark_system.set_up(5, 0, src)
 						src.spark_system.start()
 						A:ReplaceWithWall()
-						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						matter -= 3
-						user << "The RCD now holds [matter]/[max_matter] matter-units."
-						desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+						desc = "A RCD. It currently holds [matter]/30 matter-units."
 				return
 		else if(istype(A, /turf/simulated/floor) && mode == 2 && matter >= 10)
 			user << "Building Airlock (10)..."
-			playsound(src.loc, 'click.ogg', 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 50))
 				if(!disabled && matter >= 10)
 					spark_system.set_up(5, 0, src)
@@ -117,58 +113,47 @@ RCD
 					if(killthis)
 						killthis.ex_act(2)//Smashin windows
 					T.autoclose = 1
-					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-					playsound(src.loc, 'sparks2.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/effects/sparks2.ogg', 50, 1)
 					matter -= 10
-					user << "The RCD now holds [matter]/[max_matter] matter-units."
-					desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+					desc = "A RCD. It currently holds [matter]/30 matter-units."
 			return
 		else if(mode == 3 && (istype(A, /turf) || istype(A, /obj/machinery/door/airlock) ) )
 			if(istype(A, /turf/simulated/wall) && !istype(A, /turf/simulated/wall/r_wall) && matter >= 4)
 				user << "Deconstructing Wall (4)..."
-				playsound(src.loc, 'click.ogg', 50, 1)
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 40))
 					if(!disabled && matter >= 4)
 						spark_system.set_up(5, 0, src)
 						src.spark_system.start()
 						A:ReplaceWithPlating()
-						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						matter -= 4
-						user << "The RCD now holds [matter]/[max_matter] matter-units."
-						desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+						desc = "A RCD. It currently holds [matter]/30 matter-units."
 				return
 			if(istype(A, /turf/simulated/wall/r_wall))
 				return
 			if(istype(A, /turf/simulated/floor) && matter >= 5)
 				user << "Deconstructing Floor (5)..."
-				playsound(src.loc, 'click.ogg', 50, 1)
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 50))
 					if(!disabled && matter >= 5)
 						spark_system.set_up(5, 0, src)
 						src.spark_system.start()
 						A:ReplaceWithSpace()
-						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						matter -= 5
-						user << "The RCD now holds [matter]/[max_matter] matter-units."
-						desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+						desc = "A RCD. It currently holds [matter]/30 matter-units."
 				return
 			if(istype(A, /obj/machinery/door/airlock) && matter >= 10)
 				user << "Deconstructing Airlock (10)..."
-				playsound(src.loc, 'click.ogg', 50, 1)
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 50))
 					if(!disabled && matter >= 10)
 						spark_system.set_up(5, 0, src)
 						src.spark_system.start()
 						del(A)
-						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						matter -= 10
-						user << "The RCD now holds [matter]/[max_matter] matter-units."
-						desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+						desc = "A RCD. It currently holds [matter]/30 matter-units."
 				return
-/obj/item/weapon/rcd/industrial
-	name = "industrial rapid construction device"
-	max_matter = 60
-
-	New()
-		matter = max_matter
-		return ..()

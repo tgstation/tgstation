@@ -18,7 +18,7 @@ miniature - Game Master
 misterbook - Game Admin
 misterfox - Game Admin
 mloc - Game Master
-skymarshal - Game Master
+skymarshal - Retired Admin
 spaceman96 - Retired Admin
 strumpetplaya - Retired Admin
 tastyfish - Retired Admin

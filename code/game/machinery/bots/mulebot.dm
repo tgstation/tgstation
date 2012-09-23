@@ -17,9 +17,7 @@
 	maxhealth = 150
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
-	var/locked = 1
 	var/atom/movable/load = null		// the loaded crate (usually)
-
 	var/beacon_freq = 1400
 	var/control_freq = 1447
 
@@ -30,7 +28,7 @@
 	var/new_destination = ""	// pending new destination (waiting for beacon response)
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(ACCESS_CARGO, ACCESS_CARGO_BOT) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
+	req_access = list(access_cargo, access_cargo_bot) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
 	var/path[] = new()
 
 	var/mode = 0		//0 = idle/ready
@@ -49,7 +47,6 @@
 	var/auto_return = 1	// true if auto return to home beacon after unload
 	var/auto_pickup = 1 // true if auto-pickup at beacon
 
-	var/open = 0		// true if maint hatch is open
 	var/obj/item/weapon/cell/cell
 						// the installed power cell
 
@@ -77,7 +74,7 @@
 	..()
 	botcard = new(src)
 	botcard.access = get_access("Quartermaster")
-	botcard.access += ACCESS_ROBOTICS
+	botcard.access += access_robotics
 	cell = new(src)
 	cell.charge = 2000
 	cell.maxcharge = 2000
@@ -124,15 +121,10 @@
 // other: chance to knock rider off bot
 /obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
-		var/obj/item/weapon/card/emag/E = I
-		if(E.uses)
-			E.uses--
-		else
-			return
 		locked = !locked
 		user << "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!"
 		flick("mulebot-emagged", src)
-		playsound(src.loc, 'sparks1.ogg', 100, 0)
+		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
 	else if(istype(I,/obj/item/weapon/cell) && open && !cell)
 		var/obj/item/weapon/cell/C = I
 		user.drop_item()
@@ -325,16 +317,10 @@
 
 
 			if("cellremove")
-				if(open && cell && !usr.equipped())
-					cell.loc = usr
-					cell.layer = 20
-					if(usr.hand)
-						usr.l_hand = cell
-					else
-						usr.r_hand = cell
-
-					cell.add_fingerprint(usr)
+				if(open && cell && !usr.get_active_hand())
 					cell.updateicon()
+					usr.put_in_active_hand(cell)
+					cell.add_fingerprint(usr)
 					cell = null
 
 					usr.visible_message("\blue [usr] removes the power cell from [src].", "\blue You remove the power cell from [src].")
@@ -342,7 +328,7 @@
 
 			if("cellinsert")
 				if(open && !cell)
-					var/obj/item/weapon/cell/C = usr.equipped()
+					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
 						usr.drop_item()
 						cell = C
@@ -412,20 +398,20 @@
 
 
 			if("wirecut")
-				if(istype(usr.equipped(), /obj/item/weapon/wirecutters))
+				if(istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
 					var/wirebit = text2num(href_list["wire"])
 					wires &= ~wirebit
 				else
 					usr << "\blue You need wirecutters!"
 			if("wiremend")
-				if(istype(usr.equipped(), /obj/item/weapon/wirecutters))
+				if(istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
 					var/wirebit = text2num(href_list["wire"])
 					wires |= wirebit
 				else
 					usr << "\blue You need wirecutters!"
 
 			if("wirepulse")
-				if(istype(usr.equipped(), /obj/item/device/multitool))
+				if(istype(usr.get_active_hand(), /obj/item/device/multitool))
 					switch(href_list["wire"])
 						if("1","2")
 							usr << "\blue \icon[src] The charge light flickers."
@@ -476,11 +462,21 @@
 /obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
 	if((wires & wire_loadcheck) && !istype(C,/obj/structure/closet/crate))
 		src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
-		playsound(src.loc, 'buzz-sigh.ogg', 50, 0)
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return		// if not emagged, only allow crates to be loaded
+
+	//I'm sure someone will come along and ask why this is here... well people were dragging screen items onto the mule, and that was not cool.
+	//So this is a simple fix that only allows a selection of item types to be considered. Further narrowing-down is below.
+	if(!istype(C,/obj/item) && !istype(C,/obj/machinery) && !istype(C,/obj/structure) && !ismob(C))
+		return
+	if(!isturf(C.loc)) //To prevent the loading from stuff from someone's inventory, which wouldn't get handled properly.
+		return
 
 	if(get_dist(C, src) > 1 || load || !on)
 		return
+	for(var/obj/structure/plasticflaps/P in src.loc)//Takes flaps into account
+		if(!CanPass(C,P))
+			return
 	mode = 1
 
 	// if a create, close before loading
@@ -490,6 +486,8 @@
 
 	C.loc = src.loc
 	sleep(2)
+	if(C.loc != src.loc) //To prevent you from going onto more thano ne bot.
+		return
 	C.loc = src
 	load = C
 
@@ -528,7 +526,12 @@
 
 
 	if(dirn)
-		step(load, dirn)
+		var/turf/T = src.loc
+		T = get_step(T,dirn)
+		if(CanPass(load,T))//Can't get off onto anything that wouldn't let you pass normally
+			step(load, dirn)
+		else
+			load.loc = src.loc//Drops you right there, so you shouldn't be able to get yourself stuck
 
 	load = null
 
@@ -649,25 +652,25 @@
 						mode = 4
 						if(blockcount == 3)
 							src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
-							playsound(src.loc, 'buzz-two.ogg', 50, 0)
+							playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 
 						if(blockcount > 5)	// attempt 5 times before recomputing
 							// find new path excluding blocked turf
 							src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
-							playsound(src.loc, 'buzz-sigh.ogg', 50, 0)
+							playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 							spawn(2)
 								calc_path(next)
 								if(path.len > 0)
 									src.visible_message("[src] makes a delighted ping!", "You hear a ping.")
-									playsound(src.loc, 'ping.ogg', 50, 0)
+									playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 								mode = 4
 							mode =6
 							return
 						return
 				else
 					src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
-					playsound(src.loc, 'buzz-two.ogg', 50, 0)
+					playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 					//world << "Bad turf."
 					mode = 5
 					return
@@ -687,11 +690,11 @@
 					blockcount = 0
 					mode = 4
 					src.visible_message("[src] makes a delighted ping!", "You hear a ping.")
-					playsound(src.loc, 'ping.ogg', 50, 0)
+					playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 
 				else
 					src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
-					playsound(src.loc, 'buzz-sigh.ogg', 50, 0)
+					playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 					mode = 7
 		//if(6)
@@ -704,7 +707,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/mulebot/proc/calc_path(var/turf/avoid = null)
-	src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_ortho, 0, 250, id=botcard, exclude=avoid)
+	src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 250, id=botcard, exclude=avoid)
 	src.path = reverselist(src.path)
 
 
@@ -737,7 +740,7 @@
 /obj/machinery/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		src.visible_message("[src] makes a chiming sound!", "You hear a chime.")
-		playsound(src.loc, 'chime.ogg', 50, 0)
+		playsound(src.loc, 'sound/machines/chime.ogg', 50, 0)
 		reached_target = 1
 
 		if(load)		// if loaded, unload at target
@@ -777,7 +780,7 @@
 				src.visible_message("\red [src] bumps into [M]!")
 			else
 				src.visible_message("\red [src] knocks over [M]!")
-				M.pulling = null
+				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
 				M.lying = 1
@@ -791,7 +794,7 @@
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
 	src.visible_message("\red [src] drives over [H]!")
-	playsound(src.loc, 'splat.ogg', 50, 1)
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)
 	H.apply_damage(2*damage, BRUTE, "head")

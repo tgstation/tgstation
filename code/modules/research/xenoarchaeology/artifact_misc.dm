@@ -4,8 +4,6 @@
 	desc = "A sealed bio suit capable of resisting exotic alien energies and low pressure environments."
 	icon_state = "engspace_suit"
 	item_state = "engspace_suit"
-	heat_transfer_coefficient = 0.02
-	protective_temperature = 1000
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/pickaxe/hand_pick)
 
 /obj/item/clothing/head/bio_hood/anomaly
@@ -13,8 +11,6 @@
 	desc = "A sealed bio hood capable of resisting exotic alien energies and low pressure environments."
 	icon_state = "engspace_helmet"
 	item_state = "engspace_helmet"
-	heat_transfer_coefficient = 0.02
-	protective_temperature = 1000
 
 /obj/structure/noticeboard/anomaly/New()
 	notices = 5
@@ -55,3 +51,17 @@
 	P.stamped = list(/obj/item/weapon/stamp/rd)
 	P.overlays = list("paper_stamped_rd")
 	src.contents += P
+
+//Anomaly
+
+/area/anomaly
+	icon_state = "anomaly"
+
+/area/anomaly/hallway
+	name = "Anomaly Hallway"
+
+/area/anomaly/lab
+	name = "Anomaly Lab"
+
+/area/anomaly/outpost
+	name = "Research Outpost"

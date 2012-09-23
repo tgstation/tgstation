@@ -12,4 +12,4 @@
 
 	tally = speed
 
-	return tally
+	return tally+config.robot_delay

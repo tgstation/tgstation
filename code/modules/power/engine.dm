@@ -10,10 +10,10 @@
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
-		var/mob/t = M.pulling
-		M.pulling = null
+		var/atom/movable/t = M.pulling
+		M.stop_pulling()
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		M.pulling = t
+		M.start_pulling(t)
 	else
 		step(user.pulling, get_dir(user.pulling.loc, src))
 	return

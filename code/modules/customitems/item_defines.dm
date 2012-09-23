@@ -236,8 +236,8 @@
 		return
 	if (reagents.total_volume)
 		if (M == user && user.ckey == "nerezza") //Make sure this is being used by the right person, for the right reason (self injection)
-			visible_message("\blue [user] presses [user.get_visible_gender() == MALE ? "his" : user.get_visible_gender() == FEMALE ? "her" : "their"] \
-				penlight against [user.get_visible_gender() == MALE ? "his" : user.get_visible_gender() == FEMALE ? "her" : "their"] skin, quickly clicking the button once.", \
+			visible_message("\blue [user] presses their \
+				penlight against their skin, quickly clicking the button once.", \
 				"\blue You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.", \
 				"You hear a rustle as someone moves nearby, then a sharp click.")
 		if (M != user && user.ckey == "nerezza") //Woah now, you better be careful partner

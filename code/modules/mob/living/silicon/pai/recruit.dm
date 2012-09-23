@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 // Recruiting observers to play as pAIs
 
@@ -26,33 +26,34 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			var/obj/item/device/paicard/card = locate(href_list["device"])
 			if(card.pai)
 				return
-			if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate/chatbot))
-				var/mob/living/silicon/pai/chatbot/pai = new(card)
-				pai.name = candidate.name
-				pai.real_name = pai.name
-				card.pai = pai
-				pai.init()
-				usr << browse(null, "window=findPai")
-			else if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
+			if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
 				var/mob/living/silicon/pai/pai = new(card)
-				pai.name = candidate.name
+				if(!candidate.name)
+					pai.name = pick(ninja_names)
+				else
+					pai.name = candidate.name
 				pai.real_name = pai.name
 				pai.key = candidate.key
-				card.pai = pai
+
+				card.setPersonality(pai)
 				card.looking_for_personality = 0
-				pai_candidates.Remove(candidate)
+
+				ticker.mode.update_cult_icons_removed(card.pai.mind)
+				ticker.mode.update_rev_icons_removed(card.pai.mind)
+
+				pai_candidates -= candidate
 				usr << browse(null, "window=findPai")
+
 		if(href_list["new"])
 			var/datum/paiCandidate/candidate = locate(href_list["candidate"])
 			var/option = href_list["option"]
 			var/t = ""
-			var/maxNameLen = 26
 
 			switch(option)
 				if("name")
 					t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
 					if(t)
-						candidate.name = copytext(sanitize(t),1,maxNameLen)
+						candidate.name = copytext(sanitize(t),1,MAX_NAME_LEN)
 				if("desc")
 					t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
 					if(t)
@@ -71,7 +72,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 					candidate.savefile_load(usr)
 					//In case people have saved unsanitized stuff.
 					if(candidate.name)
-						candidate.name = copytext(sanitize(candidate.name),1,maxNameLen)
+						candidate.name = copytext(sanitize(candidate.name),1,MAX_NAME_LEN)
 					if(candidate.description)
 						candidate.description = copytext(sanitize(candidate.description),1,MAX_MESSAGE_LEN)
 					if(candidate.role)
@@ -138,15 +139,15 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		dat += "<a href='byond://?src=\ref[src];option=save;new=1;candidate=\ref[candidate]'>Save Personality</a><br>"
 		dat += "<a href='byond://?src=\ref[src];option=load;new=1;candidate=\ref[candidate]'>Load Personality</a><br>"
 
-		M << browse(dat, "window=paiRecruit;can_close=0;can_minimize=0")
+		M << browse(dat, "window=paiRecruit")
 
 	proc/findPAI(var/obj/item/device/paicard/p, var/mob/user)
-		requestRecruits(user)
+		requestRecruits()
 		var/list/available = list()
 		for(var/datum/paiCandidate/c in paiController.pai_candidates)
 			if(c.ready)
 				var/found = 0
-				for(var/mob/dead/observer/o in world)
+				for(var/mob/dead/observer/o in player_list)
 					if(o.key == c.key)
 						found = 1
 				if(found)
@@ -181,18 +182,13 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			dat += "<tr class=\"d0\"><td>Preferred Role:</td><td>[c.role]</td></tr>"
 			dat += "<tr class=\"d1\"><td>OOC Comments:</td><td>[c.comments]</td></tr>"
 			dat += "<tr class=\"d2\"><td><a href='byond://?src=\ref[src];download=1;candidate=\ref[c];device=\ref[p]'>\[Download [c.name]\]</a></td><td></td></tr>"
-		if(p.chatbot)
-			dat += "<tr class=\"d0\"><td>Name:</td><td>[p.chatbot.name]</td></tr>"
-			dat += "<tr class=\"d1\"><td>Description:</td><td>[p.chatbot.description]</td></tr>"
-			dat += "<tr class=\"d0\"><td>Preferred Role:</td><td>[p.chatbot.role]</td></tr>"
-			dat += "<tr class=\"d1\"><td>OOC Comments:</td><td>[p.chatbot.comments]</td></tr>"
-			dat += "<tr class=\"d2\"><td><a href='byond://?src=\ref[src];download=1;candidate=\ref[p.chatbot];device=\ref[p]'>\[Download [p.chatbot.name]\]</a></td><td></td></tr>"
 
 		dat += "</table>"
 
 		user << browse(dat, "window=findPai")
-	proc/requestRecruits(var/mob/origin)
-		for(var/mob/dead/observer/O in world)
+
+	proc/requestRecruits()
+		for(var/mob/dead/observer/O in player_list)
 			if(jobban_isbanned(O, "pAI"))
 				continue
 			if(asked.Find(O.key))

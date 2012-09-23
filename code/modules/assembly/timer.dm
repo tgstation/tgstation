@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/device/assembly/timer
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
@@ -9,9 +7,7 @@
 	w_amt = 10
 	origin_tech = "magnets=1"
 
-	secured = 1
-	small_icon_state_left = "timer_left"
-	small_icon_state_right = "timer_right"
+	secured = 0
 
 	var/timing = 0
 	var/time = 10
@@ -41,8 +37,7 @@
 	timer_end()
 		if((!secured)||(cooldown > 0))	return 0
 		pulse(0)
-		for(var/mob/O in hearers(null, null))
-			O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+		visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
 		cooldown = 2
 		spawn(10)
 			process_cooldown()
@@ -61,17 +56,10 @@
 
 	update_icon()
 		overlays = null
-		small_icon_state_overlays = list()
+		attached_overlays = list()
 		if(timing)
-			overlays += text("timer_timing")
-			small_icon_state_overlays += text("timer_timing")
-			if(master && istype(master, /obj/item/weapon/chem_grenade))
-				var/obj/item/weapon/chem_grenade/M = master
-				M.c_state(1)
-		else
-			if(master && istype(master, /obj/item/weapon/chem_grenade))
-				var/obj/item/weapon/chem_grenade/M = master
-				M.c_state(0)
+			overlays += "timer_timing"
+			attached_overlays += "timer_timing"
 		if(holder)
 			holder.update_icon()
 		return
@@ -100,7 +88,6 @@
 
 		if(href_list["time"])
 			timing = text2num(href_list["time"])
-			processing_objects.Add(src)
 			update_icon()
 
 		if(href_list["tp"])

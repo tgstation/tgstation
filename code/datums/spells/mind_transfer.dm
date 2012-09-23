@@ -4,7 +4,7 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 1
+	clothes_req = 0
 	invocation = "GIN'YU CAPAN"
 	invocation_type = "whisper"
 	range = 1
@@ -31,7 +31,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "Too many minds! You're not a hive damnit!"//Whaa...aat?
 		return
 
-	var/mob/target = targets[1]
+	var/mob/living/target = targets[1]
 
 	if(!(target in oview(range)))//If they are not in overview after selection. Do note that !() is necessary for in to work because ! takes precedence over it.
 		user << "They are too far away!"
@@ -41,23 +41,20 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "Their mind isn't compatible with yours."
 		return
 
-	if(target.stat == 2)
+	if(target.stat == DEAD)
 		user << "You didn't study necromancy back at the Space Wizard Federation academy."
 		return
 
-	if(!target.client || !target.mind)
-	//if(!target.mind)//Good for testing.
-		user << "They appear to be brain-dead."
+	if(!target.key || !target.mind)
+		user << "They appear to be catatonic. Not even magic can affect their vacant mind."
 		return
 
 	if(target.mind.special_role in protected_roles)
 		user << "Their mind is resisting your spell."
 		return
 
-	var/mob/victim = target//The target of the spell whos body will be transferred to.
+	var/mob/living/victim = target//The target of the spell whos body will be transferred to.
 	var/mob/caster = user//The wizard/whomever doing the body transferring.
-	//To properly transfer clients so no-one gets kicked off the game, we need a host mob.
-	var/mob/dead/observer/temp_ghost = new(victim)
 
 	//SPELL LOSS BEGIN
 	//NOTE: The caster must ALWAYS keep mind transfer, even when other spells are lost.
@@ -89,30 +86,24 @@ Also, you never added distance checking after target is selected. I've went ahea
 		for(var/V in victim.mind.special_verbs)
 			victim.verbs -= V
 
-	temp_ghost.key = victim.key//Throw the victim into the ghost temporarily.
-	temp_ghost.mind = victim.mind//Tranfer the victim's mind into the ghost.
-	temp_ghost.spell_list = victim.spell_list//If they have spells, transfer them. Now we basically have a backup mob.
+	var/mob/dead/observer/ghost = victim.ghostize(0)
+	ghost.spell_list = victim.spell_list//If they have spells, transfer them. Now we basically have a backup mob.
 
-	victim.key = caster.key//Now we throw the caste into the victim's body.
-	victim.mind = caster.mind//Do the same for their mind and spell list.
+	caster.mind.transfer_to(victim)
 	victim.spell_list = caster.spell_list//Now they are inside the victim's body.
 
 	if(victim.mind.special_verbs.len)//To add all the special verbs for the original caster.
 		for(var/V in caster.mind.special_verbs)//Not too important but could come into play.
 			caster.verbs += V
 
-	caster.key = temp_ghost.key//Tranfer the original victim, now in a ghost, into the caster's body.
-	caster.mind = temp_ghost.mind//Along with their mind and spell list.
-	caster.spell_list = temp_ghost.spell_list
+	ghost.mind.transfer_to(caster)
+	caster.key = ghost.key	//have to transfer the key since the mind was not active
+	caster.spell_list = ghost.spell_list
 
 	if(caster.mind.special_verbs.len)//If they had any special verbs, we add them here.
 		for(var/V in caster.mind.special_verbs)
 			caster.verbs += V
 	//MIND TRANSFER END
-
-	//Now we update mind current mob so we know what body they are in for end round reporting.
-	caster.mind.current = caster
-	victim.mind.current = victim
 
 	//Here we paralyze both mobs and knock them out for a time.
 	caster.Paralyse(paralysis_amount_caster)
@@ -121,5 +112,3 @@ Also, you never added distance checking after target is selected. I've went ahea
 	//After a certain amount of time the victim gets a message about being in a different body.
 	spawn(msg_wait)
 		caster << "\red You feel woozy and lightheaded. <b>Your body doesn't seem like your own.</b>"
-
-	del(temp_ghost)

@@ -1,6 +1,6 @@
 /obj/item/weapon/clipboard
 	name = "clipboard"
-	icon = 'bureaucracy.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "clipboard"
 	item_state = "clipboard"
 	throwforce = 0
@@ -21,17 +21,16 @@
 		var/mob/M = usr
 		if (!(istype(over_object, /obj/screen) ))
 			return ..()
-		if((!(M.restrained()) && !(M.stat)))
-			if(over_object.name == "r_hand")
-				if(!(M.r_hand))
+
+		if(!M.restrained() && !M.stat)
+			switch(over_object.name)
+				if("r_hand")
 					M.u_equip(src)
-					M.r_hand = src
-			else
-				if(over_object.name == "l_hand")
-					if(!(M.l_hand))
-						M.u_equip(src)
-						M.l_hand = src
-			M.update_clothing()
+					M.put_in_r_hand(src)
+				if("l_hand")
+					M.u_equip(src)
+					M.put_in_l_hand(src)
+
 			src.add_fingerprint(usr)
 			return
 
@@ -50,7 +49,7 @@
 		user.drop_item()
 		W.loc = src
 		toppaper = W
-		user << "\blue You clip the paper onto the clipboard."
+		user << "<span class='notice'>You clip the paper onto \the [src].</span>"
 		update_icon()
 	else if(toppaper)
 		toppaper.attackby(usr.get_active_hand(), usr)
@@ -88,10 +87,8 @@
 		if(href_list["pen"])
 			if(haspen)
 				haspen.loc = usr.loc
-				if(ishuman(usr))
-					if(!usr.get_active_hand())
-						usr.put_in_hand(haspen)
-						haspen = null
+				usr.put_in_hands(haspen)
+				haspen = null
 
 		if(href_list["addpen"])
 			if(!haspen)
@@ -100,7 +97,7 @@
 					usr.drop_item()
 					W.loc = src
 					haspen = W
-					usr << "\blue You slot the pen into the clipboard."
+					usr << "<span class='notice'>You slot the pen into \the [src].</span>"
 
 		if(href_list["write"])
 			var/obj/item/P = locate(href_list["write"])
@@ -112,14 +109,11 @@
 			var/obj/item/P = locate(href_list["remove"])
 			if(P)
 				P.loc = usr.loc
-				if(ishuman(usr))
-					if(!usr.get_active_hand())
-						usr.put_in_hand(P)
-				else
-					P.loc = get_turf(usr)
+				usr.put_in_hands(P)
 				if(P == toppaper)
-					var/obj/item/weapon/paper/newtop = locate(/obj/item/weapon/paper in src)
-					if(newtop && (newtop != toppaper))
+					toppaper = null
+					var/obj/item/weapon/paper/newtop = locate(/obj/item/weapon/paper) in src
+					if(newtop && (newtop != P))
 						toppaper = newtop
 					else
 						toppaper = null
@@ -138,7 +132,7 @@
 			var/obj/item/P = locate(href_list["top"])
 			if(P)
 				toppaper = P
-				usr << "You move [P.name] to the top."
+				usr << "<span class='notice'>You move [P.name] to the top.</span>"
 
 		//Update everything
 		attack_self(usr)

@@ -52,8 +52,7 @@ emp_act
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/name in organs)
-		var/datum/organ/external/organ = organs[name]
+	for(var/datum/organ/external/organ in organs)
 		armorval += checkarmor(organ, type)
 		organnum++
 	return (armorval/max(organnum, 1))
@@ -62,7 +61,6 @@ emp_act
 /mob/living/carbon/human/proc/checkarmor(var/datum/organ/external/def_zone, var/type)
 	if(!type)	return 0
 	var/protection = 0
-	var/adjuster = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
 	for(var/bp in body_parts)
 		if(!bp)	continue
@@ -70,8 +68,6 @@ emp_act
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
 				protection += C.armor[type]
-				adjuster++
-	protection = (adjuster ? protection/(sqrt(adjuster)) : 0)
 	return protection
 
 
@@ -91,13 +87,13 @@ emp_act
 		if(I.IsShield() && (prob(35)))
 			visible_message("\red <B>The reactive teleport system flings [src] clear of [attack_text]!</B>")
 			var/list/turfs = new/list()
-			for(var/turf/T in orange(6,src))
+			for(var/turf/T in orange(6))
 				if(istype(T,/turf/space)) continue
 				if(T.density) continue
+				if(T.x>world.maxx-6 || T.x<6)	continue
+				if(T.y>world.maxy-6 || T.y<6)	continue
 				turfs += T
-			if(!turfs.len)
-				turfs += pick(/turf in orange(6,src))
-				visible_message("\red <B>The reactive teleport system malfunctions!</B>")
+			if(!turfs.len) turfs += pick(/turf in orange(6))
 			var/turf/picked = pick(turfs)
 			if(!isturf(picked)) return
 			src.loc = picked
@@ -107,10 +103,6 @@ emp_act
 /mob/living/carbon/human/emp_act(severity)
 	for(var/obj/O in src)
 		if(!O)	continue
-		O.emp_act(severity)
-	for(var/named in organs)
-		var/datum/organ/external/O = organs[named]
-		if(O.status & ORGAN_DESTROYED)	continue
 		O.emp_act(severity)
 	..()
 
@@ -125,77 +117,75 @@ emp_act
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0
 
-	if(!(affecting.status & ORGAN_DESTROYED))
-		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
+	if(I.attack_verb.len)
+		visible_message("\red <B>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</B>")
 	else
-		user << "What [affecting]?"
-		return
+		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
 
-	var/armor = run_armor_check(affecting, "melee", "Your armor has protected you from a hit to the [hit_area].", "Your armor has softened hit to your [hit_area].")
+	var/armor = run_armor_check(affecting, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
 
-	// make heavy weapons do more damage
-	var/power = I.force
-	if(I.w_class >= 4)
-		power *= 2
-	apply_damage(power, I.damtype, affecting, armor, is_cut(I), I.name)
+	apply_damage(I.force, I.damtype, affecting, armor , I.sharp)
 
 	var/bloody = 0
-	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + is_sharp(I) * 50 + (I.force * 2)))
+	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
 		I.add_blood(src)	//Make the weapon bloody, not the person.
-		bloody = 1
-		var/turf/location = loc
-		if(istype(location, /turf/simulated))
-			location.add_blood(src)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.wear_suit)			H.wear_suit.add_blood(src)
-			else if(H.w_uniform)	H.w_uniform.add_blood(src)
-			if(H.shoes)				H.shoes.add_blood(src)
-			if (H.gloves && istype(H.gloves,/obj/item/clothing/gloves))
-				var/obj/item/clothing/gloves/G = H.gloves
-				G.add_blood(H)
-				G.transfer_blood = 2
-				G.bloody_hands_mob = H
-			else
-				H.add_blood(H)
-				H.bloody_hands = 2
-				H.bloody_hands_mob = H
+//		if(user.hand)	user.update_inv_l_hand()	//updates the attacker's overlay for the (now bloodied) weapon
+//		else			user.update_inv_r_hand()	//removed because weapons don't have on-mob blood overlays
+		if(prob(33))
+			bloody = 1
+			var/turf/location = loc
+			if(istype(location, /turf/simulated))
+				location.add_blood(src)
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if(get_dist(H, src) > 1) //people with TK won't get smeared with blood
+					if(H.wear_suit)
+						H.wear_suit.add_blood(src)
+						H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
+					else if(H.w_uniform)
+						H.w_uniform.add_blood(src)
+						H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
+					if (H.gloves)
+						H.gloves.add_blood(H)
+						H.gloves:transfer_blood = 2
+						H.gloves:bloody_hands_mob = H
+					else
+						H.add_blood(H)
+						H.bloody_hands = 2
+						H.bloody_hands_mob = H
+					H.update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
-	switch(hit_area)
-		if("head")//Harder to score a stun but if you do it lasts a bit longer
-			var/knockout_chance = 0
-			if(power >= 4)
-				knockout_chance += 5
-			if(power >= 10)
-				knockout_chance += 20
-				knockout_chance += power
-				if(health <= 40) knockout_chance += 40
-			if(prob(knockout_chance))
-				apply_effect(20, PARALYZE, armor)
-				visible_message("\red <B>[src] has been knocked unconscious!</B>")
-				if(src != user)
-					ticker.mode.remove_revolutionary(mind)
+		switch(hit_area)
+			if("head")//Harder to score a stun but if you do it lasts a bit longer
+				if(prob(I.force))
+					apply_effect(20, PARALYZE, armor)
+					visible_message("\red <B>[src] has been knocked unconscious!</B>")
+					if(src != user)
+						ticker.mode.remove_revolutionary(mind)
 
-			if(bloody)//Apply blood
-				if(wear_mask)				wear_mask.add_blood(src)
-				if(head)					head.add_blood(src)
-				if(glasses && prob(33))		glasses.add_blood(src)
+				if(bloody)//Apply blood
+					if(wear_mask)
+						wear_mask.add_blood(src)
+						update_inv_wear_mask(0)
+					if(head)
+						head.add_blood(src)
+						update_inv_head(0)
+					if(glasses && prob(33))
+						glasses.add_blood(src)
+						update_inv_glasses(0)
 
-		if("chest")//Easier to score a stun but lasts less time
-			var/knockdown_chance = 0
-			if(power >= 10)
-				knockdown_chance += 10
-			if(I.w_class >= 4)
-				knockdown_chance *= 4
-			knockdown_chance = min(knockdown_chance, 50)
-			if(prob(knockdown_chance))
-				apply_effect(5, WEAKEN, armor)
-				visible_message("\red <B>[src] has been knocked down!</B>")
+			if("chest")//Easier to score a stun but lasts less time
+				if(prob((I.force + 10)))
+					apply_effect(5, WEAKEN, armor)
+					visible_message("\red <B>[src] has been knocked down!</B>")
 
-			if(bloody)
-				if(src.wear_suit)	src.wear_suit.add_blood(src)
-				if(src.w_uniform)	src.w_uniform.add_blood(src)
+				if(bloody)
 
-	UpdateDamageIcon()
+					if(wear_suit)
+						wear_suit.add_blood(src)
+						update_inv_wear_suit(0)
+					if(w_uniform)
+						w_uniform.add_blood(src)
+						update_inv_w_uniform(0)

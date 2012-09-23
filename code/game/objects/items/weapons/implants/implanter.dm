@@ -1,6 +1,6 @@
 /obj/item/weapon/implanter
 	name = "implanter"
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "implanter0"
 	item_state = "syringe_0"
 	throw_speed = 1
@@ -12,46 +12,37 @@
 
 
 /obj/item/weapon/implanter/update()
-	if (imp)
-		icon_state = "implanter1"
+	if (src.imp)
+		src.icon_state = "implanter1"
 	else
-		icon_state = "implanter0"
+		src.icon_state = "implanter0"
 	return
 
 
 /obj/item/weapon/implanter/attack(mob/M as mob, mob/user as mob)
 	if (!istype(M, /mob/living/carbon))
 		return
-	if (user && imp)
-		if (M != user)
-			user.visible_message("\red \The [user] tries to implant \the [M] with \the [src]!","\red You try to implant \the [M] with \the [src]!")
-		else
-			user.visible_message("\red \The [user] tries to implant [user.get_visible_gender() == MALE ? "himself" : user.get_visible_gender() == FEMALE ? "herself" : "themselves"] with \the [src]!","\red You try to implant yourself with \the [src]!")
-		if(!do_mob(user, M,60))
-			return
-		if(hasorgans(M))
-			var/datum/organ/external/target = M:get_organ(check_zone(user.zone_sel.selecting))
-			if(target.status & ORGAN_DESTROYED)
-				user << "What [target.display_name]?"
-				return
-			if(!target.implant)
-				target.implant = list()
-			target.implant += imp
-			imp.loc = target
-			if (M != user)
-				user.visible_message("\red \The [user] implants \the [M]'s [target.display_name] with \the [src]!","\red You implant \the [M]'s [target.display_name] with \the [src]!")
-			else
-				user.visible_message("\red \The [user] implants [user.get_visible_gender() == MALE ? "his" : user.get_visible_gender() == FEMALE ? "her" : "their"] own [target.display_name] with \the [src]!","\red You implant your [target.display_name] with \the [src]!")
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src] ([imp])  by [user] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src] ([imp]) to implant [M] ([M.ckey])</font>")
-		log_admin("ATTACK: [user] ([user.ckey]) implanted [M] ([M.ckey]) with [src].")
-		message_admins("ATTACK: [user] ([user.ckey]) implanted [M] ([M.ckey]) with [src].")
-		log_attack("<font color='red'>[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-		imp.imp_in = M
-		imp.implanted = 1
-		imp.implanted(M)
-		imp = null
-		icon_state = "implanter0"
+	if (user && src.imp)
+		for (var/mob/O in viewers(M, null))
+			O.show_message("\red [user] is attemping to implant [M].", 1)
+
+		var/turf/T1 = get_turf(M)
+		if (T1 && ((M == user) || do_after(user, 50)))
+			if(user && M && (get_turf(M) == T1) && src && src.imp)
+				for (var/mob/O in viewers(M, null))
+					O.show_message("\red [M] has been implanted by [user].", 1)
+				M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
+				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
+				log_attack("<font color='red'>[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+
+				user.show_message("\red You implanted the implant into [M].")
+				if(src.imp.implanted(M))
+					src.imp.loc = M
+					src.imp.imp_in = M
+					src.imp.implanted = 1
+
+				src.imp = null
+				update()
 	return
 
 
@@ -60,7 +51,7 @@
 	name = "implanter-loyalty"
 
 /obj/item/weapon/implanter/loyalty/New()
-	imp = new /obj/item/weapon/implant/loyalty( src )
+	src.imp = new /obj/item/weapon/implant/loyalty( src )
 	..()
 	update()
 	return
@@ -68,10 +59,10 @@
 
 
 /obj/item/weapon/implanter/explosive
-	name = "implanter (E)"
+	name = "implanter-explosive"
 
 /obj/item/weapon/implanter/explosive/New()
-	imp = new /obj/item/weapon/implant/explosive( src )
+	src.imp = new /obj/item/weapon/implant/explosive( src )
 	..()
 	update()
 	return
@@ -84,37 +75,3 @@
 	..()
 	update()
 	return
-
-/obj/item/weapon/implanter/compressed
-	name = "implanter (C)"
-	icon_state = "cimplanter0"
-
-/obj/item/weapon/implanter/compressed/New()
-	imp = new /obj/item/weapon/implant/compressed( src )
-	..()
-	update()
-	return
-
-/obj/item/weapon/implanter/compressed/update()
-	if (imp)
-		var/obj/item/weapon/implant/compressed/c = imp
-		if(!c.scanned)
-			icon_state = "cimplanter0"
-		else
-			icon_state = "cimplanter1"
-	else
-		icon_state = "cimplanter2"
-	return
-
-/obj/item/weapon/implanter/compressed/attack(mob/M as mob, mob/user as mob)
-	var/obj/item/weapon/implant/compressed/c = imp
-	if (c.scanned == null)
-		user << "Please scan an object with the implanter first."
-		return
-	..()
-
-/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob)
-	if(istype(A,/obj/item) && imp)
-		imp:scanned = A
-		A.loc.contents.Remove(A)
-		update()

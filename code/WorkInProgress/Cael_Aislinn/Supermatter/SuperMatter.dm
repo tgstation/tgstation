@@ -26,8 +26,8 @@
 	density = 1
 	anchored = 0
 
-	ul_Red = 5
-	ul_Green = 6
+	LuminosityRed = 4
+	LuminosityGreen = 6
 
 	var/gasefficency = 0.25
 

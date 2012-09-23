@@ -1,3 +1,21 @@
+//Define all tape types in policetape.dm
+/obj/item/taperoll
+	name = "tape roll"
+	icon = 'policetape.dmi'
+	icon_state = "rollstart"
+	flags = FPRINT
+	w_class = 1.0
+	var/turf/start
+	var/turf/end
+	var/tape_type = /obj/item/tape
+	var/icon_base
+
+/obj/item/tape
+	name = "tape"
+	icon = 'policetape.dmi'
+	anchored = 1
+	density = 1
+	var/icon_base
 
 /obj/item/taperoll/police
 	name = "police tape"
@@ -9,7 +27,7 @@
 /obj/item/tape/police
 	name = "police tape"
 	desc = "A length of police tape.  Do not cross."
-	req_access = list(ACCESS_SECURITY)
+	req_access = list(access_security)
 	icon_base = "police"
 
 /obj/item/taperoll/engineering
@@ -22,7 +40,7 @@
 /obj/item/tape/engineering
 	name = "engineering tape"
 	desc = "A length of engineering tape. Better not cross it."
-	req_access = list(ACCESS_ENGINE,ACCESS_ATMOSPHERICS)
+	req_access = list(access_engine,access_atmospherics)
 	icon_base = "engineering"
 
 /obj/item/taperoll/attack_self(mob/user as mob)
@@ -116,7 +134,7 @@
 	breaktape(/obj/item/weapon/wirecutters,user)
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W as obj, mob/user as mob)
-	if(user.a_intent == "help" && ((!is_sharp(W) && src.allowed(user)) ||(!is_cut(W) && !src.allowed(user))))
+	if(user.a_intent == "help" && ((!is_sharp(W) && src.allowed(user))))
 		user << "You can't break the [src] with that!"
 		return
 	user.show_viewers("\blue [user] breaks the [src]!")

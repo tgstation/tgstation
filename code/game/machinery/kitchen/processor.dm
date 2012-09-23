@@ -1,7 +1,7 @@
 
 /obj/machinery/processor
 	name = "Food Processor"
-	icon = 'kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor"
 	layer = 2.9
 	density = 1
@@ -25,30 +25,25 @@
 			del(what)
 
 	/* objs */
-	wheat
-		input = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
-		output = /obj/item/weapon/reagent_containers/food/snacks/flour
-
 	meat
-		input = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat
-		output = /obj/item/weapon/reagent_containers/food/snacks/rawfaggot
+		input = /obj/item/weapon/reagent_containers/food/snacks/meat
+		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
 	meat2
 		input = /obj/item/weapon/syntiflesh
-		output = /obj/item/weapon/reagent_containers/food/snacks/rawfaggot
+		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 /*
 	monkeymeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/monkey
+		input = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
 	humanmeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/human
+		input = /obj/item/weapon/reagent_containers/food/snacks/meat/human
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 */
-
 	potato
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
-		output = /obj/item/weapon/reagent_containers/food/snacks/rawsticks
+		output = /obj/item/weapon/reagent_containers/food/snacks/fries
 
 	carrot
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
@@ -58,9 +53,6 @@
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 		output = /obj/item/weapon/reagent_containers/food/snacks/soydope
 
-	flour
-		input = /obj/item/weapon/reagent_containers/food/snacks/flour
-		output = /obj/item/weapon/reagent_containers/food/snacks/spagetti
 
 	/* mobs */
 	mob
@@ -70,7 +62,7 @@
 
 		metroid
 			input = /mob/living/carbon/metroid
-			output = /obj/item/weapon/reagent_containers/food/drinks/jar
+			output = /obj/item/weapon/reagent_containers/glass/beaker/roro
 
 		monkey
 			process(loc, what)
@@ -152,7 +144,7 @@
 		user.visible_message("\blue [user] turns on \a [src].", \
 			"You turn on \a [src].", \
 			"You hear a food processor")
-		playsound(src.loc, 'blender.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 		use_power(500)
 		sleep(P.time)
 		P.process(src.loc, O)

@@ -28,6 +28,9 @@
 /obj/item/weapon/ore/strangerock
 	var/datum/geosample/geological_data
 	var/source_rock = "/turf/simulated/mineral"
+	var/method = 0
+	var/obj/inside
+	origin_tech = "materials=5"
 
 /obj/item/weapon/ore/strangerock/New()
 	..()
@@ -79,6 +82,7 @@
 				R.geological_data = src.geological_data
 			user << "\blue You take a core sample of the [src]."
 
+/*
 /obj/item/weapon/ore/strangerock/acid_act(var/datum/reagent/R)
 	if(src.method)
 		if(inside)
@@ -93,6 +97,7 @@
 		for(var/mob/M in viewers(world.view, get_turf(src)))
 			M.show_message("\blue The acid splashes harmlessly off the rock, nothing else interesting happens.",1)
 	return 1
+	*/
 
 
 

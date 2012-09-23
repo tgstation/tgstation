@@ -1,41 +1,58 @@
-/mob/dead/observer/New(mob/body, var/safety = 0)
-	invisibility = 10
+/mob/dead/observer
+	name = "ghost"
+	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "ghost"
+	layer = 4
+	stat = DEAD
+	density = 0
+	canmove = 0
+	blinded = 0
+	anchored = 1	//  don't get pushed around
+	var/can_reenter_corpse
+	var/datum/hud/living/carbon/hud = null // hud
+	var/bootime = 0
+	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
+							//If you died in the game and are a ghsot - this will remain as null.
+							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
+
+/mob/dead/observer/New(mob/body)
+	invisibility = INVISIBILITY_OBSERVER
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	see_invisible = 15
+	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	verbs += /mob/dead/observer/proc/dead_tele
-	verbs += /mob/dead/observer/proc/become_mouse
-	taj_talk_understand = 1
+	stat = DEAD
 
-	if(body)
-		var/turf/location = get_turf(body)//Where is the mob located?
-		if(location)//Found turf.
-			loc = location
-		else//Safety, in case a turf cannot be found.
-			loc = pick(latejoin)
-		if(!istype(body,/mob))	return//This needs to be recoded sometime so it has loc as its first arg
-		real_name = body.name
-		if(!body.original_name)
-			body.original_name = real_name
-		original_name = body.original_name
-		//name = body.original_name		//original
-		if(issimpleanimal(body))
-			name = original_name
+	dead_mob_list += src
+	add_to_mob_list(src)
+	var/turf/T
+
+	if(ismob(body))
+		T = get_turf(body)				//Where is the body located?
+		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
+
+		gender = body.gender
+		if(body.mind && body.mind.name)
+			name = body.mind.name
 		else
-			name = body.name
-		real_name = body.real_name
+			if(body.real_name)
+				name = body.real_name
+			else
+				if(gender == MALE)
+					name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+				else
+					name = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 
-		if(!name)
-			name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
-			real_name = name
+		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
-		if( original_name != real_name )
-			name = name + " (died as [src.real_name])"
+	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
+	loc = T
 
-		if(!safety)
-			corpse = body
-			verbs += /mob/dead/observer/proc/reenter_corpse
-		return
+	if(!name)							//To prevent nameless ghosts
+		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+	real_name = name
+	return
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
@@ -44,58 +61,31 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(var/transfer_mind = 0)
+/mob/proc/ghostize(var/can_reenter_corpse = 1)
 	if(key)
-		if(client)
-			client.screen.len = null//Clear the hud, just to be sure.
-		var/mob/dead/observer/ghost = new(src,transfer_mind)//Transfer safety to observer spawning proc.
-		if(transfer_mind)//When a body is destroyed.
-			if(mind)
-				mind.transfer_to(ghost)
-			else//They may not have a mind and be gibbed/destroyed.
-				ghost.key = key
-		else//Else just modify their key and connect them.
-			ghost.key = key
-
-		verbs -= /mob/proc/ghost
-		if (ghost.client)
-			ghost.client.eye = ghost
-
-	else if(transfer_mind)//Body getting destroyed but the person is not present inside.
-		for(var/mob/dead/observer/O in world)
-			if(O.corpse == src&&O.key)//If they have the same corpse and are keyed.
-				if(mind)
-					O.mind = mind//Transfer their mind if they have one.
-				break
-	return
+		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
+		ghost.can_reenter_corpse = can_reenter_corpse
+		ghost.timeofdeath = timeofdeath //BS12 EDIT
+		ghost.key = key
+		return ghost
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
 */
-/mob/proc/ghost()
-	set category = "Ghost"
+/mob/living/verb/ghost()
+	set category = "OOC"
 	set name = "Ghost"
+	set desc = "Relinquish your life and enter the land of the dead."
 
-	/*if(stat != 2) //this check causes nothing but troubles. Commented out for Nar-Sie's sake. --rastaf0
-		src << "Only dead people and admins get to ghost, and admins don't use this verb to ghost while alive."
-		return*/
-	if(key)
-		var/mob/dead/observer/ghost = new(src)
-		ghost.key = key
-		if(timeofdeath)
-			ghost.timeofdeath = timeofdeath
-		verbs -= /mob/proc/ghost
-		if (ghost.client)
-			ghost.client.eye = ghost
-		/*if(issimpleanimal(src))
-			ghost.name = src.name + " ([src.real_name])"
-			ghost.voice_name = src.name + " ([src.real_name])"*/
+	if(stat == DEAD)
+		ghostize(1)
+	else
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		if(response != "Ghost")	return	//didn't want to ghost after-all
+		resting = 1
+		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 	return
 
-/mob/proc/adminghostize()
-	if(client)
-		client.mob = new/mob/dead/observer(src)
-	return
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(NewLoc)
@@ -107,14 +97,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
 		y++
-	if((direct & SOUTH) && y > 1)
+	else if((direct & SOUTH) && y > 1)
 		y--
 	if((direct & EAST) && x < world.maxx)
 		x++
-	if((direct & WEST) && x > 1)
+	else if((direct & WEST) && x > 1)
 		x--
 
-	for(var/obj/effect/step_trigger/S in locate(x, y, z))
+	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
 		S.HasEntered(src)
 
 /mob/dead/observer/examine()
@@ -128,6 +118,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	statpanel("Status")
 	if (client.statpanel == "Status")
+		stat(null, "Station Time: [worldtime2text()]")
 		if(ticker)
 			if(ticker.mode)
 				//world << "DEBUG: ticker not null"
@@ -141,93 +132,65 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				if (timeleft)
 					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-/mob/dead/observer/proc/reenter_corpse()
+/mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
-	if(!corpse)
-		alert("You don't have a corpse!")
+	if(!client)	return
+	if(!(mind && mind.current && can_reenter_corpse))
+		src << "<span class='warning'>You have no body.</span>"
 		return
-	if(client && client.holder && client.holder.state == 2)
-		var/rank = client.holder.rank
-		client.clear_admin_verbs()
-		client.holder.state = 1
-		client.update_admins(rank)
-	if(iscultist(corpse) && corpse.ajourn==1 && corpse.stat!=2) //checks if it's an astral-journeying cultistm if it is and he's not on an astral journey rune, re-entering won't work
-		var/S=0
-		for(var/obj/effect/rune/R in world)
-			if(corpse.loc==R.loc && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself)
-				S=1
-		if(!S)
-			usr << "\red The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you."
+	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
+		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
+		return
+	if(mind.current.ajourn && mind.current.stat != DEAD) 	//check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
+		var/obj/effect/rune/R = locate() in mind.current.loc	//whilst corpse is alive, we can only reenter the body if it's on the rune
+		if(!(R && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself))	//astral journeying rune
+			usr << "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>"
 			return
-	if(corpse.ajourn)
-		corpse.ajourn=0
-	client.mob = corpse
-	if (corpse.stat==2 || istype(corpse, /mob/living/simple_animal/mouse ))
-		corpse.verbs += /mob/proc/ghost
-	del(src)
-
-/mob/dead/observer/proc/become_mouse()
-	set category = "Ghost"
-	set name = "Become mouse"
-
-	//locate an empty mouse
-	var/list/eligible_targets = new()
-	for(var/mob/living/simple_animal/mouse/M in world)
-		if(!M.ckey && !M.stat)
-			eligible_targets.Add(M)
-
-	var/mob/living/simple_animal/mouse/target_mouse
-	if(ticker.spawn_vermin)
-		if(eligible_targets.len)
-			//grab a random existing one
-			target_mouse = pick(eligible_targets)
-		else
-			//make a new mouse
-			target_mouse = new(pick(ticker.vermin_spawn_turfs))
-
-	if(target_mouse)
-		//move player into mouse
-		//the mouse ai will deactivate itself
-		client.mob = target_mouse
-		target_mouse.original_name = src.original_name
-
-		//reset admin verbs
-		if(client && client.holder && client.holder.state == 2)
-			var/rank = client.holder.rank
-			client.clear_admin_verbs()
-			client.holder.state = 1
-			client.update_admins(rank)
-
-		//update allowed verbs
-		target_mouse.verbs += /mob/proc/ghost
-		target_mouse.verbs -= /mob/verb/observe
-		target_mouse.verbs -= /client/verb/toggle_ghost_ears
-		target_mouse.verbs -= /client/verb/toggle_ghost_sight
-
-		del(src)
-
-	else
-		client << "\red Unable to become a mouse!"
+	mind.current.ajourn=0
+	mind.current.key = key
+	return 1
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
-	if((usr.stat != 2) || !istype(usr, /mob/dead/observer))
+	if(!istype(usr, /mob/dead/observer))
 		usr << "Not when you're not dead!"
 		return
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
 	var/A
-	A = input("Area to jump to", "BOOYEA", A) in ghostteleportlocs
+	A = input("Area to jump to", "BOOYEA", A) as null|anything in ghostteleportlocs
 	var/area/thearea = ghostteleportlocs[A]
+	if(!thearea)	return
 
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
 		L+=T
 	usr.loc = pick(L)
+
+/mob/dead/observer/verb/follow()
+	set category = "Ghost"
+	set name = "Follow" // "Haunt"
+	set desc = "Follow and haunt a mob."
+
+	if(istype(usr, /mob/dead/observer))
+		var/list/mobs = getmobs()
+		var/input = input("Please, select a mob!", "Follow Mob", null, null) as null|anything in mobs
+		var/mob/target = mobs[input]
+		if(target && target != usr)
+			spawn(0)
+				var/turf/pos = get_turf(src)
+				while(src.loc == pos)
+					var/turf/T = get_turf(target)
+					if(!T)
+						break
+					src.loc = T
+					pos = src.loc
+					sleep(15)
+
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
@@ -255,6 +218,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				A << "This mob is not located in the game world."
 
+/mob/dead/observer/verb/boo()
+	set category = "Ghost"
+	set name = "Boo!"
+	set desc= "Scare your crew members because of boredom!"
+
+	if(bootime > world.time) return
+	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
+	if(L)
+		L.flicker()
+		bootime = world.time + 600
+		return
+	//Maybe in the future we can add more <i>spooky</i> code here!
+	return
 
 /mob/dead/observer/verb/toggle_alien_candidate()
 	set name = "Toggle Be Alien Candidate"
@@ -286,3 +262,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set hidden = 1
 	src << "\red You are dead! You have no mind to store memory!"
 
+/mob/dead/observer/verb/toggle_darkness()
+	set name = "Toggle Darkness"
+	set category = "Ghost"
+
+	if (see_invisible == SEE_INVISIBLE_OBSERVER_NOLIGHTING)
+		see_invisible = SEE_INVISIBLE_OBSERVER
+	else
+		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING

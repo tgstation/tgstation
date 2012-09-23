@@ -1,128 +1,125 @@
-/obj/item/clothing/suit/straight_jacket
-	name = "straight jacket"
-	desc = "A suit that completely restrains the wearer."
-	icon_state = "straight_jacket"
-	item_state = "straight_jacket"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+/*
+ * Contains:
+ *		Lasertag
+ *		Costume
+ *		Misc
+ */
 
-
-/obj/item/clothing/suit/storage/wcoat
-	name = "waistcoat"
-	desc = "The height of class."
-	icon_state = "vest"
-	item_state = "wcoat"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-
-
+/*
+ * Lasertag
+ */
 /obj/item/clothing/suit/bluetag
 	name = "blue laser tag armour"
-	desc = "Blue pride, station wide."
+	desc = "Blue Pride, Station Wide"
 	icon_state = "bluetag"
 	item_state = "bluetag"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
-
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armour"
-	desc = "Pew pew pew!"
+	desc = "Pew pew pew"
 	icon_state = "redtag"
 	item_state = "redtag"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
 
-
-/obj/item/clothing/suit/storage/apron
-	name = "apron"
-	desc = "A basic blue apron. It has a large pocket you can store things in."
-	icon_state = "apron"
-	item_state = "apron"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
-
-
-/obj/item/clothing/suit/storage/chef
-	name = "chef's apron"
-	desc = "An apron used by a high class chef. Has a few pockets for knick-knacks."
-	icon_state = "chef"
-	item_state = "chef"
-	gas_transfer_coefficient = 0.90
-	permeability_coefficient = 0.50
-	heat_transfer_coefficient = 0.50
-	protective_temperature = 1000
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
+/*
+ * Costume
+ */
+/obj/item/clothing/suit/pirate
+	name = "pirate coat"
+	desc = "Yarr."
+	icon_state = "pirate"
+	item_state = "pirate"
+	flags = FPRINT | TABLEPASS
 
 
-/obj/item/clothing/suit/storage/chef/classic
-	name = "classic chef's apron"
-	desc = "A basic, dull, white chef's apron."
-	icon_state = "apronchef"
-	item_state = "apronchef"
+/obj/item/clothing/suit/hgpirate
+	name = "pirate captain coat"
+	desc = "Yarr."
+	icon_state = "hgpirate"
+	item_state = "hgpirate"
+	flags = FPRINT | TABLEPASS
+	flags_inv = HIDEJUMPSUIT
+
+
+/obj/item/clothing/suit/cyborg_suit
+	name = "cyborg suit"
+	desc = "Suit for a cyborg costume."
+	icon_state = "death"
+	item_state = "death"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	fire_resist = T0C+5200
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+
+/obj/item/clothing/suit/greatcoat
+	name = "great coat"
+	desc = "A Nazi great coat"
+	icon_state = "nazi"
+	item_state = "nazi"
+	flags = FPRINT | TABLEPASS
+
+
+/obj/item/clothing/suit/johnny_coat
+	name = "johnny~~ coat"
+	desc = "Johnny~~"
+	icon_state = "johnny"
+	item_state = "johnny"
+	flags = FPRINT | TABLEPASS
+
+
+/obj/item/clothing/suit/justice
+	name = "justice suit"
+	desc = "this pretty much looks ridiculous"
+	icon_state = "justice"
+	item_state = "justice"
+	flags = FPRINT | TABLEPASS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+
+/obj/item/clothing/suit/judgerobe
+	name = "judge's robe"
+	desc = "This robe commands authority."
+	icon_state = "judge"
+	item_state = "judge"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	allowed = list(/obj/item/weapon/cigpacket,/obj/item/weapon/spacecash)
+	flags_inv = HIDEJUMPSUIT
+
+
+/obj/item/clothing/suit/wcoat
+	name = "waistcoat"
+	desc = "For some classy, murderous fun."
+	icon_state = "vest"
+	item_state = "wcoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 
-/obj/item/clothing/suit/hazardvest
-	name = "hazard vest"
-	desc = "A high-visibility vest used in work zones."
-	icon_state = "hazard"
-	item_state = "hazard"
-
-
-/obj/item/clothing/suit/suspenders
-	name = "suspenders"
-	desc = "They suspend the illusion of the mime's play."
-	icon = 'belts.dmi'
-	icon_state = "suspenders"
+/obj/item/clothing/suit/apron/overalls
+	name = "coveralls"
+	desc = "A set of denim overalls."
+	icon_state = "overalls"
+	item_state = "overalls"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
 
 /obj/item/clothing/suit/syndicatefake
 	name = "red space suit replica"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
-	desc = "A plastic replica of a famous space suit. This is a toy, not for use in space!"
+	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = 3
 	flags = FPRINT | TABLEPASS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
-/obj/item/clothing/suit/storage/captunic
-	name = "captain's parade tunic"
-	desc = "Worn by a captain to show their class."
-	icon_state = "captunic"
-	item_state = "bio_suit"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
-
-
-/obj/item/clothing/suit/nun
-	name = "nun robe"
-	desc = "Maximum piety in this star system."
-	icon_state = "nun"
-	item_state = "nun"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
-	flags_inv = HIDESHOES|HIDEJUMPSUIT
-
-/obj/item/clothing/suit/monk
-	name = "monk's robe"
-	desc = "A humble robe."
-	icon_state = "monk"
-	item_state = "monk"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-
-/obj/item/clothing/suit/storage/chaplain_hoodie
-	name = "chaplain hoodie"
-	desc = "This suit says to you, 'hush'!"
-	icon_state = "chaplain_hoodie"
-	item_state = "chaplain_hoodie"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-
-
 /obj/item/clothing/suit/hastur
-	name = "\improper Hastur's robes"
-	desc = "Robes not meant to be worn by man."
+	name = "Hastur's Robes"
+	desc = "Robes not meant to be worn by man"
 	icon_state = "hastur"
 	item_state = "hastur"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -130,8 +127,8 @@
 
 
 /obj/item/clothing/suit/imperium_monk
-	name = "imperium monk robes"
-	desc = "A set of strange robes."
+	name = "Imperium monk"
+	desc = "Have YOU killed a xenos today?"
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -139,8 +136,8 @@
 
 
 /obj/item/clothing/suit/chickensuit
-	name = "chicken suit"
-	desc = "Bwak!"
+	name = "Chicken Suit"
+	desc = "A suit made long ago by the ancient empire KFC."
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HEAD
@@ -148,7 +145,7 @@
 
 
 /obj/item/clothing/suit/monkeysuit
-	name = "monkey suit"
+	name = "Monkey Suit"
 	desc = "A suit that looks like a primate"
 	icon_state = "monkeysuit"
 	item_state = "monkeysuit"
@@ -157,15 +154,13 @@
 
 
 /obj/item/clothing/suit/holidaypriest
-	name = "holiday priest"
-	desc = "This is a nice holiday, my son."
+	name = "Holiday Priest"
+	desc = "This is a nice holiday my son."
 	icon_state = "holidaypriest"
 	item_state = "holidaypriest"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEJUMPSUIT
 
-
-// BubbleWrap - Nothing to see here
 
 /obj/item/clothing/suit/cardborg
 	name = "cardborg suit"
@@ -175,17 +170,117 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
 
-/obj/item/clothing/suit/patientgown
-	name = "patient gown"
-	desc = "A sterile gown for patient wear."
-	icon_state = "patientgown"
-	item_state = "patientgown"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
+/*
+ * Misc
+ */
 
-/obj/item/clothing/suit/weddingdress
-	name = "wedding dress"
-	desc = "Here comes the bride."
-	icon_state = "weddingdress"
-	item_state = "weddingdress"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
-	flags_inv = HIDESHOES
+/obj/item/clothing/suit/straight_jacket
+	name = "straight jacket"
+	desc = "A suit that completely restrains the wearer."
+	icon_state = "straight_jacket"
+	item_state = "straight_jacket"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+/obj/item/clothing/suit/ianshirt
+	name = "worn shirt"
+	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
+	icon_state = "ianshirt"
+	item_state = "ianshirt"
+
+//Blue suit jacket toggle
+/obj/item/clothing/suit/suit/verb/toggle()
+	set name = "Toggle Jacket Buttons"
+	set category = "Object"
+	set src in usr
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return 0
+
+	if(src.icon_state == "suitjacket_blue_open")
+		src.icon_state = "suitjacket_blue"
+		src.item_state = "suitjacket_blue"
+		usr << "You button up the suit jacket."
+	else if(src.icon_state == "suitjacket_blue")
+		src.icon_state = "suitjacket_blue_open"
+		src.item_state = "suitjacket_blue_open"
+		usr << "You unbutton the suit jacket."
+	else
+		usr << "You button-up some imaginary buttons on your [src]."
+		return
+	usr.update_inv_wear_suit()
+
+//pyjamas
+//originally intended to be pinstripes >.>
+
+/obj/item/clothing/under/bluepyjamas
+	name = "blue pyjamas"
+	desc = "Slightly old-fashioned sleepwear."
+	icon_state = "blue_pyjamas"
+	item_state = "blue_pyjamas"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/obj/item/clothing/under/redpyjamas
+	name = "red pyjamas"
+	desc = "Slightly old-fashioned sleepwear."
+	icon_state = "red_pyjamas"
+	item_state = "red_pyjamas"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+//coats
+
+/obj/item/clothing/suit/leathercoat
+	name = "leather coat"
+	desc = "A long, thick black leather coat."
+	icon_state = "leathercoat"
+	item_state = "leathercoat"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/suit/browncoat
+	name = "brown leather coat"
+	desc = "A long, brown leather coat."
+	icon_state = "browncoat"
+	item_state = "browncoat"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/suit/neocoat
+	name = "black coat"
+	desc = "A flowing, black coat."
+	icon_state = "neocoat"
+	item_state = "neocoat"
+	flags = FPRINT | TABLEPASS
+
+//actual suits
+
+/obj/item/clothing/suit/creamsuit
+	name = "cream suit"
+	desc = "A cream coloured, genteel suit."
+	icon_state = "creamsuit"
+	item_state = "creamsuit"
+	flags = FPRINT | TABLEPASS
+
+//stripper
+
+/obj/item/clothing/under/stripper/stripper_pink
+	name = "pink swimsuit"
+	desc = "A rather skimpy pink swimsuit."
+	icon_state = "stripper_p_under"
+	color = "stripper_p"
+
+/obj/item/clothing/under/stripper/stripper_green
+	name = "green swimsuit"
+	desc = "A rather skimpy green swimsuit."
+	icon_state = "stripper_g_under"
+	color = "stripper_g"
+
+/obj/item/clothing/suit/stripper/stripper_pink
+	name = "pink skimpy dress"
+	desc = "A rather skimpy pink dress."
+	icon_state = "stripper_p_over"
+	item_state = "stripper_p"
+
+/obj/item/clothing/suit/stripper/stripper_green
+	name = "green skimpy dress"
+	desc = "A rather skimpy green dress."
+	icon_state = "stripper_g_over"
+	item_state = "stripper_g"

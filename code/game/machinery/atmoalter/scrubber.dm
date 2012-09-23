@@ -1,7 +1,7 @@
 /obj/machinery/portable_atmospherics/scrubber
 	name = "Portable Air Scrubber"
 
-	icon = 'atmos.dmi'
+	icon = 'icons/obj/atmos.dmi'
 	icon_state = "pscrubber:0"
 	density = 1
 
@@ -56,7 +56,7 @@
 			environment = holding.air_contents
 		else
 			environment = loc.return_air()
-		var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
+		var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 		//Take a gas sample
 		var/datum/gas_mixture/removed
@@ -83,7 +83,12 @@
 					if(istype(trace_gas, /datum/gas/sleeping_agent))
 						removed.trace_gases -= trace_gas
 						filtered_out.trace_gases += trace_gas
-			filtered_out.update_values()
+
+			if(removed.trace_gases.len>0)
+				for(var/datum/gas/trace_gas in removed.trace_gases)
+					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
+						removed.trace_gases -= trace_gas
+						filtered_out.trace_gases += trace_gas
 
 		//Remix the resulting gases
 			air_contents.merge(filtered_out)

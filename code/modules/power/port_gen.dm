@@ -44,7 +44,7 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen
 	name = "Portable Generator"
 	desc = "A portable generator for emergency backup power"
-	icon = 'power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "portgen0"
 	density = 1
 	anchored = 0
@@ -106,192 +106,185 @@ display round(lastgen) and plasmatank amount
 	var/time_per_sheet = 10
 	var/heat = 0
 
-	New()
-		..()
-		component_parts = list()
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-		component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-		component_parts += new /obj/item/weapon/cable_coil(src)
-		component_parts += new /obj/item/weapon/cable_coil(src)
-		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-		component_parts += new board_path(src)
-		RefreshParts()
-
+/obj/machinery/power/port_gen/pacman/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new board_path(src)
 	RefreshParts()
-		var/temp_rating = 0
-		var/temp_reliability = 0
-		for(var/obj/item/weapon/stock_parts/SP in component_parts)
-			if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
-				max_sheets = SP.rating * SP.rating * 50
-			else if(istype(SP, /obj/item/weapon/stock_parts/micro_laser) || istype(SP, /obj/item/weapon/stock_parts/capacitor))
-				temp_rating += SP.rating
-		for(var/obj/item/weapon/CP in component_parts)
-			temp_reliability += CP.reliability
-		reliability = min(round(temp_reliability / 4), 100)
-		power_gen = round(initial(power_gen) * (max(2, temp_rating) / 2))
 
-	examine()
-		..()
-		usr << "\blue The generator has [sheets] units of fuel left, producing [power_gen] per cycle."
-		if(crit_fail) usr << "\red The generator seems to have broken down."
+/obj/machinery/power/port_gen/pacman/RefreshParts()
+	var/temp_rating = 0
+	var/temp_reliability = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
+			max_sheets = SP.rating * SP.rating * 50
+		else if(istype(SP, /obj/item/weapon/stock_parts/micro_laser) || istype(SP, /obj/item/weapon/stock_parts/capacitor))
+			temp_rating += SP.rating
+	for(var/obj/item/weapon/CP in component_parts)
+		temp_reliability += CP.reliability
+	reliability = min(round(temp_reliability / 4), 100)
+	power_gen = round(initial(power_gen) * (max(2, temp_rating) / 2))
 
-	HasFuel()
-		if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
-			return 1
-		return 0
+/obj/machinery/power/port_gen/pacman/examine()
+	..()
+	usr << "\blue The generator has [sheets] units of fuel left, producing [power_gen] per cycle."
+	if(crit_fail) usr << "\red The generator seems to have broken down."
 
-	UseFuel()
-		var/needed_sheets = 1 / (time_per_sheet / power_output)
-		var/temp = min(needed_sheets, sheet_left)
-		needed_sheets -= temp
-		sheet_left -= temp
-		sheets -= round(needed_sheets)
-		needed_sheets -= round(needed_sheets)
-		if (sheet_left <= 0 && sheets > 0)
-			sheet_left = 1 - needed_sheets
-			sheets--
+/obj/machinery/power/port_gen/pacman/HasFuel()
+	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
+		return 1
+	return 0
 
-		var/lower_limit = 56 + power_output * 10
-		var/upper_limit = 76 + power_output * 10
-		var/bias = 0
-		if (power_output > 4)
-			upper_limit = 400
-			bias = power_output * 3
+/obj/machinery/power/port_gen/pacman/UseFuel()
+	var/needed_sheets = 1 / (time_per_sheet / power_output)
+	var/temp = min(needed_sheets, sheet_left)
+	needed_sheets -= temp
+	sheet_left -= temp
+	sheets -= round(needed_sheets)
+	needed_sheets -= round(needed_sheets)
+	if (sheet_left <= 0 && sheets > 0)
+		sheet_left = 1 - needed_sheets
+		sheets--
+
+	var/lower_limit = 56 + power_output * 10
+	var/upper_limit = 76 + power_output * 10
+	var/bias = 0
+	if (power_output > 4)
+		upper_limit = 400
+		bias = power_output * 3
+	if (heat < lower_limit)
+		heat += 3
+	else
+		heat += rand(-7 + bias, 7 + bias)
 		if (heat < lower_limit)
-			heat += 3
-		else
-			heat += rand(-7 + bias, 7 + bias)
-			if (heat < lower_limit)
-				heat = lower_limit
-			if (heat > upper_limit)
-				heat = upper_limit
+			heat = lower_limit
+		if (heat > upper_limit)
+			heat = upper_limit
 
-		if (heat > 300)
-			overheat()
+	if (heat > 300)
+		overheat()
+		del(src)
+	return
+
+/obj/machinery/power/port_gen/pacman/handleInactive()
+	heat -= 2
+	if (heat < 0)
+		heat = 0
+	else
+		for(var/mob/M in viewers(1, src))
+			if (M.client && M.machine == src)
+				src.updateUsrDialog()
+
+/obj/machinery/power/port_gen/pacman/proc/overheat()
+	explosion(src.loc, 2, 5, 2, -1)
+
+/obj/machinery/power/port_gen/pacman/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(istype(O, sheet_path))
+		var/obj/item/stack/addstack = O
+		var/amount = min((max_sheets - sheets), addstack.amount)
+		if(amount < 1)
+			user << "\blue The [src.name] is full!"
+			return
+		user << "\blue You add [amount] sheets to the [src.name]."
+		sheets += amount
+		addstack.use(amount)
+		return
+	else if (istype(O, /obj/item/weapon/card/emag))
+		emagged = 1
+		emp_act(1)
+	else if(!active)
+		if(istype(O, /obj/item/weapon/wrench))
+			anchored = !anchored
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			if(anchored)
+				user << "\blue You secure the generator to the floor."
+			else
+				user << "\blue You unsecure the generator from the floor."
+			makepowernets()
+		else if(istype(O, /obj/item/weapon/screwdriver))
+			open = !open
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			if(open)
+				user << "\blue You open the access panel."
+			else
+				user << "\blue You close the access panel."
+		else if(istype(O, /obj/item/weapon/crowbar) && !open)
+			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			for(var/obj/item/I in component_parts)
+				if(I.reliability < 100)
+					I.crit_fail = 1
+				I.loc = src.loc
+			new_frame.state = 2
+			new_frame.icon_state = "box_1"
 			del(src)
+
+/obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
+	..()
+	if (!anchored)
 		return
 
-	handleInactive()
-		heat -= 2
-		if (heat < 0)
-			heat = 0
-		else
-			for(var/mob/M in viewers(1, src))
-				if (M.client && M.machine == src)
-					src.updateUsrDialog()
+	interact(user)
 
-	proc
-		overheat()
-			explosion(get_turf(src), 2, 5, 2, -1)
+/obj/machinery/power/port_gen/pacman/attack_ai(mob/user as mob)
+	interact(user)
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if(istype(O, sheet_path))
-			var/obj/item/stack/addstack = O
-			var/amount = min((max_sheets - sheets), addstack.amount)
-			if(amount < 1)
-				user << "\blue The [src.name] is full!"
-				return
-			user << "\blue You add [amount] sheets to the [src.name]."
-			sheets += amount
-			addstack.use(amount)
-			return
-		else if (istype(O, /obj/item/weapon/card/emag))
-			var/obj/item/weapon/card/emag/E = O
-			if(E.uses)
-				E.uses--
-			else
-				return
-			emagged = 1
-			emp_act(1)
-		else if(!active)
-			if(istype(O, /obj/item/weapon/wrench))
-				anchored = !anchored
-				playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-				if(anchored)
-					user << "\blue You secure the generator to the floor."
-				else
-					user << "\blue You unsecure the generator from the floor."
-				makepowernets()
-			else if(istype(O, /obj/item/weapon/screwdriver))
-				open = !open
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
-				if(open)
-					user << "\blue You open the access panel."
-				else
-					user << "\blue You close the access panel."
-			else if(istype(O, /obj/item/weapon/crowbar) && !open)
-				var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-				for(var/obj/item/I in component_parts)
-					if(I.reliability < 100)
-						I.crit_fail = 1
-					I.loc = src.loc
-				new_frame.state = 2
-				new_frame.icon_state = "box_1"
-				del(src)
+/obj/machinery/power/port_gen/pacman/attack_paw(mob/user as mob)
+	interact(user)
 
-	attack_hand(mob/user as mob)
-		..()
-		if (!anchored)
+/obj/machinery/power/port_gen/pacman/proc/interact(mob/user)
+	if (get_dist(src, user) > 1 )
+		if (!istype(user, /mob/living/silicon/ai))
+			user.machine = null
+			user << browse(null, "window=port_gen")
 			return
 
-		interact(user)
+	user.machine = src
 
-	attack_ai(mob/user as mob)
-		interact(user)
+	var/dat = text("<b>[name]</b><br>")
+	if (active)
+		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
+	else
+		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
+	dat += text("sheets: [sheets]<br>")
+	var/stack_percent = round(sheet_left * 100, 1)
+	dat += text("Current stack: [stack_percent]%<br>")
+	dat += text("Power output: <A href='?src=\ref[src];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=\ref[src];action=higher_power'>+</A><br>")
+	dat += text("Heat: [heat]<br>")
+	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
+	user << browse("[dat]", "window=port_gen")
 
-	attack_paw(mob/user as mob)
-		interact(user)
+/obj/machinery/power/port_gen/pacman/Topic(href, href_list)
+	if(..())
+		return
 
-	proc
-		interact(mob/user)
-			if (get_dist(src, user) > 1 )
-				if (!istype(user, /mob/living/silicon/ai))
-					user.machine = null
-					user << browse(null, "window=port_gen")
-					return
-
-			user.machine = src
-
-			var/dat = text("<b>[name]</b><br>")
+	src.add_fingerprint(usr)
+	if(href_list["action"])
+		if(href_list["action"] == "enable")
+			if(!active && HasFuel() && !crit_fail)
+				active = 1
+				icon_state = "portgen1"
+				src.updateUsrDialog()
+		if(href_list["action"] == "disable")
 			if (active)
-				dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
-			else
-				dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
-			dat += text("sheets: [sheets]<br>")
-			var/stack_percent = round(sheet_left * 100, 1)
-			dat += text("Current stack: [stack_percent]%<br>")
-			dat += text("Power output: <A href='?src=\ref[src];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=\ref[src];action=higher_power'>+</A><br>")
-			dat += text("Heat: [heat]<br>")
-			dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
-			user << browse("[dat]", "window=port_gen")
-
-	Topic(href, href_list)
-		if(..())
-			return
-
-		src.add_fingerprint(usr)
-		if(href_list["action"])
-			if(href_list["action"] == "enable")
-				if(!active && HasFuel() && !crit_fail)
-					active = 1
-					icon_state = "portgen1"
-					src.updateUsrDialog()
-			if(href_list["action"] == "disable")
-				if (active)
-					active = 0
-					icon_state = "portgen0"
-					src.updateUsrDialog()
-			if(href_list["action"] == "lower_power")
-				if (power_output > 1)
-					power_output--
-					src.updateUsrDialog()
-			if (href_list["action"] == "higher_power")
-				if (power_output < 4 || emagged)
-					power_output++
-					src.updateUsrDialog()
-			if (href_list["action"] == "close")
-				usr << browse(null, "window=port_gen")
-				usr.machine = null
+				active = 0
+				icon_state = "portgen0"
+				src.updateUsrDialog()
+		if(href_list["action"] == "lower_power")
+			if (power_output > 1)
+				power_output--
+				src.updateUsrDialog()
+		if (href_list["action"] == "higher_power")
+			if (power_output < 4 || emagged)
+				power_output++
+				src.updateUsrDialog()
+		if (href_list["action"] == "close")
+			usr << browse(null, "window=port_gen")
+			usr.machine = null
 
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
@@ -301,7 +294,7 @@ display round(lastgen) and plasmatank amount
 	time_per_sheet = 25
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
 	overheat()
-		explosion(get_turf(src), 3, 3, 3, -1)
+		explosion(src.loc, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
@@ -311,14 +304,4 @@ display round(lastgen) and plasmatank amount
 	time_per_sheet = 30
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 	overheat()
-		explosion(get_turf(src), 4, 4, 4, -1)
-
-/obj/machinery/power/port_gen/pacman/industrial
-	name = "Industrial P.A.C.M.A.N.-type Portable Generator"
-	icon_state = "plasmagen"
-	sheet_path = /obj/item/stack/sheet/plasma
-	power_gen = 25000
-	time_per_sheet = 30
-	board_path = "/obj/item/weapon/circuitboard/pacman/industrial"
-	overheat()
-		explosion(get_turf(src), 4, 4, 4, -1)
+		explosion(src.loc, 4, 4, 4, -1)

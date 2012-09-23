@@ -1,27 +1,27 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /*
 	File: Keywords
 */
-var/const
-	KW_FAIL = 0 //Fatal error; stop parsing entire script.
-	KW_PASS = 1 //OK
-	KW_ERR  = 2 //Non-fatal error, keyword couldn't be handled properly. Ignore keyword but continue on.
-	KW_WARN = 3 //Warning
+var/const/KW_FAIL = 0 //Fatal error; stop parsing entire script.
+var/const/KW_PASS = 1 //OK
+var/const/KW_ERR  = 2 //Non-fatal error, keyword couldn't be handled properly. Ignore keyword but continue on.
+var/const/KW_WARN = 3 //Warning
 
 /*
-	Class: n_Keyword
-	Represents a special statement in the code triggered by a keyword.
+var/const/Class: n_Keyword
+var/const/Represents a special statement in the code triggered by a keyword.
 */
 /n_Keyword
 	New(inline=0)
 		src.inline=inline
 		return ..()
 
-	var
 /*
 	Var: inline
 	1 if the keyword is in an expression (e.g. the new keyword in many languages), 0 otherwise (such as the if and else keywords).
 */
-		inline
+	var/inline
 
 /*
 	Proc: Parse

@@ -1,7 +1,7 @@
 /obj/item/weapon/dnainjector
 	name = "DNA-Injector"
 	desc = "This injects the person with DNA."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "dnainjector"
 	var/dnatype = null
 	var/dna = null
@@ -15,12 +15,13 @@
 	var/uses = 1
 	var/nofail
 	var/is_bullet = 0
+	var/inuse = 0
 
 /obj/item/weapon/dnainjector/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
 
-/obj/item/weapon/dnainjector/proc/inject(mob/M as mob)
+/obj/item/weapon/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
 	if(istype(M,/mob/living))
 		M.radiation += rand(20,50)
 
@@ -32,7 +33,6 @@
 					updateappearance(M, M.dna.uni_identity)
 					M.real_name = ue
 					M.name = ue
-					M.dna.original_name = ue
 					uses--
 				else //unique enzymes? no
 					M.dna.uni_identity = dna
@@ -53,8 +53,7 @@
 				uses--
 
 	spawn(0)//this prevents the collapse of space-time continuum
-		spawn(5)
-			usr.update_clothing()
+		user.drop_from_inventory(src)
 		del(src)
 	return uses
 
@@ -71,54 +70,65 @@
 
 	if (user)
 		if (istype(M, /mob/living/carbon/human))
-			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-			O.source = user
-			O.target = M
-			O.item = src
-			O.s_loc = user.loc
-			O.t_loc = M.loc
-			O.place = "dnainjector"
-			M.requests += O
-			if (dnatype == "se")
-				if (isblockon(getblock(dna, MONKEYBLOCK,3),MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
-					log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+			if(!inuse)
+				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
+				O.source = user
+				O.target = M
+				O.item = src
+				O.s_loc = user.loc
+				O.t_loc = M.loc
+				O.place = "dnainjector"
+				src.inuse = 1
+				spawn(50) // Not the best fix. There should be an failure proc, for /effect/equip_e/, which is called when the first initital checks fail
+					inuse = 0
+				M.requests += O
+				if (dnatype == "se")
+					if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
+						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+						log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+					else
+	//					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+						log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
 				else
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-					log_game("[key_name(user)] injected [key_name(M)] with the [name]")
-			else
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-				log_game("[key_name(user)] injected [key_name(M)] with the [name]")
+	//				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+					log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
 
-			spawn( 0 )
-				O.process()
-				user.update_clothing()
-				return
+				spawn( 0 )
+					O.process()
+					return
 		else
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] has been injected with [] by [].", M, src, user), 1)
-				//Foreach goto(192)
-			if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
-				user << "\red Apparently it didn't work."
-				return
-			if (dnatype == "se")
-				if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
-					log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+			if(!inuse)
+
+				for(var/mob/O in viewers(M, null))
+					O.show_message(text("\red [] has been injected with [] by [].", M, src, user), 1)
+					//Foreach goto(192)
+				if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
+					user << "\red Apparently it didn't work."
+					return
+				if (dnatype == "se")
+					if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
+						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+						log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
+					else
+//						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+						log_game("[key_name(user)] injected [key_name(M)] with the [name]")
 				else
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+//					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 					log_game("[key_name(user)] injected [key_name(M)] with the [name]")
-			else
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-				log_game("[key_name(user)] injected [key_name(M)] with the [name]")
-			inject(M)//Now we actually do the heavy lifting.
-			/*
-			A user injecting themselves could mean their own transformation and deletion of mob.
-			I don't have the time to figure out how this code works so this will do for now.
-			I did rearrange things a bit.
-			*/
-			if(!isnull(user))//If the user still exists. Their mob may not.
-				user.show_message(text("\red You inject [M]"))
+				inuse = 1
+				inject(M, user)//Now we actually do the heavy lifting.
+				spawn(50)
+					inuse = 0
+				/*
+				A user injecting themselves could mean their own transformation and deletion of mob.
+				I don't have the time to figure out how this code works so this will do for now.
+				I did rearrange things a bit.
+				*/
+				if(user)//If the user still exists. Their mob may not.
+					if(M)//Runtime fix: If the mob doesn't exist, mob.name doesnt work. - Nodrak
+						user.show_message(text("\red You inject [M.name]"))
+					else
+						user.show_message(text("\red You finish the injection."))
 	return
 
 
@@ -194,7 +204,7 @@
 ////////////////////////////////////
 /obj/item/weapon/dnainjector/anticough
 	name = "DNA-Injector (Anti-Cough)"
-	desc = "Will stop that aweful noise."
+	desc = "Will stop that awful noise."
 	dnatype = "se"
 	dna = "708"
 	block = 5
@@ -208,7 +218,7 @@
 
 /obj/item/weapon/dnainjector/clumsymut
 	name = "DNA-Injector (Clumsy)"
-	desc = "Makes clown minions."
+	desc = "Makes clumsy minions."
 	dnatype = "se"
 	dna = "FA0"
 	//block = 6
@@ -218,7 +228,7 @@
 
 /obj/item/weapon/dnainjector/anticlumsy
 	name = "DNA-Injector (Anti-Clumy)"
-	desc = "Apply this for Security Clown."
+	desc = "Cleans up confusion."
 	dnatype = "se"
 	dna = "708"
 	//block = 6

@@ -17,26 +17,34 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	src.emote("me",1,message)
+	if(ishuman(src) || isrobot(src))
+		usr.emote("me",1,message)
+	else
+		usr.emote(message)
 
 /mob/proc/say_dead(var/message)
 	var/name = src.real_name
 	var/alt_name = ""
 
-	if(original_name) //Original name is only used in ghost chat! It is not to be edited by anything!
-		name = src.original_name
-		if( original_name != real_name )
-			alt_name = " (died as [src.real_name])"
+	if(mind && mind.name)
+		name = "[mind.name]"
+	else
+		name = real_name
+	if(name != real_name)
+		alt_name = " (died as [real_name])"
 
 	message = src.say_quote(message)
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 
-	for (var/mob/M in world)
+	for (var/mob/M in player_list)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat == 2 || (M.client && M.client.holder && M.client.deadchat)) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
-			if(M.client && !M.client.STFU_ghosts) //Admin shut-off for ghosts chatter
-				M.show_message(rendered, 2)
+		if(M.client && M.client.holder && M.client.deadchat) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
+			if(!M.client.STFU_ghosts) //Admin shut-off for ghosts chatter
+				M << rendered	//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
+		else if (M.stat == DEAD)
+			M.show_message(rendered, 2) //Takes into account blindness and such.
+	return
 
 /mob/proc/say_understands(var/mob/other)
 	if(!other)
@@ -51,22 +59,27 @@
 		return 1
 	return 0
 
-/mob/proc/say_quote(var/text,var/is_speaking_soghun,var/is_speaking_skrell)
+/mob/proc/say_quote(var/text,var/is_speaking_soghun,var/is_speaking_skrell,var/is_speaking_tajaran)
 	if(!text)
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
 	if (is_speaking_soghun)
-		return "hisses, \"[text]\"";
+		return "hisses, \"<span class='species'>[text]</span>\"";
 	if (is_speaking_skrell)
-		return "warbles, \"[text]\"";
-	if (src.disease_symptoms & DISEASE_HOARSE)
-		return "rasps, \"[text]\"";
+		return "warbles, \"<span class='species'>[text]</span>\"";
+	if (is_speaking_tajaran)
+		return "purrs, \"<span class='species'>[text]</span>\"";
+//Needs Virus2
+//	if (src.disease_symptoms & DISEASE_HOARSE)
+//		return "rasps, \"[text]\"";
 	if (src.stuttering)
 		return "stammers, \"[text]\"";
 	if (src.slurring)
 		return "slurrs, \"[text]\"";
-	if (src.getBrainLoss() >= 60)
-		return "gibbers, \"[text]\"";
+	if(isliving(src))
+		var/mob/living/L = src
+		if (L.getBrainLoss() >= 60)
+			return "gibbers, \"[text]\"";
 	if (ending == "?")
 		return "asks, \"[text]\"";
 	if (ending == "!")
@@ -76,6 +89,14 @@
 
 /mob/proc/emote(var/act)
 	return
+
+/mob/proc/get_ear()
+	// returns an atom representing a location on the map from which this
+	// mob can hear things
+
+	// should be overloaded for all mobs whose "ear" is separate from their "mob"
+
+	return get_turf(src)
 
 /mob/proc/say_test(var/text)
 	var/ending = copytext(text, length(text))

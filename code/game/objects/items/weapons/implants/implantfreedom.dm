@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/weapon/implant/freedom
 	name = "freedom"
@@ -9,7 +9,7 @@
 
 
 	New()
-		activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+		src.activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 		src.uses = rand(1, 5)
 		..()
 		return
@@ -23,6 +23,7 @@
 			if (source.handcuffed)
 				var/obj/item/weapon/W = source.handcuffed
 				source.handcuffed = null
+				source.update_inv_handcuffed()
 				if (source.client)
 					source.client.screen -= W
 				if (W)
@@ -30,15 +31,24 @@
 					dropped(source)
 					if (W)
 						W.layer = initial(W.layer)
-				source.update_clothing()
+			if (source.legcuffed)
+				var/obj/item/weapon/W = source.legcuffed
+				source.legcuffed = null
+				source.update_inv_legcuffed()
+				if (source.client)
+					source.client.screen -= W
+				if (W)
+					W.loc = source.loc
+					dropped(source)
+					if (W)
+						W.layer = initial(W.layer)
 		return
 
 
-	implanted(mob/source as mob)
-		activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+	implanted(mob/source)
 		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
-		return
+		return 1
 
 
 	get_data()

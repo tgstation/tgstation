@@ -1,44 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
-
-/proc/isassembly(O)
-	if(istype(O, /obj/item/device/assembly))
-		return 1
-	return 0
-
-/proc/isigniter(O)
-	if(istype(O, /obj/item/device/assembly/igniter))
-		return 1
-	return 0
-
-/proc/isinfared(O)
-	if(istype(O, /obj/item/device/assembly/infra))
-		return 1
-	return 0
-
-/proc/isprox(O)
-	if(istype(O, /obj/item/device/assembly/prox_sensor))
-		return 1
-	return 0
-
-/proc/issignaler(O)
-	if(istype(O, /obj/item/device/assembly/signaler))
-		return 1
-	return 0
-
-/proc/istimer(O)
-	if(istype(O, /obj/item/device/assembly/timer))
-		return 1
-	return 0
-
-
 /obj/item/device/assembly
 	name = "assembly"
 	desc = "A small electronic device that should never exist."
-	icon = 'new_assemblies.dmi'
+	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = ""
 	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
 	w_class = 2.0
 	m_amt = 100
 	g_amt = 0
@@ -49,9 +14,7 @@
 	origin_tech = "magnets=1"
 
 	var/secured = 1
-	var/small_icon_state_left = null
-	var/small_icon_state_right = null
-	var/list/small_icon_state_overlays = null
+	var/list/attached_overlays = null
 	var/obj/item/device/assembly_holder/holder = null
 	var/cooldown = 0//To prevent spam
 	var/wires = WIRE_RECEIVE | WIRE_PULSE
@@ -91,7 +54,7 @@
 		cooldown--
 		if(cooldown <= 0)	return 0
 		spawn(10)
-		process_cooldown()
+			process_cooldown()
 		return 1
 
 
@@ -108,8 +71,6 @@
 			holder.process_activation(src, 1, 0)
 		if(holder && (wires & WIRE_PULSE_SPECIAL))
 			holder.process_activation(src, 0, 1)
-		if(master && (wires & WIRE_PULSE))
-			master.receive_signal("activate")
 //		if(radio && (wires & WIRE_RADIO_PULSE))
 			//Not sure what goes here quite yet send signal?
 		return 1
@@ -132,7 +93,7 @@
 	attach_assembly(var/obj/item/device/assembly/A, var/mob/user)
 		holder = new/obj/item/device/assembly_holder(get_turf(src))
 		if(holder.attach(A,src,user))
-			user.show_message("\blue You attach the [A.name] to the [name]!")
+			user << "\blue You attach \the [A] to \the [src]!"
 			return 1
 		return 0
 
@@ -145,9 +106,9 @@
 				return
 		if(isscrewdriver(W))
 			if(toggle_secure())
-				user.show_message("\blue The [name] is ready!")
+				user << "\blue \The [src] is ready!"
 			else
-				user.show_message("\blue The [name] can now be attached!")
+				user << "\blue \The [src] can now be attached!"
 			return
 		..()
 		return
@@ -163,9 +124,9 @@
 		..()
 		if((in_range(src, usr) || loc == usr))
 			if(secured)
-				usr.show_message("The [name] is ready!")
+				usr << "\The [src] is ready!"
 			else
-				usr.show_message("The [name] can be attached!")
+				usr << "\The [src] can be attached!"
 		return
 
 
@@ -180,26 +141,6 @@
 		return //HTML MENU FOR WIRES GOES HERE
 
 /*
-Name:	IsAssemblyHolder
-Desc:	If true is an object that can hold an assemblyholder object
-*/
-/obj/proc/IsAssemblyHolder()
-	return 0
-/*
-	proc
-		Process_Activation(var/obj/D, var/normal = 1, var/special = 1)
-*/
-
-
-
-/*
-Name:	IsSpecialAssembly
-Desc:	If true is an object that can be attached to an assembly holder but is a special thing like a plasma can or door
-*/
-
-/obj/proc/IsSpecialAssembly()
-	return 0
-/*
 	var/small_icon_state = null//If this obj will go inside the assembly use this for icons
 	var/list/small_icon_state_overlays = null//Same here
 	var/obj/holder = null
@@ -207,6 +148,7 @@ Desc:	If true is an object that can be attached to an assembly holder but is a s
 
 	proc
 		Activate()//Called when this assembly is pulsed by another one
+		Process_cooldown()//Call this via spawn(10) to have it count down the cooldown var
 		Attach_Holder(var/obj/H, var/mob/user)//Called when an assembly holder attempts to attach, sets src's loc in here
 
 

@@ -1,6 +1,6 @@
 /mob/living/silicon/hivebot
 	name = "Robot"
-	icon = 'hivebot.dmi'
+	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "basic"
 	health = 80
 	var/health_max = 80

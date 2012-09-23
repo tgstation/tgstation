@@ -106,7 +106,7 @@ obj/machinery/atmospherics/pipe
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 				..()
 			else
-				machines.Remove(src)
+				. = PROCESS_KILL
 
 			/*if(!node1)
 				parent.mingle_with_turf(loc, volume)
@@ -349,7 +349,7 @@ obj/machinery/atmospherics/pipe
 			if(!parent)
 				..()
 			else
-				machines.Remove(src)
+				. = PROCESS_KILL
 /*			if(!node1)
 				parent.mingle_with_turf(loc, 200)
 				if(!nodealert)
@@ -569,7 +569,7 @@ obj/machinery/atmospherics/pipe
 					O << "\red [user] has used the analyzer on \icon[icon]"
 
 				var/pressure = parent.air.return_pressure()
-				var/total_moles = parent.air.total_moles
+				var/total_moles = parent.air.total_moles()
 
 				user << "\blue Results of analysis of \icon[icon]"
 				if (total_moles>0)
@@ -615,7 +615,7 @@ obj/machinery/atmospherics/pipe
 		process()
 			if(!parent)
 				if(build_killswitch <= 0)
-					machines.Remove(src)
+					. = PROCESS_KILL
 				else
 					build_killswitch--
 				..()
@@ -721,7 +721,7 @@ obj/machinery/atmospherics/pipe
 			if(!parent)
 				..()
 			else
-				machines.Remove(src)
+				. = PROCESS_KILL
 /*
 			if(!node1)
 				parent.mingle_with_turf(loc, 70)

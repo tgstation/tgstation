@@ -1,14 +1,14 @@
 /obj/machinery/computer/HolodeckControl
 	name = "Holodeck Control Computer"
 	desc = "A computer used to control a nearby holodeck."
-	icon_state = "computer_generic"
+	icon_state = "holocontrol"
 	var/area/linkedholodeck = null
 	var/area/target = null
 	var/active = 0
 	var/list/holographic_items = list()
 	var/damaged = 0
 	var/last_change = 0
-	var/safety = 1
+
 
 	attack_ai(var/mob/user as mob)
 		return src.attack_hand(user)
@@ -29,27 +29,26 @@
 
 		dat += "<A href='?src=\ref[src];emptycourt=1'>((Empty Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];boxingcourt=1'>((Boxing Court)</font>)</A><BR>"
+		dat += "<A href='?src=\ref[src];basketball=1'>((Basketball Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];thunderdomecourt=1'>((Thunderdome Court)</font>)</A><BR>"
 		dat += "<A href='?src=\ref[src];beach=1'>((Beach)</font>)</A><BR>"
 //		dat += "<A href='?src=\ref[src];turnoff=1'>((Shutdown System)</font>)</A><BR>"
 
 		dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
 
-		if(!safety)
-			if(issilicon(user) && (emagged))
-				dat += "<font color=red>ERROR: SAFETY PROTOCOLS UNRESPONSIVE</font><BR>"
-			else if(issilicon(user) && (!emagged))
-				dat += "<A href='?src=\ref[src];AIrelock=1'>(<font color=red>Enable Safety Protocols?</font>)</A><BR>"
+		if(emagged)
 			dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
 			dat += "Ensure the holodeck is empty before testing.<BR>"
 			dat += "<BR>"
 			dat += "<A href='?src=\ref[src];wildlifecarp=1'>(<font color=red>Begin Wildlife Simulation</font>)</A><BR>"
 			dat += "Ensure the holodeck is empty before testing.<BR>"
 			dat += "<BR>"
-			dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
-		else if(safety)
 			if(issilicon(user))
-				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Disable Safety Protocols?</font>)</A><BR>"
+				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
+			dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
+		else
+			if(issilicon(user))
+				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
 			dat += "<BR>"
 			dat += "Safety Protocols are <font color=green> ENABLED </font><BR>"
 
@@ -76,6 +75,11 @@
 				if(target)
 					loadProgram(target)
 
+			else if(href_list["basketball"])
+				target = locate(/area/holodeck/source_basketball)
+				if(target)
+					loadProgram(target)
+
 			else if(href_list["thunderdomecourt"])
 				target = locate(/area/holodeck/source_thunderdomecourt)
 				if(target)
@@ -92,26 +96,26 @@
 					loadProgram(target)
 
 			else if(href_list["burntest"])
-				if(safety)	return
+				if(!emagged)	return
 				target = locate(/area/holodeck/source_burntest)
 				if(target)
 					loadProgram(target)
 
 			else if(href_list["wildlifecarp"])
-				if(safety)	return
+				if(!emagged)	return
 				target = locate(/area/holodeck/source_wildlife)
 				if(target)
 					loadProgram(target)
 
 			else if(href_list["AIoverride"])
 				if(!issilicon(usr))	return
-				safety = 0
-				log_admin("[usr] ([usr.ckey]) disabled Holodeck Safeties.")
-				message_admins("[usr] ([usr.ckey]) disabled Holodeck Safeties.")
-
-			else if(href_list["AIrelock"])
-				if(!issilicon(usr))	return
-				safety = 1
+				emagged = !emagged
+				if(emagged)
+					message_admins("[key_name_admin(usr)] overrided the holodeck's safeties")
+					log_game("[key_name(usr)] overrided the holodeck's safeties")
+				else
+					message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
+					log_game("[key_name(usr)] restored the holodeck's safeties")
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()
@@ -123,7 +127,7 @@
 //Warning, uncommenting this can have concequences. For example, deconstructing the computer may cause holographic eswords to never derez
 
 /*		if(istype(D, /obj/item/weapon/screwdriver))
-			playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
@@ -151,13 +155,11 @@
 
 */
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sparks4.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		safety = 0
 		user << "\blue You vastly increase projector power and override the safety and security protocols."
-		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call NanoTrasen maintence and do not use the simulator."
-		log_admin("[user] ([user.ckey]) emagged Holodeck Safeties.")
-		message_admins("[user] ([user.ckey]) emagged Holodeck Safeties.")
+		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
+		log_game("[key_name(usr)] emagged the Holodeck Control Computer")
 	src.updateUsrDialog()
 	return
 
@@ -223,13 +225,14 @@
 
 
 
-/obj/machinery/computer/HolodeckControl/proc/derez(var/obj , var/silent = 1)
+/obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
 	holographic_items.Remove(obj)
 
-	if(istype(obj , /obj/))
-		if(istype(obj:loc , /mob/))
-			var/mob/M = obj:loc
-			M.drop_from_slot(obj)
+	if(isobj(obj))
+		var/mob/M = obj.loc
+		if(ismob(M))
+			M.u_equip(obj)
+			M.update_icons()	//so their overlays update
 
 	if(!silent)
 		var/obj/oldobj = obj
@@ -290,10 +293,13 @@
 	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
 		del(B)
 
+	for(var/mob/living/simple_animal/carp/C in linkedholodeck)
+		del(C)
+
 	holographic_items = A.copy_contents_to(linkedholodeck , 1)
 
 	if(emagged)
-		for(var/obj/item/weapon/melee/energy/sword/holosword/H in linkedholodeck)
+		for(var/obj/item/weapon/holo/esword/H in linkedholodeck)
 			H.damtype = BRUTE
 
 	spawn(30)
@@ -307,6 +313,8 @@
 					if(T)
 						T.temperature = 5000
 						T.hotspot_expose(50000,50000,1)
+			if(L.name=="Holocarp Spawn")
+				new /mob/living/simple_animal/carp(L.loc)
 
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
@@ -365,12 +373,12 @@
 /obj/structure/table/holotable
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	icon = 'structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "table"
 	density = 1
 	anchored = 1.0
 	layer = 2.8
-//	throwpass = 1	//You can throw objects over this, despite it's density.
+	throwpass = 1	//You can throw objects over this, despite it's density.
 
 
 /obj/structure/table/holotable/attack_paw(mob/user as mob)
@@ -390,65 +398,7 @@
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
-			if(ishuman(G.affecting))
-				var/mob/living/carbon/human/H = G.affecting
-				var/datum/organ/external/affecting = H.get_organ("head")
-				//Fucking hacky, but whatever.
-				var/obj/machinery/computer/HolodeckControl/HC = locate() in world
-				if(istype(HC) && HC.safety) //If the computer exists, and the safety is active...
-					if(prob(25))
-						add_blood(G.affecting)
-						H.halloss += rand(10, 15)
-						G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] with enough force to engage \the [src]'s safeties!",\
-						"\red You smash \the [H]'s head on \the [src] with enough force to engage \the [src]'s safeties!",\
-						"\red You hear a whine as \the [src]'s engage.")
-					else
-						H.halloss += rand(5, 10)
-						G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src]!",\
-						"\red You smash \the [H]'s head on \the [src]!",\
-						"\red You hear a whine as \the [src]'s is hit by something dense.")
-					H.UpdateDamageIcon()
-					H.updatehealth()
-					playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
-				else //Lets do REAL DAMAGE, YEAH!
-					G.affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed on a table by [G.assailant.name] ([G.assailant.ckey])</font>")
-					G.assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Smashed [G.affecting.name] ([G.affecting.ckey]) on a table.</font>")
-
-					log_admin("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
-					message_admins("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
-					log_attack("<font color='red'>[G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.</font>")
-
-					if(prob(25))
-						add_blood(G.affecting)
-						affecting.take_damage(rand(10,15), 0)
-						H.Weaken(2)
-						if(prob(20)) // One chance in 20 to DENT THE TABLE
-							affecting.take_damage(rand(0,5), 0) //Extra damage
-							if(dented)
-								G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] with enough force to further deform \the [src]!\nYou wish you could unhear that sound.",\
-								"\red You smash \the [H]'s head on \the [src] with enough force to leave another dent!\n\black [prob(50)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
-								"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
-							else
-								G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] so hard it left a dent!\nYou wish you could unhear that sound.",\
-								"\red You smash \the [H]'s head on \the [src] with enough force to leave a dent!\n\black [prob(5)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
-								"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
-							dented++
-						else if(prob(50))
-							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.get_visible_gender() == MALE ? "his" : H.get_visible_gender() == FEMALE ? "her" : "their"] bone and cartilage making a loud crunch!",\
-							"\red You smash \the [H]'s head on \the [src], [H.get_visible_gender() == MALE ? "his" : H.get_visible_gender() == FEMALE ? "her" : "their"] bone and cartilage making a loud crunch!",\
-							"\red You hear the nauseating crunch of bone and gristle on solid metal, the noise echoing through the room.")
-						else
-							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.get_visible_gender() == MALE ? "his" : H.get_visible_gender() == FEMALE ? "her" : "their"] nose smashed and face bloodied!",\
-							"\red You smash \the [H]'s head on \the [src], [H.get_visible_gender() == MALE ? "his" : H.get_visible_gender() == FEMALE ? "her" : "their"] nose smashed and face bloodied!",\
-							"\red You hear the nauseating crunch of bone and gristle on solid metal and the gurgling gasp of someone who is trying to breathe through their own blood.")
-					else
-						affecting.take_damage(rand(5,10), 0)
-						G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src]!",\
-						"\red You smash \the [H]'s head on \the [src]!",\
-						"\red You hear the nauseating crunch of bone and gristle on solid metal.")
-					H.UpdateDamageIcon()
-					H.updatehealth()
-					playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
+			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
@@ -475,7 +425,7 @@
 
 /obj/structure/holowindow
 	name = "reinforced window"
-	icon = 'structures.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "rwindow"
 	desc = "A window."
 	density = 1
@@ -488,27 +438,114 @@
 /obj/structure/holowindow/Del()
 	..()
 
-
-/obj/item/weapon/melee/energy/sword/holosword
+/obj/item/weapon/holo
 	damtype = HALLOSS
 
-/obj/item/weapon/melee/energy/sword/holosword/green
+/obj/item/weapon/holo/esword
+	desc = "May the force be within you. Sorta"
+	icon_state = "sword0"
+	force = 3.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = 2.0
+	flags = FPRINT | TABLEPASS | NOSHIELD
+	var/active = 0
+
+/obj/item/weapon/holo/esword/green
 	New()
 		color = "green"
 
-/obj/item/weapon/melee/energy/sword/holosword/red
+/obj/item/weapon/holo/esword/red
 	New()
 		color = "red"
 
+/obj/item/weapon/holo/esword/IsShield()
+	if(active)
+		return 1
+	return 0
 
+/obj/item/weapon/holo/esword/attack(target as mob, mob/user as mob)
+	..()
 
+/obj/item/weapon/holo/esword/New()
+	color = pick("red","blue","green","purple")
 
+/obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
+	active = !active
+	if (active)
+		force = 30
+		icon_state = "sword[color]"
+		w_class = 4
+		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		user << "\blue [src] is now active."
+	else
+		force = 3
+		icon_state = "sword0"
+		w_class = 2
+		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		user << "\blue [src] can now be concealed."
+	add_fingerprint(user)
+	return
+
+//BASKETBALL OBJECTS
+
+/obj/item/weapon/beach_ball/holoball
+	icon = 'icons/obj/basketball.dmi'
+	icon_state = "basketball"
+	name = "basketball"
+	item_state = "basketball"
+	desc = "Here's your chance, do your dance at the Space Jam."
+	w_class = 4 //Stops people from hiding it in their bags/pockets
+
+/obj/structure/holohoop
+	name = "basketball hoop"
+	desc = "Boom, Shakalaka!."
+	icon = 'icons/obj/basketball.dmi'
+	icon_state = "hoop"
+	anchored = 1
+	density = 1
+	throwpass = 1
+
+/obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+		var/obj/item/weapon/grab/G = W
+		if(G.state<2)
+			user << "\red You need a better grip to do that!"
+			return
+		G.affecting.loc = src.loc
+		G.affecting.Weaken(5)
+		for(var/mob/M in viewers(src))
+			M.show_message("\red [G.assailant] dunks [G.affecting] into the [src]!", 3)
+		del(W)
+		return
+	else if (istype(W, /obj/item) && get_dist(src,user)<2)
+		user.drop_item(src)
+		for(var/mob/M in viewers(src))
+			M.show_message("\blue [user] dunks [W] into the [src]!", 3)
+		return
+
+/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if (istype(mover,/obj/item) && mover.throwing)
+		var/obj/item/I = mover
+		if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
+			return
+		if(prob(50))
+			I.loc = src.loc
+			for(var/mob/M in viewers(src))
+				M.show_message("\blue Swish! \the [I] lands in \the [src].", 3)
+		else
+			for(var/mob/M in viewers(src))
+				M.show_message("\red \the [I] bounces off of \the [src]'s rim!", 3)
+		return 0
+	else
+		return ..(mover, target, height, air_group)
 
 
 /obj/machinery/readybutton
 	name = "Ready Declaration Device"
-	desc = "This device is used to declare ready.  If all devices in an area are ready, the event will begin!"
-	icon = 'monitors.dmi'
+	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
+	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
 	var/ready = 0
 	var/area/currentarea = null

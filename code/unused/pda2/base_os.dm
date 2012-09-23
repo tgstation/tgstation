@@ -188,11 +188,11 @@
 
 						dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
 
-						if (total_moles)
-							var/o2_level = environment.oxygen/total_moles
-							var/n2_level = environment.nitrogen/total_moles
-							var/co2_level = environment.carbon_dioxide/total_moles
-							var/plasma_level = environment.toxins/total_moles
+						if (total_moles())
+							var/o2_level = environment.oxygen/total_moles()
+							var/n2_level = environment.nitrogen/total_moles()
+							var/co2_level = environment.carbon_dioxide/total_moles()
+							var/plasma_level = environment.toxins/total_moles()
 							var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
 
 							dat += "Nitrogen: [round(n2_level*100)]%<br>"
@@ -281,6 +281,7 @@
 						signal.data["tag"] = "\ref[P]"
 						src.post_signal(signal)
 						src.message_note += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
+						log_pda("[usr] sent [t] to [P.owner]")
 
 					if("rename")
 						var/datum/computer/file/F = locate(href_list["target"])

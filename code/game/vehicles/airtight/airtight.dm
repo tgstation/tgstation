@@ -46,7 +46,7 @@
 	delay = 20
 
 	process(var/obj/vehicle/airtight/V)
-		if(V.cabin_air && V.cabin_air.volume > 0)
+		if(V.cabin_air && V.cabin_air.return_volume() > 0)
 			var/delta = V.cabin_air.temperature - T20C
 			V.cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
 		return
@@ -65,8 +65,8 @@
 			var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
 			var/transfer_moles = 0
 			if(pressure_delta > 0) //cabin pressure lower than release pressure
-				if(tank_air.temperature > 0)
-					transfer_moles = pressure_delta*cabin_air.volume/(cabin_air.temperature * R_IDEAL_GAS_EQUATION)
+				if(tank_air.return_temperature() > 0)
+					transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
 					var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
 					cabin_air.merge(removed)
 			else if(pressure_delta < 0) //cabin pressure higher than release pressure
@@ -75,7 +75,7 @@
 				if(t_air)
 					pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
 				if(pressure_delta > 0) //if location pressure is lower than cabin pressure
-					transfer_moles = pressure_delta*cabin_air.volume/(cabin_air.temperature * R_IDEAL_GAS_EQUATION)
+					transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
 					var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
 					if(t_air)
 						t_air.merge(removed)
@@ -123,11 +123,11 @@
 /obj/vehicle/airtight/proc/return_temperature()
 	. = 0
 	if(use_internal_tank)
-		. = cabin_air.temperature
+		. = cabin_air.return_temperature()
 	else
 		var/datum/gas_mixture/t_air = get_turf_air()
 		if(t_air)
-			. = t_air.temperature
+			. = t_air.return_temperature()
 	return
 
 /obj/vehicle/airtight/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)

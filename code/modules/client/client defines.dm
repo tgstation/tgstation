@@ -9,11 +9,18 @@
 	var/fakekey			= null
 	var/seeprayers		= 0
 	var/ooccolor		= "#b82e00"
-	var/muted			= null 	//Can't talk in OOC, say, whisper, emote... anything except for adminhelp and admin-pm. An admin punishment
-	var/muted_complete	= null	//Can't talk in any way shape or form (muted + can't adminhelp or respond to admin pm-s). An admin punishment
+
+	var/muted_ic			//can't use 'say' while alive or emotes.
+	var/muted_ooc			//can't speak in ooc
+	var/muted_deadchat		//can't use 'say' while dead or DSAY
+	var/muted_pray			//can't send prayers
+	var/muted_adminhelp		//can't send adminhelps, PM-s or use ASAY
+
+	var/last_message = "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
+	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
+
 	var/warned			= 0
 	var/sound_adminhelp = 0 	//If set to 1 this will play a sound when adminhelps are received.
-	var/admin_invis = 0
 
 		/////////
 		//OTHER//
@@ -29,12 +36,10 @@
 	var/team			= null
 	var/be_alien		= 0		//Check if that guy wants to be an alien
 	var/be_pai			= 1		//Consider client when searching for players to recruit as a pAI
-	var/vote			= null
-	var/showvote		= null
+	var/activeslot		= 1		//Default active slot!
 	var/STFU_ghosts				//80+ people rounds are fun to admin when text flies faster than airport security
 	var/STFU_radio				//80+ people rounds are fun to admin when text flies faster than airport security
-	var/be_syndicate	= 0 	//Moving this into client vars, since I was silly when I made it.
-	var/bubbles			= 1		//Check if bubbles should be displayed for someone
+	var/STFU_atklog
 
 		///////////////
 		//SOUND STUFF//
@@ -49,7 +54,7 @@
 		////////////
 	var/next_allowed_topic_time = 10
 	// comment out the line below when debugging locally to enable the options & messages menu
-	//control_freak = 1
+	control_freak = 1
 
 
 

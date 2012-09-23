@@ -3,7 +3,7 @@
 
 /obj/effect/beam/laser
 	name = "laser beam"
-	icon = 'beam.dmi'
+	icon = 'icons/effects/beam.dmi'
 	icon_state = "full"
 	density = 0
 	mouse_opacity = 0
@@ -164,7 +164,7 @@
 		if(alpha != 0)
 			alpha = alpha**0.80
 
-		var/icon/I = icon('beam.dmi')
+		var/icon/I = icon('icons/effects/beam.dmi')
 		I.MapColors(red,0,0,0, 0,green,0,0, 0,0,blue,0, 0,0,0,alpha, 0,0,0,0)
 		icon = I
 

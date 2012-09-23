@@ -1,81 +1,10 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/proc/hex2num(hex)
+/*
+ * A large number of misc global procs.
+ */
 
-	if (!( istext(hex) ))
-		CRASH("hex2num not given a hexadecimal string argument (user error)")
-		return
-	var/num = 0
-	var/power = 0
-	var/i = null
-	i = length(hex)
-	while(i > 0)
-		var/char = copytext(hex, i, i + 1)
-		switch(char)
-			if("0")
-				//Apparently, switch works with empty statements, yay! If that doesn't work, blame me, though. -- Urist
-			if("9", "8", "7", "6", "5", "4", "3", "2", "1")
-				num += text2num(char) * 16 ** power
-			if("a", "A")
-				num += 16 ** power * 10
-			if("b", "B")
-				num += 16 ** power * 11
-			if("c", "C")
-				num += 16 ** power * 12
-			if("d", "D")
-				num += 16 ** power * 13
-			if("e", "E")
-				num += 16 ** power * 14
-			if("f", "F")
-				num += 16 ** power * 15
-			else
-				CRASH("hex2num given non-hexadecimal string (user error)")
-				return
-		power++
-		i--
-	return num
-
-/proc/num2hex(num, placeholder)
-
-	if (placeholder == null)
-		placeholder = 2
-	if (!( isnum(num) ))
-		//CRASH("num2hex not given a numeric argument (user error)")
-		// Doing above the worst thing a programmer can do, remove a message raising an error in order to clear the error log.
-		// I shall perform harakiri if this leads to major problems in the future - Abi
-		return
-	if (!( num ))
-		return "0"
-	var/hex = ""
-	var/i = 0
-	while(16 ** i < num)
-		i++
-	var/power = null
-	power = i - 1
-	while(power >= 0)
-		var/val = round(num / 16 ** power)
-		num -= val * 16 ** power
-		switch(val)
-			if(9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0, 0.0)
-				hex += text("[]", val)
-			if(10.0)
-				hex += "A"
-			if(11.0)
-				hex += "B"
-			if(12.0)
-				hex += "C"
-			if(13.0)
-				hex += "D"
-			if(14.0)
-				hex += "E"
-			if(15.0)
-				hex += "F"
-			else
-		power--
-	while(length(hex) < placeholder)
-		hex = text("0[]", hex)
-	return hex
-
+//Inverts the colour of an HTML string
 /proc/invertHTML(HTMLstring)
 
 	if (!( istext(HTMLstring) ))
@@ -103,337 +32,16 @@
 	return text("#[][][]", textr, textg, textb)
 	return
 
-/proc/shuffle(var/list/shufflelist)
-	if(!shufflelist)
-		return
-	var/list/new_list = list()
-	var/list/old_list = shufflelist.Copy()
-	while(old_list.len)
-		var/item = pick(old_list)
-		new_list.Add(item)
-		old_list.Remove(item)
-	return new_list
-
-/proc/uniquelist(var/list/L)
-	var/list/K = list()
-	for(var/item in L)
-		if(!(item in K))
-			K += item
-	return K
-
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","ÿ"="ß"))
-	for(var/char in repl_chars)
-		var/index = findtext(t, char)
-		while(index)
-			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+1)
-			index = findtext(t, char)
-	return t
-
-//For sanitizing user inputs
-/proc/reject_bad_text(var/text)
-	if(length(text) > 512)	return			//message too long
-	var/non_whitespace = 0
-	for(var/i=1, i<=length(text), i++)
-		switch(text2ascii(text,i))
-			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
-			if(127 to 255)	return			//rejects weird letters like ÿ
-			if(0 to 31)		return			//more weird stuff
-			if(32)							//whitespace
-			else			non_whitespace = 1
-	if(non_whitespace)		return text		//only accepts the text if it has some non-spaces
-
-/proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
-	var/list/strip_chars = list("<",">","&","'")
-	t = copytext(t,1,limit)
-	for(var/char in strip_chars)
-		var/index = findtext(t, char)
-		while(index)
-			t = copytext(t, 1, index) + copytext(t, index+1)
-			index = findtext(t, char)
-	return t
-
-/proc/sanitize(var/t,var/list/repl_chars = null)
-	return html_encode(sanitize_simple(t,repl_chars))
-
-/proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN)
-	return sanitize(strip_html_simple(t))
-
-/proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
-	return html_encode(strip_html_simple(t))
-
-/proc/add_zero(t, u)
-	while (length(t) < u)
-		t = "0[t]"
-	return t
-
-/proc/add_lspace(t, u)
-	while(length(t) < u)
-		t = " [t]"
-	return t
-
-/proc/add_tspace(t, u)
-	while(length(t) < u)
-		t = "[t] "
-	return t
-
-/proc/trim_left(text)
-	for (var/i = 1 to length(text))
-		if (text2ascii(text, i) > 32)
-			return copytext(text, i)
-	return ""
-
-/proc/trim_right(text)
-	for (var/i = length(text), i > 0, i--)
-		if (text2ascii(text, i) > 32)
-			return copytext(text, 1, i + 1)
-
-	return ""
-
-/proc/trim(text)
-	return trim_left(trim_right(text))
-
-/proc/capitalize(var/t as text)
-	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
-
-/proc/sortList(var/list/L)
-	if(L.len < 2)
-		return L
-	var/middle = L.len / 2 + 1 // Copy is first,second-1
-	return mergeLists(sortList(L.Copy(0,middle)), sortList(L.Copy(middle))) //second parameter null = to end of list
-
-/proc/sortNames(var/list/L)
-	var/list/Q = new()
-	for(var/atom/x in L)
-		Q[x.name] = x
-	return sortList(Q)
-
-/proc/mergeLists(var/list/L, var/list/R)
-	var/Li=1
-	var/Ri=1
-	var/list/result = new()
-	while(Li <= L.len && Ri <= R.len)
-		if(sorttext(L[Li], R[Ri]) < 1)
-			var/item = R[Ri++]
-			if(istext(item) && !isnull(R[item]))
-				result[item] = R[item]
-			else
-				result += item
-
-		else
-			var/item = L[Li++]
-			if(istext(item) && !isnull(L[item]))
-				result[item] = L[item]
-			else
-				result += item
-
-	if(Li <= L.len)
-		return (result + L.Copy(Li, 0))
-	return (result + R.Copy(Ri, 0))
-
-/proc/dd_file2list(file_path, separator)
-	var/file
-	if(separator == null)
-		separator = "\n"
-	if(isfile(file_path))
-		file = file_path
-	else
-		file = file(file_path)
-	return dd_text2list(file2text(file), separator)
-
+//Returns the middle-most value
 /proc/dd_range(var/low, var/high, var/num)
 	return max(low,min(high,num))
 
-/proc/dd_replacetext(text, search_string, replacement_string)
-	if(!text || !istext(text) || !search_string || !istext(search_string) || !istext(replacement_string))
-		return null
-	var/textList = dd_text2list(text, search_string)
-	return dd_list2text(textList, replacement_string)
+//Returns whether or not A is the middle most value
+/proc/InRange(var/A, var/lower, var/upper)
+	if(A < lower) return 0
+	if(A > upper) return 0
+	return 1
 
-/proc/dd_replaceText(text, search_string, replacement_string)
-	var/textList = dd_text2List(text, search_string)
-	return dd_list2text(textList, replacement_string)
-
-/proc/dd_hasprefix(text, prefix)
-	var/start = 1
-	var/end = length(prefix) + 1
-	return findtext(text, prefix, start, end)
-
-/proc/dd_hasPrefix(text, prefix)
-	var/start = 1
-	var/end = length(prefix) + 1
-	return findtext(text, prefix, start, end) //was findtextEx
-
-/proc/dd_hassuffix(text, suffix)
-	var/start = length(text) - length(suffix)
-	if(start)
-		return findtext(text, suffix, start, null)
-	return
-
-/proc/dd_hasSuffix(text, suffix)
-	var/start = length(text) - length(suffix)
-	if(start)
-		return findtext(text, suffix, start, null) //was findtextEx
-
-/proc/dd_text2list(text, separator, var/list/withinList)
-	var/textlength = length(text)
-	var/separatorlength = length(separator)
-	if(withinList && !withinList.len) withinList = null
-	var/list/textList = new()
-	var/searchPosition = 1
-	var/findPosition = 1
-	var/loops = 0
-	while(1)
-		if(loops >= 1000)
-			break
-		loops++
-
-		findPosition = findtext(text, separator, searchPosition, 0)
-		var/buggyText = copytext(text, searchPosition, findPosition)
-		if(!withinList || (buggyText in withinList)) textList += "[buggyText]"
-		if(!findPosition) return textList
-		searchPosition = findPosition + separatorlength
-		if(searchPosition > textlength)
-			textList += ""
-			return textList
-	return
-
-/proc/dd_text2List(text, separator, var/list/withinList)
-	var/textlength = length(text)
-	var/separatorlength = length(separator)
-	if(withinList && !withinList.len) withinList = null
-	var/list/textList = new()
-	var/searchPosition = 1
-	var/findPosition = 1
-	while(1)
-		findPosition = findtext(text, separator, searchPosition, 0) //was findtextEx
-		var/buggyText = copytext(text, searchPosition, findPosition)
-		if(!withinList || (buggyText in withinList)) textList += "[buggyText]"
-		if(!findPosition) return textList
-		searchPosition = findPosition + separatorlength
-		if(searchPosition > textlength)
-			textList += ""
-			return textList
-	return
-
-/proc/dd_list2text(var/list/the_list, separator)
-	var/total = the_list.len
-	if(!total)
-		return
-	var/count = 2
-	var/newText = "[the_list[1]]"
-	while(count <= total)
-		if(separator)
-			newText += separator
-		newText += "[the_list[count]]"
-		count++
-	return newText
-
-//slower then dd_list2text, but correctly processes associative lists.
-proc/tg_list2text(list/list, glue=",")
-	if(!istype(list) || !list.len)
-		return
-	var/output
-	for(var/i=1 to list.len)
-		output += (i!=1? glue : null)+(!isnull(list["[list[i]]"])?"[list["[list[i]]"]]":"[list[i]]")
-	return output
-
-
-//tg_text2list is faster then dd_text2list
-//not case sensitive version
-proc/tg_text2list(string, separator=",")
-	if(!string)
-		return
-	var/list/output = new
-	var/seplength = length(separator)
-	var/strlength = length(string)
-	var/prev = 1
-	var/index
-	do
-		index = findtext(string, separator, prev, 0)
-		output += copytext(string, prev, index)
-		if(!index)
-			break
-		prev = index+seplength
-		if(prev>strlength)
-			break
-	while(index)
-	return output
-
-//case sensitive version
-proc/tg_extext2list(string, separator=",")
-	if(!string)
-		return
-	var/list/output = new
-	var/seplength = length(separator)
-	var/strlength = length(string)
-	var/prev = 1
-	var/index
-	do
-		index = findtextEx(string, separator, prev, 0)
-		output += copytext(string, prev, index)
-		if(!index)
-			break
-		prev = index+seplength
-		if(prev>strlength)
-			break
-	while(index)
-	return output
-
-/proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
-	var/total = input.len
-	if (!total)
-		return "[nothing_text]"
-	else if (total == 1)
-		return "[input[1]]"
-	else if (total == 2)
-		return "[input[1]][and_text][input[2]]"
-	else
-		var/output = ""
-		var/index = 1
-		while (index < total)
-			if (index == total - 1)
-				comma_text = final_comma_text
-
-			output += "[input[index]][comma_text]"
-			index++
-
-		return "[output][and_text][input[index]]"
-
-/proc/dd_centertext(message, length)
-	var/new_message = message
-	var/size = length(message)
-	var/delta = length - size
-	if(size == length)
-		return new_message
-	if(size > length)
-		return copytext(new_message, 1, length + 1)
-	if(delta == 1)
-		return new_message + " "
-	if(delta % 2)
-		new_message = " " + new_message
-		delta--
-	var/spaces = add_lspace("",delta/2-1)
-	return spaces + new_message + spaces
-
-/proc/dd_limittext(message, length)
-	var/size = length(message)
-	if(size <= length)
-		return message
-	return copytext(message, 1, length + 1)
-
-/proc/angle2dir(var/degree)
-	degree = ((degree+22.5)%365)
-	if(degree < 45)		return NORTH
-	if(degree < 90)		return NORTH|EAST
-	if(degree < 135)	return EAST
-	if(degree < 180)	return SOUTH|EAST
-	if(degree < 225)	return SOUTH
-	if(degree < 270)	return SOUTH|WEST
-	if(degree < 315)	return WEST
-	return NORTH|WEST
-
-/proc/angle2text(var/degree)
-	return dir2text(angle2dir(degree))
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end) return 0
@@ -542,16 +150,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return destination
 
-/proc/text_input(var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	return sanitize(input(Message, Title, Default) as text, length)
 
-/proc/scrub_input(var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	return strip_html(input(Message,Title,Default) as text, length)
-
-/proc/InRange(var/A, var/lower, var/upper)
-	if(A < lower) return 0
-	if(A > upper) return 0
-	return 1
 
 /proc/LinkBlocked(turf/A, turf/B)
 	if(A == null || B == null) return 1
@@ -590,35 +189,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 1
 	return 0
 
-/proc/sign(x) //Should get bonus points for being the most compact code in the world!
-	return x!=0?x/abs(x):0 //((x<0)?-1:((x>0)?1:0))
-
-/*	//Kelson's version (doesn't work)
-/proc/getline(atom/M,atom/N)
-	if(!M || !M.loc) return
-	if(!N || !N.loc) return
-	if(M.z != N.z) return
-	var/line = new/list()
-
-	var/dx = abs(M.x - N.x)
-	var/dy = abs(M.y - N.y)
-	var/cx = M.x < N.x ? 1 : -1
-	var/cy = M.y < N.y ? 1 : -1
-	var/slope = dy ? dx/dy : INFINITY
-
-	var/tslope = slope
-	var/turf/tloc = M.loc
-
-	while(tloc != N.loc)
-		if(tslope>0)
-			--tslope
-			tloc = locate(tloc.x+cx,tloc.y,tloc.z)
-		else
-			tslope += slope
-			tloc = locate(tloc.x,tloc.y+cy,tloc.z)
-		line += tloc
-	return line
-*/
+/proc/sign(x)
+	return x!=0?x/abs(x):0
 
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
 	var/px=M.x		//starting x
@@ -651,6 +223,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			line+=locate(px,py,M.z)
 	return line
 
+//Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
 	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
 		return 0
@@ -661,108 +234,126 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		ch = text2ascii(key, i)
 		if (ch < 48 || ch > 57)
 			return 0
-
 	return 1
 
-/proc/pickweight(list/L)
-	var/total = 0
-	var/item
-	for (item in L)
-		if (!L[item])
-			L[item] = 1
-		total += L[item]
-
-	total = rand(1, total)
-	for (item in L)
-		total -=L [item]
-		if (total <= 0)
-			return item
-
-	return null
-
+//Ensure the frequency is within bounds of what it should be sending/recieving at
 /proc/sanitize_frequency(var/f)
 	f = round(f)
 	f = max(1441, f) // 144.1
 	f = min(1489, f) // 148.9
-	if ((f % 2) == 0)
+	if ((f % 2) == 0) //Ensure the last digit is an odd number
 		f += 1
 	return f
 
+//Turns 1479 into 147.9
 /proc/format_frequency(var/f)
 	return "[round(f / 10)].[f % 10]"
 
-/proc/ainame(var/mob/M as mob)
-	var/randomname = M.name
-	var/time_passed = world.time//Pretty basic but it'll do. It's still possible to bypass this by return ainame().
-	var/newname = copytext(sanitize(input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)),1,MAX_NAME_LEN)
-	if((world.time-time_passed)>200)//If more than 20 game seconds passed.
-		M << "You took too long to decide. Default name selected."
-		return
 
-	if (!newname)
-		newname = randomname
 
-	else
-		if (newname == "Inactive AI")//Keeping this here to prevent dumb.
-			M << "That name is reserved."
-			return ainame(M)
-		for (var/mob/living/silicon/ai/A in world)
-			if (A.real_name == newname&&newname!=randomname)
-				M << "There's already an AI with that name."
-				return ainame(M)
-		M.real_name = newname
-		M.name = newname
-		M.original_name = newname
+//This will update a mob's name, real_name, mind.name, data_core records, pda and id
+//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
+/mob/proc/fully_replace_character_name(var/oldname,var/newname)
+	if(!newname)	return 0
+	real_name = newname
+	name = newname
+	if(mind)
+		mind.name = newname
+	if(dna)
+		dna.real_name = real_name
 
-/*/proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
-	var/randomname = pick(clown_names)
-	var/newname = copytext(sanitize(input(M,"You are the clown. Would you like to change your name to something else?", "Name change",randomname)),1,MAX_NAME_LEN)
-	var/oldname = M.real_name
+	if(oldname)
+		//update the datacore records! This is goig to be a bit costly.
+		for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
+			for(var/datum/data/record/R in L)
+				if(R.fields["name"] == oldname)
+					R.fields["name"] = newname
+					break
 
-	if (!newname)
-		newname = randomname
+		//update our pda and id if we have them on our person
+		var/list/searching = GetAllContents(searchDepth = 3)
+		var/search_id = 1
+		var/search_pda = 1
 
-	else
-		var/badname = 0
-		switch(newname)
-			if("Unknown")	badname = 1
-			if("floor")	badname = 1
-			if("wall")	badname = 1
-			if("r-wall")	badname = 1
-			if("space")	badname = 1
-			if("_")	badname = 1
+		for(var/A in searching)
+			if( search_id && istype(A,/obj/item/weapon/card/id) )
+				var/obj/item/weapon/card/id/ID = A
+				if(ID.registered_name == oldname)
+					ID.registered_name = newname
+					ID.name = "[newname]'s ID Card ([ID.assignment])"
+					if(!search_pda)	break
+					search_id = 0
 
-		if(badname)
-			M << "That name is reserved."
-			return clname(M)
-		for (var/mob/A in world)
-			if(A.real_name == newname)
-				M << "That name is reserved."
-				return clname(M)
-		M.real_name = newname
-		M.name = newname
-		M.original_name = newname
+			else if( search_pda && istype(A,/obj/item/device/pda) )
+				var/obj/item/device/pda/PDA = A
+				if(PDA.owner == oldname)
+					PDA.owner = newname
+					PDA.name = "PDA-[newname] ([PDA.ownjob])"
+					if(!search_id)	break
+					search_pda = 0
+	return 1
 
-	for (var/obj/item/device/pda/pda in M.contents)
-		if (pda.owner == oldname)
-			pda.owner = newname
-			pda.name = "PDA-[newname] ([pda.ownjob])"
-			break
-	for(var/obj/item/weapon/card/id/id in M.contents)
-		if(id.registered_name == oldname)
-			id.registered_name = newname
-			id.name = "[id.registered_name]'s ID Card ([id.assignment])"
-			break*/
 
+
+//Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
+//Last modified by Carn
+/mob/proc/rename_self(var/role, var/allow_numbers=0)
+	spawn(0)
+		var/oldname = real_name
+
+		var/time_passed = world.time
+		var/newname
+
+		for(var/i=1,i<=3,i++)	//we get 3 attempts to pick a suitable name.
+			newname = input(src,"You are a [role]. Would you like to change your name to something else?", "Name change",oldname) as text
+			if((world.time-time_passed)>300)
+				return	//took too long
+			newname = reject_bad_name(newname,allow_numbers)	//returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
+
+			for(var/mob/living/M in player_list)
+				if(M == src)
+					continue
+				if(!newname || M.real_name == newname)
+					newname = null
+					break
+			if(newname)
+				break	//That's a suitable name!
+			src << "Sorry, that [role]-name wasn't appropriate, please try another. It's possibly too long/short, has bad characters or is already taken."
+
+		if(!newname)	//we'll stick with the oldname then
+			return
+
+		if(cmptext("ai",role))
+			if(isAI(src))
+				var/mob/living/silicon/ai/A = src
+				oldname = null//don't bother with the records update crap
+				world << "<b>[newname] is the AI!</b>"
+				world << sound('sound/AI/newAI.ogg')
+				// Set eyeobj name
+				if(A.eyeobj)
+					A.eyeobj.name = "[newname] (AI Eye)"
+
+				// Set ai pda name
+				if(A.aiPDA)
+					A.aiPDA.owner = newname
+					A.aiPDA.name = newname + " (" + A.aiPDA.ownjob + ")"
+
+
+		fully_replace_character_name(oldname,newname)
+
+
+
+//Picks a string of symbols to display as the law number for hacked or ion laws
 /proc/ionnum()
-	return "[pick("!","@","#","$","%","^","&","*")][pick(pick("!","@","#","$","%","^","&","*"))][pick(pick("!","@","#","$","%","^","&","*"))][pick(pick("!","@","#","$","%","^","&","*"))]"
+	return "[pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
+//When an AI is activated, it can choose from a list of non-slaved borgs to have as a slave.
 /proc/freeborg()
 	var/select = null
 	var/list/names = list()
 	var/list/borgs = list()
 	var/list/namecounts = list()
-	for (var/mob/living/silicon/robot/A in world)
+	for (var/mob/living/silicon/robot/A in player_list)
 		var/name = A.real_name
 		if (A.stat == 2)
 			continue
@@ -779,25 +370,33 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		select = input("Unshackled borg signals detected:", "Borg selection", null, null) as null|anything in borgs
 		return borgs[select]
 
-/proc/activeais()
-	var/select = null
-	var/list/names = list()
-	var/list/ais = list()
-	var/list/namecounts = list()
-	for (var/mob/living/silicon/ai/A in world)
-		var/name = A.real_name
-		if (A.stat == 2)
+//When a borg is activated, it can choose which AI it wants to be slaved to
+/proc/active_ais()
+	. = list()
+	for(var/mob/living/silicon/ai/A in living_mob_list)
+		if(A.stat == DEAD)
 			continue
-		if (A.control_disabled == 1)
+		if(A.control_disabled == 1)
 			continue
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		ais[name] = A
+		. += A
+	return .
 
-	if (ais.len)
-		select = input("AI signals detected:", "AI selection") in ais
-		return ais[select]
+//Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
+/proc/select_active_ai_with_fewest_borgs()
+	var/mob/living/silicon/ai/selected
+	var/list/active = active_ais()
+	for(var/mob/living/silicon/ai/A in active)
+		if(!selected || (selected.connected_robots > A.connected_robots))
+			selected = A
+
+	return selected
+
+/proc/select_active_ai(var/mob/user)
+	var/list/ais = active_ais()
+	if(ais.len)
+		if(user)	. = input(usr,"AI signals detected:", "AI selection") in ais
+		else		. = pick(ais)
+	return .
 
 /proc/get_sorted_mobs()
 	var/list/old_list = getmobs()
@@ -827,7 +426,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	new_list += Dead_list
 	return new_list
 
-
+//Returns a list of all mobs with their name
 /proc/getmobs()
 
 	var/list/mobs = sortmobs()
@@ -843,8 +442,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			names.Add(name)
 			namecounts[name] = 1
 		if (M.real_name && M.real_name != M.name)
-			name += " \[[M.original_name? M.original_name : M.real_name]\]"
-
+			name += " \[[M.real_name]\]"
 		if (M.stat == 2)
 			if(istype(M, /mob/dead/observer/))
 				name += " \[ghost\]"
@@ -854,47 +452,49 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return creatures
 
+//Orders mobs by type then by name
 /proc/sortmobs()
-
-	var/list/temp_list = list()
-	for(var/mob/living/silicon/ai/M in world)
-		temp_list.Add(M)
-	for(var/mob/living/silicon/pai/M in world)
-		temp_list.Add(M)
-	for(var/mob/living/silicon/robot/M in world)
-		temp_list.Add(M)
-	for(var/mob/living/carbon/human/M in world)
-		temp_list.Add(M)
-		for(var/mob/living/parasite/P in M.parasites)
-			temp_list.Add(P)
-	for(var/mob/living/carbon/brain/M in world)
-		temp_list.Add(M)
-	for(var/mob/living/carbon/alien/M in world)
-		temp_list.Add(M)
-	for(var/mob/dead/observer/M in world)
-		temp_list.Add(M)
-	for(var/mob/new_player/M in world)
-		temp_list.Add(M)
-	for(var/mob/living/carbon/monkey/M in world)
-		temp_list.Add(M)
-	for(var/mob/living/carbon/metroid/M in world)
-		temp_list.Add(M)
-	for(var/mob/living/simple_animal/M in world)
-		temp_list.Add(M)
+	var/list/moblist = list()
+	var/list/sortmob = sortAtom(mob_list)
+	for(var/mob/living/silicon/ai/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/living/silicon/pai/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/living/silicon/robot/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/living/carbon/human/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/living/carbon/brain/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/living/carbon/alien/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/dead/observer/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/new_player/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/living/carbon/monkey/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/living/carbon/metroid/M in sortmob)
+		moblist.Add(M)
+	for(var/mob/living/simple_animal/M in sortmob)
+		moblist.Add(M)
 //	for(var/mob/living/silicon/hivebot/M in world)
 //		mob_list.Add(M)
 //	for(var/mob/living/silicon/hive_mainframe/M in world)
 //		mob_list.Add(M)
-	return temp_list
+	return moblist
 
+//E = MC^2
 /proc/convert2energy(var/M)
 	var/E = M*(SPEED_OF_LIGHT_SQ)
 	return E
 
+//M = E/C^2
 /proc/convert2mass(var/E)
 	var/M = E/(SPEED_OF_LIGHT_SQ)
 	return M
 
+//Forces a variable to be posative
 /proc/modulus(var/M)
 	if(M >= 0)
 		return M
@@ -1018,11 +618,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		src.mob.machine = null
 	return
 
-/proc/reverselist(var/list/input)
-	var/list/output = new/list()
-	for(var/A in input)
-		output += A
-	return output
+//Will return the location of the turf an atom is ultimatly sitting on
+/proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the atom is on, or what the atom is in is on, etc
+	//in case they're in a closet or sleeper or something
+	var/atom/loc = M.loc
+	while(!istype(loc, /turf/))
+		loc = loc.loc
+	return loc
 
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
@@ -1073,31 +675,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-/*
-/proc/dir2text(var/d)
-	var/dir
-	switch(d)
-		if(1)
-			dir = "NORTH"
-		if(2)
-			dir = "SOUTH"
-		if(4)
-			dir = "EAST"
-		if(8)
-			dir = "WEST"
-		if(5)
-			dir = "NORTHEAST"
-		if(6)
-			dir = "SOUTHEAST"
-		if(9)
-			dir = "NORTHWEST"
-		if(10)
-			dir = "SOUTHWEST"
-		else
-			dir = null
-	return dir
-*/
-
 //Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
 /proc/between(var/low, var/middle, var/high)
 	return max(min(middle, high), low)
@@ -1137,21 +714,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	sleep(max(sleeptime, 15))
 	del(animation)
 
-//returns list element or null. Should prevent "index out of bounds" error.
-proc/listgetindex(var/list/list,index)
-	if(istype(list) && list.len)
-		if(isnum(index))
-			if(InRange(index,1,list.len))
-				return list[index]
-		else if(index in list)
-			return list[index]
-	return
-
-proc/islist(list/list)
-	if(istype(list))
-		return 1
-	return 0
-
+//Will return the contents of an atom recursivly to a depth of 'searchDepth'
 /atom/proc/GetAllContents(searchDepth = 5)
 	var/list/toReturn = list()
 
@@ -1162,65 +725,7 @@ proc/islist(list/list)
 
 	return toReturn
 
-
-//WIP
-
-/*
- * Returns list containing all the entries present in both lists
- * If either of arguments is not a list, returns null
- */
-/proc/intersectlist(var/list/first, var/list/second)
-	if(!islist(first) || !islist(second))
-		return
-	return first & second
-
-/*
- * Returns list containing all the entries from first list that are not present in second.
- * If skiprep = 1, repeated elements are treated as one.
- * If either of arguments is not a list, returns null
- */
-/proc/difflist(var/list/first, var/list/second, var/skiprep=0)
-	if(!islist(first) || !islist(second))
-		return
-	var/list/result = new
-	if(skiprep)
-		for(var/e in first)
-			if(!(e in result) && !(e in second))
-				result += e
-	else
-		result = first - second
-	return result
-
-/*
- * Returns list containing entries that are in either list but not both.
- * If skipref = 1, repeated elements are treated as one.
- * If either of arguments is not a list, returns null
- */
-/proc/uniquemergelist(var/list/first, var/list/second, var/skiprep=0)
-	if(!islist(first) || !islist(second))
-		return
-	var/list/result = new
-	if(skiprep)
-		result = difflist(first, second, skiprep)+difflist(second, first, skiprep)
-	else
-		result = first ^ second
-	return result
-
-/proc/pick_n_take(list/listfrom)
-	if (listfrom.len > 0)
-		var/picked = pick(listfrom)
-		listfrom -= picked
-		return picked
-	return null
-
-/proc/pop(list/listfrom)
-	if (listfrom.len > 0)
-		var/picked = listfrom[listfrom.len]
-		listfrom.len--
-		return picked
-	return null
-
-
+//Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(var/atom/source, var/atom/target, var/length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
@@ -1235,29 +740,6 @@ proc/islist(list/list)
 		steps++
 
 	return 1
-
-
-/mob/proc/get_equipped_items()
-	var/list/items = new/list()
-
-	if(hasvar(src,"back")) if(src:back) items += src:back
-	if(hasvar(src,"belt")) if(src:belt) items += src:belt
-	if(hasvar(src,"l_ear")) if(src:l_ear) items += src:l_ear
-	if(hasvar(src,"r_ear")) if(src:r_ear) items += src:r_ear
-	if(hasvar(src,"glasses")) if(src:glasses) items += src:glasses
-	if(hasvar(src,"gloves")) if(src:gloves) items += src:gloves
-	if(hasvar(src,"head")) if(src:head) items += src:head
-	if(hasvar(src,"shoes")) if(src:shoes) items += src:shoes
-	if(hasvar(src,"wear_id")) if(src:wear_id) items += src:wear_id
-	if(hasvar(src,"wear_mask")) if(src:wear_mask) items += src:wear_mask
-	if(hasvar(src,"wear_suit")) if(src:wear_suit) items += src:wear_suit
-//	if(hasvar(src,"w_radio")) if(src:w_radio) items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN
-	if(hasvar(src,"w_uniform")) if(src:w_uniform) items += src:w_uniform
-
-	//if(hasvar(src,"l_hand")) if(src:l_hand) items += src:l_hand
-	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
-
-	return items
 
 /proc/is_blocked_turf(var/turf/T)
 	var/cant_pass = 0
@@ -1299,60 +781,55 @@ proc/islist(list/list)
 	if(!user || !target) return 0
 	var/user_loc = user.loc
 	var/target_loc = target.loc
-	var/holding = user.equipped()
+	var/holding = user.get_active_hand()
 	sleep(time)
 	if(!user || !target) return 0
-	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !( user.stat ) && ( !user.stunned && !user.weakened && !user.paralysis && !user.lying ) )
+	if ( user.loc == user_loc && target.loc == target_loc && user.get_active_hand() == holding && !( user.stat ) && ( !user.stunned && !user.weakened && !user.paralysis && !user.lying ) )
 		return 1
 	else
 		return 0
-/*
-/proc/do_after(mob/M as mob, time as num)
-	if(!M)
-		return 0
-	var/turf/T = M.loc
-	var/holding = M.equipped()
-	for(var/i=0, i<time)
-		if(M)
-			if ((M.loc == T && M.equipped() == holding && !( M.stat )))
-				i++
-				sleep(1)
-			else
-				return 0
-	return 1
-*/
 
-/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1) 		// Replacing the upper one with this one because Byond keeps feeling that the upper one is an infinate loop
-	if(!user || isnull(user))																// This one should have less temptation
+/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1)
+	if(!user || isnull(user))
 		return 0
 	if(numticks == 0)
 		return 0
 
 	var/delayfraction = round(delay/numticks)
 	var/turf/T = user.loc
-	var/holding = user.equipped()
+	var/holding = user.get_active_hand()
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
 
-		if(needhand && !(user.equipped() == holding))	//Sometimes you don't want the user to have to keep their active hand
-			return 0
+
 		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T))
+			return 0
+		if(needhand && !(user.get_active_hand() == holding))	//Sometimes you don't want the user to have to keep their active hand
 			return 0
 
 	return 1
 
+//Takes: Anything that could possibly have variables and a varname to check.
+//Returns: 1 if found, 0 if not.
 /proc/hasvar(var/datum/A, var/varname)
-	//Takes: Anything that could possibly have variables and a varname to check.
-	//Returns: 1 if found, 0 if not.
-	//Notes: Do i really need to explain this?
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
+//Returns: all the areas in the world
+/proc/return_areas()
+	var/list/area/areas = list()
+	for(var/area/A in world)
+		areas += A
+	return areas
+
+//Returns: all the areas in the world, sorted.
+/proc/return_sorted_areas()
+	return sortAtom(return_areas())
+
+//Takes: Area type as text string or as typepath OR an instance of the area.
+//Returns: A list of all areas of that type in the world.
 /proc/get_areas(var/areatype)
-	//Takes: Area type as text string or as typepath OR an instance of the area.
-	//Returns: A list of all areas of that type in the world.
-	//Notes: Simple!
 	if(!areatype) return null
 	if(istext(areatype)) areatype = text2path(areatype)
 	if(isarea(areatype))
@@ -1364,11 +841,9 @@ proc/islist(list/list)
 		if(istype(N, areatype)) areas += N
 	return areas
 
+//Takes: Area type as text string or as typepath OR an instance of the area.
+//Returns: A list of all turfs in areas of that type of that type in the world.
 /proc/get_area_turfs(var/areatype)
-	//Takes: Area type as text string or as typepath OR an instance of the area.
-	//Returns: A list of all turfs in areas of that type of that type in the world.
-	//Notes: Simple!
-
 	if(!areatype) return null
 	if(istext(areatype)) areatype = text2path(areatype)
 	if(isarea(areatype))
@@ -1381,11 +856,9 @@ proc/islist(list/list)
 			for(var/turf/T in N) turfs += T
 	return turfs
 
+//Takes: Area type as text string or as typepath OR an instance of the area.
+//Returns: A list of all atoms	(objs, turfs, mobs) in areas of that type of that type in the world.
 /proc/get_area_all_atoms(var/areatype)
-	//Takes: Area type as text string or as typepath OR an instance of the area.
-	//Returns: A list of all atoms	(objs, turfs, mobs) in areas of that type of that type in the world.
-	//Notes: Simple!
-
 	if(!areatype) return null
 	if(istext(areatype)) areatype = text2path(areatype)
 	if(isarea(areatype))
@@ -1416,19 +889,15 @@ proc/islist(list/list)
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
 
-	var/blanked_turfs = list()
-
 	var/src_min_x = 0
 	var/src_min_y = 0
 	for (var/turf/T in turfs_src)
-		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	for (var/turf/T in turfs_trg)
-		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 
@@ -1495,7 +964,7 @@ proc/islist(list/list)
 
 						// Reset the shuttle corners
 						if(O.tag == "delete me")
-							X.icon = 'shuttle.dmi'
+							X.icon = 'icons/turf/shuttle.dmi'
 							X.icon_state = dd_replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
 							X.name = "wall"
 							del(O) // prevents multiple shuttle corners from stacking
@@ -1503,25 +972,25 @@ proc/islist(list/list)
 						if(!istype(O,/obj)) continue
 						O.loc = X
 					for(var/mob/M in T)
-						if(!istype(M,/mob)) continue
+						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
 
-					var/area/AR = X.loc
+//					var/area/AR = X.loc
 
-					if(AR.ul_Lighting)
-						X.opacity = !X.opacity
-						X.ul_SetOpacity(!X.opacity)
+//					if(AR.lighting_use_dynamic)							//TODO: rewrite this code so it's not messed by lighting ~Carn
+//						X.opacity = !X.opacity
+//						X.SetOpacity(!X.opacity)
 
 					toupdate += X
 
 					if(turftoleave)
 						var/turf/ttl = new turftoleave(T)
 
-						var/area/AR2 = ttl.loc
+//						var/area/AR2 = ttl.loc
 
-						if(AR2.ul_Lighting)
-							ttl.opacity = !ttl.opacity
-							ttl.ul_SetOpacity(!ttl.opacity)
+//						if(AR2.lighting_use_dynamic)						//TODO: rewrite this code so it's not messed by lighting ~Carn
+//							ttl.opacity = !ttl.opacity
+//							ttl.sd_SetOpacity(!ttl.opacity)
 
 						fromupdate += ttl
 
@@ -1538,15 +1007,19 @@ proc/islist(list/list)
 		for(var/turf/simulated/T1 in toupdate)
 			for(var/obj/machinery/door/D2 in T1)
 				doors += D2
-			air_master.tiles_to_update |= T1
+			/*if(T1.parent)
+				air_master.groups_to_rebuild += T1.parent
+			else
+				air_master.tiles_to_update += T1*/
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
 			for(var/obj/machinery/door/D2 in T2)
 				doors += D2
-			air_master.tiles_to_update |= T2
-
-	ul_UnblankLocal(blanked_turfs)
+			/*if(T2.parent)
+				air_master.groups_to_rebuild += T2.parent
+			else
+				air_master.tiles_to_update += T2*/
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
@@ -1584,19 +1057,15 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
 
-	var/blanked_turfs = list()
-
 	var/src_min_x = 0
 	var/src_min_y = 0
 	for (var/turf/T in turfs_src)
-		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	for (var/turf/T in turfs_trg)
-		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 
@@ -1664,9 +1133,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 					for(var/mob/M in T)
 
-						if(!istype(M,/mob))
-							continue
-
+						if(!istype(M,/mob) || istype(M, /mob/aiEye)) continue // If we need to check for more mobs, I'll add a variable
 						mobs += M
 
 					for(var/mob/M in mobs)
@@ -1681,14 +1148,14 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 
 					for(var/V in T.vars)
-						if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity", "sd_light_spill",)))
+						if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")))
 							X.vars[V] = T.vars[V]
 
-					var/area/AR = X.loc
+//					var/area/AR = X.loc
 
-					if(AR.ul_Lighting)
-						X.opacity = !X.opacity
-						X.ul_SetOpacity(!X.opacity)
+//					if(AR.lighting_use_dynamic)
+//						X.opacity = !X.opacity
+//						X.sd_SetOpacity(!X.opacity)			//TODO: rewrite this code so it's not messed by lighting ~Carn
 
 					toupdate += X
 
@@ -1700,13 +1167,15 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 
 	var/list/doors = new/list()
-	ul_UnblankLocal(blanked_turfs)
 
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
 			for(var/obj/machinery/door/D2 in T1)
 				doors += D2
-			air_master.tiles_to_update += T1
+			/*if(T1.parent)
+				air_master.groups_to_rebuild += T1.parent
+			else
+				air_master.tiles_to_update += T1*/
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
@@ -1718,19 +1187,10 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 
 
-
-
-
 proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
 	var/dy = abs(B.y - A.y)
 	return get_dir(A, B) & (rand() * (dx+dy) < dy ? 3 : 12)
-
-//return either pick(list) or null if list is not of type /list or empty
-proc/safepick(list/list)
-	if(!islist(list) || !list.len)
-		return
-	return pick(list)
 
 //chances are 1:value. anyprob(1) will always return true
 proc/anyprob(value)
@@ -1752,66 +1212,147 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 			. = orange(distance,center)
 	return
 
-/proc/stringsplit(txt, character)
-	if(length(character) < 1) //Do not infinite loop when splitting on "" or null
-		return list(txt)
-
-	var/cur_text = txt
-	var/last_found = 1
-	var/found_char = findtext(cur_text,character)
-	var/list/list = list()
-	if(found_char)
-		var/fs = copytext(cur_text,last_found,found_char)
-		list += fs
-		last_found = found_char+length(character)
-		found_char = findtext(cur_text,character,last_found)
-	while(found_char)
-		var/found_string = copytext(cur_text,last_found,found_char)
-		last_found = found_char+length(character)
-		list += found_string
-		found_char = findtext(cur_text,character,last_found)
-	list += copytext(cur_text,last_found,length(cur_text)+1)
-	return list
-
-/proc/stringmerge(var/text,var/compare,replace = "*")
-//This proc fills in all spaces with the "replace" var (* by default) with whatever
-//is in the other string at the same spot (assuming it is not a replace char).
-//This is used for fingerprints
-	var/newtext = text
-	if(lentext(text) != lentext(compare))
-		return 0
-	for(var/i = 1, i < lentext(text), i++)
-		var/a = copytext(text,i,i+1)
-		var/b = copytext(compare,i,i+1)
-//if it isn't both the same letter, or if they are both the replacement character
-//(no way to know what it was supposed to be)
-		if(a != b)
-			if(a == replace) //if A is the replacement char
-				newtext = copytext(newtext,1,i) + b + copytext(newtext, i+1)
-			else if(b == replace) //if B is the replacement char
-				newtext = copytext(newtext,1,i) + a + copytext(newtext, i+1)
-			else //The lists disagree, Uh-oh!
-				return 0
-	return newtext
-
-/proc/stringpercent(var/text,character = "*")
-//This proc returns the number of chars of the string that is the character
-//This is used for detective work to determine fingerprint completion.
-	if(!text || !character)
-		return 0
-	var/count = 0
-	for(var/i = 1, i <= lentext(text), i++)
-		var/a = copytext(text,i,i+1)
-		if(a == character)
-			count++
-	return count
-
 proc/get_mob_with_client_list()
 	var/list/mobs = list()
 	for(var/mob/M in world)
 		if (M.client)
 			mobs += M
 	return mobs
+
+
+/proc/parse_zone(zone)
+	if(zone == "r_hand") return "right hand"
+	else if (zone == "l_hand") return "left hand"
+	else if (zone == "l_arm") return "left arm"
+	else if (zone == "r_arm") return "right arm"
+	else if (zone == "l_leg") return "left leg"
+	else if (zone == "r_leg") return "right leg"
+	else if (zone == "l_foot") return "left foot"
+	else if (zone == "r_foot") return "right foot"
+	else if (zone == "l_hand") return "left hand"
+	else if (zone == "r_hand") return "right hand"
+	else if (zone == "l_foot") return "left foot"
+	else if (zone == "r_foot") return "right foot"
+	else return zone
+
+
+/proc/get_turf(turf/location)
+	while(location)
+		if(isturf(location))
+			return location
+		location = location.loc
+	return null
+
+/proc/get_turf_or_move(turf/location)
+	return get_turf(location)
+
+
+//Quick type checks for some tools
+var/global/list/common_tools = list(
+/obj/item/weapon/cable_coil,
+/obj/item/weapon/wrench,
+/obj/item/weapon/weldingtool,
+/obj/item/weapon/screwdriver,
+/obj/item/weapon/wirecutters,
+/obj/item/device/multitool,
+/obj/item/weapon/crowbar)
+
+/proc/istool(O)
+	if(O && is_type_in_list(O, common_tools))
+		return 1
+	return 0
+
+/proc/iswrench(O)
+	if(istype(O, /obj/item/weapon/wrench))
+		return 1
+	return 0
+
+/proc/iswelder(O)
+	if(istype(O, /obj/item/weapon/weldingtool))
+		return 1
+	return 0
+
+/proc/iscoil(O)
+	if(istype(O, /obj/item/weapon/cable_coil))
+		return 1
+	return 0
+
+/proc/iswirecutter(O)
+	if(istype(O, /obj/item/weapon/wirecutters))
+		return 1
+	return 0
+
+/proc/isscrewdriver(O)
+	if(istype(O, /obj/item/weapon/screwdriver))
+		return 1
+	return 0
+
+/proc/ismultitool(O)
+	if(istype(O, /obj/item/device/multitool))
+		return 1
+	return 0
+
+/proc/iscrowbar(O)
+	if(istype(O, /obj/item/weapon/crowbar))
+		return 1
+	return 0
+
+proc/is_hot(obj/item/W as obj)
+	switch(W.type)
+		if(/obj/item/weapon/weldingtool)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.isOn())
+				return 3800
+			else
+				return 0
+		if(/obj/item/weapon/lighter)
+			if(W:lit)
+				return 1500
+			else
+				return 0
+		if(/obj/item/weapon/match)
+			if(W:lit)
+				return 1000
+			else
+				return 0
+		if(/obj/item/clothing/mask/cigarette)
+			if(W:lit)
+				return 1000
+			else
+				return 0
+		if(/obj/item/weapon/pickaxe/plasmacutter)
+			return 3800
+		if(/obj/item/weapon/melee/energy)
+			return 3500
+		else
+			return 0
+
+	return 0
+
+//Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
+/proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
+	return ( \
+		istype(W, /obj/item/weapon/screwdriver)                   || \
+		istype(W, /obj/item/weapon/pen)                           || \
+		istype(W, /obj/item/weapon/weldingtool)					  || \
+		istype(W, /obj/item/weapon/lighter/zippo)				  || \
+		istype(W, /obj/item/weapon/match)            		      || \
+		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
+		istype(W, /obj/item/weapon/wirecutters)                   || \
+		istype(W, /obj/item/weapon/circular_saw)                  || \
+		istype(W, /obj/item/weapon/melee/energy/sword)            || \
+		istype(W, /obj/item/weapon/melee/energy/blade)            || \
+		istype(W, /obj/item/weapon/shovel)                        || \
+		istype(W, /obj/item/weapon/kitchenknife)                  || \
+		istype(W, /obj/item/weapon/butch)						  || \
+		istype(W, /obj/item/weapon/scalpel)                       || \
+		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
+		istype(W, /obj/item/weapon/shard)                         || \
+		istype(W, /obj/item/weapon/broken_bottle)				  || \
+		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
+		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
+		istype(W, /obj/item/weapon/twohanded/fireaxe) \
+	)
 
 /proc/reverse_direction(var/dir)
 	switch(dir)

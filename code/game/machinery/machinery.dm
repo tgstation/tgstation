@@ -93,31 +93,20 @@ Class Procs:
 
 /obj/machinery/New()
 	..()
-	machines.Add(src)
+	machines += src
 
 /obj/machinery/Del()
-	machines.Remove(src)
 	..()
 
 /obj/machinery/process()//If you dont use process or power why are you here
-
-	/*
-	Big note: if do not call ..() in any machinery subtype process() call or it will
-	be removed from the list of machines to iterate. It is, however, okay to call ..()
-	if the machine has a parent process() call. For instance, machinery/atmosphereics has a
-	root process() call, so things like cryocells can call ..() and not worry about
-	it getting removed from machines.
-	*/
-
-	machines.Remove(src) // uncommented by Doohl
-	return
+	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
 	if(use_power && stat == 0)
-		use_power(15000/severity)
+		use_power(7500/severity)
 
 		var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
-		pulse2.icon = 'effects.dmi'
+		pulse2.icon = 'icons/effects/effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"
 		pulse2.anchored = 1
@@ -147,15 +136,13 @@ Class Procs:
 	if(prob(50))
 		del(src)
 
-#define POWER_USE_MULTIPLIER 3
-
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
 		return 0
 	if(src.use_power == 1)
-		use_power(idle_power_usage * POWER_USE_MULTIPLIER,power_channel)
+		use_power(idle_power_usage,power_channel)
 	else if(src.use_power >= 2)
-		use_power(active_power_usage * POWER_USE_MULTIPLIER,power_channel)
+		use_power(active_power_usage,power_channel)
 	return 1
 
 /obj/machinery/Topic(href, href_list)
@@ -186,7 +173,13 @@ Class Procs:
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	if(isrobot(user))
+		// For some reason attack_robot doesn't work
+		// This is to stop robots from using cameras to remotely control machines.
+		if(user.client && user.client.eye == user)
+			return src.attack_hand(user)
+	else
+		return src.attack_hand(user)
 
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -207,11 +200,12 @@ Class Procs:
 		return 1
 */
 	if (ishuman(user))
-		if(user.getBrainLoss() >= 60)
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60)
 			for(var/mob/M in viewers(src, null))
-				M << "\red [user] stares cluelessly at [src] and drools."
+				M << "\red [H] stares cluelessly at [src] and drools."
 			return 1
-		else if(prob(user.getBrainLoss()))
+		else if(prob(H.getBrainLoss()))
 			user << "\red You momentarily forget how to use [src]."
 			return 1
 

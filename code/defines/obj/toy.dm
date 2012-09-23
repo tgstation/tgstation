@@ -8,72 +8,72 @@
 /////////Toy Mechs/////////
 
 /obj/item/toy/prize
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
 
 /obj/item/toy/prize/ripley
 	name = "toy ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/11"
+	desc = "Mini-Mecha action figure! Collect them all! 1/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 
 /obj/item/toy/prize/fireripley
 	name = "toy firefighting ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/11"
+	desc = "Mini-Mecha action figure! Collect them all! 2/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "fireripleytoy"
 
 /obj/item/toy/prize/deathripley
 	name = "toy deathsquad ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/11"
+	desc = "Mini-Mecha action figure! Collect them all! 3/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "deathripleytoy"
 
 /obj/item/toy/prize/gygax
 	name = "toy gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/11"
+	desc = "Mini-Mecha action figure! Collect them all! 4/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "gygaxtoy"
 
 /obj/item/toy/prize/durand
-	name = "toy gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 5/11"
+	name = "toy durand"
+	desc = "Mini-Mecha action figure! Collect them all! 5/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "durandprize"
 
 /obj/item/toy/prize/honk
 	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/11"
+	desc = "Mini-Mecha action figure! Collect them all! 6/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "honkprize"
 
 /obj/item/toy/prize/marauder
 	name = "toy marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/11"
+	desc = "Mini-Mecha action figure! Collect them all! 7/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "marauderprize"
 
 /obj/item/toy/prize/seraph
 	name = "toy seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/11"
+	desc = "Mini-Mecha action figure! Collect them all! 8/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "seraphprize"
 
 /obj/item/toy/prize/mauler
 	name = "toy mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/11"
+	desc = "Mini-Mecha action figure! Collect them all! 9/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "maulerprize"
 
 /obj/item/toy/prize/odysseus
 	name = "toy odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/11"
+	desc = "Mini-Mecha action figure! Collect them all! 10/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "odysseusprize"
 
 /obj/item/toy/prize/phazon
 	name = "toy phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/11"
+	desc = "Mini-Mecha action figure! Collect them all! 11/11. Send the full collection in a closed crate to CentCom at your local quartermaster for a GREAT reward!"
 	icon_state = "phazonprize"
 
 
 /obj/item/toy/syndicateballoon
-	name = "red balloon"
-	desc = "Looks like a red balloon with a large \"S\" on it."
+	name = "syndicate balloon"
+	desc = "There is a tag on the back that reads \"FUK NT!11!\"."
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
 	force = 0
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
 	w_class = 4.0
@@ -81,20 +81,20 @@
 /obj/item/toy/blink
 	name = "electronic blink toy game"
 	desc = "Blink.  Blink.  Blink. Ages 8 and up."
-	icon = 'radio.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
 	item_state = "signaler"
 
 /obj/item/toy/spinningtoy
 	name = "Gravitational Singularity"
 	desc = "\"Singulo\" brand spinning toy."
-	icon = 'singularity.dmi'
+	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'ammo.dmi'
+	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357-7"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = 1.0
@@ -109,8 +109,8 @@
 
 /obj/item/toy/ammo/crossbow
 	name = "foam dart"
-	desc = "It's nerf or nothing! Ages 8 and up."
-	icon = 'toy.dmi'
+	desc = "Its nerf or nothing! Ages 8 and up."
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamdart"
 	flags = FPRINT | TABLEPASS
 	w_class = 1.0
@@ -118,7 +118,7 @@
 /obj/effect/foam_dart_dummy
 	name = ""
 	desc = ""
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "null"
 	anchored = 1
 	density = 0
@@ -126,7 +126,7 @@
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
-	icon = 'gun.dmi'
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
@@ -134,6 +134,7 @@
 	w_class = 3.0
 	g_amt = 10
 	m_amt = 10
+	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
 	examine()
@@ -173,10 +174,8 @@
 		src.add_fingerprint(user)
 		if (src.bullets < 1)
 			user.show_message("\red *click* *click*", 2)
-			for(var/mob/K in viewers(usr))
-				K << 'empty.ogg'
 			return
-		playsound(user, 'Gunshot.ogg', 100, 1)
+		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 		src.bullets--
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red <B>[] fires a cap gun at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
@@ -184,24 +183,25 @@
 /obj/item/toy/sword
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
-	icon = 'weapons.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
 	item_state = "sword0"
 	var/active = 0.0
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
+	attack_verb = list("attacked", "struck", "hit")
 
 	attack_self(mob/user as mob)
 		src.active = !( src.active )
 		if (src.active)
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
-			playsound(user, 'saberon.ogg', 50, 1)
+			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 			src.icon_state = "swordblue"
 			src.item_state = "swordblue"
 			src.w_class = 4
 		else
 			user << "\blue You push the plastic blade back down into the handle."
-			playsound(user, 'saberoff.ogg', 50, 1)
+			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 			src.icon_state = "sword0"
 			src.item_state = "sword0"
 			src.w_class = 2
@@ -211,11 +211,12 @@
 /obj/item/toy/crossbow
 	name = "foam dart crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
-	icon = 'gun.dmi'
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	flags = FPRINT | TABLEPASS | USEDELAY
 	w_class = 2.0
+	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
 
 	examine()
@@ -247,7 +248,7 @@
 			bullets--
 			D.icon_state = "foamdart"
 			D.name = "foam dart"
-			playsound(user.loc, 'syringeproj.ogg', 50, 1)
+			playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
 
 			for(var/i=0, i<6, i++)
 				if (D)
@@ -295,7 +296,7 @@
 					O.show_message(text("\red <B>[] casually lines up a shot with []'s head and pulls the trigger!</B>", user, M), 1, "\red You hear the sound of foam against skull", 2)
 					O.show_message(text("\red [] was hit in the head by the foam dart!", M), 1)
 
-			playsound(user.loc, 'syringeproj.ogg', 50, 1)
+			playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
 			new /obj/item/toy/ammo/crossbow(M.loc)
 			src.bullets--
 		else if (M.lying && src.bullets == 0)
@@ -307,7 +308,7 @@
 /obj/item/weapon/storage/crayonbox
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
-	icon = 'crayons.dmi'
+	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = 2.0
 	storage_slots = 6
@@ -318,9 +319,10 @@
 /obj/item/toy/crayon
 	name = "crayon"
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
-	icon = 'crayons.dmi'
+	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
 	w_class = 1.0
+	attack_verb = list("attacked", "coloured")
 	var/colour = "#FF0000" //RGB
 	var/shadeColour = "#220000" //RGB
 	var/uses = 30 //0 for unlimited uses
@@ -330,17 +332,18 @@
 /obj/item/toy/snappop
 	name = "snap pop"
 	desc = "Wow!"
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
+	w_class = 1
 
 	throw_impact(atom/hit_atom)
 		..()
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		new /obj/effect/decal/ash(src.loc)
+		new /obj/effect/decal/cleanable/ash(src.loc)
 		src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
-		playsound(src, 'snap.ogg', 50, 1)
+		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 		del(src)
 
 /obj/item/toy/snappop/HasEntered(H as mob|obj)
@@ -352,47 +355,15 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(2, 0, src)
 			s.start()
-			new /obj/effect/decal/ash(src.loc)
+			new /obj/effect/decal/cleanable/ash(src.loc)
 			src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
-			playsound(src, 'snap.ogg', 50, 1)
+			playsound(src, 'sound/effects/snap.ogg', 50, 1)
 			del(src)
-
-/obj/item/toy/snappopbox
-	name = "snap pop box"
-	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
-	icon = 'toy.dmi'
-	icon_state = "spbox"
-	var/amount = 8
-
-	attack_hand(mob/user as mob, unused, flag)
-		add_fingerprint(user)
-
-		if(user.r_hand == src || user.l_hand == src)
-			if(amount)
-				var/obj/item/toy/snappop/M = new /obj/item/toy/snappop(src)
-				if (user.hand)
-					user.l_hand = M
-				else
-					user.r_hand = M
-				M.loc = user
-				M.layer = 20
-				user.update_clothing()
-				user << "You take a snap pop out of the box."
-				amount--
-			else
-				user << "There are no snap pops left in the box."
-		else
-			..()
-
-		return
-
-	attack_paw(mob/user as mob)
-		return attack_hand(user)
 
 /obj/item/toy/waterflower
 	name = "Water Flower"
 	desc = "A seemingly innocent sunflower...with a twist."
-	icon = 'harvest.dmi'
+	icon = 'icons/obj/harvest.dmi'
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	var/empty = 0
@@ -431,11 +402,11 @@
 
 		var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src))
 		D.name = "water"
-		D.icon = 'chemical.dmi'
+		D.icon = 'icons/obj/chemical.dmi'
 		D.icon_state = "chempuff"
 		D.create_reagents(5)
 		src.reagents.trans_to(D, 1)
-		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
+		playsound(src.loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 
 		spawn(0)
 			for(var/i=0, i<1, i++)
@@ -459,7 +430,7 @@
 /obj/item/toy/balloon
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
-	icon = 'toy.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
 

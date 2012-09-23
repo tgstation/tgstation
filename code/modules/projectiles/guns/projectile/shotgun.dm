@@ -23,17 +23,16 @@
 
 
 	attack_self(mob/living/user as mob)
-		if(..())
-			if(recentpump)	return
-			pump()
-			recentpump = 1
-			spawn(10)
-				recentpump = 0
+		if(recentpump)	return
+		pump()
+		recentpump = 1
+		spawn(10)
+			recentpump = 0
 		return
 
 
 	proc/pump(mob/M as mob)
-		playsound(M, 'shotgunpump.ogg', 60, 1)
+		playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 		pumped = 0
 		if(current_shell)//We have a shell in the chamber
 			current_shell.loc = get_turf(src)//Eject casing
@@ -52,7 +51,6 @@
 /obj/item/weapon/gun/projectile/shotgun/pump/combat
 	name = "combat shotgun"
 	icon_state = "cshotgun"
-	item_state = "cshotgun"
 	max_shells = 8
 	origin_tech = "combat=5;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun"
@@ -96,19 +94,17 @@
 		return 0
 
 	attack_self(mob/living/user as mob)
-		if(..())
-			if(!(locate(/obj/item/ammo_casing/shotgun) in src) && !loaded.len)
-				user << "<span class='notice'>\The [src] is empty.</span>"
-				return
-	
-			for(var/obj/item/ammo_casing/shotgun/shell in src)	//This feels like a hack.	//don't code at 3:30am kids!!
-				if(shell in loaded)
-					loaded -= shell
-				shell.loc = get_turf(src.loc)
-	
-			user << "<span class='notice'>You break \the [src].</span>"
-			update_icon()
-		return
+		if(!(locate(/obj/item/ammo_casing/shotgun) in src) && !loaded.len)
+			user << "<span class='notice'>\The [src] is empty.</span>"
+			return
+
+		for(var/obj/item/ammo_casing/shotgun/shell in src)	//This feels like a hack.	//don't code at 3:30am kids!!
+			if(shell in loaded)
+				loaded -= shell
+			shell.loc = get_turf(src.loc)
+
+		user << "<span class='notice'>You break \the [src].</span>"
+		update_icon()
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
 		if(istype(A, /obj/item/ammo_casing) && !load_method)
@@ -130,7 +126,6 @@
 				return
 			if(do_after(user, 30))	//SHIT IS STEALTHY EYYYYY
 				icon_state = "sawnshotgun"
-				item_state = "sawnshotgun"
 				w_class = 3.0
 				item_state = "gun"
 				slot_flags &= ~SLOT_BACK	//you can't sling it on your back

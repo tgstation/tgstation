@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
 
 /datum/game_mode
 	var/list/datum/mind/changelings = list()
@@ -8,6 +8,7 @@
 	name = "changeling"
 	config_tag = "changeling"
 	restricted_jobs = list("AI", "Cyborg")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
@@ -85,46 +86,27 @@
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
-	absorb_objective.gen_amount_goal(2,4)
+	absorb_objective.gen_amount_goal(2, 3)
 	changeling.objectives += absorb_objective
 
+	var/datum/objective/assassinate/kill_objective = new
+	kill_objective.owner = changeling
+	kill_objective.find_target()
+	changeling.objectives += kill_objective
+
+	var/datum/objective/steal/steal_objective = new
+	steal_objective.owner = changeling
+	steal_objective.find_target()
+	changeling.objectives += steal_objective
+
+
 	switch(rand(1,100))
-		if(1 to 45)
-
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = changeling
-			kill_objective.find_target()
-			changeling.objectives += kill_objective
-
+		if(1 to 80)
 			if (!(locate(/datum/objective/escape) in changeling.objectives))
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = changeling
 				changeling.objectives += escape_objective
-
-		if(46 to 90)
-
-			var/list/datum/objective/theft = pickweight(GenerateTheft(changeling.assigned_role,changeling))
-			var/datum/objective/steal/steal_objective = pick(theft)
-			steal_objective.owner = changeling
-			changeling.objectives += steal_objective
-
-			if (!(locate(/datum/objective/escape) in changeling.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = changeling
-				changeling.objectives += escape_objective
-
 		else
-
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = changeling
-			kill_objective.find_target()
-			changeling.objectives += kill_objective
-
-			var/list/datum/objective/theft = pickweight(GenerateTheft(changeling.assigned_role,changeling))
-			var/datum/objective/steal/steal_objective = pick(theft)
-			steal_objective.owner = changeling
-			changeling.objectives += steal_objective
-
 			if (!(locate(/datum/objective/survive) in changeling.objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = changeling
@@ -136,6 +118,11 @@
 		changeling.current << "<B>\red You are a changeling!</B>"
 	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>"
 	changeling.current << "<B>You must complete the following tasks:</B>"
+
+	if (changeling.current.mind)
+		if (changeling.current.mind.assigned_role == "Clown")
+			changeling.current << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
+			changeling.current.mutations.Remove(CLUMSY)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in changeling.objectives)
@@ -165,72 +152,82 @@
 			return ..()
 	return 0*/
 
-/datum/game_mode/proc/grant_changeling_powers(mob/living/carbon/human/changeling_mob)
-	if (!istype(changeling_mob))
-		return
+/datum/game_mode/proc/grant_changeling_powers(mob/living/carbon/changeling_mob)
+	if(!istype(changeling_mob))	return
 	changeling_mob.make_changeling()
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
-	for(var/datum/mind/changeling in changelings)
-		var/changelingwin = 1
-		var/changeling_name
-		var/totalabsorbed = 0
-		if((changeling.current) && (changeling.current.changeling))
-			totalabsorbed = ((changeling.current.changeling.absorbed_dna.len) - 1)
-			changeling_name = "[changeling.current.real_name] (played by [changeling.key])"
-			world << "<B>The changeling was [changeling_name].</B>"
-			world << "<b>[changeling.current.gender=="male"?"His":"Her"] changeling ID was [changeling.current.gender=="male"?"Mr.":"Mrs."] [changeling.current.changeling.changelingID]."
-			world << "<B>Genomes absorbed: [totalabsorbed]</B>"
+	if(changelings.len)
+		var/text = "<FONT size = 2><B>The changelings were:</B></FONT>"
+		for(var/datum/mind/changeling in changelings)
+			var/changelingwin = 1
 
-			var/count = 1
-			for(var/datum/objective/objective in changeling.objectives)
-				if(objective.check_completion())
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
-					feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
+			text += "<br>[changeling.key] was [changeling.name] ("
+			if(changeling.current)
+				if(changeling.current.stat == DEAD)
+					text += "died"
 				else
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
-					feedback_add_details("changeling_objective","[objective.type]|FAIL")
-					changelingwin = 0
-				count++
+					text += "survived"
+				if(changeling.current.real_name != changeling.name)
+					text += " as [changeling.current.real_name]"
+			else
+				text += "body destroyed"
+				changelingwin = 0
+			text += ")"
 
-		else
-			changeling_name = "[changeling.key] (character destroyed)"
-			changelingwin = 0
+			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
+			text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]."
+			text += "<br><b>Genomes Absorbed:</b> [changeling.changeling.absorbedcount]"
 
-		if(changelingwin)
-			world << "<B>The changeling was successful!<B>"
-			feedback_add_details("changeling_success","SUCCESS")
-		else
-			world << "<B>The changeling has failed!<B>"
-			feedback_add_details("changeling_success","FAIL")
+			if(changeling.objectives.len)
+				var/count = 1
+				for(var/datum/objective/objective in changeling.objectives)
+					if(objective.check_completion())
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						feedback_add_details("changeling_objective","[objective.type]|FAIL")
+						changelingwin = 0
+					count++
+
+			if(changelingwin)
+				text += "<br><font color='green'><B>The changeling was successful!</B></font>"
+				feedback_add_details("changeling_success","SUCCESS")
+			else
+				text += "<br><font color='red'><B>The changeling has failed.</B></font>"
+				feedback_add_details("changeling_success","FAIL")
+
+		world << text
+
+
 	return 1
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
-	var/changeling_level = 0
 	var/list/absorbed_dna = list()
-	var/changeling_fakedeath = 0
-	var/chem_charges = 20.00
-	var/chem_recharge_multiplier = 1
+	var/absorbedcount = 0
+	var/chem_charges = 20
+	var/chem_recharge_rate = 0.5
 	var/chem_storage = 50
 	var/sting_range = 1
-	var/changelingID = "none"
-	var/mob/living/host = null
-	var/geneticdamage = 0.0
+	var/changelingID = "Changeling"
+	var/geneticdamage = 0
 	var/isabsorbing = 0
 	var/geneticpoints = 5
 	var/purchasedpowers = list()
 
-
-
-/datum/changeling/New()
+/datum/changeling/New(var/gender=FEMALE)
 	..()
-	var/list/possibleIDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
-
-	for(var/mob/living/carbon/aChangeling in world)
-		if(aChangeling.changeling)
-			possibleIDs -= aChangeling.changeling.changelingID
-
-	if(possibleIDs.len)
-		changelingID = pick(possibleIDs)
+	var/honorific
+	if(gender == FEMALE)	honorific = "Ms."
+	else					honorific = "Mr."
+	if(possible_changeling_IDs.len)
+		changelingID = pick(possible_changeling_IDs)
+		possible_changeling_IDs -= changelingID
+		changelingID = "[honorific] [changelingID]"
 	else
-		changelingID = "[rand(1,1000)]"
+		changelingID = "[honorific] [rand(1,999)]"
+
+/datum/changeling/proc/regenerate()
+	chem_charges = min(max(0, chem_charges+chem_recharge_rate), chem_storage)
+	geneticdamage = max(0, geneticdamage-1)

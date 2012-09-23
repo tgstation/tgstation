@@ -1,8 +1,8 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/item/weapon/paper_bin
 	name = "paper bin"
-	icon = 'bureaucracy.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
 	item_state = "sheet-metal"
 	throwforce = 1
@@ -16,16 +16,10 @@
 
 	MouseDrop(mob/user as mob)
 		if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
-			if (usr.hand)
-				if (!( usr.l_hand ))
-					spawn( 0 )
-						src.attack_hand(usr, 1, 1)
-						return
-			else
-				if (!( usr.r_hand ))
-					spawn( 0 )
-						src.attack_hand(usr, 0, 1)
-						return
+			if(!istype(usr, /mob/living/carbon/metroid) && !istype(usr, /mob/living/simple_animal))
+				if( !usr.get_active_hand() )		//if active hand is empty
+					attack_hand(usr, 1, 1)
+
 		return
 
 
@@ -52,14 +46,13 @@
 
 			P.loc = user.loc
 			if(ishuman(user))
-				if(!user.get_active_hand())
-					user.put_in_hand(P)
-					user << "You take a paper out of the bin."
+				user.put_in_hands(P)
+				user << "<span class='notice'>You take a paper out of the bin.</span>"
 			else
 				P.loc = get_turf_loc(src)
-				user << "You take a paper out of the bin."
+				user << "<span class='notice'>You take a paper out of the bin.</span>"
 		else
-			user << "The paper bin is empty!"
+			user << "<span class='notice'>The paper bin is empty!</span>"
 
 		add_fingerprint(user)
 		return
@@ -70,7 +63,7 @@
 
 		user.drop_item()
 		i.loc = src
-		usr << "You put the paper on the top of the paper bin."
+		usr << "<span class='notice'>You put the paper on the top of the paper bin.</span>"
 		papers.Add(i)
 		amount++
 
@@ -78,9 +71,9 @@
 		set src in oview(1)
 
 		if(amount)
-			usr << "There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin."
+			usr << "<span class='notice'>There " + (amount > 1 ? "are [amount] papers" : "is one paper") + " in the bin.</span>"
 		else
-			usr << "There are no papers in the bin."
+			usr << "<span class='notice'>There are no papers in the bin.</span>"
 		return
 
 	update_icon()

@@ -1,7 +1,7 @@
 /obj/item/weapon/peripheral
 	name = "Peripheral card"
 	desc = "A computer circuit board."
-	icon = 'module.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
 	w_class = 2
@@ -168,7 +168,7 @@
 			if(4)
 				prize = new /obj/item/weapon/c_tube( prize_location )
 				prize.name = "toy sword"
-				prize.icon = 'weapons.dmi'
+				prize.icon = 'icons/obj/weapons.dmi'
 				prize.icon_state = "sword1"
 				prize.desc = "A sword made of cheap plastic."
 

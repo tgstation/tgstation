@@ -4,14 +4,13 @@ var/global/controllernum = "no"
 var/global/controller_iteration = 0
 
 
-
-
+var/global/last_tick_timeofday = world.timeofday
+var/global/last_tick_duration = 0
 
 datum/controller/game_controller
 	var/processing = 1
 
 	var/global/air_master_ready = 0
-	var/global/tension_master_ready = 0
 	var/global/sun_ready = 0
 	var/global/mobs_ready = 0
 	var/global/diseases_ready = 0
@@ -22,30 +21,18 @@ datum/controller/game_controller
 	var/global/ticker_ready = 0
 	var/global/next_crew_shuttle_vote = 2 // the next automatic vote to call the crew shuttle
 
-	proc
-		keepalive()
-		setup()
-		setup_objects()
-		process()
-		set_debug_state(txt)
+	//Used for MC 'proc break' debugging
+	var/global/obj/last_obj_processed
+	var/global/datum/disease/last_disease_processed
+	var/global/obj/machinery/last_machine_processed
+	var/global/mob/last_mob_processed
 
-	keepalive()
-		spawn while(1)
-			sleep(10)
 
-			// Notify the other process that we're still there
-			socket_talk.send_keepalive()
-
-	setup()
+	proc/setup()
 		if(master_controller && (master_controller != src))
 			del(src)
 			return
 			//There can be only one master.
-
-		socket_talk = new /datum/socket_talk()
-
-		// notify the other process that we started up
-		socket_talk.send_raw("type=startup")
 
 		if(!air_master)
 			air_master = new /datum/controller/air_system()
@@ -57,26 +44,18 @@ datum/controller/game_controller
 				world << "\red \b Job setup complete"
 				job_master.LoadJobs("config/jobs.txt")
 
-		if(!tension_master)
-			tension_master = new /datum/tension()
-
 		world.tick_lag = config.Ticklag
 
-//		createRandomZlevel()
-
-		//	Sleep for about 5 seconds to allow background initialization procs to finish
-		sleep(50)
-
-		//	Now that the game is world is fully initialized, pause server until a user connects.
-		world.sleep_offline = 1
+		createRandomZlevel()
 
 		setup_objects()
 
 		setupgenetics()
 
-//		for(var/i = 0, i < max_secret_rooms, i++)
-//			make_mining_asteroid_secret()
-// Because energy cutlasses, facehuggers, and empty rooms are silly. FOR NOW. - Erthilo
+
+		/*for(var/i = 0, i < max_secret_rooms, i++)
+			make_mining_asteroid_secret()*/
+
 		syndicate_code_phrase = generate_code_phrase()//Sets up code phrase for traitors, for the round.
 		syndicate_code_response = generate_code_phrase()
 
@@ -87,12 +66,10 @@ datum/controller/game_controller
 
 		setupfactions()
 
-		spawn keepalive()
-
 		spawn
 			ticker.pregame()
 
-	setup_objects()
+	proc/setup_objects()
 		world << "\red \b Initializing objects"
 		sleep(-1)
 
@@ -112,29 +89,22 @@ datum/controller/game_controller
 		for(var/obj/machinery/atmospherics/unary/vent_scrubber/T in world)
 			T.broadcast_status()
 
-		var/emclosetcount = rand((emclosets.len)/2, (emclosets.len)*2/3)
-		while(emclosetcount > 0)
-			var/turf/loc = pick(emclosets)
-			emclosets -= loc
-			new /obj/structure/closet/emcloset(loc)
-			emclosetcount--
-
 		world << "\red \b Initializations complete."
 
-	set_debug_state(txt)
+	proc/set_debug_state(txt)
 		// This should describe what is currently being done by the master controller
 		// Useful for crashlogs and similar, because that way it's easy to tell what
 		// was going on when the server crashed.
 		socket_talk.send_raw("type=ticker_state&message=[txt]")
 		return
 
-	process()
 
-		if(!Failsafe)
-			Failsafe = new /datum/failsafe
-			spawn(0)
-				Failsafe.spin()
+	proc/process()
 
+		var/currenttime = world.timeofday
+		var/diff = (currenttime - last_tick_timeofday) / 10
+		last_tick_timeofday = currenttime
+		last_tick_duration = diff
 
 		if(!processing)
 			return 0
@@ -152,7 +122,6 @@ datum/controller/game_controller
 			automatic_crew_shuttle_vote()
 
 		air_master_ready = 0
-		tension_master_ready = 0
 		sun_ready = 0
 		mobs_ready = 0
 		diseases_ready = 0
@@ -162,131 +131,110 @@ datum/controller/game_controller
 		powernets_ready = 0
 		ticker_ready = 0
 
-		// Notify the other process that we're still there
-		socket_talk.send_keepalive()
-
-		// moved this here from air_master.start()
-		// this might make atmos slower
-		// upsides:
-		//  1. atmos won't process if the game is generally lagged out(no deadlocks)
-		//  2. if the server frequently crashes during atmos processing we will know
-		if(!kill_air)
+		spawn(0)
 			src.set_debug_state("Air Master")
-
-			air_master.current_cycle++
-			var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
-			if(!success) //Runtimed.
-				log_adminwarn("ZASALERT: air_system/tick() failed: [air_master.tick_progress]")
-				air_master.failed_ticks++
-				if(air_master.failed_ticks > 5)
-					world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
-					kill_air = 1
-					air_master.failed_ticks = 0
-			/*else if (air_master.failed_ticks > 10)
-				air_master.failed_ticks = 0*/
-		air_master_ready = 1
-
-		src.set_debug_state("Tension Master")
-		tension_master.process()
-		tension_master_ready = 1
+			air_master.tick()
+			air_master_ready = 1
 
 		sleep(1)
 
-		src.set_debug_state("Sun Position Calculations")
-		sun.calc_position()
-		sun_ready = 1
+		spawn(0)
+			src.set_debug_state("Sun Position Calculations")
+			sun.calc_position()
+			sun_ready = 1
 
 		sleep(-1)
 
-		src.set_debug_state("Mob Life Processing")
-		for(var/mob/M in world)
-			M.Life()
-		mobs_ready = 1
+		spawn(0)
+			src.set_debug_state("Mob Processing")
+			for(var/mob/M in world)
+				last_mob_processed = M
+				M.Life()
+			mobs_ready = 1
+
+
 
 		sleep(-1)
 
-		src.set_debug_state("Old Disease Processing")
-		for(var/datum/disease/D in active_diseases)
-			D.process()
-		diseases_ready = 1
 
-		src.set_debug_state("Machinery Processing")
-		for(var/obj/machinery/machine in machines)
-			if(machine)
-				machine.process()
-				if(machine && machine.use_power)
-					machine.auto_use_power()
+		spawn(0)
+			src.set_debug_state("Disease Processing")
+			for(var/datum/disease/D in active_diseases)
+				last_disease_processed = D
+				D.process()
+			diseases_ready = 1
 
-		machines_ready = 1
+		spawn(0)
+			src.set_debug_state("Machinery Processing")
+			for(var/obj/machinery/machine in machines)
+				if(machine)
+					last_machine_processed = machine
+					machine.process()
+					if(machine && machine.use_power)
+						machine.auto_use_power()
+
+			machines_ready = 1
 
 		sleep(-1)
 		sleep(1)
 
-		src.set_debug_state("Object Processing")
-		for(var/obj/object in processing_objects)
-			object.process()
-		objects_ready = 1
+		spawn(0)
+			src.set_debug_state("Object Processing")
+			for(var/obj/object in processing_objects)
+				last_obj_processed = object
+				object.process()
+			objects_ready = 1
 
-		src.set_debug_state("Pipe Network Processing")
-		for(var/datum/pipe_network/network in pipe_networks)
-			network.process()
-		networks_ready = 1
+		spawn(0)
+			src.set_debug_state("Pipe Network Processing")
+			for(var/datum/pipe_network/network in pipe_networks)
+				network.process()
+			networks_ready = 1
 
-		src.set_debug_state("Powernet Processing")
-		for(var/datum/powernet/P in powernets)
-			P.reset()
-		powernets_ready = 1
+		spawn(0)
+			src.set_debug_state("Powernet Processing")
+			for(var/datum/powernet/P in powernets)
+				P.reset()
+			powernets_ready = 1
 
 		sleep(-1)
 
-		src.set_debug_state("Mode Processing")
-		ticker.process()
-		ticker_ready = 1
+		spawn(0)
+			ticker.process()
+			ticker_ready = 1
 
-		src.set_debug_state("Idle")
-		sleep(world.timeofday+10-start_time)// Don't touch this. DMTG
+		sleep(world.timeofday+12-start_time)
 
-		//while(!air_master_ready || !tension_master_ready || !sun_ready || !mobs_ready || !diseases_ready || !machines_ready || !objects_ready || !networks_ready || !powernets_ready || !ticker_ready)
-		//	sleep(1)
+		var/IL_check = 0 //Infinite loop check (To report when the master controller breaks.)
+		while(!air_master_ready || !sun_ready || !mobs_ready || !diseases_ready || !machines_ready || !objects_ready || !networks_ready || !powernets_ready || !ticker_ready)
+			IL_check++
+			if(IL_check > 600)
+				var/MC_report = "air_master_ready = [air_master_ready]; sun_ready = [sun_ready]; mobs_ready = [mobs_ready]; diseases_ready = [diseases_ready]; machines_ready = [machines_ready]; objects_ready = [objects_ready]; networks_ready = [networks_ready]; powernets_ready = [powernets_ready]; ticker_ready = [ticker_ready];"
+				message_admins("<b><font color='red'>PROC BREAKAGE WARNING:</font> The game's master contorller appears to be stuck in one of it's cycles. It has looped through it's delaying loop [IL_check] times.</b>")
+				message_admins("<b>The master controller reports: [MC_report]</b>")
+				if(!diseases_ready)
+					if(last_disease_processed)
+						message_admins("<b>DISEASE PROCESSING stuck on </b><A HREF='?src=%holder_ref%;adminplayervars=\ref[last_disease_processed]'>[last_disease_processed]</A>", 0, 1)
+					else
+						message_admins("<b>DISEASE PROCESSING stuck on </b>unknown")
+				if(!machines_ready)
+					if(last_machine_processed)
+						message_admins("<b>MACHINE PROCESSING stuck on </b><A HREF='?src=%holder_ref%;adminplayervars=\ref[last_machine_processed]'>[last_machine_processed]</A>", 0, 1)
+					else
+						message_admins("<b>MACHINE PROCESSING stuck on </b>unknown")
+				if(!objects_ready)
+					if(last_obj_processed)
+						message_admins("<b>OBJ PROCESSING stuck on </b><A HREF='?src=ADMINHOLDERREF;adminplayervars=\ref[last_obj_processed]'>[last_obj_processed]</A>", 0, 1)
+					else
+						message_admins("<b>OBJ PROCESSING stuck on </b>unknown")
+				log_admin("PROC BREAKAGE WARNING: infinite_loop_check = [IL_check]; [MC_report];")
+				message_admins("<font color='red'><b>Master controller breaking out of delaying loop. Restarting the round is advised if problem persists. DO NOT manually restart the master controller.</b></font>")
+				break;
+			sleep(1)
+
 
 		spawn
 			process()
 
 
 		return 1
-
-
-
-/datum/failsafe // This thing pretty much just keeps poking the master controller
-	var/spinning = 1
-	var/current_iteration = 0
-
-/datum/failsafe/proc/spin()
-	if(!master_controller) // Well fuck.  How did this happen?
-		sleep(50)
-		if(!master_controller)
-			master_controller = new /datum/controller/game_controller()
-		spawn(-1)
-			master_controller.setup()
-
-	else
-		while(spinning)
-			current_iteration = controller_iteration
-			sleep(600) // Wait 15 seconds
-			if(current_iteration == controller_iteration) // Mm.  The master controller hasn't ticked yet.
-
-				for (var/mob/M in world)
-					if (M.client && M.client.holder)
-						M << "<font color='red' size='2'><b> Warning.  The Master Controller has not fired in the last 60 seconds.  Restart recommended.  Automatic restart in 60 seconds.</b></font>"
-
-				sleep(600)
-				if(current_iteration == controller_iteration)
-					for (var/mob/M in world)
-						if (M.client && M.client.holder)
-							M << "<font color='red' size='2'><b> Warning.  The Master Controller has not fired in the last 2 minutes.  Automatic restart beginning.</b></font>"
-					master_controller.process()
-					sleep(150)
-				else
-					for (var/mob/M in world)
-						if (M.client && M.client.holder)
-							M << "<font color='red' size='2'><b> The Master Controller has fired.  Automatic restart aborted.</b></font>"

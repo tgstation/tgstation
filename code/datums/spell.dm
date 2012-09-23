@@ -28,7 +28,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/selection_type = "view" //can be "range" or "view"
 
 	var/overlay = 0
-	var/overlay_icon = 'wizard.dmi'
+	var/overlay_icon = 'icons/obj/wizard.dmi'
 	var/overlay_icon_state = "spell"
 	var/overlay_lifespan = 0
 
@@ -38,11 +38,15 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/smoke_amt = 0 //cropped at 10
 
 	var/critfailchance = 0
+	var/centcomm_cancast = 1 //Whether or not the spell should be allowed on z2
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(!(src in usr.spell_list))
 		usr << "\red You shouldn't have this spell! Something's wrong."
+		return 0
+
+	if(usr.z == 2 && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
 		return 0
 
 	if(!skipcharge)
@@ -89,13 +93,19 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	switch(invocation_type)
 		if("shout")
-			usr.say(invocation)
-			if(usr.gender=="male")
-				playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
+			if(prob(50))//Auto-mute? Fuck that noise
+				usr.say(invocation)
 			else
-				playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
+				usr.say(dd_replacetext(invocation," ","`"))
+			if(usr.gender==MALE)
+				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+			else
+				playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 		if("whisper")
-			usr.whisper(invocation)
+			if(prob(50))
+				usr.whisper(invocation)
+			else
+				usr.whisper(dd_replacetext(invocation," ","`"))
 
 /obj/effect/proc_holder/spell/New()
 	..()
@@ -134,7 +144,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(overlay)
 		for(var/atom/target in targets)
 			var/location
-			if(istype(target,/mob))
+			if(istype(target,/mob/living))
 				location = target.loc
 			else if(istype(target,/turf))
 				location = target
@@ -149,11 +159,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
 		var/location
-		if(istype(target,/mob))
+		if(istype(target,/mob/living))
 			location = target.loc
 		else if(istype(target,/turf))
 			location = target
-		if(istype(target,/mob) && message)
+		if(istype(target,/mob/living) && message)
 			target << text("[message]")
 		if(sparks_spread)
 			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
@@ -186,7 +196,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	return
 
-/obj/effect/proc_holder/spell/proc/adjust_var(mob/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
+/obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	switch(type)
 		if("bruteloss")
 			target.adjustBruteLoss(amount)
@@ -219,19 +229,23 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	switch(max_targets)
 		if(0) //unlimited
-			for(var/mob/target in view_or_range(range, user, selection_type))
+			for(var/mob/living/target in view_or_range(range, user, selection_type))
 				targets += target
 		if(1) //single target can be picked
 			if(range < 0)
 				targets += user
 			else
-				var/possible_targets = view_or_range(range, user, selection_type)
-				if(!include_user && user in possible_targets)
-					possible_targets -= user
+				var/possible_targets = list()
+
+				for(var/mob/living/M in view_or_range(range, user, selection_type))
+					if(!include_user && user == M)
+						continue
+					possible_targets += M
+
 				targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
 		else
 			var/list/possible_targets = list()
-			for(var/mob/target in view_or_range(range, user, selection_type))
+			for(var/mob/living/target in view_or_range(range, user, selection_type))
 				possible_targets += target
 			for(var/i=1,i<=max_targets,i++)
 				if(!possible_targets.len)

@@ -239,7 +239,7 @@ zone/proc/process()
 		for(var/zone/Z in connected_zones)
 			if(air && Z.air)
 				//Ensure we're not doing pointless calculations on equilibrium zones.
-				if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
+				if(abs(air.total_moles() - Z.air.total_moles()) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
 					if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
 						Airflow(src,Z)
 					ShareRatio( air , Z.air , connected_zones[Z] )

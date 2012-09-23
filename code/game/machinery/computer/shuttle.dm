@@ -22,11 +22,13 @@
 				user << "The access level of [W:registered_name]\'s card is not high enough. "
 				return
 
-			if(!(ACCESS_HEADS in W:access)) //doesn't have this access
+			if(!(access_heads in W:access)) //doesn't have this access
 				user << "The access level of [W:registered_name]\'s card is not high enough. "
 				return 0
 
 			var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
+			if(emergency_shuttle.location != 1 && user.get_active_hand() != W)
+				return 0
 			switch(choice)
 				if("Authorize")
 					src.authorized -= W:registered_name
@@ -54,12 +56,15 @@
 					src.authorized.len = 0
 					src.authorized = list(  )
 
-/*		else if (istype(W, /obj/item/weapon/card/emag))
+		else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
 			var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
-			switch(choice)
-				if("Launch")
-					world << "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>"
-					emergency_shuttle.settimeleft( 10 )
-				if("Cancel")
-					return*/
+
+			if(!emagged && emergency_shuttle.location == 1 && user.get_active_hand() == W)
+				switch(choice)
+					if("Launch")
+						world << "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>"
+						emergency_shuttle.settimeleft( 10 )
+						emagged = 1
+					if("Cancel")
+						return
 		return

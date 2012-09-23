@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /proc/dopage(src,target)
 	var/href_list
@@ -27,29 +27,38 @@
 			return A
 	return 0
 
-/proc/get_random_turf(var/atom/A, var/list/L)
-	while(L.len > 0)
-		var/dir = pick(L)
-		L -= dir
-		var/turf/T = get_step(A,dir)
-		var/possible = 1
-
-		if(T.density == 0)
-			for(var/obj/I in T)
-				if(I.density == 1)
-					possible = 0
-					break
-
-			if(possible)
-				return T
-
-	return
-
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
 		return 1
 
 	return 0 //not in range and not telekinetic
+
+// Like view but bypasses luminosity check
+
+/proc/hear(var/range, var/atom/source)
+
+	var/lum = source.luminosity
+	source.luminosity = 6
+
+	var/list/heard = view(range, source)
+	source.luminosity = lum
+
+	return heard
+
+
+
+
+//Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
+//They should approximate pythagoras theorem well enough for our needs.
+#define k1 0.934
+#define k2 0.427
+/proc/cheap_hypotenuse(Ax,Ay,Bx,By) // T is just the second atom to check distance to center with
+	var/dx = abs(Ax - Bx)	//sides of right-angled triangle
+	var/dy = abs(Ay - By)
+	if(dx>=dy)	return (k1*dx) + (k2*dy)	//No sqrt or powers :)
+	else		return (k1*dx) + (k2*dy)
+#undef k1
+#undef k2
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -69,17 +78,17 @@
 /proc/circleview(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/atoms = new/list()
 	var/rsq = radius * (radius+0.5)
 
-	for(var/atom/T in view(radius, centerturf))
-		var/dx = T.x - centerturf.x
-		var/dy = T.y - centerturf.y
+	for(var/atom/A in view(radius, centerturf))
+		var/dx = A.x - centerturf.x
+		var/dy = A.y - centerturf.y
 		if(dx*dx + dy*dy <= rsq)
-			turfs += T
+			atoms += A
 
 	//turfs += centerturf
-	return turfs
+	return atoms
 
 /proc/get_dist_euclidian(atom/Loc1 as turf|mob|obj,atom/Loc2 as turf|mob|obj)
 	var/dx = Loc1.x - Loc2.x
@@ -102,7 +111,7 @@
 			turfs += T
 	return turfs
 
-/proc/circleviewturfs(center=usr,radius=3)
+/proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()
@@ -115,16 +124,7 @@
 			turfs += T
 	return turfs
 
-// Like view but bypasses luminosity check
-/proc/hear(var/range, var/atom/source)
 
-	var/lum = source.luminosity
-	source.luminosity = 6
-
-	var/list/heard = view(range, source)
-	source.luminosity = lum
-
-	return heard
 
 //var/debug_mob = 0
 
@@ -132,26 +132,30 @@
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
 
-/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/client_check = 1, var/sight_check = 1, var/include_radio = 1, var/max_depth = 3)
+/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
 
 	//debug_mob += O.contents.len
-	if(max_depth < 1)
+	if(!recursion_limit)
 		return L
+	for(var/atom/A in O.contents)
 
-	for(var/atom/A in O)
 		if(ismob(A))
 			var/mob/M = A
 			if(client_check && !M.client)
-				L = recursive_mob_check(A, L, 1, 1, max_depth - 1)
+				L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
 				continue
 			if(sight_check && !isInSight(A, O))
 				continue
-			L += M
+			L |= M
+			//world.log << "[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
-			if(sight_check && isInSight(A, O))
-				L += A
-		L = recursive_mob_check(A, L, 1, 1, max_depth - 1)
+			if(sight_check && !isInSight(A, O))
+				continue
+			L |= A
+
+		if(isobj(A) || ismob(A))
+			L = recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
 	return L
 
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
@@ -161,18 +165,47 @@
 	// Returns a list of mobs in range of R from source. Used in radio and say code.
 
 	var/turf/T = get_turf(source)
-	if(!istype(T))
-		return
 	var/list/hear = list()
+
+	if(!T)
+		return hear
+
 	var/list/range = hear(R, T)
 
-	//debug_mob += range.len
-	for(var/turf/A in range)
-		hear += recursive_mob_check(A)
-	//world.log << "NEW: [debug_mob]"
-	//debug_mob = 0
+	for(var/atom/A in range)
+		if(ismob(A))
+			var/mob/M = A
+			if(M.client)
+				hear += M
+			//world.log << "Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])"
+		else if(istype(A, /obj/item/device/radio))
+			hear += A
+
+		if(isobj(A) || ismob(A))
+			hear = recursive_mob_check(A, hear, 3, 1, 0, 1)
 
 	return hear
+
+
+/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios, var/level = 0)
+	. = list()
+
+	// Returns a list of mobs who can hear any of the radios given in @radios
+	var/list/speaker_coverage = list()
+	for(var/obj/item/device/radio/R in radios)
+		var/turf/speaker = get_turf(R)
+		if(speaker)
+			for(var/turf/T in hear(R.canhear_range,speaker))
+				speaker_coverage += T
+
+	// Try to find all the players who can hear the message
+	for(var/mob/M in player_list)
+		var/turf/ear = get_turf(M)
+		if(ear && (level == 0 || level == ear.z))
+			if(ear in speaker_coverage)
+				. += M
+
+	return .
 
 #define SIGN(X) ((X<0)?-1:1)
 
@@ -206,6 +239,7 @@ proc
 				if(T.opacity)
 					return 0
 		return 1
+#undef SIGN
 
 proc/isInSight(var/atom/A, var/atom/B)
 	var/turf/Aturf = get_turf(A)
@@ -220,151 +254,23 @@ proc/isInSight(var/atom/A, var/atom/B)
 	else
 		return 0
 
-
-proc/doafterattack(obj/target , obj/source)
-
-	if (istype(target, /obj/item/weapon/storage/ ))
-		return 0
-
-	else if (locate (/obj/structure/table, source.loc))
-		return 0
-
-	else if (!istype(target.loc, /turf/))
-		return 0
-
+/proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
+	//returns only NORTH, SOUTH, EAST, or WEST
+	var/dx = finish.x - start.x
+	var/dy = finish.y - start.y
+	if(abs(dy) > abs (dx)) //slope is above 1:1 (move horizontally in a tie)
+		if(dy > 0)
+			return get_step(start, SOUTH)
+		else
+			return get_step(start, NORTH)
 	else
-		return 1
+		if(dx > 0)
+			return get_step(start, WEST)
+		else
+			return get_step(start, EAST)
 
-proc/check_can_reach(atom/user, atom/target)
-	if(!in_range(user,target))
-		return 0
-	return CanReachThrough(get_turf(user), get_turf(target), target)
-
-//cael - not sure if there's an equivalent proc, but if there is i couldn't find it
-//searches to see if M contains O somewhere
-proc/is_carrying(var/M as mob, var/O as obj)
-	while(!istype(O,/area))
-		if(O:loc == M)
-			return 1
-		O = O:loc
-	return 0
-
-	//hackcopy from a ZAS function, first created for use with intertial_damper/new shielding
-proc/CircleFloodFill(turf/start, var/radius = 3)
-	if(!istype(start))
-		return list()
-	var
-		list
-			open = list(start)
-			closed = list()
-			possibles = circlerange(start,radius)
-
-	while(open.len)
-		for(var/turf/T in open)
-			//Stop if there's a door, even if it's open. These are handled by indirect connection.
-			if(!T.HasDoor())
-
-				for(var/d in cardinal)
-					var/turf/O = get_step(T,d)
-					//Simple pass check.
-					if(O.ZCanPass(T, 1) && !(O in open) && !(O in closed) && O in possibles)
-						open += O
-
-			open -= T
-			closed += T
-
-	return closed
-
-//floods in a square area, flowing around any shielding but including all other turf types
-//created initially for explosion / shield interaction
-proc/ExplosionFloodFill(turf/start, var/radius = 3)
-	if(!istype(start))
-		return list()
-	var
-		list
-			open = list(start)
-			closed = list()
-			possibles = range(start,radius)
-
-	while(open.len)
-		for(var/turf/T in open)
-			for(var/turf/O in range(T,1))
-				if( !(O in possibles) || O in open || O in closed )
-					continue
-				var/shield_here = 0
-				for(var/obj/effect/energy_field/E in O)
-					if(E.density)
-						shield_here = 1
-						break
-				if(!shield_here)
-					open += O
-
-			open -= T
-			closed += T
-
-	return closed
-
-/*
-
-/obj/machinery/shield_gen/external/get_shielded_turfs()
-	var
-		list
-			open = list(get_turf(src))
-			closed = list()
-
-	while(open.len)
-		for(var/turf/T in open)
-			for(var/turf/O in orange(1, T))
-				if(get_dist(O,src) > field_radius)
-					continue
-				var/add_this_turf = 0
-				if(istype(O,/turf/space))
-					for(var/turf/simulated/G in orange(1, O))
-						add_this_turf = 1
-						break
-					for(var/obj/structure/S in orange(1, O))
-						add_this_turf = 1
-						break
-					for(var/obj/structure/S in O)
-						add_this_turf = 0
-						break
-
-					if(add_this_turf && !(O in open) && !(O in closed))
-						open += O
-			open -= T
-			closed += T
-
-	return closed
-*/
-
-//floods in a circular area, flowing around any shielding but including all other turf types
-//created initially for explosion / shield interaction
-proc/ExplosionCircleFloodFill(turf/start, var/radius = 3)
-	if(!istype(start))
-		return list()
-	var
-		list
-			open = list(start)
-			closed = list()
-			possibles = circlerange(start,radius)
-
-	while(open.len)
-		for(var/turf/T in open)
-			for(var/turf/O in range(T,1))
-				if(get_dist(O,start) > radius)
-					continue
-
-				if( !(O in possibles) || O in open || O in closed )
-					continue
-				var/shield_here = 0
-				for(var/obj/effect/energy_field/E in O)
-					if(E.density)
-						shield_here = 1
-						break
-				if(!shield_here && (O in possibles) && !(O in open) && !(O in closed))
-					open += O
-
-			open -= T
-			closed += T
-
-	return closed
+/proc/get_mob_by_key(var/key)
+	for(var/mob/M in mob_list)
+		if(M.ckey == lowertext(key))
+			return M
+	return null
