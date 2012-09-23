@@ -762,7 +762,10 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 					if(!border_obstacle.CanPass(D, D.loc, 1, 0))
 						ok = 0
 
-	del(D)
+	//del(D)
+	//Garbage Collect Dummy
+	D.loc = null
+	D = null
 	if (!( ok ))
 
 		return 0
