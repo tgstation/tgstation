@@ -19,6 +19,8 @@
 
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])</font>")
 
+		log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])")
+		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])") //BS12 EDIT ALG
 
 		transfer_ai("AICORE", "AICARD", M, user)
 		return

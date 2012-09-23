@@ -232,6 +232,9 @@
 							assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
 							log_attack("<font color='red'>[assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
 
+							log_admin("ATTACK: [assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])")
+							msg_admin_attack("ATTACK: [assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])")
+
 							assailant.next_move = world.time + 10
 							affecting.losebreath += 1
 						else

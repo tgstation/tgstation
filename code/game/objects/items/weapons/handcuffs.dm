@@ -39,6 +39,9 @@
 
 				log_attack("<font color='red'>[user.name] ([user.ckey]) Attempted to handcuff [M.name] ([M.ckey])</font>")
 
+				log_admin("ATTACK: [user.name] ([user.ckey]) Attempted to handcuff [M.name] ([M.ckey])")
+				msg_admin_attack("ATTACK: [user.name] ([user.ckey]) Attempted to handcuff [M.name] ([M.ckey])") //BS12 EDIT ALG
+
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 				O.source = user
 				O.target = M

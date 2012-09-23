@@ -57,6 +57,10 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["real_name"] << src.real_name
 	F["name_is_always_random"] << src.be_random_name
 
+	F["flavor_text"] << flavor_text
+	F["med_record"] << med_record
+	F["sec_record"] << sec_record
+
 	F["gender"] << src.gender
 	F["age"] << src.age
 
@@ -72,6 +76,8 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["job_engsec_high"] << src.job_engsec_high
 	F["job_engsec_med"] << src.job_engsec_med
 	F["job_engsec_low"] << src.job_engsec_low
+
+	F["job_alt_titles"] << job_alt_titles //BS12 Edit
 
 	F["userandomjob"] << src.userandomjob
 
@@ -103,6 +109,7 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["midis"] << src.midis
 	F["ghost_ears"] << src.ghost_ears
 	F["ghost_sight"] << src.ghost_sight
+	F["pregame_music"] << src.pregame_music
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
 	F["disabilities"] << src.disabilities
@@ -110,6 +117,8 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["used_skillpoints"] << src.used_skillpoints
 	F["skills"] << src.skills
 	F["skill_specialization"] << src.skill_specialization
+
+	F["organ_data"] << src.organ_data
 
 	F["OOC_Notes"] << src.metadata
 
@@ -161,6 +170,10 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["gender"] >> src.gender
 	F["age"] >> src.age
 
+	F["flavor_text"] >> flavor_text
+	F["med_record"] >> med_record
+	F["sec_record"] >> sec_record
+
 	F["hair_red"] >> src.r_hair
 	F["hair_green"] >> src.g_hair
 	F["hair_blue"] >> src.b_hair
@@ -174,6 +187,8 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["eyes_green"] >> src.g_eyes
 	F["eyes_blue"] >> src.b_eyes
 	F["blood_type"] >> src.b_type
+	F["species"] >> src.species
+	if(isnull(species)) species = "Human"
 	F["underwear"] >> src.underwear
 	if(underwear == 0) underwear = 12 //For old players who have 0 in their savefile
 	F["backbag"] >> src.backbag
@@ -184,6 +199,7 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["midis"] >> src.midis
 	F["ghost_ears"] >> src.ghost_ears
 	if(isnull(ghost_ears)) ghost_ears = 1 //Hotfix
+	F["pregame_music"] >> src.pregame_music
 	F["ghost_sight"] >> src.ghost_sight
 	if(isnull(ghost_sight)) ghost_sight = 1 //Hotfix
 	F["ooccolor"] >> src.ooccolor
@@ -202,11 +218,30 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["job_medsci_med"] >> src.job_medsci_med
 	F["job_medsci_low"] >> src.job_medsci_low
 
+
+	F["used_skillpoints"] >> src.used_skillpoints
+	F["skills"] >> src.skills
+	F["skill_specialization"] >> src.skill_specialization
+	if(!src.skills) src.skills = list()
+	if(!src.used_skillpoints) src.used_skillpoints= 0
+
+	F["organ_data"] >> src.organ_data
+	if(!src.organ_data) src.organ_data = list()
+
 	F["job_engsec_high"] >> src.job_engsec_high
 	F["job_engsec_med"] >> src.job_engsec_med
 	F["job_engsec_low"] >> src.job_engsec_low
 
 	F["userandomjob"] >> src.userandomjob
+
+	F["disabilities"] >> src.disabilities
+	if(isnull(src.disabilities))	//Sanity checking
+		src.disabilities = 0
+		F["disabilities"] << src.disabilities
+
+	F["job_alt_titles"] >> job_alt_titles
+	if(!job_alt_titles)
+		job_alt_titles = new()
 
 	F["OOC_Notes"] >> src.metadata
 
