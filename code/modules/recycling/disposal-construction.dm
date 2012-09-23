@@ -58,8 +58,16 @@
 				base_state = "intake"
 				dpdir = dir
 
+			if(9)
+				base_state = "pipe-j1s"
+				dpdir = dir | right | flip
 
-		if(ptype<6)
+			if(10)
+				base_state = "pipe-j2s"
+				dpdir = dir | left | flip
+
+
+		if(ptype<6 || ptype>8)
 			icon_state = "con[base_state]"
 		else
 			icon_state = base_state
@@ -100,10 +108,16 @@
 			return
 
 		dir = turn(dir, 180)
-		if(ptype == 2)
-			ptype = 3
-		else if(ptype == 3)
-			ptype = 2
+		switch(ptype)
+			if(2)
+				ptype = 3
+			if(3)
+				ptype = 2
+			if(9)
+				ptype = 10
+			if(10)
+				ptype = 9
+
 		update()
 
 	// returns the type path of disposalpipe corresponding to this item dtype
@@ -121,6 +135,8 @@
 				return /obj/structure/disposaloutlet
 			if(8)
 				return /obj/machinery/disposal/deliveryChute
+			if(9,10)
+				return /obj/structure/disposalpipe/sortjunction
 		return
 
 
@@ -140,6 +156,9 @@
 				nicetype = "disposal outlet"
 			if(8)
 				nicetype = "delivery chute"
+			if(9, 10)
+				nicetype = "sorting pipe"
+				ispipe = 1
 			else
 				nicetype = "pipe"
 				ispipe = 1
@@ -150,7 +169,7 @@
 			return
 
 		var/obj/structure/disposalpipe/CP = locate() in T
-		if(ptype>=6) // Disposal or outlet
+		if(ptype>=6 && ptype <= 8) // Disposal or outlet
 			if(CP) // There's something there
 				if(!istype(CP,/obj/structure/disposalpipe/trunk))
 					user << "The [nicetype] requires a trunk underneath it in order to work."
@@ -168,7 +187,6 @@
 					user << "There is already a [nicetype] at that location."
 					return
 
-		var/obj/structure/disposalpipe/trunk/Trunk = CP
 
 		if(istype(I, /obj/item/weapon/wrench))
 			if(anchored)
@@ -210,6 +228,11 @@
 							P.dpdir = dpdir
 							P.updateicon()
 
+							//Needs some special treatment ;)
+							if(ptype==9 || ptype==10)
+								var/obj/structure/disposalpipe/sortjunction/SortP = P
+								SortP.updatedir()
+
 						else if(ptype==6) // Disposal bin
 							var/obj/machinery/disposal/P = new /obj/machinery/disposal(src.loc)
 							src.transfer_fingerprints_to(P)
@@ -220,6 +243,7 @@
 							var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(src.loc)
 							src.transfer_fingerprints_to(P)
 							P.dir = dir
+							var/obj/structure/disposalpipe/trunk/Trunk = CP
 							Trunk.linked = P
 
 						else if(ptype==8) // Disposal outlet

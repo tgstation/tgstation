@@ -853,6 +853,10 @@
 				C.ptype = 4
 			if("pipe-t")
 				C.ptype = 5
+			if("pipe-j1s")
+				C.ptype = 9
+			if("pipe-j2s")
+				C.ptype = 10
 		src.transfer_fingerprints_to(C)
 		C.dir = dir
 		C.density = 0
@@ -930,27 +934,50 @@
 //a three-way junction that sorts objects
 /obj/structure/disposalpipe/sortjunction
 
-	desc = "An underfloor disposal pipe with a package sorting mechanism."
 	icon_state = "pipe-j1s"
 	var/sortType = 0
 	var/posdir = 0
 	var/negdir = 0
 	var/sortdir = 0
 
-	New()
-		..()
+	proc/updatedesc()
+		desc = "An underfloor disposal pipe with a package sorting mechanism."
+		if(sortType>0)
+			var/tag = uppertext(TAGGERLOCATIONS[sortType])
+			desc += "\nIt's tagged with [tag]"
+
+	proc/updatedir()
 		posdir = dir
+		negdir = turn(posdir, 180)
+
 		if(icon_state == "pipe-j1s")
 			sortdir = turn(posdir, -90)
-			negdir = turn(posdir, 180)
 		else
 			icon_state = "pipe-j2s"
 			sortdir = turn(posdir, 90)
-			negdir = turn(posdir, 180)
+
 		dpdir = sortdir | posdir | negdir
 
+	New()
+		..()
+		updatedir()
+		updatedesc()
 		update()
 		return
+
+	attackby(var/obj/item/I, var/mob/user)
+		if(..())
+			return
+
+		if(istype(I, /obj/item/device/destTagger))
+			var/obj/item/device/destTagger/O = I
+
+			if(O.currTag > 0)// Tag set
+				sortType = O.currTag
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
+				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
+				user << "\blue Changed filter to [tag]"
+				updatedesc()
 
 
 	// next direction to move
@@ -998,6 +1025,21 @@
 	var/posdir = 0
 	var/negdir = 0
 	var/sortdir = 0
+
+	New()
+		..()
+		posdir = dir
+		if(icon_state == "pipe-j1s")
+			sortdir = turn(posdir, -90)
+			negdir = turn(posdir, 180)
+		else
+			icon_state = "pipe-j2s"
+			sortdir = turn(posdir, 90)
+			negdir = turn(posdir, 180)
+		dpdir = sortdir | posdir | negdir
+
+		update()
+		return
 
 	New()
 		..()
