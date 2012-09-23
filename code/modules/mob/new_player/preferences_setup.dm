@@ -192,9 +192,6 @@ datum/preferences
 			hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
-		var/icon/mouth_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "mouth_[g]_s")
-		eyes_s.Blend(mouth_s, ICON_OVERLAY)
-
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
 		if(facial_hair_style)
 			var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
@@ -495,7 +492,6 @@ datum/preferences
 		preview_icon_side = new(preview_icon, dir = WEST)
 
 		del(preview_icon)
-		del(mouth_s)
 		del(eyes_s)
 		del(clothes_s)
 
