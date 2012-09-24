@@ -18,7 +18,9 @@
 
 /client/proc/update_admins(var/rank)
 	if(!holder)
-		holder = new /obj/admins(src)
+		holder = new /datum/admins(rank)
+		admin_list |= src
+		admins[ckey] = holder
 
 	var/need_update = 0
 	//check if our rank has changed
@@ -73,7 +75,7 @@
 			holder.level = 2
 			if(holder.state == 2) // if observing
 				deadchat = 1
-				verbs += /obj/admins/proc/toggleaban					//abandon mob
+				verbs += /datum/admins/proc/toggleaban					//abandon mob
 				verbs += /client/proc/deadchat							//toggles deadchat
 				verbs += /client/proc/cmd_admin_check_contents
 				verbs += /client/proc/Jump
@@ -112,14 +114,14 @@
 
 		//Moderator
 		if (holder.level >= 0)
-			verbs += /obj/admins/proc/announce
-			verbs += /obj/admins/proc/startnow
-			verbs += /obj/admins/proc/toggleAI							//Toggle the AI
-			verbs += /obj/admins/proc/toggleenter						//Toggle enterting
-			verbs += /obj/admins/proc/toggleguests						//Toggle guests entering
-			verbs += /obj/admins/proc/toggleooc							//toggle ooc
-			verbs += /obj/admins/proc/toggleoocdead						//toggle ooc for dead/unc
-			verbs += /obj/admins/proc/show_player_panel
+			verbs += /datum/admins/proc/announce
+			verbs += /datum/admins/proc/startnow
+			verbs += /datum/admins/proc/toggleAI							//Toggle the AI
+			verbs += /datum/admins/proc/toggleenter						//Toggle enterting
+			verbs += /datum/admins/proc/toggleguests						//Toggle guests entering
+			verbs += /datum/admins/proc/toggleooc							//toggle ooc
+			verbs += /datum/admins/proc/toggleoocdead						//toggle ooc for dead/unc
+			verbs += /datum/admins/proc/show_player_panel
 			verbs += /client/proc/deadchat								//toggles deadchat
 			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 			verbs += /client/proc/cmd_admin_pm_context
@@ -140,14 +142,14 @@
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/check_ai_laws
 			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
-			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
+			//verbs += /datum/admins/proc/unprison  						--Merged with player panel
 		else	return
 
 		//Temporary Admin
 		if (holder.level >= 1)
-			verbs += /obj/admins/proc/delay								//game start delay
-			verbs += /obj/admins/proc/immreboot							//immediate reboot
-			verbs += /obj/admins/proc/restart							//restart
+			verbs += /datum/admins/proc/delay								//game start delay
+			verbs += /datum/admins/proc/immreboot							//immediate reboot
+			verbs += /datum/admins/proc/restart							//restart
 			verbs += /client/proc/cmd_admin_check_contents
 			verbs += /client/proc/cmd_admin_create_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
@@ -172,10 +174,10 @@
 			seeprayers = 1
 
 			verbs += /client/proc/invisimin
-			verbs += /obj/admins/proc/view_txt_log
-			verbs += /obj/admins/proc/view_atk_log
-			verbs += /obj/admins/proc/toggleaban						//abandon mob
-			verbs += /obj/admins/proc/show_traitor_panel
+			verbs += /datum/admins/proc/view_txt_log
+			verbs += /datum/admins/proc/view_atk_log
+			verbs += /datum/admins/proc/toggleaban						//abandon mob
+			verbs += /datum/admins/proc/show_traitor_panel
 			verbs += /client/proc/getserverlog							//fetch an old serverlog to look at
 			//verbs += /client/proc/cmd_admin_remove_plasma 			--This proc is outdated, does not do anything
 			verbs += /client/proc/admin_call_shuttle
@@ -195,10 +197,10 @@
 
 		//Badmin
 		if (holder.level >= 4)
-			verbs += /obj/admins/proc/adrev								//toggle admin revives
-			verbs += /obj/admins/proc/adspawn							//toggle admin item spawning
+			verbs += /datum/admins/proc/adrev								//toggle admin revives
+			verbs += /datum/admins/proc/adspawn							//toggle admin item spawning
 			verbs += /client/proc/debug_variables
-			verbs += /obj/admins/proc/access_news_network               //Admin access to the newscaster network
+			verbs += /datum/admins/proc/access_news_network               //Admin access to the newscaster network
 			verbs += /client/proc/cmd_modify_ticker_variables
 			verbs += /client/proc/Debug2								//debug toggle switch
 			verbs += /client/proc/toggle_view_range
@@ -226,7 +228,7 @@
 
 		//Game Admin
 		if (holder.level >= 5)
-			verbs += /obj/admins/proc/spawn_atom
+			verbs += /datum/admins/proc/spawn_atom
 			verbs += /client/proc/cmd_admin_list_open_jobs
 			verbs += /client/proc/cmd_admin_direct_narrate
 			verbs += /client/proc/colorooc
@@ -264,9 +266,9 @@
 
 		//Game Master
 		if (holder.level >= 6)
-			verbs += /obj/admins/proc/toggle_aliens						//toggle aliens
-			verbs += /obj/admins/proc/toggle_space_ninja				//toggle ninjas
-			verbs += /obj/admins/proc/adjump
+			verbs += /datum/admins/proc/toggle_aliens						//toggle aliens
+			verbs += /datum/admins/proc/toggle_space_ninja				//toggle ninjas
+			verbs += /datum/admins/proc/adjump
 			verbs += /client/proc/callproc
 			verbs += /client/proc/triple_ai
 			verbs += /client/proc/get_admin_state
@@ -289,27 +291,27 @@
 /client/proc/clear_admin_verbs()
 	deadchat = 0
 	verbs.Remove(
-		/obj/admins/proc/announce,
-		/obj/admins/proc/startnow,
-		/obj/admins/proc/toggleAI, 			/*Toggle the AI*/
-		/obj/admins/proc/toggleenter,		/*Toggle enterting*/
-		/obj/admins/proc/toggleguests,		/*Toggle guests entering*/
-		/obj/admins/proc/toggleooc,			/*toggle ooc*/
-		/obj/admins/proc/toggleoocdead,		/*toggle ooc for dead/unc*/
-		/obj/admins/proc/delay,				/*game start delay*/
-		/obj/admins/proc/immreboot,			/*immediate reboot*/
-		/obj/admins/proc/restart,			/*restart*/
-		/obj/admins/proc/show_traitor_panel,
-		/obj/admins/proc/show_player_panel,
-		/obj/admins/proc/toggle_aliens,		/*toggle aliens*/
-		/obj/admins/proc/toggle_space_ninja,/*toggle ninjas*/
-		/obj/admins/proc/adjump,
-		/obj/admins/proc/view_txt_log,
-		/obj/admins/proc/view_atk_log,
-		/obj/admins/proc/spawn_atom,
-		/obj/admins/proc/adrev,				/*toggle admin revives*/
-		/obj/admins/proc/adspawn,			/*toggle admin item spawning*/
-		/obj/admins/proc/toggleaban,		/*abandon mob*/
+		/datum/admins/proc/announce,
+		/datum/admins/proc/startnow,
+		/datum/admins/proc/toggleAI, 			/*Toggle the AI*/
+		/datum/admins/proc/toggleenter,		/*Toggle enterting*/
+		/datum/admins/proc/toggleguests,		/*Toggle guests entering*/
+		/datum/admins/proc/toggleooc,			/*toggle ooc*/
+		/datum/admins/proc/toggleoocdead,		/*toggle ooc for dead/unc*/
+		/datum/admins/proc/delay,				/*game start delay*/
+		/datum/admins/proc/immreboot,			/*immediate reboot*/
+		/datum/admins/proc/restart,			/*restart*/
+		/datum/admins/proc/show_traitor_panel,
+		/datum/admins/proc/show_player_panel,
+		/datum/admins/proc/toggle_aliens,		/*toggle aliens*/
+		/datum/admins/proc/toggle_space_ninja,/*toggle ninjas*/
+		/datum/admins/proc/adjump,
+		/datum/admins/proc/view_txt_log,
+		/datum/admins/proc/view_atk_log,
+		/datum/admins/proc/spawn_atom,
+		/datum/admins/proc/adrev,				/*toggle admin revives*/
+		/datum/admins/proc/adspawn,			/*toggle admin item spawning*/
+		/datum/admins/proc/toggleaban,		/*abandon mob*/
 		/client/proc/hide_verbs,
 		/client/proc/hide_most_verbs,
 		/client/proc/show_verbs,
@@ -408,7 +410,7 @@
 		/client/proc/startSinglo,
 		/client/proc/check_ai_laws,
 		/client/proc/cmd_debug_mob_lists,
-		/obj/admins/proc/access_news_network,
+		/datum/admins/proc/access_news_network,
 		/client/proc/one_click_antag,
 		/client/proc/invisimin
 	)
@@ -425,7 +427,7 @@
 	//verbs -= /client/proc/cmd_admin_attack_log						--Merged with view variables
 	//verbs -= /proc/togglebuildmode									--Merged with view variables
 	//verbs -= /client/proc/cmd_admin_prison 							--Merged with player panel
-	//verbs -= /obj/admins/proc/unprison 								--Merged with player panel
+	//verbs -= /datum/admins/proc/unprison 								--Merged with player panel
 	//verbs -= /client/proc/cmd_switch_radio							--removed because tcommsat is staying
 	//	verbs -= /client/proc/Blobize
 	//	verbs -= /client/proc/Blobcount
@@ -444,7 +446,9 @@
 		ghost.can_reenter_corpse = 1			//just in-case.
 		ghost.reenter_corpse()
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	else if(!istype(mob,/mob/new_player))
+	else if(istype(mob,/mob/new_player))
+		src << "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
+	else
 		//ghostize
 		var/mob/body = mob
 		body.ghostize(1)
@@ -731,12 +735,9 @@
 
 	if(src.holder)
 		if(alert("Confirm self-deadmin for the round? You can't re-admin yourself without someont promoting you.",,"Yes","No") == "Yes")
-			del(holder)
 			log_admin("[src] deadmined themself.")
 			message_admins("[src] deadmined themself.", 1)
-			src.clear_admin_verbs()
-			admins.Remove(src.ckey)
-			admin_list -= src
+			deadmin()
 			usr << "You are now a normal player."
 	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -773,7 +774,7 @@
 	verbs += /client/proc/cmd_admin_gib_self
 
 	verbs += /client/proc/deadchat					//toggles deadchat
-	verbs += /obj/admins/proc/toggleooc				//toggle ooc
+	verbs += /datum/admins/proc/toggleooc				//toggle ooc
 	verbs += /client/proc/cmd_admin_say//asay
 	verbs += /client/proc/toggleadminhelpsound
 	feedback_add_details("admin_verb","HMV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -793,7 +794,7 @@
 	verbs += /client/proc/show_verbs
 
 	verbs += /client/proc/deadchat					//toggles deadchat
-	verbs += /obj/admins/proc/toggleooc				//toggle ooc
+	verbs += /datum/admins/proc/toggleooc				//toggle ooc
 	verbs += /client/proc/cmd_admin_say//asay
 	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

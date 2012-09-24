@@ -98,11 +98,12 @@
 		world.update_status()
 
 	//Admin Authorisation
-	if( ckey in admins )
-		holder = new /obj/admins(src)
-		holder.rank = admins[ckey]
+	var/datum/admins/Admin_Obj = admins[ckey]
+	if(istype(Admin_Obj))
 		admin_list += src
-//		update_admins(admins[ckey])	//handled by Login
+		holder = Admin_Obj
+		holder.owner = src
+		holder.state = null
 
 	..()	//calls mob.Login()
 
@@ -116,11 +117,9 @@
 	//DISCONNECT//
 	//////////////
 /client/Del()
-
-	spawn(0)
-		if(holder)
-			admin_list -= src
-			del(holder)
+	if(holder)
+		holder.state = null
+		admin_list -= src
 	client_list -= src
 	return ..()
 

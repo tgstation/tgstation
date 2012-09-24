@@ -3,7 +3,7 @@
 		////////////////
 		//ADMIN THINGS//
 		////////////////
-	var/obj/admins/holder = null
+	var/datum/admins/holder = null
 	var/buildmode		= 0
 	var/stealth			= 0
 	var/fakekey			= null

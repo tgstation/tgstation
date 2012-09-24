@@ -1,4 +1,4 @@
-/obj/admins/proc/player_panel_new()//The new one
+/datum/admins/proc/player_panel_new()//The new one
 	if (!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Player Panel</title></head>"
@@ -318,7 +318,7 @@
 	usr << browse(dat, "window=players;size=600x480")
 
 //The old one
-/obj/admins/proc/player_panel_old()
+/datum/admins/proc/player_panel_old()
 	if (!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Player Menu</title></head>"
@@ -377,7 +377,7 @@
 
 
 
-/obj/admins/proc/check_antagonists()
+/datum/admins/proc/check_antagonists()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 		dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
