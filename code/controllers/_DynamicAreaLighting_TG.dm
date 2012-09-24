@@ -1,7 +1,7 @@
 /*
 	Modified DynamicAreaLighting for TGstation - Coded by Carnwennan
 
-	This is TG's 'new' lighting system. It's basically a heavily modified mix of combination of Forum_Account's and
+	This is TG's 'new' lighting system. It's basically a heavily modified combination of Forum_Account's and
 	ShadowDarke's respective lighting libraries. Credits, where due, to them.
 
 	Like sd_DAL (what we used to use), it changes the shading overlays of areas by splitting each type of area into sub-areas
@@ -29,7 +29,6 @@
 		mob luminosity will be lower than expected when one of multiple light sources is dropped after exceeding the maximum luminosity
 		Shuttles still do not have support for dynamic lighting (I hope to fix this at some point)
 		No directional lighting support. Fairly easy to add this and the code is ready.
-		When opening airlocks etc, lighting does not always update to account for the change in opacity.
 */
 
 #define LIGHTING_MAX_LUMINOSITY 12	//Hard maximum luminosity to prevet lag which could be caused by coders making mini-suns
@@ -272,13 +271,13 @@ area
 
 	proc/SetLightLevel(light)
 		if(!src) return
-		if(light < 0)
+		if(light <= 0)
 			light = 0
-//			luminosity = 0
+			luminosity = 0
 		else
 			if(light > lighting_controller.lighting_states)
 				light = lighting_controller.lighting_states
-//			luminosity = 1
+			luminosity = 1
 
 		if(lighting_overlay)
 			overlays -= lighting_overlay
