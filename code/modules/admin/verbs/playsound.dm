@@ -6,10 +6,8 @@
 		src << "Only administrators may use this command."
 		return
 
-	var/sound/uploaded_sound = sound(S,0,1,0)
-	uploaded_sound.channel = 777
-	uploaded_sound.priority = 255
-	uploaded_sound.wait = 1
+	var/sound/uploaded_sound = sound(S, repeat = 0, wait = 1, channel = 777)
+	uploaded_sound.priority = 250
 
 	if(src.holder.rank == "Game Master" || src.holder.rank == "Game Admin" || src.holder.rank == "Badmin")
 		log_admin("[key_name(src)] played sound [S]")
