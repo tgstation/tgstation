@@ -158,6 +158,10 @@
 	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
 	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 	log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]</b>")
+
+	log_admin("ATTACK: [user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]")
+	msg_admin_attack("ATTACK: [user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]") //BS12 EDIT ALG
+
 	src.occupant.death(1)
 	src.occupant.ghostize()
 	del(src.occupant)

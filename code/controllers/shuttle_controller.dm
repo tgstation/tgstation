@@ -12,6 +12,8 @@
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
 datum/shuttle_controller
+	var/alert = 0 //0 = emergency, 1 = crew cycle
+
 	var/location = 0 //0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13
 	var/online = 0
 	var/direction = 1 //-1 = going back to central command, 1 = going to SS13, 2 = in transit to centcom (not recalled)
@@ -20,29 +22,52 @@ datum/shuttle_controller
 	var/timelimit //important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
 	var/fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
-
+	var/deny_shuttle = 0 //for admins not allowing it to be called.
+	var/departed = 0
 
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall(coeff = 1)
+		if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
+			return
+
 		if(endtime)
 			if(direction == -1)
 				setdirection(1)
 		else
 			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
+		//turning on the red lights in hallways
+		if(alert == 0)
+			for(var/area/A in world)
+				if(istype(A, /area/hallway))
+					A.readyalert()
+
+
+	proc/shuttlealert(var/X)
+		alert = X
+
 
 	proc/recall()
 		if(direction == 1)
 			var/timeleft = timeleft()
-			if(timeleft >= 600)
+			if(alert == 0)
+				if(timeleft >= 600)
+					return
+				captain_announce("The emergency shuttle has been recalled.")
+				world << sound('sound/AI/shuttlerecalled.ogg')
+				setdirection(-1)
+				online = 1
+				for(var/area/A in world)
+					if(istype(A, /area/hallway))
+						A.readyreset()
 				return
-			captain_announce("The emergency shuttle has been recalled.")
-			world << sound('sound/AI/shuttlerecalled.ogg')
-			setdirection(-1)
-			online = 1
-
+			else //makes it possible to send shuttle back.
+				captain_announce("The shuttle has been recalled.")
+				setdirection(-1)
+				online = 1
+				return
 
 	// returns the time (in seconds) before shuttle arrival
 	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
@@ -277,6 +302,7 @@ datum/shuttle_controller
 								spawn() S.startspawn()
 						*/
 
+						departed = 1 // It's going!
 						location = 0 // in deep space
 						direction = 2 // heading to centcom
 

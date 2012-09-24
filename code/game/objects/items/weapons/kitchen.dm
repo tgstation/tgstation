@@ -68,6 +68,9 @@
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
+	log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])")
+	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])") //BS12 EDIT ALG
+
 	var/t = user:zone_sel.selecting
 	if (t == "head")
 		if(ishuman(M))
@@ -135,6 +138,8 @@
 
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
+		log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])")
+		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])") //BS12 EDIT ALG
 
 		if(prob(15))
 			M.Weaken(3)

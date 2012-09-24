@@ -46,6 +46,45 @@
 	src.adding += using
 	action_intent = using
 
+//intent small hud objects
+	using = new src.h_type( src )
+	using.name = "help"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = (mymob.a_intent == "help" ? "help_small_active" : "help_small")
+	using.screen_loc = ui_help_small
+	using.layer = 21
+	src.adding += using
+	help_intent = using
+
+	using = new src.h_type( src )
+	using.name = "disarm"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = (mymob.a_intent == "disarm" ? "disarm_small_active" : "disarm_small")
+	using.screen_loc = ui_disarm_small
+	using.layer = 21
+	src.adding += using
+	disarm_intent = using
+
+	using = new src.h_type( src )
+	using.name = "grab"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = (mymob.a_intent == "grab" ? "grab_small_active" : "grab_small")
+	using.screen_loc = ui_grab_small
+	using.layer = 21
+	src.adding += using
+	grab_intent = using
+
+	using = new src.h_type( src )
+	using.name = "harm"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = (mymob.a_intent == "hurt" ? "harm_small_active" : "harm_small")
+	using.screen_loc = ui_harm_small
+	using.layer = 21
+	src.adding += using
+	hurt_intent = using
+
+//end intent small hud objects
+
 	using = new src.h_type( src )
 	using.name = "mov_intent"
 	using.dir = SOUTHWEST

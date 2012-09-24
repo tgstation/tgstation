@@ -285,6 +285,10 @@
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
+
+					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+
 					explode()
 			else if( prob( min(60, switchcount*switchcount*0.01) ) )
 				if(status == LIGHT_OK && trigger)
@@ -359,6 +363,10 @@
 				del(L)
 
 				if(on && rigged)
+
+					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+
 					explode()
 			else
 				user << "This type of light requires a [fitting]."
@@ -689,6 +697,9 @@
 		user << "You inject the solution into the [src]."
 
 		if(S.reagents.has_reagent("plasma", 5))
+
+			log_admin("LOG: [user.name] ([user.ckey]) injected a light with plasma, rigging it to explode.")
+			message_admins("LOG: [user.name] ([user.ckey]) injected a light with plasma, rigging it to explode.")
 
 			rigged = 1
 

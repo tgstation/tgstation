@@ -463,6 +463,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])</font>")
 
+		log_admin("ATTACK: [user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])")
+		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])") //BS12 EDIT ALG
 
 		if(istype(M,/mob/dead))
 			M.invisibility = 0

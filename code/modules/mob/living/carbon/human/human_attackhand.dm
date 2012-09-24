@@ -22,8 +22,8 @@
 
 					log_admin("ATTACK: [M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])")
 					msg_admin_attack("ATTACK: [M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])") //BS12 EDIT ALG
-					log_attack("<font color='red'>[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])</font>")
 
+					log_attack("<font color='red'>[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])</font>")
 
 					var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
 					apply_effects(5,5,0,0,5,0,0,armorblock)
@@ -113,8 +113,8 @@
 
 				log_admin("ATTACK: [M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them")
 				msg_admin_attack("ATTACK: [M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them") //BS12 EDIT ALG
-				log_attack("<font color='red'>[M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name]([src.ckey]), shocking them </font>")
 
+				log_attack("<font color='red'>[M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name]([src.ckey]), shocking them </font>")
 
 				var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
 				apply_effects(5,5,0,0,5,0,0,armorblock)
@@ -138,6 +138,7 @@
 
 			log_admin("ATTACK: [M.name] ([M.ckey]) [attack_verb]ed [src.name] ([src.ckey])")
 			msg_admin_attack("ATTACK: [M.name] ([M.ckey]) [attack_verb]ed [src.name] ([src.ckey])") //BS12 EDIT ALG
+
 			log_attack("<font color='red'>[M.name] ([M.ckey]) [attack_verb]ed [src.name] ([src.ckey])</font>")
 
 			var/damage = rand(0, 5)//BS12 EDIT

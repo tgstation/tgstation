@@ -12,7 +12,7 @@
 	var/list/darkMask = null
 	var/obj/screen/r_hand_hud_object = null
 	var/obj/screen/l_hand_hud_object = null
-	var/show_intent_icons = 0
+	var/show_intent_icons = 1
 	var/list/obj/screen/hotkeybuttons = null
 	var/hotkey_ui_hidden = 0 //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 

@@ -342,6 +342,9 @@
 				if("tor_ban")
 					ToRban = 1
 
+				if("usealienwhitelist")
+					usealienwhitelist = 1
+
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

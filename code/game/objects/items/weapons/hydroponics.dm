@@ -100,6 +100,9 @@
 
 		log_attack("<font color='red'> [user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])</font>")
 
+		log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])")
+		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])") //BS12 EDIT ALG
+
 		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 
 		M.eye_blurry += force/7

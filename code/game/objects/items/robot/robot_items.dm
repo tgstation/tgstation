@@ -15,6 +15,9 @@
 
 		log_attack(" <font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
+		log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])")
+		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])") //BS12 EDIT ALG
+
 		user.cell.charge -= 30
 
 		M.Weaken(5)

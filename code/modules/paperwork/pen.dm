@@ -55,6 +55,10 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [src.name] to stab [M.name] ([M.ckey])</font>")
+
+	log_admin("ATTACK: [user.name] ([user.ckey]) Used the [src.name] to stab [M.name] ([M.ckey])")
+	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) Used the [src.name] to stab [M.name] ([M.ckey])") //BS12 EDIT ALG
+
 	return
 
 /*

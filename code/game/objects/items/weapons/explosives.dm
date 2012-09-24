@@ -16,6 +16,8 @@
 		log_attack("<font color='red'> [user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey])</font>")
 		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
 
+	log_admin("ATTACK: [user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey])")
+	msg_admin_attack("ATTACK: [user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey])") //BS12 EDIT ALG
 
 	if(do_after(user, 50) && in_range(user, target))
 		user.drop_item()

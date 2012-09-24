@@ -32,7 +32,7 @@ proc/get_all_admin_clients()
 		else
 			entry += "\t[C.key][C.stealth ? " <i>(as [C.fakekey])</i>" : ""]"
 
-		if(usr.client.holder)
+		if(usr.client.holder && (usr.client.holder.level != 0))
 			var/mob/M = C.mob
 			entry += " - Playing as [M.real_name]"
 			switch(M.stat)

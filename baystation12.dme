@@ -815,6 +815,7 @@
 #include "code\game\objects\structures\stool_bed_chair_nest\bed.dm"
 #include "code\game\objects\structures\stool_bed_chair_nest\chairs.dm"
 #include "code\game\objects\structures\stool_bed_chair_nest\stools.dm"
+#include "code\game\player\admin_report.dm"
 #include "code\game\turfs\simulated.dm"
 #include "code\game\turfs\turf.dm"
 #include "code\game\turfs\unsimulated.dm"
@@ -1320,7 +1321,6 @@
 #include "code\WorkInProgress\SkyMarshal\Ultralight_procs.dm"
 #include "code\ZAS\Airflow.dm"
 #include "code\ZAS\Connection.dm"
-#include "code\ZAS\Debug.dm"
 #include "code\ZAS\FEA_gas_mixture.dm"
 #include "code\ZAS\FEA_system.dm"
 #include "code\ZAS\Fire.dm"
@@ -1331,5 +1331,5 @@
 #include "code\ZAS\ZAS_Zones.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation.2.0.9.dmm"
+#include "maps\tgstation.2.0.9.1.dmm"
 // END_INCLUDE
