@@ -33,7 +33,7 @@
 	if( findtext(href,"<script",1,0) )
 		world.log << "Attempted use of scripts within a topic call, by [src]"
 		message_admins("Attempted use of scripts within a topic call, by [src]")
-		del(usr)
+		//del(usr)
 		return
 
 	//Admin PM
@@ -97,15 +97,16 @@
 		host = key
 		world.update_status()
 
-	..()	//calls mob.Login()
-
 	//Admin Authorisation
 	if( ckey in admins )
 		holder = new /obj/admins(src)
 		holder.rank = admins[ckey]
 		admin_list += src
-		update_admins(admins[ckey])
+//		update_admins(admins[ckey])	//handled by Login
 
+	..()	//calls mob.Login()
+
+	if(holder)
 		admin_memo_show()
 
 	log_client_to_db()
