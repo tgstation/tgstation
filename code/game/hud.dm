@@ -84,12 +84,16 @@
 
 
 //Intent small buttons
+/*
 #define ui_help_small "12:8,1:1"
 #define ui_disarm_small "12:15,1:18"
 #define ui_grab_small "12:32,1:18"
 #define ui_harm_small "12:39,1:1"
-
-
+*/
+#define ui_help_small "13:18,1:-3"
+#define ui_disarm_small "13:18,1:12"
+#define ui_grab_small "14:2,1:12"
+#define ui_harm_small "14:2,1:-3"
 
 //#define ui_swapbutton "6:-16,1:5" //Unused
 
@@ -160,6 +164,12 @@ obj/hud/New(var/type = 0)
 /obj/hud
 	var/obj/screen/action_intent
 	var/obj/screen/move_intent
+
+	var/obj/screen/hurt_intent
+	var/obj/screen/disarm_intent
+	var/obj/screen/help_intent
+	var/obj/screen/grab_intent
+
 	var/hud_shown = 1	//Used for the HUD toggle (F12)
 	var/inventory_shown = 1	//the inventory
 

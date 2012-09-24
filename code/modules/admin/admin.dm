@@ -9,19 +9,14 @@ var/global/floorIsLava = 0
 	log_adminwarn(rendered)
 	for (var/client/C in admin_list)
 		if (C)
-			var/msg = rendered
-			if (admin_ref)
-				msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
-			if (admin_holder_ref && C.holder)
-				msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
-			C << msg
-
-/obj/admins/proc/player_has_info(var/key as text)
-	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
-	var/list/infos
-	info >> infos
-	if(!infos || !infos.len) return 0
-	else return 1
+			if(C.holder.level)
+				if(C.holder.level > -3 && C.holder.level != 0)
+					var/msg = rendered
+					if (admin_ref)
+						msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
+					if (admin_holder_ref && C.holder)
+						msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
+					C << msg
 
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
@@ -202,6 +197,76 @@ var/global/floorIsLava = 0
 				M.change_mob_type( /mob/living/simple_animal/constructwraith , null, null, delmob)
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob)
+	if(href_list["view_player_info"])
+		show_player_info(href_list["view_player_info"])
+
+	if(href_list["add_player_info"])
+		var/key = href_list["add_player_info"]
+		var/add = input("Add Player Info") as null|text
+		if(!add) return
+
+		var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+		var/list/infos
+		info >> infos
+		if(!infos) infos = list()
+
+		var/datum/player_info/P = new
+		P.author = usr.key
+		P.rank = usr.client.holder.rank
+		P.content = add
+		var/modifyer = "th"
+		switch(time2text(world.timeofday, "DD"))
+			if("01","21","31")
+				modifyer = "st"
+			if("02","22",)
+				modifyer = "nd"
+			if("03","23")
+				modifyer = "rd"
+		var/day_string = "[time2text(world.timeofday, "DD")][modifyer]"
+		if(copytext(day_string,1,2) == "0")
+			day_string = copytext(day_string,2)
+		var/full_date = time2text(world.timeofday, "DDD, Month DD of YYYY")
+		var/day_loc = findtext(full_date, time2text(world.timeofday, "DD"))
+		P.timestamp = "[copytext(full_date,1,day_loc)][day_string][copytext(full_date,day_loc+2)]"
+
+		infos += P
+
+		info << infos
+
+		message_admins("\blue [key_name_admin(usr)] has edited [key]'s notes.")
+		log_admin("[key_name(usr)] has edited [key]'s notes.")
+
+		del info
+
+		var/savefile/note_list = new("data/player_notes.sav")
+		var/list/note_keys
+		note_list >> note_keys
+		if(!note_keys) note_keys = list()
+		if(!note_keys.Find(key)) note_keys += key
+		note_list << note_keys
+		del note_list
+
+		show_player_info(key)
+
+	if(href_list["remove_player_info"])
+		var/key = href_list["remove_player_info"]
+		var/index = text2num(href_list["remove_index"])
+
+		var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+		var/list/infos
+		info >> infos
+		if(!infos || infos.len < index) return
+
+		var/datum/player_info/item = infos[index]
+		infos.Remove(item)
+		info << infos
+
+		message_admins("\blue [key_name_admin(usr)] deleted one of [key]'s notes.")
+		log_admin("[key_name(usr)] deleted one of [key]'s notes.")
+
+		del info
+
+		show_player_info(key)
 
 
 	/////////////////////////////////////new ban stuff
@@ -215,6 +280,13 @@ var/global/floorIsLava = 0
 			else
 				alert(usr,"This ban has already been lifted / does not exist.","Error","Ok")
 				unbanpanel()
+
+	if(href_list["unban_cid"])
+		var/banfolder = href_list["unban_cid"]
+		Banlist.cd = "/base/[banfolder]"
+		var/key = Banlist["key"]
+		if(alert(usr, "Are you sure you want to remove the computer ID for [key]'s ban? Without the ID, a different account could get on the server from [key]'s computer.", "Confirmation", "Yes", "No") == "Yes")
+			Banlist["skipIdCheck"] << 1
 
 	if(href_list["unbane"])
 		UpdateTime()
@@ -484,6 +556,24 @@ var/global/floorIsLava = 0
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=wizard;jobban4=\ref[M]'>[dd_replacetext("Wizard", " ", "&nbsp")]</a></td>"
 
+		//Emergency Response Team
+		if(jobban_isbanned(M, "Emergency Response Team" || isbanned_dept))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Emergency Response Team;jobban4=\ref[M]'><font color=red>[dd_replacetext("Emergency Response Team", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Emergency Response Team;jobban4=\ref[M]'>[dd_replacetext("Emergency Response Team", " ", "&nbsp")]</a></td>"
+
+	//Misc (Grey)
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='B5B5B5'><th colspan='10'>Misc Positions</th></tr><tr align='center'>"
+
+		//Records
+		if(jobban_isbanned(M, "Records"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Records;jobban4=\ref[M]'><font color=red>[dd_replacetext("Records", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Records;jobban4=\ref[M]'>[dd_replacetext("Records", " ", "&nbsp")]</a></td>"
+
+
+
 /*		//Malfunctioning AI	//Removed Malf-bans because they're a pain to impliment
 		if(jobban_isbanned(M, "malf AI") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=malf AI;jobban4=\ref[M]'><font color=red>[dd_replacetext("Malf AI", " ", "&nbsp")]</font></a></td>"
@@ -597,6 +687,8 @@ var/global/floorIsLava = 0
 					M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>"
 					M << "\red <B>The reason is: [reason]</B>"
 					M << "\red Jobban can be lifted only upon request."
+					if(config.banappeals)
+						M << "\red To try to resolve this matter head to [config.banappeals]"
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 
@@ -864,7 +956,7 @@ var/global/floorIsLava = 0
 			return
 
 	if (href_list["sendtoprison"])
-		if ((src.rank in list( "Moderator", "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+		if ((src.rank in list(/* "Moderator", */"Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 
 			var/confirm = alert(usr, "Send to admin prison for the round?", "Message", "Yes", "No")
 			if(confirm != "Yes")
@@ -1149,6 +1241,41 @@ var/global/floorIsLava = 0
 			else
 				alert("The mob must not be a new_player.")
 				return
+	if (href_list["granttaj"])
+		if (src.level>=5)
+			var/mob/M = locate(href_list["granttaj"])
+			for (var/s in alien_whitelist)
+				if(findtext(s,"[M.ckey] - Tajaran"))
+					alert("This key is already on the whitelist!", null, null, null, null, null)
+					return
+			alien_whitelist += "[M.ckey] - Tajaran"
+			usr << "[M.ckey] added to Tajaran whitelist."
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
+	if (href_list["grantsog"])
+		if (src.level>=5)
+			var/mob/M = locate(href_list["grantsog"])
+			for (var/s in alien_whitelist)
+				if(findtext(s,"[M.ckey] - Soghun"))
+					alert("This key is already on the whitelist!", null, null, null, null, null)
+					return
+			alien_whitelist += "[M.ckey] - Soghun"
+			usr << "[M.ckey] added to Soghun whitelist."
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
+	if (href_list["grantskrell"])
+		if (src.level>=5)
+			var/mob/M = locate(href_list["grantskrell"])
+			for (var/s in alien_whitelist)
+				if(findtext(s,"[M.ckey] - Skrell"))
+					alert("This key is already on the whitelist!", null, null, null, null, null)
+					return
+			alien_whitelist += "[M.ckey] - Skrell"
+			usr << "[M.ckey] added to Skrell whitelist."
 		else
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
@@ -1191,47 +1318,64 @@ var/global/floorIsLava = 0
 // Now isn't that much better? IT IS NOW A PROC, i.e. kinda like a big panel like unstable
 
 	if (href_list["adminplayeropts"])
-		var/mob/M = locate(href_list["adminplayeropts"])
-		show_player_panel(M)
+		if(rank in list("Admin Observer", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+			var/mob/M = locate(href_list["adminplayeropts"])
+			show_player_panel(M)
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+
+	if (href_list["player_info"])
+		var/key = href_list["player_info"]
+		show_player_info(key)
 
 	if (href_list["adminplayervars"])
-		var/mob/M = locate(href_list["adminplayervars"])
-		if(src && src.owner)
-			if(istype(src.owner,/client))
-				var/client/cl = src.owner
-				cl.debug_variables(M)
-			else if(ismob(src.owner))
-				var/mob/MO = src.owner
-				if(MO.client)
-					var/client/cl = MO.client
+		if(rank in list("Admin Observer", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+			var/mob/M = locate(href_list["adminplayervars"])
+			if(src && src.owner)
+				if(istype(src.owner,/client))
+					var/client/cl = src.owner
 					cl.debug_variables(M)
+				else if(ismob(src.owner))
+					var/mob/MO = src.owner
+					if(MO.client)
+						var/client/cl = MO.client
+						cl.debug_variables(M)
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
 
 	if (href_list["adminplayersubtlemessage"])
-		var/mob/M = locate(href_list["adminplayersubtlemessage"])
-		if(src && src.owner)
-			if(istype(src.owner,/client))
-				var/client/cl = src.owner
-				cl.cmd_admin_subtle_message(M)
-			else if(ismob(src.owner))
-				var/mob/MO = src.owner
-				if(MO.client)
-					var/client/cl = MO.client
+		if(rank in list("Admin Observer", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+			var/mob/M = locate(href_list["adminplayersubtlemessage"])
+			if(src && src.owner)
+				if(istype(src.owner,/client))
+					var/client/cl = src.owner
 					cl.cmd_admin_subtle_message(M)
+				else if(ismob(src.owner))
+					var/mob/MO = src.owner
+					if(MO.client)
+						var/client/cl = MO.client
+						cl.cmd_admin_subtle_message(M)
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
 
 	if (href_list["adminplayerobservejump"])
-		var/mob/M = locate(href_list["adminplayerobservejump"])
-		if(src && src.owner)
-			var/client/C
-			if(istype(src.owner,/client))
-				C = src.owner
-			else if(ismob(src.owner))
-				var/mob/MO = src.owner
-				C = MO.client
-			if(C)
-				if(state == 1)
-					C.admin_ghost()
-				sleep(2)
-				C.jumptomob(M)
+		if(rank in list("Admin Observer", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+			var/mob/M = locate(href_list["adminplayerobservejump"])
+			if(src && src.owner)
+				var/client/C
+				if(istype(src.owner,/client))
+					C = src.owner
+				else if(ismob(src.owner))
+					var/mob/MO = src.owner
+					C = MO.client
+				if(C)
+					if(state == 1)
+						C.admin_ghost()
+					sleep(2)
+					C.jumptomob(M)
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+
 
 	if (href_list["adminplayerobservecoodjump"])
 
@@ -1336,14 +1480,19 @@ var/global/floorIsLava = 0
 
 
 	if (href_list["traitor_panel_pp"])
-		var/mob/M = locate(href_list["traitor_panel_pp"])
-		if(isnull(M))
-			usr << "Mob doesn't seem to exist."
-			return
-		if(!ismob(M))
-			usr << "This doen't seem to be a mob."
-			return
-		show_traitor_panel(M)
+		if(rank in list("Admin Observer", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+			var/mob/M = locate(href_list["traitor_panel_pp"])
+			if(isnull(M))
+				usr << "Mob doesn't seem to exist."
+				return
+			if(!ismob(M))
+				usr << "This doen't seem to be a mob."
+				return
+			show_traitor_panel(M)
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+
+
 
 	if (href_list["BlueSpaceArtillery"])
 		var/mob/target = locate(href_list["BlueSpaceArtillery"])
@@ -1467,8 +1616,12 @@ var/global/floorIsLava = 0
 			return
 
 	if (href_list["narrateto"])
-		var/mob/M = locate(href_list["narrateto"])
-		usr.client.cmd_admin_direct_narrate(M)
+		if(rank in list("Game Admin", "Game Master"))
+			var/mob/M = locate(href_list["narrateto"])
+			usr.client.cmd_admin_direct_narrate(M)
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
 
 	if (href_list["subtlemessage"])
 		var/mob/M = locate(href_list["subtlemessage"])
@@ -1514,7 +1667,16 @@ var/global/floorIsLava = 0
 			return create_mob(usr)
 		else
 			alert("You are not a high enough administrator! Sorry!!!!")
+/*
+	if (href_list["vmode"])
+		vmode()
 
+	if (href_list["votekill"])
+		votekill()
+
+	if (href_list["voteres"])
+		voteres()
+*/
 	if (href_list["prom_demot"])
 		if ((src.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			var/client/C = locate(href_list["prom_demot"])
@@ -1532,6 +1694,7 @@ var/global/floorIsLava = 0
 				<A href='?src=\ref[src];chgadlvl=Temporary Admin;client4ad=\ref[C]'>Temporary Admin</A> // Secondary Admin<BR>
 				<A href='?src=\ref[src];chgadlvl=Moderator;client4ad=\ref[C]'>Moderator</A> // Moderator<BR>
 				<A href='?src=\ref[src];chgadlvl=Admin Observer;client4ad=\ref[C]'>Admin Observer</A> // Filthy Xeno<BR>
+				<A href='?src=\ref[src];chgadlvl=Retired Admin;client4ad=\ref[C]'>Retired Admin</A> // Retired Administrator<BR>
 				<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Remove Admin</A><BR>"}
 			else if(src.level == 5)
 			//coder
@@ -1542,6 +1705,7 @@ var/global/floorIsLava = 0
 				<A href='?src=\ref[src];chgadlvl=Temporary Admin;client4ad=\ref[C]'>Temporary Admin</A> // Secondary Admin<BR>
 				<A href='?src=\ref[src];chgadlvl=Moderator;client4ad=\ref[C]'>Moderator</A> // Moderator<BR>
 				<A href='?src=\ref[src];chgadlvl=Admin Observer;client4ad=\ref[C]'>Admin Observer</A> // Filthy Xeno<BR>
+				<A href='?src=\ref[src];chgadlvl=Retired Admin;client4ad=\ref[C]'>Retired Admin</A> // Retired Administrator<BR>
 				<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Remove Admin</A><BR>"}
 			else
 				alert("Not a high enough level admin, sorry.")
@@ -2267,7 +2431,7 @@ var/global/floorIsLava = 0
 		return
 
 	if (href_list["secretsadmin"])
-		if ((src.rank in list( "Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+		if ((src.rank in list(/* "Moderator", */"Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			var/ok = 0
 			switch(href_list["secretsadmin"])
 				if("clear_bombs")
@@ -2381,6 +2545,46 @@ var/global/floorIsLava = 0
 			if(href_list["vsc"] == "default")
 				vsc.SetDefault(usr)
 
+	if (href_list["rnd_max"])
+		for(var/obj/machinery/computer/rdconsole/C in world)
+			for(var/datum/tech/T in C.files.known_tech)
+				T.level = 6
+			C.files.RefreshResearch()
+
+		for(var/obj/machinery/r_n_d/server/C in world)
+			for(var/datum/tech/T in C.files.known_tech)
+				T.level = 6
+			C.files.RefreshResearch()
+
+//		owner:rnd_check_designs()
+	#define AUTOBANTIME 10
+	if(href_list["warn"])
+		var/mob/M = locate(href_list["warn"])
+		if (ismob(M))
+			var/client/user
+			if(istype(usr, /client))
+				user = usr
+			else if(istype(usr, /mob))
+				user = usr.client
+
+			if(!user.holder)
+				src << "Only administrators may use this command."
+				return
+			if(M.client && M.client.holder && (M.client.holder.level >= user.holder.level))
+				alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+				return
+			if(!M.client.warned)
+				M << "\red <B>You have been warned by an administrator. This is the only warning you will recieve.</B>"
+				M.client.warned = 1
+				message_admins("\blue [user.ckey] warned [M.ckey].")
+			else
+				AddBan(M.ckey, M.computer_id, "Autobanning due to previous warn", user.ckey, 1, AUTOBANTIME)
+				M << "\red<BIG><B>You have been autobanned by [user.ckey].</B></BIG>"
+				M << "\red This is a temporary ban; it will automatically be removed in [AUTOBANTIME] minutes."
+				log_admin("[user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+				ban_unban_log_save("[user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+				message_admins("\blue [user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+				//feedback_inc("ban_warn",1)
 
 	if(href_list["ac_view_wanted"])                 //Admin newscaster Topic() stuff be here
 		src.admincaster_screen = 18                 //The ac_ prefix before the hrefs stands for AdminCaster.
@@ -2727,12 +2931,93 @@ var/global/floorIsLava = 0
 		body += "<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | "
 		body += "<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | "
 		body += "<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
+		body += "<A href='?src=\ref[src];granttaj=\ref[M]'>Grant Tajaran (Temp)</A> | "
+		body += "<A href='?src=\ref[src];grantsog=\ref[M]'>Grant Soghun (Temp)</A> | "
+		body += "<A href='?src=\ref[src];grantskrell=\ref[M]'>Grant Skrell (Temp)</A> | "
 
 	body += "<br>"
 	body += "</body></html>"
 
 	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+/datum/player_info/var/author // admin who authored the information
+/datum/player_info/var/rank //rank of admin who made the notes
+/datum/player_info/var/content // text content of the information
+/datum/player_info/var/timestamp // Because this is bloody annoying
+
+/obj/admins/proc/player_has_info(var/key as text)
+	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+	var/list/infos
+	info >> infos
+	if(!infos || !infos.len) return 0
+	else return 1
+
+/obj/admins/proc/show_player_info(var/key as text)
+	set category = "Admin"
+	set name = "Show Player Info"
+	if (!istype(src,/obj/admins))
+		src = usr.client.holder
+	if (!istype(src,/obj/admins))
+		usr << "Error: you are not an admin!"
+		return
+	var/dat = "<html><head><title>Info on [key]</title></head>"
+	dat += "<body>"
+
+	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+	var/list/infos
+	info >> infos
+	if(!infos)
+		dat += "No information found on the given key.<br>"
+	else
+		var/update_file = 0
+		var/i = 0
+		for(var/datum/player_info/I in infos)
+			i += 1
+			if(!I.timestamp)
+				I.timestamp = "Pre-4/3/2012"
+				update_file = 1
+			if(!I.rank)
+				I.rank = "N/A"
+				update_file = 1
+			dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
+			if(I.author == usr.key)
+				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
+			dat += "<br><br>"
+		if(update_file) info << infos
+
+	dat += "<br>"
+	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
+
+	dat += "</body></html>"
+	usr << browse(dat, "window=adminplayerinfo;size=480x480")
+
+/obj/admins/proc/show_skills(var/mob/living/carbon/human/M as mob in world)
+	set category = "Admin"
+	set name = "Show Skills"
+
+	if (!istype(src,/obj/admins))
+		src = usr.client.holder
+	if (!istype(src,/obj/admins))
+		usr << "Error: you are not an admin!"
+		return
+
+	show_skill_window(usr, M)
+
+	return
+
+/client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
+	set category = "Admin"
+	set name = "Update Mob Sprite"
+	set desc = "Should fix any mob sprite update errors."
+
+	if (!holder)
+		src << "Only administrators may use this command."
+		return
+
+	if(istype(H))
+		H.regenerate_icons()
 
 
 /obj/admins/proc/access_news_network() //MARKER
@@ -2940,6 +3225,21 @@ var/global/floorIsLava = 0
 		dat += "</table>"
 		usr << browse(dat, "window=ban;size=400x400")
 
+/obj/admins/proc/PlayerNotes()
+	var/dat = "<B>Player notes</B><HR><table>"
+
+	var/savefile/S=new("data/player_notes.sav")
+	var/list/note_keys
+	S >> note_keys
+	if(!note_keys)
+		dat += "No notes found."
+	else
+		sortList(note_keys)
+		for(var/t in note_keys)
+			dat += text("<tr><td><A href='?src=\ref[src];view_player_info=[t]'>[t]</A></td></tr>")
+	dat += "</table>"
+	usr << browse(dat, "window=player_notes;size=400x400")
+
 /obj/admins/proc/Game()
 
 	var/dat
@@ -2978,6 +3278,10 @@ var/global/floorIsLava = 0
 		dat += "<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>"
 	if(lvl >= 5)
 		dat += "<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>"
+	if(lvl >= 3 )
+		dat += "<br><A href='?src=\ref[src];vsc=airflow'>Edit Airflow Settings</A><br>"
+		dat += "<A href='?src=\ref[src];vsc=plasma'>Edit Plasma Settings</A><br>"
+		dat += "<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>"
 //			if(lvl == 6 )
 	usr << browse(dat, "window=admin2;size=210x180")
 	return
@@ -3046,6 +3350,7 @@ var/global/floorIsLava = 0
 <A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
 <A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
 <A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
+<A href='?src=\ref[src];secretsfun=trigger_armed_response_team'>Trigger the Emergency Response Team</A><BR>
 <A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
 <A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
 <A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
@@ -3076,6 +3381,7 @@ var/global/floorIsLava = 0
 <A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
 <A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
+<A href='?src=\ref[src];secretsfun=electric'>Trigger Electrical Storm</A><BR>"
 <A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
 <A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
 <A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS)</A><BR>"}
@@ -3105,12 +3411,160 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=secrets")
 	return
 
+/obj/admins/proc/Voting()
+
+	var/dat
+	var/lvl = 0
+	switch(src.rank)
+		if("Moderator")
+			lvl = 1
+		if("Temporary Admin")
+			lvl = 2
+		if("Admin Candidate")
+			lvl = 3
+		if("Trial Admin")
+			lvl = 4
+		if("Badmin")
+			lvl = 5
+		if("Game Admin")
+			lvl = 6
+		if("Game Master")
+			lvl = 7
+
+
+	dat += "<center><B>Voting</B></center><hr>\n"
+
+	if(lvl > 0)
+		dat += {"
+<A href='?src=\ref[src];votekill=1'>Abort Vote</A><br>
+<A href='?src=\ref[src];vmode=1'>Start Vote</A><br>
+<A href='?src=\ref[src];voteres=1'>Toggle Voting</A><br>
+"}
+
+	usr << browse(dat, "window=admin2;size=210x160")
+	return
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
 //i.e. buttons/verbs
 
+/*
+/obj/admins/proc/vmode()
+	set category = "Server"
+	set hidden = 1 // It doesn't have a cancel button, so it shouldn't be autocompleted. Should be started via Voting() instead
+	if (!usr.client.holder)
+		return
 
+	var/confirm = alert("What vote would you like to start?", "Vote", "Restart", "Custom Vote", "Change Game Mode")
+	switch(confirm)
+		if("Cancel")
+			return
+		if("Restart")
+			vote.mode = 0
+		// hack to yield 0=restart, 1=changemode
+		if("Change Game Mode")
+			vote.mode = 1
+			if(!ticker)
+				if(going)
+					world << "<B>The game start has been delayed.</B>"
+					going = 0
+		if("Custom Vote")
+			vote.mode = 2
+			vote.enteringchoices = 1
+			vote.customname = input(usr, "What are you voting for?", "Custom Vote") as text
+			if(!vote.customname)
+				vote.enteringchoices = 0
+				vote.voting = 0
+				return
+
+			var/N = input(usr, "How many options does this vote have?", "Custom Vote", 0) as num
+			if(!N)
+				vote.enteringchoices = 0
+				vote.voting = 0
+				return
+
+			var/i
+			vote.choices = list()
+			for(i=1; i<=N; i++)
+				var/addvote = input(usr, "What is option #[i]?", "Enter Option #[i]") as text
+				vote.choices += addvote
+			vote.enteringchoices = 0
+
+	vote.voting = 1
+						// now voting
+	vote.votetime = world.timeofday + config.vote_period*10
+	// when the vote will end
+	spawn(config.vote_period*10)
+		vote.endvote()
+	if(vote.mode == 2)
+		world << "\red<B>*** A custom vote has been initiated by [usr.key].</B>"
+		world << "\red     You have [vote.timetext(config.vote_period)] to vote."
+	else
+		world << "\red<B>*** A vote to [vote.mode?"change game mode":"restart"] has been initiated by [usr.key].</B>"
+		world << "\red     You have [vote.timetext(config.vote_period)] to vote."
+
+	log_admin("Voting to [vote.mode?"change mode":"restart round"] forced by admin [key_name(usr)]")
+
+	for(var/mob/CM in world)
+		if(CM.client)
+			if(config.vote_no_default || (config.vote_no_dead && CM.stat == 2))
+				CM.client.vote = "none"
+			else
+				CM.client.vote = "default"
+
+	for(var/mob/CM in world)
+		if(CM.client)
+			if(config.vote_no_default || (config.vote_no_dead && CM.stat == 2))
+				CM.client.vote = "none"
+			else
+				CM.client.vote = "default"
+	//feedback_add_details("admin_verb","SV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/obj/admins/proc/votekill()
+	set category = "Server"
+	set name = "Abort Vote"
+	set desc="Aborts a vote"
+	if(vote.voting == 0)
+		alert("No votes in progress")
+		return
+	world << "\red <b>*** Voting aborted by [usr.client.stealth ? "Admin Candidate" : usr.key].</b>"
+
+	log_admin("Voting aborted by [key_name(usr)]")
+
+	vote.voting = 0
+	vote.nextvotetime = world.timeofday + 10*config.vote_delay
+
+	for(var/mob/M in world)
+		// clear vote window from all clients
+		if(M.client)
+			M << browse(null, "window=vote")
+			M.client.showvote = 0
+	//feedback_add_details("admin_verb","AV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/obj/admins/proc/voteres()
+	set category = "Server"
+	set name = "Toggle Voting"
+	set desc="Toggles Votes"
+	var/confirm = alert("What vote would you like to toggle?", "Vote", "Restart [config.allow_vote_restart ? "Off" : "On"]", "Change Game Mode [config.allow_vote_mode ? "Off" : "On"]", "Cancel")
+	if(confirm == "Cancel")
+		return
+	if(confirm == "Restart [config.allow_vote_restart ? "Off" : "On"]")
+		config.allow_vote_restart = !config.allow_vote_restart
+		world << "<b>Player restart voting toggled to [config.allow_vote_restart ? "On" : "Off"]</b>."
+		log_admin("Restart voting toggled to [config.allow_vote_restart ? "On" : "Off"] by [key_name(usr)].")
+
+		if(config.allow_vote_restart)
+			vote.nextvotetime = world.timeofday
+	if(confirm == "Change Game Mode [config.allow_vote_mode ? "Off" : "On"]")
+		config.allow_vote_mode = !config.allow_vote_mode
+		world << "<b>Player mode voting toggled to [config.allow_vote_mode ? "On" : "Off"]</b>."
+		log_admin("Mode voting toggled to [config.allow_vote_mode ? "On" : "Off"] by [key_name(usr)].")
+
+		if(config.allow_vote_mode)
+			vote.nextvotetime = world.timeofday
+	//feedback_add_details("admin_verb","TV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+*/
 /obj/admins/proc/restart()
 	set category = "Server"
 	set name = "Restart"

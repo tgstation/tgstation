@@ -1,5 +1,5 @@
 /mob/verb/listen_ooc()
-	set name = "Un/Mute OOC"
+	set name = "Hear/Stop Hearing OOC"
 	set category = "OOC"
 
 	if (src.client)
@@ -44,7 +44,7 @@
 
 	for (var/client/C)
 		if(C.listen_ooc)
-			if (src.client.holder && (!src.client.stealth || (C.holder && C.holder.level > 0)))
+			if (src.client.holder && (!src.client.stealth || (C.holder && C.holder.level != 0)))
 				if (src.client.holder.rank == "Admin Observer")
 					C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else if (src.client.holder.rank == "Retired Admin")

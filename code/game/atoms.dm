@@ -27,6 +27,9 @@
 		if(isobj(src))//Hate typecheckin for a child object but this is just fixing crap another guy broke so if someone wants to put the time in and make this proper feel free.
 			M.take_organ_damage(src:throwforce)
 
+			log_attack("<font color='red'>[hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])</font>")
+			log_admin("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
+			msg_admin_attack("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom

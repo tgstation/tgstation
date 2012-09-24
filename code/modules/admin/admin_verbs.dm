@@ -93,6 +93,9 @@
 			del(src)
 			return
 
+		if ("Retired Admin")
+			holder.level = -3
+
 		else
 			del(holder)
 			return
@@ -104,42 +107,33 @@
 		if (holder.level >= -1)
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_say
+			verbs += /client/proc/cmd_mod_say
 			verbs += /client/proc/cmd_admin_gib_self
+			verbs += /client/proc/update_mob_sprite
 			verbs += /client/proc/deadmin_self
+		else if (holder.level == -3) // Retired Admin
+			verbs += /client/proc/cmd_admin_say
+			verbs += /client/proc/cmd_mod_say
+			return
 		else	return
 
 		//Moderator
 		if (holder.level >= 0)
-			verbs += /obj/admins/proc/announce
-			verbs += /obj/admins/proc/startnow
-			verbs += /obj/admins/proc/toggleAI							//Toggle the AI
-			verbs += /obj/admins/proc/toggleenter						//Toggle enterting
-			verbs += /obj/admins/proc/toggleguests						//Toggle guests entering
-			verbs += /obj/admins/proc/toggleooc							//toggle ooc
-			verbs += /obj/admins/proc/toggleoocdead						//toggle ooc for dead/unc
-			verbs += /obj/admins/proc/show_player_panel
-			verbs += /client/proc/deadchat								//toggles deadchat
-			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/cmd_admin_pm_panel
-			verbs += /client/proc/cmd_admin_subtle_message
-			//verbs += /client/proc/warn	- was never used
-			verbs += /client/proc/dsay
-			verbs += /client/proc/admin_ghost
-			verbs += /client/proc/game_panel
-			verbs += /client/proc/player_panel
-			verbs += /client/proc/player_panel_new
-			verbs += /client/proc/unban_panel
-			verbs += /client/proc/jobbans
-			verbs += /client/proc/unjobban_panel
 			verbs += /client/proc/hide_verbs
-			verbs += /client/proc/general_report
-			verbs += /client/proc/air_report
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/check_ai_laws
-			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
-			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
+			verbs += /client/proc/admin_ghost
+			verbs += /client/proc/Report
+			verbs += /client/proc/display_admin_reports
+			verbs += /obj/admins/proc/show_skills
 		else	return
+
+		if(holder.level == 0) //Moderators don't get asay, only msay
+			verbs -= /client/proc/cmd_admin_say
+			verbs -= /client/proc/investigate_show
+			verbs -= /client/proc/cmd_admin_gib_self
+			verbs += /client/proc/mod_panel
 
 		//Temporary Admin
 		if (holder.level >= 1)
@@ -152,6 +146,33 @@
 			verbs += /client/proc/toggle_hear_radio
 			verbs += /client/proc/deadmin_self
 			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
+
+			//
+			//MOVED FROM MODERATOR
+			//
+			verbs += /obj/admins/proc/announce
+			verbs += /obj/admins/proc/startnow
+			verbs += /obj/admins/proc/toggleAI							//Toggle the AI
+			verbs += /obj/admins/proc/toggleenter						//Toggle enterting
+			verbs += /obj/admins/proc/toggleguests						//Toggle guests entering
+			verbs += /obj/admins/proc/toggleooc							//toggle ooc
+			verbs += /obj/admins/proc/toggleoocdead						//toggle ooc for dead/unc
+			verbs += /obj/admins/proc/show_player_panel
+			verbs += /client/proc/deadchat								//toggles deadchat
+			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
+			verbs += /client/proc/cmd_admin_subtle_message
+			//verbs += /client/proc/warn	- was never used
+			verbs += /client/proc/dsay
+
+			verbs += /client/proc/game_panel
+			verbs += /client/proc/player_panel
+			verbs += /client/proc/player_panel_new
+			verbs += /client/proc/unban_panel
+			verbs += /client/proc/jobbans
+			verbs += /client/proc/unjobban_panel
+			verbs += /client/proc/check_ai_laws
+			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
+			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
 		else	return
 
 		//Admin Candidate
@@ -187,8 +208,9 @@
 			verbs += /proc/possess
 			verbs += /proc/release
 			verbs += /client/proc/one_click_antag
-
-
+//BS12 Commands
+			verbs += /client/proc/admin_deny_shuttle
+			verbs += /client/proc/editappear
 		else	return
 
 		//Badmin
@@ -429,6 +451,15 @@
 	verbs -= /obj/admins/proc/access_news_network
 	verbs -= /client/proc/one_click_antag
 	verbs -= /client/proc/invisimin
+//BS12 Admin Verbs
+	verbs -= /client/proc/update_mob_sprite
+	verbs -= /client/proc/mod_panel
+	verbs -= /client/proc/admin_deny_shuttle
+	verbs -= /client/proc/playernotes
+	verbs -= /obj/admins/proc/show_skills
+	verbs -= /client/proc/Report
+	verbs -= /client/proc/display_admin_reports
+	verbs -= /client/proc/editappear
 	return
 
 /client/proc/admin_ghost()
@@ -488,6 +519,14 @@
 	if(holder)
 		holder.player_panel_new()
 	feedback_add_details("admin_verb","PPN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
+/client/proc/mod_panel()
+	set name = "Moderator Panel"
+	set category = "Admin"
+	if(holder)
+		holder.mod_panel()
+	feedback_add_details("admin_verb","MDRP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/check_antagonists()
@@ -559,6 +598,13 @@
 	log_admin("[key_name(usr)] has turned stealth mode [stealth ? "ON" : "OFF"]")
 	message_admins("[key_name_admin(usr)] has turned stealth mode [stealth ? "ON" : "OFF"]", 1)
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/playernotes()
+	set name = "Show Player Info"
+	set category = "Admin"
+	if(holder)
+		holder.PlayerNotes()
+	return
 
 #define AUTOBATIME 10
 /client/proc/warn(var/mob/M in player_list)
@@ -806,6 +852,98 @@
 		else
 			config.log_hrefs = 1
 			src << "<b>Started logging hrefs</b>"
+
+/client/proc/editappear(mob/living/carbon/human/M as mob in world)
+	set name = "Edit Appearance"
+	set category = "Fun"
+	if(!istype(M, /mob/living/carbon/human))
+		usr << "\red You can only do this to humans!"
+		return
+	switch(alert("You sure you wish to edit this mob's appearance?",,"Yes","No"))
+		if("No")
+			return
+	if(!ishuman(M))
+		usr << "\red Non-humans are not editable yet!"
+	else
+		var/new_facial = input("Please select facial hair color.", "Character Generation") as color
+		if(new_facial)
+			M.r_facial = hex2num(copytext(new_facial, 2, 4))
+			M.g_facial = hex2num(copytext(new_facial, 4, 6))
+			M.b_facial = hex2num(copytext(new_facial, 6, 8))
+
+		var/new_hair = input("Please select hair color.", "Character Generation") as color
+		if(new_facial)
+			M.r_hair = hex2num(copytext(new_hair, 2, 4))
+			M.g_hair = hex2num(copytext(new_hair, 4, 6))
+			M.b_hair = hex2num(copytext(new_hair, 6, 8))
+
+		var/new_eyes = input("Please select eye color.", "Character Generation") as color
+		if(new_eyes)
+			M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
+			M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
+			M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+
+		var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+
+		if (new_tone)
+			M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+			M.s_tone =  -M.s_tone + 35
+
+		// hair
+		var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+		var/list/hairs = list()
+
+		// loop through potential hairs
+		for(var/x in all_hairs)
+			var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
+			hairs.Add(H.name) // add hair name to hairs
+			del(H) // delete the hair after it's all done
+
+		var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
+
+		// if new style selected (not cancel)
+		if (new_style)
+			M.h_style = new_style
+
+			for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
+				var/datum/sprite_accessory/hair/H = new x // create new hair datum
+				if(H.name == new_style)
+					M.h_style = H // assign the hair_style variable a new hair datum
+					break
+				else
+					del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
+
+		// facial hair
+		var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+		var/list/fhairs = list()
+
+		for(var/x in all_fhairs)
+			var/datum/sprite_accessory/facial_hair/H = new x
+			fhairs.Add(H.name)
+			del(H)
+
+		new_style = input("Please select facial style", "Character Generation")  as null|anything in fhairs
+
+		if(new_style)
+			M.f_style = new_style
+			for(var/x in all_fhairs)
+				var/datum/sprite_accessory/facial_hair/H = new x
+				if(H.name == new_style)
+					M.f_style = H
+					break
+				else
+					del(H)
+
+	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
+	if (new_gender)
+		if(new_gender == "Male")
+			M.gender = MALE
+		else
+			M.gender = FEMALE
+	M.regenerate_icons()
+	M.update_body()
+	M.check_dna(M)
+
 
 /client/proc/check_ai_laws()
 	set name = "Check AI Laws"

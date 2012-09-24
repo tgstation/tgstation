@@ -15,6 +15,11 @@
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/user)
 	if((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
+
+		log_attack("<font color='red'>[user.name] ([user.ckey]) clumsily primed \a [src]</font>")
+		log_admin("ATTACK: [user] ([user.ckey]) clumsily primed \a [src]")
+		message_admins("ATTACK: [user] ([user.ckey]) clumsily primed \a [src]")
+
 		active = 1
 		icon_state = initial(icon_state) + "_active"
 		playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
@@ -56,7 +61,12 @@
 /obj/item/weapon/grenade/attack_self(mob/user as mob)
 	if(!active)
 		if(clown_check(user))
-			user << "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>"
+			user << "<span class='warning'>You prime \the [name]! [det_time/10] seconds!</span>"
+
+			log_attack("<font color='red'>[user.name] ([user.ckey]) primed \a [src].</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) primed \a [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) primed \a [src].")
+
 			active = 1
 			icon_state = initial(icon_state) + "_active"
 			add_fingerprint(user)

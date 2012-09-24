@@ -819,6 +819,22 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	return
 
+/client/proc/admin_deny_shuttle()
+	set category = "Admin"
+	set name = "Toggle Deny Shuttle"
+
+	if (!ticker)
+		return
+
+	if (!holder)
+		src << "Only administrators may use this command."
+		return
+
+	emergency_shuttle.deny_shuttle = !emergency_shuttle.deny_shuttle
+
+	log_admin("[key_name(src)] has [emergency_shuttle.deny_shuttle ? "denied" : "allowed"] the shuttle to be called.")
+	message_admins("[key_name_admin(usr)] has [emergency_shuttle.deny_shuttle ? "denied" : "allowed"] the shuttle to be called.")
+
 /client/proc/cmd_admin_attack_log(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Attack Log"
