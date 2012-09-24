@@ -9,7 +9,7 @@
 		if(M.client)
 			M.client.midis = !M.client.midis
 			if(!M.client.midis)
-				M << sound(null, 0, 0, 777) // breaks the client's sound output on channel 777
+				M << sound(null, repeat = 0, wait = 0, channel = 777) // breaks the client's sound output on channel 777
 
 			M << "You will now [M.client.midis? "start":"stop"] receiving any sounds uploaded by admins[M.client.midis? "":", and any current midis playing have been disabled"]."
 		return
