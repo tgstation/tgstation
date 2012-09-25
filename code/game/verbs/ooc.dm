@@ -13,7 +13,7 @@
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 	if (IsGuestKey(src.key))
-		src << "You are not authorized to communicate over these channels."
+		src << "Guests may not use OOC."
 		return
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
@@ -28,8 +28,8 @@
 		usr << "\red OOC for dead mobs has been turned off."
 		return
 	else if (src.client)
-		if(src.client.muted_ooc)
-			src << "\red You cannot use OOC (muted by admins)."
+		if(src.client.muted & MUTE_OOC)
+			src << "\red You cannot use OOC (muted)."
 			return
 
 		if (src.client.handle_spam_prevention(msg,MUTE_OOC))

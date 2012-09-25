@@ -162,3 +162,6 @@ HUMANS_NEED_SURNAMES
 
 ## Uncomment this to ban use of ToR
 #TOR_BAN
+
+## Comment this out to disable automuting
+#AUTOMUTE_ON

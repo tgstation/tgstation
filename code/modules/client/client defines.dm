@@ -6,11 +6,7 @@
 	var/buildmode		= 0
 	var/seeprayers		= 0
 
-	var/muted_ic			//can't use 'say' while alive or emotes.
-	var/muted_ooc			//can't speak in ooc
-	var/muted_deadchat		//can't use 'say' while dead or DSAY
-	var/muted_pray			//can't send prayers
-	var/muted_adminhelp		//can't send adminhelps, PM-s or use ASAY
+	var/muted			= 0
 
 	var/last_message = "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.

@@ -55,7 +55,7 @@
 	..()	//redirect to [locate(hsrc)]/Topic()
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
-	if(src.last_message == message)
+	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."

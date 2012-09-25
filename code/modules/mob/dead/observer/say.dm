@@ -10,8 +10,8 @@
 	log_say("Ghost/[src.key] : [message]")
 
 	if (src.client)
-		if(src.client.muted_deadchat)
-			src << "\red You cannot talk in deadchat (muted by admins)."
+		if(src.client.muted & MUTE_DEADCHAT)
+			src << "\red You cannot talk in deadchat (muted)."
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))

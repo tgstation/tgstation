@@ -7,8 +7,8 @@
 		return
 	if(!src.mob)
 		return
-	if(src.muted_deadchat)
-		src << "\red You cannot send DSAY messages (muted by admins)."
+	if(src.muted & MUTE_DEADCHAT)
+		src << "\red You cannot send DSAY messages (muted)."
 		return
 
 	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))
