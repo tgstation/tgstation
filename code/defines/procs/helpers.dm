@@ -516,7 +516,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				else
 					linked = 0
 
-		if (the_client && the_client.holder && the_client.stealth && !include_name)
+		if (the_client && the_client.holder && the_client.holder.fakekey && !include_name)
 			text += "Administrator"
 		else
 			text += "[the_key]"

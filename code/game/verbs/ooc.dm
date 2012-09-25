@@ -44,12 +44,15 @@
 
 	for (var/client/C)
 		if(C.listen_ooc)
-			if (src.client.holder && (!src.client.stealth || C.holder))
-				if (src.client.holder.rank == "Admin Observer")
-					C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-				else if (src.client.holder.level >= 5)
-					C << "<font color=[src.client.ooccolor]><b><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
+			if (src.client.holder)
+				if(!src.client.holder.fakekey || C.holder)
+					if (src.client.holder.rank == "Admin Observer")
+						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
+					else if (src.client.holder.level >= 5)
+						C << "<font color=[src.client.holder.ooccolor]><b><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
+					else
+						C << "<span class='adminooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
-					C << "<span class='adminooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
+					C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.holder.fakekey ? src.client.holder.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span>"
 			else
-				C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.stealth ? src.client.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span>"
+				C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span>"

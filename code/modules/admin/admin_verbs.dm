@@ -542,30 +542,26 @@
 /client/proc/colorooc()
 	set category = "Fun"
 	set name = "OOC Text Color"
-	ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color
+	if(holder)
+		var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+		if(new_ooccolor)	holder.ooccolor = new_ooccolor
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
-	if(!holder)
-		src << "Only administrators may use this command."
-		return
-	stealth = !stealth
-	if(stealth)
-		var/new_key = trim(input("Enter your desired display name.", "Fake Key", key))
-		if(!new_key)
-			stealth = 0
-			return
-		new_key = strip_html(new_key)
-		if(length(new_key) >= 26)
-			new_key = copytext(new_key, 1, 26)
-		fakekey = new_key
-	else
-		fakekey = null
-	log_admin("[key_name(usr)] has turned stealth mode [stealth ? "ON" : "OFF"]")
-	message_admins("[key_name_admin(usr)] has turned stealth mode [stealth ? "ON" : "OFF"]", 1)
+	if(holder)
+		if(holder.fakekey)
+			holder.fakekey = null
+		else
+			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
+			if(!new_key)	return
+			if(length(new_key) >= 26)
+				new_key = copytext(new_key, 1, 26)
+			holder.fakekey = new_key
+		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", 1)
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #define AUTOBATIME 10
@@ -659,8 +655,9 @@
 /client/proc/toggleadminhelpsound()
 	set name = "Toggle Adminhelp Sound"
 	set category = "Admin"
-	sound_adminhelp = !sound_adminhelp
-	if(sound_adminhelp)
+	if(!holder)	return
+	holder.sound_adminhelp = !holder.sound_adminhelp
+	if(holder.sound_adminhelp)
 		usr << "You will now hear a sound when adminhelps arrive"
 	else
 		usr << "You will no longer hear a sound when adminhelps arrive"

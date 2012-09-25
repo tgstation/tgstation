@@ -134,7 +134,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 		for(var/client/C in client_list)
 			if(C.holder)
-				if(C.stealth)
+				if(C.holder.fakekey)
 					continue	//so stealthmins aren't revealed by the hub
 				admins++
 			s["player[n]"] = C.key

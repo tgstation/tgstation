@@ -182,7 +182,7 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 		log_admin("[key_name(usr)] has [(muteunmute ? "muted" : "voiced")] [key_name(M)] from [mute_string]")
 		message_admins("[key_name_admin(usr)] has [(muteunmute ? "muted" : "voiced")] [key_name_admin(M)] from [mute_string].", 1)
 
-		M << "You have been [(muteunmute ? "muted" : "voiced")] from [mute_string] by [(usr.client.stealth)?"an admin":"[usr.client]"]."
+		M << "You have been [(muteunmute ? "muted" : "voiced")] from [mute_string]."
 		feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		log_admin("SPAM AUTOMUTE: [(muteunmute ? "muted" : "voiced")] [key_name(M)] from [mute_string]")

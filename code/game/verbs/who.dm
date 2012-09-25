@@ -26,13 +26,11 @@ proc/get_all_admin_clients()
 	var/list/peeps = list()
 
 	for (var/client/C in client_list)
-		var/entry = ""
-		if (C.stealth && !usr.client.holder)
-			entry += "\t[C.fakekey]"
-		else
-			entry += "\t[C.key][C.stealth ? " <i>(as [C.fakekey])</i>" : ""]"
-
+		var/entry = "\t"
 		if(usr.client.holder)
+			entry += "[C.key]"
+			if(C.holder && C.holder.fakekey)
+				entry += " <i>(as [C.holder.fakekey])</i>"
 			var/mob/M = C.mob
 			entry += " - Playing as [M.real_name]"
 			switch(M.stat)
@@ -50,6 +48,11 @@ proc/get_all_admin_clients()
 			if(is_special_character(C.mob))
 				entry += " - <b><font color='red'>Antagonist</font></b>"
 			entry += " (<A HREF='?src=\ref[src.client.holder];adminmoreinfo=\ref[M]'>?</A>)"
+		else
+			if(C.holder && C.holder.fakekey)
+				entry += "[C.holder.fakekey]"
+			else
+				entry += "[C.key]"
 
 		peeps += entry
 
@@ -73,10 +76,10 @@ proc/get_all_admin_clients()
 				if(C.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
 					afk = 1
 				if(isobserver(C.mob))
-					usr << "[C] is a [C.holder.rank][C.stealth ? " <i>(as [C.fakekey])</i>" : ""] - Observing [afk ? "(AFK)" : ""]"
+					usr << "\t[C] is a [C.holder.rank][C.holder.fakekey ? " <i>(as [C.holder.fakekey])</i>" : ""] - Observing [afk ? "(AFK)" : ""]"
 				else if(istype(C.mob,/mob/new_player))
-					usr << "[C] is a [C.holder.rank][C.stealth ? " <i>(as [C.fakekey])</i>" : ""] - Has not entered [afk ? "(AFK)" : ""]"
+					usr << "\t[C] is a [C.holder.rank][C.holder.fakekey ? " <i>(as [C.holder.fakekey])</i>" : ""] - Has not entered [afk ? "(AFK)" : ""]"
 				else if(istype(C.mob,/mob/living))
-					usr << "[C] is a [C.holder.rank][C.stealth ? " <i>(as [C.fakekey])</i>" : ""] - Playing [afk ? "(AFK)" : ""]"
-			else if(!C.stealth)
-				usr << "\t[C]  is a [C.holder.rank]"
+					usr << "\t[C] is a [C.holder.rank][C.holder.fakekey ? " <i>(as [C.holder.fakekey])</i>" : ""] - Playing [afk ? "(AFK)" : ""]"
+			else if(!C.holder.fakekey)
+				usr << "\t[C] is a [C.holder.rank]"

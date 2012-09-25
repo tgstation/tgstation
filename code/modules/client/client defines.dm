@@ -5,10 +5,7 @@
 		////////////////
 	var/datum/admins/holder = null
 	var/buildmode		= 0
-	var/stealth			= 0
-	var/fakekey			= null
 	var/seeprayers		= 0
-	var/ooccolor		= "#b82e00"
 
 	var/muted_ic			//can't use 'say' while alive or emotes.
 	var/muted_ooc			//can't speak in ooc
@@ -20,7 +17,6 @@
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 
 	var/warned			= 0
-	var/sound_adminhelp = 0 	//If set to 1 this will play a sound when adminhelps are received.
 
 		/////////
 		//OTHER//

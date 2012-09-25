@@ -8,12 +8,17 @@
 var/list/admin_datums = list()
 
 /datum/admins
-	var/rank = null
-	var/client/owner = null
-	var/state = null			//state = 1 for playing //state = 2 for observing
-	var/level = null
+	var/rank			= null
+	var/client/owner	= null
+	var/state			= null	//state = 1 for playing //state = 2 for observing
+	var/level			= null
 
 //	var/permissions = 0
+
+//	var/stealth			= 0
+	var/fakekey			= null
+	var/ooccolor		= "#b82e00"
+	var/sound_adminhelp = 0 	//If set to 1 this will play a sound when adminhelps are received.
 
 	var/datum/marked_datum
 
@@ -23,14 +28,8 @@ var/list/admin_datums = list()
 	var/admincaster_signature	//What you'll sign the newsfeeds as
 
 /datum/admins/New(initial_rank)
-//	if(!istype(C))
-//		world.log << "## WARNING: [type] created with no client/C argument"
-//		del(src)
-//		return
-//	C.holder = src
 	admincaster_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	rank = initial_rank
-//	admin_list |= C
 	..()
 
 /datum/admins/Del()

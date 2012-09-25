@@ -742,9 +742,10 @@ datum/preferences
 
 	proc/setup_client(var/client/C)
 		if(C)
-			C.sound_adminhelp = src.sound_adminhelp
+			if(C.holder)
+				C.holder.sound_adminhelp = src.sound_adminhelp
+				C.holder.ooccolor = src.ooccolor
 			C.midis = src.midis
-			C.ooccolor = src.ooccolor
 			C.be_alien = be_special & BE_ALIEN
 			C.be_pai = be_special & BE_PAI
 			if(isnull(src.ghost_ears)) src.ghost_ears = 1 //There were problems where the default was null before someone saved their profile.
