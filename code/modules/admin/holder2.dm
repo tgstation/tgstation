@@ -1566,9 +1566,6 @@ var/list/admin_datums = list()
 			C.update_admins(rank)
 			log_admin("[key_name(usr)] has made [C] a [rank]")
 			message_admins("[key_name_admin(usr)] has made [C] a [rank]", 1)
-//			admins[C.ckey] = rank
-//			admin_list |= C
-
 
 	if (href_list["object_list"])
 		if (src.rank in list("Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))

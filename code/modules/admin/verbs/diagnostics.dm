@@ -162,24 +162,7 @@
 
 		message_admins("[usr] manually reloaded admins.txt")
 		usr << "You reload admins.txt"
-		var/text = file2text("config/admins.txt")
-		if (!text)
-			diary << "Failed to reload config/admins.txt\n"
-		else
-			var/list/lines = dd_text2list(text, "\n")
-			for(var/line in lines)
-				if (!line)
-					continue
-
-				if (copytext(line, 1, 2) == ";")
-					continue
-
-				var/pos = findtext(line, " - ", 1, null)
-				if (pos)
-					var/m_key = copytext(line, 1, pos)
-					var/a_lev = copytext(line, pos + 3, length(line) + 1)
-					admins[m_key] = a_lev
-					diary << ("ADMIN: [m_key] = [a_lev]")
+		world.load_admins()
 		feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

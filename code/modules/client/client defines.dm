@@ -1,4 +1,3 @@
-//Some of this is being changed to a datum to cut down on uneccessary variables at the client level.	~Carn
 /client
 		////////////////
 		//ADMIN THINGS//
@@ -29,7 +28,6 @@
 	var/changes			= 0
 	var/area			= null
 	var/played			= 0
-	var/team			= null
 	var/be_alien		= 0		//Check if that guy wants to be an alien
 	var/be_pai			= 1		//Consider client when searching for players to recruit as a pAI
 	var/activeslot		= 1		//Default active slot!
