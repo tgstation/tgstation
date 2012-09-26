@@ -291,6 +291,30 @@
 		species_allowed = list("Skrell")
 		choose_male = 0
 
+	gold_m
+		name = "Gold plated Skrell Male Tentacles"
+		icon_state = "skrell_goldhair_m"
+		species_allowed = list("Skrell")
+		choose_female = 0
+
+	gold_f
+		name = "Gold chained Skrell Female Tentacles"
+		icon_state = "skrell_goldhair_f"
+		species_allowed = list("Skrell")
+		choose_male = 0
+
+	clothtentacle_m
+		name = "Cloth draped Skrell Male Tentacles"
+		icon_state = "skrell_clothhair_m"
+		species_allowed = list("Skrell")
+		choose_female = 0
+
+	clothtentacle_f
+		name = "Cloth draped Skrell Female Tentacles"
+		icon_state = "skrell_clothhair_f"
+		species_allowed = list("Skrell")
+		choose_male = 0
+
 	taj_ears
 		name = "Tajaran Ears"
 		icon_state = "tajears"
