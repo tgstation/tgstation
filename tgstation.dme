@@ -1098,6 +1098,7 @@
 #include "code\modules\mob\living\simple_animal\mushroom.dm"
 #include "code\modules\mob\living\simple_animal\parrot.dm"
 #include "code\modules\mob\living\simple_animal\shade.dm"
+#include "code\modules\mob\living\simple_animal\simple_animal.dm"
 #include "code\modules\mob\living\simple_animal\tomato.dm"
 #include "code\modules\mob\living\simple_animal\update_icons.dm"
 #include "code\modules\mob\living\simple_animal\worm.dm"
