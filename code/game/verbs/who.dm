@@ -26,21 +26,11 @@ proc/get_all_admin_clients()
 	var/list/peeps = list()
 
 	for (var/client/C in client_list)
-<<<<<<< HEAD
-		var/entry = ""
-		if (C.stealth && !usr.client.holder)
-			entry += "\t[C.fakekey]"
-		else
-			entry += "\t[C.key][C.stealth ? " <i>(as [C.fakekey])</i>" : ""]"
-
-		if(usr.client.holder && (usr.client.holder.level != 0))
-=======
 		var/entry = "\t"
 		if(usr.client.holder)
 			entry += "[C.key]"
 			if(C.holder && C.holder.fakekey)
 				entry += " <i>(as [C.holder.fakekey])</i>"
->>>>>>> remotes/git-svn
 			var/mob/M = C.mob
 			entry += " - Playing as [M.real_name]"
 			switch(M.stat)

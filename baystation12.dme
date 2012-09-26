@@ -1010,6 +1010,7 @@
 #include "code\modules\mob\living\blob\blob.dm"
 #include "code\modules\mob\living\carbon\carbon.dm"
 #include "code\modules\mob\living\carbon\carbon_defines.dm"
+#include "code\modules\mob\living\carbon\give.dm"
 #include "code\modules\mob\living\carbon\alien\alien.dm"
 #include "code\modules\mob\living\carbon\alien\death.dm"
 #include "code\modules\mob\living\carbon\alien\login.dm"

@@ -107,80 +107,54 @@
 	if (holder)		//THE BELOW handles granting powers. The above is for special cases only!
 		holder.owner = src
 
+		//---- Special Admin Ranks
+
+		//Retired admin
+		if (holder.level == -3)
+			verbs += /client/proc/cmd_admin_say
+			verbs += /client/proc/cmd_mod_say
+			return
+
 		//Admin Observer
-		if (holder.level >= -1)
+		if (holder.level == -1)
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/cmd_mod_say
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/update_mob_sprite
 			verbs += /client/proc/deadmin_self
-		else if (holder.level == -3) // Retired Admin
-			verbs += /client/proc/cmd_admin_say
-			verbs += /client/proc/cmd_mod_say
 			return
-		else	return
 
 		//Moderator
-		if (holder.level >= 0)
-
+		if (holder.level == 0)
 			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/admin_ghost
 			verbs += /client/proc/Report
 			verbs += /client/proc/display_admin_reports
-			verbs += /obj/admins/proc/show_skills
-		else	return
-
-		if(holder.level == 0) //Moderators don't get asay, only msay
-			verbs -= /client/proc/cmd_admin_say
-			verbs -= /client/proc/investigate_show
-			verbs -= /client/proc/cmd_admin_gib_self
+			verbs += /datum/admins/proc/show_skills
 			verbs += /client/proc/mod_panel
+			verbs += /client/proc/admin_ghost
+			return
 
-			//
-			//MOVED FROM MODERATOR
-			//
-			verbs += /obj/admins/proc/announce
-			verbs += /obj/admins/proc/startnow
-			verbs += /obj/admins/proc/toggleAI							//Toggle the AI
-			verbs += /obj/admins/proc/toggleenter						//Toggle enterting
-			verbs += /obj/admins/proc/toggleguests						//Toggle guests entering
-			verbs += /obj/admins/proc/toggleooc							//toggle ooc
-			verbs += /obj/admins/proc/toggleoocdead						//toggle ooc for dead/unc
-			verbs += /obj/admins/proc/show_player_panel
-			verbs += /client/proc/deadchat								//toggles deadchat
-			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
-			verbs += /client/proc/cmd_admin_subtle_message
-			//verbs += /client/proc/warn	- was never used
-			verbs += /client/proc/dsay
+		//---- Full Admin Ranks
+		if (holder.level > 0)
+			verbs += /client/proc/cmd_admin_say
+			verbs += /client/proc/cmd_mod_say
+			verbs += /client/proc/admin_ghost
 
-			verbs += /client/proc/game_panel
-			verbs += /client/proc/player_panel
-			verbs += /client/proc/player_panel_new
-			verbs += /client/proc/unban_panel
-			verbs += /client/proc/jobbans
-			verbs += /client/proc/unjobban_panel
-			verbs += /client/proc/check_ai_laws
-			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
-			//verbs += /datum/admins/proc/unprison  						--Merged with player panel
-		else	return
-
-
-		else	return
 		//Temporary Admin
 		if (holder.level >= 1)
-			verbs += /obj/admins/proc/delay								//game start delay
-			verbs += /obj/admins/proc/immreboot							//immediate reboot
-			verbs += /obj/admins/proc/restart							//restart
+			verbs += /datum/admins/proc/delay								//game start delay
+			verbs += /datum/admins/proc/immreboot							//immediate reboot
+			verbs += /datum/admins/proc/restart							//restart
 			verbs += /client/proc/cmd_admin_check_contents
 			verbs += /client/proc/cmd_admin_create_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
 			verbs += /client/proc/deadmin_self
-			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
+			verbs += /client/proc/playernotes
 
 		//Admin Candidate
 		if (holder.level >= 2)
@@ -464,10 +438,12 @@
 	verbs -= /client/proc/mod_panel
 	verbs -= /client/proc/admin_deny_shuttle
 	verbs -= /client/proc/playernotes
-	verbs -= /obj/admins/proc/show_skills
+	verbs -= /datum/admins/proc/show_skills
 	verbs -= /client/proc/Report
 	verbs -= /client/proc/display_admin_reports
 	verbs -= /client/proc/editappear
+	verbs -= /client/proc/cmd_mod_say
+	verbs -= /client/proc/playernotes
 	return
 
 /client/proc/admin_ghost()

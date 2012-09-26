@@ -9,23 +9,12 @@ var/global/floorIsLava = 0
 	log_adminwarn(rendered)
 	for (var/client/C in admin_list)
 		if (C)
-			if(C.holder.level)
-				if(C.holder.level > -3 && C.holder.level != 0)
-					var/msg = rendered
-					if (admin_ref)
-						msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
-					if (admin_holder_ref && C.holder)
-						msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
-					C << msg
-
-/proc/msg_admin_attack(var/text) //Toggleable Attack Messages
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
-	log_adminwarn(rendered)
-	for (var/client/C in admin_list)
-		if (C)
-			if(!C.STFU_atklog)
-				var/msg = rendered
-				C << msg
+			var/msg = rendered
+			if (admin_ref)
+				msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
+			if (admin_holder_ref && C.holder)
+				msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
+			C << msg
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -160,9 +149,6 @@ var/global/floorIsLava = 0
 		body += "<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | "
 		body += "<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | "
 		body += "<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
-		body += "<A href='?src=\ref[src];granttaj=\ref[M]'>Grant Tajaran (Temp)</A> | "
-		body += "<A href='?src=\ref[src];grantsog=\ref[M]'>Grant Soghun (Temp)</A> | "
-		body += "<A href='?src=\ref[src];grantskrell=\ref[M]'>Grant Skrell (Temp)</A> | "
 
 	body += "<br>"
 	body += "</body></html>"
@@ -176,82 +162,6 @@ var/global/floorIsLava = 0
 	set name = "Access Newscaster Network"
 	set desc = "Allows you to view, add and edit news feeds."
 
-/datum/player_info/var/author // admin who authored the information
-/datum/player_info/var/rank //rank of admin who made the notes
-/datum/player_info/var/content // text content of the information
-/datum/player_info/var/timestamp // Because this is bloody annoying
-
-/obj/admins/proc/player_has_info(var/key as text)
-	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
-	var/list/infos
-	info >> infos
-	if(!infos || !infos.len) return 0
-	else return 1
-
-/obj/admins/proc/show_player_info(var/key as text)
-	set category = "Admin"
-	set name = "Show Player Info"
-	if (!istype(src,/obj/admins))
-		src = usr.client.holder
-	if (!istype(src,/obj/admins))
-		usr << "Error: you are not an admin!"
-		return
-	var/dat = "<html><head><title>Info on [key]</title></head>"
-	dat += "<body>"
-
-	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
-	var/list/infos
-	info >> infos
-	if(!infos)
-		dat += "No information found on the given key.<br>"
-	else
-		var/update_file = 0
-		var/i = 0
-		for(var/datum/player_info/I in infos)
-			i += 1
-			if(!I.timestamp)
-				I.timestamp = "Pre-4/3/2012"
-				update_file = 1
-			if(!I.rank)
-				I.rank = "N/A"
-				update_file = 1
-			dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
-			if(I.author == usr.key)
-				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
-			dat += "<br><br>"
-		if(update_file) info << infos
-
-	dat += "<br>"
-	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
-
-	dat += "</body></html>"
-	usr << browse(dat, "window=adminplayerinfo;size=480x480")
-
-/obj/admins/proc/show_skills(var/mob/living/carbon/human/M as mob in world)
-	set category = "Admin"
-	set name = "Show Skills"
-
-	if (!istype(src,/obj/admins))
-		src = usr.client.holder
-	if (!istype(src,/obj/admins))
-		usr << "Error: you are not an admin!"
-		return
-
-	show_skill_window(usr, M)
-
-	return
-
-/client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
-	set category = "Admin"
-	set name = "Update Mob Sprite"
-	set desc = "Should fix any mob sprite update errors."
-
-	if (!holder)
-		src << "Only administrators may use this command."
-		return
-
-	if(istype(H))
-		H.regenerate_icons()
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
@@ -452,21 +362,6 @@ var/global/floorIsLava = 0
 		dat += "</table>"
 		usr << browse(dat, "window=ban;size=400x400")
 
-/obj/admins/proc/PlayerNotes()
-	var/dat = "<B>Player notes</B><HR><table>"
-
-	var/savefile/S=new("data/player_notes.sav")
-	var/list/note_keys
-	S >> note_keys
-	if(!note_keys)
-		dat += "No notes found."
-	else
-		sortList(note_keys)
-		for(var/t in note_keys)
-			dat += text("<tr><td><A href='?src=\ref[src];view_player_info=[t]'>[t]</A></td></tr>")
-	dat += "</table>"
-	usr << browse(dat, "window=player_notes;size=400x400")
-
 /datum/admins/proc/Game()
 
 	var/dat
@@ -505,10 +400,6 @@ var/global/floorIsLava = 0
 		dat += "<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>"
 	if(lvl >= 5)
 		dat += "<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>"
-	if(lvl >= 3 )
-		dat += "<br><A href='?src=\ref[src];vsc=airflow'>Edit Airflow Settings</A><br>"
-		dat += "<A href='?src=\ref[src];vsc=plasma'>Edit Plasma Settings</A><br>"
-		dat += "<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>"
 //			if(lvl == 6 )
 	usr << browse(dat, "window=admin2;size=210x180")
 	return
@@ -577,7 +468,6 @@ var/global/floorIsLava = 0
 <A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
 <A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
 <A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
-<A href='?src=\ref[src];secretsfun=trigger_armed_response_team'>Trigger the Emergency Response Team</A><BR>
 <A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
 <A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
 <A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
@@ -608,7 +498,6 @@ var/global/floorIsLava = 0
 <A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
 <A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
-<A href='?src=\ref[src];secretsfun=electric'>Trigger Electrical Storm</A><BR>"
 <A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
 <A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
 <A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS)</A><BR>"}
@@ -638,50 +527,11 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=secrets")
 	return
 
-/obj/admins/proc/Voting()
-
-	var/dat
-	var/lvl = 0
-	switch(src.rank)
-		if("Moderator")
-			lvl = 1
-		if("Temporary Admin")
-			lvl = 2
-		if("Admin Candidate")
-			lvl = 3
-		if("Trial Admin")
-			lvl = 4
-		if("Badmin")
-			lvl = 5
-		if("Game Admin")
-			lvl = 6
-		if("Game Master")
-			lvl = 7
-
-
-	dat += "<center><B>Voting</B></center><hr>\n"
-
-	if(lvl > 0)
-		dat += {"
-<A href='?src=\ref[src];votekill=1'>Abort Vote</A><br>
-<A href='?src=\ref[src];vmode=1'>Start Vote</A><br>
-<A href='?src=\ref[src];voteres=1'>Toggle Voting</A><br>
-"}
-
-	usr << browse(dat, "window=admin2;size=210x160")
-	return
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
 //i.e. buttons/verbs
 
-/*
-/obj/admins/proc/vmode()
-	set category = "Server"
-	set hidden = 1 // It doesn't have a cancel button, so it shouldn't be autocompleted. Should be started via Voting() instead
-	if (!usr.client.holder)
-		return
 
 /datum/admins/proc/restart()
 	set category = "Server"
@@ -1087,6 +937,47 @@ var/global/floorIsLava = 0
 			S.laws.show_laws(usr)
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
+
+/datum/admins/proc/show_skills(var/mob/living/carbon/human/M as mob in world)
+	set category = "Admin"
+	set name = "Show Skills"
+
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		usr << "Error: you are not an admin!"
+		return
+
+	show_skill_window(usr, M)
+
+	return
+
+/client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
+	set category = "Admin"
+	set name = "Update Mob Sprite"
+	set desc = "Should fix any mob sprite update errors."
+
+	if (!holder)
+		src << "Only administrators may use this command."
+		return
+
+	if(istype(H))
+		H.regenerate_icons()
+
+/datum/admins/proc/PlayerNotes()
+	var/dat = "<B>Player notes</B><HR><table>"
+
+	var/savefile/S=new("data/player_notes.sav")
+	var/list/note_keys
+	S >> note_keys
+	if(!note_keys)
+		dat += "No notes found."
+	else
+		sortList(note_keys)
+		for(var/t in note_keys)
+			dat += text("<tr><td><A href='?src=\ref[src];view_player_info=[t]'>[t]</A></td></tr>")
+	dat += "</table>"
+	usr << browse(dat, "window=player_notes;size=400x400")
 
 //
 //
