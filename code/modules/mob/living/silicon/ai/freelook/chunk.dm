@@ -88,6 +88,8 @@
 			obscured -= t.obscured
 			for(var/eye in seenby)
 				var/mob/aiEye/m = eye
+				if(!m || !m.ai)
+					continue
 				if(m.ai.client)
 					m.ai.client.images -= t.obscured
 
@@ -100,8 +102,9 @@
 			obscured += t.obscured
 			for(var/eye in seenby)
 				var/mob/aiEye/m = eye
-				if(!m)
+				if(!m || !m.ai)
 					seenby -= m
+					continue
 				if(m.ai.client)
 					m.ai.client.images += t.obscured
 
