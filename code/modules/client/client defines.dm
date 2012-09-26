@@ -29,6 +29,7 @@
 	var/activeslot		= 1		//Default active slot!
 	var/STFU_ghosts				//80+ people rounds are fun to admin when text flies faster than airport security
 	var/STFU_radio				//80+ people rounds are fun to admin when text flies faster than airport security
+	var/STFU_atklog		= 0
 
 		///////////////
 		//SOUND STUFF//

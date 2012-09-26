@@ -17,6 +17,15 @@ var/global/floorIsLava = 0
 			C << msg
 
 
+/proc/msg_admin_attack(var/text) //Toggleable Attack Messages
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
+	log_adminwarn(rendered)
+	for (var/client/C in admin_list)
+		if (C)
+			if(!C.STFU_atklog)
+				var/msg = rendered
+				C << msg
+
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
 /datum/admins/proc/show_player_panel(var/mob/M in mob_list)
