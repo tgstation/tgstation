@@ -7,8 +7,8 @@
 		src << "Only administrators may use this command."
 		return
 
-	if (src.muted_adminhelp)
-		src << "You cannot send ASAY messages (muted by admins)."
+	if (src.muted & MUTE_ADMINHELP)
+		src << "You cannot send ASAY messages (muted)."
 		return
 
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))

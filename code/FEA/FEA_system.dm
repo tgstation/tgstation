@@ -277,8 +277,7 @@ datum
 				return 1
 
 			process_update_tiles()
-				for(var/turf in tiles_to_update)
-					var/turf/simulated/T = turf
+				for(var/turf/simulated/T in tiles_to_update)
 					T.update_air_properties()
 /*
 				for(var/obj/movable/floor/O in tiles_to_update)

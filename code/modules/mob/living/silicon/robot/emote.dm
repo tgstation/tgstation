@@ -69,8 +69,8 @@
 
 		if ("me")
 			if (src.client)
-				if(client.muted_ic)
-					src << "You cannot send IC messages (muted by admins)."
+				if(client.muted & MUTE_IC)
+					src << "You cannot send IC messages (muted)."
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return

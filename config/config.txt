@@ -166,5 +166,5 @@ TICKCOMP 0
 ## Whether the server will talk to other processes through socket_talk
 SOCKET_TALK 0
 
-## Uncomment to restrict non-admins using humanoid alien races
-USEALIENWHITELIST
+## Uncomment this to ban use of ToR
+#TOR_BAN## Comment this out to disable automuting#AUTOMUTE_ON## Uncomment to restrict non-admins using humanoid alien racesUSEALIENWHITELIST

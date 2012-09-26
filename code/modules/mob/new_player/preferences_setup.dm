@@ -540,7 +540,6 @@ datum/preferences
 		preview_icon_side = new(preview_icon, dir = WEST)
 
 		del(preview_icon)
-		del(mouth_s)
 		del(eyes_s)
 		del(clothes_s)
 

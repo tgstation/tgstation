@@ -1,5 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+#define DEBUG
+
 #define PI 3.1415
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
@@ -445,12 +447,14 @@ var/list/liftable_structures = list(\
 	/obj/machinery/portable_atmospherics/canister)
 
 //A set of constants used to determine which type of mute an admin wishes to apply:
-#define MUTE_IC 1
-#define MUTE_OOC 2
-#define MUTE_PRAY 3
-#define MUTE_ADMINHELP 4
-#define MUTE_DEADCHAT 5
-#define MUTE_ALL 6
+//Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
+//Therefore there needs to be a gap between the flags for the automute flags
+#define MUTE_IC			1
+#define MUTE_OOC		2
+#define MUTE_PRAY		4
+#define MUTE_ADMINHELP	8
+#define MUTE_DEADCHAT	16
+#define MUTE_ALL		31
 
 //Number of identical messages required to get the spam-prevention automute thing to trigger warnings and automutes
 #define SPAM_TRIGGER_WARNING 5

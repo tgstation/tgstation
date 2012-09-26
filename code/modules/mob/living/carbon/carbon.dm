@@ -267,6 +267,8 @@
 					for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in vent_found.network.normal_members)
 						if(temp_vent.loc == loc)
 							continue
+						if(temp_vent.welded)
+							continue
 						var/turf/T = get_turf(temp_vent)
 
 						if(!T || T.z != loc.z)

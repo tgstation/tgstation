@@ -34,6 +34,7 @@
 	if(!broken)
 		if(prob(50/severity))
 			src.locked = !src.locked
+			src.update_icon()
 		if(prob(20/severity) && !opened)
 			if(!locked)
 				open()

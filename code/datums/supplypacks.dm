@@ -599,7 +599,8 @@
 /datum/supply_packs/randomised/contraband
 	num_contained = 5
 	contains = list(/obj/item/weapon/contraband/poster,
-					/obj/item/weapon/cigpacket/dromedaryco)
+					/obj/item/weapon/cigpacket/dromedaryco,
+					/obj/item/weapon/lipstick/random)
 	name = "Contraband crate"
 	cost = 30
 	containertype = /obj/structure/closet/crate

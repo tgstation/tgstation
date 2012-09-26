@@ -44,7 +44,7 @@ Whitespace:Seperator;
 Stealth and Camouflage Items;
 /obj/item/clothing/under/chameleon:3:Chameleon Jumpsuit;
 /obj/item/clothing/shoes/syndigaloshes:2:No-Slip Syndicate Shoes;
-/obj/item/weapon/card/id/syndicate:3:Agent ID card;
+/obj/item/weapon/card/id/syndicate:2:Agent ID card;
 /obj/item/clothing/mask/gas/voice:4:Voice Changer;
 /obj/item/device/chameleon:4:Chameleon-Projector;
 Whitespace:Seperator;

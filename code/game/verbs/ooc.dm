@@ -13,7 +13,7 @@
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 	if (IsGuestKey(src.key))
-		src << "You are not authorized to communicate over these channels."
+		src << "Guests may not use OOC."
 		return
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
@@ -28,8 +28,8 @@
 		usr << "\red OOC for dead mobs has been turned off."
 		return
 	else if (src.client)
-		if(src.client.muted_ooc)
-			src << "\red You cannot use OOC (muted by admins)."
+		if(src.client.muted & MUTE_OOC)
+			src << "\red You cannot use OOC (muted)."
 			return
 
 		if (src.client.handle_spam_prevention(msg,MUTE_OOC))
@@ -44,16 +44,7 @@
 
 	for (var/client/C)
 		if(C.listen_ooc)
-			if (src.client.holder && (!src.client.stealth || (C.holder && C.holder.level != 0)))
-				if (src.client.holder.rank == "Admin Observer")
-					C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-				else if (src.client.holder.rank == "Retired Admin")
-					C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-				else if (src.client.holder.rank == "Moderator")
-					C << "<span class='modooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-				else if (src.client.holder.level >= 5)
-					C << "<font color=[src.client.ooccolor]><b><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
-				else
-					C << "<span class='adminooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
+			if (src.client.holder && (!src.client.stealth || (C.holder && C.holder.level != 0)))				if(!src.client.holder.fakekey || C.holder)					if (src.client.holder.rank == "Admin Observer")						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"					else if (src.client.holder.level >= 5)						C << "<font color=[src.client.holder.ooccolor]><b><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"					else if (src.client.holder.rank == "Retired Admin")						C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"					else if (src.client.holder.rank == "Moderator")						C << "<span class='modooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"					else						C << "<span class='adminooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"				else
+					C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.holder.fakekey ? src.client.holder.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span>"
 			else
-				C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.stealth ? src.client.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span>"
+				C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span>"

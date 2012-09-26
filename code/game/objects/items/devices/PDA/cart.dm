@@ -282,7 +282,6 @@ Code:
 			if (43) //Muskets' and Rockdtben's power monitor :D
 				menu = "<h4><img src=pda_power.png> Power Monitors - Please select one</h4><BR>"
 				powmonitor = null
-				powermonitors = null
 				powermonitors = list()
 				var/powercount = 0
 

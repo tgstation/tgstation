@@ -19,6 +19,8 @@
 
 	var/s_tone = 0	//Skin tone
 
+	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
+
 	var/age = 30		//Player's age (pure fluff)
 	var/b_type = "A+"	//Player's bloodtype (Not currently used, just character fluff)
 

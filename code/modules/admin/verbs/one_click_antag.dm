@@ -8,7 +8,7 @@ client/proc/one_click_antag()
 	return
 
 
-/obj/admins/proc/one_click_antag()
+/datum/admins/proc/one_click_antag()
 
 	var/dat = {"<B>One-click Antagonist</B><br>
 		<a href='?src=\ref[src];makeAntag=1'>Make Tratiors</a><br>
@@ -32,7 +32,7 @@ client/proc/one_click_antag()
 	return
 
 
-/obj/admins/proc/makeMalfAImode()
+/datum/admins/proc/makeMalfAImode()
 
 	var/list/mob/living/silicon/AIs = list()
 	var/mob/living/silicon/malfAI = null
@@ -53,7 +53,7 @@ client/proc/one_click_antag()
 	return 0
 
 
-/obj/admins/proc/makeTratiors()
+/datum/admins/proc/makeTratiors()
 	var/datum/game_mode/traitor/temp = new
 
 	if(config.protect_roles_from_antagonist)
@@ -89,7 +89,7 @@ client/proc/one_click_antag()
 	return 0
 
 
-/obj/admins/proc/makeChanglings()
+/datum/admins/proc/makeChanglings()
 
 	var/datum/game_mode/changeling/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -124,7 +124,7 @@ client/proc/one_click_antag()
 
 	return 0
 
-/obj/admins/proc/makeRevs()
+/datum/admins/proc/makeRevs()
 
 	var/datum/game_mode/revolution/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -158,7 +158,7 @@ client/proc/one_click_antag()
 
 	return 0
 
-/obj/admins/proc/makeWizard()
+/datum/admins/proc/makeWizard()
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
 	var/time_passed = world.time
@@ -194,7 +194,7 @@ client/proc/one_click_antag()
 	return 0
 
 
-/obj/admins/proc/makeCult()
+/datum/admins/proc/makeCult()
 
 	var/datum/game_mode/cult/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -232,7 +232,7 @@ client/proc/one_click_antag()
 
 
 
-/obj/admins/proc/makeNukeTeam()
+/datum/admins/proc/makeNukeTeam()
 
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
@@ -325,15 +325,15 @@ client/proc/one_click_antag()
 
 
 
-/obj/admins/proc/makeAliens()
+/datum/admins/proc/makeAliens()
 	alien_infestation(3)
 	return 1
 
-/obj/admins/proc/makeSpaceNinja()
+/datum/admins/proc/makeSpaceNinja()
 	space_ninja_arrival()
 	return 1
 
-/obj/admins/proc/makeDeathsquad()
+/datum/admins/proc/makeDeathsquad()
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
 	var/time_passed = world.time
@@ -401,7 +401,7 @@ client/proc/one_click_antag()
 	return 1
 
 
-/obj/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
+/datum/admins/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
 
 	//First we spawn a dude.
@@ -423,7 +423,7 @@ client/proc/one_click_antag()
 
 	return new_character
 
-/obj/admins/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
+/datum/admins/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
 	var/mob/living/carbon/human/new_syndicate_commando = new(spawn_location.loc)
 	var/syndicate_commando_leader_rank = pick("Lieutenant", "Captain", "Major")
 	var/syndicate_commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")

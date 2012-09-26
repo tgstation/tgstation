@@ -424,17 +424,20 @@ var/list/datum/power/changeling/powerinstances = list()
 
 
 
-/datum/changeling/proc/purchasePower(var/datum/power/changeling/Pname)
+/datum/changeling/proc/purchasePower(var/Pname)
 	if(!usr.mind || !usr.mind.changeling)
 		return
 //	src = usr.mind.changeling
 
-	var/datum/power/changeling/Thepower = null
+	var/datum/power/changeling/Thepower = Pname
+
 
 	for (var/datum/power/changeling/P in powerinstances)
+		//world << "[P] - [Pname] = [P.name == Pname ? "True" : "False"]"
 		if(P.name == Pname)
 			Thepower = P
 			break
+
 
 	if(Thepower == null)
 		usr << "This is awkward.  Changeling power purchase failed, please report this bug to a coder!"

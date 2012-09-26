@@ -302,9 +302,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 	stand_icon.Blend(eyes_s, ICON_OVERLAY)
 	lying_icon.Blend(eyes_l, ICON_OVERLAY)
 
-	//Mouth
-	stand_icon.Blend(new/icon('icons/mob/human_face.dmi', "mouth_[g]_s"), ICON_OVERLAY)
-	lying_icon.Blend(new/icon('icons/mob/human_face.dmi', "mouth_[g]_l"), ICON_OVERLAY)
+	//Mouth	(lipstick!)
+	if(lip_style)
+		stand_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
+		lying_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_l"), ICON_OVERLAY)
 
 	//Underwear
 	if(underwear < 6 && underwear > 0)
@@ -758,8 +759,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 // Used mostly for creating head items
 /mob/living/carbon/human/proc/generate_head_icon()
-	var/g = "m"
-	if (gender == FEMALE)	g = "f"
+//gender no longer matters for the mouth, although there should probably be seperate base head icons.
+//	var/g = "m"
+//	if (gender == FEMALE)	g = "f"
 
 	//base icons
 	var/icon/face_lying		= new /icon('icons/mob/human_face.dmi',"bald_l")
@@ -780,14 +782,12 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	//Eyes
 	// Note: These used to be in update_face(), and the fact they're here will make it difficult to create a disembodied head
-	var/icon/eyes_s = new/icon('icons/mob/human_face.dmi', "eyes_s")
 	var/icon/eyes_l = new/icon('icons/mob/human_face.dmi', "eyes_l")
-	eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 	eyes_l.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 	face_lying.Blend(eyes_l, ICON_OVERLAY)
 
-	//Mouth
-	face_lying.Blend(new/icon('icons/mob/human_face.dmi', "mouth_[g]_l"), ICON_OVERLAY)
+	if(lip_style)
+		face_lying.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_l"), ICON_OVERLAY)
 
 	var/image/face_lying_image = new /image(icon = face_lying)
 	return face_lying_image
