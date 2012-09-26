@@ -504,7 +504,7 @@
 		if (M.config_tag && M.config_tag == mode_name)
 			return M
 		del(M)
-	return null
+	return new /datum/game_mode/extended()
 
 /datum/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new

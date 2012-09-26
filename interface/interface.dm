@@ -30,56 +30,47 @@
 	src << browse(file(RULES_FILE), "window=rules;size=480x320")
 #undef RULES_FILE
 
-/client/verb/a_intent_left()
-	set name = "a-intent-left"
+var/list/intents = list("help","disarm","grab","hurt")
+/proc/intent_numeric(argument)
+	if(istext(argument))
+		switch(argument)
+			if("help")		return 0
+			if("disarm")	return 1
+			if("grab")		return 2
+			else			return 3
+	else
+		switch(argument)
+			if(0)			return "help"
+			if(1)			return "disarm"
+			if(2)			return "grab"
+			else			return "hurt"
+
+
+/client/verb/a_intent_change(input as text)
+	set name = "a-intent"
 	set hidden = 1
 
 	if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
-		switch(usr.a_intent)
-			if("help")
-				usr.a_intent = "hurt"
-				usr.hud_used.action_intent.icon_state = "intent_hurt"
-			if("disarm")
-				usr.a_intent = "help"
-				usr.hud_used.action_intent.icon_state = "intent_help"
-			if("grab")
-				usr.a_intent = "disarm"
-				usr.hud_used.action_intent.icon_state = "intent_disarm"
-			if("hurt")
-				usr.a_intent = "grab"
-				usr.hud_used.action_intent.icon_state = "intent_grab"
+		switch(input)
+			if("help","disarm","grab","hurt")
+				usr.a_intent = input
+			if("right")
+				usr.a_intent = intent_numeric((intent_numeric(usr.a_intent)+1) % 4)
+			if("left")
+				usr.a_intent = intent_numeric((intent_numeric(usr.a_intent)+3) % 4)
+		usr.hud_used.action_intent.icon_state = "intent_[usr.a_intent]"
+
 	else if(issilicon(usr))
-		if(usr.a_intent == "help")
-			usr.a_intent = "hurt"
+		switch(input)
+			if("help")
+				usr.a_intent = "help"
+			if("hurt")
+				usr.a_intent = "hurt"
+			if("right","left")
+				usr.a_intent = intent_numeric(intent_numeric(usr.a_intent) - 3)
+		if(usr.a_intent == "hurt")
 			usr.hud_used.action_intent.icon_state = "harm"
 		else
-			usr.a_intent = "help"
-			usr.hud_used.action_intent.icon_state = "help"
-
-/client/verb/a_intent_right()
-	set name = "a-intent-right"
-	set hidden = 1
-
-	if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
-		switch(usr.a_intent)
-			if("help")
-				usr.a_intent = "disarm"
-				usr.hud_used.action_intent.icon_state = "intent_disarm"
-			if("disarm")
-				usr.a_intent = "grab"
-				usr.hud_used.action_intent.icon_state = "intent_grab"
-			if("grab")
-				usr.a_intent = "hurt"
-				usr.hud_used.action_intent.icon_state = "intent_hurt"
-			if("hurt")
-				usr.a_intent = "help"
-				usr.hud_used.action_intent.icon_state = "intent_help"
-	else if(issilicon(usr))
-		if(usr.a_intent == "help")
-			usr.a_intent = "hurt"
-			usr.hud_used.action_intent.icon_state = "harm"
-		else
-			usr.a_intent = "help"
 			usr.hud_used.action_intent.icon_state = "help"
 
 
@@ -99,8 +90,13 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tr = throw
 \tt = say
 \tx = swap-hand
+\tz = activate held object (or y)
 \tf = cycle-intents-left
 \tg = cycle-intents-right
+\t1 = help-intent
+\t2 = disarm-intent
+\t3 = grab-intent
+\t4 = harm-intent
 </font>"}
 
 	var/other = {"<font color='purple'>
@@ -113,8 +109,13 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+e = equip
 \tCtrl+r = throw
 \tCtrl+x = swap-hand
+\tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
 \tCtrl+g = cycle-intents-right
+\tCtrl+1 = help-intent
+\tCtrl+2 = disarm-intent
+\tCtrl+3 = grab-intent
+\tCtrl+4 = harm-intent
 </font>"}
 
 	var/admin = {"<font color='purple'>
