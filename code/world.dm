@@ -22,6 +22,8 @@
 	investigate_reset()
 	if (config.usewhitelist)
 		load_whitelist()
+	if (config.usealienwhitelist)
+		load_alienwhitelist()
 	LoadBansjob()
 	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
 	src.update_status()
