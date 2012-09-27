@@ -46,7 +46,6 @@
 	var/icon/lying_icon = null
 
 	var/list/organs = list()
-	var/list/organs_by_name = list() // map organ names to organs
 
 	var/miming = null //Toggle for the mime's abilities.
 

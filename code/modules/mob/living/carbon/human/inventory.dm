@@ -6,54 +6,6 @@
 		del(W)
 	return null
 
-
-/mob/living/carbon/human/proc/has_organ(name)
-	var/datum/organ/external/O = organs_by_name[name]
-
-	return (O && !(O.status & ORGAN_DESTROYED) )
-
-/mob/living/carbon/human/proc/has_organ_for_slot(slot)
-	switch(slot)
-		if(slot_back)
-			return has_organ("chest")
-		if(slot_wear_mask)
-			return has_organ("head")
-		if(slot_handcuffed)
-			return has_organ("l_hand") && has_organ("r_hand")
-		if(slot_legcuffed)
-			return has_organ("l_leg") && has_organ("r_leg")
-		if(slot_l_hand)
-			return has_organ("l_hand")
-		if(slot_r_hand)
-			return has_organ("r_hand")
-		if(slot_belt)
-			return has_organ("chest")
-		if(slot_wear_id)
-			// the only relevant check for this is the uniform check
-			return 1
-		if(slot_ears)
-			return has_organ("head")
-		if(slot_glasses)
-			return has_organ("head")
-		if(slot_gloves)
-			return has_organ("l_hand") && has_organ("r_hand")
-		if(slot_head)
-			return has_organ("head")
-		if(slot_shoes)
-			return has_organ("r_foot") && has_organ("l_foot")
-		if(slot_wear_suit)
-			return has_organ("chest")
-		if(slot_w_uniform)
-			return has_organ("chest")
-		if(slot_l_store)
-			return has_organ("chest")
-		if(slot_r_store)
-			return has_organ("chest")
-		if(slot_s_store)
-			return has_organ("chest")
-		if(slot_in_backpack)
-			return 1
-
 /mob/living/carbon/human/u_equip(obj/item/W as obj)
 	if(!W)	return 0
 
@@ -172,7 +124,6 @@
 /mob/living/carbon/human/equip_to_slot(obj/item/W as obj, slot, redraw_mob = 1)
 	if(!slot) return
 	if(!istype(W)) return
-	if(!has_organ_for_slot(slot)) return
 
 	if(W == src.l_hand)
 		src.l_hand = null
@@ -599,7 +550,7 @@ It can still be worn/put on as normal.
 				if(target.r_store)
 					target.u_equip(target.r_store) //At this stage l_store is already processed by the code above, we only need to process r_store.
 		else
-			if(item && target.has_organ_for_slot(slot_to_process)) //Placing an item on the mob
+			if(item) //Placing an item on the mob
 				if(item.mob_can_equip(target, slot_to_process, 0))
 					source.u_equip(item)
 					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)

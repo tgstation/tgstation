@@ -844,16 +844,15 @@ ________________________________________________________________________________
 					U << "\red Procedure interrupted. Protocol terminated."
 			return
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
-			var/obj/item/weapon/disk/tech_disk/tdisk = I
-			if(tdisk.stored)//If it has something on it.
+			if(I:stored)//If it has something on it.
 				U << "Research information detected, processing..."
 				if(do_after(U,s_delay))
 					for(var/datum/tech/current_data in stored_research)
-						if(current_data.id==tdisk.stored.id)
-							if(current_data.level<tdisk.stored.level)
-								current_data.level=tdisk.stored.level
+						if(current_data.id==I:stored.id)
+							if(current_data.level<I:stored.level)
+								current_data.level=I:stored.level
 							break
-					tdisk.stored = null
+					I:stored = null
 					U << "\blue Data analyzed and updated. Disk erased."
 				else
 					U << "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated."

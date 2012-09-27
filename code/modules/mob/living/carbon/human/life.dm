@@ -53,8 +53,6 @@
 	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
 
 	//TODO: seperate this out
-	// update the current life tick, can be used to e.g. only do something every 4 ticks
-	life_tick++
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	//No need to update all of these procs if the guy is dead.
@@ -168,71 +166,6 @@
 						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom"))
 					if(3)
 						emote("drool")
-
-	proc/handle_organs()
-		// take care of organ related updates, such as broken and missing limbs
-
-		// recalculate number of wounds
-		number_wounds = 0
-		for(var/datum/organ/external/E in organs)
-			if(!E)
-				world << name
-				continue
-			number_wounds += E.number_wounds
-
-		var/leg_tally = 2
-		for(var/datum/organ/external/E in organs)
-			E.process()
-			if(E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
-				if(E.name == "l_hand" || E.name == "l_arm")
-					if(hand && equipped())
-						drop_item()
-						emote("custom v drops what they were holding, their [E.display_name?"[E.display_name]":"[E]"] malfunctioning!")
-						var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-						spark_system.set_up(5, 0, src)
-						spark_system.attach(src)
-						spark_system.start()
-						spawn(10)
-							del(spark_system)
-				else if(E.name == "r_hand" || E.name == "r_arm")
-					if(!hand && equipped())
-						drop_item()
-						emote("custom v drops what they were holding, their [E.display_name?"[E.display_name]":"[E]"] malfunctioning!")
-						var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-						spark_system.set_up(5, 0, src)
-						spark_system.attach(src)
-						spark_system.start()
-						spawn(10)
-							del(spark_system)
-				else if(E.name == "l_leg" || E.name == "l_foot" \
-					|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-					leg_tally--									// let it fail even if just foot&leg
-			if(E.status & ORGAN_BROKEN || E.status & ORGAN_DESTROYED)
-				if(E.name == "l_hand" || E.name == "l_arm")
-					if(hand && equipped())
-						if(E.status & ORGAN_SPLINTED && prob(10))
-							drop_item()
-							emote("scream")
-						else
-							drop_item()
-							emote("scream")
-				else if(E.name == "r_hand" || E.name == "r_arm")
-					if(!hand && equipped())
-						if(E.status & ORGAN_SPLINTED && prob(10))
-							drop_item()
-							emote("scream")
-						else
-							drop_item()
-							emote("scream")
-				else if(E.name == "l_leg" || E.name == "l_foot" \
-					|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-					if(!(E.status & ORGAN_SPLINTED))
-						leg_tally--									// let it fail even if just foot&leg
-		// standing is poor
-		if(leg_tally <= 0 && !paralysis && !(lying || resting) && prob(5))
-			emote("scream")
-			emote("collapse")
-			paralysis = 10
 
 
 	proc/handle_mutations_and_radiation()
@@ -887,7 +820,6 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()	//TODO
-			handle_organs()
 			if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 				blinded = 1

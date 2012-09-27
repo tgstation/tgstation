@@ -837,8 +837,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		C.loc = src
 		user << "<span class='notice'>You insert [C] into [src].</span>"
 		cartridge = C
-		if(cartridge.radio)
-			cartridge.radio.hostpda = src
+		if(C:radio)
+			C:radio.hostpda = src
 
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C

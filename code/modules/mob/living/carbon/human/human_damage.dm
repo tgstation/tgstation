@@ -86,11 +86,11 @@
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/take_organ_damage(var/brute, var/burn, var/sharp = 0)
+/mob/living/carbon/human/take_organ_damage(var/brute, var/burn)
 	var/list/datum/organ/external/parts = get_damageable_organs()
 	if(!parts.len)	return
 	var/datum/organ/external/picked = pick(parts)
-	if(picked.take_damage(brute,burn,sharp))
+	if(picked.take_damage(brute,burn))
 		UpdateDamageIcon()
 	updatehealth()
 
@@ -116,7 +116,7 @@
 	if(update)	UpdateDamageIcon()
 
 // damage MANY external organs, in random order
-/mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0)
+/mob/living/carbon/human/take_overall_damage(var/brute, var/burn)
 	if(nodamage)	return	//godmode
 	var/list/datum/organ/external/parts = get_damageable_organs()
 	var/update = 0
@@ -126,7 +126,7 @@
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
 
-		update |= picked.take_damage(brute,burn,sharp)
+		update |= picked.take_damage(brute,burn)
 
 		brute	-= (picked.brute_dam - brute_was)
 		burn	-= (picked.burn_dam - burn_was)
@@ -150,9 +150,13 @@
 
 /mob/living/carbon/human/proc/get_organ(var/zone)
 	if(!zone)	zone = "chest"
-	return organs_by_name[zone]
+	for(var/datum/organ/external/O in organs)
+		if(O.name == zone)
+			return O
+	return null
 
-/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0)
+
+/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
 	if((damagetype != BRUTE) && (damagetype != BURN))
 		..(damage, damagetype, def_zone, blocked)
 		return 1
@@ -174,10 +178,10 @@
 
 	switch(damagetype)
 		if(BRUTE)
-			if(organ.take_damage(damage, 0, sharp))
+			if(organ.take_damage(damage, 0))
 				UpdateDamageIcon()
 		if(BURN)
-			if(organ.take_damage(0, damage, sharp))
+			if(organ.take_damage(0, damage))
 				UpdateDamageIcon()
 	updatehealth()
 	return 1
