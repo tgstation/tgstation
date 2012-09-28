@@ -107,7 +107,6 @@ RCD
 				if(!disabled && matter >= 10)
 					spark_system.set_up(5, 0, src)
 					src.spark_system.start()
-					if(locate(/obj/machinery/door) in get_turf(src))	return
 					var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock( A )
 					var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 					if(killthis)
@@ -119,7 +118,9 @@ RCD
 					desc = "A RCD. It currently holds [matter]/30 matter-units."
 			return
 		else if(mode == 3 && (istype(A, /turf) || istype(A, /obj/machinery/door/airlock) ) )
-			if(istype(A, /turf/simulated/wall) && !istype(A, /turf/simulated/wall/r_wall) && matter >= 4)
+			if(istype(A, /turf/simulated/wall/r_wall))
+				return
+			if(istype(A, /turf/simulated/wall) && matter >= 4)
 				user << "Deconstructing Wall (4)..."
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				if(do_after(user, 40))
@@ -130,8 +131,6 @@ RCD
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						matter -= 4
 						desc = "A RCD. It currently holds [matter]/30 matter-units."
-				return
-			if(istype(A, /turf/simulated/wall/r_wall))
 				return
 			if(istype(A, /turf/simulated/floor) && matter >= 5)
 				user << "Deconstructing Floor (5)..."

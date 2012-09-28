@@ -148,13 +148,13 @@
 		else
 			disabled = 0
 		if(!isrobot(user)|| disabled == 1)	return
-		if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))	return
 
 		var/mob/living/silicon/robot/R = user
 		var/obj/item/weapon/cell/cell = R.cell
+
 		if(!cell)	return
 
-		if(istype(A, /turf))
+		if((istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
 			switch(mode)
 				if(1)
 					if(istype(A, /turf/space))
@@ -166,7 +166,7 @@
 
 					if(istype(A, /turf/simulated/floor))
 						if(!cell.use(90))	return
-						user << "Building Wall (3)..."
+						user << "Building Wall ..."
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 20))
 							activate()
@@ -180,7 +180,6 @@
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
 							activate()
-							if(locate(/obj/machinery/door) in get_turf(src))	return
 							var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock( A )
 							T.autoclose = 1
 						return
@@ -195,9 +194,6 @@
 							A:ReplaceWithPlating()
 						return
 
-					if(istype(A, /turf/simulated/wall/r_wall))	//by order of muskets -pete
-						return
-
 					if(istype(A, /turf/simulated/floor))
 						user << "Deconstructing Floor..."
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -210,7 +206,7 @@
 						user << "Deconstructing Airlock..."
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50))
-							playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+							activate()
 							del(A)
 						return
 		return
