@@ -9,6 +9,7 @@
 	canmove = 0
 	blinded = 0
 	anchored = 1	//  don't get pushed around
+	invisibility = INVISIBILITY_OBSERVER
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
@@ -17,7 +18,6 @@
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 
 /mob/dead/observer/New(mob/body)
-	invisibility = INVISIBILITY_OBSERVER
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
