@@ -1,37 +1,7 @@
-/obj/hud/proc/alien_hud()
+/datum/hud/proc/alien_hud()
 
 	src.adding = list(  )
 	src.other = list(  )
-	src.vimpaired = list(  )
-	src.darkMask = list(  )
-
-	src.g_dither = new src.h_type( src )
-	src.g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.g_dither.name = "Mask"
-	src.g_dither.icon_state = "dither12g"
-	src.g_dither.layer = 18
-	src.g_dither.mouse_opacity = 0
-
-	src.alien_view = new src.h_type(src)
-	src.alien_view.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.alien_view.name = "Alien"
-	src.alien_view.icon_state = "alien"
-	src.alien_view.layer = 18
-	src.alien_view.mouse_opacity = 0
-
-	src.blurry = new src.h_type( src )
-	src.blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.blurry.name = "Blurry"
-	src.blurry.icon_state = "blurry"
-	src.blurry.layer = 17
-	src.blurry.mouse_opacity = 0
-
-	src.druggy = new src.h_type( src )
-	src.druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.druggy.name = "Druggy"
-	src.druggy.icon_state = "druggy"
-	src.druggy.layer = 17
-	src.druggy.mouse_opacity = 0
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
@@ -205,42 +175,6 @@
 	using.layer = 19
 	src.adding += using
 */
-
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "dither50"
-	using.screen_loc = "1,1 to 5,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "dither50"
-	using.screen_loc = "5,1 to 10,5"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "dither50"
-	using.screen_loc = "6,11 to 10,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "dither50"
-	using.screen_loc = "11,1 to 15,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
 
 	mymob.throw_icon = new /obj/screen(null)
 	mymob.throw_icon.icon = 'icons/mob/screen1_alien.dmi'

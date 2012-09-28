@@ -31,53 +31,6 @@
 	src << browse(file(RULES_FILE), "window=rules;size=480x320")
 #undef RULES_FILE
 
-//converts intent-strings into numbers and back
-var/list/intents = list("help","disarm","grab","hurt")
-/proc/intent_numeric(argument)
-	if(istext(argument))
-		switch(argument)
-			if("help")		return 0
-			if("disarm")	return 1
-			if("grab")		return 2
-			else			return 3
-	else
-		switch(argument)
-			if(0)			return "help"
-			if(1)			return "disarm"
-			if(2)			return "grab"
-			else			return "hurt"
-
-//change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
-/mob/verb/a_intent_change(input as text)
-	set name = "a-intent"
-	set hidden = 1
-
-	if(ishuman(src) || istype(src,/mob/living/carbon/alien/humanoid))
-		switch(input)
-			if("help","disarm","grab","hurt")
-				a_intent = input
-			if("right")
-				a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
-			if("left")
-				a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "intent_[a_intent]"
-
-	else if(isrobot(src) || ismonkey(src) || islarva(src))
-		switch(input)
-			if("help")
-				a_intent = "help"
-			if("hurt")
-				a_intent = "hurt"
-			if("right","left")
-				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
-		if(hud_used && hud_used.action_intent)
-			if(a_intent == "hurt")
-				hud_used.action_intent.icon_state = "harm"
-			else
-				hud_used.action_intent.icon_state = "help"
-
-
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"

@@ -926,7 +926,7 @@
 			if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 				del(hud)
 
-		client.screen.Remove(hud_used.blurry, hud_used.druggy, hud_used.vimpaired, hud_used.darkMask)
+		client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 
 		update_action_buttons()
 
@@ -1147,18 +1147,18 @@
 				else			blind.layer = 0
 
 			if( disabilities & NEARSIGHTED && !istype(glasses, /obj/item/clothing/glasses/regular) )
-				client.screen += hud_used.vimpaired
-			if(eye_blurry)			client.screen += hud_used.blurry
-			if(druggy)				client.screen += hud_used.druggy
+				client.screen += global_hud.vimpaired
+			if(eye_blurry)			client.screen += global_hud.blurry
+			if(druggy)				client.screen += global_hud.druggy
 
 			if( istype(head, /obj/item/clothing/head/welding) )
 				var/obj/item/clothing/head/welding/O = head
 				if(!O.up && tinted_weldhelh)
-					client.screen += hud_used.darkMask
+					client.screen += global_hud.darkMask
 
 			if(eye_stat > 20)
-				if(eye_stat > 30)	client.screen += hud_used.darkMask
-				else				client.screen += hud_used.vimpaired
+				if(eye_stat > 30)	client.screen += global_hud.darkMask
+				else				client.screen += global_hud.vimpaired
 
 			if(machine)
 				if(!machine.check_eye(src))		reset_view(null)

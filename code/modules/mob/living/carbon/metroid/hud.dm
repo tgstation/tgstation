@@ -5,7 +5,7 @@
 			del(hud)
 
 /*
-/obj/hud/proc/metroid_hud()
+/datum/hud/proc/metroid_hud()
 
 	src.adding = list(  )
 	src.other = list(  )

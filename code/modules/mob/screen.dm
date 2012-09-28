@@ -1,5 +1,5 @@
 /obj/screen
-	name = "screen"
+	name = ""
 	icon = 'icons/mob/screen1.dmi'
 	layer = 20.0
 	unacidable = 1

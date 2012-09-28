@@ -120,7 +120,7 @@
 
 	var/seer = 0 //for cult//Carbon, probably Human
 
-	var/obj/hud/hud_used = null
+	var/datum/hud/hud_used = null
 
 	//var/list/organs = list(  ) //moved to human.
 	var/list/grabbed_by = list(  )

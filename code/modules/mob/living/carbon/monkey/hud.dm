@@ -1,45 +1,11 @@
-/obj/hud/proc/monkey_hud(var/ui_style='icons/mob/screen1_old.dmi')
+/datum/hud/proc/monkey_hud(var/ui_style='icons/mob/screen1_old.dmi')
 
 	//ui_style='icons/mob/screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
 
 	src.adding = list(  )
 	src.other = list(  )
-	src.vimpaired = list(  )
-	src.darkMask = list(  )
 
 	//var/icon/blocked = icon(ui_style,"blocked")
-
-	src.g_dither = new src.h_type( src )
-	src.g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.g_dither.name = "Mask"
-	src.g_dither.icon = ui_style
-	src.g_dither.icon_state = "dither12g"
-	src.g_dither.layer = 18
-	src.g_dither.mouse_opacity = 0
-
-	src.alien_view = new src.h_type(src)
-	src.alien_view.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.alien_view.name = "Alien"
-	src.alien_view.icon = ui_style
-	src.alien_view.icon_state = "alien"
-	src.alien_view.layer = 18
-	src.alien_view.mouse_opacity = 0
-
-	src.blurry = new src.h_type( src )
-	src.blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.blurry.name = "Blurry"
-	src.blurry.icon = ui_style
-	src.blurry.icon_state = "blurry"
-	src.blurry.layer = 17
-	src.blurry.mouse_opacity = 0
-
-	src.druggy = new src.h_type( src )
-	src.druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.druggy.name = "Druggy"
-	src.druggy.icon = ui_style
-	src.druggy.icon_state = "druggy"
-	src.druggy.layer = 17
-	src.druggy.mouse_opacity = 0
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
@@ -357,39 +323,6 @@
 	src.mov_int += using
 */
 
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "1,1 to 5,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "5,1 to 10,5"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "6,11 to 10,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "11,1 to 15,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-
 	mymob.throw_icon = new /obj/screen(null)
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.icon_state = "act_throw_off"
@@ -407,18 +340,6 @@
 	mymob.pressure.icon_state = "pressure0"
 	mymob.pressure.name = "pressure"
 	mymob.pressure.screen_loc = ui_pressure
-
-/*
-	mymob.i_select = new /obj/screen( null )
-	mymob.i_select.icon_state = "selector"
-	mymob.i_select.name = "intent"
-	mymob.i_select.screen_loc = "16:-11,15"
-
-	mymob.m_select = new /obj/screen( null )
-	mymob.m_select.icon_state = "selector"
-	mymob.m_select.name = "moving"
-	mymob.m_select.screen_loc = "16:-11,14"
-*/
 
 	mymob.toxin = new /obj/screen( null )
 	mymob.toxin.icon = ui_style

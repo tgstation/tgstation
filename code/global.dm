@@ -4,7 +4,6 @@ var/global/obj/effect/datacore/data_core = null
 var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null
 
-	//obj/hud/main_hud1 = null
 
 var/global/list/machines = list()
 var/global/list/processing_objects = list()

@@ -532,24 +532,22 @@
 				else
 					bodytemp.icon_state = "temp-4"
 
-		client.screen -= hud_used.blurry
-		client.screen -= hud_used.druggy
-		client.screen -= hud_used.vimpaired
+		client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
-		if ((blind && stat != 2))
-			if ((blinded))
+		if(blind && stat != DEAD)
+			if(blinded)
 				blind.layer = 18
 			else
 				blind.layer = 0
 
-				if (disabilities & NEARSIGHTED)
-					client.screen += hud_used.vimpaired
+				if(disabilities & NEARSIGHTED)
+					client.screen += global_hud.vimpaired
 
-				if (eye_blurry)
-					client.screen += hud_used.blurry
+				if(eye_blurry)
+					client.screen += global_hud.blurry
 
-				if (druggy)
-					client.screen += hud_used.druggy
+				if(druggy)
+					client.screen += global_hud.druggy
 
 		if (stat != 2)
 			if (machine)

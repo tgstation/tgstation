@@ -582,7 +582,6 @@
 #include "code\game\objects\empulse.dm"
 #include "code\game\objects\explosion.dm"
 #include "code\game\objects\explosion_recursive.dm"
-#include "code\game\objects\hud.dm"
 #include "code\game\objects\items.dm"
 #include "code\game\objects\objs.dm"
 #include "code\game\objects\structures.dm"

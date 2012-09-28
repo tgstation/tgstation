@@ -1,42 +1,8 @@
-/obj/hud/proc/human_hud(var/ui_style='icons/mob/screen1_old.dmi')
+/datum/hud/proc/human_hud(var/ui_style='icons/mob/screen1_old.dmi')
 
 	src.adding = list(  )
 	src.other = list(  )
-	src.vimpaired = list(  )
-	src.darkMask = list(  )
 	src.hotkeybuttons = list(  ) //These can be disabled for hotkey usersx
-
-	src.g_dither = new src.h_type( src )
-	src.g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.g_dither.name = "Mask"
-	src.g_dither.icon = ui_style
-	src.g_dither.icon_state = "dither12g"
-	src.g_dither.layer = 18
-	src.g_dither.mouse_opacity = 0
-
-	src.alien_view = new src.h_type(src)
-	src.alien_view.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.alien_view.name = "Alien"
-	src.alien_view.icon = ui_style
-	src.alien_view.icon_state = "alien"
-	src.alien_view.layer = 18
-	src.alien_view.mouse_opacity = 0
-
-	src.blurry = new src.h_type( src )
-	src.blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.blurry.name = "Blurry"
-	src.blurry.icon = ui_style
-	src.blurry.icon_state = "blurry"
-	src.blurry.layer = 17
-	src.blurry.mouse_opacity = 0
-
-	src.druggy = new src.h_type( src )
-	src.druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.druggy.name = "Druggy"
-	src.druggy.icon = ui_style
-	src.druggy.icon_state = "druggy"
-	src.druggy.layer = 17
-	src.druggy.mouse_opacity = 0
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
@@ -387,107 +353,6 @@
 	using.layer = 19
 	src.mov_int += using
 */
-
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "1,1 to 5,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "5,1 to 10,5"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "6,11 to 10,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "11,1 to 15,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.vimpaired += using
-
-	//welding mask dither
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "3,3 to 5,13"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.darkMask += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "5,3 to 10,5"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.darkMask += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "6,11 to 10,13"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.darkMask += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "dither50"
-	using.screen_loc = "11,3 to 13,13"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.darkMask += using
-
-	//welding mask blackness
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "black"
-	using.screen_loc = "1,1 to 15,2"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.darkMask += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "black"
-	using.screen_loc = "1,3 to 2,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.darkMask += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "black"
-	using.screen_loc = "14,3 to 15,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.darkMask += using
-	using = new src.h_type( src )
-	using.name = null
-	using.icon = ui_style
-	using.icon_state = "black"
-	using.screen_loc = "3,14 to 13,15"
-	using.layer = 17
-	using.mouse_opacity = 0
-	src.darkMask += using
 
 	mymob.throw_icon = new /obj/screen(null)
 	mymob.throw_icon.icon = ui_style

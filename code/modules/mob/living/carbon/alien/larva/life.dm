@@ -385,9 +385,7 @@
 		//blame the person who coded them. Temporary fix added.
 
 
-		client.screen -= hud_used.blurry
-		client.screen -= hud_used.druggy
-		client.screen -= hud_used.vimpaired
+		client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 		if ((blind && stat != 2))
 			if ((blinded))
@@ -396,13 +394,13 @@
 				blind.layer = 0
 
 				if (disabilities & NEARSIGHTED)
-					client.screen += hud_used.vimpaired
+					client.screen += global_hud.vimpaired
 
 				if (eye_blurry)
-					client.screen += hud_used.blurry
+					client.screen += global_hud.blurry
 
 				if (druggy)
-					client.screen += hud_used.druggy
+					client.screen += global_hud.druggy
 
 		if (stat != 2)
 			if (machine)
