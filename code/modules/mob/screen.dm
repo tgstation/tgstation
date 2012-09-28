@@ -249,6 +249,7 @@
 */
 
 /obj/screen/Click(location, control, params)
+	if(!usr)	return
 	switch(name)
 		if("map")
 			usr.clearmap()
@@ -357,28 +358,8 @@
 							else
 								usr << "\blue You don't have an oxygen tank."
 		if("act_intent")
-			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
-				switch(usr.a_intent)
-					if("help")
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "intent_disarm"
-					if("disarm")
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "intent_grab"
-					if("grab")
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "intent_hurt"
-					if("hurt")
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "intent_help"
-			if(issilicon(usr))
-				if(usr.a_intent == "help")
-					usr.a_intent = "hurt"
-					usr.hud_used.action_intent.icon_state = "harm"
-				else
-					usr.a_intent = "help"
-					usr.hud_used.action_intent.icon_state = "help"
-		if("help")
+			usr.a_intent_change("right")
+/*		if("help")
 			usr.a_intent = "help"
 			usr.hud_used.action_intent.icon_state = "help"
 			usr.hud_used.show_intent_icons = 0
@@ -393,7 +374,7 @@
 		if("disarm")
 			usr.a_intent = "disarm"
 			usr.hud_used.action_intent.icon_state = "disarm"
-			usr.hud_used.show_intent_icons = 0
+			usr.hud_used.show_intent_icons = 0	*/
 		if("pull")
 			usr.stop_pulling()
 		if("throw")

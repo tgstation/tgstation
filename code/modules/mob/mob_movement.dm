@@ -57,35 +57,6 @@
 		usr << "\red This mob type cannot drop items."
 	return
 
-//This gets called when you press the insert button.
-/client/verb/insert_key_pressed()
-	set hidden = 1
-
-	if(!src.mob)
-		return
-	var/mob/M = src.mob
-	if(ishuman(M) || ismonkey(M) || istype(M,/mob/living/carbon/alien/humanoid) || islarva(M))
-		switch(M.a_intent)
-			if("help")
-				usr.a_intent = "disarm"
-				usr.hud_used.action_intent.icon_state = "disarm"
-			if("disarm")
-				usr.a_intent = "grab"
-				usr.hud_used.action_intent.icon_state = "grab"
-			if("grab")
-				usr.a_intent = "hurt"
-				usr.hud_used.action_intent.icon_state = "harm"
-			if("hurt")
-				usr.a_intent = "help"
-				usr.hud_used.action_intent.icon_state = "help"
-	else if(isrobot(usr))
-		if(usr.a_intent == "help")
-			usr.a_intent = "hurt"
-			usr.hud_used.action_intent.icon_state = "harm"
-		else
-			usr.a_intent = "help"
-			usr.hud_used.action_intent.icon_state = "help"
-
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
 	set hidden = 1

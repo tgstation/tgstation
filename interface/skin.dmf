@@ -57,7 +57,7 @@ macro "macro"
 		is-disabled = false
 	elem 
 		name = "INSERT"
-		command = "insert-key-pressed"
+		command = "a-intent right"
 		is-disabled = false
 	elem 
 		name = "DELETE"
@@ -223,7 +223,7 @@ macro "hotkeymode"
 		is-disabled = false
 	elem 
 		name = "INSERT"
-		command = "insert-key-pressed"
+		command = "a-intent right"
 		is-disabled = false
 	elem 
 		name = "DELETE"

@@ -1,3 +1,4 @@
+//Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 /client/verb/wiki()
 	set name = "wiki"
 	set desc = "Visit the wiki."
@@ -30,6 +31,7 @@
 	src << browse(file(RULES_FILE), "window=rules;size=480x320")
 #undef RULES_FILE
 
+//converts intent-strings into numbers and back
 var/list/intents = list("help","disarm","grab","hurt")
 /proc/intent_numeric(argument)
 	if(istext(argument))
@@ -45,33 +47,35 @@ var/list/intents = list("help","disarm","grab","hurt")
 			if(2)			return "grab"
 			else			return "hurt"
 
-
-/client/verb/a_intent_change(input as text)
+//change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
+/mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
+	if(ishuman(src) || istype(src,/mob/living/carbon/alien/humanoid))
 		switch(input)
 			if("help","disarm","grab","hurt")
-				usr.a_intent = input
+				a_intent = input
 			if("right")
-				usr.a_intent = intent_numeric((intent_numeric(usr.a_intent)+1) % 4)
+				a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
 			if("left")
-				usr.a_intent = intent_numeric((intent_numeric(usr.a_intent)+3) % 4)
-		usr.hud_used.action_intent.icon_state = "intent_[usr.a_intent]"
+				a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
+		if(hud_used && hud_used.action_intent)
+			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
-	else if(issilicon(usr))
+	else if(isrobot(src) || ismonkey(src) || islarva(src))
 		switch(input)
 			if("help")
-				usr.a_intent = "help"
+				a_intent = "help"
 			if("hurt")
-				usr.a_intent = "hurt"
+				a_intent = "hurt"
 			if("right","left")
-				usr.a_intent = intent_numeric(intent_numeric(usr.a_intent) - 3)
-		if(usr.a_intent == "hurt")
-			usr.hud_used.action_intent.icon_state = "harm"
-		else
-			usr.hud_used.action_intent.icon_state = "help"
+				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
+		if(hud_used && hud_used.action_intent)
+			if(a_intent == "hurt")
+				hud_used.action_intent.icon_state = "harm"
+			else
+				hud_used.action_intent.icon_state = "help"
 
 
 /client/verb/hotkeys_help()
@@ -116,6 +120,12 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+2 = disarm-intent
 \tCtrl+3 = grab-intent
 \tCtrl+4 = harm-intent
+\tDEL = pull
+\tINS = cycle-intents-right
+\tHOME = drop
+\tPGUP = swap-hand
+\tPGDN = activate held object
+\tEND = throw
 </font>"}
 
 	var/admin = {"<font color='purple'>
