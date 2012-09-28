@@ -25,6 +25,8 @@
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
 
+//lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
+
 /obj/item/weapon/paper/New()
 	..()
 	src.pixel_y = rand(-8, 8)
@@ -284,7 +286,7 @@
 				overlays += "paper_stamped_denied"
 			if(/obj/item/weapon/stamp/clown)
 				if (!clown)
-					usr << "<span class='notice'>You are unable to use the stamp.</span>"
+					usr << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
 					return
 				else
 					overlays += "paper_stamped_clown"
@@ -297,4 +299,3 @@
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 
 	add_fingerprint(user)
-	return

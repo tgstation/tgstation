@@ -1091,7 +1091,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					See the previous More info, for... more info...
 				*/
 
-			if (!( ok ))
+			//del(D)			// Garbage Collect Dummy			D.loc = null			D = null			// ------- DUMMY OBJECT'S SERVED IT'S PURPOSE, IT'S REWARDED WITH A SWIFT DELETE -------			if (!( ok ))
 				// ------- TESTS ABOVE DETERMINED YOU CANNOT REACH THE TILE -------
 				return 0
 
@@ -1355,4 +1355,4 @@ var/list/DummyCache = list()
 		return 0
 
 /atom/proc/checkpass(passflag)
-	return pass_flags&passflag
+	return pass_flags&passflag/*/client/verb/check_dummy()	set name = "List Dummies"	set category = "Debug"	var/list/dummies = list()	for(var/obj/item/weapon/dummy/D in world)		usr << "[D] - [D.x], [D.y], [D.z] - [D.loc]"		dummies += D	usr << "[dummies.len] found!"*/

@@ -1,5 +1,5 @@
 /var/create_mob_html = null
-/obj/admins/proc/create_mob(var/mob/user)
+/datum/admins/proc/create_mob(var/mob/user)
 	if (!create_mob_html)
 		var/mobjs = null
 		mobjs = dd_list2text(typesof(/mob), ";")

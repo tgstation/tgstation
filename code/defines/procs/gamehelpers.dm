@@ -274,3 +274,8 @@ proc/isInSight(var/atom/A, var/atom/B)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
+
+proc/check_can_reach(atom/user, atom/target)
+	if(!in_range(user,target))
+		return 0
+	return CanReachThrough(get_turf(user), get_turf(target), target)

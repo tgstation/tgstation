@@ -106,7 +106,6 @@ var/list/prisonsecuritywarp = list()	//prison security goes to these
 var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()
 //	list/traitors = list()	//traitor list
-var/list/alien_whitelist = list(  )
 var/list/cardinal = list( NORTH, SOUTH, EAST, WEST )
 var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 

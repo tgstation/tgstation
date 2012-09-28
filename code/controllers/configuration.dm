@@ -50,6 +50,7 @@
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/ToRban = 0
+	var/automute_on = 0					//enables automuting/spam prevention
 
 	var/usealienwhitelist = 0
 
@@ -342,9 +343,11 @@
 				if("tor_ban")
 					ToRban = 1
 
+				if("automute_on")
+					automute_on = 1
+
 				if("usealienwhitelist")
 					usealienwhitelist = 1
-
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

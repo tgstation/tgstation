@@ -36,8 +36,8 @@
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_admin_pm(var/client/C, var/msg)
-	if(src.muted_adminhelp)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted by admins).</font>"
+	if(src.muted & MUTE_ADMINHELP)
+		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
 
 	if( !C || !istype(C,/client) )
@@ -77,7 +77,7 @@
 			src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
 
 		//play the recieving admin the adminhelp sound (if they have them enabled)
-		if(C.sound_adminhelp)
+		if(C.holder.sound_adminhelp)
 			C << 'sound/effects/adminhelp.ogg'
 
 	else
@@ -118,3 +118,4 @@
 	for(var/client/X)									//there are fewer clients than mobs
 		if(X.holder && X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>" //inform X
+

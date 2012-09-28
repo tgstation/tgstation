@@ -33,7 +33,7 @@
 	if( findtext(href,"<script",1,0) )
 		world.log << "Attempted use of scripts within a topic call, by [src]"
 		message_admins("Attempted use of scripts within a topic call, by [src]")
-		del(usr)
+		//del(usr)
 		return
 
 	//Admin PM
@@ -55,7 +55,7 @@
 	..()	//redirect to [locate(hsrc)]/Topic()
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
-	if(src.last_message == message)
+	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."
@@ -103,7 +103,9 @@
 		host = key
 		world.update_status()
 
-	..()	//calls mob.Login()
+	//calls mob.Login()
+	..()
+
 	//makejson()
 
 	if(custom_event_msg && custom_event_msg != "")
@@ -113,12 +115,16 @@
 		src << "<br>"
 
 	//Admin Authorisation
-	if( ckey in admins )
-		holder = new /obj/admins(src)
-		holder.rank = admins[ckey]
+	var/datum/admins/Admin_Obj = admins[ckey]
+	if(istype(Admin_Obj))
 		admin_list += src
-		update_admins(admins[ckey])
+		holder = Admin_Obj
+		holder.owner = src
+		holder.state = null
 
+	..()	//calls mob.Login()
+
+	if(holder)
 		admin_memo_show()
 
 	log_client_to_db()
@@ -128,11 +134,9 @@
 	//DISCONNECT//
 	//////////////
 /client/Del()
-
-	spawn(0)
-		if(holder)
-			admin_list -= src
-			del(holder)
+	if(holder)
+		holder.state = null
+		admin_list -= src
 	client_list -= src
 	return ..()
 

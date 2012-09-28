@@ -21,8 +21,13 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = W
-			user << "\blue *TAGGED*"
-			src.sortTag = O.currTag
+
+			if(src.sortTag != O.currTag)
+				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
+				user << "\blue *[tag]*"
+				src.sortTag = O.currTag
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
+
 		else if(istype(W, /obj/item/weapon/pen))
 			var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
 			if(!str || !length(str))
@@ -57,8 +62,13 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = W
-			user << "\blue *TAGGED*"
-			src.sortTag = O.currTag
+
+			if(src.sortTag != O.currTag)
+				var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
+				user << "\blue *[tag]*"
+				src.sortTag = O.currTag
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
+
 		else if(istype(W, /obj/item/weapon/pen))
 			var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
 			if(!str || !length(str))
@@ -140,17 +150,18 @@
 		return
 
 
-/obj/item/device/destTagger
-	name = "destination tagger"
-	desc = "Used to set the destination of properly wrapped packages."
-	icon_state = "forensic0"
-	var/currTag = 0
-	var/list/locationList = list("Disposals",
+// Old, non-global name: "locationList"
+var/list/TAGGERLOCATIONS = list("Disposals",
 	"Cargo Bay", "QM Office", "Engineering", "CE Office",
 	"Atmospherics", "Security", "HoS Office", "Medbay",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
+/obj/item/device/destTagger
+	name = "destination tagger"
+	desc = "Used to set the destination of properly wrapped packages."
+	icon_state = "forensic0"
+	var/currTag = 0
 	//The whole system for the sorttype var is determined based on the order of this list,
 	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
 
@@ -162,20 +173,23 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 
-	attack_self(mob/user as mob)
-		var/dat = "<TT><B>TagMaster 2.2</B><BR><BR>"
-		if (src.currTag == 0)
-			dat += "<br>Current Selection: None<br>"
-		else
-			dat += "<br>Current Selection: [locationList[currTag]]<br><br>"
-		for (var/i = 1, i <= locationList.len, i++)
-			dat += "<A href='?src=\ref[src];nextTag=[i]'>[locationList[i]]</A>"
+	proc/openwindow(mob/user as mob)
+		var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
+
+		dat += "<table style='width:100%; padding:4px;'><tr>"
+		for (var/i = 1, i <= TAGGERLOCATIONS.len, i++)
+			dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[TAGGERLOCATIONS[i]]</a></td>"
+
 			if (i%4==0)
-				dat += "<br>"
-			else
-				dat += "	"
-		user << browse(dat, "window=destTagScreen")
+				dat += "</tr><tr>"
+
+		dat += "</tr></table><br>Current Selection: [currTag ? TAGGERLOCATIONS[currTag] : "None"]</tt>"
+
+		user << browse(dat, "window=destTagScreen;size=450x350")
 		onclose(user, "destTagScreen")
+
+	attack_self(mob/user as mob)
+		openwindow(user)
 		return
 
 	Topic(href, href_list)
@@ -183,29 +197,7 @@
 		if(href_list["nextTag"])
 			var/n = text2num(href_list["nextTag"])
 			src.currTag = n
-		src.updateUsrDialog()
-
-
-/*
-	attack(target as obj, mob/user as mob)
-		user << "/blue *TAGGED*"
-		target.sortTag = src.currTag
-
-	attack(target as obj, mob/user as mob)
-		user << "/blue You can only tag properly wrapped delivery packages!"
-*/
-	attack(target as obj, mob/user as mob)
-		if (istype(target, /obj/structure/bigDelivery))
-			user << "\blue *TAGGED*"
-			var/obj/structure/bigDelivery/O = target
-			O.sortTag = src.currTag
-		else if (istype(target, /obj/item/smallDelivery))
-			user << "\blue *TAGGED*"
-			var/obj/item/smallDelivery/O = target
-			O.sortTag = src.currTag
-		else
-			user << "\blue You can only tag properly wrapped delivery packages!"
-		return
+		openwindow(usr)
 
 /obj/machinery/disposal/deliveryChute
 	name = "Delivery chute"

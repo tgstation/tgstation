@@ -739,12 +739,13 @@ datum/preferences
 							if(is_alien_whitelisted(user, "Skrell")) //Check for Skrell and admins
 								new_species += "Skrell"
 								whitelisted = 1
+
+							if(!whitelisted)
+								alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
 						else //Not using the whitelist? Aliens for everyone!
 							new_species += "Tajaran"
 							new_species += "Soghun"
 							new_species += "Skrell"
-						if(!whitelisted && config.usealienwhitelist)
-							alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
 						species = input("Please select a species", "Character Generation", null) in new_species
 						if(prev_species != species)
 							//grab one of the valid hair styles for the newly chosen species
@@ -1119,9 +1120,10 @@ datum/preferences
 
 	proc/setup_client(var/client/C)
 		if(C)
-			C.sound_adminhelp = src.sound_adminhelp
+			if(C.holder)
+				C.holder.sound_adminhelp = src.sound_adminhelp
+				C.holder.ooccolor = src.ooccolor
 			C.midis = src.midis
-			C.ooccolor = src.ooccolor
 			C.be_alien = be_special & BE_ALIEN
 			C.be_pai = be_special & BE_PAI
 			if(isnull(src.ghost_ears)) src.ghost_ears = 1 //There were problems where the default was null before someone saved their profile.

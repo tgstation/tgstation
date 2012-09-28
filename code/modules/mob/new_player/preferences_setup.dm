@@ -203,7 +203,8 @@ datum/preferences
 		var/icon/preview_icon = null
 
 		var/g = "m"
-		if (gender == FEMALE)	g = "f"
+		if (gender == FEMALE)
+			g = "f"
 
 		if(species == "Tajaran")
 			preview_icon = new /icon('icons/effects/species.dmi', "tajaran_[g]_s")
@@ -223,9 +224,6 @@ datum/preferences
 			else
 				preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
-		if (underwear < 12)
-			preview_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
-
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes_s")
 		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 
@@ -234,11 +232,6 @@ datum/preferences
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
-
-		var/icon/mouth_s
-		if(species == "Human")
-			mouth_s = new/icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "mouth_[g]_s")
-			eyes_s.Blend(mouth_s, ICON_OVERLAY)
 
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
 		if(facial_hair_style)
@@ -540,7 +533,6 @@ datum/preferences
 		preview_icon_side = new(preview_icon, dir = WEST)
 
 		del(preview_icon)
-		del(mouth_s)
 		del(eyes_s)
 		del(clothes_s)
 

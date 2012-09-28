@@ -1,3 +1,4 @@
+
 /mob/living/Login()
 	..()
 	//Mind updates
@@ -18,13 +19,6 @@
 			if("nuclear emergency")
 				if(mind in ticker.mode:syndicates)
 					ticker.mode.update_all_synd_icons()
-
-
-	if(client.holder && client.holder.state != 1)
-		client.holder.state = 1
-		var/rank = client.holder.rank
-		client.clear_admin_verbs()
-		client.update_admins(rank)
 	return .
 
 //This stuff needs to be merged from cloning.dm but I'm not in the mood to be shouted at for breaking all the things :< ~Carn

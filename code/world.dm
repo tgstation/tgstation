@@ -22,6 +22,8 @@
 	investigate_reset()
 	if (config.usewhitelist)
 		load_whitelist()
+	if (config.usealienwhitelist)
+		load_alienwhitelist()
 	LoadBansjob()
 	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
 	src.update_status()
@@ -134,7 +136,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 		for(var/client/C in client_list)
 			if(C.holder)
-				if(C.stealth)
+				if(C.holder.fakekey)
 					continue	//so stealthmins aren't revealed by the hub
 				admins++
 			s["player[n]"] = C.key
@@ -207,7 +209,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 			if (pos)
 				var/m_key = copytext(line, 1, pos)
 				var/a_lev = copytext(line, pos + 3, length(line) + 1)
-				admins[m_key] = a_lev
+				admins[m_key] = new /datum/admins(a_lev)
 				diary << ("ADMIN: [m_key] = [a_lev]")
 
 

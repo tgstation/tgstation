@@ -1,5 +1,5 @@
 
-obj/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1, var/reason, var/job = "", var/rounds = 0)
+datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1, var/reason, var/job = "", var/rounds = 0)
 	var/user = sqlfdbklogin
 	var/pass = sqlfdbkpass
 	var/db = sqlfdbkdb
@@ -79,7 +79,7 @@ obj/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1
 
 
 
-obj/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
+datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 	var/user = sqlfdbklogin
 	var/pass = sqlfdbkpass
 	var/db = sqlfdbkdb
@@ -149,7 +149,7 @@ obj/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 	DB_ban_unban_by_id(ban_id)
 
 
-obj/admins/proc/DB_ban_unban_by_id(var/id)
+datum/admins/proc/DB_ban_unban_by_id(var/id)
 	var/user = sqlfdbklogin
 	var/pass = sqlfdbkpass
 	var/db = sqlfdbkdb

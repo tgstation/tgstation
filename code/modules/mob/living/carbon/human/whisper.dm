@@ -8,8 +8,8 @@
 	log_whisper("[src.name]/[src.key] : [message]")
 
 	if (src.client)
-		if (src.client.muted_ic)
-			src << "\red You cannot whisper (muted by admins)."
+		if (src.client.muted & MUTE_IC)
+			src << "\red You cannot whisper (muted)."
 			return
 
 		if (src.client.handle_spam_prevention(message,MUTE_IC))

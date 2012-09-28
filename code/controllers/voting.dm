@@ -53,10 +53,25 @@ datum/controller/vote
 	proc/get_result()
 		//get the highest number of votes
 		var/greatest_votes = 0
+		var/total_votes = 0
 		for(var/option in choices)
 			var/votes = choices[option]
+			total_votes += votes
 			if(votes > greatest_votes)
 				greatest_votes = votes
+		//default-vote for everyone who didn't vote
+		if(!config.vote_no_default && choices.len)
+			var/non_voters = (client_list.len - total_votes)
+			if(non_voters > 0)
+				if(mode == "restart")
+					choices["Continue Playing"] += non_voters
+					if(choices["Continue Playing"] >= greatest_votes)
+						greatest_votes = choices["Continue Playing"]
+				else if(mode == "gamemode")
+					if(master_mode in choices)
+						choices[master_mode] += non_voters
+						if(choices[master_mode] >= greatest_votes)
+							greatest_votes = choices[master_mode]
 		//get all options with that many votes and return them in a list
 		. = list()
 		if(greatest_votes)

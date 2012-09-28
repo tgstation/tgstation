@@ -7,8 +7,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 	set category = "Admin"
 	set name = "Adminhelp"
 
-	if (muted_adminhelp)
-		src << "<font color='red'>Error: Admin-PM: You cannot send adminhelps (Muted by admins).</font>"
+	if(muted & MUTE_ADMINHELP)
+		src << "<font color='red'>Error: Admin-PM: You cannot send adminhelps (Muted).</font>"
 		return
 
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
@@ -97,7 +97,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 				admin_number++
 				if( X.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
 					admin_number_afk++
-				if(X.sound_adminhelp)
+				if(X.holder.sound_adminhelp)
 					X << 'sound/effects/adminhelp.ogg'
 				var/check_laws_text = ""
 				if(ai_found)
@@ -114,7 +114,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 				admin_number++
 				if( X.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
 					admin_number_afk++
-				if(X.sound_adminhelp)
+				if(X.holder.sound_adminhelp)
 					X << 'sound/effects/adminhelp.ogg'
 				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_client]'>VV</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
 				msg_to_send = dd_replacetext(msg_to_send, "HOLDERREF", "\ref[X.holder]")

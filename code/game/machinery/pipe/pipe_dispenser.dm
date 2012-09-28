@@ -138,14 +138,17 @@ Nah
 		return
 
 	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
-<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
-<A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
-<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
+<A href='?src=\ref[src];ptype=0'>Pipe</A><BR>
+<A href='?src=\ref[src];ptype=1'>Bent Pipe</A><BR><BR>
+
+<A href='?src=\ref[src];ptype=2'>Junction</A><BR>
+<A href='?src=\ref[src];ptype=4'>Y-Junction</A><BR>
+<A href='?src=\ref[src];ptype=9'>Sorting Junction</A><BR><BR>
+
+<A href='?src=\ref[src];ptype=5'>Trunk</A><BR>
+<A href='?src=\ref[src];ptype=6;density=1'>Bin</A><BR>
+<A href='?src=\ref[src];ptype=7;density=1'>Outlet</A><BR>
+<A href='?src=\ref[src];ptype=8;density=1'>Chute</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -159,33 +162,20 @@ Nah
 		return
 	usr.machine = src
 	src.add_fingerprint(usr)
-	if(href_list["dmake"])
+	if(href_list["ptype"])
 		if(unwrenched || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 			usr << browse(null, "window=pipedispenser")
 			return
 		if(!wait)
-			var/p_type = text2num(href_list["dmake"])
 			var/obj/structure/disposalconstruct/C = new (src.loc)
-			switch(p_type)
-				if(0)
-					C.ptype = 0
-				if(1)
-					C.ptype = 1
-				if(2)
-					C.ptype = 2
-				if(3)
-					C.ptype = 4
-				if(4)
-					C.ptype = 5
-				if(5)
-					C.ptype = 6
-					C.density = 1
-				if(6)
-					C.ptype = 7
-					C.density = 1
-				if(7)
-					C.ptype = 8
-					C.density = 1
+
+			var/p_type = text2num(href_list["ptype"])
+			C.ptype = p_type
+
+			if(href_list["density"])
+				var/p_density = text2num(href_list["density"])
+				C.density = p_density
+
 			C.add_fingerprint(usr)
 			C.update()
 			wait = 1
