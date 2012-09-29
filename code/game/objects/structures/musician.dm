@@ -250,14 +250,6 @@
 		updateUsrDialog()
 
 	proc/unbayify( var/text )
-
-	//	text = dd_replacetext(text, "/0,", ",")
-	//	text = dd_replacetext(text, "/infinity", "")
-	//	text = dd_replacetext(text, "/Infini", "")
-
-		//if(copytext(text, lentext(text)-1) == "/0")
-		//	text = copytext(text, 1, lentext(text)-1)
-
 		var/list/partlist = dd_text2list(text, ",")
 
 		var/i
@@ -274,7 +266,6 @@
 					//If there's only the tone set, move it to tempo side instead
 					//It has to be null, otherwise it means it starts with a number, which is something stupid.
 					if(!isnull(text2num(copytext(tone, 1, 2))))
-						world << "shitty tone [part]"
 						//Sets tempo to whatever number we found in there (text2num removes other symbols)
 						tone = ""
 						tempo = "[text2num(tone)]"
@@ -284,18 +275,15 @@
 
 				//Can't divide by zero, what did they think?
 				if(tempo=="0")
-					world << "Divide by zero [part]"
 					tempo = "1"
 
 				//Removes /infinity, /Infini, whatever this means
 				if(findtext(lowertext(tempo), "inf"))
-					world << "inf [part]"
 					tempo = "1"
 
 				//If both tone and tempo is set, and its numbers on both sides, leftside is invalid and gets set to ""
 				//It has to be null, otherwise it means it starts with a number, which is something stupid.
 				if(!isnull(text2num(copytext(tone, 1, 2))))
-					world << "shitty tone 2 [part]"
 					//Sets tempo to whatever number we found in there (text2num removes other symbols)
 					tempo = ""
 
@@ -721,10 +709,7 @@
 
 		else if(href_list["bpminc"])
 			var/bpminc = text2num(href_list["bpminc"])
-			world << bpminc
 
-			//Ideally  currentsong.tempo += 10/((tempoinc*10)/60)
-			world << 10/(bpminc/60)
 			currentsong.tempo = 10/(((10/currentsong.tempo)*60 + bpminc)/60)
 			if(currentsong.tempo<0.05)
 				currentsong.tempo = 0.05
