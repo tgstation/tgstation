@@ -433,7 +433,10 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 			var/list/pos_crew = list()
 			for(var/mob/living/carbon/human/pos in player_list)
 				pos_crew += pos.real_name
-			crew = pick(pos_crew)
+			if(pos_crew.len)
+				crew = pick(pos_crew)
+			else
+				crew = "Any Human"
 			switch(rand(1,14))
 				if(1)
 					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
