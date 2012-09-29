@@ -9,7 +9,7 @@
 
 	//For those other infidels who uses this datum
 	//VIOLINSSS
-	var/list/lines
+	var/list/lines = new()
 
 	var/tempo = 5
 
@@ -245,9 +245,65 @@
 		soundlist["Cb9"] = 'sound/piano/Cb9.ogg'
 		soundlist["Cn9"] = 'sound/piano/Cn9.ogg'
 
-	proc/statusmsg( var/txt as text )
+	proc/statusmsg( var/txt )
 		status = txt
 		updateUsrDialog()
+
+	proc/unbayify( var/text )
+
+	//	text = dd_replacetext(text, "/0,", ",")
+	//	text = dd_replacetext(text, "/infinity", "")
+	//	text = dd_replacetext(text, "/Infini", "")
+
+		//if(copytext(text, lentext(text)-1) == "/0")
+		//	text = copytext(text, 1, lentext(text)-1)
+
+		var/list/partlist = dd_text2list(text, ",")
+
+		var/i
+		for(i=1, i<=partlist.len, i++)
+			var/part = partlist[i]
+			var/list/x = dd_text2list(part, "/")
+
+			var/tone = ""
+			var/tempo = "1"
+			if(x.len >= 1)
+				tone = x[1]
+
+				if(x.len == 1)
+					//If there's only the tone set, move it to tempo side instead
+					//It has to be null, otherwise it means it starts with a number, which is something stupid.
+					if(!isnull(text2num(copytext(tone, 1, 2))))
+						world << "shitty tone [part]"
+						//Sets tempo to whatever number we found in there (text2num removes other symbols)
+						tone = ""
+						tempo = "[text2num(tone)]"
+
+			if(x.len == 2)
+				tempo = x[2]
+
+				//Can't divide by zero, what did they think?
+				if(tempo=="0")
+					world << "Divide by zero [part]"
+					tempo = "1"
+
+				//Removes /infinity, /Infini, whatever this means
+				if(findtext(lowertext(tempo), "inf"))
+					world << "inf [part]"
+					tempo = "1"
+
+				//If both tone and tempo is set, and its numbers on both sides, leftside is invalid and gets set to ""
+				//It has to be null, otherwise it means it starts with a number, which is something stupid.
+				if(!isnull(text2num(copytext(tone, 1, 2))))
+					world << "shitty tone 2 [part]"
+					//Sets tempo to whatever number we found in there (text2num removes other symbols)
+					tempo = ""
+
+			partlist[i] = "[tone]/[tempo]"
+
+		text = dd_list2text(partlist, ",")
+
+		return text
 
 	proc/playsong()
 		if(currentsong.compilesuccess == 0)
@@ -288,6 +344,7 @@
 
 		var/strippedsourcestring = dd_replacetext(currentsong.sourcestring, "\n", "")
 
+		strippedsourcestring = unbayify(strippedsourcestring)
 
 		for(var/part in dd_text2list(strippedsourcestring, ","))
 			var/list/x = dd_text2list(part, "/")
@@ -297,9 +354,10 @@
 			var/tempodiv = 1
 			if(xlen==2)
 				tempodiv = text2num(x[2])
-				if(tempodiv == 0)
-					statusmsg( "Compile Error: Can't divide by 0!\nAt Part:'[part]' Tone:" )
-					return
+				if(tempodiv <= 0)
+					//statusmsg( "Compile Error: Can't divide by 0!\nAt Part:'[part]' Tone:" )
+					//return
+					tempodiv = 1
 			else if(xlen>2)
 				statusmsg( "Compile Error: Tempo Syntax Error!\nAt Part:'[part]' Tone:" )
 				return
@@ -368,7 +426,7 @@
 				compilestring += "x" + finaltone + "¤"
 
 			//y indicates its a sleep
-			compilestring += "y[round((currentsong.tempo / tempodiv)*100)/100]¤"
+			compilestring += "y[round((currentsong.tempo / tempodiv)*10000)/10000]¤"
 
 		currentsong.compiledstring = compilestring
 		currentsong.compilesuccess = 1
@@ -467,12 +525,14 @@
 	if(showeditor)
 		dat += {"
 				Tempo:
-				<a href='?src=\ref[src];tempo=-3'>-</a><a href='?src=\ref[src];tempo=-2'>-</a><a href='?src=\ref[src];tempo=-1'>-</a>
+				<a href='?src=\ref[src];bpminc=-50'>+</a><a href='?src=\ref[src];bpminc=-20'>-</a><a href='?src=\ref[src];bpminc=-5'>-</a><a href='?src=\ref[src];bpminc=-1'>-</a>
 				[calctempo] BPM
-				<a href='?src=\ref[src];tempo=1'>+</a><a href='?src=\ref[src];tempo=2'>+</a><a href='?src=\ref[src];tempo=3'>+</a><br>
+				<a href='?src=\ref[src];bpminc=1'>+</a><a href='?src=\ref[src];bpminc=5'>+</a><a href='?src=\ref[src];bpminc=20'>+</a><a href='?src=\ref[src];bpminc=50'>+</a><br>
 				<a href='?src=\ref[src];compile=1'>Compile</a>
 				<a href='?src=\ref[src];edit=1'>Edit</a>
-				<div bgcolor="#888888" style="padding-left:5px; margin-top:5px; background-color:#888888"><pre>[currentsong.sourcestring]</pre></div>"}
+				<div bgcolor="#888888" style="padding-left:5px; margin-top:5px; background-color:#888888"><pre>[currentsong.sourcestring]</pre></div>
+				<a href='?src=\ref[src];import=1'>Import</a><br>
+				<a href='?src=\ref[src];export=1'>Export</a>"}
 	dat+={"
 			</div>
 			<div bgcolor="#AAAAAA" class="content">"}
@@ -498,12 +558,17 @@
 				defined by 'tempo / x': <i>C,G/2,E/4</i><br>
 				Combined, an example is: <i>E-Eb4/4,/2,G#/8,B/8,E3-E4/4</i><br>
 				<br>
+				Baystation /0 tempo or /infinity tempo does not error, but the compiler ignores them.<br>
+				<br>
 				A song may only contain up to 4000 letters.<br>
-				If you're playing a small piece over and over, remember to put a pause at the end for it to sound properly.<br<
+				If you're playing a small piece over and over, remember to put a pause at the end for it to sound properly.<br>
 				<br>
 				Note: Due to limitations in the engine, some tones doesn't exist. These are:<br>
 				Cb1<br>
-				All tones in the ninth octave <b>except Cb9 and Cn9</b>
+				All tones in the ninth octave <b>except Cb9 and Cn9</b><br>
+				<br>
+				Import/Export are there to import/export old-piano code, including baystation piano code.<br>
+				The Import feature isn't completly finished because of lack of knowledge, but it atleast makes the code compile.
 				"}
 	dat+={"
 			</div>
@@ -542,8 +607,50 @@
 
 	else if(href_list["name"])
 		var/input = html_encode(input(usr, "", "Rename", currentsong.name) as text|null)
+		if(isnull(input)) return
+
 		currentsong.name = copytext(input,1,30)
 		updateUsrDialog()
+
+	else if(href_list["export"])
+		var/output = dd_replacetext(currentsong.sourcestring, "\n", "")
+
+		var/list/sourcelist = dd_text2list(output, ",")
+
+		var/list/outputlist = new()
+
+		if(sourcelist.len == 0)
+			return
+
+		var/nextadd = sourcelist[1]
+		sourcelist.Cut(1,1)
+
+		var/runmainloop = 1
+		while(runmainloop)
+			var/outstr = ""
+			while(lentext(outstr + nextadd) < 50)
+				outstr += nextadd + ","
+
+				if(sourcelist.len == 0)
+					runmainloop = 0
+					break
+
+				//Pop one
+				nextadd = sourcelist[1]
+				sourcelist.Cut(1,2)
+
+			//Remove last comma
+			outstr = copytext(outstr, 1, lentext(outstr))
+
+			//Add to output
+			outputlist.Add(outstr)
+
+		var/curbpm = round((10/currentsong.tempo)*60)
+		outputlist.Insert(1, "BPM: [curbpm]")
+
+		output = dd_list2text(outputlist, "\n")
+
+		input(usr, "", "Exported Code", output) as message|null
 
 	else if(href_list["savesong"])
 
@@ -564,7 +671,7 @@
 		updateUsrDialog()
 
 	if(playing)
-		if(href_list["newsong"]||href_list["setsong"]||href_list["tempo"]||href_list["compile"]||href_list["edit"]||href_list["repeat"])
+		if(href_list["newsong"]||href_list["setsong"]||href_list["tempo"]||href_list["compile"]||href_list["edit"]||href_list["repeat"]||href_list["import"])
 			statusmsg("Playback Error: Stop the song first!")
 	else
 		if(href_list["newsong"])
@@ -585,12 +692,42 @@
 
 			updateUsrDialog()
 
-		else if(href_list["tempo"])
-			var/tempoinc = text2num(href_list["tempo"])
+		else if(href_list["import"])
+			var/input = html_encode(input(usr, "", "Import") as message|null)
+			if(isnull(input)) return
 
-			currentsong.tempo += tempoinc*-1
-			if(currentsong.tempo<1)
-				currentsong.tempo = 1
+			var/list/inputlist = dd_text2list(input, "\n")
+
+			if(copytext(inputlist[1], 1, 4) == "BPM")
+				var/newbpm = text2num(copytext(input,5,lentext(inputlist[1])+1))
+
+				if(newbpm > 0 && newbpm <= 600)
+					currentsong.tempo = 10/(newbpm/60)
+
+				//Remove the BPM shit
+				inputlist.Cut(1,2)
+
+
+
+			//Put it back together with commas
+			input = dd_list2text(inputlist, ",\n")
+
+			//Remove last comma
+			//input = copytext(input, 1, lentext(input))
+
+			currentsong.sourcestring = input
+
+			updateUsrDialog()
+
+		else if(href_list["bpminc"])
+			var/bpminc = text2num(href_list["bpminc"])
+			world << bpminc
+
+			//Ideally  currentsong.tempo += 10/((tempoinc*10)/60)
+			world << 10/(bpminc/60)
+			currentsong.tempo = 10/(((10/currentsong.tempo)*60 + bpminc)/60)
+			if(currentsong.tempo<0.05)
+				currentsong.tempo = 0.05
 			currentsong.compilesuccess = 0
 
 			updateUsrDialog()
@@ -604,6 +741,7 @@
 		else if(href_list["edit"])
 
 			var/input = html_encode(input(usr, "", "Edit", currentsong.sourcestring) as message|null)
+			if(isnull(input)) return
 
 			input = dd_replacetext(input, " ", "")
 			input = dd_replacetext(input, "\t", "")
@@ -619,7 +757,11 @@
 
 		else if(href_list["repeat"])
 
-			var/input = round(input(usr, "", "Repeat", "How many times do you want to repeat? (max 10)") as num|null)
+			var/input = input(usr, "", "Repeat", "How many times do you want to repeat? (max 10)") as num|null
+			if(isnull(input)) return
+
+			input = round(input)
+
 			if(input < 1)
 				input = 1
 			else if(input > 10)
