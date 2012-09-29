@@ -221,9 +221,6 @@
 			see_in_dark = 2
 			see_invisible = SEE_INVISIBLE_LIVING
 
-		if (sleep) sleep.icon_state = text("sleep[]", sleeping)
-		if (rest) rest.icon_state = text("rest[]", resting)
-
 		if (healths)
 			if (stat != 2)
 				switch(health)

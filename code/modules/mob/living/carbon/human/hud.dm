@@ -7,7 +7,7 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "act_intent"
 	using.dir = SOUTHWEST
 	using.icon = ui_style
@@ -17,7 +17,7 @@
 	src.adding += using
 	action_intent = using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "mov_intent"
 	using.dir = SOUTHWEST
 	using.icon = ui_style
@@ -27,48 +27,7 @@
 	src.adding += using
 	move_intent = using
 
-/*
-	using = new src.h_type(src) //Right hud bar
-	using.dir = SOUTH
-	using.icon = ui_style
-	using.screen_loc = "EAST+1,SOUTH to EAST+1,NORTH"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type(src) //Lower hud bar
-	using.dir = EAST
-	using.icon = ui_style
-	using.screen_loc = "WEST,SOUTH-1 to EAST,SOUTH-1"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type(src) //Corner Button
-	using.dir = NORTHWEST
-	using.icon = ui_style
-	using.screen_loc = "EAST+1,SOUTH-1"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type( src )
-	using.name = "arrowleft"
-	using.icon = ui_style
-	using.icon_state = "s_arrow"
-	using.dir = WEST
-	using.screen_loc = ui_iarrowleft
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type( src )
-	using.name = "arrowright"
-	using.icon = ui_style
-	using.icon_state = "s_arrow"
-	using.dir = EAST
-	using.screen_loc = ui_iarrowright
-	using.layer = 19
-	src.adding += using
-*/
-
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "drop"
 	using.icon = ui_style
 	using.icon_state = "act_drop"
@@ -95,15 +54,6 @@
 	inv_box.screen_loc = ui_oclothing
 	inv_box.layer = 19
 	src.other += inv_box
-
-/*	inv_box = new /obj/screen/inventory( src )
-	inv_box.name = "headset"
-	inv_box.dir = SOUTHEAST
-	inv_box.icon_state = "equip"
-	inv_box.screen_loc = ui_headset
-	inv_box.layer = 19
-	if(istype(mymob,/mob/living/carbon/monkey)) inv_box.overlays += blocked
-	src.other += inv_box*/
 
 	inv_box = new /obj/screen/inventory( src )
 	inv_box.name = "r_hand"
@@ -207,7 +157,7 @@
 	inv_box.layer = 19
 	src.adding += inv_box
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "resist"
 	using.icon = ui_style
 	using.icon_state = "act_resist"
@@ -215,7 +165,7 @@
 	using.layer = 19
 	src.hotkeybuttons += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "other"
 	using.icon = ui_style
 	using.icon_state = "other"
@@ -223,29 +173,13 @@
 	using.layer = 20
 	src.adding += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "equip"
 	using.icon = ui_style
 	using.icon_state = "act_equip"
 	using.screen_loc = ui_equip
 	using.layer = 20
 	src.adding += using
-
-/*
-	using = new src.h_type( src )
-	using.name = "intent"
-	using.icon_state = "intent"
-	using.screen_loc = "15,15"
-	using.layer = 20
-	src.adding += using
-
-	using = new src.h_type( src )
-	using.name = "m_intent"
-	using.icon_state = "move"
-	using.screen_loc = "15,14"
-	using.layer = 20
-	src.adding += using
-*/
 
 	inv_box = new /obj/screen/inventory( src )
 	inv_box.name = "gloves"
@@ -301,59 +235,6 @@
 	inv_box.layer = 19
 	src.adding += inv_box
 
-/*
-	using = new src.h_type( src )
-	using.name = "grab"
-	using.icon_state = "grab"
-	using.screen_loc = "12:-11,15"
-	using.layer = 19
-	src.intents += using
-	//ICONS
-	using = new src.h_type( src )
-	using.name = "hurt"
-	using.icon_state = "harm"
-	using.screen_loc = "15:-11,15"
-	using.layer = 19
-	src.intents += using
-	src.m_ints += using
-
-	using = new src.h_type( src )
-	using.name = "disarm"
-	using.icon_state = "disarm"
-	using.screen_loc = "14:-10,15"
-	using.layer = 19
-	src.intents += using
-
-	using = new src.h_type( src )
-	using.name = "help"
-	using.icon_state = "help"
-	using.screen_loc = "13:-10,15"
-	using.layer = 19
-	src.intents += using
-	src.m_ints += using
-
-	using = new src.h_type( src )
-	using.name = "face"
-	using.icon_state = "facing"
-	using.screen_loc = "15:-11,14"
-	using.layer = 19
-	src.mov_int += using
-
-	using = new src.h_type( src )
-	using.name = "walk"
-	using.icon_state = "walking"
-	using.screen_loc = "14:-11,14"
-	using.layer = 19
-	src.mov_int += using
-
-	using = new src.h_type( src )
-	using.name = "run"
-	using.icon_state = "running"
-	using.screen_loc = "13:-11,14"
-	using.layer = 19
-	src.mov_int += using
-*/
-
 	mymob.throw_icon = new /obj/screen(null)
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.icon_state = "act_throw_off"
@@ -372,19 +253,6 @@
 	mymob.pressure.icon_state = "pressure0"
 	mymob.pressure.name = "pressure"
 	mymob.pressure.screen_loc = ui_pressure
-
-
-/*
-	mymob.i_select = new /obj/screen( null )
-	mymob.i_select.icon_state = "selector"
-	mymob.i_select.name = "intent"
-	mymob.i_select.screen_loc = "16:-11,15"
-
-	mymob.m_select = new /obj/screen( null )
-	mymob.m_select.icon_state = "selector"
-	mymob.m_select.name = "moving"
-	mymob.m_select.screen_loc = "16:-11,14"
-*/
 
 	mymob.toxin = new /obj/screen( null )
 	mymob.toxin.icon = ui_style
@@ -452,115 +320,6 @@
 	mymob.flash.screen_loc = "1,1 to 15,15"
 	mymob.flash.layer = 17
 
-/*
-	mymob.hands = new /obj/screen( null )
-	mymob.hands.icon = ui_style
-	mymob.hands.icon_state = "hand"
-	mymob.hands.name = "hand"
-	mymob.hands.screen_loc = ui_hand
-	mymob.hands.dir = NORTH
-
-	mymob.sleep = new /obj/screen( null )
-	mymob.sleep.icon = ui_style
-	mymob.sleep.icon_state = "sleep0"
-	mymob.sleep.name = "sleep"
-	mymob.sleep.screen_loc = ui_sleep
-
-	mymob.rest = new /obj/screen( null )
-	mymob.rest.icon = ui_style
-	mymob.rest.icon_state = "rest0"
-	mymob.rest.name = "rest"
-	mymob.rest.screen_loc = ui_rest
-*/
-
-	/*/Monkey blockers
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_ears
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_belt
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_shoes
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_storage2
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_glasses
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_gloves
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_storage1
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_headset
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_oclothing
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_iclothing
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_id
-	using.layer = 20
-	src.mon_blo += using
-
-	using = new src.h_type( src )
-	using.name = "blocked"
-	using.icon_state = "blocked"
-	using.screen_loc = ui_head
-	using.layer = 20
-	src.mon_blo += using
-//Monkey blockers
-*/
-
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.overlays = null
@@ -577,37 +336,6 @@
 
 	return
 
-	/*
-	using = new src.h_type( src )
-	using.dir = WEST
-	using.screen_loc = "1,3 to 2,3"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type( src )
-	using.dir = NORTHEAST
-	using.screen_loc = "3,3"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type( src )
-	using.dir = NORTH
-	using.screen_loc = "3,2"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type( src )
-	using.dir = SOUTHEAST
-	using.screen_loc = "3,1"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type( src )
-	using.dir = SOUTHWEST
-	using.screen_loc = "1,1 to 2,2"
-	using.layer = 19
-	src.adding += using
-	*/
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"

@@ -8,7 +8,7 @@
 
 
 //Radio
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "radio"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
@@ -17,34 +17,9 @@
 	using.layer = 20
 	src.adding += using
 
-//Generic overlays
-
-/*
-	using = new src.h_type(src) //Right hud bar
-	using.dir = SOUTH
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.screen_loc = "EAST+1,SOUTH to EAST+1,NORTH"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type(src) //Lower hud bar
-	using.dir = EAST
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.screen_loc = "WEST,SOUTH-1 to EAST,SOUTH-1"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type(src) //Corner Button
-	using.dir = NORTHWEST
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.screen_loc = "EAST+1,SOUTH-1"
-	using.layer = 19
-	src.adding += using*/
-
-
 //Module select
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "module1"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
@@ -54,7 +29,7 @@
 	src.adding += using
 	mymob:inv1 = using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "module2"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
@@ -64,7 +39,7 @@
 	src.adding += using
 	mymob:inv2 = using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "module3"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
@@ -77,7 +52,7 @@
 //End of module select
 
 //Intent
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "act_intent"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
@@ -86,25 +61,6 @@
 	using.layer = 20
 	src.adding += using
 	action_intent = using
-/*
-	using = new src.h_type( src )
-	using.name = "arrowleft"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "s_arrow"
-	using.dir = WEST
-	using.screen_loc = ui_iarrowleft
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type( src )
-	using.name = "arrowright"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "s_arrow"
-	using.dir = EAST
-	using.screen_loc = ui_iarrowright
-	using.layer = 19
-	src.adding += using*/
-//End of Intent
 
 //Cell
 	mymob:cells = new /obj/screen( null )
@@ -128,7 +84,7 @@
 	mymob.hands.screen_loc = ui_borg_module
 
 //Module Panel
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "panel"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "panel"
@@ -162,8 +118,6 @@
 	mymob.fire.name = "fire"
 	mymob.fire.screen_loc = ui_fire
 
-
-
 	mymob.pullin = new /obj/screen( null )
 	mymob.pullin.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.pullin.icon_state = "pull0"
@@ -183,21 +137,6 @@
 	mymob.flash.name = "flash"
 	mymob.flash.screen_loc = "1,1 to 15,15"
 	mymob.flash.layer = 17
-
-	/*
-	mymob.sleep = new /obj/screen( null )
-	mymob.sleep.icon = 'icons/mob/screen1_robot.dmi'
-	mymob.sleep.icon_state = "sleep0"
-	mymob.sleep.name = "sleep"
-	mymob.sleep.screen_loc = ui_sleep
-
-	mymob.rest = new /obj/screen( null )
-	mymob.rest.icon = 'icons/mob/screen1_robot.dmi'
-	mymob.rest.icon_state = "rest0"
-	mymob.rest.name = "rest"
-	mymob.rest.screen_loc = ui_rest
-	*/
-
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
 	mymob.zone_sel.icon = 'icons/mob/screen1_robot.dmi'

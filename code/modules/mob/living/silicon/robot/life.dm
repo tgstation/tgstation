@@ -164,9 +164,6 @@
 	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
 	if(hud && hud.hud)	hud.hud.process_hud(src)
 
-	if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
-	if (src.rest) src.rest.icon_state = text("rest[]", src.resting)
-
 	if (src.healths)
 		if (src.stat != 2)
 			switch(health)

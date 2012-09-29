@@ -1077,8 +1077,6 @@
 			else
 				see_invisible = SEE_INVISIBLE_LIVING
 
-			if(sleep && !hal_crit)	sleep.icon_state = "sleep[sleeping]"	//used?
-
 			if(healths)
 				switch(hal_screwyhud)
 					if(1)	healths.icon_state = "health6"

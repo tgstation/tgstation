@@ -14,9 +14,6 @@
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
-	var/obj/screen/mach = null
-	var/obj/screen/sleep = null
-	var/obj/screen/rest = null
 	var/obj/screen/pullin = null
 	var/obj/screen/internals = null
 	var/obj/screen/oxygen = null

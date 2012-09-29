@@ -7,7 +7,7 @@
 
 	var/obj/screen/using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "act_intent"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_alien.dmi'
@@ -17,7 +17,7 @@
 	src.adding += using
 	action_intent = using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "mov_intent"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_alien.dmi'
@@ -26,57 +26,6 @@
 	using.layer = 20
 	src.adding += using
 	move_intent = using
-
-/*
-	using = new src.h_type(src) //Right hud bar
-	using.dir = SOUTH
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.screen_loc = "EAST+1,SOUTH to EAST+1,NORTH"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type(src) //Lower hud bar
-	using.dir = EAST
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.screen_loc = "WEST,SOUTH-1 to EAST,SOUTH-1"
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type(src) //Corner Button
-	using.dir = NORTHWEST
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.screen_loc = "EAST+1,SOUTH-1"
-	using.layer = 19
-	src.adding += using
-*/
-
-/*
-	using = new src.h_type( src )
-	using.name = "arrowleft"
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "s_arrow"
-	using.dir = WEST
-	using.screen_loc = ui_iarrowleft
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type( src )
-	using.name = "arrowright"
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "s_arrow"
-	using.dir = EAST
-	using.screen_loc = ui_iarrowright
-	using.layer = 19
-	src.adding += using
-
-	using = new src.h_type( src )
-	using.name = "resist"
-	using.icon = 'icons/mob/screen1_alien.dmi'
-	using.icon_state = "act_resist"
-	using.screen_loc = ui_resist
-	using.layer = 19
-	src.adding += using
-*/
 
 	mymob.oxygen = new /obj/screen( null )
 	mymob.oxygen.icon = 'icons/mob/screen1_alien.dmi'
@@ -123,20 +72,6 @@
 	mymob.flash.name = "flash"
 	mymob.flash.screen_loc = "1,1 to 15,15"
 	mymob.flash.layer = 17
-
-/*
-	mymob.sleep = new /obj/screen( null )
-	mymob.sleep.icon = 'icons/mob/screen1_alien.dmi'
-	mymob.sleep.icon_state = "sleep0"
-	mymob.sleep.name = "sleep"
-	mymob.sleep.screen_loc = ui_sleep
-
-	mymob.rest = new /obj/screen( null )
-	mymob.rest.icon = 'icons/mob/screen1_alien.dmi'
-	mymob.rest.icon_state = "rest0"
-	mymob.rest.name = "rest"
-	mymob.rest.screen_loc = ui_rest
-*/
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
 	mymob.zone_sel.overlays = null

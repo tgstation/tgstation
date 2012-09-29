@@ -98,24 +98,21 @@
 var/datum/global_hud/global_hud = new()
 
 /datum/global_hud
-	var/h_type = /obj/screen
 	var/obj/screen/druggy
 	var/obj/screen/blurry
-//	var/obj/screen/alien_view
-//	var/obj/screen/g_dither
 	var/list/vimpaired
 	var/list/darkMask
 
 	New()
 		//420erryday psychedellic colours screen overlay for when you are high
-		druggy = new h_type()
+		druggy = new /obj/screen()
 		druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
 		druggy.icon_state = "druggy"
 		druggy.layer = 17
 		druggy.mouse_opacity = 0
 
 		//that white blurry effect you get when you eyes are damaged
-		blurry = new h_type()
+		blurry = new /obj/screen()
 		blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
 		blurry.icon_state = "blurry"
 		blurry.layer = 17
@@ -124,7 +121,7 @@ var/datum/global_hud/global_hud = new()
 		var/obj/screen/O
 		var/i
 		//that nasty looking dither you  get when you're short-sighted
-		vimpaired = newlist(h_type,h_type,h_type,h_type)
+		vimpaired = newlist(/obj/screen,/obj/screen,/obj/screen,/obj/screen)
 		O = vimpaired[1]
 		O.screen_loc = "1,1 to 5,15"
 		O = vimpaired[2]
@@ -135,7 +132,7 @@ var/datum/global_hud/global_hud = new()
 		O.screen_loc = "11,1 to 15,15"
 
 		//welding mask overlay black/dither
-		darkMask = newlist(h_type,h_type,h_type,h_type,h_type,h_type,h_type,h_type)
+		darkMask = newlist(/obj/screen,/obj/screen,/obj/screen,/obj/screen,/obj/screen,/obj/screen,/obj/screen,/obj/screen)
 		O = darkMask[1]
 		O.screen_loc = "3,3 to 5,13"
 		O = darkMask[2]
@@ -169,26 +166,11 @@ var/datum/global_hud/global_hud = new()
 			O.icon_state = "black"
 			O.layer = 17
 			O.mouse_opacity = 0
-/*
-		//not used
-		alien_view = new h_type()
-		alien_view.screen_loc = "WEST,SOUTH to EAST,NORTH"
-		alien_view.icon_state = "alien"
-		alien_view.layer = 18
-		alien_view.mouse_opacity = 0
-
-		g_dither = new h_type()
-		g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
-		g_dither.icon_state = "dither12g"
-		g_dither.layer = 18
-		g_dither.mouse_opacity = 0
-*/
 
 
 
 /datum/hud
 	var/mob/mymob
-	var/h_type = /obj/screen	//this is like...the most pointless thing ever. Use a god damn define!
 
 	var/hud_shown = 1			//Used for the HUD toggle (F12)
 	var/inventory_shown = 1		//the inventory
@@ -216,45 +198,45 @@ datum/hud/New(mob/owner)
 
 /datum/hud/proc/hidden_inventory_update()
 	if(!mymob) return
-	if(inventory_shown && hud_shown)
-		if(ishuman(mymob))
-			if(mymob:shoes) mymob:shoes:screen_loc = ui_shoes
-			if(mymob:gloves) mymob:gloves:screen_loc = ui_gloves
-			if(mymob:ears) mymob:ears:screen_loc = ui_ears
-			if(mymob:glasses) mymob:glasses:screen_loc = ui_glasses
-			if(mymob:w_uniform) mymob:w_uniform:screen_loc = ui_iclothing
-			if(mymob:wear_suit) mymob:wear_suit:screen_loc = ui_oclothing
-			if(mymob:wear_mask) mymob:wear_mask:screen_loc = ui_mask
-			if(mymob:head) mymob:head:screen_loc = ui_head
-	else
-		if(ishuman(mymob))
-			if(mymob:shoes) mymob:shoes:screen_loc = null
-			if(mymob:gloves) mymob:gloves:screen_loc = null
-			if(mymob:ears) mymob:ears:screen_loc = null
-			if(mymob:glasses) mymob:glasses:screen_loc = null
-			if(mymob:w_uniform) mymob:w_uniform:screen_loc = null
-			if(mymob:wear_suit) mymob:wear_suit:screen_loc = null
-			if(mymob:wear_mask) mymob:wear_mask:screen_loc = null
-			if(mymob:head) mymob:head:screen_loc = null
+	if(ishuman(mymob))
+		var/mob/living/carbon/human/H = mymob
+		if(inventory_shown && hud_shown)
+			if(H.shoes)		H.shoes.screen_loc = ui_shoes
+			if(H.gloves)	H.gloves.screen_loc = ui_gloves
+			if(H.ears)		H.ears.screen_loc = ui_ears
+			if(H.glasses)	H.glasses.screen_loc = ui_glasses
+			if(H.w_uniform)	H.w_uniform.screen_loc = ui_iclothing
+			if(H.wear_suit)	H.wear_suit.screen_loc = ui_oclothing
+			if(H.wear_mask)	H.wear_mask.screen_loc = ui_mask
+			if(H.head)		H.head.screen_loc = ui_head
+		else
+			if(H.shoes)		H.shoes.screen_loc = null
+			if(H.gloves)	H.gloves.screen_loc = null
+			if(H.ears)		H.ears.screen_loc = null
+			if(H.glasses)	H.glasses.screen_loc = null
+			if(H.w_uniform)	H.w_uniform.screen_loc = null
+			if(H.wear_suit)	H.wear_suit.screen_loc = null
+			if(H.wear_mask)	H.wear_mask.screen_loc = null
+			if(H.head)		H.head.screen_loc = null
 
 /datum/hud/proc/persistant_inventory_update()
 	if(!mymob) return
-	if(hud_shown)
-		if(ishuman(mymob))
-			if(mymob:s_store) mymob:s_store:screen_loc = ui_sstore1
-			if(mymob:wear_id) mymob:wear_id:screen_loc = ui_id
-			if(mymob:belt) mymob:belt:screen_loc = ui_belt
-			if(mymob:back) mymob:back:screen_loc = ui_back
-			if(mymob:l_store) mymob:l_store:screen_loc = ui_storage1
-			if(mymob:r_store) mymob:r_store:screen_loc = ui_storage2
-	else
-		if(ishuman(mymob))
-			if(mymob:s_store) mymob:s_store:screen_loc = null
-			if(mymob:wear_id) mymob:wear_id:screen_loc = null
-			if(mymob:belt) mymob:belt:screen_loc = null
-			if(mymob:back) mymob:back:screen_loc = null
-			if(mymob:l_store) mymob:l_store:screen_loc = null
-			if(mymob:r_store) mymob:r_store:screen_loc = null
+	if(ishuman(mymob))
+		var/mob/living/carbon/human/H = mymob
+		if(hud_shown)
+			if(H.s_store)	H.s_store.screen_loc = ui_sstore1
+			if(H.wear_id)	H.wear_id.screen_loc = ui_id
+			if(H.belt)		H.belt.screen_loc = ui_belt
+			if(H.back)		H.back.screen_loc = ui_back
+			if(H.l_store)	H.l_store.screen_loc = ui_storage1
+			if(H.r_store)	H.r_store.screen_loc = ui_storage2
+		else
+			if(H.s_store)	H.s_store.screen_loc = null
+			if(H.wear_id)	H.wear_id.screen_loc = null
+			if(H.belt)		H.belt.screen_loc = null
+			if(H.back)		H.back.screen_loc = null
+			if(H.l_store)	H.l_store.screen_loc = null
+			if(H.r_store)	H.r_store.screen_loc = null
 
 
 /datum/hud/proc/instantiate()
@@ -263,11 +245,12 @@ datum/hud/New(mob/owner)
 	if(ishuman(mymob))
 		human_hud(mymob.UI) // Pass the player the UI style chosen in preferences
 
-		spawn()
-			if((RADAR in mymob.augmentations) && mymob.radar_open)
-				mymob:start_radar()
-			else if(RADAR in mymob.augmentations)
-				mymob:place_radar_closed()
+		if(RADAR in mymob.augmentations)
+			spawn()
+				if(mymob.radar_open)
+					mymob:start_radar()
+				else
+					mymob:place_radar_closed()
 
 	else if(ismonkey(mymob))
 		monkey_hud(mymob.UI)
