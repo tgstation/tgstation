@@ -8,7 +8,7 @@
 /datum/supply_packs
 	var/name = null
 	var/list/contains = list()
-	var/manifest
+	var/manifest = ""
 	var/amount = null
 	var/cost = null
 	var/containertype = null
@@ -18,7 +18,7 @@
 	var/contraband = 0
 
 /datum/supply_packs/New()
-	manifest = "<ul>"
+	manifest += "<ul>"
 	for(var/path in contains)
 		if(!path)	continue
 		var/atom/movable/AM = new path()
@@ -574,12 +574,8 @@
 					/obj/item/clothing/head/collectable/thunderdome,
 					/obj/item/clothing/head/collectable/swat,
 					/obj/item/clothing/head/collectable/metroid,
-					/obj/item/clothing/head/collectable/metroid,
-					/obj/item/clothing/head/collectable/police,
 					/obj/item/clothing/head/collectable/police,
 					/obj/item/clothing/head/collectable/slime,
-					/obj/item/clothing/head/collectable/slime,
-					/obj/item/clothing/head/collectable/xenom,
 					/obj/item/clothing/head/collectable/xenom,
 					/obj/item/clothing/head/collectable/petehat)
 	name = "Collectable hat crate!"
@@ -588,10 +584,7 @@
 	containername = "Collectable hats crate! Brought to you by Bass.inc!"
 
 /datum/supply_packs/randomised/New()
-	var/list/tempContains = list()
-	for(var/i = 0,i<num_contained,i++)
-		tempContains += pick(contains)
-	contains = tempContains
+	manifest += "Contains any [num_contained] of:"
 	..()
 
 
