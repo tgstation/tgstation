@@ -63,3 +63,51 @@
 				user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "You place [src] against [their] [body_part]. You [sound_strength] [sound].")
 				return
 	return ..(M,user)
+
+
+//Medals
+/obj/item/clothing/tie/medal
+	name = "bronze medal"
+	desc = "A bronze medal."
+	icon_state = "bronze"
+	color = "bronze"
+
+/obj/item/clothing/tie/medal/conduct
+	name = "distinguished conduct medal"
+	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
+
+/obj/item/clothing/tie/medal/bronze_heart
+	name = "bronze heart medal"
+	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
+
+/obj/item/clothing/tie/medal/nobel_science
+	name = "nobel sciences award"
+	desc = "A bronze medal which represents significant contributions to the field of science or engineering."
+
+/obj/item/clothing/tie/medal/silver
+	name = "silver medal"
+	desc = "A silver medal."
+	icon_state = "silver"
+	color = "silver"
+
+/obj/item/clothing/tie/medal/silver/valor
+	name = "medal of valor"
+	desc = "A silver medal awarded for acts of exceptional valor."
+
+/obj/item/clothing/tie/medal/silver/security
+	name = "robust security award"
+	desc = "An award for distinguished combat and sacrifice in defence of Nanotrasen's commercial interests. Often awarded to security staff."
+
+/obj/item/clothing/tie/medal/gold
+	name = "gold medal"
+	desc = "A prestigious golden medal."
+	icon_state = "gold"
+	color = "gold"
+
+/obj/item/clothing/tie/medal/gold/captain
+	name = "medal of captaincy"
+	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of a captain to Nanotrasen, and their undisputable authority over their crew."
+
+/obj/item/clothing/tie/medal/gold/heroism
+	name = "medal of exceptional heroism"
+	desc = "An extremely rare golden medal awarded only by CentComm. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
