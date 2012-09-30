@@ -6,7 +6,7 @@
 	item_state = ""	//no inhands
 	color = "bluetie"
 	flags = FPRINT | TABLEPASS
-	slot_flags = SLOT_ICLOTHING | SLOT_HEAD
+	slot_flags = 0
 	w_class = 2.0
 
 /obj/item/clothing/tie/blue
@@ -79,6 +79,7 @@
 /obj/item/clothing/tie/medal/bronze_heart
 	name = "bronze heart medal"
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
+	icon_state = "bronze_heart"
 
 /obj/item/clothing/tie/medal/nobel_science
 	name = "nobel sciences award"
