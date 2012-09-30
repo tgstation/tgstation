@@ -92,29 +92,32 @@
 		icon_state = "[mineral]fwall_open"
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/screwdriver))
-		var/turf/T = get_turf(src)
-		user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
-		if(!mineral)
-			T.ReplaceWithWall()
-		else
-			T.ReplaceWithMineralWall(mineral)
-		del(src)
-
-	if( istype(W, /obj/item/weapon/weldingtool) )
-		var/obj/item/weapon/weldingtool/WT = W
-		if( WT:welding )
+	if(density)
+		if(istype(W, /obj/item/weapon/screwdriver))
 			var/turf/T = get_turf(src)
+			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
 			if(!mineral)
 				T.ReplaceWithWall()
 			else
 				T.ReplaceWithMineralWall(mineral)
-			if(mineral != "plasma")//Stupid shit keeps me from pushing the attackby() to plasma walls -Sieve
-				T = get_turf(src)
-				T.attackby(W,user)
 			del(src)
 
-	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+		if( istype(W, /obj/item/weapon/weldingtool) )
+			var/obj/item/weapon/weldingtool/WT = W
+			if( WT:welding )
+				var/turf/T = get_turf(src)
+				if(!mineral)
+					T.ReplaceWithWall()
+				else
+					T.ReplaceWithMineralWall(mineral)
+				if(mineral != "plasma")//Stupid shit keeps me from pushing the attackby() to plasma walls -Sieve
+					T = get_turf(src)
+					T.attackby(W,user)
+				del(src)
+	else
+		user << "\blue You can't reach, close it first!"
+
+	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
 		if(!mineral)
 			T.ReplaceWithWall()
@@ -172,7 +175,7 @@
 
 /obj/structure/falserwall/
 	anchored = 1
-	
+
 	attack_hand(mob/user as mob)
 		if(density)
 			// Open wall
