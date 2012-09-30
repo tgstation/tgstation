@@ -294,6 +294,8 @@
 
 
 /mob/living/silicon/ai/Topic(href, href_list)
+	if(usr != src)
+		return
 	..()
 	if (href_list["mach_close"])
 		if (href_list["mach_close"] == "aialerts")

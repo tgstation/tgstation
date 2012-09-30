@@ -424,7 +424,7 @@ var/list/datum/power/changeling/powerinstances = list()
 
 
 
-/datum/changeling/proc/purchasePower(var/Pname)
+/datum/changeling/proc/purchasePower(var/Pname, var/remake_verbs = 1)
 	if(!usr.mind || !usr.mind.changeling)
 		return
 //	src = usr.mind.changeling
@@ -458,6 +458,6 @@ var/list/datum/power/changeling/powerinstances = list()
 
 	if(!Thepower.isVerb && Thepower.verbpath)
 		call(Thepower.verbpath)()
-	else
+	else if(remake_verbs)
 		usr.make_changeling()
 
