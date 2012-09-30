@@ -323,7 +323,7 @@ obj/machinery/atmospherics/pipe
 		name = "Pressure Tank"
 		desc = "A large vessel containing pressurized gas."
 
-		volume = 1620 //in liters, 0.9 meters by 0.9 meters by 2 meters
+		volume = 2000 //in liters, 1 meters by 1 meters by 2 meters
 
 		dir = SOUTH
 		initialize_directions = SOUTH

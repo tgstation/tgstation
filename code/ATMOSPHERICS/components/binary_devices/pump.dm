@@ -26,12 +26,6 @@ obj/machinery/atmospherics/binary/pump
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-/*
-	attack_hand(mob/user)
-		on = !on
-		update_icon()
-*/
-
 	update_icon()
 		if(node1&&node2)
 			icon_state = "intact_[on?("on"):("off")]"

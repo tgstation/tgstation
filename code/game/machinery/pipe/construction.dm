@@ -17,6 +17,9 @@ Buildable meters
 #define PIPE_INSULATED_BENT		12
 #define PIPE_GAS_FILTER			13
 #define PIPE_GAS_MIXER			14
+#define PIPE_PASSIVE_GATE       15
+#define PIPE_VOLUME_PUMP        16
+#define PIPE_HEAT_EXCHANGE      17
 
 /obj/item/pipe
 	name = "pipe"
@@ -66,6 +69,12 @@ Buildable meters
 			src.pipe_type = PIPE_GAS_MIXER
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_scrubber))
 			src.pipe_type = PIPE_SCRUBBER
+		else if(istype(make_from, /obj/machinery/atmospherics/binary/passive_gate))
+			src.pipe_type = PIPE_PASSIVE_GATE
+		else if(istype(make_from, /obj/machinery/atmospherics/binary/volume_pump))
+			src.pipe_type = PIPE_VOLUME_PUMP
+		else if(istype(make_from, /obj/machinery/atmospherics/unary/heat_exchanger))
+			src.pipe_type = PIPE_HEAT_EXCHANGE
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
@@ -93,6 +102,9 @@ Buildable meters
 		"bent insulated pipe", \
 		"gas filter", \
 		"gas mixer", \
+		"passive gate", \
+		"volume pump", \
+		"heat exchanger", \
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	var/list/islist = list( \
@@ -111,6 +123,9 @@ Buildable meters
 		"insulated", \
 		"filter", \
 		"mixer", \
+		"passivegate", \
+		"volumepump", \
+		"heunary", \
 	)
 	icon_state = islist[pipe_type + 1]
 
@@ -164,12 +179,14 @@ Buildable meters
 			PIPE_HE_STRAIGHT, \
 			PIPE_JUNCTION ,\
 			PIPE_PUMP ,\
+			PIPE_VOLUME_PUMP ,\
+			PIPE_PASSIVE_GATE ,\
 			PIPE_MVALVE \
 		)
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
 			return dir //dir|acw
-		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER)
+		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE)
 			return dir
 		if(PIPE_MANIFOLD)
 			return flip|cw|acw
@@ -451,6 +468,54 @@ Buildable meters
 				P.node2.initialize()
 				P.node2.build_network()
 
+		if(PIPE_PASSIVE_GATE)		//passive gate
+			var/obj/machinery/atmospherics/binary/passive_gate/P = new(src.loc)
+			P.dir = dir
+			P.initialize_directions = pipe_dir
+			if (pipename)
+				P.name = pipename
+			var/turf/T = P.loc
+			P.level = T.intact ? 2 : 1
+			P.initialize()
+			P.build_network()
+			if (P.node1)
+				P.node1.initialize()
+				P.node1.build_network()
+			if (P.node2)
+				P.node2.initialize()
+				P.node2.build_network()
+
+		if(PIPE_VOLUME_PUMP)		//volume pump
+			var/obj/machinery/atmospherics/binary/volume_pump/P = new(src.loc)
+			P.dir = dir
+			P.initialize_directions = pipe_dir
+			if (pipename)
+				P.name = pipename
+			var/turf/T = P.loc
+			P.level = T.intact ? 2 : 1
+			P.initialize()
+			P.build_network()
+			if (P.node1)
+				P.node1.initialize()
+				P.node1.build_network()
+			if (P.node2)
+				P.node2.initialize()
+				P.node2.build_network()
+
+		if(PIPE_HEAT_EXCHANGE)		// heat exchanger
+			var/obj/machinery/atmospherics/unary/heat_exchanger/C = new( src.loc )
+			C.dir = dir
+			C.initialize_directions = pipe_dir
+			if (pipename)
+				C.name = pipename
+			var/turf/T = C.loc
+			C.level = T.intact ? 2 : 1
+			C.initialize()
+			C.build_network()
+			if (C.node)
+				C.node.initialize()
+				C.node.build_network()
+
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \
 		"[user] fastens the [src].", \
@@ -502,3 +567,6 @@ Buildable meters
 #undef PIPE_INSULATED_BENT
 #undef PIPE_GAS_FILTER
 #undef PIPE_GAS_MIXER
+#undef PIPE_PASSIVE_GATE
+#undef PIPE_VOLUME_PUMP
+#undef PIPE_OUTLET_INJECT
