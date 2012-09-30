@@ -8,7 +8,6 @@
 	level = 1
 	var/area_uid
 	var/id_tag = null
-	power_channel = ENVIRON
 
 	var/on = 0
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing

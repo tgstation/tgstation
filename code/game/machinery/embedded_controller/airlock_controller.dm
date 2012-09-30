@@ -209,6 +209,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 	density = 0
 
 	frequency = 1449
+	power_channel = ENVIRON
 
 	// Setup parameters only
 	var/id_tag

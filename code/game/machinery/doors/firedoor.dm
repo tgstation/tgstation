@@ -8,6 +8,7 @@
 	icon_state = "door_open"
 	opacity = 0
 	density = 0
+	power_channel = ENVIRON
 	var/blocked = 0
 	var/nextstate = null
 
@@ -19,7 +20,7 @@
 
 
 	power_change()
-		if(powered(ENVIRON))
+		if(powered(power_channel))
 			stat &= ~NOPOWER
 		else
 			stat |= NOPOWER

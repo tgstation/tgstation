@@ -151,6 +151,7 @@
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
 	anchored = 1.0
+	power_channel = ENVIRON
 	var/frequency = 0
 	var/id
 	use_power = 1
@@ -198,6 +199,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
+	power_channel = ENVIRON
 	var/id = null
 	var/range = 10
 	var/normaldoorcontrol = 0
