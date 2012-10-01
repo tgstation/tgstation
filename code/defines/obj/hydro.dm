@@ -962,6 +962,23 @@
 	plant_type = 0
 	growthstages = 5
 
+/obj/item/seeds/cherryseed
+	name = "pack of cherry pits"
+	desc = "Careful not to crack a tooth on one... That'd be the pits."
+	icon_state = "seed-cherry"
+	mypath = "/obj/item/seeds/cherryseed"
+	species = "cherry"
+	plantname = "Cherry Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/cherries"
+	lifespan = 35
+	endurance = 35
+	maturation = 5
+	production = 5
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 5
+
 /*  // Maybe one day when I get it to work like a grenade which exlodes gibs.
 /obj/item/seeds/gibtomatoseed
 	name = "Gib Tomato seeds"
