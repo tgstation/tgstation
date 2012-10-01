@@ -25,7 +25,7 @@
 	var/oldenergy = energy
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
-		use_power(2000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
+		use_power(3000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 
 /obj/machinery/chem_dispenser/power_change()
 	if(powered())
