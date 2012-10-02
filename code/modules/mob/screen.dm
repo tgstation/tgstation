@@ -317,7 +317,7 @@
 		if("Reset Machine")
 			usr.machine = null
 		if("internal")
-			if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
+			if (( !usr.stat && !usr.stunned && !usr.paralysis && !usr.restrained() ))
 				if (usr.internal)
 					usr.internal = null
 					usr << "\blue No longer running on internals."
