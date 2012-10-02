@@ -36,6 +36,8 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=16'>Six Soul Stone Shards and the spell Artificer</A><BR>"
 		dat += "<HR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=17'>Mastercrafted Armor Set</A><BR>"
+		dat += "<HR>"
 		if(op)
 			dat += "<A href='byond://?src=\ref[src];spell_choice=18'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")
@@ -55,7 +57,7 @@
 		if(href_list["spell_choice"])
 			if(src.uses >= 1 && src.max_uses >=1 && text2num(href_list["spell_choice"]) < 18)
 				src.uses--
-				var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock","Summon Guns","Staff of Change","Six Soul Stone Shards and the spell Artificer")
+				var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock","Summon Guns","Staff of Change","Six Soul Stone Shards and the spell Artificer","Mastercrafted Armor Set")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in usr.spell_list)
 					if(available_spells[text2num(href_list["spell_choice"])] == aspell.name)
@@ -133,6 +135,15 @@
 							usr.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(usr)
 							src.temp = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
 							src.max_uses--
+						if ("17")
+							feedback_add_details("wizard_spell_learned","HS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							new /obj/item/clothing/shoes/sandal(get_turf(usr)) //In case they've lost them.
+							new /obj/item/clothing/gloves/purple(get_turf(usr))//To complete the outfit
+							new /obj/item/clothing/suit/space/rig/wizard(get_turf(usr))
+							new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(usr))
+							src.temp = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
+							src.max_uses--
+
 			if (href_list["spell_choice"] == "18")
 				var/area/wizard_station/A = locate()
 				if(usr in A.contents)
