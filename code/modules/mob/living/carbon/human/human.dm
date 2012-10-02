@@ -21,8 +21,9 @@
 		dna = new /datum/dna(null)
 
 	//initialise organs
-	organs = newlist(/datum/organ/external/chest, /datum/organ/external/head, /datum/organ/external/l_arm, \
-						/datum/organ/external/r_arm, /datum/organ/external/r_leg, /datum/organ/external/l_leg)
+	organs = newlist(/datum/organ/external/chest, /datum/organ/external/head, /datum/organ/external/l_arm,
+					 /datum/organ/external/r_arm, /datum/organ/external/r_leg, /datum/organ/external/l_leg,
+					 /datum/organ/internal/skeleton, /datum/organ/internal/skin)
 	for(var/datum/organ/external/O in organs)
 		O.owner = src
 

@@ -325,6 +325,9 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NANOREGEN		28 	// regenerative nanobots, -3 all damage types per second
 
 
+	//2spooky
+#define SKELETON 29
+
 //disabilities
 #define NEARSIGHTED		1
 #define EPILEPSY		2

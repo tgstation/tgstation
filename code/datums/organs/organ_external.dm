@@ -117,7 +117,7 @@
 
 
 //Returns total damage...kinda pointless really
-/datum/organ/external/proc/get_damage()	//returns total damage
+/datum/organ/external/proc/get_damage()
 	return brute_dam + burn_dam
 
 

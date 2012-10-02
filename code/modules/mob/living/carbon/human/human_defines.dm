@@ -45,7 +45,7 @@
 	var/icon/stand_icon = null
 	var/icon/lying_icon = null
 
-	var/list/organs = list()
+	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc, line 24. I'm sick and tired of missing comments. -Agouri
 
 	var/miming = null //Toggle for the mime's abilities.
 
