@@ -311,7 +311,7 @@
 	mymob.damageoverlay.name = "dmg"
 	mymob.damageoverlay.screen_loc = "1,1"
 	mymob.damageoverlay.mouse_opacity = 0
-	mymob.damageoverlay.layer = 17
+	mymob.damageoverlay.layer = 18.1 //The black screen overlay sets layer to 18 to display it, this one has to be just on top.
 
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = ui_style

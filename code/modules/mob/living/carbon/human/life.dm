@@ -930,60 +930,74 @@
 
 		update_action_buttons()
 
-		if(!src.oxyloss)
-			damageoverlay.icon_state = "oxydamageoverlay0"
-		else
-			switch(oxyloss)
-				if(0 to 10)
-					damageoverlay.icon_state = "oxydamageoverlay0"
-				if(10 to 20)
-					damageoverlay.icon_state = "oxydamageoverlay1"
-				if(20 to 25)
-					damageoverlay.icon_state = "oxydamageoverlay2"
-				if(25 to 30)
-					damageoverlay.icon_state = "oxydamageoverlay3"
-				if(30 to 35)
-					damageoverlay.icon_state = "oxydamageoverlay4"
-				if(35 to 40)
-					damageoverlay.icon_state = "oxydamageoverlay5"
-				if(40 to 45)
-					damageoverlay.icon_state = "oxydamageoverlay6"
-				if(45 to INFINITY)
-					damageoverlay.icon_state = "oxydamageoverlay7"
-
 		if(damageoverlay.overlays)
 			damageoverlay.overlays = list()
-		var/hurtdamage = src.getBruteLoss() + src.getFireLoss()
-		if(hurtdamage)
-			var/image/I
-			switch(hurtdamage)
-				if(10 to 20)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay1")
-				if(20 to 30)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay2")
-				if(30 to 40)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay3")
-				if(40 to 45)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay4")
-				if(45 to 50)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay5")
-				if(50 to 56)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay6")
-				if(56 to 62)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay7")
-				if(62 to 68)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay8")
-				if(68 to 74)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay9")
-				if(74 to 80)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay10")
-				if(80 to 86)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay11")
-				if(86 to 92)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay12")
-				if(92 to INFINITY)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay13")
-			damageoverlay.overlays += I
+
+		if(stat == UNCONSCIOUS)
+			//Critical damage passage overlay
+			if(health <= 0)
+				var/image/I
+				switch(health)
+					if(-20 to -10)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage1")
+					if(-30 to -20)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage2")
+					if(-40 to -30)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage3")
+					if(-50 to -40)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage4")
+					if(-60 to -50)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage5")
+					if(-70 to -60)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage6")
+					if(-80 to -70)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage7")
+					if(-90 to -80)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage8")
+					if(-95 to -90)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage9")
+					if(-INFINITY to -95)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage10")
+				damageoverlay.overlays += I
+		else
+			//Oxygen damage overlay
+			if(oxyloss)
+				var/image/I
+				switch(oxyloss)
+					if(10 to 20)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay1")
+					if(20 to 25)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay2")
+					if(25 to 30)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay3")
+					if(30 to 35)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay4")
+					if(35 to 40)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay5")
+					if(40 to 45)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay6")
+					if(45 to INFINITY)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay7")
+				damageoverlay.overlays += I
+
+			//Fire and Brute damage overlay (BSSR)
+			var/hurtdamage = src.getBruteLoss() + src.getFireLoss()
+			if(hurtdamage)
+				var/image/I
+				switch(hurtdamage)
+					if(10 to 25)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay1")
+					if(25 to 40)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay2")
+					if(40 to 55)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay3")
+					if(55 to 70)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay4")
+					if(70 to 85)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay5")
+					if(85 to INFINITY)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay6")
+				damageoverlay.overlays += I
 
 		if( stat == DEAD )
 			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
