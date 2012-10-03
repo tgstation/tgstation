@@ -649,6 +649,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // Typo from the oriignal coder here, below lies the jitteriness process. So make of his code what you will, the previous comment here was just a copypaste of the above.
 /mob/proc/jittery_process()
+
+	if (is_floaty) return
+
 	var/old_x = pixel_x
 	var/old_y = pixel_y
 	is_jittery = 1
@@ -664,6 +667,29 @@ note dizziness decrements automatically in the mob's Life() proc.
 		sleep(1)
 	//endwhile - reset the pixel offsets to zero
 	is_jittery = 0
+	pixel_x = old_x
+	pixel_y = old_y
+
+//Floaty - Makes the mob sprite bob up and down. Also a copypaste of dizziness
+
+/mob/proc/make_floaty()
+	if(floatiness && !is_floaty)
+		spawn(0)
+			floaty_process()
+
+/mob/proc/floaty_process()
+
+	if (is_jittery) return
+
+	var/old_x = pixel_x
+	var/old_y = pixel_y
+	is_floaty = 1
+	while(floatiness)
+		pixel_y = 3 * cos(7 * world.time) //May need some tweaking
+
+		sleep(1)
+	//endwhile - reset the pixel offsets to zero
+	is_floaty = 0
 	pixel_x = old_x
 	pixel_y = old_y
 

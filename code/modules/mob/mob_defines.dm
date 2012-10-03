@@ -94,6 +94,8 @@
 	var/dizziness = 0//Carbon
 	var/is_dizzy = 0
 	var/is_jittery = 0
+	var/is_floaty = 0
+	var/floatiness = 0
 	var/jitteriness = 0//Carbon
 	var/charges = 0.0
 	var/nutrition = 400.0//Carbon
