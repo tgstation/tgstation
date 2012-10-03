@@ -7,7 +7,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"asteroid","asteroid_dug",
 				"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
 				"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
-				"burning","oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken")
+				"burning","oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken", "carpet", "carpetcorner", "carpetside", "carpet")
 
 var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug")
 var/list/wood_icons = list("wood","wood-broken")
@@ -74,13 +74,13 @@ var/list/wood_icons = list("wood","wood-broken")
 turf/simulated/floor/proc/update_icon()
 	if(lava)
 		return
-	if(is_plasteel_floor())
+	else if(is_plasteel_floor())
 		if(!broken && !burnt)
 			icon_state = icon_regular_floor
-	if(is_plating())
+	else if(is_plating())
 		if(!broken && !burnt)
 			icon_state = icon_plating //Because asteroids are 'platings' too.
-	if(is_light_floor())
+	else if(is_light_floor())
 		var/obj/item/stack/tile/light/T = floor_tile
 		if(T.on)
 			switch(T.state)
@@ -100,11 +100,54 @@ turf/simulated/floor/proc/update_icon()
 		else
 			SetLuminosity(0)
 			icon_state = "light_off"
-	if(is_grass_floor())
+	else if(is_grass_floor())
 		if(!broken && !burnt)
 			if(!(icon_state in list("grass1","grass2","grass3","grass4")))
 				icon_state = "grass[pick("1","2","3","4")]"
-	if(is_wood_floor())
+	else if(is_carpet_floor())
+		if(!broken && !burnt)
+			if(icon_state != "carpetsymbol")
+				var/connectdir = 0
+				for(var/direction in cardinal)
+					if(istype(get_step(src,direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,direction)
+						if(FF.is_carpet_floor())
+							connectdir |= direction
+
+				//Check the diagonal connections for corners, where you have, for example, connections both north and east. In this case it checks for a north-east connection to determine whether to add a corner marker or not.
+				var/diagonalconnect = 0 //1 = NE; 2 = SE; 4 = NW; 8 = SW
+
+				//Northeast
+				if(connectdir & NORTH && connectdir & EAST)
+					if(istype(get_step(src,NORTHEAST),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,NORTHEAST)
+						if(FF.is_carpet_floor())
+							diagonalconnect |= 1
+
+				//Southeast
+				if(connectdir & SOUTH && connectdir & EAST)
+					if(istype(get_step(src,SOUTHEAST),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,SOUTHEAST)
+						if(FF.is_carpet_floor())
+							diagonalconnect |= 2
+
+				//Northwest
+				if(connectdir & NORTH && connectdir & WEST)
+					if(istype(get_step(src,NORTHWEST),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,NORTHWEST)
+						if(FF.is_carpet_floor())
+							diagonalconnect |= 4
+
+				//Southwest
+				if(connectdir & SOUTH && connectdir & WEST)
+					if(istype(get_step(src,SOUTHWEST),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,SOUTHWEST)
+						if(FF.is_carpet_floor())
+							diagonalconnect |= 8
+
+				icon_state = "carpet[connectdir]-[diagonalconnect]"
+
+	else if(is_wood_floor())
 		if(!broken && !burnt)
 			if( !(icon_state in wood_icons) )
 				icon_state = "wood"
@@ -189,6 +232,12 @@ turf/simulated/floor/proc/update_icon()
 	else
 		return 0
 
+/turf/simulated/floor/is_carpet_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/carpet))
+		return 1
+	else
+		return 0
+
 /turf/simulated/floor/is_plating()
 	if(!floor_tile)
 		return 1
@@ -211,6 +260,9 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_wood_floor())
 		src.icon_state = "wood-broken"
 		broken = 1
+	else if(is_carpet_floor())
+		src.icon_state = "carpet-broken"
+		broken = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
 		broken = 1
@@ -231,6 +283,9 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_wood_floor())
 		src.icon_state = "wood-broken"
 		burnt = 1
+	else if(is_carpet_floor())
+		src.icon_state = "carpet-broken"
+		burnt = 1
 	else if(is_grass_floor())
 		src.icon_state = "sand[pick("1","2","3")]"
 		burnt = 1
@@ -245,6 +300,13 @@ turf/simulated/floor/proc/update_icon()
 			if(istype(get_step(src,direction),/turf/simulated/floor))
 				var/turf/simulated/floor/FF = get_step(src,direction)
 				FF.update_icon() //so siding get updated properly
+	else if(is_carpet_floor())
+		spawn(5)
+			if(src)
+				for(var/direction in list(1,2,4,8,5,6,9,10))
+					if(istype(get_step(src,direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,direction)
+						FF.update_icon() //so siding get updated properly
 
 	if(!floor_tile) return
 	del(floor_tile)
@@ -340,6 +402,24 @@ turf/simulated/floor/proc/update_icon()
 	update_icon()
 	levelupdate()
 
+//This proc will make a turf into a carpet floor. Fun eh? Insert the carpet tile to be used as the argument
+//If no argument is given a new one will be made.
+/turf/simulated/floor/proc/make_carpet_floor(var/obj/item/stack/tile/carpet/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		if(istype(T,/obj/item/stack/tile/carpet))
+			floor_tile = T
+			update_icon()
+			levelupdate()
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/carpet
+
+	update_icon()
+	levelupdate()
+
 /turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
 
 	if(!C || !user)
@@ -414,6 +494,11 @@ turf/simulated/floor/proc/update_icon()
 					F.on = L.on
 				if(istype(T,/obj/item/stack/tile/grass))
 					for(var/direction in cardinal)
+						if(istype(get_step(src,direction),/turf/simulated/floor))
+							var/turf/simulated/floor/FF = get_step(src,direction)
+							FF.update_icon() //so siding gets updated properly
+				else if(istype(T,/obj/item/stack/tile/carpet))
+					for(var/direction in list(1,2,4,8,5,6,9,10))
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
 							FF.update_icon() //so siding gets updated properly
