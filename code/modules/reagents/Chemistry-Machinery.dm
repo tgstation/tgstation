@@ -761,7 +761,7 @@
 			O.contents -= G
 			G.loc = src
 			holdingitems += G
-			if((holdingitems && holdingitems.len >= limit) || beaker.reagents.total_volume >= 80) //Sanity checking so the blender doesn't overfill
+			if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
 				user << "You fill the All-In-One grinder to the brim."
 				break
 
