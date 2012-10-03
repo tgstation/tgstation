@@ -231,3 +231,11 @@
 	item_state = "gladiator"
 	color = "gladiator"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/under/sundress
+	name = "sundress"
+	desc = "Makes you want to frolic in a field of daisies."
+	icon_state = "sundress"
+	item_state = "sundress"
+	color = "sundress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
