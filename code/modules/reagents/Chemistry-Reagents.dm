@@ -635,25 +635,38 @@ datum
 				if(!istype(M, /mob/living))
 					return
 				if(method == TOUCH)
-					if(istype(M, /mob/living/carbon/human))
+					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
+
 						if(H.wear_mask)
-							del (H.wear_mask)
-							H.update_inv_wear_mask()
-							H << "\red Your mask melts away but protects you from the acid!"
+							if(!H.wear_mask.unacidable)
+								del (H.wear_mask)
+								H.update_inv_wear_mask()
+								H << "\red Your mask melts away but protects you from the acid!"
+							else
+								H << "\red Your mask protects you from the acid!"
 							return
+
 						if(H.head)
-							del (H.head)
-							H.update_inv_head()
-							H << "\red Your helmet melts into uselessness but protects you from the acid!"
+							if(prob(15) && !H.head.unacidable)
+								del(H.head)
+								H.update_inv_head()
+								H << "\red Your helmet melts away but protects you from the acid"
+							else
+								H << "\red Your helmet protects you from the acid!"
 							return
-					else if(istype(M, /mob/living/carbon/monkey))
+
+					else if(ismonkey(M))
 						var/mob/living/carbon/monkey/MK = M
 						if(MK.wear_mask)
-							del (MK.wear_mask)
-							MK.update_inv_wear_mask()
-							MK << "\red Your mask melts away but protects you from the acid!"
+							if(!MK.wear_mask.unacidable)
+								del (MK.wear_mask)
+								MK.update_inv_wear_mask()
+								MK << "\red Your mask melts away but protects you from the acid!"
+							else
+								MK << "\red Your mask protects you from the acid!"
 							return
+
 					if(!M.unacidable)
 						if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
 							var/mob/living/carbon/human/H = M
@@ -697,15 +710,21 @@ datum
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
+
 						if(H.wear_mask)
-							del (H.wear_mask)
-							H << "\red Your mask melts away!"
+							if(!H.wear_mask.unacidable)
+								del (H.wear_mask)
+								H.update_inv_wear_mask()
+								H << "\red Your mask melts away but protects you from the acid!"
+							else
+								H << "\red Your mask protects you from the acid!"
 							return
+
 						if(H.head)
-							if(prob(15))
+							if(prob(15) && !H.head.unacidable)
 								del(H.head)
 								H.update_inv_head()
-								H << "\red Your helmet melts from the acid!"
+								H << "\red Your helmet melts away but protects you from the acid"
 							else
 								H << "\red Your helmet protects you from the acid!"
 							return
@@ -715,16 +734,20 @@ datum
 							if(affecting.take_damage(15, 0))
 								H.UpdateDamageIcon()
 							H.emote("scream")
-					else
-						if(ismonkey(M))
-							var/mob/living/carbon/monkey/MK = M
-							if(MK.wear_mask)
+					else if(ismonkey(M))
+						var/mob/living/carbon/monkey/MK = M
+
+						if(MK.wear_mask)
+							if(!MK.wear_mask.unacidable)
 								del (MK.wear_mask)
 								MK.update_inv_wear_mask()
 								MK << "\red Your mask melts away but protects you from the acid!"
-								return
-							if(!MK.unacidable)
-								MK.take_organ_damage(min(15, volume * 4)) // same deal as sulphuric acid
+							else
+								MK << "\red Your mask protects you from the acid!"
+							return
+
+						if(!MK.unacidable)
+							MK.take_organ_damage(min(15, volume * 4)) // same deal as sulphuric acid
 				else
 					if(!M.unacidable)
 						if(ishuman(M))
