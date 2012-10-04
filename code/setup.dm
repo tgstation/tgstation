@@ -507,3 +507,13 @@ var/list/liftable_structures = list(\
 
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
+
+// Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
+// the index of the sort department that you want. For example, sortType set to 2 will reroute all packages
+// tagged for the Cargo Bay.
+var/list/TAGGERLOCATIONS = list("Disposals",
+	"Cargo Bay", "QM Office", "Engineering", "CE Office",
+	"Atmospherics", "Security", "HoS Office", "Medbay",
+	"CMO Office", "Chemistry", "Research", "RD Office",
+	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
+	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
