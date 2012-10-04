@@ -194,22 +194,21 @@
 		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and [t_has] suffered major bloodloss!</span>\n"
 
 	if(stat == DEAD || (status_flags & FAKEDEATH))
-		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
+		if(brain_op_stage != 4)//Only perform these checks if there is no brain
+			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 
-		if(!key)
-			var/foundghost = 0
-			if(mind)
-				for(var/mob/dead/observer/G in player_list)
-					if(G.mind == mind)
-						foundghost = 1
-						break
-			if(!foundghost)
-				msg += " and [t_his] soul has departed"
-		msg += "...</span>\n"
-
-	else
-
-		msg += "<span class='warning'>"
+			if(!key)
+				var/foundghost = 0
+				if(mind)
+					for(var/mob/dead/observer/G in player_list)
+						if(G.mind == mind)
+							foundghost = 1
+							break
+				if(!foundghost)
+					msg += " and [t_his] soul has departed"
+			msg += "...</span>\n"
+		else//Brain is gone, doesn't matter if they are AFK or present
+			msg += "<span class='deadsay'>It appears that [t_his] brain is missing.\n"
 
 		var/temp = getBruteLoss() //no need to calculate each of these twice
 		if(temp)
@@ -247,9 +246,9 @@
 		else if(getBrainLoss() >= 60)
 			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-		if(!key)
+		if(!key && brain_op_stage != 4)
 			msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-		else if(!client)
+		else if(!client && brain_op_stage != 4)
 			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 	if(digitalcamo)

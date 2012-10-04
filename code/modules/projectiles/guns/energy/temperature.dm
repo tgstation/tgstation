@@ -35,8 +35,9 @@
 		Target output temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
 		"}
 
-		user << browse(dat, "window=freezegun;size=450x300")
-		onclose(user, "freezegun")
+
+		user << browse(dat, "window=freezegun;size=450x300;can_resize=1;can_close=1;can_minimize=1")
+		onclose(user, "window=freezegun", src)
 
 
 	Topic(href, href_list)
@@ -44,6 +45,9 @@
 			return
 		usr.machine = src
 		src.add_fingerprint(usr)
+
+
+
 		if(href_list["temp"])
 			var/amount = text2num(href_list["temp"])
 			if(amount > 0)
@@ -73,6 +77,4 @@
 					temperature += 10
 			else
 				temperature = current_temperature
-			if(istype(src.loc, /mob))
-				attack_self(src.loc)
 		return
