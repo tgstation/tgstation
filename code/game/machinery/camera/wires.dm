@@ -99,7 +99,7 @@
 	src.interact(usr)
 
 /obj/machinery/camera/proc/interact(mob/living/user as mob)
-	if(!panel_open || isAI(user))
+	if(!panel_open)
 		return
 
 	user.machine = src
@@ -135,7 +135,7 @@
 
 /obj/machinery/camera/Topic(href, href_list)
 	..()
-	if (((in_range(src, usr) && istype(src.loc, /turf))) && !istype(usr, /mob/living/silicon))
+	if (in_range(src, usr) && istype(src.loc, /turf))
 		usr.machine = src
 		if (href_list["wires"])
 			var/t1 = text2num(href_list["wires"])
