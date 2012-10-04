@@ -28,6 +28,18 @@
 	var/radio_filter_out
 	var/radio_filter_in
 
+	on
+		on = 1
+		icon_state = "out"
+
+	siphon
+		pump_direction = 0
+		icon_state = "off"
+
+		on
+			on = 1
+			icon_state = "in"
+
 	New()
 		var/area/A = get_area(loc)
 		if (A.master)

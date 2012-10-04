@@ -301,6 +301,19 @@ obj/machinery/atmospherics/pipe
 		level = 1
 		icon_state = "intact-f"
 
+	simple/yellow
+		name="Pipe"
+		color="yellow"
+		icon_state = ""
+
+	simple/yellow/visible
+		level = 2
+		icon_state = "intact-y"
+
+	simple/yellow/hidden
+		level = 1
+		icon_state = "intact-y-f"
+
 
 
 	simple/insulated
@@ -769,6 +782,11 @@ obj/machinery/atmospherics/pipe
 		color="gray"
 		icon_state = ""
 
+	manifold/yellow
+		name="Air supply pipe"
+		color="yellow"
+		icon_state = ""
+
 	manifold/scrubbers/visible
 		level = 2
 		icon_state = "manifold-r"
@@ -800,6 +818,14 @@ obj/machinery/atmospherics/pipe
 	manifold/general/hidden
 		level = 1
 		icon_state = "manifold-f"
+
+	manifold/yellow/visible
+		level = 2
+		icon_state = "manifold-y"
+
+	manifold/yellow/hidden
+		level = 1
+		icon_state = "manifold-y-f"
 
 obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))

@@ -26,6 +26,10 @@ obj/machinery/atmospherics/binary/volume_pump
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	on
+		on = 1
+		icon_state = "intact_on"
+
 	update_icon()
 		if(node1&&node2)
 			icon_state = "intact_[on?("on"):("off")]"
