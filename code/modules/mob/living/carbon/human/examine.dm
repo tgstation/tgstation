@@ -208,48 +208,48 @@
 					msg += " and [t_his] soul has departed"
 			msg += "...</span>\n"
 		else//Brain is gone, doesn't matter if they are AFK or present
-			msg += "<span class='deadsay'>It appears that [t_his] brain is missing.\n"
+			msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
 
-		var/temp = getBruteLoss() //no need to calculate each of these twice
-		if(temp)
-			if(temp < 30)
-				msg += "[t_He] [t_has] minor bruising.\n"
-			else
-				msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
+	var/temp = getBruteLoss() //no need to calculate each of these twice
+	if(temp)
+		if(temp < 30)
+			msg += "[t_He] [t_has] minor bruising.\n"
+		else
+			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
 
-		temp = getFireLoss()
-		if(temp)
-			if(temp < 30)
-				msg += "[t_He] [t_has] minor burns.\n"
-			else
-				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
+	temp = getFireLoss()
+	if(temp)
+		if(temp < 30)
+			msg += "[t_He] [t_has] minor burns.\n"
+		else
+			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
 
-		temp = getCloneLoss()
-		if(temp)
-			if(temp < 30)
-				msg += "[t_He] [t_has] minor genetic deformities.\n"
-			else
-				msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
+	temp = getCloneLoss()
+	if(temp)
+		if(temp < 30)
+			msg += "[t_He] [t_has] minor genetic deformities.\n"
+		else
+			msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
 
-		if(nutrition < 100)
-			msg += "[t_He] [t_is] severely malnourished.\n"
-		else if(nutrition >= 500)
-			if(usr.nutrition < 100)
-				msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
-			else
-				msg += "[t_He] [t_is] quite chubby.\n"
+	if(nutrition < 100)
+		msg += "[t_He] [t_is] severely malnourished.\n"
+	else if(nutrition >= 500)
+		if(usr.nutrition < 100)
+			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
+		else
+			msg += "[t_He] [t_is] quite chubby.\n"
 
-		msg += "</span>"
+	msg += "</span>"
 
-		if(stat == UNCONSCIOUS)
-			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-		else if(getBrainLoss() >= 60)
-			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
+	if(stat == UNCONSCIOUS)
+		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
+	else if(getBrainLoss() >= 60)
+		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-		if(!key && brain_op_stage != 4)
-			msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-		else if(!client && brain_op_stage != 4)
-			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
+	if(!key && brain_op_stage != 4)
+		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
+	else if(!client && brain_op_stage != 4)
+		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 	if(digitalcamo)
 		msg += "[t_He] [t_is] repulsively uncanny!\n"
