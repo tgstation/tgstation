@@ -302,6 +302,9 @@ datum
 					holder.remove_reagent("carpotoxin", 1)
 				if(holder.has_reagent("zombiepowder"))
 					holder.remove_reagent("zombiepowder", 0.5)
+				if(holder.has_reagent("LSD"))
+					holder.remove_reagent("LSD", 2)
+				M.hallucination = max(0, M.hallucination - 5)
 				M.adjustToxLoss(-2)
 				..()
 				return
@@ -1301,6 +1304,9 @@ datum
 					holder.remove_reagent("carpotoxin", 5)
 				if(holder.has_reagent("zombiepowder"))
 					holder.remove_reagent("zombiepowder", 5)
+				if(holder.has_reagent("LSD"))
+					holder.remove_reagent("LSD", 5)
+				M.hallucination = 0
 				M.setBrainLoss(0)
 				M.disabilities = 0
 				M.sdisabilities = 0
@@ -1339,6 +1345,9 @@ datum
 				M.AdjustParalysis(-1)
 				M.AdjustStunned(-1)
 				M.AdjustWeakened(-1)
+				if(holder.has_reagent("LSD"))
+					holder.remove_reagent("LSD", 5)
+				M.hallucination = max(0, M.hallucination - 10)
 				if(prob(60))	M.adjustToxLoss(1)
 				..()
 				return
