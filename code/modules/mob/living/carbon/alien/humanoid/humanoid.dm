@@ -74,6 +74,12 @@
 	if (client.statpanel == "Status")
 		stat(null, "Plasma Stored: [getPlasma()]")
 
+	if(emergency_shuttle)
+		if(emergency_shuttle.online && emergency_shuttle.location < 2)
+			var/timeleft = emergency_shuttle.timeleft()
+			if (timeleft)
+				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
@@ -427,7 +433,7 @@
 				if ((HULK in M.mutations) || (SUPRSTR in M.augmentations))//HULK SMASH
 					damage += 14
 					spawn(0)
-						Paralyse(5)
+						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)

@@ -3,7 +3,11 @@
 Put (mob/proc)s here that are in dire need of a code cleanup.
 */
 
-
+/mob/living/proc/has_disease(var/datum/disease/virus)
+	for(var/datum/disease/D in viruses)
+		if(istype(D, virus))
+			return 1
+	return 0
 
 // This proc has some procs that should be extracted from it. I believe we can develop some helper procs from it - Rockdtben
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)

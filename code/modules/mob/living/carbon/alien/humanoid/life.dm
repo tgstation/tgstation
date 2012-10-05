@@ -1,9 +1,9 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /mob/living/carbon/alien/humanoid
-	var/oxygen_alert = 0
-	var/toxins_alert = 0
-	var/fire_alert = 0
+	oxygen_alert = 0
+	toxins_alert = 0
+	fire_alert = 0
 
 	var/temperature_alert = 0
 
@@ -16,6 +16,8 @@
 		return
 
 	..()
+
+	var/datum/gas_mixture/environment = loc.return_air()
 
 	if (stat != DEAD) //still breathing
 
@@ -49,7 +51,7 @@
 	//handle_virus_updates() There is no disease that affects aliens
 
 	//Handle temperature/pressure differences between body and environment
-	handle_environment()
+	handle_environment(environment)
 
 	//stuff in the stomach
 	handle_stomach()
@@ -88,60 +90,6 @@
 		if (disabilities & NERVOUS)
 			if (prob(10))
 				stuttering = max(10, stuttering)
-
-
-	proc/handle_mutations_and_radiation()
-
-		if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || prob(50))
-				switch(getFireLoss())
-					if(1 to 50)
-						adjustFireLoss(-1)
-					if(51 to 100)
-						adjustFireLoss(-5)
-
-		if ((HULK in mutations) && health <= 25)
-			mutations.Remove(HULK)
-			src << "\red You suddenly feel very weak."
-			Weaken(3)
-			emote("collapse")
-
-		if (radiation)
-			if (radiation > 100)
-				radiation = 100
-				Weaken(10)
-				src << "\red You feel weak."
-				emote("collapse")
-
-			if (radiation < 0)
-				radiation = 0
-
-			switch(radiation)
-				if(1 to 49)
-					radiation--
-					if(prob(25))
-						adjustToxLoss(1)
-						updatehealth()
-
-				if(50 to 74)
-					radiation -= 2
-					adjustToxLoss(1)
-					if(prob(5))
-						radiation -= 5
-						Weaken(3)
-						src << "\red You feel weak."
-						emote("collapse")
-					updatehealth()
-
-				if(75 to 100)
-					radiation -= 3
-					adjustToxLoss(3)
-					if(prob(1))
-						src << "\red You mutate!"
-						randmutb(src)
-						domutcheck(src,null)
-						emote("gasp")
-					updatehealth()
 
 
 	proc/breathe()
@@ -256,18 +204,6 @@
 		//Temporary fixes to the alerts.
 
 		return 1
-
-	proc/handle_environment()
-
-		//If there are alien weeds on the ground then heal if needed or give some toxins
-		if(locate(/obj/effect/alien/weeds) in loc)
-			if(health >= maxHealth)
-				adjustToxLoss(plasma_rate)
-
-			else
-				adjustBruteLoss(-heal_rate)
-				adjustFireLoss(-heal_rate)
-				adjustOxyLoss(-heal_rate)
 
 
 

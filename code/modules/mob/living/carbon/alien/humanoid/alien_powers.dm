@@ -30,6 +30,7 @@ Doesn't work on other aliens/AI.*/
 		new /obj/effect/alien/weeds/node(loc)
 	return
 
+/*
 /mob/living/carbon/alien/humanoid/verb/ActivateHuggers()
 	set name = "Activate facehuggers (5)"
 	set desc = "Makes all nearby facehuggers activate"
@@ -41,7 +42,7 @@ Doesn't work on other aliens/AI.*/
 			F.GoActive()
 		emote("roar")
 	return
-
+*/
 /mob/living/carbon/alien/humanoid/verb/whisp(mob/M as mob in oview())
 	set name = "Whisper (10)"
 	set desc = "Whisper to someone"
