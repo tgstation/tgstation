@@ -23,9 +23,12 @@
 	for(var/mob/living/M in mob_list)
 		// Easy checks first.
 		// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
-		if(M.loc.z == 2)
+		var/turf/T = get_turf(M)
+		if(!T)
 			continue
-		if(M.loc.z > 6)
+		if(T.z == 2)
+			continue
+		if(T.z > 6)
 			continue
 		if(M == usr)
 			continue

@@ -86,19 +86,4 @@
 	w_class = 3
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
-
-//Security rig
-/obj/item/clothing/head/helmet/space/rig/security
-	name = "security hardsuit helmet"
-	icon_state = "rig0-security"
-	color = "security"
-	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
-
-/obj/item/clothing/suit/space/rig/security
-	name = "security hardsuit"
-	desc = "A suit specially designed for security to offer minor protection from environmental hazards, and greater protection from human hazards"
-	icon_state = "rig-security"
-	item_state = "rig-security"
-	slowdown = 1
-	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
-	allowed = list(/obj/item/weapon/gun/energy/laser, /obj/item/weapon/gun/energy/pulse_rifle, /obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/gun/energy/taser, /obj/item/weapon/melee/baton)
+//Security rig/obj/item/clothing/head/helmet/space/rig/security	name = "security hardsuit helmet"	icon_state = "rig0-security"	color = "security"	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)/obj/item/clothing/suit/space/rig/security	name = "security hardsuit"	desc = "A suit specially designed for security to offer minor protection from environmental hazards, and greater protection from human hazards"	icon_state = "rig-security"	item_state = "rig-security"	slowdown = 1	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)	allowed = list(/obj/item/weapon/gun/energy/laser, /obj/item/weapon/gun/energy/pulse_rifle, /obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/gun/energy/taser, /obj/item/weapon/melee/baton)//Wizard Rig/obj/item/clothing/head/helmet/space/rig/wizard	name = "gem-encrusted hardsuit helmet"	icon_state = "rig0-wiz"	item_state = "wiz_helm"	color = "wiz"	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)/obj/item/clothing/suit/space/rig/wizard	icon_state = "rig-wiz"	name = "gem-encrusted hardsuit"	item_state = "wiz_hardsuit"	slowdown = 1	w_class = 3	unacidable = 1	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/emergency_oxygen)

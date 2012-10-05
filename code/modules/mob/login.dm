@@ -35,7 +35,7 @@
 	client.images = null				//remove the images such as AIs being unable to see runes
 	client.screen = null				//remove hud items just in case
 	if(hud_used)	del(hud_used)		//remove the hud objects
-	hud_used = new/obj/hud( src )
+	hud_used = new /datum/hud(src)
 
 	if(!dna)
 		dna = new /datum/dna(null)

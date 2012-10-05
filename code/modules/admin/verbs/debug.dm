@@ -441,6 +441,93 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("[key_name_admin(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].", 0)
 	feedback_add_details("admin_verb","SRM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_areatest()
+	set category = "Mapping"
+	set name = "Test areas"
+
+	var/list/areas_all = list()
+	var/list/areas_with_APC = list()
+	var/list/areas_with_air_alarm = list()
+	var/list/areas_with_RC = list()
+	var/list/areas_with_light = list()
+	var/list/areas_with_LS = list()
+	var/list/areas_with_intercom = list()
+	var/list/areas_with_camera = list()
+
+	for(var/area/A in world)
+		if(!(A.type in areas_all))
+			areas_all.Add(A.type)
+
+	for(var/obj/machinery/power/apc/APC in world)
+		var/area/A = get_area(APC)
+		if(!(A.type in areas_with_APC))
+			areas_with_APC.Add(A.type)
+
+	for(var/obj/machinery/alarm/alarm in world)
+		var/area/A = get_area(alarm)
+		if(!(A.type in areas_with_air_alarm))
+			areas_with_air_alarm.Add(A.type)
+
+	for(var/obj/machinery/requests_console/RC in world)
+		var/area/A = get_area(RC)
+		if(!(A.type in areas_with_RC))
+			areas_with_RC.Add(A.type)
+
+	for(var/obj/machinery/light/L in world)
+		var/area/A = get_area(L)
+		if(!(A.type in areas_with_light))
+			areas_with_light.Add(A.type)
+
+	for(var/obj/machinery/light_switch/LS in world)
+		var/area/A = get_area(LS)
+		if(!(A.type in areas_with_LS))
+			areas_with_LS.Add(A.type)
+
+	for(var/obj/item/device/radio/intercom/I in world)
+		var/area/A = get_area(I)
+		if(!(A.type in areas_with_intercom))
+			areas_with_intercom.Add(A.type)
+
+	for(var/obj/machinery/camera/C in world)
+		var/area/A = get_area(C)
+		if(!(A.type in areas_with_camera))
+			areas_with_camera.Add(A.type)
+
+	var/list/areas_without_APC = areas_all - areas_with_APC
+	var/list/areas_without_air_alarm = areas_all - areas_with_air_alarm
+	var/list/areas_without_RC = areas_all - areas_with_RC
+	var/list/areas_without_light = areas_all - areas_with_light
+	var/list/areas_without_LS = areas_all - areas_with_LS
+	var/list/areas_without_intercom = areas_all - areas_with_intercom
+	var/list/areas_without_camera = areas_all - areas_with_camera
+
+	world << "<b>AREAS WITHOUT AN APC:</b>"
+	for(var/areatype in areas_without_APC)
+		world << "* [areatype]"
+
+	world << "<b>AREAS WITHOUT AN AIR ALARM:</b>"
+	for(var/areatype in areas_without_air_alarm)
+		world << "* [areatype]"
+
+	world << "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>"
+	for(var/areatype in areas_without_RC)
+		world << "* [areatype]"
+
+	world << "<b>AREAS WITHOUT ANY LIGHTS:</b>"
+	for(var/areatype in areas_without_light)
+		world << "* [areatype]"
+
+	world << "<b>AREAS WITHOUT A LIGHT SWITCH:</b>"
+	for(var/areatype in areas_without_LS)
+		world << "* [areatype]"
+
+	world << "<b>AREAS WITHOUT ANY INTERCOMS:</b>"
+	for(var/areatype in areas_without_intercom)
+		world << "* [areatype]"
+
+	world << "<b>AREAS WITHOUT ANY CAMERAS:</b>"
+	for(var/areatype in areas_without_camera)
+		world << "* [areatype]"
 
 /client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in mob_list)
 	set category = "Fun"

@@ -204,7 +204,7 @@ BLIND     // can't see anything
 	..()
 
 /obj/item/clothing/under/verb/removetie()
-	set name = "Remove Tie"
+	set name = "Remove Accessory"
 	set category = "Object"
 	set src in usr
 	if(!istype(usr, /mob/living)) return

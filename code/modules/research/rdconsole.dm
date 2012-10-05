@@ -292,9 +292,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						for(var/obj/I in linked_destroy.contents)
 							for(var/mob/M in I.contents)
 								M.death()
-							del(I)
+							if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
+								var/obj/item/stack/sheet/S = I
+								if(S.amount > 1)
+									S.amount--
+									linked_destroy.loaded_item = S
+								else
+									del(S)
+									linked_destroy.icon_state = "d_analyzer"
+							else
+								if(!(I in linked_destroy.component_parts))
+									del(I)
+									linked_destroy.icon_state = "d_analyzer"
 						use_power(250)
-						linked_destroy.icon_state = "d_analyzer"
 						screen = 1.0
 						updateUsrDialog()
 

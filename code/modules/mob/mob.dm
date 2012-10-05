@@ -372,10 +372,7 @@ var/list/slot_equipment_priority = list( \
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
-	for(var/obj/screen/t in usr.client.screen)
-		if (t.loc == null)
-			//t = null
-			del(t)
+	client.screen.Cut()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return

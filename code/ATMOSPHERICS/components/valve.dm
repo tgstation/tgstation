@@ -17,6 +17,10 @@ obj/machinery/atmospherics/valve
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
 
+	open
+		open = 1
+		icon_state = "valve1"
+
 	update_icon(animation)
 		if(animation)
 			flick("valve[src.open][!src.open]",src)

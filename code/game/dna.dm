@@ -505,6 +505,8 @@
 
 		for(var/obj/T in (M.contents-implants))
 			del(T)
+		//for(var/R in M.organs)
+		//	del(M.organs[text("[]", R)])
 
 		O.loc = M.loc
 

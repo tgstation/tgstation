@@ -39,7 +39,7 @@
 	desc = "They look bloody and gruesome."
 	gender = PLURAL
 	density = 0
-	anchored = 0
+	anchored = 1
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"

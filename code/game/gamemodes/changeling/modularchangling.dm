@@ -417,17 +417,21 @@ var/list/datum/power/changeling/powerinstances = list()
 
 /datum/changeling/Topic(href, href_list)
 	..()
+	if(!ismob(usr))
+		return
 
 	if(href_list["P"])
-		purchasePower(href_list["P"])
+		var/datum/mind/M = usr.mind
+		if(!istype(M))
+			return
+		purchasePower(M, href_list["P"])
 		call(/datum/changeling/proc/EvolutionMenu)()
 
 
 
-/datum/changeling/proc/purchasePower(var/Pname)
-	if(!usr.mind || !usr.mind.changeling)
+/datum/changeling/proc/purchasePower(var/datum/mind/M, var/Pname, var/remake_verbs = 1)
+	if(!M || !M.changeling)
 		return
-//	src = usr.mind.changeling
 
 	var/datum/power/changeling/Thepower = Pname
 
@@ -440,16 +444,16 @@ var/list/datum/power/changeling/powerinstances = list()
 
 
 	if(Thepower == null)
-		usr << "This is awkward.  Changeling power purchase failed, please report this bug to a coder!"
+		M.current << "This is awkward.  Changeling power purchase failed, please report this bug to a coder!"
 		return
 
 	if(Thepower in purchasedpowers)
-		usr << "We have already evolved this ability!"
+		M.current << "We have already evolved this ability!"
 		return
 
 
 	if(geneticpoints < Thepower.genomecost)
-		usr << "We cannot evolve this... yet.  We must acquire more DNA."
+		M.current << "We cannot evolve this... yet.  We must acquire more DNA."
 		return
 
 	geneticpoints -= Thepower.genomecost
@@ -458,6 +462,6 @@ var/list/datum/power/changeling/powerinstances = list()
 
 	if(!Thepower.isVerb && Thepower.verbpath)
 		call(Thepower.verbpath)()
-	else
-		usr.make_changeling()
+	else if(remake_verbs)
+		M.current.make_changeling()
 

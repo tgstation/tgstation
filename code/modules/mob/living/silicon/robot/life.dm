@@ -164,9 +164,6 @@
 	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
 	if(hud && hud.hud)	hud.hud.process_hud(src)
 
-	if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
-	if (src.rest) src.rest.icon_state = text("rest[]", src.resting)
-
 	if (src.healths)
 		if (src.stat != 2)
 			switch(health)
@@ -237,23 +234,21 @@
 //	if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
 //	if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
 
-	src.client.screen -= src.hud_used.blurry
-	src.client.screen -= src.hud_used.druggy
-	src.client.screen -= src.hud_used.vimpaired
+	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 	if ((src.blind && src.stat != 2))
-		if ((src.blinded))
+		if(src.blinded)
 			src.blind.layer = 18
 		else
 			src.blind.layer = 0
 			if (src.disabilities & NEARSIGHTED)
-				src.client.screen += src.hud_used.vimpaired
+				src.client.screen += global_hud.vimpaired
 
 			if (src.eye_blurry)
-				src.client.screen += src.hud_used.blurry
+				src.client.screen += global_hud.blurry
 
 			if (src.druggy)
-				src.client.screen += src.hud_used.druggy
+				src.client.screen += global_hud.druggy
 
 	if (src.stat != 2)
 		if (src.machine)

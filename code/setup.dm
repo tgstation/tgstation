@@ -325,6 +325,9 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NANOREGEN		28 	// regenerative nanobots, -3 all damage types per second
 
 
+	//2spooky
+#define SKELETON 29
+
 //disabilities
 #define NEARSIGHTED		1
 #define EPILEPSY		2
@@ -505,50 +508,12 @@ var/list/liftable_structures = list(\
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
 
-//Damage things
-#define CUT 		"cut"
-#define BRUISE		"bruise"
-#define BRUTE		"brute"
-#define BURN		"fire"
-#define TOX			"tox"
-#define OXY			"oxy"
-#define CLONE		"clone"
-#define HALLOSS		"halloss"
-
-#define STUN		"stun"
-#define WEAKEN		"weaken"
-#define PARALYZE	"paralize"
-#define IRRADIATE	"irradiate"
-#define STUTTER		"stutter"
-#define SLUR 		"slur"
-#define EYE_BLUR	"eye_blur"
-#define DROWSY		"drowsy"
-
-/////////////////
-//ORGAN DEFINES//
-/////////////////
-#define ORGAN_CUT_AWAY 1
-#define ORGAN_GAUZED 2
-#define ORGAN_ATTACHABLE 4
-#define ORGAN_BLEEDING 8
-#define ORGAN_BANDAGED 16
-#define ORGAN_BROKEN 32
-#define ORGAN_DESTROYED 64
-#define ORGAN_ROBOT 128
-#define ORGAN_SPLINTED 256
-#define SALVED 512
-
-#define MIN_PLAYER_AGE 18
-#define MAX_PLAYER_AGE 65
-
-//needed for ZAS
-
-#define SPECIFIC_HEAT_TOXIN		200
-#define SPECIFIC_HEAT_AIR		20
-#define SPECIFIC_HEAT_CDO		30
-#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
-	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
-
-#define MINIMUM_HEAT_CAPACITY	0.0003
-#define QUANTIZE(variable)		(round(variable,0.0001))
-#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
+// Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
+// the index of the sort department that you want. For example, sortType set to 2 will reroute all packages
+// tagged for the Cargo Bay.
+var/list/TAGGERLOCATIONS = list("Disposals",
+	"Cargo Bay", "QM Office", "Engineering", "CE Office",
+	"Atmospherics", "Security", "HoS Office", "Medbay",
+	"CMO Office", "Chemistry", "Research", "RD Office",
+	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
+	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")

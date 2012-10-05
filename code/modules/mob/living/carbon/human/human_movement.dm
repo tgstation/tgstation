@@ -19,13 +19,6 @@
 	if(shoes)
 		tally += shoes.slowdown
 
-	for(var/organ_name in list("l_foot","r_foot","l_leg","r_leg"))
-		var/datum/organ/external/E = get_organ(organ_name)
-		if(!E || (E.status & ORGAN_DESTROYED))
-			tally += 4
-		else if(E.status & ORGAN_BROKEN)
-			tally += 1.5
-
 	if(FAT in src.mutations)
 		tally += 1.5
 	if (bodytemperature < 283.222)

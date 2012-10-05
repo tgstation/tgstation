@@ -550,7 +550,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					var/t = input(U, "Please enter new ringtone", name, ttone) as text
 					if (in_range(src, U) && loc == U)
 						if (t)
-							if(src.hidden_uplink && hidden_uplink.check_trigger(U, t, lock_code))
+							if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 								U << "The PDA softly beeps."
 								U << browse(null, "window=pda")
 							else
@@ -837,8 +837,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		C.loc = src
 		user << "<span class='notice'>You insert [C] into [src].</span>"
 		cartridge = C
-		if(cartridge.radio)
-			cartridge.radio.hostpda = src
+		if(C:radio)
+			C:radio.hostpda = src
 
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C

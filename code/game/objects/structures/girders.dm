@@ -67,7 +67,7 @@
 			var/obj/item/stack/sheet/S = W
 			switch(S.type)
 
-				if(/obj/item/stack/sheet/metal)
+				if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
 					if(!anchored)
 						if(S.amount < 2) return
 						S.use(2)
