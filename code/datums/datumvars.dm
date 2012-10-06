@@ -559,7 +559,6 @@ client
 				return
 
 			if(ishuman(MOB))
-				world << "derp"
 				var/mob/living/carbon/human/HUMANMOB = MOB
 				HUMANMOB.makeSkeleton()
 

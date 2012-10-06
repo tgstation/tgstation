@@ -214,6 +214,8 @@
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.getDisplayName(),status),1)
+			if((SKELETON in H.mutations) && (!H.w_uniform) && (!H.wear_suit))
+				H.play_xylophone()
 		else
 			var/t_him = "it"
 			if (src.gender == MALE)

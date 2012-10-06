@@ -645,3 +645,13 @@
 /mob/living/carbon/human/proc/check_dna()
 	dna.check_integrity(src)
 	return
+
+/mob/living/carbon/human/proc/play_xylophone()
+	if(!src.xylophone)
+		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.","\blue You begin to play a spooky refrain on your ribcage.","\red You hear a spooky xylophone melody.")
+		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
+		playsound(loc, song, 50, 1, -1)
+		xylophone = 1
+		spawn(1200)
+			xylophone=0
+	return
