@@ -19,6 +19,7 @@
 	throw_range = 4
 	w_class = 2
 	attack_verb = list("called", "rang")
+	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
