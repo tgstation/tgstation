@@ -1,10 +1,3 @@
-/obj/item/clothing/glasses/blindfold
-	name = "blindfold"
-	desc = "Covers the eyes, preventing sight."
-	icon_state = "blindfold"
-	item_state = "blindfold"
-	vision_flags = BLIND
-
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
@@ -72,6 +65,13 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = -1
+
+/obj/item/clothing/glasses/sunglasses/blindfold
+	name = "blindfold"
+	desc = "Covers the eyes, preventing sight."
+	icon_state = "blindfold"
+	item_state = "blindfold"
+	vision_flags = BLIND
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."

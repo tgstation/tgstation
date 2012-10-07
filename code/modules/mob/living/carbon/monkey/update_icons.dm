@@ -55,6 +55,7 @@
 		if(!t_state)	t_state = r_hand.icon_state
 		overlays_standing[M_R_HAND_LAYER]	= image("icon" = 'icons/mob/items_righthand.dmi', "icon_state" = t_state)
 		r_hand.screen_loc = ui_rhand
+		if (handcuffed) drop_r_hand()
 	else
 		overlays_standing[M_R_HAND_LAYER]	= null
 	if(update_icons)		update_icons()
@@ -66,6 +67,7 @@
 		if(!t_state)	 t_state = l_hand.icon_state
 		overlays_standing[M_L_HAND_LAYER]	= image("icon" = 'icons/mob/items_lefthand.dmi', "icon_state" = t_state)
 		l_hand.screen_loc = ui_lhand
+		if (handcuffed) drop_l_hand()
 	else
 		overlays_standing[M_L_HAND_LAYER]	= null
 	if(update_icons)		update_icons()
@@ -84,6 +86,8 @@
 
 /mob/living/carbon/monkey/update_inv_handcuffed(var/update_icons=1)
 	if(handcuffed)
+		drop_r_hand()
+		drop_l_hand()
 		stop_pulling()
 		overlays_lying[M_HANDCUFF_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "handcuff2")
 		overlays_standing[M_HANDCUFF_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "handcuff1")

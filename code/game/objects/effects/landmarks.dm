@@ -131,7 +131,7 @@
 	new /obj/item/clothing/under/blackskirt(src.loc)
 	var/CHOICE = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
 	new CHOICE(src.loc)
-	new /obj/item/clothing/glasses/blindfold(src.loc)
+	new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/butler/New()

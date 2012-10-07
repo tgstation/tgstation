@@ -196,7 +196,7 @@
 "adN" = (/obj/structure/closet/crate,/obj/item/target/alien,/obj/item/target/alien,/turf/simulated/floor{icon_state = "dark"},/area/security/range)
 "adO" = (/obj/structure/closet/crate,/obj/item/target/syndicate,/obj/item/target/syndicate,/turf/simulated/floor{icon_state = "dark"},/area/security/range)
 "adP" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/security/prison)
-"adQ" = (/obj/structure/table,/obj/item/clothing/suit/straight_jacket,/obj/item/clothing/glasses/blindfold,/turf/simulated/floor{icon_state = "dark"},/area/security/prison)
+"adQ" = (/obj/structure/table,/obj/item/clothing/suit/straight_jacket,/obj/item/clothing/glasses/sunglasses/blindfold,/turf/simulated/floor{icon_state = "dark"},/area/security/prison)
 "adR" = (/turf/simulated/floor{icon_state = "dark"},/area/security/prison)
 "adS" = (/obj/structure/stool/bed,/turf/simulated/floor{tag = "icon-vault (WEST)"; icon_state = "vault"; dir = 8},/area/security/prison)
 "adT" = (/obj/machinery/door/window/eastleft{name = "Lethal Injection Chamber"; req_access_txt = "3"},/turf/simulated/floor{icon_state = "dark"},/area/security/prison)

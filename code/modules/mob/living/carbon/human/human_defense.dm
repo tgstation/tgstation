@@ -162,7 +162,7 @@ emp_act
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("\red <B>[src] has been knocked unconscious!</B>")
-					if(src != user)
+					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
 
 				if(bloody)//Apply blood
