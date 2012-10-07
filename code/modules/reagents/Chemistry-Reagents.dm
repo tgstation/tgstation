@@ -1541,10 +1541,10 @@ datum
 					M.status_flags &= ~FAKEDEATH
 				..()
 
-		LSD
-			name = "LSD"
-			id = "LSD"
-			description = "A hallucinogen"
+		mindbreaker
+			name = "Mindbreaker Toxin"
+			id = "mindbreaker"
+			description = "A powerful hallucinogen. Not a thing to be messed with."
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 139, 166, 233
 

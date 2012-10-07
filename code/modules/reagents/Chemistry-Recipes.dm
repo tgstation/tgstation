@@ -423,10 +423,10 @@ datum
 			required_reagents = list("carpotoxin" = 5, "stoxin" = 5, "copper" = 5)
 			result_amount = 2
 
-		LSD
-			name = "LSD"
-			id = "LSD"
-			result = "LSD"
+		mindbreaker
+			name = "Mindbreaker Toxin"
+			id = "mindbreaker"
+			result = "mindbreaker"
 			required_reagents = list("silicon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 			result_amount = 5
 
