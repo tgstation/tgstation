@@ -99,7 +99,7 @@
 				return 0
 		return 1
 
-
+/*
 	update_nearby_tiles(need_rebuild)
 		if(!air_master) return 0
 
@@ -121,3 +121,4 @@
 			if(istype(source)) air_master.tiles_to_update += source
 			if(istype(destination)) air_master.tiles_to_update += destination
 		return 1
+*/

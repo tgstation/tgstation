@@ -193,6 +193,12 @@
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
 	for(var/obj/item/device/radio/R in radios)
+		// This is usually for headsets, which only the wearer can hear.
+		if(R.canhear_range == 0)
+			if(ismob(R.loc))
+				. += R.loc
+			continue
+
 		var/turf/speaker = get_turf(R)
 		if(speaker)
 			for(var/turf/T in hear(R.canhear_range,speaker))
@@ -203,7 +209,7 @@
 		var/turf/ear = get_turf(M)
 		if(ear && (level == 0 || level == ear.z))
 			if(ear in speaker_coverage)
-				. += M
+				. |= M
 
 	return .
 
