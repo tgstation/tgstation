@@ -723,6 +723,11 @@ datum/mind
 						special_role = null
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>"
 						log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
+						if(isAI(current))
+							var/mob/living/silicon/ai/A = current
+							A.set_zeroth_law("")
+							A.show_laws()
+
 
 				if("traitor")
 					if(!(src in ticker.mode.traitors))
@@ -730,6 +735,10 @@ datum/mind
 						special_role = "traitor"
 						current << "<B>\red You are a traitor!</B>"
 						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
+						if(isAI(current))
+							var/mob/living/silicon/ai/A = current
+							call(/datum/game_mode/proc/add_law_zero)(A)
+							A.show_laws()
 
 				if("autoobjectives")
 					ticker.mode.forge_traitor_objectives(src)
