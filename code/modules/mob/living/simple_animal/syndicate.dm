@@ -112,8 +112,7 @@
 
 /mob/living/simple_animal/syndicate/proc/OpenFire(target_mob)
 	src.target = target_mob
-	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <b>[src]</b> fires at [src.target]!", 1)
+	visible_message("\red <b>[src]</b> fires at [src.target]!", 1)
 
 	var/tturf = get_turf(target)
 	if(rapid)
@@ -169,18 +168,12 @@
 	if(O.force)
 		if(prob(35))
 			health -= O.force
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
+			visible_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] blocks the [O] with its shield! ")
+			visible_message("\red \b [src] blocks the [O] with its shield! ")
 	else
 		usr << "\red This weapon is ineffective, it does no damage."
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with the [O]. ")
+		visible_message("\red [user] gently taps [src] with the [O]. ")
 
 
 /mob/living/simple_animal/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
