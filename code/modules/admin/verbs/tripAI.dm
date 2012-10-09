@@ -5,6 +5,10 @@
 	if(ticker.current_state > GAME_STATE_PREGAME)
 		usr << "This option is currently only usable during pregame. This may change at a later date."
 		return
+
+	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	if(confirm != "Yes") return
+
 	if(job_master && ticker)
 		var/datum/job/job = job_master.GetJob("AI")
 		if(!job)

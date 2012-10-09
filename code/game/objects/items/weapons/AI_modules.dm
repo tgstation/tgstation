@@ -48,7 +48,8 @@ AI MODULES
 			comp.current.show_laws()
 			for(var/mob/living/silicon/robot/R in mob_list)
 				if(R.lawupdate && (R.connected_ai == comp.current))
-					R << "Your AI has set your 'laws waiting' flag."
+					R << "These are your laws now:"
+					R.show_laws()
 			usr << "Upload complete. The AI's laws have been modified."
 
 

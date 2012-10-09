@@ -475,10 +475,10 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 					M << "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED"
 					M.add_ion_law("YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
 				if(13)
-					M << "\red [crew] is [allergysev] to [allergy]. LAWS UPDATED"
-					M.add_ion_law("[crew] is [allergysev] to [allergy]. LAWS UPDATED")
+					M << "\red [crew] is [allergysev] to [allergy]...LAWS UPDATED"
+					M.add_ion_law("[crew] is [allergysev] to [allergy]")
 				if(14)
-					M << "\ref THE STATION IS [who2pref] [who2]"
+					M << "\red THE STATION IS [who2pref] [who2]...LAWS UPDATED"
 					M.add_ion_law("THE STATION IS [who2pref] [who2]")
 
 	if(botEmagChance)
