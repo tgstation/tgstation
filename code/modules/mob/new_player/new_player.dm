@@ -188,7 +188,7 @@
 
 		if(href_list["late_join"])
 			if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-				usr << "\red The round is either not ready, or has already finished..."
+				usr << "/red The round is either not ready, or has already finished..."
 				return
 
 			if(preferences.species != "Human")
@@ -302,23 +302,13 @@
 				src.poll_player(pollid)
 			return
 
-<<<<<<< HEAD
 		if(href_list["votepollid"] && href_list["voteoptionid"])
 			usr << "\red DB usage has been disabled and that option should not have been available."
 			return
 
-=======
-		if(href_list["votepollid"] && href_list["votetype"])
->>>>>>> remotes/git-svn
 			var/pollid = text2num(href_list["votepollid"])
-			var/votetype = href_list["votetype"]
-			switch(votetype)
-				if("OPTION")
-					var/optionid = text2num(href_list["voteoptionid"])
-					vote_on_poll(pollid, optionid)
-				if("TEXT")
-					var/replytext = href_list["replytext"]
-					log_text_poll_reply(pollid, replytext)
+			var/optionid = text2num(href_list["voteoptionid"])
+			vote_on_poll(pollid, optionid)
 
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)
