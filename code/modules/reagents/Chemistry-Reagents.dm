@@ -2136,6 +2136,19 @@ datum
 				if(!istype(T, /turf/space))
 					new /obj/effect/decal/cleanable/flour(T)
 
+		cherryjelly
+			name = "Cherry Jelly"
+			id = "cherryjelly"
+			description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#801E28" // rgb: 128, 30, 40
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				..()
+				return
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3632,8 +3645,6 @@ datum
 					M.confused = max(M.confused+15,15)
 				..()
 				return
-
-////////////////////////// REMOVED COCKTAIL REAGENTS BELOW:: RE-ENABLE THEM IF THEY EVER GET SPRITES THAT DON'T LOOK FUCKING STUPID --Agouri ///////////////////////////
 
 		sbiten
 			name = "Sbiten"
