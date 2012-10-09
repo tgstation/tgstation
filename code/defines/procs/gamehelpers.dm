@@ -285,3 +285,38 @@ proc/check_can_reach(atom/user, atom/target)
 	if(!in_range(user,target))
 		return 0
 	return CanReachThrough(get_turf(user), get_turf(target), target)
+
+//dummy caching, used to speed up reach checks
+var/list/DummyCache = list()
+
+/proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
+
+	var/obj/item/weapon/dummy/D = locate() in DummyCache
+	if(!D)
+		D = new /obj/item/weapon/dummy( srcturf )
+	else
+		DummyCache.Remove(D)
+		D.loc = srcturf
+
+	if(targetturf.density && targetturf != get_turf(target))
+		return 0
+
+	//Now, check objects to block exit that are on the border
+	for(var/obj/border_obstacle in srcturf)
+		if(border_obstacle.flags & ON_BORDER)
+			if(!border_obstacle.CheckExit(D, targetturf))
+				D.loc = null
+				DummyCache.Add(D)
+				return 0
+
+	//Next, check objects to block entry that are on the border
+	for(var/obj/border_obstacle in targetturf)
+		if((border_obstacle.flags & ON_BORDER) && (target != border_obstacle))
+			if(!border_obstacle.CanPass(D, srcturf, 1, 0))
+				D.loc = null
+				DummyCache.Add(D)
+				return 0
+
+	D.loc = null
+	DummyCache.Add(D)
+	return 1

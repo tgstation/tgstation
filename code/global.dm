@@ -48,7 +48,7 @@ var/blobevent = 0
 var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null
-var/station_name = "Baystation12"
+var/station_name = "NSV Exodus"
 var/game_version = "Baystation12"
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null

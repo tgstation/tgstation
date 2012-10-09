@@ -133,6 +133,7 @@
 
 		//Temporary Admin
 		if (holder.level >= 1)
+			verbs += /datum/admins/proc/startnow
 			verbs += /datum/admins/proc/delay								//game start delay
 			verbs += /datum/admins/proc/immreboot							//immediate reboot
 			verbs += /datum/admins/proc/restart							//restart
@@ -256,7 +257,6 @@
 
 		//Game Master
 		if (holder.level >= 6)
-			world << "game master applied successfuly"
 			verbs += /datum/admins/proc/toggle_aliens						//toggle aliens
 			verbs += /datum/admins/proc/toggle_space_ninja				//toggle ninjas
 			verbs += /datum/admins/proc/adjump
