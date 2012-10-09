@@ -232,9 +232,6 @@
 	color = "gladiator"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
-//
-
-
 //wedding stuff
 /obj/item/clothing/under/wedding/bride_orange
 	name = "orange wedding dress"
@@ -299,3 +296,11 @@
 	name = "vampire dress"
 	icon_state = "d_vampire"
 	color = "d_vampire"
+
+/obj/item/clothing/under/sundress
+	name = "sundress"
+	desc = "Makes you want to frolic in a field of daisies."
+	icon_state = "sundress"
+	item_state = "sundress"
+	color = "sundress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO

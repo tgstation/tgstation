@@ -1,8 +1,15 @@
-/****************************************************
-				INTERNAL ORGANS
-****************************************************/
 /datum/organ/internal
 	name = "internal"
+	var/damage = 0
+	var/max_damage = 100
+
+/datum/organ/internal/skeleton
+	name = "spooky scary skeleton"
+	max_damage = 200
+
+/datum/organ/internal/skin
+	name = "skin"
+	max_damage = 100
 
 /datum/organ/internal/blood_vessels
 	name = "blood vessels"

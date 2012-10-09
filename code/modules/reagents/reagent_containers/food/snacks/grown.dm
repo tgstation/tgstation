@@ -101,6 +101,17 @@
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherries
+	seed = "/obj/item/seeds/cherryseed"
+	name = "cherries"
+	desc = "Great for toppings!"
+	icon_state = "cherry"
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 15), 1))
+			reagents.add_reagent("sugar", 1+round((potency / 15), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	seed = "/obj/item/seeds/poppyseed"

@@ -4,7 +4,6 @@ var/global/obj/effect/datacore/data_core = null
 var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null
 
-	//obj/hud/main_hud1 = null
 
 var/global/list/machines = list()
 var/global/list/processing_objects = list()
@@ -49,7 +48,7 @@ var/blobevent = 0
 var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null
-var/station_name = "Baystation12"
+var/station_name = "NSV Exodus"
 var/game_version = "Baystation12"
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null

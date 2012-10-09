@@ -75,12 +75,6 @@
 	var/health_threshold_crit = 0
 	var/health_threshold_dead = -100
 
-	var/organ_health_multiplier = 1
-	var/organ_regeneration_multiplier = 1
-
-	var/bones_can_break = 0
-	var/limbs_can_break = 0
-
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
@@ -383,14 +377,6 @@
 					config.metroid_delay = value
 				if("animal_delay")
 					config.animal_delay = value
-				if("organ_health_multiplier")
-					config.organ_health_multiplier = value / 100
-				if("organ_regeneration_multiplier")
-					config.organ_regeneration_multiplier = value / 100
-				if("bones_can_break")
-					config.bones_can_break = value
-				if("limbs_can_break")
-					config.limbs_can_break = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -512,7 +498,7 @@
 		if (M.config_tag && M.config_tag == mode_name)
 			return M
 		del(M)
-	return null
+	return new /datum/game_mode/extended()
 
 /datum/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new

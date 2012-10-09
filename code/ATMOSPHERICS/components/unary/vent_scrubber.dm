@@ -226,7 +226,7 @@
 		return
 
 	power_change()
-		if(powered(ENVIRON))
+		if(powered(power_channel))
 			stat &= ~NOPOWER
 		else
 			stat |= NOPOWER

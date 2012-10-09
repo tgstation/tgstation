@@ -180,6 +180,8 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	if(confirm != "Yes") return
 	log_admin("[key_name(src)] has added a random AI law.")
 	message_admins("[key_name_admin(src)] has added a random AI law.", 1)
 
@@ -204,6 +206,8 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	if(confirm != "Yes") return
 
 	if(create_xeno())
 		feedback_add_details("admin_verb","X") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -452,7 +456,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else
 			M.add_ion_law(input)
 			for(var/mob/living/silicon/ai/O in mob_list)
-				O << "\red " + input
+				O << "\red " + input + "\red...LAWS UPDATED"
 
 	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")
 	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]", 1)

@@ -1,7 +1,27 @@
 /obj/structure/falsewall
+	name = "wall"
 	anchored = 1
 	icon = 'icons/turf/walls.dmi'
 	var/mineral = "metal"
+
+/obj/structure/falsewall/New()
+	relativewall_neighbours()
+	..()
+
+/obj/structure/falsewall/Del()
+
+	var/temploc = src.loc
+
+	spawn(10)
+		for(var/turf/simulated/wall/W in range(temploc,1))
+			W.relativewall()
+
+		for(var/obj/structure/falsewall/W in range(temploc,1))
+			W.relativewall()
+
+		for(var/obj/structure/falserwall/W in range(temploc,1))
+			W.relativewall()
+	..()
 
 /obj/structure/falsewall/gold
 	name = "gold wall"
@@ -63,6 +83,33 @@
 	anchored = 1
 	var/mineral = "metal"
 
+/obj/structure/falserwall/New()
+	relativewall_neighbours()
+	..()
+
+/obj/structure/falsewall/relativewall()
+
+	if(!density)
+		icon_state = "[mineral]fwall_open"
+		return
+
+	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+
+	for(var/turf/simulated/wall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
+				junction |= get_dir(src,W)
+	for(var/obj/structure/falsewall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(src.mineral == W.mineral)
+				junction |= get_dir(src,W)
+	for(var/obj/structure/falserwall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(src.mineral == W.mineral)
+				junction |= get_dir(src,W)
+	icon_state = "[mineral][junction]"
+	return
+
 /obj/structure/falsewall/attack_hand(mob/user as mob)
 	if(density)
 		// Open wall
@@ -92,29 +139,32 @@
 		icon_state = "[mineral]fwall_open"
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/screwdriver))
-		var/turf/T = get_turf(src)
-		user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
-		if(!mineral)
-			T.ReplaceWithWall()
-		else
-			T.ReplaceWithMineralWall(mineral)
-		del(src)
-
-	if( istype(W, /obj/item/weapon/weldingtool) )
-		var/obj/item/weapon/weldingtool/WT = W
-		if( WT:welding )
+	if(density)
+		if(istype(W, /obj/item/weapon/screwdriver))
 			var/turf/T = get_turf(src)
+			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
 			if(!mineral)
 				T.ReplaceWithWall()
 			else
 				T.ReplaceWithMineralWall(mineral)
-			if(mineral != "plasma")//Stupid shit keeps me from pushing the attackby() to plasma walls -Sieve
-				T = get_turf(src)
-				T.attackby(W,user)
 			del(src)
 
-	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+		if( istype(W, /obj/item/weapon/weldingtool) )
+			var/obj/item/weapon/weldingtool/WT = W
+			if( WT:welding )
+				var/turf/T = get_turf(src)
+				if(!mineral)
+					T.ReplaceWithWall()
+				else
+					T.ReplaceWithMineralWall(mineral)
+				if(mineral != "plasma")//Stupid shit keeps me from pushing the attackby() to plasma walls -Sieve
+					T = get_turf(src)
+					T.attackby(W,user)
+				del(src)
+	else
+		user << "\blue You can't reach, close it first!"
+
+	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
 		if(!mineral)
 			T.ReplaceWithWall()
@@ -172,7 +222,7 @@
 
 /obj/structure/falserwall/
 	anchored = 1
-	
+
 	attack_hand(mob/user as mob)
 		if(density)
 			// Open wall
@@ -189,44 +239,68 @@
 			SetOpacity(1)
 			relativewall()
 
+/obj/structure/falserwall/relativewall()
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/screwdriver))
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
-			T.ReplaceWithWall() //Intentionally makes a regular wall instead of an r-wall (no cheap r-walls for you).
-			del(src)
+	if(!density)
+		icon_state = "frwall_open"
+		return
 
-		if( istype(W, /obj/item/weapon/weldingtool) )
-			var/obj/item/weapon/weldingtool/WT = W
-			if( WT.remove_fuel(0,user) )
-				var/turf/T = get_turf(src)
-				T.ReplaceWithWall()
-				T = get_turf(src)
-				T.attackby(W,user)
-				del(src)
+	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
 
-		else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+	for(var/turf/simulated/wall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
+				junction |= get_dir(src,W)
+	for(var/obj/structure/falsewall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(src.mineral == W.mineral)
+				junction |= get_dir(src,W)
+	for(var/obj/structure/falserwall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(src.mineral == W.mineral)
+				junction |= get_dir(src,W)
+	icon_state = "rwall[junction]"
+	return
+
+
+
+/obj/structure/falserwall/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		var/turf/T = get_turf(src)
+		user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
+		T.ReplaceWithWall() //Intentionally makes a regular wall instead of an r-wall (no cheap r-walls for you).
+		del(src)
+
+	if( istype(W, /obj/item/weapon/weldingtool) )
+		var/obj/item/weapon/weldingtool/WT = W
+		if( WT.remove_fuel(0,user) )
 			var/turf/T = get_turf(src)
 			T.ReplaceWithWall()
 			T = get_turf(src)
 			T.attackby(W,user)
 			del(src)
 
-		//DRILLING
-		else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
-			var/turf/T = get_turf(src)
-			T.ReplaceWithWall()
-			T = get_turf(src)
-			T.attackby(W,user)
-			del(src)
+	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+		var/turf/T = get_turf(src)
+		T.ReplaceWithWall()
+		T = get_turf(src)
+		T.attackby(W,user)
+		del(src)
 
-		else if( istype(W, /obj/item/weapon/melee/energy/blade) )
-			var/turf/T = get_turf(src)
-			T.ReplaceWithWall()
-			T = get_turf(src)
-			T.attackby(W,user)
-			del(src)
+	//DRILLING
+	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+		var/turf/T = get_turf(src)
+		T.ReplaceWithWall()
+		T = get_turf(src)
+		T.attackby(W,user)
+		del(src)
+
+	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
+		var/turf/T = get_turf(src)
+		T.ReplaceWithWall()
+		T = get_turf(src)
+		T.attackby(W,user)
+		del(src)
 
 /obj/structure/falsewall/uranium/proc/radiate()
 	if(!active)

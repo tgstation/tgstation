@@ -244,6 +244,7 @@ client
 			body += "<option value='byond://?src=\ref[src];godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
 			body += "<option value='byond://?src=\ref[src];direct_control=\ref[D]'>Assume Direct Control</option>"
+			body += "<option value='byond://?src=\ref[src];make_skeleton=\ref[D]'>Make 2spooky</option>"
 			body += "<option value='byond://?src=\ref[src];drop_everything=\ref[D]'>Drop Everything</option>"
 			body += "<option value='byond://?src=\ref[src];regenerateicons=\ref[D]'>Regenerate Icons</option>"
 			if(ishuman(D))
@@ -545,6 +546,21 @@ client
 
 			if(usr.client)
 				usr.client.cmd_assume_direct_control(MOB)
+
+		else if (href_list["make_skeleton"])
+			if(!href_list["make_skeleton"])
+				return
+			var/mob/MOB = locate(href_list["make_skeleton"])
+			if(!MOB)
+				return
+			if(!ismob(MOB))
+				return
+			if(!src.holder)
+				return
+
+			if(ishuman(MOB))
+				var/mob/living/carbon/human/HUMANMOB = MOB
+				HUMANMOB.makeSkeleton()
 
 		else if (href_list["delall"])
 			if(!href_list["delall"])

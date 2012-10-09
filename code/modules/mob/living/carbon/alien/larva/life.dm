@@ -1,9 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /mob/living/carbon/alien/larva
-	var/oxygen_alert = 0
-	var/toxins_alert = 0
-	var/fire_alert = 0
 
 	var/temperature_alert = 0
 
@@ -16,8 +13,13 @@
 		return
 
 	..()
-
+	var/datum/gas_mixture/enviroment = loc.return_air()
 	if (stat != DEAD) //still breathing
+
+		// GROW!
+		if(amount_grown < max_grown)
+			amount_grown++
+
 		//First, resolve location and get a breath
 		if(air_master.current_cycle%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
@@ -43,7 +45,7 @@
 	//handle_virus_updates() There is no disease that affects larva
 
 	//Handle temperature/pressure differences between body and environment
-	handle_environment()
+	handle_environment(enviroment)
 
 	//stuff in the stomach
 	//handle_stomach()
@@ -61,43 +63,6 @@
 
 
 /mob/living/carbon/alien/larva
-	proc/handle_mutations_and_radiation()
-
-		//grow!! but not if metroid or dead
-		if(stat != DEAD && amount_grown < max_grown)
-			amount_grown++
-
-		if (radiation)
-			if (radiation > 100)
-				radiation = 100
-				Weaken(10)
-				src << "\red You feel weak."
-				emote("collapse")
-
-			if (radiation < 0)
-				radiation = 0
-
-			switch(radiation)
-				if(1 to 49)
-					radiation--
-					if(prob(25))
-						adjustToxLoss(1)
-						updatehealth()
-
-				if(50 to 74)
-					radiation -= 2
-					adjustToxLoss(1)
-					if(prob(5))
-						radiation -= 5
-						Weaken(3)
-						src << "\red You feel weak."
-						emote("collapse")
-					updatehealth()
-
-				if(75 to 100)
-					radiation -= 3
-					adjustToxLoss(3)
-					updatehealth()
 
 	proc/breathe()
 
@@ -212,18 +177,6 @@
 
 		return 1
 
-	proc/handle_environment()
-
-		//If there are alien weeds on the ground then heal if needed or give some toxins
-		if(locate(/obj/effect/alien/weeds) in loc)
-			if(health >= 25)
-				adjustToxLoss(5)
-			else
-				adjustBruteLoss(-5)
-				adjustFireLoss(-5)
-
-		return
-
 
 	proc/handle_chemicals_in_body()
 		if(reagents) reagents.metabolize(src)
@@ -285,7 +238,7 @@
 				Paralyse(3)
 
 			if(paralysis)
-				AdjustParalysis(-1)
+				AdjustParalysis(-2)
 				blinded = 1
 				stat = UNCONSCIOUS
 			else if(sleeping)
@@ -353,9 +306,6 @@
 			see_in_dark = 4
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-		if (sleep) sleep.icon_state = text("sleep[]", sleeping)
-		if (rest) rest.icon_state = text("rest[]", resting)
-
 		if (healths)
 			if (stat != 2)
 				switch(health)
@@ -384,9 +334,7 @@
 		//blame the person who coded them. Temporary fix added.
 
 
-		client.screen -= hud_used.blurry
-		client.screen -= hud_used.druggy
-		client.screen -= hud_used.vimpaired
+		client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 		if ((blind && stat != 2))
 			if ((blinded))
@@ -395,13 +343,13 @@
 				blind.layer = 0
 
 				if (disabilities & NEARSIGHTED)
-					client.screen += hud_used.vimpaired
+					client.screen += global_hud.vimpaired
 
 				if (eye_blurry)
-					client.screen += hud_used.blurry
+					client.screen += global_hud.blurry
 
 				if (druggy)
-					client.screen += hud_used.druggy
+					client.screen += global_hud.druggy
 
 		if (stat != 2)
 			if (machine)

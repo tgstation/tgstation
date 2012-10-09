@@ -14,9 +14,6 @@
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
-	var/obj/screen/mach = null
-	var/obj/screen/sleep = null
-	var/obj/screen/rest = null
 	var/obj/screen/pullin = null
 	var/obj/screen/internals = null
 	var/obj/screen/oxygen = null
@@ -63,7 +60,7 @@
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
 	var/stuttering = null	//Carbon
-	var/slurring = null
+	var/slurring = null		//Carbon
 	var/real_name = null
 //	var/original_name = null //Original name is only used in ghost chat! Depracated, now used bb
 	var/blinded = null
@@ -122,7 +119,7 @@
 
 	var/seer = 0 //for cult//Carbon, probably Human
 
-	var/obj/hud/hud_used = null
+	var/datum/hud/hud_used = null
 
 	//var/list/organs = list(  ) //moved to human.
 	var/list/grabbed_by = list(  )
@@ -222,3 +219,4 @@
 	var/tajaran_talk_understand = 0
 	var/soghun_talk_understand = 0
 	var/skrell_talk_understand = 0
+

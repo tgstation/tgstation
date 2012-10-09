@@ -141,9 +141,12 @@
 /obj/machinery/shower/attack_hand(mob/M as mob)
 	on = !on
 	update_icon()
-	if(on && M.loc == loc)
-		wash(M)
-		check_heat(M)
+	if(on)
+		if (M.loc == loc)
+			wash(M)
+			check_heat(M)
+		for (var/atom/movable/G in src.loc)
+			G.clean_blood()
 
 /obj/machinery/shower/attackby(obj/item/I as obj, mob/user as mob)
 	if(I.type == /obj/item/device/analyzer)
@@ -207,11 +210,32 @@
 			M.r_hand.clean_blood()
 		if(M.l_hand)
 			M.l_hand.clean_blood()
-		if(M.wear_mask)
-			if(M.wear_mask.clean_blood())
-				M.update_inv_wear_mask(0)
+		if(M.back)
+			if(M.back.clean_blood())
+				M.update_inv_back(0)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
+			var/washgloves = 1
+			var/washshoes = 1
+			var/washmask = 1
+			var/washears = 1
+			var/washglasses = 1
+
+			if(H.wear_suit)
+				washgloves = !(H.wear_suit.flags_inv & HIDEGLOVES)
+				washshoes = !(H.wear_suit.flags_inv & HIDESHOES)
+
+			if(H.head)
+				washmask = !(H.head.flags_inv & HIDEMASK)
+				washglasses = !(H.head.flags_inv & HIDEEYES)
+				washears = !(H.head.flags_inv & HIDEEARS)
+
+			if(H.wear_mask)
+				if (washears)
+					washears = !(H.wear_mask.flags_inv & HIDEEARS)
+				if (washglasses)
+					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
+
 			if(H.head)
 				if(H.head.clean_blood())
 					H.update_inv_head(0)
@@ -221,11 +245,30 @@
 			else if(H.w_uniform)
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform(0)
-			if(H.shoes)
+			if(H.gloves && washgloves)
+				if(H.gloves.clean_blood())
+					H.update_inv_gloves(0)
+			if(H.shoes && washshoes)
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes(0)
-
-	O.clean_blood()
+			if(H.wear_mask && washmask)
+				if(H.wear_mask.clean_blood())
+					H.update_inv_wear_mask(0)
+			if(H.glasses && washglasses)
+				if(H.glasses.clean_blood())
+					H.update_inv_glasses(0)
+			if(H.ears && washears)
+				if(H.ears.clean_blood())
+					H.update_inv_ears(0)
+			if(H.belt)
+				if(H.belt.clean_blood())
+					H.update_inv_belt(0)
+		else
+			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
+				if(M.wear_mask.clean_blood())
+					M.update_inv_wear_mask(0)
+	else
+		O.clean_blood()
 
 	if(isturf(loc))
 		var/turf/tile = loc

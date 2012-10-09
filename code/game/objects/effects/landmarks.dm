@@ -131,7 +131,7 @@
 	new /obj/item/clothing/under/blackskirt(src.loc)
 	var/CHOICE = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
 	new CHOICE(src.loc)
-	new /obj/item/clothing/glasses/blindfold(src.loc)
+	new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/butler/New()
@@ -207,6 +207,11 @@
 /obj/effect/landmark/costume/marisawizard/fake/New()
 	new /obj/item/clothing/head/wizard/marisa/fake(src.loc)
 	new/obj/item/clothing/suit/wizrobe/marisa/fake(src.loc)
+	del(src)
+
+/obj/effect/landmark/costume/cutewitch/New()
+	new /obj/item/clothing/under/sundress(src.loc)
+	new /obj/item/clothing/head/witchwig(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/fakewizard/New()

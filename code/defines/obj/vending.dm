@@ -284,7 +284,7 @@
 	desc = "Tools for tools."
 	icon_state = "tool"
 	icon_deny = "tool-deny"
-	req_access_txt = "12" //Maintenance access
+	//req_access_txt = "12" //Maintenance access
 	product_paths = "/obj/item/weapon/cable_coil/random;/obj/item/weapon/crowbar;/obj/item/weapon/weldingtool;/obj/item/weapon/wirecutters;/obj/item/weapon/wrench;/obj/item/device/analyzer;/obj/item/device/t_scanner"
 	product_amounts = "10;5;3;5;5;5;5"
 	product_hidden = "/obj/item/weapon/weldingtool/hugeetank;/obj/item/clothing/gloves/fyellow"

@@ -1,3 +1,3 @@
 
-/obj/hud/proc/unplayer_hud()
+/datum/hud/proc/unplayer_hud()
 	return

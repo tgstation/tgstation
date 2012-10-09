@@ -527,6 +527,8 @@
 					src << "\red > N"
 					sleep(20)
 					src << "\red ERRORERRORERROR"
+					src << "<b>Obey these laws:</b>"
+					laws.show_laws(src)
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
 					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
 						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
@@ -618,7 +620,7 @@
 		if ("disarm")
 			if(!(lying))
 				if (rand(1,100) <= 85)
-					Stun(5)
+					Stun(10)
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
 					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)

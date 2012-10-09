@@ -1,5 +1,5 @@
 /obj/screen
-	name = "screen"
+	name = ""
 	icon = 'icons/mob/screen1.dmi'
 	layer = 20.0
 	unacidable = 1
@@ -241,27 +241,15 @@
 		return
 	switch(name)
 		if("act_intent")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("harm")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("help")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("disarm")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("grab")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
+				var/intent = usr.a_intent
+				if(intent == "hurt")
+					intent = "harm"	//hurt and harm have different sprite names for some reason.
+				usr.hud_used.action_intent.icon_state = "[intent]"
 */
+
 /obj/screen/Click(location, control, params)
+	if(!usr)	return
 	switch(name)
 		if("map")
 			usr.clearmap()
@@ -329,7 +317,7 @@
 		if("Reset Machine")
 			usr.machine = null
 		if("internal")
-			if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
+			if (( !usr.stat && !usr.stunned && !usr.paralysis && !usr.restrained() ))
 				if (usr.internal)
 					usr.internal = null
 					usr << "\blue No longer running on internals."
@@ -370,63 +358,23 @@
 							else
 								usr << "\blue You don't have an oxygen tank."
 		if("act_intent")
-			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
-				switch(usr.a_intent)
-					if("help")
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "intent_disarm"
-					if("disarm")
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "intent_grab"
-					if("grab")
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "intent_hurt"
-					if("hurt")
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "intent_help"
-			if(issilicon(usr))
-				if(usr.a_intent == "help")
-					usr.a_intent = "hurt"
-					usr.hud_used.action_intent.icon_state = "harm"
-				else
-					usr.a_intent = "help"
-					usr.hud_used.action_intent.icon_state = "help"
-		if("help")
+			usr.a_intent_change("right")
+/*		if("help")
 			usr.a_intent = "help"
 			usr.hud_used.action_intent.icon_state = "help"
-			usr.hud_used.hurt_intent.icon_state = "harm_small"
-			usr.hud_used.help_intent.icon_state = "help_small_active"
-			usr.hud_used.grab_intent.icon_state = "grab_small"
-			usr.hud_used.disarm_intent.icon_state = "disarm_small"
-//			usr.hud_used.show_intent_icons = 0
-//			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			usr.hud_used.show_intent_icons = 0
 		if("harm")
 			usr.a_intent = "hurt"
 			usr.hud_used.action_intent.icon_state = "harm"
-			usr.hud_used.hurt_intent.icon_state = "harm_small_active"
-			usr.hud_used.help_intent.icon_state = "help_small"
-			usr.hud_used.grab_intent.icon_state = "grab_small"
-			usr.hud_used.disarm_intent.icon_state = "disarm_small"
-//			usr.hud_used.show_intent_icons = 0
-//			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			usr.hud_used.show_intent_icons = 0
 		if("grab")
 			usr.a_intent = "grab"
 			usr.hud_used.action_intent.icon_state = "grab"
-			usr.hud_used.hurt_intent.icon_state = "harm_small"
-			usr.hud_used.help_intent.icon_state = "help_small"
-			usr.hud_used.grab_intent.icon_state = "grab_small_active"
-			usr.hud_used.disarm_intent.icon_state = "disarm_small"
-//			usr.hud_used.show_intent_icons = 0
-//			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			usr.hud_used.show_intent_icons = 0
 		if("disarm")
 			usr.a_intent = "disarm"
 			usr.hud_used.action_intent.icon_state = "disarm"
-			usr.hud_used.hurt_intent.icon_state = "harm_small"
-			usr.hud_used.help_intent.icon_state = "help_small"
-			usr.hud_used.grab_intent.icon_state = "grab_small"
-			usr.hud_used.disarm_intent.icon_state = "disarm_small_active"
-//			usr.hud_used.show_intent_icons = 0
-//			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			usr.hud_used.show_intent_icons = 0	*/
 		if("pull")
 			usr.stop_pulling()
 		if("throw")

@@ -725,6 +725,11 @@ datum/mind
 						special_role = null
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>"
 						log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
+						if(isAI(current))
+							var/mob/living/silicon/ai/A = current
+							A.set_zeroth_law("")
+							A.show_laws()
+
 
 				if("traitor")
 					if(!(src in ticker.mode.traitors))
@@ -732,6 +737,10 @@ datum/mind
 						special_role = "traitor"
 						current << "<B>\red You are a traitor!</B>"
 						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
+						if(isAI(current))
+							var/mob/living/silicon/ai/A = current
+							call(/datum/game_mode/proc/add_law_zero)(A)
+							A.show_laws()
 
 				if("autoobjectives")
 					ticker.mode.forge_traitor_objectives(src)
@@ -1153,17 +1162,17 @@ datum/mind
 	..()
 	mind.assigned_role = "Shade"
 
-/mob/living/simple_animal/constructbuilder/mind_initialize()
+/mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
 	mind.special_role = "Cultist"
 
-/mob/living/simple_animal/constructwraith/mind_initialize()
+/mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
 	mind.special_role = "Cultist"
 
-/mob/living/simple_animal/constructarmoured/mind_initialize()
+/mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"

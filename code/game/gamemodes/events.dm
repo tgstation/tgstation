@@ -4,9 +4,9 @@
 	//and also to stop spawn copying variables from the game ticker
 	spawn(3000)
 		while(1)
-//			if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
-//				spawn(1)
-//					dust_swarm("weak") //BS12 EDIT
+			/*if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
+				spawn(1)
+					dust_swarm("weak")*/
 			if (!event)
 				//CARN: checks to see if random events are enabled.
 				if(config.allow_random_events && prob(eventchance))
@@ -433,7 +433,10 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 			var/list/pos_crew = list()
 			for(var/mob/living/carbon/human/pos in player_list)
 				pos_crew += pos.real_name
-			crew = pick(pos_crew)
+			if(pos_crew.len)
+				crew = pick(pos_crew)
+			else
+				crew = "Any Human"
 			switch(rand(1,14))
 				if(1)
 					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"

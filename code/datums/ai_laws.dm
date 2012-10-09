@@ -3,6 +3,7 @@
 	var/name = "Unknown Laws"
 	var/randomly_selectable = 0
 	var/zeroth = null
+	var/zeroth_borg = null
 	var/list/inherent = list()
 	var/list/supplied = list()
 	var/list/ion = list()
@@ -79,8 +80,10 @@
 
 /* General ai_law functions */
 
-/datum/ai_laws/proc/set_zeroth_law(var/law)
+/datum/ai_laws/proc/set_zeroth_law(var/law, var/law_borg = null)
 	src.zeroth = law
+	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
+		src.zeroth_borg = law_borg
 
 /datum/ai_laws/proc/add_inherent_law(var/law)
 	if (!(law in src.inherent))

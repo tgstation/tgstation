@@ -19,6 +19,8 @@
 // Add an AI eye to the chunk, then update if changed.
 
 /datum/camerachunk/proc/add(mob/aiEye/ai)
+	if(!ai.ai)
+		return
 	ai.visibleCameraChunks += src
 	if(ai.ai.client)
 		ai.ai.client.images += obscured
@@ -30,6 +32,8 @@
 // Remove an AI eye from the chunk, then update if changed.
 
 /datum/camerachunk/proc/remove(mob/aiEye/ai)
+	if(!ai.ai)
+		return
 	ai.visibleCameraChunks -= src
 	if(ai.ai.client)
 		ai.ai.client.images -= obscured
@@ -88,6 +92,8 @@
 			obscured -= t.obscured
 			for(var/eye in seenby)
 				var/mob/aiEye/m = eye
+				if(!m || !m.ai)
+					continue
 				if(m.ai.client)
 					m.ai.client.images -= t.obscured
 
@@ -100,8 +106,9 @@
 			obscured += t.obscured
 			for(var/eye in seenby)
 				var/mob/aiEye/m = eye
-				if(!m)
+				if(!m || !m.ai)
 					seenby -= m
+					continue
 				if(m.ai.client)
 					m.ai.client.images += t.obscured
 

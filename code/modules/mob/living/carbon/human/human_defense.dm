@@ -112,7 +112,7 @@ emp_act
 
 	var/datum/organ/external/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 
-	var/hit_area = affecting.display_name
+	var/hit_area = parse_zone(affecting.name)
 
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0
@@ -126,7 +126,7 @@ emp_act
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
 
-	apply_damage(I.force, I.damtype, affecting, armor , I.sharp)
+	apply_damage(I.force, I.damtype, affecting, armor , I)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
@@ -162,7 +162,7 @@ emp_act
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("\red <B>[src] has been knocked unconscious!</B>")
-					if(src != user)
+					if(src != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(mind)
 
 				if(bloody)//Apply blood

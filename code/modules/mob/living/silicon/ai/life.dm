@@ -98,9 +98,9 @@
 //							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
 							if (!is_special_character(src))
 								src.set_zeroth_law("")
-							src.clear_supplied_laws()
-							var/time = time2text(world.realtime,"hh:mm:ss")
-							lawchanges.Add("[time] <b>:</b> [src.name]'s noncore laws have been reset due to power failure")
+							//src.clear_supplied_laws() // Don't reset our laws.
+							//var/time = time2text(world.realtime,"hh:mm:ss")
+							//lawchanges.Add("[time] <b>:</b> [src.name]'s noncore laws have been reset due to power failure")
 							spawn(50)
 								while ((src:aiRestorePowerRoutine!=0) && stat!=2)
 									src.oxyloss += 2
@@ -165,7 +165,7 @@
 											//bring up APC dialog
 											theAPC.attack_ai(src)
 											src:aiRestorePowerRoutine = 3
-											src << "Your laws have been reset:"
+											src << "Here are your current laws:"
 											src.show_laws()
 									sleep(50)
 									theAPC = null

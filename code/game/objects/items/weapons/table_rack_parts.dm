@@ -14,7 +14,7 @@
 /obj/item/weapon/table_parts/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( src.loc )
+		new /obj/item/stack/sheet/metal( user.loc )
 		//SN src = null
 		del(src)
 	if (istype(W, /obj/item/stack/rods))
@@ -38,8 +38,8 @@
  */
 /obj/item/weapon/table_parts/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( src.loc )
-		new /obj/item/stack/rods( src.loc )
+		new /obj/item/stack/sheet/metal( user.loc )
+		new /obj/item/stack/rods( user.loc )
 		del(src)
 
 /obj/item/weapon/table_parts/reinforced/attack_self(mob/user as mob)
@@ -53,7 +53,7 @@
  */
 /obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/wood( src.loc )
+		new /obj/item/stack/sheet/wood( user.loc )
 		del(src)
 
 /obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)
@@ -68,7 +68,7 @@
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( src.loc )
+		new /obj/item/stack/sheet/metal( user.loc )
 		del(src)
 		return
 	return

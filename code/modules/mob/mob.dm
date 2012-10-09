@@ -372,10 +372,7 @@ var/list/slot_equipment_priority = list( \
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
-	for(var/obj/screen/t in usr.client.screen)
-		if (t.loc == null)
-			//t = null
-			del(t)
+	client.screen.Cut()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
@@ -408,6 +405,7 @@ var/list/slot_equipment_priority = list( \
 							 'html/wrench-screwdriver.png',
 							 'html/spell-check.png',
 							 'html/burn-exclamation.png',
+							 'html/tg-notif.png',
 							 'html/chevron.png',
 							 'html/chevron-expand.png',
 							 'html/changelog.css',
@@ -868,5 +866,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		return 1
 	return 0
 
-mob/proc/flash_weak_pain()
+/mob/proc/get_species()
+	return ""
+
+/mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)

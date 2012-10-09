@@ -229,7 +229,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	if(data == 1)
 		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
-			if(R.receive_range(display_freq, level) > 0)
+			if(R.receive_range(display_freq, level) > -1)
 				radios += R
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
@@ -240,7 +240,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			if(istype(R, /obj/item/device/radio/headset))
 				continue
 
-			if(R.receive_range(display_freq, level) > 0)
+			if(R.receive_range(display_freq, level) > -1)
 				radios += R
 
 	// --- Broadcast to syndicate radio! ---
@@ -250,14 +250,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
 
-			if(R.receive_range(SYND_FREQ, level) > 0)
+			if(R.receive_range(SYND_FREQ, level) > -1)
 				radios += R
 
 	// --- Broadcast to ALL radio devices ---
 
 	else
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
-			if(R.receive_range(display_freq, level) > 0)
+			if(R.receive_range(display_freq, level) > -1)
 				radios += R
 
 	// Get a list of mobs who can hear from the radios we collected.
@@ -366,11 +366,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
-		var/quotedmsg = "\"" + message + "\"" //BS12 EDIT For Arrivals Computer
-		if(job == "Automated Announcement")
-			quotedmsg = message
-		else if(M)
-			quotedmsg = M.say_quote(message)
+		var/quotedmsg = M.say_quote(message)
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 

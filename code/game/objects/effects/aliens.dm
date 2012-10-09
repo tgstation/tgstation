@@ -170,20 +170,27 @@
 	anchored = 1
 	density = 0
 	var/health = 15
+	var/obj/effect/alien/weeds/node/linked_node = null
 
-	node
-		icon_state = "weednode"
-		name = "purple sac"
-		desc = "Weird purple octopus-like thing."
-		luminosity = NODERANGE
+/obj/effect/alien/weeds/node
+	icon_state = "weednode"
+	name = "purple sac"
+	desc = "Weird purple octopus-like thing."
+	luminosity = NODERANGE
+	var/node_range = NODERANGE
 
-/obj/effect/alien/weeds/New()
+/obj/effect/alien/weeds/node/New()
+	..(src.loc, src)
+
+
+/obj/effect/alien/weeds/New(pos, node)
 	..()
+	linked_node = node
 	if(istype(loc, /turf/space))
 		del(src)
 		return
 	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
-	spawn(rand(150,300))
+	spawn(rand(150, 200))
 		if(src)
 			Life()
 	return
@@ -215,8 +222,8 @@ Alien plants should do something if theres a lot of poison
 			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
 				continue
 
-			if(!(locate(/obj/effect/alien/weeds/node) in view(NODERANGE,T)))
-				continue
+			if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+				return
 
 	//		if (locate(/obj/movable, T)) // don't propogate into movables
 	//			continue
@@ -225,7 +232,7 @@ Alien plants should do something if theres a lot of poison
 				if(O.density)
 					continue direction_loop
 
-			new /obj/effect/alien/weeds(T)
+			new /obj/effect/alien/weeds(T, linked_node)
 
 
 /obj/effect/alien/weeds/ex_act(severity)
@@ -370,10 +377,10 @@ Alien plants should do something if theres a lot of poison
 		new /obj/item/clothing/mask/facehugger(src)
 		return
 
-	proc/Burst() //drops and kills the hugger if any is remaining
+	proc/Burst(var/kill = 1) //drops and kills the hugger if any is remaining
 		var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
 
-		if(child)
+		if(kill && istype(child))
 			loc.contents += child
 			child.Die()
 
@@ -381,12 +388,12 @@ Alien plants should do something if theres a lot of poison
 		status = BURST
 		return
 
+
 /obj/effect/alien/egg/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
 	return
-
 
 
 /obj/effect/alien/egg/attackby(var/obj/item/weapon/W, var/mob/user)
@@ -417,3 +424,21 @@ Alien plants should do something if theres a lot of poison
 	if(exposed_temperature > 500)
 		health -= 5
 		healthcheck()
+
+/obj/effect/alien/egg/HasProximity(atom/movable/AM as mob|obj)
+	if(status == GROWN && iscarbon(AM) && !isalien(AM))
+
+		var/mob/living/carbon/C = AM
+		if(C.stat == CONSCIOUS && C.has_disease(/datum/disease/alien_embryo))
+			return
+
+		status = BURST
+		flick("egg_opening", src) //Play animation
+		var/turf/pos = get_turf(src)
+		spawn(18) // Wait until the animation finishes
+			Burst(0)
+			var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
+			child.loc = pos
+			if(AM && in_range(AM, pos))
+				child.Attach(AM)
+

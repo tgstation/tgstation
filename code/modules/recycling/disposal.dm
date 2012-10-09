@@ -938,7 +938,7 @@
 /obj/structure/disposalpipe/sortjunction
 
 	icon_state = "pipe-j1s"
-	var/sortType = 0
+	var/sortType = 0	//Look at the list called TAGGERLOCATIONS in setup.dm
 	var/posdir = 0
 	var/negdir = 0
 	var/sortdir = 0

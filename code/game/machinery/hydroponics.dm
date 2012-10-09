@@ -892,17 +892,24 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(ckey && config.revival_pod_plants)
 		ghost = find_dead_player("[ckey]")
 		if(ismob(ghost))
-			if(istype(mind,/datum/mind))
-				if(!mind.current || mind.current == DEAD)
-					make_podman = 1
+			if(istype(ghost,/mob/dead/observer))
+				var/mob/dead/observer/O = ghost
+				if(istype(mind,/datum/mind))
+					if(O.can_reenter_corpse)
+						make_podman = 1
+			else
+				make_podman = 1
+
 	if(make_podman)	//all conditions met!
 		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
 		if(realName)
 			podman.real_name = realName
 		else
 			podman.real_name = "Pod Person [rand(0,999)]"
-
+		var/oldactive = mind.active
+		mind.active = 1
 		mind.transfer_to(podman)
+		mind.active = oldactive
 			// -- Mode/mind specific stuff goes here. TODO! Broken :( Should be merged into mob/living/Login
 		switch(ticker.mode.name)
 			if ("revolution")

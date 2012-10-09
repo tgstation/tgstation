@@ -8,10 +8,6 @@
  *		Sub-types
  */
 
-//TODO List:
-// Make parrots faster (But not retardedly fast like when using byond's walk() procs)
-// See if its possible for parrots to target a human's eyes (peck their eyes out)
-
 /*
  * Defines
  */
@@ -59,6 +55,7 @@
 	var/parrot_dam_zone = list("chest", "head", "l_arm", "l_leg", "r_arm", "r_leg") //For humans, select a bodypart to attack
 
 	var/list/speech_buffer = list()
+	var/list/available_channels = list()
 
 	//Headset for Poly to yell at engineers :)
 	var/obj/item/device/radio/headset/ears = null
@@ -99,7 +96,8 @@
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 	verbs.Add(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
 			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
-			  /mob/living/simple_animal/parrot/proc/drop_held_item)
+			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
+			  /mob/living/simple_animal/parrot/proc/perch_player)
 
 /mob/living/simple_animal/parrot/Die()
 	if(held_item)
@@ -139,9 +137,15 @@
 			switch(remove_from)
 				if("ears")
 					if(ears)
-						src.say(":e BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+						if(available_channels.len)
+							src.say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+						else
+							src.say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
 						ears.loc = src.loc
 						ears = null
+						for(var/possible_phrase in speak)
+							if(copytext(possible_phrase,1,3) in department_radio_keys)
+								possible_phrase = copytext(possible_phrase,3,length(possible_phrase))
 					else
 						usr << "\red There is nothing to remove from its [remove_from]."
 						return
@@ -166,12 +170,36 @@
 							usr << "\red This object won't fit."
 							return
 
+						var/obj/item/device/radio/headset/headset_to_add = item_to_add
+
 						usr.drop_item()
-						item_to_add.loc = src
-						src.ears = item_to_add
+						headset_to_add.loc = src
+						src.ears = headset_to_add
 						usr << "You fit the headset onto [src]."
+
+						clearlist(available_channels)
+						for(var/ch in headset_to_add.channels)
+							switch(ch)
+								if("Engineering")
+									available_channels.Add(":e")
+								if("Command")
+									available_channels.Add(":c")
+								if("Security")
+									available_channels.Add(":s")
+								if("Science")
+									available_channels.Add(":n")
+								if("Medical")
+									available_channels.Add(":m")
+								if("Mining")
+									available_channels.Add(":d")
+								if("Cargo")
+									available_channels.Add(":q")
+
+						if(headset_to_add.translate_binary)
+							available_channels.Add(":b")
 		else
 			..()
+
 
 /*
  * Attack responces
@@ -250,15 +278,24 @@
 /mob/living/simple_animal/parrot/Life()
 	..()
 
+	//Sprite and AI update for when a parrot gets pulled
+	if(pulledby && stat == CONSCIOUS)
+		icon_state = "parrot_fly"
+		if(!client)
+			parrot_state = PARROT_WANDER
+		return
+
 	if(client || stat)
 		return //Lets not force players or dead/incap parrots to move
 
-	if(!isturf(src.loc) || !canmove || buckled || pulledby)
-		return //If it can't move, dont let it move. (The buckled check probably isn't necessary)
+	if(!isturf(src.loc) || !canmove || buckled)
+		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
 
-	//Parrot speech mimickry! Phrases that the parrot hears in mob/living/say() get added to speach_buffer.
-	//Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
-	//Then it clears the buffer to make sure they dont magically remember something from hours ago.
+//-----SPEECH
+	/* Parrot speech mimickry!
+	   Phrases that the parrot hears in mob/living/say() get added to speach_buffer.
+	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
+	   Then it clears the buffer to make sure they dont magically remember something from hours ago. */
 	if(speech_buffer.len && prob(10))
 		if(speak.len)
 			speak.Remove(pick(speak))
@@ -285,10 +322,39 @@
 			return
 
 		else
-			parrot_sleep_dur = parrot_sleep_max //This way we only call the loop below once every [sleep_max] ticks.
+			//This way we only call the stuff below once every [sleep_max] ticks.
+			parrot_sleep_dur = parrot_sleep_max
+
+			//Cycle through message modes for the headset
+			if(speak.len)
+				var/list/newspeak = list()
+
+				if(available_channels.len && src.ears)
+					for(var/possible_phrase in speak)
+
+						//50/50 chance to not use the radio at all
+						var/useradio = 0
+						if(prob(50))
+							useradio = 1
+
+						if(copytext(possible_phrase,1,3) in department_radio_keys)
+							possible_phrase = "[useradio?pick(available_channels):""] [copytext(possible_phrase,3,length(possible_phrase)+1)]" //crop out the channel prefix
+						else
+							possible_phrase = "[useradio?pick(available_channels):""] [possible_phrase]"
+
+						newspeak.Add(possible_phrase)
+
+				else //If we have no headset or channels to use, dont try to use any!
+					for(var/possible_phrase in speak)
+						if(copytext(possible_phrase,1,3) in department_radio_keys)
+							possible_phrase = "[copytext(possible_phrase,3,length(possible_phrase)+1)]" //crop out the channel prefix
+						newspeak.Add(possible_phrase)
+				speak = newspeak
+
+			//Search for item to steal
 			parrot_interest = search_for_item()
 			if(parrot_interest)
-				emote("[src] looks in [parrot_interest]'s direction and takes flight.")
+				emote("looks in [parrot_interest]'s direction and takes flight")
 				parrot_state = PARROT_SWOOP | PARROT_STEAL
 				icon_state = "parrot_fly"
 			return
@@ -310,7 +376,7 @@
 			if(AM)
 				if(istype(AM, /obj/item) || isliving(AM))	//If stealable item
 					parrot_interest = AM
-					emote("[src] turns and flies towards [parrot_interest].")
+					emote("turns and flies towards [parrot_interest]")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
 					return
 				else	//Else it's a perch
@@ -454,6 +520,11 @@
  * Procs
  */
 
+/mob/living/simple_animal/parrot/movement_delay()
+	if(client && parrot_state != "parrot_fly")
+		icon_state = "parrot_fly"
+	..()
+
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	for(var/atom/movable/AM in view(src))
 		for(var/path in desired_items)
@@ -509,29 +580,36 @@
 		return -1
 
 	if(held_item)
-		usr << "\red You are already holding the [held_item]"
+		src << "\red You are already holding the [held_item]"
 		return 1
 
 	for(var/obj/item/I in view(1,src))
 		for(var/path in desired_items)
+			//Make sure it's the proper item and we're not holding it
 			if(istype(I, path) && I.loc != src)
+
+				//If we have a perch and the item is sitting on it, continue
+				if(!client && parrot_perch && I.loc == parrot_perch)
+					continue
+
 				held_item = I
 				I.loc = src
 				visible_message("[src] grabs the [held_item]!", "\blue You grab the [held_item]!", "You hear the sounds of wings flapping furiously.")
 				return held_item
 
-	usr << "\red There is nothing of interest to take."
+	src << "\red There is nothing of interest to take."
 	return 0
 
 /mob/living/simple_animal/parrot/proc/steal_from_mob()
 	set name = "Steal from mob"
 	set category = "Parrot"
 	set desc = "Steals an item right out of a person's hand!"
+
 	if(stat)
 		return -1
 
 	if(held_item)
-		usr << "\red You are already holding the [held_item]"
+		src << "\red You are already holding the [held_item]"
 		return 1
 
 	var/obj/item/stolen_item = null
@@ -551,8 +629,16 @@
 				visible_message("[src] grabs the [held_item] out of [C]'s hand!", "\blue You snag the [held_item] out of [C]'s hand!", "You hear the sounds of wings flapping furiously.")
 				return held_item
 
-	usr << "\red There is nothing of interest to take."
+	src << "\red There is nothing of interest to take."
 	return 0
+
+/mob/living/simple_animal/parrot/verb/drop_held_item_player()
+	set name = "Drop held item"
+	set category = "Parrot"
+	set desc = "Drop the item you're holding."
+
+	src.drop_held_item()
+	return
 
 /mob/living/simple_animal/parrot/proc/drop_held_item(var/drop_gently = 1)
 	set name = "Drop held item"
@@ -569,15 +655,34 @@
 	if(!drop_gently)
 		if(istype(held_item, /obj/item/weapon/grenade))
 			var/obj/item/weapon/grenade/G = held_item
-			G.loc = get_turf(src)
+			G.loc = src.loc
 			G.prime()
+			src << "You let go of the [held_item]!"
 			held_item = null
+			return 1
 
-	usr << "You drop the [held_item]."
+	src << "You drop the [held_item]."
 
 	held_item.loc = src.loc
 	held_item = null
 	return 1
+
+/mob/living/simple_animal/parrot/proc/perch_player()
+	set name = "Sit"
+	set category = "Parrot"
+	set desc = "Sit on a nice comfy perch."
+
+	if(stat || !client)
+		return
+
+	if(icon_state == "parrot_fly")
+		for(var/atom/movable/AM in view(src,1))
+			for(var/perch_path in desired_perches)
+				if(istype(AM, perch_path))
+					src.loc = AM.loc
+					icon_state = "parrot_sit"
+					return
+	return
 
 /*
  * Sub-types
@@ -589,4 +694,5 @@
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
+	available_channels = list(":e")
 	..()

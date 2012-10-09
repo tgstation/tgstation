@@ -115,44 +115,27 @@ proc/isorgan(A)
 		return 1
 	return 0
 
-proc/hasorgans(A)
-	return (ishuman(A) || ismonkey(A))
-
 /proc/hsl2rgb(h, s, l)
 	return
 
-/proc/istajaran(A)
-	if(istype(A, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = A
-		if(M.dna.mutantrace == "tajaran")
-			return 1
-	return 0
-
-/proc/issoghun(A)
-	if(istype(A, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = A
-		if(M.dna.mutantrace == "lizard")
-			return 1
-	return 0
-
-/proc/isskrell(A)
-	if(istype(A, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = A
-		if(M.dna.mutantrace == "skrell")
-			return 1
-	return 0
-
 
 /proc/check_zone(zone)
-	if(!zone)
-		return "chest"
+	if(!zone)	return "chest"
 	switch(zone)
 		if("eyes")
 			zone = "head"
 		if("mouth")
 			zone = "head"
-//		if("groin")
-//			zone = "chest"
+		if("l_hand")
+			zone = "l_arm"
+		if("r_hand")
+			zone = "r_arm"
+		if("l_foot")
+			zone = "l_leg"
+		if("r_foot")
+			zone = "r_leg"
+		if("groin")
+			zone = "chest"
 	return zone
 
 
@@ -181,7 +164,7 @@ proc/hasorgans(A)
 	else
 		if (pr >= 100)
 			return n
-	var/te = html_decode(n)
+	var/te = n
 	var/t = ""
 	n = length(n)
 	var/p = null
@@ -192,67 +175,8 @@ proc/hasorgans(A)
 		else
 			t = text("[]*", t)
 		p++
-	return html_encode(t)
+	return t
 
-/*proc/NewStutter(phrase,stunned)
-	phrase = html_decode(phrase)
-
-	var/list/split_phrase = dd_text2list(phrase," ") //Split it up into words.
-
-	var/list/unstuttered_words = split_phrase.Copy()
-	var/i = rand(1,3)
-	if(stunned) i = split_phrase.len
-	for(,i > 0,i--) //Pick a few words to stutter on.
-
-		if (!unstuttered_words.len)
-			break
-		var/word = pick(unstuttered_words)
-		unstuttered_words -= word //Remove from unstuttered words so we don't stutter it again.
-		var/index = split_phrase.Find(word) //Find the word in the split phrase so we can replace it.
-
-		//Search for dipthongs (two letters that make one sound.)
-		var/first_sound = copytext(word,1,3)
-		var/first_letter = copytext(word,1,2)
-		if(lowertext(first_sound) in list("ch","th","sh"))
-			first_letter = first_sound
-
-		//Repeat the first letter to create a stutter.
-		var/rnum = rand(1,3)
-		switch(rnum)
-			if(1)
-				word = "[first_letter]-[word]"
-			if(2)
-				word = "[first_letter]-[first_letter]-[word]"
-			if(3)
-				word = "[first_letter]-[word]"
-
-		split_phrase[index] = word
-
-	return sanitize(dd_list2text(split_phrase," "))*/
-
-
-proc/slur(phrase)
-	phrase = html_decode(phrase)
-	var/leng=lentext(phrase)
-	var/counter=lentext(phrase)
-	var/newphrase=""
-	var/newletter=""
-	while(counter>=1)
-		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")	newletter="u"
-			if(lowertext(newletter)=="s")	newletter="ch"
-			if(lowertext(newletter)=="a")	newletter="ah"
-			if(lowertext(newletter)=="c")	newletter="k"
-		switch(rand(1,15))
-			if(1,3,5,8)	newletter="[lowertext(newletter)]"
-			if(2,4,6,15)	newletter="[uppertext(newletter)]"
-			if(7)	newletter+="'"
-			if(9,10)	newletter="<b>[newletter]</b>"
-			if(11,12)	newletter="<big>[newletter]</big>"
-			if(13)	newletter="<small>[newletter]</small>"
-		newphrase+="[newletter]";counter-=1
-	return newphrase
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -355,15 +279,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	return 0
 
-/mob/proc/abiotic2(var/full_body2 = 0)
-	if(full_body2 && ((l_hand && !( l_hand.abstract )) || (r_hand && !( r_hand.abstract )) || (back || wear_mask)))
-		return 1
-
-	if((l_hand && !( l_hand.abstract )) || (r_hand && !( r_hand.abstract )))
-		return 1
-
-	return 0
-
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
 	set name = "F12"
@@ -415,12 +330,48 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	else
 		usr << "\red This mob type does not use a HUD."
 
-/mob/proc/is_player_active()
-	if(!src.client) return 0
-	if(src.client.inactivity > 10 * 60 * 10) return 0
-	if(src.stat == 2) return 0
+//converts intent-strings into numbers and back
+var/list/intents = list("help","disarm","grab","hurt")
+/proc/intent_numeric(argument)
+	if(istext(argument))
+		switch(argument)
+			if("help")		return 0
+			if("disarm")	return 1
+			if("grab")		return 2
+			else			return 3
+	else
+		switch(argument)
+			if(0)			return "help"
+			if(1)			return "disarm"
+			if(2)			return "grab"
+			else			return "hurt"
 
-	return 1
+//change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
+/mob/verb/a_intent_change(input as text)
+	set name = "a-intent"
+	set hidden = 1
 
-/mob/proc/get_species()
-	return
+	if(ishuman(src) || istype(src,/mob/living/carbon/alien/humanoid))
+		switch(input)
+			if("help","disarm","grab","hurt")
+				a_intent = input
+			if("right")
+				a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
+			if("left")
+				a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
+		if(hud_used && hud_used.action_intent)
+			hud_used.action_intent.icon_state = "intent_[a_intent]"
+
+	else if(isrobot(src) || ismonkey(src) || islarva(src))
+		switch(input)
+			if("help")
+				a_intent = "help"
+			if("hurt")
+				a_intent = "hurt"
+			if("right","left")
+				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
+		if(hud_used && hud_used.action_intent)
+			if(a_intent == "hurt")
+				hud_used.action_intent.icon_state = "harm"
+			else
+				hud_used.action_intent.icon_state = "help"

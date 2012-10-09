@@ -48,9 +48,10 @@
 	var/icon/stand_icon = null
 	var/icon/lying_icon = null
 
-	var/list/organs = list()
-	var/list/organs_by_name = list() // map organ names to organs
+	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc, line 24. I'm sick and tired of missing comments. -Agouri
 
 	var/miming = null //Toggle for the mime's abilities.
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
+
+	var/xylophone = 0 //For the spoooooooky xylophone cooldown

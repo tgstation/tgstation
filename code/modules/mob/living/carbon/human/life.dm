@@ -53,8 +53,6 @@
 	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
 
 	//TODO: seperate this out
-	// update the current life tick, can be used to e.g. only do something every 4 ticks
-	life_tick++
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	//No need to update all of these procs if the guy is dead.
@@ -165,74 +163,9 @@
 					if(1)
 						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
 					if(2)
-						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom"))
+						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
 					if(3)
 						emote("drool")
-
-	proc/handle_organs()
-		// take care of organ related updates, such as broken and missing limbs
-
-		// recalculate number of wounds
-		number_wounds = 0
-		for(var/datum/organ/external/E in organs)
-			if(!E)
-				world << name
-				continue
-			number_wounds += E.number_wounds
-
-		var/leg_tally = 2
-		for(var/datum/organ/external/E in organs)
-			E.process()
-			if(E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
-				if(E.name == "l_hand" || E.name == "l_arm")
-					if(hand && equipped())
-						drop_item()
-						emote("custom v drops what they were holding, their [E.display_name?"[E.display_name]":"[E]"] malfunctioning!")
-						var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-						spark_system.set_up(5, 0, src)
-						spark_system.attach(src)
-						spark_system.start()
-						spawn(10)
-							del(spark_system)
-				else if(E.name == "r_hand" || E.name == "r_arm")
-					if(!hand && equipped())
-						drop_item()
-						emote("custom v drops what they were holding, their [E.display_name?"[E.display_name]":"[E]"] malfunctioning!")
-						var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-						spark_system.set_up(5, 0, src)
-						spark_system.attach(src)
-						spark_system.start()
-						spawn(10)
-							del(spark_system)
-				else if(E.name == "l_leg" || E.name == "l_foot" \
-					|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-					leg_tally--									// let it fail even if just foot&leg
-			if(E.status & ORGAN_BROKEN || E.status & ORGAN_DESTROYED)
-				if(E.name == "l_hand" || E.name == "l_arm")
-					if(hand && equipped())
-						if(E.status & ORGAN_SPLINTED && prob(10))
-							drop_item()
-							emote("scream")
-						else
-							drop_item()
-							emote("scream")
-				else if(E.name == "r_hand" || E.name == "r_arm")
-					if(!hand && equipped())
-						if(E.status & ORGAN_SPLINTED && prob(10))
-							drop_item()
-							emote("scream")
-						else
-							drop_item()
-							emote("scream")
-				else if(E.name == "l_leg" || E.name == "l_foot" \
-					|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-					if(!(E.status & ORGAN_SPLINTED))
-						leg_tally--									// let it fail even if just foot&leg
-		// standing is poor
-		if(leg_tally <= 0 && !paralysis && !(lying || resting) && prob(5))
-			emote("scream")
-			emote("collapse")
-			paralysis = 10
 
 
 	proc/handle_mutations_and_radiation()
@@ -887,7 +820,6 @@
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()	//TODO
-			handle_organs()
 			if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 				blinded = 1
@@ -953,7 +885,7 @@
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
 				blinded = 1
-			else if(istype(glasses, /obj/item/clothing/glasses/blindfold))	//resting your eyes with a blindfold heals blurry eyes faster
+			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold))	//resting your eyes with a blindfold heals blurry eyes faster
 				eye_blurry = max(eye_blurry-3, 0)
 				blinded = 1
 			else if(eye_blurry)	//blurry eyes heal slowly
@@ -994,64 +926,78 @@
 			if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 				del(hud)
 
-		client.screen.Remove(hud_used.blurry, hud_used.druggy, hud_used.vimpaired, hud_used.darkMask)
+		client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 
 		update_action_buttons()
 
-		if(!src.oxyloss)
-			damageoverlay.icon_state = "oxydamageoverlay0"
-		else
-			switch(oxyloss)
-				if(0 to 10)
-					damageoverlay.icon_state = "oxydamageoverlay0"
-				if(10 to 20)
-					damageoverlay.icon_state = "oxydamageoverlay1"
-				if(20 to 25)
-					damageoverlay.icon_state = "oxydamageoverlay2"
-				if(25 to 30)
-					damageoverlay.icon_state = "oxydamageoverlay3"
-				if(30 to 35)
-					damageoverlay.icon_state = "oxydamageoverlay4"
-				if(35 to 40)
-					damageoverlay.icon_state = "oxydamageoverlay5"
-				if(40 to 45)
-					damageoverlay.icon_state = "oxydamageoverlay6"
-				if(45 to INFINITY)
-					damageoverlay.icon_state = "oxydamageoverlay7"
-
 		if(damageoverlay.overlays)
 			damageoverlay.overlays = list()
-		var/hurtdamage = src.getBruteLoss() + src.getFireLoss()
-		if(hurtdamage)
-			var/image/I
-			switch(hurtdamage)
-				if(10 to 20)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay1")
-				if(20 to 30)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay2")
-				if(30 to 40)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay3")
-				if(40 to 45)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay4")
-				if(45 to 50)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay5")
-				if(50 to 56)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay6")
-				if(56 to 62)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay7")
-				if(62 to 68)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay8")
-				if(68 to 74)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay9")
-				if(74 to 80)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay10")
-				if(80 to 86)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay11")
-				if(86 to 92)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay12")
-				if(92 to INFINITY)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay13")
-			damageoverlay.overlays += I
+
+		if(stat == UNCONSCIOUS)
+			//Critical damage passage overlay
+			if(health <= 0)
+				var/image/I
+				switch(health)
+					if(-20 to -10)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage1")
+					if(-30 to -20)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage2")
+					if(-40 to -30)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage3")
+					if(-50 to -40)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage4")
+					if(-60 to -50)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage5")
+					if(-70 to -60)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage6")
+					if(-80 to -70)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage7")
+					if(-90 to -80)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage8")
+					if(-95 to -90)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage9")
+					if(-INFINITY to -95)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage10")
+				damageoverlay.overlays += I
+		else
+			//Oxygen damage overlay
+			if(oxyloss)
+				var/image/I
+				switch(oxyloss)
+					if(10 to 20)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay1")
+					if(20 to 25)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay2")
+					if(25 to 30)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay3")
+					if(30 to 35)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay4")
+					if(35 to 40)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay5")
+					if(40 to 45)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay6")
+					if(45 to INFINITY)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay7")
+				damageoverlay.overlays += I
+
+			//Fire and Brute damage overlay (BSSR)
+			var/hurtdamage = src.getBruteLoss() + src.getFireLoss()
+			if(hurtdamage)
+				var/image/I
+				switch(hurtdamage)
+					if(10 to 25)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay1")
+					if(25 to 40)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay2")
+					if(40 to 55)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay3")
+					if(55 to 70)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay4")
+					if(70 to 85)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay5")
+					if(85 to INFINITY)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay6")
+				damageoverlay.overlays += I
 
 		if( stat == DEAD )
 			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
@@ -1145,8 +1091,6 @@
 			else
 				see_invisible = SEE_INVISIBLE_LIVING
 
-			if(sleep && !hal_crit)	sleep.icon_state = "sleep[sleeping]"	//used?
-
 			if(healths)
 				switch(hal_screwyhud)
 					if(1)	healths.icon_state = "health6"
@@ -1215,18 +1159,18 @@
 				else			blind.layer = 0
 
 			if( disabilities & NEARSIGHTED && !istype(glasses, /obj/item/clothing/glasses/regular) )
-				client.screen += hud_used.vimpaired
-			if(eye_blurry)			client.screen += hud_used.blurry
-			if(druggy)				client.screen += hud_used.druggy
+				client.screen += global_hud.vimpaired
+			if(eye_blurry)			client.screen += global_hud.blurry
+			if(druggy)				client.screen += global_hud.druggy
 
 			if( istype(head, /obj/item/clothing/head/welding) )
 				var/obj/item/clothing/head/welding/O = head
 				if(!O.up && tinted_weldhelh)
-					client.screen += hud_used.darkMask
+					client.screen += global_hud.darkMask
 
 			if(eye_stat > 20)
-				if(eye_stat > 30)	client.screen += hud_used.darkMask
-				else				client.screen += hud_used.vimpaired
+				if(eye_stat > 30)	client.screen += global_hud.darkMask
+				else				client.screen += global_hud.vimpaired
 
 			if(machine)
 				if(!machine.check_eye(src))		reset_view(null)

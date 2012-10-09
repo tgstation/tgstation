@@ -48,8 +48,48 @@ macro "macro"
 		command = ".east"
 		is-disabled = false
 	elem 
+		name = "CTRL+SOUTH"
+		command = "southface"
+		is-disabled = false
+	elem 
+		name = "SOUTH+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "INSERT"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
+		is-disabled = false
+	elem 
+		name = "CTRL+1"
+		command = "a-intent help"
+		is-disabled = false
+	elem 
+		name = "CTRL+2"
+		command = "a-intent disarm"
+		is-disabled = false
+	elem 
+		name = "CTRL+3"
+		command = "a-intent grab"
+		is-disabled = false
+	elem 
+		name = "CTRL+4"
+		command = "a-intent hurt"
+		is-disabled = false
+	elem 
 		name = "CTRL+A+REP"
 		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
 		is-disabled = false
 	elem 
 		name = "CTRL+D+REP"
@@ -61,11 +101,11 @@ macro "macro"
 		is-disabled = false
 	elem 
 		name = "CTRL+F"
-		command = "a-intent-left"
+		command = "a-intent left"
 		is-disabled = false
 	elem 
 		name = "CTRL+G"
-		command = "a-intent-right"
+		command = "a-intent right"
 		is-disabled = false
 	elem 
 		name = "CTRL+Q"
@@ -86,22 +126,6 @@ macro "macro"
 	elem 
 		name = "CTRL+X"
 		command = ".northeast"
-		is-disabled = false
-	elem 
-		name = "CTRL+SOUTH"
-		command = "southface"
-		is-disabled = false
-	elem 
-		name = "SOUTH+REP"
-		command = ".south"
-		is-disabled = false
-	elem 
-		name = "INSERT"
-		command = "insert-key-pressed"
-		is-disabled = false
-	elem 
-		name = "DELETE"
-		command = "delete-key-pressed"
 		is-disabled = false
 	elem 
 		name = "F1"
@@ -189,7 +213,55 @@ macro "hotkeymode"
 		name = "EAST+REP"
 		command = ".east"
 		is-disabled = false
-	elem "a_key"
+	elem 
+		name = "CTRL+SOUTH"
+		command = "southface"
+		is-disabled = false
+	elem 
+		name = "SOUTH+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "INSERT"
+		command = "a-intent right"
+		is-disabled = false
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
+		is-disabled = false
+	elem 
+		name = "1"
+		command = "a-intent help"
+		is-disabled = false
+	elem 
+		name = "CTRL+1"
+		command = "a-intent help"
+		is-disabled = false
+	elem 
+		name = "2"
+		command = "a-intent disarm"
+		is-disabled = false
+	elem 
+		name = "CTRL+2"
+		command = "a-intent disarm"
+		is-disabled = false
+	elem 
+		name = "3"
+		command = "a-intent grab"
+		is-disabled = false
+	elem 
+		name = "CTRL+3"
+		command = "a-intent grab"
+		is-disabled = false
+	elem 
+		name = "4"
+		command = "a-intent hurt"
+		is-disabled = false
+	elem 
+		name = "CTRL+4"
+		command = "a-intent hurt"
+		is-disabled = false
+	elem 
 		name = "A+REP"
 		command = ".west"
 		is-disabled = false
@@ -197,7 +269,23 @@ macro "hotkeymode"
 		name = "CTRL+A+REP"
 		command = ".west"
 		is-disabled = false
-	elem "d_key"
+	elem 
+		name = "Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
 		name = "D+REP"
 		command = ".east"
 		is-disabled = false
@@ -205,7 +293,7 @@ macro "hotkeymode"
 		name = "CTRL+D+REP"
 		command = ".east"
 		is-disabled = false
-	elem "e_key"
+	elem 
 		name = "E"
 		command = "quick-equip"
 		is-disabled = false
@@ -213,23 +301,23 @@ macro "hotkeymode"
 		name = "CTRL+E"
 		command = "quick-equip"
 		is-disabled = false
-	elem "f_key"
+	elem 
 		name = "F"
-		command = "a-intent-left"
+		command = "a-intent left"
 		is-disabled = false
 	elem 
 		name = "CTRL+F"
-		command = "a-intent-left"
+		command = "a-intent left"
 		is-disabled = false
-	elem "g_key"
+	elem 
 		name = "G"
-		command = "a-intent-right"
+		command = "a-intent right"
 		is-disabled = false
 	elem 
 		name = "CTRL+G"
-		command = "a-intent-right"
+		command = "a-intent right"
 		is-disabled = false
-	elem "q_key"
+	elem 
 		name = "Q"
 		command = ".northwest"
 		is-disabled = false
@@ -237,7 +325,7 @@ macro "hotkeymode"
 		name = "CTRL+Q"
 		command = ".northwest"
 		is-disabled = false
-	elem "r_key"
+	elem 
 		name = "R"
 		command = ".southwest"
 		is-disabled = false
@@ -253,7 +341,7 @@ macro "hotkeymode"
 		name = "CTRL+S+REP"
 		command = ".south"
 		is-disabled = false
-	elem "t_key"
+	elem 
 		name = "T"
 		command = "say"
 		is-disabled = false
@@ -265,29 +353,13 @@ macro "hotkeymode"
 		name = "CTRL+W+REP"
 		command = ".north"
 		is-disabled = false
-	elem "x_key"
+	elem 
 		name = "X"
 		command = ".northeast"
 		is-disabled = false
 	elem 
 		name = "CTRL+X"
 		command = ".northeast"
-		is-disabled = false
-	elem 
-		name = "CTRL+SOUTH"
-		command = "southface"
-		is-disabled = false
-	elem 
-		name = "SOUTH+REP"
-		command = ".south"
-		is-disabled = false
-	elem 
-		name = "INSERT"
-		command = "insert-key-pressed"
-		is-disabled = false
-	elem 
-		name = "DELETE"
-		command = "delete-key-pressed"
 		is-disabled = false
 	elem 
 		name = "F1"
@@ -325,6 +397,7 @@ macro "hotkeymode"
 		name = "F12"
 		command = "F12"
 		is-disabled = false
+
 
 menu "menu"
 	elem 
@@ -1112,7 +1185,6 @@ window "mainwindow"
 		size = 517x20
 		anchor1 = 0,100
 		anchor2 = 100,100
-		focus = true
 		font-family = ""
 		font-size = 0
 		font-style = ""
@@ -1206,10 +1278,10 @@ window "mapwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		font-family = ""
-		font-size = 0
+		font-family = "Arial Rounded MT Bold,Arial Black,Arial,sans-serif"
+		font-size = 7
 		font-style = ""
-		text-color = #FFFFFF
+		text-color = none
 		background-color = none
 		is-visible = true
 		is-disabled = false

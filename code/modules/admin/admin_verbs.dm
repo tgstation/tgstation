@@ -97,9 +97,6 @@
 //			del(src)
 //			return
 
-		if ("Retired Admin")
-			holder.level = -3
-
 		else
 			del(holder)
 			return
@@ -107,26 +104,22 @@
 	if (holder)		//THE BELOW handles granting powers. The above is for special cases only!
 		holder.owner = src
 
-		//---- Special Admin Ranks
-
-		//Retired admin
+		//---- Special Admin Ranks		//Retired admin
 		if (holder.level == -3)
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/cmd_mod_say
 			return
 
 		//Admin Observer
-		if (holder.level == -1)
+		if (holder.level >= -1)
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_say
-			verbs += /client/proc/cmd_mod_say
 			verbs += /client/proc/cmd_admin_gib_self
-			verbs += /client/proc/update_mob_sprite
 			verbs += /client/proc/deadmin_self
-			return
+		else	return
 
 		//Moderator
-		if (holder.level == 0)
+		if (holder.level >= 0)
 			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/hide_verbs
@@ -136,16 +129,11 @@
 			verbs += /datum/admins/proc/show_skills
 			verbs += /client/proc/mod_panel
 			verbs += /client/proc/admin_ghost
-			return
-
-		//---- Full Admin Ranks
-		if (holder.level > 0)
-			verbs += /client/proc/cmd_admin_say
-			verbs += /client/proc/cmd_mod_say
-			verbs += /client/proc/admin_ghost
+		else	return
 
 		//Temporary Admin
 		if (holder.level >= 1)
+			verbs += /datum/admins/proc/startnow
 			verbs += /datum/admins/proc/delay								//game start delay
 			verbs += /datum/admins/proc/immreboot							//immediate reboot
 			verbs += /datum/admins/proc/restart							//restart
@@ -154,7 +142,8 @@
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/playernotes
+			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
+		else	return
 
 		//Admin Candidate
 		if (holder.level >= 2)
@@ -189,9 +178,12 @@
 			verbs += /proc/possess
 			verbs += /proc/release
 			verbs += /client/proc/one_click_antag
-//BS12 Commands
+
+			//bs12 specific
 			verbs += /client/proc/admin_deny_shuttle
 			verbs += /client/proc/editappear
+
+
 		else	return
 
 		//Badmin
@@ -411,7 +403,19 @@
 		/client/proc/cmd_debug_mob_lists,
 		/datum/admins/proc/access_news_network,
 		/client/proc/one_click_antag,
-		/client/proc/invisimin
+		/client/proc/invisimin,
+
+		//bs12 verbs
+		/client/proc/update_mob_sprite,
+		/client/proc/mod_panel,
+		/client/proc/admin_deny_shuttle,
+		/client/proc/playernotes,
+		/datum/admins/proc/show_skills,
+		/client/proc/Report,
+		/client/proc/display_admin_reports,
+		/client/proc/editappear,
+		/client/proc/cmd_mod_say,
+		/client/proc/playernotes
 	)
 	//verbs -= /client/proc/mapload
 	//verbs -= /client/proc/cmd_admin_drop_everything					--merged with view variables
@@ -433,17 +437,6 @@
 	//verbs -= /client/proc/warn
 	//verbs -= /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 	//verbs -= /client/proc/cmd_admin_remove_plasma						--This proc is outdated, does not do anything
-//BS12 Admin Verbs
-	verbs -= /client/proc/update_mob_sprite
-	verbs -= /client/proc/mod_panel
-	verbs -= /client/proc/admin_deny_shuttle
-	verbs -= /client/proc/playernotes
-	verbs -= /datum/admins/proc/show_skills
-	verbs -= /client/proc/Report
-	verbs -= /client/proc/display_admin_reports
-	verbs -= /client/proc/editappear
-	verbs -= /client/proc/cmd_mod_say
-	verbs -= /client/proc/playernotes
 	return
 
 /client/proc/admin_ghost()
@@ -486,10 +479,10 @@
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			usr << "\red <b>You are now visible to other players.</b>"
+			mob << "\red <b>Invisimin off. Invisibility reset.</b>"
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			usr << "\blue <b>You are now invisible to other players.</b>"
+			mob << "\blue <b>Invisimin on. You are now as invisible as a ghost.</b>"
 
 
 /client/proc/player_panel()
@@ -506,14 +499,6 @@
 	if(holder)
 		holder.player_panel_new()
 	feedback_add_details("admin_verb","PPN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
-/client/proc/mod_panel()
-	set name = "Moderator Panel"
-	set category = "Admin"
-	if(holder)
-		holder.mod_panel()
-	feedback_add_details("admin_verb","MDRP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/check_antagonists()
@@ -581,13 +566,6 @@
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", 1)
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/playernotes()
-	set name = "Show Player Info"
-	set category = "Admin"
-	if(holder)
-		holder.PlayerNotes()
-	return
 
 #define AUTOBATIME 10
 /client/proc/warn(var/mob/M in player_list)
@@ -833,86 +811,106 @@
 			config.log_hrefs = 1
 			src << "<b>Started logging hrefs</b>"
 
+/client/proc/check_ai_laws()
+	set name = "Check AI Laws"
+	set category = "Admin"
+	if(holder)
+		src.holder.output_ai_laws()
+
+
+//---- bs12 verbs ----
+
+/client/proc/mod_panel()
+	set name = "Moderator Panel"
+	set category = "Admin"
+	if(holder)
+		holder.mod_panel()
+//	feedback_add_details("admin_verb","MP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
 /client/proc/editappear(mob/living/carbon/human/M as mob in world)
 	set name = "Edit Appearance"
 	set category = "Fun"
-	if(!istype(M, /mob/living/carbon/human))
+
+	usr << "\red This proc has been temporarily disabled."
+	return
+
+	//some random errors here, cbb fixing them right now
+	//todo
+	/*if(!istype(M, /mob/living/carbon/human))
 		usr << "\red You can only do this to humans!"
 		return
-	switch(alert("You sure you wish to edit this mob's appearance?",,"Yes","No"))
+	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Soghun and Tajaran can result in unintended consequences.",,"Yes","No"))
 		if("No")
 			return
-	if(!ishuman(M))
-		usr << "\red Non-humans are not editable yet!"
-	else
-		var/new_facial = input("Please select facial hair color.", "Character Generation") as color
-		if(new_facial)
-			M.r_facial = hex2num(copytext(new_facial, 2, 4))
-			M.g_facial = hex2num(copytext(new_facial, 4, 6))
-			M.b_facial = hex2num(copytext(new_facial, 6, 8))
+	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
+	if(new_facial)
+		M.r_facial = hex2num(copytext(new_facial, 2, 4))
+		M.g_facial = hex2num(copytext(new_facial, 4, 6))
+		M.b_facial = hex2num(copytext(new_facial, 6, 8))
 
-		var/new_hair = input("Please select hair color.", "Character Generation") as color
-		if(new_facial)
-			M.r_hair = hex2num(copytext(new_hair, 2, 4))
-			M.g_hair = hex2num(copytext(new_hair, 4, 6))
-			M.b_hair = hex2num(copytext(new_hair, 6, 8))
+	var/new_hair = input("Please select hair color.", "Character Generation") as color
+	if(new_facial)
+		M.r_hair = hex2num(copytext(new_hair, 2, 4))
+		M.g_hair = hex2num(copytext(new_hair, 4, 6))
+		M.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-		var/new_eyes = input("Please select eye color.", "Character Generation") as color
-		if(new_eyes)
-			M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
-			M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
-			M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+	var/new_eyes = input("Please select eye color.", "Character Generation") as color
+	if(new_eyes)
+		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
+		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
+		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-		var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
-		if (new_tone)
-			M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-			M.s_tone =  -M.s_tone + 35
+	if (new_tone)
+		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+		M.s_tone =  -M.s_tone + 35
 
-		// hair
-		var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
-		var/list/hairs = list()
+	// hair
+	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/hairs = list()
 
-		// loop through potential hairs
-		for(var/x in all_hairs)
-			var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
-			hairs.Add(H.name) // add hair name to hairs
-			del(H) // delete the hair after it's all done
+	// loop through potential hairs
+	for(var/x in all_hairs)
+		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
+		hairs.Add(H.name) // add hair name to hairs
+		del(H) // delete the hair after it's all done
 
-		var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
+	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
 
-		// if new style selected (not cancel)
-		if (new_style)
-			M.h_style = new_style
+	// if new style selected (not cancel)
+	if (new_style)
+		M.h_style = new_style
 
-			for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
-				var/datum/sprite_accessory/hair/H = new x // create new hair datum
-				if(H.name == new_style)
-					M.h_style = H // assign the hair_style variable a new hair datum
-					break
-				else
-					del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
+		for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
+			var/datum/sprite_accessory/hair/H = new x // create new hair datum
+			if(H.name == new_style)
+				M.hair_style = H // assign the hair_style variable a new hair datum
+				break
+			else
+				del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
 
-		// facial hair
-		var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
-		var/list/fhairs = list()
+	// facial hair
+	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+	var/list/fhairs = list()
 
+	for(var/x in all_fhairs)
+		var/datum/sprite_accessory/facial_hair/H = new x
+		fhairs.Add(H.name)
+		del(H)
+
+	new_style = input("Please select facial style", "Character Generation")  as null|anything in fhairs
+
+	if(new_style)
+		M.f_style = new_style
 		for(var/x in all_fhairs)
 			var/datum/sprite_accessory/facial_hair/H = new x
-			fhairs.Add(H.name)
-			del(H)
-
-		new_style = input("Please select facial style", "Character Generation")  as null|anything in fhairs
-
-		if(new_style)
-			M.f_style = new_style
-			for(var/x in all_fhairs)
-				var/datum/sprite_accessory/facial_hair/H = new x
-				if(H.name == new_style)
-					M.f_style = H
-					break
-				else
-					del(H)
+			if(H.name == new_style)
+				M.facial_hair_style = H
+				break
+			else
+				del(H)
 
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
@@ -920,14 +918,14 @@
 			M.gender = MALE
 		else
 			M.gender = FEMALE
-	M.regenerate_icons()
+	M.rebuild_appearance()
 	M.update_body()
 	M.check_dna(M)
+	*/
 
-
-/client/proc/check_ai_laws()
-	set name = "Check AI Laws"
+/client/proc/playernotes()
+	set name = "Show Player Info"
 	set category = "Admin"
 	if(holder)
-		src.holder.output_ai_laws()
-
+		holder.PlayerNotes()
+	return

@@ -193,6 +193,12 @@
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
 	for(var/obj/item/device/radio/R in radios)
+		// This is usually for headsets, which only the wearer can hear.
+		if(R.canhear_range == 0)
+			if(ismob(R.loc))
+				. += R.loc
+			continue
+
 		var/turf/speaker = get_turf(R)
 		if(speaker)
 			for(var/turf/T in hear(R.canhear_range,speaker))
@@ -203,7 +209,7 @@
 		var/turf/ear = get_turf(M)
 		if(ear && (level == 0 || level == ear.z))
 			if(ear in speaker_coverage)
-				. += M
+				. |= M
 
 	return .
 
@@ -279,3 +285,38 @@ proc/check_can_reach(atom/user, atom/target)
 	if(!in_range(user,target))
 		return 0
 	return CanReachThrough(get_turf(user), get_turf(target), target)
+
+//dummy caching, used to speed up reach checks
+var/list/DummyCache = list()
+
+/proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
+
+	var/obj/item/weapon/dummy/D = locate() in DummyCache
+	if(!D)
+		D = new /obj/item/weapon/dummy( srcturf )
+	else
+		DummyCache.Remove(D)
+		D.loc = srcturf
+
+	if(targetturf.density && targetturf != get_turf(target))
+		return 0
+
+	//Now, check objects to block exit that are on the border
+	for(var/obj/border_obstacle in srcturf)
+		if(border_obstacle.flags & ON_BORDER)
+			if(!border_obstacle.CheckExit(D, targetturf))
+				D.loc = null
+				DummyCache.Add(D)
+				return 0
+
+	//Next, check objects to block entry that are on the border
+	for(var/obj/border_obstacle in targetturf)
+		if((border_obstacle.flags & ON_BORDER) && (target != border_obstacle))
+			if(!border_obstacle.CanPass(D, srcturf, 1, 0))
+				D.loc = null
+				DummyCache.Add(D)
+				return 0
+
+	D.loc = null
+	DummyCache.Add(D)
+	return 1

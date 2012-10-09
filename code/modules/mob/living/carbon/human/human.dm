@@ -21,43 +21,9 @@
 		dna = new /datum/dna(null)
 
 	//initialise organs
-	organs = list()
-	organs_by_name["chest"] = new/datum/organ/external/chest()
-	organs_by_name["head"] = new/datum/organ/external/head()
-	organs_by_name["l_arm"] = new/datum/organ/external/l_arm()
-	organs_by_name["r_arm"] = new/datum/organ/external/r_arm()
-	organs_by_name["r_leg"] = new/datum/organ/external/r_leg()
-	organs_by_name["l_leg"] = new/datum/organ/external/l_leg()
-	organs_by_name["l_hand"] = new/datum/organ/external/l_hand()
-	organs_by_name["r_hand"] = new/datum/organ/external/r_hand()
-	organs_by_name["l_foot"] = new/datum/organ/external/l_foot()
-	organs_by_name["r_foot"] = new/datum/organ/external/r_foot()
-
-	// connect feet to legs and hands to arms
-	var/datum/organ/external/organ = organs_by_name["l_hand"]
-	organ.parent = organs_by_name["l_arm"]
-	organ = organs_by_name["r_hand"]
-	organ.parent = organs_by_name["r_arm"]
-	organ = organs_by_name["l_foot"]
-	organ.parent = organs_by_name["l_leg"]
-	organ = organs_by_name["r_foot"]
-	organ.parent = organs_by_name["r_leg"]
-	organ = organs_by_name["r_foot"]
-	organ.parent = organs_by_name["r_leg"]
-	organ = organs_by_name["head"]
-	organ.parent = organs_by_name["chest"]
-	organ = organs_by_name["r_leg"]
-	organ.parent = organs_by_name["chest"]
-	organ = organs_by_name["l_leg"]
-	organ.parent = organs_by_name["chest"]
-	organ = organs_by_name["r_arm"]
-	organ.parent = organs_by_name["chest"]
-	organ = organs_by_name["l_arm"]
-	organ.parent = organs_by_name["chest"]
-
-	for(var/name in organs_by_name)
-		organs += organs_by_name[name]
-
+	organs = newlist(/datum/organ/external/chest, /datum/organ/external/head, /datum/organ/external/l_arm,
+					 /datum/organ/external/r_arm, /datum/organ/external/r_leg, /datum/organ/external/l_leg,
+					 /datum/organ/internal/skeleton, /datum/organ/internal/skin)
 	for(var/datum/organ/external/O in organs)
 		O.owner = src
 
@@ -230,15 +196,6 @@
 				Paralyse(10)
 
 	var/update = 0
-
-	// focus most of the blast on one organ
-	var/datum/organ/external/take_blast = pick(organs)
-	update |= take_blast.take_damage(b_loss * 0.9, f_loss * 0.9)
-
-	// distribute the remaining 10% on all limbs equally
-	b_loss *= 0.1
-	f_loss *= 0.1
-
 	for(var/datum/organ/external/temp in organs)
 		switch(temp.name)
 			if("head")
@@ -252,14 +209,6 @@
 			if("l_leg")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 			if("r_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("r_foot")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("l_foot")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-			if("l_arm")
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 	if(update)	UpdateDamageIcon()
 
@@ -570,8 +519,8 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	var/datum/organ/external/head/head = get_organ("head")
-	if( !head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name )	//disfigured. use id-name if possible
+	var/datum/organ/external/O = get_organ("head")
+	if( (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || !real_name )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 
@@ -712,3 +661,22 @@
 				return "Animated Construct"
 			else
 				return "Human"
+
+/mob/living/carbon/get_species()
+	if(src.dna)
+		if(src.dna.mutantrace == "lizard")
+			return "Soghun"
+		else if(src.dna.mutantrace == "skrell")
+			return "Skrell"
+		else if(src.dna.mutantrace == "tajaran")
+			return "Tajaran"
+
+/mob/living/carbon/human/proc/play_xylophone()
+	if(!src.xylophone)
+		visible_message("\red [src] begins playing his ribcage like a xylophone. It's quite spooky.","\blue You begin to play a spooky refrain on your ribcage.","\red You hear a spooky xylophone melody.")
+		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
+		playsound(loc, song, 50, 1, -1)
+		xylophone = 1
+		spawn(1200)
+			xylophone=0
+	return

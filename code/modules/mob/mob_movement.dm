@@ -57,51 +57,6 @@
 		usr << "\red This mob type cannot drop items."
 	return
 
-//This gets called when you press the insert button.
-/client/verb/insert_key_pressed()
-	set hidden = 1
-
-	if(!src.mob)
-		return
-	var/mob/M = src.mob
-	if(ishuman(M) || ismonkey(M) || istype(M,/mob/living/carbon/alien/humanoid) || islarva(M))
-		switch(M.a_intent)
-			if("help")
-				usr.a_intent = "disarm"
-				usr.hud_used.action_intent.icon_state = "disarm"
-				usr.hud_used.hurt_intent.icon_state = "harm_small"
-				usr.hud_used.help_intent.icon_state = "help_small"
-				usr.hud_used.grab_intent.icon_state = "grab_small"
-				usr.hud_used.disarm_intent.icon_state = "disarm_small_active"
-			if("disarm")
-				usr.a_intent = "grab"
-				usr.hud_used.action_intent.icon_state = "grab"
-				usr.hud_used.hurt_intent.icon_state = "harm_small"
-				usr.hud_used.help_intent.icon_state = "help_small"
-				usr.hud_used.grab_intent.icon_state = "grab_small_active"
-				usr.hud_used.disarm_intent.icon_state = "disarm_small"
-			if("grab")
-				usr.a_intent = "hurt"
-				usr.hud_used.action_intent.icon_state = "harm"
-				usr.hud_used.hurt_intent.icon_state = "harm_small_active"
-				usr.hud_used.help_intent.icon_state = "help_small"
-				usr.hud_used.grab_intent.icon_state = "grab_small"
-				usr.hud_used.disarm_intent.icon_state = "disarm_small"
-			if("hurt")
-				usr.a_intent = "help"
-				usr.hud_used.action_intent.icon_state = "help"
-				usr.hud_used.hurt_intent.icon_state = "harm_small"
-				usr.hud_used.help_intent.icon_state = "help_small_active"
-				usr.hud_used.grab_intent.icon_state = "grab_small"
-				usr.hud_used.disarm_intent.icon_state = "disarm_small"
-	else if(isrobot(usr))
-		if(usr.a_intent == "help")
-			usr.a_intent = "hurt"
-			usr.hud_used.action_intent.icon_state = "harm"
-		else
-			usr.a_intent = "help"
-			usr.hud_used.action_intent.icon_state = "help"
-
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
 	set hidden = 1
@@ -279,9 +234,7 @@
 
 	if(moving)	return 0
 
-	if(move_delay >= 864000) move_delay -= 864000
-
-	if(world.timeofday < move_delay)	return
+	if(world.time < move_delay)	return
 
 	if(!mob)	return
 
@@ -328,7 +281,7 @@
 					src << "\blue You're restrained! You can't move!"
 					return 0
 
-		move_delay = world.timeofday//set move delay
+		move_delay = world.time//set move delay
 
 		switch(mob.m_intent)
 			if("run")
@@ -351,7 +304,7 @@
 		moving = 1
 		//Something with pulling things
 		if(locate(/obj/item/weapon/grab, mob))
-			move_delay = max(move_delay, world.timeofday + 7)
+			move_delay = max(move_delay, world.time + 7)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
@@ -409,12 +362,12 @@
 		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
 			if((G.state == 1)&&(!grabbing.Find(G.assailant)))	del(G)
 			if(G.state == 2)
-				move_delay = world.timeofday + 10
+				move_delay = world.time + 10
 				if(!prob(25))	return 1
 				mob.visible_message("\red [mob] has broken free of [G.assailant]'s grip!")
 				del(G)
 			if(G.state == 3)
-				move_delay = world.timeofday + 10
+				move_delay = world.time + 10
 				if(!prob(5))	return 1
 				mob.visible_message("\red [mob] has broken free of [G.assailant]'s headlock!")
 				del(G)

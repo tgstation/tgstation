@@ -160,6 +160,15 @@
 	opacity = 0
 	density = 0
 
+/obj/effect/sign/kiddieplaque
+	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child is holding a crayon and writing some code in his diary with it. The child is smiling evilly."
+	name = "Credits plaque for AI developers."
+	icon = 'icons/obj/decals.dmi'
+	icon_state = "kiddieplaque"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
 /obj/effect/sign/atmosplaque
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
 	name = "FEA Atmospherics Division"

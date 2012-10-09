@@ -19,6 +19,7 @@
 	throw_range = 4
 	w_class = 2
 	attack_verb = list("called", "rang")
+	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
@@ -1116,6 +1117,10 @@
 	name = "paper- 'Greetings from Billy Bob'"
 	info = "<B>Hey fellow botanist!</B><BR>\n<BR>\nI didn't trust the station folk so I left<BR>\na couple of weeks ago. But here's some<BR>\ninstructions on how to operate things here.<BR>\nYou can grow plants and each iteration they become<BR>\nstronger, more potent and have better yield, if you<BR>\nknow which ones to pick. Use your botanist's analyzer<BR>\nfor that. You can turn harvested plants into seeds<BR>\nat the seed extractor, and replant them for better stuff!<BR>\nSometimes if the weed level gets high in the tray<BR>\nmutations into different mushroom or weed species have<BR>\nbeen witnessed. On the rare occassion even weeds mutate!<BR>\n<BR>\nEither way, have fun!<BR>\n<BR>\nBest regards,<BR>\nBilly Bob Johnson.<BR>\n<BR>\nPS.<BR>\nHere's a few tips:<BR>\nIn nettles, potency = damage<BR>\nIn amanitas, potency = deadliness + side effect<BR>\nIn Liberty caps, potency = drug power + effect<BR>\nIn chilis, potency = heat<BR>\n<B>Nutrients keep mushrooms alive!</B><BR>\n<B>Water keeps weeds such as nettles alive!</B><BR>\n<B>All other plants need both.</B>"
 
+/obj/item/weapon/paper/djstation
+	name = "paper - 'DJ Listening Outpost'"
+	info = "<B>Welcome new owner!</B><BR><BR>You have purchased the latest in listening equipment. The telecommunication setup we created is the best in listening to common and private radio fequencies. Here is a step by step guide to start listening in on those saucy radio channels:<br><ol><li>Equip yourself with a multi-tool</li><li>Use the multitool on each machine, that is the broadcaster, receiver and the relay.</li><li>Turn all the machines on, it has already been configured for you to listen on.</li></ol> Simple as that. Now to listen to the private channels, you'll have to configure the intercoms, located on the front desk. Here is a list of frequencies for you to listen on.<br><ul><li>145.7 - Common Channel</li><li>144.7 - Private AI Channel</li><li>135.9 - Security Channel</li><li>135.7 - Engineering Channel</li><li>135.5 - Medical Channel</li><li>135.3 - Command Channel</li><li>135.1 - Science Channel</li><li>134.9 - Mining Channel</li><li>134.7 - Cargo Channel</li>"
+
 /obj/item/weapon/paper/flag
 	icon_state = "flag_neutral"
 	item_state = "paper"
@@ -1551,7 +1556,6 @@
 	m_amt = 12000
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharp = 1
 
 /obj/item/weapon/kitchenknife/ritual
 	name = "ritual knife"
@@ -1633,7 +1637,6 @@
 	icon_state = "knife"
 	force = 10.0
 	throwforce = 10.0
-	sharp = 1
 
 /obj/item/weapon/kitchen/utensil/spoon
 	name = "spoon"
@@ -1656,7 +1659,6 @@
 	g_amt = 5000
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharp = 1
 
 /obj/item/weapon/retractor
 	name = "retractor"
@@ -1723,7 +1725,6 @@
 	g_amt = 10000
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
-	sharp = 1
 
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"

@@ -6,7 +6,7 @@
 	g_amt = 0
 	m_amt = 75
 	subspace_transmission = 1
-	canhear_range = 1 // can't hear headsets from very far away
+	canhear_range = 0 // can't hear headsets from very far away
 
 	slot_flags = SLOT_EARS
 	var/translate_binary = 0
@@ -19,6 +19,13 @@
 	..()
 	keyslot1 = new /obj/item/device/encryptionkey/
 	recalculateChannels()
+
+/obj/item/device/radio/headset/receive_range(freq, level)
+	if(ishuman(src.loc))
+		var/mob/living/carbon/human/H = src.loc
+		if(H.ears == src)
+			return ..(freq, level)
+	return -1
 
 /obj/item/device/radio/headset/syndicate
 	origin_tech = "syndicate=3"

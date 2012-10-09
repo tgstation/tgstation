@@ -22,15 +22,15 @@ Contains the procs that control attacking critters
 		if (user.a_intent == "hurt")
 			TakeDamage(rand(1,2) * brutevuln)
 
-			if(istajaran(user))
-				for(var/mob/O in viewers(src, null))
-					O.show_message("\red <B>[user] has slashed at [src]!</B>", 1)
-				playsound(src.loc, 'slice.ogg', 25, 1, -1)
-
-			else if(istype(user, /mob/living/carbon/human))
-				for(var/mob/O in viewers(src, null))
-					O.show_message("\red <B>[user] has punched [src]!</B>", 1)
-				playsound(src.loc, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 100, 1)
+			if(istype(user, /mob/living/carbon/human))
+				if(user.get_species() == "Tajaran")
+					for(var/mob/O in viewers(src, null))
+						O.show_message("\red <B>[user] has slashed at [src]!</B>", 1)
+					playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+				else
+					for(var/mob/O in viewers(src, null))
+						O.show_message("\red <B>[user] has punched [src]!</B>", 1)
+					playsound(src.loc, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 100, 1)
 
 			else if(istype(user, /mob/living/carbon/alien/humanoid))
 				for(var/mob/O in viewers(src, null))
