@@ -4,7 +4,7 @@
 
 /obj/effect/landmark/corpse
 
-	var/mobname = "Uknown"  //Names the mob, obviously
+	var/mobname = "Unknown"  //Names the mob, obviously
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -65,9 +65,93 @@
 	del(src)
 
 
-//An example.
+
+// I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
+
+
+
+
+
+/obj/effect/landmark/corpse/syndicatesoldier
+	mobname = "Syndicate Operative"
+	corpseuniform = /obj/item/clothing/under/syndicate
+	corpsesuit = /obj/item/clothing/suit/armor/vest
+	corpseshoes = /obj/item/clothing/shoes/swat
+	corpsegloves = /obj/item/clothing/gloves/swat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas
+	corpsehelmet = /obj/item/clothing/head/helmet/swat
+	corpseback = /obj/item/weapon/storage/backpack
+	corpseid = 1
+	corpseidjob = "Operative"
+	corpseidaccess = "Syndicate"
+
+
+
+/obj/effect/landmark/corpse/syndicatecommando
+	mobname = "Syndicate Commando"
+	corpseuniform = /obj/item/clothing/under/syndicate
+	corpsesuit = /obj/item/clothing/suit/space/rig/syndi
+	corpseshoes = /obj/item/clothing/shoes/swat
+	corpsegloves = /obj/item/clothing/gloves/swat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/syndicate
+	corpsehelmet = /obj/item/clothing/head/helmet/space/rig/syndi
+	corpseback = /obj/item/weapon/tank/jetpack/oxygen
+	corpsepocket1 = /obj/item/weapon/tank/emergency_oxygen
+	corpseid = 1
+	corpseidjob = "Operative"
+	corpseidaccess = "Syndicate"
+
+
+
+///////////Civilians//////////////////////
+
+/obj/effect/landmark/corpse/chef
+	mobname = "Chef"
+	corpseuniform = /obj/item/clothing/suit/chef
+	corpsesuit = /obj/item/clothing/suit/chef/classic
+	corpseshoes = /obj/item/clothing/shoes/black
+	corpsehelmet = /obj/item/clothing/head/chefhat
+	corpseback = /obj/item/weapon/storage/backpack
+	corpseradio = /obj/item/device/radio/headset
+	corpseid = 1
+	corpseidjob = "Chef"
+	corpseidaccess = "Chef"
+
+
+/obj/effect/landmark/corpse/doctor
+	mobname = "Doctor"
+	corpseradio = /obj/item/device/radio/headset/headset_med
+	corpseuniform = /obj/item/clothing/under/rank/medical
+	corpsesuit = /obj/item/clothing/suit/labcoat
+	corpseback = /obj/item/weapon/storage/backpack/medic
+	corpsepocket1 = /obj/item/device/flashlight/pen
+	corpseshoes = /obj/item/clothing/shoes/black
+	corpseid = 1
+	corpseidjob = "Medical Doctor"
+	corpseidaccess = "Medical Doctor"
+
+/obj/effect/landmark/corpse/engineer
+	mobname = "Engineer"
+	corpseradio = /obj/item/device/radio/headset/headset_eng
+	corpseuniform = /obj/item/clothing/under/rank/engineer
+	corpseback = /obj/item/weapon/storage/backpack/industrial
+	corpseshoes = /obj/item/clothing/shoes/orange
+	corpsebelt = /obj/item/weapon/storage/belt/utility/full
+	corpsegloves = /obj/item/clothing/gloves/yellow
+	corpsehelmet = /obj/item/clothing/head/hardhat
+	corpseid = 1
+	corpseidjob = "Station Engineer"
+	corpseidaccess = "Station Engineer"
+
+/obj/effect/landmark/corpse/engineer/rig
+	corpsesuit = /obj/item/clothing/suit/space/rig
+	corpsemask = /obj/item/clothing/mask/breath
+	corpsehelmet = /obj/item/clothing/head/helmet/space/rig
+
 /obj/effect/landmark/corpse/clown
-	mobname = "Giggles"
+	mobname = "Clown"
 	corpseuniform = /obj/item/clothing/under/rank/clown
 	corpseshoes = /obj/item/clothing/shoes/clown_shoes
 	corpseradio = /obj/item/device/radio/headset
@@ -78,4 +162,13 @@
 	corpseidjob = "Clown"
 	corpseidaccess = "Clown"
 
-// I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
+/obj/effect/landmark/corpse/scientist
+	mobname = "Scientist"
+	corpseradio = /obj/item/device/radio/headset/headset_sci
+	corpseuniform = /obj/item/clothing/under/rank/scientist
+	corpsesuit = /obj/item/clothing/suit/labcoat/science
+	corpseback = /obj/item/weapon/storage/backpack
+	corpseshoes = /obj/item/clothing/shoes/white
+	corpseid = 1
+	corpseidjob = "Scientist"
+	corpseidaccess = "Scientist"

@@ -1448,8 +1448,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Fore Block"
 	icon_state = "away3"
 
-
-
+/area/awaymission/spacebattle
+	name = "\improper Nanotrasen Cruiser"
+	icon_state = "away"
+	requires_power = 0
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.

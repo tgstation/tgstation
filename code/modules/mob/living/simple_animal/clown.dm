@@ -48,19 +48,11 @@
 	var/mob/living/target_mob
 
 /mob/living/simple_animal/clown/Life()
-	if(stat == DEAD)
-		walk(src,0)//STOP FUCKING MOVING GODDAMN
-		if(health > 0)
-			icon_state = icon_living
-			dead_mob_list -= src
-			living_mob_list += src
-			stat = CONSCIOUS
-			density = 1
+	..()
+	if(stat == 2)
+		new /obj/effect/landmark/corpse/clown (src.loc)
+		del src
 		return
-
-
-	if(health < 1)
-		Die()
 
 	if(health > maxHealth)
 		health = maxHealth
