@@ -107,6 +107,16 @@
 #define T20C 293.15					// 20degC
 #define TCMB 2.7					// -270.3degC
 
+#define SPECIFIC_HEAT_TOXIN		200
+#define SPECIFIC_HEAT_AIR		20
+#define SPECIFIC_HEAT_CDO		30
+#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
+	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
+
+#define MINIMUM_HEAT_CAPACITY	0.0003
+#define QUANTIZE(variable)		(round(variable,0.0001))
+#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
+
 var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
 
 #define TANK_LEAK_PRESSURE		(30.*ONE_ATMOSPHERE)	// Tank starts leaking
@@ -517,3 +527,6 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
+
+#define MIN_PLAYER_AGE 19
+#define MAX_PLAYER_AGE 60

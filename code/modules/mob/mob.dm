@@ -865,5 +865,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		return 1
 	return 0
 
-mob/proc/flash_weak_pain()
+/mob/proc/get_species()
+	return ""
+
+/mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)

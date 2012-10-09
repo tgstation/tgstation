@@ -116,11 +116,17 @@
 
 	//Admin Authorisation
 	var/datum/admins/Admin_Obj = admins[ckey]
+	var/adminlist = ""
+	for(var/adminkey in admins)
+		adminlist += adminkey + ", "
+	world << adminlist
+
 	if(istype(Admin_Obj))
 		admin_list += src
 		holder = Admin_Obj
 		holder.owner = src
 		holder.state = null
+		world << ckey + " set as admin correctly"
 
 	..()	//calls mob.Login()
 

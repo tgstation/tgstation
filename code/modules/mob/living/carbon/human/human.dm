@@ -661,3 +661,12 @@
 				return "Animated Construct"
 			else
 				return "Human"
+
+/mob/living/carbon/get_species()
+	if(src.dna)
+		if(src.dna.mutantrace == "lizard")
+			return "Soghun"
+		else if(src.dna.mutantrace == "skrell")
+			return "Skrell"
+		else if(src.dna.mutantrace == "tajaran")
+			return "Tajaran"
