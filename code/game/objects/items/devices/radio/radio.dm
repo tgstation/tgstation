@@ -616,24 +616,24 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/proc/receive_range(freq, level)
 	// check if this radio can receive on the given frequency, and if so,
 	// what the range is in which mobs will hear the radio
-	// returns: 0 if can't receive, range otherwise
+	// returns: -1 if can't receive, range otherwise
 
 	if (!(wires & WIRE_RECEIVE))
-		return 0
+		return -1
 	if(!listening)
-		return 0
+		return -1
 	if(level != 0)
 		var/turf/position = get_turf(src)
 		if(isnull(position) || position.z != level)
-			return 0
+			return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
-			return 0
+			return -1
 	if (!on)
-		return 0
+		return -1
 	if (!freq) //recieved on main frequency
 		if (!listening)
-			return 0
+			return -1
 	else
 		var/accept = (freq==frequency && listening)
 		if (!accept)
@@ -643,14 +643,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					accept = 1
 					break
 		if (!accept)
-			return 0
+			return -1
 
 	return canhear_range
 
 /obj/item/device/radio/proc/send_hear(freq, level)
 
 	var/range = receive_range(freq, level)
-	if(range > 0)
+	if(range > -1)
 		return get_mobs_in_view(canhear_range, src)
 
 

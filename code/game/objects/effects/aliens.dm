@@ -177,6 +177,7 @@
 	name = "purple sac"
 	desc = "Weird purple octopus-like thing."
 	luminosity = NODERANGE
+	var/node_range = NODERANGE
 
 /obj/effect/alien/weeds/node/New()
 	..(src.loc, src)
@@ -189,7 +190,7 @@
 		del(src)
 		return
 	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
-	spawn(rand(50, 150))
+	spawn(rand(150, 200))
 		if(src)
 			Life()
 	return
@@ -221,7 +222,7 @@ Alien plants should do something if theres a lot of poison
 			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
 				continue
 
-			if(!linked_node)
+			if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
 				return
 
 	//		if (locate(/obj/movable, T)) // don't propogate into movables

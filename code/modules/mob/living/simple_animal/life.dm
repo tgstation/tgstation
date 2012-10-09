@@ -29,8 +29,8 @@
 	var/harm_intent_damage = 3
 
 	//Temperature effect
-	var/minbodytemp = 270
-	var/maxbodytemp = 370
+	var/minbodytemp = 250
+	var/maxbodytemp = 350
 	var/heat_damage_per_tick = 3	//amount of damage applied if animal's body temperature is higher than maxbodytemp
 	var/cold_damage_per_tick = 2	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
 
@@ -84,6 +84,13 @@
 	if(health > maxHealth)
 		health = maxHealth
 
+	if(stunned)
+		AdjustStunned(-1)
+	if(weakened)
+		AdjustWeakened(-1)
+	if(paralysis)
+		AdjustParalysis(-1)
+
 	//Movement
 	if(!client && !stop_automated_movement)
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
@@ -135,7 +142,7 @@
 	if(isturf(A))
 		var/turf/T = A
 		var/areatemp = T.temperature
-		if( abs(areatemp - bodytemperature) > 50 )
+		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
 			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"

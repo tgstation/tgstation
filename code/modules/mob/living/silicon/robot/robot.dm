@@ -527,6 +527,8 @@
 					src << "\red > N"
 					sleep(20)
 					src << "\red ERRORERRORERROR"
+					src << "<b>Obey these laws:</b>"
+					laws.show_laws(src)
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
 					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
 						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)

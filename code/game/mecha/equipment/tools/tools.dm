@@ -747,6 +747,8 @@
 		var/charge = 0
 		if(pow_chan)
 			charge = 1000 //making magic
+		else
+			return chassis.dyngetcharge()
 		return charge
 
 	proc/get_power_channel(var/area/A)

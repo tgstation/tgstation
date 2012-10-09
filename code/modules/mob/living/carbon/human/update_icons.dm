@@ -624,6 +624,8 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_inv_handcuffed(var/update_icons=1)
 	if(handcuffed)
+		drop_r_hand()
+		drop_l_hand()
 		stop_pulling()	//TODO: should be handled elsewhere
 		overlays_lying[HANDCUFF_LAYER]		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "handcuff2")
 		overlays_standing[HANDCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "handcuff1")
@@ -653,6 +655,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
 		overlays_standing[R_HAND_LAYER] = image("icon" = 'icons/mob/items_righthand.dmi', "icon_state" = "[t_state]")
+		if (handcuffed) drop_r_hand()
 	else
 		overlays_standing[R_HAND_LAYER] = null
 	if(update_icons)   update_icons()
@@ -664,6 +667,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/t_state = l_hand.item_state
 		if(!t_state)	t_state = l_hand.icon_state
 		overlays_standing[L_HAND_LAYER] = image("icon" = 'icons/mob/items_lefthand.dmi', "icon_state" = "[t_state]")
+		if (handcuffed) drop_l_hand()
 	else
 		overlays_standing[L_HAND_LAYER] = null
 	if(update_icons)   update_icons()

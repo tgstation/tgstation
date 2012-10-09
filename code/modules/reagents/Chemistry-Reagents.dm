@@ -302,8 +302,8 @@ datum
 					holder.remove_reagent("carpotoxin", 1)
 				if(holder.has_reagent("zombiepowder"))
 					holder.remove_reagent("zombiepowder", 0.5)
-				if(holder.has_reagent("LSD"))
-					holder.remove_reagent("LSD", 2)
+				if(holder.has_reagent("mindbreaker"))
+					holder.remove_reagent("mindbreaker", 2)
 				M.hallucination = max(0, M.hallucination - 5)
 				M.adjustToxLoss(-2)
 				..()
@@ -1304,8 +1304,8 @@ datum
 					holder.remove_reagent("carpotoxin", 5)
 				if(holder.has_reagent("zombiepowder"))
 					holder.remove_reagent("zombiepowder", 5)
-				if(holder.has_reagent("LSD"))
-					holder.remove_reagent("LSD", 5)
+				if(holder.has_reagent("mindbreaker"))
+					holder.remove_reagent("mindbreaker", 5)
 				M.hallucination = 0
 				M.setBrainLoss(0)
 				M.disabilities = 0
@@ -1345,8 +1345,8 @@ datum
 				M.AdjustParalysis(-1)
 				M.AdjustStunned(-1)
 				M.AdjustWeakened(-1)
-				if(holder.has_reagent("LSD"))
-					holder.remove_reagent("LSD", 5)
+				if(holder.has_reagent("mindbreaker"))
+					holder.remove_reagent("mindbreaker", 5)
 				M.hallucination = max(0, M.hallucination - 10)
 				if(prob(60))	M.adjustToxLoss(1)
 				..()
@@ -1541,10 +1541,10 @@ datum
 					M.status_flags &= ~FAKEDEATH
 				..()
 
-		LSD
-			name = "LSD"
-			id = "LSD"
-			description = "A hallucinogen"
+		mindbreaker
+			name = "Mindbreaker Toxin"
+			id = "mindbreaker"
+			description = "A powerful hallucinogen. Not a thing to be messed with."
 			reagent_state = LIQUID
 			color = "#B31008" // rgb: 139, 166, 233
 

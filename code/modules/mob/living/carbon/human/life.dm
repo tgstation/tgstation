@@ -885,7 +885,7 @@
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
 				blinded = 1
-			else if(istype(glasses, /obj/item/clothing/glasses/blindfold))	//resting your eyes with a blindfold heals blurry eyes faster
+			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold))	//resting your eyes with a blindfold heals blurry eyes faster
 				eye_blurry = max(eye_blurry-3, 0)
 				blinded = 1
 			else if(eye_blurry)	//blurry eyes heal slowly

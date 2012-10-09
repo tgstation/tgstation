@@ -174,9 +174,6 @@ var/const/MAX_ACTIVE_TIME = 600
 		if(alien && alien.client)
 			alien.client.images += activeIndicator	*/
 
-	spawn(rand(MIN_ACTIVE_TIME,MAX_ACTIVE_TIME))
-		GoIdle()
-
 	return
 
 /obj/item/clothing/mask/facehugger/proc/GoIdle()
@@ -187,6 +184,8 @@ var/const/MAX_ACTIVE_TIME = 600
 
 	stat = UNCONSCIOUS
 
+	spawn(rand(MIN_ACTIVE_TIME,MAX_ACTIVE_TIME))
+		GoActive()
 	return
 
 /obj/item/clothing/mask/facehugger/proc/Die()

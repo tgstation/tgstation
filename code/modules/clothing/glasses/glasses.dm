@@ -1,3 +1,4 @@
+
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'glasses.dmi'
@@ -8,13 +9,6 @@
 	//var/darkness_view = 0//Base human is 2
 	//var/invisa_view = 0
 	var/prescription = 0
-
-/obj/item/clothing/glasses/blindfold
-	name = "blindfold"
-	desc = "Covers the eyes, preventing sight."
-	icon_state = "blindfold"
-	item_state = "blindfold"
-	vision_flags = BLIND
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
@@ -86,6 +80,13 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = -1
+
+/obj/item/clothing/glasses/sunglasses/blindfold
+	name = "blindfold"
+	desc = "Covers the eyes, preventing sight."
+	icon_state = "blindfold"
+	item_state = "blindfold"
+	vision_flags = BLIND
 
 /obj/item/clothing/glasses/sunglasses/prescription
 	prescription = 1
