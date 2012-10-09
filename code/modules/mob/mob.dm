@@ -405,6 +405,7 @@ var/list/slot_equipment_priority = list( \
 							 'html/wrench-screwdriver.png',
 							 'html/spell-check.png',
 							 'html/burn-exclamation.png',
+							 'html/tg-notif.png',
 							 'html/chevron.png',
 							 'html/chevron-expand.png',
 							 'html/changelog.css',

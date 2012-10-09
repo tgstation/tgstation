@@ -2,7 +2,6 @@
 /mob/proc/update_Login_details()
 	//trigger admin holder updates. This is hear as all Login() calls this proc.
 	if(client.holder)
-		world << "calling update admin..."
 		client.update_admins(client.holder.rank)
 
 	//Multikey checks and logging
@@ -29,7 +28,6 @@
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
 /mob/Login()
-	world << "/mob/Login()"
 	player_list |= src
 	update_Login_details()
 	world.update_status()
