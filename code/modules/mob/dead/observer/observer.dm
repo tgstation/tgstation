@@ -177,7 +177,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(istype(usr, /mob/dead/observer))
 		var/list/mobs = getmobs()
-		var/input = input("Please, select a mob!", "Follow Mob", null, null) as null|anything in mobs
+		var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 		var/mob/target = mobs[input]
 		if(target && target != usr)
 			spawn(0)
@@ -185,6 +185,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				while(src.loc == pos)
 					var/turf/T = get_turf(target)
 					if(!T)
+						break
+					if(!client)
 						break
 					src.loc = T
 					pos = src.loc

@@ -2709,9 +2709,8 @@ datum
 				return
 
 			reaction_turf(var/turf/simulated/T, var/volume)
-				if(volume >= 3)
-					if(!istype(T)) return
-					T.Bless()
+				if(!istype(T)) return
+				T.Bless()
 
 		tequilla
 			name = "Tequila"
