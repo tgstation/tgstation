@@ -284,6 +284,7 @@
 			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/toggle_log_hrefs
 			verbs += /client/proc/cmd_debug_mob_lists
+			verbs += /client/proc/set_ooc
 		else	return
 	return
 
@@ -412,7 +413,8 @@
 		/client/proc/cmd_debug_mob_lists,
 		/datum/admins/proc/access_news_network,
 		/client/proc/one_click_antag,
-		/client/proc/invisimin
+		/client/proc/invisimin,
+		/client/proc/set_ooc
 	)
 	//verbs -= /client/proc/mapload
 	//verbs -= /client/proc/cmd_admin_drop_everything					--merged with view variables
