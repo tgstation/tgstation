@@ -400,11 +400,17 @@
 /obj/machinery/mecha_part_fabricator/proc/process_queue()
 	var/obj/item/part = listgetindex(src.queue, 1)
 	if(!part)
-		remove_from_queue(1)
-		return process_queue()
+		if(remove_from_queue(1))
+			return process_queue()
+		else
+			// Most likely means we have an empty queue, so stop processing
+			return 0
 	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")))//If it shouldn't be printed
-		remove_from_queue(1)//Take it out of the quene
-		return process_queue()//Then reprocess it
+		if(remove_from_queue(1))//Take it out of the quene
+			return process_queue()//Then reprocess it
+		else
+			// Most likely means we have an empty queue, so stop processing
+			return 0
 	temp = null
 	while(part)
 		if(stat&(NOPOWER|BROKEN))

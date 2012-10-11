@@ -49,6 +49,7 @@
 	var/icon/lying_icon = null
 
 	var/list/organs = list() //Gets filled up in the constructor (human.dm, New() proc, line 24. I'm sick and tired of missing comments. -Agouri
+	var/list/organs_by_name = list() // map organ names to organs
 
 	var/miming = null //Toggle for the mime's abilities.
 
