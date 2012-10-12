@@ -162,7 +162,7 @@
 			else if(W.damage_type == BURN)
 				burn_dam += W.damage
 
-			if(!W.bandaged && W.damage > 4)
+			if(W.bleeding())
 				status |= ORGAN_BLEEDING
 
 			number_wounds += W.amount
@@ -184,6 +184,11 @@
 
 		// sync the organ's damage with its wounds
 		src.update_damages()
+
+	proc/bandage()
+		status |= ORGAN_BANDAGED
+		for(var/datum/wound/W in wounds)
+			W.bandaged = 1
 
 
 	proc/get_damage()	//returns total damage
@@ -366,7 +371,7 @@
 			var/size = min( max( 1, damage/10 ) , 6)
 
 			// first check whether we can widen an existing wound
-			if(wounds.len > 0 && prob(max(50+wounds.len*10,100)))
+			if(wounds.len > 0 && prob(max(50+owner.number_wounds*10,100)))
 				if((type == CUT || type == BRUISE) && damage >= 5)
 					var/datum/wound/W = pick(wounds)
 					if(W.amount == 1 && W.started_healing())
