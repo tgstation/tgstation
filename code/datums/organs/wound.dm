@@ -90,17 +90,20 @@
 		while(src.damage / src.amount < damage_list[current_stage] && current_stage < src.desc_list.len)
 			current_stage++
 		desc = desc_list[current_stage]
+		src.min_damage = damage_list[current_stage]
 
 		// return amount of healing still leftover, can be used for other wounds
 		return amount
 
 	// opens the wound again
-	proc/open_wound()
-		if(current_stage > 1)
-			// e.g. current_stage is 2, then reset it to 0 and do next_stage(), bringing it to 1
-			src.current_stage -= 2
-			next_stage()
-			src.damage = src.min_damage + 5
+	proc/open_wound(damage)
+		src.damage += damage
+
+		while(src.current_stage > 1 && src.damage_list[current_stage-1] <= src.damage)
+			src.current_stage--
+
+		src.desc = desc_list[current_stage]
+		src.min_damage = damage_list[current_stage]
 
 /** CUTS **/
 /datum/wound/cut
