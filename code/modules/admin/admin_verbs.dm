@@ -134,13 +134,13 @@
 
 		//Extra moderator commands
 		if(holder.level == 0)
-			verbs -= /client/proc/cmd_admin_say
 			verbs += /client/proc/mod_panel
 			return
 
 		//Temporary Admin
 		if (holder.level >= 1)
 			verbs += /client/proc/investigate_show
+			verbs += /client/proc/cmd_admin_say
 			verbs += /datum/admins/proc/startnow
 			verbs += /datum/admins/proc/delay								//game start delay
 			verbs += /datum/admins/proc/immreboot							//immediate reboot
