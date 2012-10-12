@@ -33,6 +33,9 @@
 	var/open = 0
 	var/stage = 0
 
+	// how often wounds should be updated, a higher number means less often
+	var/wound_update_accuracy = 20 // update every 20 ticks(roughly every minute)
+
 	proc/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
 		// TODO: this proc needs to be rewritten to not update damages directly
 		if((brute <= 0) && (burn <= 0))
@@ -69,32 +72,22 @@
 		// If the limbs can break, make sure we don't exceed the maximum damage a limb can take before breaking
 		if((brute_dam + burn_dam + brute + burn) < max_damage || !config.limbs_can_break)
 			if(brute)
-				brute_dam += brute
 				if( (prob(brute*2) && !sharp) || sharp )
 					createwound( CUT, brute )
 				else if(!sharp)
 					createwound( BRUISE, brute )
 			if(burn)
-				burn_dam += burn
 				createwound( BURN, burn )
 		else
+			// If we can't inflict the full amount of damage, spread the damage in other ways
 			var/can_inflict = max_damage * config.organ_health_multiplier - (brute_dam + burn_dam) //How much damage can we actually cause?
 			if(can_inflict)
-				if (brute > 0 && burn > 0)
-					brute = can_inflict/2
-					burn = can_inflict/2
-					var/ratio = brute / (brute + burn)
-					brute_dam += ratio * can_inflict
-					burn_dam += (1 - ratio) * can_inflict
-				else
-					if (brute > 0)
-						brute = can_inflict
-						brute_dam += brute
-						createwound(BRUISE, brute)
-					else
-						burn = can_inflict
-						burn_dam += burn
-						createwound(BRUISE, brute)
+				if (brute > 0)
+					brute = can_inflict
+					createwound(BRUISE, brute)
+				if (burn > 0)
+					burn = can_inflict
+					createwound(BURN, burn)
 			else if(!(status & ORGAN_ROBOT))
 				var/passed_dam = (brute + burn) - can_inflict //Getting how much overdamage we have.
 				var/list/datum/organ/external/possible_points = list()
@@ -169,7 +162,7 @@
 			else if(W.damage_type == BURN)
 				burn_dam += W.damage
 
-			if(!W.bandaged && W.damage > 4)
+			if(W.bleeding())
 				status |= ORGAN_BLEEDING
 
 			number_wounds += W.amount
@@ -187,10 +180,15 @@
 				if(W.salved) amount++
 				if(W.disinfected) amount++
 				// amount of healing is spread over all the wounds
-				W.heal_damage((amount * W.amount * config.organ_regeneration_multiplier) / (5*owner.number_wounds+1))
+				W.heal_damage((wound_update_accuracy * amount * W.amount * config.organ_regeneration_multiplier) / (20*owner.number_wounds+1))
 
 		// sync the organ's damage with its wounds
 		src.update_damages()
+
+	proc/bandage()
+		status |= ORGAN_BANDAGED
+		for(var/datum/wound/W in wounds)
+			W.bandaged = 1
 
 
 	proc/get_damage()	//returns total damage
@@ -204,7 +202,7 @@
 
 	process()
 		// process wounds, doing healing etc., only do this every 4 ticks to save processing power
-		if(owner.life_tick % 4 == 0)
+		if(owner.life_tick % wound_update_accuracy == 0)
 			update_wounds()
 		if(status & ORGAN_DESTROYED)
 			if(!destspawn && config.limbs_can_break)
@@ -373,14 +371,15 @@
 			var/size = min( max( 1, damage/10 ) , 6)
 
 			// first check whether we can widen an existing wound
-			if(wounds.len > 0 && prob(25))
+			if(wounds.len > 0 && prob(max(50+owner.number_wounds*10,100)))
 				if((type == CUT || type == BRUISE) && damage >= 5)
 					var/datum/wound/W = pick(wounds)
 					if(W.amount == 1 && W.started_healing())
-						W.open_wound()
-						owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
-						"\red The wound on your [display_name] widens with a nasty ripping voice.",\
-						"You hear a nasty ripping noise, as if flesh is being torn apart.")
+						W.open_wound(damage)
+						if(prob(25))
+							owner.visible_message("\red The wound on [owner.name]'s [display_name] widens with a nasty ripping voice.",\
+							"\red The wound on your [display_name] widens with a nasty ripping voice.",\
+							"You hear a nasty ripping noise, as if flesh is being torn apart.")
 
 						return
 
@@ -585,7 +584,7 @@ obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
 	brainmob.container = src
-    
+
 obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
