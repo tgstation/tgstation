@@ -1318,19 +1318,6 @@
 	icon_state = "wood_tableparts"
 	flags = null
 
-/obj/item/weapon/teleportation_scroll
-	name = "scroll of teleportation"
-	desc = "A scroll for moving around."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll"
-	var/uses = 4.0
-	flags = FPRINT | TABLEPASS
-	w_class = 2.0
-	item_state = "paper"
-	throw_speed = 4
-	throw_range = 20
-	origin_tech = "bluespace=4"
-
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
 	name = "wire"

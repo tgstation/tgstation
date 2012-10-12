@@ -426,6 +426,8 @@ Alien plants should do something if theres a lot of poison
 		healthcheck()
 
 /obj/effect/alien/egg/HasProximity(atom/movable/AM as mob|obj)
+	if(!CanHug(AM))
+		return
 	if(status == GROWN && iscarbon(AM) && !isalien(AM))
 
 		var/mob/living/carbon/C = AM
@@ -439,6 +441,8 @@ Alien plants should do something if theres a lot of poison
 			Burst(0)
 			var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
 			child.loc = pos
+			if(!CanHug(AM))
+				return
 			if(AM && in_range(AM, pos))
 				child.Attach(AM)
 

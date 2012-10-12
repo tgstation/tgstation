@@ -369,6 +369,9 @@ About the new airlock wires panel:
 			return
 	..(user)
 
+/obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user as mob)
+	..(user)
+
 
 /obj/machinery/door/airlock/proc/pulse(var/wireColor)
 	//var/wireFlag = airlockWireColorToFlag[wireColor] //not used in this function

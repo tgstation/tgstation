@@ -697,6 +697,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 
 
 

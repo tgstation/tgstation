@@ -283,6 +283,7 @@
 			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/toggle_log_hrefs
 			verbs += /client/proc/cmd_debug_mob_lists
+			verbs += /client/proc/set_ooc
 		else	return
 	return
 
@@ -412,19 +413,9 @@
 		/datum/admins/proc/access_news_network,
 		/client/proc/one_click_antag,
 		/client/proc/invisimin,
+		/client/proc/set_ooc
 
-		//bs12 verbs
-		/client/proc/update_mob_sprite,
-		/client/proc/mod_panel,
-		/client/proc/admin_deny_shuttle,
-		/client/proc/playernotes,
-		/datum/admins/proc/show_skills,
-		/client/proc/Report,
-		/client/proc/display_admin_reports,
-		/client/proc/editappear,
-		/client/proc/cmd_mod_say,
-		/client/proc/playernotes
-	)
+		//bs12 verbs		/client/proc/update_mob_sprite,		/client/proc/mod_panel,		/client/proc/admin_deny_shuttle,		/client/proc/playernotes,		/datum/admins/proc/show_skills,		/client/proc/Report,		/client/proc/display_admin_reports,		/client/proc/editappear,		/client/proc/cmd_mod_say,		/client/proc/playernotes	)
 	//verbs -= /client/proc/mapload
 	//verbs -= /client/proc/cmd_admin_drop_everything					--merged with view variables
 	//verbs -= /client/proc/give_spell 									--Merged with view variables
