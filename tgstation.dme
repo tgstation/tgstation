@@ -855,6 +855,7 @@
 #include "code\modules\assembly\shock_kit.dm"
 #include "code\modules\assembly\signaler.dm"
 #include "code\modules\assembly\timer.dm"
+#include "code\modules\awaymissions\bluespaceartillery.dm"
 #include "code\modules\awaymissions\corpse.dm"
 #include "code\modules\awaymissions\gateway.dm"
 #include "code\modules\awaymissions\loot.dm"

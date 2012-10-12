@@ -172,3 +172,32 @@
 	corpseid = 1
 	corpseidjob = "Scientist"
 	corpseidaccess = "Scientist"
+
+
+/////////////////Officers//////////////////////
+
+/obj/effect/landmark/corpse/bridgeofficer
+	mobname = "Bridge Officer"
+	corpseradio = /obj/item/device/radio/headset/heads/hop
+	corpseuniform = /obj/item/clothing/under/rank/centcom_officer
+	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
+	corpseshoes = /obj/item/clothing/shoes/black
+	corpseglasses = /obj/item/clothing/glasses/sunglasses
+	corpseid = 1
+	corpseidjob = "Bridge Officer"
+	corpseidaccess = "Captain"
+
+/obj/effect/landmark/corpse/commander
+	mobname = "Commander"
+	corpseuniform = /obj/item/clothing/under/rank/centcom_commander
+	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
+	corpseradio = /obj/item/device/radio/headset/heads/captain
+	corpseglasses = /obj/item/clothing/glasses/eyepatch
+	corpsemask = /obj/item/clothing/mask/cigarette/cigar/cohiba
+	corpsehelmet = /obj/item/clothing/head/centhat
+	corpsegloves = /obj/item/clothing/gloves/swat
+	corpseshoes = /obj/item/clothing/shoes/swat
+	corpsepocket1 = /obj/item/weapon/lighter/zippo
+	corpseid = 1
+	corpseidjob = "Commander"
+	corpseidaccess = "Captain"
