@@ -84,14 +84,6 @@ macro "macro"
 		command = ".west"
 		is-disabled = false
 	elem 
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
 		name = "CTRL+D+REP"
 		command = ".east"
 		is-disabled = false
@@ -128,6 +120,14 @@ macro "macro"
 		command = ".northeast"
 		is-disabled = false
 	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
 		name = "F1"
 		command = "adminhelp"
 		is-disabled = false
@@ -136,12 +136,20 @@ macro "macro"
 		command = ".options"
 		is-disabled = false
 	elem 
+		name = "F2"
+		command = "ooc"
+		is-disabled = false
+	elem 
 		name = "F2+REP"
 		command = ".screenshot auto"
 		is-disabled = false
 	elem 
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
+		is-disabled = false
+	elem 
+		name = "F4"
+		command = "asay"
 		is-disabled = false
 	elem 
 		name = "F5"
@@ -270,22 +278,6 @@ macro "hotkeymode"
 		command = ".west"
 		is-disabled = false
 	elem 
-		name = "Z"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
-		name = "Y"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
-		is-disabled = false
-	elem 
 		name = "D+REP"
 		command = ".east"
 		is-disabled = false
@@ -362,12 +354,32 @@ macro "hotkeymode"
 		command = ".northeast"
 		is-disabled = false
 	elem 
+		name = "Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+		is-disabled = false
+	elem 
 		name = "F1"
 		command = "adminhelp"
 		is-disabled = false
 	elem 
 		name = "CTRL+SHIFT+F1+REP"
 		command = ".options"
+		is-disabled = false
+	elem 
+		name = "F2"
+		command = "ooc"
 		is-disabled = false
 	elem 
 		name = "F2+REP"
@@ -378,8 +390,12 @@ macro "hotkeymode"
 		command = ".screenshot"
 		is-disabled = false
 	elem 
+		name = "F4"
+		command = "asay"
+		is-disabled = false
+	elem 
 		name = "F5"
-		command = "Aghost"
+		command = "msay"
 		is-disabled = false
 	elem 
 		name = "F6"
