@@ -114,6 +114,7 @@
 	if(module)
 		return
 	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/channels = list()
 	if(module)
 		return
 	switch(mod)
@@ -146,6 +147,7 @@
 			icon_state = "Miner"
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
+			channels = list("Mining" = 1)
 
 		if("Medical")
 			updatename(mod)
@@ -155,6 +157,7 @@
 			modtype = "Med"
 			nopush = 1
 			feedback_inc("cyborg_medical",1)
+			channels = list("Medical" = 1)
 
 		if("Security")
 			updatename(mod)
@@ -165,6 +168,7 @@
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
 			nopush = 1
 			feedback_inc("cyborg_security",1)
+			channels = list("Security" = 1)
 
 		if("Engineering")
 			updatename(mod)
@@ -173,6 +177,7 @@
 			icon_state = "landmate"
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
+			channels = list("Engineering" = 0)
 
 		if("Janitor")
 			updatename(mod)
@@ -183,6 +188,7 @@
 			feedback_inc("cyborg_janitor",1)
 
 	overlays -= "eyes" //Takes off the eyes that it started with
+	radio.config(channels)
 	updateicon()
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
