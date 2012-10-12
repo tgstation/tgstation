@@ -195,8 +195,9 @@
 				if(!is_alien_whitelisted(src, preferences.species) && config.usealienwhitelist)
 					src << alert("You are currently not whitelisted to play [preferences.species].")
 					return 0
-				else if(GetAvailableAlienPlayerSlots() >= 1)
+				else if(GetAvailableAlienPlayerSlots() < 1)
 					src << "\red Unable to join game. Too many players have already joined as aliens."
+					return 0
 
 			LateChoices()
 
