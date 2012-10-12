@@ -141,6 +141,27 @@ var/list/department_radio_keys = list(
 	if (!message)
 		return
 
+	//work out if we're speaking skrell or not
+	var/is_speaking_skrell = 0
+	if(copytext(message, 1, 3) == ":k" || copytext(message, 1, 3) == ":K")
+		message = copytext(message, 3)
+		if(skrell_talk_understand || universal_speak)
+			is_speaking_skrell = 1
+
+	//work out if we're speaking soghun or not
+	var/is_speaking_soghun = 0
+	if(copytext(message, 1, 3) == ":o" || copytext(message, 1, 3) == ":O")
+		message = copytext(message, 3)
+		if(soghun_talk_understand || universal_speak)
+			is_speaking_soghun = 1
+
+	//work out if we're speaking soghun or not
+	var/is_speaking_taj = 0
+	if(copytext(message, 1, 3) == ":j" || copytext(message, 1, 3) == ":J")
+		message = copytext(message, 3)
+		if(tajaran_talk_understand || universal_speak)
+			is_speaking_taj = 1
+
 	// :downs:
 	if (getBrainLoss() >= 60)
 		message = dd_replacetext(message, " am ", " ")
@@ -324,10 +345,23 @@ var/list/department_radio_keys = list(
 
 	for (var/M in listening)
 		if(hascall(M,"say_understands"))
-			if (M:say_understands(src))
+			if (M:say_understands(src) && !is_speaking_skrell && !is_speaking_soghun && !is_speaking_taj)
 				heard_a += M
+			else if(ismob(M))
+				if(is_speaking_skrell && (M:skrell_talk_understand || M:universal_speak))
+					heard_a += M
+				else if(is_speaking_soghun && (M:soghun_talk_understand || M:universal_speak))
+					heard_a += M
+				else if(is_speaking_taj && (M:tajaran_talk_understand || M:universal_speak))
+					heard_a += M
+				else
+					heard_b += M
 			else
-				heard_b += M
+				heard_a += M
+
+	var/speech_bubble_test = say_test(message)
+	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
+	spawn(30) del(speech_bubble)
 
 	var/rendered = null
 	if (length(heard_a))
@@ -348,6 +382,7 @@ var/list/department_radio_keys = list(
 		for (var/M in heard_a)
 			if(hascall(M,"show_message"))
 				M:show_message(rendered, 2)
+				M << speech_bubble
 
 	if (length(heard_b))
 		var/message_b
@@ -367,6 +402,7 @@ var/list/department_radio_keys = list(
 		for (var/M in heard_b)
 			if(hascall(M,"show_message"))
 				M:show_message(rendered, 2)
+				M << speech_bubble
 
 			/*
 			if(M.client)
@@ -389,6 +425,9 @@ var/list/department_radio_keys = list(
 			del(B)
 		*/
 
+	//talking crystals
+	for(var/obj/item/weapon/talkingcrystal/O in view(3,src))
+		O.catchMessage(message,src)
 
 	log_say("[name]/[key] : [message]")
 

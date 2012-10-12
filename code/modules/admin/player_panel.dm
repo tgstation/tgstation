@@ -318,7 +318,7 @@
 
 	usr << browse(dat, "window=players;size=600x480")
 
-//this is a direct copy paste
+//this is a direct copy paste of player_panel_new
 /datum/admins/proc/mod_panel()
 	if (!usr.client.holder)
 		return

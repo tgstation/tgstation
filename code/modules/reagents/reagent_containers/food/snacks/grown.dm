@@ -106,6 +106,7 @@
 	name = "cherries"
 	desc = "Great for toppings!"
 	icon_state = "cherry"
+	gender = PLURAL
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops

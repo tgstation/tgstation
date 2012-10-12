@@ -60,26 +60,6 @@
 		tally = -1 // hunters go supersuperfast
 	return (tally + move_delay_add + config.alien_delay)
 
-//This needs to be fixed
-/mob/living/carbon/alien/humanoid/Stat()
-	..()
-
-	statpanel("Status")
-	if (client && client.holder)
-		stat(null, "([x], [y], [z])")
-
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
-	if (client.statpanel == "Status")
-		stat(null, "Plasma Stored: [getPlasma()]")
-
-	if(emergency_shuttle)
-		if(emergency_shuttle.online && emergency_shuttle.location < 2)
-			var/timeleft = emergency_shuttle.timeleft()
-			if (timeleft)
-				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
