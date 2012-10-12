@@ -168,9 +168,10 @@
 			usr << "\red Not a good cop"
 			return
 
-		message_admins("[usr] manually reloaded admins.txt")
-		usr << "You reload admins.txt"
+		message_admins("[usr] manually reloaded admins.txt and moderators.txt")
+		usr << "You reload admins.txt and moderators.txt"
 		world.load_admins()
+		world.load_mods()
 		feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 //todo:
