@@ -179,6 +179,29 @@
 
 	if (!istype(M)) // not sure if this is the right thing...
 		return
+
+	//if(istype(M) &&((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(50))))
+	if(istype(M,/mob/living/carbon))
+		if (user.a_intent == "help")
+			if(surgery_steps == null) build_surgery_steps_list()
+			for(var/datum/surgery_step/S in surgery_steps)
+				var/have_correct_tool = 0
+				if(istype(S.required_tool, /list))
+					for(var/T in S.required_tool) if(istype(src, T))
+						have_correct_tool = 1
+						break
+				else
+					have_correct_tool = (istype(src, S.required_tool))
+				if(!have_correct_tool) continue
+				if(S.can_use(user, M, user.zone_sel.selecting, src))
+					S.begin_step(user, M, user.zone_sel.selecting, src)
+					if(do_mob(user, M, rand(S.min_duration, S.max_duration)))
+						S.end_step(user, M, user.zone_sel.selecting, src)
+					else
+						S.fail_step(user, M, user.zone_sel.selecting, src)
+					return		  //don't want to do weapony things after surgery
+
+
 	var/messagesource = M
 
 	if (istype(M,/mob/living/carbon/brain))
