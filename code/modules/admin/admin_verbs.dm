@@ -247,6 +247,7 @@
 			verbs += /client/proc/Set_Holiday							//Force-set a Holiday
 			verbs += /client/proc/admin_memo
 			verbs += /client/proc/ToRban								//ToRban  frontend to access its features.
+			verbs += /client/proc/game_panel
 			//verbs += /client/proc/cmd_mass_modify_object_variables 	--Merged with view variables
 			//verbs += /client/proc/cmd_admin_explosion					--Merged with view variables
 			//verbs += /client/proc/cmd_admin_emp						--Merged with view variables
