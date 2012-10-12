@@ -320,7 +320,118 @@
 	mymob.flash.screen_loc = "1,1 to 15,15"
 	mymob.flash.layer = 17
 
-	mymob.zone_sel = new /obj/screen/zone_sel()
+	mymob.pain = new /obj/screen( null )
+
+/*
+	mymob.hands = new /obj/screen( null )
+	mymob.hands.icon = ui_style
+	mymob.hands.icon_state = "hand"
+	mymob.hands.name = "hand"
+	mymob.hands.screen_loc = ui_hand
+	mymob.hands.dir = NORTH
+
+	mymob.sleep = new /obj/screen( null )
+	mymob.sleep.icon = ui_style
+	mymob.sleep.icon_state = "sleep0"
+	mymob.sleep.name = "sleep"
+	mymob.sleep.screen_loc = ui_sleep
+
+	mymob.rest = new /obj/screen( null )
+	mymob.rest.icon = ui_style
+	mymob.rest.icon_state = "rest0"
+	mymob.rest.name = "rest"
+	mymob.rest.screen_loc = ui_rest
+*/
+
+	/*/Monkey blockers
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_ears
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_belt
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_shoes
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_storage2
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_glasses
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_gloves
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_storage1
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_headset
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_oclothing
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_iclothing
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_id
+	using.layer = 20
+	src.mon_blo += using
+
+	using = new src.h_type( src )
+	using.name = "blocked"
+	using.icon_state = "blocked"
+	using.screen_loc = ui_head
+	using.layer = 20
+	src.mon_blo += using
+//Monkey blockers
+*/
+
+	mymob.zone_sel = new /obj/screen/zone_sel( null )
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.overlays = null
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")

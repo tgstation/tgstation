@@ -1543,6 +1543,7 @@
 	m_amt = 12000
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	sharp = 1
 
 /obj/item/weapon/kitchenknife/ritual
 	name = "ritual knife"
@@ -1624,6 +1625,7 @@
 	icon_state = "knife"
 	force = 10.0
 	throwforce = 10.0
+	sharp = 1
 
 /obj/item/weapon/kitchen/utensil/spoon
 	name = "spoon"
@@ -1646,6 +1648,7 @@
 	g_amt = 5000
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	sharp = 1
 
 /obj/item/weapon/retractor
 	name = "retractor"
@@ -1712,6 +1715,7 @@
 	g_amt = 10000
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
+	sharp = 1
 
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"

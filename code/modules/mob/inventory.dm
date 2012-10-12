@@ -16,9 +16,6 @@
 	if(hand)	return r_hand
 	else		return l_hand
 
-/mob/proc/equipped()
-	return get_active_hand()
-
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(var/obj/item/W)
 	if(lying)			return 0
@@ -216,3 +213,16 @@
 	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
 
 	return items
+
+/** BS12's proc to get the item in the active hand. Couldn't find the /tg/ equivalent. **/
+/mob/proc/equipped()
+	if(issilicon(src))
+		if(isrobot(src))
+			if(src:module_active)
+				return src:module_active
+	else
+		if (hand)
+			return l_hand
+		else
+			return r_hand
+		return

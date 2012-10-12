@@ -219,4 +219,3 @@
 	var/tajaran_talk_understand = 0
 	var/soghun_talk_understand = 0
 	var/skrell_talk_understand = 0
-
