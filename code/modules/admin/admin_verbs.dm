@@ -114,6 +114,7 @@
 		if (holder.level == -1)
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_say
+			verbs += /client/proc/cmd_mod_say
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/deadmin_self
 			return
@@ -122,6 +123,7 @@
 		if (holder.level >= 0)
 			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/cmd_admin_pm_panel
+			verbs += /client/proc/cmd_mod_say
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/Report
@@ -150,6 +152,13 @@
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/player_panel_new
 			verbs += /client/proc/cmd_admin_change_custom_event
+			verbs += /client/proc/game_panel
+			verbs += /client/proc/unjobban_panel
+			verbs += /client/proc/jobbans
+			verbs += /client/proc/unban_panel
+			verbs += /datum/admins/proc/toggleooc
+			verbs += /datum/admins/proc/toggleoocdead
+
 			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
 		else	return
 

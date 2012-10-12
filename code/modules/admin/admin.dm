@@ -409,6 +409,10 @@ var/global/floorIsLava = 0
 		dat += "<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>"
 	if(lvl >= 5)
 		dat += "<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>"
+	if(lvl >= 3 )
+		dat += "<br><A href='?src=\ref[src];vsc=airflow'>Edit Airflow Settings</A><br>"
+		dat += "<A href='?src=\ref[src];vsc=plasma'>Edit Plasma Settings</A><br>"
+		dat += "<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>"
 //			if(lvl == 6 )
 	usr << browse(dat, "window=admin2;size=210x180")
 	return
