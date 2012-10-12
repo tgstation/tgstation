@@ -18,9 +18,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hos(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos(H), slot_wear_suit)
 		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/HoS(H), slot_head)
 //		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas(H), slot_wear_mask) //Grab one from the armory you donk
 		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), slot_glasses)
 		H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), slot_s_store)
@@ -56,8 +54,6 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/warden(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/warden(H), slot_wear_suit)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/warden(H), slot_head)
 		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), slot_glasses)
 //		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas(H), slot_wear_mask) //Grab one from the armory you donk
@@ -140,8 +136,6 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/security(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet(H), slot_head)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_s_store)
 		H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_l_store)
 		if(H.backbag == 1)
