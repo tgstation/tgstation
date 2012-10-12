@@ -6,6 +6,8 @@
 
 	maxHealth = 25
 	health = 25
+	storedPlasma = 50
+	max_plasma = 50
 
 	var/amount_grown = 0
 	var/max_grown = 200
@@ -56,24 +58,12 @@
 //This needs to be fixed
 /mob/living/carbon/alien/larva/Stat()
 	..()
+	stat(null, "Progress: [amount_grown]/[max_grown]")
 
-	statpanel("Status")
-	if (client && client.holder)
-		stat(null, "([x], [y], [z])")
-
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
-	if (client.statpanel == "Status")
-		stat(null, "Progress: [amount_grown]/[max_grown]")
-		stat(null, "Plasma Stored: [getPlasma()]")
-
-
-///mob/living/carbon/alien/larva/bullet_act(var/obj/item/projectile/Proj) taken care of in living
-
-
-/mob/living/carbon/alien/larva/emp_act(severity)
-	..()
+/mob/living/carbon/alien/larva/adjustToxLoss(amount)
+	if(stat != DEAD)
+		amount_grown = min(amount_grown + 1, max_grown)
+	..(amount)
 
 
 /mob/living/carbon/alien/larva/ex_act(severity)

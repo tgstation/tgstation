@@ -502,7 +502,7 @@
 			realJobName = src:id:assignment_real_title
 	if(istype(src, /obj/item/weapon/card/id))
 		jobName = src:assignment
-		realJobName = src:id:assignment_real_title
+		realJobName = src:assignment_real_title
 
 	if(realJobName in get_all_jobs())
 		return jobName

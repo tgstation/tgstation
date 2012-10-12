@@ -111,28 +111,36 @@
 			return
 
 		//Admin Observer
-		if (holder.level >= -1)
+		if (holder.level == -1)
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_say
+			verbs += /client/proc/cmd_mod_say
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/deadmin_self
-		else	return
+			return
 
 		//Moderator
 		if (holder.level >= 0)
 			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/cmd_admin_pm_panel
+			verbs += /client/proc/cmd_mod_say
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/Report
 			verbs += /client/proc/display_admin_reports
 			verbs += /datum/admins/proc/show_skills
-			verbs += /client/proc/mod_panel
 			verbs += /client/proc/admin_ghost
 		else	return
 
+		//Extra moderator commands
+		if(holder.level == 0)
+			verbs += /client/proc/mod_panel
+			return
+
 		//Temporary Admin
 		if (holder.level >= 1)
+			verbs += /client/proc/investigate_show
+			verbs += /client/proc/cmd_admin_say
 			verbs += /datum/admins/proc/startnow
 			verbs += /datum/admins/proc/delay								//game start delay
 			verbs += /datum/admins/proc/immreboot							//immediate reboot
@@ -142,6 +150,15 @@
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/player_panel_new
+			verbs += /client/proc/cmd_admin_change_custom_event
+			verbs += /client/proc/game_panel
+			verbs += /client/proc/unjobban_panel
+			verbs += /client/proc/jobbans
+			verbs += /client/proc/unban_panel
+			verbs += /datum/admins/proc/toggleooc
+			verbs += /datum/admins/proc/toggleoocdead
+
 			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
 		else	return
 
@@ -247,6 +264,7 @@
 			verbs += /client/proc/Set_Holiday							//Force-set a Holiday
 			verbs += /client/proc/admin_memo
 			verbs += /client/proc/ToRban								//ToRban  frontend to access its features.
+			verbs += /client/proc/game_panel
 			//verbs += /client/proc/cmd_mass_modify_object_variables 	--Merged with view variables
 			//verbs += /client/proc/cmd_admin_explosion					--Merged with view variables
 			//verbs += /client/proc/cmd_admin_emp						--Merged with view variables
@@ -275,6 +293,7 @@
 			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/toggle_log_hrefs
 			verbs += /client/proc/cmd_debug_mob_lists
+			verbs += /client/proc/set_ooc
 		else	return
 	return
 
@@ -404,6 +423,7 @@
 		/datum/admins/proc/access_news_network,
 		/client/proc/one_click_antag,
 		/client/proc/invisimin,
+		/client/proc/set_ooc,
 
 		//bs12 verbs
 		/client/proc/update_mob_sprite,
@@ -415,7 +435,8 @@
 		/client/proc/display_admin_reports,
 		/client/proc/editappear,
 		/client/proc/cmd_mod_say,
-		/client/proc/playernotes
+		/client/proc/playernotes,
+		/client/proc/cmd_admin_change_custom_event
 	)
 	//verbs -= /client/proc/mapload
 	//verbs -= /client/proc/cmd_admin_drop_everything					--merged with view variables

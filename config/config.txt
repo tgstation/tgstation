@@ -167,4 +167,10 @@ TICKCOMP 0
 SOCKET_TALK 0
 
 ## Uncomment this to ban use of ToR
-#TOR_BAN## Comment this out to disable automuting#AUTOMUTE_ON## Uncomment to restrict non-admins using humanoid alien racesUSEALIENWHITELIST
+#TOR_BAN
+
+## Comment this out to disable automuting
+#AUTOMUTE_ON
+
+## Uncomment to restrict non-admins from using humanoid alien races
+USEALIENWHITELIST

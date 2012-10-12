@@ -5,8 +5,8 @@
 var/const/MIN_IMPREGNATION_TIME = 100 //time it takes to impregnate someone
 var/const/MAX_IMPREGNATION_TIME = 150
 
-var/const/MIN_ACTIVE_TIME = 300 //time between being dropped and going idle
-var/const/MAX_ACTIVE_TIME = 600
+var/const/MIN_ACTIVE_TIME = 200 //time between being dropped and going idle
+var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger
 	name = "alien"
@@ -79,7 +79,7 @@ var/const/MAX_ACTIVE_TIME = 600
 	Attach(M)
 
 /obj/item/clothing/mask/facehugger/HasEntered(atom/target)
-	Attach(target)
+	HasProximity(target)
 	return
 
 /obj/item/clothing/mask/facehugger/dropped()
@@ -203,5 +203,15 @@ var/const/MAX_ACTIVE_TIME = 600
 	return
 
 /obj/item/clothing/mask/facehugger/HasProximity(atom/movable/AM as mob|obj)
-	if(istype(AM , /mob/living/))
+	if(CanHug(AM))
 		Attach(AM)
+
+/proc/CanHug(var/mob/M)
+	if(!iscarbon(M) || isalien(M))
+		return 0
+	var/mob/living/carbon/C = M
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(H.head && H.head.flags & HEADCOVERSMOUTH)
+			return 0
+	return 1
