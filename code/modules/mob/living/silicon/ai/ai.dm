@@ -68,7 +68,7 @@
 		if (istype(L, /datum/ai_laws))
 			laws = L
 	else
-		laws = new /datum/ai_laws/asimov
+		laws = new base_law_type
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 

@@ -1,3 +1,5 @@
+var/global/const/base_law_type = /datum/ai_laws/nanotrasen
+
 
 /datum/ai_laws
 	var/name = "Unknown Laws"
