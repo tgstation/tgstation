@@ -59,7 +59,8 @@
 					else
 						C << "<span class='adminooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.holder.fakekey ? src.client.holder.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span></font>"			else
+					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.holder.fakekey ? src.client.holder.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span></font>"
+			else
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>"
 
 var/global/normal_ooc_colour = "#002eb8"

@@ -413,9 +413,21 @@
 		/datum/admins/proc/access_news_network,
 		/client/proc/one_click_antag,
 		/client/proc/invisimin,
-		/client/proc/set_ooc
+		/client/proc/set_ooc,
 
-		//bs12 verbs		/client/proc/update_mob_sprite,		/client/proc/mod_panel,		/client/proc/admin_deny_shuttle,		/client/proc/playernotes,		/datum/admins/proc/show_skills,		/client/proc/Report,		/client/proc/display_admin_reports,		/client/proc/editappear,		/client/proc/cmd_mod_say,		/client/proc/playernotes	)
+		//bs12 verbs
+		/client/proc/update_mob_sprite,
+		/client/proc/mod_panel,
+		/client/proc/admin_deny_shuttle,
+		/client/proc/playernotes,
+		/datum/admins/proc/show_skills,
+		/client/proc/Report,
+		/client/proc/display_admin_reports,
+		/client/proc/editappear,
+		/client/proc/cmd_mod_say,
+		/client/proc/playernotes,
+		/client/proc/cmd_admin_change_custom_event
+	)
 	//verbs -= /client/proc/mapload
 	//verbs -= /client/proc/cmd_admin_drop_everything					--merged with view variables
 	//verbs -= /client/proc/give_spell 									--Merged with view variables
