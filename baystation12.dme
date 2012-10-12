@@ -1310,6 +1310,7 @@
 #include "code\modules\security levels\security levels.dm"
 #include "code\WorkInProgress\buildmode.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
+#include "code\WorkInProgress\surgery.dm"
 #include "code\WorkInProgress\Cael_Aislinn\energy_field.dm"
 #include "code\WorkInProgress\Cael_Aislinn\external_shield_gen.dm"
 #include "code\WorkInProgress\Cael_Aislinn\meteor_battery.dm"

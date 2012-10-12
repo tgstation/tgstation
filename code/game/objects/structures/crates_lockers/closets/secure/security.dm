@@ -26,6 +26,7 @@
 		new /obj/item/weapon/reagent_containers/food/drinks/flask(src)
 		new /obj/item/clothing/gloves/captain(src)
 		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/clothing/suit/armor/captain(src)
 		return
 
 
