@@ -111,12 +111,12 @@
 			return
 
 		//Admin Observer
-		if (holder.level >= -1)
+		if (holder.level == -1)
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/deadmin_self
-		else	return
+			return
 
 		//Moderator
 		if (holder.level >= 0)
@@ -127,12 +127,18 @@
 			verbs += /client/proc/Report
 			verbs += /client/proc/display_admin_reports
 			verbs += /datum/admins/proc/show_skills
-			verbs += /client/proc/mod_panel
 			verbs += /client/proc/admin_ghost
 		else	return
 
+		//Extra moderator commands
+		if(holder.level == 0)
+			verbs -= /client/proc/cmd_admin_say
+			verbs += /client/proc/mod_panel
+			return
+
 		//Temporary Admin
 		if (holder.level >= 1)
+			verbs += /client/proc/investigate_show
 			verbs += /datum/admins/proc/startnow
 			verbs += /datum/admins/proc/delay								//game start delay
 			verbs += /datum/admins/proc/immreboot							//immediate reboot
@@ -142,6 +148,7 @@
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/player_panel_new
 			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
 		else	return
 

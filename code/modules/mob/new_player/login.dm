@@ -1,5 +1,4 @@
 /mob/new_player/Login()
-	world << "mob/new_player/Login()"
 	update_Login_details()	//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 	if (join_motd)
 		src << "<div class=\"motd\">[join_motd]</div>"
