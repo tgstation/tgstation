@@ -150,6 +150,8 @@
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/player_panel_new
 			verbs += /client/proc/cmd_admin_change_custom_event
+			verbs += /client/proc/game_panel
+
 			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
 		else	return
 
