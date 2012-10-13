@@ -174,3 +174,6 @@ SOCKET_TALK 0
 
 ## Uncomment to restrict non-admins from using humanoid alien races
 USEALIENWHITELIST
+
+## Location of the nudge.py script
+NUDGE_SCRIPT_PATH nudge.py

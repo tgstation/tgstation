@@ -2,6 +2,8 @@
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 
+	var/nudge_script_path = "nudge.py"  // where the nudge.py script is located
+
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
 	var/log_say = 0						// log client say
@@ -237,6 +239,9 @@
 
 				if ("serversuffix")
 					config.server_suffix = 1
+
+				if ("nudge_script_path")
+					config.nudge_script_path = value
 
 				if ("hostedby")
 					config.hostedby = value
