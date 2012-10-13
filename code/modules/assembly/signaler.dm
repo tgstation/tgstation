@@ -17,10 +17,6 @@
 	var/airlock_wire = null
 	var/datum/radio_frequency/radio_connection
 
-	proc
-		signal()
-
-
 	New()
 		..()
 		spawn(40)
@@ -103,7 +99,7 @@
 		return
 
 
-	signal()
+	proc/signal()
 		if(!radio_connection) return
 
 		var/datum/signal/signal = new

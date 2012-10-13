@@ -191,24 +191,59 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 
 /world/proc/load_admins()
-	var/text = file2text("config/admins.txt")
-	if (!text)
-		diary << "Failed to load config/admins.txt\n"
+	if(config.admin_legacy_system)
+		//Legacy admin system uses admins.txt
+		var/text = file2text("config/admins.txt")
+		if (!text)
+			diary << "Failed to load config/admins.txt\n"
+		else
+			var/list/lines = dd_text2list(text, "\n")
+			for(var/line in lines)
+				if (!line)
+					continue
+
+				if (copytext(line, 1, 2) == ";")
+					continue
+
+				var/pos = findtext(line, " - ", 1, null)
+				if (pos)
+					var/m_key = copytext(line, 1, pos)
+					var/a_lev = copytext(line, pos + 3, length(line) + 1)
+					admins[m_key] = new /datum/admins(a_lev)
+					diary << ("ADMIN: [m_key] = [a_lev]")
 	else
-		var/list/lines = dd_text2list(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
+		//The current admin system uses SQL
+		var/user = sqlfdbklogin
+		var/pass = sqlfdbkpass
+		var/db = sqlfdbkdb
+		var/address = sqladdress
+		var/port = sqlport
 
-			if (copytext(line, 1, 2) == ";")
-				continue
+		var/DBConnection/dbcon = new()
 
-			var/pos = findtext(line, " - ", 1, null)
-			if (pos)
-				var/m_key = copytext(line, 1, pos)
-				var/a_lev = copytext(line, pos + 3, length(line) + 1)
-				admins[m_key] = new /datum/admins(a_lev)
-				diary << ("ADMIN: [m_key] = [a_lev]")
+		dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+		if(!dbcon.IsConnected())
+			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
+			config.admin_legacy_system
+			load_admins()
+			return
+
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level FROM erro_admin")
+		query.Execute()
+		while(query.NextRow())
+			var/adminckey = query.item[1]
+			var/adminrank = query.item[2]
+			var/adminlevel = query.item[3]
+			var/datum/admins/AD = new /datum/admins(adminrank)
+			AD.level = adminlevel
+			admins[adminckey] = AD
+
+		if(!admins)
+			diary << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
+			config.admin_legacy_system
+			load_admins()
+			return
+
 
 
 /world/proc/load_configuration()
