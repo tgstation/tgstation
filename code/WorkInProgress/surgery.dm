@@ -81,8 +81,8 @@ proc/build_surgery_steps_list()
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\blue [user] clapms bleeders in the wound in [target]'s [affected.display_name] with \the [tool]",	\
-		"\blue You clapm bleeders in [user]'s [affected.display_name] with \the [tool]")
+		user.visible_message("\blue [user] clamps bleeders in the wound in [target]'s [affected.display_name] with \the [tool]",	\
+		"\blue You clamp bleeders in [user]'s [affected.display_name] with \the [tool]")
 		affected.bandage()
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -152,21 +152,23 @@ proc/build_surgery_steps_list()
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/groin = target.get_organ("groin")
-		return target_zone == "groin" && groin.open == 2 && !(/datum/disease/appendicitis/ in target.resistances)
+		return target_zone == "groin" && groin.open == 2 && groin:appendictomy_stage == 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts cutting out [target]'s appendix with \the [tool]", \
 		"You start cutting out [user]'s appendix with \the [tool]")
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/groin = target.get_organ("groin")
 		user.visible_message("\blue [user] cuts out [target]'s appendix with \the [tool]", \
 		"\blue You cut out [user]'s appendix with \the [tool]")
+		groin:appendictomy_stage = 1
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
+		var/datum/organ/external/groin = target.get_organ("groin")
 		user.visible_message("\red [user]'s hand slips, slicing artery inside [target]'s abdomen with \the [tool]!", \
 		"\red Your hand slips, slicing artery inside [target]'s abdomen with \the [tool]!")
-		affected.createwound(CUT, 50)
+		groin.createwound(CUT, 50)
 
 /datum/surgery_step/remove_appendix
 	required_tool = /obj/item/weapon/hemostat
@@ -176,22 +178,88 @@ proc/build_surgery_steps_list()
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/groin = target.get_organ("groin")
-		return target_zone == "groin" && groin.open == 2
+		return target_zone == "groin" && groin.open == 2 && groin:appendictomy_stage == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts removing [target]'s appendix with \the [tool]", \
-		"You removing [user]'s appendix with \the [tool]")
+		"You start removing [user]'s appendix with \the [tool]")
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/groin = target.get_organ("groin")
 		user.visible_message("\blue [user] removes [target]'s appendix with \the [tool]", \
 		"\blue You remove [user]'s appendix with \the [tool]")
+		var/datum/disease/appendicitis/app = null
 		for(var/datum/disease/appendicitis/appendicitis in target.viruses)
-			new /obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed(get_turf(target))
+			app = appendicitis
 			appendicitis.cure()
-			target.resistances += appendicitis
+		if (app)
+			new /obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed(get_turf(target))
+		else
+			new /obj/item/weapon/reagent_containers/food/snacks/appendix(get_turf(target))
+		target.resistances += app
+		groin:appendictomy_stage = 2
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, hitting internal organs in [target]'s abdomen with \the [tool]!", \
 		"\red Your hand slips, hitting internal organs in [target]'s abdomen with \the [tool]!")
 		affected.createwound(BRUISE, 20)
+
+/datum/surgery_step/glue_bone
+	required_tool = /obj/item/weapon/bonegel
+
+	min_duration = 50
+	max_duration = 60
+
+	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		return affected.open == 2 && affected.stage < 3
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		user.visible_message("[user] starts applying [tool] to [target]'s bone in [affected.display_name]", \
+		"You start applying [tool] to [target]'s bone in [affected.display_name] with \the [tool]")
+
+	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		user.visible_message("\blue [user] applies some [tool] to [target]'s bone in [affected.display_name]", \
+		"\blue You apply some [tool] to [target]'s bone in [affected.display_name] with \the [tool]")
+		if (affected.stage == 0)
+			affected.stage = 1
+		if (affected.stage == 2)
+			affected.status &= ~ORGAN_BROKEN
+			affected.status &= ~ORGAN_SPLINTED
+			affected.stage = 0
+			affected.perma_injury = 0
+
+	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		user.visible_message("\red [user]'s hand slips, applying [tool] to the wrong spot in [target]'s [affected.display_name]!", \
+		"\red Your hand slips, applying [tool] to the wrong spot in [user]'s [affected.display_name]!")
+
+/datum/surgery_step/set_bone
+	required_tool = /obj/item/weapon/bonesetter
+
+	min_duration = 60
+	max_duration = 70
+
+	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		return affected.open == 2 && affected.stage == 1
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("[user] is beginning to set [target]'s [target_zone] bone in place with \the [tool]", \
+		"You are beginning to set [user]'s [target_zone] bone in place with \the [tool]")
+
+	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		user.visible_message("\blue [user] set [target]'s [affected.display_name] bone in place with \the [tool]", \
+		"\blue You set [user]'s [affected.display_name] bone in place with \the [tool]")
+		affected.stage = 2
+
+	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		user.visible_message("\red [user]'s hand slips, setting [target]'s [affected.display_name] in wrong place with \the [tool]!", \
+		"\red Your hand slips, setting [user]'s [affected.display_name] in wrong place  with \the [tool]!")
+		affected.createwound(BRUISE, 5)
+

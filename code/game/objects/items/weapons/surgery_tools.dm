@@ -578,3 +578,13 @@
 		return ..()
 */
 	return
+
+/obj/item/weapon/bonegel
+	name = "bone gel"
+	icon = 'surgery.dmi'
+	icon_state = "bone-gel"
+
+/obj/item/weapon/bonesetter
+	name = "bone setter"
+	icon = 'surgery.dmi'
+	icon_state = "bone setter"

@@ -187,6 +187,7 @@
 
 	proc/bandage()
 		status |= ORGAN_BANDAGED
+		status &= ~ORGAN_BLEEDING
 		for(var/datum/wound/W in wounds)
 			W.bandaged = 1
 
@@ -466,6 +467,7 @@
 	max_damage = 115
 	min_broken_damage = 70
 	body_part = LOWER_TORSO
+	var/appendictomy_stage = 0
 
 /datum/organ/external/head
 	name = "head"
