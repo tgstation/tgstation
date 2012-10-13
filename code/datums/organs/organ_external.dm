@@ -169,7 +169,7 @@
 			else if(W.damage_type == BURN)
 				burn_dam += W.damage
 
-			if(!W.bandaged && W.damage > 4)
+			if(!W.bandaged && (W.damage_type == CUT || W.damage_type == BRUISE && W.damage >=20))
 				status |= ORGAN_BLEEDING
 
 			number_wounds += W.amount
@@ -585,7 +585,7 @@ obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
 	brainmob.container = src
-    
+
 obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
