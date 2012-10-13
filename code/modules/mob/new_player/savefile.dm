@@ -135,6 +135,7 @@ datum/preferences/proc/savefile_save(mob/user)
 // returns 0 if savefile did not exist
 
 datum/preferences/proc/savefile_load(mob/user)
+	if(user.client == null) return 0
 	if(IsGuestKey(user.key))	return 0
 
 	var/path = savefile_path(user)

@@ -33,8 +33,16 @@
 	var/open = 0
 	var/stage = 0
 
-	// how often wounds should be updated, a higher number means less often
+		// how often wounds should be updated, a higher number means less often
 	var/wound_update_accuracy = 20 // update every 20 ticks(roughly every minute)
+	New(var/datum/organ/external/P)
+		if(P)
+			parent = P
+			if(!parent.children)
+				parent.children = list()
+			parent.children.Add(src)
+		return ..()
+
 
 	proc/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
 		// TODO: this proc needs to be rewritten to not update damages directly
