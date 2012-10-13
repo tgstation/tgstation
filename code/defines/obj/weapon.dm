@@ -957,18 +957,6 @@
 	throw_range = 15
 	attack_verb = list("banned")
 
-/obj/item/weapon/pen/sleepypen
-	desc = "It's a normal black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	slot_flags = SLOT_BELT
-	origin_tech = "materials=2;biotech=1;syndicate=7"
-
-/obj/item/weapon/pen/paralysis
-	desc = "It's a normal black ink pen with a sharp point."
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	slot_flags = SLOT_BELT
-	origin_tech = "materials=2;biotech=1;syndicate=5"
-
 /obj/item/weapon/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."

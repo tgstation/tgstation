@@ -183,18 +183,21 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(stand_icon)	del(stand_icon)
 	if(lying_icon)	del(lying_icon)
 	if(dna && dna.mutantrace)	return
-	//var/husk = (HUSK in src.mutations)  //100% unnecessary -Agouri
-	//var/fat = (FAT in src.mutations)
+
+	var/husk = (HUSK in src.mutations)  //100% unnecessary -Agouri	//nope, do you really want to iterate through src.mutations repeatedly? -Pete
+	var/fat = (FAT in src.mutations)
+	var/skeleton = (SKELETON in src.mutations)
 	var/g = "m"
+
 	if(gender == FEMALE)	g = "f"
 	//Base mob icon
-	if(HUSK in src.mutations)
+	if(husk)
 		stand_icon = new /icon('icons/mob/human.dmi', "husk_s")
 		lying_icon = new /icon('icons/mob/human.dmi', "husk_l")
-	else if(FAT in src.mutations)
+	else if(fat)
 		stand_icon = new /icon('icons/mob/human.dmi', "fatbody_s")
 		lying_icon = new /icon('icons/mob/human.dmi', "fatbody_l")
-	else if(SKELETON in src.mutations)
+	else if(skeleton)
 		stand_icon = new /icon('icons/mob/human.dmi', "skeleton_s")
 		lying_icon = new /icon('icons/mob/human.dmi', "skeleton_l")
 	else
@@ -202,7 +205,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		lying_icon = new /icon('icons/mob/human.dmi', "body_[g]_l")
 
 	//Skin tone
-	if((SKELETON in src.mutations) == 0)
+	if(!skeleton)
 		if(s_tone >= 0)
 			stand_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
 			lying_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
@@ -211,7 +214,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
 	//Eyes
-	if((SKELETON in src.mutations) == 0)
+	if(!skeleton)
 		var/icon/eyes_s = new/icon('icons/mob/human_face.dmi', "eyes_s")
 		var/icon/eyes_l = new/icon('icons/mob/human_face.dmi', "eyes_l")
 		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
@@ -220,13 +223,13 @@ Please contact me on #coderbus IRC. ~Carn x
 		lying_icon.Blend(eyes_l, ICON_OVERLAY)
 
 	//Mouth	(lipstick!)
-	if(lip_style && (SKELETON in src.mutations) == 0)
+	if(lip_style)	//skeletons are allowed to wear lipstick no matter what you think, agouri.
 		stand_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new/icon('icons/mob/human_face.dmi', "lips_[lip_style]_l"), ICON_OVERLAY)
 
 	//Underwear
 	if(underwear >0 && underwear < 12)
-		if((FAT in src.mutations) == 0 && (SKELETON in src.mutations) == 0)
+		if(!fat && !skeleton)
 			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 			lying_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
 	if(update_icons)	update_icons()
@@ -274,7 +277,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human/update_mutations(var/update_icons=1)
 	var/fat
-	if( FAT in mutations )
+	if(FAT in mutations)
 		fat = "fat"
 
 	var/image/lying		= image("icon" = 'icons/effects/genetics.dmi')

@@ -17,10 +17,10 @@
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return attack_hand(user)
 
 	attack_paw(mob/user as mob)
-		return src.attack_hand(user)
+		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
 		user.machine = src
@@ -47,7 +47,7 @@
 			if(copy)
 				for(var/i = 0, i < copies, i++)
 					if(toner > 0)
-						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (src.loc)
+						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
 						if(toner > 10)	//lots of toner, make it dark
 							c.info = "<font color = #101010>"
 						else			//no toner? shitty copies for you!
@@ -68,7 +68,7 @@
 			else if(photocopy)
 				for(var/i = 0, i < copies, i++)
 					if(toner > 0)
-						var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (src.loc)
+						var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 						var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 						if(toner > 10)	//plenty of toner, go straight greyscale
 							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))		//I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.

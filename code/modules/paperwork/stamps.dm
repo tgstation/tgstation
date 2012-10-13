@@ -56,4 +56,4 @@
 
 
 /obj/item/weapon/stamp/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
+	return attack_hand(user)
