@@ -9,12 +9,13 @@ var/global/floorIsLava = 0
 	log_adminwarn(rendered)
 	for (var/client/C in admin_list)
 		if (C)
-			var/msg = rendered
-			if (admin_ref)
-				msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
-			if (admin_holder_ref && C.holder)
-				msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
-			C << msg
+			if (C.holder.level >= 1)
+				var/msg = rendered
+				if (admin_ref)
+					msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
+				if (admin_holder_ref && C.holder)
+					msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
+				C << msg
 
 
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
@@ -22,9 +23,10 @@ var/global/floorIsLava = 0
 	log_adminwarn(rendered)
 	for (var/client/C in admin_list)
 		if (C)
-			if(!C.STFU_atklog)
-				var/msg = rendered
-				C << msg
+			if (C.holder.level >= 1)
+				if(!C.STFU_atklog)
+					var/msg = rendered
+					C << msg
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
