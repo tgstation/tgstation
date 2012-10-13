@@ -148,12 +148,16 @@ macro "macro"
 		command = ".screenshot"
 		is-disabled = false
 	elem 
+		name = "F3"
+		command = "say"
+		is-disabled = false
+	elem 
 		name = "F4"
-		command = "asay"
+		command = "me"
 		is-disabled = false
 	elem 
 		name = "F5"
-		command = "Aghost"
+		command = "asay"
 		is-disabled = false
 	elem 
 		name = "F6"
@@ -390,12 +394,16 @@ macro "hotkeymode"
 		command = ".screenshot"
 		is-disabled = false
 	elem 
+		name = "F3"
+		command = "say"
+		is-disabled = false
+	elem 
 		name = "F4"
-		command = "asay"
+		command = "me"
 		is-disabled = false
 	elem 
 		name = "F5"
-		command = "msay"
+		command = "asay"
 		is-disabled = false
 	elem 
 		name = "F6"
