@@ -1335,3 +1335,13 @@
 		dirs = alldirs.Copy()
 
 	src.streak(dirs)
+
+/obj/effect/decal/cleanable/blood/drip
+	name = "drips of blood"
+	desc = "It's red."
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'drip.dmi'
+	icon_state = "1"

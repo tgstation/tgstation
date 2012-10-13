@@ -123,6 +123,73 @@
 
 /mob/living/carbon/human
 
+	proc/handle_blood()
+		// take care of blood and blood loss
+		if(stat < 2)
+			var/blood_volume = round(vessel.get_reagent_amount("blood"))
+			if(blood_volume < 560 && blood_volume)
+				var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
+				if(B) // Make sure there's some blood at all
+					if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
+						for(var/datum/reagent/blood/D in vessel.reagent_list)
+							if(D.data["donor"] == src)
+								B = D
+								break
+					var/datum/reagent/nutriment/F = locate() in vessel.reagent_list
+					if(F != null)
+						if(F.volume >= 1)
+							// nutriment speeds it up quite a bit
+							B.volume += 0.4
+							F.volume -= 0.1
+					else
+						//At this point, we dun care which blood we are adding to, as long as they get more blood.
+						B.volume = B.volume + 0.1 // regenerate blood VERY slowly
+
+
+			switch(blood_volume)
+				if(501 to 10000)
+					if(pale)
+						pale = 0
+						update_body()
+				if(336 to 500)
+					if(!pale)
+						pale = 1
+						update_body()
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel [word]"
+					if(prob(1))
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel [word]"
+					if(oxyloss < 20)
+						// hint that they're getting close to suffocation
+						oxyloss += 3
+				if(224 to 335)
+					if(!pale)
+						pale = 1
+						update_body()
+					eye_blurry += 6
+					if(oxyloss < 50)
+						oxyloss += 10
+					oxyloss += 1
+					if(prob(15))
+						Paralyse(rand(1,3))
+				if(122 to 244)
+					oxyloss += 5
+					toxloss += 5
+				if(0 to 122)
+					death()
+
+
+			var/blood_max = 0
+			for(var/datum/organ/external/temp in organs)
+				if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
+					continue
+				for(var/datum/wound/W in temp.wounds) if(W.bleeding())
+					blood_max += W.damage / 2
+				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
+					blood_max += 20 //Yer missing a fucking limb.
+			drip(blood_max)
+
 	proc/handle_disabilities()
 		if (disabilities & EPILEPSY)
 			if ((prob(1) && paralysis < 1))
@@ -888,6 +955,7 @@
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()	//TODO
 			handle_organs()
+			handle_blood()
 			if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 				blinded = 1
