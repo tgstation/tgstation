@@ -224,7 +224,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 		dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
 		if(!dbcon.IsConnected())
 			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
-			config.admin_legacy_system
+			config.admin_legacy_system = 1
 			load_admins()
 			return
 
@@ -240,7 +240,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 		if(!admins)
 			diary << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
-			config.admin_legacy_system
+			config.admin_legacy_system = 1
 			load_admins()
 			return
 
