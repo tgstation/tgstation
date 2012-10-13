@@ -43,20 +43,25 @@
 	organ.parent = organs_by_name["l_leg"]
 	organ = organs_by_name["r_foot"]
 	organ.parent = organs_by_name["r_leg"]
-	organ = organs_by_name["r_foot"]
-	organ.parent = organs_by_name["r_leg"]
 	organ = organs_by_name["head"]
 	organ.parent = organs_by_name["chest"]
 	organ = organs_by_name["groin"]
 	organ.parent = organs_by_name["chest"]
 	organ = organs_by_name["r_leg"]
-	organ.parent = organs_by_name["groin"]
+	organ.parent = organs_by_name["chest"]
+	organ.children = new/list(organs_by_name["r_foot"])
 	organ = organs_by_name["l_leg"]
-	organ.parent = organs_by_name["groin"]
+	organ.parent = organs_by_name["chest"]
+	organ.children = new/list(organs_by_name["l_foot"])
 	organ = organs_by_name["r_arm"]
 	organ.parent = organs_by_name["chest"]
+	organ.children = new/list(organs_by_name["r_hand"])
 	organ = organs_by_name["l_arm"]
 	organ.parent = organs_by_name["chest"]
+	organ.children = new/list(organs_by_name["l_hand"])
+	organ = organs_by_name["chest"]
+	organ.children = new/list(organs_by_name["l_arm"], organs_by_name["r_arm"], organs_by_name["l_leg"],	\
+							  organs_by_name["r_leg"], organs_by_name["groin"], organs_by_name["head"] )
 
 	for(var/name in organs_by_name)
 		organs += organs_by_name[name]
