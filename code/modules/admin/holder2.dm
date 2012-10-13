@@ -594,7 +594,6 @@ var/list/admin_datums = list()
 						jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 						if(!msg)	msg = job
 						else		msg += ", [job]"
-					notes_add(M.ckey, "Banned  from [msg] - [reason]")
 					message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg]", 1)
 					M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>"
 					M << "\red <B>The reason is: [reason]</B>"
@@ -640,25 +639,6 @@ var/list/admin_datums = list()
 				message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].", 1)
 				//M.client = null
 				del(M.client)
-
-	//Player Notes
-	if(href_list["notes"])
-		var/ckey = href_list["ckey"]
-		if(!ckey)
-			var/mob/M = locate(href_list["mob"])
-			if(ismob(M))
-				ckey = M.ckey
-
-		switch(href_list["notes"])
-			if("show")
-				notes_show(ckey)
-			if("add")
-				notes_add(ckey,href_list["text"])
-				notes_show(ckey)
-			if("remove")
-				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))
-				notes_show(ckey)
-		return
 
 
 	if (href_list["removejobban"])
@@ -2590,3 +2570,85 @@ var/list/admin_datums = list()
 				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
 			if(href_list["vsc"] == "default")
 				vsc.SetDefault(usr)
+
+	// player info stuff
+
+	if(href_list["add_player_info"])
+		var/key = href_list["add_player_info"]
+		var/add = input("Add Player Info") as null|text
+		if(!add) return
+
+		var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+		var/list/infos
+		info >> infos
+		if(!infos) infos = list()
+
+		var/datum/player_info/P = new
+		P.author = usr.key
+		P.rank = usr.client.holder.rank
+		P.content = add
+		var/modifyer = "th"
+		switch(time2text(world.timeofday, "DD"))
+			if("01","21","31")
+				modifyer = "st"
+			if("02","22",)
+				modifyer = "nd"
+			if("03","23")
+				modifyer = "rd"
+		var/day_string = "[time2text(world.timeofday, "DD")][modifyer]"
+		if(copytext(day_string,1,2) == "0")
+			day_string = copytext(day_string,2)
+		var/full_date = time2text(world.timeofday, "DDD, Month DD of YYYY")
+		var/day_loc = findtext(full_date, time2text(world.timeofday, "DD"))
+		P.timestamp = "[copytext(full_date,1,day_loc)][day_string][copytext(full_date,day_loc+2)]"
+
+		infos += P
+
+		info << infos
+
+		message_admins("\blue [key_name_admin(usr)] has edited [key]'s notes.")
+		log_admin("[key_name(usr)] has edited [key]'s notes.")
+
+		del info
+
+		var/savefile/note_list = new("data/player_notes.sav")
+		var/list/note_keys
+		note_list >> note_keys
+		if(!note_keys) note_keys = list()
+		if(!note_keys.Find(key)) note_keys += key
+		note_list << note_keys
+		del note_list
+
+		show_player_info(key)
+
+	if(href_list["remove_player_info"])
+		var/key = href_list["remove_player_info"]
+		var/index = text2num(href_list["remove_index"])
+
+		var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+		var/list/infos
+		info >> infos
+		if(!infos || infos.len < index) return
+
+		var/datum/player_info/item = infos[index]
+		infos.Remove(item)
+		info << infos
+
+		message_admins("\blue [key_name_admin(usr)] deleted one of [key]'s notes.")
+		log_admin("[key_name(usr)] deleted one of [key]'s notes.")
+
+		del info
+
+		show_player_info(key)
+
+	if(href_list["notes"])
+		var/ckey = href_list["ckey"]
+		if(!ckey)
+			var/mob/M = locate(href_list["mob"])
+			if(ismob(M))
+				ckey = M.ckey
+
+		switch(href_list["notes"])
+			if("show")
+				show_player_info(ckey)
+		return
