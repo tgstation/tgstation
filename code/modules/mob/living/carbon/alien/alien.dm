@@ -154,6 +154,7 @@
 
 /mob/living/carbon/alien/Stat()
 
+	statpanel("Status")
 	stat(null, "Intent: [a_intent]")
 	stat(null, "Move Mode: [m_intent]")
 

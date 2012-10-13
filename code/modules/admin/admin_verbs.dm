@@ -212,6 +212,7 @@
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/giveruntimelog						//used by coders to retrieve runtime logs
 			verbs += /client/proc/togglebuildmodeself
+			verbs += /client/proc/debug_controller
 		else	return
 
 		//Game Admin
@@ -231,7 +232,6 @@
 			verbs += /client/proc/play_local_sound
 			verbs += /client/proc/send_space_ninja
 			verbs += /client/proc/restart_controller					//Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
-			verbs += /client/proc/debug_controller
 			verbs += /client/proc/toggle_clickproc 						//TODO ERRORAGE (Temporary proc while the new clickproc is being tested)
 			verbs += /client/proc/toggle_gravity_on
 			verbs += /client/proc/toggle_gravity_off
