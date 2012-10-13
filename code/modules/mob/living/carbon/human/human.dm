@@ -5,6 +5,10 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m_s"
 
+	var/datum/reagents/vessel
+	// TODO: make this actually affect the way the mob is rendered
+	var/pale = 0
+
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -70,6 +74,49 @@
 		dna.real_name = real_name
 
 	prev_gender = gender // Debug for plural genders
+
+
+	vessel = new/datum/reagents(600)
+	vessel.my_atom = src
+	vessel.add_reagent("blood",560)
+	spawn(1)
+		fixblood()
+
+/mob/living/carbon/human/proc/drip(var/amt as num)
+	if(!amt)
+		return
+
+	var/amm = 0.1 * amt
+	var/turf/T = get_turf(src)
+	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
+	var/list/iconL = list("1","2","3","4","5")
+
+	vessel.remove_reagent("blood",amm)
+
+	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
+		nums += G
+		iconL.Remove(G.icon_state)
+		if(nums.len >= 3)
+			var/obj/effect/decal/cleanable/blood/drip/D = pick(nums)
+			D.blood_DNA[dna.unique_enzymes] = dna.b_type
+			return
+
+	var/obj/effect/decal/cleanable/blood/drip/this = new(T)
+	this.icon_state = pick(iconL)
+	this.blood_DNA = list()
+	this.blood_DNA[dna.unique_enzymes] = dna.b_type
+
+	// replace many drips with something larger
+	if(nums.len > 3)
+		for(var/obj/effect/decal/cleanable/blood/drip/G in nums)
+			del G
+		T.add_blood(src)
+
+
+/mob/living/carbon/human/proc/fixblood()
+	for(var/datum/reagent/blood/B in vessel.reagent_list)
+		if(B.id == "blood")
+			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,"resistances"=null,"trace_chem"=null)
 
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)

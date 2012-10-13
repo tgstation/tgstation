@@ -187,7 +187,6 @@
 
 	proc/bandage()
 		var/rval = 0
-		status |= ORGAN_BANDAGED
 		for(var/datum/wound/W in wounds)
 			rval |= !W.bandaged
 			W.bandaged = 1
