@@ -343,20 +343,16 @@
 			for (var/obj/machinery/power/apc/temp_apc in A)
 				temp_apc.overload_lighting()
 
-		for(var/area/A in areas)
 			for (var/obj/structure/closet/secure_closet/brig/temp_closet in A)
 				temp_closet.locked = 0
 				temp_closet.icon_state = temp_closet.icon_closed
 
-		for(var/area/A in areas)
 			for (var/obj/machinery/door/airlock/security/temp_airlock in A)
-				temp_airlock.prison_open()
+				spawn(0) temp_airlock.prison_open()
 
-		for(var/area/A in areas)
 			for (var/obj/machinery/door/airlock/glass_security/temp_glassairlock in A)
-				temp_glassairlock.prison_open()
+				spawn(0) temp_glassairlock.prison_open()
 
-		for(var/area/A in areas)
 			for (var/obj/machinery/door_timer/temp_timer in A)
 				temp_timer.releasetime = 1
 

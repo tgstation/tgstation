@@ -48,6 +48,15 @@
 /mob/living/carbon/alien/eyecheck()
 	return 2
 
+/mob/living/carbon/alien/updatehealth()
+	if(nodamage)
+		health = maxHealth
+		stat = CONSCIOUS
+	else
+		//oxyloss is only used for suicide
+		//toxloss isn't used for aliens, its actually used as alien powers!!
+		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+
 /mob/living/carbon/alien/proc/handle_environment(var/datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
