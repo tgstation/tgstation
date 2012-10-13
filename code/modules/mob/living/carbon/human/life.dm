@@ -173,9 +173,14 @@
 					oxyloss += 1
 					if(prob(15))
 						Paralyse(rand(1,3))
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel extremely [word]"
 				if(122 to 244)
 					oxyloss += 5
 					toxloss += 5
+					if(prob(15))
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel extremely [word]"
 				if(0 to 122)
 					death()
 
