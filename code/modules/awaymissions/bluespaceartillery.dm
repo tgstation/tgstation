@@ -4,6 +4,8 @@
 	name = "Bluespace Artillery Control"
 	icon_state = "control_boxp1"
 	icon = 'particle_accelerator.dmi'
+	density = 1
+	anchored = 1
 
 /obj/machinery/artillerycontrol/process()
 	if(src.reload<180)
@@ -35,6 +37,7 @@
 		A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
 		var/area/thearea = teleportlocs[A]
 		if (usr.stat || usr.restrained()) return
+		if(src.reload < 180) return
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 			command_alert("Bluespace artillery fire detected. Brace for impact.")
 			message_admins("[key_name_admin(usr)] has launched an artillery strike.", 1)

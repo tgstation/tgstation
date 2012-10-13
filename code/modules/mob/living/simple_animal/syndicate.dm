@@ -129,7 +129,8 @@
 		Shoot(tturf, src.loc, src)
 		new /obj/item/ammo_casing/a12mm(get_turf(src))
 
-	stance = SYNDICATE_STANCE_ATTACK
+	stance = SYNDICATE_STANCE_IDLE
+	target_mob = null
 	return
 
 
@@ -199,6 +200,7 @@
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
 	corpse = /obj/effect/landmark/corpse/syndicatecommando
+	speed = 0
 
 /mob/living/simple_animal/syndicate/melee/space/Process_Spacemove(var/check_drift = 0)
 	return
@@ -224,6 +226,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	corpse = /obj/effect/landmark/corpse/syndicatecommando
+	speed = 0
 
 /mob/living/simple_animal/syndicate/ranged/space/Process_Spacemove(var/check_drift = 0)
 	return
