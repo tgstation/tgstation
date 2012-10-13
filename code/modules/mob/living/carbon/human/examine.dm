@@ -216,26 +216,6 @@
 
 	msg += "<span class='warning'>"
 
-	if(temp_dam)
-		if(temp_dam < 30)
-			msg += "[t_He] [t_has] minor bruising.\n"
-		else
-			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
-
-	temp_dam = getFireLoss()
-	if(temp_dam)
-		if(temp_dam < 30)
-			msg += "[t_He] [t_has] minor burns.\n"
-		else
-			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
-
-	temp_dam = getCloneLoss()
-	if(temp_dam)
-		if(temp_dam < 30)
-			msg += "[t_He] [t_has] minor genetic deformities.\n"
-		else
-			msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
-
 	if(nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= 500)
@@ -298,10 +278,13 @@
 			else if(temp.wounds.len > 0)
 				var/list/wound_descriptors = list()
 				for(var/datum/wound/W in temp.wounds)
-					if(W.desc in wound_descriptors)
-						wound_descriptors[W.desc] += W.amount
+					var/this_wound_desc = W.desc
+					if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
+					else if(W.bandaged) this_wound_desc = "bandaged [this_wound_desc]"
+					if(this_wound_desc in wound_descriptors)
+						wound_descriptors[this_wound_desc] += W.amount
 						continue
-					wound_descriptors[W.desc] = W.amount
+					wound_descriptors[this_wound_desc] = W.amount
 				var/list/flavor_text = list()
 				var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
 				"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")

@@ -75,6 +75,11 @@
 		return 1
 	return 0
 
+/proc/isSyndicate(A)
+	if(istype(A, /mob/living/simple_animal/syndicate))
+		return 1
+	return 0
+
 /proc/isclown(A)
 	if(istype(A, /mob/living/simple_animal/clown))
 		return 1

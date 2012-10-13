@@ -83,10 +83,7 @@ proc/build_surgery_steps_list()
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] clapms bleeders in the wound in [target]'s [affected.display_name] with \the [tool]",	\
 		"\blue You clapm bleeders in [user]'s [affected.display_name] with \the [tool]")
-		affected.open = 1
-		//Can't directly set status to not bleeding, or next organ damage update will just revert it.
-		for(var/datum/wound/W in affected.wounds)
-			W.bandaged = 1
+		affected.bandage()
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)

@@ -17,7 +17,7 @@
 	var/recharged = 0
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
-	"copper","mercury","radium","water","ethanol","sugar","sacid")
+	"copper","mercury","radium","water","ethanol","sugar","sacid","milk")
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
@@ -697,6 +697,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 
 
 

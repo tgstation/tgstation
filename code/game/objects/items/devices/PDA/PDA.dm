@@ -43,9 +43,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
-/obj/item/device/pda/New()
-	new /obj/item/weapon/pen(src)
-
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-m"
@@ -115,7 +112,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/captain
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	icon_state = "pda-c"
-	toff = 1
 
 /obj/item/device/pda/cargo
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
@@ -210,6 +206,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
+	new /obj/item/weapon/pen(src)
 
 /obj/item/device/pda/proc/can_use()
 

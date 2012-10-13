@@ -32,6 +32,7 @@
 	organs_by_name["r_hand"] = new/datum/organ/external/r_hand()
 	organs_by_name["l_foot"] = new/datum/organ/external/l_foot()
 	organs_by_name["r_foot"] = new/datum/organ/external/r_foot()
+	organs_by_name["groin"] = new/datum/organ/external/groin()
 
 	// connect feet to legs and hands to arms
 	var/datum/organ/external/organ = organs_by_name["l_hand"]
@@ -46,10 +47,12 @@
 	organ.parent = organs_by_name["r_leg"]
 	organ = organs_by_name["head"]
 	organ.parent = organs_by_name["chest"]
+	organ = organs_by_name["groin"]
+	organ.parent = organs_by_name["chest"]
 	organ = organs_by_name["r_leg"]
-	organ.parent = organs_by_name["chest"]
+	organ.parent = organs_by_name["groin"]
 	organ = organs_by_name["l_leg"]
-	organ.parent = organs_by_name["chest"]
+	organ.parent = organs_by_name["groin"]
 	organ = organs_by_name["r_arm"]
 	organ.parent = organs_by_name["chest"]
 	organ = organs_by_name["l_arm"]

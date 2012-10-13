@@ -799,3 +799,15 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
+
+
+/obj/item/device/radio/proc/config(op)
+	if(radio_controller)
+		for (var/ch_name in channels)
+			radio_controller.remove_object(src, radiochannels[ch_name])
+	secure_radio_connections = new
+	channels = op
+	if(radio_controller)
+		for (var/ch_name in op)
+			secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+	return

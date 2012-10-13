@@ -19,6 +19,7 @@
 	src.load_mode()
 	src.load_motd()
 	src.load_admins()
+	src.load_mods()
 	investigate_reset()
 	if (config.usewhitelist)
 		load_whitelist()
@@ -191,8 +192,8 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
 
-
 /world/proc/load_admins()
+	log_admin("Loading admins...")
 	var/text = file2text("config/admins.txt")
 	if (!text)
 		diary << "Failed to load config/admins.txt\n"
@@ -210,8 +211,24 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 				var/m_key = copytext(line, 1, pos)
 				var/a_lev = copytext(line, pos + 3, length(line) + 1)
 				admins[m_key] = new /datum/admins(a_lev)
-				diary << ("ADMIN: [m_key] = [a_lev]")
 
+/world/proc/load_mods()
+	log_admin("Loading mods...)")
+	var/text = file2text("config/moderators.txt")
+	if (!text)
+		diary << "Failed to load config/moderators.txt\n"
+	else
+		//diary << "Successfully loaded config/moderators.txt\n"
+		var/list/lines = dd_text2list(text, "\n")
+		for(var/line in lines)
+			if (!line)
+				continue
+
+			if (copytext(line, 1, 2) == ";")
+				continue
+
+			var/m_key = copytext(line, 1, length(line) + 1)
+			admins[m_key] = new /datum/admins("Moderator")
 
 /world/proc/load_configuration()
 	config = new /datum/configuration()
