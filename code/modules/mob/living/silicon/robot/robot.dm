@@ -177,7 +177,7 @@
 			icon_state = "landmate"
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
-			channels = list("Engineering" = 0)
+			channels = list("Engineering" = 1)
 
 		if("Janitor")
 			updatename(mod)

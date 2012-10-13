@@ -186,10 +186,19 @@
 		src.update_damages()
 
 	proc/bandage()
+		var/rval = 0
 		status |= ORGAN_BANDAGED
 		for(var/datum/wound/W in wounds)
+			rval |= !W.bandaged
 			W.bandaged = 1
+		return rval
 
+	proc/salve()
+		var/rval = 0
+		for(var/datum/wound/W in wounds)
+			rval |= !W.salved
+			W.salved = 1
+		return rval
 
 	proc/get_damage()	//returns total damage
 		return max(brute_dam + burn_dam - perma_injury, perma_injury)	//could use health?

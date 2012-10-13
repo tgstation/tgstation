@@ -366,6 +366,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
+		if(!M) return
 		var/quotedmsg = M.say_quote(message)
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---

@@ -212,29 +212,7 @@
 		else//Brain is gone, doesn't matter if they are AFK or present
 			msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
 
-	var/temp_dam = getBruteLoss() //no need to calculate each of these twice
-
 	msg += "<span class='warning'>"
-
-	if(temp_dam)
-		if(temp_dam < 30)
-			msg += "[t_He] [t_has] minor bruising.\n"
-		else
-			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
-
-	temp_dam = getFireLoss()
-	if(temp_dam)
-		if(temp_dam < 30)
-			msg += "[t_He] [t_has] minor burns.\n"
-		else
-			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
-
-	temp_dam = getCloneLoss()
-	if(temp_dam)
-		if(temp_dam < 30)
-			msg += "[t_He] [t_has] minor genetic deformities.\n"
-		else
-			msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
 
 	if(nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
