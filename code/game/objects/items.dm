@@ -179,28 +179,22 @@
 
 	if (!istype(M)) // not sure if this is the right thing...
 		return
-
-	//if(istype(M) &&((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(50))))
-	if(istype(M,/mob/living/carbon))
-		if (user.a_intent == "help")
-			if(surgery_steps == null) build_surgery_steps_list()
-			for(var/datum/surgery_step/S in surgery_steps)
-				var/have_correct_tool = 0
-				if(istype(S.required_tool, /list))
-					for(var/T in S.required_tool) if(istype(src, T))
-						have_correct_tool = 1
-						break
-				else
-					have_correct_tool = (istype(src, S.required_tool))
-				if(!have_correct_tool) continue
-				if(S.can_use(user, M, user.zone_sel.selecting, src))
-					S.begin_step(user, M, user.zone_sel.selecting, src)
-					if(do_mob(user, M, rand(S.min_duration, S.max_duration)))
-						S.end_step(user, M, user.zone_sel.selecting, src)
-					else
-						S.fail_step(user, M, user.zone_sel.selecting, src)
-					return		  //don't want to do weapony things after surgery
-
+	if (can_operate(M))	//Checks if mob is lying down on table for surgery
+		if(istype(M,/mob/living/carbon))
+			if (user.a_intent == "help")
+				if(surgery_steps == null) build_surgery_steps_list()
+				for(var/datum/surgery_step/S in surgery_steps)					//check if tool is right
+					if(istype(src, S.required_tool) || \
+						(S.allowed_tools && src.type in S.allowed_tools ))		//or close enough
+						if(S.can_use(user, M, user.zone_sel.selecting, src))	//is this step possible?
+							S.begin_step(user, M, user.zone_sel.selecting, src)
+							if(do_mob(user, M, rand(S.min_duration, S.max_duration)))
+								S.end_step(user, M, user.zone_sel.selecting, src)
+							else
+								S.fail_step(user, M, user.zone_sel.selecting, src)
+							return		  //don't want to do weapony things after surgery
+		if (is_surgery_tool(src) && user.a_intent != "harm")
+			return
 
 	var/messagesource = M
 

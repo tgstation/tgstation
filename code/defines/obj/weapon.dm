@@ -1717,6 +1717,23 @@
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharp = 1
 
+/obj/item/weapon/bonegel
+	name = "bone gel"
+	icon = 'surgery.dmi'
+	icon_state = "bone-gel"
+	force = 0
+	throwforce = 1.0
+
+/obj/item/weapon/bonesetter
+	name = "bone setter"
+	icon = 'surgery.dmi'
+	icon_state = "bone setter"
+	force = 8.0
+	throwforce = 9.0
+	throw_speed = 3
+	throw_range = 5
+	attack_verb = list("attacked", "hit", "bludgeoned")
+
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
 	desc = "Meat that appears...strange..."

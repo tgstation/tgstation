@@ -467,7 +467,6 @@
 	max_damage = 115
 	min_broken_damage = 70
 	body_part = LOWER_TORSO
-	var/appendictomy_stage = 0
 
 /datum/organ/external/head
 	name = "head"
