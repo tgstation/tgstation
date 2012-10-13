@@ -212,8 +212,6 @@
 		else//Brain is gone, doesn't matter if they are AFK or present
 			msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
 
-	var/temp_dam = getBruteLoss() //no need to calculate each of these twice
-
 	msg += "<span class='warning'>"
 
 	if(nutrition < 100)
