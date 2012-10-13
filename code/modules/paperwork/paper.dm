@@ -5,8 +5,8 @@
 	icon_state = "paper"
 	throwforce = 0
 	w_class = 1.0
-	throw_speed = 3
-	throw_range = 15
+	throw_range = 1
+	throw_speed = 1
 	layer = 4
 	pressure_resistance = 1
 	slot_flags = SLOT_HEAD
@@ -38,8 +38,9 @@
 
 /obj/item/weapon/paper/update_icon()
 	if(info)
-		overlays += "paper_words"
-	return
+		icon_state = "paper_words"
+		return
+	icon_state = "paper"
 
 /obj/item/weapon/paper/examine()
 	set src in oview(1)
@@ -141,12 +142,15 @@
 		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
+
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
 	stamps = null
 	stamped = list()
 	overlays = null
 	updateinfolinks()
+	update_icon()
+
 
 /obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
@@ -219,6 +223,7 @@
 		\[hr\] : Adds a horizontal rule.
 	</BODY></HTML>"}, "window=paper_help")
 
+
 /obj/item/weapon/paper/Topic(href, href_list)
 	..()
 	if((usr.stat || usr.restrained()))
@@ -249,17 +254,18 @@
 
 		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]") // Update the window
 
-		if(!overlays.Find("paper_words"))
-			overlays += "paper_words"
+		update_icon()
+
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
 	..()
+	if(plane)	return
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
+		user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
 		//openhelp(user)
 		return
 	else if(istype(P, /obj/item/weapon/stamp))
@@ -268,32 +274,21 @@
 
 		stamps += (stamps=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the [P.name].</i>"
 
-		switch(P.type)
-			if(/obj/item/weapon/stamp/captain)
-				overlays += "paper_stamped_cap"
-			if(/obj/item/weapon/stamp/hop)
-				overlays += "paper_stamped_hop"
-			if(/obj/item/weapon/stamp/hos)
-				overlays += "paper_stamped_hos"
-			if(/obj/item/weapon/stamp/ce)
-				overlays += "paper_stamped_ce"
-			if(/obj/item/weapon/stamp/rd)
-				overlays += "paper_stamped_rd"
-			if(/obj/item/weapon/stamp/cmo)
-				overlays += "paper_stamped_cmo"
-			if(/obj/item/weapon/stamp/denied)
-				overlays += "paper_stamped_denied"
-			if(/obj/item/weapon/stamp/clown)
-				if(!clown)
-					usr << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
-					return
-				else
-					overlays += "paper_stamped_clown"
-			else
-				overlays += "paper_stamped"
+		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+		stampoverlay.pixel_x = rand(-2, 2)
+		stampoverlay.pixel_y = rand(-3, 2)
+
+		if(istype(P, /obj/item/weapon/stamp/clown))
+			if(!clown)
+				user << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
+				return
+
+		stampoverlay.icon_state = "paper_[P.icon_state]"
+
 		if(!stamped)
 			stamped = new
 		stamped += P.type
+		overlays += stampoverlay
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 
