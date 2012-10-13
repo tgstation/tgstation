@@ -106,6 +106,13 @@
 	this.blood_DNA = list()
 	this.blood_DNA[dna.unique_enzymes] = dna.b_type
 
+	// replace many drips with something larger
+	if(nums.len > 3)
+		for(var/obj/effect/decal/cleanable/blood/drip/G in nums)
+			del G
+		T.add_blood(src)
+
+
 /mob/living/carbon/human/proc/fixblood()
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
