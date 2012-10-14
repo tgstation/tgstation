@@ -2011,7 +2011,7 @@ datum
 					..()
 					return
 				..()
-
+/*	//removed because of meta bullshit. this is why we can't have nice things.
 		syndicream
 			name = "Cream filling"
 			id = "syndicream"
@@ -2029,7 +2029,7 @@ datum
 						..()
 						return
 				..()
-
+*/
 		cornoil
 			name = "Corn Oil"
 			id = "cornoil"
