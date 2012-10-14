@@ -2,7 +2,7 @@
 	name = "filing cabinet"
 	desc = "A large cabinet with drawers."
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "filing_cabinet"
+	icon_state = "filingcabinet"
 	density = 1
 	anchored = 1
 
