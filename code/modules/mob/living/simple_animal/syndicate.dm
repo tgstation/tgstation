@@ -14,7 +14,7 @@
 	response_help = "pokes the"
 	response_disarm = "shoves the"
 	response_harm = "hits the"
-	speed = -1
+	speed = 0
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 75
 	health = 75
@@ -157,8 +157,8 @@
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/syndicate/melee
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 15
+	melee_damage_upper = 20
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
 	weapon1 = /obj/item/weapon/melee/energy/sword/red
@@ -167,7 +167,7 @@
 
 /mob/living/simple_animal/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
-		if(prob(35))
+		if(prob(80))
 			health -= O.force
 			visible_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
@@ -179,7 +179,7 @@
 
 /mob/living/simple_animal/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
-	if(prob(35))
+	if(prob(80))
 		src.health -= Proj.damage
 	else
 		visible_message("\red <B>[src] blocks [Proj] with its shield!</B>")
