@@ -65,6 +65,8 @@
 	updatename("Default")
 	updateicon()
 
+	playsound(src, 'sound/voice/liveagain.ogg', 75, 1)
+
 	if(!cell)
 		cell = new /obj/item/weapon/cell(src)
 		cell.maxcharge = 7500

@@ -170,7 +170,7 @@
 
 	proc/handle_mutations_and_radiation()
 		if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || (prob(1) && prob(75)))
+			if((COLD_RESISTANCE in mutations) || (prob(1)))
 				heal_organ_damage(0,1)
 
 		// Make nanoregen heal youu, -3 all damage types

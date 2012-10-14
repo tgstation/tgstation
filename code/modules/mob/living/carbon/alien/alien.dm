@@ -35,11 +35,10 @@
 	return
 
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
-	..(amount * 1.5)
-	return
-
-/mob/living/carbon/alien/adjustBruteLoss(amount) // Strong against melee weapons
-	..(amount * 0.5)
+	if(amount > 0)
+		..(amount * 1.5)
+	else
+		..(amount)
 	return
 
 /mob/living/carbon/alien/proc/getPlasma()
@@ -115,12 +114,8 @@
 /mob/living/carbon/alien/proc/handle_mutations_and_radiation()
 
 	if(getFireLoss())
-		if((COLD_RESISTANCE in mutations) || prob(50))
-			switch(getFireLoss())
-				if(1 to 50)
-					adjustFireLoss(-1)
-				if(51 to 100)
-					adjustFireLoss(-5)
+		if((COLD_RESISTANCE in mutations) || prob(5))
+			adjustFireLoss(-1)
 
 	// Aliens love radiation nom nom nom
 	if (radiation)
