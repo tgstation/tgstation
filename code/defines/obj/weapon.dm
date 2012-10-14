@@ -1650,6 +1650,11 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = 1
 
+/obj/item/weapon/scalpel/stabslash
+	name = "\proper Stabslash The Pains of Healing"
+	desc = "All craftsmanship is of highest quality. On it is image of doctor and patient. Doctor is panicing. Patien is asleep."
+	icon_state = "stabslash"
+
 /obj/item/weapon/retractor
 	name = "retractor"
 	desc = "Retracts stuff."

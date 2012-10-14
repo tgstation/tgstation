@@ -62,11 +62,21 @@
 			else if(affecting.name == "l_leg")
 				child = H.get_organ("l_foot")
 
-			if (affecting.heal_damage(src.heal_brute, src.heal_burn) || child.heal_damage(src.heal_brute, src.heal_burn))
-				H.UpdateDamageIcon()
+			if(src.heal_brute)
+				if(!affecting.bandage() && !child.bandage())
+					user << "\red The wounds on this limb have already been bandaged."
+			else if(src.heal_burn)
+				if(!affecting.salve() && !child.salve())
+					user << "\red The wounds on this limb have already been salved."
 		else
-			if (affecting.heal_damage(src.heal_brute, src.heal_burn))
-				H.UpdateDamageIcon()
+			if(src.heal_brute)
+				if(!affecting.bandage())
+					user << "\red The wounds on this limb have already been bandaged."
+			else if(src.heal_burn)
+				if(!affecting.salve())
+					user << "\red The wounds on this limb have already been salved."
+
+		H.UpdateDamageIcon()
 		M.updatehealth()
 	else
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))

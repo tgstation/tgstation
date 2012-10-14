@@ -9,12 +9,13 @@ var/global/floorIsLava = 0
 	log_adminwarn(rendered)
 	for (var/client/C in admin_list)
 		if (C)
-			var/msg = rendered
-			if (admin_ref)
-				msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
-			if (admin_holder_ref && C.holder)
-				msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
-			C << msg
+			if (C.holder.level >= 1)
+				var/msg = rendered
+				if (admin_ref)
+					msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
+				if (admin_holder_ref && C.holder)
+					msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
+				C << msg
 
 
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
@@ -22,9 +23,10 @@ var/global/floorIsLava = 0
 	log_adminwarn(rendered)
 	for (var/client/C in admin_list)
 		if (C)
-			if(!C.STFU_atklog)
-				var/msg = rendered
-				C << msg
+			if (C.holder.level >= 1)
+				if(!C.STFU_atklog)
+					var/msg = rendered
+					C << msg
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
@@ -164,6 +166,83 @@ var/global/floorIsLava = 0
 
 	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+/datum/player_info/var/author // admin who authored the information
+/datum/player_info/var/rank //rank of admin who made the notes
+/datum/player_info/var/content // text content of the information
+/datum/player_info/var/timestamp // Because this is bloody annoying
+
+/datum/admins/proc/PlayerNotes()
+	set category = "Admin"
+	set name = "Player Notes"
+	var/dat = "<B>Player notes</B><HR><table>"
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		usr << "Error: you are not an admin!"
+		return
+
+	var/savefile/S=new("data/player_notes.sav")
+	var/list/note_keys
+	S >> note_keys
+	if(!note_keys)
+		dat += "No notes found."
+	else
+		sortList(note_keys)
+		for(var/t in note_keys)
+			dat += "<tr><td><a href='?src=\ref[src];notes=show;ckey=[t]'>[t]</a></td></tr>"
+	dat += "</table>"
+	usr << browse(dat, "window=player_notes;size=400x400")
+
+
+/datum/admins/proc/player_has_info(var/key as text)
+	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+	var/list/infos
+	info >> infos
+	if(!infos || !infos.len) return 0
+	else return 1
+
+
+/datum/admins/proc/show_player_info(var/key as text)
+	set category = "Admin"
+	set name = "Show Player Info"
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		usr << "Error: you are not an admin!"
+		return
+	var/dat = "<html><head><title>Info on [key]</title></head>"
+	dat += "<body>"
+
+	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+	var/list/infos
+	info >> infos
+	if(!infos)
+		dat += "No information found on the given key.<br>"
+	else
+		var/update_file = 0
+		var/i = 0
+		for(var/datum/player_info/I in infos)
+			i += 1
+			if(!I.timestamp)
+				I.timestamp = "Pre-4/3/2012"
+				update_file = 1
+			if(!I.rank)
+				I.rank = "N/A"
+				update_file = 1
+			dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
+			if(I.author == usr.key)
+				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
+			dat += "<br><br>"
+		if(update_file) info << infos
+
+	dat += "<br>"
+	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
+
+	dat += "</body></html>"
+	usr << browse(dat, "window=adminplayerinfo;size=480x480")
+
 
 
 /datum/admins/proc/access_news_network() //MARKER
@@ -976,21 +1055,6 @@ var/global/floorIsLava = 0
 
 	if(istype(H))
 		H.regenerate_icons()
-
-/datum/admins/proc/PlayerNotes()
-	var/dat = "<B>Player notes</B><HR><table>"
-
-	var/savefile/S=new("data/player_notes.sav")
-	var/list/note_keys
-	S >> note_keys
-	if(!note_keys)
-		dat += "No notes found."
-	else
-		sortList(note_keys)
-		for(var/t in note_keys)
-			dat += text("<tr><td><A href='?src=\ref[src];view_player_info=[t]'>[t]</A></td></tr>")
-	dat += "</table>"
-	usr << browse(dat, "window=player_notes;size=400x400")
 
 //
 //

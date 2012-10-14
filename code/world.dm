@@ -146,7 +146,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 		if(revdata)	s["revision"] = revdata.revision
 		s["admins"] = admins
-
+		s["end"] = "#end"
 		return list2params(s)
 
 

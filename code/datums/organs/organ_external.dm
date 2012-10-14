@@ -33,8 +33,16 @@
 	var/open = 0
 	var/stage = 0
 
-	// how often wounds should be updated, a higher number means less often
+		// how often wounds should be updated, a higher number means less often
 	var/wound_update_accuracy = 20 // update every 20 ticks(roughly every minute)
+	New(var/datum/organ/external/P)
+		if(P)
+			parent = P
+			if(!parent.children)
+				parent.children = list()
+			parent.children.Add(src)
+		return ..()
+
 
 	proc/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
 		// TODO: this proc needs to be rewritten to not update damages directly
@@ -186,11 +194,18 @@
 		src.update_damages()
 
 	proc/bandage()
-		status |= ORGAN_BANDAGED
-		status &= ~ORGAN_BLEEDING
+		var/rval = 0
 		for(var/datum/wound/W in wounds)
+			rval |= !W.bandaged
 			W.bandaged = 1
+		return rval
 
+	proc/salve()
+		var/rval = 0
+		for(var/datum/wound/W in wounds)
+			rval |= !W.salved
+			W.salved = 1
+		return rval
 
 	proc/get_damage()	//returns total damage
 		return max(brute_dam + burn_dam - perma_injury, perma_injury)	//could use health?

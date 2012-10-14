@@ -1062,6 +1062,8 @@ datum/preferences
 		if(character.dna)
 			character.dna.real_name = character.real_name
 
+		character.flavor_text = flavor_text
+
 		character.gender = gender
 
 		character.age = age

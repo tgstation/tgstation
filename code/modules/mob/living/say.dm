@@ -253,9 +253,14 @@ var/list/department_radio_keys = list(
 			return
 
 		if ("department")
-			if (src:ears)
-				src:ears.talk_into(src, message, message_mode)
-				used_radios += src:ears
+			if(istype(src, /mob/living/carbon))
+				if (src:ears)
+					src:ears.talk_into(src, message, message_mode)
+					used_radios += src:ears
+			else if(istype(src, /mob/living/silicon/robot))
+				if (src:radio)
+					src:radio.talk_into(src, message, message_mode)
+					used_radios += src:radio
 			message_range = 1
 			italics = 1
 
