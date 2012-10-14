@@ -362,11 +362,11 @@ datum
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				switch(data)
-					if(1 to 15)
+					if(10 to 20)
 						M.eye_blurry = max(M.eye_blurry, 10)
-					if(15 to 25)
+					if(20 to 30)
 						M.drowsyness  = max(M.drowsyness, 20)
-					if(25 to INFINITY)
+					if(30 to INFINITY)
 						M.Paralyse(20)
 						M.drowsyness  = max(M.drowsyness, 30)
 				data++
@@ -1689,12 +1689,12 @@ datum
 				if(!data) data = 1
 				data++
 				switch(data)
-					if(1)
+					if(15 to 25)
 						M.confused += 2
 						M.drowsyness += 2
-					if(2 to 50)
+					if(25 to 60)
 						M.sleeping += 1
-					if(51 to INFINITY)
+					if(61 to INFINITY)
 						M.sleeping += 1
 						M.adjustToxLoss(data - 50)
 				..()

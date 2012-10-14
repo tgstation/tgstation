@@ -133,5 +133,5 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 
 proc/send2irc(msg,msg2)
 	if(config.useircbot)
-		shell("python nudge.py [msg] [msg2]")
+		shell("python [config.nudge_script_path] [msg] [msg2]")
 	return

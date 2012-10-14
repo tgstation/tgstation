@@ -130,6 +130,8 @@
 			verbs += /client/proc/display_admin_reports
 			verbs += /datum/admins/proc/show_skills
 			verbs += /client/proc/admin_ghost
+			verbs += /datum/admins/proc/show_player_info
+			verbs += /datum/admins/proc/PlayerNotes
 		else	return
 
 		//Extra moderator commands

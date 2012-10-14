@@ -193,24 +193,33 @@
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and [t_has] suffered major bloodloss!</span>\n"
 
-	if(stat == DEAD || (status_flags & FAKEDEATH))
-		if(brain_op_stage != 4)//Only perform these checks if there is no brain
-			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 
-			if(!key)
+	var/distance = get_dist(usr,src)
+	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
+		distance = 1
+	if (src.stat == 1 || stat == 2)
+		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
+		if((stat == 2 || src.health < config.health_threshold_crit) && distance <= 3)
+			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
+		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
+			for(var/mob/O in viewers(usr.loc, null))
+				O.show_message("[usr] checks [src]'s pulse.", 1)
+			spawn(15)
+				usr << "\blue [t_He] has a pulse!"
+
+	if (src.stat == 2 || (status_flags & FAKEDEATH))
+		if(distance <= 1)
+			if(istype(usr, /mob/living/carbon/human) && usr.stat == 0)
+				for(var/mob/O in viewers(usr.loc, null))
+					O.show_message("[usr] checks [src]'s pulse.", 1)
+			spawn(15)
 				var/foundghost = 0
-				if(mind)
-					for(var/mob/dead/observer/G in player_list)
-						if(G.mind == mind)
-							foundghost = 1
-							if (G.can_reenter_corpse == 0)
-								foundghost = 0
-							break
+				if(src.client)
+					foundghost = 1
 				if(!foundghost)
-					msg += " and [t_his] soul has departed"
-			msg += "...</span>\n"
-		else//Brain is gone, doesn't matter if they are AFK or present
-			msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
+					usr << "<span class='deadsay'>[t_He] has no pulse and [t_his] soul has departed...</span>"
+				else
+					usr << "<span class='deadsay'>[t_He] has no pulse...</span>"
 
 	msg += "<span class='warning'>"
 
