@@ -30,6 +30,9 @@
 		if(density)
 			layer = 3.1 //Above most items if closed
 			explosion_resistance = initial(explosion_resistance)
+			if(opacity)
+				var/turf/T = get_turf(src)
+				T.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
 		else
 			layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
 			explosion_resistance = 0
@@ -38,6 +41,7 @@
 
 
 	Del()
+		density = 0
 		update_nearby_tiles()
 		..()
 		return
@@ -252,6 +256,11 @@
 		var/turf/simulated/south = get_step(source,SOUTH)
 		var/turf/simulated/east = get_step(source,EAST)
 		var/turf/simulated/west = get_step(source,WEST)
+
+		if(src.density && src.opacity)
+			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
+		else
+			source.thermal_conductivity = initial(source.thermal_conductivity)
 
 		if(need_rebuild)
 			if(istype(source)) //Rebuild/update nearby group geometry
