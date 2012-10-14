@@ -4,12 +4,14 @@ var/list/forbidden_varedit_object_types = list(
 										/datum/feedback_variable			//Prevents people messing with feedback gathering
 									)
 
+/*
 /client/proc/cmd_modify_object_variables(obj/O as obj|mob|turf|area in world)
 	set category = "Debug"
 	set name = "Edit Variables"
 	set desc="(target) Edit a target item's variables"
 	src.modify_variables(O)
 	feedback_add_details("admin_verb","EDITV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+*/
 
 /client/proc/cmd_modify_ticker_variables()
 	set category = "Debug"

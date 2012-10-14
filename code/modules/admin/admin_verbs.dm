@@ -40,6 +40,7 @@
 	if(!need_update)	return
 
 	clear_admin_verbs()
+	handle_permission_verbs()
 
 	switch(rank)
 		if("Game Master")
