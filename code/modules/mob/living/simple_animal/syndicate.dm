@@ -157,8 +157,8 @@
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/syndicate/melee
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	melee_damage_lower = 20
+	melee_damage_upper = 25
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
 	weapon1 = /obj/item/weapon/melee/energy/sword/red
@@ -179,7 +179,7 @@
 
 /mob/living/simple_animal/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
-	if(prob(80))
+	if(prob(65))
 		src.health -= Proj.damage
 	else
 		visible_message("\red <B>[src] blocks [Proj] with its shield!</B>")
