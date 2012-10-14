@@ -14,7 +14,7 @@
 	response_help = "pokes the"
 	response_disarm = "shoves the"
 	response_harm = "hits the"
-	speed = 0
+	speed = -1
 	stop_automated_movement_when_pulled = 0
 	maxHealth = 75
 	health = 75
