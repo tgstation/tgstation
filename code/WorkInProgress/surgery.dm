@@ -171,17 +171,18 @@ proc/build_surgery_steps_list()
 		user.visible_message("\blue [user] cauterizes the incision in [target]'s [affected.display_name] with \the [tool]", \
 		"\blue You cauterize the incision in [target]'s [affected.display_name] with \the [tool]")
 		affected.open = 0
-		affected.status &= ~ORGAN_BLEEDING
-		if (target_zone == "eyes" && target.op_stage.eyes > 0)
-			if (target.op_stage.eyes == 2)
-				target.sdisabilities &= ~BLIND
-				target.eye_stat = 0
+		affected.status &= ~ORGAN_BLEEDING\
+		if (affected.name == "head")
 			target.op_stage.eyes = 0
-		if (target_zone == "mouth" && target.op_stage.face > 0)
-			if (target.op_stage.face == 2)
-				var/datum/organ/external/head/h = affected
-				h.disfigured = 0
 			target.op_stage.face = 0
+			if (target_zone == "eyes" && target.op_stage.eyes > 0)
+				if (target.op_stage.eyes == 2)
+					target.sdisabilities &= ~BLIND
+					target.eye_stat = 0
+			if (target_zone == "mouth" && target.op_stage.face > 0)
+				if (target.op_stage.face == 2)
+					var/datum/organ/external/head/h = affected
+					h.disfigured = 0
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -198,14 +199,11 @@ proc/build_surgery_steps_list()
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (target_zone != "groin")
 			return 0
-		world << "Aiming right..."
 		groin = target.get_organ("groin")
 		if (!groin)
 			return 0
-		world << "Target locked..."
 		if (groin.open < 2)
 			return 0
-		world << "Entry gained..."
 		return 1
 
 /datum/surgery_step/appendectomy/cut_appendix
@@ -215,7 +213,6 @@ proc/build_surgery_steps_list()
 	max_duration = 90
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		world << "Opstage: [target.op_stage.appendix]"
 		return ..() && target.op_stage.appendix == 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -233,7 +230,7 @@ proc/build_surgery_steps_list()
 		"\red Your hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!")
 		groin.createwound(CUT, 50)
 
-/datum/surgery_step/remove_appendix
+/datum/surgery_step/appendectomy/remove_appendix
 	required_tool = /obj/item/weapon/hemostat
 
 	min_duration = 60
@@ -332,15 +329,23 @@ proc/build_surgery_steps_list()
 //						EYE SURGERY							//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/lift_eyes
+/datum/surgery_step/eye
+	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if (!hasorgans(target))
+			return 0
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		if (!affected)
+			return 0
+		return target_zone == "eyes" && affected.open == 2 && !(affected.status & ORGAN_BLEEDING)
+
+/datum/surgery_step/eye/lift_eyes
 	required_tool = /obj/item/weapon/retractor
 
 	min_duration = 30
 	max_duration = 40
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return target_zone == "eyes" && target.op_stage.eyes < 1 && affected.open && !(affected.status & ORGAN_BLEEDING)
+		return ..() && target.op_stage.eyes < 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts lifting [target]'s eyes from sockets with \the [tool]", \
@@ -358,15 +363,14 @@ proc/build_surgery_steps_list()
 		target.apply_damage(10, BRUTE, affected)
 		//TODO eye damage
 
-/datum/surgery_step/mend_eyes
+/datum/surgery_step/eye/mend_eyes
 	required_tool = /obj/item/weapon/hemostat
 
 	min_duration = 80
 	max_duration = 100
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return target_zone == "eyes" && target.op_stage.eyes == 1 && affected.open && !(affected.status & ORGAN_BLEEDING)
+		return ..() && target.op_stage.eyes == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts mending nerves in [target]'s eyes with \the [tool]", \
@@ -387,15 +391,23 @@ proc/build_surgery_steps_list()
 //						FACE SURGERY							//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/mend_vocal
+/datum/surgery_step/face
+	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if (!hasorgans(target))
+			return 0
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		if (!affected)
+			return 0
+		return target_zone == "mouth" && affected.open == 2 && !(affected.status & ORGAN_BLEEDING)
+
+/datum/surgery_step/face/mend_vocal
 	required_tool = /obj/item/weapon/hemostat
 
 	min_duration = 70
 	max_duration = 90
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return target_zone == "mouth" && target.op_stage.face < 1 && affected.open && !(affected.status & ORGAN_BLEEDING)
+		return ..() && target.op_stage.face < 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts mending [target]'s vocal cords with \the [tool]", \
@@ -411,15 +423,14 @@ proc/build_surgery_steps_list()
 		"\red Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!")
 		target.losebreath += 10
 
-/datum/surgery_step/fix_face
+/datum/surgery_step/face/fix_face
 	required_tool = /obj/item/weapon/retractor
 
 	min_duration = 80
 	max_duration = 100
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return target_zone == "mouth" && target.op_stage.face == 1 && affected.open && !(affected.status & ORGAN_BLEEDING)
+		return ..() && target.op_stage.face == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts pulling skin on [target]'s face back in place with \the [tool]", \
@@ -504,8 +515,8 @@ proc/build_surgery_steps_list()
 		"You start separating [target]'s brain from spine with \the [tool]")
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] separates [target]'s rain from spine with \the [tool]",	\
-		"\blue You separate [target]'s rain from spine with \the [tool]")
+		user.visible_message("\blue [user] separates [target]'s brain from spine with \the [tool]",	\
+		"\blue You separate [target]'s brain from spine with \the [tool]")
 
 		user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 		target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
