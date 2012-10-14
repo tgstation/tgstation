@@ -16,8 +16,8 @@
 	response_harm = "hits the"
 	speed = -1
 	stop_automated_movement_when_pulled = 0
-	maxHealth = 75
-	health = 75
+	maxHealth = 100
+	health = 100
 	var/ranged = 0
 	var/target
 	var/rapid = 0
