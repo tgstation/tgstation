@@ -400,11 +400,11 @@ ZIPPO
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
 				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			else
-				if(prob(75))
+				if(prob(90))
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 				else
 					user << "<span class='warning'>You burn yourself while lighting the lighter.</span>"
-					user.adjustFireLoss(5)
+					user.adjustFireLoss(2)
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
 			user.SetLuminosity(user.luminosity + 2)

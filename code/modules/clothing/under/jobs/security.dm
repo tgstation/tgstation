@@ -95,8 +95,8 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/hos/jensen
-	name = "armored trenchoat"
-	desc = "A trenchoat augmented with a special alloy for some protection and style"
+	name = "armored trenchcoat"
+	desc = "A trenchcoat augmented with a special alloy for some protection and style."
 	icon_state = "jensencoat"
 	item_state = "jensencoat"
 	flags_inv = 0
