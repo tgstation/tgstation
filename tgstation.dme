@@ -746,6 +746,7 @@
 #include "code\game\objects\structures\morgue.dm"
 #include "code\game\objects\structures\musician.dm"
 #include "code\game\objects\structures\noticeboard.dm"
+#include "code\game\objects\structures\safe.dm"
 #include "code\game\objects\structures\tables_racks.dm"
 #include "code\game\objects\structures\target_stake.dm"
 #include "code\game\objects\structures\watercloset.dm"

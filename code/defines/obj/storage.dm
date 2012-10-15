@@ -180,11 +180,6 @@
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
 
-/obj/item/weapon/storage/backpack/bandolier
-	name = "bandolier"
-	desc = "It's a very old bandolier to wear on your back."
-	icon_state = "bandolier"
-
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"
 	desc = "It's a tough backpack for the daily grind of station life."
