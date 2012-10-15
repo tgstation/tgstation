@@ -24,6 +24,9 @@
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "\blue You start to add cables to the frame."
 						if(do_after(user, 20))
+							if(!P)
+								user << "\blue You realize the cable coil no longer exist."
+								return;
 							P:amount -= 5
 							if(!P:amount) del(P)
 							user << "\blue You add cables to the frame."
