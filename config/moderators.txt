@@ -3,6 +3,7 @@
 asanadas
 botanistpower
 bowlsoldier
+chinsky
 cubejackal
 dakonic
 densane
@@ -11,6 +12,7 @@ fastler
 fenrisian
 madmalicemccrea
 mangled
+phaux
 roaper
 searif
 sparklysheep

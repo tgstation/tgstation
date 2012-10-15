@@ -8,7 +8,7 @@ HEALTH_THRESHOLD_DEAD -100
 
 ## Determines whether bones can be broken through excessive damage to the organ
 ## 0 means bones can't break, 1 means they can
-BONES_CAN_BREAK 1
+BONES_CAN_BREAK 0
 ## Determines whether limbs can be amputated through excessive damage to the organ
 ## 0 means limbs can't be amputated, 1 means they can
 LIMBS_CAN_BREAK 0
