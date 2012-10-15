@@ -83,5 +83,6 @@
 	if(src.beaker)
 		src.beaker.loc = get_turf(src)
 		src.beaker = null
+		update_icon()
 	else
 		return ..()

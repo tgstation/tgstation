@@ -1236,6 +1236,7 @@
 #include "code\modules\reagents\reagent_containers.dm"
 #include "code\modules\reagents\reagent_dispenser.dm"
 #include "code\modules\reagents\syringe_gun.dm"
+#include "code\modules\reagents\reagent_containers\blood_pack.dm"
 #include "code\modules\reagents\reagent_containers\borghydro.dm"
 #include "code\modules\reagents\reagent_containers\dropper.dm"
 #include "code\modules\reagents\reagent_containers\food.dm"
