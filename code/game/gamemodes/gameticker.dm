@@ -116,7 +116,7 @@ var/global/datum/controller/gameticker/ticker
 			if (S.name != "AI")
 				del(S)
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
-//		world << sound('sound/AI/welcome.ogg') // Skie
+		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
 
