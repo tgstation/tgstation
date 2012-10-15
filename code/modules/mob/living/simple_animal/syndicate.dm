@@ -16,8 +16,8 @@
 	response_harm = "hits the"
 	speed = -1
 	stop_automated_movement_when_pulled = 0
-	maxHealth = 75
-	health = 75
+	maxHealth = 100
+	health = 100
 	var/ranged = 0
 	var/target
 	var/rapid = 0
@@ -129,7 +129,8 @@
 		Shoot(tturf, src.loc, src)
 		new /obj/item/ammo_casing/a12mm(get_turf(src))
 
-	stance = SYNDICATE_STANCE_ATTACK
+	stance = SYNDICATE_STANCE_IDLE
+	target_mob = null
 	return
 
 
@@ -156,8 +157,8 @@
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/syndicate/melee
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 20
+	melee_damage_upper = 25
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
 	weapon1 = /obj/item/weapon/melee/energy/sword/red
@@ -166,7 +167,7 @@
 
 /mob/living/simple_animal/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
-		if(prob(35))
+		if(prob(80))
 			health -= O.force
 			visible_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
@@ -178,7 +179,7 @@
 
 /mob/living/simple_animal/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
-	if(prob(35))
+	if(prob(65))
 		src.health -= Proj.damage
 	else
 		visible_message("\red <B>[src] blocks [Proj] with its shield!</B>")
@@ -199,6 +200,7 @@
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
 	corpse = /obj/effect/landmark/corpse/syndicatecommando
+	speed = 0
 
 /mob/living/simple_animal/syndicate/melee/space/Process_Spacemove(var/check_drift = 0)
 	return
@@ -224,6 +226,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	corpse = /obj/effect/landmark/corpse/syndicatecommando
+	speed = 0
 
 /mob/living/simple_animal/syndicate/ranged/space/Process_Spacemove(var/check_drift = 0)
 	return

@@ -227,32 +227,37 @@
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
 		user << (state ? "You have pried the window into the frame." : "You have pried the window out of the frame.")
 	else
-
-		var/aforce = W.force
-		if(reinf) aforce /= 2.0
 		if(W.damtype == BRUTE || W.damtype == BURN)
-			src.health = max(0, src.health - aforce)
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		if (src.health <= 7)
-			src.anchored = 0
-			update_nearby_icons()
-			step(src, get_dir(user, src))
-		if (src.health <= 0)
-			if (src.dir == SOUTHWEST)
-				var/index = null
-				index = 0
-				while(index < 2)
-					new /obj/item/weapon/shard( src.loc )
-					if(reinf) new /obj/item/stack/rods( src.loc)
-					index++
-			else
-				new /obj/item/weapon/shard( src.loc )
-				if(reinf) new /obj/item/stack/rods( src.loc)
-			src.density = 0
-			del(src)
-			return
+			hit(W.force)
+			if (src.health <= 7)
+				src.anchored = 0
+				update_nearby_icons()
+				step(src, get_dir(user, src))
+		else
+			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		..()
 	return
+
+/obj/structure/window/proc/hit(var/damage, var/sound_effect = 1)
+
+	if(reinf) damage /= 2.0
+	src.health = max(0, src.health - damage)
+	if(sound_effect)
+		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+	if (src.health <= 0)
+		if (src.dir == SOUTHWEST)
+			var/index = null
+			index = 0
+			while(index < 2)
+				new /obj/item/weapon/shard( src.loc )
+				if(reinf) new /obj/item/stack/rods( src.loc)
+				index++
+		else
+			new /obj/item/weapon/shard( src.loc )
+			if(reinf) new /obj/item/stack/rods( src.loc)
+		src.density = 0
+		del(src)
+		return
 
 
 /obj/structure/window/verb/rotate()
@@ -408,6 +413,11 @@
 				src.icon_state = "window[junction]"
 
 		return
+
+/obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > T0C + 600)
+		hit(round(exposed_volume / 100), 0)
+	..()
 
 
 

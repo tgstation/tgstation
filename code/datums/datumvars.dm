@@ -8,6 +8,11 @@ client
 		//set src in world
 
 
+		if(!usr.client || !usr.client.holder || !(usr.client.holder.level >= 2) )	//admin candidate and up.
+			usr << "\red You need to be a higher level administrator to access this."
+			return
+
+
 		var/title = ""
 		var/body = ""
 

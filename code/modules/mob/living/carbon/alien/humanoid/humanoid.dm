@@ -524,13 +524,4 @@ In all, this is a lot like the monkey code. /N
 	onclose(user, "mob[name]")
 	return
 
-/mob/living/carbon/alien/humanoid/updatehealth()
-	if(nodamage)
-		health = maxHealth
-		stat = CONSCIOUS
-	else
-		//oxyloss is only used for suicide
-		//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
-
 

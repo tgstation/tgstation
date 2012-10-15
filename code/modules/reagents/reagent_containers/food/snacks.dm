@@ -1023,7 +1023,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
-		reagents.add_reagent("syndicream", 2)
+		reagents.add_reagent("doctor_delight", 2)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
@@ -1288,6 +1288,7 @@
 		reagents.add_reagent("tomatojuice", 2)
 		bitesize = 5
 
+/* No more of this
 /obj/item/weapon/reagent_containers/food/snacks/telebacon
 	name = "Tele Bacon"
 	desc = "It tastes a little odd but it is still delicious."
@@ -1302,7 +1303,7 @@
 		if(!reagents.total_volume)
 			baconbeacon.loc = usr
 			baconbeacon.digest_delay()
-
+*/
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"
@@ -1754,7 +1755,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
-		reagents.add_reagent("syndicream", 5)
+		reagents.add_reagent("doctor_delight", 5)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart

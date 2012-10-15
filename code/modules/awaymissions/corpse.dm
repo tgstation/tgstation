@@ -3,8 +3,8 @@
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 
 /obj/effect/landmark/corpse
-
-	var/mobname = "Unknown"  //Names the mob, obviously
+	name = "Unknown"
+	var/mobname = "Unknown"  //Unused now
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -25,7 +25,7 @@
 
 /obj/effect/landmark/corpse/New() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
-	M.real_name = src.mobname
+	M.real_name = src.name
 	M.stat = 2 //Kills the new mob
 	if(src.corpseuniform)
 		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
@@ -73,7 +73,7 @@
 
 
 /obj/effect/landmark/corpse/syndicatesoldier
-	mobname = "Syndicate Operative"
+	name = "Syndicate Operative"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/armor/vest
 	corpseshoes = /obj/item/clothing/shoes/swat
@@ -89,7 +89,7 @@
 
 
 /obj/effect/landmark/corpse/syndicatecommando
-	mobname = "Syndicate Commando"
+	name = "Syndicate Commando"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/space/rig/syndi
 	corpseshoes = /obj/item/clothing/shoes/swat
@@ -108,7 +108,7 @@
 ///////////Civilians//////////////////////
 
 /obj/effect/landmark/corpse/chef
-	mobname = "Chef"
+	name = "Chef"
 	corpseuniform = /obj/item/clothing/suit/chef
 	corpsesuit = /obj/item/clothing/suit/chef/classic
 	corpseshoes = /obj/item/clothing/shoes/black
@@ -121,7 +121,7 @@
 
 
 /obj/effect/landmark/corpse/doctor
-	mobname = "Doctor"
+	name = "Doctor"
 	corpseradio = /obj/item/device/radio/headset/headset_med
 	corpseuniform = /obj/item/clothing/under/rank/medical
 	corpsesuit = /obj/item/clothing/suit/labcoat
@@ -133,7 +133,7 @@
 	corpseidaccess = "Medical Doctor"
 
 /obj/effect/landmark/corpse/engineer
-	mobname = "Engineer"
+	name = "Engineer"
 	corpseradio = /obj/item/device/radio/headset/headset_eng
 	corpseuniform = /obj/item/clothing/under/rank/engineer
 	corpseback = /obj/item/weapon/storage/backpack/industrial
@@ -151,7 +151,7 @@
 	corpsehelmet = /obj/item/clothing/head/helmet/space/rig
 
 /obj/effect/landmark/corpse/clown
-	mobname = "Clown"
+	name = "Clown"
 	corpseuniform = /obj/item/clothing/under/rank/clown
 	corpseshoes = /obj/item/clothing/shoes/clown_shoes
 	corpseradio = /obj/item/device/radio/headset
@@ -163,7 +163,7 @@
 	corpseidaccess = "Clown"
 
 /obj/effect/landmark/corpse/scientist
-	mobname = "Scientist"
+	name = "Scientist"
 	corpseradio = /obj/item/device/radio/headset/headset_sci
 	corpseuniform = /obj/item/clothing/under/rank/scientist
 	corpsesuit = /obj/item/clothing/suit/labcoat/science
@@ -177,7 +177,7 @@
 /////////////////Officers//////////////////////
 
 /obj/effect/landmark/corpse/bridgeofficer
-	mobname = "Bridge Officer"
+	name = "Bridge Officer"
 	corpseradio = /obj/item/device/radio/headset/heads/hop
 	corpseuniform = /obj/item/clothing/under/rank/centcom_officer
 	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
@@ -188,7 +188,7 @@
 	corpseidaccess = "Captain"
 
 /obj/effect/landmark/corpse/commander
-	mobname = "Commander"
+	name = "Commander"
 	corpseuniform = /obj/item/clothing/under/rank/centcom_commander
 	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
 	corpseradio = /obj/item/device/radio/headset/heads/captain

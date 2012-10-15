@@ -19,12 +19,9 @@
 	src.load_mode()
 	src.load_motd()
 	src.load_admins()
-	src.load_mods()
 	investigate_reset()
 	if (config.usewhitelist)
 		load_whitelist()
-	if (config.usealienwhitelist)
-		load_alienwhitelist()
 	LoadBansjob()
 	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
 	src.update_status()
@@ -146,7 +143,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 		if(revdata)	s["revision"] = revdata.revision
 		s["admins"] = admins
-		s["end"] = "#end"
+
 		return list2params(s)
 
 
@@ -193,42 +190,87 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	join_motd = file2text("config/motd.txt")
 
 /world/proc/load_admins()
-	log_admin("Loading admins...")
-	var/text = file2text("config/admins.txt")
-	if (!text)
-		diary << "Failed to load config/admins.txt\n"
+	if(config.admin_legacy_system)
+		//Legacy admin system uses admins.txt
+		var/text = file2text("config/admins.txt")
+		if (!text)
+			diary << "Failed to load config/admins.txt\n"
+		else
+			var/list/lines = dd_text2list(text, "\n")
+			for(var/line in lines)
+				if (!line)
+					continue
+
+				if (copytext(line, 1, 2) == ";")
+					continue
+
+				var/pos = findtext(line, " - ", 1, null)
+				if (pos)
+					var/m_key = copytext(line, 1, pos)
+					var/a_lev = copytext(line, pos + 3, length(line) + 1)
+					admins[m_key] = new /datum/admins(a_lev)
+					diary << ("ADMIN: [m_key] = [a_lev]")
 	else
-		var/list/lines = dd_text2list(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
+		//The current admin system uses SQL
+		var/user = sqlfdbklogin
+		var/pass = sqlfdbkpass
+		var/db = sqlfdbkdb
+		var/address = sqladdress
+		var/port = sqlport
 
-			if (copytext(line, 1, 2) == ";")
-				continue
+		var/DBConnection/dbcon = new()
 
-			var/pos = findtext(line, " - ", 1, null)
-			if (pos)
-				var/m_key = copytext(line, 1, pos)
-				var/a_lev = copytext(line, pos + 3, length(line) + 1)
-				admins[m_key] = new /datum/admins(a_lev)
+		dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+		if(!dbcon.IsConnected())
+			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
+			config.admin_legacy_system = 1
+			load_admins()
+			return
 
-/world/proc/load_mods()
-	log_admin("Loading mods...)")
-	var/text = file2text("config/moderators.txt")
-	if (!text)
-		diary << "Failed to load config/moderators.txt\n"
-	else
-		//diary << "Successfully loaded config/moderators.txt\n"
-		var/list/lines = dd_text2list(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin")
+		query.Execute()
+		while(query.NextRow())
+			var/adminckey = query.item[1]
+			var/adminrank = query.item[2]
+			var/adminlevel = query.item[3]
+			if(istext(adminlevel))
+				adminlevel = text2num(adminlevel)
+			var/permissions = query.item[4]
+			if(istext(permissions))
+				permissions = text2num(permissions)
 
-			if (copytext(line, 1, 2) == ";")
-				continue
+			//This list of stuff translates the permission defines the database uses to the permission structure that the game uses.
+			var/permissions_actual = 0
+			if(permissions & SQL_BUILDMODE)
+				permissions_actual |= BUILDMODE
+			if(permissions & SQL_ADMIN)
+				permissions_actual |= ADMIN
+			if(permissions & SQL_BAN)
+				permissions_actual |= BAN
+			if(permissions & SQL_FUN)
+				permissions_actual |= FUN
+			if(permissions & SQL_SERVER)
+				permissions_actual |= SERVER
+			if(permissions & SQL_DEBUG)
+				permissions_actual |= ADMDEBUG
+			if(permissions & SQL_POSSESS)
+				permissions_actual |= POSSESS
+			if(permissions & SQL_PERMISSIONS)
+				permissions_actual |= PERMISSIONS
 
-			var/m_key = copytext(line, 1, length(line) + 1)
-			admins[m_key] = new /datum/admins("Moderator")
+			if(adminrank == "Removed")
+				return	//This person was de-adminned. They are only in the admin list for archive purposes.
+
+			var/datum/admins/AD = new /datum/admins(adminrank)
+			AD.level = adminlevel //Legacy support for old verbs
+			AD.sql_permissions = permissions_actual
+			admins[adminckey] = AD
+
+		if(!admins)
+			diary << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
+			config.admin_legacy_system = 1
+			load_admins()
+			return
 
 /world/proc/load_configuration()
 	config = new /datum/configuration()

@@ -36,13 +36,13 @@
 		if(usr.canmove && !usr.stat && !usr.restrained())
 			if(src.up)
 				src.up = !src.up
-				src.flags |= HEADCOVERSEYES
+				src.flags |= HEADCOVERSEYES | HEADCOVERSMOUTH
 				flags_inv |= HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 				icon_state = "welding"
 				usr << "You flip the mask down to protect your eyes."
 			else
 				src.up = !src.up
-				src.flags &= ~HEADCOVERSEYES
+				src.flags &= ~HEADCOVERSEYES | HEADCOVERSMOUTH
 				flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 				icon_state = "weldingup"
 				usr << "You push the mask up out of your face."

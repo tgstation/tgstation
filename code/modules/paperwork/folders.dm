@@ -36,7 +36,7 @@
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = copytext(sanitize(input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text),1,MAX_NAME_LEN)
-		if ((loc == usr && usr.stat == 0))
+		if((loc == usr && usr.stat == 0))
 			name = "folder[(n_name ? text("- '[n_name]'") : null)]"
 	return
 
@@ -54,10 +54,10 @@
 
 /obj/item/weapon/folder/Topic(href, href_list)
 	..()
-	if ((usr.stat || usr.restrained()))
+	if((usr.stat || usr.restrained()))
 		return
 
-	if (usr.contents.Find(src))
+	if(usr.contents.Find(src))
 
 		if(href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])

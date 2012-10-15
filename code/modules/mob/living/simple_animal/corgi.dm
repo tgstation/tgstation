@@ -368,3 +368,20 @@
 					sleep(1)
 	else
 		..()
+
+
+
+/mob/living/simple_animal/corgi/puppy
+	name = "\improper corgi puppy"
+	real_name = "corgi"
+	desc = "It's a corgi puppy."
+	icon_state = "puppy"
+	icon_living = "puppy"
+	icon_dead = "puppy_dead"
+
+//pupplies cannot wear anything.
+/mob/living/simple_animal/corgi/puppy/Topic(href, href_list)
+	if(href_list["remove_inv"] || href_list["add_inv"])
+		usr << "\red You can't fit this on [src]"
+		return
+	..()

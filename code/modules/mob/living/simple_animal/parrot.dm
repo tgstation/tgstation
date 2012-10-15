@@ -637,7 +637,11 @@
 	set category = "Parrot"
 	set desc = "Drop the item you're holding."
 
+	if(stat)
+		return
+
 	src.drop_held_item()
+
 	return
 
 /mob/living/simple_animal/parrot/proc/drop_held_item(var/drop_gently = 1)

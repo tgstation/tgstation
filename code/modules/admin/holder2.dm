@@ -19,6 +19,7 @@ var/list/admin_datums = list()
 	var/fakekey			= null
 	var/ooccolor		= "#b82e00"
 	var/sound_adminhelp = 0 	//If set to 1 this will play a sound when adminhelps are received.
+	var/sql_permissions = 0		//Permissions for different admin command groups. Must not be editable ingame.
 
 	var/datum/marked_datum
 
@@ -83,6 +84,49 @@ var/list/admin_datums = list()
 				if(!src.makeDeathsquad())
 					usr << "\red Unfortunatly there were no candidates available"
 		return
+
+	if(href_list["editadminpermissions"])
+		if(!usr.client)
+			return
+
+		var/adm_ckey = href_list["editadminckey"]
+		if(!adm_ckey)
+			usr << "\red no valid ckey"
+			return
+
+		if(!usr.client.holder || !(usr.client.holder.sql_permissions & PERMISSIONS))
+			usr << "\red You do not have permission to do this!"
+			message_admins("[key_name_admin(usr)] attempted to edit the admin permissions of [adm_ckey] without authentication!")
+			log_admin("[key_name(usr)] attempted to edit the admin permissions of [adm_ckey] without authentication!")
+			return
+
+		switch(href_list["editadminpermissions"])
+			if("permissions")
+				usr << "Currently unavailable since nothing runs off of permissions"
+			if("rank")
+				var/new_rank = input("Please, select a rank", "New rank for player", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer")
+				if(!new_rank)
+					return
+				message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
+				log_admin("[key_name(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
+				log_admin_rank_modification(adm_ckey, new_rank)
+			if("remove")
+				if(alert("Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
+					message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
+					log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
+					log_admin_rank_modification(adm_ckey, "Removed")
+			if("add")
+				var/new_ckey = input(usr,"New admin's ckey","Admin ckey", null) as text|null
+				if(!new_ckey)
+					return
+				var/new_rank = input("Please, select a rank", "New rank for player", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer")
+				if(!new_rank)
+					return
+				message_admins("[key_name_admin(usr)] added [new_ckey] as a new admin to the rank [new_rank]")
+				log_admin("[key_name(usr)] added [new_ckey] as a new admin to the rank [new_rank]")
+				log_admin_rank_modification(new_ckey, new_rank)
+
+
 
 	if(href_list["call_shuttle"])
 		if (src.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master"))

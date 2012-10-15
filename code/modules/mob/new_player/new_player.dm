@@ -53,7 +53,7 @@
 				var/isadmin = 0
 				if(src.client && src.client.holder)
 					isadmin = 1
-				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\")")
+				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM erro_poll_textreply WHERE ckey = \"[ckey]\")")
 				query.Execute()
 				var/newpoll = 0
 				while(query.NextRow())
@@ -313,6 +313,25 @@
 				if("TEXT")
 					var/replytext = href_list["replytext"]
 					log_text_poll_reply(pollid, replytext)
+				if("NUMVAL")
+					var/id_min = text2num(href_list["minid"])
+					var/id_max = text2num(href_list["maxid"])
+
+					if( (id_max - id_min) > 100 )	//Basic exploit prevention
+						usr << "The option ID difference is too big. Please contact administration or the database admin."
+						return
+
+					for(var/optionid = id_min; optionid<= id_max; optionid++)
+						if(!isnull(href_list["o[optionid]"]))	//Test if this optionid was replied to
+							var/rating
+							if(href_list["o[optionid]"] == "abstain")
+								rating = null
+							else
+								rating = text2num(href_list["o[optionid]"])
+								if(!isnum(rating))
+									return
+
+							vote_on_numval_poll(pollid, optionid, rating)
 
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)
