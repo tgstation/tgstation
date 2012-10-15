@@ -106,7 +106,7 @@
 		src.min_damage = damage_list[current_stage]
 
 	proc/bleeding()
-		return (!bandaged && damage > 4)
+		return (!bandaged && (damage_type == BRUISE && damage >= 20 || damage_type == CUT))
 
 /** CUTS **/
 /datum/wound/cut

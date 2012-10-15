@@ -150,6 +150,8 @@
 
 /mob/living/carbon/human/proc/get_organ(var/zone)
 	if(!zone)	zone = "chest"
+	if (zone in list( "eyes", "mouth" ))
+		zone = "head"
 	return organs_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0)
