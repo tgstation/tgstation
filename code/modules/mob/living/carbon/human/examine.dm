@@ -420,6 +420,8 @@
 			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
 			//msg += "\[Set Hostile Identification\]\n"
 
+	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
+
 	msg += "*---------*</span>"
 
 	usr << msg

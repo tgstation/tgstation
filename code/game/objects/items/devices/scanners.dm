@@ -130,6 +130,30 @@ MASS SPECTROMETER
 		user.show_message(text("\red Severe brain damage detected. Subject likely to have mental retardation."), 1)
 	else if (M.getBrainLoss() >= 10)
 		user.show_message(text("\red Significant brain damage detected. Subject may have had a concussion."), 1)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		for(var/name in H.organs_by_name)
+			var/datum/organ/external/e = H.organs_by_name[name]
+			var/limb = e.getDisplayName()
+			if(e.status & ORGAN_BROKEN)
+				if(((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg")) && (!(e.status & ORGAN_SPLINTED)))
+					user << "\red Unsecured fracture in subject [limb]. Splinting recommended for transport."
+		for(var/name in H.organs_by_name)
+			var/datum/organ/external/e = H.organs_by_name[name]
+			if(e.status & ORGAN_BROKEN)
+				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
+				break
+	if(ishuman(M))
+		if(M:vessel)
+			var/blood_volume = round(M:vessel.get_reagent_amount("blood"))
+			var/blood_percent =  blood_volume / 560
+			blood_percent *= 100
+			if(blood_volume <= 448)
+				user.show_message("\red <b>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl")
+			else if(blood_volume <= 336)
+				user.show_message("\red <b>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl")
+			else
+				user.show_message("\blue Blood Level Normal: [blood_percent]% [blood_volume]cl")
 	src.add_fingerprint(user)
 	return
 
