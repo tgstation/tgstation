@@ -115,6 +115,8 @@
 			message = dd_replacetext(message, ".", "")
 			message = lowertext(message)
 			*/
+	if (src.slurring)
+		message = slur(message)
 	..(message)
 
 /mob/living/carbon/human/say_understands(var/other)
