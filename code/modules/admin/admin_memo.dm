@@ -5,7 +5,7 @@
 /client/proc/admin_memo(task in list("write","show","delete"))
 	set name = "Memo"
 	set category = "Server"
-	if(!holder)	return
+	if(!holder || !ENABLE_MEMOS)	return
 	switch(task)
 		if("write")
 			admin_memo_write()
@@ -52,3 +52,6 @@
 		if(ckey)
 			F.dir.Remove(ckey)
 			src << "<b>Removed Memo created by [ckey].</b>"
+
+#undef MEMOFILE
+#undef ENABLE_MEMOS

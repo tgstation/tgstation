@@ -8,7 +8,7 @@
 
 	animation = new(loc)
 	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
+	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
 	flick("gibbed-h", animation)
@@ -28,7 +28,7 @@
 
 	animation = new(loc)
 	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
+	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
 	flick("dust-h", animation)
@@ -40,77 +40,64 @@
 
 
 /mob/living/carbon/human/death(gibbed)
-	if(halloss > 0 && (!gibbed))
-		//hallucination = 0
+	if(halloss > 0 && !gibbed)
 		halloss = 0
-		// And the suffocation was a hallucination (lazy)
-		//oxyloss = 0
-		updatehealth()
 		return
-	if(src.stat == 2)
-		return
-	if(src.healths)
-		src.healths.icon_state = "health5"
-	src.stat = 2
-	src.dizziness = 0
-	src.jitteriness = 0
-	src.sleeping = 0
-	src.sleeping_willingly = 0
+	if(stat == DEAD)	return
+	if(healths)		healths.icon_state = "health5"
+	stat = DEAD
+	dizziness = 0
+	jitteriness = 0
 
-	tension_master.death(src)
-
-	if (!gibbed)
+	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
 		//For ninjas exploding when they die./N
-		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
+		if( istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_initialized )
 			src << browse(null, "window=spideros")//Just in case.
-			var/turf/location = get_turf(src)
+			var/location = loc
 			explosion(location, 1, 2, 3, 4)
 
-		canmove = 0
-		if(src.client)
-			src.blind.layer = 0
-		lying = 1
-		var/h = src.hand
-		hand = 0
-		drop_item()
-		hand = 1
-		drop_item()
-		hand = h
-		//This is where the suicide assemblies checks would go
+		update_canmove()
+		if(client)	blind.layer = 0
 
-		if (client)
-			spawn(10)
-				if(client && src.stat == 2)
-					verbs += /mob/proc/ghost
-
-	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
-	if(mind)
-		mind.store_memory("Time of death: [tod]", 0)
-//	sql_report_death(src)
-
-	//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
-	ticker.mode.check_win()
-	//Traitor's dead! Oh no!
-	if (ticker.mode.name == "traitor" && src.mind && src.mind.special_role == "traitor")
-		message_admins("\red Traitor [key_name_admin(src)] has died.")
-		log_game("Traitor [key_name(src)] has died.")
-
+	tod = worldtime2text()		//weasellos time of death patch
+	if(mind)	mind.store_memory("Time of death: [tod]", 0)
+	sql_report_death(src)
+	ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	return ..(gibbed)
 
+/mob/living/carbon/human/proc/makeSkeleton()
+	if(SKELETON in src.mutations)	return
+
+	if(f_style)
+		f_style = "Shaved"
+	if(h_style)
+		h_style = "Bald"
+	update_hair(0)
+
+	mutations.Add(SKELETON)
+	status_flags |= DISFIGURED
+	update_body(0)
+	update_mutantrace()
+	return
+
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(HUSK in src.mutations)
-		return
-	var/datum/organ/external/head/head = get_organ("head")
-	if(head)
-		head.disfigured = 1
-	name = get_visible_name()
+	if(HUSK in mutations)	return
+
+	if(f_style)
+		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
+	if(h_style)
+		h_style = "Bald"
+	update_hair(0)
+
 	mutations.Add(HUSK)
-	update_body()
+	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
+	update_body(0)
+	update_mutantrace()
 	return
 
 /mob/living/carbon/human/proc/Drain()
 	ChangeToHusk()
-	mutations.Add(NOCLONE)
+	mutations |= NOCLONE
 	return

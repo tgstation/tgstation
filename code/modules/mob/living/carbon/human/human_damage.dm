@@ -1,12 +1,142 @@
-//Instead of setting real_name = "Unknown", use this when necessary.
-//It will prevent the cloned-as-unknown bug and various other derpy things.
-/mob/living/carbon/human/proc/disfigure_face()
-	var/datum/organ/external/head/head = get_organ("head")
-	if(head && !head.disfigured)
-		head.disfigured = 1
-		name = get_visible_name()
-		src << "\red Your face has become disfigured."
-		warn_flavor_changed()
+//Updates the mob's health from organs and mob damage variables
+/mob/living/carbon/human/updatehealth()
+	if(nodamage)
+		health = 100
+		stat = CONSCIOUS
+		return
+	var/total_burn	= 0
+	var/total_brute	= 0
+	for(var/datum/organ/external/O in organs)	//hardcoded to streamline things a bit
+		total_brute	+= O.brute_dam
+		total_burn	+= O.burn_dam
+	health = 100 - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+	//TODO: fix husking
+	if( ((100 - total_burn) < config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
+		ChangeToHusk()
+	return
+
+
+//These procs fetch a cumulative total damage from all organs
+/mob/living/carbon/human/getBruteLoss()
+	var/amount = 0
+	for(var/datum/organ/external/O in organs)
+		amount += O.brute_dam
+	return amount
+
+/mob/living/carbon/human/getFireLoss()
+	var/amount = 0
+	for(var/datum/organ/external/O in organs)
+		amount += O.burn_dam
+	return amount
+
+
+/mob/living/carbon/human/adjustBruteLoss(var/amount)
+	if(amount > 0)
+		take_overall_damage(amount, 0)
+	else
+		heal_overall_damage(-amount, 0)
+
+/mob/living/carbon/human/adjustFireLoss(var/amount)
+	if(amount > 0)
+		take_overall_damage(0, amount)
+	else
+		heal_overall_damage(0, -amount)
+
+/mob/living/carbon/human/Stun(amount)
+	if(HULK in mutations)	return
+	..()
+
+/mob/living/carbon/human/Weaken(amount)
+	if(HULK in mutations)	return
+	..()
+
+/mob/living/carbon/human/Paralyse(amount)
+	if(HULK in mutations)	return
+	..()
+
+////////////////////////////////////////////
+
+//Returns a list of damaged organs
+/mob/living/carbon/human/proc/get_damaged_organs(var/brute, var/burn)
+	var/list/datum/organ/external/parts = list()
+	for(var/datum/organ/external/O in organs)
+		if((brute && O.brute_dam) || (burn && O.burn_dam))
+			parts += O
+	return parts
+
+//Returns a list of damageable organs
+/mob/living/carbon/human/proc/get_damageable_organs()
+	var/list/datum/organ/external/parts = list()
+	for(var/datum/organ/external/O in organs)
+		if(O.brute_dam + O.burn_dam < O.max_damage)
+			parts += O
+	return parts
+
+//Heals ONE external organ, organ gets randomly selected from damaged ones.
+//It automatically updates damage overlays if necesary
+//It automatically updates health status
+/mob/living/carbon/human/heal_organ_damage(var/brute, var/burn)
+	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
+	if(!parts.len)	return
+	var/datum/organ/external/picked = pick(parts)
+	if(picked.heal_damage(brute,burn))
+		UpdateDamageIcon()
+	updatehealth()
+
+//Damages ONE external organ, organ gets randomly selected from damagable ones.
+//It automatically updates damage overlays if necesary
+//It automatically updates health status
+/mob/living/carbon/human/take_organ_damage(var/brute, var/burn, var/sharp = 0)
+	var/list/datum/organ/external/parts = get_damageable_organs()
+	if(!parts.len)	return
+	var/datum/organ/external/picked = pick(parts)
+	if(picked.take_damage(brute,burn,sharp))
+		UpdateDamageIcon()
+	updatehealth()
+
+
+//Heal MANY external organs, in random order
+/mob/living/carbon/human/heal_overall_damage(var/brute, var/burn)
+	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
+
+	var/update = 0
+	while(parts.len && (brute>0 || burn>0) )
+		var/datum/organ/external/picked = pick(parts)
+
+		var/brute_was = picked.brute_dam
+		var/burn_was = picked.burn_dam
+
+		update |= picked.heal_damage(brute,burn)
+
+		brute -= (brute_was-picked.brute_dam)
+		burn -= (burn_was-picked.burn_dam)
+
+		parts -= picked
+	updatehealth()
+	if(update)	UpdateDamageIcon()
+
+// damage MANY external organs, in random order
+/mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0)
+	if(nodamage)	return	//godmode
+	var/list/datum/organ/external/parts = get_damageable_organs()
+	var/update = 0
+	while(parts.len && (brute>0 || burn>0) )
+		var/datum/organ/external/picked = pick(parts)
+
+		var/brute_was = picked.brute_dam
+		var/burn_was = picked.burn_dam
+
+		update |= picked.take_damage(brute,burn,sharp)
+
+		brute	-= (picked.brute_dam - brute_was)
+		burn	-= (picked.burn_dam - burn_was)
+
+		parts -= picked
+	updatehealth()
+	if(update)	UpdateDamageIcon()
+
+
+////////////////////////////////////////////
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/datum/organ/external/E = get_organ(zone)
@@ -17,45 +147,14 @@
 		return 0
 	return
 
-// new damage icon system
-// now constructs damage icon for each organ from mask * damage field
 
-/mob/living/carbon/human/UpdateDamageIcon()
-	// first check whether something actually changed about damage appearance
-	var/damage_appearance = ""
+/mob/living/carbon/human/proc/get_organ(var/zone)
+	if(!zone)	zone = "chest"
+	if (zone in list( "eyes", "mouth" ))
+		zone = "head"
+	return organs_by_name[zone]
 
-	for(var/name in organs)
-		var/datum/organ/external/O = organs[name]
-		if(O.status & ORGAN_DESTROYED) damage_appearance += "d"
-		else
-			damage_appearance += O.damage_state
-
-	if(damage_appearance == previous_damage_appearance)
-		// nothing to do here
-		return
-
-	previous_damage_appearance = damage_appearance
-
-	var/icon/standing = new /icon('dam_human.dmi', "00")
-	var/icon/lying = new /icon('dam_human.dmi', "00-2")
-
-	for(var/name in organs)
-		var/datum/organ/external/O = organs[name]
-		if(!(O.status & ORGAN_DESTROYED))
-			O.update_icon()
-			var/icon/DI = new /icon('dam_human.dmi', O.damage_state)			// the damage icon for whole human
-			DI.Blend(new /icon('dam_mask.dmi', O.icon_name), ICON_MULTIPLY)		// mask with this organ's pixels
-		//		world << "[O.icon_name] [O.damage_state] \icon[DI]"
-			standing.Blend(DI,ICON_OVERLAY)
-			DI = new /icon('dam_human.dmi', "[O.damage_state]-2")				// repeat for lying icons
-			DI.Blend(new /icon('dam_mask.dmi', "[O.icon_name]2"), ICON_MULTIPLY)
-		//		world << "[O.r_name]2 [O.d_i_state]-2 \icon[DI]"
-			lying.Blend(DI,ICON_OVERLAY)
-	damageicon_standing = new /image("icon" = standing, "layer" = DAMAGE_LAYER)
-	damageicon_lying = new /image("icon" = lying, "layer" = DAMAGE_LAYER)
-
-
-/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0, var/used_weapon = null)
+/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0)
 	if((damagetype != BRUTE) && (damagetype != BURN))
 		..(damage, damagetype, def_zone, blocked)
 		return 1
@@ -68,7 +167,7 @@
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
 		organ = get_organ(check_zone(def_zone))
-	if(!organ || organ.status & ORGAN_DESTROYED)	return 0
+	if(!organ)	return 0
 	if(blocked)
 		damage = (damage/(blocked+1))
 
@@ -77,13 +176,10 @@
 
 	switch(damagetype)
 		if(BRUTE)
-			organ.take_damage(damage, 0, sharp, used_weapon)
+			if(organ.take_damage(damage, 0, sharp))
+				UpdateDamageIcon()
 		if(BURN)
-			organ.take_damage(0, damage, sharp, used_weapon)
-
-	if(used_weapon)
-		organ.add_wound(used_weapon, damage)
-
-	UpdateDamageIcon()
+			if(organ.take_damage(0, damage, sharp))
+				UpdateDamageIcon()
 	updatehealth()
 	return 1

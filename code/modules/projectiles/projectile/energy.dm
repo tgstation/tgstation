@@ -1,5 +1,5 @@
 /obj/item/projectile/energy
-	name = "\improper Energy"
+	name = "energy"
 	icon_state = "spark"
 	damage = 0
 	damage_type = BURN
@@ -7,23 +7,16 @@
 
 
 /obj/item/projectile/energy/electrode
-	name = "\improper Electrode"
+	name = "electrode"
 	icon_state = "spark"
 	nodamage = 1
-	stun = 15
-	weaken = 15
+	stun = 10
+	weaken = 10
 	stutter = 10
-	flag = "laser" //Give it a better chance to be blocked.
-
-	check_fire(var/mob/living/target as mob, var/mob/living/user as mob)
-		if((target.stunned + target.weakened) > 30)
-			return 2
-		else
-			return ..()
 
 
 /obj/item/projectile/energy/declone
-	name = "\improper Decloner Bolt"
+	name = "declone"
 	icon_state = "declone"
 	nodamage = 1
 	damage_type = CLONE
@@ -31,7 +24,7 @@
 
 
 /obj/item/projectile/energy/dart
-	name = "\improper Dart"
+	name = "dart"
 	icon_state = "toxin"
 	damage = 5
 	damage_type = TOX
@@ -39,7 +32,7 @@
 
 
 /obj/item/projectile/energy/bolt
-	name = "\improper Bolt"
+	name = "bolt"
 	icon_state = "cbbolt"
 	damage = 10
 	damage_type = TOX
@@ -49,7 +42,7 @@
 
 
 /obj/item/projectile/energy/bolt/large
-	name = "\improper Large Bolt"
+	name = "largebolt"
 	damage = 20
 
 

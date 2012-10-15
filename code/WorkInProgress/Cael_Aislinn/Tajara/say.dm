@@ -4,8 +4,8 @@
 	//work out if the listener can understand or not
 
 	var/ending = copytext(text, length(text))
-	if (src.disease_symptoms & DISEASE_HOARSE)
-		return "rasps, \"[text]\"";
+	/*if (src.disease_symptoms & DISEASE_HOARSE)
+		return "rasps, \"[text]\"";*/
 	if (src.stuttering)
 		return "stammers, \"[text]\"";
 	if (src.slurring)

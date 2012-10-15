@@ -11,8 +11,6 @@
 		return 1
 	if (istype(other, /mob/living/carbon/brain))
 		return 1
-	if (istype(other, /mob/living/carbon/human/tajaran))
-		return 1
 	return ..()
 
 /mob/living/silicon/pai/say_quote(var/text)

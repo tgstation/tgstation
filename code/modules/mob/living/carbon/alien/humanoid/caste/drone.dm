@@ -1,3 +1,11 @@
+/mob/living/carbon/alien/humanoid/drone
+	name = "alien drone"
+	caste = "d"
+	maxHealth = 100
+	health = 100
+	icon_state = "aliend_s"
+	plasma_rate = 15
+
 /mob/living/carbon/alien/humanoid/drone/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
@@ -5,51 +13,34 @@
 	if(src.name == "alien drone")
 		src.name = text("alien drone ([rand(1, 1000)])")
 	src.real_name = src.name
-	spawn (1)
-//		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode
-		src.verbs -= /mob/living/carbon/alien/humanoid/verb/ActivateHuggers
-		src.stand_icon = new /icon('alien.dmi', "aliend_s")
-		src.lying_icon = new /icon('alien.dmi', "aliend_l")
-		src.resting_icon = new /icon('alien.dmi', "aliend_sleep")
-		src.running_icon = new /icon('alien.dmi', "aliend_running")
-		src.icon = src.stand_icon
-		rebuild_appearance()
-		src << "\blue Your icons have been generated!"
-
+	verbs.Add(/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/corrosive_acid)
+	//verbs -= /mob/living/carbon/alien/humanoid/verb/ActivateHuggers	//<-- pointless
+	add_to_mob_list(src)
 //Drones use the same base as generic humanoids.
 //Drone verbs
 
 /mob/living/carbon/alien/humanoid/drone/verb/evolve() // -- TLE
 	set name = "Evolve (500)"
-	set desc = "Produce an interal egg sac capable of spawning children"
+	set desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
 	set category = "Alien"
 
 	if(powerc(500))
-		adjustToxLoss(-500)
-		src << "\green You begin to evolve!"
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
-		var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
+		// Queen check
+		var/no_queen = 1
+		for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
+			if(!Q.key && Q.brain_op_stage != 4)
+				continue
+			no_queen = 0
 
-		new_xeno.mind_initialize(src, "Queen")
-		new_xeno.key = key
-		del(src)
-	return
-
-/mob/living/carbon/alien/humanoid/drone/verb/resinwall() // -- TLE
-	set name = "Shape Resin (100)"
-	set desc = "Produce a wall of resin that blocks entry and line of sight"
-	set category = "Alien"
-
-	if(powerc(100))
-		adjustToxLoss(-100)
-		var/choice = input("Choose what you wish to shape.","Resin building") as anything in list("resin wall","resin membrane") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
-		src << "\green You shape a [choice]."
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
-		switch(choice)
-			if("resin wall")
-				new /obj/effect/alien/resin/wall(loc)
-			if("resin membrane")
-				new /obj/effect/alien/resin/membrane(loc)
+		if(no_queen)
+			adjustToxLoss(-500)
+			src << "\green You begin to evolve!"
+			for(var/mob/O in viewers(src, null))
+				O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
+			var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
+			new_xeno.UI = UI
+			mind.transfer_to(new_xeno)
+			del(src)
+		else
+			src << "<span class='notice'>We already have an alive queen.</span>"
 	return

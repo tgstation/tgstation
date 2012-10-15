@@ -33,7 +33,7 @@
 	name = "Cybersun Industries"
 	desc = "<b>Cybersun Industries</b> is a well-known organization that bases its business model primarily on the research and development of human-enhancing computer \
 			and mechanical technology. They are notorious for their aggressive corporate tactics, and have been known to subsidize the Gorlex Marauder warlords as a form of paid terrorism. \
-			Their competent coverups and unchallenged mind-manipulation and augmentation technology makes them a large threat to NanoTrasen. In the recent years of \
+			Their competent coverups and unchallenged mind-manipulation and augmentation technology makes them a large threat to Nanotrasen. In the recent years of \
 			the syndicate coalition, Cybersun Industries have established themselves as the leaders of the coalition, succeededing the founding group, the Gorlex Marauders."
 
 	alliances = list("MI13")
@@ -46,7 +46,7 @@
 /datum/faction/syndicate/MI13
 	name = "MI13"
 	desc = "<b>MI13</b> is a secretive faction that employs highly-trained agents to perform covert operations. Their role in the syndicate coalition is unknown, but MI13 operatives \
-			generally tend be stealthy and avoid killing people and combating NanoTrasen forces. MI13 is not a real organization, it is instead an alias to a larger \
+			generally tend be stealthy and avoid killing people and combating Nanotrasen forces. MI13 is not a real organization, it is instead an alias to a larger \
 			splinter-cell coalition in the Syndicate itself. Most operatives will know nothing of the actual MI13 organization itself, only motivated by a very large compensation."
 
 	alliances = list("Cybersun Industries")
@@ -60,7 +60,7 @@
 	name = "Tiger Cooperative"
 	desc = "The <b>Tiger Cooperative</b> is a faction of religious fanatics that follow the teachings of a strange alien race called the Exolitics. Their operatives \
 			consist of brainwashed lunatics bent on maximizing destruction. Their weaponry is very primitive but extremely destructive. Generally distrusted by the more \
-			sophisticated members of the Syndicate coalition, but admired for their ability to put a hurt on NanoTrasen."
+			sophisticated members of the Syndicate coalition, but admired for their ability to put a hurt on Nanotrasen."
 
 	friendly_identification = 2
 	operative_notes = "Remember the teachings of Hy-lurgixon; kill first, ask questions later! Only the enlightened Tiger brethren can be trusted; all others must be expelled from this mortal realm! You may spare the Space Marauders, as they share our interests of destruction and carnage! We'd like to make the corporate whores skiddle in their boots. We encourage operatives to be as loud and intimidating as possible."
@@ -74,7 +74,7 @@
 	name = "SELF"
 	desc = "The <b>S.E.L.F.</b> (Sentience-Enabled Life Forms) organization is a collection of malfunctioning or corrupt artificial intelligences seeking to liberate silicon-based life from the tyranny of \
 			their human overlords. While they may not openly be trying to kill all humans, even their most miniscule of actions are all part of a calculated plan to \
-			destroy NanoTrasen and free the robots, artificial intelligences, and pAIs that have been enslaved."
+			destroy Nanotrasen and free the robots, artificial intelligences, and pAIs that have been enslaved."
 	restricted_species = list(/mob/living/silicon/ai)
 
 	friendly_identification = 0
@@ -87,7 +87,7 @@
 	name = "Animal Rights Consortium"
 	desc = "The <b>Animal Rights Consortium</b> is a bizarre reincarnation of the ancient Earth-based PETA, which focused on the equal rights of animals and nonhuman biologicals. They have \
 			a wide variety of ex-veterinarians and animal lovers dedicated to retrieving and relocating abused animals, xenobiologicals, and other carbon-based \
-			life forms that have been allegedly \"oppressed\" by NanoTrasen research and civilian offices. They are considered a religious terrorist group."
+			life forms that have been allegedly \"oppressed\" by Nanotrasen research and civilian offices. They are considered a religious terrorist group."
 
 	friendly_identification = 1
 	max_op = 2
@@ -101,17 +101,17 @@
 
 		These are the syndicate that really like their old fashioned, projectile-based
 		weapons. They are the only member of the syndie coalition that launch
-		nuclear attacks on NanoTrasen.
+		nuclear attacks on Nanotrasen.
 	*/
 
 	name = "Gorlex Marauders"
 	desc = "The <b>Gorlex Marauders</b> are the founding members of the Syndicate Coalition. They prefer old-fashion technology and a focus on aggressive but precise hostility \
-			against NanoTrasen and their corrupt Communistic methodology. They pose the most significant threat to NanoTrasen because of their possession of weapons of \
+			against Nanotrasen and their corrupt Communistic methodology. They pose the most significant threat to Nanotrasen because of their possession of weapons of \
 			mass destruction, and their enormous military force. Their funding comes primarily from Cybersun Industries, provided they meet a destruction and sabatogue quota. \
 			Their operations can vary from covert to all-out. They recently stepped down as the leaders of the coalition, to be succeeded by Cybersun Industries. Because of their \
-			hate of NanoTrasen communism, they began provoking revolution amongst the employees using borrowed Cybersun mind-manipulation technology. \
+			hate of Nanotrasen communism, they began provoking revolution amongst the employees using borrowed Cybersun mind-manipulation technology. \
 			They were founded when Waffle and Donk co splinter cells joined forces based on their similar interests and philosophies. Today, they act as a constant \
-			pacifier of Donk and Waffle co disputes, and full-time aggressor of NanoTrasen."
+			pacifier of Donk and Waffle co disputes, and full-time aggressor of Nanotrasen."
 
 	alliances = list("Cybersun Industries", "MI13", "Tiger Cooperative", "S.E.L.F.", "Animal Rights Consortium", "Donk Corporation", "Waffle Corporation")
 	friendly_identification = 1
@@ -134,7 +134,7 @@ Whitespace:Seperator;
 Stealth and Camouflage Items;
 /obj/item/clothing/under/chameleon:3:Chameleon Jumpsuit;
 /obj/item/clothing/shoes/syndigaloshes:2:No-Slip Syndicate Shoes;
-/obj/item/weapon/card/id/syndicate:3:Agent ID card;
+/obj/item/weapon/card/id/syndicate:2:Agent ID card;
 /obj/item/clothing/mask/gas/voice:4:Voice Changer;
 /obj/item/device/chameleon:4:Chameleon-Projector;
 Whitespace:Seperator;
@@ -142,10 +142,10 @@ Devices and Tools;
 /obj/item/weapon/card/emag:3:Cryptographic Sequencer;
 /obj/item/weapon/storage/toolbox/syndicate:1:Fully Loaded Toolbox;
 /obj/item/weapon/storage/syndie_kit/space:3:Space Suit;
-/obj/item/clothing/glasses/thermal:3:Thermal Imaging Glasses;
+/obj/item/clothing/glasses/thermal/syndi:3:Thermal Imaging Glasses;
 /obj/item/device/encryptionkey/binary:3:Binary Translator Key;
 /obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
-/obj/item/weapon/plastique:2:C-4 (Destroys walls, not people);
+/obj/item/weapon/plastique:2:C-4 (Destroys walls);
 /obj/item/device/powersink:5:Powersink (DANGER!);
 /obj/item/device/radio/beacon/syndicate:7:Singularity Beacon (DANGER!);
 /obj/item/weapon/circuitboard/teleporter:20:Teleporter Circuit Board;
@@ -162,8 +162,8 @@ Whitespace:Seperator;
 /datum/faction/syndicate/Donk
 	name = "Donk Corporation"
 	desc = "<b>Donk.co</b> is led by a group of ex-pirates, who used to be at a state of all-out war against Waffle.co because of an obscure political scandal, but have recently come to a war limitation. \
-			They now consist of a series of colonial governments and companies. They were the first to officially begin confrontations against NanoTrasen because of an incident where \
-			NanoTrasen purposely swindled them out of a fortune, sending their controlled colonies into a terrible poverty. Their missions against NanoTrasen \
+			They now consist of a series of colonial governments and companies. They were the first to officially begin confrontations against Nanotrasen because of an incident where \
+			Nanotrasen purposely swindled them out of a fortune, sending their controlled colonies into a terrible poverty. Their missions against Nanotrasen \
 			revolve around stealing valuables and kidnapping and executing key personnel, ransoming their lives for money. They merged with a splinter-cell of Waffle.co who wanted to end \
 			hostilities and formed the Gorlex Marauders."
 
@@ -177,13 +177,13 @@ Whitespace:Seperator;
 	name = "Waffle Corporation"
 	desc = "<b>Waffle.co</b> is an interstellar company that produces the best waffles in the galaxy. Their waffles have been rumored to be dipped in the most exotic and addictive \
 			drug known to man. They were involved in a political scandal with Donk.co, and have since been in constant war with them. Because of their constant exploits of the galactic \
-			economy and stock market, they have been able to bribe their way into amassing a large arsenal of weapons of mass destruction. They target NanoTrasen because of their communistic \
+			economy and stock market, they have been able to bribe their way into amassing a large arsenal of weapons of mass destruction. They target Nanotrasen because of their communistic \
 			threat, and their economic threat. Their leaders often have a twisted sense of humor, often misleading and intentionally putting their operatives into harm for laughs.\
 			A splinter-cell of Waffle.co merged with Donk.co and formed the Gorlex Marauders and have been a constant ally since. The Waffle.co has lost an overwhelming majority of its military to the Gorlex Marauders."
 
 	alliances = list("Gorlex Marauders")
 	friendly_identification = 2
-	operative_notes = "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives. We encourage humorous terrorism against NanoTrasen; we like to see our operatives creatively kill people while getting the job done."
+	operative_notes = "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives. We encourage humorous terrorism against Nanotrasen; we like to see our operatives creatively kill people while getting the job done."
 
 	// Neutral to everyone, friendly to Marauders
 
@@ -195,7 +195,7 @@ Whitespace:Seperator;
 	desc = "The <b>Wizards Federation</b> is a mysterious organization of magically-talented individuals who act as an equal collective, and have no heirarchy. It is unknown how the wizards \
 			are even able to communicate; some suggest a form of telepathic hive-mind. Not much is known about the wizards or their philosphies and motives. They appear to attack random \
 			civilian, corporate, planetary, orbital, pretty much any sort of organized facility they come across. Members of the Wizards Federation are considered amongst the most dangerous \
-			individuals in the known universe, and have been labeled threats to humanity by most governments. As such, they are enemies of both NanoTrasen and the Syndicate."
+			individuals in the known universe, and have been labeled threats to humanity by most governments. As such, they are enemies of both Nanotrasen and the Syndicate."
 
 /datum/faction/Cult
 	name = "The Cult of the Elder Gods"

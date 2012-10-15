@@ -1,7 +1,7 @@
 /obj/item/weapon/paper
 	name = "paper"
 	gender = PLURAL
-	icon = 'bureaucracy.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
 	w_class = 1.0
@@ -10,9 +10,8 @@
 	layer = 4
 	pressure_resistance = 1
 	slot_flags = SLOT_HEAD
-	see_face = 1
 	body_parts_covered = HEAD
-	protective_temperature = 0
+	attack_verb = list("")
 
 	var/info	//What's actually written on the paper.
 	var/info_links //A different version of the paper which includes html links at fields and EOF
@@ -25,6 +24,8 @@
 	var/const/deffont = "Verdana"
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
+
+//lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
 /obj/item/weapon/paper/New()
 	..()
@@ -45,12 +46,17 @@
 	set src in oview(1)
 
 //	..()	//We don't want them to see the dumb "this is a paper" thing every time.
-	if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
-		onclose(usr, "[name]")
+	// I didn't like the idea that people can read tiny pieces of paper from across the room.
+	// Now you need to be next to the paper in order to read it.
+	if(in_range(usr, src))
+		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
+			onclose(usr, "[name]")
+		else
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
+			onclose(usr, "[name]")
 	else
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
-		onclose(usr, "[name]")
+		usr << "<span class='notice'>It is too far away.</span>"
 	return
 
 /obj/item/weapon/paper/verb/rename()
@@ -59,7 +65,7 @@
 	set src in usr
 
 	if ((CLUMSY in usr.mutations) && prob(50))
-		usr << "\red You cut yourself on the paper."
+		usr << "<span class='warning'>You cut yourself on the paper.</span>"
 		return
 	var/n_name = input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text
 	n_name = copytext(n_name, 1, 32)
@@ -73,7 +79,7 @@
 	if(rigged && (Holiday == "April Fool's Day"))
 		if(spam_flag == 0)
 			spam_flag = 1
-			playsound(src.loc, 'bikehorn.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 			spawn(20)
 				spam_flag = 0
 	return
@@ -144,7 +150,7 @@
 	updateinfolinks()
 
 /obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
-	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+//	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 	t = dd_replacetext(t, "\[center\]", "<center>")
 	t = dd_replacetext(t, "\[/center\]", "</center>")
@@ -155,7 +161,7 @@
 	t = dd_replacetext(t, "\[/i\]", "</I>")
 	t = dd_replacetext(t, "\[u\]", "<U>")
 	t = dd_replacetext(t, "\[/u\]", "</U>")
-	t = dd_replacetext(t, "\[large\]", "<font size = \"4\">")
+	t = dd_replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = dd_replacetext(t, "\[/large\]", "</font>")
 	t = dd_replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
 	t = dd_replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
@@ -178,6 +184,8 @@
 		t = dd_replacetext(t, "\[/list\]", "")
 
 		t = "<font face=\"[crayonfont]\" color=[P.colour]><b>[t]</b></font>"
+
+//	t = dd_replacetext(t, "#", "") // Junk converted to nothing!
 
 	//Count the fields
 	var/laststart = 1
@@ -219,9 +227,9 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t = strip_html_simple(input(usr, "What text do you wish to add to " + (id=="end" ? "the end of the paper" : "field "+id) + "?", "[name]", null),8192) as text
-
-		var/obj/item/i = usr.equipped() // Check to see if he still got that darn pen, also check if he's using a crayon or pen.
+		//var/t = strip_html_simple(input(usr, "What text do you wish to add to " + (id=="end" ? "the end of the paper" : "field "+id) + "?", "[name]", null),8192) as message
+		var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
+		var/obj/item/i = usr.get_active_hand() // Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
 		if(!istype(i, /obj/item/weapon/pen))
 			if(!istype(i, /obj/item/toy/crayon))
@@ -229,7 +237,7 @@
 			iscrayon = 1
 
 
-		if ((!in_range(src, usr) && src.loc != usr && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != usr && usr.equipped() != i)) // Some check to see if he's allowed to write
+		if ((!in_range(src, usr) && src.loc != usr && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
 			return
 
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
@@ -256,7 +264,7 @@
 		//openhelp(user)
 		return
 	else if(istype(P, /obj/item/weapon/stamp))
-		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
+		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.get_active_hand() != P))
 			return
 
 		stamps += (stamps=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the [P.name].</i>"
@@ -278,7 +286,7 @@
 				overlays += "paper_stamped_denied"
 			if(/obj/item/weapon/stamp/clown)
 				if (!clown)
-					usr << "\red You are totally unable to use the stamp. HONK!"
+					usr << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
 					return
 				else
 					overlays += "paper_stamped_clown"
@@ -288,6 +296,6 @@
 			stamped = new
 		stamped += P.type
 
-		user << "\blue You stamp the paper with your rubber stamp."
+		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
+
 	add_fingerprint(user)
-	return

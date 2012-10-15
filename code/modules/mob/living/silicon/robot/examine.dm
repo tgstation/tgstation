@@ -2,7 +2,7 @@
 	set src in oview()
 
 	if(!usr || !src)	return
-	if(((usr.disabilities & 128) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))
+	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 
@@ -30,9 +30,6 @@
 			if(!src.client)	msg += "It appears to be in stand-by mode.\n" //afk
 		if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responding.</span>\n"
 		if(DEAD)			msg += "<span class='deadsay'>It looks completely unsalvageable.</span>\n"
-
-	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
-
 	msg += "*---------*</span>"
 
 	usr << msg

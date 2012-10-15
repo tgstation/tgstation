@@ -2,7 +2,7 @@
 /obj/item/weapon/bucket_sensor
 	desc = "It's a bucket. With a sensor attached."
 	name = "proxy bucket"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "bucket_proxy"
 	force = 3.0
 	throwforce = 10.0
@@ -17,7 +17,7 @@
 /obj/machinery/bot/cleanbot
 	name = "Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	icon = 'aibots.dmi'
+	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
 	layer = 5.0
 	density = 0
@@ -26,16 +26,14 @@
 	health = 25
 	maxhealth = 25
 	var/cleaning = 0
-	var/locked = 1
 	var/screwloose = 0
 	var/oddbutton = 0
 	var/blood = 1
-	var/panelopen = 0
 	var/list/target_types = list()
 	var/obj/effect/decal/cleanable/target
 	var/obj/effect/decal/cleanable/oldtarget
 	var/oldloc = null
-	req_access = list(ACCESS_JANITOR)
+	req_access = list(access_janitor)
 	var/path[] = new()
 	var/patrol_path[] = null
 	var/beacon_freq = 1445		// navigation beacon frequency
@@ -86,13 +84,14 @@
 	dat += text({"
 <TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
 Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
+Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
+Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
 	if(!src.locked)
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
 	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
-	if(src.panelopen && !src.locked)
+	if(src.open && !src.locked)
 		dat += text({"
 Odd looking screw twiddled: []<BR>
 Weird button pressed: []"},
@@ -129,34 +128,34 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			src.updateUsrDialog()
 		if("screw")
 			src.screwloose = !src.screwloose
-			usr << "You twiddle the screw."
+			usr << "<span class='notice>You twiddle the screw.</span>"
 			src.updateUsrDialog()
 		if("oddbutton")
 			src.oddbutton = !src.oddbutton
-			usr << "You press the weird button."
+			usr << "<span class='notice'>You press the weird button.</span>"
 			src.updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if(src.allowed(usr))
+		if(src.allowed(usr) && !open && !emagged)
 			src.locked = !src.locked
-			user << "You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls."
+			user << "<span class='notice'>You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
 		else
-			user << "\red This [src] doesn't seem to accept your authority."
-	else if (istype(W, /obj/item/weapon/screwdriver))
-		if(!src.locked)
-			src.panelopen = !src.panelopen
-			user << "You [ src.panelopen ? "open" : "close"] the hidden panel on [src]."
+			if(emagged)
+				user << "<span class='warning'>ERROR</span>"
+			if(open)
+				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+			else
+				user << "<span class='notice'>This [src] doesn't seem to respect your authority.</span>"
 	else
 		return ..()
 
 /obj/machinery/bot/cleanbot/Emag(mob/user as mob)
 	..()
-	if(user) user << "The [src] buzzes and beeps."
-	src.oddbutton = 1
-	src.screwloose = 1
-	src.panelopen = 0
-	src.locked = 1
+	if(open && !locked)
+		if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
+		src.oddbutton = 1
+		src.screwloose = 1
 
 /obj/machinery/bot/cleanbot/process()
 	set background = 1
@@ -166,12 +165,8 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(src.cleaning)
 		return
 	var/list/cleanbottargets = list()
-	if(!src.target || src.target == null)
-		for(var/obj/machinery/bot/cleanbot/bot in world)
-			if(bot != src)
-				cleanbottargets += bot.target
 
-	if(prob(5) && !src.screwloose && !src.oddbutton)
+	if(!src.screwloose && !src.oddbutton && prob(5))
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("[src] makes an excited beeping booping sound!"), 1)
 
@@ -185,7 +180,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 				if(T.wet_overlay)
 					T.overlays -= T.wet_overlay
 					T.wet_overlay = null
-				T.wet_overlay = image('water.dmi',T,"wet_floor")
+				T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
 				T.overlays += T.wet_overlay
 				spawn(800)
 					if (istype(T) && T.wet < 2)
@@ -232,17 +227,16 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 				if (!next_dest_loc)
 					next_dest_loc = closest_loc
 				if (next_dest_loc)
-					src.patrol_path = AStar(src.loc, next_dest_loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_ortho, 0, 120, id=botcard, exclude=null)
+					src.patrol_path = AStar(src.loc, next_dest_loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=null)
 					src.patrol_path = reverselist(src.patrol_path)
 		else
 			patrol_move()
-			spawn(5)
-				patrol_move()
 
 		return
 
-	if(src.target && (src.target != null) && src.path.len == 0)
+	if(target && path.len == 0)
 		spawn(0)
+			if(!src || !target) return
 			src.path = AStar(src.loc, src.target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 0, 30)
 			src.path = reverselist(src.path)
 			if(src.path.len == 0)
@@ -307,12 +301,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/vomit
 	target_types += /obj/effect/decal/cleanable/robot_debris
 	target_types += /obj/effect/decal/cleanable/crayon
-	target_types += /obj/effect/decal/cleanable/mucus
-	target_types += /obj/effect/decal/cleanable/robot_debris
-	target_types += /obj/effect/decal/cleanable/molten_item
-	target_types += /obj/effect/decal/cleanable/tomato_smudge
-	target_types += /obj/effect/decal/cleanable/egg_smudge
-	target_types += /obj/effect/decal/cleanable/pie_smudge
 
 	if(src.blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood/
@@ -355,26 +343,19 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 /obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		var/cleanbots = 0
-		for(var/obj/machinery/bot/cleanbot in world)
-			cleanbots++
-		if(cleanbots >= 6) //For some reason it starts at 4, so max limit is actually 2.
-			user << "\red The station frequencies can't handle anymore cleanbots!" //TOO MANY GODDAMN CLEANBOTS
-			cleanbots = 0
-			return
-		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot
-		A.loc = get_turf(src.loc)
-		A.name = src.created_name
-		user << "You add the robot arm to the bucket and sensor assembly! Beep boop!"
+		user.drop_item()
 		del(W)
+		var/turf/T = get_turf(src.loc)
+		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
+		A.name = src.created_name
+		user << "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>"
+		user.drop_from_inventory(src)
 		del(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = copytext(sanitize(t), 1, MAX_NAME_LEN)
+		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)
 			return
-
 		src.created_name = t

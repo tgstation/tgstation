@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/global/list/autolathe_recipes = list( \
 		/* screwdriver removed*/ \
@@ -12,11 +12,9 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/screwdriver(), \
 		new /obj/item/weapon/wirecutters(), \
 		new /obj/item/weapon/wrench(), \
-		new /obj/item/clothing/head/helmet/welding(), \
+		new /obj/item/clothing/head/welding(), \
 		new /obj/item/weapon/stock_parts/console_screen(), \
 		new /obj/item/weapon/airlock_electronics(), \
-		new /obj/item/weapon/module/power_control(), \
-		new /obj/item/weapon/circuitboard/disposal(), \
 		new /obj/item/stack/sheet/metal(), \
 		new /obj/item/stack/sheet/glass(), \
 		new /obj/item/stack/sheet/rglass(), \
@@ -25,8 +23,11 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/kitchenknife(), \
 		new /obj/item/weapon/scalpel(), \
 		new /obj/item/weapon/circular_saw(), \
+		new /obj/item/weapon/surgicaldrill(),\
+		new /obj/item/weapon/retractor(),\
+		new /obj/item/weapon/cautery(),\
 		new /obj/item/weapon/reagent_containers/glass/beaker(), \
-		new /obj/item/weapon/reagent_containers/glass/large(), \
+		new /obj/item/weapon/reagent_containers/glass/beaker/large(), \
 		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_magazine/c38(), \
@@ -40,7 +41,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/device/assembly/timer(), \
 		new /obj/item/weapon/light/tube(), \
 		new /obj/item/weapon/light/bulb(), \
-		new /obj/item/ashtray/glass()
+		new /obj/item/weapon/camera_assembly(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \
@@ -59,8 +60,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/busy = 0
 	var/max_m_amount = 150000.0
 	var/max_g_amount = 75000.0
-	var/outputAmount = 1
-	var/makeDir = 0
 
 	proc
 		wires_win(mob/user as mob)
@@ -78,17 +77,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 		regular_win(mob/user as mob)
 			var/dat as text
 			dat = text("<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color=blue><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>")
-			dat += "<FONT color=green><B>Output Queue:</B></FONT> [outputAmount] (<A href='?src=\ref[src];modifyOutputAmount=1'>Modify</A>)"
-			dat += "<HR>"
-			var/list/heldContainers = list()
-			for(var/obj/item/weapon/storage/container in src.contents)
-				heldContainers += container
-			if(heldContainers.len)
-				for(var/obj/item/weapon/storage/container in heldContainers)
-					dat += "<A href='?src=\ref[src];removeContainer=\ref[container]'>[container.name] (eject stored container)</A><br>"
-			else
-				dat += "No held storage containers"
-			dat += "<HR>"
 			var/list/objs = list()
 			objs += src.L
 			if (src.hacked)
@@ -144,11 +132,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (stat)
 			return 1
-		if(istype(O,/obj/item/weapon/storage/))
-			usr.before_take_item(O)
-			O.loc = src
-			user << "\blue You insert the \icon[O] [O.name] into the autolathe!"
-			return 0
 		if (busy)
 			user << "\red The autolathe is busy. Please wait for completion of previous operation."
 			return 1
@@ -164,7 +147,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 			return 1
 		if (opened)
 			if(istype(O, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'Crowbar.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 				M.state = 2
 				M.icon_state = "box_1"
@@ -244,67 +227,39 @@ var/global/list/autolathe_recipes_hidden = list( \
 			return
 		usr.machine = src
 		src.add_fingerprint(usr)
-		if(href_list["removeContainer"])
-			var/obj/item/weapon/storage/container = locate(href_list["removeContainer"])
-			container.loc = src.loc
-			container.layer = initial(container.layer)
-		if(href_list["modifyOutputAmount"])
-			outputAmount = text2num(input(usr,"Amount:","Enter new quantity to create",""))
-			if(!busy)
-				if(outputAmount < 1)
-					outputAmount = 1
-			else
-				usr << "\red The autolathe is busy. Please wait for completion of previous operation."
 		if (!busy)
 			if(href_list["make"])
-				var/turf/T = src.loc
+				var/turf/T = get_step(src.loc, get_dir(src,usr))
 				var/obj/template = locate(href_list["make"])
 				var/multiplier = text2num(href_list["multiplier"])
 				if (!multiplier) multiplier = 1
 				var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
-				restart:
-				if(outputAmount > 0)
-					if(src.m_amount >= template.m_amt*multiplier && src.g_amount >= template.g_amt*multiplier)
-
+				if(src.m_amount >= template.m_amt*multiplier && src.g_amount >= template.g_amt*multiplier)
+					busy = 1
+					use_power(power)
+					icon_state = "autolathe"
+					flick("autolathe_n",src)
+					spawn(16)
 						use_power(power)
-						icon_state = "autolathe"
-						flick("autolathe_n",src)
 						spawn(16)
-							if(!busy)
-								busy = 1
-								use_power(power)
-								spawn(16)
-									use_power(power)
-									spawn(16)
-										src.m_amount -= template.m_amt*multiplier
-										src.g_amount -= template.g_amt*multiplier
-										if(src.m_amount < 0)
-											src.m_amount = 0
-										if(src.g_amount < 0)
-											src.g_amount = 0
-										var/obj/new_item = new template.type(src)
-										for(var/obj/item/weapon/storage/container in src.contents)
-											container.attackby(new_item)
-											if(new_item.loc == container)
-												break
-										if (multiplier>1)
-											var/obj/item/stack/S = new_item
-											S.amount = multiplier
-										if(new_item in src)
-											new_item.loc = T
-										src.updateUsrDialog()
-										outputAmount -= 1
-										busy = 0
-										goto restart
-					else
-						for(var/mob/M in view(3,src))
-							M << "\red\icon[src] has run out of materials."
-				else
-					outputAmount = 1
+							use_power(power)
+							spawn(16)
+								src.m_amount -= template.m_amt*multiplier
+								src.g_amount -= template.g_amt*multiplier
+								if(src.m_amount < 0)
+									src.m_amount = 0
+								if(src.g_amount < 0)
+									src.g_amount = 0
+								var/obj/new_item = new template.type(T)
+								if (multiplier>1)
+									var/obj/item/stack/S = new_item
+									S.amount = multiplier
+								busy = 0
+								src.updateUsrDialog()
 			if(href_list["act"])
 				var/temp_wire = href_list["wire"]
 				if(href_list["act"] == "pulse")
-					if (!istype(usr.equipped(), /obj/item/device/multitool))
+					if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 						usr << "You need a multitool!"
 					else
 						if(src.wires[temp_wire])
@@ -322,7 +277,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 								src.shock(usr,50)
 								spawn(100) src.shocked = !src.shocked
 				if(href_list["act"] == "wire")
-					if (!istype(usr.equipped(), /obj/item/weapon/wirecutters))
+					if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
 						usr << "You need wirecutters!"
 					else
 						wires[temp_wire] = !wires[temp_wire]

@@ -54,6 +54,8 @@
 			return
 		switch(src.effecttype)
 			if("healing")
+				//caeltodo
+				/*
 				if (istype(user, /mob/living/carbon/human/))
 					user << "\blue You feel a soothing energy invigorate you."
 
@@ -106,7 +108,7 @@
 					user.weakened += 6
 					return 1
 				else user << "Nothing happens."
-			/*if("stun")
+			if("stun")
 				if (istype(user, /mob/living/carbon/))
 					user << "\red A powerful force overwhelms your consciousness."
 					user.paralysis += 30
@@ -114,7 +116,7 @@
 					user.weakened += 45
 					user.stuttering += 45
 					return 1
-				else user << "Nothing happens."*/
+				else user << "Nothing happens."
 			if("roboheal")
 				if (istype(user, /mob/living/silicon/robot))
 					user << "\blue Your systems report damaged components mending by themselves!"
@@ -129,6 +131,7 @@
 					user.adjustFireLoss(40)
 					return 1
 				else user << "Nothing happens."
+				*/
 			if("forcefield")
 				while(created_field.len < 16)
 					var/obj/effect/energy_field/E = new (locate(user.x,user.y,user.z))
@@ -136,69 +139,6 @@
 					E.strength = 1
 					E.density = 1
 					E.invisibility = 0
-				/*var/obj/effect/energy_field/E = new /obj/effect/energy_field(locate(user.x + 2,user.y,user.z))
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x + 2,user.y + 1,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x + 2,user.y + 2,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x + 2,user.y - 1,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x + 2,user.y - 2,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x - 2,user.y,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x - 2,user.y + 1,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x - 2,user.y + 2,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x - 2,user.y - 1,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x - 2,user.y - 2,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x,user.y + 2,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x + 1,user.y + 2,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x - 1,user.y + 2,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x,user.y - 2,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x + 1,user.y - 2,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0
-				E = new /obj/effect/energy_field(locate(user.x - 1,user.y - 2,user.z))
-				created_field.Add(E)
-				E.strength = 1
-				E.invisibility = 0*/
 				return 1
 			if("teleport")
 				var/list/randomturfs = new/list()
@@ -215,6 +155,8 @@
 				return 1
 	else if (src.effectmode == "aura")
 		switch(src.effecttype)
+			//caeltodo
+			/*
 			if("healing")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
@@ -239,7 +181,7 @@
 					M.adjustBrainLoss(1)
 					M.updatehealth()
 				return 1
-			/*if("stun")
+			if("stun")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
@@ -249,7 +191,7 @@
 						M.stunned += 2
 						M.weakened += 2
 						M.stuttering += 2
-				return 1*/
+				return 1
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					if(prob(10)) M << "\blue SYSTEM ALERT: Beneficial energy field detected!"
@@ -284,6 +226,7 @@
 						D.charge -= 10
 						if(prob(10)) M << "\red SYSTEM ALERT: Energy draining field detected!"
 				return 1
+			*/
 			if("planthelper")
 				for (var/obj/machinery/hydroponics/H in range(src.aurarange,originator))
 					//makes weeds and shrooms and stuff more potent too
@@ -303,6 +246,8 @@
 		for(var/mob/O in viewers(originator, null))
 			O.show_message(text("<b>[]</b> emits a pulse of energy!", originator), 1)
 		switch(src.effecttype)
+			//caeltodo
+			/*
 			if("healing")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
@@ -329,7 +274,7 @@
 					M.weakened += 3
 					M.updatehealth()
 				return 1
-			/*if("stun")
+			if("stun")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
@@ -338,7 +283,7 @@
 					M.stunned += 4
 					M.weakened += 4
 					M.stuttering += 4
-				return 1*/
+				return 1
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
@@ -353,6 +298,7 @@
 					M.adjustFireLoss(10)
 					M.updatehealth()
 				return 1
+				*/
 			if("cellcharge")
 				for (var/obj/machinery/power/apc/C in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/B in C.contents)
@@ -406,6 +352,8 @@
 		for(var/mob/O in viewers(originator, null))
 			O.show_message(text("<b>[]</b> emits a powerful burst of energy!", originator), 1)
 		switch(src.effecttype)
+			//caeltodo
+			/*
 			if("healing")
 				for (var/mob/living/carbon/M in world)
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
@@ -428,7 +376,7 @@
 					M.adjustBrainLoss(3)
 					M.updatehealth()
 				return 1
-			/*if("stun")
+			if("stun")
 				for (var/mob/living/carbon/M in world)
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
@@ -437,7 +385,7 @@
 					M.stunned += 8
 					M.weakened += 8
 					M.stuttering += 8
-				return 1*/
+				return 1
 			if("roboheal")
 				for (var/mob/living/silicon/robot/M in world)
 					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
@@ -452,6 +400,7 @@
 					M.adjustFireLoss(5)
 					M.updatehealth()
 				return 1
+				*/
 			if("cellcharge")
 				for (var/obj/machinery/power/apc/C in world)
 					for (var/obj/item/weapon/cell/B in C.contents)

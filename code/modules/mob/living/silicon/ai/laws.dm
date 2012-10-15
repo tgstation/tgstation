@@ -18,53 +18,38 @@
 
 /mob/living/silicon/ai/proc/laws_sanity_check()
 	if (!src.laws)
-		src.laws = new /datum/ai_laws/nanotrasen
+		src.laws = new base_law_type
 
-/mob/living/silicon/ai/proc/notify_linked_cyborgs()
-	for (var/mob/living/silicon/robot/A in world)
-		if(A.stat == 2)
-			continue
-		if(!islinked(A, src))
-			continue
-
-		A << "These are your laws now:"
-		A.show_laws()
-
-/mob/living/silicon/ai/proc/set_zeroth_law(var/law)
+/mob/living/silicon/ai/proc/set_zeroth_law(var/law, var/law_borg)
 	src.laws_sanity_check()
-	src.laws.set_zeroth_law(law)
-	src.notify_linked_cyborgs()
+	src.laws.set_zeroth_law(law, law_borg)
 
 /mob/living/silicon/ai/proc/add_inherent_law(var/law)
 	src.laws_sanity_check()
 	src.laws.add_inherent_law(law)
-	src.notify_linked_cyborgs()
 
 /mob/living/silicon/ai/proc/clear_inherent_laws()
 	src.laws_sanity_check()
 	src.laws.clear_inherent_laws()
-	src.notify_linked_cyborgs()
 
 /mob/living/silicon/ai/proc/add_ion_law(var/law)
 	src.laws_sanity_check()
 	src.laws.add_ion_law(law)
-	src.notify_linked_cyborgs()
+	for(var/mob/living/silicon/robot/R in mob_list)
+		if(R.lawupdate && (R.connected_ai == src))
+			R << "\red " + law + "\red...LAWS UPDATED"
 
 /mob/living/silicon/ai/proc/clear_ion_laws()
 	src.laws_sanity_check()
 	src.laws.clear_ion_laws()
-	src.notify_linked_cyborgs()
 
 /mob/living/silicon/ai/proc/add_supplied_law(var/number, var/law)
 	src.laws_sanity_check()
 	src.laws.add_supplied_law(number, law)
-	src.notify_linked_cyborgs()
 
 /mob/living/silicon/ai/proc/clear_supplied_laws()
 	src.laws_sanity_check()
 	src.laws.clear_supplied_laws()
-	src.notify_linked_cyborgs()
-
 
 
 

@@ -11,7 +11,7 @@
 	src.sight |= SEE_OBJS
 
 	src.see_in_dark = 8
-	src.see_invisible = 2
+	src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	src.updateicon()
 
 	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
@@ -20,5 +20,5 @@
 	if (src.key)
 		spawn(50)
 			if(src.key && src.stat == 2)
-				src.verbs += /mob/proc/ghost
+				src.verbs += /client/proc/ghost
 	return ..(gibbed)

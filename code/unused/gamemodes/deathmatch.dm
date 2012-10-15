@@ -40,18 +40,18 @@
 					M.real_name = newname
 					M.name = newname // there are WAY more things than this to change, I'm almost certain
 
-					M.equip_if_possible(new /obj/item/clothing/under/color/black(M), M.slot_w_uniform)
-					M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
-					M.equip_if_possible(new /obj/item/clothing/suit/swat_suit/death_commando(M), M.slot_wear_suit)
-					M.equip_if_possible(new /obj/item/clothing/mask/gas/death_commando(M), M.slot_wear_mask)
-					M.equip_if_possible(new /obj/item/clothing/gloves/swat(M), M.slot_gloves)
-					M.equip_if_possible(new /obj/item/clothing/glasses/thermal(M), M.slot_glasses)
-					M.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle(M), M.slot_l_hand)
-					M.equip_if_possible(new /obj/item/weapon/m_pill/cyanide(M), M.slot_l_store)
-					M.equip_if_possible(new /obj/item/weapon/flashbang(M), M.slot_r_store)
+					M.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(M), slot_w_uniform)
+					M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
+					M.equip_to_slot_or_del(new /obj/item/clothing/suit/swat_suit/death_commando(M), slot_wear_suit)
+					M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/death_commando(M), slot_wear_mask)
+					M.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(M), slot_gloves)
+					M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(M), slot_glasses)
+					M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(M), slot_l_hand)
+					M.equip_to_slot_or_del(new /obj/item/weapon/m_pill/cyanide(M), slot_l_store)
+					M.equip_to_slot_or_del(new /obj/item/weapon/flashbang(M), slot_r_store)
 
 					var/obj/item/weapon/tank/air/O = new(M)
-					M.equip_if_possible(O, M.slot_back)
+					M.equip_to_slot_or_del(O, slot_back)
 					M.internal = O
 
 					var/obj/item/weapon/card/id/W = new(M)
@@ -59,7 +59,7 @@
 					W.name = "[newname]'s ID card (Death Commando)"
 					W.assignment = "Death Commando"
 					W.registered_name = newname
-					M.equip_if_possible(W, M.slot_wear_id)
+					M.equip_to_slot_or_del(W, slot_wear_id)
 		..()
 
 	check_win()

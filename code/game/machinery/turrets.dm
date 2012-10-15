@@ -3,15 +3,13 @@
 	var/list/turretTargets = list()
 
 /area/turret_protected/proc/subjectDied(target)
-	if( ismob(target) )
+	if( isliving(target) )
 		if( !issilicon(target) )
-			if( target:stat )
-				if( target in turretTargets )
-					src.Exited(target)
+			var/mob/living/L = target
+			if( L.stat )
+				if( L in turretTargets )
+					src.Exited(L)
 
-
-//TODO: make teleporting to places trigger Entered() ~Carn
-// Done.
 
 /area/turret_protected/Entered(O)
 	..()
@@ -24,6 +22,8 @@
 		var/obj/mecha/Mech = O
 		if( Mech.occupant )
 			turretTargets |= Mech
+	else if(istype(O,/mob/living/simple_animal))
+		turretTargets |= O
 	return 1
 
 /area/turret_protected/Exited(O)
@@ -40,13 +40,13 @@
 
 /obj/machinery/turret
 	name = "turret"
-	icon = 'turrets.dmi'
+	icon = 'icons/obj/turrets.dmi'
 	icon_state = "grey_target_prism"
 	var/raised = 0
 	var/enabled = 1
 	anchored = 1
 	layer = 3
-	invisibility = 2
+	invisibility = INVISIBILITY_LEVEL_TWO
 	density = 1
 	var/lasers = 0
 	var/lasertype = 1
@@ -56,8 +56,7 @@
 		// 4 = change (HONK)
 		// 5 = bluetag
 		// 6 = redtag
-	var/health = 18
-	var/id = ""
+	var/health = 80
 	var/obj/machinery/turretcover/cover = null
 	var/popping = 0
 	var/wasvalid = 0
@@ -83,7 +82,7 @@
 
 /obj/machinery/turretcover
 	name = "pop-up turret cover"
-	icon = 'turrets.dmi'
+	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
 	anchored = 1
 	layer = 3.5
@@ -140,6 +139,11 @@
 			var/obj/mecha/ME = T
 			if( ME.occupant )
 				return 1
+		else if(istype(T,/mob/living/simple_animal))
+			var/mob/living/simple_animal/A = T
+			if( !A.stat )
+				if(lasers)
+					return 1
 	return 0
 
 /obj/machinery/turret/proc/get_new_target()
@@ -151,6 +155,9 @@
 				new_targets += M
 	for(var/obj/mecha/M in protected_area.turretTargets)
 		if(M.occupant)
+			new_targets += M
+	for(var/mob/living/simple_animal/M in protected_area.turretTargets)
+		if(!M.stat)
 			new_targets += M
 	if(new_targets.len)
 		new_target = pick(new_targets)
@@ -226,7 +233,7 @@
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	spawn( 0 )
-		A.fired()
+		A.process()
 	return
 
 
@@ -251,20 +258,21 @@
 			src.cover.icon_state = "turretCover"
 		spawn(10)
 			if (popping==-1)
-				invisibility = 2
+				invisibility = INVISIBILITY_LEVEL_TWO
 				popping = 0
 
 /obj/machinery/turret/bullet_act(var/obj/item/projectile/Proj)
 	src.health -= Proj.damage
 	..()
 	if(prob(45) && Proj.damage > 0) src.spark_system.start()
+	del (Proj)
 	if (src.health <= 0)
 		src.die()
 	return
 
 /obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
 	..()
-	playsound(src.loc, 'smash.ogg', 60, 1)
+	playsound(src.loc, 'sound/weapons/smash.ogg', 60, 1)
 	src.spark_system.start()
 	src.health -= W.force * 0.5
 	if (src.health <= 0)
@@ -297,44 +305,32 @@
 
 /obj/machinery/turretid
 	name = "Turret deactivation control"
-	icon = 'device.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
 	anchored = 1
 	density = 0
 	var/enabled = 1
-	var/id = ""
 	var/lethal = 0
 	var/locked = 1
 	var/control_area //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
-	req_access = list(ACCESS_AI_UPLOAD)
-	var/similar_controls
-	var/turrets
-
-/obj/machinery/turretid/east
-	pixel_x = 28
-
-/obj/machinery/turretid/south
-	pixel_y = -28
-
-/obj/machinery/turretid/west
-	pixel_x = -28
-
-/obj/machinery/turretid/north
-	pixel_y = 28
+	req_access = list(access_ai_upload)
 
 /obj/machinery/turretid/New()
 	..()
-	spawn(10)		// allow map load
-		turrets = list()
-		for(var/obj/machinery/turret/T in world)
-			if(T.id == id)
-				turrets += T
-
-		similar_controls = list() // On modifying a control, all the similar controls should change their icon_state as well
-		for(var/obj/machinery/turretid/TC in world)
-			if(TC.id == id && TC != src)
-				similar_controls += TC
+	if(!control_area)
+		var/area/CA = get_area(src)
+		if(CA.master && CA.master != CA)
+			control_area = CA.master
+		else
+			control_area = CA
+	else if(istext(control_area))
+		for(var/area/A in world)
+			if(A.name && A.name==control_area)
+				control_area = A
+				break
+	//don't have to check if control_area is path, since get_area_all_atoms can take path.
+	return
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN) return
@@ -402,9 +398,27 @@
 	onclose(user, "turretid")
 
 
+/obj/machinery/turret/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)	return
+	if(!(stat & BROKEN))
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\red <B>[M] [M.attacktext] [src]!</B>"), 1)
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
+		//src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+		src.health -= M.melee_damage_upper
+		if (src.health <= 0)
+			src.die()
+	else
+		M << "\red That object is useless to you."
+	return
+
+
+
+
 /obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if(!(stat & BROKEN))
-		playsound(src.loc, 'slash.ogg', 25, 1, -1)
+		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
@@ -414,6 +428,8 @@
 	else
 		M << "\green That object is useless to you."
 	return
+
+
 
 /obj/machinery/turretid/Topic(href, href_list)
 	..()
@@ -439,18 +455,12 @@
 /obj/machinery/turretid/proc/update_icons()
 	if (src.enabled)
 		if (src.lethal)
-			src.icon_state = "motion1"
-			for(var/obj/machinery/turretid/TC in src.similar_controls) //Change every similar control's icon as well
-				TC.icon_state = "motion1"
+			icon_state = "motion1"
 		else
-			src.icon_state = "motion3"
-			for(var/obj/machinery/turretid/TC in src.similar_controls)
-				TC.icon_state = "motion3"
+			icon_state = "motion3"
 	else
-		src.icon_state = "motion0"
-		for(var/obj/machinery/turretid/TC in src.similar_controls)
-			TC.icon_state = "motion0"
-
+		icon_state = "motion0"
+																				//CODE FIXED BUT REMOVED
 //	if(control_area)															//USE: updates other controls in the area
 //		for (var/obj/machinery/turretid/Turret_Control in world)				//I'm not sure if this is what it was
 //			if( Turret_Control.control_area != src.control_area )	continue	//supposed to do. Or whether the person
@@ -459,9 +469,6 @@
 //			Turret_Control.lethal = lethal										//in which this would be used on the current map.
 																				//If he wants it back he can uncomment it
 
-
-	for (var/obj/machinery/turret/aTurret in turrets)
-		aTurret.setState(enabled, lethal)
 
 /obj/structure/turret/gun_turret
 	name = "Gun Turret"
@@ -477,8 +484,7 @@
 	var/health = 40
 	var/list/scan_for = list("human"=0,"cyborg"=0,"mecha"=0,"alien"=1)
 	var/on = 0
-	var/processing = 0 //So we dun get dozens of duplicate while loops
-	icon = 'turrets.dmi'
+	icon = 'icons/obj/turrets.dmi'
 	icon_state = "gun_turret"
 
 
@@ -568,20 +574,16 @@
 
 
 	process()
-		if(!processing)
-			spawn
-				while(on)
-					processing = 1
-					if(projectiles<=0)
-						on = 0
-						return
-					if(cur_target && !validate_target(cur_target))
-						cur_target = null
-					if(!cur_target)
-						cur_target = get_target()
-					fire(cur_target)
-					sleep(cooldown)
-				processing = 0
+		spawn while(on)
+			if(projectiles<=0)
+				on = 0
+				return
+			if(cur_target && !validate_target(cur_target))
+				cur_target = null
+			if(!cur_target)
+				cur_target = get_target()
+			fire(cur_target)
+			sleep(cooldown)
 		return
 
 	proc/get_target()
@@ -630,12 +632,12 @@
 				continue
 			if (targloc == curloc)
 				continue
-			playsound(src, 'Gunshot.ogg', 50, 1)
+			playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
 			var/obj/item/projectile/A = new /obj/item/projectile(curloc)
 			src.projectiles--
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
-			A.fired()
+			A.process()
 			sleep(2)
 		return

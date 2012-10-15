@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/unary/cold_sink
-	icon = 'cold_sink.dmi'
+	icon = 'icons/obj/atmospherics/cold_sink.dmi'
 	icon_state = "intact_off"
 	density = 1
 

@@ -1,5 +1,5 @@
 //allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-/client/proc/cmd_admin_pm_context(mob/M as mob in world)
+/client/proc/cmd_admin_pm_context(mob/M as mob in mob_list)
 	set category = null
 	set name = "Admin PM Mob"
 	if(!holder)
@@ -36,8 +36,8 @@
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_admin_pm(var/client/C, var/msg)
-	if(src.muted_complete)
-		src << "<font color='red'>Error: Admin-PM: You are completely muted.</font>"
+	if(src.muted & MUTE_ADMINHELP)
+		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
 
 	if( !C || !istype(C,/client) )
@@ -47,12 +47,16 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message") as text|null // This is to stop identification of stealthmins for now -- Erthilo
+		msg = input(src,"Message:", "Private message to [C.key]") as text|null
+
 		if(!msg)	return
 		if(!C)
 			if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 			else		adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
 			return
+
+	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+		return
 
 	//clean the message if it's not sent by a GA or GM
 	if( !holder || !(holder.rank in list("Game Admin", "Game Master")) )
@@ -73,22 +77,23 @@
 			src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
 
 		//play the recieving admin the adminhelp sound (if they have them enabled)
-		if(C.sound_adminhelp)
-			C << 'adminhelp.ogg'
+		if(C.holder.sound_adminhelp)
+			C << 'sound/effects/adminhelp.ogg'
 
 	else
 		if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
-//			C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
 			if(holder.rank == "Moderator")
 				C << "<font color='maroon'>Mod PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
 				C << "<font color='maroon'><i>Click on the moderators's name to reply.</i></font>"
 				src << "<font color='blue'>Mod PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
 			else
+				C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
 				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
 				C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
 				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
+
 			//always play non-admin recipients the adminhelp sound
-			C << 'adminhelp.ogg'
+			C << 'sound/effects/adminhelp.ogg'
 
 			//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 			if(config.popup_admin_pm)
@@ -113,3 +118,4 @@
 	for(var/client/X)									//there are fewer clients than mobs
 		if(X.holder && X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>" //inform X
+

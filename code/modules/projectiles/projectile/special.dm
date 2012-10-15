@@ -39,6 +39,36 @@
 			M.bodytemperature = temperature
 		return 1
 
+/obj/item/projectile/meteor
+	name = "meteor"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "smallf"
+	damage = 0
+	damage_type = BRUTE
+	nodamage = 1
+	flag = "bullet"
+
+	Bump(atom/A as mob|obj|turf|area)
+		if(A == firer)
+			loc = A.loc
+			return
+
+		sleep(-1) //Might not be important enough for a sleep(-1) but the sleep/spawn itself is necessary thanks to explosions and metoerhits
+
+		if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
+			if(A)
+
+				A.meteorhit(src)
+				playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+
+				for(var/mob/M in range(10, src))
+					if(!M.stat && !istype(M, /mob/living/silicon/ai))\
+						shake_camera(M, 3, 1)
+				del(src)
+				return 1
+		else
+			return 0
+
 /obj/item/projectile/energy/floramut
 	name = "alpha somatoray"
 	icon_state = "energy"
@@ -48,12 +78,11 @@
 	flag = "energy"
 
 	on_hit(var/atom/target, var/blocked = 0)
-		var/mob/M = target
-		if(istype(target, /mob/living) && M:mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
-			var/mob/living/L as mob
+		var/mob/living/M = target
+		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
 			if(prob(15))
-				L.apply_effect((rand(30,80)),IRRADIATE)
-				L.Weaken(5)
+				M.apply_effect((rand(30,80)),IRRADIATE)
+				M.Weaken(5)
 				for (var/mob/V in viewers(src))
 					V.show_message("\red [M] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
 			if(prob(35))
@@ -87,7 +116,7 @@
 
 	on_hit(var/atom/target, var/blocked = 0)
 		var/mob/M = target
-		if(istype(target, /mob/living/carbon/human) && M:mutantrace == "plant") //These rays make plantmen fat.
+		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //These rays make plantmen fat.
 			if(M.nutrition < 500) //sanity check
 				M.nutrition += 30
 		else if (istype(target, /mob/living/carbon/))

@@ -1,98 +1,58 @@
-#define SAVEFILE_VERSION_MIN	5
-#define SAVEFILE_VERSION_MAX	6
+#define SAVEFILE_VERSION_MIN	7
+#define SAVEFILE_VERSION_MAX	7
 
-datum/preferences/proc/savefile_path(mob/user)
-	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences.sav"
-
-datum/preferences/proc/savefile_getslots(mob/user)
-	if(IsGuestKey(user.key))
-		return new/list()
-
-	var/path = savefile_path(user)
-	if(!fexists(path))
-		return new/list()
-
-	var/list/slots = new()
-	var/savefile/F = new(path)
-
-	// slot 1
-	slots.Add(F["slotname"] ? F["slotname"] : "Default") // allow old prefs saves to be loaded as slot 1
-
-	// slots 2 - len
-	for(var/i=1, i<=F.dir.len, i++)
-		var/dname = F.dir[i]
-		if(copytext(dname, 1, 6) == "slot.")
-			slots.Insert(2, copytext(dname, 6)) // reverse order so it's oldest->newest, like old system
-
-	return slots
-
-datum/preferences/proc/savefile_createslot(mob/user, slotname)
-	if(IsGuestKey(user.key))
-		return
-
-	var/path = savefile_path(user)
-	if(!fexists(path))
-		return
-
-	var/savefile/F = new(path)
-
-	// 1st?
-	if(!F["real_name"])
-		F["slotname"] = "Default"
-		randomize_name()
+datum/preferences/proc/savefile_path(mob/user, var/slot = 0)
+	if(!user.client)
+		return null
 	else
-		F.dir.Add("slot." + slotname)
+		if(!slot)
+			slot = user.client.activeslot
+		return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences[slot].sav"
 
-	var/list/slots = savefile_getslots(user)
-	var/slot = slots.Find(slotname)
-	savefile_save(user, slot)
-	return slot
+//??
+datum/preferences/proc/savefile_saveslot(mob/user,var/slot)//Mirrors default slot across each save
+	if(!user.client)
+		return null
+	else
+		for(var/i = 1; i <= MAX_SAVE_SLOTS; i += 1)
+			var/savefile/F = new /savefile("data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences[i].sav")
+			F["default_slot"] << slot
+	return 1
 
-datum/preferences/proc/savefile_removeslot(mob/user, slot)
+datum/preferences/proc/savefile_createslot(mob/user, var/slot_num = 0)
 	if(IsGuestKey(user.key))
 		return
 
-	var/path = savefile_path(user)
-	if(!fexists(path))
-		return
+	if(!slot_name)
+		slot_name = "Default"
 
-	var/list/slots = savefile_getslots(user)
-
-	if(slot > 1)
-		var/savefile/F = new(path)
-		F.dir.Remove("slot." + slots[slot])
-	else if(slots.len >= 2)
-		// otherwise, we're deleting slot 1, and must move slot 2 to slot 1
-		savefile_load(user, 2)
-		savefile_save(user, 1)
-
-		var/savefile/F = new(path)
-		F["slotname"] = slots[2] // slot 1's name <- slot 2's name
-		F.dir.Remove("slot." + slots[2])
+	if(slot_num)
+		user.client.activeslot = slot_num
+		savefile_save(user)
+		user << "\blue Slot overridden with current character."
 	else
-		// otherwise, we're wiping the last save (slot 1)
-		// actually no, that makes unintuitive, weird things happen
-		//F["slotname"] = null
-		//F["real_name"] = null
-		user << "You must have at least one slot!"
+		var/path
+		for(slot_num = 1; slot_num <= MAX_SAVE_SLOTS; slot_num += 1)
+			path = savefile_path(user, slot_num)
+			if(!fexists(path))
+				break
 
-datum/preferences/proc/savefile_save(mob/user, slot)
+		if(slot_num <= MAX_SAVE_SLOTS)
+			user.client.activeslot = slot_num
+			savefile_save(user)
+			user << "\blue Character copied to new slot."
+		else
+			user << "\red You have reached the max number of character slots ([MAX_SAVE_SLOTS])"
+
+datum/preferences/proc/savefile_save(mob/user)
 	if (IsGuestKey(user.key))
 		return 0
 
-	var/list/slots = savefile_getslots(user)
-	var/savefile/F = new(savefile_path(user))
-
-	//	var/version
-	//	F["version"] >> version
+	var/savefile/F = new /savefile(src.savefile_path(user))
+//	var/version
+//	F["version"] >> version
 
 	F["version"] << SAVEFILE_VERSION_MAX
-
-	// make this compatible with old single-slot system, making slot 1 be in root
-	if(slot != 1)
-		if(slots.len < slot)
-			return 0
-		F.cd = "slot." + slots[slot]
 
 	F["real_name"] << src.real_name
 	F["name_is_always_random"] << src.be_random_name
@@ -117,7 +77,9 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["job_engsec_med"] << src.job_engsec_med
 	F["job_engsec_low"] << src.job_engsec_low
 
-	F["job_alt_titles"] << job_alt_titles
+	F["job_alt_titles"] << job_alt_titles //BS12 Edit
+
+	F["userandomjob"] << src.userandomjob
 
 	//Body data
 	F["hair_red"] << src.r_hair
@@ -133,10 +95,9 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["eyes_green"] << src.g_eyes
 	F["eyes_blue"] << src.b_eyes
 	F["blood_type"] << src.b_type
-	F["species"] << src.species
 	F["underwear"] << src.underwear
 	F["backbag"] << src.backbag
-	F["backbag"] << src.backbag
+	F["species"] << src.species
 
 
 
@@ -162,6 +123,9 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["OOC_Notes"] << src.metadata
 
 	F["sound_adminhelp"] << src.sound_adminhelp
+	F["default_slot"] << src.default_slot
+	F["slotname"] << src.slot_name
+	F["lobby_music"] << src.lobby_music
 
 	return 1
 
@@ -170,32 +134,38 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 // returns 1 if loaded (or file was incompatible)
 // returns 0 if savefile did not exist
 
-datum/preferences/proc/savefile_load(mob/user, slot)
+datum/preferences/proc/savefile_load(mob/user)
+	if(user.client == null) return 0
 	if(IsGuestKey(user.key))	return 0
 
 	var/path = savefile_path(user)
-	if(!fexists(path))
-		// make it then!
-		savefile_save(user, slot)
 
-	var/savefile/F = new(path)
+	if(!fexists(path))
+		//Is there a preference file before this was committed?
+		path = "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences.sav"
+		if(!fexists(path))
+			//No there is not
+			return 0
+		else
+			//Yes there is. Let's rename it.
+			var/savefile/oldsave = new/savefile(path)
+			fcopy(oldsave, savefile_path(user))
+			fdel(path) // We don't need the old file anymore
+			path = savefile_path(user)
+			// Did nothing break?
+			if(!fexists(path))
+				return 0
+
+	var/savefile/F = new /savefile(path)
 
 	var/version = null
 	F["version"] >> version
 
-	if (isnull(version) || version < SAVEFILE_VERSION_MIN || version > SAVEFILE_VERSION_MAX)
+	if(isnull(version) || version < SAVEFILE_VERSION_MIN || version > SAVEFILE_VERSION_MAX)
 		fdel(path)
-		alert(user, "Your savefile was incompatible with this version and was deleted.")
+		if(version)
+			alert(user, "Your savefile was incompatible with this version and was deleted.")
 		return 0
-
-	// make this compatible with old single-slot system, making slot 1 be in root
-	if(slot == 0)
-		return 0
-	if(slot != 1)
-		var/list/slots = savefile_getslots(user)
-		if(slots.len < slot)
-			return 0
-		F.cd = "slot." + slots[slot]
 
 	F["real_name"] >> src.real_name
 	F["gender"] >> src.gender
@@ -221,9 +191,11 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["species"] >> src.species
 	if(isnull(species)) species = "Human"
 	F["underwear"] >> src.underwear
-	if(underwear == 0) underwear = 6 //For old players who have 0 in their savefile
+	if(underwear == 0) underwear = 12 //For old players who have 0 in their savefile
 	F["backbag"] >> src.backbag
 	if(isnull(backbag)) backbag = 2
+	F["species"] >> src.species
+	if(isnull(species)) species = "Human"
 	F["name_is_always_random"] >> src.be_random_name
 	F["midis"] >> src.midis
 	F["ghost_ears"] >> src.ghost_ears
@@ -260,6 +232,9 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["job_engsec_high"] >> src.job_engsec_high
 	F["job_engsec_med"] >> src.job_engsec_med
 	F["job_engsec_low"] >> src.job_engsec_low
+
+	F["userandomjob"] >> src.userandomjob
+
 	F["disabilities"] >> src.disabilities
 	if(isnull(src.disabilities))	//Sanity checking
 		src.disabilities = 0
@@ -272,6 +247,15 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["OOC_Notes"] >> src.metadata
 
 	F["sound_adminhelp"] >> src.sound_adminhelp
+	F["default_slot"] >> src.default_slot
+	if(isnull(default_slot))
+		default_slot = 1
+	F["slotname"] >> src.slot_name
+	if(!src.slot_name)
+		src.slot_name = "Slot [user.client.activeslot]"
+	F["lobby_music"] >> src.lobby_music
+	if(isnull(lobby_music))
+		lobby_music = 1
 
 	if(isnull(metadata))
 		metadata = ""
@@ -282,14 +266,32 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	if(version && version < SAVEFILE_VERSION_MAX)
 		convert_hairstyles() // convert version 4 hairstyles to version 5
 
-	style_to_datum() // convert f_style and h_style to /datum
-
 	return 1
+
+datum/preferences/proc/open_load_dialog(mob/user)
+	var/dat = "<body>"
+	dat += "<tt><center>"
+
+	var/n = null
+	for(var/i = 1; i <= MAX_SAVE_SLOTS; i += 1)
+		var/path = savefile_path(user, i)
+		if(fexists(path))
+			var/savefile/F = new /savefile(path)
+			F["slotname"] >> n
+			dat += "<a href=\"byond://?src=\ref[user];preference=changeslot;num=[i]\">[n ? n : "Slot [i]"]</a> <a href=\"byond://?src=\ref[user];preference=newslot;num=[i]\">(Overwrite)</a><br><br>"
+		else
+			dat += "Empty slot [i] <a href=\"byond://?src=\ref[user];preference=newslot;num=[i]\">(Create)</a></a><br><br>"
+
+	dat += "<hr>"
+	dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
+	dat += "</center></tt>"
+	user << browse(dat, "window=saves;size=300x390")
+
+datum/preferences/proc/close_load_dialog(mob/user)
+	user << browse(null, "window=saves")
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
-
-
 
 datum/preferences/proc/convert_hairstyles()
 	// convert hairstyle names from old savefiles
@@ -324,3 +326,5 @@ datum/preferences/proc/convert_hairstyles()
 			f_style = "Adam Jensen Beard"
 	return
 
+#undef SAVEFILE_VERSION_MIN
+#undef SAVEFILE_VERSION_MAX

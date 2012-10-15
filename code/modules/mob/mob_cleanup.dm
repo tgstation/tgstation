@@ -3,15 +3,21 @@
 Put (mob/proc)s here that are in dire need of a code cleanup.
 */
 
-
+/mob/living/proc/has_disease(var/datum/disease/virus)
+	for(var/datum/disease/D in viruses)
+		if(istype(D, virus))
+			return 1
+	return 0
 
 // This proc has some procs that should be extracted from it. I believe we can develop some helper procs from it - Rockdtben
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
 //	world << "Contract_disease called by [src] with virus [virus]"
-	if(stat >=2) return
-	if(virus.type in resistances)
-		if(prob(99.9)) return
-		resistances.Remove(virus.type)//the resistance is futile
+	if(stat >=2 || src.resistances.Find(virus.type)) return
+
+//This gives a chance to re-infect cured/vaccinated mobs
+//	if(virus.type in resistances)
+//		if(prob(99.9)) return
+//		resistances.Remove(virus.type)//the resistance is futile
 
 	for(var/datum/disease/D in viruses)
 		if(istype(D, virus.type))
@@ -32,7 +38,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 			//src.virus.cure(0)
 
 		var/datum/disease/v = new virus.type
-		viruses += v
+		src.viruses += v
 		v.affected_mob = src
 		v.strain_data = v.strain_data.Copy()
 		v.holder = src
@@ -40,7 +46,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 			v.carrier = 1
 		return
 
-	//if(virus) //
+	//if(src.virus) //
 		//return //
 
 
@@ -57,7 +63,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 					clothing_areas[Covers] += Clothing
 
 */
-	if(prob(15/virus.permeability_mod)) return //the power of immunity compels this disease!
+	if(prob(15/virus.permeability_mod)) return //the power of immunity compels this disease! but then you forgot resistances
 
 	var/obj/item/clothing/Cl = null
 	var/passed = 1
@@ -106,8 +112,8 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 					Cl = H.wear_suit
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Suit pass [passed]"
-				if(passed && isobj(H.slot_w_uniform))
-					Cl = H.slot_w_uniform
+				if(passed && isobj(slot_w_uniform))
+					Cl = slot_w_uniform
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Uniform pass [passed]"
 			if(3)
@@ -184,7 +190,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 		return
 	else*/
 		var/datum/disease/v = new virus.type
-		viruses += v
+		src.viruses += v
 		v.affected_mob = src
 		v.strain_data = v.strain_data.Copy()
 		v.holder = src

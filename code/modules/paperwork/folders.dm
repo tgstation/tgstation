@@ -1,7 +1,7 @@
 /obj/item/weapon/folder
 	name = "folder"
 	desc = "A folder."
-	icon = 'bureaucracy.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "folder"
 	w_class = 2
 	pressure_resistance = 2
@@ -32,7 +32,7 @@
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
 		user.drop_item()
 		W.loc = src
-		user << "\blue You put the [W] into the folder."
+		user << "<span class='notice'>You put the [W] into \the [src].</span>"
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = copytext(sanitize(input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text),1,MAX_NAME_LEN)
@@ -63,11 +63,7 @@
 			var/obj/item/P = locate(href_list["remove"])
 			if(P)
 				P.loc = usr.loc
-				if(ishuman(usr))
-					if(!usr.get_active_hand())
-						usr.put_in_hand(P)
-				else
-					P.loc = get_turf(usr)
+				usr.put_in_hands(P)
 
 		if(href_list["read"])
 			var/obj/item/weapon/paper/P = locate(href_list["read"])

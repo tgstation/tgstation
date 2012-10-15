@@ -16,7 +16,7 @@
 	var/on = 1
 	var/remoteenabled = 1
 	//
-	req_access = list(ACCESS_ENGINE)
+	req_access = list(access_engine)
 	//
 	use_power = 1
 	idle_power_usage = 10
@@ -114,7 +114,7 @@
 			A.fired()
 */
 	proc/Emit()
-		var/obj/item/projectile/beam/ehf_beam/A = new /obj/item/projectile/beam/ehf_beam( src.loc )
+		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
 		A.frequency = frequency
 		A.damage = mega_energy * 500
 		//
@@ -141,7 +141,7 @@
 		else // Any other
 			A.yo = -20
 			A.xo = 0
-		A.fired()
+		A.process()
 		//
 		flick("emitter-active",src)
 		if(emitting)

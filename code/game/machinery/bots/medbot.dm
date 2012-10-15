@@ -13,12 +13,10 @@
 	anchored = 0
 	health = 20
 	maxhealth = 20
-	req_access =list(ACCESS_MEDICAL)
+	req_access =list(access_medical)
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
-	var/locked = 1
-//var/emagged = 0
 	var/obj/machinery/camera/cam = null
-	var/list/botcard_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_ROBOTICS)
+	var/list/botcard_access = list(access_medical, access_morgue, access_genetics, access_robotics)
 	var/obj/item/weapon/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
 	var/frustration = 0
@@ -296,7 +294,7 @@
 
 	if(src.patient && src.path.len == 0 && (get_dist(src,src.patient) > 1))
 		spawn(0)
-			src.path = AStar(src.loc, get_turf(src.patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_ortho, 0, 30,id=botcard)
+			src.path = AStar(src.loc, get_turf(src.patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30,id=botcard)
 			src.path = reverselist(src.path)
 			if(src.path.len == 0)
 				src.oldpatient = src.patient
@@ -394,6 +392,13 @@
 	if(src.emagged) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
 
+	if(reagent_id == "internal_beaker" && \
+		src.patient.reagents.has_reagent(src.reagent_glass.reagents.get_master_reagent_id()) )
+		if(prob(10))
+			var/message = pick("Oops, that's an overdose!", "You're going to be just fine!")
+			src.speak(message)
+		return
+
 	if(C.getOxyLoss() < 10 && reagent_id == "inaprovaline") //If they don't need any of that they're probably cured!
 		src.oldpatient = src.patient
 		src.patient = null
@@ -487,36 +492,6 @@
 			M:loc = T
 
 /*
- *	Pathfinding procs, allow the medibot to path through doors it has access to.
- */
-
-//Pretty ugh
-/*
-/turf/proc/AdjacentTurfsAllowMedAccess()
-	var/L[] = new()
-	for(var/turf/t in oview(src,1))
-		if(!t.density)
-			if(!LinkBlocked(src, t) && !TurfBlockedNonWindowNonDoor(t,get_access("Medical Doctor")))
-				L.Add(t)
-	return L
-
-
-//It isn't blocked if we can open it, man.
-/proc/TurfBlockedNonWindowNonDoor(turf/loc, var/list/access)
-	for(var/obj/O in loc)
-		if(O.density && !istype(O, /obj/structure/window) && !istype(O, /obj/machinery/door))
-			return 1
-
-		if (O.density && (istype(O, /obj/machinery/door)) && (access.len))
-			var/obj/machinery/door/D = O
-			for(var/req in D.req_access)
-				if(!(req in access)) //doesn't have this access
-					return 1
-
-	return 0
-*/
-
-/*
  *	Medbot Assembly -- Can be made out of all three medkits.
  */
 
@@ -582,3 +557,4 @@
 			return
 
 		src.created_name = t
+

@@ -1,10 +1,10 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/prisoner
 	name = "Prisoner Management"
-	icon = 'computer.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "explosive"
-	req_access = list(ACCESS_ARMORY)
+	req_access = list(access_armory)
 	circuit = "/obj/item/weapon/circuitboard/prisoner"
 	var/id = 0.0
 	var/temp = null
@@ -50,7 +50,7 @@
 				var/loc_display = "Unknown"
 				var/mob/living/carbon/M = T.imp_in
 				if(M.z == 1 && !istype(M.loc, /turf/space))
-					var/turf/mob_loc = get_turf(M)
+					var/turf/mob_loc = get_turf_loc(M)
 					loc_display = mob_loc.loc
 				dat += "ID: [T.id] | Location: [loc_display]<BR>"
 				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
@@ -100,7 +100,7 @@
 				var/obj/item/weapon/implant/I = locate(href_list["warn"])
 				if((I)&&(I.imp_in))
 					var/mob/living/carbon/R = I.imp_in
-					R << "\green You think: '[warning]'"
+					R << "\green You hear a voice in your head saying: '[warning]'"
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()

@@ -1,9 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/device/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
-	icon = 'assemblies.dmi'
+	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
 	w_class = 3
 	origin_tech = "biotech=3"
@@ -12,7 +12,7 @@
 	var/construction_time = 75
 	//these vars are so the mecha fabricator doesn't shit itself anymore. --NEO
 
-	req_access = list(ACCESS_ROBOTICS)
+	req_access = list(access_robotics)
 
 	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
 
@@ -33,16 +33,9 @@
 			O:brainmob = null
 			brainmob.loc = src
 			brainmob.container = src
-			brainmob.verbs -= /mob/proc/ghost
 			brainmob.stat = 0
-
-			// force re-entering corpse
-			if (!brainmob.client)
-				for(var/mob/dead/observer/ghost in world)
-					if(ghost.corpse == brainmob && ghost.client)
-						ghost.cancel_camera()
-						ghost.reenter_corpse()
-						break
+			dead_mob_list -= brainmob//Update dem lists
+			living_mob_list += brainmob
 
 			user.drop_item()
 			del(O)
@@ -51,6 +44,9 @@
 			icon_state = "mmi_full"
 
 			locked = 1
+
+			feedback_inc("cyborg_mmis_filled",1)
+
 			return
 
 		if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
@@ -75,8 +71,8 @@
 			var/obj/item/brain/brain = new(user.loc)
 			brainmob.container = null//Reset brainmob mmi var.
 			brainmob.loc = brain//Throw mob into brain.
+			living_mob_list -= brainmob//Get outta here
 			brain.brainmob = brainmob//Set the brain to use the brainmob
-			brainmob.verbs += /mob/proc/ghost
 			brainmob = null//Set mmi brainmob var to null
 
 			icon_state = "mmi_empty"
@@ -89,7 +85,6 @@
 			brainmob.real_name = H.real_name
 			brainmob.dna = H.dna
 			brainmob.container = src
-			brainmob.verbs -= /mob/proc/ghost
 
 			name = "Man-Machine Interface: [brainmob.real_name]"
 			icon_state = "mmi_full"
@@ -134,3 +129,16 @@
 
 			radio.listening = radio.listening==1 ? 0 : 1
 			brainmob << "\blue Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast."
+
+/obj/item/device/mmi/emp_act(severity)
+	if(!brainmob)
+		return
+	else
+		switch(severity)
+			if(1)
+				brainmob.emp_damage += rand(20,30)
+			if(2)
+				brainmob.emp_damage += rand(10,20)
+			if(3)
+				brainmob.emp_damage += rand(0,10)
+	..()

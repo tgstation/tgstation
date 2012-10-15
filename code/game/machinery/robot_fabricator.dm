@@ -1,6 +1,6 @@
 /obj/machinery/robotic_fabricator
 	name = "Robotic Fabricator"
-	icon = 'robotics.dmi'
+	icon = 'icons/obj/robotics.dmi'
 	icon_state = "fab-idle"
 	density = 1
 	anchored = 1
@@ -39,10 +39,6 @@
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
-
-/obj/machinery/robotic_fabricator/process()
-	if (stat & (NOPOWER | BROKEN))
-		return
 
 /obj/machinery/robotic_fabricator/attack_paw(user as mob)
 	return src.attack_hand(user)

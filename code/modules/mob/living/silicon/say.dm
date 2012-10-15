@@ -2,44 +2,44 @@
 	if (!message)
 		return
 
-	if (src.client && (client.muted || src.client.muted_complete))
-		src << "You are muted."
-		return
+	if (src.client)
+		if(client.muted & MUTE_IC)
+			src << "You cannot send IC messages (muted)."
+			return
+		if (src.client.handle_spam_prevention(message,MUTE_IC))
+			return
 
 	if (stat == 2)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		return say_dead(message)
 
-	// wtf?
+	//Must be concious to speak
 	if (stat)
 		return
 
 	if (length(message) >= 2)
-		if ((copytext(message, 1, 3) == ":s") || (copytext(message, 1, 3) == ":S"))
-//			if(istype(src, /mob/living/silicon/pai))
-//				return ..(message)
+		if ((copytext(message, 1, 3) == ":b") || (copytext(message, 1, 3) == ":B"))
+			if(istype(src, /mob/living/silicon/pai))
+				return ..(message)
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			robot_talk(message)
-		else if ((copytext(message, 1, 3) == ":h") || (copytext(message, 1, 3) == ":H"))
+		else if (isAI(src) && ((copytext(message, 1, 3) == ":h") || (copytext(message, 1, 3) == ":H")))
 			if(isAI(src)&&client)//For patching directly into AI holopads.
+				var/mob/living/silicon/ai/U = src
 				message = copytext(message, 3)
 				message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-				holopad_talk(message)
-			else if(istype(src,/mob/living/silicon/robot))	//Will not allow anyone by an active AI to use this function.
-				message = copytext(message, 3)
-				message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-				var/mob/living/silicon/robot/R = src
-				R.radio.talk_into(src, message, "department")
-			else
-				src << "You cannot use that channel."
+				U.holopad_talk(message)
+			else//Will not allow anyone by an active AI to use this function.
+				src << "This function is not available to you."
+				return
 		else
 			return ..(message)
 	else
 		return ..(message)
 
 //For holopads only. Usable by AI.
-/mob/living/proc/holopad_talk(var/message)
+/mob/living/silicon/ai/proc/holopad_talk(var/message)
 
 	log_say("[key_name(src)] : [message]")
 
@@ -48,18 +48,14 @@
 	if (!message)
 		return
 
-	if(!isAI(src))
-		return
-
-	var/mob/living/silicon/ai/A = src
-	var/obj/machinery/hologram/holopad/T = A.current//Client eye centers on an object.
-	if(istype(T) && T.hologram && T.master==src)
+	var/obj/machinery/hologram/holopad/T = src.current
+	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
 		var/message_a = say_quote(message)
 
 		//Human-like, sorta, heard by those who understand humans.
 		var/rendered_a = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
 
-		//Speech distorted, heard by those who do not understand AIs.
+		//Speach distorted, heard by those who do not understand AIs.
 		message = stars(message)
 		var/message_b = say_quote(message)
 		var/rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
@@ -70,12 +66,6 @@
 				M.show_message(rendered_a, 2)
 			else//If they do not.
 				M.show_message(rendered_b, 2)
-
-		for (var/obj/item/device/taperecorder/O in range(T, 7)) //Puree hack for tap recorder
-			spawn (0)
-				if(O && !istype(O.loc, /obj/item/weapon/storage))
-					O.hear_talk(src, message_a)
-
 		/*Radios "filter out" this conversation channel so we don't need to account for them.
 		This is another way of saying that we won't bother dealing with them.*/
 	else
@@ -94,22 +84,21 @@
 	var/message_a = say_quote(message)
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 
-	for (var/mob/living/S in world)
-		if(!S.stat)
-			if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
-				if(istype(S , /mob/living/silicon/ai))
-					var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
-					S.show_message(renderedAI, 2)
-				else
-					S.show_message(rendered, 2)
+	for (var/mob/living/S in living_mob_list)
+		if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
+			if(istype(S , /mob/living/silicon/ai))
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
+				S.show_message(renderedAI, 2)
+			else
+				S.show_message(rendered, 2)
 
 
-			else if (S.binarycheck())
-				if(istype(S , /mob/living/silicon/ai))
-					var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
-					S.show_message(renderedAI, 2)
-				else
-					S.show_message(rendered, 2)
+		else if (S.binarycheck())
+			if(istype(S , /mob/living/silicon/ai))
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src]'><span class='name'>[name]</span></a> <span class='message'>[message_a]</span></span></i>"
+				S.show_message(renderedAI, 2)
+			else
+				S.show_message(rendered, 2)
 
 	var/list/listening = hearers(1, src)
 	listening -= src
@@ -136,8 +125,6 @@
 
 	rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 
-	for (var/mob/M in world)
-		if (istype(M, /mob/new_player))
-			continue
-		if (M.stat > 1)
+	for (var/mob/M in dead_mob_list)
+		if(!istype(M,/mob/new_player) && !(istype(M,/mob/living/carbon/brain)))//No meta-evesdropping
 			M.show_message(rendered, 2)

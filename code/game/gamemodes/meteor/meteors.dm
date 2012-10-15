@@ -3,8 +3,8 @@
 /var/const/meteor_wave_delay = 625 //minimum wait between waves in tenths of seconds
 //set to at least 100 unless you want evarr ruining every round
 
-/var/const/meteors_in_wave = 10 //THIS should be better, Spess.
-/var/const/meteors_in_small_wave = 4
+/var/const/meteors_in_wave = 50
+/var/const/meteors_in_small_wave = 10
 
 /proc/meteor_wave(var/number = meteors_in_wave)
 	if(!ticker || wavesecret)
@@ -36,25 +36,25 @@
 	do
 		switch(pick(1,2,3,4))
 			if(1) //NORTH
-				starty = world.maxy-15
-				startx = rand(15, world.maxx-15)
-				endy = 15
-				endx = rand(15, world.maxx-15)
+				starty = world.maxy-(TRANSITIONEDGE+1)
+				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+				endy = TRANSITIONEDGE
+				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
 			if(2) //EAST
-				starty = rand(15,world.maxy-15)
-				startx = world.maxx-15
-				endy = rand(15, world.maxy-15)
-				endx = 15
+				starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
+				startx = world.maxx-(TRANSITIONEDGE+1)
+				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
+				endx = TRANSITIONEDGE
 			if(3) //SOUTH
-				starty = 15
-				startx = rand(15, world.maxx-15)
-				endy = world.maxy-15
-				endx = rand(15, world.maxx-15)
+				starty = (TRANSITIONEDGE+1)
+				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
+				endy = world.maxy-TRANSITIONEDGE
+				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
 			if(4) //WEST
-				starty = rand(15, world.maxy-15)
-				startx = 15
-				endy = rand(15,world.maxy-15)
-				endx = world.maxx-15
+				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
+				startx = (TRANSITIONEDGE+1)
+				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+				endx = world.maxx-TRANSITIONEDGE
 
 		pickedstart = locate(startx, starty, 1)
 		pickedgoal = locate(endx, endy, 1)
@@ -82,7 +82,7 @@
 
 /obj/effect/meteor
 	name = "meteor"
-	icon = 'meteor.dmi'
+	icon = 'icons/obj/meteor.dmi'
 	icon_state = "flaming"
 	density = 1
 	anchored = 1.0
@@ -96,10 +96,9 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/effect/meteor/Move()
-//	var/turf/T = src.loc
-	//FUCK YOU. FUCK YOU ALL, METEORS. ~Hawk.
-	/*if (istype(T, /turf))
-		T.hotspot_expose(METEOR_TEMPERATURE, 1000) */
+	var/turf/T = src.loc
+	if (istype(T, /turf))
+		T.hotspot_expose(METEOR_TEMPERATURE, 1000)
 	..()
 	return
 
@@ -110,9 +109,15 @@
 				shake_camera(M, 3, 1)
 		if (A)
 			A.meteorhit(src)
-			playsound(src.loc, 'meteorimpact.ogg', 40, 1)
+			playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 		if (--src.hits <= 0)
-			if(prob(15))// && !istype(A, /obj/structure/grille))
+
+			//Prevent meteors from blowing up the singularity's containment.
+			//Changing emitter and generator ex_act would result in them being bomb and C4 proof.
+			if(!istype(A,/obj/machinery/emitter) && \
+				!istype(A,/obj/machinery/field_generator) && \
+				prob(15))
+
 				explosion(src.loc, 4, 5, 6, 7, 0)
 				playsound(src.loc, "explosion", 50, 1)
 			del(src)
@@ -134,12 +139,19 @@
 
 	Bump(atom/A)
 		spawn(0)
+			//Prevent meteors from blowing up the singularity's containment.
+			//Changing emitter and generator ex_act would result in them being bomb and C4 proof
+			if(!istype(A,/obj/machinery/emitter) && \
+				!istype(A,/obj/machinery/field_generator))
+				if(--src.hits <= 0)
+					del(src) //Dont blow up singularity containment if we get stuck there.
+
 			for(var/mob/M in range(10, src))
 				if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
 					shake_camera(M, 3, 1)
 			if (A)
 				explosion(src.loc, 0, 1, 2, 3, 0)
-				playsound(src.loc, 'meteorimpact.ogg', 40, 1)
+				playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 			if (--src.hits <= 0)
 				if(prob(15) && !istype(A, /obj/structure/grille))
 					explosion(src.loc, 1, 2, 3, 4, 0)

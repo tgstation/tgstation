@@ -1,28 +1,19 @@
 /mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 
-	if(!emote_allowed && usr == src)
-		usr << "You are unable to emote."
-		return
-
-	if (findtext(act, " ", 1, null))
-		var/t1 = findtext(act, " ", 1, null)
+	if (findtext(act, "-", 1, null))
+		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 	//var/m_type = 1
 
-	for(var/named in organs)
-		var/datum/organ/external/F = organs[named]
-		for (var/obj/item/weapon/implant/I in F.implant)
-			if (I.implanted)
-				I.trigger(act, src)
+	for (var/obj/item/weapon/implant/I in src)
+		if (I.implanted)
+			I.trigger(act, src)
 
 	if(src.stat == 2.0 && (act != "deathgasp"))
-		return
-	if(src.stat != 2.0 && act == "deathgasp" && !src.mind.special_role == "Syndicate")
-		src << "You are not dead.  No."
 		return
 	switch(act)
 		if ("airguitar")
@@ -56,52 +47,36 @@
 			m_type = 1
 
 		if ("custom")
-			m_type = 0
-			if(copytext(param,1,2) == "v")
+			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
+			if (!input)
+				return
+			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
+			if (input2 == "Visible")
 				m_type = 1
-			else if(copytext(param,1,2) == "h")
+			else if (input2 == "Hearable")
+				if (src.miming)
+					return
 				m_type = 2
 			else
-				var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
-				if (input2 == "Visible")
-					m_type = 1
-				else if (input2 == "Hearable")
-					m_type = 2
-				else
-					alert("Unable to use this emote, must be either hearable or visible.")
-					return
-			if(m_type)
-				param = trim(copytext(param,2))
-			else
-				param = trim(param)
-			var/input
-			if(!param)
-				input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
-			else
-				input = param
-			if(input)
-				message = "<B>[src]</B> [input]"
-			else
+				alert("Unable to use this emote, must be either hearable or visible.")
 				return
+			message = "<B>[src]</B> [input]"
+
 		if ("me")
 			if(silent)
 				return
-			if (src.client && (client.muted || client.muted_complete))
-				src << "You are muted."
-				return
+			if (src.client)
+				if (client.muted & MUTE_IC)
+					src << "\red You cannot send IC messages (muted)."
+					return
+				if (src.client.handle_spam_prevention(message,MUTE_IC))
+					return
 			if (stat)
 				return
 			if(!(message))
 				return
 			else
-				if(cmptext(copytext(message, 1, 3), "v "))
-					message = "<B>[src]</B> [copytext(message, 3)]"
-					m_type = 1
-				else if(cmptext(copytext(message, 1, 3), "h "))
-					message = "<B>[src]</B> [copytext(message, 3)]"
-					m_type = 2
-				else
-					message = "<B>[src]</B> [message]"
+				message = "<B>[src]</B> [message]"
 
 		if ("salute")
 			if (!src.buckled)
@@ -205,20 +180,6 @@
 				message = "<B>[src]</B> makes a weak noise."
 				m_type = 2
 
-		if ("breathe")
-			message = "<B>[src]</B> breathes."
-			m_type = 1
-			holdbreath = 0
-
-		if ("stopbreath")
-			message = "<B>[src]</B> stops breathing..."
-			m_type = 1
-
-		if ("holdbreath")
-			message = "<B>[src]</B> stops breathing..."
-			m_type = 1
-			holdbreath = 1
-
 		if ("deathgasp")
 			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
@@ -307,12 +268,12 @@
 				m_type = 2
 
 		if ("mumble")
-			message = "<B>[src]</B> mumbles."
+			message = "<B>[src]</B> mumbles!"
 			m_type = 2
 
 		if ("grumble")
 			if (!muzzled)
-				message = "<B>[src]</B> grumbles."
+				message = "<B>[src]</B> grumbles!"
 				m_type = 2
 			else
 				message = "<B>[src]</B> makes a noise."
@@ -497,18 +458,6 @@
 				message = "<B>[src]</B> makes a very loud noise."
 				m_type = 2
 
-		if ("hungry")
-			if(prob(1))
-				message = "<B>Blue Elf</B> needs food Badly."
-			else
-				message = "<B>[src]'s</B> stomach growls."
-
-		if ("thirsty")
-			if(prob(1))
-				message = "<B>[src]</B> cancels destory station: Drinking."
-			else
-				message = "<B>[src]</B> looks thirsty."
-
 		if ("help")
 			src << "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn"
 
@@ -525,26 +474,17 @@
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.
 
-		for(var/mob/M in world)
-			if (!M.client)
-				continue //skip monkeys and leavers
-			if (istype(M, /mob/new_player))
-				continue
-			if(findtext(message," snores.")) //Because we have so many sleeping people.
-				continue
+		for(var/mob/M in dead_mob_list)
+			if (!M.client || istype(M, /mob/new_player))
+				continue //skip monkeys, leavers and new players
 			if(M.stat == 2 && M.client.ghost_sight && !(M in viewers(src,null)))
 				M.show_message(message)
 
 
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
-				if(istype(O,/mob/living/carbon/human))
-					for(var/mob/living/parasite/P in O:parasites)
-						P.show_message(message, m_type)
 				O.show_message(message, m_type)
 		else if (m_type & 2)
 			for (var/mob/O in hearers(src.loc, null))
-				if(istype(O,/mob/living/carbon/human))
-					for(var/mob/living/parasite/P in O:parasites)
-						P.show_message(message, m_type)
 				O.show_message(message, m_type)
+

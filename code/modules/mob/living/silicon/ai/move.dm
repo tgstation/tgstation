@@ -1,5 +1,5 @@
-#define SHARED_TYPES_WEIGHT 5
-#define CAMERA_PROXIMITY_PREFERENCE 0.2
+/var/const/SHARED_TYPES_WEIGHT = 5
+/var/const/CAMERA_PROXIMITY_PREFERENCE = 0.2
 // the smaller this is, the more a straight line will be preferred over a closer camera when changing cameras
 // if you set this to 0 the game will crash. don't do that.
 // if you set it to be negative the algorithm will do completely nonsensical things (like choosing the camera that's
@@ -7,24 +7,11 @@
 
 /client/proc/AIMove(n,direct,var/mob/living/silicon/ai/user)
 	if(!user) return
+	if(user.control_disabled) return
 
 	var/min_dist = 1e8
 	var/obj/machinery/camera/closest = null
 	var/atom/old = (user.current?user.current : user.loc)
-
-	if(istype(user.loc, /obj/item/clothing/suit/space/space_ninja))//To make ninja suit AI holograms work.
-		var/obj/item/clothing/suit/space/space_ninja/S = user.loc//Ease of use.
-		if(S.hologram)//If there is a hologram.
-			S.hologram.loc = get_step(S.hologram, direct)
-			S.hologram.dir = direct
-		return//Whatever the case, return since you can't move anyway.
-
-	if(user.client)//To make AI holograms work. They will relay directions as long as they are centered on the object.
-		var/obj/machinery/hologram/holopad/T = user.current//Client eye centers on an object.
-		if(istype(T)&&T.hologram&&T.master==user)//If there is a hologram and its master is the user.
-			T.hologram.loc = get_step(T.hologram, direct)
-			T.hologram.dir = direct
-			return//Relay move and then return if that's the case.
 
 	if(!old)	return
 
@@ -42,17 +29,14 @@
 	var/area/A = get_area(old)
 	var/list/old_types = dd_text2list("[A.type]", "/")
 
-	for(var/obj/machinery/camera/current in world)
-		if( !(current.network in user.networks) )	continue
-		if(!current.status)	continue			//	ignore disabled cameras
+	for(var/obj/machinery/camera/current in cameranet.cameras)
+		if(user.network != current.network)	continue
+		if(!current.status)	continue	//	ignore disabled cameras
 
 		//make sure it's the right direction
 		if(dx && (current.x * dx <= old.x * dx))
 			continue
 		if(dy && (current.y * dy <= old.y * dy))
-			continue
-		//only let the player move to cameras on the same zlevel
-		if(current.z != old.z)
 			continue
 
 		var/shared_types = 0 //how many levels deep the old camera and the closest camera's areas share

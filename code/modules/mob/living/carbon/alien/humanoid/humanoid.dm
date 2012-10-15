@@ -1,3 +1,15 @@
+/mob/living/carbon/alien/humanoid
+	name = "alien"
+	icon_state = "alien_s"
+
+	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
+	var/obj/item/clothing/head/head = null			//
+	var/obj/item/weapon/r_store = null
+	var/obj/item/weapon/l_store = null
+//	var/alien_invis = 0
+	var/caste = ""
+	update_icon = 1
+
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -6,23 +18,7 @@
 	if(name == "alien")
 		name = text("alien ([rand(1, 1000)])")
 	real_name = name
-	spawn (1)
-		if(!istype(src, /mob/living/carbon/alien/humanoid/queen))
-			stand_icon = new /icon('alien.dmi', "alien_s")
-			lying_icon = new /icon('alien.dmi', "alien_l")
-			resting_icon = new /icon('alien.dmi', "alienh_sleep")
-			running_icon = new /icon('alien.dmi', "alienh_running")
-		icon = stand_icon
-		rebuild_appearance()
-		src << "\blue Your icons have been generated!"
 	..()
-
-/mob/living/carbon/alien/humanoid/proc/mind_initialize(mob/G, alien_caste)
-	mind = new
-	mind.current = src
-	mind.assigned_role = "Alien"
-	mind.special_role = alien_caste
-	mind.key = G.key
 
 //This is fine, works the same as a human
 /mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
@@ -62,21 +58,7 @@
 		tally += 1
 	if (istype(src, /mob/living/carbon/alien/humanoid/hunter))
 		tally = -1 // hunters go supersuperfast
-	return tally + move_delay_add
-
-//This needs to be fixed
-/mob/living/carbon/alien/humanoid/Stat()
-	..()
-
-	statpanel("Status")
-	if (client && client.holder)
-		stat(null, "([x], [y], [z])")
-
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
-	if (client.statpanel == "Status")
-		stat(null, "Plasma Stored: [getPlasma()]")
+	return (tally + move_delay_add + config.alien_delay)
 
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
@@ -88,16 +70,17 @@
 	..()
 
 /mob/living/carbon/alien/humanoid/ex_act(severity)
-	flick("flash", flash)
+	if(!blinded)
+		flick("flash", flash)
 
-//	if (stat == 2 && client)
-//		gib()
-//		return
+	if (stat == 2 && client)
+		gib()
+		return
 
-//	else if (stat == 2 && !client)
-//		xgibs(loc, viruses)
-//		del(src)
-//		return
+	else if (stat == 2 && !client)
+		xgibs(loc, viruses)
+		del(src)
+		return
 
 	var/shielded = 0
 
@@ -148,80 +131,6 @@
 
 	return
 
-//unequip
-/mob/living/carbon/alien/humanoid/u_equip(obj/item/W as obj)
-	if (W == wear_suit)
-		wear_suit = null
-	else if (W == head)
-		head = null
-	else if (W == r_store)
-		r_store = null
-	else if (W == l_store)
-		l_store = null
-	else if (W == r_hand)
-		r_hand = null
-	else if (W == l_hand)
-		l_hand = null
-
-/mob/living/carbon/alien/humanoid/db_click(text, t1)
-	var/obj/item/W = equipped()
-	var/emptyHand = (W == null)
-	if ((!emptyHand) && (!istype(W, /obj/item)))
-		return
-	if (emptyHand)
-		usr.next_move = usr.prev_move
-		usr:lastDblClick -= 3	//permit the double-click redirection to proceed.
-	switch(text)
-
-//if emptyhand then wear the suit, no bedsheet clothes for the alien
-
-		if("o_clothing")
-			if (wear_suit)
-				if (emptyHand)
-					wear_suit.DblClick()
-			return
-/*			if (!( istype(W, /obj/item/clothing/suit) ))
-				return
-			u_equip(W)
-			wear_suit = W
-			W.equipped(src, text)
-*/
-		if("head")
-			if (head)
-				if (emptyHand)
-					head.DblClick()
-				return
-			if (( istype(W, /obj/effect/alien/head) ))
-				u_equip(W)
-				head = W
-				return
-			return
-/*			if (!( istype(W, /obj/item/clothing/head) ))
-				return
-			u_equip(W)
-			head = W
-			W.equipped(src, text)
-*/
-		if("storage1")
-			if (l_store)
-				if (emptyHand)
-					l_store.DblClick()
-				return
-			if ((!( istype(W, /obj/item) ) || W.w_class > 3))
-				return
-			u_equip(W)
-			l_store = W
-		if("storage2")
-			if (r_store)
-				if (emptyHand)
-					r_store.DblClick()
-				return
-			if ((!( istype(W, /obj/item) ) || W.w_class > 3))
-				return
-			u_equip(W)
-			r_store = W
-		else
-	return
 
 /mob/living/carbon/alien/humanoid/meteorhit(O as obj)
 	for(var/mob/M in viewers(src, null))
@@ -239,7 +148,7 @@
 		return 0
 
 	if (restrained())
-		pulling = null
+		stop_pulling()
 
 	var/t7 = 1
 	if (restrained())
@@ -252,7 +161,7 @@
 
 		if (pulling && pulling.loc)
 			if(!( isturf(pulling.loc) ))
-				pulling = null
+				stop_pulling()
 				return
 			else
 				if(Debug)
@@ -261,7 +170,7 @@
 
 		/////
 		if(pulling && pulling.anchored)
-			pulling = null
+			stop_pulling()
 			return
 
 		if (!restrained())
@@ -286,21 +195,21 @@
 						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
 							ok = 0
 					if (ok)
-						var/t = M.pulling
-						M.pulling = null
+						var/atom/movable/t = M.pulling
+						M.stop_pulling()
 
 						step(pulling, get_dir(pulling.loc, T))
-						M.pulling = t
+						M.start_pulling(t)
 				else
 					if (pulling)
 						if (istype(pulling, /obj/structure/window))
 							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
 								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
-									pulling = null
+									stop_pulling()
 					if (pulling)
 						step(pulling, get_dir(pulling.loc, T))
 	else
-		pulling = null
+		stop_pulling()
 		. = ..()
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
@@ -310,169 +219,6 @@
 
 	return
 
-/mob/living/carbon/alien/humanoid/update_clothing()
-	..()
-
-	if (monkeyizing)
-		return
-
-	overlays = null
-
-	if(buckled)
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			lying = 0
-		else
-			lying = 1
-
-	// Automatically drop anything in store / id / belt if you're not wearing a uniform.
-	if (zone_sel)
-		zone_sel.overlays = null
-		zone_sel.overlays += damageicon_standing
-		zone_sel.overlays += image("icon" = 'zone_sel.dmi', "icon_state" = text("[]", zone_sel.selecting))
-
-	if (lying)
-		if(update_icon)
-			if(!resting)
-				icon = lying_icon
-			else
-				icon = resting_icon
-
-	else if(!lying)
-		if(update_icon)
-			if(m_intent == "run")
-				icon = running_icon
-			else
-				icon = stand_icon
-
-		overlays += damageicon_lying
-
-		if (face_lying)
-			overlays += face_lying
-	else
-		if(update_icon)
-			icon = stand_icon
-
-		overlays += damageicon_standing
-
-		if (face_standing)
-			overlays += face_standing
-
-	// Uniform
-	if (client)
-		client.screen -= hud_used.other
-		client.screen -= hud_used.intents
-		client.screen -= hud_used.mov_int
-
-	// ???
-	if (client && other)
-		client.screen += hud_used.other
-
-
-	if (client)
-		if (i_select)
-			if (intent)
-				client.screen += hud_used.intents
-
-				var/list/L = dd_text2list(intent, ",")
-				L[1] += ":-11"
-				i_select.screen_loc = dd_list2text(L,",") //ICONS4, FUCKING SHIT
-			else
-				i_select.screen_loc = null
-		if (m_select)
-			if (m_int)
-				client.screen += hud_used.mov_int
-
-				var/list/L = dd_text2list(m_int, ",")
-				L[1] += ":-11"
-				m_select.screen_loc = dd_list2text(L,",") //ICONS4, FUCKING SHIT
-			else
-				m_select.screen_loc = null
-
-	if (wear_suit)
-		var/t1 = wear_suit.item_state
-		if (!t1)
-			t1 = wear_suit.icon_state
-		overlays += image("icon" = 'mob.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = SUIT_LAYER)
-		if (wear_suit.blood_DNA)
-			if (istype(wear_suit, /obj/item/clothing/suit/armor))
-				overlays += image("icon" = 'blood.dmi', "icon_state" = "armorblood[!lying ? "" : "2"]", "layer" = B_SUIT_LAYER)
-			else
-				overlays += image("icon" = 'blood.dmi', "icon_state" = "suitblood[!lying ? "" : "2"]", "layer" = B_SUIT_LAYER)
-		wear_suit.screen_loc = ui_alien_oclothing
-		if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-			if (handcuffed)
-				handcuffed.loc = loc
-				handcuffed.layer = initial(handcuffed.layer)
-				handcuffed = null
-			if ((l_hand || r_hand))
-				var/h = hand
-				hand = 1
-				drop_item()
-				hand = 0
-				drop_item()
-				hand = h
-
-	// Head
-	if (head)
-		var/t1 = head.item_state
-		if (!t1)
-			t1 = head.icon_state
-		overlays += image("icon" = 'mob.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = HEAD_LAYER)
-		if (head.blood_DNA)
-			overlays += image("icon" = 'blood.dmi', "icon_state" = "helmetblood[!lying ? "" : "2"]", "layer" = B_HEAD_LAYER)
-		head.screen_loc = ui_alien_head
-
-	if (l_store)
-		l_store.screen_loc = ui_storage1
-
-	if (r_store)
-		r_store.screen_loc = ui_storage2
-
-	if (client)
-		client.screen -= contents
-		client.screen += contents
-
-	if (r_hand)
-		overlays += image("icon" = 'items_righthand.dmi', "icon_state" = r_hand.item_state ? r_hand.item_state : r_hand.icon_state, "layer" = INHANDS_LAYER)
-
-		r_hand.screen_loc = ui_rhand
-
-	if (l_hand)
-		overlays += image("icon" = 'items_lefthand.dmi', "icon_state" = l_hand.item_state ? l_hand.item_state : l_hand.icon_state, "layer" = INHANDS_LAYER)
-
-		l_hand.screen_loc = ui_lhand
-
-
-
-	var/shielded = 0
-	for (var/obj/item/weapon/cloaking_device/S in src)
-		if (S.active)
-			shielded = 2
-			break
-	if(client && client.admin_invis)
-		invisibility = 100
-	else if (shielded == 2 || alien_invis)
-		invisibility = 2
-		//New stealth. Hopefully doesn't lag too much. /N
-		if(istype(loc, /turf))//If they are standing on a turf.
-			AddCamoOverlay(loc)//Overlay camo.
-	else
-		invisibility = 0
-		if(targeted_by && target_locked)
-			overlays += target_locked
-		else if(targeted_by)
-			target_locked = new /obj/effect/target_locked(src)
-			overlays += target_locked
-		else if(!targeted_by && target_locked)
-			del(target_locked)
-
-	for (var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			spawn (0)
-				show_inv(M)
-				return
-
-	last_b_state = stat
 
 /mob/living/carbon/alien/humanoid/hand_p(mob/M as mob)
 	if (!ticker)
@@ -511,7 +257,7 @@
 			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
 				return
 			if (health > 0)
-				playsound(loc, 'bite.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
@@ -584,6 +330,8 @@
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
+		if(M.attack_sound)
+			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -645,53 +393,34 @@
 		if ("grab")
 			if (M == src)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
-			G.assailant = M
-			if (M.hand)
-				M.l_hand = G
-			else
-				M.r_hand = G
-			G.layer = 20
-			G.affecting = src
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, M, src)
+
+			M.put_in_active_hand(G)
+
 			grabbed_by += G
 			G.synch()
 
 			LAssailant = M
 
-			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
 		if ("hurt")
 			var/damage = rand(1, 9)
-
-			var/attack_verb
-			switch(M.mutantrace)
-				if("lizard")
-					attack_verb = "scratch"
-				if("plant")
-					attack_verb = "slash"
-				else
-					attack_verb = "punch"
-
-			if(M.type == /mob/living/carbon/human/tajaran)
-				attack_verb = "slash"
-
 			if (prob(90))
 				if ((HULK in M.mutations) || (SUPRSTR in M.augmentations))//HULK SMASH
 					damage += 14
 					spawn(0)
-						Paralyse(5)
+						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
-				if(M.type != /mob/living/carbon/human/tajaran)
-					playsound(loc, "punch", 25, 1, -1)
-				else if (M.type == /mob/living/carbon/human/tajaran)
-					damage += 10
-					playsound(loc, 'slice.ogg', 25, 1, -1)
-				visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
+				playsound(loc, "punch", 25, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
 				if (damage > 9||prob(5))//Regular humans have a very small chance of weakening an alien.
 					Weaken(1,5)
 					for(var/mob/O in viewers(M, null))
@@ -700,31 +429,28 @@
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
-				if(M.type != /mob/living/carbon/human/tajaran)
-					playsound(loc, 'punchmiss.ogg', 25, 1, -1)
-				else if (M.type == /mob/living/carbon/human/tajaran)
-					playsound(loc, 'slashmiss.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to [attack_verb] []!</B>", M, src), 1)
+						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
 
 		if ("disarm")
 			if (!lying)
 				if (prob(5))//Very small chance to push an alien down.
 					Weaken(2)
-					playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has pushed down []!</B>", M, src), 1)
 				else
 					if (prob(50))
 						drop_item()
-						playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has disarmed []!</B>", M, src), 1)
 					else
-						playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+						playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has attempted to disarm []!</B>", M, src), 1)
@@ -749,8 +475,7 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
-			if(!sleeping_willingly)
-				sleeping = max(0,sleeping-5)
+			sleeping = max(0,sleeping-5)
 			resting = 0
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
@@ -761,7 +486,7 @@ In all, this is a lot like the monkey code. /N
 
 		else
 			if (health > 0)
-				playsound(loc, 'bite.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				var/damage = rand(1, 3)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -800,11 +525,12 @@ In all, this is a lot like the monkey code. /N
 	return
 
 /mob/living/carbon/alien/humanoid/updatehealth()
-	if (nodamage == 0)
-	//oxyloss is only used for suicide
-	//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = 100 - getOxyLoss() - getFireLoss() - getBruteLoss()
+	if(nodamage)
+		health = maxHealth
+		stat = CONSCIOUS
 	else
-		health = 100
-		stat = 0
+		//oxyloss is only used for suicide
+		//toxloss isn't used for aliens, its actually used as alien powers!!
+		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+
 

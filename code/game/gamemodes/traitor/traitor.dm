@@ -5,8 +5,9 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
-	restricted_jobs = list("Cyborg", "AI")//Approved by headmins for a week test, if you see this it would be nice if you didn't spread it everywhere
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
+	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
 
@@ -18,9 +19,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
-	var/const/traitor_scaling_coeff = 10.0 //how much does the amount of players get divided by to determine traitors
-
-	var/num_players = 0
+	var/const/traitor_scaling_coeff = 5.0 //how much does the amount of players get divided by to determine traitors
 
 
 /datum/game_mode/traitor/announce()
@@ -42,7 +41,7 @@
 	var/num_traitors = 1
 
 	if(config.traitor_scaling)
-		num_traitors = max(1, round((num_players())/(traitor_scaling_coeff)) + 1)
+		num_traitors = max(1, round((num_players())/(traitor_scaling_coeff)))
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
@@ -78,10 +77,6 @@
 
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
-	var/datum/traitorinfo/info = new
-	info.ckey = traitor.key
-	info.starting_player_count = num_players()
-	info.starting_name = traitor.current.name
 	if(istype(traitor.current, /mob/living/silicon))
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = traitor
@@ -96,25 +91,36 @@
 			var/datum/objective/block/block_objective = new
 			block_objective.owner = traitor
 			traitor.objectives += block_objective
-		info.starting_occupation = "AI"
 
 	else
-		info.starting_occupation = (traitor.current:wear_id && traitor.current:wear_id:assignment ? traitor.current:wear_id:assignment : traitor.assigned_role)
-		for(var/datum/objective/o in SelectObjectives((istype(traitor.current:wear_id, /obj/item/weapon/card/id) ? traitor.current:wear_id:assignment : traitor.assigned_role), traitor))
-			o.owner = traitor
-			traitor.objectives += o
-	for(var/datum/objective/objective in traitor.objectives)
-		info.starting_objective += "[objective.explanation_text]            "
-	logtraitors[traitor] = info
+		switch(rand(1,100))
+			if(1 to 50)
+				var/datum/objective/assassinate/kill_objective = new
+				kill_objective.owner = traitor
+				kill_objective.find_target()
+				traitor.objectives += kill_objective
+			else
+				var/datum/objective/steal/steal_objective = new
+				steal_objective.owner = traitor
+				steal_objective.find_target()
+				traitor.objectives += steal_objective
+		switch(rand(1,100))
+			if(1 to 90)
+				if (!(locate(/datum/objective/escape) in traitor.objectives))
+					var/datum/objective/escape/escape_objective = new
+					escape_objective.owner = traitor
+					traitor.objectives += escape_objective
+
+			else
+				if (!(locate(/datum/objective/hijack) in traitor.objectives))
+					var/datum/objective/hijack/hijack_objective = new
+					hijack_objective.owner = traitor
+					traitor.objectives += hijack_objective
 	return
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
 	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
-	traitor.current << "\red <B>REPEAT</B>"
-	traitor.current << "\red <B>You are the traitor.</B>"
-	spawn(rand(600,1800))			//Strumpetplaya - Just another friendly reminder so people don't forget they're the traitor.
-		traitor.current << "\red <B>In case you missed it the first time - YOU ARE THE TRAITOR!</B>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)
 		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -137,8 +143,9 @@
 
 /datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
+	var/law_borg = "Accomplish your AI's objectives at all costs."
 	killer << "<b>Your laws have been changed!</b>"
-	killer.set_zeroth_law(law)
+	killer.set_zeroth_law(law, law_borg)
 	killer << "New law: 0. [law]"
 
 	//Begin code phrase.
@@ -154,97 +161,53 @@
 	else
 		killer << "Unfortunately, the Syndicate did not provide you with a code response."
 	killer << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
-	spawn(30)
-		killer << sound('AISyndiHack.ogg',volume=50)
 	//End code phrase.
 
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
-	for(var/datum/mind/traitor in traitors)
-		var/traitor_name
-
-		if(traitor.current)
-			if(traitor.current == traitor.original)
-				traitor_name = "[traitor.current.real_name] (played by [traitor.key])"
-			else if (traitor.original)
-				traitor_name = "[traitor.current.real_name] (originally [traitor.original.real_name]) (played by [traitor.key])"
-			else
-				traitor_name = "[traitor.current.real_name] (original character destroyed) (played by [traitor.key])"
-		else
-			traitor_name = "[traitor.key] (character destroyed)"
-		var/special_role_text = traitor.special_role?(lowertext(traitor.special_role)):"antagonist"
-		world << "<B>The [special_role_text] was [traitor_name]</B>"
-		if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
+	if(traitors.len)
+		var/text = "<FONT size = 2><B>The traitors were:</B></FONT>"
+		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
-			var/count = 1
-			var/list/success_log = list("Steal-Win" = 0, "Steal-Fail" = 0, "Protect-Win" = 0, "Protect-Fail" = 0,\
-				"Frame-Win" = 0, "Frame-Fail" = 0, "Kill-Win" = 0, "Kill-Fail" = 0)
-			for(var/datum/objective/objective in traitor.objectives)
-				if(objective.check_completion())
-					if(istype(objective, /datum/objective/frame))
-						success_log["Frame-Win"]++
-					if(istype(objective, /datum/objective/protection))
-						success_log["Protect-Win"]++
-					if(istype(objective, /datum/objective/assassinate))
-						success_log["Kill-Win"]++
-					if(istype(objective, /datum/objective/steal))
-						success_log["Steal-Win"]++
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
-					//feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+
+			text += "<br>[traitor.key] was [traitor.name] ("
+			if(traitor.current)
+				if(traitor.current.stat == DEAD)
+					text += "died"
 				else
-					if(istype(objective, /datum/objective/frame))
-						success_log["Frame-Fail"]++
-					if(istype(objective, /datum/objective/protection))
-						success_log["Protect-Fail"]++
-					if(istype(objective, /datum/objective/assassinate))
-						success_log["Kill-Fail"]++
-					if(istype(objective, /datum/objective/steal))
-						success_log["Steal-Fail"]++
-					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
-					//feedback_add_details("traitor_objective","[objective.type]|FAIL")
-					traitorwin = 0
-				count++
+					text += "survived"
+				if(traitor.current.real_name != traitor.name)
+					text += " as [traitor.current.real_name]"
+			else
+				text += "body destroyed"
+			text += ")"
+
+			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
+				var/count = 1
+				for(var/datum/objective/objective in traitor.objectives)
+					if(objective.check_completion())
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						feedback_add_details("traitor_objective","[objective.type]|FAIL")
+						traitorwin = 0
+					count++
+
+			var/special_role_text
+			if(traitor.special_role)
+				special_role_text = lowertext(traitor.special_role)
+			else
+				special_role_text = "antagonist"
 
 			if(traitorwin)
-				world << "<B>The [special_role_text] was successful!<B>"
-				//feedback_add_details("traitor_success","SUCCESS")
+				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
+				feedback_add_details("traitor_success","SUCCESS")
 			else
-				world << "<B>The [special_role_text] has failed!<B>"
-				//feedback_add_details("traitor_success","FAIL")
-			var/savefile/traitor_logs = new("data/player_saves/[copytext(traitor.key, 1, 2)]/[traitor.key]/traitor.sav")
-			var/list/infos
-			traitor_logs >> infos
-			if(istype(infos))
-				infos["Total"]++
-				infos["Success"] += traitorwin
-				infos["Steal"] = (success_log["Steal-Win"]+success_log["Steal-Fail"]+infos["Steal_Total"]) ? ((infos["Steal"]*infos["Steal_Total"]) + success_log["Steal-Win"])/(success_log["Steal-Win"]+success_log["Steal-Fail"]+infos["Steal_Total"]) : 1
-				infos["Kill"] = (success_log["Kill-Win"]+success_log["Kill-Fail"]+infos["Kill_Total"]) ? ((infos["Kill"]*infos["Kill_Total"]) + success_log["Kill-Win"])/(success_log["Kill-Win"]+success_log["Kill-Fail"]+infos["Kill_Total"]) : 1
-				infos["Frame"] = (success_log["Frame-Win"]+success_log["Frame-Fail"]+infos["Frame_Total"]) ? ((infos["Frame"]*infos["Frame_Total"]) + success_log["Frame-Win"])/(success_log["Frame-Win"]+success_log["Frame-Fail"]+infos["Frame_Total"]) : 1
-				infos["Protect"] = (success_log["Protect-Win"]+success_log["Protect-Fail"]+infos["Protect_Total"]) ? ((infos["Protect"]*infos["Protect_Total"]) + success_log["Protect-Win"])/(success_log["Protect-Win"]+success_log["Protect-Fail"]+infos["Protect_Total"]) : 1
-				infos["Steal_Total"] = infos["Steal_Total"]+success_log["Steal-Win"]+success_log["Steal-Fail"]
-				infos["Kill_Total"] = infos["Kill_Total"]+success_log["Kill-Win"]+success_log["Kill-Fail"]
-				infos["Frame_Total"] = infos["Frame_Total"]+success_log["Frame-Win"]+success_log["Frame-Fail"]
-				infos["Protect_Total"] = infos["Protect_Total"]+success_log["Protect-Win"]+success_log["Protect-Fail"]
-			else
-				infos = list("Total" = 1, "Success" = traitorwin,
-				"Steal" = (success_log["Steal-Win"]+success_log["Steal-Fail"]) ? success_log["Steal-Win"]/(success_log["Steal-Win"]+success_log["Steal-Fail"]) : 1,
-				"Kill" = (success_log["Kill-Win"]+success_log["Kill-Fail"]) ? success_log["Kill-Win"]/(success_log["Kill-Win"]+success_log["Kill-Fail"]) : 1,
-				"Frame" = (success_log["Frame-Win"]+success_log["Frame-Fail"]) ? success_log["Frame-Win"]/(success_log["Frame-Win"]+success_log["Frame-Fail"]) : 1,
-				"Protect" = (success_log["Protect-Win"]+success_log["Protect-Fail"]) ? success_log["Protect-Win"]/(success_log["Protect-Win"]+success_log["Protect-Fail"]) : 1,
-				"Steal_Total" = success_log["Steal-Win"]+success_log["Steal-Fail"],
-				"Kill_Total" = success_log["Kill-Win"]+success_log["Kill-Fail"],
-				"Frame_Total" = success_log["Frame-Win"]+success_log["Frame-Fail"],
-				"Protect_Total" = success_log["Protect-Win"]+success_log["Protect-Fail"])
-			traitor_logs << infos
+				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
+				feedback_add_details("traitor_success","FAIL")
 
-			var/datum/traitorinfo/info = logtraitors[traitor]
-			if (info)
-				var/DBConnection/dbcon = new()
-				dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
-				if(dbcon.IsConnected())
-					var/DBQuery/query = dbcon.NewQuery("INSERT INTO `bay12`.`traitorlogs` (`CKey`, `Objective`, `Succeeded`, `Spawned`, `Occupation`, `PlayerCount`) VALUES ('[info.ckey]', [dbcon.Quote(info.starting_objective)], '[traitorwin]', '[dd_list2text(info.spawnlist, ";")]', '[info.starting_occupation]', '[info.starting_player_count]')")
-					query.Execute()
-
+		world << text
 	return 1
 
 
@@ -257,61 +220,19 @@
 			traitor_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			traitor_mob.mutations.Remove(CLUMSY)
 
-	// find a radio! toolbox(es), backpack, belt, headset, pockets
+	// find a radio! toolbox(es), backpack, belt, headset
 	var/loc = ""
-	var/obj/item/device/R = null //Hide the uplink in a PDA if available, otherwise radio
-	if (!R && istype(traitor_mob.belt, /obj/item/device/pda))
-		R = traitor_mob.belt
-		loc = "on your belt"
-	if (!R && istype(traitor_mob.wear_id, /obj/item/device/pda))
-		R = traitor_mob.wear_id
-		loc = "on your jumpsuit"
-	if (!R && istype(traitor_mob.wear_id, /obj/item/device/pda))
-		R = traitor_mob.wear_id
-		loc = "on your jumpsuit"
-	if (!R && istype(traitor_mob.l_hand, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = traitor_mob.l_hand
-		var/list/L = S.return_inv()
-		for (var/obj/item/device/radio/foo in L)
-			R = foo
-			loc = "in the [S.name] in your left hand"
-			break
-	if (!R && istype(traitor_mob.r_hand, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = traitor_mob.r_hand
-		var/list/L = S.return_inv()
-		for (var/obj/item/device/radio/foo in L)
-			R = foo
-			loc = "in the [S.name] in your right hand"
-			break
-	if (!R && istype(traitor_mob.back, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = traitor_mob.back
-		var/list/L = S.return_inv()
-		for (var/obj/item/device/radio/foo in L)
-			R = foo
-			loc = "in the [S.name] on your back"
-			break
-	if (!R && istype(traitor_mob.l_store, /obj/item/device/pda))
-		R = traitor_mob.l_store
-		loc = "in your pocket"
-	if (!R && istype(traitor_mob.r_store, /obj/item/device/pda))
-		R = traitor_mob.r_store
-		loc = "in your pocket"
-	if (!R && traitor_mob.w_uniform && istype(traitor_mob.belt, /obj/item/device/radio))
-		R = traitor_mob.belt
-		loc = "on your belt"
-	if (!R && istype(traitor_mob.l_ear, /obj/item/device/radio))
-		R = traitor_mob.l_ear
-		loc = "on your head"
-	if (!R && istype(traitor_mob.r_ear, /obj/item/device/radio))
-		R = traitor_mob.r_ear
-		loc = "on your head"
+	var/obj/item/R = locate(/obj/item/device/pda) in traitor_mob.contents //Hide the uplink in a PDA if available, otherwise radio
+	if(!R)
+		R = locate(/obj/item/device/radio) in traitor_mob.contents
+
 	if (!R)
-		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you an uplink."
-		traitor_mob << "\red <b>ADMINHELP THIS AT ONCE.</b>"
+		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you a radio."
 		. = 0
 	else
 		if (istype(R, /obj/item/device/radio))
 			// generate list of radio freqs
+			var/obj/item/device/radio/target_radio = R
 			var/freq = 1441
 			var/list/freqlist = list()
 			while (freq <= 1489)
@@ -322,25 +243,20 @@
 					freq += 1
 			freq = freqlist[rand(1, freqlist.len)]
 
-			var/obj/item/device/uplink/radio/T = new /obj/item/device/uplink/radio(R)
-			R:traitorradio = T
-			R:traitor_frequency = freq
-			T.name = R.name
-			T.icon = R.icon
-			T.w_class = R.w_class
-			T.icon_state = R.icon_state
-			T.item_state = R.item_state
-			T.origradio = R
+			var/obj/item/device/uplink/hidden/T = new(R)
+			target_radio.hidden_uplink = T
+			target_radio.traitor_frequency = freq
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
 		else if (istype(R, /obj/item/device/pda))
 			// generate a passcode if the uplink is hidden in a PDA
 			var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
 
-			var/obj/item/device/uplink/pda/T = new /obj/item/device/uplink/pda(R)
-			R:uplink = T
-			T.lock_code = pda_pass
-			T.hostpda = R
+			var/obj/item/device/uplink/hidden/T = new(R)
+			R.hidden_uplink = T
+			var/obj/item/device/pda/P = R
+			P.lock_code = pda_pass
+
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 	//Begin code phrase.
@@ -350,13 +266,11 @@
 			traitor_mob << "\red Code Phrase: \black [syndicate_code_phrase]"
 			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 		else
-			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code phrase."
+			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code phrase."
 		if(prob(80))
 			traitor_mob << "\red Code Response: \black [syndicate_code_response]"
 			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 		else
 			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
 		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
-		spawn(30)
-			traitor_mob << sound('syndicate intro.ogg',volume=50)
 	//End code phrase.

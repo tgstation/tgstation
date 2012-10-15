@@ -1,5 +1,5 @@
 obj/machinery/atmospherics/valve
-	icon = 'valve.dmi'
+	icon = 'icons/obj/atmospherics/valve.dmi'
 	icon_state = "valve0"
 
 	name = "manual valve"
@@ -9,12 +9,17 @@ obj/machinery/atmospherics/valve
 	initialize_directions = SOUTH|NORTH
 
 	var/open = 0
+	var/openDuringInit = 0
 
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
+
+	open
+		open = 1
+		icon_state = "valve1"
 
 	update_icon(animation)
 		if(animation)
@@ -130,7 +135,7 @@ obj/machinery/atmospherics/valve
 
 	process()
 		..()
-		machines.Remove(src)
+		. = PROCESS_KILL
 
 /*		if(open && (!node1 || !node2))
 			close()
@@ -169,6 +174,11 @@ obj/machinery/atmospherics/valve
 			if(target.initialize_directions & get_dir(target,src))
 				node2 = target
 				break
+		if(openDuringInit)
+			open()
+			openDuringInit = 0
+
+		build_network()
 /*
 		var/connect_directions
 		switch(dir)
@@ -250,7 +260,7 @@ obj/machinery/atmospherics/valve
 	digital		// can be controlled by AI
 		name = "digital valve"
 		desc = "A digitally controlled valve."
-		icon = 'digital_valve.dmi'
+		icon = 'icons/obj/atmospherics/digital_valve.dmi'
 
 		attack_ai(mob/user as mob)
 			return src.attack_hand(user)
@@ -314,7 +324,7 @@ obj/machinery/atmospherics/valve
 			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
-		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \

@@ -1,8 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/photocopier
-	name = "Photocopier"
-	icon = 'library.dmi'
+	name = "photocopier"
+	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
 	anchored = 1
 	density = 1
@@ -11,6 +11,7 @@
 	active_power_usage = 200
 	power_channel = EQUIP
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
+	var/obj/item/weapon/photo/photocopy = null
 	var/copies = 1	//how many copies to print!
 	var/toner = 30 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
@@ -25,7 +26,7 @@
 		user.machine = src
 
 		var/dat = "Photocopier<BR><BR>"
-		if(copy)
+		if(copy || photocopy)
 			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
 			if(toner)
 				dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
@@ -64,15 +65,36 @@
 					else
 						break
 				updateUsrDialog()
+			else if(photocopy)
+				for(var/i = 0, i < copies, i++)
+					if(toner > 0)
+						var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (src.loc)
+						var/icon/I = icon(photocopy.icon, photocopy.icon_state)
+						if(toner > 10)	//plenty of toner, go straight greyscale
+							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))		//I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.
+						else			//not much toner left, lighten the photo
+							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
+						p.icon = I
+						p.name = photocopy.name
+						p.desc = photocopy.desc
+						toner -= 5	//photos use a lot of ink!
+						sleep(15)
+					else
+						break
+				updateUsrDialog()
 		else if(href_list["remove"])
 			if(copy)
-				if(ishuman(usr))
-					if(!usr.get_active_hand())
-						copy.loc = usr.loc
-						usr.put_in_hand(copy)
-						usr << "You take the paper out of the photocopier."
-						copy = null
-						updateUsrDialog()
+				copy.loc = usr.loc
+				usr.put_in_hands(copy)
+				usr << "<span class='notice'>You take the paper out of \the [src].</span>"
+				copy = null
+				updateUsrDialog()
+			else if(photocopy)
+				photocopy.loc = usr.loc
+				usr.put_in_hands(photocopy)
+				usr << "<span class='notice'>You take the photo out of \the [src].</span>"
+				photocopy = null
+				updateUsrDialog()
 		else if(href_list["min"])
 			if(copies > 1)
 				copies--
@@ -84,28 +106,38 @@
 
 	attackby(obj/item/O as obj, mob/user as mob)
 		if(istype(O, /obj/item/weapon/paper))
-			if(!copy)
+			if(!copy && !photocopy)
 				user.drop_item()
 				copy = O
 				O.loc = src
-				user << "You insert the paper into the photocopier."
+				user << "<span class='notice'>You insert the paper into \the [src].</span>"
 				flick("bigscanner1", src)
 				updateUsrDialog()
 			else
-				user << "There is already paper in the photocopier."
+				user << "<span class='notice'>There is already something in \the [src].</span>"
+		else if(istype(O, /obj/item/weapon/photo))
+			if(!copy && !photocopy)
+				user.drop_item()
+				photocopy = O
+				O.loc = src
+				user << "<span class='notice'>You insert the photo into \the [src].</span>"
+				flick("bigscanner1", src)
+				updateUsrDialog()
+			else
+				user << "<span class='notice'>There is already something in \the [src].</span>"
 		else if(istype(O, /obj/item/device/toner))
 			if(toner == 0)
 				user.drop_item()
 				del(O)
 				toner = 30
-				user << "You insert the toner cartridge into the photocopier."
+				user << "<span class='notice'>You insert the toner cartridge into \the [src].</span>"
 				updateUsrDialog()
 			else
-				user << "This cartridge is not yet ready for replacement! Use up the rest of the toner."
+				user << "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>"
 		else if(istype(O, /obj/item/weapon/wrench))
-			playsound(loc, 'Ratchet.ogg', 50, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
-			user << "You [anchored ? "wrench" : "unwrench"] \the [src]."
+			user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
 		return
 
 	ex_act(severity)

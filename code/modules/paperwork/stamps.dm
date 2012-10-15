@@ -1,7 +1,7 @@
 /obj/item/weapon/stamp
-	desc = "A rubber stamp for stamping important documents."
 	name = "rubber stamp"
-	icon = 'bureaucracy.dmi'
+	desc = "A rubber stamp for stamping important documents."
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "stamp-qm"
 	item_state = "stamp"
 	flags = FPRINT | TABLEPASS
@@ -12,6 +12,7 @@
 	m_amt = 60
 	color = "cargo"
 	pressure_resistance = 5
+	attack_verb = list("stamped")
 
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"
@@ -52,3 +53,7 @@
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
 	color = "clown"
+
+
+/obj/item/weapon/stamp/attack_paw(mob/user as mob)
+	return src.attack_hand(user)

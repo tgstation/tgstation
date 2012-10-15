@@ -22,20 +22,20 @@ Contains the procs that control attacking critters
 		if (user.a_intent == "hurt")
 			TakeDamage(rand(1,2) * brutevuln)
 
-			if(istajaran(user))
-				for(var/mob/O in viewers(src, null))
-					O.show_message("\red <B>[user] has slashed at [src]!</B>", 1)
-				playsound(src.loc, 'slice.ogg', 25, 1, -1)
-
-			else if(istype(user, /mob/living/carbon/human))
-				for(var/mob/O in viewers(src, null))
-					O.show_message("\red <B>[user] has punched [src]!</B>", 1)
-				playsound(src.loc, pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg'), 100, 1)
+			if(istype(user, /mob/living/carbon/human))
+				if(user.get_species() == "Tajaran")
+					for(var/mob/O in viewers(src, null))
+						O.show_message("\red <B>[user] has slashed at [src]!</B>", 1)
+					playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+				else
+					for(var/mob/O in viewers(src, null))
+						O.show_message("\red <B>[user] has punched [src]!</B>", 1)
+					playsound(src.loc, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 100, 1)
 
 			else if(istype(user, /mob/living/carbon/alien/humanoid))
 				for(var/mob/O in viewers(src, null))
 					O.show_message("\red <B>[user] has slashed at [src]!</B>", 1)
-				playsound(src.loc, 'slice.ogg', 25, 1, -1)
+				playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 
 
 
@@ -49,7 +49,7 @@ Contains the procs that control attacking critters
 				O.show_message("\blue [user] touches [src]!", 1)
 
 
-	Target_Attacker(var/target)
+	proc/Target_Attacker(var/target)
 		if(!target)	return
 		src.target = target
 		src.oldtarget_name = target:name
@@ -61,7 +61,7 @@ Contains the procs that control attacking critters
 		return
 
 
-	TakeDamage(var/damage = 0)
+	proc/TakeDamage(var/damage = 0)
 		var/tempdamage = (damage-armor)
 		if(tempdamage > 0)
 			src.health -= tempdamage
@@ -71,7 +71,7 @@ Contains the procs that control attacking critters
 			src.Die()
 
 
-	Die()
+	proc/Die()
 		if (!src.alive) return
 		src.icon_state += "_dead"
 		src.alive = 0
@@ -81,7 +81,7 @@ Contains the procs that control attacking critters
 		src.visible_message("<b>[src]</b> [deathtext]")
 
 
-	Harvest(var/obj/item/weapon/W, var/mob/living/user)
+	proc/Harvest(var/obj/item/weapon/W, var/mob/living/user)
 		if((!W) || (!user))	return 0
 		if(src.alive)	return 0
 		return 1

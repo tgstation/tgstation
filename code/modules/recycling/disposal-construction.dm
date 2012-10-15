@@ -5,7 +5,7 @@
 
 	name = "disposal pipe segment"
 	desc = "A huge pipe segment used for constructing disposal systems."
-	icon = 'disposal.dmi'
+	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "conpipe-s"
 	anchored = 0
 	density = 0
@@ -13,7 +13,7 @@
 	m_amt = 1850
 	level = 2
 	var/ptype = 0
-	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet, 9=junction-j1s, 10=junction-j2s
+	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet
 
 	var/dpdir = 0	// directions as disposalpipe
 	var/base_state = "pipe-s"
@@ -57,15 +57,17 @@
 			if(8)
 				base_state = "intake"
 				dpdir = dir
+
 			if(9)
 				base_state = "pipe-j1s"
 				dpdir = dir | right | flip
+
 			if(10)
 				base_state = "pipe-j2s"
 				dpdir = dir | left | flip
 
 
-		if(ptype<6 && ptype != 9 && ptype != 10)
+		if(ptype<6 || ptype>8)
 			icon_state = "con[base_state]"
 		else
 			icon_state = base_state
@@ -106,10 +108,16 @@
 			return
 
 		dir = turn(dir, 180)
-		if(ptype == 2)
-			ptype = 3
-		else if(ptype == 3)
-			ptype = 2
+		switch(ptype)
+			if(2)
+				ptype = 3
+			if(3)
+				ptype = 2
+			if(9)
+				ptype = 10
+			if(10)
+				ptype = 9
+
 		update()
 
 	// returns the type path of disposalpipe corresponding to this item dtype
@@ -140,6 +148,7 @@
 	attackby(var/obj/item/I, var/mob/user)
 		var/nicetype = "pipe"
 		var/ispipe = 0 // Indicates if we should change the level of this pipe
+		src.add_fingerprint(user)
 		switch(ptype)
 			if(6)
 				nicetype = "disposal bin"
@@ -147,6 +156,9 @@
 				nicetype = "disposal outlet"
 			if(8)
 				nicetype = "delivery chute"
+			if(9, 10)
+				nicetype = "sorting pipe"
+				ispipe = 1
 			else
 				nicetype = "pipe"
 				ispipe = 1
@@ -157,7 +169,7 @@
 			return
 
 		var/obj/structure/disposalpipe/CP = locate() in T
-		if(ptype>=6 && ptype != 9 && ptype != 10) // Disposal or outlet
+		if(ptype>=6 && ptype <= 8) // Disposal or outlet
 			if(CP) // There's something there
 				if(!istype(CP,/obj/structure/disposalpipe/trunk))
 					user << "The [nicetype] requires a trunk underneath it in order to work."
@@ -175,7 +187,6 @@
 					user << "There is already a [nicetype] at that location."
 					return
 
-		var/obj/structure/disposalpipe/trunk/Trunk = CP
 
 		if(istype(I, /obj/item/weapon/wrench))
 			if(anchored)
@@ -194,14 +205,14 @@
 				else
 					density = 1 // We don't want disposal bins or outlets to go density 0
 				user << "You attach the [nicetype] to the underfloor."
-			playsound(src.loc, 'Ratchet.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			update()
 
 		else if(istype(I, /obj/item/weapon/weldingtool))
 			if(anchored)
 				var/obj/item/weapon/weldingtool/W = I
 				if(W.remove_fuel(0,user))
-					playsound(src.loc, 'Welder2.ogg', 100, 1)
+					playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 					user << "Welding the [nicetype] in place."
 					if(do_after(user, 20))
 						if(!src || !W.isOn()) return
@@ -211,24 +222,34 @@
 
 							var/pipetype = dpipetype()
 							var/obj/structure/disposalpipe/P = new pipetype(src.loc)
+							src.transfer_fingerprints_to(P)
 							P.base_icon_state = base_state
 							P.dir = dir
 							P.dpdir = dpdir
 							P.updateicon()
 
+							//Needs some special treatment ;)
+							if(ptype==9 || ptype==10)
+								var/obj/structure/disposalpipe/sortjunction/SortP = P
+								SortP.updatedir()
+
 						else if(ptype==6) // Disposal bin
 							var/obj/machinery/disposal/P = new /obj/machinery/disposal(src.loc)
+							src.transfer_fingerprints_to(P)
 							P.mode = 0 // start with pump off
 
 						else if(ptype==7) // Disposal outlet
 
 							var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(src.loc)
+							src.transfer_fingerprints_to(P)
 							P.dir = dir
+							var/obj/structure/disposalpipe/trunk/Trunk = CP
 							Trunk.linked = P
 
 						else if(ptype==8) // Disposal outlet
 
 							var/obj/machinery/disposal/deliveryChute/P = new /obj/machinery/disposal/deliveryChute(src.loc)
+							src.transfer_fingerprints_to(P)
 							P.dir = dir
 
 						del(src)

@@ -145,7 +145,7 @@
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [] has shorted out the [] with an electromagnetic card!", user, src), 1)
-		src.overlays += image('pipes2.dmi', "filter-spark")
+		src.overlays += image('icons/obj/pipes2.dmi', "filter-spark")
 		sleep(6)
 		src.updateicon()
 		return src.attack_hand(user)
@@ -228,16 +228,16 @@
 	else
 		icon_state = "filter"
 		if(emagged)	//only show if powered because presumeably its the interface that has been fried
-			src.overlays += image('pipes2.dmi', "filter-emag")
+			src.overlays += image('icons/obj/pipes2.dmi', "filter-emag")
 		if (src.f_mask & (GAS_N2O|GAS_PL))
-			src.overlays += image('pipes2.dmi', "filter-tox")
+			src.overlays += image('icons/obj/pipes2.dmi', "filter-tox")
 		if (src.f_mask & GAS_O2)
-			src.overlays += image('pipes2.dmi', "filter-o2")
+			src.overlays += image('icons/obj/pipes2.dmi', "filter-o2")
 		if (src.f_mask & GAS_N2)
-			src.overlays += image('pipes2.dmi', "filter-n2")
+			src.overlays += image('icons/obj/pipes2.dmi', "filter-n2")
 		if (src.f_mask & GAS_CO2)
-			src.overlays += image('pipes2.dmi', "filter-co2")
+			src.overlays += image('icons/obj/pipes2.dmi', "filter-co2")
 	if(!locked)
-		src.overlays += image('pipes2.dmi', "filter-open")
+		src.overlays += image('icons/obj/pipes2.dmi', "filter-open")
 		if(bypassed)	//should only be bypassed if unlocked
-			src.overlays += image('pipes2.dmi', "filter-bypass")
+			src.overlays += image('icons/obj/pipes2.dmi', "filter-bypass")

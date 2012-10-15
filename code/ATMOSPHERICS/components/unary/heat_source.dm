@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/unary/heat_reservoir
 //currently the same code as cold_sink but anticipating process() changes
 
-	icon = 'cold_sink.dmi'
+	icon = 'icons/obj/atmospherics/cold_sink.dmi'
 	icon_state = "intact_off"
 	density = 1
 

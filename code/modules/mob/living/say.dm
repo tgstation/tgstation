@@ -1,7 +1,7 @@
 
 var/list/department_radio_keys = list(
-	  ":r" = "right ear",
-	  ":l" = "left ear",
+	  ":r" = "right hand",
+	  ":l" = "left hand",
 	  ":i" = "intercom",
 	  ":h" = "department",
 	  ":c" = "Command",
@@ -17,8 +17,8 @@ var/list/department_radio_keys = list(
 	  ":q" = "Cargo",
 	  ":g" = "changeling",
 
-	  ":R" = "right ear",
-	  ":L" = "left ear",
+	  ":R" = "right hand",
+	  ":L" = "left hand",
 	  ":I" = "intercom",
 	  ":H" = "department",
 	  ":C" = "Command",
@@ -62,12 +62,8 @@ var/list/department_radio_keys = list(
 	if (!ishuman(src))
 		return
 	var/mob/living/carbon/human/H = src
-	if (H.l_ear || H.r_ear)
-		var/obj/item/device/radio/headset/dongle
-		if(istype(H.l_ear,/obj/item/device/radio/headset))
-			dongle = H.l_ear
-		else
-			dongle = H.r_ear
+	if (H.ears)
+		var/obj/item/device/radio/headset/dongle = H.ears
 		if(!istype(dongle)) return
 		if(dongle.translate_binary) return 1
 
@@ -75,46 +71,33 @@ var/list/department_radio_keys = list(
 	if (isalien(src)) return 1
 	if (!ishuman(src)) return
 	var/mob/living/carbon/human/H = src
-	if (H.l_ear || H.r_ear)
-		var/obj/item/device/radio/headset/dongle
-		if(istype(H.l_ear,/obj/item/device/radio/headset))
-			dongle = H.l_ear
-		else
-			dongle = H.r_ear
+	if (H.ears)
+		var/obj/item/device/radio/headset/dongle = H.ears
 		if(!istype(dongle)) return
 		if(dongle.translate_hive) return 1
 
 /mob/living/say(var/message)
-	var/message_old = message
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	if(!speech_allowed && usr == src)
-		usr << "\red You can't speak."
-		return
 
 	if (!message)
 		return
 
-	if (length(message) >= 1)
-		if (miming && copytext(message, 1, 2) != "*")
-			return
-
 	if (stat == 2)
 		return say_dead(message)
 
-	if (silent)
-		return
-
-	if (src.client && (client.muted || src.client.muted_complete))
-		src << "You are muted."
-		return
+	if (src.client)
+		if(client.muted & MUTE_IC)
+			src << "\red You cannot speak in IC (muted)."
+			return
+		if (src.client.handle_spam_prevention(message,MUTE_IC))
+			return
 
 	// stat == 2 is handled above, so this stops transmission of uncontious messages
 	if (stat)
 		return
 
 	// Mute disability
-	if (disabilities & 64)
+	if (sdisabilities & MUTE)
 		return
 
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
@@ -125,10 +108,9 @@ var/list/department_radio_keys = list(
 		return emote(copytext(message, 2))
 
 	var/alt_name = ""
-	if (istype(src, /mob/living/carbon/human))
+	if (istype(src, /mob/living/carbon/human) && name != real_name)
 		var/mob/living/carbon/human/H = src
-		if(H.get_face_name() != real_name)
-			alt_name = " (as [H.get_id_name("Unknown")])"
+		alt_name = " (as [H.get_id_name("Unknown")])"
 	var/italics = 0
 	var/message_range = null
 	var/message_mode = null
@@ -151,16 +133,16 @@ var/list/department_radio_keys = list(
 		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
 		if (message_mode)
 			message = trim(copytext(message, 3))
-			if (!(ishuman(src) || istype(src, /mob/living/simple_animal/parrot)) && (message_mode=="department" || (message_mode in radiochannels) || message_mode == "right ear" || message_mode == "left ear"))
+			if (!(ishuman(src) || isanimal(src) || isrobot(src) && (message_mode=="department" || (message_mode in radiochannels))))
 				message_mode = null //only humans can use headsets
 			// Check removed so parrots can use headsets!
+			// And borgs -Sieve
 
 	if (!message)
 		return
 
 	//work out if we're speaking skrell or not
 	var/is_speaking_skrell = 0
-
 	if(copytext(message, 1, 3) == ":k" || copytext(message, 1, 3) == ":K")
 		message = copytext(message, 3)
 		if(skrell_talk_understand || universal_speak)
@@ -173,14 +155,12 @@ var/list/department_radio_keys = list(
 		if(soghun_talk_understand || universal_speak)
 			is_speaking_soghun = 1
 
-	if( !message_mode && (disease_symptoms & DISEASE_WHISPER))
-		message_mode = "whisper"
-
-	if(src.stunned > 2 || (traumatic_shock > 61 && prob(50)))
-		message_mode = "" //Stunned people shouldn't be able to physically turn on their radio/hold down the button to speak into it
-
-
-	message = capitalize(message) //capitalize the first letter of what they actually say
+	//work out if we're speaking soghun or not
+	var/is_speaking_taj = 0
+	if(copytext(message, 1, 3) == ":j" || copytext(message, 1, 3) == ":J")
+		message = copytext(message, 3)
+		if(tajaran_talk_understand || universal_speak)
+			is_speaking_taj = 1
 
 	// :downs:
 	if (getBrainLoss() >= 60)
@@ -197,12 +177,10 @@ var/list/department_radio_keys = list(
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"
 		if(!stuttering && prob(15))
-			message = NewStutter(message,stunned)
+			message = stutter(message)
 
 	if (stuttering)
-		message = NewStutter(message,stunned)
-	if (slurring)
-		message = slur(message)
+		message = stutter(message)
 
 /* //qw do not have beesease atm.
 	if(virus)
@@ -217,40 +195,34 @@ var/list/department_radio_keys = list(
 
 	switch (message_mode)
 		if ("headset")
-			if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-				src:l_ear.talk_into(src, message)
-				used_radios += src:l_ear
-			else if (src:r_ear)
-				src:r_ear.talk_into(src, message)
-				used_radios += src:r_ear
+			if (src:ears)
+				src:ears.talk_into(src, message)
+				used_radios += src:ears
 
 			message_range = 1
 			italics = 1
 
 
 		if ("secure headset")
-			if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-				src:l_ear.talk_into(src, message, 1)
-				used_radios += src:l_ear
-			else if (src:r_ear)
-				src:r_ear.talk_into(src, message, 1)
-				used_radios += src:r_ear
+			if (src:ears)
+				src:ears.talk_into(src, message, 1)
+				used_radios += src:ears
 
 			message_range = 1
 			italics = 1
 
-		if ("right ear")
-			if (src:r_ear)
-				src:r_ear.talk_into(src, message)
-				used_radios += src:r_ear
+		if ("right hand")
+			if (r_hand)
+				r_hand.talk_into(src, message)
+				used_radios += src:r_hand
 
 			message_range = 1
 			italics = 1
 
-		if ("left ear")
-			if (src:l_ear)
-				src:l_ear.talk_into(src, message)
-				used_radios += src:l_ear
+		if ("left hand")
+			if (l_hand)
+				l_hand.talk_into(src, message)
+				used_radios += src:l_hand
 
 			message_range = 1
 			italics = 1
@@ -265,7 +237,7 @@ var/list/department_radio_keys = list(
 
 		//I see no reason to restrict such way of whispering
 		if ("whisper")
-			whisper(trim(copytext(message_old, 3)))
+			whisper(message)
 			return
 
 		if ("binary")
@@ -281,36 +253,43 @@ var/list/department_radio_keys = list(
 			return
 
 		if ("department")
-			if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-				src:l_ear.talk_into(src, message, message_mode)
-				used_radios += src:l_ear
-			else if (src:r_ear)
-				src:r_ear.talk_into(src, message, message_mode)
-				used_radios += src:r_ear
+			if(istype(src, /mob/living/carbon))
+				if (src:ears)
+					src:ears.talk_into(src, message, message_mode)
+					used_radios += src:ears
+			else if(istype(src, /mob/living/silicon/robot))
+				if (src:radio)
+					src:radio.talk_into(src, message, message_mode)
+					used_radios += src:radio
 			message_range = 1
 			italics = 1
+
 		if ("pAI")
 			if (src:radio)
 				src:radio.talk_into(src, message)
 				used_radios += src:radio
 			message_range = 1
 			italics = 1
+
 		if("changeling")
-			if(src.changeling)
-				for(var/mob/aChangeling in world)
-					if(aChangeling.changeling || istype(aChangeling, /mob/dead/observer))
-						aChangeling << "<i><font color=#800080><b>[gender=="male"?"Mr.":"Mrs."] [changeling.changelingID]:</b> [message]</font></i>"
+			if(mind && mind.changeling)
+				for(var/mob/Changeling in mob_list)
+					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
+						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				return
 ////SPECIAL HEADSETS START
 		else
 			//world << "SPECIAL HEADSETS"
 			if (message_mode in radiochannels)
-				if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-					src:l_ear.talk_into(src, message, message_mode)
-					used_radios += src:l_ear
-				else if (src:r_ear)
-					src:r_ear.talk_into(src, message, message_mode)
-					used_radios += src:r_ear
+				if(isrobot(src))//Seperates robots to prevent runtimes from the ear stuff
+					var/mob/living/silicon/robot/R = src
+					if(R.radio)//Sanityyyy
+						R.radio.talk_into(src, message, message_mode)
+						used_radios += R.radio
+				else
+					if (src:ears)
+						src:ears.talk_into(src, message, message_mode)
+						used_radios += src:ears
 				message_range = 1
 				italics = 1
 /////SPECIAL HEADSETS END
@@ -318,7 +297,7 @@ var/list/department_radio_keys = list(
 	var/list/listening
 
 	listening = get_mobs_in_view(message_range, src)
-	for(var/mob/M in world)
+	for(var/mob/M in player_list)
 		if (!M.client)
 			continue //skip monkeys and leavers
 		if (istype(M, /mob/new_player))
@@ -327,35 +306,29 @@ var/list/department_radio_keys = list(
 			listening|=M
 
 	var/turf/T = get_turf(src)
-	var/list/V = view(message_range, T)
-	var/list/W = V
-
-	var/list/eavesdroppers = get_mobs_in_view(7, src)
-	for(var/mob/M in listening)
-		eavesdroppers.Remove(M)
-	for(var/mob/M in eavesdroppers)
-		if(M.stat || !M.client || istype(M, /mob/living/silicon/pai) || M == src)
-			eavesdroppers.Remove(M)
+	var/list/W = view(message_range, T)
 
 	for (var/obj/O in ((W | contents)-used_radios))
 		W |= O
 
 	for (var/mob/M in W)
 		W |= M.contents
-		if(hasorgans(M))
-			var/mob/living/carbon/G = M
-			for(var/name in G:organs)
-				var/datum/organ/external/F = G:organs[name]
-				for(var/obj/item/weapon/implant/I in F.implant)
-					W |= I
 
-	for (var/obj/item/device/pda/M in W)
-		W |= M.contents
+	for (var/atom/A in W)
+		if(istype(A, /mob/living/simple_animal/parrot)) //Parrot speech mimickry
+			if(A == src)
+				continue //Dont imitate ourselves
 
-	for (var/obj/O in W) //radio in pocket could work, radio in backpack wouldn't --rastaf0
-		spawn (0)
-			if(O && !istype(O.loc, /obj/item/weapon/storage))
-				O.hear_talk(src, message)
+			var/mob/living/simple_animal/parrot/P = A
+			if(P.speech_buffer.len >= 10)
+				P.speech_buffer.Remove(pick(P.speech_buffer))
+			P.speech_buffer.Add(message)
+
+		if(istype(A, /obj/)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
+			var/obj/O = A
+			spawn (0)
+				if(O && !istype(O.loc, /obj/item/weapon/storage))
+					O.hear_talk(src, message)
 
 
 /*			Commented out as replaced by code above from BS12
@@ -375,100 +348,46 @@ var/list/department_radio_keys = list(
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
 
-	for (var/mob/M in listening)
-		//if speaking in skrell, only let other skrell understand
-		if (M.say_understands(src) && !is_speaking_skrell && !is_speaking_soghun) //This could probably be merged into say_understands(), but I'm too lazy
-			heard_a += M
-		else if(is_speaking_skrell && (M.skrell_talk_understand || M.universal_speak))
-			heard_a += M
-		else if(is_speaking_soghun && (M.soghun_talk_understand || M.universal_speak))
-			heard_a += M
-		else
-			heard_b += M
+	for (var/M in listening)
+		if(hascall(M,"say_understands"))
+			if (M:say_understands(src) && !is_speaking_skrell && !is_speaking_soghun && !is_speaking_taj)
+				heard_a += M
+			else if(ismob(M))
+				if(is_speaking_skrell && (M:skrell_talk_understand || M:universal_speak))
+					heard_a += M
+				else if(is_speaking_soghun && (M:soghun_talk_understand || M:universal_speak))
+					heard_a += M
+				else if(is_speaking_taj && (M:tajaran_talk_understand || M:universal_speak))
+					heard_a += M
+				else
+					heard_b += M
+			else
+				heard_a += M
 
 	var/speech_bubble_test = say_test(message)
-	var/image/speech_bubble = image('talk.dmi',src,"h[speech_bubble_test]")
+	var/image/speech_bubble = image('icons/mob/talk.dmi',src,"h[speech_bubble_test]")
+	spawn(30) del(speech_bubble)
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = say_quote(message,is_speaking_soghun,is_speaking_skrell)
+		var/message_a = say_quote(message)
+
 		if (italics)
 			message_a = "<i>[message_a]</i>"
 		if (!istype(src, /mob/living/carbon/human))
 			rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
 		else if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
-			var/mob/living/carbon/human/H = src
 			if(wear_mask:vchange)
 				rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> <span class='message'>[message_a]</span></span>"
 			else
-				rendered = "<span class='game say'><span class='name'>[H.get_visible_name()]</span> <span class='message'>[message_a]</span></span>"
+				rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
 		else
-			var/mob/living/carbon/human/H = src
-			rendered = "<span class='game say'><span class='name'>[H.get_face_name()]</span>[alt_name] <span class='message'>[message_a]</span></span>"
+			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 
-/*
-		// Create speech bubble
-		var/obj/effect/speech_bubble/B = new/obj/effect/speech_bubble
-		B.icon = 'speechbubble.dmi'
-		B.parent = src
-		B.mouse_opacity = 0
-		B.invisibility = invisibility
-		B.layer = 10
-
-		// Determine if the speech bubble's going to have a special look
-		var/presay = ""
-		if(istype(src, /mob/living/silicon))
-			presay = "bot"
-		if(istype(src, /mob/living/carbon/alien))
-			presay = "xeno"
-		if(istype(src, /mob/living/carbon/metroid))
-			presay = "metroid"
-*/
-		//talking crystals
-
-		for(var/obj/item/weapon/talkingcrystal/O in view(3,src))
-			O.catchMessage(message,src)
-
-
-		for (var/mob/M in heard_a)
-
-			M.show_message(rendered, 2)
-			M << speech_bubble
-		spawn(30) del(speech_bubble)
-		//spawn(30) del(speech_bubble)
-			/*
-			if(M.client)
-
-				// If this client has bubbles disabled, obscure the bubble
-				if(!M.client.bubbles || M == src)
-					var/image/I = image('speechbubble.dmi', B, "override")
-					I.override = 1
-					M << I
-			*/
-		/*
-		// find the suffix, if bot, human or monkey
-		var/punctuation = ""
-		if(presay == "bot" || presay == "")
-			var/ending = copytext(text, length(text))
-			if (ending == "?")
-				punctuation = "question"
-			else if (ending == "!")
-				punctuation = "exclamation"
-			else
-				punctuation = ""
-
-		// flick the bubble
-		flick("[presay]say[punctuation]", B)
-
-		if(istype(loc, /turf))
-			B.loc = loc
-		else
-			B.loc = loc.loc
-
-		spawn()
-			sleep(11)
-			del(B)
-		*/
+		for (var/M in heard_a)
+			if(hascall(M,"show_message"))
+				M:show_message(rendered, 2)
+				M << speech_bubble
 
 	if (length(heard_b))
 		var/message_b
@@ -477,7 +396,7 @@ var/list/department_radio_keys = list(
 			message_b = voice_message
 		else
 			message_b = stars(message)
-			message_b = say_quote(message_b,is_speaking_soghun,is_speaking_skrell)
+			message_b = say_quote(message_b)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"
@@ -485,38 +404,19 @@ var/list/department_radio_keys = list(
 		rendered = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
 
 
-		/*
-		// Create speech bubble
-		var/obj/effect/speech_bubble/B = new/obj/effect/speech_bubble
-		B.icon = 'speechbubble.dmi'
-		B.parent = src
-		B.mouse_opacity = 0
-		B.invisibility = invisibility
-		B.layer = 10
-
-		// Determine if the speech bubble's going to have a special look
-		var/presay = ""
-		if(istype(src, /mob/living/silicon))
-			presay = "bot"
-		if(istype(src, /mob/living/carbon/alien))
-			presay = "xeno"
-		if(istype(src, /mob/living/carbon/metroid))
-			presay = "metroid"
-		*/
-
-		for (var/mob/M in heard_b)
-			M.show_message(rendered, 2)
-			M << speech_bubble
-		spawn(30) del(speech_bubble)
+		for (var/M in heard_b)
+			if(hascall(M,"show_message"))
+				M:show_message(rendered, 2)
+				M << speech_bubble
 
 			/*
 			if(M.client)
 
 				if(!M.client.bubbles || M == src)
-					var/image/I = image('speechbubble.dmi', B, "override")
+					var/image/I = image('icons/effects/speechbubble.dmi', B, "override")
 					I.override = 1
 					M << I
-
+			*/ /*
 
 		flick("[presay]say", B)
 
@@ -530,16 +430,12 @@ var/list/department_radio_keys = list(
 			del(B)
 		*/
 
-	if (length(eavesdroppers))
-
-		for (var/mob/M in eavesdroppers)
-			M << "\blue [src] speaks into their radio..."
-			M << speech_bubble
-		spawn(30) del(speech_bubble)
+	//talking crystals
+	for(var/obj/item/weapon/talkingcrystal/O in view(3,src))
+		O.catchMessage(message,src)
 
 	log_say("[name]/[key] : [message]")
 
-
-
 /obj/effect/speech_bubble
 	var/mob/parent
+

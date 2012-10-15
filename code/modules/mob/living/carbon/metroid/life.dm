@@ -6,16 +6,23 @@
 		return
 
 	..()
-    
-	if (stat == 2)
-		return
 
-	if(stat == 2)
-		return
+	if(stat != DEAD)
+		//Chemicals in the body
+		handle_chemicals_in_body()
+
+		//Disease Check
+		//handle_virus_updates() There is no disease that affects metroids
+
+		handle_nutrition()
+
+		handle_targets()
+
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(src.loc)
 		environment = loc.return_air()
+
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -23,189 +30,15 @@
 	//to find it.
 	src.blinded = null
 
-	//Disease Check
-	handle_virus_updates()
-
-
 	// Basically just deletes any screen objects :<
 	regular_hud_updates()
 
 	//Handle temperature/pressure differences between body and environment
-
 	if(environment)
 		handle_environment(environment)
 
-
-	//Chemicals in the body
-	handle_chemicals_in_body()
-
 	//Status updates, death etc.
 	handle_regular_status_updates()
-
-	/*
-	if(client)
-		handle_regular_hud_updates() */
-
-	handle_nutrition()
-
-	if(Tempstun)
-		if(!Victim) // not while they're eating!
-			canmove = 0
-	else
-		canmove = 1
-
-	if(attacked > 50) attacked = 50
-
-	if(attacked > 0)
-		if(prob(85))
-			attacked--
-
-	if(Discipline > 0)
-
-		if(Discipline >= 5 && rabid)
-			if(prob(60)) rabid = 0
-
-		if(prob(10))
-			Discipline--
-
-
-	// Grabbing
-
-	if(!client && stat != 2)
-
-		if(!canmove) return
-
-		// DO AI STUFF HERE
-
-		if(Target)
-			if(attacked <= 0)
-				Target = null
-
-		if(Victim) return // if it's eating someone already, continue eating!
-
-
-		if(prob(5))
-			emote(pick("click","chatter","sway","light","vibrate","chatter","shriek"))
-
-		if(AIproc && SStun) return
-
-
-		var/hungry = 0 // determines if the metroid is hungry
-		var/starving = 0 // determines if the metroid is starving-hungry
-		if(istype(src, /mob/living/carbon/metroid/adult))
-			switch(nutrition)
-				if(400 to 1100) hungry = 1
-				if(0 to 399)
-					starving = 1
-
-		else
-			switch(nutrition)
-				if(150 to 800) hungry = 1
-				if(0 to 149) starving = 1
-
-
-		if(starving && !client) // if a metroid is starving, it starts losing its friends
-			if(prob(15) && Friends.len > 0)
-				var/friendnum = 0
-				for(var/mob/M in Friends)
-					friendnum++
-
-				if(friendnum > 0)
-					var/mob/nofriend = pick(Friends)
-					Friends -= nofriend
-
-		if(!Target)
-			var/list/targets = list()
-
-			for(var/mob/living/carbon/C in view(12,src))
-				if(!istype(C, /mob/living/carbon/metroid)) // does not eat his bros! BROSBROSBROSBROS
-					if(C.stat != 2 && C.health > 0) // chooses only healthy targets
-						var/notarget = 0
-						if(istype(C, /mob/living/carbon/human))
-							var/mob/living/carbon/human/H = C
-							if(H.mutantrace == "metroid")
-								notarget = 1 // don't hurt metroidmen!
-
-						if(!istype(src, /mob/living/carbon/metroid/adult))
-							if(!starving && Discipline > 0)
-								notarget = 1
-								break
-
-						if(!C.canmove)
-							for(var/mob/living/carbon/metroid/M in view(1,C))
-								if(M.Victim == C)
-									notarget = 1
-
-						if(C in Friends)
-							notarget = 1
-
-						if(tame && istype(C, /mob/living/carbon/human))
-							notarget = 1
-
-						if(!notarget) targets += C
-
-			for(var/mob/living/silicon/C in view(12,src))
-				if(C.stat != 2)
-					var/notarget = 0
-					if(C in Friends)
-						notarget = 1
-
-					if(!istype(src, /mob/living/carbon/metroid/adult))
-						if(!starving && Discipline > 0)
-							notarget = 1
-							break
-
-					if(tame)
-						notarget = 1
-
-					if(!notarget) targets += C
-
-
-
-			if((hungry || starving) && targets.len > 0)
-				if(!istype(src, /mob/living/carbon/metroid/adult))
-					if(!starving)
-						for(var/mob/living/carbon/monkey/M in targets)
-							Target = M
-							break
-						for(var/mob/living/carbon/alien/larva/L in targets)
-							Target = L
-							break
-						if(prob(5) && !Discipline)
-							for(var/mob/living/carbon/alien/humanoid/H in targets)
-								Target = H
-								break
-							for(var/mob/living/carbon/human/H in targets)
-								Target = H
-								break
-
-					else
-						Target = targets[1]
-
-				else
-					Target = targets[1] // closest target
-
-			if(targets.len > 0)
-				if(attacked > 0 || rabid)
-					Target = targets[1]
-
-
-		if(!Target)
-
-			if(hungry || starving)
-				if(prob(50) && canmove && isturf(loc))
-					step(src, pick(cardinal))
-
-			else
-				if(prob(33) && canmove && isturf(loc))
-					step(src, pick(cardinal))
-
-
-		else
-			if(!AIproc)
-				spawn() AIprocess()
-
-
 
 
 
@@ -217,12 +50,11 @@
 	var/Tempstun = 0 // temporary temperature stuns
 	var/Discipline = 0 // if a metroid has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
-	var/Obstacle = 1 // determines whether the turf the metroid will head to has an obstacle
 	proc
 
 		AIprocess()  // the master AI process
 
-			if(AIproc || stat == 2 || client) return
+			if(AIproc || stat == DEAD || client) return
 
 			var/hungry = 0
 			var/starving = 0
@@ -233,19 +65,15 @@
 						starving = 1
 			else
 				switch(nutrition)
-					if(150 to 800) hungry = 1
+					if(150 to 900) hungry = 1
 					if(0 to 149) starving = 1
-
 			AIproc = 1
-
 			while(AIproc && stat != 2 && (attacked > 0 || starving || hungry || rabid || Victim))
 				if(Victim) // can't eat AND have this little process at the same time
-					AIproc = 0
-					return
+					break
 
 				if(!Target || client)
-					AIproc = 0
-					return
+					break
 
 
 				if(Target.health <= -70 || Target.stat == 2)
@@ -253,75 +81,67 @@
 					AIproc = 0
 					break
 
-				for(var/mob/living/carbon/metroid/M in view(1,Target))
-					if(M.Victim == Target)
-						Target = null
-						AIproc = 0
-						return
+				if(Target)
+					for(var/mob/living/carbon/metroid/M in view(1,Target))
+						if(M.Victim == Target)
+							Target = null
+							AIproc = 0
+							break
+					if(!AIproc)
+						break
 
-				if(!AIproc)
-					return
+					if(Target in view(1,src))
 
-				if(get_obstacle_ok(Target))
-					Obstacle = 0
-				else Obstacle = 1
+						if(istype(Target, /mob/living/silicon))
+							if(!Atkcool)
+								spawn()
+									Atkcool = 1
+									sleep(15)
+									Atkcool = 0
 
-				if(Target in view(1,src))
+								if(get_obstacle_ok(Target))
+									Target.attack_metroid(src)
+							return
+						if(!Target.lying && prob(80))
 
-					if(istype(Target, /mob/living/silicon))
-						if(!Atkcool)
-							spawn()
-								Atkcool = 1
-								sleep(15)
-								Atkcool = 0
+							if(Target.client && Target.health >= 20)
+								if(!Atkcool)
+									spawn()
+										Atkcool = 1
+										sleep(25)
+										Atkcool = 0
 
-							if(!Obstacle)
-								Target.attack_metroid(src)
-						return
-
-					if(prob(80) && !Target.lying && Target.client && Target.health >= rand(10,30))
-
-						if(!Atkcool)
-							spawn()
-								Atkcool = 1
-								sleep(25)
-								Atkcool = 0
-
-							if(!Obstacle)
-								Target.attack_metroid(src)
+									if(get_obstacle_ok(Target))
+										Target.attack_metroid(src)
 
 
-						if(prob(30))
-							step_to(src, Target)
+								if(prob(30))
+									step_to(src, Target)
 
-					else
-						if(!Atkcool && !Obstacle)
-							Feedon(Target)
+							else
+								if(!Atkcool && get_obstacle_ok(Target))
+									Feedon(Target)
 
-				else
-					if(Target in view(30, src))
-						if(!Obstacle)
-							step_to(src, Target)
+						else
+							if(!Atkcool && get_obstacle_ok(Target))
+								Feedon(Target)
 
 					else
-						Target = null
-						AIproc = 0
-						return
+						if(Target in view(7, src))
+							if(get_obstacle_ok(Target))
+								step_to(src, Target)
+
+						else
+							Target = null
+							AIproc = 0
+							break
 
 				var/sleeptime = movement_delay()
-				if(sleeptime < 1) sleeptime = 1
+				if(sleeptime <= 0) sleeptime = 1
 
 				sleep(sleeptime + 2) // this is about as fast as a player Metroid can go
 
 			AIproc = 0
-
-
-		update_mind()
-			if(!mind && client)
-				mind = new
-				mind.current = src
-				mind.assigned_role = "Metroid"
-				mind.key = key
 
 		handle_environment(datum/gas_mixture/environment)
 			if(!environment)
@@ -330,9 +150,10 @@
 
 			//var/environment_heat_capacity = environment.heat_capacity()
 			var/loc_temp = T0C
-			if(istype(loc, /turf/space))
+			if(istype(get_turf(src), /turf/space))
 				//environment_heat_capacity = loc:heat_capacity
-				loc_temp = 2.7
+				var/turf/heat_turf = get_turf(src)
+				loc_temp = heat_turf.temperature
 			else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				loc_temp = loc:air_contents.temperature
 			else
@@ -443,7 +264,7 @@
 				src.blinded = 1
 
 			else
-				if (src.paralysis || src.stunned || src.weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
+				if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
 					if (src.stunned > 0)
 						AdjustStunned(-1)
 						src.stat = 0
@@ -473,9 +294,9 @@
 
 			src.density = !( src.lying )
 
-			if (src.disabilities & 128)
+			if (src.sdisabilities & BLIND)
 				src.blinded = 1
-			if (src.disabilities & 32)
+			if (src.sdisabilities & DEAF)
 				src.ear_deaf = 1
 
 			if (src.eye_blurry > 0)
@@ -488,8 +309,6 @@
 
 
 		handle_nutrition()
-
-			if(stat == 2) return // haha wow
 
 			if(prob(20))
 				if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(4,6)
@@ -516,8 +335,8 @@
 						var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)
 						for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
 							var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
-							M.nutrition = round(nutrition/number)
-							M.powerlevel = round(powerlevel / number)
+//							M.nutrition = round(nutrition * 0.9)
+							M.powerlevel = round(powerlevel/number)
 							M.Friends = Friends
 							M.tame = tame
 							M.rabid = rabid
@@ -530,6 +349,7 @@
 					if(!client)
 						var/mob/living/carbon/metroid/adult/A = new/mob/living/carbon/metroid/adult(src.loc)
 						A.nutrition = nutrition
+//						A.nutrition += 100
 						A.powerlevel = max(0, powerlevel-1)
 						A.Friends = Friends
 						A.tame = tame
@@ -543,4 +363,157 @@
 					D.cure()
 			return
 
+		handle_targets()
+			if(Tempstun)
+				if(!Victim) // not while they're eating!
+					canmove = 0
+			else
+				canmove = 1
 
+			if(attacked > 50) attacked = 50
+
+			if(attacked > 0)
+				if(prob(85))
+					attacked--
+
+			if(Discipline > 0)
+
+				if(Discipline >= 5 && rabid)
+					if(prob(60)) rabid = 0
+
+				if(prob(10))
+					Discipline--
+
+
+			if(!client)
+
+				if(!canmove) return
+
+				// DO AI STUFF HERE
+
+				if(Target)
+					if(attacked <= 0)
+						Target = null
+
+				if(Victim) return // if it's eating someone already, continue eating!
+
+
+				if(prob(5))
+					emote(pick("click","chatter","sway","light","vibrate","chatter","shriek"))
+
+				if(AIproc && SStun) return
+
+
+				var/hungry = 0 // determines if the metroid is hungry
+				var/starving = 0 // determines if the metroid is starving-hungry
+				if(istype(src, /mob/living/carbon/metroid/adult)) // 1200 max nutrition
+					switch(nutrition)
+						if(601 to 900)
+							if(prob(25)) hungry = 1//Ensures they continue eating, but aren't as aggressive at the same time
+						if(301 to 600) hungry = 1
+						if(0 to 300)
+							starving = 1
+
+				else
+					switch(nutrition)			// 1000 max nutrition
+						if(501 to 700)
+							if(prob(25)) hungry = 1
+						if(201 to 500) hungry = 1
+						if(0 to 200) starving = 1
+
+
+				if(starving && !client) // if a metroid is starving, it starts losing its friends
+					if(Friends.len > 0 && prob(1))
+						var/mob/nofriend = pick(Friends)
+						Friends -= nofriend
+
+				if(!Target)
+					var/list/targets = list()
+
+					if(hungry || starving) //Only add to the list if we need to
+						for(var/mob/living/L in view(7,src))
+
+							//Ignore other metroids, dead mobs and simple_animals
+							if(ismetroid(L) || L.stat == DEAD || isanimal(L))
+								continue
+
+							if(issilicon(L))
+								if(!istype(src, /mob/living/carbon/metroid/adult)) //Non-starving diciplined adult metroids wont eat things
+									if(!starving && Discipline > 0)
+										continue
+
+								if(tame) //Tame metroids ignore electronic life
+									continue
+
+								targets += L //Possible target found!
+
+							else if(iscarbon(L))
+
+								if(istype(L, /mob/living/carbon/human)) //Ignore metroid(wo)men
+									var/mob/living/carbon/human/H = L
+									if(H.dna)
+										if(H.dna.mutantrace == "metroid")
+											continue
+
+								if(!istype(src, /mob/living/carbon/metroid/adult)) //Non-starving diciplined adult metroids wont eat things
+									if(!starving && Discipline > 0)
+										continue
+
+								if(L in Friends) //No eating friends!
+									continue
+
+								if(tame && ishuman(L)) //Tame metroids dont eat people.
+									continue
+
+								if(!L.canmove) //Only one metroid can latch on at a time.
+
+									var/notarget = 0
+									for(var/mob/living/carbon/metroid/M in view(1,L))
+										if(M.Victim == L)
+											notarget = 1
+									if(notarget)
+										continue
+
+								targets += L //Possible target found!
+
+
+
+					if((hungry || starving) && targets.len > 0)
+						if(!istype(src, /mob/living/carbon/metroid/adult))
+							if(!starving)
+								for(var/mob/living/carbon/C in targets)
+									if(!Discipline && prob(5))
+										if(ishuman(C))
+											Target = C
+											break
+										if(isalienadult(C))
+											Target = C
+											break
+
+									if(islarva(C))
+										Target = C
+										break
+									if(ismonkey(C))
+										Target = C
+										break
+							else
+								Target = targets[1]
+						else
+							Target = targets[1] // closest target
+
+					if(targets.len > 0)
+						if(attacked > 0 || rabid)
+							Target = targets[1] //closest mob probably attacked it, so override Target and attack the nearest!
+
+
+				if(!Target)
+					if(hungry || starving)
+						if(canmove && isturf(loc) && prob(50))
+							step(src, pick(cardinal))
+
+					else
+						if(canmove && isturf(loc) && prob(33))
+							step(src, pick(cardinal))
+				else
+					if(!AIproc)
+						spawn() AIprocess()

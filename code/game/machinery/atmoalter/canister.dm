@@ -1,6 +1,6 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
-	icon = 'atmos.dmi'
+	icon = 'icons/obj/atmos.dmi'
 	icon_state = "yellow"
 	density = 1
 	var/health = 100.0
@@ -66,13 +66,13 @@
 		var/tank_pressure = air_contents.return_pressure()
 
 		if (tank_pressure < 10)
-			overlays += image('atmos.dmi', "can-o0")
+			overlays += image('icons/obj/atmos.dmi', "can-o0")
 		else if (tank_pressure < ONE_ATMOSPHERE)
-			overlays += image('atmos.dmi', "can-o1")
+			overlays += image('icons/obj/atmos.dmi', "can-o1")
 		else if (tank_pressure < 15*ONE_ATMOSPHERE)
-			overlays += image('atmos.dmi', "can-o2")
+			overlays += image('icons/obj/atmos.dmi', "can-o2")
 		else
-			overlays += image('atmos.dmi', "can-o3")
+			overlays += image('icons/obj/atmos.dmi', "can-o3")
 	return
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -89,7 +89,7 @@
 		location.assume_air(air_contents)
 
 		src.destroyed = 1
-		playsound(src.loc, 'spray.ogg', 10, 1, -3)
+		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 		src.density = 0
 		update_icon()
 
@@ -219,9 +219,13 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 	return
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
+
+	//Do not use "if(..()) return" here, canisters will stop working in unpowered areas like space or on the derelict.
+	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+		usr << browse(null, "window=canister")
+		onclose(usr, "canister")
 		return
+
 	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
 		usr.machine = src
 

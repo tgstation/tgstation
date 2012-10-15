@@ -1,7 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-#define TRUE 1
-#define FALSE 0
+#define DEBUG
 
 #define PI 3.1415
 
@@ -19,37 +18,51 @@
 
 #define MOLES_PLASMA_VISIBLE	0.5 //Moles in a standard cell after which plasma is visible
 
-#define SPECIFIC_HEAT_TOXIN		200
-#define SPECIFIC_HEAT_AIR		20
-#define SPECIFIC_HEAT_CDO		30
-#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
-	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
-
-#define MINIMUM_HEAT_CAPACITY	0.0003
-#define QUANTIZE(variable)		(round(variable,0.0001))
-#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
-
-#define BREATH_VOLUME 0.5	//liters in a normal breath  Increased to scale to SS13 speeds.
+#define BREATH_VOLUME 0.5	//liters in a normal breath
 #define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
 	//Amount of air to take a from a tile
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
 	//Amount of air needed before pass out/suffocation commences
 
 // Pressure limits.
-#define HAZARD_HIGH_PRESSURE 750
-#define HIGH_STEP_PRESSURE HAZARD_HIGH_PRESSURE/2
-#define WARNING_HIGH_PRESSURE HAZARD_HIGH_PRESSURE*0.7
-#define HAZARD_LOW_PRESSURE 20
-#define WARNING_LOW_PRESSURE HAZARD_LOW_PRESSURE*2.5
-#define MAX_PRESSURE_DAMAGE 20
+#define HAZARD_HIGH_PRESSURE 750	//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
+#define WARNING_HIGH_PRESSURE 525 	//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
+#define WARNING_LOW_PRESSURE 50 	//This is when the gray low pressure icon is displayed. (it is 2.5 * HAZARD_LOW_PRESSURE)
+#define HAZARD_LOW_PRESSURE 20		//This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
+
+#define TEMPERATURE_DAMAGE_COEFFICIENT 1.5	//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
+#define BODYTEMP_AUTORECOVERY_DIVISOR 12 //This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
+#define BODYTEMP_AUTORECOVERY_MINIMUM 10 //Minimum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 50.
+#define BODYTEMP_COLD_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
+#define BODYTEMP_HEAT_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
+
+#define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
+#define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
+#define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE 15000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
+#define FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 15000 //for fire helmet quality items (red and white hardhats)
+#define HELMET_MIN_COLD_PROTECITON_TEMPERATURE 160	//For normal helmets
+#define HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For normal helmets
+#define ARMOR_MIN_COLD_PROTECITON_TEMPERATURE 160	//For armor
+#define ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For armor
+
+#define GLOVES_MIN_COLD_PROTECITON_TEMPERATURE 2.0	//For some gloves (black and)
+#define GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE 1500		//For some gloves
+#define SHOE_MIN_COLD_PROTECITON_TEMPERATURE 2.0	//For gloves
+#define SHOE_MAX_HEAT_PROTECITON_TEMPERATURE 1500		//For gloves
+
+
+#define PRESSURE_DAMAGE_COEFFICIENT 5 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
+#define MAX_PRESSURE_DAMAGE 7 //This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
+
+#define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
+#define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
 
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
 
 // Factor of how fast mob nutrition decreases
-#define	HUNGER_FACTOR 0.1
-#define	REAGENTS_METABOLISM 0.05
-#define REAGENTS_OVERDOSE 30
+#define	HUNGER_FACTOR 0.05
+#define	REAGENTS_METABOLISM 0.4
 
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
 	//Minimum ratio of air that must move to/from a tile to suspend group processing
@@ -94,6 +107,18 @@
 #define T20C 293.15					// 20degC
 #define TCMB 2.7					// -270.3degC
 
+#define SPECIFIC_HEAT_TOXIN		200
+#define SPECIFIC_HEAT_AIR		20
+#define SPECIFIC_HEAT_CDO		30
+#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
+	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
+
+#define MINIMUM_HEAT_CAPACITY	0.0003
+#define QUANTIZE(variable)		(round(variable,0.0001))
+#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
+
+var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
+
 #define TANK_LEAK_PRESSURE		(30.*ONE_ATMOSPHERE)	// Tank starts leaking
 #define TANK_RUPTURE_PRESSURE	(40.*ONE_ATMOSPHERE) // Tank spills all contents into atmosphere
 
@@ -105,6 +130,7 @@
 var/MAX_EXPLOSION_RANGE = 14
 //#define MAX_EXPLOSION_RANGE		14					// Defaults to 12 (was 8) -- TLE
 
+#define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
 #define NORMPIPERATE 30					//pipe-insulation rate divisor
 #define HEATPIPERATE 8					//heat-exch pipe insulation
@@ -114,7 +140,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
 
-//ITEM INVENTORY SLOT BITMASKS: (HUMANS ONLY!)
+//ITEM INVENTORY SLOT BITMASKS
 #define SLOT_OCLOTHING 1
 #define SLOT_ICLOTHING 2
 #define SLOT_GLOVES 4
@@ -131,18 +157,13 @@ var/MAX_EXPLOSION_RANGE = 14
 
 
 //FLAGS BITMASK
+#define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
+//To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
+
 #define TABLEPASS 2			// can pass by a table or rack
 
-/********************************************************************************
-*	WOO WOO WOO	THIS IS UNUSED	WOO WOO WOO										*
-*	#define HALFMASK 4	// mask only gets 1/2 of air supply from internals		*
-*	WOO WOO WOO	THIS IS UNUSED	WOO WOO WOO										*
-********************************************************************************/
-
-#define HEADSPACE 4			// head wear protects against space
-
 #define MASKINTERNALS	8	// mask allows internals
-#define SUITSPACE		8	// suit protects against space
+//#define SUITSPACE		8	// suit protects against space
 
 #define USEDELAY 	16		// 1 second extra delay on use (Can be used once every 2s)
 #define NODELAY 	32768	// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
@@ -161,13 +182,12 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 
-// #define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh)
+#define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
+#define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh) --jumpsuit only (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
 
 #define	NOREACT		16384 		//Reagents dont' react inside this container.
 
 #define BLOCKHAIR	32768		// temporarily removes the user's hair icon
-
-#define PLASMAGUARD 8192		//Does not get contaminated by plasma.
 
 //flags for pass_flags
 #define PASSTABLE	1
@@ -184,37 +204,31 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
 #define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
 #define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEMASK	1	//APPLIES ONLY TO HELMETS!!
-#define HIDEEARS	2	//APPLIES ONLY TO HELMETS!!
-#define HIDEEYES	4	//APPLIES ONLY TO HELMETS!!
+#define HIDEMASK	1	//APPLIES ONLY TO HELMETS/MASKS!!
+#define HIDEEARS	2	//APPLIES ONLY TO HELMETS/MASKS!! (ears means headsets and such)
+#define HIDEEYES	4	//APPLIES ONLY TO HELMETS/MASKS!! (eyes means glasses)
+#define HIDEFACE	8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
 
-//clothing-overlay layers. They are floats so they always appear above the Mob
-#define DAMAGE_LAYER		-23
-#define UNIFORM_LAYER		-22
-#define B_UNIFORM_LAYER		-21
-#define SHOES_LAYER			-20
-#define B_SHOES_LAYER		-19
-#define ID_LAYER			-18
-#define GLOVES_LAYER		-17
-#define B_GLOVES_LAYER		-16
-#define EARS_LAYER			-15
-#define SUIT_LAYER			-14
-#define B_SUIT_LAYER		-13
-#define FACE_LAYER			-12
-#define GLASSES_LAYER		-11
-#define FACEMASK_LAYER		-10
-#define B_FACEMASK_LAYER	-9
-#define HEAD_LAYER			-8
-#define B_HEAD_LAYER		-7
-#define SUIT_STORE_LAYER	-6
-#define BELT_LAYER			-5
-#define BACK_LAYER			-4
-#define CUFFED_LAYER		-3
-#define SHIELD_LAYER		-2
-#define INHANDS_LAYER		-1
-
-
-
+//slots
+#define slot_back 1
+#define slot_wear_mask 2
+#define slot_handcuffed 3
+#define slot_l_hand 4
+#define slot_r_hand 5
+#define slot_belt 6
+#define slot_wear_id 7
+#define slot_ears 8
+#define slot_glasses 9
+#define slot_gloves 10
+#define slot_head 11
+#define slot_shoes 12
+#define slot_wear_suit 13
+#define slot_w_uniform 14
+#define slot_l_store 15
+#define slot_r_store 16
+#define slot_s_store 17
+#define slot_in_backpack 18
+#define slot_legcuffed 19
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -235,6 +249,22 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HAND_RIGHT		1024
 #define HANDS			1536
 #define FULL_BODY		2047
+
+// bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
+// Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
+// The values here should add up to 1.
+// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
+#define THERMAL_PROTECTION_HEAD			0.3
+#define THERMAL_PROTECTION_UPPER_TORSO	0.15
+#define THERMAL_PROTECTION_LOWER_TORSO	0.15
+#define THERMAL_PROTECTION_LEG_LEFT		0.075
+#define THERMAL_PROTECTION_LEG_RIGHT	0.075
+#define THERMAL_PROTECTION_FOOT_LEFT	0.025
+#define THERMAL_PROTECTION_FOOT_RIGHT	0.025
+#define THERMAL_PROTECTION_ARM_LEFT		0.075
+#define THERMAL_PROTECTION_ARM_RIGHT	0.075
+#define THERMAL_PROTECTION_HAND_LEFT	0.025
+#define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
 /*
 //bitflags for mutations
@@ -304,18 +334,21 @@ var/MAX_EXPLOSION_RANGE = 14
 #define REFLEXES		27 	// dodge 50% of projectiles
 #define NANOREGEN		28 	// regenerative nanobots, -3 all damage types per second
 
-	// Other Mutations:
-#define MNOBREATH		100 	// no need to breathe
-#define MREMOTEVIEW			101 	// remote viewing
-#define MREGENERATE			102 	// health regen
-#define MINCREASERUN			103 	// no slowdown
-#define MREMOTETALK		104 	// remote talking
-#define MMORPH			105 	// changing appearance
-#define MBLEND			106 	// nothing (seriously nothing)
-#define MHALLUCINATION	107 	// hallucinations
-#define MFINGERPRINTS	108 	// no fingerprints
-#define MSHOCK			109 	// insulated hands
-#define MSMALLSIZE		110 	// table climbing
+
+	//2spooky
+#define SKELETON 29
+
+//disabilities
+#define NEARSIGHTED		1
+#define EPILEPSY		2
+#define COUGHING		4
+#define TOURETTES		8
+#define NERVOUS			16
+
+//sdisabilities
+#define BLIND			1
+#define MUTE			2
+#define DEAF			4
 
 //mob/var/stat things
 #define CONSCIOUS	0
@@ -356,7 +389,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define GAS_N2O	(1 << 4)
 
 
-var/list/accessable_z_levels = list("3" = 15, "4" = 35, "6" = 50)
+var/list/accessable_z_levels = list("3" = 30, "4" = 70)
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
 //(Exceptions: extended, sandbox and nuke) -Errorage
 //Was list("1" = 10, "3" = 15, "4" = 60, "5" = 15); changed it to list("3" = 30, "4" = 70).
@@ -369,6 +402,134 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 //Bluh shields
 
+
+//Damage things	//TODO: merge these down to reduce on defines
+#define BRUTE		"brute"
+#define BURN		"fire"
+#define TOX			"tox"
+#define OXY			"oxy"
+#define CLONE		"clone"
+#define HALLOSS		"halloss"
+
+#define STUN		"stun"
+#define WEAKEN		"weaken"
+#define PARALYZE	"paralize"
+#define IRRADIATE	"irradiate"
+#define STUTTER		"stutter"
+#define EYE_BLUR	"eye_blur"
+#define DROWSY		"drowsy"
+
+//Bitflags defining which status effects could be or are inflicted on a mob
+#define CANSTUN		1
+#define CANWEAKEN	2
+#define CANPARALYSE	4
+#define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
+#define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
+#define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
+
+var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg','sound/items/Welder.ogg','sound/items/Welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
+
+//Security levels
+#define SEC_LEVEL_GREEN	0
+#define SEC_LEVEL_BLUE	1
+#define SEC_LEVEL_RED	2
+#define SEC_LEVEL_DELTA	3
+
+#define TRANSITIONEDGE	7 //Distance from edge to move to another z-level
+
+var/list/liftable_structures = list(\
+
+	/obj/machinery/autolathe, \
+	/obj/machinery/constructable_frame, \
+	/obj/machinery/hydroponics, \
+	/obj/machinery/computer, \
+	/obj/machinery/optable, \
+	/obj/machinery/dispenser, \
+	/obj/machinery/gibber, \
+	/obj/machinery/microwave, \
+	/obj/machinery/vending, \
+	/obj/machinery/seed_extractor, \
+	/obj/machinery/space_heater, \
+	/obj/machinery/recharge_station, \
+	/obj/machinery/flasher, \
+	/obj/structure/stool, \
+	/obj/structure/closet, \
+	/obj/machinery/photocopier, \
+	/obj/structure/filingcabinet, \
+	/obj/structure/reagent_dispensers, \
+	/obj/machinery/portable_atmospherics/canister)
+
+//A set of constants used to determine which type of mute an admin wishes to apply:
+//Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
+//Therefore there needs to be a gap between the flags for the automute flags
+#define MUTE_IC			1
+#define MUTE_OOC		2
+#define MUTE_PRAY		4
+#define MUTE_ADMINHELP	8
+#define MUTE_DEADCHAT	16
+#define MUTE_ALL		31
+
+//Number of identical messages required to get the spam-prevention automute thing to trigger warnings and automutes
+#define SPAM_TRIGGER_WARNING 5
+#define SPAM_TRIGGER_AUTOMUTE 10
+
+//Some constants for DB_Ban
+#define BANTYPE_PERMA		1
+#define BANTYPE_TEMP		2
+#define BANTYPE_JOB_PERMA	3
+#define BANTYPE_JOB_TEMP	4
+#define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
+
+//The number of deciseconds which someone needs to be inactive to be classified as AFK:
+#define AFK_THRESHOLD 3000
+
+
+
+#define SEE_INVISIBLE_MINIMUM 5
+
+#define SEE_INVISIBLE_OBSERVER_NOLIGHTING 15
+
+#define INVISIBILITY_LIGHTING 20
+
+#define SEE_INVISIBLE_LIVING 25
+
+#define SEE_INVISIBLE_LEVEL_ONE 35	//Used by some stuff in code. It's really poorly organized.
+#define INVISIBILITY_LEVEL_ONE 35	//Used by some stuff in code. It's really poorly organized.
+
+#define SEE_INVISIBLE_LEVEL_TWO 45	//Used by some other stuff in code. It's really poorly organized.
+#define INVISIBILITY_LEVEL_TWO 45	//Used by some other stuff in code. It's really poorly organized.
+
+#define INVISIBILITY_OBSERVER 60
+#define SEE_INVISIBLE_OBSERVER 60
+
+#define INVISIBILITY_MAXIMUM 100
+
+//Object specific defines
+#define CANDLE_LUM 3 //For how bright candles are
+
+
+//Some mob defines below
+#define AI_CAMERA_LUMINOSITY 6
+
+#define BORGMESON 1
+#define BORGTHERM 2
+#define BORGXRAY  4
+
+//some arbitrary defines to be used by self-pruning global lists. (see master_controller)
+#define PROCESS_KILL 26	//Used to trigger removal from a processing list
+
+// Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
+// the index of the sort department that you want. For example, sortType set to 2 will reroute all packages
+// tagged for the Cargo Bay.
+var/list/TAGGERLOCATIONS = list("Disposals",
+	"Cargo Bay", "QM Office", "Engineering", "CE Office",
+	"Atmospherics", "Security", "HoS Office", "Medbay",
+	"CMO Office", "Chemistry", "Research", "RD Office",
+	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
+	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
+
+#define MIN_PLAYER_AGE 19
+#define MAX_PLAYER_AGE 60
 
 //Damage things
 #define CUT 		"cut"
@@ -389,79 +550,6 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
 
-var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg','hiss5.ogg','hiss6.ogg','Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg','Welder.ogg','Welder2.ogg','airlock.ogg','clownstep1.ogg','clownstep2.ogg')
-
-//Security levels
-#define SEC_LEVEL_GREEN	0
-#define SEC_LEVEL_BLUE	1
-#define SEC_LEVEL_RED	2
-#define SEC_LEVEL_DELTA	3
-
-#define TRANSITIONEDGE	7 //Distance from edge to move to another z-level
-
-#define CLOSED 0
-
-// Maximum and minimum character ages.
-var/const/minimum_age = 20
-var/const/maximum_age = 65
-
-var/list/liftable_structures = list(\
-
-	/obj/machinery/autolathe, \
-	/obj/machinery/constructable_frame, \
-	/obj/machinery/hydroponics, \
-	/obj/machinery/computer, \
-	/obj/machinery/optable, \
-	/obj/machinery/dispenser, \
-	/obj/machinery/gibber, \
-	/obj/machinery/microwave, \
-	/obj/machinery/vending, \
-	/obj/machinery/seed_extractor, \
-	/obj/machinery/space_heater, \
-	/obj/machinery/recharge_station, \
-	/obj/machinery/flasher, \
-	/obj/structure/stool, \
-	/obj/structure/closet, \
-/*	/obj/machinery/photocopier, \*/
-	/obj/structure/filingcabinet, \
-	/obj/structure/reagent_dispensers, \
-	/obj/machinery/portable_atmospherics/canister)
-
-//////////////////
-//GLOBAL DEFINES//
-//////////////////
-
-#define SPEED_OF_LIGHT 3e8 //not exact but hey!
-#define SPEED_OF_LIGHT_SQ 9e+16
-#define FIRE_DAMAGE_MODIFIER 0.0215 //Higher values result in more external fire damage to the skin (default 0.0215)
-#define AIR_DAMAGE_MODIFIER 2.025 //More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
-#define INFINITY 1e31 //closer then enough
-
-	//Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
-#define MAX_MESSAGE_LEN 1024
-#define MAX_PAPER_MESSAGE_LEN 3072
-#define MAX_BOOK_MESSAGE_LEN 9216
-
-#define MAX_NAME_LEN 32
-
-/////////////////
-//RADIO DEFINES//
-/////////////////
-#define TRANSMISSION_WIRE	0
-#define TRANSMISSION_RADIO	1
-
-/* filters */
-#define RADIO_TO_AIRALARM "1"
-#define RADIO_FROM_AIRALARM "2"
-#define RADIO_CHAT "3"
-#define RADIO_ATMOSIA "4"
-#define RADIO_NAVBEACONS "5"
-#define RADIO_AIRLOCK "6"
-#define RADIO_SECBOT "7"
-#define RADIO_MULEBOT "8"
-#define RADIO_MAGNETS "9"
-#define RADIO_POWER "10"
-
 /////////////////
 //ORGAN DEFINES//
 /////////////////
@@ -469,7 +557,6 @@ var/list/liftable_structures = list(\
 #define ORGAN_GAUZED 2
 #define ORGAN_ATTACHABLE 4
 #define ORGAN_BLEEDING 8
-#define ORGAN_BANDAGED 16
 #define ORGAN_BROKEN 32
 #define ORGAN_DESTROYED 64
 #define ORGAN_ROBOT 128

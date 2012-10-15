@@ -123,6 +123,14 @@
 	icon_on = "redzippoon"
 	icon_off = "redzippo"
 
+/obj/item/weapon/lighter/zippo/fluff/executivekill_1 //executivekill: Hunter Duke
+	name = "Gonzo Fist zippo"
+	desc = "A Zippo lighter with the iconic Gonzo Fist on a matte black finish."
+	icon = 'custom_items.dmi'
+	icon_state = "gonzozippo"
+	icon_on = "gonzozippoon"
+	icon_off = "gonzozippo"
+
 /obj/item/weapon/fluff/cado_keppel_1 //sparklysheep: Cado Keppel
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic. It has a small K etched into its side."
@@ -134,8 +142,14 @@
 	attack_self(mob/user)
 		if(user.r_hand == src || user.l_hand == src)
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] uses their [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
+				O.show_message(text("\red [] uses [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
 		return
+
+/obj/item/weapon/fluff/hugo_cinderbacth_1 //thatoneguy: Hugo Cinderbatch
+	name = "Old Cane"
+	desc = "An old brown cane made from wood. It has a a large, itallicized H on it's handle."
+	icon = 'custom_items.dmi'
+	icon_state = "special_cane"
 
 /obj/item/weapon/camera_test/fluff/orange //chinsky: Summer Springfield
 	name = "orange camera"
@@ -222,8 +236,8 @@
 		return
 	if (reagents.total_volume)
 		if (M == user && user.ckey == "nerezza") //Make sure this is being used by the right person, for the right reason (self injection)
-			visible_message("\blue [user] presses [user.get_visible_gender() == MALE ? "his" : user.get_visible_gender() == FEMALE ? "her" : "their"] \
-				penlight against [user.get_visible_gender() == MALE ? "his" : user.get_visible_gender() == FEMALE ? "her" : "their"] skin, quickly clicking the button once.", \
+			visible_message("\blue [user] presses their \
+				penlight against their skin, quickly clicking the button once.", \
 				"\blue You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.", \
 				"You hear a rustle as someone moves nearby, then a sharp click.")
 		if (M != user && user.ckey == "nerezza") //Woah now, you better be careful partner
@@ -251,6 +265,36 @@
 	desc = "A special identification card with a red cross signifying an emergency physician has specialised in Odysseus operations and maintenance.\nIt grants the owner recharge bay access."
 	icon = 'custom_items.dmi'
 	icon_state = "odysseus_spec_id"
+
+/obj/item/weapon/card/id/fluff/ian_colmid //Roaper: Ian Colm
+	name = "Technician"
+	desc = "An old ID with the words 'Ian Colm's Technician ID' printed on it.."
+	icon = 'custom_items.dmi'
+	icon_state = "technician_id"
+
+
+/obj/item/weapon/clipboard/fluff/mcreary_journal //sirribbot: James McReary
+	name = "McReary's journal"
+	desc = "A journal with a warning sticker on the front cover. The initials \"J.M.\" are written on the back."
+	icon = 'custom_items.dmi'
+	icon_state = "mcreary_journal"
+	item_state = "mcreary_journal"
+
+/obj/item/device/flashlight/fluff/thejesster14_1 //thejesster14: Rosa Wolff
+	name = "old red flashlight"
+	desc = "A very old, childlike flashlight."
+	icon = 'custom_items.dmi'
+	icon_state = "wolfflight0"
+	w_class = 2
+	item_state = "wolfflight"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
+	m_amt = 50
+	g_amt = 20
+	on = 0
+	brightness_on = 4 //luminosity when on
+	icon_on = "wolfflight1"
+	icon_off = "wolfflight0"
 
 //////////////////////////////////
 //////////// Clothing ////////////
@@ -326,7 +370,6 @@
 	desc = "Because when you're the toughest Mother Hubbard on the station, nobody's criticizing your fashion sense."
 	icon = 'custom_items.dmi'
 	icon_state = "enos_adlai_1"
-	flags = FPRINT|TABLEPASS
 
 //////////// Suits ////////////
 
@@ -398,8 +441,17 @@
 	item_state = "tian_dress"
 	color = "tian_dress"
 
+/obj/item/clothing/under/rank/bartender/fluff/classy	//searif: Ara Al-Jazari
+	name = "classy bartender uniform"
+	desc = "A prim and proper uniform that looks very similar to a bartender's, the only differences being a red tie, waistcoat and a rag hanging out of the back pocket."
+	icon = 'custom_items.dmi'
+	icon_state = "ara_bar_uniform"
+	item_state = "ara_bar_uniform"
+	color = "ara_bar_uniform"
+
 //////////// Masks ////////////
 
+/*
 /obj/item/clothing/mask/fluff/flagmask //searif: Tsiokeriio Tarbell
 	name = "\improper First Nations facemask"
 	desc = "A simple cloth rag that bears the flag of the first nations."
@@ -409,6 +461,7 @@
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
+*/
 
 /obj/item/clothing/mask/mara_kilpatrick_1 //staghorn: Mara Kilpatrick
 	name = "shamrock pendant"
@@ -482,3 +535,4 @@
 	icon = 'custom_items.dmi'
 	icon_state = "retpoluniform"
 	color = "retpoluniform"
+

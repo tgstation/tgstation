@@ -26,7 +26,6 @@ Header Section
 	<tr>
 		<td valign='top'>
 			<div align='center'><font size='3'><b>Baystation 12 - A Space Station 13 Server</b></font></div>
-			
 			<p><div align='center'><font size='3'><a href="http://baystation12.net/forums/">Forum</a> | <a href="http://baystation12.net/wiki/">Wiki</a> | <a href="https://github.com/Baystation12/Baystation12/">Source</a></font></div></p>
 			<div align='center'><font size='2'><b>Visit our IRC channel:</b> #bs12 on irc.sorcery.net</font><br>
 			<font size='2'>Code licensed under <a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>. Content licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.<br><br>
@@ -57,6 +56,84 @@ Stuff which is in development and not yet visible to players or just code relate
 should be listed in the changelog upon commit though. Thanks. -->
 
 <!-- To take advantage of the pretty new format (well it was new when I wrote this anyway), open the "add-to-changelog.html" file in any browser and add the stuff and then generate the html code and paste it here -->
+<div class="commit sansserif">
+	<h2 class="date">15.10.2012</h2>
+	<h3 class="author">Chinsky updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Ported over surgery procedures (face surgery and bone surgery). Re-added delays on surgery steps. !!WARNING!! almost all surgery steps now damage patient if interrupted (user moved or changed active hand between starting message and ending message), so be careful.</li>
+		<li class="tweak">Now only cuting wounds and really bad blunt ones (>20 damage) will cause bleeding</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">October 13th, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Moderators are now being loaded correctly, and all broken admin and mod verbs should be functioning correctly. Misc other fixes and improvements.</li>
+	</ul>
+	<h3 class="author">CIB updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Medical stack items(ointment, bandages) aren't instant anymore, but instead stop bleeding and speed up healing.</li>
+        <li class="bugfix">Cyborgs can now use :h to use their department channel.</li>
+        <li class="tweak">Ported BS12 medbots. This means you now have to load them with a chemical, or otherwise they only have inaprovaline.</li>
+        <li class="tweak">Ported the BS12 player info features.</li>
+        <li class="tweak">Examine now only reveals whether someone is breathing(need to be 3 tiles away or closer). Check pulse from 1 tile distance.</li>
+        <li class="tweak">Ported bleeding. Bleeding can be stopped by applying a bandage.</li>
+        <li class="tweak">Small delay for chloral hydrate and sleep toxin to take effect.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">October 12th, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">Merge current BS12 code with /tg/station's rev4847. Thanks for everyone who's been posting issues and bugs to the PiratePad <a href="http://piratepad.net/YO3Dig6L2N">issue tracker</a> (see also <a href="http://piratepad.net/9CwFobI4lZ">here</a> for general discussion and criticisms).</li>
+		<li class="tgs">See <a href="https://code.google.com/p/tgstation13/source/list">https://code.google.com/p/tgstation13/source/list</a> for tg's changelog. This is recommended reading for anyone interested in any changes, be warned there's a lot of them. </li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">October 9th, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">The merge code is now stable and playable (diag click only has been fixed, among other things). Hopefully, more playtesting will be taking place over the next few weeks.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">September 26th, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">Multiple bugfixes and tweaks in response to the testing session a few days ago have been put in place. For more details, see the piratepad tracker (TG also has broken underwear, we're awaiting a fix from them for it).</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">September 24th, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">Engineering depressurisation during the test run was due to the singularity EMPing doors open. This is not a bug.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">September 23nd, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">The server map has now officially branched to tgstation2.0.9.1.dmm.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">August 22, 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tgs">This server is in the process of running a merge of BS12 and up to date TGcode. This is a significant update, and there will likely be several bugs coming with it. 
+		See <a href="https://github.com/Baystation12/Baystation12/pull/1671">https://github.com/Baystation12/Baystation12/pull/1671</a> for more information.</li>
+		<li class="tgs">The server is now running tgstation2.0.9.dmm. The station layout is functionally the same, but with significant additions from tg. Hopefully, the Antiqua will be ready soon.</li>
+		<li class="tgs">Please report all bugs immediately, both in OOC and by making an issue at: <a href="https://github.com/Baystation12/Baystation12/issues/new">https://github.com/Baystation12/Baystation12/issues/new</a></li>
+	</ul>
+</div>
 
 <div class="commit sansserif">
 	<h2 class="date">15th August 2012</h2>

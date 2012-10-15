@@ -1,7 +1,7 @@
 /obj/machinery/biogenerator
 	name = "Biogenerator"
 	desc = ""
-	icon = 'biogenerator.dmi'
+	icon = 'icons/obj/biogenerator.dmi'
 	icon_state = "biogen-stand"
 	density = 1
 	anchored = 1
@@ -17,7 +17,7 @@
 		var/datum/reagents/R = new/datum/reagents(1000)
 		reagents = R
 		R.my_atom = src
-		beaker = new /obj/item/weapon/reagent_containers/glass/large(src)
+		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
 	on_reagent_change()			//When the reagents change, change the icon as well.
 		update_icon()
@@ -96,9 +96,10 @@
 					dat += "<A href='?src=\ref[src];action=create;item=l4z;cost=20'>Left 4 Zed</A> <FONT COLOR=blue>(20)</FONT> | <A href='?src=\ref[src];action=create;item=l4z5;cost=100'>x5</A><BR>"
 					dat += "<A href='?src=\ref[src];action=create;item=rh;cost=25'>Robust Harvest</A> <FONT COLOR=blue>(25)</FONT> | <A href='?src=\ref[src];action=create;item=rh5;cost=125'>x5</A><BR>"
 					dat += "Leather<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=wallet;cost=200'>Wallet</A> <FONT COLOR=blue>(200)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=gloves;cost=350'>Botanical gloves</A> <FONT COLOR=blue>(350)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=tbelt;cost=400'>Utility belt</A> <FONT COLOR=blue>(400)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=wallet;cost=100'>Wallet</A> <FONT COLOR=blue>(100)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=gloves;cost=250'>Botanical gloves</A> <FONT COLOR=blue>(250)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=tbelt;cost=300'>Utility belt</A> <FONT COLOR=blue>(300)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=satchel;cost=400'>Leather Satchel</A> <FONT COLOR=blue>(400)</FONT><BR>"
 					//dat += "Other<BR>"
 					//dat += "<A href='?src=\ref[src];action=create;item=monkey;cost=500'>Monkey</A> <FONT COLOR=blue>(500)</FONT><BR>"
 				else
@@ -138,7 +139,7 @@
 		processing = 1
 		update_icon()
 		updateUsrDialog()
-		playsound(src.loc, 'blender.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 		use_power(S*30)
 		sleep(S+15)
 		processing = 0
@@ -160,7 +161,7 @@
 		if("milk")
 			beaker.reagents.add_reagent("milk",10)
 		if("meat")
-			new/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat(src.loc)
+			new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("ez")
 			new/obj/item/nutrient/ez(src.loc)
 		if("l4z")
@@ -191,6 +192,8 @@
 			new/obj/item/clothing/gloves/botanic_leather(src.loc)
 		if("tbelt")
 			new/obj/item/weapon/storage/belt/utility(src.loc)
+		if("satchel")
+			new/obj/item/weapon/storage/backpack/satchel(src.loc)
 		if("monkey")
 			new/mob/living/carbon/monkey(src.loc)
 	processing = 0

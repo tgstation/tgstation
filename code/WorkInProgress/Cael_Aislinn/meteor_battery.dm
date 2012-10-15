@@ -11,7 +11,7 @@
 	density = 1
 	desc = "It's sparking and shaking slightly."
 
-/obj/item/projectile/missile/fired(var/turf/newtarget)
+/obj/item/projectile/missile/process(var/turf/newtarget)
 	target = newtarget
 	dir = get_dir(src.loc, target)
 	walk_towards(src, target, MISSILE_SPEED)
@@ -179,7 +179,7 @@
 	A.tracking = tracking_missiles
 	fired_missiles.Add(A)
 	spawn(0)
-		A.fired(U)
+		A.process(U)
 	return
 
 

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /*
  * GAMEMODES (by Rastaf0)
@@ -23,12 +23,11 @@
 	var/list/datum/mind/modePlayer = new
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be tratiors because
-	var/list/logtraitors = list()
-	var/required_players = 1
+	var/required_players = 0
 	var/required_enemies = 0
 	var/recommended_enemies = 0
-	var/uplink_welcome
-	var/uplink_uses
+	var/uplink_welcome = "Syndicate Uplink Console:"
+	var/uplink_uses = 10
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
 /obj/item/weapon/gun/projectile:6:Revolver;
 /obj/item/ammo_magazine/a357:2:Ammo-357;
@@ -38,45 +37,38 @@
 /obj/item/weapon/storage/emp_kit:3:5 EMP Grenades;
 Whitespace:Seperator;
 Stealthy and Inconspicuous Weapons;
-/obj/item/weapon/pen/sleepypen:3:Sleepy Pen;
+/obj/item/weapon/pen/paralysis:3:Paralysis Pen;
 /obj/item/weapon/soap/syndie:1:Syndicate Soap;
 /obj/item/weapon/cartridge/syndicate:3:Detomatix PDA Cartridge;
 Whitespace:Seperator;
 Stealth and Camouflage Items;
-/obj/item/clothing/under/chameleon:4:Chameleon Jumpsuit, with armor.;
+/obj/item/clothing/under/chameleon:3:Chameleon Jumpsuit;
 /obj/item/clothing/shoes/syndigaloshes:2:No-Slip Syndicate Shoes;
-/obj/item/weapon/card/id/syndicate:3:Agent ID card;
+/obj/item/weapon/card/id/syndicate:2:Agent ID card;
 /obj/item/clothing/mask/gas/voice:4:Voice Changer;
 /obj/item/device/chameleon:4:Chameleon-Projector;
-/obj/item/weapon/stamperaser:1:Stamp Remover and Forger;
 Whitespace:Seperator;
 Devices and Tools;
-/obj/item/weapon/card/emag:4:Cryptographic Sequencer (Limited uses, almost full access);
-/obj/item/device/hacktool:3:Hacktool (Slow, but stealthy.  Unlimited uses);
+/obj/item/weapon/card/emag:3:Cryptographic Sequencer;
 /obj/item/weapon/storage/toolbox/syndicate:1:Fully Loaded Toolbox;
-/obj/item/device/encryptionkey/traitor:3:Traitor Radio Key;
-/obj/item/device/encryptionkey/binary:3:Binary Translator Key;
 /obj/item/weapon/storage/syndie_kit/space:3:Space Suit;
-/obj/item/clothing/glasses/thermal:3:Thermal Imaging Glasses;
+/obj/item/clothing/glasses/thermal/syndi:3:Thermal Imaging Glasses;
+/obj/item/device/encryptionkey/binary:3:Binary Translator Key;
 /obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
-/obj/item/weapon/plastique:2:C-4 (Destroys walls, not people);
-/obj/item/weapon/syndie/c4explosive:4:Low Power Explosive Charge, with Detonator;
+/obj/item/weapon/plastique:2:C-4 (Destroys walls);
 /obj/item/device/powersink:5:Powersink (DANGER!);
 /obj/item/device/radio/beacon/syndicate:7:Singularity Beacon (DANGER!);
-/obj/item/weapon/circuitboard/teleporter:10:Teleporter Circuit Board;
+/obj/item/weapon/circuitboard/teleporter:20:Teleporter Circuit Board;
 Whitespace:Seperator;
 Implants;
 /obj/item/weapon/storage/syndie_kit/imp_freedom:3:Freedom Implant;
-/obj/item/weapon/storage/syndie_kit/imp_compress:5:Compressed Matter Implant;
-/obj/item/weapon/storage/syndie_kit/imp_explosive:6:Explosive Implant;
 /obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
 Whitespace:Seperator;
-Badassery;
+(Pointless) Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
 // Items removed from above:
 /*
-/obj/item/weapon/syndie/c4explosive/heavy:7:High (!) Power Explosive Charge, with Detonator;
 /obj/item/weapon/cloaking_device:4:Cloaking Device;	//Replacing cloakers with thermals.	-Pete
 */
 
@@ -88,7 +80,7 @@ Badassery;
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
-	for(var/mob/new_player/player in world)
+	for(var/mob/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
 	if(playerC >= required_players)
@@ -110,7 +102,7 @@ Badassery;
 		feedback_set_details("game_mode","[ticker.mode]")
 	if(revdata)
 		feedback_set_details("revision","[revdata.revision]")
-	feedback_set_details("server_ip","[world.internet_address]")
+	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
 	return 1
 
 
@@ -141,7 +133,7 @@ Badassery;
 
 	var/list/area/escape_locations = list(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
 
-	for(var/mob/M in world)
+	for(var/mob/M in player_list)
 		if(M.client)
 			clients++
 			if(ishuman(M))
@@ -192,6 +184,7 @@ Badassery;
 	if(escaped_on_pod_5 > 0)
 		feedback_set("escaped_on_pod_5",escaped_on_pod_5)
 
+	send2irc("Server", "Round just ended.")
 
 	return 0
 
@@ -199,7 +192,6 @@ Badassery;
 /datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
 	return 0
 
-/datum/game_mode/proc/latespawn(var/mob)
 
 /datum/game_mode/proc/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
@@ -228,7 +220,7 @@ Badassery;
 	for (var/obj/machinery/computer/communications/comm in world)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
-			intercept.name = "paper - 'Cent. Com. Status Summary'"
+			intercept.name = "paper- 'Cent. Com. Status Summary'"
 			intercept.info = intercepttext
 
 			comm.messagetitle.Add("Cent. Com. Status Summary")
@@ -236,12 +228,13 @@ Badassery;
 	world << sound('commandreport.ogg')
 
 /*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-	world << sound('intercept.ogg')
+	world << sound('sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
 
 
-/datum/game_mode/proc/get_players_for_role(var/role, draft_people=0, override_jobbans=0)
+/datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)
+	var/list/players = list()
 	var/list/candidates = list()
 	var/list/drafted = list()
 	var/datum/mind/applicant = null
@@ -254,10 +247,18 @@ Badassery;
 		if(BE_WIZARD)		roletext="wizard"
 		if(BE_REV)			roletext="revolutionary"
 		if(BE_CULTIST)		roletext="cultist"
-		if(BE_MEME)			roletext="meme"
 
 
-	for(var/mob/new_player/player in world)
+	// Ultimate randomizing code right here
+	for(var/mob/new_player/player in player_list)
+		if(player.client && player.ready)
+			players += player
+
+	// Shuffling, the players list is now ping-independent!!!
+	// Goodbye antag dante
+	players = shuffle(players)
+
+	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
 			if(player.preferences.be_special & role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
@@ -269,8 +270,8 @@ Badassery;
 				if(player.assigned_role == job)
 					candidates -= player
 
-	if(candidates.len < recommended_enemies && draft_people)
-		for(var/mob/new_player/player in world)
+	if(candidates.len < recommended_enemies)
+		for(var/mob/new_player/player in players)
 			if (player.client && player.ready)
 				if(!(player.preferences.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
@@ -281,6 +282,8 @@ Badassery;
 			for(var/job in restricted_jobs)
 				if(player.assigned_role == job)
 					drafted -= player
+
+	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
 
 	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
 		if(drafted.len > 0)
@@ -293,7 +296,7 @@ Badassery;
 			break
 
 	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
-		for(var/mob/new_player/player in world)
+		for(var/mob/new_player/player in players)
 			if (player.client && player.ready)
 				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					drafted += player.mind
@@ -303,6 +306,8 @@ Badassery;
 			for(var/job in restricted_jobs)
 				if(player.assigned_role == job)
 					drafted -= player
+
+	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
 
 	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
 		if(drafted.len > 0)
@@ -327,7 +332,7 @@ Badassery;
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/new_player/P in world)
+	for(var/mob/new_player/P in player_list)
 		if(P.client && P.ready)
 			. ++
 
@@ -337,7 +342,7 @@ Badassery;
 ///////////////////////////////////
 /datum/game_mode/proc/get_living_heads()
 	var/list/heads = list()
-	for(var/mob/living/carbon/human/player in world)
+	for(var/mob/living/carbon/human/player in mob_list)
 		if(player.stat!=2 && player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads
@@ -348,7 +353,7 @@ Badassery;
 ////////////////////////////
 /datum/game_mode/proc/get_all_heads()
 	var/list/heads = list()
-	for(var/mob/player in world)
+	for(var/mob/player in mob_list)
 		if(player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads

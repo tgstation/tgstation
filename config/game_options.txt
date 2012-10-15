@@ -1,10 +1,25 @@
 ### HEALTH ###
 
 ## level of health at which a mob becomes unconscious (crit)
-HEALTH_THRESHOLD_CRIT -50
+HEALTH_THRESHOLD_CRIT 0
 
 ## level of health at which a mob becomes dead
 HEALTH_THRESHOLD_DEAD -100
+
+## Determines whether bones can be broken through excessive damage to the organ
+## 0 means bones can't break, 1 means they can
+BONES_CAN_BREAK 0
+## Determines whether limbs can be amputated through excessive damage to the organ
+## 0 means limbs can't be amputated, 1 means they can
+LIMBS_CAN_BREAK 0
+
+## multiplier which enables organs to take more damage before bones breaking or limbs being destroyed
+## 100 means normal, 50 means half
+ORGAN_HEALTH_MULTIPLIER 100
+
+## multiplier which influences how fast organs regenerate naturally
+## 100 means normal, 50 means half
+ORGAN_REGENERATION_MULTIPLIER 200
 
 ### REVIVAL ###
 
@@ -16,3 +31,25 @@ REVIVAL_CLONING 1
 
 ## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
+
+
+
+### MOB MOVEMENT ###
+
+## We suggest editing these variabled in-game to find a good speed for your server. To do this you must be a high level admin. Open the 'debug' tab ingame. Select "Debug Controller" and then, in the popup, select "Configuration". These variables should have the same name.
+
+## These values get directly added to values and totals in-game. To speed things up make the number negative, to slow things down, make the number positive.
+
+
+## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
+RUN_DELAY 0
+WALK_DELAY 0
+
+
+## The variables below affect the movement of specific mob types.
+HUMAN_DELAY 0
+ROBOT_DELAY 0
+MONKEY_DELAY 0
+ALIEN_DELAY 0
+METROID_DELAY 0
+ANIMAL_DELAY 0

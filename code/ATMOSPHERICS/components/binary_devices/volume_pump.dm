@@ -13,11 +13,11 @@ Thus, the two variables affect pump operation are set in New():
 */
 
 obj/machinery/atmospherics/binary/volume_pump
-	icon = 'volume_pump.dmi'
+	icon = 'icons/obj/atmospherics/volume_pump.dmi'
 	icon_state = "intact_off"
 
-	name = "Gas pump"
-	desc = "A pump"
+	name = "Volumetric gas pump"
+	desc = "A volumetric pump"
 
 	var/on = 0
 	var/transfer_rate = 200
@@ -25,6 +25,10 @@ obj/machinery/atmospherics/binary/volume_pump
 	var/frequency = 0
 	var/id = null
 	var/datum/radio_frequency/radio_connection
+
+	on
+		on = 1
+		icon_state = "intact_on"
 
 	update_icon()
 		if(node1&&node2)
@@ -36,14 +40,22 @@ obj/machinery/atmospherics/binary/volume_pump
 				icon_state = "exposed_2_off"
 			else
 				icon_state = "exposed_3_off"
-			on = 0
-
 		return
 
 	process()
 //		..()
+		if(stat & (NOPOWER|BROKEN))
+			return
 		if(!on)
 			return 0
+
+// Pump mechanism just won't do anything if the pressure is too high/too low
+
+		var/input_starting_pressure = air1.return_pressure()
+		var/output_starting_pressure = air2.return_pressure()
+
+		if((input_starting_pressure < 0.01) || (output_starting_pressure > 9000))
+			return 1
 
 		var/transfer_ratio = max(1, transfer_rate/air1.volume)
 
@@ -85,6 +97,17 @@ obj/machinery/atmospherics/binary/volume_pump
 
 			return 1
 
+		interact(mob/user as mob)
+			var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
+						<b>Desirable output flow: </b>
+						[round(transfer_rate,1)]l/s | <a href='?src=\ref[src];set_transfer_rate=1'>Change</a>
+						"}
+
+			user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
+			onclose(user, "atmo_pump")
+
+
+
 	initialize()
 		..()
 
@@ -115,3 +138,60 @@ obj/machinery/atmospherics/binary/volume_pump
 		spawn(2)
 			broadcast_status()
 		update_icon()
+
+
+	attack_hand(user as mob)
+		if(..())
+			return
+		src.add_fingerprint(usr)
+		if(!src.allowed(user))
+			user << "\red Access denied."
+			return
+		usr.machine = src
+		interact(user)
+		return
+
+	Topic(href,href_list)
+		if(..()) return
+		if(href_list["power"])
+			on = !on
+		if(href_list["set_transfer_rate"])
+			var/new_transfer_rate = input(usr,"Enter new output volume (0-200l/s)","Flow control",src.transfer_rate) as num
+			src.transfer_rate = max(0, min(200, new_transfer_rate))
+		usr.machine = src
+		src.update_icon()
+		src.updateUsrDialog()
+		return
+
+	power_change()
+		..()
+		update_icon()
+
+
+
+	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if (!istype(W, /obj/item/weapon/wrench))
+			return ..()
+		if (!(stat & NOPOWER) && on)
+			user << "\red You cannot unwrench this [src], turn it off first."
+			return 1
+		var/turf/T = src.loc
+		if (level==1 && isturf(T) && T.intact)
+			user << "\red You must remove the plating first."
+			return 1
+		var/datum/gas_mixture/int_air = return_air()
+		var/datum/gas_mixture/env_air = loc.return_air()
+		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+			add_fingerprint(user)
+			return 1
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user << "\blue You begin to unfasten \the [src]..."
+		if (do_after(user, 40))
+			user.visible_message( \
+				"[user] unfastens \the [src].", \
+				"\blue You have unfastened \the [src].", \
+				"You hear ratchet.")
+			new /obj/item/pipe(loc, make_from=src)
+			del(src)
+

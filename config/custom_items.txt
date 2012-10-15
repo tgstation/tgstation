@@ -1,17 +1,21 @@
 atomicdog92: Seth Sealis: /obj/item/clothing/suit/storage/det_suit/fluff/leatherjack
 botanistpower: Walter Brooks: /obj/item/clothing/gloves/fluff/walter_brooks_1
+bountylord13: Norah Briggs: /obj/item/clothing/head/helmet/welding/fluff/norah_briggs_1
 chinsky: Victor Kaminski: /obj/item/fluff/victor_kaminsky_1
 chinsky: Summer Springfield: /obj/item/weapon/camera_test/fluff/orange
 compactninja: Al Peterson: /obj/item/clothing/head/flatcap
 compactninja: Lister Black: /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle, /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle
+cubejackal: Barry Sharke: /obj/item/clothing/mask/fluff/electriccig
 desiderium: Momiji Inubashiri: /obj/item/clothing/under/fluff/olddressuniform
 desiderium: Rook Maudlin: /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat, /obj/item/clothing/head/det_hat/fluff/retpolcap, /obj/item/clothing/under/det/fluff/retpoluniform
-deusdactyl: James Girard: /obj/item/clothing/head/secsoft/fluff/swatcap
+deusdactyl: James Girard: /obj/item/clothing/head/secsoft/fluff/swatcap, /obj/item/clothing/suit/armor/vest/fluff/deus_blueshield
 eternal248: Maximilian Haynes: /obj/item/weapon/paper/certificate
+executivekill: Hunter Duke: /obj/item/weapon/lighter/zippo/fluff/executivekill_1
 fastler: Fastler Greay: /obj/item/weapon/card/id/fluff/lifetime
 fniff: Sarah Calvera: /obj/item/fluff/sarah_calvera_1
 fniff: Angleo Wilkerson: /obj/item/fluff/angelo_wilkerson_1
 gvazdas: Sarah Carbrokes: /obj/item/fluff/sarah_carbrokes_1
+jamini: Edwin Atweeke: /obj/item/clothing/suit/storage/labcoat/fluff/burnt
 leonheart11:  Johann Erzatz: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/johann_erzatz_1
 lexusjjss: Lexus Langg: /obj/item/weapon/clipboard/fluff/smallnote, /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask
 lexusjjss: Zachary Tomlinson: /obj/item/weapon/clipboard/fluff/smallnote, /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask
@@ -23,27 +27,27 @@ nerezza: Asher Spock: /obj/item/weapon/reagent_containers/hypospray/fluff/asher_
 nerezza: Asher Spock: /obj/item/weapon/card/id/fluff/asher_spock_2
 orangebottle: Lillian Levett: /obj/item/weapon/pen/fluff/fancypen
 orangebottle: Lilliana Reade: /obj/item/weapon/pen/fluff/fancypen
+phaux: Tian Krieger: /obj/item/clothing/under/fluff/tian_dress
 rawrtaicho: Riley Rohtin: /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1
 roaper: Enos Adlai: /obj/item/clothing/head/fluff/enos_adlai_1
 searif: Yuki Matsuda: /obj/item/clothing/under/fluff/jumpsuitdown, /obj/item/clothing/head/helmet/welding/fluff/yuki_matsuda_1
-searif: Tsiokeriio Tarbell: /obj/item/clothing/mask/fluff/flagmask
+searif: Ara Al-Jazari: /obj/item/clothing/under/rank/bartender/fluff/classy
 serithi: Serithi Artalis: /obj/item/clothing/glasses/fluff/serithi_artalis_1, /obj/item/clothing/shoes/fluff/leatherboots
+sirribbit: /obj/item/weapon/clipboard/fluff/mcreary_journal
 sicktrigger: David Fanning: /obj/item/fluff/david_fanning_1
 silentthunder: Val McNeil: /obj/item/fluff/val_mcneil_1
+sniperyeti: Patrick Harris: /obj/item/weapon/lighter/zippo/fluff/sniperyeti_1
+sniperyeti: Susan Harris: /obj/item/weapon/lighter/zippo/fluff/sniperyeti_1
 spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/suit/storage/labcoat/fluff/pink
 sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
 staghorn: Mara Kilpatrick: /obj/item/clothing/mask/mara_kilpatrick_1
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
+thatoneguy: Hugo Cinderbatch: /obj/item/weapon/fluff/hugo_cinderbacth_1
 thebreadbocks: Steve Johnson: /obj/item/fluff/steve_johnson_1
-themij: Taryn Kifer: /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
+themij: Taryn Keppel: /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
+thejesster14: Rosa Wolff: /obj/item/device/flashlight/fluff/thejesster14_1
 tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
 vinceluk: Seth Sealis: /obj/item/clothing/suit/storage/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
 whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1
-jamini: Edwin Atweeke: /obj/item/clothing/suit/storage/labcoat/fluff/burnt
-cubejackal: Barry Sharke: /obj/item/clothing/mask/fluff/electriccig
-sniperyeti: Patrick Harris: /obj/item/weapon/lighter/zippo/fluff/sniperyeti_1
-sniperyeti: Susan Harris: /obj/item/weapon/lighter/zippo/fluff/sniperyeti_1
-bountylord13: Norah Briggs: /obj/item/clothing/head/helmet/welding/fluff/norah_briggs_1
-deusdactyl: James Girard: /obj/item/clothing/suit/armor/vest/fluff/deus_blueshield
-phaux: Tian Yinhu: /obj/item/clothing/under/fluff/tian_dress
+roaper: Ian Colm: /obj/item/weapon/card/id/fluff/ian_colmid

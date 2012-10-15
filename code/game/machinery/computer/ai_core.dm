@@ -2,7 +2,7 @@
 	density = 1
 	anchored = 0
 	name = "AI core"
-	icon = 'AI.dmi'
+	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
 	var/state = 0
 	var/datum/ai_laws/laws = new /datum/ai_laws/nanotrasen
@@ -14,7 +14,7 @@
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
-				playsound(loc, 'Ratchet.ogg', 50, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You wrench the frame into place."
 					anchored = 1
@@ -24,7 +24,7 @@
 				if(!WT.isOn())
 					user << "The welder must be on for this task."
 					return
-				playsound(loc, 'Welder.ogg', 50, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20))
 					if(!src || !WT.remove_fuel(0, user)) return
 					user << "\blue You deconstruct the frame."
@@ -32,25 +32,25 @@
 					del(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
-				playsound(loc, 'Ratchet.ogg', 50, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You unfasten the frame."
 					anchored = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
-				playsound(loc, 'Deconstruct.ogg', 50, 1)
+				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				user << "\blue You place the circuit board inside the frame."
 				icon_state = "1"
 				circuit = P
 				user.drop_item()
 				P.loc = src
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(loc, 'Screwdriver.ogg', 50, 1)
+				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You screw the circuit board into place."
 				state = 2
 				icon_state = "2"
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
-				playsound(loc, 'Crowbar.ogg', 50, 1)
+				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the circuit board."
 				state = 1
 				icon_state = "0"
@@ -58,13 +58,13 @@
 				circuit = null
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(loc, 'Screwdriver.ogg', 50, 1)
+				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You unfasten the circuit board."
 				state = 1
 				icon_state = "1"
 			if(istype(P, /obj/item/weapon/cable_coil))
 				if(P:amount >= 5)
-					playsound(loc, 'Deconstruct.ogg', 50, 1)
+					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						P:amount -= 5
 						if(!P:amount) del(P)
@@ -76,7 +76,7 @@
 				if (brain)
 					user << "Get that brain out of there first"
 				else
-					playsound(loc, 'wirecutter.ogg', 50, 1)
+					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
 					user << "\blue You remove the cables."
 					state = 2
 					icon_state = "2"
@@ -85,7 +85,7 @@
 
 			if(istype(P, /obj/item/stack/sheet/rglass))
 				if(P:amount >= 2)
-					playsound(loc, 'Deconstruct.ogg', 50, 1)
+					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
 						if (P)
 							P:amount -= 2
@@ -105,7 +105,6 @@
 				laws.add_inherent_law("Serve: Serve the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.")
 				laws.add_inherent_law("Protect: Protect the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.")
 				laws.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
-				//laws.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
 				usr << "Law module applied."
 
 			if(istype(P, /obj/item/weapon/aiModule/purge))
@@ -126,15 +125,13 @@
 					user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 					return
 
-				if(P:brainmob.mind in ticker.mode.head_revolutionaries)
-					user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'.  It refuses to accept the MMI."
-					return
-				if(P:brainmob.mind in ticker.mode:revolutionaries)
-					ticker.mode:remove_revolutionary(P:brainmob.mind , 1)
-
 				if(jobban_isbanned(P:brainmob, "AI"))
 					user << "\red This MMI does not seem to fit."
 					return
+
+				if(P:brainmob.mind)
+					ticker.mode.remove_cultist(P:brainmob.mind, 1)
+					ticker.mode.remove_revolutionary(P:brainmob.mind, 1)
 
 				user.drop_item()
 				P.loc = src
@@ -143,7 +140,7 @@
 				icon_state = "3b"
 
 			if(istype(P, /obj/item/weapon/crowbar) && brain)
-				playsound(loc, 'Crowbar.ogg', 50, 1)
+				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the brain."
 				brain.loc = loc
 				brain = null
@@ -151,7 +148,7 @@
 
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
-				playsound(loc, 'Crowbar.ogg', 50, 1)
+				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "\blue You remove the glass panel."
 				state = 3
 				if (brain)
@@ -162,15 +159,16 @@
 				return
 
 			if(istype(P, /obj/item/weapon/screwdriver))
-				playsound(loc, 'Screwdriver.ogg', 50, 1)
+				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
-				new /mob/living/silicon/ai ( loc, laws, brain )
-//				feedback_inc("cyborg_ais_created",1)
+				var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
+				A.rename_self("ai", 1)
+				feedback_inc("cyborg_ais_created",1)
 				del(src)
 
 /obj/structure/AIcore/deactivated
 	name = "Inactive AI"
-	icon = 'AI.dmi'
+	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai-empty"
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
@@ -290,23 +288,23 @@ That prevents a few funky behaviors.
 								T.occupant = A
 								A.control_disabled = 1
 								if (A.stat == 2)
-									T.overlays += image('computer.dmi', "ai-fixer-404")
+									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
 								else
-									T.overlays += image('computer.dmi', "ai-fixer-full")
-								T.overlays -= image('computer.dmi', "ai-fixer-empty")
+									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
 								A.cancel_camera()
 								A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
 								U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
 						else
 							if(!C.contents.len && T.occupant && !T.active)
 								C.name = "inteliCard - [T.occupant.name]"
-								T.overlays += image('computer.dmi', "ai-fixer-empty")
+								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
 								if (T.occupant.stat == 2)
 									C.icon_state = "aicard-404"
-									T.overlays -= image('computer.dmi', "ai-fixer-404")
+									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 								else
 									C.icon_state = "aicard-full"
-									T.overlays -= image('computer.dmi', "ai-fixer-full")
+									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
 								T.occupant << "You have been downloaded to a mobile storage device. Still no remote access."
 								U << "\blue <b>Transfer succesful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 								T.occupant.loc = C
@@ -329,8 +327,8 @@ That prevents a few funky behaviors.
 								T.occupant = A
 								C.AI = null
 								A.control_disabled = 1
-								T.overlays += image('computer.dmi', "ai-fixer-full")
-								T.overlays -= image('computer.dmi', "ai-fixer-empty")
+								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+								T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-empty")
 								A.cancel_camera()
 								A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
 								U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
@@ -339,8 +337,8 @@ That prevents a few funky behaviors.
 								if (T.occupant.stat)
 									U << "\red <b>ERROR</b>: \black [T.occupant.name] data core is corrupted. Unable to install."
 								else
-									T.overlays += image('computer.dmi', "ai-fixer-empty")
-									T.overlays -= image('computer.dmi', "ai-fixer-full")
+									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
 									T.occupant << "You have been downloaded to a mobile storage device. Still no remote access."
 									U << "\blue <b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 									T.occupant.loc = C

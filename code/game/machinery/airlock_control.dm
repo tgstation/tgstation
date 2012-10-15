@@ -4,8 +4,9 @@
 obj/machinery/door/airlock
 	var/id_tag
 	var/frequency
-
+	var/shockedby = list()
 	var/datum/radio_frequency/radio_connection
+	explosion_resistance = 15
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption) return
@@ -88,11 +89,12 @@ obj/machinery/door/airlock
 			set_frequency(frequency)
 
 obj/machinery/airlock_sensor
-	icon = 'airlock_machines.dmi'
+	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_sensor_off"
 	name = "Airlock Sensor"
 
 	anchored = 1
+	power_channel = ENVIRON
 
 	var/id_tag
 	var/master_tag
@@ -154,11 +156,12 @@ obj/machinery/airlock_sensor
 			set_frequency(frequency)
 
 obj/machinery/access_button
-	icon = 'airlock_machines.dmi'
+	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_button_standby"
 	name = "Access Button"
 
 	anchored = 1
+	power_channel = ENVIRON
 
 	var/master_tag
 	var/frequency = 1449

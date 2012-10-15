@@ -1,3 +1,5 @@
+//NEVER USE THIS IT SUX	-PETETHEGOAT
+
 var/global/list/cached_icons = list()
 
 /obj/item/weapon/reagent_containers/glass/paint
@@ -67,7 +69,7 @@ var/global/list/cached_icons = list()
 /obj/item/weapon/paint
 	name = "Paint Can"
 	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
-	icon = 'items.dmi'
+	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
 	color = "FFFFFF"
 	item_state = "paintcan"
@@ -115,7 +117,7 @@ var/global/list/cached_icons = list()
 
 	attack_self(mob/user as mob)
 		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "black", "white")
-		if ((user.equipped() != src || user.stat || user.restrained()))
+		if ((user.get_active_hand() != src || user.stat || user.restrained()))
 			return
 		switch(t1)
 			if("red")

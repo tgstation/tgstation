@@ -1,12 +1,13 @@
 /obj/item/weapon/cable_coil/heavyduty
 	name = "heavy cable coil"
-	icon = 'power.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "wire"
 
 /obj/structure/cable/heavyduty
-	icon = 'power_cond_heavy.dmi'
+	icon = 'icons/obj/power_cond_heavy.dmi'
 	name = "large power cable"
 	desc = "This cable is tough. It cannot be cut with simple hand tools."
+	layer = 2.39 //Just below pipes, which are at 2.4
 
 /obj/structure/cable/heavyduty/attackby(obj/item/W, mob/user)
 

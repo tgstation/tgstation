@@ -1,98 +1,71 @@
+/* Hydroponic stuff
+ * Contains:
+ *		Plant Bags
+ *		Sunflowers
+ *		Nettle
+ *		Deathnettle
+ *		Corbcob
+ */
+
 /*
+ * Plant Bags
+ */
+/obj/item/weapon/plantbag
+	icon = 'icons/obj/hydroponics.dmi'
+	icon_state = "plantbag"
+	name = "Plant Bag"
+	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
+	var/capacity = 50; //the number of plant pieces it can carry.
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
+	w_class = 1
 
-CONTAINS:
-Plant-B-Gone
-Nettle
-Deathnettle
-Craftables (Cob pipes, potato batteries, pumpkinheads)
-
-*/
-
-
-// Plant-B-Gone
-/obj/item/weapon/plantbgone/New()
-	var/datum/reagents/R = new/datum/reagents(100) // 100 units of solution
-	reagents = R
-	R.my_atom = src
-	R.add_reagent("plantbgone", 100)
-
-/obj/item/weapon/plantbgone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/weapon/plantbag/attack_self(mob/user as mob)
+	for (var/obj/item/weapon/reagent_containers/food/snacks/grown/O in contents)
+		contents -= O
+		O.loc = user.loc
+	user << "\blue You empty the plant bag."
 	return
 
-/obj/item/weapon/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
+/obj/item/weapon/plantbag/verb/toggle_mode()
+	set name = "Switch Bagging Method"
+	set category = "Object"
 
-	if (istype(A, /obj/item/weapon/storage/backpack ))
-		return
-
-	else if (locate (/obj/structure/table, src.loc))
-		return
-
-	else if (src.reagents.total_volume < 1)
-		src.empty = 1
-		user << "\blue Add more Plant-B-Gone mixture!"
-		return
-
-	else
-		src.empty = 0
-
-		if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
-			return
-
-		else if (istype(A, /obj/effect/blob)) // blob damage in blob code
-			return
-
-		else
-			var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src)) // Targeting elsewhere
-			D.name = "chemicals"
-			D.icon = 'chemical.dmi'
-			D.icon_state = "weedpuff"
-			D.create_reagents(5)
-			src.reagents.trans_to(D, 5) // 5 units of solution used at a time => 20 uses
-			playsound(src.loc, 'spray3.ogg', 50, 1, -6)
-
-			spawn(0)
-				for(var/i=0, i<3, i++) // Max range = 3 tiles
-					step_towards(D,A) // Moves towards target as normally (not thru walls)
-					D.reagents.reaction(get_turf(D))
-					for(var/atom/T in get_turf(D))
-						D.reagents.reaction(T)
-					sleep(4)
-				del(D)
+	mode = !mode
+	switch (mode)
+		if(1)
+			usr << "The bag now picks up all plants in a tile at once."
+		if(0)
+			usr << "The bag now picks up one plant at a time."
 
 
-			if((src.reagents.has_reagent("pacid")) || (src.reagents.has_reagent("lube"))) 	   				// Messages admins if someone sprays polyacid or space lube from a Plant-B-Gone bottle.
-				message_admins("[key_name_admin(user)] fired Polyacid/Space lube from a PlantBGone bottle.")		// Polymorph
-				log_game("[key_name(user)] fired Polyacid/Space lube from a PlantBGone bottle.")
+/*
+ * Sunflower
+ */
 
-
-			return
-
-/obj/item/weapon/plantbgone/examine()
-	set src in usr
-	usr << text("\icon[] [] units of Plant-B-Gone left!", src, src.reagents.total_volume)
-	..()
-	return
-
-// Sunflower
 /obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
 	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
 
-// Nettle
 
+/*
+ * Nettle
+ */
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
 		user << "\red The nettle burns your bare hand!"
-		if(hasorgans(user))
+		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/affecting = user:get_organ(organ)
-			affecting.take_damage(0,force)
+			var/datum/organ/external/affecting = user.get_organ(organ)
+			if(affecting.take_damage(0,force))
+				user.UpdateDamageIcon()
 		else
 			user.take_organ_damage(0,force)
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob)
 	if(force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
+		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	else
 		usr << "All the leaves have fallen off the nettle from violent whacking."
 		del(src)
@@ -101,15 +74,17 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 	potency = newValue
 	force = round((5+potency/5), 1)
 
-
-// Deathnettle
+/*
+ * Deathnettle
+ */
 
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
-		if(hasorgans(user))
+		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
-			var/datum/organ/external/affecting = user:get_organ(organ)
-			affecting.take_damage(0,force)
+			var/datum/organ/external/affecting = user.get_organ(organ)
+			if(affecting.take_damage(0,force))
+				user.UpdateDamageIcon()
 		else
 			user.take_organ_damage(0,force)
 		if(prob(50))
@@ -123,9 +98,12 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
 
-		log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-		message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
 		log_attack("<font color='red'> [user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])</font>")
+
+		log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])")
+		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] on [M.name] ([M.ckey])") //BS12 EDIT ALG
+
+		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 
 		M.eye_blurry += force/7
 		if(prob(20))
@@ -145,31 +123,14 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 	potency = newValue
 	force = round((5+potency/2.5), 1)
 
-//Crafting
 
+/*
+ * Corncob
+ */
 /obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife))
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
-		new /obj/item/clothing/mask/pipe/cobpipe (user.loc)
+		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		del(src)
 		return
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/melee/energy))
-		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
-		new /obj/item/clothing/head/helmet/hardhat/pumpkinhead (user.loc)
-		del(src)
-		return
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W, /obj/item/weapon/cable_coil))
-		if(W:amount >= 5)
-			W:amount -= 5
-			if(!W:amount) del(W)
-			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
-			new /obj/item/weapon/cell/potato(user.loc)
-			del(src)
-			return

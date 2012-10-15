@@ -11,6 +11,11 @@
 
 //////////////////////////////////////////////////////////////////
 
+/turf/simulated/mineral
+	var/datum/geosample/geological_data
+
+//////////////////////////////////////////////////////////////////
+
 /obj/item/device/core_sampler
 	name = "core sampler"
 	desc = "Used to extract geological core samples."
@@ -23,10 +28,6 @@
 	var/sampled_turf = ""
 	var/num_stored_bags = 10
 	var/obj/item/weapon/storage/samplebag/filled_bag
-
-/obj/item/device/core_sampler/New()
-	/*for(var/i=0, i<num_stored_bags, i++)
-		src.contents += new/obj/item/weapon/storage/samplebag(src)*/
 
 /obj/item/device/core_sampler/attack_hand(var/mob/user)
 	user << "\blue The core sampler is [sampled_turf ? "full" : "empty"], and has [num_stored_bags] sample bag[num_stored_bags != 1] remaining."

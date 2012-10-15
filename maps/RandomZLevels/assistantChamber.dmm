@@ -1,35 +1,33 @@
 "a" = (/turf/space,/area)
-"b" = (/turf/unsimulated/wall,/area)
-"c" = (/obj/machinery/shield,/turf/simulated/wall/cult,/area/turret_protected/AssistantRoom)
-"d" = (/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"e" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"f" = (/obj/item/weapon/gift,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"g" = (/obj/effect/accelerated_particle,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"h" = (/obj/item/weapon/gun/energy/gun/nuclear,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"i" = (/obj/item/device/soulstone,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"j" = (/obj/item/ammo_magazine,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"k" = (/obj/effect/rune,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"l" = (/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"m" = (/obj/item/weapon/mousetrap/armed,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"n" = (/obj/item/weapon/nullrod,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"o" = (/obj/item/weapon/card/id/captains_spare,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"p" = (/obj/item/weapon/gun/energy/pulse_rifle/M1911,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"q" = (/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"r" = (/obj/item/weapon/card/emag,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"s" = (/obj/item/tk_grab,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"t" = (/obj/item/device/powersink,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"u" = (/obj/item/device/radio/beacon,/obj/item/weapon/caution,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"v" = (/obj/item/brain,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"w" = (/obj/item/weapon/gun/energy/laser/captain,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"x" = (/obj/item/weapon/gun/projectile/deagle/gold,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"y" = (/obj/item/weapon/gun/energy/lasercannon,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"z" = (/obj/item/weapon/gun/energy/crossbow/largecrossbow,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"A" = (/obj/item/weapon/gun/energy/pulse_rifle/destroyer,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"B" = (/obj/item/toy/spinningtoy,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"C" = (/obj/item/weapon/card/id/centcom,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"D" = (/obj/item/weapon/gun/grenadelauncher,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"E" = (/obj/item/weapon/chemsprayer,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"F" = (/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/obj/machinery/light,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
+"b" = (/turf/unsimulated/wall,/area/awaymission)
+"c" = (/obj/machinery/shield,/turf/simulated/wall/cult,/area/awaymission)
+"d" = (/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"e" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"f" = (/obj/item/weapon/gift,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"g" = (/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"h" = (/obj/item/weapon/gun/energy/gun/nuclear,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"i" = (/obj/item/device/soulstone,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"j" = (/obj/item/ammo_magazine,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"k" = (/obj/effect/rune,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"l" = (/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"m" = (/obj/item/weapon/mousetrap/armed,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"n" = (/obj/item/weapon/nullrod,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"o" = (/obj/item/weapon/card/id/captains_spare,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"p" = (/obj/item/weapon/gun/energy/pulse_rifle/M1911,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"q" = (/obj/item/weapon/card/emag,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"r" = (/obj/item/device/powersink,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"s" = (/obj/item/device/radio/beacon,/obj/item/weapon/caution,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"t" = (/obj/item/brain,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"u" = (/obj/item/weapon/gun/energy/laser/captain,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"v" = (/obj/item/weapon/gun/projectile/deagle/gold,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"w" = (/obj/item/weapon/sord,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"x" = (/obj/item/weapon/gun/energy/lasercannon,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"y" = (/obj/item/weapon/gun/energy/crossbow/largecrossbow,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"z" = (/obj/item/weapon/gun/energy/pulse_rifle/destroyer,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"A" = (/obj/item/toy/spinningtoy,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"B" = (/obj/item/weapon/card/id/centcom,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"C" = (/obj/item/weapon/gun/grenadelauncher,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"D" = (/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/obj/machinery/light,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -45,12 +43,12 @@ aaaaaaaaabbbbbbbbbbbbaaaaaaaaa
 aaaaaaaaabccccccccccbaaaaaaaaa
 aaaaaaaaabccddddddccbaaaaaaaaa
 aaaaaaaaabcefghijklcbaaaaaaaaa
-aaaaaaaaabcemnopqrlcbaaaaaaaaa
-aaaaaaaaabcestquvqlcbaaaaaaaaa
-aaaaaaaaabcewqqxqqlcbaaaaaaaaa
-aaaaaaaaabceqyzqAqlcbaaaaaaaaa
-aaaaaaaaabceBqCqDElcbaaaaaaaaa
-aaaaaaaaabccFFFFFFccbaaaaaaaaa
+aaaaaaaaabcemnopgqlcbaaaaaaaaa
+aaaaaaaaabcegrgstglcbaaaaaaaaa
+aaaaaaaaabceuggvgwlcbaaaaaaaaa
+aaaaaaaaabcegxygzglcbaaaaaaaaa
+aaaaaaaaabceAgBgCglcbaaaaaaaaa
+aaaaaaaaabccDDDDDDccbaaaaaaaaa
 aaaaaaaaabccccccccccbaaaaaaaaa
 aaaaaaaaabbbbbbbbbbbbaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

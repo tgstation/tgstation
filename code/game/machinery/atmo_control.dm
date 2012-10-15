@@ -1,5 +1,5 @@
 obj/machinery/air_sensor
-	icon = 'stationobjs.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
 	name = "Gas Sensor"
 
@@ -40,7 +40,7 @@ obj/machinery/air_sensor
 				signal.data["temperature"] = round(air_sample.temperature,0.1)
 
 			if(output>4)
-				var/total_moles = air_sample.total_moles
+				var/total_moles = air_sample.total_moles()
 				if(total_moles > 0)
 					if(output&4)
 						signal.data["oxygen"] = round(100*air_sample.oxygen/total_moles,0.1)
@@ -75,8 +75,8 @@ obj/machinery/air_sensor
 			set_frequency(frequency)
 
 obj/machinery/computer/general_air_control
-	icon = 'computer.dmi'
-	icon_state = "computer_generic"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "tank"
 
 	name = "Computer"
 
@@ -97,7 +97,7 @@ obj/machinery/computer/general_air_control
 
 	attackby(I as obj, user as mob)
 		if(istype(I, /obj/item/weapon/screwdriver))
-			playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
 				if (src.stat & BROKEN)
 					user << "\blue The broken glass falls out."
@@ -184,7 +184,7 @@ obj/machinery/computer/general_air_control
 		set_frequency(frequency)
 
 	large_tank_control
-		icon = 'computer.dmi'
+		icon = 'icons/obj/computer.dmi'
 		icon_state = "tank"
 
 		var/input_tag
@@ -224,7 +224,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 			else
 				output += "<FONT color='red'>ERROR: Can not find output port</FONT> <A href='?src=\ref[src];out_refresh_status=1'>Search</A><BR>"
 
-			output += "Max Output Pressure Set: <A href='?src=\ref[src];adj_pressure=-100'>-</A> <A href='?src=\ref[src];adj_pressure=-1'>-</A> [pressure_setting] kPa <A href='?src=\ref[src];adj_pressure=1'>+</A> <A href='?src=\ref[src];adj_pressure=100'>+</A><BR>"
+			output += "Max Output Pressure Set: <A href='?src=\ref[src];adj_pressure=-1000'>-</A> <A href='?src=\ref[src];adj_pressure=-100'>-</A> <A href='?src=\ref[src];adj_pressure=-10'>-</A> <A href='?src=\ref[src];adj_pressure=-1'>-</A> [pressure_setting] kPa <A href='?src=\ref[src];adj_pressure=1'>+</A> <A href='?src=\ref[src];adj_pressure=10'>+</A> <A href='?src=\ref[src];adj_pressure=100'>+</A> <A href='?src=\ref[src];adj_pressure=1000'>+</A><BR>"
 
 			return output
 
@@ -283,7 +283,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				src.updateDialog()
 
 	fuel_injection
-		icon = 'computer.dmi'
+		icon = 'icons/obj/computer.dmi'
 		icon_state = "atmos"
 
 		var/device_tag
@@ -296,7 +296,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 		attackby(I as obj, user as mob)
 			if(istype(I, /obj/item/weapon/screwdriver))
-				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				if(do_after(user, 20))
 					if (src.stat & BROKEN)
 						user << "\blue The broken glass falls out."

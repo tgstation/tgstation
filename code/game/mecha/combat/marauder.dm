@@ -14,7 +14,7 @@
 	var/smoke_ready = 1
 	var/smoke_cooldown = 100
 	var/datum/effect/effect/system/harmless_smoke_spread/smoke_system = new
-	operation_req_access = list(ACCESS_CENT_SPECOPS)
+	operation_req_access = list(access_cent_specops)
 	wreckage = /obj/effect/decal/mecha_wreckage/marauder
 	add_req_access = 0
 	internal_damage_threshold = 25
@@ -25,7 +25,7 @@
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
 	name = "Seraph"
 	icon_state = "seraph"
-	operation_req_access = list(ACCESS_CENT_CREED)
+	operation_req_access = list(access_cent_creed)
 	step_in = 3
 	health = 550
 	wreckage = /obj/effect/decal/mecha_wreckage/seraph
@@ -37,7 +37,7 @@
 	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model."
 	name = "Mauler"
 	icon_state = "mauler"
-	operation_req_access = list(ACCESS_SYNDICATE)
+	operation_req_access = list(access_syndicate)
 	wreckage = /obj/effect/decal/mecha_wreckage/mauler
 
 /obj/mecha/combat/marauder/New()
@@ -161,7 +161,7 @@
 		src.occupant_message("<font color='[src.zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 		if(zoom)
 			src.occupant.client.view = 12
-			src.occupant << sound('imag_enh.ogg',volume=50)
+			src.occupant << sound('sound/mecha/imag_enh.ogg',volume=50)
 		else
 			src.occupant.client.view = world.view//world.view - default mob view size
 	return

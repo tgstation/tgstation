@@ -13,7 +13,7 @@ Thus, the two variables affect pump operation are set in New():
 */
 
 obj/machinery/atmospherics/binary/pump
-	icon = 'pump.dmi'
+	icon = 'icons/obj/atmospherics/pump.dmi'
 	icon_state = "intact_off"
 
 	name = "Gas pump"
@@ -21,23 +21,14 @@ obj/machinery/atmospherics/binary/pump
 
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
-	var/max_pressure = 4500
 
 	var/frequency = 0
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	highcap
-		name = "High capacity gas pump"
-		desc = "A high capacity pump"
-
-		max_pressure = 15000000
-
-/*
-	attack_hand(mob/user)
-		on = !on
-		update_icon()
-*/
+	on
+		on = 1
+		icon_state = "intact_on"
 
 	update_icon()
 		if(node1&&node2)
@@ -65,7 +56,7 @@ obj/machinery/atmospherics/binary/pump
 			return 1
 
 		//Calculate necessary moles to transfer using PV=nRT
-		if((air1.total_moles > 0) && (air1.temperature>0))
+		if((air1.total_moles() > 0) && (air1.temperature>0))
 			var/pressure_delta = target_pressure - output_starting_pressure
 			var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
@@ -164,11 +155,12 @@ obj/machinery/atmospherics/binary/pump
 		return
 
 	Topic(href,href_list)
+		if(..()) return
 		if(href_list["power"])
 			on = !on
 		if(href_list["set_press"])
-			var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure]kPa)","Pressure control",src.target_pressure) as num
-			src.target_pressure = max(0, min(max_pressure, new_pressure))
+			var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
+			src.target_pressure = max(0, min(4500, new_pressure))
 		usr.machine = src
 		src.update_icon()
 		src.updateUsrDialog()
@@ -194,7 +186,7 @@ obj/machinery/atmospherics/binary/pump
 			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
 			add_fingerprint(user)
 			return 1
-		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "\blue You begin to unfasten \the [src]..."
 		if (do_after(user, 40))
 			user.visible_message( \

@@ -1,5 +1,6 @@
 
 //chemistry stuff here so that it can be easily viewed/modified
+/*
 datum
 	reagent
 		tungsten	//used purely to make lith-sodi-tungs
@@ -73,3 +74,4 @@ datum
 			required_reagents = list("density_separated_sample" = 5)
 			result_amount = 4
 			requires_heating = 1
+*/

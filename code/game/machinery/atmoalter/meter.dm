@@ -71,18 +71,15 @@
 
 	usr << t
 
-/obj/machinery/meter/attack_ai(mob/user as mob)
-	return attack_hand(user)
 
-/obj/machinery/meter/attack_paw(mob/user as mob)
-	return attack_hand(user)
 
-/obj/machinery/meter/attack_hand(mob/user as mob)
+/obj/machinery/meter/Click()
+
 	if(stat & (NOPOWER|BROKEN))
 		return 1
 
 	var/t = null
-	if (get_dist(user, src) <= 3 || istype(user, /mob/living/silicon/ai) || istype(user, /mob/dead))
+	if (get_dist(usr, src) <= 3 || istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/dead))
 		if (src.target)
 			var/datum/gas_mixture/environment = target.return_air()
 			if(environment)
@@ -100,7 +97,7 @@
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	playsound(src.loc, 'Ratchet.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user << "\blue You begin to unfasten \the [src]..."
 	if (do_after(user, 40))
 		user.visible_message( \

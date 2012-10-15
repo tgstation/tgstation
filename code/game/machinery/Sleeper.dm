@@ -4,7 +4,7 @@
 
 /obj/machinery/sleep_console
 	name = "Sleeper Console"
-	icon = 'Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeperconsole"
 	var/obj/machinery/sleeper/connected = null
 	anchored = 1 //About time someone fixed this.
@@ -48,7 +48,7 @@
 	if(..())
 		return
 	if (src.connected)
-		var/mob/occupant = src.connected.occupant
+		var/mob/living/occupant = src.connected.occupant
 		var/dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>"
 		if (occupant)
 			var/t1
@@ -68,10 +68,10 @@
 			dat += text("<HR>Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
 			if(occupant.reagents)
 				dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
-				dat += text("Soporific (Sleep Toxin): [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
-				dat += text("[]\tDermaline: [] units</FONT><BR>", (occupant.reagents.get_reagent_amount("dermaline") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("dermaline"))
-				dat += text("[]\tBicaridine: [] units<BR>", (occupant.reagents.get_reagent_amount("bicaridine") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("bicaridine"))
-				dat += text("[]\tDexalin: [] units<BR>", (occupant.reagents.get_reagent_amount("dexalin") < 30 ? "<font color='black'>" : "<font color='red'>"), occupant.reagents.get_reagent_amount("dexalin"))
+				dat += text("Soporific: [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
+				dat += text("Dermaline: [] units<BR>", occupant.reagents.get_reagent_amount("dermaline"))
+				dat += text("Bicaridine: [] units<BR>", occupant.reagents.get_reagent_amount("bicaridine"))
+				dat += text("Dexalin: [] units<BR>", occupant.reagents.get_reagent_amount("dexalin"))
 			dat += text("<HR><A href='?src=\ref[];refresh=1'>Refresh meter readings each second</A><BR><A href='?src=\ref[];inap=1'>Inject Inaprovaline</A><BR><A href='?src=\ref[];stox=1'>Inject Soporific</A><BR><A href='?src=\ref[];derm=1'>Inject Dermaline</A><BR><A href='?src=\ref[];bic=1'>Inject Bicaridine</A><BR><A href='?src=\ref[];dex=1'>Inject Dexalin</A>", src, src, src, src, src, src)
 		else
 			dat += "The sleeper is empty."
@@ -133,22 +133,19 @@
 
 /obj/machinery/sleeper
 	name = "Sleeper"
-	icon = 'Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_0"
 	density = 1
 	anchored = 1
 	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
-	var/mob/occupant = null
+	var/mob/living/occupant = null
 
 
 	New()
 		..()
 		spawn( 5 )
 			if(orient == "RIGHT")
-				if(!istype(src,/obj/machinery/sleeper/syndicate))
-					icon_state = "sleeper_0-r"
-				else
-					icon_state = "syndipod_0-r"
+				icon_state = "sleeper_0-r"
 			return
 		return
 
@@ -175,20 +172,20 @@
 		if((!( istype(G, /obj/item/weapon/grab)) || !( ismob(G.affecting))))
 			return
 		if(src.occupant)
-			user << "\blue <B>The [src.name] is already occupied!</B>"
+			user << "\blue <B>The sleeper is already occupied!</B>"
 			return
 
 		for(var/mob/living/carbon/metroid/M in range(1,G.affecting))
 			if(M.Victim == G.affecting)
-				usr << "[G.affecting.name] will not fit into the [src.name] because they have a Metroid latched onto their head."
+				usr << "[G.affecting.name] will not fit into the sleeper because they have a Metroid latched onto their head."
 				return
 
 		for (var/mob/V in viewers(user))
-			V.show_message("[user] starts putting [G.affecting.name] into the [src.name].", 3)
+			V.show_message("[user] starts putting [G.affecting.name] into the sleeper.", 3)
 
 		if(do_after(user, 20))
 			if(src.occupant)
-				user << "\blue <B>The [src.name] is already occupied!</B>"
+				user << "\blue <B>The sleeper is already occupied!</B>"
 				return
 			if(!G || !G.affecting) return
 			var/mob/M = G.affecting
@@ -197,14 +194,9 @@
 				M.client.eye = src
 			M.loc = src
 			src.occupant = M
-			if(!istype(src,/obj/machinery/sleeper/syndicate))
-				src.icon_state = "sleeper_1"
-				if(orient == "RIGHT")
-					icon_state = "sleeper_1-r"
-			else
-				src.icon_state = "syndipod_1"
-				if(orient == "RIGHT")
-					icon_state = "syndipod_1-r"
+			src.icon_state = "sleeper_1"
+			if(orient == "RIGHT")
+				icon_state = "sleeper_1-r"
 
 			M << "\blue <b>You feel cool air surround you. You go numb as your senses turn inward.</b>"
 
@@ -271,14 +263,11 @@
 		src.occupant.loc = src.loc
 		src.occupant = null
 		if(orient == "RIGHT")
-			if(!istype(src,/obj/machinery/sleeper/syndicate))
-				icon_state = "sleeper_0-r"
-			else
-				icon_state = "syndipod_0-r"
+			icon_state = "sleeper_0-r"
 		return
 
 
-	proc/inject_inap(mob/user as mob)
+	proc/inject_inap(mob/living/user as mob)
 		if(src.occupant)
 			if(src.occupant.reagents.get_reagent_amount("inaprovaline") + 30 <= 60)
 				src.occupant.reagents.add_reagent("inaprovaline", 30)
@@ -288,29 +277,29 @@
 		return
 
 
-	proc/inject_stox(mob/user as mob)
+	proc/inject_stox(mob/living/user as mob)
 		if(src.occupant)
-			if(src.occupant.reagents.get_reagent_amount("stoxin") + 10 <= 40)
-				src.occupant.reagents.add_reagent("stoxin", 10)
+			if(src.occupant.reagents.get_reagent_amount("stoxin") + 20 <= 40)
+				src.occupant.reagents.add_reagent("stoxin", 20)
 			user << text("Occupant now has [] units of soporifics in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("stoxin"))
 		else
 			user << "No occupant!"
 		return
 
 
-	proc/inject_dermaline(mob/user as mob)
+	proc/inject_dermaline(mob/living/user as mob)
 		if (src.occupant)
-			if(src.occupant.reagents.get_reagent_amount("dermaline") + 10 <= 40)
-				src.occupant.reagents.add_reagent("dermaline", 10)
+			if(src.occupant.reagents.get_reagent_amount("dermaline") + 20 <= 40)
+				src.occupant.reagents.add_reagent("dermaline", 20)
 			user << text("Occupant now has [] units of Dermaline in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("dermaline"))
 		else
 			user << "No occupant!"
 		return
 
 
-	proc/inject_bicaridine(mob/user as mob)
+	proc/inject_bicaridine(mob/living/user as mob)
 		if(src.occupant)
-			if(src.occupant.reagents.get_reagent_amount("bicaridine") + 10 <= 40)
+			if(src.occupant.reagents.get_reagent_amount("bicaridine") + 10 <= 20)
 				src.occupant.reagents.add_reagent("bicaridine", 10)
 			user << text("Occupant now has [] units of Bicaridine in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("bicaridine"))
 		else
@@ -318,17 +307,17 @@
 		return
 
 
-	proc/inject_dexalin(mob/user as mob)
+	proc/inject_dexalin(mob/living/user as mob)
 		if(src.occupant)
-			if(src.occupant.reagents.get_reagent_amount("dexalin") + 10 <= 40)
-				src.occupant.reagents.add_reagent("dexalin", 10)
+			if(src.occupant.reagents.get_reagent_amount("dexalin") + 20 <= 40)
+				src.occupant.reagents.add_reagent("dexalin", 20)
 			user << text("Occupant now has [] units of Dexalin in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("dexalin"))
 		else
 			user << "No occupant!"
 		return
 
 
-	proc/check(mob/user as mob)
+	proc/check(mob/living/user as mob)
 		if(src.occupant)
 			user << text("\blue <B>Occupant ([]) Statistics:</B>", src.occupant)
 			var/t1
@@ -359,14 +348,9 @@
 		set src in oview(1)
 		if(usr.stat != 0)
 			return
-		if(!istype(src,/obj/machinery/sleeper/syndicate))
-			if(orient == "RIGHT")
-				icon_state = "sleeper_0-r"
-			src.icon_state = "sleeper_0"
-		else
-			if(orient == "RIGHT")
-				icon_state = "syndipod_0-r"
-			src.icon_state = "syndipod_0"
+		if(orient == "RIGHT")
+			icon_state = "sleeper_0-r"
+		src.icon_state = "sleeper_0"
 		src.go_out()
 		add_fingerprint(usr)
 		return
@@ -377,13 +361,11 @@
 		set category = "Object"
 		set src in oview(1)
 
-		if(usr.stat != 0)
+		if(usr.stat != 0 || !(ishuman(usr) || ismonkey(usr)))
 			return
-		if(istype(src,/obj/machinery/sleeper/syndicate))
-			usr << "\red You really want to get into an illegal stasis pod? Are you dumb?"
-			return
+
 		if(src.occupant)
-			usr << "\blue <B>The [src.name] is already occupied!</B>"
+			usr << "\blue <B>The sleeper is already occupied!</B>"
 			return
 
 		for(var/mob/living/carbon/metroid/M in range(1,usr))
@@ -391,42 +373,22 @@
 				usr << "You're too busy getting your life sucked out of you."
 				return
 		for(var/mob/V in viewers(usr))
-			V.show_message("[usr] starts climbing into the [src.name].", 3)
+			V.show_message("[usr] starts climbing into the sleeper.", 3)
 		if(do_after(usr, 20))
 			if(src.occupant)
-				usr << "\blue <B>The [src.name] is already occupied!</B>"
+				usr << "\blue <B>The sleeper is already occupied!</B>"
 				return
-			usr.pulling = null
+			usr.stop_pulling()
 			usr.client.perspective = EYE_PERSPECTIVE
 			usr.client.eye = src
 			usr.loc = src
 			src.occupant = usr
-			if(!istype(src,/obj/machinery/sleeper/syndicate))
-				src.icon_state = "sleeper_1"
-				if(orient == "RIGHT")
-					icon_state = "sleeper_1-r"
-			else
-				src.icon_state = "syndipod_1"
-				if(orient == "RIGHT")
-					icon_state = "syndipod_1-r"
+			src.icon_state = "sleeper_1"
+			if(orient == "RIGHT")
+				icon_state = "sleeper_1-r"
 
 			for(var/obj/O in src)
 				del(O)
 			src.add_fingerprint(usr)
 			return
 		return
-
-
-
-/obj/machinery/sleeper/syndicate
-	name = "Illegal Stasis Pod"
-	icon = 'Cryogenic2.dmi'
-	icon_state = "syndi_0"
-	density = 1
-	anchored = 1
-
-	process()
-		if(src.occupant)
-			src.occupant.sleeping = 5
-		return
-

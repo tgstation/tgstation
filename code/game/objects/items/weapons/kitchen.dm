@@ -1,10 +1,10 @@
-/*
-CONTAINS:
-FORK
-ROLLING PIN
-KNIFE
-
-*/
+/* Kitchen tools
+ * Contains:
+ *		Forks
+ *		Knives
+ *		Rolling Pins
+ *		Trays
+ */
 
 
 /obj/item/weapon/kitchen/utensil/New()
@@ -15,81 +15,49 @@ KNIFE
 
 
 
+/*
+ * Forks
+ */
 
-// FORK
-
-/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/M as mob, mob/living/carbon/user as mob)
-	if(istype(M,/mob/living/carbon) || istype(M,/mob/living/simple_animal/livestock))
-		if (bite)
-			if(M == user)
-				user.visible_message( \
-					"\blue [user] eats a delicious forkful of [bite]!", \
-					"\blue You eat a delicious forkful of [bite]!")
-			else
-				user.visible_message( \
-					"\blue [user] feeds [M] a delicious forkful of [bite]!", \
-					"\blue You feed [M] a delicious forkful of [bite]!")
-			spawn(0)
-				bite.reagents.reaction(M, INGEST)
-				bite.reagents.trans_to(M)
-				del(bite)
-				src.icon_state = "fork"
-		else if(user.zone_sel.selecting == "eyes")
-			if((CLUMSY in user.mutations) && prob(50))
-				M = user
-			return eyestab(M, user)
-		else
-			user << "\red Your fork does not have any food on it."
-	else
-		user << "\red You can't seem to feed [M]."
-
-/obj/item/weapon/kitchen/utensil/fork/afterattack(obj/item/weapon/reagent_containers/food/snacks/snack as obj, mob/living/carbon/user as mob)
-	if(istype(snack))
-		if(bite)
-			user << "\red You already have [bite] on your fork."
-		else
-			bite = new snack.type(src)
-			icon_state = "forkloaded"
-			user.visible_message( \
-				"[user] takes a piece of [bite] with their fork!", \
-				"\blue You take a piece of [bite] with your fork!" \
-			)
-			if(bite.reagents && snack.reagents)	//transfer bit's worth of reagents to
-				bite.reagents.clear_reagents()
-				if(snack.reagents.total_volume)
-					snack.reagents.reaction(src, TOUCH) // react "food" with fork
-					spawn(0)
-						if(snack.reagents.total_volume > snack.bitesize)
-							snack.reagents.trans_to(bite, snack.bitesize)
-						else
-							snack.reagents.trans_to(bite, snack.reagents.total_volume)
-						snack.bitecount++
-						if(!snack.reagents.total_volume)
-							// due to the trash code being hard-coded to place in hand, do magic trick
-							// free active hand
-							user.drop_item(src)
-
-							// consumption fills active hand, drop it back down
-							snack.On_Consume()
-							var/obj/trash = user.get_active_hand()
-							if(trash)
-								user.drop_item(trash)
-								trash.loc = get_turf(snack.loc) // move trash to snack's turf
-
-							// put fork back in hand
-							user.put_in_hand(src)
-							user << "\red You grab the last bite of [snack]."
-							del(snack)
-	else
+/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M))
 		return ..()
 
+	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+		return ..()
 
+	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
+		if(M == user)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\blue [] eats a delicious forkful of omelette!", user), 1)
+				M.reagents.add_reagent("nutriment", 1)
+		else
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\blue [] feeds [] a delicious forkful of omelette!", user, M), 1)
+				M.reagents.add_reagent("nutriment", 1)
+		src.icon_state = "fork"
+		return
+	else
+		if((CLUMSY in user.mutations) && prob(50))
+			M = user
+		return eyestab(M,user)
 
+/*
+ * Knives
+ */
+/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
+	if ((CLUMSY in user.mutations) && prob(50))
+		user << "\red You accidentally cut yourself with the [src]."
+		user.take_organ_damage(20)
+		return
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	return ..()
 
+/*
+ * Rolling Pins
+ */
 
-// ROLLING PIN
-/* //Honestly this doesn't even work and is very silly. -- Erthilo
-/obj/item/weapon/kitchen/rollingpin/attack(mob/M as mob, mob/living/user as mob)
+/obj/item/weapon/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
@@ -98,46 +66,37 @@ KNIFE
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
-	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
 	log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
-	if (M.stat < 2 && M.health < 50 && prob(90))
-		var/mob/H = M
-		// ******* Check
-		if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-			M << "\red The helmet protects you from being hit hard in the head!"
-			return
-		var/time = rand(2, 6)
-		if (prob(75))
-			M.Paralyse(time)
-		else
-			M.Stun(time)
-		if(M.stat != 2)	M.stat = 1
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall.", 2)
-	else
-		M << text("\red [] tried to knock you unconcious!",user)
-		M.eye_blurry += 3
+	log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])")
+	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])") //BS12 EDIT ALG
+
+	var/t = user:zone_sel.selecting
+	if (t == "head")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (H.stat < 2 && H.health < 50 && prob(90))
+				// ******* Check
+				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
+					H << "\red The helmet protects you from being hit hard in the head!"
+					return
+				var/time = rand(2, 6)
+				if (prob(75))
+					H.Paralyse(time)
+				else
+					H.Stun(time)
+				if(H.stat != 2)	H.stat = 1
+				for(var/mob/O in viewers(H, null))
+					O.show_message(text("\red <B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.", 2)
+			else
+				H << text("\red [] tried to knock you unconscious!",user)
+				H.eye_blurry += 3
 
 	return
-*/
 
-
-
-
-
-// KNIFE
-
-/obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You accidentally cut yourself with the [src]."
-		user.take_organ_damage(20)
-		return
-	return ..()
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////// TRAY -Agouri :3   ///////////////////////////////////////////////
-
+/*
+ * Trays - Agouri
+ */
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	// Drop all the things. All of them.
@@ -158,16 +117,16 @@ KNIFE
 		M.Weaken(1)
 		user.take_organ_damage(2)
 		if(prob(50))
-			playsound(M, 'trayhit1.ogg', 50, 1)
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			return
 		else
-			playsound(M, 'trayhit2.ogg', 50, 1) //sound playin'
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1) //sound playin'
 			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
 
-	var/mob/living/carbon/human/H = M      // Let's have this ready for later.
+	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
 
 
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head") //hitting anything else other than the eyes
+	if(!(user.zone_sel.selecting == ("eyes" || "head"))) //////////////hitting anything else other than the eyes
 		if(prob(33))
 			src.add_blood(H)
 			var/turf/location = H.loc
@@ -177,10 +136,10 @@ KNIFE
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
-		log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
-		message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
+		log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])")
+		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])") //BS12 EDIT ALG
 
 		if(prob(15))
 			M.Weaken(3)
@@ -188,12 +147,12 @@ KNIFE
 		else
 			M.take_organ_damage(5)
 		if(prob(50))
-			playsound(M, 'trayhit1.ogg', 50, 1)
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 			return
 		else
-			playsound(M, 'trayhit2.ogg', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 			return
@@ -216,11 +175,11 @@ KNIFE
 				location.add_blood(H)
 
 		if(prob(50))
-			playsound(M, 'trayhit1.ogg', 50, 1)
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		else
-			playsound(M, 'trayhit2.ogg', 50, 1)  //sound playin'
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //sound playin'
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		if(prob(10))
@@ -240,11 +199,11 @@ KNIFE
 				location.add_blood(H)
 
 		if(prob(50))
-			playsound(M, 'trayhit1.ogg', 50, 1)
+			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		else
-			playsound(M, 'trayhit2.ogg', 50, 1)  //sound playin' again
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //sound playin' again
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		if(prob(30))
@@ -336,7 +295,7 @@ KNIFE
 		if (W.icon_state == "forkloaded")
 			user << "\red You already have omelette on your fork."
 			return
-		W.icon = 'kitchen.dmi'
+		W.icon = 'icons/obj/kitchen.dmi'
 		W.icon_state = "forkloaded"
 		viewers(3,user) << "[user] takes a piece of omelette with his fork!"
 		reagents.remove_reagent("nutriment", 1)

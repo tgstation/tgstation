@@ -7,7 +7,7 @@
 
 /obj/effect/proc_holder/spell/targeted/emplosion/cast(list/targets)
 
-	for(var/mob/target in targets)
+	for(var/mob/living/target in targets)
 		empulse(target.loc, emp_heavy, emp_light)
 
 	return

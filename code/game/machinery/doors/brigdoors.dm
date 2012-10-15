@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Brig Door control displays.
@@ -10,10 +10,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /obj/machinery/door_timer
 	name = "Door Timer"
-	icon = 'status_display.dmi'
+	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	desc = "A remote control for a door."
-	req_access = list(ACCESS_BRIG)
+	req_access = list(access_brig)
 	anchored = 1.0    		// can't pick it up
 	density = 0       		// can walk through it.
 	var/id = null     		// id of door it controls.
@@ -142,7 +142,7 @@
 			dat += "<a href='?src=\ref[src];timing=1'>Activate Timer and close door</a><br/>"
 
 		dat += "Time Left: [(minute ? text("[minute]:") : null)][second] <br/>"
-		dat += "<a href='?src=\ref[src];tp=-600'>-</a> <a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a> <A href='?src=\ref[src];tp=600'>+</a><br/>"
+		dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
 
 		for(var/obj/machinery/flasher/F in targets)
 			if(F.last_flash && (F.last_flash + 150) > world.time)
@@ -220,7 +220,7 @@
 	proc/set_picture(var/state)
 		picture_state = state
 		overlays = null
-		overlays += image('status_display.dmi', icon_state=picture_state)
+		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
@@ -241,14 +241,14 @@
 //Actual string input to icon display for loop, with 5 pixel x offsets for each letter.
 //Stolen from status_display
 	proc/texticon(var/tn, var/px = 0, var/py = 0)
-		var/image/I = image('status_display.dmi', "blank")
+		var/image/I = image('icons/obj/status_display.dmi', "blank")
 		var/len = lentext(tn)
 
 		for(var/d = 1 to len)
 			var/char = copytext(tn, len-d+1, len-d+2)
 			if(char == " ")
 				continue
-			var/image/ID = image('status_display.dmi', icon_state=char)
+			var/image/ID = image('icons/obj/status_display.dmi', icon_state=char)
 			ID.pixel_x = -(d-1)*5 + px
 			ID.pixel_y = py
 			I.overlays += ID

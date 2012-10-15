@@ -4,7 +4,7 @@
 /obj/machinery/atmospherics/binary/circulator
 	name = "circulator/heat exchanger"
 	desc = "A gas circulator pump and heat exchanger."
-	icon = 'pipes.dmi'
+	icon = 'icons/obj/pipes.dmi'
 	icon_state = "circ1-off"
 
 	var/side = 1 // 1=left 2=right

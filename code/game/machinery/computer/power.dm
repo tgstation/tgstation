@@ -1,7 +1,26 @@
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
+/obj/machinery/power/monitor
+	name = "power monitoring computer"
+	desc = "It monitors power levels across the station."
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "power"
+	density = 1
+	anchored = 1
+	use_power = 2
+	idle_power_usage = 20
+	active_power_usage = 80
 
-//Now Supports remote access -- Newt
+//fix for issue 521, by QualityVan.
+//someone should really look into why circuits have a powernet var, it's several kinds of retarded.
+/obj/machinery/power/monitor/New()
+	..()
+	var/obj/structure/cable/attached = null
+	var/turf/T = loc
+	if(isturf(T))
+		attached = locate() in T
+	if(attached)
+		powernet = attached.get_powernet()
 
 
 /obj/machinery/power/monitor/attack_ai(mob/user)
@@ -20,7 +39,7 @@
 
 /obj/machinery/power/monitor/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
@@ -45,15 +64,6 @@
 				A.icon_state = "4"
 				A.anchored = 1
 				del(src)
-	if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
-		//var/obj/item/weapon/card/id/W = I
-		if(src.allowed(user))
-			src.control = !src.control
-			user << "You [ control ? "enable" : "disable"] remote APC control."
-		else
-			user << "\red Access denied."
-
-
 	else
 		src.attack_hand(user)
 	return
@@ -68,7 +78,7 @@
 
 
 	user.machine = src
-	var/t = "<TT><B>Power Monitoring: Swipe ID for remote access</B><HR>"
+	var/t = "<TT><B>Power Monitoring</B><HR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
@@ -97,10 +107,6 @@
 			for(var/obj/machinery/power/apc/A in L)
 
 				t += copytext(add_tspace("\The [A.area]", 30), 1, 30)
-				if(control)
-					t += " (<A href='?src=\ref[src];apc=\ref[A];breaker=1'>[A.operating? " On" : "Off"]</A>)"
-				else
-					t += " ([A.operating? "On " : "Off"])"
 				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 		t += "</FONT></PRE></TT>"
@@ -116,13 +122,6 @@
 		usr.machine = null
 		return
 	if( href_list["update"] )
-		src.updateDialog()
-		return
-	if( href_list["breaker"])
-		var/obj/machinery/power/apc/APC = locate(href_list["apc"])
-		APC.operating = !APC.operating
-		APC.update()
-		APC.updateicon()
 		src.updateDialog()
 		return
 
@@ -143,3 +142,4 @@
 			spawn(rand(0, 15))
 				src.icon_state = "c_unpowered"
 				stat |= NOPOWER
+

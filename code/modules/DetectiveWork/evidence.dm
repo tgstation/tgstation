@@ -3,53 +3,46 @@
 /obj/item/weapon/evidencebag
 	name = "evidence bag"
 	desc = "An empty evidence bag."
-	icon = 'storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 	w_class = 1
-	var/image/overlay_image
 
 /obj/item/weapon/evidencebag/afterattack(obj/item/O, mob/user as mob)
 	if(!in_range(O,user))
 		return
 
-	if(istype(O, /obj/item/weapon/storage) && O in user)
+	if(istype(O, /obj/item/weapon/storage))
 		return ..()
 
-	if(!(O && istype(O)) || O.anchored == 1)
-		user << "You can't put that inside \the [src]!"
+	if(!istype(O) || O.anchored == 1)
+		user << "<span class='notice'>You can't put that inside \the [src]!</span>"
 		return ..()
 
 	if(istype(O, /obj/item/weapon/evidencebag))
-		user << "You find putting an evidence bag in another evidence bag to be slightly absurd."
-		return
-
-	if(O in user && (user.l_hand != O && user.r_hand != O)) //If it is in their inventory, but not in their hands, don't grab it off of them.
-		user << "You are wearing that."
-		return
-
-	if(O in user) //TEMPORARY FIX. It seems trying to put items that are in your hand in the bags breaks them horribly. - Erthilo
-		user << "You'll need to put the evidence down to properly bag it."
+		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
 		return
 
 	if(contents.len)
-		user << "The [src] already has something inside it."
+		user << "<span class='notice'>\The [src] already has something inside it.</span>"
 		return ..()
 
-	if(istype(O.loc,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/U = O.loc
-		user.client.screen -= O
-		U.contents.Remove(O)
-
-	if(istype(O.loc,/obj/item/clothing/suit/storage/))
-		var/obj/item/clothing/suit/storage/U = O.loc
-		user.client.screen -= O
-		U.contents.Remove(O)
+	if(!isturf(O.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
+		if(istype(O.loc,/obj/item/weapon/storage))	//in a container.
+			var/obj/item/weapon/storage/U = O.loc
+			user.client.screen -= O
+			U.contents.Remove(O)
+		else if(user.l_hand == O)					//in a hand
+			user.drop_l_hand()
+		else if(user.r_hand == O)					//in a hand
+			user.drop_r_hand()
+		else
+			return
 
 	user.visible_message("\The [user] puts \a [O] into \a [src]", "You put \the [O] inside \the [src].",\
 	"You hear a rustle as someone puts something into a plastic bag.")
 	icon_state = "evidence"
-	overlay_image = image(O.icon, O.icon_state, layer, O.dir)
-	overlays += overlay_image
+	var/image/I = image("icon"=O, "layer"=FLOAT_LAYER)	//take a snapshot. (necessary to stop the underlays appearing under our inventory-HUD slots ~Carn
+	underlays += I
 	desc = "An evidence bag containing \a [O]. [O.desc]"
 	O.loc = src
 	w_class = O.w_class
@@ -61,8 +54,7 @@
 		var/obj/item/I = contents[1]
 		user.visible_message("\The [user] takes \a [I] out of \a [src]", "You take \the [I] out of \the [src].",\
 		"You hear someone rustle around in a plastic bag, and remove something.")
-		overlays -= overlay_image
-		del overlay_image
+		underlays = null	//remove the underlays
 		user.put_in_hands(I)
 		w_class = 1
 		icon_state = "evidenceobj"
@@ -70,6 +62,7 @@
 
 	else
 		user << "\The [src] is empty."
+		icon_state = "evidenceobj"
 	return
 
 /obj/item/weapon/storage/box/evidence

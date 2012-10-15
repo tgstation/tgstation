@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /*
 A Star pathfinding algorithm
@@ -121,7 +121,7 @@ proc
 		var/closed[] = new()
 		var/path[]
 		start = get_turf(start)
-		if(!start || !end) return 0
+		if(!start) return 0
 
 		open.Enqueue(new /PathNode(start,null,0,call(start,dist)(end)))
 

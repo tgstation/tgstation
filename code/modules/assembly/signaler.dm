@@ -1,7 +1,5 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/device/assembly/signaler
-	name = "Remote Signaling Device"
+	name = "remote signaling device"
 	desc = "Used to remotely activate devices."
 	icon_state = "signaller"
 	item_state = "signaler"
@@ -12,8 +10,6 @@
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 
 	secured = 1
-	small_icon_state_left = "signaller_left"
-	small_icon_state_right = "signaller_right"
 
 	var/code = 30
 	var/frequency = 1457
@@ -42,6 +38,10 @@
 		signal()
 		return 1
 
+	update_icon()
+		if(holder)
+			holder.update_icon()
+		return
 
 	interact(mob/user as mob, flag1)
 		var/t1 = "-------"
@@ -105,6 +105,8 @@
 
 
 	signal()
+		if(!radio_connection) return
+
 		var/datum/signal/signal = new
 		signal.source = src
 		signal.encryption = code

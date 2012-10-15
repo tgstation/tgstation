@@ -1,3 +1,5 @@
+//For the love of god,space out your code! This is a nightmare to read.
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /*
@@ -151,7 +153,7 @@ ________________________________________________________________________________
 //=======//INITIALIZE//=======//
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/U = loc)
-	if(U.mind&&U.mind.assigned_role=="MODE"&&!s_initialized&&!s_busy)//Shouldn't be busy... but anything is possible I guess.
+	if(U.mind && U.mind.assigned_role=="MODE" && !s_initialized && !s_busy)//Shouldn't be busy... but anything is possible I guess.
 		s_busy = 1
 		for(var/i,i<7,i++)
 			switch(i)
@@ -165,11 +167,11 @@ ________________________________________________________________________________
 					U << "\blue Extending neural-net interface...\nNow monitoring brain wave pattern..."
 				if(3)
 					if(U.stat==2||U.health<=0)
-						U << "\red <B>FÄ†AL ÈRrÖR</B>: 344--93#†&&21 BRÄÌN |/|/aVÈ PATT$RN <B>RED</B>\nA-A-aBÖrTÌNG..."
+						U << "\red <B>FÄ†AL ï¿½Rrï¿½R</B>: 344--93#ï¿½&&21 BRï¿½ï¿½N |/|/aVï¿½ PATT$RN <B>RED</B>\nA-A-aBï¿½rTï¿½NG..."
 						unlock_suit()
 						break
 					lock_suit(U,1)//Check for icons.
-					U.update_clothing()
+					U.regenerate_icons()
 					U << "\blue Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation."
 				if(4)
 					U << "\blue VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>."
@@ -228,7 +230,7 @@ ________________________________________________________________________________
 					blade_check(U,2)
 					remove_equip_verbs()
 					unlock_suit()
-					U.update_clothing()
+					U.regenerate_icons()
 			sleep(delay)
 		s_busy = 0
 	return
@@ -253,7 +255,7 @@ ________________________________________________________________________________
 	else
 		dat += "<h2 ALIGN=CENTER>SpiderOS v.<b>ERR-RR00123</b></h2>"
 	dat += "<br>"
-	dat += "<img src=sos_10.png> Current Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]<br>"
+	dat += "<img src=sos_10.png> Current Time: [worldtime2text()]<br>"
 	dat += "<img src=sos_9.png> Battery Life: [round(cell.charge/100)]%<br>"
 	dat += "<img src=sos_11.png> Smoke Bombs: \Roman [s_bombs]<br>"
 	dat += "<img src=sos_14.png> pai Device: "
@@ -313,15 +315,15 @@ ________________________________________________________________________________
 				var/datum/gas_mixture/environment = T.return_air()
 
 				var/pressure = environment.return_pressure()
-				var/total_moles = environment.total_moles
+				var/total_moles = environment.total_moles()
 
 				dat += "Air Pressure: [round(pressure,0.1)] kPa"
 
-				if (total_moles)
-					var/o2_level = environment.oxygen/total_moles
-					var/n2_level = environment.nitrogen/total_moles
-					var/co2_level = environment.carbon_dioxide/total_moles
-					var/plasma_level = environment.toxins/total_moles
+				if (total_moles())
+					var/o2_level = environment.oxygen/total_moles()
+					var/n2_level = environment.nitrogen/total_moles()
+					var/co2_level = environment.carbon_dioxide/total_moles()
+					var/plasma_level = environment.toxins/total_moles()
 					var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
 					dat += "<ul>"
 					dat += "<li>Nitrogen: [round(n2_level*100)]%</li>"
@@ -368,13 +370,13 @@ ________________________________________________________________________________
 					Space ninjas are a special type of ninja, specifically one of the space-faring type. The vast majority of space ninjas belong to the Spider Clan, a cult-like sect, which has existed for several hundred years. The Spider Clan practice a sort of augmentation of human flesh in order to achieve a more perfect state of being and follow Postmodern Space Bushido. They also kill people for money. Their leaders are chosen from the oldest of the grand-masters, people that have lived a lot longer than any mortal man should.<br>Being a sect of technology-loving fanatics, the Spider Clan have the very best to choose from in terms of hardware--cybernetic implants, exoskeleton rigs, hyper-capacity batteries, and you get the idea. Some believe that much of the Spider Clan equipment is based on reverse-engineered alien technology while others doubt such claims.<br>Whatever the case, their technology is absolutely superb.
 					<h5>How they relate to other SS13 organizations:</h5>
 					<ul>
-					<li>*<b>NanoTrasen</b> and the Syndicate are two sides of the same coin and that coin is valuable.</li>
+					<li>*<b>Nanotrasen</b> and the Syndicate are two sides of the same coin and that coin is valuable.</li>
 					<li>*<b>The Space Wizard Federation</b> is a problem, mainly because they are an extremely dangerous group of unpredictable individuals--not to mention the wizards hate technology and are in direct opposition of the Spider Clan. Best avoided or left well-enough alone. How to battle: wizards possess several powerful abilities to steer clear off. Blind in particular is a nasty spell--jaunt away if you are blinded and never approach a wizard in melee. Stealth may also work if the wizard is not wearing thermal scanners--don't count on this. Run away if you feel threatened and await a better opportunity.</li>
 					<li>*<b>Changeling Hivemind</b>: extremely dangerous and to be killed on sight. How to battle: they will likely try to absorb you. Adrenaline boost, then phase shift into them. If you get stung, use SpiderOS to inject counter-agents. Stealth may also work but detecting a changeling is the real battle.</li>
 					<li>*<b>Xeno Hivemind</b>: their skulls make interesting kitchen decorations and are challenging to best, especially in larger nests. How to battle: they can see through your stealth guise and energy stars will not work on them. Best killed with a Phase Shift or at range. If you happen on a projectile stun weapon, use it and then close in to melee.</li>
 					</ul>
 					<h5>The reason they (you) are here:</h5>
-					Space ninjas are renowned throughout the known controlled space as fearless spies, infiltrators, and assassins. They are sent on missions of varying nature by NanoTrasen, the Syndicate, and other shady organizations and people. To hire a space ninja means serious business.
+					Space ninjas are renowned throughout the known controlled space as fearless spies, infiltrators, and assassins. They are sent on missions of varying nature by Nanotrasen, the Syndicate, and other shady organizations and people. To hire a space ninja means serious business.
 					<h5>Their playstyle:</h5>
 					A mix of traitor, changeling, and wizard. Ninjas rely on energy, or electricity to be precise, to keep their suits running (when out of energy, a suit hibernates). Suits gain energy from objects or creatures that contain electrical charge. APCs, cell batteries, rechargers, SMES batteries, cyborgs, mechs, and exposed wires are currently supported. Through energy ninjas gain access to special powers--while all powers are tied to the ninja suit, the most useful of them are verb activated--to help them in their mission.<br>It is a constant struggle for a ninja to remain hidden long enough to recharge the suit and accomplish their objective; despite their arsenal of abilities, ninjas can die like any other. Unlike wizards, ninjas do not possess good crowd control and are typically forced to play more subdued in order to achieve their goals. Some of their abilities are specifically designed to confuse and disorient others.<br>With that said, it should be perfectly possible to completely flip the fuck out and rampage as a ninja.
 					<h5>Their powers:</h5>
@@ -400,7 +402,7 @@ ________________________________________________________________________________
 					<h4>IMPORTANT:</h4>
 					<ul>
 					<li>*Make sure to toggle Special Interaction from the Ninja Equipment menu to interact differently with certain objects.</li>
-					<li>*Your starting power cell can be replaced if you find one with higher maximum energy capacity by clicking on the new cell with the same hand (super and hyper cells).</li>
+					<li>*Your starting power cell can be replaced if you find one with higher maximum energy capacity by clicking on your suit with the higher capacity cell.</li>
 					<li>*Conserve your energy. Without it, you are very vulnerable.</li>
 					</ul>
 					That is all you will need to know. The rest will come with practice and talent. Good luck!
@@ -463,7 +465,7 @@ ________________________________________________________________________________
 			if(t_disk)
 				dat += "<a href='byond://?src=\ref[src];choice=Eject Disk'>Eject Disk</a><br>"
 			dat += "<ul>"
-			if(stored_research.len)//If there is stored research. Should be but just in case.
+			if(istype(stored_research,/list))//If there is stored research. Should be but just in case.
 				for(var/datum/tech/current_data in stored_research)
 					dat += "<li>"
 					dat += "[current_data.name]: [current_data.level]"
@@ -535,11 +537,11 @@ ________________________________________________________________________________
 				return
 			P.tnote += "<i><b>&larr; From [!s_control?(A):"an unknown source"]:</b></i><br>[t]<br>"
 			if (!P.silent)
-				playsound(P.loc, 'twobeep.ogg', 50, 1)
+				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, P.loc))
 					O.show_message(text("\icon[P] *[P.ttone]*"))
 			P.overlays = null
-			P.overlays += image('pda.dmi', "pda-r")
+			P.overlays += image('icons/obj/pda.dmi', "pda-r")
 
 		if("Inject")
 			if( (href_list["tag"]=="radium"? (reagents.get_reagent_amount("radium"))<=(a_boost*a_transfer) : !reagents.get_reagent_amount(href_list["tag"])) )//Special case for radium. If there are only a_boost*a_transfer radium units left.
@@ -589,7 +591,7 @@ ________________________________________________________________________________
 									U << "\blue Power nodes re-routed. \nLimiter unlocked."
 								if(3)
 									grant_kamikaze(U)//Give them verbs and change variables as necessary.
-									U.update_clothing()//Update their clothing.
+									U.regenerate_icons()//Update their clothing.
 									ninjablade()//Summon two energy blades.
 									message_admins("\blue [U.key] used KAMIKAZE mode.", 1)//Let the admins know.
 									s_busy = 0
@@ -610,7 +612,7 @@ ________________________________________________________________________________
 		if("Eject Disk")
 			var/turf/T = get_turf(loc)
 			if(!U.get_active_hand())
-				U.put_in_hand(t_disk)
+				U.put_in_hands(t_disk)
 				t_disk.add_fingerprint(U)
 				t_disk = null
 			else
@@ -631,7 +633,7 @@ ________________________________________________________________________________
 		if("Eject pAI")
 			var/turf/T = get_turf(loc)
 			if(!U.get_active_hand())
-				U.put_in_hand(pai)
+				U.put_in_hands(pai)
 				pai.add_fingerprint(U)
 				pai = null
 			else
@@ -661,24 +663,24 @@ ________________________________________________________________________________
 							switch(i)
 								if(0)
 									A << "\red <b>WARNING</b>: \black purge procedure detected. \nNow hacking host..."
-									U << "\red <b>WARNING</b>: HACKING AT††TEMP† IN PR0GRESs!"
+									U << "\red <b>WARNING</b>: HACKING ATï¿½ï¿½TEMPï¿½ IN PR0GRESs!"
 									spideros = 0
 									k_unlock = 0
 									U << browse(null, "window=spideros")
 								if(1)
 									A << "Disconnecting neural interface..."
-									U << "\red <b>WAR†NING</b>: þR†O0†GrÈ--S 2&3%"
+									U << "\red <b>WARï¿½NING</b>: ï¿½Rï¿½O0ï¿½Grï¿½--S 2&3%"
 								if(2)
 									A << "Shutting down external protocol..."
-									U << "\red <b>WARNING</b>: PþþþþRÖ†GrÈ5S 677^%"
+									U << "\red <b>WARNING</b>: Pï¿½ï¿½ï¿½ï¿½RÖ†Grï¿½5S 677^%"
 									cancel_stealth()
 								if(3)
 									A << "Connecting to kernel..."
-									U << "\red <b>WARNING</b>: ÈR†rÖR_404"
+									U << "\red <b>WARNING</b>: ï¿½Rï¿½rï¿½R_404"
 									A.control_disabled = 0
 								if(4)
 									A << "Connection established and secured. Menu updated."
-									U << "\red <b>WÄr#nING</b>: #%@!!WÈ†|_4þ54@ \nUnÄB88l3 TÖ LÖ-†o-LÖCaT2 ##$!ÈRNÈ0..%.."
+									U << "\red <b>Wï¿½r#nING</b>: #%@!!WÈ†|_4ï¿½54@ \nUnï¿½B88l3 Tï¿½ Lï¿½-ï¿½o-Lï¿½CaT2 ##$!ï¿½RNï¿½0..%.."
 									grant_AI_verbs()
 									return
 							sleep(s_delay)
@@ -832,7 +834,7 @@ ________________________________________________________________________________
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
 					var/obj/item/weapon/cell/old_cell = cell
 					old_cell.charge = 0
-					U.put_in_hand(old_cell)
+					U.put_in_hands(old_cell)
 					old_cell.add_fingerprint(U)
 					old_cell.corrupt()
 					old_cell.updateicon()
@@ -842,23 +844,22 @@ ________________________________________________________________________________
 					U << "\red Procedure interrupted. Protocol terminated."
 			return
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
-			var/obj/item/weapon/disk/tech_disk/T = I
-			if(T.stored)//If it has something on it.
+			if(I:stored)//If it has something on it.
 				U << "Research information detected, processing..."
 				if(do_after(U,s_delay))
 					for(var/datum/tech/current_data in stored_research)
-						if(current_data.id==T.stored.id)
-							if(current_data.level<T.stored.level)
-								current_data.level=T.stored.level
+						if(current_data.id==I:stored.id)
+							if(current_data.level<I:stored.level)
+								current_data.level=I:stored.level
 							break
-					T.stored = null
+					I:stored = null
 					U << "\blue Data analyzed and updated. Disk erased."
 				else
 					U << "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated."
 			else
-				T.loc = src
-				t_disk = T
-				U << "\blue You slot \the [T] into \the [src]."
+				I.loc = src
+				t_disk = I
+				U << "\blue You slot \the [I] into \the [src]."
 			return
 	..()
 
@@ -868,24 +869,24 @@ ________________________________________________________________________________
 		cancel_stealth()
 	else
 		spawn(0)
-			anim(U.loc,U,'mob.dmi',,"cloak",,U.dir)
+			anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
+		U.update_icons()	//update their icons
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
-	U.update_clothing()
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
 	var/mob/living/carbon/human/U = affecting
 	if(s_active)
 		spawn(0)
-			anim(U.loc,U,'mob.dmi',,"uncloak",,U.dir)
+			anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
+		U.update_icons()	//update their icons
 		U << "\blue You are now visible."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
-		U.update_clothing()
 		return 1
 	return 0
 
@@ -923,7 +924,7 @@ ________________________________________________________________________________
 			U << "There are <B>[s_bombs]</B> smoke bombs remaining."
 			U << "There are <B>[a_boost]</B> adrenaline boosters remaining."
 		else
-			U <<  "ÈrrÖR Ða†Ða†Ä No-†-† fÖÚNÐ 3RRÖr"
+			U <<  "ï¿½rrï¿½R ï¿½aï¿½ï¿½aï¿½ï¿½ No-ï¿½-ï¿½ fï¿½ï¿½Nï¿½ 3RRï¿½r"
 
 /*
 ===================================================================================
@@ -1063,7 +1064,7 @@ ________________________________________________________________________________
 			U << "\blue Hacking \the [A]..."
 			spawn(0)
 				var/turf/location = get_turf(U)
-				for(var/mob/living/silicon/ai/AI in world)
+				for(var/mob/living/silicon/ai/AI in player_list)
 					AI << "\red <b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>."
 			if(A:files&&A:files.known_tech.len)
 				for(var/datum/tech/current_data in S.stored_research)
@@ -1187,7 +1188,7 @@ ________________________________________________________________________________
 
 //This proc is linked to human life.dm. It determines what hud icons to display based on mind special role for most mobs.
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/assess_targets(list/target_list, mob/living/carbon/U)
-	var/icon/tempHud = 'hud.dmi'
+	var/icon/tempHud = 'icons/mob/hud.dmi'
 	for(var/mob/living/target in target_list)
 		if(iscarbon(target))
 			switch(target.mind.special_role)
@@ -1238,7 +1239,7 @@ ________________________________________________________________________________
 				voice = "[pick(wizard_first)] [pick(wizard_second)]"
 			if(91 to 100)//Small chance of an existing crew name.
 				var/names[] = new()
-				for(var/mob/living/carbon/human/M in world)
+				for(var/mob/living/carbon/human/M in player_list)
 					if(M==U||!M.client||!M.real_name)	continue
 					names.Add(M.real_name)
 				voice = !names.len ? "Cuban Pete" : pick(names)
@@ -1265,7 +1266,7 @@ ________________________________________________________________________________
 			U << "Switching mode to <B>Thermal Scanner</B>."
 		if(2)
 			mode=3
-			U.see_invisible = 0
+			U.see_invisible = SEE_INVISIBLE_LIVING
 			U.sight &= ~SEE_MOBS
 			U << "Switching mode to <B>Meson Scanner</B>."
 		if(3)
@@ -1304,7 +1305,7 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/effect/energy_net
 	name = "energy net"
 	desc = "It's a net made of green energy."
-	icon = 'effects.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "energynet"
 
 	density = 1//Can't pass through.
@@ -1354,11 +1355,11 @@ It is possible to destroy the net by the occupant or someone else.
 				if(istype(M,/mob/living/carbon/human))
 					if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
 					if(W==M:shoes)	continue
-				M.drop_from_slot(W)
+				M.drop_from_inventory(W)
 
 			spawn(0)
-				playsound(M.loc, 'sparks4.ogg', 50, 1)
-				anim(M.loc,M,'mob.dmi',,"phaseout",,M.dir)
+				playsound(M.loc, 'sound/effects/sparks4.ogg', 50, 1)
+				anim(M.loc,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
 
 			M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
 			M << "\red You appear in a strange place!"
@@ -1367,9 +1368,9 @@ It is possible to destroy the net by the occupant or someone else.
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, M.loc)
 				spark_system.start()
-				playsound(M.loc, 'phasein.ogg', 25, 1)
-				playsound(M.loc, 'sparks2.ogg', 50, 1)
-				anim(M.loc,M,'mob.dmi',,"phasein",,M.dir)
+				playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)
+				playsound(M.loc, 'sound/effects/sparks2.ogg', 50, 1)
+				anim(M.loc,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
 				del(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 
 			for(var/mob/O in viewers(src, 3))
@@ -1419,7 +1420,7 @@ It is possible to destroy the net by the occupant or someone else.
 			tforce = 10
 		else
 			tforce = AM:throwforce
-		playsound(src.loc, 'slash.ogg', 80, 1)
+		playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
 		health = max(0, health - tforce)
 		healthcheck()
 		..()
@@ -1443,7 +1444,7 @@ It is possible to destroy the net by the occupant or someone else.
 		usr << text("\green You claw at the net.")
 		for(var/mob/O in oviewers(src))
 			O.show_message(text("\red [] claws at the energy net!", usr), 1)
-		playsound(src.loc, 'slash.ogg', 80, 1)
+		playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
 		health -= rand(10, 20)
 		if(health <= 0)
 			usr << text("\green You slice the energy net to pieces.")

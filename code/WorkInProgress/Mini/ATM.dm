@@ -21,7 +21,7 @@ log transactions
 /obj/machinery/atm/attackby(obj/item/I as obj, mob/user as mob)
 	if(ishuman(user))
 		var/obj/item/weapon/card/id/user_id = src.scan_user(user)
-		if(istype(I,/obj/item/weapon/money))
+		if(istype(I,/obj/item/weapon/spacecash))
 			user_id.money += I:worth
 			del I
 
@@ -51,21 +51,21 @@ log transactions
 				//hueg switch for giving moneh out
 				switch(amount)
 					if(1)
-						new /obj/item/weapon/money(loc)
+						new /obj/item/weapon/spacecash(loc)
 					if(10)
-						new /obj/item/weapon/money/c10(loc)
+						new /obj/item/weapon/spacecash/c10(loc)
 					if(20)
-						new /obj/item/weapon/money/c20(loc)
+						new /obj/item/weapon/spacecash/c20(loc)
 					if(50)
-						new /obj/item/weapon/money/c50(loc)
+						new /obj/item/weapon/spacecash/c50(loc)
 					if(100)
-						new /obj/item/weapon/money/c100(loc)
+						new /obj/item/weapon/spacecash/c100(loc)
 					if(200)
-						new /obj/item/weapon/money/c200(loc)
+						new /obj/item/weapon/spacecash/c200(loc)
 					if(500)
-						new /obj/item/weapon/money/c500(loc)
+						new /obj/item/weapon/spacecash/c500(loc)
 					if(1000)
-						new /obj/item/weapon/money/c1000(loc)
+						new /obj/item/weapon/spacecash/c1000(loc)
 			else
 				usr << browse("You don't have that much money!<br/><a href=\"?src=\ref[src]\">Back</a>","window=atm")
 				return

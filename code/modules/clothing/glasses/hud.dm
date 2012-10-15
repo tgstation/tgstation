@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/clothing/glasses/hud
 	name = "HUD"
@@ -24,30 +24,20 @@
 		switch(health)
 			if(100 to INFINITY)
 				return "health100"
-			if(90 to 100)
-				return "health90"
-			if(80 to 90)
+			if(70 to 100)
 				return "health80"
-			if(70 to 80)
-				return "health70"
-			if(60 to 70)
+			if(50 to 70)
 				return "health60"
-			if(50 to 60)
-				return "health50"
-			if(40 to 50)
+			if(30 to 50)
 				return "health40"
-			if(30 to 40)
-				return "health30"
-			if(20 to 30)
-				return "health20"
-			if(10 to 20)
+			if(18 to 30)
+				return "health25"
+			if(5 to 18)
 				return "health10"
-			if(0 to 10)
+			if(1 to 5)
 				return "health1"
-			if(-50 to 0)
-				return "health-50"
-			if(-99 to -50)
-				return "health-99"
+			if(-99 to 0)
+				return "health0"
 			else
 				return "health-100"
 		return "0"
@@ -57,26 +47,22 @@
 		if(!M)	return
 		if(!M.client)	return
 		var/client/C = M.client
+		var/icon/tempHud = 'icons/mob/hud.dmi'
 		for(var/mob/living/carbon/human/patient in view(M))
 			var/foundVirus = 0
 			for(var/datum/disease/D in patient.viruses)
 				if(!D.hidden[SCANNER])
 					foundVirus++
-
-			// jesus fuck, no, don't display vira by just looking at them
-			/*if(patient.virus2)
-				foundVirus++*/
-			patient.health_img.icon_state = "hud[RoundHealth(patient.health)]"
-			C.images += patient.health_img
+			if(!C) continue
+			C.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
 			if(patient.stat == 2)
-				patient.med_img.icon_state = "huddead"
-			else if(patient.alien_egg_flag)
-				patient.med_img.icon_state = "hudxeno"
+				C.images += image(tempHud,patient,"huddead")
+			else if(patient.status_flags & XENO_HOST)
+				C.images += image(tempHud,patient,"hudxeno")
 			else if(foundVirus)
-				patient.med_img.icon_state = "hudill"
+				C.images += image(tempHud,patient,"hudill")
 			else
-				patient.med_img.icon_state = "hudhealthy"
-			C.images += patient.med_img
+				C.images += image(tempHud,patient,"hudhealthy")
 
 
 /obj/item/clothing/glasses/hud/security
@@ -89,7 +75,6 @@
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
 	icon_state = "jensenshades"
 	item_state = "jensenshades"
-	protective_temperature = 1500
 	vision_flags = SEE_MOBS
 	invisa_view = 2
 
@@ -97,41 +82,33 @@
 	if(!M)	return
 	if(!M.client)	return
 	var/client/C = M.client
+	var/icon/tempHud = 'icons/mob/hud.dmi'
 	for(var/mob/living/carbon/human/perp in view(M))
 		if(!C) continue
 		var/perpname = "wot"
 		if(perp.wear_id)
-			perp.sec_img.icon_state = "hud[ckey(perp:wear_id:GetJobName())]"
-			C.images += perp.sec_img
+			C.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobName())]")
 			if(istype(perp.wear_id,/obj/item/weapon/card/id))
 				perpname = perp.wear_id:registered_name
 			else if(istype(perp.wear_id,/obj/item/device/pda))
 				var/obj/item/device/pda/tempPda = perp.wear_id
 				perpname = tempPda.owner
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.security)
-						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-							perp.sec2_img.icon_state = "hudwanted"
-							C.images += perp.sec2_img
-							break
-						else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
-							perp.sec2_img.icon_state = "hudprisoner"
-							C.images += perp.sec2_img
-							break
 		else
-			perp.sec_img.icon_state = "hudunknown"
-			C.images += perp.sec_img
+			perpname = perp.name
+			C.images += image(tempHud,perp,"hudunknown")
 
-		for(var/named in perp.organs)
-			var/datum/organ/external/E = perp.organs[named]
-			for(var/obj/item/weapon/implant/I in E.implant)
-				if(I.implanted)
-					if(istype(I,/obj/item/weapon/implant/tracking))
-						perp.imp_img.icon_state = "hud_imp_tracking"
-						C.images += perp.imp_img
-					if(istype(I,/obj/item/weapon/implant/loyalty))
-						perp.imp_img.icon_state = "hud_imp_loyal"
-						C.images += perp.imp_img
-
-
+		for (var/datum/data/record/E in data_core.general)
+			if (E.fields["name"] == perpname)
+				for (var/datum/data/record/R in data_core.security)
+					if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
+						C.images += image(tempHud,perp,"hudwanted")
+						break
+					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
+						C.images += image(tempHud,perp,"hudprisoner")
+						break
+		for(var/obj/item/weapon/implant/I in perp)
+			if(I.implanted)
+				if(istype(I,/obj/item/weapon/implant/tracking))
+					C.images += image(tempHud,perp,"hud_imp_tracking")
+				if(istype(I,/obj/item/weapon/implant/loyalty))
+					C.images += image(tempHud,perp,"hud_imp_loyal")

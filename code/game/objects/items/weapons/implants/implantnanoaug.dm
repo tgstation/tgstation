@@ -9,7 +9,7 @@
 		var/dat = {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Cybersun Industries Nano-Robotic Biological Augmentation Suite<BR>
-<b>Life:</b> Infinite. WARNING: Biological chances are irreversable.<BR>
+<b>Life:</b> Infinite. WARNING: Biological changes are irreversable.<BR>
 <b>Important Notes:</b> <font color='red'>Illegal</font>. Subjects exposed to nanorobotic agent are considered dangerous.<BR>
 <HR>
 <b>Implant Details:</b><BR>
@@ -19,27 +19,12 @@
 		return dat
 
 
-	implanted(mob/M as mob)
-		if(!istype(M, /mob/living/carbon/human))	return
-		var/mob/living/carbon/human/H = M
-		H.augmentations.Add(augmentation) // give them the mutation
-		H << "\blue [augment_text]"
-		if(istype(src, /obj/item/weapon/implant/nanoaug/eswordsynth))
-			activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
-			H.mind.store_memory("Freedom nanoaugmentation can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
-			H << "The nanoaugmentation implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+	implanted(mob/M)
+		if(!istype(M, /mob/living/carbon/human))	return 0
+		M.augmentations.Add(augmentation) // give them the mutation
+		M << "\blue [augment_text]"
 
-		if(istype(src, /obj/item/weapon/implant/nanoaug/radar))
-			H << "<font color='#FF0000'>Red</font color> blips on the map are Security."
-			H << "White blips are civlians."
-			H << "<font color='#3E710B'>Monochrome Green</font color> blips are cyborgs and AIs."
-			H << "<font color='#238989'>Light blue</font color> blips are heads of staff."
-			H << "<font color='#663366'>Purple</font color> blips are unidentified organisms."
-			H << "Dead biologicals will not display on the radar."
-
-			spawn()
-				H.start_radar()
-		return
+		return 1
 
 
 /obj/item/weapon/implant/nanoaug/strength
@@ -52,6 +37,20 @@
 	augmentation = RADAR
 	augment_text = "You begin to sense the presence or lack of presence of others around you."
 
+	implanted(mob/M)
+		if(..())
+			M << "<font color='#FF0000'>Red</font color> blips on the map are Security."
+			M << "White blips are civlians."
+			M << "<font color='#3E710B'>Monochrome Green</font color> blips are cyborgs and AIs."
+			M << "<font color='#238989'>Light blue</font color> blips are heads of staff."
+			M << "<font color='#663366'>Purple</font color> blips are unidentified organisms."
+			M << "Dead biologicals will not display on the radar."
+			spawn()
+				var/mob/living/carbon/human/H = M
+				H.start_radar()
+			return 1
+		return 0
+
 /obj/item/weapon/implant/nanoaug/electrichands
 	name = "Electric Hands"
 	augmentation = ELECTRICHANDS
@@ -62,6 +61,14 @@
 	augmentation = ESWORDSYNTH
 	augment_text = "Your hands throb and pulsate. They feel sharper, and strangely hot."
 
+	implanted(mob/M)
+		if(..())
+			activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+			M.mind.store_memory("Freedom nanoaugmentation can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+			M << "The nanoaugmentation implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+			return 1
+		return 0
+
 	trigger(emote, source as mob)
 		if(emote == activation_emote)
 			src.activate(source)
@@ -71,7 +78,7 @@
 
 		var/obj/item/weapon/melee/energy/blade/swordspawn = new /obj/item/weapon/melee/energy/blade
 		if(!source.get_active_hand())
-			source.put_in_hand(swordspawn)
+			source.put_in_hands(swordspawn)
 
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, source.loc)

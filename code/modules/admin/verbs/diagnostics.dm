@@ -7,7 +7,7 @@
 			usr << alert("Master_controller not found.")
 
 		var/mobs = 0
-		for(var/mob/M in world)
+		for(var/mob/M in mob_list)
 			mobs++
 
 		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>
@@ -20,12 +20,15 @@
 "}
 
 		usr << browse(output,"window=generalreport")
-		//feedback_add_details("admin_verb","SGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","SGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/*	air_report()
+//todo:
+	air_report()
 		set category = "Debug"
 		set name = "Show Air Report"
 
+		usr << "\red This proc is unavailable."
+		/*
 		if(!master_controller || !air_master)
 			alert(usr,"Master_controller or air_master not found.","Air Report")
 			return 0
@@ -63,12 +66,16 @@
 "}
 
 		usr << browse(output,"window=airreport")
-		//feedback_add_details("admin_verb","SAR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","SAR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		*/
 
+//todo:
 	air_status(turf/target as turf)
 		set category = "Debug"
 		set name = "Display Air Status"
 
+		usr << "\red This proc is unavailable."
+		/*
 		if(!isturf(target))
 			return
 
@@ -82,8 +89,9 @@
 		usr << "\blue @[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]"
 		for(var/datum/gas/trace_gas in GM.trace_gases)
 			usr << "[trace_gas.type]: [trace_gas.moles]"
-		//feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-*/
+		feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		*/
+
 	fix_next_move()
 		set category = "Debug"
 		set name = "Unfreeze Everyone"
@@ -112,7 +120,7 @@
 		message_admins("[key_name_admin(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [largest_move_time/10] seconds!", 1)
 		message_admins("[key_name_admin(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!", 1)
 		message_admins("world.time = [world.time]", 1)
-		//feedback_add_details("admin_verb","UFE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","UFE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 
 	radio_report()
@@ -150,7 +158,7 @@
 						output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
 
 		usr << browse(output,"window=radioreport")
-		//feedback_add_details("admin_verb","RR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","RR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	reload_admins()
 		set name = "Reload Admins"
@@ -160,32 +168,19 @@
 			usr << "\red Not a good cop"
 			return
 
-		message_admins("[usr] manually reloaded admins.txt")
-		usr << "You reload admins.txt"
-		var/text = file2text("config/admins.txt")
-		if (!text)
-			diary << "Failed to reload config/admins.txt\n"
-		else
-			var/list/lines = dd_text2list(text, "\n")
-			for(var/line in lines)
-				if (!line)
-					continue
+		message_admins("[usr] manually reloaded admins.txt and moderators.txt")
+		usr << "You reload admins.txt and moderators.txt"
+		world.load_admins()
+		world.load_mods()
+		feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-				if (copytext(line, 1, 2) == ";")
-					continue
-
-				var/pos = findtext(line, " - ", 1, null)
-				if (pos)
-					var/m_key = copytext(line, 1, pos)
-					var/a_lev = copytext(line, pos + 3, length(line) + 1)
-					admins[m_key] = a_lev
-					diary << ("ADMIN: [m_key] = [a_lev]")
-		//feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-	/*jump_to_dead_group()
+//todo:
+	jump_to_dead_group()
 		set name = "Jump to dead group"
 		set category = "Debug"
+
+		usr << "\red This proc is unavailable."
+		/*
 		if(!holder)
 			src << "Only administrators may use this command."
 			return
@@ -199,13 +194,16 @@
 				dead_groups += group
 		var/datum/air_group/dest_group = pick(dead_groups)
 		usr.loc = pick(dest_group.members)
-		//feedback_add_details("admin_verb","JDAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","JDAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
+		*/
 
 	kill_airgroup()
 		set name = "Kill Local Airgroup"
-		set desc = "Use this to allow manual manipulation of atmospherics."
+		set desc = "Use this to allow manual manupliation of atmospherics."
 		set category = "Debug"
+		usr << "\red This proc is unavailable."
+		/*
 		if(!holder)
 			src << "Only administrators may use this command."
 			return
@@ -217,65 +215,9 @@
 		var/turf/T = get_turf(usr)
 		if(istype(T, /turf/simulated))
 			var/datum/air_group/AG = T:parent
+			AG.next_check = 30
 			AG.group_processing = 0
 		else
 			usr << "Local airgroup is unsimulated!"
-		//feedback_add_details("admin_verb","KLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-*/
-
-	tension_report()
-		set category = "Debug"
-		set name = "Show Tension Report"
-
-		if(!master_controller || !tension_master)
-			alert(usr,"Master_controller or tension_master not found.","Tension Report")
-			return 0
-
-		if (!tension_master.get_num_players())
-			alert(usr,"No players found.  How the fuck are you calling this?","Tension Report")
-			return 0
-
-		var/numghosts = 0
-
-		for(var/mob/dead/observer/theghost in world)
-			numghosts ++
-
-
-		var/output = {"<B>TENSION REPORT</B><HR>
-<B>General Statistics</B><BR>
-<B>Deaths:</B> [tension_master.deaths]<BR>
----- <I>Humans:</I> [tension_master.human_deaths]<BR>
-<B>Explosions:</B> [tension_master.explosions]<BR>
-<B>Air alarms:</B> [tension_master.air_alarms]<BR>
-<B>Adminhelps:</B> [tension_master.adminhelps]<BR>
-<B>Ghosts:</B> [numghosts]<BR>
-<BR>
-<B>Current Status</B><BR>
-<B>Tension:</B> [tension_master.score]<BR>
-<a href='?src=\ref[tension_master];addScore=1'>Increase Tension by 50000</a><br>
-<B>Tension per player:</B> [tension_master.score/tension_master.get_num_players()]<BR>
-<B>Tensioner Debug Data:</B>  R1:[tension_master.round1] R2:[tension_master.round2] R3:[tension_master.round3] R4:[tension_master.round4] ES: [tension_master.eversupressed] CD: [tension_master.cooldown]<br>
-<B>Current Tensioner Status:</B> [config.Tensioner_Active].  <a href='?src=\ref[tension_master];ToggleStatus=1'>Toggle?</a><br>
-<B>Recommendations:</B> All the modes.  All of them.  Press all of them.<BR>
-<BR>
-
-	<a href='?src=\ref[tension_master];makeTratior=1'>Make Tratiors</a><br>
-	<a href='?src=\ref[tension_master];makeChanglings=1'>Make Changlings</a><br>
-	<a href='?src=\ref[tension_master];makeRevs=1'>Make Revs</a><br>
-	<a href='?src=\ref[tension_master];makeWizard=1'>Make Wizard (Requires Ghosts)</a><br>
-	<a href='?src=\ref[tension_master];makeCult=1'>Make Cult</a><br>
-	<a href='?src=\ref[tension_master];makeNukeTeam=1'>Make Nuke Team (Requires Ghosts)</a><br>
-	<a href='?src=\ref[tension_master];makeMalf=1'>Make Malf AI</a><br>
-	<a href='?src=\ref[tension_master];makeSpaceNinja=1'>Make Space Ninja (Requires Ghosts)</a><br>
-	<a href='?src=\ref[tension_master];makeAliens=1'>Make Aliens (Requires Ghosts)</a><br>
-	<a href='?src=\ref[tension_master];makeDeathsquad=1'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
-	<a href='?src=\ref[tension_master];makeBorgDeathsquad=1'>Make Deathsquad (Borg) (Requires Ghosts)</a><br>
-
-	<br>
-
-"}
-
-		for(var/game in tension_master.antagonistmodes)
-			output += "<font size = 2>Points required/Probability for [game]: [tension_master.antagonistmodes[game]]<br></font>"
-		usr << browse(output,"window=tensionreport;size=480x480")
-		feedback_add_details("admin_verb","STR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_detail("admin_verb","KLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		*/

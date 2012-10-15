@@ -1,6 +1,6 @@
 /obj/machinery/recharge_station
-	name = "Cyborg Recharging Station"
-	icon = 'objects.dmi'
+	name = "cyborg recharging station"
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = 1
 	anchored = 1.0
@@ -55,7 +55,7 @@
 						R.cell.charge = R.cell.maxcharge
 						return
 					else
-						R.cell.charge += 200
+						R.cell.charge = min(R.cell.charge + 200, R.cell.maxcharge)
 						return
 
 		go_out()
@@ -102,20 +102,34 @@
 							//Service
 							if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
 								if(O.reagents.get_reagent_amount("enzyme") < 50)
-									O.reagents.add_reagent("enzyme", 1)
+									O.reagents.add_reagent("enzyme", 2)
 							//Medical
 							if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/robot))
 								var/obj/item/weapon/reagent_containers/glass/bottle/robot/B = O
 								if(B.reagent && (B.reagents.get_reagent_amount(B.reagent) < B.volume))
 									B.reagents.add_reagent(B.reagent, 2)
+							//Janitor
+							if(istype(O, /obj/item/device/lightreplacer))
+								var/obj/item/device/lightreplacer/LR = O
+								LR.Charge(R)
 
 						if(R)
 							if(R.module)
 								R.module.respawn_consumable(R)
 
+						//Emagged items for janitor and medical borg
+						if(R.module.emag)
+							if(istype(R.module.emag, /obj/item/weapon/reagent_containers/spray))
+								var/obj/item/weapon/reagent_containers/spray/S = R.module.emag
+								if(S.name == "Polyacid spray")
+									S.reagents.add_reagent("pacid", 2)
+								else if(S.name == "Lube spray")
+									S.reagents.add_reagent("lube", 2)
+
 
 	verb
 		move_eject()
+			set category = "Object"
 			set src in oview(1)
 			if (usr.stat != 0)
 				return
@@ -124,6 +138,7 @@
 			return
 
 		move_inside()
+			set category = "Object"
 			set src in oview(1)
 			if (usr.stat == 2)
 				//Whoever had it so that a borg with a dead cell can't enter this thing should be shot. --NEO
@@ -138,7 +153,7 @@
 				usr<<"\blue Without a powercell, you can't be recharged."
 				//Make sure they actually HAVE a cell, now that they can get in while powerless. --NEO
 				return
-			usr.pulling = null
+			usr.stop_pulling()
 			if(usr && usr.client)
 				usr.client.perspective = EYE_PERSPECTIVE
 				usr.client.eye = src

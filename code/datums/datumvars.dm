@@ -167,11 +167,11 @@ client
 
 		if(istype(D,/atom))
 			var/atom/A = D
-			if(ismob(A))
+			if(isliving(A))
 				body += "<a href='byond://?src=\ref[src];rename=\ref[D]'><b>[D]</b></a>"
 				if(A.dir)
 					body += "<br><font size='1'><a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
-				var/mob/M = A
+				var/mob/living/M = A
 				body += "<br><font size='1'><a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 				body += {"
 				<br><font size='1'>
@@ -244,9 +244,12 @@ client
 			body += "<option value='byond://?src=\ref[src];godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
 			body += "<option value='byond://?src=\ref[src];direct_control=\ref[D]'>Assume Direct Control</option>"
+			body += "<option value='byond://?src=\ref[src];make_skeleton=\ref[D]'>Make 2spooky</option>"
 			body += "<option value='byond://?src=\ref[src];drop_everything=\ref[D]'>Drop Everything</option>"
+			body += "<option value='byond://?src=\ref[src];regenerateicons=\ref[D]'>Regenerate Icons</option>"
 			if(ishuman(D))
 				body += "<option value>---</option>"
+				body += "<option value='byond://?src=\ref[src];setmutantrace=\ref[D]'>Set Mutantrace</option>"
 				body += "<option value='byond://?src=\ref[src];makeai=\ref[D]'>Make AI</option>"
 				body += "<option value='byond://?src=\ref[src];makerobot=\ref[D]'>Make cyborg</option>"
 				body += "<option value='byond://?src=\ref[src];makemonkey=\ref[D]'>Make monkey</option>"
@@ -390,39 +393,26 @@ client
 		return html
 
 /client/proc/view_var_Topic(href,href_list,hsrc)
-	//This will all be moved over to datum/admins/Topic() ~Carn
+	//This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client == src) && src.holder )
 		. = 1	//default return
 		if (href_list["Vars"])
 			debug_variables(locate(href_list["Vars"]))
 
-		//~CARN: for renaming mobs (updates their real_name and their ID/PDA if applicable).
+		//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 		else if (href_list["rename"])
-			var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name") as text|null),1,MAX_NAME_LEN)
-			if(!new_name)	return
 			var/mob/M = locate(href_list["rename"])
 			if(!istype(M))	return
+			var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null),1,MAX_NAME_LEN)
+			if( !new_name || !M )	return
 
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].", 1)
-			if(istype(M, /mob/living/carbon/human))
-				for(var/obj/item/weapon/card/id/ID in M.contents)
-					if(ID.registered_name == M.real_name)
-						ID.name = "[new_name]'s ID Card ([ID.assignment])"
-						ID.registered_name = new_name
-						break
-				for(var/obj/item/device/pda/PDA in M.contents)
-					if(PDA.owner == M.real_name)
-						PDA.name = "PDA-[new_name] ([PDA.ownjob])"
-						PDA.owner = new_name
-						break
-			M.real_name = new_name
-			M.name = new_name
-			M.original_name = new_name
+			M.fully_replace_character_name(M.real_name,new_name)
 			href_list["datumrefresh"] = href_list["rename"]
 
 		else if (href_list["varnameedit"])
 			if(!href_list["datumedit"] || !href_list["varnameedit"])
-				usr << "Varedit error: Not all information has been sent Contact a coder."
+				usr << "Varedit error: Not all information has been sent. Contact a coder."
 				return
 			var/DAT = locate(href_list["datumedit"])
 			if(!DAT)
@@ -556,6 +546,21 @@ client
 
 			if(usr.client)
 				usr.client.cmd_assume_direct_control(MOB)
+
+		else if (href_list["make_skeleton"])
+			if(!href_list["make_skeleton"])
+				return
+			var/mob/MOB = locate(href_list["make_skeleton"])
+			if(!MOB)
+				return
+			if(!ismob(MOB))
+				return
+			if(!src.holder)
+				return
+
+			if(ishuman(MOB))
+				var/mob/living/carbon/human/HUMANMOB = MOB
+				HUMANMOB.makeSkeleton()
 
 		else if (href_list["delall"])
 			if(!href_list["delall"])
@@ -731,23 +736,53 @@ client
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
+		else if (href_list["setmutantrace"])
+			var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
+			if(!istype(H))
+				usr << "This can only be done to objects of type /mob/living/carbon/human"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","metroid","plant","tajaran","skrell") //BS12 EDIT TAJ EDIT SKR
+			switch(new_mutantrace)
+				if(null)		return
+				if("NONE")		new_mutantrace = ""
+			if(!H || !istype(H))
+				usr << "Mob doesn't exist anymore"
+				return
+			if(H.dna)
+				H.dna.mutantrace = new_mutantrace
+				H.update_mutantrace()
+		else if (href_list["regenerateicons"])
+			var/mob/M = locate(href_list["regenerateicons"])
+			if(!istype(M))
+				usr << "This can only be done to objects of type /mob"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			M.regenerate_icons()
 		else if (href_list["adjustDamage"] && href_list["mobToDamage"])
 			var/mob/M = locate(href_list["mobToDamage"])
 			var/Text = locate(href_list["adjustDamage"])
 
+			if(!isliving(M)) return
+			var/mob/living/L = M
+
 			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
 			if(Text == "brute")
-				M.adjustBruteLoss(amount)
+				L.adjustBruteLoss(amount)
 			else if(Text == "fire")
-				M.adjustFireLoss(amount)
+				L.adjustFireLoss(amount)
 			else if(Text == "toxin")
-				M.adjustToxLoss(amount)
+				L.adjustToxLoss(amount)
 			else if(Text == "oxygen")
-				M.adjustOxyLoss(amount)
+				L.adjustOxyLoss(amount)
 			else if(Text == "brain")
-				M.adjustBrainLoss(amount)
+				L.adjustBrainLoss(amount)
 			else if(Text == "clone")
-				M.adjustCloneLoss(amount)
+				L.adjustCloneLoss(amount)
 			else
 				usr << "You caused an error. DEBUG: Text:[Text] Mob:[M]"
 				return

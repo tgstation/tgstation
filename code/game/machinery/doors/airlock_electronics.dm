@@ -2,19 +2,17 @@
 
 /obj/item/weapon/airlock_electronics
 	name = "Airlock Electronics"
-	icon = 'door_assembly.dmi'
+	icon = 'icons/obj/doors/door_assembly.dmi'
 	icon_state = "door_electronics"
 	w_class = 2.0 //It should be tiny! -Agouri
 	m_amt = 50
 	g_amt = 50
 
-	req_access = list(ACCESS_ENGINE)
+	req_access = list(access_engine)
 
 	var/list/conf_access = null
 	var/last_configurator = null
 	var/locked = 1
-	var/style_name = "General"
-	var/style = /obj/structure/door_assembly/door_assembly_0
 
 	attack_self(mob/user as mob)
 		if (!ishuman(user))
@@ -34,8 +32,6 @@
 			t1 += "<a href='?src=\ref[src];login=1'>Swipe ID</a><hr>"
 		else
 			t1 += "<a href='?src=\ref[src];logout=1'>Block</a><hr>"
-
-			t1 += "Style: <a href='?src=\ref[src];style=1'>[style_name]</a><br><br>"
 
 
 			t1 += conf_access == null ? "<font color=red>All</font><br>" : "<a href='?src=\ref[src];access=all'>All</a><br>"
@@ -65,7 +61,7 @@
 			return
 
 		if (href_list["login"])
-			var/obj/item/I = usr.equipped()
+			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -81,30 +77,6 @@
 
 		if (href_list["access"])
 			toggle_access(href_list["access"])
-
-		if (href_list["style"])
-			style_name = input("Select the door's paint scheme.", "Door Style", style_name) in \
-				list("General", "Command", "Security", "Engineering", "Medical", "Maintenance", "Airlock", "Freezer", "Research")
-
-			switch(style_name)
-				if("General")
-					style = /obj/structure/door_assembly/door_assembly_0
-				if("Command")
-					style = /obj/structure/door_assembly/door_assembly_com
-				if("Security")
-					style = /obj/structure/door_assembly/door_assembly_sec
-				if("Engineering")
-					style = /obj/structure/door_assembly/door_assembly_eng
-				if("Medical")
-					style = /obj/structure/door_assembly/door_assembly_med
-				if("Maintenance")
-					style = /obj/structure/door_assembly/door_assembly_mai
-				if("Airlock")
-					style = /obj/structure/door_assembly/door_assembly_ext
-				if("Freezer")
-					style = /obj/structure/door_assembly/door_assembly_fre
-				if("Research")
-					style = /obj/structure/door_assembly/door_assembly_research
 
 		attack_self(usr)
 

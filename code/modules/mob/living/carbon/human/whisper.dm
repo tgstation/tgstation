@@ -1,19 +1,20 @@
+//Lallander was here
 /mob/living/carbon/human/whisper(message as text)
-	//Figured it out.  If you use say :w (message) it HTML encodes it, THEN passes it to the whisper code, which does so again.  Jeez.  --SkyMarshal
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext(strip_html_simple(message), 1, MAX_MESSAGE_LEN))
 
-	if (!message)
+	if (!message || silent || miming)
 		return
 
 	log_whisper("[src.name]/[src.key] : [message]")
 
-	if (src.client && (src.client.muted || src.client.muted_complete))
-		src << "You are muted."
-		return
+	if (src.client)
+		if (src.client.muted & MUTE_IC)
+			src << "\red You cannot whisper (muted)."
+			return
 
-	if(!speech_allowed && usr == src)
-		usr << "\red You can't speak."
-		return
+		if (src.client.handle_spam_prevention(message,MUTE_IC))
+			return
+
 
 	if (src.stat == 2)
 		return src.say_dead(message)
@@ -26,7 +27,7 @@
 		var/mob/living/carbon/human/H = src
 		alt_name = " (as [H.get_id_name("Unknown")])"
 	// Mute disability
-	if (src.disabilities & 64)
+	if (src.sdisabilities & MUTE)
 		return
 
 	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
@@ -47,30 +48,25 @@
 				temp_message[H] = ninjaspeak(temp_message[H])
 				pick_list -= H
 			message = dd_list2text(temp_message, " ")
-			message = dd_replaceText(message, "o", "¤")
-			message = dd_replaceText(message, "p", "þ")
-			message = dd_replaceText(message, "l", "£")
-			message = dd_replaceText(message, "s", "§")
-			message = dd_replaceText(message, "u", "µ")
-			message = dd_replaceText(message, "b", "ß")
-
-	message = capitalize(message)
+			message = dd_replacetext(message, "o", "¤")
+			message = dd_replacetext(message, "p", "þ")
+			message = dd_replacetext(message, "l", "£")
+			message = dd_replacetext(message, "s", "§")
+			message = dd_replacetext(message, "u", "µ")
+			message = dd_replacetext(message, "b", "ß")
 
 	if (src.stuttering)
-		message = NewStutter(message,stunned)
-	if (src.slurring)
-		message = slur(message)
+		message = stutter(message)
 
 	for (var/obj/O in view(message_range, src))
 		spawn (0)
 			if (O)
 				O.hear_talk(src, message)
 
-	var/list/listening = get_mobs_in_view(message_range, src)
-//	listening -= src
-//	listening += src
-// WAT.
-	var/list/eavesdropping = get_mobs_in_view(message_range, src)
+	var/list/listening = hearers(message_range, src)
+	listening -= src
+	listening += src
+	var/list/eavesdropping = hearers(2, src)
 	eavesdropping -= src
 	eavesdropping -= listening
 	var/list/watching  = hearers(5, src)
@@ -162,10 +158,8 @@
 	else
 		rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] whispers, <span class='message'>\"[message]\"</span></span>"
 
-	for (var/mob/M in world)
-		if(!M.client)
+	for (var/mob/M in dead_mob_list)
+		if (!(M.client))
 			continue
-		if (istype(M, /mob/new_player))
-			continue
-		if (M.stat > 1 && !(M in heard_a) && M.client.ghost_ears)
+		if (M.stat > 1 && !(M in heard_a))
 			M.show_message(rendered, 2)

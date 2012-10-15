@@ -1,7 +1,7 @@
 /obj/item/weapon/veilrender
 	name = "veil render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
-	icon = 'wizard.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 	item_state = "render"
 	flags = FPRINT | TABLEPASS
@@ -14,7 +14,7 @@
 /obj/effect/rend
 	name = "Tear in the fabric of reality"
 	desc = "You should run now"
-	icon = 'biomass.dmi'
+	icon = 'icons/obj/biomass.dmi'
 	icon_state = "rift"
 	density = 1
 	unacidable = 1

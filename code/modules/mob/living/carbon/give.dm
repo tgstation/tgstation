@@ -47,7 +47,10 @@ mob/living/carbon/verb/give()
 				I.loc = src
 				I.layer = 20
 				I.add_fingerprint(src)
-				src.update_clothing()
+				src.update_inv_l_hand()
+				src.update_inv_r_hand()
+				usr.update_inv_l_hand()
+				usr.update_inv_r_hand()
 				src.visible_message("[usr.name] handed \the [I.name] to [src.name].")
 			if("No")
 				src.visible_message("[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
@@ -78,7 +81,10 @@ mob/living/carbon/verb/give()
 				I.loc = src
 				I.layer = 20
 				I.add_fingerprint(src)
-				src.update_clothing()
+				src.update_inv_l_hand()
+				src.update_inv_r_hand()
+				usr.update_inv_l_hand()
+				usr.update_inv_r_hand()
 				src.visible_message("[usr.name] handed \the [I.name] to [src.name].")
 			if("No")
 				src.visible_message("[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")

@@ -5,43 +5,51 @@
 	circuit = "/obj/item/weapon/circuitboard/teleporter"
 	var/obj/item/locked = null
 	var/id = null
+	var/one_time_use = 0 //Used for one-time-use teleport cards (such as clown planet coordinates.)
+						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
 /obj/machinery/computer/teleporter/New()
-	src.id = text("[]", rand(1000, 9999))
+	src.id = "[rand(1000, 9999)]"
 	..()
 	return
 
-/obj/machinery/computer/teleporter/attackby(I as obj, user as mob)
-	if (istype(I, /obj/item/weapon/card/data/))
-		var/obj/item/weapon/card/data/M = I
-		if(stat & (NOPOWER|BROKEN) & (M.function != "teleporter"))
+
+/obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob)
+	if(istype(I, /obj/item/weapon/card/data/))
+		var/obj/item/weapon/card/data/C = I
+		if(stat & (NOPOWER|BROKEN) & (C.function != "teleporter"))
 			src.attack_hand()
 
-		var/obj/S = null
-		for(var/obj/effect/landmark/sloc in world)
-			if (sloc.name != M.data)
-				continue
-			if (locate(/mob) in sloc.loc)
-				continue
-			S = sloc
+		var/obj/L = null
+
+		for(var/obj/effect/landmark/sloc in landmarks_list)
+			if(sloc.name != C.data) continue
+			if(locate(/mob/living) in sloc.loc) continue
+			L = sloc
 			break
-		if (!S)
-			S = locate("landmark*[M.data]") // use old stype
-		if (istype(S, /obj/effect/landmark/) && istype(S.loc, /turf))
-			usr.loc = S.loc
+
+		if(!L)
+			L = locate("landmark*[C.data]") // use old stype
+
+
+		if(istype(L, /obj/effect/landmark/) && istype(L.loc, /turf))
+			src.locked = L
+			one_time_use = 1
+
+			usr << "You insert the coordinates into the machine."
+			usr << "A message flashes across the screen reminding the traveller that the nuclear authentication disk is to remain on the station at all times."
+			user.drop_item()
 			del(I)
-		return
+
+			for(var/mob/O in hearers(src, null))
+				O.show_message("\blue Locked In", 2)
+			src.add_fingerprint(usr)
 	else
 		..()
+
 	return
 
 /obj/machinery/computer/teleporter/attack_paw()
-	src.attack_hand()
-
-/obj/machinery/computer/teleporter/security/attackby(obj/item/weapon/W)
-	src.attack_hand()
-
-/obj/machinery/computer/teleporter/security/attack_paw()
 	src.attack_hand()
 
 /obj/machinery/teleport/station/attack_ai()
@@ -58,7 +66,7 @@
 		var/turf/T = get_turf(R)
 		if (!T)
 			continue
-		if(T.z == 2)
+		if(T.z == 2 || T.z > 7)
 			continue
 		var/tmpname = T.loc.name
 		if(areaindex[tmpname])
@@ -68,7 +76,7 @@
 		L[tmpname] = R
 
 	for (var/obj/item/weapon/implant/tracking/I in world)
-		if (!I.implanted || !(istype(I.loc,/datum/organ/external) || ismob(loc)))
+		if (!I.implanted || !ismob(I.loc))
 			continue
 		else
 			var/mob/M = I.loc
@@ -85,11 +93,10 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = I
 
-	var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
-	if(desc)
-		src.locked = L[desc]
-		for(var/mob/O in hearers(src, null))
-			O.show_message("\blue Locked In", 2)
+	var/desc = input("Please select a location to lock in.", "Locking Computer") in L
+	src.locked = L[desc]
+	for(var/mob/O in hearers(src, null))
+		O.show_message("\blue Locked In", 2)
 	src.add_fingerprint(usr)
 	return
 
@@ -104,6 +111,14 @@
 	if (t)
 		src.id = t
 	return
+
+/proc/find_loc(obj/R as obj)
+	if (!R)	return null
+	var/turf/T = R.loc
+	while(!istype(T, /turf))
+		T = T.loc
+		if(!T || istype(T, /area))	return null
+	return T
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn()
@@ -123,9 +138,13 @@
 		return
 	if (istype(M, /atom/movable))
 		if(prob(5) && !accurate) //oh dear a problem, put em in deep space
-			do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy - 5), 3), 2)
+			do_teleport(M, locate(rand((2*TRANSITIONEDGE), world.maxx - (2*TRANSITIONEDGE)), rand((2*TRANSITIONEDGE), world.maxy - (2*TRANSITIONEDGE)), 3), 2)
 		else
 			do_teleport(M, com.locked) //dead-on precision
+
+		if(com.one_time_use) //Make one-time-use cards only usable one time!
+			com.one_time_use = 0
+			com.locked = null
 	else
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)

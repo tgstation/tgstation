@@ -85,6 +85,7 @@
 		else
 			world << "<B>The traitor has failed!<B>"
 	*/
+	..()
 	return 1
 
 
@@ -171,7 +172,7 @@
 	set category = "Abomination"
 	set desc = "Everything must come to an end. After you have freed them, you must free yourself."
 
-	for(var/mob/living/carbon/human/H in world)
+	for(var/mob/living/carbon/human/H in player_list)
 		if(!H.client || H.client == src)
 			continue
 		src << "Your work is not done. You will not find release until they are all free."
@@ -186,7 +187,7 @@
 
 	var/list/candidates = list()
 
-	for(var/mob/living/carbon/human/H in world)
+	for(var/mob/living/carbon/human/H in player_list)
 		if(!H.client || H.client == src) continue
 		//if(!H.client) continue
 		candidates.Add(H)
@@ -276,7 +277,7 @@
 
 	proc/search_for_new_owner()
 		var/list/possible_owners = list()
-		for(var/mob/living/carbon/human/H in world)
+		for(var/mob/living/carbon/human/H in mob_list)
 			possible_owners.Add(H)
 
 		var/mob/living/carbon/human/H = pick(possible_owners)

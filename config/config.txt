@@ -55,8 +55,8 @@ SQL_ENABLED 0
 ## default probablity is 1, increase to make that mode more likely to be picked
 ## set to 0 to disable that mode
 ## Cult mode is in alpha test, enable at your own risk
-PROBABILITY EXTENDED 0
-PROBABILITY TRAITOR 1
+PROBABILITY EXTENDED 1
+PROBABILITY TRAITOR 2
 PROBABILITY METEOR 0
 PROBABILITY MALFUNCTION 0
 PROBABILITY BLOB 0
@@ -64,7 +64,7 @@ PROBABILITY NUCLEAR 0
 PROBABILITY SANDBOX 0
 PROBABILITY WIZARD 0
 PROBABILITY RESTRUCTURING 0
-PROBABILITY REVOLUTION 1
+PROBABILITY REVOLUTION 0
 PROBABILITY CHANGELING 0
 PROBABILITY CULT 2
 PROBABILITY MONKEY 0
@@ -90,16 +90,16 @@ TRAITOR_SCALING
 # ALLOW_METADATA
 
 ## allow players to initiate a restart vote
-ALLOW_VOTE_RESTART
+#ALLOW_VOTE_RESTART
 
 ## allow players to initate a mode-change start
-ALLOW_VOTE_MODE
+#ALLOW_VOTE_MODE
 
-## min delay (seconds) between voting sessions (default 10 minutes)
-VOTE_DELAY 600
+## min delay (deciseconds) between voting sessions (default 10 minutes)
+VOTE_DELAY 6000
 
-## time period (seconds) which voting session will last (default 1 minute)
-VOTE_PERIOD 60
+## time period (deciseconds) which voting session will last (default 1 minute)
+VOTE_PERIOD 600
 
 ## prevents dead players from voting or starting votes
 # NO_DEAD_VOTE
@@ -166,5 +166,14 @@ TICKCOMP 0
 ## Whether the server will talk to other processes through socket_talk
 SOCKET_TALK 0
 
-## Uncomment to restrict non-admins using humanoid alien races
+## Uncomment this to ban use of ToR
+#TOR_BAN
+
+## Comment this out to disable automuting
+#AUTOMUTE_ON
+
+## Uncomment to restrict non-admins from using humanoid alien races
 USEALIENWHITELIST
+
+## Location of the nudge.py script
+NUDGE_SCRIPT_PATH nudge.py

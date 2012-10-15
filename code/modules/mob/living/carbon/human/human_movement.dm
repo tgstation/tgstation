@@ -1,3 +1,37 @@
+/mob/living/carbon/human/movement_delay()
+	var/tally = 0
+
+	if(reagents.has_reagent("hyperzine")) return -1
+
+	if(reagents.has_reagent("nuka_cola")) return -1
+
+	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
+
+	var/health_deficiency = (100 - health - halloss)
+	if(health_deficiency >= 40) tally += (health_deficiency / 25)
+
+	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
+	if (hungry >= 70) tally += hungry/50
+
+	if(wear_suit)
+		tally += wear_suit.slowdown
+
+	if(shoes)
+		tally += shoes.slowdown
+
+	for(var/organ_name in list("l_foot","r_foot","l_leg","r_leg"))
+		var/datum/organ/external/E = get_organ(organ_name)
+		if(!E || (E.status & ORGAN_DESTROYED))
+			tally += 4
+		else if(E.status & ORGAN_BROKEN)
+			tally += 1.5
+
+	if(FAT in src.mutations)
+		tally += 1.5
+	if (bodytemperature < 283.222)
+		tally += (283.222 - bodytemperature) / 10 * 1.75
+
+	return (tally+config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(var/check_drift = 0)
 	//Can we act
