@@ -69,7 +69,7 @@ proc/build_surgery_steps_list()
 		affected = target.get_organ(target_zone)
 		if (affected == null)
 			return 0
-		return 1
+		return target_zone != "eyes"	//there are specific steps for eye surgery
 
 /datum/surgery_step/generic/cut_open
 	required_tool = /obj/item/weapon/scalpel
@@ -78,7 +78,7 @@ proc/build_surgery_steps_list()
 	max_duration = 110
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && affected.open == 0 && target_zone != "eyes" && target_zone != "mouth"
+		return ..() && affected.open == 0 && target_zone != "mouth"
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -181,12 +181,12 @@ proc/build_surgery_steps_list()
 	max_duration = 100
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && affected.open
+		return ..() && affected.open && target_zone != "mouth"
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] is beginning to cauterize the incision on [target]'s [affected.display_name] with \the [tool]." , \
-		"You are beginning to cauterize the incision on [user]'s [affected.display_name] with \the [tool].")
+		"You are beginning to cauterize the incision on [target]'s [affected.display_name] with \the [tool].")
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -194,17 +194,6 @@ proc/build_surgery_steps_list()
 		"\blue You cauterize the incision on [target]'s [affected.display_name] with \the [tool].")
 		affected.open = 0
 		affected.status &= ~ORGAN_BLEEDING
-		if (affected.name == "head")
-			target.op_stage.eyes = 0
-			target.op_stage.face = 0
-			if (target_zone == "eyes" && target.op_stage.eyes > 0)
-				if (target.op_stage.eyes == 3)
-					target.sdisabilities &= ~BLIND
-					target.eye_stat = 0
-			if (target_zone == "mouth" && target.op_stage.face > 0)
-				if (target.op_stage.face == 2)
-					var/datum/organ/external/head/h = affected
-					h.disfigured = 0
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -333,9 +322,14 @@ proc/build_surgery_steps_list()
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\blue [user] sets the bone in [target]'s [affected.display_name] in place with \the [tool].", \
-			"\blue You set the bone in [target]'s [affected.display_name] n place with \the [tool].")
-		affected.stage = 2
+		if (affected.status & ORGAN_BROKEN)
+			user.visible_message("\blue [user] sets the bone in [target]'s [affected.display_name] in place with \the [tool].", \
+				"\blue You set the bone in [target]'s [affected.display_name] in place with \the [tool].")
+			affected.stage = 2
+		else
+			user.visible_message("\blue [user] sets the bone in [target]'s [affected.display_name]\red in the WRONG place with \the [tool].", \
+				"\blue You set the bone in [target]'s [affected.display_name]\red in the WRONG place with \the [tool].")
+			affected.fracture()
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -355,7 +349,7 @@ proc/build_surgery_steps_list()
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] is beginning piece together [target]'s skull with \the [tool]."  , \
-			"You are beginning piece together [user]'s skull with \the [tool].")
+			"You are beginning piece together [target]'s skull with \the [tool].")
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -496,7 +490,7 @@ proc/build_surgery_steps_list()
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] is beginning to cauterize the incision around [target]'s eyes with \the [tool]." , \
-		"You are beginning to cauterize the incision around [user]'s eyes with \the [tool].")
+		"You are beginning to cauterize the incision around [target]'s eyes with \the [tool].")
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] cauterizes the incision around [target]'s eyes with \the [tool].", \
@@ -609,7 +603,7 @@ proc/build_surgery_steps_list()
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] is beginning to cauterize the incision on [target]'s face and neck with \the [tool]." , \
-		"You are beginning to cauterize the incision on [user]'s face and neck with \the [tool].")
+		"You are beginning to cauterize the incision on [target]'s face and neck with \the [tool].")
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
