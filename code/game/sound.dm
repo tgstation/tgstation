@@ -78,12 +78,14 @@
 client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful
 	set category = "Special Verbs"
 	set name = "Toggle Ambience"
+
 	usr:client:no_ambi = !usr:client:no_ambi
+
 	if(usr:client:no_ambi)
-		usr << sound(pick('sound/ambience/shipambience.ogg','sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg','sound/ambience/ambimalf.ogg','sound/ambience/ambispace.ogg','sound/ambience/ambimine.ogg','sound/ambience/title2.ogg'), repeat = 0, wait = 0, volume = 0, channel = 2)
-	else
-		usr << sound(pick('sound/ambience/shipambience.ogg','sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg','sound/ambience/ambimalf.ogg','sound/ambience/ambispace.ogg','sound/ambience/ambimine.ogg','sound/ambience/title2.ogg'), repeat = 1, wait = 0, volume = 35, channel = 2)
-	usr << "Toggled ambience sound."
+		usr << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
+		usr << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
+
+	usr << "Toggled ambient sound [usr:client:no_ambi?"off":"on"]."
 	return
 
 
