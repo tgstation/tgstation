@@ -1,6 +1,8 @@
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
+	anchored = 0
+	density = 1
 
 /obj/machinery/iv_drip/var/mob/living/carbon/human/attached = null
 /obj/machinery/iv_drip/var/obj/item/weapon/reagent_containers/beaker = null
@@ -35,7 +37,10 @@
 	..()
 
 	if(attached)
-		usr << "[attached] is already attached to the drip."
+		visible_message("[src.attached] is detached from \the [src]")
+		src.attached = null
+		src.update_icon()
+		return
 
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
@@ -62,6 +67,7 @@
 /obj/machinery/iv_drip/process()
 	set background = 1
 
+	..()
 	if(src.attached && src.beaker && src.beaker.volume > 0)
 		if(!(get_dist(src, src.attached) <= 1))
 			visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
@@ -74,9 +80,8 @@
 		update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user as mob)
-	if(src.attached)
-		visible_message("[src.attached] is detached from \the [src]")
-		src.attached = null
-		src.update_icon()
+	if(src.beaker)
+		src.beaker.loc = get_turf(src)
+		src.beaker = null
 	else
 		return ..()
