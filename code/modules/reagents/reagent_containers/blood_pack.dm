@@ -2,7 +2,7 @@
 	name = "BloodPack"
 	desc = "Contains blood used for transfusion."
 	icon = 'icons/obj/bloodpack.dmi'
-	volume = 100
+	volume = 200
 
 	var/blood_type = null
 
@@ -10,7 +10,7 @@
 		..()
 		if(blood_type != null)
 			name = "BloodPack [blood_type]"
-			reagents.add_reagent("blood", 100, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+			reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 
 /obj/item/weapon/reagent_containers/blood/APlus
 	blood_type = "A+"
