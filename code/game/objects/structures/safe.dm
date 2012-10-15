@@ -1,3 +1,10 @@
+/*
+CONTAINS:
+SAFES
+FLOOR SAFES
+*/
+
+//SAFES
 /obj/structure/safe
 	name = "safe"
 	desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Scarborough Arms - 2 tumbler safe, guaranteed thermite resistant, explosion resistant, and assistant resistant.\""
@@ -16,11 +23,11 @@
 
 
 /obj/structure/safe/New()
-	tumbler_1_pos = round(rand(0, 72))
-	tumbler_1_open = round(rand(0, 72))
+	tumbler_1_pos = rand(0, 72)
+	tumbler_1_open = rand(0, 72)
 
-	tumbler_2_pos = round(rand(0, 72))
-	tumbler_2_open = round(rand(0, 72))
+	tumbler_2_pos = rand(0, 72)
+	tumbler_2_open = rand(0, 72)
 
 
 /obj/structure/safe/initialize()
@@ -162,3 +169,22 @@ obj/structure/safe/ex_act(severity)
 
 obj/structure/safe/meteorhit(obj/O as obj)
 	return
+
+
+//FLOOR SAFES
+/obj/structure/safe/floor
+	name = "floor safe"
+	icon_state = "floorsafe"
+	density = 0
+	level = 1	//underfloor
+	layer = 2.5
+
+
+/obj/structure/safe/floor/initialize()
+	..()
+	var/turf/T = loc
+	hide(T.intact)
+
+
+/obj/structure/safe/floor/hide(var/intact)
+	invisibility = intact ? 101 : 0
