@@ -338,8 +338,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(update_icons)   update_icons()
 		return
 
-	//mutants don't have hair. masks and helmets can obscure our hair too.
-	if( (dna && dna.mutantrace) || (head && (head.status & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
+	//masks and helmets can obscure our hair.
+	if( (head && (head.status & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
 		if(update_icons)   update_icons()
 
 		return

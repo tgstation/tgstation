@@ -402,6 +402,19 @@
 		var/mob/living/carbon/human/new_character = new(loc)
 		new_character.lastarea = get_area(loc)
 
+		if(preferences.species == "Tajaran") //This is like the worst, but it works, so meh. - Erthilo
+			if(is_alien_whitelisted(src, "Tajaran") || !config.usealienwhitelist)
+				new_character.dna.mutantrace = "tajaran"
+				new_character.tajaran_talk_understand = 1
+		if(preferences.species == "Soghun")
+			if(is_alien_whitelisted(src, "Soghun") || !config.usealienwhitelist)
+				new_character.dna.mutantrace = "lizard"
+				new_character.soghun_talk_understand = 1
+		if(preferences.species == "Skrell")
+			if(is_alien_whitelisted(src, "Skrell") || !config.usealienwhitelist)
+				new_character.dna.mutantrace = "skrell"
+				new_character.skrell_talk_understand = 1
+
 		if(ticker.random_players)
 			new_character.gender = pick(MALE, FEMALE)
 			preferences.randomize_name()
@@ -423,19 +436,6 @@
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = preferences.b_type
 
-		if(preferences.species == "Tajaran") //This is like the worst, but it works, so meh. - Erthilo
-			if(is_alien_whitelisted(src, "Tajaran") || !config.usealienwhitelist)
-				new_character.dna.mutantrace = "tajaran"
-				new_character.tajaran_talk_understand = 1
-		if(preferences.species == "Soghun")
-			if(is_alien_whitelisted(src, "Soghun") || !config.usealienwhitelist)
-				new_character.dna.mutantrace = "lizard"
-				new_character.soghun_talk_understand = 1
-		if(preferences.species == "Skrell")
-			if(is_alien_whitelisted(src, "Skrell") || !config.usealienwhitelist)
-				new_character.dna.mutantrace = "skrell"
-				new_character.skrell_talk_understand = 1
-
 		new_character.key = key		//Manually transfer the key to log them in
 
 		return new_character
@@ -455,11 +455,11 @@
 		src << browse(null, "window=latechoices") //closes late choices window
 		src << browse(null, "window=playersetup") //closes the player setup window
 
-#define MAX_ALIEN_PLAYER_PERCENT 20
-
-//cael - this should probably be moved to ticker or somewhere, but it's fine here for now
 //limits the number of alien players in a game
 /proc/GetAvailableAlienPlayerSlots()
+	if(!config.limitalienplayers)
+		return 9999
+
 	var/num_players = 0
 
 	//check new players
@@ -472,4 +472,4 @@
 		if(H.ckey)
 			num_players++
 
-	return round(num_players * (MAX_ALIEN_PLAYER_PERCENT / 100))
+	return round(num_players * (config.alien_to_human_ratio / 100))

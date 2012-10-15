@@ -55,6 +55,8 @@
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	var/usealienwhitelist = 0
+	var/limitalienplayers = 0
+	var/alien_to_human_ratio = 0.5
 
 	var/server
 	var/banappeals
@@ -353,8 +355,14 @@
 
 				if("usealienwhitelist")
 					usealienwhitelist = 1
+
+				if("alien_player_ratio")
+					limitalienplayers = 1
+					alien_to_human_ratio = text2num(value)
+
 				else
 					diary << "Unknown setting in configuration: '[name]'"
+
 
 		else if(type == "game_options")
 			if(!value)

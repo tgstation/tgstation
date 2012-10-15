@@ -177,3 +177,6 @@ USEALIENWHITELIST
 
 ## Location of the nudge.py script
 NUDGE_SCRIPT_PATH nudge.py
+
+## Comment this to unrestrict the number of alien players allowed in the round. The number represents the number of alien players for every human player.
+ALIEN_PLAYER_RATIO 0.2
