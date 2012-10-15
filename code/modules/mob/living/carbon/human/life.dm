@@ -190,7 +190,7 @@
 				if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
 					continue
 				for(var/datum/wound/W in temp.wounds) if(W.bleeding())
-					blood_max += W.damage / 2
+					blood_max += W.damage / 4
 				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
 					blood_max += 20 //Yer missing a fucking limb.
 			drip(blood_max)
