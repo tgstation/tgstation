@@ -53,6 +53,8 @@ datum/mind
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 
+	var/rev_cooldown = 0
+
 	New(var/key)
 		src.key = key
 

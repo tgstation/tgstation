@@ -25,6 +25,7 @@
 	var/played			= 0
 	var/be_alien		= 0		//Check if that guy wants to be an alien
 	var/be_pai			= 1		//Consider client when searching for players to recruit as a pAI
+	var/be_syndicate    = 1     //Consider client for late-game autotraitor
 	var/activeslot		= 1		//Default active slot!
 	var/STFU_ghosts				//80+ people rounds are fun to admin when text flies faster than airport security
 	var/STFU_radio				//80+ people rounds are fun to admin when text flies faster than airport security
