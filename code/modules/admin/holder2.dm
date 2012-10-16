@@ -181,6 +181,10 @@ var/list/admin_datums = list()
 
 	if(href_list["simplemake"])
 
+		if (!(src.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master")))
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
 		if(!href_list["mob"])
 			usr << "Invalid mob"
 			return

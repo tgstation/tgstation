@@ -16,6 +16,12 @@
 //			verbs += /client/proc/air_status //Air things
 //			verbs += /client/proc/Cell //More air things
 
+/client/proc/admin_rank_check(var/rank, var/requested)
+	if(rank < requested)
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return(0)
+	return(1)
+
 /client/proc/update_admins(var/rank)
 	if(!holder)
 		holder = new /datum/admins(rank)
@@ -55,7 +61,6 @@
 		if ("Trial Admin")
 			holder.level = 3
 			if(holder.state == 2) // if observing
-				verbs += /client/proc/debug_variables
 				verbs += /client/proc/cmd_modify_ticker_variables
 				verbs += /client/proc/toggle_view_range
 				verbs += /client/proc/Getmob
@@ -89,6 +94,8 @@
 
 		if ("Admin Observer")
 			holder.level = -1
+			if(holder.state == 2) // if observing
+				verbs += /client/proc/debug_variables
 
 //		if ("Banned")
 //			holder.level = -2
@@ -106,6 +113,7 @@
 		if (holder.level >= -1)
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/admin_ghost
 		else	return
 
 		//Moderator
@@ -123,7 +131,6 @@
 			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/cmd_admin_subtle_message
 			verbs += /client/proc/dsay
-			verbs += /client/proc/admin_ghost
 			verbs += /client/proc/game_panel
 			verbs += /client/proc/player_panel
 			verbs += /client/proc/player_panel_new
