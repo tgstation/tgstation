@@ -101,6 +101,16 @@
 			if (istype(mover, /obj/item/projectile))
 				return prob(30)
 			else
+				var/turf/T = get_turf(src)
+				var/obj/structure/cable/C = T.get_cable_node()
+				if(C)
+					if (C.powernet.avail)
+						if (istype(mover, /obj/item))
+							var/obj/item/i = mover
+							if (i.m_amt)
+								var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+								s.set_up(5, 1, src)
+								s.start()
 				return !src.density
 
 
