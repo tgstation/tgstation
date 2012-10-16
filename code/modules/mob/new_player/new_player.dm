@@ -363,13 +363,18 @@
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
-			var/mob/living/silicon/ai/announcer = new (null)
 			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
+			if (a == null)
+				world << "ffuck"
+			a.autosay("\"[character.real_name],[character.wear_id.assignment ? " [character.wear_id.assignment]," : "" ] has arrived on the station.\"", "Arrivals Announcement Computer")
+			del(a)
+			/*
+			var/mob/living/silicon/ai/announcer = new (null)
 			announcer.name = "Arrivals Announcement Computer"
 			announcer.real_name = "Arrivals Announcement Computer"
 			a.autosay("\"[character.real_name],[character.wear_id.assignment ? " [character.wear_id.assignment]," : "" ] has arrived on the station.\"", announcer)
-			del(a)
 			del(announcer)
+			*/
 
 	proc/LateChoices()
 		var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
