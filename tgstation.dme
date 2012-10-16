@@ -663,7 +663,6 @@
 #include "code\game\objects\items\stacks\tiles\plasteel.dm"
 #include "code\game\objects\items\stacks\tiles\tile_types.dm"
 #include "code\game\objects\items\weapons\AI_modules.dm"
-#include "code\game\objects\items\weapons\Bedsheets.dm"
 #include "code\game\objects\items\weapons\cards_ids.dm"
 #include "code\game\objects\items\weapons\cigs_lighters.dm"
 #include "code\game\objects\items\weapons\clown_items.dm"

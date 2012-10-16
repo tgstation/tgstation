@@ -44,14 +44,10 @@
 					P.updateinfolinks()
 
 		P.loc = user.loc
-		if(ishuman(user))
-			user.put_in_hands(P)
-			user << "<span class='notice'>You take a paper out of the bin.</span>"
-		else
-			P.loc = get_turf_loc(src)
-			user << "<span class='notice'>You take a paper out of the bin.</span>"
+		user.put_in_hands(P)
+		user << "<span class='notice'>You take [P] out of the [src].</span>"
 	else
-		user << "<span class='notice'>The paper bin is empty!</span>"
+		user << "<span class='notice'>[src] is empty!</span>"
 
 	add_fingerprint(user)
 	return
@@ -63,7 +59,7 @@
 
 	user.drop_item()
 	i.loc = src
-	usr << "<span class='notice'>You put the paper on the top of the paper bin.</span>"
+	user << "<span class='notice'>You put [i] in [src].</span>"
 	papers.Add(i)
 	amount++
 
