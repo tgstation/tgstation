@@ -195,7 +195,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			updateDialog()
 	add_fingerprint(usr)
 
-/obj/item/device/radio/talk_into(mob/M as mob, message, channel)
+/obj/item/device/radio/talk_into(mob/living/M as mob, message, channel)
 
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
@@ -278,10 +278,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		// --- Modifications to the mob's identity ---
 
 		// The mob is disguising their identity:
-		if (istype(M.wear_mask, /obj/item/clothing/mask/gas/voice))
-			if(M.wear_mask:vchange)
-				displayname = M.wear_mask:voice
-				jobname = "Unknown"
+		if (ishuman(M) && M.GetVoice() != real_name)
+			displayname = M.GetVoice()
+			jobname = "Unknown"
 			voicemask = 1
 
 
@@ -451,7 +450,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 				continue
 			if (R.say_understands(M))
-				if (!ishuman(M) || istype(M.wear_mask, /obj/item/clothing/mask/gas/voice))
+				if (ishuman(M) && M.GetVoice() != M.real_name)
 					heard_masked += R
 				else
 					heard_normal += R
@@ -535,10 +534,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			if (length(heard_masked))
 				var/N = M.name
 				var/J = eqjobname
-				if (istype(M.wear_mask, /obj/item/clothing/mask/gas/voice)&&M.wear_mask:vchange)
-				//To properly have the ninja show up on radio. Could also be useful for similar items.
-				//Would not be necessary but the mob could be wearing a mask that is not a voice changer.
-					N = M.wear_mask:voice
+				if(ishuman(M) && M.GetVoice() != M.real_name)
+					N = M.GetVoice()
 					J = "Unknown"
 				var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 				for (var/mob/R in heard_masked)

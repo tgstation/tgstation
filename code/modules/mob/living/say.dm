@@ -108,7 +108,7 @@ var/list/department_radio_keys = list(
 		return emote(copytext(message, 2))
 
 	var/alt_name = ""
-	if (istype(src, /mob/living/carbon/human) && name != real_name)
+	if (istype(src, /mob/living/carbon/human) && name != GetVoice())
 		var/mob/living/carbon/human/H = src
 		alt_name = " (as [H.get_id_name("Unknown")])"
 	var/italics = 0
@@ -335,15 +335,8 @@ var/list/department_radio_keys = list(
 
 		if (italics)
 			message_a = "<i>[message_a]</i>"
-		if (!istype(src, /mob/living/carbon/human))
-			rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
-		else if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
-			if(wear_mask:vchange)
-				rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> <span class='message'>[message_a]</span></span>"
-			else
-				rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
-		else
-			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
+
+		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 
 		for (var/M in heard_a)
 			if(hascall(M,"show_message"))
@@ -391,5 +384,8 @@ var/list/department_radio_keys = list(
 
 
 	log_say("[name]/[key] : [message]")
+
+/mob/living/proc/GetVoice()
+	return name
 
 
