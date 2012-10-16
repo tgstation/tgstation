@@ -9,7 +9,7 @@
 		else if (M.gender == FEMALE)
 			t_him = "her"
 		user << "\red \The [M] is dead, you cannot help [t_him]!"
-		return
+		return 1
 
 	if (!istype(M))
 		user << "\red \The [src] cannot be applied to [M]!"
@@ -20,24 +20,6 @@
 			istype(user, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
 		user << "\red You don't have the dexterity to do this!"
 		return 1
-
-	if (user)
-		if (M != user)
-			user.visible_message( \
-				"\blue [M] has been applied with [src] by [user].", \
-				"\blue You apply \the [src] to [M]." \
-			)
-		else
-			var/t_himself = "itself"
-			if (user.gender == MALE)
-				t_himself = "himself"
-			else if (user.gender == FEMALE)
-				t_himself = "herself"
-
-			user.visible_message( \
-				"\blue [M] applied [src] on [t_himself].", \
-				"\blue You apply \the [src] on yourself." \
-			)
 
 	if (istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
@@ -65,16 +47,20 @@
 			if(src.heal_brute)
 				if(!affecting.bandage() && !child.bandage())
 					user << "\red The wounds on this limb have already been bandaged."
+					return 1
 			else if(src.heal_burn)
 				if(!affecting.salve() && !child.salve())
 					user << "\red The wounds on this limb have already been salved."
+					return 1
 		else
 			if(src.heal_brute)
 				if(!affecting.bandage())
 					user << "\red The wounds on this limb have already been bandaged."
+					return 1
 			else if(src.heal_burn)
 				if(!affecting.salve())
 					user << "\red The wounds on this limb have already been salved."
+					return 1
 
 		H.UpdateDamageIcon()
 		M.updatehealth()
@@ -82,3 +68,21 @@
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
 
 	use(1)
+
+	if (user)
+		if (M != user)
+			user.visible_message( \
+				"\blue [M] has been applied with [src] by [user].", \
+				"\blue You apply \the [src] to [M]." \
+			)
+		else
+			var/t_himself = "itself"
+			if (user.gender == MALE)
+				t_himself = "himself"
+			else if (user.gender == FEMALE)
+				t_himself = "herself"
+
+			user.visible_message( \
+				"\blue [M] applied [src] on [t_himself].", \
+				"\blue You apply \the [src] on yourself." \
+			)
