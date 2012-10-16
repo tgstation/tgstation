@@ -1164,8 +1164,16 @@
 			if(eye_blurry)			client.screen += global_hud.blurry
 			if(druggy)				client.screen += global_hud.druggy
 
+			var/masked = 0
+
 			if( istype(head, /obj/item/clothing/head/welding) )
 				var/obj/item/clothing/head/welding/O = head
+				if(!O.up && tinted_weldhelh)
+					client.screen += global_hud.darkMask
+					masked = 1
+
+			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
+				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask
 
