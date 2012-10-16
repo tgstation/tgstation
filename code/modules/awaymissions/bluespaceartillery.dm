@@ -13,9 +13,12 @@
 
 /obj/structure/artilleryplaceholder
 	name = "artillery"
-	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon = 'icons/obj/machines/artillery.dmi'
 	anchored = 1
 	density = 1
+
+/obj/structure/artilleryplaceholder/decorative
+	density = 0
 
 /obj/machinery/artillerycontrol/attack_hand(mob/user as mob)
 	user.machine = src
