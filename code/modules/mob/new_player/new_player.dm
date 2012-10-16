@@ -344,6 +344,11 @@
 		character.loc = pick(latejoin)
 		character.lastarea = get_area(loc)
 
+		if(character.client)
+			character.client.be_syndicate = preferences.be_special
+
+		ticker.mode.latespawn(character)
+
 		if(character.mind.assigned_role != "Cyborg")
 			data_core.manifest_inject(character)
 			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
