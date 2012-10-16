@@ -243,17 +243,6 @@
 	else if(!client && brain_op_stage != 4 && stat != DEAD)
 		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
-	msg += "<span class='warning'>"
-
-	if(nutrition < 100)
-		msg += "[t_He] [t_is] severely malnourished.\n"
-	else if(nutrition >= 500)
-		if(usr.nutrition < 100)
-			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
-		else
-			msg += "[t_He] [t_is] quite chubby.\n"
-	msg += "</span>"
-
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
 	var/list/is_bleeding = list()
