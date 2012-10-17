@@ -42,7 +42,7 @@
 		..()
 		return
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+/*	attackby(obj/item/weapon/W as obj, mob/user as mob) //BoH+BoH=Singularity, commented out
 		if(crit_fail)
 			user << "\red The Bluespace generator isn't working."
 			return
@@ -57,7 +57,7 @@
 			del(src)
 			return
 		..()
-
+*/
 	proc/failcheck(mob/user as mob)
 		if (prob(src.reliability)) return 1 //No failure
 		if (prob(src.reliability))
