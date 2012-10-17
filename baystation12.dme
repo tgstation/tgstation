@@ -731,6 +731,7 @@
 #include "code\game\objects\items\weapons\RSF.dm"
 #include "code\game\objects\items\weapons\scrolls.dm"
 #include "code\game\objects\items\weapons\stunbaton.dm"
+#include "code\game\objects\items\weapons\surgery_limbattachment.dm"
 #include "code\game\objects\items\weapons\surgery_tools.dm"
 #include "code\game\objects\items\weapons\swords_axes_etc.dm"
 #include "code\game\objects\items\weapons\table_rack_parts.dm"
