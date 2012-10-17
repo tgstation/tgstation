@@ -305,7 +305,7 @@ datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 		tox_concentration = toxins / volume
 		fuel_concentration = 0
 
-	if(fuel) fuel_concentration = (fuel.moles*5) / volume
+	if(fuel) fuel_concentration = (fuel.moles) / volume
 	if(liquid) liquid_concentration = (liquid.amount*15) / volume
 	return (oxy_concentration + tox_concentration + liquid_concentration + fuel_concentration)*100
 

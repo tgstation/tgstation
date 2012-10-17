@@ -368,7 +368,7 @@
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
-			var/mob/living/silicon/ai/announcer = new (null)
+			var/mob/living/silicon/ai/announcer = new (null,null,null,1)
 			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 			announcer.name = "Arrivals Announcement Computer"
 			announcer.real_name = "Arrivals Announcement Computer"
