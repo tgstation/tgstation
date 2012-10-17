@@ -43,6 +43,10 @@ var/list/admin_datums = list()
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
 
+	if (!(usr.client.holder.rank in list("Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master")))
+		usr << "\red You cannot perform this action. You must be of a higher administrative rank!"
+		return
+
 	if(href_list["makeAntag"])
 		switch(href_list["makeAntag"])
 			if("1")

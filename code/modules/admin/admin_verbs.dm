@@ -110,9 +110,10 @@
 
 		//Admin Observer
 		if (holder.level >= -1)
+			seeprayers = 1
+
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/admin_ghost
 			verbs += /client/proc/toggleadminhelpsound
 		else	return
 
@@ -131,6 +132,7 @@
 			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/cmd_admin_subtle_message
 			verbs += /client/proc/dsay
+			verbs += /client/proc/admin_ghost
 			verbs += /client/proc/game_panel
 			verbs += /client/proc/player_panel
 			verbs += /client/proc/player_panel_new
@@ -169,7 +171,6 @@
 		//Trial Admin
 		if (holder.level >= 3)
 			deadchat = 1
-			seeprayers = 1
 
 			verbs += /client/proc/invisimin
 			verbs += /datum/admins/proc/view_txt_log
