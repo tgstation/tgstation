@@ -270,11 +270,14 @@
 				vents += temp_vent
 
 	var/list/candidates = list() //List of candidate KEYs to control the new larvae. ~Carn
-	for(var/mob/dead/observer/G in player_list)
-		if(G.client.be_alien)
-			if(((G.client.inactivity/10)/60) <= 5)
-				if(!(G.mind && G.mind.current && G.mind.current != DEAD))
-					candidates += G.key
+	var/i = 0
+	while(candidates.len <= 0 && i < 5)
+		for(var/mob/dead/observer/G in player_list)
+			if(G.client.be_alien)
+				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
+					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+						candidates += G.key
+		i++
 
 	if(prob(33)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)

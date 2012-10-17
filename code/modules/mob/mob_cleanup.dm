@@ -42,7 +42,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 		v.affected_mob = src
 		v.strain_data = v.strain_data.Copy()
 		v.holder = src
-		if(prob(5))
+		if(v.can_carry && prob(5))
 			v.carrier = 1
 		return
 
@@ -194,7 +194,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 		v.affected_mob = src
 		v.strain_data = v.strain_data.Copy()
 		v.holder = src
-		if(prob(5))
+		if(v.can_carry && prob(5))
 			v.carrier = 1
 		return
 	return

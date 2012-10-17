@@ -771,3 +771,80 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 		return 0
 
 	return 1
+
+
+// Basically this Metroid Core catalyzes reactions that normally wouldn't happen anywhere
+/obj/item/metroid_core
+	name = "roro core"
+	desc = "A very slimy and tender part of a Rorobeast. Legends claim these to have \"magical powers\"."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "roro core"
+	flags = TABLEPASS
+	force = 1.0
+	w_class = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 6
+	origin_tech = "biotech=4"
+	var/POWERFLAG = 0 // sshhhhhhh
+	var/Flush = 30
+	var/Uses = 5 // uses before it goes inert
+
+	New()
+		..()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		POWERFLAG = rand(1,10)
+		Uses = rand(7, 25)
+		//flags |= NOREACT
+
+		spawn()
+			Life()
+
+	proc/Life()
+		while(src)
+			sleep(25)
+			Flush--
+			if(Flush <= 0)
+				reagents.clear_reagents()
+				Flush = 30
+
+/obj/item/weapon/reagent_containers/food/snacks/roro_egg
+	name = "roro egg"
+	desc = "A small, gelatinous egg."
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "roro egg-growing"
+	bitesize = 12
+	origin_tech = "biotech=4"
+	var/grown = 0
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		spawn(rand(1200,1500))//the egg takes a while to "ripen"
+			Grow()
+
+	proc/Grow()
+		grown = 1
+		icon_state = "roro egg-grown"
+		processing_objects.Add(src)
+		return
+
+	proc/Hatch()
+		processing_objects.Remove(src)
+		var/turf/T = get_turf(src)
+		for(var/mob/O in hearers(T))
+			O.show_message("\blue The [name] pulsates and quivers!")
+		spawn(rand(50,100))
+			for(var/mob/O in hearers(T))
+				O.show_message("\blue The [name] bursts open!")
+			new/mob/living/carbon/metroid(T)
+			del(src)
+
+
+/obj/item/weapon/reagent_containers/food/snacks/roro_egg/process()
+	var/turf/location = get_turf(src)
+	var/datum/gas_mixture/environment = location.return_air()
+	if (environment.toxins > MOLES_PLASMA_VISIBLE)//plasma exposure causes the egg to hatch
+		src.Hatch()

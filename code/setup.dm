@@ -127,6 +127,8 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
+#define ALIEN_SELECT_AFK_BUFFER 2 // How many minutes that a person can be AFK before not being allowed to be an alien.
+
 #define NORMPIPERATE 30					//pipe-insulation rate divisor
 #define HEATPIPERATE 8					//heat-exch pipe insulation
 

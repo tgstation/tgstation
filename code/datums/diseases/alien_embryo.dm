@@ -37,7 +37,8 @@
 	cure_id = list("lexorin","toxin","gargleblaster")
 	cure_chance = 20
 	affected_species = list("Human", "Monkey")
-	permeability_mod = 3//likely to infect
+	permeability_mod = 15//likely to infect
+	can_carry = 0
 	var/gibbed = 0
 
 /datum/disease/alien_embryo/stage_act()
@@ -79,14 +80,17 @@
 			affected_mob << "\red You feel something tearing its way out of your stomach..."
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
-			if(prob(40))
+			if(prob(50))
 				if(gibbed != 0) return 0
 				var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-				for(var/mob/dead/observer/G in player_list)
-					if(G.client.be_alien)
-						if(((G.client.inactivity/10)/60) <= 5)
-							if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-								candidates += G.key
+				var/i = 0
+				while(candidates.len <= 0 && i < 5)
+					for(var/mob/dead/observer/G in player_list)
+						if(G.client.be_alien)
+							if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
+								if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+									candidates += G.key
+					i++
 
 				var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
 				if(candidates.len)
