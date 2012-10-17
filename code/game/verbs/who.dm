@@ -27,7 +27,7 @@ proc/get_all_admin_clients()
 
 	for (var/client/C in client_list)
 		var/entry = "\t"
-		if(usr.client.holder)
+		if(usr.client.holder && usr.client.holder.level >= 0) //Everything above admin-observers get this.
 			entry += "[C.key]"
 			if(C.holder && C.holder.fakekey)
 				entry += " <i>(as [C.holder.fakekey])</i>"

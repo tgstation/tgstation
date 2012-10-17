@@ -114,6 +114,7 @@
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/admin_ghost
+			verbs += /client/proc/toggleadminhelpsound
 		else	return
 
 		//Moderator
@@ -140,7 +141,6 @@
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/general_report
 			verbs += /client/proc/air_report
-			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/check_ai_laws
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_gib_self
@@ -156,7 +156,6 @@
 			verbs += /client/proc/cmd_admin_create_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
-			verbs += /client/proc/deadmin_self
 		else	return
 
 		//Admin Candidate
@@ -166,7 +165,6 @@
 			verbs += /client/proc/check_antagonists
 			verbs += /client/proc/play_sound
 			verbs += /client/proc/stealth
-			verbs += /client/proc/deadmin_self
 		else	return
 
 		//Trial Admin
@@ -186,8 +184,6 @@
 			verbs += /client/proc/respawn_character
 			verbs += /client/proc/spawn_xeno
 			verbs += /client/proc/toggleprayers
-			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
 			verbs += /client/proc/one_click_antag
@@ -265,7 +261,6 @@
 			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
-			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/cinematic								//show a cinematic sequence
 			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/toggle_log_hrefs
