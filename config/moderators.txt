@@ -1,6 +1,5 @@
 ; just add the ckey (lowercase) of every moderator on a separate line
 ; lines starting with ; are comments and will be ignored
-asanadas
 botanistpower
 bowlsoldier
 cubejackal
