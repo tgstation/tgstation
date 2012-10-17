@@ -61,6 +61,7 @@
 		if ("Trial Admin")
 			holder.level = 3
 			if(holder.state == 2) // if observing
+				verbs += /client/proc/debug_variables
 				verbs += /client/proc/cmd_modify_ticker_variables
 				verbs += /client/proc/toggle_view_range
 				verbs += /client/proc/Getmob
@@ -94,8 +95,6 @@
 
 		if ("Admin Observer")
 			holder.level = -1
-			if(holder.state == 2) // if observing
-				verbs += /client/proc/debug_variables
 
 //		if ("Banned")
 //			holder.level = -2
