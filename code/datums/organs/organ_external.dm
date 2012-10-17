@@ -105,8 +105,9 @@
 					possible_points += children
 				if(forbidden_limbs.len)
 					possible_points -= forbidden_limbs
-			//	if(!possible_points.len)
-				//	message_admins("Oh god WHAT!  [owner]'s [src] was unable to find an organ to pass overdamage to!")
+				if(!possible_points.len)
+					if(owner.stat != 2)
+						message_admins("Oh god WHAT!  [owner]'s [src] was unable to find an organ to pass overdamage to!")
 				else
 					var/datum/organ/external/target = pick(possible_points)
 					if(brute)

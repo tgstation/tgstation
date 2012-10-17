@@ -88,7 +88,7 @@ datum
 					var/current_reagent_transfer = current_reagent.volume * part
 					if(preserve_data)
 						trans_data = current_reagent.data
-					if(current_reagent.id != "blood")
+					if((current_reagent.id == "blood" && !ishuman(target)) || current_reagent.id != "blood")
 						R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
 						src.remove_reagent(current_reagent.id, current_reagent_transfer)
 					else if(current_reagent.id == "blood" && ishuman(target)) // can never be sure
