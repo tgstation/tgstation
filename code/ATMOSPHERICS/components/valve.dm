@@ -174,11 +174,14 @@ obj/machinery/atmospherics/valve
 			if(target.initialize_directions & get_dir(target,src))
 				node2 = target
 				break
+
+		build_network()
+
 		if(openDuringInit)
+			close()
 			open()
 			openDuringInit = 0
 
-		build_network()
 /*
 		var/connect_directions
 		switch(dir)
