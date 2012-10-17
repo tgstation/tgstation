@@ -67,6 +67,10 @@
 		name = "Shoulder-length Hair Alt"
 		icon_state = "hair_longfringe"
 
+	longish
+		name = "Longer Hair"
+		icon_state = "hair_b2"
+
 	longer
 		name = "Long Hair"
 		icon_state = "hair_vlong"
