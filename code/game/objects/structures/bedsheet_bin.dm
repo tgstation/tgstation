@@ -152,8 +152,7 @@ LINEN BINS
 			B = sheets[sheets.len]
 			sheets.Remove(B)
 
-		else if(amount >= 1)
-			amount--
+		else
 			B = new /obj/item/weapon/bedsheet(loc)
 
 		B.loc = user.loc

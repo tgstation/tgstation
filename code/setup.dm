@@ -441,7 +441,7 @@ var/list/liftable_structures = list(\
 	/obj/machinery/hydroponics, \
 	/obj/machinery/computer, \
 	/obj/machinery/optable, \
-	/obj/machinery/dispenser, \
+	/obj/structure/dispenser, \
 	/obj/machinery/gibber, \
 	/obj/machinery/microwave, \
 	/obj/machinery/vending, \
