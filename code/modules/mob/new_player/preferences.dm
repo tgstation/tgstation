@@ -814,10 +814,6 @@ datum/preferences
 						var/list/valid_hairstyles = list()
 						for(var/hairstyle in hair_styles_list)
 							var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-							if(gender == MALE && !S.choose_male)
-								continue
-							if(gender == FEMALE && !S.choose_female)
-								continue
 							if( !(species in S.species_allowed))
 								continue
 
