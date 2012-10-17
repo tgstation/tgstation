@@ -1,0 +1,72 @@
+"a" = (/turf/unsimulated/beach/sand{density = 1; opacity = 1},/area/awaymission/beach)
+"b" = (/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"c" = (/obj/machinery/gateway{dir = 9},/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"d" = (/obj/machinery/gateway{dir = 1},/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"e" = (/obj/machinery/gateway{dir = 5},/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"f" = (/obj/effect/overlay/palmtree_r,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"g" = (/obj/machinery/gateway{dir = 8},/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"h" = (/obj/machinery/gateway/centeraway,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"i" = (/obj/machinery/gateway{dir = 4},/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"j" = (/obj/effect/overlay/palmtree_l,/obj/effect/overlay/coconut,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"k" = (/obj/machinery/gateway{dir = 10},/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"l" = (/obj/machinery/gateway,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"m" = (/obj/machinery/gateway{dir = 6},/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"n" = (/turf/unsimulated/wall{tag = "icon-sandstone6"; icon_state = "sandstone6"},/area/awaymission/beach)
+"o" = (/turf/unsimulated/wall{tag = "icon-sandstone12"; icon_state = "sandstone12"},/area/awaymission/beach)
+"p" = (/turf/unsimulated/wall{tag = "icon-sandstone10"; icon_state = "sandstone10"},/area/awaymission/beach)
+"q" = (/obj/structure/closet/athletic_mixed,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"r" = (/turf/unsimulated/wall{tag = "icon-sandstone3"; icon_state = "sandstone3"},/area/awaymission/beach)
+"s" = (/obj/structure/closet/gmcloset{icon_closed = "black"; icon_state = "black"; name = "formal wardrobe"},/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"t" = (/obj/structure/closet/secure_closet/bar,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"u" = (/obj/structure/table/woodentable,/obj/item/weapon/book/manual/barman_recipes,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"v" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/shaker,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"w" = (/obj/structure/table/woodentable,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"x" = (/obj/structure/table/woodentable,/obj/item/clothing/glasses/sunglasses,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"y" = (/obj/machinery/vending/boozeomat,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"z" = (/obj/machinery/vending/cigarette,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"A" = (/obj/machinery/vending/cola,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"B" = (/obj/machinery/vending/snack,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"C" = (/turf/unsimulated/wall{tag = "icon-sandstone1"; icon_state = "sandstone1"},/area/awaymission/beach)
+"D" = (/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"E" = (/obj/structure/mineral_door/wood{tag = "icon-wood"; icon_state = "wood"},/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"F" = (/obj/effect/overlay/palmtree_l,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"G" = (/turf/unsimulated/wall{tag = "icon-sandstone0"; icon_state = "sandstone0"},/area/awaymission/beach)
+"H" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/unsimulated/floor{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"I" = (/obj/item/weapon/beach_ball,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"J" = (/obj/structure/stool,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"K" = (/mob/living/simple_animal/crab,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"L" = (/obj/effect/overlay/coconut,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"M" = (/mob/living/simple_animal/crab/Coffee,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"N" = (/obj/structure/stool/bed/chair,/turf/unsimulated/beach/sand,/area/awaymission/beach)
+"O" = (/turf/unsimulated/beach/coastline,/area/awaymission/beach)
+"P" = (/turf/unsimulated/beach/coastline{density = 1; opacity = 1},/area/awaymission/beach)
+"Q" = (/turf/unsimulated/beach/water,/area/awaymission/beach)
+"R" = (/turf/unsimulated/beach/water{density = 1; opacity = 1},/area/awaymission/beach)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bcdebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfba
+bghibbbbjbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+bklmbbbbbbbbnoooooooooopbbqbqbqbqbqbqbqa
+bbbbbbbbbbbbrstuvwxyzABrbbbbbbbbbbbbbbba
+bbbbbbbbbbbbCDDDDDDDDDDrbbbbbbbbbbbbbbba
+bbbbbbbbbbbbEDDDDDDDDDDrbbbbbbbbbFbbbbba
+bbfbbbbbbbbbGwHwwwwwwwwCbbbFbbIbbbbbbbba
+bbbbbbbbbbbbbJJJJJJJJJJbbbbbbbbbbbbbbbba
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+bbbKbbbbbbbbbbbbbbbbbbbbbbbbbbbfbbbbbbba
+bbbbbbFLbbbbbbbbbbbbbbFbbbbbMbbbLbbbbbfa
+bbbIbbbbbbKbbNbNbNbNbNbNbbbbbbbbbbNbNbba
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOP
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQR
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQR
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQR
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQR
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQR
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQR
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQR
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQR
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQR
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQR
+"}

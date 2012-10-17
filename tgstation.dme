@@ -1250,5 +1250,6 @@
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
 #include "maps\tgstation.2.0.9.dmm"
+#include "maps\RandomZLevels\Academy.dm"
 #include "maps\RandomZLevels\stationCollision.dm"
 // END_INCLUDE
