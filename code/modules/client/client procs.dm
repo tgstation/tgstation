@@ -87,11 +87,14 @@
 	///////////
 	//CONNECT//
 	///////////
-/client/New()
-	//Connection-Type and client byond_version checking
-	if( connection != "seeker" || (byond_version < MIN_CLIENT_VERSION))	//Out of date or wrong connection type. Update your client!!
-		del(src)
-		return
+/client/New(TopicData)
+	TopicData = null							//Prevent calls to client.Topic from connect
+
+	if(connection != "seeker")					//Invalid connection type.
+		return null
+	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
+		return null
+
 	client_list += src
 	if ( (world.address == address || !address) && !host )
 		host = key
@@ -105,7 +108,7 @@
 		holder.owner = src
 		holder.state = null
 
-	..()	//calls mob.Login()
+	. = ..()	//calls mob.Login()
 
 	if(holder)
 		admin_memo_show()
