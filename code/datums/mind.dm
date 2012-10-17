@@ -340,7 +340,7 @@ datum/mind
 			log_admin("[key_name(usr)] tried to access [current]'s mind without authorization.")
 			return
 
-		if (!(usr.client.holder in list("Trial Admin", "Badmin", "Game Admin", "Game Master")))
+		if (!(usr.client.holder.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master")))
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
 
