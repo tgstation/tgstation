@@ -1052,7 +1052,8 @@
 
 			if(stuttering)
 				stuttering = max(stuttering-1, 0)
-
+			if (src.slurring)
+				stuttering = max(slurring-1, 0)
 			if(silent)
 				silent = max(silent-1, 0)
 

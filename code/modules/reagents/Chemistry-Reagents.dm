@@ -1639,7 +1639,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.dizziness = 0
 				M.drowsyness = 0
-				M.stuttering = 0
+				M.slurring = 0
 				M.confused = 0
 				..()
 				return
