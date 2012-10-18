@@ -67,7 +67,7 @@
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 //Forensics
-/obj/item/clothing/suit/forensics/red
+/obj/item/clothing/suit/forensics
 	name = "jacket"
 	desc = "A forensics technician jacket."
 	item_state = "det_suit"
