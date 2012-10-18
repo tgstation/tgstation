@@ -301,6 +301,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/vomit
 	target_types += /obj/effect/decal/cleanable/robot_debris
 	target_types += /obj/effect/decal/cleanable/crayon
+	target_types += /obj/effect/decal/cleanable/liquid_fuel
 
 	if(src.blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood/
