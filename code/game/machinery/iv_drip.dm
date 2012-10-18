@@ -90,3 +90,23 @@
 		update_icon()
 	else
 		return ..()
+
+/obj/machinery/iv_drip/examine()
+	set src in view()
+	..()
+	if (!(usr in view(2)) && usr!=src.loc) return
+
+	if(beaker)
+		usr << "\blue Attached is \a [beaker] with:"
+		if(beaker.reagents && beaker.reagents.reagent_list.len)
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				usr << "\blue [R.volume] units of [R.name]"
+		else
+			usr << "\blue Attached is an empty [beaker]."
+	else
+		usr << "\blue No chemicals are attached."
+
+	if(attached)
+		usr << "\blue [attached] is attached."
+	else
+		usr << "\blue No one is attached."

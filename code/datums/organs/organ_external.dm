@@ -428,7 +428,7 @@
 
 					W = new wound_type(damage)
 				if(BURN)
-					var/list/size_names = list(/datum/wound/moderate_burn, /datum/wound/large_burn, /datum/wound/severe_burn, /datum/wound/deep_burn, /datum/wound/carbonised_area)
+					var/list/size_names = list(/datum/wound/moderate_burn, /datum/wound/large_burn, /datum/wound/severe_burn, /datum/wound/deep_burn, /datum/wound/carbonised_area, /datum/wound/carbonised_area)
 					wound_type = size_names[size]
 
 					W = new wound_type(damage)

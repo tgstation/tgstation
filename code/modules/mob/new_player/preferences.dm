@@ -1163,6 +1163,8 @@ datum/preferences
 		character.h_style = h_style
 		character.f_style = f_style
 
+		character.skills = skills
+
 		// Destroy/cyborgize organs
 		for(var/name in organ_data)
 			var/datum/organ/external/O = character.organs[name]
