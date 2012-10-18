@@ -45,7 +45,6 @@
 
 
 	proc/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
-		// TODO: this proc needs to be rewritten to not update damages directly
 		if((brute <= 0) && (burn <= 0))
 			return 0
 		if(status & ORGAN_DESTROYED)
@@ -182,6 +181,11 @@
 			if(W.damage == 0 && W.created + 10 * 10 * 60 <= world.time)
 				wounds -= W
 				// let the GC handle the deletion of the wound
+			if(W.internal && !W.is_treated())
+				// internal wounds get worse over time
+				W.open_wound(0.5 * wound_update_accuracy)
+				owner.vessel.remove_reagent("blood",0.1 * W.damage * wound_update_accuracy)
+
 			if(W.is_treated())
 				// slow healing
 				var/amount = 0.2
@@ -197,6 +201,7 @@
 	proc/bandage()
 		var/rval = 0
 		for(var/datum/wound/W in wounds)
+			if(W.internal) continue
 			rval |= !W.bandaged
 			W.bandaged = 1
 		return rval
