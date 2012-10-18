@@ -124,8 +124,6 @@
 
 /datum/camerachunk/New(loc, x, y, z)
 
-	set background = 1
-
 	// 0xf = 15
 	x &= ~0xf
 	y &= ~0xf

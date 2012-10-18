@@ -280,7 +280,7 @@ var/list/department_radio_keys = list(
 			listening|=M
 
 	var/turf/T = get_turf(src)
-	var/list/W = view(message_range, T)
+	var/list/W = hear(message_range, T)
 
 	for (var/obj/O in ((W | contents)-used_radios))
 		W |= O
@@ -311,12 +311,13 @@ var/list/department_radio_keys = list(
 			if (O)
 				O.hear_talk(src, message)
 */
-	if(isbrain(src))//For brains to properly talk if they are in an MMI..or in a brain. Could be extended to other mobs I guess.
+
+/*	if(isbrain(src))//For brains to properly talk if they are in an MMI..or in a brain. Could be extended to other mobs I guess.
 		for(var/obj/O in loc)//Kinda ugly but whatever.
 			if(O)
 				spawn(0)
 					O.hear_talk(src, message)
-
+*/
 
 
 	var/list/heard_a = list() // understood us
