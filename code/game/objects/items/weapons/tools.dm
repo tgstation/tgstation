@@ -231,9 +231,8 @@
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 		log_game("[key_name(user)] triggered a fueltank explosion.")
 		user << "\red That was stupid of you."
-		explosion(O.loc,-1,0,2)
-		if(O)
-			del(O)
+		var/obj/structure/reagent_dispensers/fueltank/tank = O
+		tank.explode()
 		return
 	if (src.welding)
 		remove_fuel(1)
