@@ -652,6 +652,7 @@
 #include "code\game\objects\effects\decals\misc.dm"
 #include "code\game\objects\effects\decals\remains.dm"
 #include "code\game\objects\effects\decals\Cleanable\aliens.dm"
+#include "code\game\objects\effects\decals\Cleanable\fuel.dm"
 #include "code\game\objects\effects\decals\Cleanable\humans.dm"
 #include "code\game\objects\effects\decals\Cleanable\misc.dm"
 #include "code\game\objects\effects\decals\Cleanable\robots.dm"

@@ -84,6 +84,8 @@
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
 					for(var/obj/machinery/bot/medbot/M in world)
+						if(!M)
+							continue
 						var/turf/bl = get_turf(M)
 						bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
 						if((!isnull(M.reagent_glass)) && M.use_beaker)
