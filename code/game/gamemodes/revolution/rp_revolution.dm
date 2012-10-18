@@ -67,7 +67,6 @@
 	modePlayer += head_revolutionaries
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
-	..()
 
 /datum/game_mode/revolution/rp_revolution/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
 	var/obj_count = 1
@@ -133,7 +132,7 @@
 	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
 			src << "\red <b>[M] is already be a revolutionary!</b>"
-		else if(ticker.mode:is_convertible(M))
+		else if(!ticker.mode:is_convertible(M))
 			src << "\red <b>[M] is implanted with a loyalty implant - Remove it first!</b>"
 		else
 			if(world.time < M.mind.rev_cooldown)
@@ -156,37 +155,37 @@
 	// only perform rev checks once in a while
 	if(tried_to_add_revheads < world.time)
 		tried_to_add_revheads = world.time+50
+		var/active_revs = 0
 		for(var/datum/mind/rev_mind in head_revolutionaries)
-			var/active_revs = 0
 			if(rev_mind.current.client && rev_mind.current.client.inactivity <= 10*60*20) // 20 minutes inactivity are OK
 				active_revs++
 
-			if(active_revs == 0)
-				log_admin("There are zero active head revolutionists, trying to add some..")
-				message_admins("There are zero active head revolutionists, trying to add some..")
-				var/added_heads = 0
-				for(var/mob/living/carbon/human/H in world) if(H.client && H.mind && H.client.inactivity <= 10*60*20 && H.mind in revolutionaries)
-					head_revolutionaries += H.mind
-					for(var/datum/mind/head_mind in heads)
-						var/datum/objective/mutiny/rp/rev_obj = new
-						rev_obj.owner = H.mind
-						rev_obj.target = head_mind
-						rev_obj.explanation_text = "Assassinate or capture [head_mind.name], the [head_mind.assigned_role]."
-						H.mind.objectives += rev_obj
+		if(active_revs == 0)
+			log_admin("There are zero active head revolutionists, trying to add some..")
+			message_admins("There are zero active head revolutionists, trying to add some..")
+			var/added_heads = 0
+			for(var/mob/living/carbon/human/H in world) if(H.client && H.mind && H.client.inactivity <= 10*60*20 && H.mind in revolutionaries)
+				head_revolutionaries += H.mind
+				for(var/datum/mind/head_mind in heads)
+					var/datum/objective/mutiny/rp/rev_obj = new
+					rev_obj.owner = H.mind
+					rev_obj.target = head_mind
+					rev_obj.explanation_text = "Assassinate or capture [head_mind.name], the [head_mind.assigned_role]."
+					H.mind.objectives += rev_obj
 
-					update_rev_icons_added(H.mind)
-					H.verbs += /mob/living/carbon/human/proc/RevConvert
+				update_rev_icons_added(H.mind)
+				H.verbs += /mob/living/carbon/human/proc/RevConvert
 
-					H << "\red Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion."
-					added_heads = 1
-					break
+				H << "\red Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion."
+				added_heads = 1
+				break
 
-				if(added_heads)
-					log_admin("Managed to add new heads of revolution.")
-					message_admins("Managed to add new heads of revolution.")
-				else
-					log_admin("Unable to add new heads of revolution.")
-					message_admins("Unable to add new heads of revolution.")
-					tried_to_add_revheads = world.time + 6000 // wait 10 minutes
+			if(added_heads)
+				log_admin("Managed to add new heads of revolution.")
+				message_admins("Managed to add new heads of revolution.")
+			else
+				log_admin("Unable to add new heads of revolution.")
+				message_admins("Unable to add new heads of revolution.")
+				tried_to_add_revheads = world.time + 6000 // wait 10 minutes
 
 	return ..()
