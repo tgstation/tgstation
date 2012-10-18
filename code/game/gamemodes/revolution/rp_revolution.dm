@@ -67,7 +67,6 @@
 	modePlayer += head_revolutionaries
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
-	..()
 
 /datum/game_mode/revolution/rp_revolution/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
 	var/obj_count = 1
@@ -133,7 +132,7 @@
 	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
 			src << "\red <b>[M] is already be a revolutionary!</b>"
-		else if(ticker.mode:is_convertible(M))
+		else if(!ticker.mode:is_convertible(M))
 			src << "\red <b>[M] is implanted with a loyalty implant - Remove it first!</b>"
 		else
 			if(world.time < M.mind.rev_cooldown)
