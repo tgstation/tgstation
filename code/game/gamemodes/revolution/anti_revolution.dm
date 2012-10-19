@@ -100,10 +100,13 @@
 	var/obj_count = 1
 	if (you_are)
 		head_mind.current << "\blue It looks like this shift CentComm has some special orders for you.. check your objectives."
+		head_mind.current << "\blue Note that you can ignore these objectives, but resisting NT's orders probably means demotion or worse."
 	for(var/datum/objective/objective in head_mind.objectives)
 		head_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		head_mind.special_role = "Corrupt Head"
 		obj_count++
+
+	head_mind.current.verbs += /mob/proc/ResignFromHeadPosition
 
 //////////////////////////////////////
 //Checks if the revs have won or not//
@@ -201,3 +204,19 @@
 		modePlayer += character.mind
 		add_head_objectives(character.mind)
 		greet_head(character.mind)
+
+/mob/proc/ResignFromHeadPosition()
+	set category = "IC"
+	set name = "Resign From Head Position"
+
+	if(!istype(ticker.mode, /datum/game_mode/anti_revolution))
+		return
+
+	ticker.mode:heads -= src.mind
+	src.mind.objectives = list()
+	ticker.mode.modePlayer -= src.mind
+	src.mind.special_role = null
+
+	src.verbs -= /mob/proc/ResignFromHeadPosition
+
+	src << "\red You resigned from your position, now you have the consequences."
