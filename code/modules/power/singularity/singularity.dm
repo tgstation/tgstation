@@ -465,6 +465,17 @@ var/global/list/uneatable = list(
 	grav_pull = 10 //How many tiles out do we pull?
 	consume_range = 3 //How many tiles out do we eat
 
+/obj/machinery/singularity/narsie/large
+	name = "Nar-Sie"
+	icon = 'icons/obj/narsie.dmi'
+	// Pixel stuff centers Narsie.
+	pixel_x = -236
+	pixel_y = -256
+	current_size = 12
+	move_self = 1 //Do we move on our own?
+	grav_pull = 13 //How many tiles out do we pull?
+	consume_range = 12 //How many tiles out do we eat
+
 /obj/machinery/singularity/narsie/process()
 	eat()
 	if(!target || prob(5))

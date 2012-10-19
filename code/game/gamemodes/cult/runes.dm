@@ -131,7 +131,7 @@ var/list/sacrificed = list()
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
-				new /obj/machinery/singularity/narsie(src.loc)
+				new /obj/machinery/singularity/narsie/large(src.loc)
 				if(ticker.mode.name == "cult")
 					ticker.mode:eldergod = 0
 				return
