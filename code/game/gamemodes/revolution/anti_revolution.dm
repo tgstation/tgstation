@@ -59,7 +59,7 @@
 		var/datum/objective/anti_revolution/execute/obj = new
 		obj.owner = head
 		obj.target = target
-		obj.explanation_text = "[target.current.real_name], the [target.assigned_role] has extracted confidential information above their clearance. Execute \him[target.current]."
+		obj.explanation_text = "[target.current.real_name], the [target.assigned_role] has extracted confidential information above their clearance. Execute them."
 		head.objectives += obj
 	for(var/datum/mind/target in brig_targets)
 		var/datum/objective/anti_revolution/brig/obj = new
@@ -71,7 +71,7 @@
 		var/datum/objective/anti_revolution/demote/obj = new
 		obj.owner = head
 		obj.target = target
-		obj.explanation_text = "[target.current.real_name], the [target.assigned_role]  has been classified as harmful to NanoTrasen's goals. Demote \him[target.current] to assistant."
+		obj.explanation_text = "[target.current.real_name], the [target.assigned_role]  has been classified as harmful to NanoTrasen's goals. Demote them to assistant."
 		head.objectives += obj
 
 
