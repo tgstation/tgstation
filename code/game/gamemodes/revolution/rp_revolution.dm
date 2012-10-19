@@ -166,6 +166,7 @@
 			var/added_heads = 0
 			for(var/mob/living/carbon/human/H in world) if(H.client && H.mind && H.client.inactivity <= 10*60*20 && H.mind in revolutionaries)
 				head_revolutionaries += H.mind
+				revolutionaries -= H.mind
 				for(var/datum/mind/head_mind in heads)
 					var/datum/objective/mutiny/rp/rev_obj = new
 					rev_obj.owner = H.mind
