@@ -107,6 +107,14 @@
 				return 0
 	return 1
 
+///////////////////////////
+//Announces the game type//
+///////////////////////////
+/datum/game_mode/revolution/rp_revolution/announce()
+	world << "<B>The current game mode is - Revolution!</B>"
+	world << "<B>Some crewmembers are attempting to start a revolution!</B>"
+
+
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
