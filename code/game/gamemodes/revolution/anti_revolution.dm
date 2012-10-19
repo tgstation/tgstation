@@ -59,16 +59,19 @@
 		var/datum/objective/anti_revolution/execute/obj = new
 		obj.owner = head
 		obj.target = target
+		obj.explanation_text = "[target.current.real_name], the [target.assigned_role] has extracted confidential information above their clearance. Execute \him[target.current]."
 		head.objectives += obj
 	for(var/datum/mind/target in brig_targets)
 		var/datum/objective/anti_revolution/brig/obj = new
 		obj.owner = head
 		obj.target = target
+		obj.explanation_text = "Brig [target.current.real_name], the [target.assigned_role] for 20 minutes to set an example."
 		head.objectives += obj
 	for(var/datum/mind/target in demote_targets)
 		var/datum/objective/anti_revolution/demote/obj = new
 		obj.owner = head
 		obj.target = target
+		obj.explanation_text = "[target.current.real_name], the [target.assigned_role]  has been classified as harmful to NanoTrasen's goals. Demote \him[target.current] to assistant."
 		head.objectives += obj
 
 
