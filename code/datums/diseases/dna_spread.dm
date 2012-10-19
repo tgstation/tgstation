@@ -3,9 +3,9 @@
 	max_stages = 4
 	spread = "On contact"
 	spread_type = CONTACT_GENERAL
-	cure = "Ryetalin"
-	cure = "ryetalyn"
-	curable = 0
+	cure = "Ryetalyn"
+	cure_id = "ryetalyn"
+	curable = 1
 	agent = "S4E1 retrovirus"
 	affected_species = list("Human")
 	var/list/original_dna = list()
