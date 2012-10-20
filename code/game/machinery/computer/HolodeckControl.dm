@@ -445,9 +445,9 @@
 	desc = "May the force be within you. Sorta"
 	icon_state = "sword0"
 	force = 3.0
-	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
+	throwforce = 0
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	var/active = 0
