@@ -152,11 +152,8 @@
 	var/produce_heat = 1500
 
 /obj/item/device/flashlight/flare/New()
-	fuel = rand(6000, 9000) // Last 10 to 15 minutes.
+	fuel = rand(3000, 4500) // Last 10 to 15 minutes.
 	..()
-
-/obj/item/device/flashlight/flare/attack(mob/living/M as mob, mob/living/user as mob)
-	..(M, user, 0)
 
 /obj/item/device/flashlight/flare/process()
 	var/turf/pos = get_turf(src)

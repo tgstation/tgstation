@@ -759,6 +759,7 @@
 #include "code\game\machinery\suit_storage_unit.dm"
 #include "code\game\machinery\syndicatebeacon.dm"
 #include "code\game\machinery\teleporter.dm"
+#include "code\game\machinery\transformer.dm"
 #include "code\game\machinery\turrets.dm"
 #include "code\game\machinery\vending.dm"
 #include "code\game\machinery\washing_machine.dm"

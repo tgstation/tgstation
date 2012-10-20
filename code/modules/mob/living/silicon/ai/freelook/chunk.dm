@@ -75,6 +75,9 @@
 	for(var/camera in cameras)
 		var/obj/machinery/camera/c = camera
 
+		if(!c)
+			continue
+
 		if(!c.can_use())
 			continue
 
@@ -142,6 +145,9 @@
 
 	for(var/camera in cameras)
 		var/obj/machinery/camera/c = camera
+		if(!c)
+			continue
+
 		if(!c.can_use())
 			continue
 
