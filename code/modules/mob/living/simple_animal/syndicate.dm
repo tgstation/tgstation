@@ -176,7 +176,10 @@
 /mob/living/simple_animal/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
 		if(prob(80))
-			health -= O.force
+			var/damage = O.force
+			if (O.damtype == HALLOSS)
+				damage = 0
+			health -= damage
 			visible_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
 			visible_message("\red \b [src] blocks the [O] with its shield! ")
