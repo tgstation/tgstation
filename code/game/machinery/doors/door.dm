@@ -262,7 +262,8 @@
 		else
 			source.thermal_conductivity = initial(source.thermal_conductivity)
 
-		if(need_rebuild)
+		//not sure what the equivalent in zas is
+		/*if(need_rebuild)
 			if(istype(source)) //Rebuild/update nearby group geometry
 				if(source.parent)
 					air_master.groups_to_rebuild += source.parent
@@ -288,12 +289,13 @@
 					air_master.groups_to_rebuild += west.parent
 				else
 					air_master.tiles_to_update += west
-		else
-			if(istype(source)) air_master.tiles_to_update += source
-			if(istype(north)) air_master.tiles_to_update += north
-			if(istype(south)) air_master.tiles_to_update += south
-			if(istype(east)) air_master.tiles_to_update += east
-			if(istype(west)) air_master.tiles_to_update += west
+		else*/
+		if(istype(source)) air_master.tiles_to_update |= source
+		if(istype(north)) air_master.tiles_to_update |= north
+		if(istype(south)) air_master.tiles_to_update |= south
+		if(istype(east)) air_master.tiles_to_update |= east
+		if(istype(west)) air_master.tiles_to_update |= west
+
 		return 1
 
 

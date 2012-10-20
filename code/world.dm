@@ -272,6 +272,26 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 			load_admins()
 			return
 
+//copy paste of above - load_admins() will take care of loading mods if it's enabled
+/world/proc/load_mods()
+	if(config.admin_legacy_system)
+		//Legacy admin system uses admins.txt
+		var/text = file2text("config/mods.txt")
+		if (!text)
+			diary << "Failed to load config/mods.txt\n"
+		else
+			var/list/lines = dd_text2list(text, "\n")
+			for(var/line in lines)
+				if (!line)
+					continue
+
+				if (copytext(line, 1, 2) == ";")
+					continue
+
+				var/m_key = copytext(line, 1, length(line)+1)
+				admins[m_key] = new /datum/admins("Moderator")
+				diary << ("MOD: [m_key]")
+
 /world/proc/load_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")

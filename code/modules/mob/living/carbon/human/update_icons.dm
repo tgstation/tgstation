@@ -220,20 +220,27 @@ proc/get_damage_icon_part(damage_state, body_part)
 	if(stand_icon)	del(stand_icon)
 	if(lying_icon)	del(lying_icon)
 	if(dna && dna.mutantrace)	return
-	var/husk = (HUSK in src.mutations)  //100% unnecessary -Agouri	//nope, do you really want to iterate through src.mutations repeatedly? -Pete	var/fat = (FAT in src.mutations)	var/skeleton = (SKELETON in src.mutations)	var/g = "m"
 
+	var/husk = (HUSK in src.mutations)  //100% unnecessary -Agouri	//nope, do you really want to iterate through src.mutations repeatedly? -Pete
+	var/fat = (FAT in src.mutations)
+	var/skeleton = (SKELETON in src.mutations)
+
+	var/g = "m"
 	if(gender == FEMALE)	g = "f"
-	var/husk = (HUSK in src.mutations)
-	var/obese = (FAT in src.mutations)
 
 	// whether to draw the individual limbs
 	var/individual_limbs = 1
 
 	//Base mob icon
-	if(husk)		stand_icon = new /icon('icons/mob/human.dmi', "husk_s")		lying_icon = new /icon('icons/mob/human.dmi', "husk_l")	else if(fat)		stand_icon = new /icon('icons/mob/human.dmi', "fatbody_s")
+	if(husk)
+		stand_icon = new /icon('icons/mob/human.dmi', "husk_s")
+		lying_icon = new /icon('icons/mob/human.dmi', "husk_l")
+	else if(fat)
+		stand_icon = new /icon('icons/mob/human.dmi', "fatbody_s")
 		lying_icon = new /icon('icons/mob/human.dmi', "fatbody_l")
-else if(skeleton)
-		stand_icon = new /icon('icons/mob/human.dmi', "skeleton_s")		lying_icon = new /icon('icons/mob/human.dmi', "skeleton_l")
+	else if(skeleton)
+		stand_icon = new /icon('icons/mob/human.dmi', "skeleton_s")
+		lying_icon = new /icon('icons/mob/human.dmi', "skeleton_l")
 	else
 		stand_icon = new /icon('icons/mob/human.dmi', "body_[g]_s")
 		lying_icon = new /icon('icons/mob/human.dmi', "body_[g]_l")
@@ -311,8 +318,13 @@ else if(skeleton)
 
 	//Underwear
 	if(underwear >0 && underwear < 12)
-		if(!fat && !skeleton)			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)	if(update_icons)	update_icons()
-	//tail	update_tail_showing(0)
+		if(!fat && !skeleton)
+			stand_icon.Blend(new /icon('icons/mob/human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+	if(update_icons)
+		update_icons()
+
+	//tail
+	update_tail_showing(0)
 
 
 //HAIR OVERLAY

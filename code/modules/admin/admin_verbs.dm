@@ -111,14 +111,22 @@
 		//Admin Observer
 		if (holder.level == -1)
 			verbs += /client/proc/cmd_admin_say
-			verbs += /client/proc/cmd_mod_say			verbs += /client/proc/cmd_admin_gib_self			verbs += /client/proc/deadmin_self
 			return
 
 		//Moderator
 		if (holder.level >= 0)
-			verbs += /client/proc/cmd_admin_pm_context			verbs += /client/proc/cmd_admin_pm_panel
-			verbs += /client/proc/hide_verbs			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/Report			verbs += /client/proc/display_admin_reports			verbs += /datum/admins/proc/show_skills			verbs += /client/proc/admin_ghost			verbs += /datum/admins/proc/show_player_info			verbs += /datum/admins/proc/PlayerNotes		else	return
+			verbs += /client/proc/cmd_admin_pm_panel
+			verbs += /client/proc/cmd_admin_pm_context
+			verbs += /client/proc/hide_verbs
+			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/Report
+			verbs += /client/proc/display_admin_reports
+			verbs += /datum/admins/proc/show_skills
+			verbs += /client/proc/admin_ghost
+			verbs += /datum/admins/proc/show_player_info
+			verbs += /datum/admins/proc/PlayerNotes
+		else
+			return
 
 		//Extra moderator commands
 		if(holder.level == 0)
@@ -132,7 +140,7 @@
 			verbs += /datum/admins/proc/startnow
 			verbs += /datum/admins/proc/delay								//game start delay
 			verbs += /datum/admins/proc/immreboot							//immediate reboot
-			verbs += /datum/admins/proc/restart							//restart
+			verbs += /datum/admins/proc/restart								//restart
 			verbs += /client/proc/cmd_admin_check_contents
 			verbs += /client/proc/cmd_admin_create_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
@@ -141,12 +149,12 @@
 			verbs += /datum/admins/proc/announce
 			verbs += /datum/admins/proc/startnow
 			verbs += /datum/admins/proc/toggleAI							//Toggle the AI
-			verbs += /datum/admins/proc/toggleenter						//Toggle enterting
+			verbs += /datum/admins/proc/toggleenter							//Toggle enterting
 			verbs += /datum/admins/proc/toggleguests						//Toggle guests entering
 			verbs += /datum/admins/proc/toggleooc							//toggle ooc
 			verbs += /datum/admins/proc/toggleoocdead						//toggle ooc for dead/unc
 			verbs += /datum/admins/proc/show_player_panel
-			verbs += /client/proc/deadchat								//toggles deadchat
+			verbs += /client/proc/deadchat									//toggles deadchat
 			verbs += /client/proc/cmd_admin_subtle_message
 			verbs += /client/proc/dsay
 			verbs += /client/proc/admin_ghost
@@ -159,7 +167,16 @@
 			verbs += /client/proc/check_ai_laws
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_gib_self
-			verbs += /client/proc/player_panel_new			verbs += /client/proc/cmd_admin_change_custom_event			verbs += /client/proc/game_panel			verbs += /client/proc/unjobban_panel			verbs += /client/proc/jobbans			verbs += /client/proc/unban_panel			verbs += /datum/admins/proc/toggleooc			verbs += /datum/admins/proc/toggleoocdead		else	return
+			verbs += /client/proc/player_panel_new
+			verbs += /client/proc/cmd_admin_change_custom_event
+			verbs += /client/proc/game_panel
+			verbs += /client/proc/unjobban_panel
+			verbs += /client/proc/jobbans
+			verbs += /client/proc/unban_panel
+			verbs += /datum/admins/proc/toggleooc
+			verbs += /datum/admins/proc/toggleoocdead
+		else
+			return
 
 		//Admin Candidate
 		if (holder.level >= 2)
@@ -204,11 +221,11 @@
 		//Badmin
 		if (holder.level >= 4)
 			verbs += /datum/admins/proc/adrev								//toggle admin revives
-			verbs += /datum/admins/proc/adspawn							//toggle admin item spawning
+			verbs += /datum/admins/proc/adspawn								//toggle admin item spawning
 			verbs += /client/proc/debug_variables
-			verbs += /datum/admins/proc/access_news_network               //Admin access to the newscaster network
+			verbs += /datum/admins/proc/access_news_network					//Admin access to the newscaster network
 			verbs += /client/proc/cmd_modify_ticker_variables
-			verbs += /client/proc/Debug2								//debug toggle switch
+			verbs += /client/proc/Debug2									//debug toggle switch
 			verbs += /client/proc/toggle_view_range
 			verbs += /client/proc/Getmob
 			verbs += /client/proc/Getkey
@@ -224,7 +241,7 @@
 			verbs += /client/proc/hide_most_verbs
 			verbs += /client/proc/jumptocoord
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/giveruntimelog						//used by coders to retrieve runtime logs
+			verbs += /client/proc/giveruntimelog							//used by coders to retrieve runtime logs
 			verbs += /client/proc/togglebuildmodeself
 			verbs += /client/proc/debug_controller
 		else	return
@@ -245,21 +262,23 @@
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
 			verbs += /client/proc/send_space_ninja
-			verbs += /client/proc/restart_controller					//Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
-			verbs += /client/proc/toggle_clickproc 						//TODO ERRORAGE (Temporary proc while the new clickproc is being tested)
+			verbs += /client/proc/restart_controller						//Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
+			verbs += /client/proc/toggle_clickproc 							//TODO ERRORAGE (Temporary proc while the new clickproc is being tested)
 			verbs += /client/proc/toggle_gravity_on
 			verbs += /client/proc/toggle_gravity_off
 			verbs += /client/proc/toggle_random_events
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/Set_Holiday							//Force-set a Holiday
+			verbs += /client/proc/Set_Holiday								//Force-set a Holiday
 			verbs += /client/proc/admin_memo
-			verbs += /client/proc/ToRban								//ToRban  frontend to access its features.
-			verbs += /client/proc/game_panel		else	return
+			verbs += /client/proc/ToRban									//ToRban  frontend to access its features.
+			verbs += /client/proc/game_panel
+		else
+			return
 
 		//Game Master
 		if (holder.level >= 6)
 			verbs += /datum/admins/proc/toggle_aliens						//toggle aliens
-			verbs += /datum/admins/proc/toggle_space_ninja				//toggle ninjas
+			verbs += /datum/admins/proc/toggle_space_ninja					//toggle ninjas
 			verbs += /datum/admins/proc/adjump
 			verbs += /client/proc/callproc
 			verbs += /client/proc/triple_ai
@@ -272,12 +291,13 @@
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/cinematic								//show a cinematic sequence
-			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
+			verbs += /client/proc/cinematic									//show a cinematic sequence
+			verbs += /client/proc/startSinglo								//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/toggle_log_hrefs
 			verbs += /client/proc/cmd_debug_mob_lists
 			verbs += /client/proc/set_ooc
-		else	return
+		else
+			return
 	return
 
 
