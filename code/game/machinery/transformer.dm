@@ -29,7 +29,6 @@
 
 /obj/machinery/transformer/Bumped(var/atom/movable/AM)
 	// HasEntered didn't like people lying down.
-	world << "BUMP!"
 	if(ishuman(AM))
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)
