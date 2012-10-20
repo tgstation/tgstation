@@ -79,7 +79,7 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 //Syndicate sub-machine guns.
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
 
-/obj/item/weapon/gun/projectile/automatic/c20r/New()
+/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/New()
 	for(var/ammo in loaded)
 		if(prob(95)) //95% chance
 			loaded -= ammo

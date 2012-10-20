@@ -342,6 +342,10 @@ datum/mind
 			log_admin("[key_name(usr)] tried to access [current]'s mind without authorization.")
 			return
 
+		if (!(usr.client.holder.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master")))
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
 		if (href_list["role_edit"])
 			var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
 			if (!new_role) return

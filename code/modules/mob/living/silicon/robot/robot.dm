@@ -65,8 +65,6 @@
 	updatename("Default")
 	updateicon()
 
-	playsound(src, 'sound/voice/liveagain.ogg', 75, 1)
-
 	if(!cell)
 		cell = new /obj/item/weapon/cell(src)
 		cell.maxcharge = 7500
@@ -100,6 +98,9 @@
 		if(isWireCut(5)) // 5 = BORG CAMERA
 			camera.status = 0
 	..()
+
+	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
+
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N

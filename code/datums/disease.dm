@@ -43,6 +43,7 @@ to null does not delete the object itself. Thank you.
 	var/severity = null//severity descr
 	var/longevity = 250//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
 	var/list/hidden = list(0, 0)
+	var/can_carry = 1 // If the disease allows "carriers".
 	// if hidden[1] is true, then virus is hidden from medical scanners
 	// if hidden[2] is true, then virus is hidden from PANDEMIC machine
 

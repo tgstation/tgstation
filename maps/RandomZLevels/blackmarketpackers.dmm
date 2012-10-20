@@ -46,7 +46,7 @@
 "aT" = (/obj/structure/table,/obj/item/weapon/storage/box,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating{tag = "icon-warnplate (NORTH)"; icon_state = "warnplate"; dir = 1},/area/awaymission/BMPship1)
 "aU" = (/turf/simulated/floor/plating{tag = "icon-warnplate (NORTH)"; icon_state = "warnplate"; dir = 1},/area/awaymission/BMPship1)
 "aV" = (/turf/simulated/floor/plating{tag = "icon-warnplate (NORTHEAST)"; icon_state = "warnplate"; dir = 5},/turf/simulated/shuttle/wall{tag = "icon-swall_f5"; icon_state = "swall_f5"; dir = 2},/area/awaymission/BMPship1)
-"aW" = (/turf/space,/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/awaymission/BMPship1)
+"aW" = (/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/awaymission/BMPship1)
 "aX" = (/turf/simulated/floor/plating/airless{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/awaymission/BMPship1)
 "aY" = (/obj/effect/gibspawner/generic,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship1)
 "aZ" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor/plating/airless,/area/awaymission/BMPship1)
@@ -187,7 +187,7 @@
 "dE" = (/obj/effect/landmark{name = "awaystart"},/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor{icon_state = "white"},/area/awaymission/BMPship1)
 "dF" = (/obj/item/weapon/crowbar,/turf/simulated/floor{icon_state = "white"},/area/awaymission/BMPship1)
 "dG" = (/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/awaymission/BMPship1)
-"dH" = (/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/power/apc{dir = 1; equipment = 0; locked = 0; req_access = ""},/turf/simulated/floor/plating,/area/awaymission/BMPship1)
+"dH" = (/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/power/apc{dir = 1; environ = 0; equipment = 3; locked = 0; req_access = ""},/turf/simulated/floor/plating,/area/awaymission/BMPship1)
 "dI" = (/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/awaymission/BMPship1)
 "dJ" = (/obj/structure/table,/obj/item/weapon/paper{info = "I'm no scientist, but judging from the design and components, it seems to be some kind of gateway. This thing is gonna be worth a lot of cash to the right man. The boys are excited, as they have every right to be, and I've let them crack into that case of beer we got. I normally wouldn't allow such a thing, but this is a time for celebration! It's not like a couple drinks will hurt anything."; name = "Captain's log entry"},/turf/simulated/floor{tag = "icon-carpet6-0 (EAST)"; icon_state = "carpet6-0"; dir = 4},/area/awaymission/BMPship3)
 "dK" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/simulated/floor{tag = "icon-carpet14-2 (EAST)"; icon_state = "carpet14-2"; dir = 4},/area/awaymission/BMPship3)
@@ -349,7 +349,7 @@
 "gK" = (/obj/item/weapon/mop,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/BMPship1)
 "gL" = (/obj/effect/decal/cleanable/oil,/turf/simulated/floor{icon_state = "hydrofloor"},/area/awaymission/BMPship1)
 "gM" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/awaymission/BMPship1)
-"gN" = (/turf/simulated/floor/plating/airless,/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/awaymission/BMPship3)
+"gN" = (/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/awaymission/BMPship3)
 "gO" = (/obj/item/weapon/shard,/turf/simulated/floor/plating/airless{tag = "icon-platingdmg1"; icon_state = "platingdmg1"},/area/awaymission/BMPship3)
 "gP" = (/obj/structure/stool,/turf/simulated/floor/plating/airless{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/awaymission/BMPship3)
 "gQ" = (/turf/simulated/floor/plating/airless,/area/awaymission/BMPship3)
@@ -371,7 +371,7 @@
 "hg" = (/obj/machinery/door/airlock/silver{locked = 1},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor,/area/awaymission/BMPship1)
 "hh" = (/obj/machinery/door/unpowered/shuttle,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/turf/simulated/floor,/area/awaymission/BMPship1)
 "hi" = (/turf/simulated/mineral/random,/area/awaymission)
-"hj" = (/turf/space,/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/awaymission)
+"hj" = (/obj/item/device/multitool,/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/awaymission)
 "hk" = (/turf/simulated/shuttle/wall{tag = "icon-swallc3"; icon_state = "swallc3"},/area/awaymission/BMPship3)
 "hl" = (/turf/simulated/shuttle/wall{tag = "icon-swallc1"; icon_state = "swallc1"},/area/awaymission/BMPship3)
 "hm" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/obj/machinery/door/airlock/silver,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship3)
@@ -384,7 +384,7 @@
 "ht" = (/obj/structure/stool,/turf/simulated/floor,/area/awaymission/BMPship1)
 "hu" = (/obj/structure/table,/obj/item/weapon/paper{info = "DEAR DAIRY: So we was doing our typpical route when the captain says we've been picking up weird signals on some backwatter planet. Madsen wanted to stay on course but he ain't the captain, so we went out of the way to check it out. There was lots of rocks on the way, but we got to the planet fine. Found a big fancy camp with nobody around and this big metal donut thing with NT stamps all over it right in the middle. Case of beer too. Captain reckons we can pass it off to some buyer in the Syndicate. Ingram says it's bad luck and that someone is going to come look for it but it sounds like better money than selling bad meat to jerky companies."; name = "Old Diary"},/turf/simulated/floor,/area/awaymission/BMPship1)
 "hv" = (/obj/structure/table,/obj/item/weapon/pen/red,/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/simulated/floor,/area/awaymission/BMPship1)
-"hw" = (/obj/structure/closet,/turf/simulated/floor,/area/awaymission/BMPship1)
+"hw" = (/obj/structure/closet,/obj/item/clothing/under/overalls,/turf/simulated/floor,/area/awaymission/BMPship1)
 "hx" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/turf/simulated/floor/engine,/area/awaymission/BMPship3)
 "hy" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/engine,/area/awaymission/BMPship3)
 "hz" = (/obj/structure/cable,/turf/simulated/floor/plating/airless{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/awaymission/BMPship3)
@@ -410,26 +410,26 @@
 "hT" = (/obj/effect/decal/remains/human,/obj/item/clothing/head/helmet/space/syndicate/green/dark,/obj/effect/gibspawner/generic,/turf/simulated/floor/plating/airless/asteroid,/area/awaymission)
 "hU" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/item/weapon/shard{icon_state = "small"},/turf/simulated/floor/engine,/area/awaymission/BMPship3)
 "hV" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated,/area/awaymission/BMPship3)
-"hW" = (/turf/space,/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/awaymission/BMPship3)
-"hX" = (/obj/effect/gibspawner/robot,/turf/simulated,/area/awaymission/BMPship3)
+"hW" = (/obj/effect/gibspawner/robot,/turf/simulated,/area/awaymission/BMPship3)
+"hX" = (/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/awaymission)
 "hY" = (/obj/effect/decal/mecha_wreckage/ripley,/turf/simulated/floor/plating/airless,/area/awaymission)
 "hZ" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plating/airless/asteroid,/area/awaymission)
 "ia" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/awaymission)
 "ib" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor/plating/airless,/area/awaymission)
 "ic" = (/obj/structure/stool/bed,/turf/simulated/floor,/area/awaymission/BMPship1)
 "id" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/obj/item/weapon/storage/wallet/random,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor,/area/awaymission/BMPship1)
-"ie" = (/obj/item/clothing/suit/space/syndicate/green/dark,/turf/simulated/floor/plating/airless/asteroid,/area/awaymission)
-"if" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/grille,/turf/simulated/floor/engine,/area/awaymission/BMPship3)
-"ig" = (/obj/effect/gibspawner/robot,/turf/simulated/floor/plating/airless{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/awaymission)
-"ih" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating/airless,/area/awaymission)
-"ii" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor/plating/airless,/area/awaymission)
-"ij" = (/obj/machinery/door/unpowered/shuttle,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor/plating,/area/awaymission/BMPship1)
-"ik" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/BMPship1)
-"il" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/simulated/floor,/area/awaymission/BMPship1)
-"im" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/space,/area)
-"in" = (/turf/simulated/shuttle/wall{tag = "icon-swall13"; icon_state = "swall13"},/area/awaymission/BMPship3)
-"io" = (/turf/simulated/shuttle/wall,/area/awaymission/BMPship3)
-"ip" = (/turf/simulated/floor/plating/airless{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/awaymission)
+"ie" = (/obj/structure/closet,/obj/item/clothing/under/lawyer/bluesuit,/obj/item/clothing/suit/apron,/turf/simulated/floor,/area/awaymission/BMPship1)
+"if" = (/obj/item/clothing/suit/space/syndicate/green/dark,/turf/simulated/floor/plating/airless/asteroid,/area/awaymission)
+"ig" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/grille,/turf/simulated/floor/engine,/area/awaymission/BMPship3)
+"ih" = (/obj/effect/gibspawner/robot,/turf/simulated/floor/plating/airless{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/awaymission)
+"ii" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating/airless,/area/awaymission)
+"ij" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor/plating/airless,/area/awaymission)
+"ik" = (/obj/machinery/door/unpowered/shuttle,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor/plating,/area/awaymission/BMPship1)
+"il" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/simulated/floor,/area/awaymission/BMPship1)
+"im" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/simulated/floor,/area/awaymission/BMPship1)
+"in" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/space,/area)
+"io" = (/turf/simulated/shuttle/wall{tag = "icon-swall13"; icon_state = "swall13"},/area/awaymission/BMPship3)
+"ip" = (/turf/simulated/shuttle/wall,/area/awaymission/BMPship3)
 "iq" = (/turf/simulated/floor/plating/airless{tag = "icon-panelscorched"; icon_state = "panelscorched"},/area/awaymission)
 "ir" = (/obj/effect/decal/remains/human,/turf/simulated/floor,/area/awaymission/BMPship1)
 "is" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/turf/simulated/floor,/area/awaymission/BMPship1)
@@ -530,15 +530,15 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacaaaaaraaaaaaaagZhahbgAgRcBcJhccJcJcJcJhdcJhehdcKcJhccJcJcJhccJcJcJcJhccJcJcTawazhfaBazhgaBawayazhhaBclfsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahihihiacaaaraahjaraahkafafhlhmhncjcjcjcjcjcjcjhohphqhrcjcjcjcjcjcjcjcjcjcjcjcjcjbTdodododohsdnhthuhvhseuhwaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahihihihiacaaaaaaaaaahxajhycghzhAhBhCgyhDgAhEhihihihihFacachGhHachIhGachJhKhLhMhNaOhOdobcdodohPhQhQhQhQhRhSaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahihihihihTaaaaaaaaaahUakakhVgQhWgQhBhXgQhBhihihihihihihEachjhYhGhZiaibibhGhGhGhGbahtdodoicdoiddoicdododohwaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahiacieaaaaaaaaaaifajakbSgAgAhBgyhBgAhBhEhihihihEhihihiacigacibibibibhGhGihiiijikikikikikildododoaBawawbTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaaaaaaaimacaeafafinafiohihBhEhihihihihihihihihihihihHipibibhZibhGiqhGhGbIdodoirisdoicdoicdoitiuivaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacachihihihihihihihihihihihihihihihihihihihEaciphGhGhJiwiwiwixaOiyizdobcdododododobIiAiBfsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahihihihihTaaaaaaaaaahUakakhVgQgNgQhBhWgQhBhihihihihihihEachXhYhGhZiaibibhGhGhGhGbahtdodoicdoiddoicdododoieaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahiacifaaaaaaaaaaigajakbSgAgAhBgyhBgAhBhEhihihihEhihihiacihacibibibibhGhGiiijikilililililimdododoaBawawbTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaaaaaaainacaeafafioafiphihBhEhihihihihihihihihihihihHhXibibhZibhGiqhGhGbIdodoirisdoicdoicdoitiuivaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacachihihihihihihihihihihihihihihihihihihihEachXhGhGhJiwiwiwixaOiyizdobcdododododobIiAiBfsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiCacacachihihihihihihihihihihihEhihihihihihihihihEiDiEiEiEiEiEiEiEayawawawaxazhfaBaxaxayawfsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacachihihihihihihihihihihihihihihihihihihihihihihihiacacaaaaaaaaaabjajhycgiFaqiGauiHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacacachihihihihihihihihihihihihihihihihihihihihihihihiacacaaaaaaaaaaaoakakapaqiIiJiHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacacachihihihihihihihihihihihihihihihihihihihihihihihiacacaaaaaaaaaaiKajakbSamiJiHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaachihiacachihihihihihihihihihihihihihihihihihihihihihihihiacacaaaaaaaaaaaeafafinafiHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaachihiacachihihihihihihihihihihihihihihihihihihihihihihihiacacaaaaaaaaaaaeafafioafiHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahihihiacacachihihihihihihihihihihihihihihihihihihihihihihiacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahihihihihiacachihihihihihihihihihihihihihihihihihihihihihiacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahihihihihiacacachihiiLhihihihihihihihihihihihihihihihihihiacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

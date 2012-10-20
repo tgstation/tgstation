@@ -1119,8 +1119,12 @@ datum
 				..()
 				return
 			reaction_obj(var/obj/O, var/volume)
-				if((!O) || (!volume))	return 0
 				src = null
+				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/roro_egg))
+					var/obj/item/weapon/reagent_containers/food/snacks/roro_egg/egg = O
+					if (egg.grown)
+						egg.Hatch()
+				if((!O) || (!volume))	return 0
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new

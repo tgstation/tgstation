@@ -36,13 +36,13 @@
 				meteor_wave()
 				spawn_meteors()
 
-		/*if(2)
+		if(2)
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('sound/AI/granomalies.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 			spawn(rand(50, 300))
-				del(bh)*/
+				del(bh)
 		/*
 		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
@@ -270,11 +270,14 @@
 				vents += temp_vent
 
 	var/list/candidates = list() //List of candidate KEYs to control the new larvae. ~Carn
-	for(var/mob/dead/observer/G in player_list)
-		if(G.client.be_alien)
-			if(((G.client.inactivity/10)/60) <= 5)
-				if(!(G.mind && G.mind.current && G.mind.current != DEAD))
-					candidates += G.key
+	var/i = 0
+	while(candidates.len <= 0 && i < 5)
+		for(var/mob/dead/observer/G in player_list)
+			if(G.client.be_alien)
+				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
+					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+						candidates += G.key
+		i++
 
 	if(prob(33)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
@@ -357,9 +360,7 @@
 				temp_timer.releasetime = 1
 
 		sleep(150)
-		//command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
-		var/virusname = pick("Kietz","NT-OS EliteUltimatePro Edition","Selbstreproduktion","VAX11/750","Ghostball","Crazy Tuesday") + pick(" malware"," trojan", " virus", " rootkit", " backdoor", " worm")
-		command_alert("[virusname] detected in [station_name()] access subroutines. Recommend station AI involvement.", "Security Alert")
+		command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
 	else
 		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."
 
@@ -526,4 +527,5 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		world << "Finished processing FIREDOORS. Processed: [firedoornum]"
 
 	world << "Ion Storm Main Done"
+
 	*/

@@ -137,3 +137,58 @@
 
 	if(!usr.stat)
 		attack_self(usr)
+
+// FLARES
+
+/obj/item/device/flashlight/flare
+	name = "flare"
+	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
+	w_class = 2.0
+	brightness_on = 7 // Pretty bright.
+	icon_state = "flare"
+	item_state = "flare"
+	var/fuel = 0
+	var/on_damage = 7
+	var/produce_heat = 1500
+
+/obj/item/device/flashlight/flare/New()
+	fuel = rand(3000, 4500) // Last 10 to 15 minutes.
+	..()
+
+/obj/item/device/flashlight/flare/process()
+	var/turf/pos = get_turf(src)
+	pos.hotspot_expose(produce_heat, 5)
+	fuel = max(fuel - 1, 0)
+	if(!fuel || !on)
+		turn_off()
+		if(!fuel)
+			src.icon_state = "[initial(icon_state)]-empty"
+		processing_objects -= src
+
+/obj/item/device/flashlight/flare/proc/turn_off()
+	on = 0
+	src.force = initial(src.force)
+	src.damtype = initial(src.damtype)
+	if(ismob(loc))
+		var/mob/U = loc
+		update_brightness(U)
+	else
+		update_brightness(null)
+
+/obj/item/device/flashlight/flare/attack_self(mob/user)
+	// Usual checks
+	if(loc != usr)
+		return
+	if(!fuel)
+		user << "<span class='notice'>It's out of fuel.</span>"
+		return
+	if(!on)
+		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
+	else
+		return
+	// All good, turn it on.
+	on = 1
+	update_brightness(user)
+	src.force = on_damage
+	src.damtype = "fire"
+	processing_objects += src

@@ -269,6 +269,7 @@ var/list/forbidden_varedit_object_types = list(
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
+	if(!admin_rank_check(src.holder.level, 3)) return
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )

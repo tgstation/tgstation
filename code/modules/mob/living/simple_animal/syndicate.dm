@@ -71,19 +71,26 @@
 	if(!stat)
 		switch(stance)
 			if(SYNDICATE_STANCE_IDLE)
+				var/obj/mecha/M = null
+				var/mob/living/L = null
 				stop_automated_movement = 0
-				for( var/mob/living/L in viewers(7,src) )
+				for(L in viewers(7,src))
 					if(isSyndicate(L)) continue
 					if(!L.stat)
 						stance = SYNDICATE_STANCE_ATTACK
 						target_mob = L
 						break
+				for(M in view(7,src))
+					if (M.occupant)
+						stance = SYNDICATE_STANCE_ATTACK
+						target_mob = M
+						break
 
 			if(SYNDICATE_STANCE_ATTACK)	//This one should only be active for one tick
 				stop_automated_movement = 1
-				if(!target_mob || target_mob.stat)
+				if(!target_mob || SA_attackable(target_mob))
 					stance = SYNDICATE_STANCE_IDLE
-				if(target_mob in viewers(10,src))
+				if(target_mob in SA_search(target_mob))
 					if(ranged)
 						if(get_dist(src, target_mob) <= 6)
 							OpenFire(target_mob)
@@ -95,11 +102,11 @@
 
 			if(SYNDICATE_STANCE_ATTACKING)
 				stop_automated_movement = 1
-				if(!target_mob || target_mob.stat)
+				if(!target_mob || SA_attackable(target_mob))
 					stance = SYNDICATE_STANCE_IDLE
 					target_mob = null
 					return
-				if(!(target_mob in viewers(7,src)))
+				if(!(target_mob in SA_search(target_mob)))
 					stance = SYNDICATE_STANCE_IDLE
 					target_mob = null
 					return
@@ -107,8 +114,9 @@
 					if(isliving(target_mob))
 						var/mob/living/L = target_mob
 						L.attack_animal(src)
-
-
+					if(istype(target_mob,/obj/mecha))
+						var/obj/mecha/M = target_mob
+						M.attack_animal(src)
 
 /mob/living/simple_animal/syndicate/proc/OpenFire(target_mob)
 	src.target = target_mob

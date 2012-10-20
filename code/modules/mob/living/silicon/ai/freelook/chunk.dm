@@ -75,6 +75,9 @@
 	for(var/camera in cameras)
 		var/obj/machinery/camera/c = camera
 
+		if(!c)
+			continue
+
 		if(!c.can_use())
 			continue
 
@@ -124,8 +127,6 @@
 
 /datum/camerachunk/New(loc, x, y, z)
 
-	set background = 1
-
 	// 0xf = 15
 	x &= ~0xf
 	y &= ~0xf
@@ -144,6 +145,9 @@
 
 	for(var/camera in cameras)
 		var/obj/machinery/camera/c = camera
+		if(!c)
+			continue
+
 		if(!c.can_use())
 			continue
 

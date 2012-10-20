@@ -16,6 +16,12 @@
 //			verbs += /client/proc/air_status //Air things
 //			verbs += /client/proc/Cell //More air things
 
+/client/proc/admin_rank_check(var/rank, var/requested)
+	if(rank < requested)
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return(0)
+	return(1)
+
 /client/proc/update_admins(var/rank)
 	if(!holder)
 		holder = new /datum/admins(rank)
@@ -110,8 +116,12 @@
 
 		//Admin Observer
 		if (holder.level == -1)
+			seeprayers = 1
+
 			verbs += /client/proc/cmd_admin_say
-			return
+			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/toggleadminhelpsound
+		else	return
 
 		//Moderator
 		if (holder.level >= 0)
@@ -164,7 +174,7 @@
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
 			verbs += /client/proc/unjobban_panel
-			verbs += /client/proc/check_ai_laws
+			verbs += /client/proc/hide_verbs			verbs += /client/proc/general_report			verbs += /client/proc/air_report			verbs += /client/proc/check_ai_laws
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/player_panel_new
@@ -178,20 +188,19 @@
 		else
 			return
 
-		//Admin Candidate
+
+		else	return		//Temporary Admin		if (holder.level >= 1)			verbs += /datum/admins/proc/delay								//game start delay			verbs += /datum/admins/proc/immreboot							//immediate reboot			verbs += /datum/admins/proc/restart							//restart			verbs += /client/proc/cmd_admin_check_contents			verbs += /client/proc/cmd_admin_create_centcom_report			verbs += /client/proc/toggle_hear_deadcast			verbs += /client/proc/toggle_hear_radio		else	return		//Admin Candidate
 		if (holder.level >= 2)
 			verbs += /client/proc/cmd_admin_add_random_ai_law
 			verbs += /client/proc/secrets
 			verbs += /client/proc/check_antagonists
 			verbs += /client/proc/play_sound
 			verbs += /client/proc/stealth
-			verbs += /client/proc/deadmin_self
 		else	return
 
 		//Trial Admin
 		if (holder.level >= 3)
 			deadchat = 1
-			seeprayers = 1
 
 			verbs += /client/proc/invisimin
 			verbs += /datum/admins/proc/view_txt_log
@@ -205,8 +214,6 @@
 			verbs += /client/proc/respawn_character
 			verbs += /client/proc/spawn_xeno
 			verbs += /client/proc/toggleprayers
-			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
 			verbs += /client/proc/one_click_antag
@@ -290,7 +297,6 @@
 			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
-			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/cinematic									//show a cinematic sequence
 			verbs += /client/proc/startSinglo								//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/toggle_log_hrefs

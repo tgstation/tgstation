@@ -70,24 +70,32 @@
 	if(!stat)
 		switch(stance)
 			if(CARP_STANCE_IDLE)
+				var/obj/mecha/M = null
+				var/mob/living/L = null
 				stop_automated_movement = 0
 				stance_step++
 				if(stance_step > 5)
 					stance_step = 0
-					for( var/mob/living/L in viewers(7,src) )
+					for(L in viewers(7,src))
 						if(iscarp(L)) continue
 						if(!L.stat)
-							emote("gnashes at [L]")
 							stance = CARP_STANCE_ATTACK
 							target_mob = L
 							break
+					for(M in view(7,src))
+						if (M.occupant)
+							stance = CARP_STANCE_ATTACK
+							target_mob = M
+							break
+					if (target_mob)
+						emote("nashes at [target_mob]")
 
 			if(CARP_STANCE_ATTACK)	//This one should only be active for one tick
 				stop_automated_movement = 1
-				if(!target_mob || target_mob.stat)
+				if(!target_mob || SA_attackable(target_mob))
 					stance = CARP_STANCE_IDLE
 					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
-				if(target_mob in viewers(7,src))
+				if(target_mob in SA_search(target_mob))
 					walk_to(src, target_mob, 1, 3)
 					stance = CARP_STANCE_ATTACKING
 					stance_step = 0
@@ -95,12 +103,12 @@
 			if(CARP_STANCE_ATTACKING)
 				stop_automated_movement = 1
 				stance_step++
-				if(!target_mob || target_mob.stat)
+				if(!target_mob || SA_attackable(target_mob))
 					stance = CARP_STANCE_IDLE
 					stance_step = 3 //Make it very alert, so it quickly attacks again if a mob returns
 					target_mob = null
 					return
-				if(!(target_mob in viewers(7,src)))
+				if(!(target_mob in SA_search(target_mob)))
 					stance = CARP_STANCE_IDLE
 					stance_step = 1
 					target_mob = null
@@ -112,6 +120,9 @@
 						if(prob(10))
 							L.Weaken(5)
 							L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+					if(istype(target_mob,/obj/mecha))
+						var/obj/mecha/M = target_mob
+						M.attack_animal(src)
 
 /mob/living/simple_animal/carp/Process_Spacemove(var/check_drift = 0)
 	return	//No drifting in space for space carp!	//original comments do not steal

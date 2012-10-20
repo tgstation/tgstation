@@ -7,6 +7,7 @@
 
 	level = 1
 
+	var/area/initial_loc
 	var/id_tag = null
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
@@ -24,10 +25,10 @@
 	var/radio_filter_out
 	var/radio_filter_in
 	New()
-		var/area/A = get_area(loc)
-		if (A.master)
-			A = A.master
-		area_uid = A.uid
+		initial_loc = get_area(loc)
+		if (initial_loc.master)
+			initial_loc = initial_loc.master
+		area_uid = initial_loc.uid
 		if (!id_tag)
 			assign_uid()
 			id_tag = num2text(uid)
@@ -257,3 +258,8 @@
 				"You hear ratchet.")
 			new /obj/item/pipe(loc, make_from=src)
 			del(src)
+
+	/obj/machinery/atmospherics/unary/vent_scrubber/Del()
+		initial_loc.air_scrub_info -= id_tag
+		..()
+		return

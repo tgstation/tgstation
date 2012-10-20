@@ -42,7 +42,7 @@
 
 	var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
-	reagents.trans_to(D, amount_per_transfer_from_this)
+	reagents.trans_to(D, amount_per_transfer_from_this, 1/3)
 
 	D.name = "chemicals"
 	D.icon = 'icons/obj/chempuff.dmi'
