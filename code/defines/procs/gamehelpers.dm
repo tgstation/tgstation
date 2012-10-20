@@ -196,7 +196,7 @@
 		// This is usually for headsets, which only the wearer can hear.
 		if(R.canhear_range == 0)
 			if(ismob(R.loc))
-				. += R.loc
+				. |= R.loc
 			continue
 
 		var/turf/speaker = get_turf(R)
