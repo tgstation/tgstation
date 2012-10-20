@@ -68,33 +68,40 @@
 
 		switch(stance)
 			if(BEAR_STANCE_IDLE)
+				var/obj/mecha/M = null
+				var/mob/living/L = null
 				stop_automated_movement = 0
 				stance_step++
 				if(stance_step > 5)
 					stance_step = 0
-					for( var/mob/living/L in viewers(7,src) )
+					for(L in viewers(7,src))
 						if(isbear(L)) continue
 						if(!L.stat)
-							emote("stares alertly at [L]")
 							stance = BEAR_STANCE_ALERT
+							target_mob = L
 							break
+					for(M in view(7,src))
+						if (M.occupant)
+							stance = BEAR_STANCE_ALERT
+							target_mob = M
+							break
+					if (target_mob)
+						emote("stares alertly at [target_mob]")
+
 			if(BEAR_STANCE_ALERT)
 				stop_automated_movement = 1
 				var/found_mob = 0
-				for( var/mob/living/L in viewers(7,src) )
-					if(isbear(L)) continue
-					if(!L.stat)
+				if(target_mob in SA_search(target_mob))
+					if(target_mob && !(SA_attackable(target_mob)))
 						stance_step = max(0, stance_step) //If we have not seen a mob in a while, the stance_step will be negative, we need to reset it to 0 as soon as we see a mob again.
 						stance_step++
 						found_mob = 1
-						target_mob = L
 						src.dir = get_dir(src,target_mob)	//Keep staring at the mob
 
 						if(stance_step in list(1,4,7)) //every 3 ticks
-							var/action = pick( list( "growls at [L]", "stares angrily at [L]", "prepares to attack [L]", "closely watches [L]" ) )
+							var/action = pick( list( "growls at [target_mob]", "stares angrily at [target_mob]", "prepares to attack [target_mob]", "closely watches [target_mob]" ) )
 							if(action)
 								emote(action)
-						break
 				if(!found_mob)
 					stance_step--
 
@@ -104,10 +111,10 @@
 					stance = BEAR_STANCE_ATTACK
 			if(BEAR_STANCE_ATTACK)	//This one should only be active for one tick,
 				stop_automated_movement = 1
-				if(!target_mob || target_mob.stat)
+				if(!target_mob || SA_attackable(target_mob))
 					stance = BEAR_STANCE_ALERT
 					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
-				if(target_mob in viewers(7,src))
+				if(target_mob in SA_search(target_mob))
 					walk_to(src, target_mob, 1, 3)
 					stance = BEAR_STANCE_ATTACKING
 					stance_step = 0
@@ -115,11 +122,11 @@
 
 				stop_automated_movement = 1
 				stance_step++
-				if(!target_mob || target_mob.stat)
+				if(!target_mob || SA_attackable(target_mob))
 					stance = BEAR_STANCE_ALERT
 					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
 					return
-				if(!(target_mob in viewers(7,src)))
+				if(!(target_mob in SA_search(target_mob)))
 					stance = BEAR_STANCE_ALERT
 					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
 					target_mob = null
@@ -137,6 +144,9 @@
 					else if(isliving(target_mob))
 						var/mob/living/L = target_mob
 						L.adjustBruteLoss(damage)
+					else if(istype(target_mob,/obj/mecha))
+						var/obj/mecha/M = target_mob
+						M.attack_animal(src)
 
 				if(stance_step >= 20)	//attacks for 20 ticks, then it gets tired and needs to rest
 					emote( "is worn out and needs to rest" )
@@ -148,7 +158,7 @@
 				stop_automated_movement = 1
 				stance_step++
 				if(stance_step >= 10) //rests for 10 ticks
-					if(target_mob && target_mob in viewers(7,src))
+					if(target_mob && target_mob in SA_search(target_mob))
 						stance = BEAR_STANCE_ATTACK //If the mob he was chasing is still nearby, resume the attack, otherwise go idle.
 					else
 						stance = BEAR_STANCE_IDLE
