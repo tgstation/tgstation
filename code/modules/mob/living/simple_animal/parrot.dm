@@ -48,11 +48,13 @@
 	response_harm   = "swats the"
 	stop_automated_movement = 1
 
-
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
 	var/parrot_sleep_max = 25 //The time the parrot sits while perched before looking around. Mosly a way to avoid the parrot's AI in life() being run every single tick.
 	var/parrot_sleep_dur = 25 //Same as above, this is the var that physically counts down
 	var/parrot_dam_zone = list("chest", "head", "l_arm", "l_leg", "r_arm", "r_leg") //For humans, select a bodypart to attack
+
+	var/parrot_speed = 5 //"Delay in world ticks between movement." Yeah, that's BS but it does directly affect movement. Higher number = slower.
+	var/parrot_been_shot = 0 //Parrots get a speed bonus after being shot. This will deincrement every Life() and at 0 the parrot will return to regular speed.
 
 	var/list/speech_buffer = list()
 	var/list/available_channels = list()
@@ -267,6 +269,7 @@
 
 		parrot_interest = null
 		parrot_state = PARROT_WANDER //OWFUCK, Been shot! RUN LIKE HELL!
+		parrot_been_shot += 5
 		icon_state = "parrot_fly"
 		drop_held_item(0)
 	return
@@ -291,6 +294,7 @@
 	if(!isturf(src.loc) || !canmove || buckled)
 		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
 
+
 //-----SPEECH
 	/* Parrot speech mimickry!
 	   Phrases that the parrot hears in mob/living/say() get added to speach_buffer.
@@ -304,7 +308,6 @@
 		clearlist(speech_buffer)
 
 
-	//Alright, here we go... down the slope
 
 //-----SLEEPING
 	if(parrot_state == PARROT_PERCH)
@@ -419,11 +422,7 @@
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		var/oldloc = src.loc
-		step_towards(src, get_step_towards(src,parrot_interest))
-		if(src.loc == oldloc) //Check if the mob is stuck
-			parrot_state = PARROT_WANDER //and demonstrate your amazing obstical avoidance AI
-
+		walk_to(src, parrot_interest, 1, parrot_speed)
 		return
 
 //-----RETURNING TO PERCH
@@ -441,10 +440,7 @@
 			icon_state = "parrot_sit"
 			return
 
-		var/oldloc = src.loc
-		step_towards(src, get_step_towards(src,parrot_perch))
-		if(src.loc == oldloc) //Check if the mob is stuck
-			parrot_state = PARROT_WANDER //and demonstrate your amazing obstical avoidance AI
+		walk_to(src, parrot_perch, 1, parrot_speed)
 		return
 
 //-----FLEEING
@@ -453,10 +449,9 @@
 		if(!parrot_interest || !isliving(parrot_interest)) //Sanity
 			parrot_state = PARROT_WANDER
 
-		var/oldloc = src.loc
-		step(src, get_step_away(src, parrot_interest))
-		if(src.loc == oldloc) //Check if the mob is stuck
-			parrot_state = PARROT_WANDER //and demonstrate your amazing obstical avoidance AI
+		walk_away(src, parrot_interest, 1, parrot_speed-parrot_been_shot)
+		parrot_been_shot--
+		return
 
 //-----ATTACKING
 	else if(parrot_state == (PARROT_SWOOP | PARROT_ATTACK))
@@ -502,11 +497,8 @@
 
 		//Otherwise, fly towards the mob!
 		else
-			var/oldloc = src.loc
-			step_towards(src, get_step_towards(src,parrot_interest))
-			if(src.loc == oldloc) //Check if the mob is stuck
-				parrot_state = PARROT_WANDER //and demonstrate your amazing obstical avoidance AI
-
+			walk_to(src, parrot_interest, 1, parrot_speed)
+		return
 //-----STATE MISHAP
 	else //This should not happen. If it does lets reset everything and try again
 		walk(src,0)
