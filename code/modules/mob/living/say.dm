@@ -430,7 +430,9 @@ var/list/department_radio_keys = list(
 
 	log_say("[name]/[key] : [message]")
 
-/obj/effect/speech_bubble	var/mob/parent
+/obj/effect/speech_bubble
+	var/mob/parent
+
 /mob/living/proc/GetVoice()
 	return name
 

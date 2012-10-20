@@ -174,7 +174,10 @@
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
 			verbs += /client/proc/unjobban_panel
-			verbs += /client/proc/hide_verbs			verbs += /client/proc/general_report			verbs += /client/proc/air_report			verbs += /client/proc/check_ai_laws
+			verbs += /client/proc/hide_verbs
+			verbs += /client/proc/general_report
+			verbs += /client/proc/air_report
+			verbs += /client/proc/check_ai_laws
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/player_panel_new
@@ -188,8 +191,18 @@
 		else
 			return
 
+		//Temporary Admin
+		if (holder.level >= 1)
+			verbs += /datum/admins/proc/delay								//game start delay
+			verbs += /datum/admins/proc/immreboot							//immediate reboot
+			verbs += /datum/admins/proc/restart							//restart
+			verbs += /client/proc/cmd_admin_check_contents
+			verbs += /client/proc/cmd_admin_create_centcom_report
+			verbs += /client/proc/toggle_hear_deadcast
+			verbs += /client/proc/toggle_hear_radio
+		else	return
 
-		else	return		//Temporary Admin		if (holder.level >= 1)			verbs += /datum/admins/proc/delay								//game start delay			verbs += /datum/admins/proc/immreboot							//immediate reboot			verbs += /datum/admins/proc/restart							//restart			verbs += /client/proc/cmd_admin_check_contents			verbs += /client/proc/cmd_admin_create_centcom_report			verbs += /client/proc/toggle_hear_deadcast			verbs += /client/proc/toggle_hear_radio		else	return		//Admin Candidate
+		//Admin Candidate
 		if (holder.level >= 2)
 			verbs += /client/proc/cmd_admin_add_random_ai_law
 			verbs += /client/proc/secrets
