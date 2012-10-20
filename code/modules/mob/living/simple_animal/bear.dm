@@ -68,30 +68,34 @@
 
 		switch(stance)
 			if(BEAR_STANCE_IDLE)
-				var/obj/mecha/M = null
-				var/mob/living/L = null
 				stop_automated_movement = 0
 				stance_step++
 				if(stance_step > 5)
 					stance_step = 0
-					for(L in viewers(7,src))
-						if(isbear(L)) continue
-						if(!L.stat)
-							stance = BEAR_STANCE_ALERT
-							target_mob = L
-							break
-					for(M in view(7,src))
-						if (M.occupant)
-							stance = BEAR_STANCE_ALERT
-							target_mob = M
-							break
+					for(var/atom/A in view(7,src))
+						if(isbear(A))
+							continue
+
+						if(isliving(A))
+							var/mob/living/L = A
+							if(!L.stat)
+								stance = BEAR_STANCE_ATTACK
+								target_mob = L
+								break
+
+						if(istype(A, /obj/mecha))
+							var/obj/mecha/M = A
+							if (M.occupant)
+								stance = BEAR_STANCE_ATTACK
+								target_mob = M
+								break
 					if (target_mob)
 						emote("stares alertly at [target_mob]")
 
 			if(BEAR_STANCE_ALERT)
 				stop_automated_movement = 1
 				var/found_mob = 0
-				if(target_mob in SA_search(target_mob))
+				if(target_mob in view(7,src))
 					if(target_mob && !(SA_attackable(target_mob)))
 						stance_step = max(0, stance_step) //If we have not seen a mob in a while, the stance_step will be negative, we need to reset it to 0 as soon as we see a mob again.
 						stance_step++
@@ -114,7 +118,7 @@
 				if(!target_mob || SA_attackable(target_mob))
 					stance = BEAR_STANCE_ALERT
 					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
-				if(target_mob in SA_search(target_mob))
+				if(target_mob in view(7,src))
 					walk_to(src, target_mob, 1, 3)
 					stance = BEAR_STANCE_ATTACKING
 					stance_step = 0
@@ -126,7 +130,7 @@
 					stance = BEAR_STANCE_ALERT
 					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
 					return
-				if(!(target_mob in SA_search(target_mob)))
+				if(!(target_mob in view(7,src)))
 					stance = BEAR_STANCE_ALERT
 					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
 					target_mob = null
@@ -158,7 +162,7 @@
 				stop_automated_movement = 1
 				stance_step++
 				if(stance_step >= 10) //rests for 10 ticks
-					if(target_mob && target_mob in SA_search(target_mob))
+					if(target_mob && target_mob in view(7,src))
 						stance = BEAR_STANCE_ATTACK //If the mob he was chasing is still nearby, resume the attack, otherwise go idle.
 					else
 						stance = BEAR_STANCE_IDLE

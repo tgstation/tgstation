@@ -70,23 +70,27 @@
 	if(!stat)
 		switch(stance)
 			if(CARP_STANCE_IDLE)
-				var/obj/mecha/M = null
-				var/mob/living/L = null
 				stop_automated_movement = 0
 				stance_step++
 				if(stance_step > 5)
 					stance_step = 0
-					for(L in viewers(7,src))
-						if(iscarp(L)) continue
-						if(!L.stat)
-							stance = CARP_STANCE_ATTACK
-							target_mob = L
-							break
-					for(M in view(7,src))
-						if (M.occupant)
-							stance = CARP_STANCE_ATTACK
-							target_mob = M
-							break
+					for(var/atom/A in view(7,src))
+						if(iscarp(A))
+							continue
+
+						if(isliving(A))
+							var/mob/living/L = A
+							if(!L.stat)
+								stance = CARP_STANCE_ATTACK
+								target_mob = L
+								break
+
+						if(istype(A, /obj/mecha))
+							var/obj/mecha/M = A
+							if (M.occupant)
+								stance = CARP_STANCE_ATTACK
+								target_mob = M
+								break
 					if (target_mob)
 						emote("nashes at [target_mob]")
 
@@ -95,7 +99,7 @@
 				if(!target_mob || SA_attackable(target_mob))
 					stance = CARP_STANCE_IDLE
 					stance_step = 5 //Make it very alert, so it quickly attacks again if a mob returns
-				if(target_mob in SA_search(target_mob))
+				if(target_mob in view(7,src))
 					walk_to(src, target_mob, 1, 3)
 					stance = CARP_STANCE_ATTACKING
 					stance_step = 0
@@ -108,7 +112,7 @@
 					stance_step = 3 //Make it very alert, so it quickly attacks again if a mob returns
 					target_mob = null
 					return
-				if(!(target_mob in SA_search(target_mob)))
+				if(!(target_mob in view(7,src)))
 					stance = CARP_STANCE_IDLE
 					stance_step = 1
 					target_mob = null

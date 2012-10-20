@@ -69,19 +69,23 @@
 		switch(stance)
 			if(CLOWN_STANCE_IDLE)
 				if (src.hostile == 0) return
-				var/obj/mecha/M = null
-				var/mob/living/L = null
-				for(L in viewers(7,src))
-					if(isclown(L)) continue
-					if(!L.stat)
-						stance = CLOWN_STANCE_ATTACK
-						target_mob = L
-						break
-				for(M in view(7,src))
-					if (M.occupant)
-						stance = CLOWN_STANCE_ATTACK
-						target_mob = M
-						break
+				for(var/atom/A in view(7,src))
+					if(isclown(A))
+						continue
+
+					if(isliving(A))
+						var/mob/living/L = A
+						if(!L.stat)
+							stance = CLOWN_STANCE_ATTACK
+							target_mob = L
+							break
+
+					if(istype(A, /obj/mecha))
+						var/obj/mecha/M = A
+						if (M.occupant)
+							stance = CLOWN_STANCE_ATTACK
+							target_mob = M
+							break
 				if (target_mob)
 					emote("honks menacingly at [target_mob]")
 
@@ -89,7 +93,7 @@
 				stop_automated_movement = 1
 				if(!target_mob || SA_attackable(target_mob))
 					stance = CLOWN_STANCE_IDLE
-				if(target_mob in SA_search(target_mob))
+				if(target_mob in view(7,src))
 					walk_to(src, target_mob, 1, 3)
 					stance = CLOWN_STANCE_ATTACKING
 
@@ -99,7 +103,7 @@
 					stance = CLOWN_STANCE_IDLE
 					target_mob = null
 					return
-				if(!(target_mob in SA_search(target_mob)))
+				if(!(target_mob in view(7,src)))
 					stance = CLOWN_STANCE_IDLE
 					target_mob = null
 					return
