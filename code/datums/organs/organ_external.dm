@@ -45,7 +45,6 @@
 
 
 	proc/take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
-		// TODO: this proc needs to be rewritten to not update damages directly
 		if((brute <= 0) && (burn <= 0))
 			return 0
 		if(status & ORGAN_DESTROYED)
@@ -106,7 +105,8 @@
 				if(forbidden_limbs.len)
 					possible_points -= forbidden_limbs
 				if(!possible_points.len)
-					message_admins("Oh god WHAT!  [owner]'s [src] was unable to find an organ to pass overdamage too!")
+					if(owner.stat != 2)
+						message_admins("Oh god WHAT!  [owner]'s [src] was unable to find an organ to pass overdamage to!")
 				else
 					var/datum/organ/external/target = pick(possible_points)
 					if(brute)
@@ -181,6 +181,11 @@
 			if(W.damage == 0 && W.created + 10 * 10 * 60 <= world.time)
 				wounds -= W
 				// let the GC handle the deletion of the wound
+			if(W.internal && !W.is_treated())
+				// internal wounds get worse over time
+				W.open_wound(0.5 * wound_update_accuracy)
+				owner.vessel.remove_reagent("blood",0.1 * W.damage * wound_update_accuracy)
+
 			if(W.is_treated())
 				// slow healing
 				var/amount = 0.2
@@ -196,6 +201,7 @@
 	proc/bandage()
 		var/rval = 0
 		for(var/datum/wound/W in wounds)
+			if(W.internal) continue
 			rval |= !W.bandaged
 			W.bandaged = 1
 		return rval
@@ -232,13 +238,17 @@
 				owner.update_body(1)
 				return
 		if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
-			if(!(status & ORGAN_BROKEN))
-				owner.visible_message("\red You hear a loud cracking sound coming from \the [owner].","\red <b>Something feels like it shattered in your [display_name]!</b>","You hear a sickening crack.")
-				owner.emote("scream")
-				status |= ORGAN_BROKEN
-				broken_description = pick("broken","fracture","hairline fracture")
-				perma_injury = brute_dam
+			src.fracture()
 		return
+
+	proc/fracture()
+		if(status & ORGAN_BROKEN)
+			return
+		owner.visible_message("\red You hear a loud cracking sound coming from \the [owner].","\red <b>Something feels like it shattered in your [display_name]!</b>","You hear a sickening crack.")
+		owner.emote("scream")
+		status |= ORGAN_BROKEN
+		broken_description = pick("broken","fracture","hairline fracture")
+		perma_injury = brute_dam
 
 // new damage icon system
 // returns just the brute/burn damage code
@@ -418,7 +428,7 @@
 
 					W = new wound_type(damage)
 				if(BURN)
-					var/list/size_names = list(/datum/wound/moderate_burn, /datum/wound/large_burn, /datum/wound/severe_burn, /datum/wound/deep_burn, /datum/wound/carbonised_area)
+					var/list/size_names = list(/datum/wound/moderate_burn, /datum/wound/large_burn, /datum/wound/severe_burn, /datum/wound/deep_burn, /datum/wound/carbonised_area, /datum/wound/carbonised_area)
 					wound_type = size_names[size]
 
 					W = new wound_type(damage)

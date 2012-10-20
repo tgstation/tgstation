@@ -93,22 +93,18 @@
 		..()
 		reagents.add_reagent("fuel",1000)
 
-
 	bullet_act(var/obj/item/projectile/Proj)
 		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-			explosion(src.loc,-1,0,2)
-			if(src)
-				del(src)
-
-
+			explode()
 
 	blob_act()
-		explosion(src.loc,0,1,5,7,10)
-		if(src)
-			del(src)
+		explode()
 
 	ex_act()
-		explosion(src.loc,-1,0,2)
+		explode()
+
+	proc/explode()
+		explosion(src.loc,1,2,4)
 		if(src)
 			del(src)
 

@@ -53,6 +53,11 @@ datum/mind
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 
+	var/rev_cooldown = 0
+
+	// the world.time since the mob has been brigged, or -1 if not at all
+	var/brigged_since = -1
+
 	New(var/key)
 		src.key = key
 
@@ -1081,6 +1086,37 @@ datum/mind
 		var/fail = 0
 	//	fail |= !ticker.mode.equip_traitor(current, 1)
 		fail |= !ticker.mode.equip_revolutionary(current)
+
+
+	// check whether this mind's mob has been brigged for the given duration
+	// have to call this periodically for the duration to work properly
+	proc/is_brigged(duration)
+		var/turf/T = current.loc
+		if(!istype(T))
+			brigged_since = -1
+			return 0
+
+		var/is_currently_brigged = 0
+
+		if(istype(T.loc,/area/security/brig))
+			is_currently_brigged = 1
+			for(var/obj/item/weapon/card/id/card in current)
+				is_currently_brigged = 0
+				break // if they still have ID they're not brigged
+			for(var/obj/item/device/pda/P in current)
+				if(P.id)
+					is_currently_brigged = 0
+					break // if they still have ID they're not brigged
+
+		if(!is_currently_brigged)
+			brigged_since = -1
+			return 0
+
+		if(brigged_since == -1)
+			brigged_since = world.time
+
+		return (duration <= world.time - brigged_since)
+
 
 
 

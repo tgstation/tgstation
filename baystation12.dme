@@ -786,7 +786,6 @@
 #include "code\game\objects\structures\noticeboard.dm"
 #include "code\game\objects\structures\shuttle_engines.dm"
 #include "code\game\objects\structures\tables_racks.dm"
-#include "code\game\objects\structures\tank_dispenser.dm"
 #include "code\game\objects\structures\target_stake.dm"
 #include "code\game\objects\structures\watercloset.dm"
 #include "code\game\objects\structures\windoor_assembly.dm"

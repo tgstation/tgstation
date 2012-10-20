@@ -26,7 +26,8 @@
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/secstorage/ssafe,
-		/obj/machinery/disposal
+		/obj/machinery/disposal,
+        /obj/machinery/iv_drip
 	)
 
 	examine()

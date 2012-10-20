@@ -43,12 +43,12 @@ to null does not delete the object itself. Thank you.
 	var/severity = null//severity descr
 	var/longevity = 250//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
 	var/list/hidden = list(0, 0)
-	var/can_carry = 1 // If the disease allows "carriers".
-	// if hidden[1] is true, then virus is hidden from medical scanners
+	var/can_carry = 1 // If the disease allows "carriers".	var/age = 0 // age of the disease in the current mob	var/stage_minimum_age = 0 // how old the disease must be to advance per stage	// if hidden[1] is true, then virus is hidden from medical scanners
 	// if hidden[2] is true, then virus is hidden from PANDEMIC machine
 
 
 /datum/disease/proc/stage_act()
+	age++
 	var/cure_present = has_cure()
 	//world << "[cure_present]"
 
@@ -60,7 +60,7 @@ to null does not delete the object itself. Thank you.
 
 	if(stage > max_stages)
 		stage = max_stages
-	if(stage_prob != 0 && prob(stage_prob) && stage != max_stages && !cure_present) //now the disease shouldn't get back up to stage 4 in no time
+	if(stage_prob != 0 && prob(stage_prob) && stage != max_stages && !cure_present && age > stage_minimum_age * stage) //now the disease shouldn't get back up to stage 4 in no time
 		stage++
 	if(stage != 1 && (prob(1) || (cure_present && prob(cure_chance))))
 		stage--

@@ -109,7 +109,7 @@ MASS SPECTROMETER
 		user.show_message("\blue Localized Damage, Brute/Burn:",1)
 		if(length(damaged)>0)
 			for(var/datum/organ/external/org in damaged)
-				user.show_message(text("\blue \t []: []\blue-[]",capitalize(org.getDisplayName()),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
+				user.show_message(text("\blue \t []: []\blue-[][]",capitalize(org.getDisplayName()),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0, (org.status & ORGAN_BLEEDING)?"\red (bleeding)":""),1)
 		else
 			user.show_message("\blue \t Limbs are OK.",1)
 

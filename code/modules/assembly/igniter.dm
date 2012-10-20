@@ -14,6 +14,9 @@
 		if(!..())	return 0//Cooldown check
 		var/turf/location = get_turf(loc)
 		if(location)	location.hotspot_expose(1000,1000)
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
 		return 1
 
 

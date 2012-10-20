@@ -1,9 +1,7 @@
 ; just add the ckey (lowercase) of every moderator on a separate line
 ; lines starting with ; are comments and will be ignored
-asanadas
 botanistpower
 bowlsoldier
-chinsky
 cubejackal
 dakonic
 densane
@@ -17,5 +15,6 @@ roaper
 searif
 sparklysheep
 themij
+chinsky
 ; Why u no keep list in alphabetical order?! Lazies! Lazies! -Abi
 ; Imma best alphabetiser - Erthilo

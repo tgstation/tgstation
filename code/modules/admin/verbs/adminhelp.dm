@@ -14,9 +14,10 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-	src.verbs -= /client/verb/adminhelp
+	/**src.verbs -= /client/verb/adminhelp
 	spawn(1200)
-		src.verbs += /client/verb/adminhelp	// 2 minute cool-down for adminhelps
+		src.verbs += /client/verb/adminhelp	// 2 minute cool-down for adminhelps//Go to hell
+	**/
 
 	if(!msg)	return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
