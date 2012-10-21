@@ -11,9 +11,10 @@
 	var/datum/data/record/foundrecord
 
 	for(var/datum/data/record/t in data_core.general)
-		if(t.fields["name"] == name)
-			foundrecord = t
-			break
+		if (t)
+			if(t.fields["name"] == name)
+				foundrecord = t
+				break
 
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
