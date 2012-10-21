@@ -156,6 +156,7 @@
 		new /obj/item/weapon/melee/baton(src)
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
+		new /obj/item/taperoll/police(src)
 		return
 
 
