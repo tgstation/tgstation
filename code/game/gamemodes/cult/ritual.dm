@@ -502,15 +502,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 
 			if (C>=26+runedec+ticker.mode.cult.len) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
-				switch(alert("The cloth of reality can't take that much of a strain. By creating another rune, you risk locally tearing reality apart, which would prove fatal to you. Do you still wish to scribe the rune?",,"Yes","No"))
-					if("Yes")
-						if(prob(C*5-105-(runedec-ticker.mode.cult.len)*5)) //including the useless rune at the secret room, shouldn't count against the limit - Urist
-							usr.emote("scream")
-							user << "\red A tear momentarily appears in reality. Before it closes, you catch a glimpse of that which lies beyond. That proves to be too much for your mind."
-							usr.gib()
-							return
-					if("No")
-						return
+				alert("The cloth of reality can't take that much of a strain. Remove some runes first!")
+				return
 			else
 				switch(alert("You open the tome",,"Read it","Scribe a rune", "Notes")) //Fuck the "Cancel" option. Rewrite the whole tome interface yourself if you want it to work better. And input() is just ugly. - K0000
 					if("Cancel")
