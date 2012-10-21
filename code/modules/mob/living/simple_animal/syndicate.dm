@@ -101,9 +101,9 @@
 						if(get_dist(src, target_mob) <= 6)
 							OpenFire(target_mob)
 						else
-							walk_to(src, target_mob, 1, 3)
+							walk_to(src, target_mob, 1, 2)
 					else
-						walk_to(src, target_mob, 1, 3)
+						walk_to(src, target_mob, 1, 2)
 						stance = SYNDICATE_STANCE_ATTACKING
 
 			if(SYNDICATE_STANCE_ATTACKING)
@@ -178,6 +178,7 @@
 	weapon1 = /obj/item/weapon/melee/energy/sword/red
 	weapon2 = /obj/item/weapon/shield/energy
 	attacktext = "slashes"
+	nopush = 1
 
 /mob/living/simple_animal/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
