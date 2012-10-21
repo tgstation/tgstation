@@ -93,7 +93,6 @@
 
 
 /mob/living/simple_animal/parrot/New()
-	usr << "\red Parrots are still a work in progress, use at your own risk."
 	..()
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 	verbs.Add(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
@@ -678,6 +677,7 @@
 					src.loc = AM.loc
 					icon_state = "parrot_sit"
 					return
+	src << "\red There is no perch nearby to sit on."
 	return
 
 /*
