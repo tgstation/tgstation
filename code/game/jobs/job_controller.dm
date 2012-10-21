@@ -331,6 +331,10 @@ var/global/datum/controller/occupations/job_master
 							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
 							new /obj/item/weapon/storage/box(BPK)
 							H.equip_to_slot_or_del(BPK, slot_back,1)
+						if(4)
+							var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel(H)
+							new /obj/item/weapon/storage/box(BPK)
+							H.equip_to_slot_or_del(BPK, slot_back,1)
 
 		H << "<B>You are the [rank].</B>"
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
