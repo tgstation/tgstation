@@ -229,7 +229,7 @@
 		if("Chef")
 			return list(access_kitchen, access_morgue)
 		if("Roboticist")
-			return list(access_robotics, access_tech_storage, access_morgue,access_maint_tunnels) // This is nice so that robotists have a extra escape route if there single entrance is blocked and also can be used to get mechs around without roaming the halls as much // //As a job that handles so many corpses, it makes sense for them to have morgue access.
+			return list(access_robotics, access_tech_storage, access_morgue)  //As a job that handles so many corpses, it makes sense for them to have morgue access.
 		if("Cargo Technician")
 			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 		if("Shaft Miner")
