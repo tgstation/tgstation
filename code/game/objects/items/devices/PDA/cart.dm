@@ -429,7 +429,8 @@ Code:
 
 					else
 						for(var/obj/machinery/bot/secbot/B in SC.botlist)
-							menu += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
+							if (B)
+								menu += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
 
 					menu += "<BR><A href='byond://?src=\ref[SC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
 
@@ -495,7 +496,8 @@ Code:
 
 					else
 						for(var/obj/machinery/bot/mulebot/B in QC.botlist)
-							menu += "<A href='byond://?src=\ref[QC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
+							if(B)
+								menu += "<A href='byond://?src=\ref[QC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
 
 					menu += "<BR><A href='byond://?src=\ref[QC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
 
