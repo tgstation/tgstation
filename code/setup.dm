@@ -17,6 +17,7 @@
 #define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD	// N2 standard value (79%)
 
 #define MOLES_PLASMA_VISIBLE	0.7 //Moles in a standard cell after which plasma is visible
+#define MIN_PLASMA_DAMAGE 20
 
 #define BREATH_VOLUME 0.5	//liters in a normal breath
 #define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
@@ -38,7 +39,7 @@
 
 #define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
-#define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE 15000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
+#define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE 30000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
 #define FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 15000 //for fire helmet quality items (red and white hardhats)
 #define HELMET_MIN_COLD_PROTECITON_TEMPERATURE 160	//For normal helmets
 #define HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For normal helmets
@@ -137,7 +138,7 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
-#define ALIEN_SELECT_AFK_BUFFER 2 // How many minutes that a person can be AFK before not being allowed to be an alien.
+#define ALIEN_SELECT_AFK_BUFFER 1 // How many minutes that a person can be AFK before not being allowed to be an alien.
 
 #define NORMPIPERATE 30					//pipe-insulation rate divisor
 #define HEATPIPERATE 8					//heat-exch pipe insulation
@@ -533,39 +534,4 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 	"Atmospherics", "Security", "HoS Office", "Medbay",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
-	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
-
-#define MIN_PLAYER_AGE 19
-#define MAX_PLAYER_AGE 60
-
-//Damage things
-#define CUT 		"cut"
-#define BRUISE		"bruise"
-#define BRUTE		"brute"
-#define BURN		"fire"
-#define TOX			"tox"
-#define OXY			"oxy"
-#define CLONE		"clone"
-#define HALLOSS		"halloss"
-
-#define STUN		"stun"
-#define WEAKEN		"weaken"
-#define PARALYZE	"paralize"
-#define IRRADIATE	"irradiate"
-#define STUTTER		"stutter"
-#define SLUR 		"slur"
-#define EYE_BLUR	"eye_blur"
-#define DROWSY		"drowsy"
-
-/////////////////
-//ORGAN DEFINES//
-/////////////////
-#define ORGAN_CUT_AWAY 1
-#define ORGAN_GAUZED 2
-#define ORGAN_ATTACHABLE 4
-#define ORGAN_BLEEDING 8
-#define ORGAN_BROKEN 32
-#define ORGAN_DESTROYED 64
-#define ORGAN_ROBOT 128
-#define ORGAN_SPLINTED 256
-#define SALVED 512
+	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")#define MIN_PLAYER_AGE 19#define MAX_PLAYER_AGE 60//Damage things#define CUT 		"cut"#define BRUISE		"bruise"#define BRUTE		"brute"#define BURN		"fire"#define TOX			"tox"#define OXY			"oxy"#define CLONE		"clone"#define HALLOSS		"halloss"#define STUN		"stun"#define WEAKEN		"weaken"#define PARALYZE	"paralize"#define IRRADIATE	"irradiate"#define STUTTER		"stutter"#define SLUR 		"slur"#define EYE_BLUR	"eye_blur"#define DROWSY		"drowsy"///////////////////ORGAN DEFINES///////////////////#define ORGAN_CUT_AWAY 1#define ORGAN_GAUZED 2#define ORGAN_ATTACHABLE 4#define ORGAN_BLEEDING 8#define ORGAN_BROKEN 32#define ORGAN_DESTROYED 64#define ORGAN_ROBOT 128#define ORGAN_SPLINTED 256#define SALVED 512#define HOSTILE_STANCE_IDLE 1#define HOSTILE_STANCE_ALERT 2#define HOSTILE_STANCE_ATTACK 3#define HOSTILE_STANCE_ATTACKING 4#define HOSTILE_STANCE_TIRED 5

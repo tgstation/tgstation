@@ -190,8 +190,7 @@
 		else
 			return
 	if(prob(5))
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("[src] makes an excited booping beeping sound!"), 1)
+		visible_message("[src] makes an excited booping beeping sound!")
 
 	if((!src.target || src.target == null) && emagged < 2)
 		if(targetdirection != null)
@@ -272,8 +271,7 @@
 				F.break_tile_to_plating()
 			else
 				F.ReplaceWithLattice()
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [src] makes an excited booping sound."), 1)
+			visible_message("\red [src] makes an excited booping sound.")
 			spawn(50)
 				src.amount ++
 				src.anchored = 0
@@ -296,8 +294,7 @@
 	src.anchored = 1
 	src.icon_state = "floorbot-c"
 	if(istype(target, /turf/space/))
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red [src] begins to repair the hole"), 1)
+		visible_message("\red [src] begins to repair the hole")
 		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
 		src.repairing = 1
 		spawn(50)
@@ -308,8 +305,7 @@
 			src.anchored = 0
 			src.target = null
 	else
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red [src] begins to improve the floor."), 1)
+		visible_message("\red [src] begins to improve the floor.")
 		src.repairing = 1
 		spawn(50)
 			src.loc.icon_state = "floor"
@@ -322,8 +318,7 @@
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/stack/tile/plasteel/T)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		return
-	for(var/mob/O in viewers(src, null))
-		O.show_message(text("\red [src] begins to collect tiles."), 1)
+	visible_message("\red [src] begins to collect tiles.")
 	src.repairing = 1
 	spawn(20)
 		if(isnull(T))
@@ -346,8 +341,7 @@
 		return
 	if(M.amount > 1)
 		return
-	for(var/mob/O in viewers(src, null))
-		O.show_message(text("\red [src] begins to create tiles."), 1)
+	visible_message("\red [src] begins to create tiles.")
 	src.repairing = 1
 	spawn(20)
 		if(isnull(M))

@@ -38,6 +38,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
+	wall_smash = 1
 
 	var/stance = SYNDICATE_STANCE_IDLE	//Used to determine behavior
 	var/mob/living/target_mob
@@ -53,6 +54,10 @@
 		del src
 		return
 
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
+		if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
+			obstacle.attack_animal(src)
 
 	if(health < 1)
 		Die()
@@ -71,33 +76,39 @@
 	if(!stat)
 		switch(stance)
 			if(SYNDICATE_STANCE_IDLE)
-				var/obj/mecha/M = null
-				var/mob/living/L = null
+
 				stop_automated_movement = 0
-				for(L in viewers(7,src))
-					if(isSyndicate(L)) continue
-					if(!L.stat)
-						stance = SYNDICATE_STANCE_ATTACK
-						target_mob = L
-						break
-				for(M in view(7,src))
-					if (M.occupant)
-						stance = SYNDICATE_STANCE_ATTACK
-						target_mob = M
-						break
+
+				for(var/atom/A in view(7,src))
+					if(isSyndicate(A))
+						continue
+
+					if(isliving(A))
+						var/mob/living/L = A
+						if(!L.stat)
+							stance = SYNDICATE_STANCE_ATTACK
+							target_mob = L
+							break
+
+					if(istype(A, /obj/mecha))
+						var/obj/mecha/M = A
+						if (M.occupant)
+							stance = SYNDICATE_STANCE_ATTACK
+							target_mob = M
+							break
 
 			if(SYNDICATE_STANCE_ATTACK)	//This one should only be active for one tick
 				stop_automated_movement = 1
 				if(!target_mob || SA_attackable(target_mob))
 					stance = SYNDICATE_STANCE_IDLE
-				if(target_mob in SA_search(target_mob))
+				if(target_mob in view(7, src))
 					if(ranged)
 						if(get_dist(src, target_mob) <= 6)
 							OpenFire(target_mob)
 						else
-							walk_to(src, target_mob, 1, 3)
+							walk_to(src, target_mob, 1, 2)
 					else
-						walk_to(src, target_mob, 1, 3)
+						walk_to(src, target_mob, 1, 2)
 						stance = SYNDICATE_STANCE_ATTACKING
 
 			if(SYNDICATE_STANCE_ATTACKING)
@@ -106,7 +117,7 @@
 					stance = SYNDICATE_STANCE_IDLE
 					target_mob = null
 					return
-				if(!(target_mob in SA_search(target_mob)))
+				if(!(target_mob in view(7, src)))
 					stance = SYNDICATE_STANCE_IDLE
 					target_mob = null
 					return
@@ -172,6 +183,7 @@
 	weapon1 = /obj/item/weapon/melee/energy/sword/red
 	weapon2 = /obj/item/weapon/shield/energy
 	attacktext = "slashes"
+	nopush = 1
 
 /mob/living/simple_animal/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)

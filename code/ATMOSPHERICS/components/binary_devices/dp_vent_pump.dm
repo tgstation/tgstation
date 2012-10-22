@@ -145,9 +145,9 @@
 			set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
+
 		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 			return 0
-
 		if("power" in signal.data)
 			on = text2num(signal.data["power"])
 

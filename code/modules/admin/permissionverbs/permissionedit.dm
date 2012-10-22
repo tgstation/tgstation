@@ -100,6 +100,11 @@
 	if(!adm_ckey || !new_rank)
 		return
 
+	adm_ckey = ckey(adm_ckey)
+
+	if(!adm_ckey)
+		return
+
 	if(!istext(adm_ckey) || !istext(new_rank))
 		return
 
