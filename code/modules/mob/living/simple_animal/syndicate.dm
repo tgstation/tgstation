@@ -38,6 +38,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
+	wall_smash = 1
 
 	var/stance = SYNDICATE_STANCE_IDLE	//Used to determine behavior
 	var/mob/living/target_mob
@@ -53,6 +54,10 @@
 		del src
 		return
 
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
+		if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
+			obstacle.attack_animal(src)
 
 	if(health < 1)
 		Die()

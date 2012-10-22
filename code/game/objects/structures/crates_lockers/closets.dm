@@ -155,6 +155,13 @@
 
 	return
 
+/obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
+	if(user.wall_smash)
+		visible_message("\red [user] destroys the [src]. ")
+		for(var/atom/movable/A as mob|obj in src)
+			A.loc = src.loc
+		del(src)
+
 // this should probably use dump_contents()
 /obj/structure/closet/blob_act()
 	if(prob(75))
