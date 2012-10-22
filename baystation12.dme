@@ -635,6 +635,7 @@
 #include "code\game\objects\structures.dm"
 #include "code\game\objects\weapons.dm"
 #include "code\game\objects\effects\aliens.dm"
+#include "code\game\objects\effects\barsign.dm"
 #include "code\game\objects\effects\biomass_rift.dm"
 #include "code\game\objects\effects\bump_teleporter.dm"
 #include "code\game\objects\effects\effect_system.dm"
