@@ -844,16 +844,14 @@ About the new airlock wires panel:
 		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				for(var/mob/M in viewers(src, null))
-					M << "\red [user] headbutts the airlock."
+				visible_message("\red [user] headbutts the airlock.")
 				var/datum/organ/external/affecting = H.get_organ("head")
 				H.Stun(8)
 				H.Weaken(5)
 				if(affecting.take_damage(10, 0))
 					H.UpdateDamageIcon()
 			else
-				for(var/mob/M in viewers(src, null))
-					M << "\red [user] headbutts the airlock. Good thing they're wearing a helmet."
+				visible_message("\red [user] headbutts the airlock. Good thing they're wearing a helmet.")
 			return
 
 	if(src.p_open)

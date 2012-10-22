@@ -51,13 +51,6 @@
 	return
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
-	/* Well, aliums dislike machines and do not want to caress them.
-	if (user.a_intent == "help")
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("\blue [user] caresses [src.name] with its scythe like arm."), 1)
-	else
-	*/
 	src.health -= rand(15,30)*brute_dam_coeff
 	src.visible_message("\red <B>[user] has slashed [src]!</B>")
 	playsound(src.loc, 'sound/weapons/slice.ogg', 25, 1, -1)

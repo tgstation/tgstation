@@ -138,8 +138,7 @@
 /obj/machinery/door/window/hitby(AM as mob|obj)
 
 	..()
-	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <B>The glass door was hit by [AM].</B>", 1)
+	visible_message("\red <B>The glass door was hit by [AM].</B>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -167,8 +166,7 @@
 			return
 		src.health = max(0, src.health - 25)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[user] smashes against the [src.name].</B>", 1)
+		visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
@@ -197,8 +195,7 @@
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			for(var/mob/O in viewers(user, 5))
-				O.show_message(text("\blue The glass door was sliced open by []!", user), 1, text("\red You hear glass being sliced and sparks flying."), 2)
+			visible_message("\blue The glass door was sliced open by []!", user)
 		flick(text("[]spark", src.base_state), src)
 		sleep(6)
 		open()
@@ -210,8 +207,7 @@
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[src] was hit by [I].</B>", 1)
+		visible_message("\red <B>[src] was hit by [I].</B>")
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)

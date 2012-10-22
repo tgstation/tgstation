@@ -131,12 +131,10 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		for(var/mob/M in viewers(src, null))
-			M.show_message("\red You hear a loud metallic grinding sound.", 1)
+		visible_message("\red You hear a loud metallic grinding sound.")
 		return
 	use_power(1000)
-	for(var/mob/M in viewers(src, null))
-		M.show_message("\red You hear a loud squelchy grinding sound.", 1)
+	visible_message("\red You hear a loud squelchy grinding sound.")
 	src.operating = 1
 	update_icon()
 	var/sourcename = src.occupant.real_name

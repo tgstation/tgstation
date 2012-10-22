@@ -440,17 +440,13 @@
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 		user << "\red You slash at the armored suit!"
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("\red The [user] slashes at [src.name]'s armor!", 1)
+		visible_message("\red The [user] slashes at [src.name]'s armor!")
 	else
 		src.log_append_to_last("Armor saved.")
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 		user << "\green Your claws had no effect!"
 		src.occupant_message("\blue The [user]'s claws are stopped by the armor.")
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("\blue The [user] rebounds off [src.name]'s armor!", 1)
+		visible_message("\blue The [user] rebounds off [src.name]'s armor!")
 	return
 
 
@@ -463,17 +459,13 @@
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			src.take_damage(damage)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-			for (var/mob/V in viewers(src))
-				if(V.client && !(V.blinded))
-					V.show_message("\red <B>[user]</B> [user.attacktext] [src]!", 1)
+			visible_message("\red <B>[user]</B> [user.attacktext] [src]!")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 		else
 			src.log_append_to_last("Armor saved.")
 			playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 			src.occupant_message("\blue The [user]'s attack is stopped by the armor.")
-			for (var/mob/V in viewers(src))
-				if(V.client && !(V.blinded))
-					V.show_message("\blue The [user] rebounds off [src.name]'s armor!", 1)
+			visible_message("\blue The [user] rebounds off [src.name]'s armor!", 1)
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	return
 
@@ -486,15 +478,11 @@
 		src.take_damage(damage)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src.loc, "sparks", 50, 1)
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("\red <b>[C]</b> hits [src.name]'s armor!", 1)
+		visible_message("\red <b>[C]</b> hits [src.name]'s armor!")
 	else
 		src.log_append_to_last("Armor saved.")
 		src.occupant_message("\blue <b>[C]'s</b> attack is stopped by the armor.")
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("\blue <b>[C]</b> rebounds off [src.name]'s armor!", 1)
+		visible_message("\blue <b>[C]</b> rebounds off [src.name]'s armor!")
 	return
 
 
@@ -999,9 +987,7 @@
 			return
 //	usr << "You start climbing into [src.name]"
 
-	for (var/mob/V in viewers(src))
-		if(V.client && !(V.blinded))
-			V.show_message("\blue [usr] starts to climb into [src.name]", 1)
+	visible_message("\blue [usr] starts to climb into [src.name]")
 
 	if(enter_after(40,usr))
 		if(!src.occupant)
@@ -1050,9 +1036,7 @@
 	//Added a message here since people assume their first click failed or something./N
 //	user << "Installing MMI, please stand by."
 
-	for (var/mob/V in viewers(src))
-		if(V.client && !(V.blinded))
-			V.show_message("\blue [usr] starts to insert an MMI into [src.name]", 1)
+	visible_message("\blue [usr] starts to insert an MMI into [src.name]")
 
 	if(enter_after(40,user))
 		if(!occupant)

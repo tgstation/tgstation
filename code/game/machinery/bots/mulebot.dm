@@ -309,10 +309,7 @@
 						return
 				else
 					return
-				usr << "You switch [on ? "on" : "off"] [src]."
-				for(var/mob/M in viewers(src))
-					if(M==usr) continue
-					M << "[usr] switches [on ? "on" : "off"] [src]."
+				visible_message("[usr] switches [on ? "on" : "off"] [src].")
 				updateDialog()
 
 

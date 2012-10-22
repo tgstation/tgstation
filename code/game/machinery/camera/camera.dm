@@ -95,9 +95,8 @@
 	if(!istype(user))
 		return
 	status = 0
-	for(var/mob/O in viewers(user, null))
-		O.show_message("<span class='warning'>\The [user] slashes at [src]!</span>", 1)
-		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
+	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	icon_state = "[initial(icon_state)]1"
 	add_hiddenprint(user)
 	deactivate(user,0)
@@ -169,9 +168,7 @@
 		spark_system.start()
 		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(loc, "sparks", 50, 1)
-
-		for(var/mob/O in viewers(user, 3))
-			O.show_message(text("\blue The camera has been sliced apart by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+		visible_message("\blue The camera has been sliced apart by [] with an energy blade!")
 		del(src)
 	else
 		..()
@@ -181,15 +178,13 @@
 	if(choice==1)
 		status = !( src.status )
 		if (!(src.status))
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] has deactivated []!", user, src), 1)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			visible_message("\red [user] has deactivated [src]!")
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
 			add_hiddenprint(user)
 		else
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] has reactivated []!", user, src), 1)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			visible_message("\red [user] has reactivated [src]!")
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
 			add_hiddenprint(user)
 	// now disconnect anyone using the camera
