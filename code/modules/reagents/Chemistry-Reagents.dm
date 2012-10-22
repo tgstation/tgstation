@@ -993,25 +993,22 @@ datum
 			color = "#660000" // rgb: 102, 0, 0
 
 //Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
-/*
+
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				var/turf/the_turf = get_turf(O)
 				if(!the_turf)
 					return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
-				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 15
-				napalm.trace_gases += fuel
-				the_turf.assume_air(napalm)
+				 new/obj/effect/decal/cleanable/liquid_fuel(the_turf, volume)
+
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 15
-				napalm.trace_gases += fuel
-				T.assume_air(napalm)
-				return*/
+
+				if(!T)
+					return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
+				new/obj/effect/decal/cleanable/liquid_fuel(T, volume)
+				return
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.adjustToxLoss(1)
@@ -1639,7 +1636,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.dizziness = 0
 				M.drowsyness = 0
-				M.stuttering = 0
+				M.slurring = 0
 				M.confused = 0
 				..()
 				return

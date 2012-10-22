@@ -42,10 +42,15 @@
 		..()
 		return
 
-/*	attackby(obj/item/weapon/W as obj, mob/user as mob) //BoH+BoH=Singularity, commented out
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(crit_fail)
 			user << "\red The Bluespace generator isn't working."
 			return
+		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
+			user << "\red The Bluespace interfaces of the two devices conflict and malfunction."
+			del(W)
+			return
+			/* //BoH+BoH=Singularity, commented out.
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 			investigate_log("has become a singularity. Caused by [user.key]","singulo")
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
@@ -56,8 +61,9 @@
 			log_game("[key_name(user)] detonated a bag of holding")
 			del(src)
 			return
+			*/
 		..()
-*/
+
 	proc/failcheck(mob/user as mob)
 		if (prob(src.reliability)) return 1 //No failure
 		if (prob(src.reliability))

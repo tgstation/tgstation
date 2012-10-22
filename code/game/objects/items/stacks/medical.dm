@@ -25,6 +25,10 @@
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/affecting = H.get_organ("chest")
 
+		if(affecting.status & ORGAN_ROBOT)
+			user << "\red This isn't useful at all on a robotic limb.."
+			return 1
+
 		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/user2 = user
 			affecting = H.get_organ(check_zone(user2.zone_sel.selecting))

@@ -274,6 +274,7 @@
 			else if(temp.wounds.len > 0)
 				var/list/wound_descriptors = list()
 				for(var/datum/wound/W in temp.wounds)
+					if(W.internal && !temp.open) continue // can't see internal wounds
 					var/this_wound_desc = W.desc
 					if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
 					else if(W.bandaged) this_wound_desc = "bandaged [this_wound_desc]"

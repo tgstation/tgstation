@@ -1729,6 +1729,15 @@
 	force = 0
 	throwforce = 1.0
 
+/obj/item/weapon/FixOVein
+	name = "FixOVein"
+	icon = 'surgery.dmi'
+	icon_state = "fixovein"
+	force = 0
+	throwforce = 1.0
+	origin_tech = "materials=1;biotech=3"
+	var/usage_amount = 10
+
 /obj/item/weapon/bonesetter
 	name = "bone setter"
 	icon = 'surgery.dmi'

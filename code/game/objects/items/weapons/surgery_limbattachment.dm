@@ -62,7 +62,7 @@
 			T.status &= ~ORGAN_ATTACHABLE
 			T.status &= ~ORGAN_DESTROYED
 			T.status |= ORGAN_ROBOT
-			M.update_body()
+			H.update_body()
 			M.updatehealth()
 			M.UpdateDamageIcon()
 			del(src)

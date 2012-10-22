@@ -40,7 +40,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	if(locate(/obj/fire) in src)
 		return 1
 	var/datum/gas/volatile_fuel/fuel = locate() in air_contents.trace_gases
-	var/obj/liquid_fuel/liquid = locate() in src
+	var/obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in src
 	if(air_contents.calculate_firelevel(liquid) > vsc.IgnitionLevel && (fuel || liquid || air_contents.toxins > 0.5))
 		igniting = 1
 		if(air_contents.oxygen < 0.5)
@@ -63,7 +63,7 @@ obj
 		anchored = 1
 		mouse_opacity = 0
 
-		//luminosity = 3
+		luminosity = 3
 
 		icon = 'fire.dmi'
 		icon_state = "1"
@@ -90,7 +90,7 @@ obj
 						//Get whatever trace fuels are in the area
 						datum/gas/volatile_fuel/fuel = locate(/datum/gas/volatile_fuel/) in air_contents.trace_gases
 						//Also get liquid fuels on the ground.
-						obj/liquid_fuel/liquid = locate() in S
+						obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in S
 
 					var/datum/gas_mixture/flow = air_contents.remove_ratio(0.25)
 					//The reason we're taking a part of the air instead of all of it is so that it doesn't jump to
@@ -177,67 +177,12 @@ obj
 
 			..()
 
-obj/liquid_fuel
-	//Liquid fuel is used for things that used to rely on volatile fuels or plasma being contained to a couple tiles.
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "fuel"
-	layer = TURF_LAYER+0.2
-	anchored = 1
-	var/amount = 1 //Basically moles.
-
-	New(newLoc,amt=1)
-		src.amount = amt
-
-		//Be absorbed by any other liquid fuel in the tile.
-		for(var/obj/liquid_fuel/other in newLoc)
-			if(other != src)
-				other.amount += src.amount
-				spawn other.Spread()
-				del src
-
-		Spread()
-		. = ..()
-
-	proc/Spread()
-		//Allows liquid fuels to sometimes flow into other tiles.
-		if(amount < 0.5) return
-		var/turf/simulated/S = loc
-		if(!istype(S)) return
-		for(var/d in cardinal)
-			if(S.air_check_directions & d)
-				if(rand(25))
-					var/turf/simulated/O = get_step(src,d)
-					if(!locate(/obj/liquid_fuel) in O)
-						new/obj/liquid_fuel(O,amount*0.25)
-						amount *= 0.75
-
-	flamethrower_fuel
-		icon_state = "mustard"
-		anchored = 0
-		New(newLoc, amt = 1, d = 0)
-			dir = d //Setting this direction means you won't get torched by your own flamethrower.
-			. = ..()
-		Spread()
-			//The spread for flamethrower fuel is much more precise, to create a wide fire pattern.
-			if(amount < 0.1) return
-			var/turf/simulated/S = loc
-			if(!istype(S)) return
-
-			for(var/d in list(turn(dir,90),turn(dir,-90)))
-				if(S.air_check_directions & d)
-					var/turf/simulated/O = get_step(S,d)
-					new/obj/liquid_fuel/flamethrower_fuel(O,amount*0.25,d)
-					O.hotspot_expose((T20C*2) + 380,500) //Light flamethrower fuel on fire immediately.
-
-			amount *= 0.5
-
-
 turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
 turf/proc/apply_fire_protection()
 turf/simulated/apply_fire_protection()
 	fire_protection = world.time
 
-datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
+datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 	//This proc is similar to fire(), but uses a simple logarithm to calculate temp, and is thus more stable with ZAS.
 	if(temperature > PLASMA_MINIMUM_BURN_TEMPERATURE)
 		var
@@ -295,7 +240,7 @@ datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
 	return 0
 
 
-datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
+datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fuel/liquid)
 		//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
 	var
 		datum/gas/volatile_fuel/fuel = locate() in trace_gases
@@ -305,7 +250,7 @@ datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 		tox_concentration = toxins / volume
 		fuel_concentration = 0
 
-	if(fuel) fuel_concentration = (fuel.moles*5) / volume
+	if(fuel) fuel_concentration = (fuel.moles) / volume
 	if(liquid) liquid_concentration = (liquid.amount*15) / volume
 	return (oxy_concentration + tox_concentration + liquid_concentration + fuel_concentration)*100
 

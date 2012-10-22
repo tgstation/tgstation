@@ -17,10 +17,10 @@
 				return
 
 	if(src.dna)
-		if(src.dna.mutantrace == "lizard")
+		/*if(src.dna.mutantrace == "lizard") //Soghun stutterss-s-ss-sss.
 			if(copytext(message, 1, 2) != "*")
 				message = dd_replacetext(message, "s", stutter("ss"))
-
+*/
 		if(src.dna.mutantrace == "metroid" && prob(5))
 			if(copytext(message, 1, 2) != "*")
 				if(copytext(message, 1, 2) == ";")
