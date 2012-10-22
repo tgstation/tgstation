@@ -106,8 +106,7 @@
 				return
 
 	else if ((istype(W, /obj/item/device/analyzer) || (istype(W, /obj/item/device/pda))) && get_dist(user, src) <= 1)
-		for (var/mob/O in viewers(user, null))
-			O << "\red [user] has used [W] on \icon[icon]"
+		visible_message("\red [user] has used [W] on \icon[icon]")
 		if(air_contents)
 			var/pressure = air_contents.return_pressure()
 			var/total_moles = air_contents.total_moles()

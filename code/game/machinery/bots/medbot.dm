@@ -419,8 +419,7 @@
 		return
 	else
 		src.icon_state = "medibots"
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[src] is trying to inject [src.patient]!</B>", 1)
+		visible_message("\red <B>[src] is trying to inject [src.patient]!</B>")
 		spawn(30)
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
@@ -428,8 +427,7 @@
 					src.reagent_glass.reagents.reaction(src.patient, 2)
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
-				for(var/mob/O in viewers(src, null))
-					O.show_message("\red <B>[src] injects [src.patient] with the syringe!</B>", 1)
+				visible_message("\red <B>[src] injects [src.patient] with the syringe!</B>")
 
 			src.icon_state = "medibot[src.on]"
 			src.currently_healing = 0
@@ -443,8 +441,7 @@
 /obj/machinery/bot/medbot/proc/speak(var/message)
 	if((!src.on) || (!message))
 		return
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
+	visible_message("[src] beeps, \"[message]\"")
 	return
 
 /obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)
@@ -454,8 +451,7 @@
 
 /obj/machinery/bot/medbot/explode()
 	src.on = 0
-	for(var/mob/O in hearers(src, null))
-		O.show_message("\red <B>[src] blows apart!</B>", 1)
+	visible_message("\red <B>[src] blows apart!</B>", 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)

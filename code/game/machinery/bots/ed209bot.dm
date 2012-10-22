@@ -288,8 +288,7 @@ Auto Patrol: []"},
 					maxstuns--
 					if (maxstuns <= 0)
 						target = null
-					for(var/mob/O in viewers(src, null))
-						O.show_message("\red <B>[src.target] has been stunned by [src]!</B>", 1, "\red You hear someone fall", 2)
+					visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
 
 					mode = SECBOT_PREP_ARREST
 					src.anchored = 1
@@ -321,8 +320,7 @@ Auto Patrol: []"},
 			if (!src.target.handcuffed && !src.arrest_type)
 				playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 				mode = SECBOT_ARREST
-				for(var/mob/O in viewers(src, null))
-					O.show_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>", 1)
+				visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
 				spawn(60)
 					if (get_dist(src, src.target) <= 1)

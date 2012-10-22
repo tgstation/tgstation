@@ -68,13 +68,11 @@ for reference:
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/stack/sheet/wood))
 			if (src.health < src.maxhealth)
-				for(var/mob/O in viewers(src, null))
-					O << "\red [user] begins to repair the [src]!"
+				visible_message("\red [user] begins to repair the [src]!")
 				if(do_after(user,20))
 					src.health = src.maxhealth
 					W:use(1)
-					for(var/mob/O in viewers(src, null))
-						O << "\red [user] repairs the [src]!"
+					visible_message("\red [user] repairs the [src]!")
 					return
 			else
 				return
@@ -87,8 +85,7 @@ for reference:
 					src.health -= W.force * 0.75
 				else
 			if (src.health <= 0)
-				for(var/mob/O in viewers(src, null))
-					O << "\red <B>The barricade is smashed apart!</B>"
+				visible_message("\red <B>The barricade is smashed apart!</B>")
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				new /obj/item/stack/sheet/wood(get_turf(src))
@@ -98,15 +95,13 @@ for reference:
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				for(var/mob/O in viewers(src, null))
-					O << "\red <B>The barricade is blown apart!</B>"
+				visible_message("\red <B>The barricade is blown apart!</B>")
 				del(src)
 				return
 			if(2.0)
 				src.health -= 25
 				if (src.health <= 0)
-					for(var/mob/O in viewers(src, null))
-						O << "\red <B>The barricade is blown apart!</B>"
+					visible_message("\red <B>The barricade is blown apart!</B>")
 					new /obj/item/stack/sheet/wood(get_turf(src))
 					new /obj/item/stack/sheet/wood(get_turf(src))
 					new /obj/item/stack/sheet/wood(get_turf(src))
@@ -114,8 +109,7 @@ for reference:
 				return
 
 	meteorhit()
-		for(var/mob/O in viewers(src, null))
-			O << "\red <B>The barricade is smashed apart!</B>"
+		visible_message("\red <B>The barricade is smashed apart!</B>")
 		new /obj/item/stack/sheet/wood(get_turf(src))
 		new /obj/item/stack/sheet/wood(get_turf(src))
 		new /obj/item/stack/sheet/wood(get_turf(src))
@@ -125,8 +119,7 @@ for reference:
 	blob_act()
 		src.health -= 25
 		if (src.health <= 0)
-			for(var/mob/O in viewers(src, null))
-				O << "\red <B>The blob eats through the barricade!</B>"
+			visible_message("\red <B>The blob eats through the barricade!</B>")
 			del(src)
 		return
 
@@ -181,8 +174,7 @@ for reference:
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 					s.set_up(2, 1, src)
 					s.start()
-					for(var/mob/O in viewers(src, null))
-						O << "\red BZZzZZzZZzZT"
+					visible_message("\red BZZzZZzZZzZT")
 					return
 			return
 		else if (istype(W, /obj/item/weapon/card/emag))
@@ -193,8 +185,7 @@ for reference:
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
-				for(var/mob/O in viewers(src, null))
-					O << "\red BZZZZT"
+				visible_message("\red BZZzZZzZZzZT")
 				return
 			else if (src.emagged == 1)
 				src.emagged = 2
@@ -202,22 +193,19 @@ for reference:
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
-				for(var/mob/O in viewers(src, null))
-					O << "\red BZZZZT"
+				visible_message("\red BZZzZZzZZzZT")
 				return
 		else if (istype(W, /obj/item/weapon/wrench))
 			if (src.health < src.maxhealth)
 				src.health = src.maxhealth
 				src.emagged = 0
 				src.req_access = list(access_security)
-				for(var/mob/O in viewers(src, null))
-					O << "\red [user] repairs the [src]!"
+				visible_message("\red [user] repairs the [src]!")
 				return
 			else if (src.emagged > 0)
 				src.emagged = 0
 				src.req_access = list(access_security)
-				for(var/mob/O in viewers(src, null))
-					O << "\red [user] repairs the [src]!"
+				visible_message("\red [user] repairs the [src]!")
 				return
 			return
 		else
@@ -262,8 +250,7 @@ for reference:
 
 	proc/explode()
 
-		for(var/mob/O in hearers(src, null))
-			O.show_message("\red <B>[src] blows apart!</B>", 1)
+		visible_message("\red <B>[src] blows apart!</B>")
 		var/turf/Tsec = get_turf(src)
 
 	/*	var/obj/item/stack/rods/ =*/
