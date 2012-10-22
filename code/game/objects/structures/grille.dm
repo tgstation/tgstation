@@ -100,7 +100,6 @@
 		if (istype(mover, /obj/item/projectile))
 			return prob(30)
 		else
-				return !src.density
 			return !src.density
 
 

@@ -46,7 +46,7 @@
 				for(var/obj/machinery/teleport/hub/H in range(1))
 					var/amount = rand(2,5)
 					for(var/i=0;i<amount;i++)
-						new /mob/living/simple_animal/carp(get_turf(H))
+						new /mob/living/simple_animal/hostile/carp(get_turf(H))
 				//
 			else
 				for(var/mob/O in hearers(src, null))

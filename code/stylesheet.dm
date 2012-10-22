@@ -20,15 +20,10 @@ em						{font-style: normal;	font-weight: bold;}
 .adminobserver			{color: #996600;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
 
-.mod				{color: #735638;	font-weight: bold;}
-.modooc				{color: #184880;	font-weight: bold;}
-.adminmod			{color: #402A14;	font-weight: bold;}
-
 .name					{					font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #5c00e6;}
-.species				{color: #803B56;}
 .radio					{color: #008000;}
 .deptradio				{color: #993399;}
 .comradio				{color: #ACA82D;}
@@ -53,5 +48,10 @@ h1.alert, h2.alert		{color: #000000;}
 
 .alien					{color: #543354;}
 .newscaster				{color: #800000;}
+
+.mod					{color: #735638;	font-weight: bold;}
+.modooc					{color: #184880;	font-weight: bold;}
+.adminmod				{color: #402A14;	font-weight: bold;}
+.species				{color: #803B56;}
 
 </style>"}
