@@ -400,13 +400,17 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 
 		else // the signal has been decompressed by a processor unit
-			 // send to all linked server units
-			var/sendserver = relay_information(signal, "/obj/machinery/telecomms/server")
 
-			// Can't send to a single server, send to a hub instead!
-			if(!sendserver)
-				signal.data["slow"] += rand(0, 1) // slow the signal down only slightly
-				relay_information(signal, "/obj/machinery/telecomms/hub")
+			// Try sending it!
+			var/list/try_send = list("/obj/machinery/telecomms/server", "/obj/machinery/telecomms/hub", "/obj/machinery/telecomms/broadcaster")
+			var/i = 0
+			for(var/send in try_send)
+				if(i)
+					signal.data["slow"] += rand(0, 1) // slow the signal down only slightly
+				i++
+				var/can_send = relay_information(signal, send)
+				if(can_send)
+					break
 
 
 

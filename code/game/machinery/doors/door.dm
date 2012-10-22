@@ -30,6 +30,9 @@
 		if(density)
 			layer = 3.1 //Above most items if closed
 			explosion_resistance = initial(explosion_resistance)
+			if(opacity)
+				var/turf/T = get_turf(src)
+				T.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
 		else
 			layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
 			explosion_resistance = 0
@@ -38,6 +41,7 @@
 
 
 	Del()
+		density = 0
 		update_nearby_tiles()
 		..()
 		return
@@ -247,17 +251,51 @@
 	update_nearby_tiles(need_rebuild)
 		if(!air_master) return 0
 
-		var/turf/simulated/source = get_turf(src)
+		var/turf/simulated/source = loc
 		var/turf/simulated/north = get_step(source,NORTH)
 		var/turf/simulated/south = get_step(source,SOUTH)
 		var/turf/simulated/east = get_step(source,EAST)
 		var/turf/simulated/west = get_step(source,WEST)
 
+		if(src.density && src.opacity)
+			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
+		else
+			source.thermal_conductivity = initial(source.thermal_conductivity)
+
+		//not sure what the equivalent in zas is
+		/*if(need_rebuild)
+			if(istype(source)) //Rebuild/update nearby group geometry
+				if(source.parent)
+					air_master.groups_to_rebuild += source.parent
+				else
+					air_master.tiles_to_update += source
+			if(istype(north))
+				if(north.parent)
+					air_master.groups_to_rebuild += north.parent
+				else
+					air_master.tiles_to_update += north
+			if(istype(south))
+				if(south.parent)
+					air_master.groups_to_rebuild += south.parent
+				else
+					air_master.tiles_to_update += south
+			if(istype(east))
+				if(east.parent)
+					air_master.groups_to_rebuild += east.parent
+				else
+					air_master.tiles_to_update += east
+			if(istype(west))
+				if(west.parent)
+					air_master.groups_to_rebuild += west.parent
+				else
+					air_master.tiles_to_update += west
+		else*/
 		if(istype(source)) air_master.tiles_to_update |= source
 		if(istype(north)) air_master.tiles_to_update |= north
 		if(istype(south)) air_master.tiles_to_update |= south
 		if(istype(east)) air_master.tiles_to_update |= east
 		if(istype(west)) air_master.tiles_to_update |= west
+
 		return 1
 
 

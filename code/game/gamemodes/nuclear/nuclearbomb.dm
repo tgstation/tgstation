@@ -31,6 +31,16 @@
 				src.attack_hand(M)
 	return
 
+/obj/machinery/nuclearbomb/attackby(obj/item/weapon/I as obj, mob/user as mob)
+	if (src.extended)
+		if (istype(I, /obj/item/weapon/disk/nuclear))
+			usr.drop_item()
+			I.loc = src
+			src.auth = I
+			src.add_fingerprint(user)
+			return
+	..()
+
 /obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 

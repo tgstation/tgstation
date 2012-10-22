@@ -108,7 +108,7 @@ var/list/department_radio_keys = list(
 		return emote(copytext(message, 2))
 
 	var/alt_name = ""
-	if (istype(src, /mob/living/carbon/human) && name != real_name)
+	if (istype(src, /mob/living/carbon/human) && name != GetVoice())
 		var/mob/living/carbon/human/H = src
 		alt_name = " (as [H.get_id_name("Unknown")])"
 	var/italics = 0
@@ -306,7 +306,7 @@ var/list/department_radio_keys = list(
 			listening|=M
 
 	var/turf/T = get_turf(src)
-	var/list/W = view(message_range, T)
+	var/list/W = hear(message_range, T)
 
 	for (var/obj/O in ((W | contents)-used_radios))
 		W |= O
@@ -337,12 +337,13 @@ var/list/department_radio_keys = list(
 			if (O)
 				O.hear_talk(src, message)
 */
-	if(isbrain(src))//For brains to properly talk if they are in an MMI..or in a brain. Could be extended to other mobs I guess.
+
+/*	if(isbrain(src))//For brains to properly talk if they are in an MMI..or in a brain. Could be extended to other mobs I guess.
 		for(var/obj/O in loc)//Kinda ugly but whatever.
 			if(O)
 				spawn(0)
 					O.hear_talk(src, message)
-
+*/
 
 
 	var/list/heard_a = list() // understood us
@@ -374,15 +375,8 @@ var/list/department_radio_keys = list(
 
 		if (italics)
 			message_a = "<i>[message_a]</i>"
-		if (!istype(src, /mob/living/carbon/human))
-			rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
-		else if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
-			if(wear_mask:vchange)
-				rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> <span class='message'>[message_a]</span></span>"
-			else
-				rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
-		else
-			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
+
+		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 
 		for (var/M in heard_a)
 			if(hascall(M,"show_message"))
@@ -438,4 +432,8 @@ var/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
+
+/mob/living/proc/GetVoice()
+	return name
+
 

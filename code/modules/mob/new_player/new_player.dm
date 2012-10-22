@@ -53,7 +53,7 @@
 				var/isadmin = 0
 				if(src.client && src.client.holder)
 					isadmin = 1
-				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\")")
+				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM erro_poll_textreply WHERE ckey = \"[ckey]\")")
 				query.Execute()
 				var/newpoll = 0
 				while(query.NextRow())
@@ -83,24 +83,33 @@
 				break
 
 		//shh ;)
-		var/music = ticker.login_music
-		if(ckey == "cajoes")
-			music = 'sound/music/dangerzone.ogg'
-		else if(ckey == "duntada")
-			music = 'sound/music/you_are_likely_to_be_eaten.ogg'
-		else if(ckey == "misterbook")
-			music = 'sound/music/dinosaur.ogg'
-		else if(ckey == "chinsky")
-			music = 'sound/music/soviet_anthem.ogg'
-		else if(ckey == "abi79")
-			music = 'sound/music/spinmeround.ogg'
-		else if(ckey == "mloc")
-			music = 'sound/music/cantina1_short.ogg'
-		else if(ckey == "applemaster")
-			music = 'sound/music/elektronik_supersonik.ogg'
-		else if(ckey == "wrongnumber")
-			music = 'sound/music/greenthumb.ogg'
-		src << sound(music, repeat = 0, wait = 0, volume = 85, channel = 1)	//MAD JAMZ
+		switch(src.key)
+			if("caelaislinn")
+				src << sound('sound/music/drive_me_closer.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("daneesh")
+				src << sound('sound/music/ill_make_a_man_out_of_you.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("doughnuts")
+				src << sound('sound/music/ultimate_showdown.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("themij")
+				src << sound('sound/music/pegasus.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("searif")
+				src << sound('sound/music/pegasus.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("danny220")
+				src << sound('sound/music/dirty_hands.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("sparklysheep")
+				src << sound('sound/music/dirty_hands.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("pobiega")
+				src << sound('sound/music/the_gabber_robots.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("chinsky")
+				src << sound('sound/music/cotton_eye_joe.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("russkisam")
+				src << sound('sound/music/elektronik_supersonik.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("duntadaman")
+				src << sound('sound/music/spinmeround.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("misterbook")
+				src << sound('sound/music/down_with_the_sickness.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			else
+				src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
 
 	proc/Stopmusic()
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
@@ -313,6 +322,25 @@
 				if("TEXT")
 					var/replytext = href_list["replytext"]
 					log_text_poll_reply(pollid, replytext)
+				if("NUMVAL")
+					var/id_min = text2num(href_list["minid"])
+					var/id_max = text2num(href_list["maxid"])
+
+					if( (id_max - id_min) > 100 )	//Basic exploit prevention
+						usr << "The option ID difference is too big. Please contact administration or the database admin."
+						return
+
+					for(var/optionid = id_min; optionid<= id_max; optionid++)
+						if(!isnull(href_list["o[optionid]"]))	//Test if this optionid was replied to
+							var/rating
+							if(href_list["o[optionid]"] == "abstain")
+								rating = null
+							else
+								rating = text2num(href_list["o[optionid]"])
+								if(!isnum(rating))
+									return
+
+							vote_on_numval_poll(pollid, optionid, rating)
 
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)

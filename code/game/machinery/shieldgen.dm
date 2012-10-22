@@ -57,8 +57,7 @@
 
 
 	if (src.health <= 0)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\blue The [src] dissapates")
+		visible_message("\blue The [src] dissapates")
 		del(src)
 		return
 
@@ -71,8 +70,7 @@
 	src.health -= max_health*0.75 //3/4 health as damage
 
 	if(src.health <= 0)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\blue The [src] dissapates")
+		visible_message("\blue The [src] dissapates")
 		del(src)
 		return
 
@@ -84,8 +82,7 @@
 	health -= Proj.damage
 	..()
 	if(health <=0)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\blue The [src] dissapates")
+		visible_message("\blue The [src] dissapates")
 		del(src)
 		return
 	opacity = 1
@@ -118,8 +115,7 @@
 
 /obj/machinery/shield/hitby(AM as mob|obj)
 	//Let everyone know we've been hit!
-	for(var/mob/O in viewers(src, null))
-		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
+	visible_message("\red <B>[src] was hit by [AM].</B>")
 
 	//Super realistic, resource-intensive, real-time damage calculations.
 	var/tforce = 0
@@ -135,8 +131,7 @@
 
 	//Handle the destruction of the shield
 	if (src.health <= 0)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\blue The [src] dissapates")
+		visible_message("\blue The [src] dissapates")
 		del(src)
 		return
 
@@ -521,10 +516,7 @@
 
 	else
 		src.add_fingerprint(user)
-		user << "\red You hit the [src.name] with your [W.name]!"
-		for(var/mob/M in viewers(src))
-			if(M == user)	continue
-			M.show_message("\red The [src.name] has been hit with the [W.name] by [user.name]!")
+		visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!")
 
 /obj/machinery/shieldwallgen/proc/cleanup(var/NSEW)
 	var/obj/machinery/shieldwall/F

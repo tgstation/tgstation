@@ -197,13 +197,6 @@
 //		new /obj/item/weapon/pestspray(src)
 //		new /obj/item/weapon/pestspray(src)
 
-/obj/structure/closet/crate/New()
-	..()
-	spawn(1)
-		if(!opened)		// if closed, any item at the crate's loc is put in the contents
-			for(var/obj/item/I in src.loc)
-				if(I.density || I.anchored || I == src) continue
-				I.loc = src
 
 /obj/structure/closet/crate/secure/New()
 	..()

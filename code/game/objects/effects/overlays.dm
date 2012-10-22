@@ -17,12 +17,16 @@
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm1"
 	density = 1
+	layer = 5
+	anchored = 1
 
 /obj/effect/overlay/palmtree_l
 	name = "Palm tree"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm2"
 	density = 1
+	layer = 5
+	anchored = 1
 
 /obj/effect/overlay/coconut
 	name = "Coconuts"

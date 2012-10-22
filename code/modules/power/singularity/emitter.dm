@@ -38,6 +38,8 @@
 	return
 
 /obj/machinery/emitter/Del()
+	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?src=%holder_ref%;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+	log_game("Emitter deleted at ([x],[y],[z])")
 	investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
 	..()
 
@@ -56,6 +58,8 @@
 				src.active = 0
 				user << "You turn off the [src]."
 				src.use_power = 1
+				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?src=%holder_ref%;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?src=%holder_ref%;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
 			else
 				src.active = 1
