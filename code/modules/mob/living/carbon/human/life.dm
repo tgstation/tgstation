@@ -38,13 +38,14 @@
 
 	..()
 
+	/*
 	//This code is here to try to determine what causes the gender switch to plural error. Once the error is tracked down and fixed, this code should be deleted
 	//Also delete var/prev_gender once this is removed.
 	if(prev_gender != gender)
 		prev_gender = gender
 		if(gender in list(PLURAL, NEUTER))
 			message_admins("[src] ([ckey]) gender has been changed to plural or neuter. Please record what has happened recently to the person and then notify coders. (<A HREF='?src=%holder_ref%;adminmoreinfo=\ref[src]'>?</A>)  (<A HREF='?src=%holder_ref%;adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=%admin_ref%;priv_msg=\ref[src]'>PM</A>) (<A HREF='?src=%holder_ref%;adminplayerobservejump=\ref[src]'>JMP</A>)",1,1) //The 1,1 at the end is there to make '%holder_ref%' get replaced with the actual ref object
-
+	*/
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
@@ -309,7 +310,7 @@
 
 	proc/handle_mutations_and_radiation()
 		if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || (prob(1) && prob(75)))
+			if((COLD_RESISTANCE in mutations) || (prob(1)))
 				heal_organ_damage(0,1)
 
 		// Make nanoregen heal youu, -3 all damage types
@@ -552,7 +553,7 @@
 
 		if(Toxins_pp > safe_toxins_max) // Too much toxins
 			var/ratio = breath.toxins/safe_toxins_max
-			adjustToxLoss(min(ratio, 10))	//Limit amount of damage toxin exposure can do per second
+			adjustToxLoss(min(ratio, MIN_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 			toxins_alert = max(toxins_alert, 1)
 		else
 			toxins_alert = 0
@@ -1052,7 +1053,8 @@
 
 			if(stuttering)
 				stuttering = max(stuttering-1, 0)
-
+			if (src.slurring)
+				slurring = max(slurring-1, 0)
 			if(silent)
 				silent = max(silent-1, 0)
 
@@ -1304,8 +1306,16 @@
 			if(eye_blurry)			client.screen += global_hud.blurry
 			if(druggy)				client.screen += global_hud.druggy
 
+			var/masked = 0
+
 			if( istype(head, /obj/item/clothing/head/welding) )
 				var/obj/item/clothing/head/welding/O = head
+				if(!O.up && tinted_weldhelh)
+					client.screen += global_hud.darkMask
+					masked = 1
+
+			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
+				var/obj/item/clothing/glasses/welding/O = glasses
 				if(!O.up && tinted_weldhelh)
 					client.screen += global_hud.darkMask
 

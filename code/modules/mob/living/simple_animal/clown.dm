@@ -69,29 +69,41 @@
 		switch(stance)
 			if(CLOWN_STANCE_IDLE)
 				if (src.hostile == 0) return
-				for( var/mob/living/L in viewers(7,src) )
-					if(isclown(L)) continue
-					if(!L.stat)
-						emote("honks menacingly at [L]")
-						stance = CLOWN_STANCE_ATTACK
-						target_mob = L
-						break
+				for(var/atom/A in view(7,src))
+					if(isclown(A))
+						continue
+
+					if(isliving(A))
+						var/mob/living/L = A
+						if(!L.stat)
+							stance = CLOWN_STANCE_ATTACK
+							target_mob = L
+							break
+
+					if(istype(A, /obj/mecha))
+						var/obj/mecha/M = A
+						if (M.occupant)
+							stance = CLOWN_STANCE_ATTACK
+							target_mob = M
+							break
+				if (target_mob)
+					emote("honks menacingly at [target_mob]")
 
 			if(CLOWN_STANCE_ATTACK)	//This one should only be active for one tick
 				stop_automated_movement = 1
-				if(!target_mob || target_mob.stat)
+				if(!target_mob || SA_attackable(target_mob))
 					stance = CLOWN_STANCE_IDLE
-				if(target_mob in viewers(7,src))
+				if(target_mob in view(7,src))
 					walk_to(src, target_mob, 1, 3)
 					stance = CLOWN_STANCE_ATTACKING
 
 			if(CLOWN_STANCE_ATTACKING)
 				stop_automated_movement = 1
-				if(!target_mob || target_mob.stat)
+				if(!target_mob || SA_attackable(target_mob))
 					stance = CLOWN_STANCE_IDLE
 					target_mob = null
 					return
-				if(!(target_mob in viewers(7,src)))
+				if(!(target_mob in view(7,src)))
 					stance = CLOWN_STANCE_IDLE
 					target_mob = null
 					return
@@ -102,9 +114,16 @@
 						if(prob(10))
 							L.Weaken(5)
 							L.visible_message("<span class='danger'>\the [src] slips \the [L]!</span>")
-						for(var/mob/M in viewers(src, null))
-							if(istype(M, /mob/living/simple_animal/clown))
-								var/mob/living/simple_animal/clown/C = M
+						for(var/mob/H in viewers(src, null))
+							if(istype(H, /mob/living/simple_animal/clown))
+								var/mob/living/simple_animal/clown/C = H
+								C.hostile = 1
+					if(istype(target_mob,/obj/mecha))
+						var/obj/mecha/M = target_mob
+						M.attack_animal(src)
+						for(var/mob/H in viewers(src, null))
+							if(istype(H, /mob/living/simple_animal/clown))
+								var/mob/living/simple_animal/clown/C = H
 								C.hostile = 1
 
 /mob/living/simple_animal/clown/bullet_act(var/obj/item/projectile/Proj)

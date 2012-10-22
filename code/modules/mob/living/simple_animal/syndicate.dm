@@ -16,8 +16,8 @@
 	response_harm = "hits the"
 	speed = -1
 	stop_automated_movement_when_pulled = 0
-	maxHealth = 75
-	health = 75
+	maxHealth = 100
+	health = 100
 	var/ranged = 0
 	var/target
 	var/rapid = 0
@@ -38,6 +38,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
+	wall_smash = 1
 
 	var/stance = SYNDICATE_STANCE_IDLE	//Used to determine behavior
 	var/mob/living/target_mob
@@ -53,6 +54,10 @@
 		del src
 		return
 
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
+		if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
+			obstacle.attack_animal(src)
 
 	if(health < 1)
 		Die()
@@ -71,35 +76,48 @@
 	if(!stat)
 		switch(stance)
 			if(SYNDICATE_STANCE_IDLE)
+
 				stop_automated_movement = 0
-				for( var/mob/living/L in viewers(7,src) )
-					if(isSyndicate(L)) continue
-					if(!L.stat)
-						stance = SYNDICATE_STANCE_ATTACK
-						target_mob = L
-						break
+
+				for(var/atom/A in view(7,src))
+					if(isSyndicate(A))
+						continue
+
+					if(isliving(A))
+						var/mob/living/L = A
+						if(!L.stat)
+							stance = SYNDICATE_STANCE_ATTACK
+							target_mob = L
+							break
+
+					if(istype(A, /obj/mecha))
+						var/obj/mecha/M = A
+						if (M.occupant)
+							stance = SYNDICATE_STANCE_ATTACK
+							target_mob = M
+							break
 
 			if(SYNDICATE_STANCE_ATTACK)	//This one should only be active for one tick
 				stop_automated_movement = 1
-				if(!target_mob || target_mob.stat)
+				if(!target_mob || SA_attackable(target_mob))
 					stance = SYNDICATE_STANCE_IDLE
-				if(target_mob in viewers(10,src))
+				if(target_mob in view(7, src))
 					if(ranged)
 						if(get_dist(src, target_mob) <= 6)
 							OpenFire(target_mob)
 						else
-							walk_to(src, target_mob, 1, 3)
+							walk_to(src, target_mob, 1, 2)
 					else
-						walk_to(src, target_mob, 1, 3)
+						walk_to(src, target_mob, 1, 2)
 						stance = SYNDICATE_STANCE_ATTACKING
 
 			if(SYNDICATE_STANCE_ATTACKING)
 				stop_automated_movement = 1
-				if(!target_mob || target_mob.stat)
+				if(!target_mob || SA_attackable(target_mob))
 					stance = SYNDICATE_STANCE_IDLE
 					target_mob = null
 					return
-				if(!(target_mob in viewers(7,src)))
+				if(!(target_mob in view(7, src)))
 					stance = SYNDICATE_STANCE_IDLE
 					target_mob = null
 					return
@@ -107,8 +125,9 @@
 					if(isliving(target_mob))
 						var/mob/living/L = target_mob
 						L.attack_animal(src)
-
-
+					if(istype(target_mob,/obj/mecha))
+						var/obj/mecha/M = target_mob
+						M.attack_animal(src)
 
 /mob/living/simple_animal/syndicate/proc/OpenFire(target_mob)
 	src.target = target_mob
@@ -129,7 +148,8 @@
 		Shoot(tturf, src.loc, src)
 		new /obj/item/ammo_casing/a12mm(get_turf(src))
 
-	stance = SYNDICATE_STANCE_ATTACK
+	stance = SYNDICATE_STANCE_IDLE
+	target_mob = null
 	return
 
 
@@ -156,18 +176,22 @@
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/syndicate/melee
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 20
+	melee_damage_upper = 25
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
 	weapon1 = /obj/item/weapon/melee/energy/sword/red
 	weapon2 = /obj/item/weapon/shield/energy
 	attacktext = "slashes"
+	nopush = 1
 
 /mob/living/simple_animal/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
-		if(prob(35))
-			health -= O.force
+		if(prob(80))
+			var/damage = O.force
+			if (O.damtype == HALLOSS)
+				damage = 0
+			health -= damage
 			visible_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
 			visible_message("\red \b [src] blocks the [O] with its shield! ")
@@ -178,7 +202,7 @@
 
 /mob/living/simple_animal/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj)	return
-	if(prob(35))
+	if(prob(65))
 		src.health -= Proj.damage
 	else
 		visible_message("\red <B>[src] blocks [Proj] with its shield!</B>")
@@ -199,6 +223,7 @@
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
 	corpse = /obj/effect/landmark/corpse/syndicatecommando
+	speed = 0
 
 /mob/living/simple_animal/syndicate/melee/space/Process_Spacemove(var/check_drift = 0)
 	return
@@ -224,6 +249,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	corpse = /obj/effect/landmark/corpse/syndicatecommando
+	speed = 0
 
 /mob/living/simple_animal/syndicate/ranged/space/Process_Spacemove(var/check_drift = 0)
 	return

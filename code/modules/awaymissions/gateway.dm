@@ -76,12 +76,13 @@ obj/machinery/gateway/centerstation/process()
 	if(!ready) return
 	if(linked.len != 8) return
 	if(!powered()) return
-	if(world.time < wait)
-		user << "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>"
-		return
 	if(awaygate == null)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return
+	if(world.time < wait)
+		user << "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>"
+		return
+
 
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 1

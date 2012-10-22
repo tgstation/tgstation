@@ -174,12 +174,7 @@
 	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
 
-	var/datum/dna/chosen_dna
-	for(var/datum/dna/DNA in changeling.absorbed_dna)
-		if(S == "[DNA.real_name]")
-			chosen_dna = DNA
-			break
-
+	var/datum/dna/chosen_dna = changeling.GetDNA(S)
 	if(!chosen_dna)
 		return
 
@@ -277,12 +272,7 @@
 	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
 
-	var/datum/dna/chosen_dna
-	for(var/datum/dna/DNA in changeling.absorbed_dna)
-		if(S == "[DNA.real_name]")
-			chosen_dna = DNA
-			break
-
+	var/datum/dna/chosen_dna = changeling.GetDNA(S)
 	if(!chosen_dna)
 		return
 
@@ -500,6 +490,102 @@
 	feedback_add_details("changeling_powers","RR")
 	return 1
 
+// HIVE MIND UPLOAD/DOWNLOAD DNA
+
+var/list/datum/dna/hivemind_bank = list()
+
+/mob/proc/changeling_hiveupload()
+	set category = "Changeling"
+	set name = "Hive Channel (10)"
+	set desc = "Allows you to channel DNA in the airwaves to allow other changelings to absorb it."
+
+	var/datum/changeling/changeling = changeling_power(10,1)
+	if(!changeling)	return
+
+	var/list/names = list()
+	for(var/datum/dna/DNA in changeling.absorbed_dna)
+		if(!(DNA in hivemind_bank))
+			names += DNA.real_name
+
+	if(names.len <= 0)
+		usr << "<span class='notice'>The airwaves already have all of our DNA.</span>"
+		return
+
+	var/S = input("Select a DNA to channel: ", "Channel DNA", null) as null|anything in names
+	if(!S)	return
+
+	var/datum/dna/chosen_dna = changeling.GetDNA(S)
+	if(!chosen_dna)
+		return
+
+	changeling.chem_charges -= 10
+	hivemind_bank += chosen_dna
+	usr << "<span class='notice'>We channel the DNA of [S] to the air.</span>"
+	feedback_add_details("changeling_powers","HU")
+	return 1
+
+/mob/proc/changeling_hivedownload()
+	set category = "Changeling"
+	set name = "Hive Absorb (40)"
+	set desc = "Allows you to absorb DNA that is being channeled in the airwaves."
+
+	var/datum/changeling/changeling = changeling_power(40,1)
+	if(!changeling)	return
+
+	var/list/names = list()
+	for(var/datum/dna/DNA in hivemind_bank)
+		if(!(DNA in changeling.absorbed_dna))
+			names[DNA.real_name] = DNA
+
+	if(names.len <= 0)
+		usr << "<span class='notice'>There's no new DNA to absorb from the air.</span>"
+		return
+
+	var/S = input("Select a DNA absorb from the air: ", "Absorb DNA", null) as null|anything in names
+	if(!S)	return
+	var/datum/dna/chosen_dna = names[S]
+	if(!chosen_dna)
+		return
+
+	changeling.chem_charges -= 40
+	changeling.absorbed_dna += chosen_dna
+	usr << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
+	feedback_add_details("changeling_powers","HD")
+	return 1
+
+// Fake Voice
+
+/mob/proc/changeling_mimicvoice()
+	set category = "Changeling"
+	set name = "Mimic Voice (10)"
+	set desc = "Shape our vocal glands to form a voice of someone we choose."
+
+	var/datum/changeling/changeling = changeling_power(10,1)
+	if(!changeling)	return
+
+	if(changeling.mimicing)
+		changeling.mimicing = ""
+		usr << "<span class='notice'>We return our vocal glands to their original location.</span>"
+		return
+
+	var/mimic_voice = input("Enter a name to mimic.", "Mimic Voice", null) as text
+	if(!mimic_voice)
+		return
+
+	changeling.chem_charges -= 10
+	changeling.mimicing = mimic_voice
+
+	usr << "<span class='notice'>We shape our glands to take the voice of <b>[mimic_voice]</b>, this will stop us from regenerating chemicals while active.</span>"
+	usr << "<span class='notice'>Use this power again to return to our original voice and reproduce chemicals again.</span>"
+
+	feedback_add_details("changeling_powers","MV")
+
+	spawn(0)
+		while(src && src.mind && src.mind.changeling && src.mind.changeling.mimicing)
+			src.mind.changeling.chem_charges -= 1
+			sleep(40)
+		if(src && src.mind && src.mind.changeling)
+			src.mind.changeling.mimicing = ""
 	//////////
 	//STINGS//	//They get a pretty header because there's just so fucking many of them ;_;
 	//////////
@@ -617,12 +703,7 @@
 	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
 
-	var/datum/dna/chosen_dna
-	for(var/datum/dna/DNA in changeling.absorbed_dna)
-		if(S == "[DNA.real_name]")
-			chosen_dna = DNA
-			break
-
+	var/datum/dna/chosen_dna = changeling.GetDNA(S)
 	if(!chosen_dna)
 		return
 
@@ -665,4 +746,24 @@
 	T.make_jittery(1000)
 	if(T.reagents)	T.reagents.add_reagent("lexorin", 40)
 	feedback_add_details("changeling_powers","DTHS")
+	return 1
+
+/mob/proc/changeling_extract_dna_sting()
+	set category = "Changeling"
+	set name = "Extract DNA Sting (40)"
+	set desc="Stealthily sting a target to extract their DNA."
+
+	var/datum/changeling/changeling = null
+	if(usr.mind && usr.mind.changeling)
+		changeling = usr.mind.changeling
+	if(!changeling)
+		return 0
+
+	var/mob/living/carbon/T = changeling_sting(40, /mob/proc/changeling_extract_dna_sting)
+	if(!T)	return 0
+
+	T.dna.real_name = T.real_name
+	changeling.absorbed_dna |= T.dna
+
+	feedback_add_details("changeling_powers","ED")
 	return 1

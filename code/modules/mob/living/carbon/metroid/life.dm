@@ -329,27 +329,22 @@
 					if(nutrition >= 800)
 						if(prob(40)) amount_grown++
 
+			//lay eggs or grow
 			if(amount_grown >= 10 && !Victim && !Target)
 				if(istype(src, /mob/living/carbon/metroid/adult))
-					if(!client)
-						var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)
-						for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
-							var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
-//							M.nutrition = round(nutrition * 0.9)
-							M.powerlevel = round(powerlevel/number)
-							M.Friends = Friends
-							M.tame = tame
-							M.rabid = rabid
-							M.Discipline = Discipline
-							if(i != 1) step_away(M,src)
-
-						del(src)
+					if(!client && nutrition >= 1000)
+						var/number = pick(1,1,1,1,1,1,2,2,2,3) //number of eggs laid
+						var/obj/item/weapon/reagent_containers/food/snacks/roro_egg/E
+						for(var/i=1,i<=number,i++)
+							E = new/obj/item/weapon/reagent_containers/food/snacks/roro_egg(loc)
+							src.nutrition -= 200
+						step_away(E,src)
 
 				else
 					if(!client)
 						var/mob/living/carbon/metroid/adult/A = new/mob/living/carbon/metroid/adult(src.loc)
 						A.nutrition = nutrition
-//						A.nutrition += 100
+						A.nutrition += 100
 						A.powerlevel = max(0, powerlevel-1)
 						A.Friends = Friends
 						A.tame = tame

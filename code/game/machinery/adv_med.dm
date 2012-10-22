@@ -262,9 +262,6 @@
 						if(!D.hidden[SCANNER])
 							dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
 
-					if (occupant.virus2 || occupant.reagents.reagent_list.len > 0)
-						dat += text("<font color='red'>Warning: Foreign substances detected in bloodstream.</FONT>")
-
 					dat += "<HR><table border='1'>"
 					dat += "<tr>"
 					dat += "<th>Organ</th>"
@@ -273,8 +270,7 @@
 					dat += "<th>Other Wounds</th>"
 					dat += "</tr>"
 
-					for(var/name in occupant.organs)
-						var/datum/organ/external/e = occupant.organs[name]
+					for(var/datum/organ/external/e in occupant.organs)
 						dat += "<tr>"
 						var/AN = ""
 						var/open = ""
@@ -282,6 +278,10 @@
 						var/imp = ""
 						var/bled = ""
 						var/splint = ""
+						var/internal_bleeding = ""
+						for(var/datum/wound/W in e.wounds) if(W.internal)
+							internal_bleeding = "Internal Bleeding:"
+							break
 						if(e.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
 						if(e.status & ORGAN_BLEEDING)
@@ -295,7 +295,7 @@
 						if(!AN && !open && !infected & !imp)
 							AN = "None"
 						if(!(e.status & ORGAN_DESTROYED))
-							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[bled][AN][splint][open][infected][imp]</td>"
+							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[bled][AN][splint][open][infected][imp][internal_bleeding]</td>"
 						else
 							dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"

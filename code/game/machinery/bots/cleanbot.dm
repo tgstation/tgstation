@@ -167,12 +167,10 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	var/list/cleanbottargets = list()
 
 	if(!src.screwloose && !src.oddbutton && prob(5))
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("[src] makes an excited beeping booping sound!"), 1)
+		visible_message("[src] makes an excited beeping booping sound!")
 
 	if(src.screwloose && prob(5))
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("[src] leaks a drop of water. How strange."), 1)
+		visible_message("[src] leaks a drop of water. How strange.")
 		if(istype(loc,/turf/simulated))
 			var/turf/simulated/T = src.loc
 			if(T.wet < 1)
@@ -189,8 +187,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 							T.overlays -= T.wet_overlay
 							T.wet_overlay = null
 	if(src.oddbutton && prob(5))
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("Something flies out of [src]. He seems to be acting oddly."), 1)
+		visible_message("Something flies out of [src]. He seems to be acting oddly.")
 		var/obj/effect/decal/cleanable/blood/gibs/gib = new /obj/effect/decal/cleanable/blood/gibs(src.loc)
 		//gib.streak(list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 		src.oldtarget = gib
@@ -301,6 +298,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/vomit
 	target_types += /obj/effect/decal/cleanable/robot_debris
 	target_types += /obj/effect/decal/cleanable/crayon
+	target_types += /obj/effect/decal/cleanable/liquid_fuel
 
 	if(src.blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood/
@@ -312,8 +310,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
 	src.anchored = 1
 	src.icon_state = "cleanbot-c"
-	for(var/mob/O in viewers(src, null))
-		O.show_message(text("\red [src] begins to clean up the [target]"), 1)
+	visible_message("\red [src] begins to clean up the [target]")
 	src.cleaning = 1
 	spawn(50)
 		src.cleaning = 0

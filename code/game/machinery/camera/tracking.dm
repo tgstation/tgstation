@@ -1,25 +1,56 @@
-/mob/living/silicon/ai/proc/ai_camera_list()
+/mob/living/silicon/ai/proc/get_camera_list()
+
+	if(src.stat == 2)
+		return
+
+	var/list/L = list()
+	for (var/obj/machinery/camera/C in cameranet.cameras)
+		L.Add(C)
+
+	camera_sort(L)
+
+	var/list/T = list()
+	T["Cancel"] = "Cancel"
+	for (var/obj/machinery/camera/C in L)
+		if (C.network == src.network)
+			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
+
+	track = new()
+	track.cameras = T
+	return T
+
+
+/mob/living/silicon/ai/proc/ai_camera_list(var/camera in get_camera_list())
 	set category = "AI Commands"
 	set name = "Show Camera List"
 
-	if(usr.stat == 2)
-		usr << "You can't track with camera because you are dead!"
+	if(src.stat == 2)
+		src << "You can't list the cameras because you are dead!"
 		return
 
-	attack_ai(src)
+	if (!camera || camera == "Cancel")
+		return 0
 
-/mob/living/silicon/ai/proc/ai_camera_track()
-	set category = "AI Commands"
-	set name = "Track With Camera"
-	if(usr.stat == 2)
-		usr << "You can't track with camera because you are dead!"
-		return
+	var/obj/machinery/camera/C = track.cameras[camera]
+	track = null
+	src.eyeobj.setLoc(C)
 
+	return
+
+// Used to allow the AI is write in mob names/camera name from the CMD line.
+/datum/trackable
 	var/list/names = list()
 	var/list/namecounts = list()
 	var/list/humans = list()
 	var/list/others = list()
+	var/list/cameras = list()
 
+/mob/living/silicon/ai/proc/trackable_mobs()
+
+	if(usr.stat == 2)
+		return list()
+
+	var/datum/trackable/TB = new()
 	for(var/mob/living/M in mob_list)
 		// Easy checks first.
 		// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
@@ -55,25 +86,34 @@
 			continue
 
 		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = text("[] ([])", name, namecounts[name])
+		if (name in TB.names)
+			TB.namecounts[name]++
+			name = text("[] ([])", name, TB.namecounts[name])
 		else
-			names.Add(name)
-			namecounts[name] = 1
+			TB.names.Add(name)
+			TB.namecounts[name] = 1
 		if(human)
-			humans[name] = M
+			TB.humans[name] = M
 		else
-			others[name] = M
+			TB.others[name] = M
 
-	var/list/targets = sortList(humans) + sortList(others)
-	var/target_name = input(usr, "Which creature should you track?") as null|anything in targets
+	var/list/targets = sortList(TB.humans) + sortList(TB.others)
+	src.track = TB
+	return targets
 
-	if (!target_name)
-		usr:cameraFollow = null
+/mob/living/silicon/ai/proc/ai_camera_track(var/target_name in trackable_mobs())
+	set category = "AI Commands"
+	set name = "Track With Camera"
+	set desc = "Select who you would like to track."
+
+	if(src.stat == 2)
+		src << "You can't track with camera because you are dead!"
 		return
+	if(!target_name)
+		src.cameraFollow = null
 
-	var/mob/target = (isnull(humans[target_name]) ? others[target_name] : humans[target_name])
+	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
+	src.track = null
 	ai_actual_track(target)
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
@@ -121,7 +161,7 @@
 				return
 			sleep(10)
 
-/proc/near_camera(var/mob/M)
+/proc/near_camera(var/mob/living/M)
 	if (!isturf(M.loc))
 		return 0
 	if(isrobot(M))
@@ -141,33 +181,7 @@
 
 
 /mob/living/silicon/ai/attack_ai(var/mob/user as mob)
-	if (user != src)
-		return
-
-	if (stat == 2)
-		return
-
-	var/list/L = list()
-	for (var/obj/machinery/camera/C in cameranet.cameras)
-		L.Add(C)
-
-	camera_sort(L)
-
-	var/list/D = list()
-	D["Cancel"] = "Cancel"
-	for (var/obj/machinery/camera/C in L)
-		if (C.network == src.network)
-			D[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
-
-	var/t = input(user, "Which camera should you change to?") as null|anything in D
-
-	if (!t || t == "Cancel")
-		return 0
-
-	var/obj/machinery/camera/C = D[t]
-	src.eyeobj.setLoc(C)
-
-	return
+	ai_camera_list()
 
 /proc/camera_sort(list/L)
 	var/obj/machinery/camera/a

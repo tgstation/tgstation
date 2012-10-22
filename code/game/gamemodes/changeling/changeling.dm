@@ -215,6 +215,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/isabsorbing = 0
 	var/geneticpoints = 5
 	var/purchasedpowers = list()
+	var/mimicing = ""
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
@@ -231,3 +232,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /datum/changeling/proc/regenerate()
 	chem_charges = min(max(0, chem_charges+chem_recharge_rate), chem_storage)
 	geneticdamage = max(0, geneticdamage-1)
+
+
+/datum/changeling/proc/GetDNA(var/dna_owner)
+	var/datum/dna/chosen_dna
+	for(var/datum/dna/DNA in absorbed_dna)
+		if(dna_owner == DNA.real_name)
+			chosen_dna = DNA
+			break
+	return chosen_dna

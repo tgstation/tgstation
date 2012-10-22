@@ -169,7 +169,7 @@
 
 	//ID
 	if(wear_id)
-		var/id
+		/*var/id
 		if(istype(wear_id, /obj/item/device/pda))
 			var/obj/item/device/pda/pda = wear_id
 			id = pda.owner
@@ -178,8 +178,8 @@
 			id = idcard.registered_name
 		if(id && (id != real_name) && (get_dist(src, usr) <= 1) && prob(10))
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_id] \a [wear_id] yet something doesn't seem right...</span>\n"
-		else
-			msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
+		else*/
+		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
 
 	//Jitters
 	if(is_jittery)
@@ -274,6 +274,7 @@
 			else if(temp.wounds.len > 0)
 				var/list/wound_descriptors = list()
 				for(var/datum/wound/W in temp.wounds)
+					if(W.internal && !temp.open) continue // can't see internal wounds
 					var/this_wound_desc = W.desc
 					if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
 					else if(W.bandaged) this_wound_desc = "bandaged [this_wound_desc]"

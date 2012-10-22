@@ -38,6 +38,9 @@
 	// 1 means all stages except the last should bleed
 	var/max_bleeding_stage = 1
 
+	// internal wounds can only be fixed through surgery
+	var/internal = 0
+
 	// helper lists
 	var/tmp/list/desc_list = list()
 	var/tmp/list/damage_list = list()
@@ -90,7 +93,13 @@
 
 	// heal the given amount of damage, and if the given amount of damage was more
 	// than what needed to be healed, return how much heal was left
-	proc/heal_damage(amount)
+	// set @heals_internal to also heal internal organ damage
+	// TODO: set heals_internal to 0 by default
+	proc/heal_damage(amount, heals_internal = 1)
+		if(src.internal && !heals_internal)
+			// heal nothing
+			return amount
+
 		var/healed_damage = min(src.damage, amount)
 		amount -= healed_damage
 		src.damage -= healed_damage
@@ -114,7 +123,8 @@
 		src.min_damage = damage_list[current_stage]
 
 	proc/bleeding()
-		return (!bandaged && (damage_type == BRUISE && damage >= 20 || damage_type == CUT) && current_stage <= max_bleeding_stage)
+		// internal wounds don't bleed in the sense of this function
+		return (!bandaged && (damage_type == BRUISE && damage >= 20 || damage_type == CUT) && current_stage <= max_bleeding_stage && !src.internal)
 
 /** CUTS **/
 /datum/wound/cut
@@ -212,3 +222,11 @@
 	needs_treatment = 1 // this only heals when bandaged
 
 	damage_type = BURN
+
+/datum/wound/internal_bleeding
+	internal = 1
+
+	stages = list("severed vein" = 30, "cut vein" = 20, "damaged vein" = 10, "bruised vein" = 5)
+	max_bleeding_stage = 0
+
+	needs_treatment = 1

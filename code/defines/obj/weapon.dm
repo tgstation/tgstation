@@ -504,83 +504,6 @@
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
 
-/obj/item/weapon/bedsheet
-	name = "bedsheet"
-	desc = "Nice, linen, bedsheet. Perfect to put on."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "sheet"
-	layer = 4.0
-	item_state = "bedsheet"
-	throwforce = 1
-	w_class = 1.0
-	throw_speed = 2
-	throw_range = 10
-	color = "white"
-
-/obj/item/weapon/bedsheet/blue
-	icon_state = "sheetblue"
-	color = "blue"
-
-/obj/item/weapon/bedsheet/green
-	icon_state = "sheetgreen"
-	color = "green"
-
-/obj/item/weapon/bedsheet/orange
-	icon_state = "sheetorange"
-	color = "orange"
-
-/obj/item/weapon/bedsheet/purple
-	icon_state = "sheetpurple"
-	color = "purple"
-
-/obj/item/weapon/bedsheet/rainbow
-	icon_state = "sheetrainbow"
-	color = "rainbow"
-
-/obj/item/weapon/bedsheet/red
-	icon_state = "sheetred"
-	color = "red"
-
-/obj/item/weapon/bedsheet/yellow
-	icon_state = "sheetyellow"
-	color = "yellow"
-
-/obj/item/weapon/bedsheet/mime
-	icon_state = "sheetmime"
-	color = "mime"
-
-/obj/item/weapon/bedsheet/clown
-	icon_state = "sheetclown"
-	color = "clown"
-
-/obj/item/weapon/bedsheet/captain
-	icon_state = "sheetcaptain"
-	color = "captain"
-
-/obj/item/weapon/bedsheet/rd
-	icon_state = "sheetrd"
-	color = "director"
-
-/obj/item/weapon/bedsheet/medical
-	icon_state = "sheetmedical"
-	color = "medical"
-
-/obj/item/weapon/bedsheet/hos
-	icon_state = "sheethos"
-	color = "hosred"
-
-/obj/item/weapon/bedsheet/hop
-	icon_state = "sheethop"
-	color = "hop"
-
-/obj/item/weapon/bedsheet/ce
-	icon_state = "sheetce"
-	color = "chief"
-
-/obj/item/weapon/bedsheet/brown
-	icon_state = "sheetbrown"
-	color = "brown"
-
 /obj/item/weapon/bikehorn
 	name = "bike horn"
 	desc = "A horn off of a bicycle."
@@ -1153,18 +1076,6 @@
 	throw_range = 15
 	attack_verb = list("banned")
 
-/obj/item/weapon/pen/sleepypen
-	desc = "It's a normal black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	slot_flags = SLOT_BELT
-	origin_tech = "materials=2;biotech=1;syndicate=7"
-
-/obj/item/weapon/pen/paralysis
-	desc = "It's a normal black ink pen with a sharp point."
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	slot_flags = SLOT_BELT
-	origin_tech = "materials=2;biotech=1;syndicate=5"
-
 /obj/item/weapon/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
@@ -1728,6 +1639,15 @@
 	icon_state = "bone-gel"
 	force = 0
 	throwforce = 1.0
+
+/obj/item/weapon/FixOVein
+	name = "FixOVein"
+	icon = 'surgery.dmi'
+	icon_state = "fixovein"
+	force = 0
+	throwforce = 1.0
+	origin_tech = "materials=1;biotech=3"
+	var/usage_amount = 10
 
 /obj/item/weapon/bonesetter
 	name = "bone setter"

@@ -87,11 +87,14 @@
 	///////////
 	//CONNECT//
 	///////////
-/client/New()
-	//Connection-Type and client byond_version checking
-	if( connection != "seeker" || (byond_version < MIN_CLIENT_VERSION))	//Out of date or wrong connection type. Update your client!!
-		del(src)
-		return
+/client/New(TopicData)
+	TopicData = null							//Prevent calls to client.Topic from connect
+
+	if(connection != "seeker")					//Invalid connection type.
+		return null
+	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
+		return null
+
 
 	if(IsGuestKey(key))
 		alert(src,"Baystation12 doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
@@ -110,6 +113,8 @@
 		holder = Admin_Obj
 		holder.owner = src
 		holder.state = null
+
+	. = ..()	//calls mob.Login()
 
 	//makejson()
 

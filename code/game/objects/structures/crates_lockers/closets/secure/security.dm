@@ -176,6 +176,8 @@
 		new /obj/item/clothing/under/det(src)
 		new /obj/item/clothing/suit/armor/det_suit(src)
 		new /obj/item/clothing/suit/det_suit(src)
+		new /obj/item/clothing/suit/forensics/blue(src)
+		new /obj/item/clothing/suit/forensics/red(src)
 		new /obj/item/clothing/gloves/black(src)
 		new /obj/item/clothing/head/det_hat(src)
 		new /obj/item/clothing/shoes/brown(src)

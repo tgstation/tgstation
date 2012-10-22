@@ -99,6 +99,9 @@
 			camera.status = 0
 	..()
 
+	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
+
+
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
 /mob/living/silicon/robot/Del()
