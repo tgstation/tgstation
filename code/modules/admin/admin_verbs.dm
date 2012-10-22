@@ -23,6 +23,7 @@
 	return(1)
 
 /client/proc/update_admins(var/rank)
+	world << "update_admins([rank])"
 	if(!holder)
 		holder = new /datum/admins(rank)
 		admin_list |= src
@@ -115,20 +116,20 @@
 			return
 
 		//Admin Observer
-		if (holder.level == -1)
+		if (holder.level >= -1)
 			seeprayers = 1
 
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/toggleadminhelpsound
-		else	return
+		else
+			return
 
 		//Moderator
 		if (holder.level >= 0)
 			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/hide_verbs
-			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/Report
 			verbs += /client/proc/display_admin_reports
 			verbs += /datum/admins/proc/show_skills
@@ -141,6 +142,7 @@
 		//Extra moderator commands
 		if(holder.level == 0)
 			verbs += /client/proc/mod_panel
+			verbs -= /client/proc/cmd_admin_say
 			return
 
 		//Temporary Admin
@@ -191,17 +193,6 @@
 		else
 			return
 
-		//Temporary Admin
-		if (holder.level >= 1)
-			verbs += /datum/admins/proc/delay								//game start delay
-			verbs += /datum/admins/proc/immreboot							//immediate reboot
-			verbs += /datum/admins/proc/restart							//restart
-			verbs += /client/proc/cmd_admin_check_contents
-			verbs += /client/proc/cmd_admin_create_centcom_report
-			verbs += /client/proc/toggle_hear_deadcast
-			verbs += /client/proc/toggle_hear_radio
-		else	return
-
 		//Admin Candidate
 		if (holder.level >= 2)
 			verbs += /client/proc/cmd_admin_add_random_ai_law
@@ -209,7 +200,8 @@
 			verbs += /client/proc/check_antagonists
 			verbs += /client/proc/play_sound
 			verbs += /client/proc/stealth
-		else	return
+		else
+			return
 
 		//Trial Admin
 		if (holder.level >= 3)
@@ -234,9 +226,8 @@
 			//bs12 specific
 			verbs += /client/proc/admin_deny_shuttle
 			verbs += /client/proc/editappear
-
-
-		else	return
+		else
+			return
 
 		//Badmin
 		if (holder.level >= 4)
@@ -264,7 +255,8 @@
 			verbs += /client/proc/giveruntimelog							//used by coders to retrieve runtime logs
 			verbs += /client/proc/togglebuildmodeself
 			verbs += /client/proc/debug_controller
-		else	return
+		else
+			return
 
 		//Game Admin
 		if (holder.level >= 5)
