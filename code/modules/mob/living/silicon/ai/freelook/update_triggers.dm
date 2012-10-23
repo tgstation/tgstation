@@ -64,13 +64,15 @@
 /mob/living/silicon/robot/var/updating = 0
 
 /mob/living/silicon/robot/Move()
+	var/oldLoc = src.loc
 	. = ..()
 	if(.)
 		if(src.camera)
 			if(!updating)
 				updating = 1
 				spawn(BORG_CAMERA_BUFFER)
-					cameranet.updatePortableCamera(src.camera)
+					if(oldLoc != src.loc)
+						cameranet.updatePortableCamera(src.camera)
 					updating = 0
 
 // CAMERA

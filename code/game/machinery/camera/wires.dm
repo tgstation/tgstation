@@ -50,7 +50,7 @@
 
 		if(CAMERA_WIRE_POWER)
 			deactivate(usr, 1)
-			shock(usr)
+			//shock(usr)
 
 		if(CAMERA_WIRE_LIGHT)
 			light_disabled = 1

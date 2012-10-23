@@ -243,9 +243,7 @@
 /obj/structure/table/attack_paw(mob/user as mob)
 	if ((HULK in usr.mutations))
 		usr << "\blue You destroy the table."
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << "\red [user] smashes the table apart!"
+		visible_message("\red [user] smashes the table apart!")
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -258,18 +256,14 @@
 		step(user, get_dir(user, src))
 		if (user.loc == src.loc)
 			user.layer = TURF_LAYER
-			for(var/mob/O in oviewers())
-				if ((O.client && !( O.blinded )))
-					O << "[user] hides under the table!"
+			visible_message("[user] hides under the table!")
 				//Foreach goto(69)
 	return
 
 
 /obj/structure/table/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
 	usr << "\green You destroy the table."
-	for(var/mob/O in oviewers())
-		if ((O.client && !( O.blinded )))
-			O << "\red [user] slices the table apart!"
+	visible_message("\red [user] slices the table apart!")
 	if(istype(src, /obj/structure/table/reinforced))
 		new /obj/item/weapon/table_parts/reinforced( src.loc )
 	else if(istype(src, /obj/structure/table/woodentable))
@@ -281,12 +275,10 @@
 	return
 
 
-/obj/structure/table/attack_animal(mob/living/simple_animal/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
+/obj/structure/table/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.wall_smash)
 		usr << "\red You destroy the table."
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << "\red [user] smashes the table apart!"
+		visible_message("\red [user] smahes the table apart!")
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -303,9 +295,7 @@
 /obj/structure/table/attack_hand(mob/user as mob)
 	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 		usr << "\blue You destroy the table."
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << "\red [user] smashes the table apart!"
+		visible_message("\red [user] smahes the table apart!")
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -346,9 +336,7 @@
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		for(var/mob/O in viewers(world.view, src))
-			if (O.client)
-				O << "\red [G.assailant] puts [G.affecting] on the table."
+		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
 		del(W)
 		return
 
@@ -400,9 +388,7 @@
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		for(var/mob/O in viewers(world.view, src))
-			if (O.client)
-				O << "\red [G.assailant] puts [G.affecting] on the wooden table."
+		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
 		del(W)
 		return
 	if (istype(W, /obj/item/weapon/wrench))
@@ -451,9 +437,7 @@
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		for(var/mob/O in viewers(world.view, src))
-			if (O.client)
-				O << "\red [G.assailant] puts [G.affecting] on the reinforced table."
+		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
 		del(W)
 		return
 

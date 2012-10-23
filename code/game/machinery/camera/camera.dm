@@ -49,7 +49,7 @@
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
 		if(prob(100/severity))
-			icon_state = "cameraemp"
+			icon_state = "[initial(icon_state)]emp"
 			network = null                   //Not the best way but it will do. I think.
 			cameranet.removeCamera(src)
 			stat |= EMPED
@@ -98,7 +98,7 @@
 	for(var/mob/O in viewers(user, null))
 		O.show_message("<span class='warning'>\The [user] slashes at [src]!</span>", 1)
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	icon_state = "camera1"
+	icon_state = "[initial(icon_state)]1"
 	add_hiddenprint(user)
 	deactivate(user,0)
 
@@ -111,6 +111,7 @@
 		panel_open = !panel_open
 		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
 	else if((iswirecutter(W) || ismultitool(W)) && panel_open)
 		interact(user)
@@ -183,13 +184,13 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [] has deactivated []!", user, src), 1)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			icon_state = "camera1"
+			icon_state = "[initial(icon_state)]1"
 			add_hiddenprint(user)
 		else
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [] has reactivated []!", user, src), 1)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			icon_state = "camera"
+			icon_state = initial(icon_state)
 			add_hiddenprint(user)
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
@@ -212,18 +213,6 @@
 	alarm_on = 0
 	for(var/mob/living/silicon/S in mob_list)
 		S.cancelAlarm("Camera", get_area(src), list(src), src)
-
-/obj/machinery/camera/proc/toggle_panel(var/mob/user)
-	if(busy)
-		return 0
-	playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-	busy = 1
-	if(do_after(user, 30))
-		panel_open = !panel_open
-		busy = 0
-		return 1
-	busy = 0
-	return 0
 
 /obj/machinery/camera/proc/can_use()
 	if(!status)
@@ -296,23 +285,3 @@
 		return 1
 	busy = 0
 	return 0
-
-
-
-/obj/machinery/camera/autoname
-	var/number = 0 //camera number in area
-
-//This camera type automatically sets it's name to whatever the area that it's in is called.
-/obj/machinery/camera/autoname/New()
-	..()
-	spawn(10)
-		number = 1
-		var/area/A = get_area(src)
-		if(A)
-			for(var/obj/machinery/camera/autoname/C in world)
-				if(C == src) continue
-				var/area/CA = get_area(C)
-				if(CA.type == A.type)
-					if(C.number)
-						number = max(number, C.number+1)
-			c_tag = "[A.name] #[number]"

@@ -111,7 +111,7 @@
 				if(!issilicon(usr))	return
 				emagged = !emagged
 				if(emagged)
-					message_admins("[key_name_admin(usr)] overrided the holodeck's safeties")
+					message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
 					log_game("[key_name(usr)] overrided the holodeck's safeties")
 				else
 					message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
@@ -293,7 +293,7 @@
 	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
 		del(B)
 
-	for(var/mob/living/simple_animal/carp/C in linkedholodeck)
+	for(var/mob/living/simple_animal/hostile/carp/C in linkedholodeck)
 		del(C)
 
 	holographic_items = A.copy_contents_to(linkedholodeck , 1)
@@ -314,7 +314,7 @@
 						T.temperature = 5000
 						T.hotspot_expose(50000,50000,1)
 			if(L.name=="Holocarp Spawn")
-				new /mob/living/simple_animal/carp(L.loc)
+				new /mob/living/simple_animal/hostile/carp(L.loc)
 
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
@@ -445,9 +445,9 @@
 	desc = "May the force be within you. Sorta"
 	icon_state = "sword0"
 	force = 3.0
-	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
+	throwforce = 0
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	var/active = 0

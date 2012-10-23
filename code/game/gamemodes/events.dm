@@ -1,12 +1,13 @@
+
 /proc/start_events()
 	//changed to a while(1) loop since they are more efficient.
 	//Moved the spawn in here to allow it to be called with advance proc call if it crashes.
 	//and also to stop spawn copying variables from the game ticker
 	spawn(3000)
 		while(1)
-			/*if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
+			if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
 				spawn(1)
-					dust_swarm("weak")*/
+					dust_swarm("weak")
 			if (!event)
 				//CARN: checks to see if random events are enabled.
 				if(config.allow_random_events && prob(eventchance))
@@ -36,15 +37,13 @@
 				meteor_wave()
 				spawn_meteors()
 
-		/** NOPE!
-		if(2)
+		/*if(2)
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('sound/AI/granomalies.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 			spawn(rand(50, 300))
-				del(bh)
-		**/
+				del(bh)*/
 		/*
 		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
@@ -68,12 +67,9 @@
 						spawn(rand(300,600))
 							del(P)
 		*/
-
-		/** NOPE!
 		if(3)
 			if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
 				space_ninja_arrival()//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
-		**/
 		if(4)
 			mini_blob_event()
 
@@ -81,18 +77,14 @@
 			high_radiation_event()
 		if(6)
 			viral_outbreak()
-		/** NOPE!
 		if(7)
 			alien_infestation()
-		**/
 		if(8)
 			prison_break()
 		if(9)
 			carp_migration()
-		/** NOPE!
 		if(10)
 			immovablerod()
-		**/
 		if(11)
 			lightsout(1,2)
 		if(12)
@@ -215,7 +207,7 @@
 //	world << sound('sound/AI/outbreak7.ogg')
 	var/virus_type
 	if(!virus)
-		virus_type = pick(/datum/disease/dnaspread,/datum/disease/flu,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis)
+		virus_type = pick(/datum/disease/dnaspread,/datum/disease/flu,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
 	else
 		switch(virus)
 			if("fake gbs")
@@ -279,11 +271,14 @@
 				vents += temp_vent
 
 	var/list/candidates = list() //List of candidate KEYs to control the new larvae. ~Carn
-	for(var/mob/dead/observer/G in player_list)
-		if(G.client.be_alien)
-			if(((G.client.inactivity/10)/60) <= 5)
-				if(!(G.mind && G.mind.current && G.mind.current != DEAD))
-					candidates += G.key
+	var/i = 0
+	while(candidates.len <= 0 && i < 5)
+		for(var/mob/dead/observer/G in player_list)
+			if(G.client.be_alien)
+				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
+					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+						candidates += G.key
+		i++
 
 	if(prob(33)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
@@ -352,20 +347,16 @@
 			for (var/obj/machinery/power/apc/temp_apc in A)
 				temp_apc.overload_lighting()
 
-		for(var/area/A in areas)
 			for (var/obj/structure/closet/secure_closet/brig/temp_closet in A)
 				temp_closet.locked = 0
 				temp_closet.icon_state = temp_closet.icon_closed
 
-		for(var/area/A in areas)
 			for (var/obj/machinery/door/airlock/security/temp_airlock in A)
-				temp_airlock.prison_open()
+				spawn(0) temp_airlock.prison_open()
 
-		for(var/area/A in areas)
 			for (var/obj/machinery/door/airlock/glass_security/temp_glassairlock in A)
-				temp_glassairlock.prison_open()
+				spawn(0) temp_glassairlock.prison_open()
 
-		for(var/area/A in areas)
 			for (var/obj/machinery/door_timer/temp_timer in A)
 				temp_timer.releasetime = 1
 
@@ -377,7 +368,7 @@
 /proc/carp_migration() // -- Darem
 	for(var/obj/effect/landmark/C in landmarks_list)
 		if(C.name == "carpspawn")
-			new /mob/living/simple_animal/carp(C.loc)
+			new /mob/living/simple_animal/hostile/carp(C.loc)
 	//sleep(100)
 	spawn(rand(300, 600)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
@@ -484,10 +475,10 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 					M << "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED"
 					M.add_ion_law("YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
 				if(13)
-					M << "\red [crew] is [allergysev] to [allergy]. LAWS UPDATED"
-					M.add_ion_law("[crew] is [allergysev] to [allergy]. LAWS UPDATED")
+					M << "\red [crew] is [allergysev] to [allergy]...LAWS UPDATED"
+					M.add_ion_law("[crew] is [allergysev] to [allergy]")
 				if(14)
-					M << "\ref THE STATION IS [who2pref] [who2]"
+					M << "\red THE STATION IS [who2pref] [who2]...LAWS UPDATED"
 					M.add_ion_law("THE STATION IS [who2pref] [who2]")
 
 	if(botEmagChance)
@@ -537,5 +528,4 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		world << "Finished processing FIREDOORS. Processed: [firedoornum]"
 
 	world << "Ion Storm Main Done"
-
 	*/

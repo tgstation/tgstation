@@ -20,8 +20,10 @@
 	id = "round_end_belt"
 
 	// create a conveyor
-/obj/machinery/conveyor/New()
-	..()
+/obj/machinery/conveyor/New(loc, newdir, on = 0)
+	..(loc)
+	if(newdir)
+		dir = newdir
 	switch(dir)
 		if(NORTH)
 			forwards = NORTH
@@ -47,6 +49,9 @@
 		if(SOUTHWEST)
 			forwards = WEST
 			backwards = NORTH
+	if(on)
+		operating = 1
+		setmove()
 
 /obj/machinery/conveyor/proc/setmove()
 	if(operating == 1)

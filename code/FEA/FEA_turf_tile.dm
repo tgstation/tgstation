@@ -304,7 +304,7 @@ turf
 			if (next_check > 0)
 				next_check--
 				return 1
-			next_check += check_delay + rand(0,check_delay/2)
+			next_check += check_delay + rand(max(check_delay, 1)/2,check_delay)
 			check_delay++
 
 			var/turf/simulated/list/possible_fire_spreads = list()

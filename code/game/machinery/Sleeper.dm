@@ -180,8 +180,7 @@
 				usr << "[G.affecting.name] will not fit into the sleeper because they have a Metroid latched onto their head."
 				return
 
-		for (var/mob/V in viewers(user))
-			V.show_message("[user] starts putting [G.affecting.name] into the sleeper.", 3)
+		visible_message("[user] starts putting [G.affecting.name] into the sleeper.", 3)
 
 		if(do_after(user, 20))
 			if(src.occupant)
@@ -372,8 +371,7 @@
 			if(M.Victim == usr)
 				usr << "You're too busy getting your life sucked out of you."
 				return
-		for(var/mob/V in viewers(usr))
-			V.show_message("[usr] starts climbing into the sleeper.", 3)
+		visible_message("[usr] starts climbing into the sleeper.", 3)
 		if(do_after(usr, 20))
 			if(src.occupant)
 				usr << "\blue <B>The sleeper is already occupied!</B>"

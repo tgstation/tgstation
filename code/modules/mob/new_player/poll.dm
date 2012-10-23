@@ -229,6 +229,77 @@
 					output += "[vote_text]"
 
 				src << browse(output,"window=playerpoll;size=500x500")
+
+			//Polls with a text input
+			if("NUMVAL")
+				var/DBQuery/voted_query = dbcon.NewQuery("SELECT o.text, v.rating FROM erro_poll_option o, erro_poll_vote v WHERE o.pollid = [pollid] AND v.ckey = '[usr.ckey]' AND o.id = v.optionid")
+				voted_query.Execute()
+
+				var/output = "<div align='center'><B>Player poll</B>"
+				output +="<hr>"
+				output += "<b>Question: [pollquestion]</b><br>"
+				output += "<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
+
+				var/voted = 0
+				while(voted_query.NextRow())
+					voted = 1
+
+					var/optiontext = voted_query.item[1]
+					var/rating = voted_query.item[2]
+
+					output += "<br><b>[optiontext] - [rating]</b>"
+
+				if(!voted)	//Only make this a form if we have not voted yet
+					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
+					output += "<input type='hidden' name='src' value='\ref[src]'>"
+					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
+					output += "<input type='hidden' name='votetype' value='NUMVAL'>"
+
+					var/minid = 999999
+					var/maxid = 0
+
+					var/DBQuery/option_query = dbcon.NewQuery("SELECT id, text, minval, maxval, descmin, descmid, descmax FROM erro_poll_option WHERE pollid = [pollid]")
+					option_query.Execute()
+					while(option_query.NextRow())
+						var/optionid = text2num(option_query.item[1])
+						var/optiontext = option_query.item[2]
+						var/minvalue = text2num(option_query.item[3])
+						var/maxvalue = text2num(option_query.item[4])
+						var/descmin = option_query.item[5]
+						var/descmid = option_query.item[6]
+						var/descmax = option_query.item[7]
+
+						if(optionid < minid)
+							minid = optionid
+						if(optionid > maxid)
+							maxid = optionid
+
+						var/midvalue = round( (maxvalue + minvalue) / 2)
+
+						if(isnull(minvalue) || isnull(maxvalue) || (minvalue == maxvalue))
+							continue
+
+						output += "<br>[optiontext]: <select name='o[optionid]'>"
+						output += "<option value='abstain'>abstain</option>"
+						for (var/j = minvalue; j <= maxvalue; j++)
+							if(j == minvalue && descmin)
+								output += "<option value='[j]'>[j] ([descmin])</option>"
+							else if (j == midvalue && descmid)
+								output += "<option value='[j]'>[j] ([descmid])</option>"
+							else if (j == maxvalue && descmax)
+								output += "<option value='[j]'>[j] ([descmax])</option>"
+							else
+								output += "<option value='[j]'>[j]</option>"
+
+						output += "</select>"
+
+					output += "<input type='hidden' name='minid' value='[minid]'>"
+					output += "<input type='hidden' name='maxid' value='[maxid]'>"
+
+					output += "<p><input type='submit' value='Submit'>"
+					output += "</form>"
+
+				src << browse(output,"window=playerpoll;size=500x500")
 		return
 
 /mob/new_player/proc/vote_on_poll(var/pollid = -1, var/optionid = -1)
@@ -364,4 +435,74 @@
 		insert_query.Execute()
 
 		usr << "\blue Feedback logging successful."
+		usr << browse(null,"window=playerpoll")
+
+
+/mob/new_player/proc/vote_on_numval_poll(var/pollid = -1, var/optionid = -1, var/rating = null)
+	if(pollid == -1 || optionid == -1)
+		return
+
+	if(!isnum(pollid) || !isnum(optionid))
+		return
+
+	var/user = sqlfdbklogin
+	var/pass = sqlfdbkpass
+	var/db = sqlfdbkdb
+	var/address = sqladdress
+	var/port = sqlport
+
+	var/DBConnection/dbcon = new()
+	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	if(dbcon.IsConnected())
+
+		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype FROM erro_poll_question WHERE id = [pollid] AND Now() BETWEEN starttime AND endtime")
+		select_query.Execute()
+
+		var/validpoll = 0
+
+		while(select_query.NextRow())
+			if(select_query.item[4] != "NUMVAL")
+				return
+			validpoll = 1
+			break
+
+		if(!validpoll)
+			usr << "\red Poll is not valid."
+			return
+
+		var/DBQuery/select_query2 = dbcon.NewQuery("SELECT id FROM erro_poll_option WHERE id = [optionid] AND pollid = [pollid]")
+		select_query2.Execute()
+
+		var/validoption = 0
+
+		while(select_query2.NextRow())
+			validoption = 1
+			break
+
+		if(!validoption)
+			usr << "\red Poll option is not valid."
+			return
+
+		var/alreadyvoted = 0
+
+		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_vote WHERE optionid = [optionid] AND ckey = '[usr.ckey]'")
+		voted_query.Execute()
+
+		while(voted_query.NextRow())
+			alreadyvoted = 1
+			break
+
+		if(alreadyvoted)
+			usr << "\red You already voted in this poll."
+			return
+
+		var/adminrank = "Player"
+		if(usr && usr.client && usr.client.holder)
+			adminrank = usr.client.holder.rank
+
+
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]', [(isnull(rating)) ? "null" : rating])")
+		insert_query.Execute()
+
+		usr << "\blue Vote successful."
 		usr << browse(null,"window=playerpoll")

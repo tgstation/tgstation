@@ -1,8 +1,6 @@
 /obj/machinery/meter/New()
 	..()
-
 	src.target = locate(/obj/machinery/atmospherics/pipe) in loc
-
 	return 1
 
 /obj/machinery/meter/initialize()
@@ -106,3 +104,18 @@
 			"You hear ratchet.")
 		new /obj/item/pipe_meter(src.loc)
 		del(src)
+
+// TURF METER - REPORTS A TILE'S AIR CONTENTS
+
+/obj/machinery/meter/turf/New()
+	..()
+	src.target = loc
+	return 1
+
+
+/obj/machinery/meter/turf/initialize()
+	if (!target)
+		src.target = loc
+
+/obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	return

@@ -17,9 +17,9 @@
 	update_icon()
 
 /obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) //Quick clipboard fix. -Agouri
-	if(ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
+	if(ishuman(usr))
 		var/mob/M = usr
-		if (!(istype(over_object, /obj/screen) ))
+		if(!(istype(over_object, /obj/screen) ))
 			return ..()
 
 		if(!M.restrained() && !M.stat)
@@ -31,7 +31,7 @@
 					M.u_equip(src)
 					M.put_in_l_hand(src)
 
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 			return
 
 /obj/item/weapon/clipboard/update_icon()
@@ -58,7 +58,7 @@
 
 /obj/item/weapon/clipboard/attack_self(mob/user as mob)
 	var/dat = "<title>Clipboard</title>"
-	if (haspen)
+	if(haspen)
 		dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
 	else
 		dat += "<A href='?src=\ref[src];addpen=1'>Add Pen</A><BR><HR>"
@@ -79,10 +79,10 @@
 
 /obj/item/weapon/clipboard/Topic(href, href_list)
 	..()
-	if ((usr.stat || usr.restrained()))
+	if((usr.stat || usr.restrained()))
 		return
 
-	if (usr.contents.Find(src))
+	if(usr.contents.Find(src))
 
 		if(href_list["pen"])
 			if(haspen)

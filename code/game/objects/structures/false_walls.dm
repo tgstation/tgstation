@@ -143,7 +143,7 @@
 		if(istype(W, /obj/item/weapon/screwdriver))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
-			if(!mineral)
+			if(!mineral || mineral == "metal")
 				T.ReplaceWithWall()
 			else
 				T.ReplaceWithMineralWall(mineral)
