@@ -53,8 +53,7 @@ mob/living/carbon/human/proc/handle_pain()
 		return
 	var/maxdam = 0
 	var/datum/organ/external/damaged_organ = null
-	for(var/name in organs)
-		var/datum/organ/external/E = organs[name]
+	for(var/datum/organ/external/E in organs)
 		// amputated limbs don't cause pain
 		if(E.amputated) continue
 

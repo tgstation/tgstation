@@ -78,6 +78,7 @@ var/list/department_radio_keys = list(
 
 /mob/living/say(var/message)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = capitalize(message)
 
 	if (!message)
 		return

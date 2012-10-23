@@ -92,6 +92,10 @@
 	//stuff in the stomach
 	handle_stomach()
 
+	handle_shock()
+
+	handle_pain()
+
 	//Status updates, death etc.
 	handle_regular_status_updates()		//TODO: optimise ~Carn
 	update_canmove()
@@ -968,6 +972,8 @@
 				silent = 0
 				return 1
 
+			// the analgesic effect wears off slowly
+			analgesic = max(0, analgesic - 1)
 
 			//UNCONSCIOUS. NO-ONE IS HOME
 			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
@@ -1383,6 +1389,44 @@
 	proc/handle_changeling()
 		if(mind && mind.changeling)
 			mind.changeling.regenerate()
+
+	handle_shock()
+		..()
+
+		if(analgesic) return // analgesic avoids all traumatic shock temporarily
+
+		if(health < 0)// health 0 makes you immediately collapse
+			shock_stage = max(shock_stage, 61)
+
+		if(traumatic_shock >= 80)
+			shock_stage += 1
+		else
+			shock_stage = min(shock_stage, 100)
+			shock_stage = max(shock_stage-1, 0)
+			return
+
+		if(shock_stage == 10)
+			src << "<font color='red'><b>"+pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")
+
+		if(shock_stage >= 30)
+			if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
+			eye_blurry = max(2, eye_blurry)
+			stuttering = max(stuttering, 5)
+
+		if(shock_stage == 40)
+			src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
+
+		if (shock_stage >= 60)
+			if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
+			if (prob(5))
+				Stun(20)
+				lying = 1
+
+		if(shock_stage == 80)
+			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
+
+		if (shock_stage > 80)
+			Paralyse(rand(15,28))
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

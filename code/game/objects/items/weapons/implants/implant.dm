@@ -18,24 +18,11 @@
 		return 1
 
 	proc/get_data()
-		return
-
-
-
-	trigger(emote, source as mob)
-		return
-
-
-	activate()
-		return
-
-
-	implanted(mob/source)
-		return 1
-
-
-	get_data()
 		return "No information available"
+
+	proc/hear(message, source as mob)
+		return
+
 
 
 
@@ -64,7 +51,7 @@ Implant Specifics:<BR>"}
 
 
 
-/obj/item/weapon/implant/explosive
+/obj/item/weapon/implant/dexplosive
 	name = "explosive"
 	desc = "And boom goes the weasel."
 
@@ -95,6 +82,53 @@ Implant Specifics:<BR>"}
 		if(src.imp_in)
 			src.imp_in.gib()
 
+//BS12 Explosive
+/obj/item/weapon/implant/explosive
+	name = "explosive implant"
+	desc = "A military grade micro bio-explosive. Highly dangerous."
+	var/phrase = "supercalifragilisticexpialidocious"
+
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Robust Corp RX-78 Intimidation Class Implant<BR>
+<b>Life:</b> Activates upon codephrase.<BR>
+<b>Important Notes:</b> Explodes<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
+<b>Special Features:</b> Explodes<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+		return dat
+
+	hear_talk(mob/M as mob, msg)
+		hear(msg)
+		return
+
+	hear(var/msg)
+		world << "Implant heard: [msg]"
+		var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
+		msg = sanitize_simple(msg, replacechars)
+		world << "Implant understood: [msg]"
+		world << "Implant's phrase: [phrase]"
+		if(findtext(msg,phrase))
+			if(istype(imp_in, /mob/))
+				var/mob/T = imp_in
+				T.gib()
+			explosion(get_turf(imp_in), 1, 3, 4, 6, 3)
+			var/turf/t = get_turf(imp_in)
+			if(t)
+				t.hotspot_expose(3500,125)
+			del(src)
+
+	implanted(mob/source as mob)
+		phrase = input("Choose activation phrase:") as text
+		var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
+		phrase = sanitize_simple(phrase, replacechars)
+		usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
+		usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
+		return 1
 
 
 /obj/item/weapon/implant/chem
@@ -212,3 +246,86 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
 		source << "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate."
 		return 1
+
+
+/obj/item/weapon/implant/death_alarm
+	name = "death alarm implant"
+	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
+	var/mobname = "Will Robinson"
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
+<b>Life:</b> Activates upon death.<BR>
+<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
+<b>Special Features:</b> Alerts crew to crewmember death.<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+		return dat
+
+	process()
+		if (!implanted) return
+		var/mob/M = imp_in
+		if (M == null)
+			world << "Are?.."
+		var/area/t = get_area(M)
+
+		if(isnull(M)) // If the mob got gibbed
+			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
+			a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
+			del(a)
+			processing_objects.Remove(src)
+		else if(M.stat == 2)
+			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
+			if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
+				//give the syndies a bit of stealth
+				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
+			else
+				a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
+			del(a)
+			processing_objects.Remove(src)
+
+
+	implanted(mob/source as mob)
+		mobname = source.real_name
+		processing_objects.Add(src)
+		return 1
+
+/obj/item/weapon/implant/compressed
+	name = "compressed matter implant"
+	desc = "Based on compressed matter technology, can store a single item."
+	var/activation_emote = "sigh"
+	var/obj/item/scanned = null
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
+<b>Life:</b> Activates upon death.<BR>
+<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
+<b>Special Features:</b> Alerts crew to crewmember death.<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+		return dat
+
+	trigger(emote, mob/source as mob)
+		if (src.scanned == null)
+			return 0
+
+		if (emote == src.activation_emote)
+			source << "The air glows as \the [src.scanned.name] uncompresses."
+			var/turf/t = get_turf(source)
+			src.scanned.loc = t
+			del src
+
+	implanted(mob/source as mob)
+		src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+		return 1
+
