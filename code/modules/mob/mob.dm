@@ -649,18 +649,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(statpanel("Status"))	//not looking at that panel
 
 		if(client && client.holder)
-			stat(null,"Location: \t ([x], [y], [z])")
-			stat(null,"CPU: \t [world.cpu]")
+			stat(null,"Location:\t([x], [y], [z])")
+			stat(null,"CPU:\t[world.cpu]")
+			stat(null,"Instances:\t[world.contents.len]")
 
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"Air-[master_controller.air_cost]\t Sun-[master_controller.sun_cost]")
-				stat(null,"Mob-[master_controller.mobs_cost]\t #[mob_list.len]")
-				stat(null,"Dis-[master_controller.diseases_cost]\t #[active_diseases.len]")
-				stat(null,"Mch-[master_controller.machines_cost]\t #[machines.len]")
-				stat(null,"Obj-[master_controller.objects_cost]\t #[processing_objects.len]")
-				stat(null,"Net-[master_controller.networks_cost]\t Pnet-[master_controller.powernets_cost]")
-				stat(null,"Tick-[master_controller.ticker_cost]\t ALL-[master_controller.total_cost]")
+				stat(null,"Air-[master_controller.air_cost]\tSun-[master_controller.sun_cost]")
+				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
+				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
+				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")
+				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
+				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
+				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
 
