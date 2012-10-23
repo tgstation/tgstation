@@ -195,8 +195,8 @@
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			visible_message("\blue The glass door was sliced open by []!", user)
-		flick(text("[]spark", src.base_state), src)
+			visible_message("\blue The glass door was sliced open by [user]!")
+		flick("[src.base_state]spark", src)
 		sleep(6)
 		open()
 		return 1
