@@ -131,7 +131,7 @@ ZIPPO
 
 
 /obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights the [name].")
-	if(!src.lit)
+	if(!src.lit && !is_butt)
 		src.lit = 1
 		damtype = "fire"
 		if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
