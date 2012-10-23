@@ -709,7 +709,7 @@
 	level = 2
 	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
 	function = "teleporter"
-	//data = "Clown Land"
+	data = "Clown Land"
 
 /obj/item/weapon/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
