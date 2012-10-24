@@ -119,7 +119,8 @@
 		if (holder.level >= -1)
 			seeprayers = 1
 
-			verbs += /client/proc/cmd_admin_say
+			verbs += /client/proc/cmd_admin_say //Allows anyone rank -1 or higher to use asay -- removed when it hits 0 (mods), added again at 1 (Temp Admin)
+			verbs += /client/proc/cmd_mod_say   //Allows anyone rank -1 or higher to use msay
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/toggleadminhelpsound
 		else
