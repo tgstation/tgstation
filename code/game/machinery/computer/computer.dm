@@ -48,6 +48,11 @@
 			else
 		return
 
+	bullet_act(var/obj/item/projectile/Proj)
+		if(prob(Proj.damage))
+			set_broken()
+		..()
+
 
 	blob_act()
 		if (prob(75))

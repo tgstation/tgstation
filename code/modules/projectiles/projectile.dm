@@ -26,7 +26,7 @@
 	var/yo = null
 	var/xo = null
 	var/current = null
-	var/turf/original = null // the original turf clicked
+	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
 
@@ -139,10 +139,9 @@
 				return
 			step_towards(src, current)
 			sleep(1)
-			if(!bumped)
-				if(loc == original)
-					for(var/mob/living/M in original)
-						if(!(M in permutated))
-							Bump(M)
-							sleep(1)
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
+						sleep(1)
 		return
