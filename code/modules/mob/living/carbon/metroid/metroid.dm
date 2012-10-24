@@ -790,7 +790,7 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 	var/Flush = 30
 	var/Uses = 5 // uses before it goes inert
 
-	New()
+/obj/item/metroid_core/New()
 		..()
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
@@ -798,7 +798,7 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 		POWERFLAG = rand(1,10)
 		Uses = rand(7, 25)
 		//flags |= NOREACT
-
+/*
 		spawn()
 			Life()
 
@@ -809,6 +809,7 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 			if(Flush <= 0)
 				reagents.clear_reagents()
 				Flush = 30
+*/
 
 /obj/item/weapon/reagent_containers/food/snacks/roro_egg
 	name = "roro egg"
@@ -819,28 +820,26 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 	origin_tech = "biotech=4"
 	var/grown = 0
 
-	New()
-		..()
-		reagents.add_reagent("nutriment", 5)
-		spawn(rand(1200,1500))//the egg takes a while to "ripen"
-			Grow()
+/obj/item/weapon/reagent_containers/food/snacks/roro_egg/New()
+	..()
+	reagents.add_reagent("nutriment", 5)
+	spawn(rand(1200,1500))//the egg takes a while to "ripen"
+		Grow()
 
-	proc/Grow()
-		grown = 1
-		icon_state = "roro egg-grown"
-		processing_objects.Add(src)
-		return
+/obj/item/weapon/reagent_containers/food/snacks/roro_egg/proc/Grow()
+	grown = 1
+	icon_state = "roro egg-grown"
+	processing_objects.Add(src)
+	return
 
-	proc/Hatch()
-		processing_objects.Remove(src)
-		var/turf/T = get_turf(src)
-		for(var/mob/O in hearers(T))
-			O.show_message("\blue The [name] pulsates and quivers!")
-		spawn(rand(50,100))
-			for(var/mob/O in hearers(T))
-				O.show_message("\blue The [name] bursts open!")
-			new/mob/living/carbon/metroid(T)
-			del(src)
+/obj/item/weapon/reagent_containers/food/snacks/roro_egg/proc/Hatch()
+	processing_objects.Remove(src)
+	var/turf/T = get_turf(src)
+	src.visible_message("\blue The [name] pulsates and quivers!")
+	spawn(rand(50,100))
+		src.visible_message("\blue The [name] bursts open!")
+		new/mob/living/carbon/metroid(T)
+		del(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/roro_egg/process()
