@@ -623,7 +623,7 @@
 		if ("disarm")
 			if(!(lying))
 				if (rand(1,100) <= 85)
-					Stun(10)
+					Stun(7)
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
 					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)

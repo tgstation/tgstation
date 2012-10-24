@@ -299,24 +299,31 @@ Alien plants should do something if theres a lot of poison
 	opacity = 0
 	anchored = 1
 
-	var/obj/target
+	var/atom/target
 	var/ticks = 0
 
 /obj/effect/alien/acid/proc/tick()
 	if(!target)
 		del(src)
+
 	ticks += 1
+
 	for(var/mob/O in hearers(src, null))
 		O.show_message("\green <B>[src.target] sizzles and begins to melt under the bubbling mess of acid!</B>", 1)
-	if(prob(ticks*10))
+
+	if(ticks >= 3)
+
 		for(var/mob/O in hearers(src, null))
 			O.show_message("\green <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B>", 1)
-//		if(target.occupant) //I tried to fix mechas-with-humans-getting-deleted. Made them unacidable for now.
-//			target.ex_act(1)
-		del(target)
+
+		if(istype(target, /turf/simulated/wall)) // I hate turf code.
+			var/turf/simulated/wall/W = target
+			W.dismantle_wall(1)
+		else
+			del(target)
 		del(src)
 		return
-	spawn(rand(200, 400)) tick()
+	spawn(rand(100, 150)) tick()
 
 /*
  * Egg

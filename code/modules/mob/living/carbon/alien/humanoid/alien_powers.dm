@@ -80,25 +80,38 @@ Doesn't work on other aliens/AI.*/
 The first proc defines the acid throw function while the other two work in the game itself. Probably a good idea to revise this later.
 I kind of like the right click only--the window version can get a little confusing. Perhaps something telling the alien they need to right click?
 /N*/
-/obj/proc/acid(user as mob)
-	var/obj/effect/alien/acid/A = new(src.loc)
-	A.target = src
+
+/proc/acid(user as mob, var/atom/O as obj|turf)
+	var/obj/effect/alien/acid/A = new(get_turf(O))
+	A.target = O
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\green <B>[user] vomits globs of vile stuff all over [src]. It begins to sizzle and melt under the bubbling mess of acid!</B>"), 1)
+		M.show_message(text("\green <B>[user] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</B>"), 1)
 	A.tick()
 
-/mob/living/carbon/alien/humanoid/proc/corrosive_acid(obj/O as obj in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
+/mob/living/carbon/alien/humanoid/proc/corrosive_acid(O as obj|turf in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
 	set name = "Corrossive Acid (200)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
 
 	if(powerc(200))
 		if(O in oview(1))
-			if(O.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-				src << "\green You cannot dissolve this object."
-			else
-				adjustToxLoss(-200)
-				O.acid(src)
+			// OBJ CHECK
+			if(isobj(O))
+				var/obj/I = O
+				if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
+					src << "\green You cannot dissolve this object."
+					return
+			// TURF CHECK
+			else if(isturf(O))
+				var/turf/T = O
+				if(istype(T, /turf/simulated/wall/r_wall))
+					src << "\green You cannot dissolve this object."
+					return
+			else// Not a type we can acid.
+				return
+
+			adjustToxLoss(-200)
+			acid(src, O)
 		else
 			src << "\green Target is too far away."
 	return
@@ -143,14 +156,14 @@ I kind of like the right click only--the window version can get a little confusi
 	return
 
 /mob/living/carbon/alien/humanoid/proc/resin() // -- TLE
-	set name = "Secrete Resin (100)"
+	set name = "Secrete Resin (75)"
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
 
-	if(powerc(100))
+	if(powerc(75))
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
-		if(!choice || !powerc(100))	return
-		adjustToxLoss(-100)
+		if(!choice || !powerc(75))	return
+		adjustToxLoss(-75)
 		src << "\green You shape a [choice]."
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)

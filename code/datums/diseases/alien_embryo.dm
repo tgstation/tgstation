@@ -43,16 +43,7 @@
 /datum/disease/alien_embryo/stage_act()
 	..()
 	switch(stage)
-		if(2)
-			if(prob(1))
-				affected_mob.emote("sneeze")
-			if(prob(1))
-				affected_mob.emote("cough")
-			if(prob(1))
-				affected_mob << "\red Your throat feels sore."
-			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
-		if(3)
+		if(2, 3)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
@@ -81,16 +72,7 @@
 			affected_mob.updatehealth()
 			if(prob(50))
 				if(gibbed != 0) return 0
-				var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-				var/i = 0
-				while(candidates.len <= 0 && i < 5)
-					for(var/mob/dead/observer/G in player_list)
-						if(G.client.be_alien)
-							if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
-								if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-									candidates += G.key
-					i++
-
+				var/list/candidates = get_alien_candidates()
 				var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
 				if(candidates.len)
 					new_xeno.key = pick(candidates)

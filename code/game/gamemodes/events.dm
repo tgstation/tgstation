@@ -269,17 +269,9 @@
 			if(temp_vent.network.normal_members.len > 50) // Stops Aliens getting stuck in small networks. See: Security, Virology
 				vents += temp_vent
 
-	var/list/candidates = list() //List of candidate KEYs to control the new larvae. ~Carn
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client.be_alien)
-				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
-					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-						candidates += G.key
-		i++
+	var/list/candidates = get_alien_candidates()
 
-	if(prob(33)) spawncount++ //sometimes, have two larvae spawn instead of one
+	if(prob(40)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
 
 		var/obj/vent = pick(vents)

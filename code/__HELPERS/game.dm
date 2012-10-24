@@ -280,3 +280,32 @@ proc/isInSight(var/atom/A, var/atom/B)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
+
+// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
+
+/proc/get_active_candidates(var/buffer = 1)
+
+	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
+	var/i = 0
+	while(candidates.len <= 0 && i < 5)
+		for(var/mob/dead/observer/G in player_list)
+			if(((G.client.inactivity/10)/60) <= buffer + i) // the most active players are more likely to become an alien
+				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+					candidates += G.key
+		i++
+	return candidates
+
+// Same as above but for alien candidates.
+
+/proc/get_alien_candidates()
+
+	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
+	var/i = 0
+	while(candidates.len <= 0 && i < 5)
+		for(var/mob/dead/observer/G in player_list)
+			if(G.client.be_alien)
+				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
+					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+						candidates += G.key
+		i++
+	return candidates
