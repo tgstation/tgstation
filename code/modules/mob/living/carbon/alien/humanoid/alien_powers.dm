@@ -76,17 +76,6 @@ Doesn't work on other aliens/AI.*/
 					src << "\green You need to be closer."
 	return
 
-/*Xenos now have a proc and a verb for drenching stuff in acid. I couldn't get them to work right when combined so this was the next best solution.
-The first proc defines the acid throw function while the other two work in the game itself. Probably a good idea to revise this later.
-I kind of like the right click only--the window version can get a little confusing. Perhaps something telling the alien they need to right click?
-/N*/
-
-/proc/acid(user as mob, var/atom/O as obj|turf)
-	var/obj/effect/alien/acid/A = new(get_turf(O))
-	A.target = O
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\green <B>[user] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</B>"), 1)
-	A.tick()
 
 /mob/living/carbon/alien/humanoid/proc/corrosive_acid(O as obj|turf in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
 	set name = "Corrossive Acid (200)"
@@ -104,14 +93,20 @@ I kind of like the right click only--the window version can get a little confusi
 			// TURF CHECK
 			else if(istype(O, /turf/simulated))
 				var/turf/T = O
+				// R WALL
 				if(istype(T, /turf/simulated/wall/r_wall))
+					src << "\green You cannot dissolve this object."
+					return
+				// R FLOOR
+				if(istype(T, /turf/simulated/floor/engine))
 					src << "\green You cannot dissolve this object."
 					return
 			else// Not a type we can acid.
 				return
 
 			adjustToxLoss(-200)
-			acid(src, O)
+			new /obj/effect/alien/acid(get_turf(O), O)
+			visible_message("\green <B>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</B>")
 		else
 			src << "\green Target is too far away."
 	return

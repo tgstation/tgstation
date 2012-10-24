@@ -64,7 +64,7 @@
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
-	if(!client && !stat)
+	if(!client && stat == CONSCIOUS)
 		if(prob(33) && canmove && isturf(loc))
 			step(src, pick(cardinal))
 		if(prob(1))
@@ -158,7 +158,8 @@
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/air_group/breath
-
+		if(health < 0)
+			losebreath++
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
 			if (prob(75)) //High chance of gasping for air

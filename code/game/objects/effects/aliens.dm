@@ -301,6 +301,17 @@ Alien plants should do something if theres a lot of poison
 
 	var/atom/target
 	var/ticks = 0
+	var/target_strength = 0
+
+/obj/effect/alien/acid/New(loc, target)
+	..(loc)
+	src.target = target
+
+	if(isturf(target)) // Turf take twice as long to take down.
+		target_strength = 8
+	else
+		target_strength = 4
+	tick()
 
 /obj/effect/alien/acid/proc/tick()
 	if(!target)
@@ -308,10 +319,7 @@ Alien plants should do something if theres a lot of poison
 
 	ticks += 1
 
-	for(var/mob/O in hearers(src, null))
-		O.show_message("\green <B>[src.target] sizzles and begins to melt under the bubbling mess of acid!</B>", 1)
-
-	if(ticks >= 3)
+	if(ticks >= target_strength)
 
 		for(var/mob/O in hearers(src, null))
 			O.show_message("\green <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B>", 1)
@@ -323,7 +331,17 @@ Alien plants should do something if theres a lot of poison
 			del(target)
 		del(src)
 		return
-	spawn(rand(100, 150)) tick()
+
+	switch(target_strength - ticks)
+		if(6)
+			visible_message("\green <B>[src.target] is holding up against the acid!</B>")
+		if(4)
+			visible_message("\green <B>[src.target]\s structure is being melted by the acid!</B>")
+		if(2)
+			visible_message("\green <B>[src.target] is struggling to withstand the acid!</B>")
+		if(0 to 1)
+			visible_message("\green <B>[src.target] begins to crumble under the acid!</B>")
+	spawn(rand(150, 200)) tick()
 
 /*
  * Egg

@@ -409,7 +409,6 @@
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)	return 0		//to avoid spamming with insulated glvoes on
-	else if(ismetroid(M)) return 0
 
 	var/area/source_area
 	if(istype(power_source,/area))

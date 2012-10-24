@@ -189,6 +189,10 @@
 		stat(null,"Power Level: [powerlevel]")
 
 
+/mob/living/carbon/metroid/adjustFireLoss(amount)
+	..(-abs(amount)) // Heals them
+	return
+
 /mob/living/carbon/metroid/bullet_act(var/obj/item/projectile/Proj)
 	attacked += 10
 	..(Proj)
