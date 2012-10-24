@@ -1,10 +1,16 @@
 /mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
+	mob_list -= src
+	dead_mob_list -= src
+	living_mob_list -= src
 	ghostize()
-	remove_from_mob_list(src)
 	..()
 
 /mob/New()
-	add_to_mob_list(src)
+	mob_list += src
+	if(stat == DEAD)
+		dead_mob_list += src
+	else
+		living_mob_list += src
 	..()
 
 /mob/proc/Cell()

@@ -106,7 +106,7 @@
 
 			job = "AI"
 
-	add_to_mob_list(src)
+	..()
 	return
 
 

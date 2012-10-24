@@ -132,7 +132,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 		var/n = 0
 		var/admins = 0
 
-		for(var/client/C in client_list)
+		for(var/client/C in clients)
 			if(C.holder)
 				if(C.holder.fakekey)
 					continue	//so stealthmins aren't revealed by the hub
@@ -202,7 +202,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 			if(pos)
 				var/m_key = copytext(line, 1, pos)
 				var/a_lev = copytext(line, pos + 3, length(line) + 1)
-				admins[m_key] = new /datum/admins(a_lev)
+				admin_datums[m_key] = new /datum/admins(a_lev)
 				diary << ("ADMIN: [m_key] = [a_lev]")
 	else
 		//The current admin system uses SQL
@@ -258,9 +258,9 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 			var/datum/admins/AD = new /datum/admins(adminrank)
 			AD.level = adminlevel //Legacy support for old verbs
 			AD.sql_permissions = permissions_actual
-			admins[adminckey] = AD
+			admin_datums[adminckey] = AD
 
-		if(!admins)
+		if(!admin_datums)
 			diary << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()

@@ -53,17 +53,15 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 		a_computerid = src.owner:computer_id
 		a_ip = src.owner:address
 
-//	var/list/client/clients = get_all_clients()
 	var/who
-	for(var/client/C in client_list)
+	for(var/client/C in clients)
 		if(!who)
 			who = "[C]"
 		else
 			who += ", [C]"
 
-	var/list/client/admin_clients = get_all_admin_clients()
 	var/adminwho
-	for(var/client/C in admin_clients)
+	for(var/client/C in admins)
 		if(!adminwho)
 			adminwho = "[C]"
 		else

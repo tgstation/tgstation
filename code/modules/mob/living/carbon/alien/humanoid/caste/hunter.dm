@@ -15,7 +15,7 @@
 	if(name == "alien hunter")
 		name = text("alien hunter ([rand(1, 1000)])")
 	real_name = name
-	add_to_mob_list(src)
+	..()
 
 /mob/living/carbon/alien/humanoid/hunter
 

@@ -1,44 +1,24 @@
-proc/get_all_clients()
-	var/list/client/clients = list()
 
-	for (var/mob/M in player_list)
-
-		clients += M.client
-
-	return clients
-
-proc/get_all_admin_clients()
-	var/list/client/clients = list()
-
-	for (var/client/C in admin_list)
-
-		clients += C
-
-	return clients
-
-
-/mob/verb/who()
+/client/verb/who()
 	set name = "Who"
 	set category = "OOC"
 
-	usr << "<b>Current Players:</b>"
+	var/msg = "<b>Current Players:</b>\n"
 
-	var/list/peeps = list()
+	var/list/Lines = list()
 
-	for (var/client/C in client_list)
-		var/entry = "\t"
-		if(usr.client.holder && usr.client.holder.level >= 0) //Everything above admin-observers get this.
-			entry += "[C.key]"
+	if(holder && holder.level >= 0)		//Everything above admin-observers get this.
+		for(var/client/C in clients)
+			var/entry = "\t[C.key]"
 			if(C.holder && C.holder.fakekey)
 				entry += " <i>(as [C.holder.fakekey])</i>"
-			var/mob/M = C.mob
-			entry += " - Playing as [M.real_name]"
-			switch(M.stat)
+			entry += " - Playing as [C.mob.real_name]"
+			switch(C.mob.stat)
 				if(UNCONSCIOUS)
 					entry += " - <font color='darkgray'><b>Unconscious</b></font>"
 				if(DEAD)
-					if(isobserver(M))
-						var/mob/dead/observer/O = M
+					if(isobserver(C.mob))
+						var/mob/dead/observer/O = C.mob
 						if(O.started_as_observer)
 							entry += " - <font color='gray'>Observing</font>"
 						else
@@ -47,39 +27,46 @@ proc/get_all_admin_clients()
 						entry += " - <font color='black'><b>DEAD</b></font>"
 			if(is_special_character(C.mob))
 				entry += " - <b><font color='red'>Antagonist</font></b>"
-			entry += " (<A HREF='?src=\ref[src.client.holder];adminmoreinfo=\ref[M]'>?</A>)"
-		else
+			entry += " (<A HREF='?src=\ref[holder];adminmoreinfo=\ref[C.mob]'>?</A>)"
+			Lines += entry
+	else
+		for(var/client/C in clients)
 			if(C.holder && C.holder.fakekey)
-				entry += "[C.holder.fakekey]"
+				Lines += C.holder.fakekey
 			else
-				entry += "[C.key]"
+				Lines += C.key
 
-		peeps += entry
+	for(var/line in sortList(Lines))
+		msg += "[line]\n"
 
-	peeps = sortList(peeps)
-
-	for (var/p in peeps)
-		usr << p
-
-	usr << "<b>Total Players: [length(peeps)]</b>"
+	msg += "<b>Total Players: [length(Lines)]</b>"
+	src << msg
 
 /client/verb/adminwho()
 	set category = "Admin"
 	set name = "Adminwho"
 
-	usr << "<b>Current Admins:</b>"
+	var/msg = "<b>Current Admins:</b>\n"
+	if(holder)
+		for(var/client/C in admins)
+			msg += "\t[C] is a [C.holder.rank]"
 
-	for (var/client/C in admin_list)
-		if(C && C.holder)
-			if(usr.client && usr.client.holder)
-				var/afk = 0
-				if(C.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
-					afk = 1
-				if(isobserver(C.mob))
-					usr << "\t[C] is a [C.holder.rank][C.holder.fakekey ? " <i>(as [C.holder.fakekey])</i>" : ""] - Observing [afk ? "(AFK)" : ""]"
-				else if(istype(C.mob,/mob/new_player))
-					usr << "\t[C] is a [C.holder.rank][C.holder.fakekey ? " <i>(as [C.holder.fakekey])</i>" : ""] - Has not entered [afk ? "(AFK)" : ""]"
-				else if(istype(C.mob,/mob/living))
-					usr << "\t[C] is a [C.holder.rank][C.holder.fakekey ? " <i>(as [C.holder.fakekey])</i>" : ""] - Playing [afk ? "(AFK)" : ""]"
-			else if(!C.holder.fakekey)
-				usr << "\t[C] is a [C.holder.rank]"
+			if(C.holder.fakekey)
+				msg += " <i>(as [C.holder.fakekey])</i>"
+
+			if(isobserver(C.mob))
+				msg += " - Observing"
+			else if(istype(C.mob,/mob/new_player))
+				msg += " - Lobby"
+			else
+				msg += " - Playing"
+
+			if(C.inactivity > AFK_THRESHOLD)
+				msg += " (AFK)"
+			msg += "\n"
+	else
+		for(var/client/C in admins)
+			if(!C.holder.fakekey)
+				msg += "\t[C] is a [C.holder.rank]\n"
+
+	src << msg

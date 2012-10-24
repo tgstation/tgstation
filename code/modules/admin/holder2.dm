@@ -1,8 +1,8 @@
 /client/proc/deadmin()
-	admins.Remove(ckey)
+	admin_datums -= ckey
 	if(holder)	del(holder)
-	src.clear_admin_verbs()
-	admin_list -= src
+	clear_admin_verbs()
+	admins -= src
 	return 1
 
 var/list/admin_datums = list()

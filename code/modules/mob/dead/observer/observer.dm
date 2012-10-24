@@ -24,10 +24,7 @@
 	verbs += /mob/dead/observer/proc/dead_tele
 	stat = DEAD
 
-	dead_mob_list += src
-	add_to_mob_list(src)
 	var/turf/T
-
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
@@ -52,7 +49,7 @@
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
-	return
+	..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1

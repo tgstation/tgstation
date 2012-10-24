@@ -15,6 +15,9 @@
 
 	anchored = 1	//  don't get pushed around
 
+	New()
+		mob_list += src
+
 	verb/new_player_panel()
 		set src = usr
 		new_player_panel_proc()

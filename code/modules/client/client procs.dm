@@ -95,20 +95,21 @@
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
-	client_list += src
-	if ( (world.address == address || !address) && !host )
-		host = key
-		world.update_status()
+	clients += src
+	directory[ckey] = src
 
 	//Admin Authorisation
-	var/datum/admins/Admin_Obj = admins[ckey]
-	if(istype(Admin_Obj))
-		admin_list += src
-		holder = Admin_Obj
+	holder = admin_datums[ckey]
+	if(holder)
+		admins += src
 		holder.owner = src
 		holder.state = null
 
 	. = ..()	//calls mob.Login()
+
+	if( (world.address == address || !address) && !host )
+		host = key
+		world.update_status()
 
 	if(holder)
 		admin_memo_show()
@@ -122,8 +123,10 @@
 /client/Del()
 	if(holder)
 		holder.state = null
-		admin_list -= src
-	client_list -= src
+		holder.owner = null
+		admins -= src
+	directory -= ckey
+	clients -= src
 	return ..()
 
 

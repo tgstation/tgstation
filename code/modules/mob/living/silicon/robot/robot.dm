@@ -106,7 +106,6 @@
 //Improved /N
 /mob/living/silicon/robot/Del()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
-		add_to_mob_list(mmi.brainmob)
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
 		if(mind)	mind.transfer_to(mmi.brainmob)
