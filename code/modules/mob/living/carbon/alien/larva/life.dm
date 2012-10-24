@@ -222,17 +222,17 @@
 			blinded = 1
 			silent = 0
 		else				//ALIVE. LIGHTS ARE ON
-			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+			if(health < -25 || brain_op_stage == 4.0)
 				death()
 				blinded = 1
 				silent = 0
 				return 1
 
 			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
-				if( health <= 20 && prob(1) )
-					spawn(0)
-						emote("gasp")
+			if( (getOxyLoss() > 50) || (0 > health) )
+				//if( health <= 20 && prob(1) )
+				//	spawn(0)
+				//		emote("gasp")
 				if(!reagents.has_reagent("inaprovaline"))
 					adjustOxyLoss(1)
 				Paralyse(3)

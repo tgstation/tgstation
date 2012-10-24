@@ -1466,6 +1466,88 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Nanotrasen Cruiser"
 	icon_state = "away"
 	requires_power = 0
+
+/area/awaymission/spacebattle/syndicate1
+	name = "\improper Syndicate Assault Ship 1"
+
+/area/awaymission/spacebattle/syndicate2
+	name = "\improper Syndicate Assault Ship 2"
+
+/area/awaymission/spacebattle/syndicate3
+	name = "\improper Syndicate Assault Ship 3"
+
+/area/awaymission/spacebattle/syndicate4
+	name = "\improper Syndicate War Sphere 1"
+
+/area/awaymission/spacebattle/syndicate5
+	name = "\improper Syndicate War Sphere 2"
+
+/area/awaymission/spacebattle/syndicate6
+	name = "\improper Syndicate War Sphere 3"
+
+/area/awaymission/spacebattle/syndicate7
+	name = "\improper Syndicate Fighter"
+
+/area/awaymission/spacebattle/secret
+	name = "\improper Hidden Chamber"
+
+
+/area/awaymission/beach
+	name = "Beach"
+	icon_state = "null"
+	luminosity = 1
+	lighting_use_dynamic = 0
+	requires_power = 0
+	var/sound/mysound = null
+
+	New()
+		..()
+		var/sound/S = new/sound()
+		mysound = S
+		S.file = 'sound/ambience/shore.ogg'
+		S.repeat = 1
+		S.wait = 0
+		S.channel = 123
+		S.volume = 100
+		S.priority = 255
+		S.status = SOUND_UPDATE
+		process()
+
+	Entered(atom/movable/Obj,atom/OldLoc)
+		if(ismob(Obj))
+			if(Obj:client)
+				mysound.status = SOUND_UPDATE
+				Obj << mysound
+		return
+
+	Exited(atom/movable/Obj)
+		if(ismob(Obj))
+			if(Obj:client)
+				mysound.status = SOUND_PAUSED | SOUND_UPDATE
+				Obj << mysound
+
+	proc/process()
+		set background = 1
+
+		var/sound/S = null
+		var/sound_delay = 0
+		if(prob(25))
+			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
+			sound_delay = rand(0, 50)
+
+		for(var/mob/living/carbon/human/H in src)
+			if(H.s_tone > -55)
+				H.s_tone--
+				H.update_body()
+			if(H.client)
+				mysound.status = SOUND_UPDATE
+				H << mysound
+				if(S)
+					spawn(sound_delay)
+						H << S
+
+		spawn(60) .()
+
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.
@@ -1587,3 +1669,4 @@ var/list/the_station_areas = list (
 						H << S
 
 		spawn(60) .()
+

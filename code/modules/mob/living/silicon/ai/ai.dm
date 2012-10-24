@@ -41,6 +41,7 @@
 	var/mob/living/silicon/ai/parent = null
 
 	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
+	var/datum/trackable/track = null
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	var/list/possibleNames = ai_names

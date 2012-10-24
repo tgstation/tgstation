@@ -2,22 +2,16 @@
 	name = "filing cabinet"
 	desc = "A large cabinet with drawers."
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "filing_cabinet0"
-	var/icon_closed = "filing_cabinet0"
-	var/icon_open = "filing_cabinet1"
+	icon_state = "filingcabinet"
 	density = 1
 	anchored = 1
 
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"
 	icon_state = "chestdrawer"
-	icon_closed = "chestdrawer"
-	icon_open = "chestdrawer-open"
 
-/obj/structure/filingcabinet/filingcabinet
-	icon_state = "filingcabinet"
-	icon_closed = "filingcabinet"
-	icon_open = "filingcabinet-open"
+/obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unecessary map issues, but please don't name stuff like this in future -Pete
+	icon_state = "tallcabinet"
 
 /obj/structure/filingcabinet/initialize()
 	for(var/obj/item/I in loc)
@@ -29,9 +23,9 @@
 		user << "<span class='notice'>You put [P] in [src].</span>"
 		user.drop_item()
 		P.loc = src
-		icon_state = icon_open
+		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
-		icon_state = icon_closed
+		icon_state = initial(icon_state)
 		updateUsrDialog()
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -65,8 +59,7 @@
 		if(P && in_range(src, usr))
 			usr.put_in_hands(P)
 			updateUsrDialog()
-			icon_state = icon_open
+			icon_state = "[initial(icon_state)]-open"
 			sleep(5)
-			icon_state = icon_closed
-
+			icon_state = initial(icon_state)
 

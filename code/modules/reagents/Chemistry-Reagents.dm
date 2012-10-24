@@ -1131,19 +1131,23 @@ datum
 				..()
 				return
 			reaction_obj(var/obj/O, var/volume)
-				if((!O) || (!volume))	return 0
 				src = null
+				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/roro_egg))
+					var/obj/item/weapon/reagent_containers/food/snacks/roro_egg/egg = O
+					if (egg.grown)
+						egg.Hatch()
+				if((!O) || (!volume))	return 0
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
+				fuel.moles = volume
 				napalm.trace_gases += fuel
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
+				fuel.moles = volume
 				napalm.trace_gases += fuel
 				T.assume_air(napalm)
 				return
@@ -2049,6 +2053,240 @@ datum
 				for(var/mob/living/carbon/metroid/M in T)
 					M.adjustToxLoss(rand(15,30))
 
+
+
+		blackpepper
+			name = "Black Pepper"
+			id = "blackpepper"
+			description = "A powder ground from peppercorns. *AAAACHOOO*"
+			reagent_state = SOLID
+			// no color (ie, black)
+
+		coco
+			name = "Coco Powder"
+			id = "coco"
+			description = "A fatty, bitter paste made from coco beans."
+			reagent_state = SOLID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				..()
+				return
+
+		hot_coco
+			name = "Hot Chocolate"
+			id = "hot_coco"
+			description = "Made with love! And coco beans."
+			reagent_state = LIQUID
+			nutriment_factor = 2 * REAGENTS_METABOLISM
+			color = "#403010" // rgb: 64, 48, 16
+
+			on_mob_life(var/mob/living/M as mob)
+				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+				M.nutrition += nutriment_factor
+				..()
+				return
+
+		amatoxin
+			name = "Amatoxin"
+			id = "amatoxin"
+			description = "A powerful poison derived from certain species of mushroom."
+			color = "#792300" // rgb: 121, 35, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.adjustToxLoss(1)
+				..()
+				return
+
+		psilocybin
+			name = "Psilocybin"
+			id = "psilocybin"
+			description = "A strong psycotropic derived from certain species of mushroom."
+			color = "#E700E7" // rgb: 231, 0, 231
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.druggy = max(M.druggy, 30)
+				if(!data) data = 1
+				switch(data)
+					if(1 to 5)
+						if (!M.stuttering) M.stuttering = 1
+						M.make_dizzy(5)
+						if(prob(10)) M.emote(pick("twitch","giggle"))
+					if(5 to 10)
+						if (!M.stuttering) M.stuttering = 1
+						M.make_jittery(10)
+						M.make_dizzy(10)
+						M.druggy = max(M.druggy, 35)
+						if(prob(20)) M.emote(pick("twitch","giggle"))
+					if (10 to INFINITY)
+						if (!M.stuttering) M.stuttering = 1
+						M.make_jittery(20)
+						M.make_dizzy(20)
+						M.druggy = max(M.druggy, 40)
+						if(prob(30)) M.emote(pick("twitch","giggle"))
+				holder.remove_reagent(src.id, 0.2)
+				data++
+				..()
+				return
+
+		sprinkles
+			name = "Sprinkles"
+			id = "sprinkles"
+			description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
+					if(!M) M = holder.my_atom
+					M.heal_organ_damage(1,1)
+					M.nutrition += nutriment_factor
+					..()
+					return
+				..()
+/*	//removed because of meta bullshit. this is why we can't have nice things.
+		syndicream
+			name = "Cream filling"
+			id = "syndicream"
+			description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#AB7878" // rgb: 171, 120, 120
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				if(istype(M, /mob/living/carbon/human) && M.mind)
+					if(M.mind.special_role)
+						if(!M) M = holder.my_atom
+						M.heal_organ_damage(1,1)
+						M.nutrition += nutriment_factor
+						..()
+						return
+				..()
+*/
+		cornoil
+			name = "Corn Oil"
+			id = "cornoil"
+			description = "An oil derived from various types of corn."
+			reagent_state = LIQUID
+			nutriment_factor = 20 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				..()
+				return
+			reaction_turf(var/turf/simulated/T, var/volume)
+				if (!istype(T)) return
+				src = null
+				if(volume >= 3)
+					if(T.wet >= 1) return
+					T.wet = 1
+					if(T.wet_overlay)
+						T.overlays -= T.wet_overlay
+						T.wet_overlay = null
+					T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
+					T.overlays += T.wet_overlay
+
+					spawn(800)
+						if (!istype(T)) return
+						if(T.wet >= 2) return
+						T.wet = 0
+						if(T.wet_overlay)
+							T.overlays -= T.wet_overlay
+							T.wet_overlay = null
+				var/hotspot = (locate(/obj/fire) in T)
+				if(hotspot)
+					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+					lowertemp.react()
+					T.assume_air(lowertemp)
+					del(hotspot)
+
+		enzyme
+			name = "Universal Enzyme"
+			id = "enzyme"
+			description = "A universal enzyme used in the preperation of certain chemicals and foods."
+			reagent_state = LIQUID
+			color = "#365E30" // rgb: 54, 94, 48
+
+		dry_ramen
+			name = "Dry Ramen"
+			id = "dry_ramen"
+			description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
+			reagent_state = SOLID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				..()
+				return
+
+		hot_ramen
+			name = "Hot Ramen"
+			id = "hot_ramen"
+			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
+			reagent_state = LIQUID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+				..()
+				return
+
+		hell_ramen
+			name = "Hell Ramen"
+			id = "hell_ramen"
+			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
+			reagent_state = LIQUID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+				..()
+				return
+
+		flour
+			name = "flour"
+			id = "flour"
+			description = "This is what you rub all over yourself to pretend to be a ghost."
+			reagent_state = SOLID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#FFFFFF" // rgb: 0, 0, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				..()
+				return
+
+			reaction_turf(var/turf/T, var/volume)
+				src = null
+				if(!istype(T, /turf/space))
+					new /obj/effect/decal/cleanable/flour(T)
+
+		cherryjelly
+			name = "Cherry Jelly"
+			id = "cherryjelly"
+			description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#801E28" // rgb: 128, 30, 40
+
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				..()
+				return
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////

@@ -35,7 +35,7 @@
 
 		NC.mergeConnectedNetworks(NC.d2)
 		NC.mergeConnectedNetworksOnTurf()
-		if(powernet==null)
+		if(powernet == null)
 			if(NC.powernet == null)
 				NC.powernet = new()
 				powernets += NC.powernet

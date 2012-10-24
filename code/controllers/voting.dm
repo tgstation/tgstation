@@ -167,8 +167,11 @@ datum/controller/vote
 	proc/interface(var/client/C)
 		if(!C)	return
 		var/admin = 0
+		var/trialmin = 0
 		if(C.holder)
 			admin = 1
+			if (C.holder.level >= 3)
+				trialmin = 1
 		voting |= C
 
 		. = "<html><head><title>Voting Panel</title></head><body>"
@@ -186,24 +189,24 @@ datum/controller/vote
 		else
 			. += "<h2>Start a vote:</h2><hr><ul><li>"
 			//restart
-			if(admin || config.allow_vote_restart)
+			if(trialmin || config.allow_vote_restart)
 				. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 			else
 				. += "<font color='grey'>Restart (Disallowed)</font>"
-			if(admin)
+			if(trialmin)
 				. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 			. += "</li><li>"
 			//gamemode
-			if(admin || config.allow_vote_mode)
+			if(trialmin || config.allow_vote_mode)
 				. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
 			else
 				. += "<font color='grey'>GameMode (Disallowed)</font>"
-			if(admin)
+			if(trialmin)
 				. += "\t(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 
 			. += "</li>"
 			//custom
-			if(admin)
+			if(trialmin)
 				. += "<li><a href='?src=\ref[src];vote=custom'>Custom</a></li>"
 			. += "</ul><hr>"
 		. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a></body></html>"

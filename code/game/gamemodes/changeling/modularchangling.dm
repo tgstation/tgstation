@@ -1,3 +1,4 @@
+// READ: Don't use the apostrophe in name or desc. Causes script errors.
 
 var/list/powers = typesof(/datum/power/changeling) - /datum/power/changeling	//needed for the badmin verb for now
 var/list/datum/power/changeling/powerinstances = list()
@@ -33,6 +34,22 @@ var/list/datum/power/changeling/powerinstances = list()
 	allowduringlesserform = 1
 	verbpath = /mob/proc/changeling_fakedeath
 
+// Hivemind
+
+/datum/power/changeling/hive_upload
+	name = "Hive Channel"
+	desc = "We can channel a DNA into the airwaves, allowing our fellow changelings to absorb it and transform into it as if they acquired the DNA themselves."
+	helptext = "Allows other changelings to absorb the DNA you channel from the airwaves. Will not help them towards their absorb objectives."
+	genomecost = 0
+	verbpath = /mob/proc/changeling_hiveupload
+
+/datum/power/changeling/hive_download
+	name = "Hive Absorb"
+	desc = "We can absorb a single DNA from the airwaves, allowing us to use more disguises with help from our fellow changelings."
+	helptext = "Allows you to absorb a single DNA and use it. Does not count towards your absorb objective."
+	genomecost = 0
+	verbpath = /mob/proc/changeling_hivedownload
+
 /datum/power/changeling/lesser_form
 	name = "Lesser Form"
 	desc = "We debase ourselves and become lesser.  We become a monkey."
@@ -60,6 +77,21 @@ var/list/datum/power/changeling/powerinstances = list()
 	genomecost = 2
 	allowduringlesserform = 1
 	verbpath = /mob/proc/changeling_silence_sting
+
+/datum/power/changeling/mimicvoice
+	name = "Mimic Voice"
+	desc = "We shape our vocal glands to sound like a desired voice."
+	helptext = "Will turn your voice into the name that you enter."
+	genomecost = 3
+	verbpath = /mob/proc/changeling_mimicvoice
+
+/datum/power/changeling/extractdna
+	name = "Extract DNA"
+	desc = "We stealthily sting a target and extract the DNA from them."
+	helptext = "Will give you the DNA of your target, allowing you to transform into them. Does not count towards absorb objectives."
+	genomecost = 4
+	allowduringlesserform = 1
+	verbpath = /mob/proc/changeling_extract_dna_sting
 
 /datum/power/changeling/transformation_sting
 	name = "Transformation Sting"
@@ -135,7 +167,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	name = "Digital Camoflauge"
 	desc = "We evolve the ability to distort our form and proprtions, defeating common altgorthms used to detect lifeforms on cameras."
 	helptext = "We cannot be tracked by camera while using this skill.  However, humans looking at us will find us.. uncanny.  We must constantly expend chemicals to maintain our form like this."
-	genomecost = 4
+	genomecost = 3
 	allowduringlesserform = 1
 	verbpath = /mob/proc/changeling_digitalcamo
 
@@ -145,6 +177,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	helptext = "Heals a moderate amount of damage every tick."
 	genomecost = 8
 	verbpath = /mob/proc/changeling_rapidregen
+
 
 
 // Modularchangling, totally stolen from the new player panel.  YAYY

@@ -5,6 +5,7 @@
 	name = "Air Vent"
 	desc = "Has a valve and pump attached to it"
 
+	var/area/initial_loc
 	level = 1
 	var/area_uid
 	var/id_tag = null
@@ -41,10 +42,10 @@
 			icon_state = "in"
 
 	New()
-		var/area/A = get_area(loc)
-		if (A.master)
-			A = A.master
-		area_uid = A.uid
+		initial_loc = get_area(loc)
+		if (initial_loc.master)
+			initial_loc = initial_loc.master
+		area_uid = initial_loc.uid
 		if (!id_tag)
 			assign_uid()
 			id_tag = num2text(uid)
@@ -321,3 +322,8 @@
 				"You hear ratchet.")
 			new /obj/item/pipe(loc, make_from=src)
 			del(src)
+
+	/obj/machinery/atmospherics/unary/vent_pump/Del()
+		initial_loc.air_scrub_info -= id_tag
+		..()
+		return

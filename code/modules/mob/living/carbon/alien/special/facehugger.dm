@@ -11,6 +11,7 @@ var/const/MAX_ACTIVE_TIME = 400
 /obj/item/clothing/mask/facehugger
 	name = "alien"
 	desc = "It has some sort of a tube at the end of its tail."
+	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
@@ -167,6 +168,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		return
 
 	stat = CONSCIOUS
+	icon_state = "[initial(icon_state)]"
 
 /*		for(var/mob/living/carbon/alien/alien in world)
 		var/image/activeIndicator = image('icons/mob/alien.dmi', loc = src, icon_state = "facehugger_active")
@@ -183,6 +185,7 @@ var/const/MAX_ACTIVE_TIME = 400
 /*		RemoveActiveIndicators()	*/
 
 	stat = UNCONSCIOUS
+	icon_state = "[initial(icon_state)]_inactive"
 
 	spawn(rand(MIN_ACTIVE_TIME,MAX_ACTIVE_TIME))
 		GoActive()
@@ -194,7 +197,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /*		RemoveActiveIndicators()	*/
 
-	icon_state = "facehugger_dead"
+	icon_state = "[initial(icon_state)]_dead"
 	stat = DEAD
 
 	for(var/mob/O in viewers(src, null))

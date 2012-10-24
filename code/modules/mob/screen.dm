@@ -36,6 +36,8 @@
 		switch(owner.icon_action_button)
 			if("action_hardhat", "action_welding")
 				usr.update_inv_head()
+			if("action_welding_g")
+				usr.update_inv_glasses()
 			if("action_jetpack")
 				usr.update_inv_back()
 
