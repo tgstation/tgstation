@@ -129,3 +129,22 @@
 		update_icon()
 		return
 
+
+/obj/item/weapon/gun/proc/isHandgun()
+	if(istype(src,/obj/item/weapon/gun/projectile/shotgun))
+		return 0
+	if(istype(src,/obj/item/weapon/gun/projectile/automatic))
+		return 0
+	if(istype(src,/obj/item/weapon/gun/energy/lasercannon))
+		return 0
+	if(istype(src,/obj/item/weapon/gun/energy/pulse_rifle))
+		return 0
+	if(istype(src,/obj/item/weapon/gun/energy/ionrifle))
+		return 0
+	if(istype(src,/obj/item/weapon/gun/energy/ionrifle))
+		return 0
+	if(istype(src,/obj/item/weapon/gun/energy/decloner))
+		return 0
+	if(istype(src,/obj/item/weapon/gun/energy/staff))
+		return 0
+	return 1

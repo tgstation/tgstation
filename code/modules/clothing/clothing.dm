@@ -152,6 +152,8 @@ BLIND     // can't see anything
 		hastie = I
 		I.loc = src
 		user << "<span class='notice'>You attach [I] to [src].</span>"
+		if (istype(hastie,/obj/item/clothing/tie/holster))
+			verbs += /obj/item/clothing/under/proc/holster
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
@@ -213,6 +215,8 @@ BLIND     // can't see anything
 	if(hastie)
 		usr.put_in_hands(hastie)
 		hastie = null
+		if (istype(hastie,/obj/item/clothing/tie/holster))
+			verbs -= /obj/item/clothing/under/proc/holster
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
@@ -221,3 +225,40 @@ BLIND     // can't see anything
 /obj/item/clothing/under/rank/New()
 	sensor_mode = pick(0,1,2,3)
 	..()
+
+/obj/item/clothing/under/proc/holster()
+	set name = "Holster"
+	set category = "Object"
+	set src in usr
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat) return
+
+	if (!hastie || !istype(hastie,/obj/item/clothing/tie/holster))
+		usr << "\red You need a holster for that!"
+		return
+	var/obj/item/clothing/tie/holster/H = hastie
+
+	if(!H.holstered)
+		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
+			usr << "\blue You need your gun equiped to holster it."
+			return
+		var/obj/item/weapon/gun/W = usr.get_active_hand()
+		if (!W.isHandgun())
+			usr << "\red This gun won't fit in holster!"
+			return
+		H.holstered = usr.get_active_hand()
+		usr.drop_item()
+		H.holstered.loc = src
+		usr.visible_message("\blue [usr] holsters \the [H.holstered].", "You holster \the [H.holstered].")
+	else
+		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
+			usr << "\red You need an empty hand to draw the gun!"
+		else
+			if(usr.a_intent == "hurt")
+				usr.visible_message("\red [usr] draws \the [H.holstered], ready to shoot!", \
+				"\red You draw \the [H.holstered], ready to shoot!")
+			else
+				usr.visible_message("\blue [usr] draws \the [H.holstered], pointing it at tthe ground.", \
+				"\blue You draw \the [H.holstered], pointing it at tthe ground.")
+			usr.put_in_hands(H.holstered)
+			H.holstered = null
