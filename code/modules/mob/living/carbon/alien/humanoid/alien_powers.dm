@@ -102,7 +102,7 @@ I kind of like the right click only--the window version can get a little confusi
 					src << "\green You cannot dissolve this object."
 					return
 			// TURF CHECK
-			else if(isturf(O))
+			else if(istype(O, /turf/simulated))
 				var/turf/T = O
 				if(istype(T, /turf/simulated/wall/r_wall))
 					src << "\green You cannot dissolve this object."
