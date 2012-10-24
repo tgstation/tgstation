@@ -23,7 +23,6 @@
 	return(1)
 
 /client/proc/update_admins(var/rank)
-	world << "update_admins([rank])"
 	if(!holder)
 		holder = new /datum/admins(rank)
 		admin_list |= src
