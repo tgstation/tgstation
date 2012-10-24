@@ -17,6 +17,8 @@ to null does not delete the object itself. Thank you.
 
 */
 
+var/list/diseases = typesof(/datum/disease) - /datum/disease
+
 
 /datum/disease
 	var/form = "Virus" //During medscans, what the disease is referred to as

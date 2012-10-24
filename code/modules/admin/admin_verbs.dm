@@ -592,6 +592,17 @@
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
 
+/client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
+	set category = "Fun"
+	set name = "Give Disease"
+	set desc = "Gives a Disease to a mob."
+	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in diseases
+	if(!D) return
+	T.contract_disease(new D, 1)
+	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
+	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].", 1)
+
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
 	set name = "Make Sound"

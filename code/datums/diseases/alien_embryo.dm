@@ -5,7 +5,6 @@
 	if(!holder) return
 	if(holder == affected_mob)
 		stage_act()
-
 	if(affected_mob)
 		if(affected_mob.stat == DEAD)
 			if(prob(50))

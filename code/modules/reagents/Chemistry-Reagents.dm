@@ -101,9 +101,11 @@ datum
 				src = null
 				for(var/datum/disease/D in self.data["viruses"])
 					var/datum/disease/virus = new D.type
+					// We don't spread.
+					if(virus.spread_type == SPECIAL || virus.spread_type == NON_CONTAGIOUS) continue
+
 					if(method == TOUCH)
 						M.contract_disease(virus)
-
 					else //injected
 						M.contract_disease(virus, 1, 0)
 

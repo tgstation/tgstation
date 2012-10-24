@@ -245,6 +245,7 @@ client
 
 		if(ismob(D))
 			body += "<option value='byond://?src=\ref[src];give_spell=\ref[D]'>Give Spell</option>"
+			body += "<option value='byond://?src=\ref[src];give_disease=\ref[D]'>Give Disease</option>"
 			body += "<option value='byond://?src=\ref[src];ninja=\ref[D]'>Make Space Ninja</option>"
 			body += "<option value='byond://?src=\ref[src];godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
@@ -476,6 +477,19 @@ client
 				return
 			if(!admin_rank_check(src.holder.level, 3)) return
 			src.give_spell(MOB)
+			href_list["datumrefresh"] = href_list["give_spell"]
+		else if (href_list["give_disease"])
+			if(!href_list["give_disease"])
+				return
+			var/mob/MOB = locate(href_list["give_disease"])
+			if(!MOB)
+				return
+			if(!ismob(MOB))
+				return
+			if(!src.holder)
+				return
+			if(!admin_rank_check(src.holder.level, 3)) return
+			src.give_disease(MOB)
 			href_list["datumrefresh"] = href_list["give_spell"]
 		else if (href_list["ninja"])
 			if(!href_list["ninja"])
