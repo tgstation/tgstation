@@ -62,7 +62,7 @@
 
 
 /obj/item/weapon/implanter/explosive
-	name = "implanter-explosive"
+	name = "implanter (E)"
 
 /obj/item/weapon/implanter/explosive/New()
 	src.imp = new /obj/item/weapon/implant/explosive( src )
@@ -78,3 +78,38 @@
 	..()
 	update()
 	return
+
+/obj/item/weapon/implanter/compressed
+	name = "implanter (C)"
+	icon_state = "cimplanter0"
+
+/obj/item/weapon/implanter/compressed/New()
+	imp = new /obj/item/weapon/implant/compressed( src )
+	..()
+	update()
+	return
+
+/obj/item/weapon/implanter/compressed/update()
+	if (imp)
+		var/obj/item/weapon/implant/compressed/c = imp
+		if(!c.scanned)
+			icon_state = "cimplanter0"
+		else
+			icon_state = "cimplanter1"
+	else
+		icon_state = "cimplanter2"
+	return
+
+/obj/item/weapon/implanter/compressed/attack(mob/M as mob, mob/user as mob)
+	var/obj/item/weapon/implant/compressed/c = imp
+	if (!c)	return
+	if (c.scanned == null)
+		user << "Please scan an object with the implanter first."
+		return
+	..()
+
+/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob)
+	if(istype(A,/obj/item) && imp)
+		imp:scanned = A
+		A.loc.contents.Remove(A)
+		update()
