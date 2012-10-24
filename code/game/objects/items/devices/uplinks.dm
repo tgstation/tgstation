@@ -21,7 +21,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		items = dd_replacetext(ticker.mode.uplink_items, "\n", "")	// Getting the text string of items
 	else
 		items = dd_replacetext(item_data)
-	ItemList = dd_text2list(src.items, ";")	// Parsing the items text string
+	ItemList = text2list(src.items, ";")	// Parsing the items text string
 	uses = ticker.mode.uplink_uses
 
 //Let's build a menu!

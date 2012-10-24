@@ -250,12 +250,12 @@
 		updateUsrDialog()
 
 	proc/unbayify( var/text )
-		var/list/partlist = dd_text2list(text, ",")
+		var/list/partlist = text2list(text, ",")
 
 		var/i
 		for(i=1, i<=partlist.len, i++)
 			var/part = partlist[i]
-			var/list/x = dd_text2list(part, "/")
+			var/list/x = text2list(part, "/")
 
 			var/tone = ""
 			var/tempo = "1"
@@ -334,10 +334,10 @@
 
 		strippedsourcestring = unbayify(strippedsourcestring)
 
-		for(var/part in dd_text2list(strippedsourcestring, ","))
-			var/list/x = dd_text2list(part, "/")
+		for(var/part in text2list(strippedsourcestring, ","))
+			var/list/x = text2list(part, "/")
 			var/xlen = x.len
-			var/list/tones = dd_text2list(x[1], "-")
+			var/list/tones = text2list(x[1], "-")
 
 			var/tempodiv = 1
 			if(xlen==2)
@@ -603,7 +603,7 @@
 	else if(href_list["export"])
 		var/output = dd_replacetext(currentsong.sourcestring, "\n", "")
 
-		var/list/sourcelist = dd_text2list(output, ",")
+		var/list/sourcelist = text2list(output, ",")
 
 		var/list/outputlist = new()
 
@@ -684,7 +684,7 @@
 			var/input = html_encode(input(usr, "", "Import") as message|null)
 			if(isnull(input)) return
 
-			var/list/inputlist = dd_text2list(input, "\n")
+			var/list/inputlist = text2list(input, "\n")
 
 			if(copytext(inputlist[1], 1, 4) == "BPM")
 				var/newbpm = text2num(copytext(input,5,lentext(inputlist[1])+1))

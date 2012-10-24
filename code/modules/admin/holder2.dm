@@ -722,7 +722,7 @@ var/list/admin_datums = list()
 					message_admins("\blue [key_name_admin(usr)] removed [t]", 1)
 					jobban_remove(t)
 					href_list["ban"] = 1 // lets it fall through and refresh
-					var/t_split = dd_text2list(t, " - ")
+					var/t_split = text2list(t, " - ")
 					var/key = t_split[1]
 					var/job = t_split[2]
 					DB_ban_unban(ckey(key), BANTYPE_JOB_PERMA, job)
@@ -1658,7 +1658,7 @@ var/list/admin_datums = list()
 				else if (length(removed_paths))
 					alert("Removed:\n" + dd_list2text(removed_paths, "\n"))
 
-				var/list/offset = dd_text2list(href_list["offset"],",")
+				var/list/offset = text2list(href_list["offset"],",")
 				var/number = dd_range(1, 100, text2num(href_list["object_count"]))
 				var/X = offset.len > 0 ? text2num(offset[1]) : 0
 				var/Y = offset.len > 1 ? text2num(offset[2]) : 0

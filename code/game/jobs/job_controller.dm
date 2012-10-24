@@ -381,13 +381,7 @@ var/global/datum/controller/occupations/job_master
 		if(!config.load_jobs_from_txt)
 			return 0
 
-		var/text = file2text(jobsfile)
-
-		if(!text)
-			world << "No jobs.txt found, using defaults."
-			return
-
-		var/list/jobEntries = dd_text2list(text, "\n")
+		var/list/jobEntries = file2list(jobsfile)
 
 		for(var/job in jobEntries)
 			if(!job)

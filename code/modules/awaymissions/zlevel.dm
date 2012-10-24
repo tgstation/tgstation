@@ -3,17 +3,10 @@ proc/createRandomZlevel()
 		return
 
 	var/list/potentialRandomZlevels = list()
-
-	var/text = file2text("maps/RandomZLevels/fileList.txt")
-
-	if (!text) // No random Z-levels for you.
-		return
-
 	world << "\red \b Searching for away missions..."
-
-	var/list/CL = dd_text2list(text, "\n")
-
-	for (var/t in CL)
+	var/list/Lines = file2list("maps/RandomZLevels/fileList.txt")
+	if(!Lines.len)	return
+	for (var/t in Lines)
 		if (!t)
 			continue
 

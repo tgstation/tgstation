@@ -39,12 +39,12 @@
 	var/list/temp_list
 	if(!id_with_upload.len)
 		temp_list = list()
-		temp_list = dd_text2list(id_with_upload_string, ";")
+		temp_list = text2list(id_with_upload_string, ";")
 		for(var/N in temp_list)
 			id_with_upload += text2num(N)
 	if(!id_with_download.len)
 		temp_list = list()
-		temp_list = dd_text2list(id_with_download_string, ";")
+		temp_list = text2list(id_with_download_string, ";")
 		for(var/N in temp_list)
 			id_with_download += text2num(N)
 

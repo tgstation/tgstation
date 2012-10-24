@@ -1,3 +1,11 @@
+//Returns the world time in english
+proc/worldtime2text()
+	return "[round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"
+
+proc/time_stamp()
+	return time2text(world.timeofday, "hh:mm:ss")
+
+/* Preserving this so future generations can see how fucking retarded some people are
 proc/time_stamp()
 	var/hh = text2num(time2text(world.timeofday, "hh")) // Set the hour
 	var/mm = text2num(time2text(world.timeofday, "mm")) // Set the minute
@@ -9,7 +17,7 @@ proc/time_stamp()
 	if(mm < 10) pm = "0"
 	if(ss < 10) ps = "0"
 	return"[ph][hh]:[pm][mm]:[ps][ss]"
-
+*/
 
 /* Returns 1 if it is the selected month and day */
 proc/isDay(var/month, var/day)

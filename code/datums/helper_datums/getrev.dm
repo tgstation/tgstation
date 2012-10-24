@@ -20,18 +20,10 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 
 	New(filename)
 		..()
-		if(!fexists(filename))
-			return abort()
-
-		var/text = file2text(file(filename))
-		if(!text)
-			world.log << "Unable to get [filename] contents, aborting"
-			return abort()
-
-		var/list/CL = tg_text2list(text, "\n")
-		for (var/t in CL)
-			if (!t)
-				continue
+		var/list/Lines = file2list(filename)
+		if(!Lines.len)	return abort()
+		for(var/t in Lines)
+			if(!t)	continue
 			t = trim(t)
 			if (length(t) == 0)
 				continue
@@ -54,7 +46,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 					revhref = value
 
 		if(svndirpath && fexists(svndirpath) && fexists("[svndirpath]/entries") && isfile(file("[svndirpath]/entries")))
-			var/list/filelist = dd_file2list("[svndirpath]/entries",null)
+			var/list/filelist = file2list("[svndirpath]/entries")
 			if(filelist.len < 4)
 				return abort()
 			revision = filelist[4]

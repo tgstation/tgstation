@@ -834,13 +834,3 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
 	return
-
-/*
- * Sends resource files to client cache
- */
-/mob/proc/getFiles()
-	if(!isemptylist(args))
-		for(var/file in args)
-			src << browse_rsc(file)
-		return 1
-	return 0

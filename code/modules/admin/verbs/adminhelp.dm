@@ -29,7 +29,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 	msg = dd_replacetext(msg, "HOLDERREF", "HOLDER-REF") //HOLDERREF is a key word which gets replaced with the admin's holder ref later on, so it mustn't be in the original message
 	msg = dd_replacetext(msg, "ADMINREF", "ADMIN-REF") //ADMINREF is a key word which gets replaced with the admin's client's ref. So it mustn't be in the original message.
 
-	var/list/msglist = dd_text2list(msg, " ")
+	var/list/msglist = text2list(msg, " ")
 
 	var/list/mob/mobs = list()
 
@@ -64,7 +64,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 			ai_found = 1
 			continue
 		for(var/mob/M in mobs)
-			var/list/namelist = dd_text2list("[M.name] [M.real_name] [(M.mind)?"[M.mind.name]":""] [M.ckey] [M.key]", " ")
+			var/list/namelist = text2list("[M.name] [M.real_name] [(M.mind)?"[M.mind.name]":""] [M.ckey] [M.key]", " ")
 			var/word_is_match = 0 //Used to break from this mob for loop if a match is found
 			for(var/namepart in namelist)
 				if( lowertext(word) == lowertext(namepart) )

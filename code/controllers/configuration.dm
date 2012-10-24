@@ -110,20 +110,10 @@
 	src.votable_modes += "secret"
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
-	var/text = file2text(filename)
+	var/list/Lines = file2list(filename)
 
-	if (!text)
-		diary << "No [filename] file found, setting defaults"
-		src = new /datum/configuration()
-		return
-
-	diary << "Reading configuration file [filename]"
-
-	var/list/CL = dd_text2list(text, "\n")
-
-	for (var/t in CL)
-		if (!t)
-			continue
+	for(var/t in Lines)
+		if(!t)	continue
 
 		t = trim(t)
 		if (length(t) == 0)
@@ -377,20 +367,9 @@
 					diary << "Unknown setting in configuration: '[name]'"
 
 /datum/configuration/proc/loadsql(filename)  // -- TLE
-	var/text = file2text(filename)
-
-	if (!text)
-		diary << "No dbconfig.txt file found, retaining defaults"
-		world << "No dbconfig.txt file found, retaining defaults"
-		return
-
-	diary << "Reading database configuration file [filename]"
-
-	var/list/CL = dd_text2list(text, "\n")
-
-	for (var/t in CL)
-		if (!t)
-			continue
+	var/list/Lines = file2list(filename)
+	for(var/t in Lines)
+		if(!t)	continue
 
 		t = trim(t)
 		if (length(t) == 0)
@@ -434,20 +413,9 @@
 				diary << "Unknown setting in configuration: '[name]'"
 
 /datum/configuration/proc/loadforumsql(filename)  // -- TLE
-	var/text = file2text(filename)
-
-	if (!text)
-		diary << "No forumdbconfig.txt file found, retaining defaults"
-		world << "No forumdbconfig.txt file found, retaining defaults"
-		return
-
-	diary << "Reading forum database configuration file [filename]"
-
-	var/list/CL = dd_text2list(text, "\n")
-
-	for (var/t in CL)
-		if (!t)
-			continue
+	var/list/Lines = file2list(filename)
+	for(var/t in Lines)
+		if(!t)	continue
 
 		t = trim(t)
 		if (length(t) == 0)

@@ -167,7 +167,7 @@ Just found out there was already a string explode function, did some benchmarkin
 */
 proc/string_explode(var/string, var/separator)
 	if(istext(string) && istext(separator))
-		return dd_text2list(string, separator)
+		return text2list(string, separator)
 
 proc/n_repeat(var/string, var/amount)
 	if(istext(string) && isnum(amount))
