@@ -90,6 +90,20 @@
 		name = "Ponytail 3"
 		icon_state = "hair_ponytail3"
 
+	parted
+		name = "Parted"
+		icon_state = "hair_parted"
+
+	pompadour
+		name = "Pompadour"
+		icon_state = "hair_pompadour"
+		choose_female = 0
+
+	quiff
+		name = "Quiff"
+		icon_state = "hair_quiff"
+		choose_female = 0
+
 	bedhead
 		name = "Bedhead"
 		icon_state = "hair_bedhead"
@@ -101,6 +115,45 @@
 	bedhead3
 		name = "Bedhead 3"
 		icon_state = "hair_bedheadv3"
+
+	beehive
+		name = "Beehive"
+		icon_state = "hair_beehive"
+		choose_male = 0
+
+	bobcurl
+		name = "Bobcurl"
+		icon_state = "hair_bobcurl"
+		choose_male = 0
+
+	bob
+		name = "Bob"
+		icon_state = "hair_bobcut"
+		choose_male = 0
+
+	bowl
+		name = "Bowl"
+		icon_state = "hair_bowlcut"
+		choose_female = 0
+
+	buzz
+		name = "Buzzcut"
+		icon_state = "hair_buzzcut"
+		choose_female = 0
+
+	crew
+		name = "Crewcut"
+		icon_state = "hair_crewcut"
+		choose_female = 0
+
+	combover
+		name = "Combover"
+		icon_state = "hair_combover"
+		choose_female = 0
+
+	devillock
+		name = "Devil Lock"
+		icon_state = "hair_devilock"
 
 	dreadlocks
 		name = "Dreadlocks"
@@ -115,6 +168,10 @@
 		name = "Afro"
 		icon_state = "hair_afro"
 
+	afro2
+		name = "Afro 2"
+		icon_state = "hair_afro2"
+
 	afro_large
 		name = "Big Afro"
 		icon_state = "hair_bigafro"
@@ -125,9 +182,22 @@
 		icon_state = "hair_sargeant"
 		choose_female = 0
 
+	emo
+		name = "Emo"
+		icon_state = "hair_emo"
+
 	fag
 		name = "Flow Hair"
 		icon_state = "hair_f"
+
+	feather
+		name = "Feather"
+		icon_state = "hair_feather"
+
+	hitop
+		name = "Hitop"
+		icon_state = "hair_hitop"
+		choose_female = 0
 
 	mohawk
 		name = "Mohawk"
@@ -166,6 +236,21 @@
 	braid
 		name = "Floorlength Braid"
 		icon_state = "hair_braid"
+		choose_male = 0
+
+	odango
+		name = "Odango"
+		icon_state = "hair_odango"
+		choose_male = 0
+
+	ombre
+		name = "Ombre"
+		icon_state = "hair_ombre"
+		choose_male = 0
+
+	updo
+		name = "Updo"
+		icon_state = "hair_updo"
 		choose_male = 0
 
 	skinhead
