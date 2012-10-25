@@ -26,9 +26,6 @@
 	density = 1
 	anchored = 0
 
-	LuminosityRed = 4
-	LuminosityGreen = 6
-
 	var/gasefficency = 0.25
 
 	var/base_icon_state = "darkmatter"
@@ -86,13 +83,13 @@
 			if((world.timeofday - lastwarning) / 10 >= WARNING_DELAY)
 
 				if(damage > emergency_point)
-					radioalert("states, \"[emergency_alert]\"","Supermatter Monitor")
+					//radioalert("states, \"[emergency_alert]\"","Supermatter Monitor")
 					lastwarning = world.timeofday
 				else if(damage >= damage_archived)   // The damage is still going up
-					radioalert("states, \"[warning_alert]\"","Supermatter Monitor")
+					//radioalert("states, \"[warning_alert]\"","Supermatter Monitor")
 					lastwarning = world.timeofday-150
 				else						  // Phew, we're safe
-					radioalert("states, \"[safe_alert]\"","Supermatter Monitor")
+					//radioalert("states, \"[safe_alert]\"","Supermatter Monitor")
 					lastwarning = world.timeofday
 
 			if(damage > explosion_point)

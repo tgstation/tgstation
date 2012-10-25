@@ -1,12 +1,12 @@
 //mostly replaced these with emitter code
 //they're functionally identical
 
-/obj/machinery/engine/laser
+/obj/machinery/computer/laser
 	name = "Zero-point laser"
 	desc = "A super-powerful laser"
 	var/visible = 1
 	var/state = 1.0
-	var/obj/beam/e_beam/first
+	//var/obj/beam/e_beam/first
 	var/power = 500
 	icon = 'engine.dmi'
 	icon_state = "laser"
@@ -17,8 +17,8 @@
 	var/phase = 0
 	var/phase_variance = 0
 
-/obj/machinery/engine/laser/process()
-	if(on)
+/obj/machinery/computer/laser/process()
+	/*if(on)
 		if(!first)
 			src.first = new /obj/beam/e_beam(src.loc)
 			src.first.master = src
@@ -34,14 +34,14 @@
 			src.first.updatebeam()
 	else
 		if(first)
-			del first
+			del first*/
 
-/obj/machinery/engine/laser/proc/setpower(var/powera)
-	src.power = powera
+/obj/machinery/computer/laser/proc/setpower(var/powera)
+	/*src.power = powera
 	if(first)
-		first.setpower(src.power)
+		first.setpower(src.power)*/
 
-
+/*
 /obj/beam/e_beam
 	name = "Laser beam"
 	icon = 'projectiles.dmi'
@@ -129,3 +129,4 @@
 /obj/beam/e_beam/proc/hit()
 	del src
 	return
+	*/
