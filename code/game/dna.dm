@@ -907,7 +907,7 @@
 	if(!src || !src.connected)
 		return
 	if ((usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["locked"])
 			if ((src.connected && src.connected.occupant))
 				src.connected.locked = !( src.connected.locked )

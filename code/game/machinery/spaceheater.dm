@@ -69,7 +69,7 @@
 			update_icon()
 			if(!open && user.machine == src)
 				user << browse(null, "window=spaceheater")
-				user.machine = null
+				user.unset_machine()
 		else
 			..()
 		return
@@ -94,7 +94,7 @@
 			dat += " [set_temperature]&deg;C "
 			dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A><BR>"
 
-			user.machine = src
+			user.set_machine(src)
 			user << browse("<HEAD><TITLE>Space Heater Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=spaceheater")
 			onclose(user, "spaceheater")
 
@@ -112,7 +112,7 @@
 		if (usr.stat)
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
-			usr.machine = src
+			usr.set_machine(src)
 
 			switch(href_list["op"])
 
@@ -145,7 +145,7 @@
 			updateDialog()
 		else
 			usr << browse(null, "window=spaceheater")
-			usr.machine = null
+			usr.unset_machine()
 		return
 
 

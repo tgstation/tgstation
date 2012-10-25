@@ -263,10 +263,10 @@
 /obj/machinery/power/am_control_unit/proc/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
 		if(!istype(user, /mob/living/silicon/ai))
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return
-	user.machine = src
+	user.set_machine(src)
 
 	var/dat = ""
 	dat += "AntiMatter Control Panel<BR>"
@@ -303,13 +303,13 @@
 	..()
 	//Ignore input if we are broken or guy is not touching us, AI can control from a ways away
 	if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon/ai)))
-		usr.machine = null
+		usr.unset_machine()
 		usr << browse(null, "window=AMcontrol")
 		return
 
 	if(href_list["close"])
 		usr << browse(null, "window=AMcontrol")
-		usr.machine = null
+		usr.unset_machine()
 		return
 
 	if(href_list["togglestatus"])

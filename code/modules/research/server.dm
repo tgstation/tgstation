@@ -207,7 +207,7 @@
 		return
 
 	add_fingerprint(usr)
-	usr.machine = src
+	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
 		usr << "\red You do not have the required access level"
 		return
@@ -276,7 +276,7 @@
 /obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/dat = ""
 
 	switch(screen)

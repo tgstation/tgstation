@@ -414,7 +414,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(..())
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["set_channel_name"])
 			src.channel_name = strip_html_simple(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
 			while (findtext(src.channel_name," ") == 1)
@@ -810,7 +810,7 @@ obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
 	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
-		U.machine = src
+		U.set_machine(src)
 		if(href_list["next_page"])
 			if(curr_page==src.pages+1)
 				return //Don't need that at all, but anyway.

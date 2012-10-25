@@ -20,7 +20,7 @@
 
 		if(..())
 			return
-		user.machine = src
+		user.set_machine(src)
 		var/dat
 
 
@@ -63,7 +63,7 @@
 		if(..())
 			return
 		if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-			usr.machine = src
+			usr.set_machine(src)
 
 			if(href_list["emptycourt"])
 				target = locate(/area/holodeck/source_emptycourt)

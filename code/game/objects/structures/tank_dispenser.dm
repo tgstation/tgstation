@@ -33,7 +33,7 @@
 
 
 /obj/structure/dispenser/attack_hand(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat = "[src]<br><br>"
 	dat += "Oxygen tanks: [oxygentanks] - [oxygentanks ? "<A href='?src=\ref[src];oxygen=1'>Dispense</A>" : "empty"]<br>"
 	dat += "Plasma tanks: [plasmatanks] - [plasmatanks ? "<A href='?src=\ref[src];plasma=1'>Dispense</A>" : "empty"]"
@@ -68,7 +68,7 @@
 	if(usr.stat || usr.restrained())
 		return
 	if(get_dist(src, usr) <= 1)
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["oxygen"])
 			if(oxygentanks > 0)
 				var/obj/item/weapon/tank/oxygen/O

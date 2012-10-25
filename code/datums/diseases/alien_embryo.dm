@@ -91,15 +91,15 @@ Des: Removes all infection images from aliens and places an infection image on a
 ----------------------------------------*/
 /datum/disease/alien_embryo/proc/RefreshInfectionImage()
 	spawn(0)
-		for (var/mob/living/carbon/alien/alien in world)
+		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
 				for(var/image/I in alien.client.images)
 					if(I.icon_state == "infected")
 						del(I)
 
-		for (var/mob/living/carbon/alien/alien in world)
+		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
-				for (var/mob/living/carbon/C in world)
+				for (var/mob/living/carbon/C in mob_list)
 					if(C)
 						if (C.status_flags & XENO_HOST)
 							var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected")
@@ -112,7 +112,7 @@ Des: Checks if the passed mob (C) is infected with the alien egg, then gives eac
 ----------------------------------------*/
 /datum/disease/alien_embryo/proc/AddInfectionImages(var/mob/living/carbon/C)
 	if (C)
-		for (var/mob/living/carbon/alien/alien in world)
+		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
 				if (C.status_flags & XENO_HOST)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected")
@@ -126,7 +126,7 @@ Des: Removes the alien infection image from all aliens in the world located in p
 
 /datum/disease/alien_embryo/proc/RemoveInfectionImages(var/mob/living/carbon/C)
 	if (C)
-		for (var/mob/living/carbon/alien/alien in world)
+		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
 				for(var/image/I in alien.client.images)
 					if(I.loc == C)

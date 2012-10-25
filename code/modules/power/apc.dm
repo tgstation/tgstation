@@ -86,11 +86,7 @@
 /obj/machinery/power/apc/updateDialog()
 	if (stat & (BROKEN|MAINT))
 		return
-	var/list/nearby = viewers(1, src)
-	for(var/mob/M in nearby)
-		if (M.client && M.machine == src)
-			src.interact(M)
-	AutoUpdateAI(src)
+	..()
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	..()
@@ -463,7 +459,7 @@
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
 			return
 	// do APC interaction
-	user.machine = src
+	user.set_machine(src)
 	src.interact(user)
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
@@ -513,24 +509,24 @@
 		user << browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
 
-	user.machine = src
+	user.set_machine(src)
 	var/t = "<html><head><title>[area.name] APC</title></head><body><TT><B>Area Power Controller</B> ([area.name])<HR>"
 
 	//This goes after the wire stuff. They should be able to fix a physical problem when a wire is cut
 	if ( (get_dist(src, user) > 1 ))
 		if (!istype(user, /mob/living/silicon))
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=apc")
 			return
 		else if (istype(user, /mob/living/silicon) && src.aidisabled && !src.malfhack)
 			user << "AI control for this APC interface has been disabled."
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=apc")
 			return
 		else if (src.malfai)
 			if ((src.malfai != user && src.malfai != user:parent) && !islinked(user, malfai))
 				user << "AI control for this APC interface has been disabled."
-				user.machine = null
+				user.unset_machine()
 				user << browse(null, "window=apc")
 				return
 
@@ -748,7 +744,7 @@
 			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
 		user << "\red You don't have the dexterity to use this [src]!"
 		user << browse(null, "window=apc")
-		user.machine = null
+		user.unset_machine()
 		return 0
 	if(user.restrained())
 		user << "\red You must have free hands to use this [src]"
@@ -770,12 +766,12 @@
 			if(!loud)
 				user << "\red \The [src] have AI control disabled!"
 				user << browse(null, "window=apc")
-				user.machine = null
+				user.unset_machine()
 			return 0
 	else
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			user << browse(null, "window=apc")
-			user.machine = null
+			user.unset_machine()
 			return 0
 
 	var/mob/living/carbon/human/H = user
@@ -794,7 +790,7 @@
 		if(!can_use(usr, 1))
 			return
 	src.add_fingerprint(usr)
-	usr.machine = src
+	usr.set_machine(src)
 	if (href_list["apcwires"])
 		var/t1 = text2num(href_list["apcwires"])
 		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
@@ -857,11 +853,11 @@
 		update()
 	else if( href_list["close"] )
 		usr << browse(null, "window=apc")
-		usr.machine = null
+		usr.unset_machine()
 		return
 	else if (href_list["close2"])
 		usr << browse(null, "window=apcwires")
-		usr.machine = null
+		usr.unset_machine()
 		return
 
 	else if (href_list["overload"])

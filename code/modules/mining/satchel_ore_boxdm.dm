@@ -72,7 +72,7 @@
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["removeall"])
 		for (var/obj/item/weapon/ore/O in contents)

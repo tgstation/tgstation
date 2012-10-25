@@ -451,7 +451,7 @@
 
 /mob/living/carbon/alien/larva/show_inv(mob/user as mob)
 
-	user.machine = src
+	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR><BR>

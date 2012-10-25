@@ -164,7 +164,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 				del(src)
 				return 1
 			else
-				user.machine = src
+				user.set_machine(src)
 				interact(user)
 				return 1
 
@@ -218,14 +218,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		user.set_machine(src)
 		interact(user)
 
 
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		usr.set_machine(src)
 		src.add_fingerprint(usr)
 		if (!busy)
 			if(href_list["make"])

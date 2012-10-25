@@ -201,7 +201,7 @@
 	return
 
 /obj/item/weapon/secstorage/attack_self(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (src.locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
 	if ((src.l_set == 0) && (!src.emagged) && (!src.l_setshort))

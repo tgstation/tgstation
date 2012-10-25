@@ -11,7 +11,7 @@
 	var/insisting = 0
 
 /obj/machinery/wish_granter/attack_hand(var/mob/user as mob)
-	usr.machine = src
+	usr.set_machine(src)
 
 	if(charges <= 0)
 		user << "The Wish Granter lies silent."

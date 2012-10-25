@@ -186,7 +186,7 @@ Transponder Codes:<UL>"}
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
 			if(open && !locked)
-				usr.machine = src
+				usr.set_machine(src)
 
 				if (href_list["freq"])
 					freq = sanitize_frequency(freq + text2num(href_list["freq"]))

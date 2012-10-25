@@ -23,7 +23,7 @@
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		user.set_machine(src)
 
 		var/dat = "Photocopier<BR><BR>"
 		if(copy || photocopy)

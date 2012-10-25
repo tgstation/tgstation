@@ -29,7 +29,7 @@ obj/machinery/embedded_controller
 
 	attack_hand(mob/user)
 		user << browse(return_text(), "window=computer")
-		user.machine = src
+		user.set_machine(src)
 		onclose(user, "computer")
 
 	update_icon()
@@ -53,7 +53,7 @@ obj/machinery/embedded_controller
 			program.receive_user_command(href_list["command"])
 			spawn(5) program.process()
 
-		usr.machine = src
+		usr.set_machine(src)
 		spawn(5) src.updateDialog()
 
 	process()

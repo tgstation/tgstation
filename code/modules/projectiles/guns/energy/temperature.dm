@@ -23,7 +23,7 @@
 
 
 	attack_self(mob/living/user as mob)
-		user.machine = src
+		user.set_machine(src)
 		var/temp_text = ""
 		if(temperature > (T0C - 50))
 			temp_text = "<FONT color=black>[temperature] ([round(temperature-T0C)]&deg;C) ([round(temperature*1.8-459.67)]&deg;F)</FONT>"
@@ -43,7 +43,7 @@
 	Topic(href, href_list)
 		if (..())
 			return
-		usr.machine = src
+		usr.set_machine(src)
 		src.add_fingerprint(usr)
 
 

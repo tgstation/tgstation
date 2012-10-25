@@ -40,7 +40,7 @@
 
 /obj/structure/noticeboard/Topic(href, href_list)
 	..()
-	usr.machine = src
+	usr.set_machine(src)
 	if(href_list["remove"])
 		if((usr.stat || usr.restrained()))	//For when a player is handcuffed while they have the notice window open
 			return

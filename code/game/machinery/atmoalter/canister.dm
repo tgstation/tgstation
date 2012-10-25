@@ -202,7 +202,7 @@
 	if (src.destroyed)
 		return
 
-	user.machine = src
+	user.set_machine(src)
 	var/holding_text
 	if(holding)
 		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
@@ -232,7 +232,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 		return
 
 	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.machine = src
+		usr.set_machine(src)
 
 		if(href_list["toggle"])
 			if (valve_open)

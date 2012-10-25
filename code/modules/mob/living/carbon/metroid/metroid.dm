@@ -670,7 +670,7 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/metroid/show_inv(mob/user as mob)
 
-	user.machine = src
+	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR><BR>
@@ -826,7 +826,8 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/roro/New()
 	..()
-	reagents.add_reagent("nutriment", 5)
+	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent("rorojelly", 1)
 	spawn(rand(1200,1500))//the egg takes a while to "ripen"
 		Grow()
 

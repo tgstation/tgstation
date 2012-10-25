@@ -192,14 +192,14 @@
 
 
 /obj/machinery/bot/mulebot/attack_ai(var/mob/user)
-	user.machine = src
+	user.set_machine(src)
 	interact(user, 1)
 
 /obj/machinery/bot/mulebot/attack_hand(var/mob/user)
 	. = ..()
 	if (.)
 		return
-	user.machine = src
+	user.set_machine(src)
 	interact(user, 0)
 
 /obj/machinery/bot/mulebot/proc/interact(var/mob/user, var/ai=0)
@@ -290,7 +290,7 @@
 	if (usr.stat)
 		return
 	if ((in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 
 		switch(href_list["op"])
 			if("lock", "unlock")
@@ -390,7 +390,7 @@
 				auto_pickup = !auto_pickup
 
 			if("close")
-				usr.machine = null
+				usr.unset_machine()
 				usr << browse(null,"window=mulebot")
 
 
@@ -429,7 +429,7 @@
 		//src.updateUsrDialog()
 	else
 		usr << browse(null, "window=mulebot")
-		usr.machine = null
+		usr.unset_machine()
 	return
 
 

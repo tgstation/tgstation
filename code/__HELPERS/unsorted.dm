@@ -587,7 +587,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	// so just reset the user mob's machine var
 	if(src && src.mob)
 		//world << "[src] was [src.mob.machine], setting to null"
-		src.mob.machine = null
+		src.mob.unset_machine()
 	return
 
 //Will return the location of the turf an atom is ultimatly sitting on

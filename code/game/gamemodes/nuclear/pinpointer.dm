@@ -267,7 +267,7 @@
 	. = ..()
 
 /obj/item/weapon/pinpointer/attack_self(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat
 	if (src.temp)
 		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
@@ -298,7 +298,7 @@
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["refresh"])
 			src.temp = "<B>Nuclear Disk Pinpointer</B><HR>"
 			var/turf/sr = get_turf(src)

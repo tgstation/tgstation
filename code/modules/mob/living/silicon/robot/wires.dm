@@ -89,7 +89,7 @@
 
 /mob/living/silicon/robot/proc/interact(mob/user)
 	if(wiresexposed && (!istype(user, /mob/living/silicon)))
-		user.machine = src
+		user.set_machine(src)
 		var/t1 = text("<B>Access Panel</B><br>\n")
 		var/list/Borgwires = list(
 			"Orange" = 1,
@@ -116,7 +116,7 @@
 /mob/living/silicon/robot/Topic(href, href_list)
 	..()
 	if (((in_range(src, usr) && istype(src.loc, /turf))) && !istype(usr, /mob/living/silicon))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["borgwires"])
 			var/t1 = text2num(href_list["borgwires"])
 			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
@@ -138,7 +138,7 @@
 				src.pulse(t1)
 		else if (href_list["close2"])
 			usr << browse(null, "window=borgwires")
-			usr.machine = null
+			usr.unset_machine()
 			return
 
 #undef BORG_WIRE_LAWCHECK

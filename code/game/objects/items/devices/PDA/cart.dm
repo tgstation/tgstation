@@ -641,7 +641,7 @@ Code:
 	..()
 
 	if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-		usr.machine = null
+		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return
 

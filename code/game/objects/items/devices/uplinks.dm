@@ -314,7 +314,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		return 0
 
 	if ((usr.contents.Find(src.loc) || (in_range(src.loc, usr) && istype(src.loc.loc, /turf))))
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["lock"])
 			toggle()
 			usr << browse(null, "window=hidden")

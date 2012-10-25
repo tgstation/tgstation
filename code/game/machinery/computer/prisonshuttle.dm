@@ -72,7 +72,7 @@ var/prison_shuttle_timeleft = 0
 			return
 		if(..())
 			return
-		user.machine = src
+		user.set_machine(src)
 		post_signal("prison")
 		var/dat
 		if (src.temp)
@@ -93,7 +93,7 @@ var/prison_shuttle_timeleft = 0
 			return
 
 		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-			usr.machine = src
+			usr.set_machine(src)
 
 		if (href_list["sendtodock"])
 			if (!prison_can_move())

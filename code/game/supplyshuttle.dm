@@ -356,7 +356,7 @@ var/list/mechtoys = list(
 /obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
 	if(..())
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/dat
 	if(temp)
 		dat = temp
@@ -378,7 +378,7 @@ var/list/mechtoys = list(
 		return
 
 	if( isturf(loc) && (in_range(src, usr) || istype(usr, /mob/living/silicon)) )
-		usr.machine = src
+		usr.set_machine(src)
 
 	if(href_list["order"])
 		temp = "Supply points: [supply_shuttle.points]<BR><HR><BR>Request what?<BR><BR>"
@@ -467,7 +467,7 @@ var/list/mechtoys = list(
 
 	if(..())
 		return
-	user.machine = src
+	user.set_machine(src)
 	post_signal("supply")
 	var/dat
 	if (temp)
@@ -531,7 +531,7 @@ var/list/mechtoys = list(
 		return
 
 	if(isturf(loc) && ( in_range(src, usr) || istype(usr, /mob/living/silicon) ) )
-		usr.machine = src
+		usr.set_machine(src)
 
 	//Calling the shuttle
 	if(href_list["send"])

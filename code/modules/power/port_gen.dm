@@ -239,11 +239,11 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/proc/interact(mob/user)
 	if (get_dist(src, user) > 1 )
 		if (!istype(user, /mob/living/silicon/ai))
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=port_gen")
 			return
 
-	user.machine = src
+	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
 	if (active)
@@ -284,7 +284,7 @@ display round(lastgen) and plasmatank amount
 				src.updateUsrDialog()
 		if (href_list["action"] == "close")
 			usr << browse(null, "window=port_gen")
-			usr.machine = null
+			usr.unset_machine()
 
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"

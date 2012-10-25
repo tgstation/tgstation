@@ -111,7 +111,7 @@
 	if (!( data_core.medical.Find(src.active2) ))
 		src.active2 = null
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["temp"])
 			src.temp = null
 		if (href_list["scan"])

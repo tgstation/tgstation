@@ -73,7 +73,7 @@
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))
 			return
-		user.machine = src
+		user.set_machine(src)
 		var/dat = "<TITLE>Telecommunication Traffic Control</TITLE><center><b>Telecommunications Traffic Control</b></center>"
 
 		switch(screen)
@@ -123,7 +123,7 @@
 
 
 		add_fingerprint(usr)
-		usr.machine = src
+		usr.set_machine(src)
 		if(!src.allowed(usr) && !emagged)
 			usr << "\red ACCESS DENIED."
 			return

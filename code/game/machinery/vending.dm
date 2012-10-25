@@ -128,7 +128,7 @@
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	user.machine = src
+	user.set_machine(src)
 
 	if(src.seconds_electrified != 0)
 		if(src.shock(user, 100))
@@ -223,7 +223,7 @@
 
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		usr.set_machine(src)
 		if ((href_list["vend"]) && (src.vend_ready))
 
 			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH

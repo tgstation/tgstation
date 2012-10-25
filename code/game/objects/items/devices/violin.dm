@@ -237,7 +237,7 @@
 
 /obj/item/device/violin/attack_self(mob/user as mob)
 	if(!isliving(user) || user.stat || user.restrained() || user.lying)	return
-	user.machine = src
+	user.set_machine(src)
 
 	var/dat = "<HEAD><TITLE>Violin</TITLE></HEAD><BODY>"
 

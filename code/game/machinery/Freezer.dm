@@ -42,7 +42,7 @@
 		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		user.set_machine(src)
 		var/temp_text = ""
 		if(air_contents.temperature > (T0C - 20))
 			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
@@ -63,7 +63,7 @@
 
 	Topic(href, href_list)
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-			usr.machine = src
+			usr.set_machine(src)
 			if (href_list["start"])
 				src.on = !src.on
 				update_icon()
@@ -128,7 +128,7 @@
 		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		user.set_machine(src)
 		var/temp_text = ""
 		if(air_contents.temperature > (T20C+40))
 			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
@@ -147,7 +147,7 @@
 
 	Topic(href, href_list)
 		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-			usr.machine = src
+			usr.set_machine(src)
 			if (href_list["start"])
 				src.on = !src.on
 				update_icon()

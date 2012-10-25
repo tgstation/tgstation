@@ -276,12 +276,12 @@
 		if(stat & (BROKEN | NOPOWER)) return
 		if ( (get_dist(src, user) > 1 ))
 			if (!istype(user, /mob/living/silicon/ai))
-				user.machine = null
+				user.unset_machine()
 				user << browse(null, "window=solcon")
 				return
 
 		add_fingerprint(user)
-		user.machine = src
+		user.set_machine(src)
 
 		var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
 		t += "Generated power : [round(lastgen)] W<BR><BR>"
@@ -306,11 +306,11 @@
 	Topic(href, href_list)
 		if(..())
 			usr << browse(null, "window=solcon")
-			usr.machine = null
+			usr.unset_machine()
 			return
 		if(href_list["close"] )
 			usr << browse(null, "window=solcon")
-			usr.machine = null
+			usr.unset_machine()
 			return
 
 		if(href_list["dir"])

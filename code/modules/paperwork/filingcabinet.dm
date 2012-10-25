@@ -39,7 +39,7 @@
 		user << "<span class='notice'>\The [src] is empty.</span>"
 		return
 
-	user.machine = src
+	user.set_machine(src)
 	var/dat = "<center><table>"
 	var/i
 	for(i=contents.len, i>=1, i--)

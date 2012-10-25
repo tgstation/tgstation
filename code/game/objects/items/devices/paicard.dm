@@ -24,7 +24,7 @@
 /obj/item/device/paicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/dat = "<TT><B>Personal AI Device</B><BR>"
 	if(pai && (!pai.master_dna || !pai.master))
 		dat += "<a href='byond://?src=\ref[src];setdna=1'>Imprint Master DNA</a><br>"

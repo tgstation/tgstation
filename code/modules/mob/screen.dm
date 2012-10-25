@@ -317,7 +317,7 @@
 			usr.m_intent = "run"
 			usr.m_int = "13,14"
 		if("Reset Machine")
-			usr.machine = null
+			usr.unset_machine()
 		if("internal")
 			if (( !usr.stat && !usr.stunned && !usr.paralysis && !usr.restrained() ))
 				if (usr.internal)

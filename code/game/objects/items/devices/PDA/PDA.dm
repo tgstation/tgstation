@@ -233,7 +233,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //NOTE: graphic resources are loaded on client login
 /obj/item/device/pda/attack_self(mob/user as mob)
 
-	user.machine = src
+	user.set_machine(src)
 
 	if(active_uplink_check(user))
 		return
@@ -438,14 +438,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if ( !(U.stat || U.restrained()) )
 
 			add_fingerprint(U)
-			U.machine = src
+			U.set_machine(src)
 
 			switch(href_list["choice"])
 
 //BASIC FUNCTIONS===================================
 
 				if("Close")//Self explanatory
-					U.machine = null
+					U.unset_machine()
 					U << browse(null, "window=pda")
 					return
 				if("Refresh")//Refresh, goes to the end of the proc.
@@ -635,7 +635,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						else
 							U << "PDA not found."
 					else
-						U.machine = null
+						U.unset_machine()
 						U << browse(null, "window=pda")
 						return
 
@@ -656,11 +656,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					cartridge.mode = mode
 					cartridge.unlock()
 		else//If can't interact.
-			U.machine = null
+			U.unset_machine()
 			U << browse(null, "window=pda")
 			return
 	else//If not in range or not using the pda.
-		U.machine = null
+		U.unset_machine()
 		U << browse(null, "window=pda")
 		return
 
@@ -676,7 +676,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(U.machine == src && href_list["skiprefresh"]!="1")//Final safety.
 		attack_self(U)//It auto-closes the menu prior if the user is not in range and so on.
 	else
-		U.machine = null
+		U.unset_machine()
 		U << browse(null, "window=pda")
 	return
 

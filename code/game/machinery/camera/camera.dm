@@ -66,7 +66,7 @@
 				if (istype(O.machine, /obj/machinery/computer/security))
 					var/obj/machinery/computer/security/S = O.machine
 					if (S.current == src)
-						O.machine = null
+						O.unset_machine()
 						O.reset_view(null)
 						O << "The screen bursts into static."
 			..()
@@ -194,7 +194,7 @@
 		if (istype(O.machine, /obj/machinery/computer/security))
 			var/obj/machinery/computer/security/S = O.machine
 			if (S.current == src)
-				O.machine = null
+				O.unset_machine()
 				O.reset_view(null)
 				O << "The screen bursts into static."
 

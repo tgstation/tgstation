@@ -839,7 +839,7 @@
 	..()
 	if (href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 		return
 

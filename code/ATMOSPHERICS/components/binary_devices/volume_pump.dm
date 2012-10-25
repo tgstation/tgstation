@@ -147,7 +147,7 @@ obj/machinery/atmospherics/binary/volume_pump
 		if(!src.allowed(user))
 			user << "\red Access denied."
 			return
-		usr.machine = src
+		usr.set_machine(src)
 		interact(user)
 		return
 
@@ -158,7 +158,7 @@ obj/machinery/atmospherics/binary/volume_pump
 		if(href_list["set_transfer_rate"])
 			var/new_transfer_rate = input(usr,"Enter new output volume (0-200l/s)","Flow control",src.transfer_rate) as num
 			src.transfer_rate = max(0, min(200, new_transfer_rate))
-		usr.machine = src
+		usr.set_machine(src)
 		src.update_icon()
 		src.updateUsrDialog()
 		return

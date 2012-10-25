@@ -2,7 +2,7 @@
 //SPELL BOOK PROCS
 
 /obj/item/weapon/spellbook/attack_self(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat
 	if (src.temp)
 		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
@@ -53,7 +53,7 @@
 	if (!( istype(H, /mob/living/carbon/human)))
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["spell_choice"])
 			if(src.uses >= 1 && src.max_uses >=1 && text2num(href_list["spell_choice"]) < 18)
 				src.uses--

@@ -110,7 +110,7 @@
  * Inventory
  */
 /mob/living/simple_animal/parrot/show_inv(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	if(user.stat) return
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"

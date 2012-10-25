@@ -63,7 +63,7 @@
 	return
 
 /obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/beaker_text = ""
 	var/health_text = ""
 	var/temp_text = ""
@@ -90,7 +90,7 @@
 		[beaker_text]<BR><BR>
 		<B>Current occupant:</B> [occupant ? "<BR>Name: [occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(occupant.getOxyLoss(),0.1)]<BR>Brute damage: [round(occupant.getBruteLoss(),0.1)]<BR>Fire damage: [round(occupant.getFireLoss(),0.1)]<BR>Toxin damage: [round(occupant.getToxLoss(),0.1)]<BR>Body temperature: [occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
 		"}
-	user.machine = src
+	user.set_machine(src)
 	user << browse(dat, "window=cryo")
 	onclose(user, "cryo")
 

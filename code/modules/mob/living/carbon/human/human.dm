@@ -435,7 +435,7 @@
 
 /mob/living/carbon/human/show_inv(mob/user as mob)
 
-	user.machine = src
+	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
@@ -559,7 +559,7 @@
 
 	if (href_list["mach_close"])
 		var/t1 = text("window=[]", href_list["mach_close"])
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 
 	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e

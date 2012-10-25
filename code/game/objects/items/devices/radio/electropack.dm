@@ -44,7 +44,7 @@
 	if(usr.stat || usr.restrained())
 		return
 	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
 			set_frequency(new_frequency)
@@ -106,7 +106,7 @@
 
 	if(!istype(user, /mob/living/carbon/human))
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/dat = {"<TT>
 <A href='?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
 <B>Frequency/Code</B> for electropack:<BR>

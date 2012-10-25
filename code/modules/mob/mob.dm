@@ -219,7 +219,7 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/show_inv(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
@@ -509,7 +509,7 @@ var/list/slot_equipment_priority = list( \
 	set name = "Cancel Camera View"
 	set category = "OOC"
 	reset_view(null)
-	machine = null
+	unset_machine()
 	if(istype(src, /mob/living))
 		if(src:cameraFollow)
 			src:cameraFollow = null
@@ -517,7 +517,7 @@ var/list/slot_equipment_priority = list( \
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 //	..()
 	return

@@ -116,8 +116,8 @@
 	user.cameraFollow = null
 	src.eye = user.eyeobj
 
-	//user.machine = null //Uncomment this if it causes problems.
-	user.lightNearbyCamera()
+	//user.unset_machine() //Uncomment this if it causes problems.
+	//user.lightNearbyCamera()
 
 
 // Return to the Core.
@@ -133,7 +133,7 @@
 
 	current = null
 	cameraFollow = null
-	machine = null
+	unset_machine()
 
 	if(src.eyeobj && src.loc)
 		src.eyeobj.loc = src.loc

@@ -176,11 +176,11 @@
 	. = ..()
 	if (.)
 		return
-	user.machine = src
+	user.set_machine(src)
 
 	if ( (get_dist(src, user) > 1 ))
 		if (!istype(user, /mob/living/silicon))
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=air_alarm")
 			user << browse(null, "window=AAlarmwires")
 			return
@@ -715,11 +715,11 @@ table tr:first-child th:first-child { border: none;}
 	if(..())
 		return
 	src.add_fingerprint(usr)
-	usr.machine = src
+	usr.set_machine(src)
 
 	if ( (get_dist(src, usr) > 1 ))
 		if (!istype(usr, /mob/living/silicon))
-			usr.machine = null
+			usr.unset_machine()
 			usr << browse(null, "window=air_alarm")
 			usr << browse(null, "window=AAlarmwires")
 			return
@@ -1079,7 +1079,7 @@ table tr:first-child th:first-child { border: none;}
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		return
 
-	user.machine = src
+	user.set_machine(src)
 	var/area/A = src.loc
 	var/d1
 	var/d2
@@ -1121,7 +1121,7 @@ table tr:first-child th:first-child { border: none;}
 	if (usr.stat || stat & (BROKEN|NOPOWER))
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["reset"])
 			src.reset()
 		else
@@ -1174,7 +1174,7 @@ table tr:first-child th:first-child { border: none;}
 	if(user.stat || stat & (NOPOWER|BROKEN))
 		return
 
-	user.machine = src
+	user.set_machine(src)
 	var/area/A = src.loc
 	var/d1
 	var/d2
@@ -1236,7 +1236,7 @@ table tr:first-child th:first-child { border: none;}
 	if (usr.stat || stat & (BROKEN|NOPOWER))
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["reset"])
 			src.reset()
 		else
