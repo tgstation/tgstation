@@ -761,15 +761,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 			lying = 0
 		else
 			lying = 1
-	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) )
+	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		lying = 1
 		canmove = 0
 	else if( stunned )
 //		lying = 0
 		canmove = 0
 	else
-		lying = 0
-		canmove = 1
+		lying = !can_stand
+		canmove = has_limbs
 
 	if(lying)
 		density = 0

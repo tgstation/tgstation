@@ -258,6 +258,12 @@
 			number_wounds += E.number_wounds
 
 		var/leg_tally = 2
+		var/canstand_l = 1
+		var/canstand_r = 1
+		var/hasleg_l = 1
+		var/hasleg_r = 1
+		var/hasarm_l = 1
+		var/hasarm_r = 1
 		for(var/datum/organ/external/E in organs)
 			E.process()
 			if(E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
@@ -305,11 +311,37 @@
 					|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 					if(!(E.status & ORGAN_SPLINTED))
 						leg_tally--									// let it fail even if just foot&leg
+
+		var/datum/organ/external/E
+		E = get_organ("l_leg")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			canstand_l = 0
+			hasleg_l = 0
+		E = get_organ("r_leg")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			canstand_r = 0
+			hasleg_r = 0
+		E = get_organ("l_foot")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			canstand_l = 0
+		E = get_organ("r_foot")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			canstand_r = 0
+		E = get_organ("l_arm")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			hasarm_l = 0
+		E = get_organ("r_arm")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			hasarm_r = 0
+
 		// standing is poor
 		if(leg_tally <= 0 && !paralysis && !(lying || resting) && prob(5))
 			emote("scream")
 			emote("collapse")
 			paralysis = 10
+
+		can_stand = canstand_l||canstand_r
+		has_limbs = hasleg_l||hasleg_r||hasarm_l||hasarm_r
 
 
 	proc/handle_mutations_and_radiation()
@@ -320,25 +352,49 @@
 		// Make nanoregen heal youu, -3 all damage types
 		if(NANOREGEN in augmentations)
 			var/healed = 0
-			if(getToxLoss())
-				adjustToxLoss(-3)
-				healed = 1
-			if(getOxyLoss())
-				adjustOxyLoss(-3)
-				healed = 1
-			if(getCloneLoss())
-				adjustCloneLoss(-3)
-				healed = 1
-			if(getBruteLoss())
-				heal_organ_damage(3,0)
-				healed = 1
-			if(getFireLoss())
-				heal_organ_damage(0,3)
-				healed = 1
-			if(halloss > 0)
-				halloss -= 3
-				if(halloss < 0) halloss = 0
-				healed = 1
+			var/hptoreg = 3
+			if(stat==UNCONSCIOUS) hptoreg=1
+			if(stat==DEAD) hptoreg=0
+			for(var/i=0; i<hptoreg; i++)
+				var/list/damages
+				if(getToxLoss())
+					damages+="tox"
+				if(getOxyLoss())
+					damages+="oxy"
+				if(getCloneLoss())
+					damages+="clone"
+				if(getBruteLoss())
+					damages+="brute"
+				if(getFireLoss())
+					damages+="burn"
+				if(halloss != 0)
+					damages+="hal"
+
+				switch(pick(damages))
+					if("tox")
+						adjustToxLoss(-1)
+						healed = 1
+					if("oxy")
+						adjustOxyLoss(-1)
+						healed = 1
+					if("clone")
+						adjustCloneLoss(-1)
+						healed = 1
+					if("brute")
+						heal_organ_damage(1,0)
+						healed = 1
+					if("burn")
+						heal_organ_damage(0,1)
+						healed = 1
+					if("hal")
+						if(halloss > 0)
+							halloss -= 1
+						if(halloss < 0)
+							halloss = 0
+						healed = 1
+					else
+						i=5
+
 			if(healed)
 				if(prob(5))
 					src << "\blue You feel your wounds mending..."

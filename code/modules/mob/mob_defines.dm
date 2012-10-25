@@ -220,3 +220,6 @@
 	var/tajaran_talk_understand = 0
 	var/soghun_talk_understand = 0
 	var/skrell_talk_understand = 0
+
+	var/has_limbs = 1
+	var/can_stand = 1
