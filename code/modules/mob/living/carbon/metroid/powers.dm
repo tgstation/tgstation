@@ -196,7 +196,7 @@
 	if(istype(src, /mob/living/carbon/metroid/adult))
 		if(amount_grown >= 10)
 			if(src.nutrition >= 300)
-				new/obj/item/weapon/reagent_containers/food/snacks/roro_egg(loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/egg/roro(loc)
 				src.nutrition -= 200
 			else
 				src << "<i>I have not fed enough...</i>"

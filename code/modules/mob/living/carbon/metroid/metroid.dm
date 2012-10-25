@@ -815,7 +815,7 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 				Flush = 30
 */
 
-/obj/item/weapon/reagent_containers/food/snacks/roro_egg
+/obj/item/weapon/reagent_containers/food/snacks/egg/roro
 	name = "roro egg"
 	desc = "A small, gelatinous egg."
 	icon = 'icons/mob/mob.dmi'
@@ -824,19 +824,19 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 	origin_tech = "biotech=4"
 	var/grown = 0
 
-/obj/item/weapon/reagent_containers/food/snacks/roro_egg/New()
+/obj/item/weapon/reagent_containers/food/snacks/egg/roro/New()
 	..()
 	reagents.add_reagent("nutriment", 5)
 	spawn(rand(1200,1500))//the egg takes a while to "ripen"
 		Grow()
 
-/obj/item/weapon/reagent_containers/food/snacks/roro_egg/proc/Grow()
+/obj/item/weapon/reagent_containers/food/snacks/egg/roro/proc/Grow()
 	grown = 1
 	icon_state = "roro egg-grown"
 	processing_objects.Add(src)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/roro_egg/proc/Hatch()
+/obj/item/weapon/reagent_containers/food/snacks/egg/roro/proc/Hatch()
 	processing_objects.Remove(src)
 	var/turf/T = get_turf(src)
 	src.visible_message("\blue The [name] pulsates and quivers!")
@@ -846,8 +846,14 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 		del(src)
 
 
-/obj/item/weapon/reagent_containers/food/snacks/roro_egg/process()
+/obj/item/weapon/reagent_containers/food/snacks/egg/roro/process()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	if (environment.toxins > MOLES_PLASMA_VISIBLE)//plasma exposure causes the egg to hatch
 		src.Hatch()
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/roro/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype( W, /obj/item/toy/crayon ))
+		return
+	else
+		..()

@@ -344,9 +344,9 @@
 		if(istype(src, /mob/living/carbon/metroid/adult))
 			if(!client && nutrition >= 1000)
 				var/number = pick(1,1,1,1,1,1,2,2,2,3) //number of eggs laid
-				var/obj/item/weapon/reagent_containers/food/snacks/roro_egg/E
+				var/obj/item/weapon/reagent_containers/food/snacks/egg/roro/E
 				for(var/i=1,i<=number,i++)
-					E = new/obj/item/weapon/reagent_containers/food/snacks/roro_egg(loc)
+					E = new(loc)
 					src.nutrition -= 200
 				step_away(E,src)
 

@@ -28,7 +28,7 @@
 	density = 1
 	opacity = 1
 	anchored = 1
-	var/health = 50
+	var/health = 170
 	//var/mob/living/affecting = null
 
 	wall
@@ -42,6 +42,16 @@
 		icon_state = "resinmembrane"
 		opacity = 0
 		health = 20
+
+/obj/effect/alien/resin/New()
+	..()
+	var/turf/T = get_turf(src)
+	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+
+/obj/effect/alien/resin/Del()
+	var/turf/T = get_turf(src)
+	T.thermal_conductivity = initial(T.thermal_conductivity)
+	..()
 
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
@@ -113,7 +123,7 @@
 	for(var/mob/O in oviewers(src))
 		O.show_message("\red [usr] claws at the resin!", 1)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	health -= rand(10, 20)
+	health -= rand(40, 60)
 	if(health <= 0)
 		usr << "\green You slice the [name] to pieces."
 		for(var/mob/O in oviewers(src))

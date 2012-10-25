@@ -1122,8 +1122,8 @@ datum
 				return
 			reaction_obj(var/obj/O, var/volume)
 				src = null
-				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/roro_egg))
-					var/obj/item/weapon/reagent_containers/food/snacks/roro_egg/egg = O
+				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/roro))
+					var/obj/item/weapon/reagent_containers/food/snacks/egg/roro/egg = O
 					if (egg.grown)
 						egg.Hatch()
 				if((!O) || (!volume))	return 0
