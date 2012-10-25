@@ -244,7 +244,7 @@ BLIND     // can't see anything
 			return
 		var/obj/item/weapon/gun/W = usr.get_active_hand()
 		if (!W.isHandgun())
-			usr << "\red This gun won't fit in holster!"
+			usr << "\red This gun won't fit in \the [H]!"
 			return
 		H.holstered = usr.get_active_hand()
 		usr.drop_item()
@@ -258,7 +258,7 @@ BLIND     // can't see anything
 				usr.visible_message("\red [usr] draws \the [H.holstered], ready to shoot!", \
 				"\red You draw \the [H.holstered], ready to shoot!")
 			else
-				usr.visible_message("\blue [usr] draws \the [H.holstered], pointing it at tthe ground.", \
+				usr.visible_message("\blue [usr] draws \the [H.holstered], pointing it at the ground.", \
 				"\blue You draw \the [H.holstered], pointing it at tthe ground.")
 			usr.put_in_hands(H.holstered)
 			H.holstered = null
