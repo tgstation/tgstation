@@ -90,6 +90,7 @@
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/melee/baton(src)
 		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/clothing/tie/holster/waist(src)
 		return
 
 
@@ -189,6 +190,7 @@
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/detective_scanner(src)
 		new /obj/item/weapon/storage/box/evidence(src)
+		new /obj/item/clothing/tie/holster/armpit(src)
 		return
 
 /obj/structure/closet/secure_closet/detective/update_icon()

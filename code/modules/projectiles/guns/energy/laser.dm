@@ -71,6 +71,8 @@ obj/item/weapon/gun/energy/laser/retro
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	projectile_type = "/obj/item/projectile/beam/heavylaser"
 
+	isHandgun()
+		return 0
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
