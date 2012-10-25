@@ -10,6 +10,9 @@
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/ion"
 
+	isHandgun()
+		return 0
+
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	if(severity <= 2)
 		power_supply.use(round(power_supply.maxcharge / severity))
@@ -17,8 +20,6 @@
 	else
 		return
 
-	isHandgun()
-		return 0
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
