@@ -44,6 +44,8 @@
 		a_right = D2
 		name = "[D.name]-[D2.name] assembly"
 		update_icon()
+		usr.put_in_hands(src)
+
 		return 1
 
 
@@ -154,8 +156,10 @@
 					if("Right")	a_right.attack_self(user)
 				return
 			else
-				a_left.attack_self(user)
-				a_right.attack_self(user)
+				if(!istype(a_left,/obj/item/device/assembly/igniter))
+					a_left.attack_self(user)
+				if(!istype(a_right,/obj/item/device/assembly/igniter))
+					a_right.attack_self(user)
 		else
 			var/turf/T = get_turf(src)
 			if(!T)	return 0
@@ -172,6 +176,8 @@
 
 	process_activation(var/obj/D, var/normal = 1, var/special = 1)
 		if(!D)	return 0
+		if(!secured)
+			visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
 		if((normal) && (a_right) && (a_left))
 			if(a_right != D)
 				a_right.pulsed(0)

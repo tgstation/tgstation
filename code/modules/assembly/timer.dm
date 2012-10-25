@@ -7,6 +7,8 @@
 	w_amt = 10
 	origin_tech = "magnets=1"
 
+	wires = WIRE_PULSE
+
 	secured = 0
 
 	var/timing = 0
@@ -37,7 +39,8 @@
 	timer_end()
 		if((!secured)||(cooldown > 0))	return 0
 		pulse(0)
-		visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+		if(!holder)
+			visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
 		cooldown = 2
 		spawn(10)
 			process_cooldown()
