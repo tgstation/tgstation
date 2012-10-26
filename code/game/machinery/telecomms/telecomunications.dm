@@ -69,6 +69,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			send_count++
 			if(machine.is_freq_listening(signal))
 				machine.traffic++
+			machine.receive_information(signal, src)
 			continue
 		// If we're sending a copy, be sure to create the copy for EACH machine and paste the data
 		var/datum/signal/copy = new
