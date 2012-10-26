@@ -38,3 +38,12 @@
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
+
+/obj/item/clothing/mask/pig
+	name = "pig mask"
+	desc = "A rubber pig mask."
+	icon_state = "pig"
+	item_state = "pig"
+	flags = FPRINT|TABLEPASS|BLOCKHAIR
+	flags_inv = HIDEFACE
+	w_class = 2
