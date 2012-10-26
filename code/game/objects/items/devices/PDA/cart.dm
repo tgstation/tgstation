@@ -428,7 +428,7 @@ Code:
 						menu += "No bots found.<BR>"
 
 					else
-						for(var/obj/machinery/bot/secbot/B in SC.botlist)
+						for(var/obj/machinery/bot/B in SC.botlist)
 							if (B)
 								menu += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
 
