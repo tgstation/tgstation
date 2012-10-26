@@ -7,7 +7,6 @@ var/list/ai_list = list()
 		for(var/A in ai_list)
 			var/mob/living/silicon/ai/M = A
 			if ((M.client && M.machine == subject))
-				world << "[M] - Using [subject]"
 				is_in_use = 1
 				subject.attack_ai(M)
 	return is_in_use
