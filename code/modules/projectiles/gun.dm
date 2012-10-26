@@ -129,3 +129,6 @@
 		update_icon()
 		return
 
+
+/obj/item/weapon/gun/proc/isHandgun()
+	return 1

@@ -10,12 +10,16 @@
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/ion"
 
+	isHandgun()
+		return 0
+
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	if(severity <= 2)
 		power_supply.use(round(power_supply.maxcharge / severity))
 		update_icon()
 	else
 		return
+
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
@@ -25,6 +29,9 @@
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/declone"
+
+	isHandgun()
+		return 0
 
 obj/item/weapon/gun/energy/staff
 	name = "staff of change"
@@ -61,6 +68,9 @@ obj/item/weapon/gun/energy/staff
 		power_supply.give(200)
 		update_icon()
 		return 1
+
+	isHandgun()
+		return 0
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"

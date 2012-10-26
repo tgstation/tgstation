@@ -101,3 +101,15 @@
 	icon_state = "laceups"
 	item_state = "laceups"
 	color = "black"
+
+/obj/item/clothing/shoes/slippers
+	name = "bunny slippers"
+	desc = "Fluffy!"
+	icon_state = "slippers"
+	item_state = "slippers"
+
+/obj/item/clothing/shoes/slippers_worn
+	name = "worn bunny slippers"
+	desc = "Fluffy..."
+	icon_state = "slippers_worn"
+	item_state = "slippers_worn"

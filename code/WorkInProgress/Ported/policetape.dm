@@ -74,7 +74,7 @@
 				can_place = 0
 			else
 				for(var/obj/O in cur)
-					if(O.density)
+					if(!istype(O, /obj/item/tape) && O.density)
 						can_place = 0
 						break
 			cur = get_step_towards(cur,end)

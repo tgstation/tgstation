@@ -65,6 +65,25 @@
 	return ..(M,user)
 
 
+/obj/item/clothing/tie/holster
+	name = "shoulder holster"
+	desc = "A handgun holster."
+	icon_state = "holster"
+	color = "holster"
+	var/obj/item/weapon/gun/holstered = null
+
+/obj/item/clothing/tie/holster/armpit
+	name = "shoulder holster"
+	desc = "A worn-out handgun holster. Perfect for concealed carry"
+	icon_state = "holster"
+	color = "holster"
+
+/obj/item/clothing/tie/holster/waist
+	name = "shoulder holster"
+	desc = "A handgun holster. Made of expensive leather."
+	icon_state = "holster"
+	color = "holster_low"
+
 //Medals
 /obj/item/clothing/tie/medal
 	name = "bronze medal"

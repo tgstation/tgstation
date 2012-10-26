@@ -219,7 +219,7 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 			temperature = max( 1700*log(0.4*firelevel + 1.23) , temperature )
 
 			//Consume some gas.
-			var/consumed_gas = min(oxygen,0.05*firelevel,total_fuel) / fuel_sources
+			var/consumed_gas = min(oxygen,firelevel,total_fuel) / fuel_sources
 
 			oxygen = max(0,oxygen-consumed_gas)
 
@@ -245,14 +245,19 @@ datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fue
 	var
 		datum/gas/volatile_fuel/fuel = locate() in trace_gases
 		liquid_concentration = 0
+		fuel_concentration = 0
 
 		oxy_concentration = oxygen / volume
 		tox_concentration = toxins / volume
-		fuel_concentration = 0
 
 	if(fuel) fuel_concentration = (fuel.moles) / volume
 	if(liquid) liquid_concentration = (liquid.amount*15) / volume
-	return (oxy_concentration + tox_concentration + liquid_concentration + fuel_concentration)*100
+
+	var/final = tox_concentration + liquid_concentration + fuel_concentration
+	if(final > oxy_concentration)
+		final = oxy_concentration
+
+	return final * 100
 
 /mob/living/carbon/human/proc/FireBurn(mx as num)
 	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.

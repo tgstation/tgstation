@@ -112,4 +112,6 @@
 		new /obj/item/clothing/suit/hazardvest(src)
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/clothing/glasses/meson(src)
+		new /obj/item/taperoll/engineering(src)
+		new /obj/item/taperoll/engineering(src)
 		return

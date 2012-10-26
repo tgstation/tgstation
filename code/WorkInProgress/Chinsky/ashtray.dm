@@ -36,7 +36,7 @@
 				else
 					user << "You place [cig] in [src] without even smoking it. Why would you do that?"
 			else if (cig.lit == -1)
-				src.visible_message("[user] places /the [cig] in /the [src].")
+				src.visible_message("[user] places [cig] in [src].")
 			user.update_inv_l_hand()
 			user.update_inv_r_hand()
 			add_fingerprint(user)

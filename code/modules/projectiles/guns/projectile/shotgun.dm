@@ -15,6 +15,8 @@
 	var/pumped = 0
 	var/obj/item/ammo_casing/current_shell = null
 
+	isHandgun()
+		return 0
 
 	load_into_chamber()
 		if(in_chamber)

@@ -881,6 +881,20 @@ datum
 				..()
 				return
 
+		tramadol
+			name = "Tramadol"
+			id = "tramadol"
+			description = "A simple, yet effective painkiller."
+			reagent_state = LIQUID
+			color = "#C8A5DC"
+
+		oxycodone
+			name = "Oxycodone"
+			id = "oxycodone"
+			description = "An effective and very addictive painkiller."
+			reagent_state = LIQUID
+			color = "#C805DC"
+
 		virus_food
 			name = "Virus Food"
 			id = "virusfood"
@@ -1126,14 +1140,14 @@ datum
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
+				fuel.moles = volume
 				napalm.trace_gases += fuel
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
 				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
+				fuel.moles = volume
 				napalm.trace_gases += fuel
 				T.assume_air(napalm)
 				return
