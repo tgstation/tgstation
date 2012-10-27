@@ -135,10 +135,11 @@ FLOOR SAFES
 	if(href_list["retrieve"])
 		user << browse("", "window=safe") // Close the menu
 
-		var/obj/item/P = locate(href_list["retrieve"])
-		if(P && in_range(src, user))
-			user.put_in_hands(P)
-			updateUsrDialog()
+		var/obj/item/P = locate(href_list["retrieve"]) in src
+		if(open)
+			if(P && in_range(src, user))
+				user.put_in_hands(P)
+				updateUsrDialog()
 
 
 /obj/structure/safe/attackby(obj/item/I as obj, mob/user as mob)
