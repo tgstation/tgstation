@@ -36,7 +36,7 @@ proc/createRandomZlevel()
 		if (!name)
 			continue
 
-		potentialRandomZlevels.Add(t)
+		potentialRandomZlevels.Add(name)
 
 
 	if(potentialRandomZlevels.len)
@@ -46,7 +46,6 @@ proc/createRandomZlevel()
 		var/file = file(map)
 		if(isfile(file))
 			maploader.load_map(file)
-			world.log << "away mission loaded: [map]"
 
 		for(var/obj/effect/landmark/L in landmarks_list)
 			if (L.name != "awaystart")
