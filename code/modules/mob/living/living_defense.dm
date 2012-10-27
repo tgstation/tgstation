@@ -52,3 +52,26 @@
 		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone)
 	P.on_hit(src, absorb)
 	return absorb
+
+/mob/living/hitby(atom/movable/AM as mob|obj)//Standardization and logging -Sieve
+	if(istype(AM,/obj/))
+		var/obj/O = AM
+		var/zone = ran_zone("chest",75)//Hits a random part of the body, geared towards the chest
+		var/dtype = BRUTE
+		if(istype(O,/obj/item/weapon))
+			var/obj/item/weapon/W = O
+			dtype = W.damtype
+		src.visible_message("\red [src] has been hit by [O].")
+		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [zone].", "Your armor has softened hit to your [zone].")
+		if(armor < 2)
+			apply_damage(O.throwforce, dtype, zone, armor, O)
+		if(!O.fingerprintslast)
+			return
+		var/mob/assailant = null
+		for(var/mob/living/M in player_list)//Finds the name of whoever threw it (This is required unless thrown objects are COMPLETELY reworked
+			if(M.key == O.fingerprintslast)
+				assailant = M
+				continue
+		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with [O], last touched by [assailant.name] ([assailant.ckey])</font>")
+		assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with [O]</font>")
+		log_attack("<font color='red'>[src.name] ([src.ckey]) was hit by [O], last touched by [assailant.name] ([assailant.ckey])</font>")

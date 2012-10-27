@@ -23,10 +23,7 @@
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
-		M.visible_message("\red [hit_atom] has been hit by [src].")
-		if(isobj(src))//Hate typecheckin for a child object but this is just fixing crap another guy broke so if someone wants to put the time in and make this proper feel free.
-			M.take_organ_damage(src:throwforce)
-
+		M.hitby(src)
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom
