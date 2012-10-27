@@ -201,6 +201,13 @@
 	containertype = /obj/structure/largecrate/mule
 	containername = "MULEbot Crate"
 
+/datum/supply_packs/lisa
+	name = "Corgi Crate"
+	contains = list()
+	cost = 50
+	containertype = /obj/structure/largecrate/lisa
+	containername = "Corgi Crate"
+
 /datum/supply_packs/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"
 	contains = list(/obj/item/weapon/reagent_containers/spray/plantbgone,
