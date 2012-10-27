@@ -84,6 +84,10 @@ var/const/MAX_ACTIVE_TIME = 400
 	HasProximity(target)
 	return
 
+/obj/item/clothing/mask/facehugger/on_found(mob/finder as mob)
+	Attach(finder)
+	return 1
+
 /obj/item/clothing/mask/facehugger/dropped()
 	..()
 	GoActive()

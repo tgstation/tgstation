@@ -31,18 +31,12 @@
 	return L
 
 /obj/item/weapon/storage/proc/show_to(mob/user as mob)
+	if(user.s_active != src)
+		for(var/obj/item/I in src)
+			if(I.on_found(user))
+				return
 	if(user.s_active)
 		user.s_active.hide_from(user)
-	for(var/obj/item/weapon/mousetrap/MT in src)
-		if(MT.armed)
-			for(var/mob/O in viewers(user, null))
-				if(O == user)
-					user.show_message(text("\red <B>You reach into the [src.name], but there was a live mousetrap in there!</B>"), 1)
-				else
-					user.show_message(text("\red <B>[user] reaches into the [src.name] and sets off a hidden mousetrap!</B>"), 1)
-			user.drop_from_inventory(MT)
-			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
-			return
 	user.client.screen -= src.boxes
 	user.client.screen -= src.closer
 	user.client.screen -= src.contents
@@ -499,12 +493,12 @@
 	return
 
 /obj/item/weapon/storage/mousetraps/New()
-	new /obj/item/weapon/mousetrap( src )
-	new /obj/item/weapon/mousetrap( src )
-	new /obj/item/weapon/mousetrap( src )
-	new /obj/item/weapon/mousetrap( src )
-	new /obj/item/weapon/mousetrap( src )
-	new /obj/item/weapon/mousetrap( src )
+	new /obj/item/device/assembly/mousetrap( src )
+	new /obj/item/device/assembly/mousetrap( src )
+	new /obj/item/device/assembly/mousetrap( src )
+	new /obj/item/device/assembly/mousetrap( src )
+	new /obj/item/device/assembly/mousetrap( src )
+	new /obj/item/device/assembly/mousetrap( src )
 	..()
 	return
 

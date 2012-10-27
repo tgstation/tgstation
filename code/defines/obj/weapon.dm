@@ -1468,23 +1468,6 @@
 	var/cigarcount = 6
 	flags = ONBELT | TABLEPASS */
 
-
-/obj/item/weapon/mousetrap
-	name = "mousetrap"
-	desc = "A handy little spring-loaded trap for catching pesty rodents."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "mousetrap"
-	item_state = "mousetrap"
-	w_class = 1
-	force = null
-	throwforce = null
-	var/armed = 0
-	origin_tech = "combat=1"
-
-/obj/item/weapon/mousetrap/armed
-	icon_state = "mousetraparmed"
-	armed = 1
-
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
 	name = "data cable"

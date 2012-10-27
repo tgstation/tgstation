@@ -7122,7 +7122,7 @@
 "cGX" = (/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/turf/unsimulated/floor{icon_state = "asteroid"; name = "dust"},/area/planet/clown)
 "cGY" = (/turf/unsimulated/floor{icon_state = "asteroid"; name = "dust"},/area/planet/clown)
 "cGZ" = (/obj/item/weapon/bananapeel,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
-"cHa" = (/obj/item/weapon/mousetrap/armed,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
+"cHa" = (/obj/item/device/assembly/mousetrap/armed,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
 "cHb" = (/obj/item/weapon/ore/clown,/turf/unsimulated/floor{icon_state = "asteroid"; name = "dust"},/area/planet/clown)
 "cHc" = (/obj/effect/decal/remains/human,/turf/unsimulated/floor{icon_state = "asteroid"; name = "dust"},/area/planet/clown)
 "cHd" = (/obj/item/weapon/pickaxe,/turf/unsimulated/floor{icon_state = "asteroid"; name = "dust"},/area/planet/clown)

@@ -341,6 +341,10 @@
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S as obj)
 	return
 
+// called when "found" in pockets and storage items. Returns 1 if the search should end.
+/obj/item/proc/on_found(mob/finder as mob)
+	return
+
 // called after an item is placed in an equipment slot
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm

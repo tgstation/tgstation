@@ -7,9 +7,6 @@
 	w_amt = 10
 	origin_tech = "magnets=1"
 
-	secured = 1
-
-
 	activate()
 		if(!..())	return 0//Cooldown check
 		var/turf/location = get_turf(loc)

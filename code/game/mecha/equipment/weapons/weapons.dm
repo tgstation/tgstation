@@ -361,7 +361,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar
 	name = "Mousetrap Mortar"
 	icon_state = "mecha_mousetrapmrtr"
-	projectile = /obj/item/weapon/mousetrap
+	projectile = /obj/item/device/assembly/mousetrap
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
@@ -379,8 +379,8 @@
 	action(target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		var/obj/item/weapon/mousetrap/M = new projectile(chassis.loc)
-		M.armed = 1
+		var/obj/item/device/assembly/mousetrap/M = new projectile(chassis.loc)
+		M.secured = 1
 		playsound(chassis, fire_sound, 60, 1)
 		M.throw_at(target, missile_range, missile_speed)
 		projectiles--

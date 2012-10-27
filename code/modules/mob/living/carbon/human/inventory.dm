@@ -362,6 +362,9 @@
 			if("legcuff")
 				message = "\red <B>[source] is trying to unlegcuff [target]!</B>"
 			if("uniform")
+				for(var/obj/item/I in list(target.l_store, target.r_store))
+					if(I.on_found(source))
+						return
 				if(target.w_uniform && !target.w_uniform.canremove)
 					message = "\red <B>[source] fails to take off \a [target.w_uniform] from [target]'s body!</B>"
 				else
@@ -369,19 +372,8 @@
 			if("s_store")
 				message = "\red <B>[source] is trying to take off \a [target.s_store] from [target]'s suit!</B>"
 			if("pockets")
-				for(var/obj/item/weapon/mousetrap/MT in  list(target.l_store, target.r_store))
-					if(MT.armed)
-						for(var/mob/O in viewers(target, null))
-							if(O == source)
-								O.show_message("\red <B>You reach into the [target]'s pockets, but there was a live mousetrap in there!</B>", 1)
-							else
-								O.show_message("\red <B>[source] reaches into [target]'s pockets and sets off a hidden mousetrap!</B>", 1)
-						target.u_equip(MT)
-						if (target.client)
-							target.client.screen -= MT
-						MT.loc = source.loc
-						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
-						MT.layer = OBJ_LAYER
+				for(var/obj/item/I in list(target.l_store, target.r_store))
+					if(I.on_found(source))
 						return
 				message = "\red <B>[source] is trying to empty [target]'s pockets.</B>"
 			if("CPR")
