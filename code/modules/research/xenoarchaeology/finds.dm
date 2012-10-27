@@ -28,18 +28,16 @@
 /obj/item/weapon/ore/strangerock
 	var/datum/geosample/geological_data
 	var/source_rock = "/turf/simulated/mineral"
-	var/method = 0
-	var/obj/inside
-	origin_tech = "materials=5"
 
 /obj/item/weapon/ore/strangerock/New()
 	..()
 	//var/datum/reagents/r = new/datum/reagents(50)
 	//src.reagents = r
 	if(rand(3))
-		method = 0
+		method = 0 // 0 = fire, 1+ = acid
 	else
-		method = 1
+		method = 0 //currently always fire
+		//	method = 1 //removed due to acid melting strange rocks to gooey grey -Mij
 	inside = pick(150;"", 50;"/obj/item/weapon/crystal", 25;"/obj/item/weapon/talkingcrystal", "/obj/item/weapon/fossil/base")
 
 /obj/item/weapon/ore/strangerock/bullet_act(var/obj/item/projectile/P)
@@ -52,7 +50,7 @@
 	if(istype(W,/obj/item/weapon/weldingtool/))
 		var/obj/item/weapon/weldingtool/w = W
 		if(w.isOn() && (w.get_fuel() > 3))
-			if(!src.method)
+			if(!src.method) //0 = fire, 1+ = acid
 				if(inside)
 					var/obj/A = new src.inside(get_turf(src))
 					for(var/mob/M in viewers(world.view, user))
@@ -82,7 +80,9 @@
 				R.geological_data = src.geological_data
 			user << "\blue You take a core sample of the [src]."
 
-/*
+/*Code does not work, likely due to removal/change of acid_act proc
+//Strange rocks currently melt to gooey grey w/ acid application (see reactions)
+//will fix when I get a chance to fiddle with it -Mij
 /obj/item/weapon/ore/strangerock/acid_act(var/datum/reagent/R)
 	if(src.method)
 		if(inside)
@@ -97,7 +97,7 @@
 		for(var/mob/M in viewers(world.view, get_turf(src)))
 			M.show_message("\blue The acid splashes harmlessly off the rock, nothing else interesting happens.",1)
 	return 1
-	*/
+*/
 
 
 
