@@ -64,6 +64,9 @@
 			u_equip(s_store)
 		if(W)
 			success = 1
+			if(W:causes_cramps)
+				W:interrupted_cramps = 1
+				src << "\blue It feels much better to have the [W] off."
 		wear_suit = null
 		update_inv_wear_suit()
 	else if (W == w_uniform)
@@ -231,14 +234,24 @@
 			var/broken = 0
 			if(cur_species == "Tajaran")
 				if(prob(5))
-					src.visible_message("\red Your feet burst out of the [W], ripping them to shreds!", "\red [src]'s feet burst out of the [W], ripping them to shreds!", "\red You hear a ripping, tearing sound!")
-					apply_damage(5)
+					src.visible_message("\red Your claws burst out of the [W], ripping them to shreds!", "\red [src]'s claws burst out of the [W], ripping them to shreds!", "\red You hear a ripping, tearing sound!")
+					var/datum/organ/external/affecting = get_organ("l_foot")
+					if(affecting)
+						affecting.take_damage(5, 0, 0)
+					affecting = get_organ("r_foot")
+					if(affecting)
+						affecting.take_damage(5, 0, 0)
 					broken = 1
 					spawn(0)
 						del(W)
 				else if(prob(50))
-					src << "\red You hurt your feet forcing them into the [W]!"
-					apply_damage(5)
+					src << "\red You hurt your claws forcing them into the [W]!"
+					var/datum/organ/external/affecting = get_organ("l_foot")
+					if(affecting)
+						affecting.take_damage(5, 0, 0)
+					affecting = get_organ("r_foot")
+					if(affecting)
+						affecting.take_damage(5, 0, 0)
 			if(!broken)
 				src.gloves = W
 				W.equipped(src, slot)
@@ -256,13 +269,23 @@
 			if(cur_species == "Tajaran")
 				if(prob(5))
 					src.visible_message("\red Your feet burst out of the [W], ripping them to shreds!", "\red [src]'s feet burst out of the [W], ripping them to shreds!", "\red You hear a ripping, tearing sound!")
-					apply_damage(5)
+					var/datum/organ/external/affecting = get_organ("l_foot")
+					if(affecting)
+						affecting.take_damage(5, 0, 0)
+					affecting = get_organ("r_foot")
+					if(affecting)
+						affecting.take_damage(5, 0, 0)
 					broken = 1
 					spawn(0)
 						del(W)
 				else if(prob(50))
 					src << "\red You hurt your feet forcing them into the [W]!"
-					apply_damage(5)
+					var/datum/organ/external/affecting = get_organ("l_foot")
+					if(affecting)
+						affecting.take_damage(5, 0, 0)
+					affecting = get_organ("r_foot")
+					if(affecting)
+						affecting.take_damage(5, 0, 0)
 			if(!broken)
 				src.shoes = W
 				W.equipped(src, slot)
@@ -271,6 +294,10 @@
 			src.wear_suit = W
 			W.equipped(src, slot)
 			update_inv_wear_suit(redraw_mob)
+			if(istype(W,/obj/item/clothing/suit) && W:causes_cramps)
+				src << "\red You put on the [W]. It's pretty heavy and uncomfortable."
+				spawn(rand(MIN_CRAMP_TIME, MAX_CRAMP_TIME))
+					W:cramp_up()
 		if(slot_w_uniform)
 			src.w_uniform = W
 			W.equipped(src, slot)
@@ -299,12 +326,16 @@
 	//can't quite fit some alien bodyparts
 	if( W.body_parts_covered & LOWER_TORSO && W.flags_inv & HIDEJUMPSUIT && (cur_species == "Tajaran" || cur_species == "Soghun"))
 		if(prob(50))
-			src << "\red You twist your tail trying to fit it in!"
-			apply_damage(5)
+			src << "\red You twist your tail trying to fit it into the [W]!"
+			var/datum/organ/external/affecting = get_organ("chest")
+			if(affecting)
+				affecting.take_damage(10, 0, 0)
 	if( W.body_parts_covered & HEAD && W.flags & BLOCKHAIR && (cur_species == "Skrell"))
 		if(prob(50))
-			src << "\red You twist your eartails trying to fit it in!"
-			apply_damage(5)
+			src << "\red You twist your eartails trying to fit them into the [W]!"
+			var/datum/organ/external/affecting = get_organ("head")
+			if(affecting)
+				affecting.take_damage(10, 0, 0)
 
 	W.layer = 20
 
