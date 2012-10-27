@@ -18,9 +18,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/uplink/New()
 	welcome = ticker.mode.uplink_welcome
 	if(!item_data)
-		items = dd_replacetext(ticker.mode.uplink_items, "\n", "")	// Getting the text string of items
+		items = replacetext(ticker.mode.uplink_items, "\n", "")	// Getting the text string of items
 	else
-		items = dd_replacetext(item_data)
+		items = replacetext(item_data)
 	ItemList = text2list(src.items, ";")	// Parsing the items text string
 	uses = ticker.mode.uplink_uses
 

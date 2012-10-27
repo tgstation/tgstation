@@ -10,9 +10,9 @@ var/global/floorIsLava = 0
 	for(var/client/C in admins)
 		var/msg = rendered
 		if(admin_ref)
-			msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
+			msg = replacetext(msg, "%admin_ref%", "\ref[C]")
 		if(admin_holder_ref && C.holder)
-			msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
+			msg = replacetext(msg, "%holder_ref%", "\ref[C.holder]")
 		C << msg
 
 

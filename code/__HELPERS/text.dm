@@ -15,8 +15,8 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitizeSQL(var/t as text)
-	var/sanitized_text = dd_replacetext(t, "'", "\\'")
-	sanitized_text = dd_replacetext(sanitized_text, "\"", "\\\"")
+	var/sanitized_text = replacetext(t, "'", "\\'")
+	sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
 	return sanitized_text
 
 /*
@@ -177,18 +177,33 @@
 /*
  * Text modification
  */
+/proc/replacetext(text, find, replacement)
+	var/find_len = length(find)
+	if(find_len < 1)	return text
+	. = ""
+	var/last_found = 1
+	while(1)
+		var/found = findtext(text, find, last_found, 0)
+		. += copytext(text, last_found, found)
+		if(found)
+			. += replacement
+			last_found = found + find_len
+			continue
+		return .
 
-//Search and replace a sub-string within a string
-/proc/dd_replacetext(text, search_string, replacement_string)
-	if(!text || !istext(text) || !search_string || !istext(search_string) || !istext(replacement_string))
-		return null
-	var/textList = text2list(text, search_string)
-	return dd_list2text(textList, replacement_string)
-
-//Search and replace a case sensitive sub-string within a string
-/proc/dd_replacetext_case(text, search_string, replacement_string)
-	var/textList = text2list(text, search_string)
-	return dd_list2text(textList, replacement_string)
+/proc/replacetextEx(text, find, replacement)
+	var/find_len = length(find)
+	if(find_len < 1)	return text
+	. = ""
+	var/last_found = 1
+	while(1)
+		var/found = findtextEx(text, find, last_found, 0)
+		. += copytext(text, last_found, found)
+		if(found)
+			. += replacement
+			last_found = found + find_len
+			continue
+		return .
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)

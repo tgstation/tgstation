@@ -917,7 +917,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 						corner.density = 1
 						corner.anchored = 1
 						corner.icon = X.icon
-						corner.icon_state = dd_replacetext(X.icon_state, "_s", "_f")
+						corner.icon_state = replacetext(X.icon_state, "_s", "_f")
 						corner.tag = "delete me"
 						corner.name = "wall"
 
@@ -937,7 +937,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 						// Reset the shuttle corners
 						if(O.tag == "delete me")
 							X.icon = 'icons/turf/shuttle.dmi'
-							X.icon_state = dd_replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
+							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
 							X.name = "wall"
 							del(O) // prevents multiple shuttle corners from stacking
 							continue

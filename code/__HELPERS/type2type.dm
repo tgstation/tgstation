@@ -129,6 +129,8 @@ proc/tg_list2text(list/list, glue=",")
 
 		if(last_i <= text_len)
 			. += copytext(text, last_i, 0)
+	else
+		. += text
 	return .
 
 //Converts a text string into a list by splitting the string at each seperator found in text (discarding the seperator)
@@ -141,7 +143,7 @@ proc/tg_list2text(list/list, glue=",")
 	var/text_len = length(text)					//length of the input text
 	var/seperator_len = length(seperator)		//length of the seperator text
 
-	if(text_len > seperator_len)
+	if(text_len >= seperator_len)
 		var/i
 		var/last_i = 1
 
@@ -153,6 +155,8 @@ proc/tg_list2text(list/list, glue=",")
 
 		if(last_i <= text_len)
 			. += copytext(text, last_i, 0)
+	else
+		. += text
 	return .
 
 //Splits the text of a file at seperator and returns them in a list.
