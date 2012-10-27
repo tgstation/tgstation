@@ -96,7 +96,7 @@
 	if(src.machine)
 		unset_machine()
 	src.machine = O
-	if(O)
+	if(istype(O))
 		O.in_use = 1
 
 /obj/item/proc/updateSelfDialog()
