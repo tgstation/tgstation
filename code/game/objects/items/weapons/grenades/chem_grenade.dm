@@ -31,7 +31,7 @@
 					if(istype(B))
 						beakers -= B
 						user.put_in_hands(B)
-			name = "unsecured grenade with [beakers.len] containers[stage?" and detonator":""]"
+			name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		if(stage > 1 && !active && clown_check(user))
 			user << "<span class='warning'>You prime \the [name]!</span>"
 
@@ -45,7 +45,7 @@
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)//TODO:Have grenades use the new assembly things
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 		if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 			var/obj/item/device/assembly_holder/det = W
@@ -62,7 +62,7 @@
 			det.loc = src
 			detonator = det
 			icon_state = initial(icon_state) +"_ass"
-			name = "unsecured grenade with [beakers.len] containers[stage?" and detonator":""]"
+			name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			stage = 1
 		else if(istype(W,/obj/item/weapon/screwdriver) && path != 2)
 			if(stage == 1)
@@ -83,7 +83,7 @@
 			else if(stage == 2)
 				user << "\blue You unlock the assembly."
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
-				name = "unsecured grenade with [beakers.len] containers[stage?" and detonator":""]"
+				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				icon_state = initial(icon_state) + (detonator?"_ass":"")
 				stage = 1
 				active = 0
@@ -99,7 +99,7 @@
 					W.loc = src
 					beakers += W
 					stage = 1
-					name = "unsecured grenade with [beakers.len] containers[stage?" and detonator":""]"
+					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				else
 					user << "\red \the [W] is empty."
 
