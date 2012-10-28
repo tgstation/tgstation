@@ -20,12 +20,9 @@
 		log_admin("ATTACK: [user] ([user.ckey]) clumsily primed \a [src]")
 		message_admins("ATTACK: [user] ([user.ckey]) clumsily primed \a [src]")
 
-		active = 1
-		icon_state = initial(icon_state) + "_active"
-		playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+		activate()
+		add_fingerprint(user)
 		spawn(5)
-			if(user)
-				user.drop_item()
 			prime()
 		return 0
 	return 1
@@ -67,18 +64,25 @@
 			log_admin("ATTACK: [user] ([user.ckey]) primed \a [src].")
 			message_admins("ATTACK: [user] ([user.ckey]) primed \a [src].")
 
-			active = 1
-			icon_state = initial(icon_state) + "_active"
+			activate()
 			add_fingerprint(user)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
-			spawn(det_time)
-				if(user)
-					user.drop_item()
-				prime()
-				return
 	return
+
+
+/obj/item/weapon/grenade/proc/activate()
+	if(active)
+		return
+
+	icon_state = initial(icon_state) + "_active"
+	active = 1
+	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+
+	spawn(det_time)
+		prime()
+		return
 
 
 /obj/item/weapon/grenade/proc/prime()

@@ -52,7 +52,7 @@
 			if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
 				user << "\red Assembly must contain one igniter."
 				return
-			if(!det.secured)	
+			if(!det.secured)
 				user << "\red Assembly must be secured with screwdriver."
 				return
 			path = 1
@@ -81,12 +81,17 @@
 					icon_state = initial(icon_state) +"_locked"
 					stage = 2
 			else if(stage == 2)
-				user << "\blue You unlock the assembly."
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
-				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
-				icon_state = initial(icon_state) + (detonator?"_ass":"")
-				stage = 1
-				active = 0
+				if(active && prob(95))
+					user << "\red You trigger the assembly!"
+					prime()
+					return
+				else
+					user << "\blue You unlock the assembly."
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
+					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
+					icon_state = initial(icon_state) + (detonator?"_ass":"")
+					stage = 1
+					active = 0
 		else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 			path = 1
 			if(beakers.len == 2)
