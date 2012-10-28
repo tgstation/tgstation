@@ -19,9 +19,9 @@
 				var/afforgan = pick("chest","l_foot","r_foot","l_arm","l_leg")
 				var/datum/organ/external/affecting = H.get_organ(afforgan)
 				if(affecting)
-					if(prob(25))
-						affecting.take_damage(5, 0, 0)
-						cramp_damage_caused += 5
+					if(prob(20) && cramp_damage_caused < CRAMP_DAMAGE_MAX)
+						affecting.take_damage(3, 0, 0)
+						cramp_damage_caused += 3
 					H << "\red [pick("Your [affecting.display_name] goes to sleep.","Your [affecting.display_name] begins to twitch.","Your [affecting.display_name] begins to seize up.","You can feel cramps in your [affecting.display_name].","Your [affecting.display_name] begins to ache.","You can feel pins and needles in your [affecting.display_name].")]"
 
 				spawn(rand(MIN_CRAMP_TIME, MAX_CRAMP_TIME))
