@@ -16,7 +16,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 var/global/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "Mankini", "Love-Hearts", "Black2", "Grey2", "Stripey", "Kinky", "None") //Curse whoever made male/female underwear diffrent colours
 var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "Babydoll", "Baby-Blue", "Green", "Pink", "Kinky", "None")
-var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
+var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
 
 var/const/BE_TRAITOR   =(1<<0)
 var/const/BE_OPERATIVE =(1<<1)
@@ -708,14 +708,14 @@ datum/preferences
 						randomize_skin_tone()
 
 					if("bag")
-						backbag = rand(1,3)
+						backbag = rand(1,4)
 
 					if("all")
 						gender = pick(MALE,FEMALE)
 						randomize_name()
 						age = rand(17,45)
 						underwear = rand(1,12)
-						backbag = rand(1,3)
+						backbag = rand(1,4)
 						randomize_hair_color("hair")
 						randomize_hair(gender)
 						randomize_hair_color("facial")
@@ -1192,7 +1192,7 @@ datum/preferences
 			underwear = 1 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me.
 		character.underwear = underwear
 
-		if(backbag > 3 || backbag < 1)
+		if(backbag > 4 || backbag < 1)
 			backbag = 1 //Same as above
 		character.backbag = backbag
 

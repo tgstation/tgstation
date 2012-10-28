@@ -34,6 +34,7 @@
 	if(interrupted_cramps)
 		cramp_damage_caused = 0
 
+/*
 /obj/item/clothing/suit/bio_suit/causes_cramps = 1
 /obj/item/clothing/suit/armor/riot/causes_cramps = 1
 /obj/item/clothing/suit/fire/causes_cramps = 1
@@ -45,3 +46,4 @@
 //ergonomically designed space suits
 /obj/item/clothing/suit/space/space_ninja/causes_cramps = 0
 /obj/item/clothing/suit/space/pirate/causes_cramps = 0
+*/
