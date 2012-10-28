@@ -233,7 +233,18 @@ datum
 				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
-					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+					var/excess_temp = lowertemp.temperature - WATER_BOIL_TEMP
+					if(excess_temp > 0)
+						while(T.wet > 0)
+							T.wet -= 0
+							excess_temp /= 2
+						if(T.wet_overlay)
+							if(prob(10))
+								T.visible_message("\icon[T.wet_overlay] You hear something [pick("hissing","sizzling")]!", "", "\icon[T.wet_overlay] You hear something [pick("hissing","sizzling")]!")
+							T.overlays -= T.wet_overlay
+							T.wet_overlay = null
+						lowertemp.temperature = WATER_BOIL_TEMP + excess_temp
+					//lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
 					del(hotspot)
@@ -1487,8 +1498,9 @@ datum
 				if(M.bodytemperature < 170)
 					M.adjustCloneLoss(-1)
 					M.adjustOxyLoss(-3)
-					M.heal_organ_damage(3,3)
-					M.adjustToxLoss(-3)
+					if(prob(50))
+						M.heal_organ_damage(1,1)
+						M.adjustToxLoss(-1)
 				..()
 				return
 
@@ -1504,8 +1516,8 @@ datum
 				if(M.bodytemperature < 170)
 					M.adjustCloneLoss(-3)
 					M.adjustOxyLoss(-3)
-					M.heal_organ_damage(3,3)
-					M.adjustToxLoss(-3)
+					M.heal_organ_damage(1,1)
+					M.adjustToxLoss(-1)
 				..()
 				return
 
