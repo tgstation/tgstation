@@ -15,7 +15,7 @@
 	var/timing = 0
 	var/time = 10
 
-	var/range = 1
+	var/range = 2
 
 	proc
 		toggle_scan()
