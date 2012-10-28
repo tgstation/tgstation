@@ -1,7 +1,7 @@
 //might be a better place to put this, but it's fine here for now
 
-#define MIN_CRAMP_TIME 600
-#define MAX_CRAMP_TIME 3600
+#define MIN_CRAMP_TIME 1200
+#define MAX_CRAMP_TIME 7200
 #define CRAMP_DAMAGE_MAX 10
 
 /obj/item/clothing/suit/var/causes_cramps = 0
@@ -19,9 +19,9 @@
 				var/afforgan = pick("chest","l_foot","r_foot","l_arm","l_leg")
 				var/datum/organ/external/affecting = H.get_organ(afforgan)
 				if(affecting)
-					if(prob(20) && cramp_damage_caused < CRAMP_DAMAGE_MAX)
+					/*if(prob(20) && cramp_damage_caused < CRAMP_DAMAGE_MAX)
 						affecting.take_damage(3, 0, 0)
-						cramp_damage_caused += 3
+						cramp_damage_caused += 3*/
 					H << "\red [pick("Your [affecting.display_name] goes to sleep.","Your [affecting.display_name] begins to twitch.","Your [affecting.display_name] begins to seize up.","You can feel cramps in your [affecting.display_name].","Your [affecting.display_name] begins to ache.","You can feel pins and needles in your [affecting.display_name].")]"
 
 				spawn(rand(MIN_CRAMP_TIME, MAX_CRAMP_TIME))
