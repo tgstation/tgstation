@@ -181,9 +181,9 @@
 /obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas()
 	if(air_contents.total_moles() < 1)
 		return
-	var/datum/gas_mixture/expel_gas = new
-	var/remove_amount = air_contents.total_moles()/50
-	expel_gas = air_contents.remove(remove_amount)
+//	var/datum/gas_mixture/expel_gas = new
+//	var/remove_amount = air_contents.total_moles()/50
+//	expel_gas = air_contents.remove(remove_amount)
 
 	// Just have the gas disappear to nowhere.
 	//expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
