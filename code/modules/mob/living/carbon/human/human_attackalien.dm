@@ -5,9 +5,7 @@
 
 	switch(M.a_intent)
 		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+			visible_message(text("\blue [M] caresses [src] with its scythe like arm."))
 		if ("grab")
 			if(M == src)	return
 			if (w_uniform)
@@ -21,9 +19,7 @@
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+			visible_message(text("\red [] has grabbed [] passively!", M, src))
 
 		if("hurt")
 			if (w_uniform)
@@ -47,22 +43,16 @@
 
 		if("disarm")
 			var/randn = rand(1, 100)
-			if (randn <= 90)
+			if (randn <= 80)
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Weaken(10)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1)
+				visible_message(text("\red <B>[] has tackled down []!</B>", M, src))
 			else
 				if (randn <= 99)
 					playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 					drop_item()
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] disarmed []!</B>", M, src), 1)
+					visible_message(text("\red <B>[] disarmed []!</B>", M, src))
 				else
 					playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has tried to disarm []!</B>", M, src), 1)
+					visible_message(text("\red <B>[] has tried to disarm []!</B>", M, src))
 	return

@@ -9,6 +9,7 @@
 	say_message = "hisses"
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
+	dna = null
 
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -172,6 +173,11 @@
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
 
+/mob/living/carbon/alien/getDNA()
+	return null
+
+/mob/living/carbon/alien/setDNA()
+	return
 
 /*----------------------------------------
 Proc: AddInfectionImages()
@@ -196,6 +202,7 @@ Des: Removes all infected images from the alien.
 			if(I.icon_state == "infected")
 				del(I)
 	return
+
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

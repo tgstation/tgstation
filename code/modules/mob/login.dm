@@ -37,11 +37,6 @@
 	if(hud_used)	del(hud_used)		//remove the hud objects
 	hud_used = new /datum/hud(src)
 
-	if(!dna)
-		dna = new /datum/dna(null)
-		if(dna)
-			dna.real_name = real_name
-
 	next_move = 1
 	sight |= SEE_SELF
 	..()
