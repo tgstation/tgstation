@@ -933,6 +933,17 @@ proc/process_ghost_teleport_locs()
 	icon_state = "medbay"
 	music = 'sound/ambience/signal.ogg'
 
+//Medbay is a large area, these additional areas help level out APC load.
+/area/medical/medbay2
+	name = "Medbay"
+	icon_state = "medbay2"
+	music = 'sound/ambience/signal.ogg'
+
+/area/medical/medbay3
+	name = "Medbay"
+	icon_state = "medbay3"
+	music = 'sound/ambience/signal.ogg'
+
 /area/medical/patients_rooms
 	name = "\improper Patient's Rooms"
 	icon_state = "patients"
@@ -974,8 +985,12 @@ proc/process_ghost_teleport_locs()
 	icon_state = "exam_room"
 
 /area/medical/genetics
-	name = "Genetics"
+	name = "Genetics Lab"
 	icon_state = "genetics"
+
+/area/medical/genetics_cloning
+	name = "Cloning Lab"
+	icon_state = "cloning"
 
 /area/medical/sleeper
 	name = "\improper Medical Sleeper Room"

@@ -457,7 +457,7 @@ datum/preferences
 						randomize_name()
 
 					if("age")
-						age = rand(17, 45)
+						age = rand(17, 85)
 
 					if("b_type")
 						b_type = pick( 31;"A+", 7;"A-", 8;"B+", 2;"B-", 2;"AB+", 1;"AB-", 40;"O+", 9;"O-" )
@@ -489,7 +489,7 @@ datum/preferences
 					if("all")
 						gender = pick(MALE,FEMALE)
 						randomize_name()
-						age = rand(17,45)
+						age = rand(17,85)
 						underwear = rand(1,12)
 						backbag = rand(1,3)
 						randomize_hair_color("hair")
@@ -526,9 +526,9 @@ datum/preferences
 							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 					if("age")
-						var/new_age = input(user, "Choose your character's age:\n(17-45)", "Character Preference") as num|null
+						var/new_age = input(user, "Choose your character's age:\n(17-85)", "Character Preference") as num|null
 						if(new_age)
-							age = max(min(round(text2num(new_age)), 45), 17)
+							age = max(min(round(text2num(new_age)), 85), 17)
 
 					if("metadata")
 						var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null

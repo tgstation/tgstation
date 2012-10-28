@@ -496,3 +496,44 @@ datum/preferences
 		del(clothes_s)
 
 
+proc/skintone2racedescription(var/tone)
+	switch (tone)
+		if(30 to INFINITY)
+			return "albino"
+		if(20 to 30)
+			return "pale"
+		if(5 to 15)
+			return "light skinned"
+		if(-10 to 5)
+			return "white"
+		if(-25 to -10)
+			return "tan"
+		if(-45 to -25)
+			return "darker skinned"
+		if(-65 to -45)
+			return "brown"
+		if(-INFINITY to -65)
+			return "black"
+
+
+proc/age2agedescription(var/age)
+	switch (age)
+		if(0 to 1)
+			return "infant"
+		if(1 to 3)
+			return "toddler"
+		if(3 to 13)
+			return "child"
+		if(13 to 19)
+			return "teenager"
+		if(19 to 30)
+			return "young adult"
+		if(30 to 45)
+			return "adult"
+		if(45 to 60)
+			return "middle-aged"
+		if(60 to 70)
+			return "aging"
+		if(70 to INFINITY)
+			return "elderly"
+
