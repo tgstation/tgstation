@@ -20,6 +20,9 @@
 		var/list/temp_hideamt = text2list(src.product_hideamt, ";")
 		var/list/temp_coin = text2list(src.product_coin, ";")
 		var/list/temp_coin_amt = text2list(src.product_coin_amt, ";")
+
+		src.last_slogan = world.time + rand(0, slogan_delay)	//So not all machines speak at the exact same time. The first time this machine says something will be at slogantime + this random value, so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
+
 		//Little sanity check here
 		if ((isnull(temp_paths)) || (isnull(temp_amounts)) || (temp_paths.len != temp_amounts.len) || (temp_hidden.len != temp_hideamt.len))
 			stat |= BROKEN
