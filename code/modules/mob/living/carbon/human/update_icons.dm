@@ -246,6 +246,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 		lying_icon = new /icon('icons/mob/human.dmi', "body_[g]_l")
 		individual_limbs = 0
 
+	//remove destroyed limbs from base icon
 	for(var/datum/organ/external/part in organs)
 		if(!istype(part, /datum/organ/external/groin) \
 		&& !istype(part, /datum/organ/external/chest) \
@@ -258,7 +259,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 			temp.MapColors(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,-1, 1,1,1,1)
 			lying_icon.AddAlphaMask(temp)
 
-	// Draw each individual limb
+	// Draw each individual limb (AterIgnis: not sure why this is needed at all - base icon have all of these, but that was before me)
 	if(!husk && individual_limbs)
 		stand_icon.Blend(new /icon('icons/mob/human.dmi', "chest_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('icons/mob/human.dmi', "chest_[g]_l"), ICON_OVERLAY)
@@ -271,6 +272,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 		stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "groin_[g]_l"), ICON_OVERLAY)
 
+	// Draw nondestroyed robotic limbs grayscale
 	for(var/datum/organ/external/part in organs)
 		if(!istype(part, /datum/organ/external/groin) \
 			&& !istype(part, /datum/organ/external/chest) \
