@@ -370,30 +370,31 @@
 				if(halloss != 0)
 					damages+="hal"
 
-				switch(pick(damages))
-					if("tox")
-						adjustToxLoss(-1)
-						healed = 1
-					if("oxy")
-						adjustOxyLoss(-1)
-						healed = 1
-					if("clone")
-						adjustCloneLoss(-1)
-						healed = 1
-					if("brute")
-						heal_organ_damage(1,0)
-						healed = 1
-					if("burn")
-						heal_organ_damage(0,1)
-						healed = 1
-					if("hal")
-						if(halloss > 0)
-							halloss -= 1
-						if(halloss < 0)
-							halloss = 0
-						healed = 1
-					else
-						i=5
+				if(damages.len)
+					switch(pick(damages))
+						if("tox")
+							adjustToxLoss(-1)
+							healed = 1
+						if("oxy")
+							adjustOxyLoss(-1)
+							healed = 1
+						if("clone")
+							adjustCloneLoss(-1)
+							healed = 1
+						if("brute")
+							heal_organ_damage(1,0)
+							healed = 1
+						if("burn")
+							heal_organ_damage(0,1)
+							healed = 1
+						if("hal")
+							if(halloss > 0)
+								halloss -= 1
+							if(halloss < 0)
+								halloss = 0
+							healed = 1
+				else
+					break
 
 			if(healed)
 				if(prob(5))
