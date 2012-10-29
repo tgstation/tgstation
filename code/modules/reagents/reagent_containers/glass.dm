@@ -27,7 +27,8 @@
 		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/secstorage/ssafe,
 		/obj/machinery/disposal,
-        /obj/machinery/iv_drip
+		/obj/machinery/iv_drip,
+		/obj/machinery/disease2/incubator
 	)
 
 	examine()

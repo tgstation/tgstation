@@ -10,6 +10,7 @@
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	var/list/viruses = list()
 	blood_DNA = list()
+	var/datum/disease2/disease/virus2 = null
 
 /obj/effect/decal/cleanable/blood/Del()
 	for(var/datum/disease/D in viruses)
@@ -73,3 +74,16 @@
 					b.viruses += D
 			if (step_to(src, get_step(src, direction), 0))
 				break
+
+
+/obj/effect/decal/cleanable/mucus
+	name = "mucus"
+	desc = "Disgusting mucus."
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'blood.dmi'
+	icon_state = "mucus"
+	random_icon_states = list("mucus")
+	var/datum/disease2/disease/virus2 = null

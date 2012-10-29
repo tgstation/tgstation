@@ -91,7 +91,7 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
+			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null,"antibodies"=null )
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -108,6 +108,19 @@ datum
 					else //injected
 						M.contract_disease(virus, 1, 0)
 
+				if(self.data["virus2"])
+					if(method == TOUCH)
+						infect_virus2(M,self.data["virus2"])
+					else
+						infect_virus2(M,self.data["virus2"],1)
+
+				if(istype(M,/mob/living/carbon))
+					// add the host's antibodies to their blood
+					self.data["antibodies"] |= M:antibodies
+
+					// check if the blood has antibodies that cure our disease
+					if (M:virus2) if((self.data["antibodies"] & M:virus2.antigen) && prob(10))
+						M:virus2.dead = 1
 
 				/*
 				if(self.data["virus"])
@@ -808,6 +821,15 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.apply_effect(2,IRRADIATE,0)
+
+				// radium may increase your chances to cure a disease
+				if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
+					if(M:virus2 && prob(5))
+						if(prob(50))
+							M.radiation += 50 // curing it that way may kill you instead
+							M.adjustToxLoss(100)
+						M:antibodies |= M:virus2.antigen
+
 				..()
 				return
 

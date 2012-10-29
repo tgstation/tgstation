@@ -40,7 +40,21 @@
 			container = I
 			C.drop_item()
 			I.loc = src
+	if(istype(I,/obj/item/weapon/virusdish))
+		if(virusing)
+			user << "<b>The pathogen materializer is still recharging.."
+			return
+		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
+		var/list/data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null,"antibodies"=0)
+		data["virus2"] = I:virus2
+		product.reagents.add_reagent("blood",30,data)
+
+		virusing = 1
+		spawn(1200) virusing = 0
+
+		state("The [src.name] Buzzes", "blue")
+		return
 	//else
 	src.attack_hand(user)
 	return
@@ -68,6 +82,9 @@
 
 		if(B)
 			dat = "Blood sample inserted."
+			var/code = ""
+			for(var/V in ANTIGENS) if(text2num(V) & B.data["antibodies"]) code += ANTIGENS[V]
+			dat += "<BR>Antibodies: [code]"
 			dat += "<BR><A href='?src=\ref[src];antibody=1'>Begin antibody production</a>"
 		else
 			dat += "<BR>Please check container contents."
@@ -121,9 +138,10 @@
 	product.reagents.add_reagent("antibodies",30,data)
 
 	state("The [src.name] Buzzes", "blue")
-
+/*
 /obj/machinery/computer/curer/proc/createvirus(var/datum/disease2/disease/virus2)
 	var/obj/item/weapon/cureimplanter/implanter = new /obj/item/weapon/cureimplanter(src.loc)
 	implanter.name = "Viral implanter (MAJOR BIOHAZARD)"
 	implanter.works = 3
 	state("The [src.name] Buzzes", "blue")
+*/

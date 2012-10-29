@@ -181,6 +181,13 @@ datum
 			required_reagents = list("silicon" = 1, "carbon" = 1)
 			result_amount = 2
 
+		virus_food
+			name = "Virus Food"
+			id = "virusfood"
+			result = "virusfood"
+			required_reagents = list("water" = 1, "milk" = 1)
+			result_amount = 5
+
 		leporazine
 			name = "Leporazine"
 			id = "leporazine"
