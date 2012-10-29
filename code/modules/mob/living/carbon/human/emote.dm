@@ -85,6 +85,15 @@
 				return
 			if(!(message))
 				return
+			if(copytext(message,1,5) == "says")
+				src << "\red Invalid emote."
+				return
+			else if(copytext(message,1,9) == "exclaims")
+				src << "\red Invalid emote."
+				return
+			else if(copytext(message,1,5) == "asks")
+				src << "\red Invalid emote."
+				return
 			else
 				message = "<B>[src]</B> [message]"
 
