@@ -181,8 +181,8 @@
 		src.r_hand = null
 		update_inv_r_hand()
 
-	//check later on if our species can't wear some clothes
-	var/cur_species = get_species()
+	//check later on if our species can't wear some clothes. Hawk: Bugger that. Just tell them in the roundstart messages! We whitelist them!
+//	var/cur_species = get_species()
 
 	W.loc = src
 	switch(slot)
@@ -228,8 +228,8 @@
 			W.equipped(src, slot)
 			update_inv_glasses(redraw_mob)
 		if(slot_gloves)
-			var/broken = 0
-			if(cur_species == "Tajaran")
+/*			var/broken = 0
+			if(cur_species == "Tajaran") //We whitelist our Tajaran already. No further code is needed to punish them.
 				if(prob(5))
 					src.visible_message("\red Your feet burst out of the [W], ripping them to shreds!", "\red [src]'s feet burst out of the [W], ripping them to shreds!", "\red You hear a ripping, tearing sound!")
 					apply_damage(5)
@@ -239,10 +239,10 @@
 				else if(prob(50))
 					src << "\red You hurt your feet forcing them into the [W]!"
 					apply_damage(5)
-			if(!broken)
-				src.gloves = W
-				W.equipped(src, slot)
-				update_inv_gloves(redraw_mob)
+			if(!broken)*/
+			src.gloves = W
+			W.equipped(src, slot)
+			update_inv_gloves(redraw_mob)
 		if(slot_head)
 			src.head = W
 			if(head.flags & BLOCKHAIR)
@@ -252,7 +252,7 @@
 			W.equipped(src, slot)
 			update_inv_head(redraw_mob)
 		if(slot_shoes)
-			var/broken = 0
+/*			var/broken = 0
 			if(cur_species == "Tajaran")
 				if(prob(5))
 					src.visible_message("\red Your feet burst out of the [W], ripping them to shreds!", "\red [src]'s feet burst out of the [W], ripping them to shreds!", "\red You hear a ripping, tearing sound!")
@@ -263,10 +263,10 @@
 				else if(prob(50))
 					src << "\red You hurt your feet forcing them into the [W]!"
 					apply_damage(5)
-			if(!broken)
-				src.shoes = W
-				W.equipped(src, slot)
-				update_inv_shoes(redraw_mob)
+			if(!broken) */
+			src.shoes = W
+			W.equipped(src, slot)
+			update_inv_shoes(redraw_mob)
 		if(slot_wear_suit)
 			src.wear_suit = W
 			W.equipped(src, slot)
@@ -295,8 +295,8 @@
 			src << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
 			return
 
-
-	//can't quite fit some alien bodyparts
+/*
+	//can't quite fit some alien bodyparts. Hawk: For the love of god why?
 	if( W.body_parts_covered & LOWER_TORSO && W.flags_inv & HIDEJUMPSUIT && (cur_species == "Tajaran" || cur_species == "Soghun"))
 		if(prob(50))
 			src << "\red You twist your tail trying to fit it in!"
@@ -305,7 +305,7 @@
 		if(prob(50))
 			src << "\red You twist your eartails trying to fit it in!"
 			apply_damage(5)
-
+*/
 	W.layer = 20
 
 	return

@@ -696,6 +696,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Research Director's Office"
 	icon_state = "head_quarters"
 
+/area/crew_quarters/hos
+	name = "\improper Head of Security's Office"
+	icon_state = "head_quarters"
+
 /area/crew_quarters/chief
 	name = "\improper Chief Engineer's Office"
 	icon_state = "head_quarters"
@@ -1105,7 +1109,19 @@ proc/process_ghost_teleport_locs()
 //Toxins
 
 /area/toxins/lab
+	name = "\improper Research Hallway"
+	icon_state = "toxlab"
+
+/area/toxins/hallway
 	name = "\improper Research Lab"
+	icon_state = "toxlab"
+
+/area/toxins/rdoffice
+	name = "\improper Research Director's Office"
+	icon_state = "head_quarters"
+
+/area/toxins/supermatter
+	name = "\improper Supermatter Lab"
 	icon_state = "toxlab"
 
 /area/toxins/xenobiology

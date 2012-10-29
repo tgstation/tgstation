@@ -98,6 +98,8 @@
 #define FIRE_PLASMA_ENERGY_RELEASED	 3000000 //Amount of heat released per mole of burnt plasma into the tile
 #define FIRE_GROWTH_RATE			40000 //For small fires
 
+#define WATER_BOIL_TEMP 393
+
 // Fire Damage
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 200+T0C
 #define CARBON_LIFEFORM_FIRE_DAMAGE		4

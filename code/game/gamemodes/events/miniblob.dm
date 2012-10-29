@@ -25,5 +25,5 @@
 				if(B.z != 1)
 					continue
 				B.Life()
-		spawn(30)
+		spawn(70)
 			dotheblobbaby()

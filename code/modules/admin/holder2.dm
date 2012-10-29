@@ -1344,7 +1344,10 @@ var/list/admin_datums = list()
 			src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;"
 			src.owner << "Location = [location_description];"
 			src.owner << "[special_role_description]"
-			src.owner << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
+			var/adminopts = "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>)"
+			if(level >= 3)
+				adminopts += " (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
+			src.owner << adminopts
 
 	if (href_list["adminspawncookie"])
 		var/mob/M = locate(href_list["adminspawncookie"])

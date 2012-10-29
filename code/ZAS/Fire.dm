@@ -79,73 +79,70 @@ obj
 		process()
 			. = 1
 
-			if(firelevel > vsc.IgnitionLevel)
+			var/turf/simulated/floor/S = loc
+			if(!S.zone) del src //Cannot exist where zones are broken.
 
-				var/turf/simulated/floor/S = loc
-				if(!S.zone) del src //Cannot exist where zones are broken.
+			if(istype(S,/turf/simulated/floor))
+				var
+					datum/gas_mixture/air_contents = S.return_air()
+					//Get whatever trace fuels are in the area
+					datum/gas/volatile_fuel/fuel = locate(/datum/gas/volatile_fuel/) in air_contents.trace_gases
+					//Also get liquid fuels on the ground.
+					obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in S
 
-				if(istype(S,/turf/simulated/floor))
-					var
-						datum/gas_mixture/air_contents = S.return_air()
-						//Get whatever trace fuels are in the area
-						datum/gas/volatile_fuel/fuel = locate(/datum/gas/volatile_fuel/) in air_contents.trace_gases
-						//Also get liquid fuels on the ground.
-						obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in S
+				var/datum/gas_mixture/flow = air_contents.remove_ratio(0.25)
+				//The reason we're taking a part of the air instead of all of it is so that it doesn't jump to
+				//the fire's max temperature instantaneously.
 
-					var/datum/gas_mixture/flow = air_contents.remove_ratio(0.25)
-					//The reason we're taking a part of the air instead of all of it is so that it doesn't jump to
-					//the fire's max temperature instantaneously.
+				firelevel = air_contents.calculate_firelevel(liquid)
 
-					firelevel = air_contents.calculate_firelevel(liquid)
+				//Ensure that there is an appropriate amount of fuel and O2 here.
+				if(firelevel > 0.25 && flow.oxygen > 0.3 && (air_contents.toxins || fuel || liquid))
 
-					//Ensure that there is an appropriate amount of fuel and O2 here.
-					if(firelevel > 0.25 && flow.oxygen > 0.3 && (air_contents.toxins || fuel || liquid))
+					for(var/direction in cardinal)
+						if(S.air_check_directions&direction) //Grab all valid bordering tiles
 
-						for(var/direction in cardinal)
-							if(S.air_check_directions&direction) //Grab all valid bordering tiles
+							var/turf/simulated/enemy_tile = get_step(S, direction)
 
-								var/turf/simulated/enemy_tile = get_step(S, direction)
+							if(istype(enemy_tile))
+								//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
+								//reduce firelevel.
+								if(enemy_tile.fire_protection > world.time-30)
+									firelevel -= 1.5
+									continue
 
-								if(istype(enemy_tile))
-									//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
-									//reduce firelevel.
-									if(enemy_tile.fire_protection > world.time-30)
-										firelevel -= 1.5
-										continue
+								//Spread the fire.
+								if(!(locate(/obj/fire) in enemy_tile))
+									if( prob( firelevel*10 ) )
+										new/obj/fire(enemy_tile,firelevel)
 
-									//Spread the fire.
-									if(!(locate(/obj/fire) in enemy_tile))
-										if( prob( firelevel*10 ) )
-											new/obj/fire(enemy_tile,firelevel)
+				if(flow)
 
-					if(flow)
+					//Ensure adequate oxygen and fuel.
+					if(flow.oxygen > 0.3 && (flow.toxins || fuel || liquid))
 
-						//Ensure adequate oxygen and fuel.
-						if(flow.oxygen > 0.3 && (flow.toxins || fuel || liquid))
-
-							//Change icon depending on the fuel, and thus temperature.
-							if(firelevel > 6)
-								icon_state = "3"
-							else if(firelevel > 2.5)
-								icon_state = "2"
-							else
-								icon_state = "1"
-
-							//Ensure flow temperature is higher than minimum fire temperatures.
-							flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
-
-							//Burn the gas mixture.
-							flow.zburn(liquid)
-
+						//Change icon depending on the fuel, and thus temperature.
+						if(firelevel > 6)
+							icon_state = "3"
+						else if(firelevel > 2.5)
+							icon_state = "2"
 						else
+							icon_state = "1"
 
+						//Ensure flow temperature is higher than minimum fire temperatures.
+						flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
+
+						//Burn the gas mixture.
+						if(!flow.zburn(liquid))
 							del src
 
-
-						S.assume_air(flow) //Then put it back where you found it.
-
 					else
+
 						del src
+
+
+					S.assume_air(flow) //Then put it back where you found it.
+
 				else
 					del src
 			else
@@ -191,12 +188,16 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 			datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
 		if(fuel)
-		//Volatile Fuel
-			total_fuel += fuel.moles
-			fuel_sources++
+			//Volatile Fuel
+			if(fuel.moles < 0.01)
+				trace_gases.Remove(fuel)
+				del fuel
+			else
+				total_fuel += fuel.moles
+				fuel_sources++
 
 		if(liquid)
-		//Liquid Fuel
+			//Liquid Fuel
 			if(liquid.amount <= 0)
 				del liquid
 			else
@@ -212,6 +213,8 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 
 				//Calculate the firelevel.
 			var/firelevel = calculate_firelevel(liquid)
+			if(firelevel < 0.01)
+				return 0
 
 				//Reaches a maximum practical temperature of around 4500.
 
@@ -219,7 +222,7 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 			temperature = max( 1700*log(0.4*firelevel + 1.23) , temperature )
 
 			//Consume some gas.
-			var/consumed_gas = min(oxygen,firelevel,total_fuel) / fuel_sources
+			var/consumed_gas = min(oxygen,firelevel * 50,total_fuel) / fuel_sources
 
 			oxygen = max(0,oxygen-consumed_gas)
 

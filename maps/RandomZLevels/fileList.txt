@@ -3,9 +3,9 @@
 #Maps should be 255x255 or smaller and be bounded.  Falling off the edge of the map will result in undefined behavior. 
 #SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
 
-#maps/RandomZLevels/example.dmm
-#maps/RandomZLevels/blackmarketpackers.dmm
-#maps/RandomZLevels/stationCollision.dmm
-#maps/RandomZLevels/spacebattle.dmm
-#maps/RandomZLevels/beach.dmm
+maps/RandomZLevels/example.dmm
+maps/RandomZLevels/blackmarketpackers.dmm
+maps/RandomZLevels/stationCollision.dmm
+maps/RandomZLevels/spacebattle.dmm
+maps/RandomZLevels/beach.dmm
 #maps/RandomZLevels/Academy.dmm
