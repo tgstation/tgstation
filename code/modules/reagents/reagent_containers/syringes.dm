@@ -96,6 +96,8 @@
 
 							B.data["viruses"] += new D.type
 
+						if(T.virus2)
+							B.data["virus2"] = T.virus2.getcopy()
 
 						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
 						if(T.resistances&&T.resistances.len)
@@ -108,6 +110,7 @@
 							temp_chem += R.name
 							temp_chem[R.name] = R.volume
 						B.data["trace_chem"] = list2params(temp_chem)
+						B.data["antibodies"] = T.antibodies
 
 						if(ishuman(T))
 							T:vessel.remove_reagent("blood",amount) // Removes blood if human

@@ -1367,7 +1367,28 @@
 		if(bodytemperature > 406)
 			for(var/datum/disease/D in viruses)
 				D.cure()
-		return
+
+		if(!virus2)
+			for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
+				if(B.virus2 && get_infection_chance())
+					infect_virus2(src,B.virus2)
+			for(var/obj/effect/decal/cleanable/mucus/M in view(1,src))
+				if(M.virus2 && get_infection_chance())
+					infect_virus2(src,M.virus2)
+		else
+			if(isnull(virus2)) // Trying to figure out a runtime error that keeps repeating
+				CRASH("virus2 nulled before calling activate()")
+			else
+				virus2.activate(src)
+
+			// activate may have deleted the virus
+			if(!virus2) return
+
+			// check if we're immune
+			if(virus2.antigen & src.antibodies) virus2.dead = 1
+
+
+			return
 
 	proc/handle_stomach()
 		spawn(0)
