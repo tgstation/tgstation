@@ -351,6 +351,8 @@
 	if(!changeling)	return
 
 	var/mob/living/carbon/C = usr
+	if(!C.stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")//Confirmation for living changelings if they want to fake their death
+		return
 	C << "<span class='notice'>We will attempt to regenerate our form.</span>"
 
 	C.status_flags |= FAKEDEATH		//play dead
