@@ -287,6 +287,7 @@ var/global/datum/controller/gameticker/ticker
 					captainless=0
 				if(player.mind.assigned_role != "MODE")
 					job_master.EquipRank(player, player.mind.assigned_role, 0)
+					EquipCustomItems(player)
 		if(captainless)
 			world << "Captainship not forced on anyone."
 

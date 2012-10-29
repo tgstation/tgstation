@@ -284,17 +284,8 @@
 	name = "old red flashlight"
 	desc = "A very old, childlike flashlight."
 	icon = 'custom_items.dmi'
-	icon_state = "wolfflight0"
-	w_class = 2
+	icon_state = "wolfflight"
 	item_state = "wolfflight"
-	flags = FPRINT | TABLEPASS | CONDUCT
-	slot_flags = SLOT_BELT
-	m_amt = 50
-	g_amt = 20
-	on = 0
-	brightness_on = 4 //luminosity when on
-	icon_on = "wolfflight1"
-	icon_off = "wolfflight0"
 
 //////////////////////////////////
 //////////// Clothing ////////////
