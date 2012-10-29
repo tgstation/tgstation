@@ -199,8 +199,9 @@ ZIPPO
 		icon_state = src.butt_icon
 		desc = src.butt_desc
 		name = src.butt_name
-		usr.update_inv_l_hand()
-		usr.update_inv_r_hand()
+		if (usr)
+			usr.update_inv_l_hand()
+			usr.update_inv_r_hand()
 
 
 ////////////
