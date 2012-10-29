@@ -33,11 +33,12 @@
 	spread = "None"
 	spread_type = SPECIAL
 	cure = "Unknown"
-	cure_id = list("lexorin","toxin","gargleblaster")
-	cure_chance = 20
+	cure_id = list("lexorin","toxin","gargleblaster", "cyanide")
+	cure_chance = 50
 	affected_species = list("Human", "Monkey")
 	permeability_mod = 15//likely to infect
 	can_carry = 0
+	stage_prob = 3
 	var/gibbed = 0
 
 /datum/disease/alien_embryo/stage_act()
@@ -73,12 +74,23 @@
 			if(prob(50))
 				if(gibbed != 0) return 0
 				var/list/candidates = get_alien_candidates()
-				var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
-				if(candidates.len)
-					new_xeno.key = pick(candidates)
-				else
-					new_xeno.key = affected_mob.key
+				var/picked = null
 
+				// To stop clientless larva, we will check that our host has a client
+				// if we find no ghosts to become the alien. If the host has a client
+				// he will become the alien but if he doesn't then we will set the stage
+				// to 2, so we don't do a process heavy check everytime.
+
+				if(candidates.len)
+					picked = pick(candidates)
+				else if(affected_mob.client)
+					picked = affected_mob.key
+				else
+					stage = 2 // Let's try again later.
+					return
+
+				var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
+				new_xeno.key = picked
 				new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
 				affected_mob.gib()
 				src.cure(0)

@@ -4624,7 +4624,7 @@
 "bKV" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/toxins/xenobiology)
 "bKW" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{dir = 8; icon_state = "warnwhitecorner"; tag = "icon-warnwhitecorner (EAST)"},/area/toxins/xenobiology)
 "bKX" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/atmospherics/binary/pump{dir = 1},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor{dir = 9; icon_state = "warning"},/area/toxins/xenobiology)
-"bKY" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/space,/area/toxins/xenobiology)
+"bKY" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plating,/area/toxins/xenobiology)
 "bKZ" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/mob/living/carbon/monkey,/turf/simulated/floor,/area/toxins/xenobiology)
 "bLa" = (/turf/simulated/floor,/area/toxins/xenobiology)
 "bLb" = (/obj/item/weapon/wrench,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
