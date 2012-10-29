@@ -39,7 +39,7 @@
 	emote_hear = list("squawks","bawks")
 	emote_see = list("flutters its wings")
 
-	speak_chance = 8//4% (1 in 25) chance every tick
+	speak_chance = 1//1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
 
@@ -56,7 +56,6 @@
 	var/parrot_speed = 5 //"Delay in world ticks between movement." Yeah, that's BS but it does directly affect movement. Higher number = slower.
 	var/parrot_been_shot = 0 //Parrots get a speed bonus after being shot. This will deincrement every Life() and at 0 the parrot will return to regular speed.
 
-	var/speach_probability = 10 //This means it has a 10% chance of speaking the first time, each time it speaks, this is reduced by 1, eventually becoming prob(1) per life tick.
 	var/list/speech_buffer = list()
 	var/list/available_channels = list()
 
@@ -300,14 +299,12 @@
 	   Phrases that the parrot hears in mob/living/say() get added to speach_buffer.
 	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
 	   Then it clears the buffer to make sure they dont magically remember something from hours ago. */
-	if(speech_buffer.len && prob(speach_probability))
+	if(speech_buffer.len && prob(10))
 		if(speak.len)
 			speak.Remove(pick(speak))
 
 		speak.Add(pick(speech_buffer))
 		clearlist(speech_buffer)
-		speach_probability = max(1, speach_probability-1) //This ensures that the amount of parrot spam reduces over time, as each time it speaks, the chance of it speaking again is reduced by 1, eventually reaching a prob(1)
-
 
 
 //-----SLEEPING
