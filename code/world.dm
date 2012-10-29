@@ -19,6 +19,7 @@
 	src.load_mode()
 	src.load_motd()
 	src.load_admins()
+	src.load_mods()
 	investigate_reset()
 	if (config.usewhitelist)
 		load_whitelist()
@@ -276,7 +277,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 /world/proc/load_mods()
 	if(config.admin_legacy_system)
 		//Legacy admin system uses admins.txt
-		var/text = file2text("config/mods.txt")
+		var/text = file2text("config/moderators.txt")
 		if (!text)
 			diary << "Failed to load config/mods.txt\n"
 		else
