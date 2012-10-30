@@ -223,3 +223,5 @@
 
 	var/has_limbs = 1 //Whether this mob have any limbs he can move with
 	var/can_stand = 1 //Whether this mob have ability to stand
+
+	var/immune_to_ssd = 0
