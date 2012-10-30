@@ -244,6 +244,7 @@
 			verbs += /client/proc/Set_Holiday							//Force-set a Holiday
 			verbs += /client/proc/admin_memo
 			verbs += /client/proc/ToRban								//ToRban  frontend to access its features.
+			verbs += /client/proc/Blobize
 		else	return
 
 		//Game Master
