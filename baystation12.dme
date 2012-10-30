@@ -636,6 +636,7 @@
 #include "code\game\objects\objs.dm"
 #include "code\game\objects\structures.dm"
 #include "code\game\objects\weapons.dm"
+#include "code\game\objects\closets\walllocker.dm"
 #include "code\game\objects\effects\aliens.dm"
 #include "code\game\objects\effects\biomass_rift.dm"
 #include "code\game\objects\effects\bump_teleporter.dm"
