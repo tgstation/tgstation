@@ -104,6 +104,9 @@ emp_act
 	for(var/obj/O in src)
 		if(!O)	continue
 		O.emp_act(severity)
+	for(var/datum/organ/external/O  in organs)
+		if(O.status & ORGAN_DESTROYED)	continue
+		O.emp_act(severity)
 	..()
 
 
@@ -111,7 +114,11 @@ emp_act
 	if(!I || !user)	return 0
 
 	var/datum/organ/external/affecting = get_organ(ran_zone(user.zone_sel.selecting))
-
+	if (!affecting)
+		return
+	if(affecting.status & ORGAN_DESTROYED)
+		user << "What [affecting.display_name]?"
+		return
 	var/hit_area = affecting.display_name
 
 	if((user != src) && check_shields(I.force, "the [I.name]"))

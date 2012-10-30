@@ -4,7 +4,7 @@
 	icon_state = "detective"
 	caliber = "38"
 	origin_tech = "combat=2;materials=2"
-	ammo_type = "/obj/item/ammo_magazine/c38"
+	ammo_type = "/obj/item/ammo_casing/c38"
 
 /*
 	special_check(var/mob/living/carbon/human/M)

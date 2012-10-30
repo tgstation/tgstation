@@ -1167,7 +1167,7 @@ datum/preferences
 
 		// Destroy/cyborgize organs
 		for(var/name in organ_data)
-			var/datum/organ/external/O = character.organs[name]
+			var/datum/organ/external/O = character.organs_by_name[name]
 			if(!O) continue
 
 			var/status = organ_data[name]

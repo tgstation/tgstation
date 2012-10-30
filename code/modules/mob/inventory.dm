@@ -226,3 +226,92 @@
 		else
 			return r_hand
 		return
+
+/mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, del_on_fail = 1) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
+	//warning: icky code
+	var/equipped = 0
+	switch(slot)
+		if(slot_back)
+			if(!src.back)
+				src.back = W
+				equipped = 1
+		if(slot_wear_mask)
+			if(!src.wear_mask)
+				src.wear_mask = W
+				equipped = 1
+		if(slot_handcuffed)
+			if(!src.handcuffed)
+				src.handcuffed = W
+				equipped = 1
+		if(slot_l_hand)
+			if(!src.l_hand)
+				src.l_hand = W
+				equipped = 1
+		if(slot_r_hand)
+			if(!src.r_hand)
+				src.r_hand = W
+				equipped = 1
+		if(slot_belt)
+			if(!src.belt && src.w_uniform)
+				src.belt = W
+				equipped = 1
+		if(slot_wear_id)
+			if(!src.wear_id && src.w_uniform)
+				src.wear_id = W
+				equipped = 1
+		if(slot_ears)
+			if(!src.ears)
+				src.ears = W
+				equipped = 1
+		if(slot_glasses)
+			if(!src.glasses)
+				src.glasses = W
+				equipped = 1
+		if(slot_gloves)
+			if(!src.gloves)
+				src.gloves = W
+				equipped = 1
+		if(slot_head)
+			if(!src.head)
+				src.head = W
+				equipped = 1
+		if(slot_shoes)
+			if(!src.shoes)
+				src.shoes = W
+				equipped = 1
+		if(slot_wear_suit)
+			if(!src.wear_suit)
+				src.wear_suit = W
+				equipped = 1
+		if(slot_w_uniform)
+			if(!src.w_uniform)
+				src.w_uniform = W
+				equipped = 1
+		if(slot_l_store)
+			if(!src.l_store && src.w_uniform)
+				src.l_store = W
+				equipped = 1
+		if(slot_r_store)
+			if(!src.r_store && src.w_uniform)
+				src.r_store = W
+				equipped = 1
+		if(slot_s_store)
+			if(!src.s_store && src.wear_suit)
+				src.s_store = W
+				equipped = 1
+		if(slot_in_backpack)
+			if (src.back && istype(src.back, /obj/item/weapon/storage/backpack))
+				var/obj/item/weapon/storage/backpack/B = src.back
+				if(B.contents.len < B.storage_slots && W.w_class <= B.max_w_class)
+					W.loc = B
+					equipped = 1
+
+	if(equipped)
+		W.layer = 20
+		if(src.back && W.loc != src.back)
+			W.loc = src
+	else
+		if (del_on_fail)
+			del(W)
+	return equipped
+
