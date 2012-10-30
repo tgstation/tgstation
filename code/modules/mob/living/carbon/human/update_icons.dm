@@ -216,7 +216,6 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body(var/update_icons=1)
-
 	if(stand_icon)	del(stand_icon)
 	if(lying_icon)	del(lying_icon)
 	if(dna && dna.mutantrace)	return
@@ -229,7 +228,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	if(gender == FEMALE)	g = "f"
 
 	// whether to draw the individual limbs
-	var/individual_limbs = 1
+	var/individual_limbs = 0
 
 	//Base mob icon
 	if(husk)
@@ -242,9 +241,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 		stand_icon = new /icon('icons/mob/human.dmi', "skeleton_s")
 		lying_icon = new /icon('icons/mob/human.dmi', "skeleton_l")
 	else
-		stand_icon = new /icon('icons/mob/human.dmi', "body_[g]_s")
-		lying_icon = new /icon('icons/mob/human.dmi', "body_[g]_l")
-		individual_limbs = 0
+		stand_icon = new /icon('icons/mob/human.dmi', "torso_[g]_s")
+		lying_icon = new /icon('icons/mob/human.dmi', "torso_[g]_l")
+		individual_limbs = 1
 
 	// Draw each individual limb
 	if(individual_limbs)

@@ -284,7 +284,7 @@
 				else if(E.name == "l_leg" || E.name == "l_foot" \
 					|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 					leg_tally--									// let it fail even if just foot&leg
-			if(E.status & ORGAN_BROKEN || E.status & ORGAN_DESTROYED)
+			if(E.status & ORGAN_BROKEN || (E.status & ORGAN_DESTROYED && !E.amputated))
 				if(E.name == "l_hand" || E.name == "l_arm")
 					if(hand && equipped())
 						if(E.status & ORGAN_SPLINTED && prob(10))

@@ -101,6 +101,13 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
+	if (hasorgans(user))
+		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
+		if (user.hand)
+			temp = user:organs_by_name["l_hand"]
+		if(temp && temp.status & ORGAN_DESTROYED)
+			user << "<span class = 'warning'> Yo- wait a minute."
+			return
 	if (istype(src.loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
