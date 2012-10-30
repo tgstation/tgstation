@@ -63,12 +63,9 @@ ZIPPO
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
 	var/icon_off = "cigoff"
 	var/butt_icon = "cigbutt"
-	var/butt_name = "Cigarette butt"
-	var/butt_desc = "A manky old cigarette butt."
 	var/lastHolder = null
 	var/smoketime = 300
 	var/chem_volume = 15
-	var/is_butt = 0
 
 /obj/item/clothing/mask/cigarette/New()
 	..()
@@ -118,7 +115,7 @@ ZIPPO
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user as mob)
 	..()
-	if(!is_butt)
+	if(lit == 0)
 		if(istype(glass))	//you can dip cigarettes into beakers
 			var/transfered = glass.reagents.trans_to(src, chem_volume)
 			if(transfered)	//if reagents were transfered, show the message
@@ -131,7 +128,7 @@ ZIPPO
 
 
 /obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights the [name].")
-	if(!src.lit && !is_butt)
+	if(!src.lit)
 		src.lit = 1
 		damtype = "fire"
 		if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
@@ -166,10 +163,9 @@ ZIPPO
 			M.u_equip(src)	//un-equip it so the overlays can update
 			M.update_inv_wear_mask(0)
 		return
-	if(!is_butt)
+	if(lit == 1)
 		if(location)
 			location.hotspot_expose(700, 5)
-	if(!is_butt)
 		if(reagents && reagents.total_volume)	//	check if it has any reagents at all
 			if(iscarbon(loc) && (src == loc:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
 				var/mob/living/carbon/C = loc
@@ -195,10 +191,11 @@ ZIPPO
 /obj/item/clothing/mask/cigarette/proc/put_out()
 	if(src.lit == 1)
 		src.lit = -1
-		src.is_butt = 1
 		icon_state = src.butt_icon
-		desc = src.butt_desc
-		name = src.butt_name
+		desc = "Old manky [src] butt."
+		name = "[src] butt"
+		attack_verb = list("poked")
+		processing_objects.Remove(src)
 		if (usr)
 			usr.update_inv_l_hand()
 			usr.update_inv_r_hand()
@@ -213,10 +210,7 @@ ZIPPO
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
-	is_butt = 0
 	butt_icon = "cigarbutt"
-	butt_name = "Cigar butt"
-	butt_desc = "A manky old cigar butt."
 	throw_speed = 0.5
 	item_state = "cigaroff"
 	smoketime = 1500
