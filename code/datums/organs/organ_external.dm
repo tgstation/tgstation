@@ -452,9 +452,9 @@
 		if(!(status & ORGAN_ROBOT))
 			return
 		if(prob(30*severity))
-			take_damage(4(4-severity), 0, 1, used_weapon = "EMP")
-		else
 			droplimb(1)
+		else
+			take_damage(4(4-severity), 0, 1, used_weapon = "EMP")
 
 	proc/getDisplayName()
 		switch(name)
