@@ -197,14 +197,20 @@
 				var/chance = hand ? 40 : 10
 				if (prob(chance))
 					visible_message("<spawn class=danger>[src]'s [W] goes off during struggle!")
-					return W.afterattack(M,src)
+					if (prob(5))
+						return W.afterattack(src,src)
+					else
+						return W.afterattack(M,src)
 
 			if (istype(r_hand,/obj/item/weapon/gun))
 				var/obj/item/weapon/gun/W = r_hand
 				var/chance = !hand ? 40 : 10
 				if (prob(chance))
 					visible_message("<spawn class=danger>[src]'s [W] goes off during struggle!")
-					return W.afterattack(M,src)
+					if (prob(5))
+						return W.afterattack(src,src)
+					else
+						return W.afterattack(M,src)
 
 			var/randn = rand(1, 100)
 			if (randn <= 25)
