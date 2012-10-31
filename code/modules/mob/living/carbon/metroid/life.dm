@@ -155,7 +155,7 @@
 
 /mob/living/carbon/metroid/proc/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
-		adjustFireLoss(rand(10,20))
+		adjustToxLoss(rand(10,20))
 		return
 
 	//var/environment_heat_capacity = environment.heat_capacity()
@@ -199,9 +199,9 @@
 
 		if(bodytemperature <= (T0C - 50)) // hurt temperature
 			if(bodytemperature <= 50) // sqrting negative numbers is bad
-				adjustFireLoss(200)
+				adjustToxLoss(200)
 			else
-				adjustFireLoss(round(sqrt(bodytemperature)) * 2)
+				adjustToxLoss(round(sqrt(bodytemperature)) * 2)
 
 	else
 		Tempstun = 0

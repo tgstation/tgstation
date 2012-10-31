@@ -1,10 +1,10 @@
-#define NON_CONTAGIOUS -1
-#define SPECIAL 0
-#define CONTACT_GENERAL 1
-#define CONTACT_HANDS 2
-#define CONTACT_FEET 3
-#define AIRBORNE 4
-#define BLOOD 5
+#define SPECIAL -1
+#define NON_CONTAGIOUS 0
+#define BLOOD 1
+#define CONTACT_FEET 2
+#define CONTACT_HANDS 3
+#define CONTACT_GENERAL 4
+#define AIRBORNE 5
 
 #define SCANNER 1
 #define PANDEMIC 2
@@ -17,7 +17,7 @@ to null does not delete the object itself. Thank you.
 
 */
 
-var/list/diseases = typesof(/datum/disease) - /datum/disease
+var/list/diseases = typesof(/datum/disease) - /datum/disease - /datum/disease/advance
 
 
 /datum/disease
@@ -94,10 +94,15 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return result
 
 
-/datum/disease/proc/spread(var/atom/source=null)
+/datum/disease/proc/spread(var/atom/source=null, var/airborne_range = 2,  var/force_spread)
 	//world << "Disease [src] proc spread was called from holder [source]"
 
-	if(spread_type == SPECIAL || spread_type == NON_CONTAGIOUS)//does not spread
+	// If we're overriding how we spread, say so here
+	var/how_spread = spread_type
+	if(force_spread)
+		how_spread = force_spread
+
+	if(how_spread == SPECIAL || how_spread == NON_CONTAGIOUS)//does not spread
 		return
 
 	if(stage < contagious_period) //the disease is not contagious at this stage
@@ -110,26 +115,28 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			return
 
 
-	var/check_range = AIRBORNE//defaults to airborne - range 4
+	var/check_range = airborne_range//defaults to airborne - range 2
 
-	if(spread_type != AIRBORNE && spread_type != SPECIAL)
+	if(how_spread != AIRBORNE && how_spread != SPECIAL)
 		check_range = 0 // everything else, like infect-on-contact things, only infect things on top of it
 
-	for(var/mob/living/carbon/M in oview(check_range, source))	//I have no idea why oview works when oviewers doesn't.	-Pete
+	for(var/mob/living/carbon/M in oview(check_range, source))
 		M.contract_disease(src)
 
 	return
 
 
 /datum/disease/proc/process()
-	if(!holder) return
+	if(!holder)
+		active_diseases -= src
+		return
 	if(prob(65))
 		spread(holder)
 
 	if(affected_mob)
 		for(var/datum/disease/D in affected_mob.viruses)
 			if(D != src)
-				if(istype(src, D.type))
+				if(IsSame(D))
 					del(D) // if there are somehow two viruses of the same kind in the system, delete the other one
 
 	if(holder == affected_mob)
@@ -159,10 +166,15 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return
 
 
-/datum/disease/New(var/process=1)//process = 1 - adding the object to global list. List is processed by master controller.
+/datum/disease/New(var/process=1, var/datum/disease/D)//process = 1 - adding the object to global list. List is processed by master controller.
 	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
 	if(process)					 // Viruses in list are considered active.
 		active_diseases += src
+
+/datum/disease/proc/IsSame(var/datum/disease/D)
+	if(istype(src, D.type))
+		return 1
+	return 0
 
 /*
 /datum/disease/Del()

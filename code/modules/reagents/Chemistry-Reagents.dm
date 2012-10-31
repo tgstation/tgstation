@@ -100,7 +100,7 @@ datum
 				var/datum/reagent/blood/self = src
 				src = null
 				for(var/datum/disease/D in self.data["viruses"])
-					var/datum/disease/virus = new D.type
+					var/datum/disease/virus = new D.type(D)
 					// We don't spread.
 					if(virus.spread_type == SPECIAL || virus.spread_type == NON_CONTAGIOUS) continue
 
@@ -135,7 +135,7 @@ datum
 						blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 
 					for(var/datum/disease/D in self.data["viruses"])
-						var/datum/disease/newVirus = new D.type
+						var/datum/disease/newVirus = new D.type(D)
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
 
@@ -146,7 +146,7 @@ datum
 						blood_prop = new(T)
 						blood_prop.blood_DNA["Non-Human DNA"] = "A+"
 					for(var/datum/disease/D in self.data["viruses"])
-						var/datum/disease/newVirus = new D.type
+						var/datum/disease/newVirus = new D.type(D)
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
 
@@ -163,7 +163,7 @@ datum
 						blood_prop = new(T)
 						blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
 					for(var/datum/disease/D in self.data["viruses"])
-						var/datum/disease/newVirus = new D.type
+						var/datum/disease/newVirus = new D.type(D)
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
 						/*

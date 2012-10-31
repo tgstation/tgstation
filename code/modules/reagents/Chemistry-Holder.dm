@@ -349,17 +349,19 @@ datum
 						// mix dem viruses
 						if(R.id == "blood" && reagent == "blood")
 							if(R.data && data)
-								if(R.data && R.data["viruses"] || data && data["viruses"])
-									var/list/this = R.data["viruses"]
-									var/list/that = data["viruses"]
-									this += that // combine the two
+								if((R.data && R.data["viruses"]) || (data && data["viruses"]))
 
-									/* -- Turns out this code was buggy and unnecessary ---- Doohl
-									for(var/datum/disease/D in this) // makes sure no two viruses are in the reagent at the same time
-										for(var/datum/disease/d in this)//Something in here can cause an inf loop and I am tired so someone else will have to fix it.
-											if(d != D)
-												D.cure(0)
-									*/
+									R.data["viruses"] |= data["viruses"]
+									var/datum/disease/advance/AD = Advance_Mix(R.data["viruses"])
+
+									if(AD)
+										for(var/datum/disease/advance/D in R.data["viruses"])
+											R.data["viruses"] -= D
+
+										R.data["viruses"] |= new/datum/disease/advance(0, AD)
+
+
+
 
 						handle_reactions()
 						return 0

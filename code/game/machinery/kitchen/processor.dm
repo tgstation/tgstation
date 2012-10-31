@@ -82,7 +82,7 @@
 
 				for(var/datum/disease/D in O.viruses)
 					if(D.spread_type != SPECIAL)
-						B.data["viruses"] = new D.type(0)
+						B.data["viruses"] = new D.type(0, D)
 
 				B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
 				if(O.resistances&&O.resistances.len)

@@ -448,6 +448,36 @@ datum
 				new /obj/item/stack/sheet/plasma(location)
 				return
 
+		virus_food
+			name = "Virus Food"
+			id = "virusfood"
+			result = "virusfood"
+			required_reagents = list("water" = 5, "milk" = 5, "oxygen" = 5)
+			result_amount = 15
+
+		mix_virus
+			name = "Mix Virus"
+			id = "mixvirus"
+			result = "blood"
+			required_reagents = list("blood" = 5, "virusfood" = 5)
+			result_amount = 5
+			var/level = 2
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+
+				var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+				if(B && B.data)
+					var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
+					if(D)
+						D.Evolve(level - rand(0, 1))
+
+				holder.del_reagent(id)
+
+			mix_virus_2
+
+				required_reagents = list("blood" = 5, "mutagen" = 5)
+				level = 4
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 // foam and foam precursor

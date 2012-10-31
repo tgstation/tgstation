@@ -91,7 +91,7 @@
 								B.data["viruses"] = list()
 
 
-							B.data["viruses"] += new D.type
+							B.data["viruses"] += new D.type(D)
 
 
 						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
