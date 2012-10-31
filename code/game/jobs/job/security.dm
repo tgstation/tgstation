@@ -84,6 +84,7 @@
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
+	alt_titles = list("Forensic Technician")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -96,12 +97,15 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/det(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/detective(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), slot_head)
-		var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(H)
+/*		var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(H)
 		CIG.light("")
-		H.equip_to_slot_or_del(CIG, slot_wear_mask)
+		H.equip_to_slot_or_del(CIG, slot_wear_mask)	*/
 		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-		H.equip_to_slot_or_del(new /obj/item/clothing/suit/det_suit(H), slot_wear_suit)
+		if(H.mind.role_alt_title && H.mind.role_alt_title == "Forensic Technician")
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/forensics/blue(H), slot_wear_suit)
+		else
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/det_suit(H), slot_wear_suit)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), slot_head)
 		H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
 
 		if(H.backbag == 1)//Why cant some of these things spawn in his office?

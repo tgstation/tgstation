@@ -272,7 +272,7 @@ datum/preferences
 		if(jobban_isbanned(user, "Records"))
 			dat += "<b>You are banned from using character records.</b><br>"
 		else
-			dat += "<b><a href=\"byond://?src=\ref[user];preference=records;task=input\">Character Records</a></b><br><br>"
+			dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br><br>"
 
 		dat += "<b>Flavor Text</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'>Change</a><br>"
@@ -401,14 +401,14 @@ datum/preferences
 		HTML += "<tt><center>"
 		HTML += "<b>Set Character Records</b><br>"
 
-		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;med_record=1\">Medical Records</a><br>"
+		HTML += "<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"
 
 		if(lentext(med_record) <= 40)
 			HTML += "[med_record]"
 		else
 			HTML += "[copytext(med_record, 1, 37)]..."
 
-		HTML += "<br><br><a href=\"byond://?src=\ref[user];preferences=1;sec_record=1\">Security Records</a><br>"
+		HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
 
 		if(lentext(sec_record) <= 40)
 			HTML += "[sec_record]<br>"
@@ -416,7 +416,7 @@ datum/preferences
 			HTML += "[copytext(sec_record, 1, 37)]...<br>"
 
 		HTML += "<br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;records=-1\">\[Done\]</a>"
+		HTML += "<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
 		HTML += "</center></tt>"
 
 		user << browse(null, "window=preferences")
@@ -453,7 +453,7 @@ datum/preferences
 
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
-
+		if (!job_master)		return
 		for(var/datum/job/job in job_master.occupations)
 
 			index += 1
@@ -500,6 +500,8 @@ datum/preferences
 				HTML += " <font color=orange>\[Low]</font>"
 			else
 				HTML += " <font color=red>\[NEVER]</font>"
+			if(job.alt_titles)
+				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetAltTitle(job)]\]</a></td></tr>"
 			HTML += "</a></td></tr>"
 
 		HTML += "</td'></tr></table>"
@@ -625,7 +627,6 @@ datum/preferences
 
 	proc/process_link(mob/user, list/href_list)
 		if(!user)	return
-
 		if(href_list["preference"] == "job")
 			switch(href_list["task"])
 				if("close")
@@ -634,6 +635,14 @@ datum/preferences
 				if("random")
 					userandomjob = !userandomjob
 					SetChoices(user)
+				if ("alt_title")
+					var/datum/job/job = locate(href_list["job"])
+					if (job)
+						var/choices = list(job.title) + job.alt_titles
+						var/choice = input("Pick a title for [job.title].", "Character Generation", GetAltTitle(job)) as anything in choices | null
+						if(choice)
+							SetAltTitle(job, choice)
+							SetChoices(user)
 				if("input")
 					SetJob(user, href_list["text"])
 				else
@@ -673,6 +682,32 @@ datum/preferences
 			else
 				SetSkills(user)
 			return 1
+
+		else if(href_list["preference"] == "records")
+			if(text2num(href_list["record"]) >= 1)
+				SetRecords(user)
+				return
+			else
+				user << browse(null, "window=records")
+			if(href_list["task"] == "med_record")
+				var/medmsg = input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message
+
+				if(medmsg != null)
+					medmsg = copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN)
+					medmsg = html_encode(medmsg)
+
+					med_record = medmsg
+					SetRecords(user)
+
+			if(href_list["task"] == "sec_record")
+				var/secmsg = input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message
+
+				if(secmsg != null)
+					secmsg = copytext(secmsg, 1, MAX_PAPER_MESSAGE_LEN)
+					secmsg = html_encode(secmsg)
+
+					sec_record = secmsg
+					SetRecords(user)
 
 		switch(href_list["task"])
 			if("random")
@@ -936,33 +971,6 @@ datum/preferences
 						else
 							user << browse(null, "window=disabil")
 
-					if("records")
-						if(text2num(href_list["records"]) >= 1)
-							SetRecords(user)
-							return
-						else
-							user << browse(null, "window=records")
-
-					if("med_record")
-						var/medmsg = input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message
-
-						if(medmsg != null)
-							medmsg = copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN)
-							medmsg = html_encode(medmsg)
-
-							med_record = medmsg
-							SetRecords(user)
-
-					if("sec_record")
-						var/secmsg = input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message
-
-						if(secmsg != null)
-							secmsg = copytext(secmsg, 1, MAX_PAPER_MESSAGE_LEN)
-							secmsg = html_encode(secmsg)
-
-							sec_record = secmsg
-							SetRecords(user)
-
 					if("limbs")
 						var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
 						if(!limb_name) return
@@ -1139,6 +1147,8 @@ datum/preferences
 			character.dna.real_name = character.real_name
 
 		character.flavor_text = flavor_text
+		character.med_record = med_record
+		character.sec_record = sec_record
 
 		character.gender = gender
 
