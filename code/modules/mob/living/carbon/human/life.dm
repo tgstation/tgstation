@@ -1400,23 +1400,7 @@
 		// Puke if toxloss is too high
 		if(!stat)
 			if (getToxLoss() >= 45 && nutrition > 20)
-				lastpuke ++
-				if(lastpuke >= 25) // about 25 second delay I guess
-					Stun(5)
-
-					for(var/mob/O in viewers(world.view, src))
-						O.show_message(text("<b>\red [] throws up!</b>", src), 1)
-					playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-					var/turf/location = loc
-					if (istype(location, /turf/simulated))
-						location.add_vomit_floor(src, 1)
-
-					nutrition -= 20
-					adjustToxLoss(-3)
-
-					// make it so you can only puke so fast
-					lastpuke = 0
+				vomit()
 
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)

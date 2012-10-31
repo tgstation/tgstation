@@ -32,15 +32,8 @@
 		if(3)
 			if(prob(1))
 				if (affected_mob.nutrition > 100)
-					affected_mob.Stun(rand(4,6))
-					for(var/mob/O in viewers(world.view, affected_mob))
-						O.show_message(text("<b>\red [] throws up!</b>", affected_mob), 1)
-					playsound(affected_mob.loc, 'sound/effects/splat.ogg', 50, 1)
-					var/turf/location = affected_mob.loc
-					if (istype(location, /turf/simulated))
-						location.add_vomit_floor(affected_mob)
-					affected_mob.nutrition -= 95
-					affected_mob.adjustToxLoss(-1)
+					var/mob/living/carbon/human/H = affected_mob
+					H.vomit()
 				else
 					affected_mob << "\red You gag as you want to throw up, but there's nothing in your stomach!"
 					affected_mob.Weaken(10)
