@@ -16,6 +16,7 @@ Bonus
 
 /datum/symptom/damage_converter // Not the egg
 
+	name = "Toxic Compensation"
 	stealth = 1
 	resistance = -5
 	stage_speed = -5

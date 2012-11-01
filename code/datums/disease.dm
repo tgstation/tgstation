@@ -94,7 +94,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease - /datum/disease/ad
 	return result
 
 
-/datum/disease/proc/spread(var/atom/source=null, var/airborne_range = 2,  var/force_spread)
+/datum/disease/proc/spread(var/atom/source=null, var/airborne_range = 3,  var/force_spread)
 	//world << "Disease [src] proc spread was called from holder [source]"
 
 	// If we're overriding how we spread, say so here
@@ -118,10 +118,11 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease - /datum/disease/ad
 	var/check_range = airborne_range//defaults to airborne - range 2
 
 	if(how_spread != AIRBORNE && how_spread != SPECIAL)
-		check_range = 0 // everything else, like infect-on-contact things, only infect things on top of it
+		check_range = 1 // everything else, like infect-on-contact things, only infect things on top of it
 
 	for(var/mob/living/carbon/M in oview(check_range, source))
-		M.contract_disease(src)
+		if(AStar(affected_mob.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, check_range))
+			M.contract_disease(src)
 
 	return
 

@@ -188,7 +188,7 @@
 						M:appendix_op_stage = 6.0
 						for(var/datum/disease/appendicitis in M.viruses)
 							appendicitis.cure()
-							M.resistances += appendicitis
+							M.resistances += appendicitis.type
 		return
 
 	if (user.zone_sel.selecting == "eyes")

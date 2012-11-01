@@ -17,6 +17,7 @@ Bonus
 
 /datum/symptom/sneeze
 
+	name = "Sneezing"
 	stealth = -2
 	resistance = -1
 	stage_speed = 0
@@ -31,5 +32,5 @@ Bonus
 				M.emote("sniffs")
 			else
 				M.emote("sneeze")
-				A.spread(A.holder, 4, AIRBORNE)
+				A.spread(A.holder, 5, AIRBORNE)
 	return

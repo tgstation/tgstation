@@ -181,5 +181,4 @@ var/global/sent_strike_team = 0
 	W.registered_name = real_name
 	equip_to_slot_or_del(W, slot_wear_id)
 
-	resistances += "alien_embryo"
 	return 1

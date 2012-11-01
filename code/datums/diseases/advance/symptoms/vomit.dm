@@ -20,6 +20,7 @@ Bonus
 
 /datum/symptom/vomit
 
+	name = "Vomiting"
 	stealth = -2
 	resistance = -1
 	stage_speed = 0
@@ -69,6 +70,7 @@ Bonus
 
 /datum/symptom/vomit/blood
 
+	name = "Blood Vomiting"
 	stealth = -2
 	resistance = -1
 	stage_speed = -1

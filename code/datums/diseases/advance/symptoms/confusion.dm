@@ -16,6 +16,7 @@ Bonus
 
 /datum/symptom/confusion
 
+	name = "Confusion"
 	stealth = 1
 	resistance = -1
 	stage_speed = -3

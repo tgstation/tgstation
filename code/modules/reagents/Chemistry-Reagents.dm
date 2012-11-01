@@ -194,8 +194,13 @@ datum
 				src = null
 				if(self.data&&method == INGEST)
 					for(var/datum/disease/D in M.viruses)
-						if(D.type == self.data)
-							D.cure()
+						if(istype(D, /datum/disease/advance))
+							var/datum/disease/advance/A = D
+							if(A.GetDiseaseID() == self.data)
+								D.cure()
+						else
+							if(D.type == self.data)
+								D.cure()
 
 					M.resistances += self.data
 				return

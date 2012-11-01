@@ -500,7 +500,6 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_r_store)
 	equip_to_slot_or_del(new /obj/item/weapon/plastique(src), slot_l_store)
 	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
-	resistances += "alien_embryo"
 	return 1
 
 //=======//HELPER PROCS//=======//

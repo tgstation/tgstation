@@ -495,8 +495,16 @@
 		if(!src.wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			if(B)
-				var/vaccine_type = text2path(href_list["create_vaccine"])//the path is received as string - converting
-				var/datum/disease/D = new vaccine_type
+				var/path = href_list["create_vaccine"]
+				var/vaccine_type = text2path(path)
+				var/datum/disease/D = null
+
+				if(!vaccine_type)
+					D = archive_diseases[path]
+					vaccine_type = path
+				else
+					D = new vaccine_type(0, null)
+
 				if(D)
 					B.name = "[D.name] vaccine bottle"
 					B.reagents.add_reagent("vaccine",15,vaccine_type)
@@ -520,7 +528,12 @@
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			B.icon_state = "bottle3"
 			var/type = text2path(href_list["create_virus_culture"])//the path is received as string - converting
-			var/datum/disease/D = new type
+			var/datum/disease/D = null
+			if(!type)
+				var/datum/disease/advance/A = archive_diseases[href_list["create_virus_culture"]]
+				D = new A.type(0, A)
+			else
+				D = new type(0, null)
 			var/list/data = list("viruses"=list(D))
 			var/name = sanitize(input(usr,"Name:","Name the culture",D.name))
 			if(!name || name == " ") name = D.name
@@ -596,10 +609,25 @@
 					for(var/datum/disease/D in Blood.data["viruses"])
 						if(!D.hidden[PANDEMIC])
 
-							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[D.type]'>Create virus culture bottle</A>":"none"]<BR>"
+
+							var/disease_creation = D.type
+							if(istype(D, /datum/disease/advance))
+
+								var/datum/disease/advance/A = D
+								D = archive_diseases[A.GetDiseaseID()]
+								disease_creation = A.GetDiseaseID()
+
+							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
 							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
 							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
 							dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
+
+							if(istype(D, /datum/disease/advance))
+								var/datum/disease/advance/A = D
+								dat += "<b>Symptoms:</b>"
+								for(var/datum/symptom/S in A.symptoms)
+									dat += " [S.name] "
+
 
 			dat += "<b>Contains antibodies to:</b> "
 			if(Blood.data["resistances"])
@@ -607,9 +635,17 @@
 				if(res.len)
 					dat += "<ul>"
 					for(var/type in Blood.data["resistances"])
-						var/datum/disease/DR = new type
-						dat += "<li>[DR.name] - <A href='?src=\ref[src];create_vaccine=[type]'>Create vaccine bottle</A></li>"
-						del(DR)
+						var/disease_name = "Unknown"
+
+						if(!ispath(type))
+							var/datum/disease/advance/A = archive_diseases[type]
+							if(A)
+								disease_name = A.name
+						else
+							var/datum/disease/D = new type(0, null)
+							disease_name = D.name
+
+						dat += "<li>[disease_name] - <A href='?src=\ref[src];create_vaccine=[type]'>Create vaccine bottle</A></li>"
 					dat += "</ul><BR>"
 				else
 					dat += "nothing<BR>"

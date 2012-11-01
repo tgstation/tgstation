@@ -17,6 +17,7 @@ BONUS
 
 /datum/symptom/cough
 
+	name = "Headache"
 	stealth = -1
 	resistance = 4
 	stage_speed = 0

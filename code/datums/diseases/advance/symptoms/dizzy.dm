@@ -16,6 +16,7 @@ Bonus
 
 /datum/symptom/dizzy // Not the egg
 
+	name = "Dizziness"
 	stealth = 1
 	resistance = -2
 	stage_speed = -3

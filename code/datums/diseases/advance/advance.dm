@@ -9,6 +9,8 @@
 
 #define RANDOM_STARTING_LEVEL 2
 
+var/list/archive_diseases = list()
+
 /*
 
 	PROPERTIES
@@ -36,6 +38,13 @@
  */
 
 /datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D)
+
+	// Setup our dictionary if it hasn't already.
+	if(!dictionary_symptoms.len)
+		for(var/symp in list_symptoms)
+			var/datum/symptom/S = new symp
+			dictionary_symptoms[S.id] = symp
+
 	if(!istype(D))
 		D = null
 	// Generate symptoms if we weren't given any.
@@ -70,7 +79,7 @@
 	if(affected_mob)
 		var/id = "[GetDiseaseID()]"
 		if(resistance && !(id in affected_mob.resistances))
-			affected_mob.resistances[id] = /datum/disease/advance
+			affected_mob.resistances[id] = id
 		affected_mob.viruses -= src		//remove the datum from the list
 	del(src)	//delete the datum to stop it processing
 	return
@@ -119,6 +128,7 @@
 	//world << "[src.name] \ref[src] - REFRESH!"
 	var/list/properties = GenerateProperties()
 	AssignProperties(properties)
+	archive_diseases[GetDiseaseID()] = src
 
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
