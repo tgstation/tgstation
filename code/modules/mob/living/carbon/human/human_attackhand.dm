@@ -192,25 +192,25 @@
 				w_uniform.add_fingerprint(M)
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 
-			if (istype(l_hand,/obj/item/weapon/gun))
-				var/obj/item/weapon/gun/W = l_hand
-				var/chance = hand ? 40 : 10
-				if (prob(chance))
-					visible_message("<spawn class=danger>[src]'s [W] goes off during struggle!")
-					if (prob(5))
-						return W.afterattack(src,src)
-					else
-						return W.afterattack(M,src)
+			if (istype(r_hand,/obj/item/weapon/gun) || istype(l_hand,/obj/item/weapon/gun))
+				var/obj/item/weapon/gun/W = null
+				var/chance = 0
 
-			if (istype(r_hand,/obj/item/weapon/gun))
-				var/obj/item/weapon/gun/W = r_hand
-				var/chance = !hand ? 40 : 10
+				if (istype(l_hand,/obj/item/weapon/gun))
+					W = l_hand
+					chance = hand ? 40 : 20
+
+				if (istype(r_hand,/obj/item/weapon/gun))
+					W = r_hand
+					chance = !hand ? 40 : 20
+
 				if (prob(chance))
 					visible_message("<spawn class=danger>[src]'s [W] goes off during struggle!")
-					if (prob(5))
-						return W.afterattack(src,src)
-					else
-						return W.afterattack(M,src)
+					var/list/turfs = list()
+					for(var/turf/T in view())
+						turfs += T
+					var/turf/target = pick(turfs)
+					return W.afterattack(target,src)
 
 			var/randn = rand(1, 100)
 			if (randn <= 25)
