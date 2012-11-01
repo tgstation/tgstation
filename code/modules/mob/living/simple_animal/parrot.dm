@@ -104,6 +104,7 @@
 	if(held_item)
 		held_item.loc = src.loc
 		held_item = null
+	walk(src,0)
 	..()
 
 /*
@@ -511,7 +512,7 @@
  */
 
 /mob/living/simple_animal/parrot/movement_delay()
-	if(client && parrot_state != "parrot_fly")
+	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
 		icon_state = "parrot_fly"
 	..()
 
