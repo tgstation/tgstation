@@ -196,6 +196,22 @@
 
 
 
+/obj/item/device/assembly_holder/timer_igniter
+	name = "5sec timer-igniter assembly"
 
+	New()
+		..()
 
+		var/obj/item/device/assembly/igniter/ign = new(src)
+		ign.secured = 1
+		ign.holder = src
+		var/obj/item/device/assembly/timer/tmr = new(src)
+		tmr.time=5
+		tmr.secured = 1
+		tmr.holder = src
+		processing_objects.Add(tmr)
+		a_left = tmr
+		a_right = ign
+		secured = 1
+		update_icon()
 

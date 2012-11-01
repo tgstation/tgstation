@@ -69,17 +69,14 @@
 				path = 1
 				if(beakers.len)
 					user << "\blue You lock the assembly."
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
 					name = "grenade"
-					icon_state = initial(icon_state) +"_locked"
-					stage = 2
 				else
 //					user << "\red You need to add at least one beaker before locking the assembly."
 					user << "\blue You lock the empty assembly."
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
 					name = "fake grenade"
-					icon_state = initial(icon_state) +"_locked"
-					stage = 2
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
+				icon_state = initial(icon_state) +"_locked"
+				stage = 2
 			else if(stage == 2)
 				if(active && prob(95))
 					user << "\red You trigger the assembly!"
@@ -114,8 +111,9 @@
 		if(detonator)
 			usr << "With attached [detonator.name]"
 
-	activate()
+	activate(mob/user as mob)
 		if(active) return
+	
 		if(detonator)
 			if(!isigniter(detonator.a_left))
 				detonator.a_left.activate()
@@ -125,6 +123,11 @@
 				active = 1
 		if(active)
 			icon_state = initial(icon_state) + "_active"
+
+			if(user)
+				log_attack("<font color='red'>[user.name] ([user.ckey]) primed \a [src]</font>")
+				log_admin("ATTACK: [user] ([user.ckey]) primed \a [src]")
+				message_admins("ATTACK: [user] ([user.ckey]) primed \a [src]")
 
 		return
 
@@ -195,9 +198,11 @@
 		B2.reagents.add_reagent("foaming_agent", 10)
 		B2.reagents.add_reagent("pacid", 10)
 
+		detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+
 		beakers += B1
 		beakers += B2
-		icon_state = "grenade"
+		icon_state = initial(icon_state) +"_locked"
 
 /obj/item/weapon/grenade/chem_grenade/incendiary
 	name = "Incendiary Grenade"
@@ -214,9 +219,11 @@
 		B2.reagents.add_reagent("plasma", 25)
 		B2.reagents.add_reagent("sacid", 25)
 
+		detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+
 		beakers += B1
 		beakers += B2
-		icon_state = "grenade"
+		icon_state = initial(icon_state) +"_locked"
 
 /obj/item/weapon/grenade/chem_grenade/cleaner
 	name = "Cleaner Grenade"
@@ -233,6 +240,8 @@
 		B2.reagents.add_reagent("water", 40)
 		B2.reagents.add_reagent("cleaner", 10)
 
+		detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+
 		beakers += B1
 		beakers += B2
-		icon_state = "grenade"
+		icon_state = initial(icon_state) +"_locked"

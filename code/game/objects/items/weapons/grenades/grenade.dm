@@ -16,11 +16,7 @@
 	if((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
 
-		log_attack("<font color='red'>[user.name] ([user.ckey]) clumsily primed \a [src]</font>")
-		log_admin("ATTACK: [user] ([user.ckey]) clumsily primed \a [src]")
-		message_admins("ATTACK: [user] ([user.ckey]) clumsily primed \a [src]")
-
-		activate()
+		activate(user)
 		add_fingerprint(user)
 		spawn(5)
 			prime()
@@ -60,11 +56,7 @@
 		if(clown_check(user))
 			user << "<span class='warning'>You prime \the [name]! [det_time/10] seconds!</span>"
 
-			log_attack("<font color='red'>[user.name] ([user.ckey]) primed \a [src].</font>")
-			log_admin("ATTACK: [user] ([user.ckey]) primed \a [src].")
-			message_admins("ATTACK: [user] ([user.ckey]) primed \a [src].")
-
-			activate()
+			activate(user)
 			add_fingerprint(user)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
@@ -72,9 +64,14 @@
 	return
 
 
-/obj/item/weapon/grenade/proc/activate()
+/obj/item/weapon/grenade/proc/activate(mob/user as mob)
 	if(active)
 		return
+
+	if(user)
+		log_attack("<font color='red'>[user.name] ([user.ckey]) primed \a [src]</font>")
+		log_admin("ATTACK: [user] ([user.ckey]) primed \a [src]")
+		message_admins("ATTACK: [user] ([user.ckey]) primed \a [src]")
 
 	icon_state = initial(icon_state) + "_active"
 	active = 1
