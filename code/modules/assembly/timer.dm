@@ -20,7 +20,9 @@
 
 	activate()
 		if(!..())	return 0//Cooldown check
+		
 		timing = !timing
+
 		update_icon()
 		return 0
 
@@ -37,7 +39,7 @@
 
 
 	timer_end()
-		if((!secured)||(cooldown > 0))	return 0
+		if(!secured)	return 0
 		pulse(0)
 		if(!holder)
 			visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")

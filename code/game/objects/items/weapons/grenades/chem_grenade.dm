@@ -22,6 +22,7 @@
 		if(!stage || stage==1)
 			if(detonator)
 //				detonator.loc=src.loc
+				detonator.detached()
 				usr.put_in_hands(detonator)
 				detonator=null
 				stage=0
