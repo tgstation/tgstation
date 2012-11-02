@@ -217,7 +217,7 @@ datum/controller/vote
 		if(!usr || !usr.client)	return	//not necessary but meh...just in-case somebody does something stupid
 		switch(href_list["vote"])
 			if("close")
-				voting -= usr.ckey
+				voting -= usr.client
 				usr << browse(null, "window=vote")
 				return
 			if("cancel")
