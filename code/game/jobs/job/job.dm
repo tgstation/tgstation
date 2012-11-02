@@ -28,5 +28,8 @@
 	//the type of the ID the player will have
 	var/idtype = /obj/item/weapon/card/id
 
+	//List of alternate titles, if any
+	var/list/alt_titles
+
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1
