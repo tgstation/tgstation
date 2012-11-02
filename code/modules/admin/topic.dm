@@ -48,7 +48,6 @@
 				if(!src.makeDeathsquad())
 					usr << "\red Unfortunatly there were no candidates available"
 
-/*	Temporarily commented out
 	if(href_list["editadminpermissions"])
 		if(!usr.client)
 			return
@@ -58,7 +57,7 @@
 			usr << "\red no valid ckey"
 			return
 
-		if(!usr.client.holder || !(usr.client.holder.sql_permissions & PERMISSIONS))
+		if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
 			usr << "\red You do not have permission to do this!"
 			message_admins("[key_name_admin(usr)] attempted to edit the admin permissions of [adm_ckey] without authentication!")
 			log_admin("[key_name(usr)] attempted to edit the admin permissions of [adm_ckey] without authentication!")
@@ -66,7 +65,18 @@
 
 		switch(href_list["editadminpermissions"])
 			if("permissions")
-				usr << "Currently unavailable since nothing runs off of permissions"
+				var/list/permissionlist = list()
+				for(var/i = 1; i <= R_MAXPERMISSION; i = i << 1)
+					permissionlist[rights2text(i)] = i
+				var/new_permission
+				spawn(0)	//Safety
+					new_permission = input("Select a permission to turn on/off", "Permission toggle", null, null) as null|anything in permissionlist
+					if(!new_permission)
+						return
+
+					message_admins("[key_name_admin(usr)] toggled the [new_permission] permission of [adm_ckey]")
+					log_admin("[key_name(usr)] toggled the [new_permission] permission of [adm_ckey]")
+					log_admin_permission_modification(adm_ckey, permissionlist[new_permission])
 			if("rank")
 				var/new_rank = input("Please, select a rank", "New rank for player", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer")
 				if(!new_rank)
@@ -89,7 +99,6 @@
 				message_admins("[key_name_admin(usr)] added [new_ckey] as a new admin to the rank [new_rank]")
 				log_admin("[key_name(usr)] added [new_ckey] as a new admin to the rank [new_rank]")
 				log_admin_rank_modification(new_ckey, new_rank)
-*/
 
 
 	else if(href_list["call_shuttle"])

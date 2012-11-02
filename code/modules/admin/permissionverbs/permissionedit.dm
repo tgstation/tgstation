@@ -11,7 +11,7 @@
 	if(!usr.client)
 		return
 
-	if(!usr.client.holder || !(usr.client.holder.sql_permissions & PERMISSIONS))
+	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
 		usr << "\red You do not have permission to do this!"
 		return
 
@@ -57,10 +57,8 @@
 		output += "<td align='center'><b>[adm_ckey]</b></td>"
 		output += "<td align='center'><b>[adm_rank]</b></td>"
 		output += "<td align='center'>[adm_level]</td>"
-		var/list/permissionlist = bitfield2list(adm_flags, permissionwords_sql)
 		output += "<td align='center'>"
-		for(var/word in permissionlist)
-			output += "[word]<BR>"
+		output += "<font size='2'>[rights2text(adm_flags)]</font>"
 		output += "</td>"
 		output += "<td align='center'><font size='2'>"
 
@@ -76,12 +74,14 @@
 
 	usr << browse(output,"window=editadminpermissions;size=600x500")
 
+	dbcon.Disconnect()
+
 
 /datum/admins/proc/log_admin_rank_modification(var/adm_ckey, var/new_rank)
 	if(!usr.client)
 		return
 
-	if(!usr.client.holder || !(usr.client.holder.sql_permissions & PERMISSIONS))
+	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
 		usr << "\red You do not have permission to do this!"
 		return
 
@@ -130,3 +130,69 @@
 			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');")
 			log_query.Execute()
 			usr << "\blue Admin rank changed."
+
+	dbcon.Disconnect()
+
+
+
+/datum/admins/proc/log_admin_permission_modification(var/adm_ckey, var/new_permission)
+
+	if(!usr.client)
+		return
+
+	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
+		usr << "\red You do not have permission to do this!"
+		return
+
+	var/user = sqlfdbklogin
+	var/pass = sqlfdbkpass
+	var/db = sqlfdbkdb
+	var/address = sqladdress
+	var/port = sqlport
+
+	var/DBConnection/dbcon = new()
+	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	if(!dbcon.IsConnected())
+		usr << "\red Failed to establish database connection"
+		return
+
+	if(!adm_ckey || !new_permission)
+		return
+
+	adm_ckey = ckey(adm_ckey)
+
+	if(!adm_ckey)
+		return
+
+	if(istext(new_permission))
+		new_permission = text2num(new_permission)
+
+	if(!istext(adm_ckey) || !isnum(new_permission))
+		return
+
+	var/DBQuery/select_query = dbcon.NewQuery("SELECT id, flags FROM erro_admin WHERE ckey = '[adm_ckey]'")
+	select_query.Execute()
+
+	var/admin_id
+	var/admin_rights
+	while(select_query.NextRow())
+		admin_id = text2num(select_query.item[1])
+		admin_rights = text2num(select_query.item[2])
+
+	if(!admin_id)
+		return
+
+	if(admin_rights & new_permission) //This admin already has this permission, so we are removing it.
+		var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET flags = [admin_rights & ~new_permission] WHERE id = [admin_id]")
+		insert_query.Execute()
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Removed permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');")
+		log_query.Execute()
+		usr << "\blue Permission removed."
+	else //This admin doesn't have this permission, so we are adding it.
+		var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET flags = '[admin_rights | new_permission]' WHERE id = [admin_id]")
+		insert_query.Execute()
+		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]')")
+		log_query.Execute()
+		usr << "\blue Permission added."
+
+	dbcon.Disconnect()
