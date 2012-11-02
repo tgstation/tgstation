@@ -359,8 +359,8 @@
 			var/hptoreg = 3
 			if(stat==UNCONSCIOUS) hptoreg=1
 			if(stat==DEAD) hptoreg=0
-			for(var/i=0; i<hptoreg; i++)
-				var/list/damages
+			for(var/i=0, i<hptoreg, i++)
+				var/list/damages = new/list()
 				if(getToxLoss())
 					damages+="tox"
 				if(getOxyLoss())
