@@ -281,7 +281,7 @@
 
 /obj/structure/mineral_door/resin
 	mineralType = "resin"
-	hardness = 5
+	hardness = 1.5
 	var/close_delay = 100
 
 	TryToSwitchState(atom/user)
@@ -316,3 +316,8 @@
 
 	Dismantle(devastated = 0)
 		del(src)
+
+	CheckHardness()
+		playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+		..()
+

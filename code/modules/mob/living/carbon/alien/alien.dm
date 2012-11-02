@@ -37,7 +37,7 @@
 
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)
-		..(amount * 1.5)
+		..(amount * 2)
 	else
 		..(amount)
 	return
