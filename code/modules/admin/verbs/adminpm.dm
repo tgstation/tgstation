@@ -40,9 +40,9 @@
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
 
-	if( !C || !istype(C,/client) )
-		if(holder)		src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
-		else			adminhelp(msg)	//admin we are replying to left. adminhelp instead
+	if(!istype(C,/client))
+		if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+		else		adminhelp(msg)	//admin we are replying to left. adminhelp instead
 		return
 
 	//get message text, limit it's length.and clean/escape html
@@ -58,8 +58,8 @@
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-	//clean the message if it's not sent by a GA or GM
-	if( !holder || !(holder.rank in list("Game Admin", "Game Master")) )
+	//clean the message if it's not sent by a high-rank admin
+	if(!check_rights(R_SERVER|R_DEBUG,0))
 		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 		if(!msg)	return
 
@@ -106,6 +106,6 @@
 	log_admin("PM: [key_name(src)]->[key_name(C)]: [msg]")
 
 	//we don't use message_admins here because the sender/receiver might get it too
-	for(var/client/X)									//there are fewer clients than mobs
-		if(X.holder && X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
+	for(var/client/X in admins)
+		if(X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>" //inform X

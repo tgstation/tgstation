@@ -427,20 +427,20 @@ var/list/slot_equipment_priority = list( \
 	set category = "OOC"
 	var/is_admin = 0
 
-	if (client.holder && client.holder.level >= 1 && ( client.holder.state == 2 || client.holder.level > 3 ))
+	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = 1
-	else if (istype(src, /mob/new_player) || stat != 2)
+	else if(stat != DEAD || istype(src, /mob/new_player))
 		usr << "\blue You must be observing to use this!"
 		return
 
-	if (is_admin && stat == 2)
+	if(is_admin && stat == DEAD)
 		is_admin = 0
 
 	var/list/names = list()
 	var/list/namecounts = list()
 	var/list/creatures = list()
 
-	for(var/obj/O in world)
+	for(var/obj/O in world)				//EWWWWWWWWWWWWWWWWWWWWWWWW ~needs to be optimised
 		if(!O.loc)
 			continue
 		if(istype(O, /obj/item/weapon/disk/nuclear))

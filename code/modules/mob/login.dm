@@ -1,9 +1,5 @@
 //handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 /mob/proc/update_Login_details()
-	//trigger admin holder updates. This is hear as all Login() calls this proc.
-	if(client.holder)
-		client.update_admins(client.holder.rank)
-
 	//Multikey checks and logging
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id

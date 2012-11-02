@@ -247,3 +247,19 @@ proc/tg_list2text(list/list, glue=",")
 /proc/angle2text(var/degree)
 	return dir2text(angle2dir(degree))
 
+
+//Converts a rights bitfield into a string
+/proc/rights2text(rights)
+	if(rights & R_BUILDMODE)	. += "+BUILDMODE"
+	if(rights & R_ADMIN)		. += "+ADMIN"
+	if(rights & R_BAN)			. += "+BAN"
+	if(rights & R_FUN)			. += "+FUN"
+	if(rights & R_SERVER)		. += "+SERVER"
+	if(rights & R_DEBUG)		. += "+DEBUG"
+	if(rights & R_POSSESS)		. += "+POSSESS"
+	if(rights & R_PERMISSIONS)	. += "+PERMISSIONS"
+	if(rights & R_STEALTH)		. += "+STEALTH"
+	if(rights & R_REJUVINATE)	. += "+REJUVINATE"
+	if(rights & R_VAREDIT)		. += "+VAREDIT"
+	if(rights & R_SOUNDS)		. += "+SOUND"
+	return .

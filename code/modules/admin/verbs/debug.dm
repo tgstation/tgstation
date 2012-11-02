@@ -1,22 +1,17 @@
 /client/proc/Debug2()
 	set category = "Debug"
 	set name = "Debug-Game"
-	if(!holder)
-		src << "Only administrators may use this command."
-		return
-	if(holder.rank == "Game Admin")
-		Debug2 = !Debug2
+	if(!check_rights(R_DEBUG))	return
 
-		world << "Debugging [Debug2 ? "On" : "Off"]"
-		log_admin("[key_name(src)] toggled debugging to [Debug2]")
-	else if(holder.rank == "Game Master")
-		Debug2 = !Debug2
-
-		world << "Debugging [Debug2 ? "On" : "Off"]"
-		log_admin("[key_name(src)] toggled debugging to [Debug2]")
+	if(Debug2)
+		Debug2 = 0
+		message_admins("[key_name(src)] toggled debugging off.")
+		log_admin("[key_name(src)] toggled debugging off.")
 	else
-		alert("Coders only baby")
-		return
+		Debug2 = 1
+		message_admins("[key_name(src)] toggled debugging on.")
+		log_admin("[key_name(src)] toggled debugging on.")
+
 	feedback_add_details("admin_verb","DG2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

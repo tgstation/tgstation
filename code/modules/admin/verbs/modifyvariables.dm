@@ -126,6 +126,8 @@ var/list/forbidden_varedit_object_types = list(
 			L += var_value
 
 /client/proc/mod_list(var/list/L)
+	if(!check_rights(R_VAREDIT))	return
+
 	if(!istype(L,/list)) src << "Not a List."
 
 	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine", "poo", "icon", "icon_state")
@@ -144,8 +146,8 @@ var/list/forbidden_varedit_object_types = list(
 
 	var/dir
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Game Master", "Game Admin")))
-		return
+	if(variable in locked)
+		if(!check_rights(R_DEBUG))	return
 
 	if(isnull(variable))
 		usr << "Unable to determine variable type."
@@ -264,12 +266,9 @@ var/list/forbidden_varedit_object_types = list(
 
 
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
-	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "icon", "icon_state", "mutantrace")
+	if(!check_rights(R_VAREDIT))	return
 
-	if(!src.holder)
-		src << "Only administrators may use this command."
-		return
-	if(!admin_rank_check(src.holder.level, 3)) return
+	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "icon", "icon_state", "mutantrace")
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
@@ -285,13 +284,8 @@ var/list/forbidden_varedit_object_types = list(
 			src << "A variable with this name ([param_var_name]) doesn't exist in this atom ([O])"
 			return
 
-		if (param_var_name == "holder" && holder.rank != "Game Master")
-			src << "No. Stop being stupid."
-			return
-
-		if (locked.Find(param_var_name) && !(src.holder.rank in list("Game Master", "Game Admin")))
-			src << "Editing this variable requires you to be a game master or game admin."
-			return
+		if(param_var_name == "holder" || (param_var_name in locked))
+			if(!check_rights(R_DEBUG))	return
 
 		variable = param_var_name
 
@@ -345,15 +339,11 @@ var/list/forbidden_varedit_object_types = list(
 		names = sortList(names)
 
 		variable = input("Which var?","Var") as null|anything in names
-		if(!variable)
-			return
+		if(!variable)	return
 		var_value = O.vars[variable]
 
-		if (locked.Find(variable) && !(src.holder.rank in list("Game Master", "Game Admin")))
-			return
-
-		if (variable == "holder" && holder.rank != "Game Master") //Hotfix, a bit ugly but that exploit has been there for ages and now somebody just had to go and tell everyone of it bluh bluh - U
-			return
+		if(variable == "holder" || (variable in locked))
+			if(!check_rights(R_DEBUG))	return
 
 	if(!autodetect_class)
 

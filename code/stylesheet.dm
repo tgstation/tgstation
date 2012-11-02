@@ -49,4 +49,6 @@ h1.alert, h2.alert		{color: #000000;}
 .alien					{color: #543354;}
 .newscaster				{color: #800000;}
 
+.interface				{color: #330033;}
+
 </style>"}

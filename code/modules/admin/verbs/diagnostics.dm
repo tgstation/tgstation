@@ -1,27 +1,4 @@
 /client/proc
-	general_report()
-		set category = "Debug"
-		set name = "Show General Report"
-
-		if(!master_controller)
-			usr << alert("Master_controller not found.")
-
-		var/mobs = 0
-		for(var/mob/M in mob_list)
-			mobs++
-
-		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>
-<B>General Processing Data</B><BR>
-<B># of Machines:</B> [machines.len]<BR>
-<B># of Pipe Networks:</B> [pipe_networks.len]<BR>
-<B># of Processing Items:</B> [processing_objects.len]<BR>
-<B># of Power Nets:</B> [powernets.len]<BR>
-<B># of Mobs:</B> [mobs]<BR>
-"}
-
-		usr << browse(output,"window=generalreport")
-		feedback_add_details("admin_verb","SGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 	air_report()
 		set category = "Debug"
 		set name = "Show Air Report"
@@ -156,13 +133,10 @@
 		set name = "Reload Admins"
 		set category = "Debug"
 
-		if(!(usr.client.holder && usr.client.holder.level >= 6)) // protect and prevent
-			usr << "\red Not a good cop"
-			return
+		if(!check_rights(R_SERVER))	return
 
 		message_admins("[usr] manually reloaded admins.txt")
-		usr << "You reload admins.txt"
-		world.load_admins()
+		load_admins()
 		feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

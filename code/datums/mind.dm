@@ -305,7 +305,7 @@ datum/mind
 				crystals = suplink.uses
 			if (suplink)
 				text += "|<a href='?src=\ref[src];common=takeuplink'>take</a>"
-				if (usr.client.holder.level >= 3)
+				if (usr.client.holder.rights & R_FUN)
 					text += ", <a href='?src=\ref[src];common=crystals'>[crystals]</a> crystals"
 				else
 					text += ", [crystals] crystals"
@@ -332,17 +332,7 @@ datum/mind
 		usr << browse(out, "window=edit_memory[src]")
 
 	Topic(href, href_list)
-		if(!usr || !usr.client)
-			return
-
-		if(!usr.client.holder)
-			message_admins("\red [key_name(usr)] tried to access [current]'s mind without authorization.")
-			log_admin("[key_name(usr)] tried to access [current]'s mind without authorization.")
-			return
-
-		if (!(usr.client.holder.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master")))
-			alert("You cannot perform this action. You must be of a higher administrative rank!")
-			return
+		if(!check_rights(R_ADMIN))	return
 
 		if (href_list["role_edit"])
 			var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
@@ -754,7 +744,7 @@ datum/mind
 				return
 			switch(href_list["monkey"])
 				if("healthy")
-					if (usr.client.holder.level >= 3)
+					if (usr.client.holder.rights & R_ADMIN)
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
@@ -769,7 +759,7 @@ datum/mind
 								D.cure(0)
 							sleep(0) //because deleting of virus is done through spawn(0)
 				if("infected")
-					if (usr.client.holder.level >= 3)
+					if (usr.client.holder.rights & R_ADMIN)
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
@@ -873,7 +863,7 @@ datum/mind
 					take_uplink()
 					memory = null//Remove any memory they may have had.
 				if("crystals")
-					if (usr.client.holder.level >= 3)
+					if (usr.client.holder.rights & R_FUN)
 						var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink()
 						var/crystals
 						if (suplink)

@@ -118,13 +118,9 @@ var/global/Holiday = null
 	set name = ".Set Holiday"
 	set category = "Fun"
 	set desc = "Force-set the Holiday variable to make the game think it's a certain day."
-
-	if( !holder || !(holder.rank in list("Game Master","Game Admin")) )
-		src << "<font color='red'>Error: Set_Holiday: You hold insufficient rank to perform this action.</font>"
-		return
+	if(!check_rights(R_SERVER))	return
 
 	if(!T)	return
-
 	Holiday = T
 	//get a new station name
 	station_name = null

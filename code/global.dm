@@ -1,3 +1,4 @@
+//#define TESTING
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/global/obj/effect/datacore/data_core = null
@@ -206,29 +207,19 @@ var/forum_authenticated_group = "10"
 var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finished setting up and stuff.
 
 
-#define BUILDMODE	1
-#define ADMIN		2
-#define BAN			4
-#define FUN			8
-#define SERVER		16
-#define ADMDEBUG	32
-#define POSSESS		64
-#define PERMISSIONS	128
-//Keep this list synced with the #defines above
-var/global/list/permissionwords = list("BUILDMODE", "ADMIN", "BAN", "FUN", "SERVER", "DEBUG", "POSSESS", "EDITPERMISSIONS")
+//Please don't edit these values without speaking to Errorage first	~Carn
+//Admin Permissions
+#define R_BUILDMODE		1
+#define R_ADMIN			2
+#define R_BAN			4
+#define R_FUN			8
+#define R_SERVER		16
+#define R_DEBUG			32
+#define R_POSSESS		64
+#define R_PERMISSIONS	128
+#define R_STEALTH		256
+#define R_REJUVINATE	512
+#define R_VAREDIT		1024
+#define R_SOUNDS		2048
 
-
-
-//Please do not edit these values. The database assigning proper rights relies on this. You can add new values, just don't change existing ones.
-//This list is separate from the list used ingame, so that one can be edited with little consequence. This one is tied to the database
-//The database admins should be consulted before any edits to this list.
-#define SQL_BUILDMODE	1
-#define SQL_ADMIN		2
-#define SQL_BAN			4
-#define SQL_FUN			8
-#define SQL_SERVER		16
-#define SQL_DEBUG		32
-#define SQL_POSSESS		64
-#define SQL_PERMISSIONS	128
-//Same rules apply to this list as to the values above. You can only add stuff to it.
-var/global/list/permissionwords_sql = list("BUILDMODE", "ADMIN", "BAN", "FUN", "SERVER", "DEBUG", "POSSESS", "EDITPERMISSIONS")
+#define R_HOST			65535

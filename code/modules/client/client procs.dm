@@ -103,7 +103,6 @@
 	if(holder)
 		admins += src
 		holder.owner = src
-		holder.state = null
 
 	. = ..()	//calls mob.Login()
 
@@ -112,6 +111,7 @@
 		world.update_status()
 
 	if(holder)
+		update_admin()
 		admin_memo_show()
 
 	log_client_to_db()
@@ -122,7 +122,6 @@
 	//////////////
 /client/Del()
 	if(holder)
-		holder.state = null
 		holder.owner = null
 		admins -= src
 	directory -= ckey
@@ -175,12 +174,10 @@
 
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
-
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
 	else
 		//New player!! Need to insert all the stuff
-
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
 		query_insert.Execute()
 

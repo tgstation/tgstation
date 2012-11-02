@@ -176,11 +176,11 @@ datum/preferences
 		if(config.allow_Metadata)
 			dat += "<b>OOC Notes:</b> <a href='byond://?src=\ref[user];preference=metadata;task=input'> Edit </a><br>"
 
-		if((user.client) && (user.client.holder) && (user.client.holder.rank))
+		if(user.client && user.client.holder)
 			dat += "<b>Adminhelp sound</b>: "
 			dat += "[(sound_adminhelp)?"On":"Off"] <a href='byond://?src=\ref[user];preference=hear_adminhelps'>toggle</a><br>"
 
-			if(user.client.holder.level >= 5)
+			if(user.client.holder.rights & R_FUN)
 				dat += "<br><b>OOC</b><br>"
 				dat += "<a href='byond://?src=\ref[user];preference=ooccolor;task=input'>Change color</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font><br>"
 

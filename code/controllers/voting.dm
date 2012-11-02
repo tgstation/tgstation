@@ -170,7 +170,7 @@ datum/controller/vote
 		var/trialmin = 0
 		if(C.holder)
 			admin = 1
-			if (C.holder.level >= 3)
+			if (C.holder.rights & R_ADMIN)
 				trialmin = 1
 		voting |= C
 
