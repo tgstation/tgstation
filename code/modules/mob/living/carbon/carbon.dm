@@ -313,6 +313,9 @@
 									target_vent = vent_found 	//travel back. No additional time required.
 									src << "\red The vent you were heading to appears to be welded."
 								loc = target_vent.loc
+								var/area/new_area = get_area(loc)
+								if(new_area)
+									new_area.Entered(src)
 
 					else
 						src << "You need to remain still while entering a vent."

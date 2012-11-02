@@ -204,7 +204,7 @@ var/list/archive_diseases = list()
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure(var/list/properties = list())
 	if(properties && properties.len)
-		var/res = max(properties["resistance"] - symptoms.len, 1)
+		var/res = max(properties["resistance"] - symptoms.len, 0)
 		//world << "Res = [res]"
 		switch(res)
 			// Due to complications, I cannot randomly generate cures or randomly give cures.
