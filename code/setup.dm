@@ -387,11 +387,12 @@ var/MAX_EXPLOSION_RANGE = 14
 #define GAS_N2O	(1 << 4)
 
 
-var/list/accessable_z_levels = list("3" = 30, "4" = 70)
+var/list/accessable_z_levels = list("1" = 10, "3" = 15, "4" = 60, "5" = 15)
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
 //(Exceptions: extended, sandbox and nuke) -Errorage
-//Was list("1" = 10, "3" = 15, "4" = 60, "5" = 15); changed it to list("3" = 30, "4" = 70).
+//Was list("3" = 30, "4" = 70).
 //Spacing should be a reliable method of getting rid of a body -- Urist.
+//Go away Urist, I'm restoring this to the longer list. ~Errorage
 
 #define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
 

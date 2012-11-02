@@ -93,9 +93,15 @@
 						del(N)//Make the disk respawn if it is floating on its own
 				return
 
-			var/move_to_z_str = pickweight(accessable_z_levels)
+			var/move_to_z = src.z
+			var/safety = 1
 
-			var/move_to_z = text2num(move_to_z_str)
+			while(move_to_z == src.z)
+				var/move_to_z_str = pickweight(accessable_z_levels)
+				move_to_z = text2num(move_to_z_str)
+				safety++
+				if(safety > 10)
+					break
 
 			if(!move_to_z)
 				return
