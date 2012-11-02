@@ -975,7 +975,7 @@
 				update_mutations(0)
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
-		else
+/*		else
 			if(overeatduration > 500)
 				src << "\red You suddenly feel blubbery!"
 				mutations.Add(FAT)
@@ -983,7 +983,7 @@
 				update_mutations(0)
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
-
+AND YOU */
 		// nutrition decrease
 		if (nutrition > 0 && stat != 2)
 			nutrition = max (0, nutrition - HUNGER_FACTOR)
