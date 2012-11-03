@@ -1,6 +1,6 @@
 #define WHITELISTFILE "data/whitelist.txt"
 
-var/list/whitelist
+var/list/whitelist = list()
 
 /proc/load_whitelist()
 	var/text = file2text(WHITELISTFILE)
@@ -25,10 +25,8 @@ proc/load_alienwhitelist()
 
 /proc/is_alien_whitelisted(mob/M, var/species)
 	if(!alien_whitelist)
-		world << "no alien whitelist"
 		return 0
 	if((M.client) && (M.client.holder) && (M.client.holder.level) && (M.client.holder.level >= 5))
-		world << "admin alien whitelisted"
 		return 1
 	if(M && species)
 		for (var/s in alien_whitelist)
