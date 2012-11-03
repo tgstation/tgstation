@@ -387,7 +387,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define GAS_N2O	(1 << 4)
 
 
-var/list/accessable_z_levels = list("1" = 10, "3" = 15, "4" = 60, "5" = 15)
+var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" = 60)
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
 //(Exceptions: extended, sandbox and nuke) -Errorage
 //Was list("3" = 30, "4" = 70).
@@ -532,3 +532,5 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define HOSTILE_STANCE_ATTACK 3
 #define HOSTILE_STANCE_ATTACKING 4
 #define HOSTILE_STANCE_TIRED 5
+
+#define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.

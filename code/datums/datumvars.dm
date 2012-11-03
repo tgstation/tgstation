@@ -180,12 +180,12 @@ client
 				body += "<br><font size='1'><a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 				body += {"
 				<br><font size='1'>
-				BRUTE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["brute"]'>[M.getBruteLoss()]</a>
-				FIRE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["fire"]'>[M.getFireLoss()]</a>
-				TOXIN:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["toxin"]'>[M.getToxLoss()]</a>
-				OXY:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["oxygen"]'>[M.getOxyLoss()]</a>
-				CLONE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["clone"]'>[M.getCloneLoss()]</a>
-				BRAIN:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["brain"]'>[M.getBrainLoss()]</a>
+				BRUTE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
+				FIRE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
+				TOXIN:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
+				OXY:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+				CLONE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
+				BRAIN:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
 				</font>
 
 
