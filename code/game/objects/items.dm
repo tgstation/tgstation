@@ -115,9 +115,9 @@
 	else
 		if(isliving(src.loc))
 			return
-		src.pickup(user)
 		user.lastDblClick = world.time + 2
 		user.next_move = world.time + 2
+	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
 	return

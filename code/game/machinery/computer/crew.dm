@@ -69,7 +69,8 @@
 			var/list/logs = list()
 			for(var/obj/item/clothing/under/C in src.tracked)
 				var/log = ""
-				if((C) && (C.has_sensor) && (C.loc) && (C.loc.z == 1) && C.sensor_mode)
+				var/turf/pos = get_turf(C)
+				if((C) && (C.has_sensor) && (pos) && (pos.z == src.z) && C.sensor_mode)
 					if(istype(C.loc, /mob/living/carbon/human))
 
 						var/mob/living/carbon/human/H = C.loc
@@ -85,7 +86,7 @@
 						if(H.wear_id)
 							log += "<tr><td width='40%'>[H.wear_id.name]</td>"
 						else
-							log += "<tr><td width='40%'>Unknown:</td>"
+							log += "<tr><td width='40%'>Unknown</td>"
 
 						switch(C.sensor_mode)
 							if(1)
@@ -94,7 +95,7 @@
 								log += "<td width='20%'>[life_status] [damage_report]</td><td width='40%'>Not Available</td></tr>"
 							if(3)
 								var/area/player_area = get_area(H)
-								log += "<td width='20%'>[life_status] [damage_report]</td><td width='40%'>[player_area.name] ([H.x], [H.y])</td></tr>"
+								log += "<td width='20%'>[life_status] [damage_report]</td><td width='40%'>[player_area.name] ([pos.x], [pos.y])</td></tr>"
 				logs += log
 			logs = sortList(logs)
 			for(var/log in logs)
