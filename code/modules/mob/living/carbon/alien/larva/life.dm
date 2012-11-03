@@ -186,12 +186,12 @@
 				if(prob(round((50 - nutrition) / 100)))
 					src << "\blue You feel fit again!"
 					mutations.Add(FAT)
-		else
+/*		else
 			if(nutrition > 500)
 				if(prob(5 + round((nutrition - max_grown) / 2)))
 					src << "\red You suddenly feel blubbery!"
 					mutations.Add(FAT)
-
+FUCK YOU MORE FAT CODE -Hawk*/
 		if (nutrition > 0)
 			nutrition-= HUNGER_FACTOR
 
