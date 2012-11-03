@@ -113,3 +113,9 @@
 	desc = "They suspend the illusion of the mime's play."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
+
+/obj/item/clothing/suit/fr_jacket
+	name = "first responder jacket"
+	desc = "A high-visibility jacket worn by medical first responders."
+	icon_state = "fr_jacket_open"
+	item_state = "fr_jacket"

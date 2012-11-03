@@ -44,6 +44,8 @@ var/global/datum/controller/occupations/job_master
 			if(J.title == rank)	return J
 		return null
 
+	proc/GetAltTitle(mob/new_player/player, rank)
+		return player.preferences.GetAltTitle(GetJob(rank))
 
 	proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
 		Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
@@ -57,6 +59,7 @@ var/global/datum/controller/occupations/job_master
 			if((job.current_positions < position_limit) || position_limit == -1)
 				Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
 				player.mind.assigned_role = rank
+				player.mind.role_alt_title = GetAltTitle(player, rank)
 				unassigned -= player
 				job.current_positions++
 				return 1
@@ -296,6 +299,9 @@ var/global/datum/controller/occupations/job_master
 			H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
 
 		H.job = rank
+		if(H.mind && H.mind.assigned_role != rank)
+			H.mind.assigned_role = rank
+			H.mind.role_alt_title = null
 
 		if(!joined_late)
 			var/obj/S = null
@@ -338,15 +344,19 @@ var/global/datum/controller/occupations/job_master
 
 		H << "<B>You are the [rank].</B>"
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
-		spawnId(H,rank)
 
+		if(H.mind.assigned_role == rank && H.mind.role_alt_title)
+			spawnId(H, rank, H.mind.role_alt_title)
+		else
+			spawnId(H,rank)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
 //		H.update_icons()
 		return 1
 
 
-	proc/spawnId(var/mob/living/carbon/human/H, rank)
+	proc/spawnId(var/mob/living/carbon/human/H, rank, title)
 		if(!H)	return 0
+		if(!title) title = rank
 		var/obj/item/weapon/card/id/C = null
 
 		var/datum/job/job = null
@@ -364,9 +374,9 @@ var/global/datum/controller/occupations/job_master
 			C = new /obj/item/weapon/card/id(H)
 		if(C)
 			C.registered_name = H.real_name
-			C.assignment = rank
+			C.assignment = title
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
-			C.access = get_access(C.assignment)
+			C.access = get_access(rank)
 			H.equip_to_slot_or_del(C, slot_wear_id)
 	/*	if(prob(50))
 			H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_r_store)

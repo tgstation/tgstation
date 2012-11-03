@@ -143,6 +143,62 @@
 			else
 				message = "<B>[src]</B> looks."
 			m_type = 1
+		if("beep")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> beeps at [param]."
+			else
+				message = "<B>[src]</B> beeps."
+			playsound(src.loc, 'twobeep.ogg', 50, 0)
+			m_type = 2
+
+		if("ping")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> pings at [param]."
+			else
+				message = "<B>[src]</B> pings."
+			playsound(src.loc, 'ping.ogg', 50, 0)
+			m_type = 2
+
+		if("buzz")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> buzzes at [param]."
+			else
+				message = "<B>[src]</B> buzzes."
+			playsound(src.loc, 'buzz-sigh.ogg', 50, 0)
+			m_type = 2
+
+		if("law")
+			message = "<B>[src]</B> shows its legal authorization barcode."
+
+			playsound(src.loc, 'biamthelaw.ogg', 50, 0)
+			m_type = 2
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))

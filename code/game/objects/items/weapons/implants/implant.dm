@@ -107,11 +107,8 @@ Implant Specifics:<BR>"}
 		return
 
 	hear(var/msg)
-		world << "Implant heard: [msg]"
 		var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 		msg = sanitize_simple(msg, replacechars)
-		world << "Implant understood: [msg]"
-		world << "Implant's phrase: [phrase]"
 		if(findtext(msg,phrase))
 			if(istype(imp_in, /mob/))
 				var/mob/T = imp_in
@@ -269,8 +266,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	process()
 		if (!implanted) return
 		var/mob/M = imp_in
-		if (M == null)
-			world << "Are?.."
 		var/area/t = get_area(M)
 
 		if(isnull(M)) // If the mob got gibbed

@@ -67,7 +67,10 @@
 		M.fields["alg_d"]		= "No allergies have been detected in this patient."
 		M.fields["cdi"]			= "None"
 		M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-		M.fields["notes"]		= "No notes."
+		if(H.med_record && !jobban_isbanned(H, "Records"))
+			M.fields["notes"] = H.med_record
+		else
+			M.fields["notes"] = "No notes found."
 		medical += M
 
 		//Security Record
@@ -80,6 +83,10 @@
 		S.fields["ma_crim"]		= "None"
 		S.fields["ma_crim_d"]	= "No major crime convictions."
 		S.fields["notes"]		= "No notes."
+		if(H.sec_record && !jobban_isbanned(H, "Records"))
+			S.fields["notes"] = H.sec_record
+		else
+			S.fields["notes"] = "No notes."
 		security += S
 
 		//Locked Record
