@@ -215,7 +215,7 @@
 		interact(user, 0)
 
 	// user interaction
-	proc/interact(mob/user, var/ai=0)
+	interact(mob/user, var/ai=0)
 
 		src.add_fingerprint(user)
 		if(stat & BROKEN)

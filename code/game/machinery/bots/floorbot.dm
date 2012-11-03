@@ -75,7 +75,7 @@
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/floorbot/proc/interact(mob/user as mob)
+/obj/machinery/bot/floorbot/interact(mob/user as mob)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"

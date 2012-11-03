@@ -236,7 +236,7 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/attack_paw(mob/user as mob)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/proc/interact(mob/user)
+/obj/machinery/power/port_gen/pacman/interact(mob/user)
 	if (get_dist(src, user) > 1 )
 		if (!istype(user, /mob/living/silicon/ai))
 			user.unset_machine()

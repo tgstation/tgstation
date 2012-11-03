@@ -294,7 +294,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	return 0
 
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
-/obj/item/device/uplink/hidden/proc/interact(mob/user as mob)
+/obj/item/device/uplink/hidden/interact(mob/user as mob)
 
 	var/dat = "<body link='yellow' alink='white' bgcolor='#601414'><font color='white'>"
 	dat += src.generate_menu()

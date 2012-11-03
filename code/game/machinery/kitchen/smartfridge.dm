@@ -89,7 +89,7 @@
 *   SmartFridge Menu
 ********************/
 
-/obj/machinery/smartfridge/proc/interact(mob/user as mob)
+/obj/machinery/smartfridge/interact(mob/user as mob)
 	if(!src.ispowered)
 		return
 

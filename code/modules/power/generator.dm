@@ -121,7 +121,7 @@
 	interact(user)
 
 
-/obj/machinery/power/generator/proc/interact(mob/user)
+/obj/machinery/power/generator/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) && (!istype(user, /mob/living/silicon/ai)))
 		user.unset_machine()
 		user << browse(null, "window=teg")

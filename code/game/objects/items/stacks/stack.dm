@@ -34,7 +34,7 @@
 /obj/item/stack/attack_self(mob/user as mob)
 	interact(user)
 
-/obj/item/stack/proc/interact(mob/user as mob)
+/obj/item/stack/interact(mob/user as mob)
 	if (!recipes)
 		return
 	if (!src || amount<=0)

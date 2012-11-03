@@ -102,7 +102,7 @@
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/secbot/proc/interact(mob/user as mob)
+/obj/machinery/bot/secbot/interact(mob/user as mob)
 	var/dat
 
 	dat += text({"

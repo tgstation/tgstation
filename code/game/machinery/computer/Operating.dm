@@ -30,7 +30,7 @@
 	interact(user)
 
 
-/obj/machinery/computer/operating/proc/interact(mob/user)
+/obj/machinery/computer/operating/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!istype(user, /mob/living/silicon))
 			user.unset_machine()

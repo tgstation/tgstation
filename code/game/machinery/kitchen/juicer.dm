@@ -62,7 +62,7 @@
 	user.set_machine(src)
 	interact(user)
 
-/obj/machinery/juicer/proc/interact(mob/user as mob) // The microwave Menu
+/obj/machinery/juicer/interact(mob/user as mob) // The microwave Menu
 	var/is_chamber_empty = 0
 	var/is_beaker_ready = 0
 	var/processing_chamber = ""

@@ -68,7 +68,7 @@
 		src.attack_hand(user)
 	return
 
-/obj/machinery/power/monitor/proc/interact(mob/user)
+/obj/machinery/power/monitor/interact(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!istype(user, /mob/living/silicon))

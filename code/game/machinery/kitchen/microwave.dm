@@ -146,7 +146,7 @@
 *   Microwave Menu
 ********************/
 
-/obj/machinery/microwave/proc/interact(mob/user as mob) // The microwave Menu
+/obj/machinery/microwave/interact(mob/user as mob) // The microwave Menu
 	var/dat = ""
 	if(src.broken > 0)
 		dat = {"<TT>Bzzzzttttt</TT>"}

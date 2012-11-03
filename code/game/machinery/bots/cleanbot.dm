@@ -79,7 +79,7 @@
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/cleanbot/proc/interact(mob/user as mob)
+/obj/machinery/bot/cleanbot/interact(mob/user as mob)
 	var/dat
 	dat += text({"
 <TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>

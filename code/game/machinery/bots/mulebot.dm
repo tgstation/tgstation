@@ -202,7 +202,7 @@
 	user.set_machine(src)
 	interact(user, 0)
 
-/obj/machinery/bot/mulebot/proc/interact(var/mob/user, var/ai=0)
+/obj/machinery/bot/mulebot/interact(var/mob/user, var/ai=0)
 	var/dat
 	dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
 	dat += "ID: [suffix]<BR>"

@@ -74,7 +74,7 @@
 	update_icon()
 	return
 
-/obj/machinery/biogenerator/proc/interact(mob/user as mob)
+/obj/machinery/biogenerator/interact(mob/user as mob)
 	if(stat & BROKEN)
 		return
 	user.set_machine(src)

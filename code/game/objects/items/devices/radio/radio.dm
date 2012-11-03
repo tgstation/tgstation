@@ -74,7 +74,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	user.set_machine(src)
 	interact(user)
 
-/obj/item/device/radio/proc/interact(mob/user as mob)
+/obj/item/device/radio/interact(mob/user as mob)
 	if(!on)
 		return
 

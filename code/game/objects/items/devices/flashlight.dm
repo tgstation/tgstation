@@ -152,7 +152,7 @@
 	var/produce_heat = 1500
 
 /obj/item/device/flashlight/flare/New()
-	fuel = rand(3000, 4500) // Last 10 to 15 minutes.
+	fuel = rand(1500, 2000) // Last 10 to 15 minutes.
 	..()
 
 /obj/item/device/flashlight/flare/process()

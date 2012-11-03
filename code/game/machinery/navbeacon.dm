@@ -132,7 +132,7 @@
 	attack_hand(var/mob/user)
 		interact(user, 0)
 
-	proc/interact(var/mob/user, var/ai = 0)
+	interact(var/mob/user, var/ai = 0)
 		var/turf/T = loc
 		if(T.intact)
 			return		// prevent intraction when T-scanner revealed

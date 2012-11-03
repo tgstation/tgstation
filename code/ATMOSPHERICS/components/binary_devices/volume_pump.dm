@@ -97,14 +97,14 @@ obj/machinery/atmospherics/binary/volume_pump
 
 			return 1
 
-		interact(mob/user as mob)
-			var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
-						<b>Desirable output flow: </b>
-						[round(transfer_rate,1)]l/s | <a href='?src=\ref[src];set_transfer_rate=1'>Change</a>
-						"}
+	interact(mob/user as mob)
+		var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
+					<b>Desirable output flow: </b>
+					[round(transfer_rate,1)]l/s | <a href='?src=\ref[src];set_transfer_rate=1'>Change</a>
+					"}
 
-			user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
-			onclose(user, "atmo_pump")
+		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
+		onclose(user, "atmo_pump")
 
 
 

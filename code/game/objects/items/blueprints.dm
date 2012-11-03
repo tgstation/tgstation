@@ -44,7 +44,7 @@
 				return
 			edit_area()
 
-/obj/item/blueprints/proc/interact()
+/obj/item/blueprints/interact()
 	var/area/A = get_area()
 	var/text = {"<HTML><head><title>[src]</title></head><BODY>
 <h2>[station_name()] blueprints</h2>

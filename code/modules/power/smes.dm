@@ -178,7 +178,7 @@
 	interact(user)
 
 
-/obj/machinery/power/smes/proc/interact(mob/user)
+/obj/machinery/power/smes/interact(mob/user)
 	if(get_dist(src, user) > 1 && !istype(user, /mob/living/silicon/ai))
 		user.unset_machine()
 		user << browse(null, "window=smes")
