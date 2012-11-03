@@ -332,13 +332,13 @@ proc/get_damage_icon_part(damage_state, body_part)
 	overlays_lying[HAIR_LAYER]		= null
 	overlays_standing[HAIR_LAYER]	= null
 
-	var/datum/organ/external/head/head = get_organ("head")
-	if( !head || (head.status & ORGAN_DESTROYED) )
+	var/datum/organ/external/head/head_organ = get_organ("head")
+	if( !head_organ || (head_organ.status & ORGAN_DESTROYED) )
 		if(update_icons)   update_icons()
 		return
 
 	//masks and helmets can obscure our hair.
-	if( (head && (head.status & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
+	if( (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
 		if(update_icons)   update_icons()
 
 		return
