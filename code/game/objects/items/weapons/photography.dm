@@ -59,6 +59,9 @@
 	..()
 	if (scribble)
 		usr << "\blue you see something written on photo's back. "
+	show(usr)
+
+/obj/item/weapon/photo/proc/show(var/mob/usr)
 	usr << browse_rsc(src.img, "tmp_photo.png")
 	usr << browse("<html><head><title>Photo</title></head>" \
 		+ "<body style='overflow:hidden'>" \
