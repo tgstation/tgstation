@@ -48,8 +48,7 @@
 
 
 	sense()
-		var/obj/mainloc = loc
-		if(holder) mainloc=holder.loc
+		var/turf/mainloc = get_turf(src)
 //		if(scanning && cooldown <= 0)
 //			mainloc.visible_message("\icon[src] *boop* *boop*", "*boop* *boop*")
 		if((!holder && !secured)||(!scanning)||(cooldown > 0))	return 0
@@ -64,8 +63,7 @@
 
 	process()
 		if(scanning)
-			var/obj/mainloc = loc
-			if(holder) mainloc=holder.loc
+			var/turf/mainloc = get_turf(src)
 			for(var/mob/living/A in range(range,mainloc))
 				if (A.move_speed < 12)
 					sense()
