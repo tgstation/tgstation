@@ -373,7 +373,7 @@ var/global/floorIsLava = 0
 
 	if(check_rights(R_ADMIN))
 		dat += {"
-			"<BR>"
+			<BR>
 			<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
 			<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
 			<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>
