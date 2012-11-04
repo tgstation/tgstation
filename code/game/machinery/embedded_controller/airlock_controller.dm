@@ -44,6 +44,10 @@ datum/computer/file/embedded_program/airlock_controller
 						target_state = AIRLOCK_STATE_OUTOPEN
 					else
 						target_state = AIRLOCK_STATE_INOPEN
+				if("cycle_interior")
+					target_state = AIRLOCK_STATE_INOPEN
+				if("cycle_exterior")
+					target_state = AIRLOCK_STATE_OUTOPEN
 
 	receive_user_command(command)
 		switch(command)
