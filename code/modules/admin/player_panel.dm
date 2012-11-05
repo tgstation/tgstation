@@ -478,7 +478,7 @@
 					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		if(istype(ticker.mode, /datum/game_mode/anti_revolution) && ticker.mode:heads.len)
+		/*if(istype(ticker.mode, /datum/game_mode/anti_revolution) && ticker.mode:heads.len)	//comment out anti-revolution
 			dat += "<br><table cellspacing=5><tr><td><B>Corrupt Heads</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode:heads)
 				var/mob/M = N.current
@@ -486,7 +486,7 @@
 					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
 			dat += "</table>"
-
+*/
 		if(ticker.mode.traitors.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Traitors</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/traitor in ticker.mode.traitors)
