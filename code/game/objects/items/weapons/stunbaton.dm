@@ -89,6 +89,25 @@
 
 	add_fingerprint(user)
 
+/obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
+	if (prob(50))
+		if(istype(hit_atom, /mob/living))
+			var/mob/living/carbon/human/H = hit_atom
+			if(status)
+				H.apply_effect(10, STUN, 0)
+				H.apply_effect(10, WEAKEN, 0)
+				H.apply_effect(10, STUTTER, 0)
+				charges--
+
+				H.visible_message("<span class='danger'>[src] hits [H] with stunning end!</span>")
+				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src.name]</font>"
+				log_attack("<font color='red'>Flying [src.name] stunned [H.name] ([H.ckey])</font>" )
+
+				log_admin("ATTACK: Flying [src.name] stunned [H.name] ([H.ckey])")
+				msg_admin_attack("ATTACK: Flying [src.name] stunned [H.name] ([H.ckey])") //BS12 EDIT ALG
+				return
+	return ..()
+
 /obj/item/weapon/melee/baton/emp_act(severity)
 	switch(severity)
 		if(1)
