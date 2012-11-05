@@ -8,23 +8,24 @@
 #define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 1000K point
 
-#define COLD_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 260.15k safety point
-#define COLD_DAMAGE_LEVEL_2 2 //Amount of damage applied when your body temperature passes the 200K point
-#define COLD_DAMAGE_LEVEL_3 4 //Amount of damage applied when your body temperature passes the 120K point
+#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
+#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
+#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
 
 //Note that gas heat damage is only applied once every FOUR ticks.
 #define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
 #define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
 #define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
 
-#define COLD_GAS_DAMAGE_LEVEL_1 1 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
-#define COLD_GAS_DAMAGE_LEVEL_2 2 //Amount of damage applied when the current breath's temperature passes the 200K point
-#define COLD_GAS_DAMAGE_LEVEL_3 4 //Amount of damage applied when the current breath's temperature passes the 120K point
+#define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
+#define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
+#define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
 /mob/living/carbon/human
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
 	var/fire_alert = 0
+	var/pressure_alert = 0
 	var/prev_gender = null // Debug for plural genders
 	var/temperature_alert = 0
 
@@ -488,12 +489,12 @@
 			//Place is colder than we are
 			var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(thermal_protection < 1)
-				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)
+				bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
 		else
 			//Place is hotter than we are
 			var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(thermal_protection < 1)
-				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+				bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 		if(bodytemperature > 360.15)
@@ -528,10 +529,21 @@
 		// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
 
 		var/pressure = environment.return_pressure()
-		if(pressure > HAZARD_HIGH_PRESSURE)
-			var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
-			if(adjusted_pressure > HAZARD_HIGH_PRESSURE)
-				adjustBruteLoss( min( (adjusted_pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT , MAX_PRESSURE_DAMAGE) )
+		var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+		switch(adjusted_pressure)
+			if(HAZARD_HIGH_PRESSURE to INFINITY)
+				adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+				pressure_alert = 2
+			if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+				pressure_alert = 1
+			if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
+				pressure_alert = 0
+			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+				pressure_alert = -1
+			else
+				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+				pressure_alert = -2
+
 		return
 
 	/*
@@ -1115,17 +1127,7 @@
 					else							nutrition_icon.icon_state = "nutrition4"
 
 			if(pressure)
-				if(istype(wear_suit, /obj/item/clothing/suit/space)||istype(wear_suit, /obj/item/clothing/suit/armor/captain))
-					pressure.icon_state = "pressure0"
-				else
-					var/datum/gas_mixture/environment = loc.return_air()
-					if(environment)
-						switch(environment.return_pressure())
-							if(HAZARD_HIGH_PRESSURE to INFINITY)				pressure.icon_state = "pressure2"
-							if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)	pressure.icon_state = "pressure1"
-							if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)	pressure.icon_state = "pressure0"
-							if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)		pressure.icon_state = "pressure-1"
-							else												pressure.icon_state = "pressure-2"
+				pressure.icon_state = "pressure[pressure_alert]"
 
 			if(pullin)
 				if(pulling)								pullin.icon_state = "pull1"

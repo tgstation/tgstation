@@ -80,21 +80,21 @@
 /obj/item/examine()
 	set src in view()
 
-	var/t
+	var/size
 	switch(src.w_class)
 		if(1.0)
-			t = "tiny"
+			size = "tiny"
 		if(2.0)
-			t = "small"
+			size = "small"
 		if(3.0)
-			t = "normal-sized"
+			size = "normal-sized"
 		if(4.0)
-			t = "bulky"
+			size = "bulky"
 		if(5.0)
-			t = "huge"
+			size = "huge"
 		else
-	if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
+	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
+	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
 	if(src.desc)
 		usr << src.desc
 	return
