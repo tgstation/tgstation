@@ -541,8 +541,11 @@
 			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 				pressure_alert = -1
 			else
-				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				pressure_alert = -2
+				if( !(COLD_RESISTANCE in mutations) )
+					adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+					pressure_alert = -2
+				else
+					pressure_alert = -1
 
 		return
 
