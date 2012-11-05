@@ -510,7 +510,7 @@
 		jobName = src:assignment
 		realJobName = src:assignment_real_title
 
-	if(realJobName in get_all_jobs())
+	if( (realJobName in get_all_jobs()) || (jobName in get_all_jobs()) )
 		return jobName
 
 	return "Unknown"
