@@ -73,6 +73,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -95,6 +96,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falserwall (src.loc)
+						del(src)
 					else
 						if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
 							if(S.amount < 1) return ..()
@@ -128,6 +130,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/gold (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -150,6 +153,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/silver (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -172,6 +176,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/diamond (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -194,6 +199,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/uranium (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -216,6 +222,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/plasma (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -238,6 +245,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/clown (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -259,6 +267,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/sandstone (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -276,7 +285,6 @@
 						return
 
 			add_hiddenprint(usr)
-			del(src)
 
 		else if(istype(W, /obj/item/pipe))
 			var/obj/item/pipe/P = W
