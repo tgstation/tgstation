@@ -1,3 +1,52 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
+/obj
+	//var/datum/module/mod		//not used
+	var/m_amt = 0	// metal
+	var/g_amt = 0	// glass
+	var/w_amt = 0	// waster amounts
+	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
+	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
+	var/crit_fail = 0
+	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
+	var/datum/marked_datum
+	animate_movement = 2
+	glide_size = 8
+	var/throwforce = 1
+
+	proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+		//Return: (NONSTANDARD)
+		//		null if object handles breathing logic for lifeform
+		//		datum/air_group to tell lifeform to process using that breath return
+		//DEFAULT: Take air from turf to give to have mob process
+		if(breath_request>0)
+			return remove_air(breath_request)
+		else
+			return null
+
+	proc/initialize()
+
+//Define all tape types in policetape.dm
+/obj/item/taperoll
+	name = "tape roll"
+	icon = 'policetape.dmi'
+	icon_state = "rollstart"
+	flags = FPRINT
+	w_class = 1.0
+	var/turf/start
+	var/turf/end
+	var/tape_type = /obj/item/tape
+	var/icon_base
+
+/obj/item/tape
+	name = "tape"
+	icon = 'policetape.dmi'
+	anchored = 1
+	density = 1
+	var/icon_base
+/*
+
+*/
 /obj/structure/signpost
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "signpost"
