@@ -548,6 +548,7 @@
 			src.temphtml = "The replicator is not ready yet."
 		src.updateUsrDialog()
 		return
+	/*
 	else if (href_list["create_virus_culture"])
 		if(!wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
@@ -568,6 +569,7 @@
 			src.temphtml = "The replicator is not ready yet."
 		src.updateUsrDialog()
 		return
+	*/
 	else if (href_list["empty_beaker"])
 		beaker.reagents.clear_reagents()
 		src.updateUsrDialog()
@@ -629,7 +631,7 @@
 					for(var/datum/disease/D in Blood.data["viruses"])
 						if(!D.hidden[PANDEMIC])
 
-							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[D.type]'>Create virus culture bottle</A>":"none"]<BR>"
+							dat += "<b>Disease Agent:</b> [D?"[D.agent]":"none"]<BR>"
 							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
 							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
 							dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
