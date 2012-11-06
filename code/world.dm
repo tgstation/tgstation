@@ -34,6 +34,16 @@
 
 	..()
 
+	if(!setup_database_connection())
+		world.log << "Your server failed to establish a connection with the feedback database."
+	else
+		world.log << "Feedback database connection established."
+
+	if(!setup_old_database_connection())
+		world.log << "Your server failed to establish a connection with the tgstation database."
+	else
+		world.log << "Tgstation database connection established."
+
 	sleep(50)
 
 	plmaster = new /obj/effect/overlay(  )
@@ -257,3 +267,79 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	/* does this help? I do not know */
 	if (src.status != s)
 		src.status = s
+
+#define FAILED_DB_CONNECTION_CUTOFF 5
+var/failed_db_connections = 0
+var/failed_old_db_connections = 0
+
+proc/setup_database_connection()
+
+	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
+		return 0
+
+	if(!dbcon)
+		dbcon = new()
+
+	var/user = sqlfdbklogin
+	var/pass = sqlfdbkpass
+	var/db = sqlfdbkdb
+	var/address = sqladdress
+	var/port = sqlport
+
+	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	. = dbcon.IsConnected()
+	if ( . )
+		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
+	else
+		failed_db_connections++		//If it failed, increase the failed connections counter.
+
+	return .
+
+//This proc ensures that the connection to the feedback database (global variable dbcon) is established
+proc/establish_db_connection()
+	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
+		return 0
+
+	if(!dbcon || !dbcon.IsConnected())
+		return setup_database_connection()
+	else
+		return 1
+
+
+
+
+//These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
+proc/setup_old_database_connection()
+
+	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
+		return 0
+
+	if(!dbcon_old)
+		dbcon_old = new()
+
+	var/user = sqllogin
+	var/pass = sqlpass
+	var/db = sqldb
+	var/address = sqladdress
+	var/port = sqlport
+
+	dbcon_old.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	. = dbcon_old.IsConnected()
+	if ( . )
+		failed_old_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
+	else
+		failed_old_db_connections++		//If it failed, increase the failed connections counter.
+
+	return .
+
+//This proc ensures that the connection to the feedback database (global variable dbcon) is established
+proc/establish_old_db_connection()
+	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)
+		return 0
+
+	if(!dbcon_old || !dbcon_old.IsConnected())
+		return setup_old_database_connection()
+	else
+		return 1
+
+#undef FAILED_DB_CONNECTION_CUTOFF

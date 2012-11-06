@@ -226,3 +226,9 @@ var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finis
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
 #define R_HOST			65535
+
+
+//Database connections
+//A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).
+var/DBConnection/dbcon = new()	//Feedback database (New database)
+var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the files in the SQL folder for information what goes where.

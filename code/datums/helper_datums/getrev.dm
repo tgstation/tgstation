@@ -47,10 +47,23 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 
 		if(svndirpath && fexists(svndirpath) && fexists("[svndirpath]/entries") && isfile(file("[svndirpath]/entries")))
 			var/list/filelist = file2list("[svndirpath]/entries")
-			if(filelist.len < 4)
-				return abort()
-			revision = filelist[4]
-			commiter = filelist[12]
+			var/s_archive = "" //Stores the previous line so the revision owner can be assigned.
+
+			//This thing doesn't count blank lines, so doing filelist[4] isn't working.
+			for(var/s in filelist)
+				if(!commiter)
+					if(s == "has-props")//The line before this is the committer.
+						commiter = s_archive
+				if(!revision)
+					var/n = text2num(s)
+					if(isnum(n))
+						if(n > 5000 && n < 99999) //Do you think we'll still be up and running at r100000? :) ~Errorage
+							revision = s
+				if(revision && commiter)
+					break
+				s_archive = s
+			if(!revision)
+				abort()
 			world.log << "Running TG Revision Number: [revision]."
 			diary << "Revision info loaded succesfully"
 			return

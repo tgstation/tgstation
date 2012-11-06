@@ -135,15 +135,7 @@
 	if ( IsGuestKey(src.key) )
 		return
 
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
 
@@ -180,8 +172,6 @@
 		//New player!! Need to insert all the stuff
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
 		query_insert.Execute()
-
-	dbcon.Disconnect()
 
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT

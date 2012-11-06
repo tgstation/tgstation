@@ -95,15 +95,8 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 
 	else
 		//The current admin system uses SQL
-		var/user = sqlfdbklogin
-		var/pass = sqlfdbkpass
-		var/db = sqlfdbkdb
-		var/address = sqladdress
-		var/port = sqlport
 
-		var/DBConnection/dbcon = new()
-
-		dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+		establish_db_connection()
 		if(!dbcon.IsConnected())
 			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			config.admin_legacy_system = 1

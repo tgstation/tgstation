@@ -15,14 +15,7 @@
 		usr << "\red You do not have permission to do this!"
 		return
 
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(!dbcon.IsConnected())
 		usr << "\red Failed to establish database connection"
 		return
@@ -53,12 +46,18 @@
 		var/adm_rank = select_query.item[2]
 		var/adm_level = select_query.item[3]
 		var/adm_flags = text2num(select_query.item[4])
+
+		var/rights_text = rights2text(adm_flags)
+		rights_text = replacetextEx(rights_text, "+", "<br>+")
+		if(length(rights_text) > 5)
+			rights_text = copytext(rights_text, 5)	//Removes the first <br>, which replacetextEx() adds.
+
 		output += "<tr bgcolor='[(i % 2) ? color1 : color2]'>"
 		output += "<td align='center'><b>[adm_ckey]</b></td>"
 		output += "<td align='center'><b>[adm_rank]</b></td>"
 		output += "<td align='center'>[adm_level]</td>"
 		output += "<td align='center'>"
-		output += "<font size='2'>[rights2text(adm_flags)]</font>"
+		output += "<font size='2'>[rights_text]</font>"
 		output += "</td>"
 		output += "<td align='center'><font size='2'>"
 
@@ -74,8 +73,6 @@
 
 	usr << browse(output,"window=editadminpermissions;size=600x500")
 
-	dbcon.Disconnect()
-
 
 /datum/admins/proc/log_admin_rank_modification(var/adm_ckey, var/new_rank)
 	if(!usr.client)
@@ -85,14 +82,8 @@
 		usr << "\red You do not have permission to do this!"
 		return
 
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
+	establish_db_connection()
 
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
 	if(!dbcon.IsConnected())
 		usr << "\red Failed to establish database connection"
 		return
@@ -131,8 +122,6 @@
 			log_query.Execute()
 			usr << "\blue Admin rank changed."
 
-	dbcon.Disconnect()
-
 
 
 /datum/admins/proc/log_admin_permission_modification(var/adm_ckey, var/new_permission)
@@ -144,14 +133,7 @@
 		usr << "\red You do not have permission to do this!"
 		return
 
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(!dbcon.IsConnected())
 		usr << "\red Failed to establish database connection"
 		return
@@ -194,5 +176,3 @@
 		var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]')")
 		log_query.Execute()
 		usr << "\blue Permission added."
-
-	dbcon.Disconnect()

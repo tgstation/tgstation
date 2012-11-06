@@ -1,14 +1,6 @@
 
 /mob/new_player/proc/handle_privacy_poll()
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
 	var/voted = 0
@@ -21,8 +13,6 @@
 
 	if(!voted)
 		privacy_poll()
-
-	dbcon.Disconnect()
 
 /mob/new_player/proc/privacy_poll()
 	var/output = "<div align='center'><B>Player poll</B>"
@@ -57,15 +47,7 @@
 	var/optiontext
 
 /mob/new_player/proc/handle_player_polling()
-
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(dbcon.IsConnected())
 		var/isadmin = 0
 		if(src.client && src.client.holder)
@@ -95,20 +77,11 @@
 
 		src << browse(output,"window=playerpolllist;size=500x300")
 
-	dbcon.Disconnect()
 
 
 /mob/new_player/proc/poll_player(var/pollid = -1)
 	if(pollid == -1) return
-
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(dbcon.IsConnected())
 
 		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype FROM erro_poll_question WHERE id = [pollid]")
@@ -154,8 +127,6 @@
 					PO.optionid = text2num(options_query.item[1])
 					PO.optiontext = options_query.item[2]
 					options += PO
-
-				dbcon.Disconnect()
 
 				var/output = "<div align='center'><B>Player poll</B>"
 				output +="<hr>"
@@ -308,15 +279,7 @@
 
 	if(!isnum(pollid) || !isnum(optionid))
 		return
-
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(dbcon.IsConnected())
 
 		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype FROM erro_poll_question WHERE id = [pollid] AND Now() BETWEEN starttime AND endtime")
@@ -378,15 +341,7 @@
 
 	if(!isnum(pollid) || !istext(replytext))
 		return
-
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(dbcon.IsConnected())
 
 		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype FROM erro_poll_question WHERE id = [pollid] AND Now() BETWEEN starttime AND endtime")
@@ -444,15 +399,7 @@
 
 	if(!isnum(pollid) || !isnum(optionid))
 		return
-
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(dbcon.IsConnected())
 
 		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype FROM erro_poll_question WHERE id = [pollid] AND Now() BETWEEN starttime AND endtime")

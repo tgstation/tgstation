@@ -1,14 +1,6 @@
 
 datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1, var/reason, var/job = "", var/rounds = 0)
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
 
@@ -73,16 +65,9 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 
-	dbcon.Disconnect()
-
 
 
 datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
 
 	var/bantype_str
 	if(bantype)
@@ -115,9 +100,7 @@ datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 	if(job)
 		sql += " AND job = '[job]'"
 
-	var/DBConnection/dbcon = new()
-
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
 
@@ -148,17 +131,10 @@ datum/admins/proc/DB_ban_unban(var/ckey, var/bantype, var/job = "")
 
 
 datum/admins/proc/DB_ban_unban_by_id(var/id)
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
 
 	var/sql = "SELECT id FROM erro_ban WHERE id = [id]"
 
-	var/DBConnection/dbcon = new()
-
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
 
