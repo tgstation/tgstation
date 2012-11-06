@@ -221,7 +221,8 @@ var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finis
 #define R_REJUVINATE	512
 #define R_VAREDIT		1024
 #define R_SOUNDS		2048
+#define R_ADVDEBUG		4096
 
-#define R_MAXPERMISSION 2048 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
+#define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
 #define R_HOST			65535

@@ -29,9 +29,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Debug"
 	set name = "Advanced ProcCall"
 
-	if(!holder)
-		src << "Only administrators may use this command."
-		return
+	if(!check_rights(R_ADVDEBUG)) return
 
 	spawn(0)
 		var/target = null

@@ -262,4 +262,5 @@ proc/tg_list2text(list/list, glue=",")
 	if(rights & R_REJUVINATE)	. += "+REJUVINATE"
 	if(rights & R_VAREDIT)		. += "+VAREDIT"
 	if(rights & R_SOUNDS)		. += "+SOUND"
+	if(rights & R_ADVDEBUG)		. += "+ADVDEBUG"
 	return .
