@@ -340,7 +340,19 @@
 //				if(mob.organStructure && mob.organStructure.legs)
 //					move_delay += mob.organStructure.legs.moveWalkDelay
 				move_delay += 5
-		move_delay += mob.movement_delay()
+
+
+
+
+
+		if (mob.movement_delay() != mob.lastmovementdelay)
+			mob.lastmovementdelay = mob.movement_delay()
+			mob.glide_size = 40/mob.lastmovementdelay //Slightly faster than tile (32 pixels) per second assuming 10 FPS.
+			src << "Debug: Your new glide speed is [mob.glide_size]"
+		else
+			mob.lastmovementdelay = mob.movement_delay()
+
+		move_delay += mob.lastmovementdelay
 		move_delay += mob.grav_delay
 
 		if(config.Tickcomp)

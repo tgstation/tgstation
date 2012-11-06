@@ -297,3 +297,5 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 	var/swap_on_mobbump = 1	//by default, mob collisions will swap the two mobs (if allowed)
 
+//Animation speed changer
+	var/lastmovementdelay = 0
