@@ -99,12 +99,12 @@
 				H.apply_effect(10, STUTTER, 0)
 				charges--
 
-				H.visible_message("<span class='danger'>[src] hits [H] with stunning end!</span>")
-				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src.name]</font>"
-				log_attack("<font color='red'>Flying [src.name] stunned [H.name] ([H.ckey])</font>" )
+				H.visible_message("<span class='danger'>[src], thrown by ([src.fingerprintslast]) hits [H] with stunning end!</span>")
+				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src.name] (([src.fingerprintslast]))</font>"
+				log_attack("<font color='red'>Flying [src.name], thrown by ([src.fingerprintslast]) stunned [H.name] ([H.ckey])</font>" )
 
-				log_admin("ATTACK: Flying [src.name] stunned [H.name] ([H.ckey])")
-				msg_admin_attack("ATTACK: Flying [src.name] stunned [H.name] ([H.ckey])") //BS12 EDIT ALG
+				log_admin("ATTACK: Flying [src.name], thrown by ([src.fingerprintslast]) stunned [H.name] ([H.ckey])")
+				msg_admin_attack("ATTACK: Flying [src.name], thrown by ([src.fingerprintslast]) stunned [H.name] ([H.ckey]).") //BS12 EDIT ALG
 				return
 	return ..()
 
