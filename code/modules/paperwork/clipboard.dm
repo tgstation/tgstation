@@ -8,7 +8,7 @@
 	throw_speed = 3
 	throw_range = 10
 	var/obj/item/weapon/pen/haspen		//The stored pen.
-	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
+	var/obj/item/weapon/toppaper	//The topmost piece of paper.
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	pressure_resistance = 10
@@ -45,11 +45,12 @@
 	return
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/paper))
+	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
 		user.drop_item()
 		W.loc = src
-		toppaper = W
-		user << "<span class='notice'>You clip the paper onto \the [src].</span>"
+		if(istype(W, /obj/item/weapon/paper))
+			toppaper = W
+		user << "<span class='notice'>You clip the [W] onto \the [src].</span>"
 		update_icon()
 	else if(toppaper)
 		toppaper.attackby(usr.get_active_hand(), usr)
@@ -68,10 +69,13 @@
 		var/obj/item/weapon/paper/P = toppaper
 		dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR><HR>"
 
-		for(P in src)
-			if(P == toppaper)
-				continue
-			dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> <A href='?src=\ref[src];top=\ref[P]'>Move to top</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR>"
+	for(var/obj/item/weapon/paper/P in src)
+		if(P==toppaper)
+			continue
+		dat += "<A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR>"
+	for(var/obj/item/weapon/photo/Ph in src)
+		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[Ph.name]</A><BR>"
+
 	user << browse(dat, "window=clipboard")
 	onclose(user, "clipboard")
 	add_fingerprint(usr)
@@ -127,6 +131,11 @@
 				else
 					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[P.info][P.stamps]</BODY></HTML>", "window=[P.name]")
 					onclose(usr, "[P.name]")
+
+		if(href_list["look"])
+			var/obj/item/weapon/photo/P = locate(href_list["look"])
+			if(P)
+				P.show(usr)
 
 		if(href_list["top"])
 			var/obj/item/P = locate(href_list["top"])
