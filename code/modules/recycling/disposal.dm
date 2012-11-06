@@ -136,6 +136,7 @@
 		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
 			return
 		src.add_fingerprint(user)
+		var/target_loc = target.loc
 		var/msg
 		for (var/mob/V in viewers(usr))
 			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
@@ -144,6 +145,8 @@
 				if(target.anchored) return
 				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
 		if(!do_after(usr, 20))
+			return
+		if(target_loc != target.loc)
 			return
 		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
 												// must be awake, not stunned or whatever
