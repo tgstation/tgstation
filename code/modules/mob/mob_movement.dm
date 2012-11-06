@@ -289,17 +289,7 @@
 					move_delay += 6
 				move_delay += 1+config.run_speed
 			if("walk")
-<<<<<<< HEAD
 				move_delay += 7+config.walk_speed
-		move_delay += mob.movement_delay()
-=======
-//				if(mob.organStructure && mob.organStructure.legs)
-//					move_delay += mob.organStructure.legs.moveWalkDelay
-				move_delay += 5
-
-
-
-
 
 		if (mob.movement_delay() != mob.lastmovementdelay)
 			mob.lastmovementdelay = mob.movement_delay()
@@ -310,7 +300,6 @@
 
 		move_delay += mob.lastmovementdelay
 		move_delay += mob.grav_delay
->>>>>>> animation
 
 		if(config.Tickcomp)
 			move_delay -= 1.3
