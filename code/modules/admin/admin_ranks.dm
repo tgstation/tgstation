@@ -97,6 +97,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 
 		establish_db_connection()
 		if(!dbcon.IsConnected())
+			world.log << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()
@@ -107,7 +108,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		while(query.NextRow())
 			var/ckey = query.item[1]
 			var/rank = query.item[2]
-			if(rank == "Removed")	return	//This person was de-adminned. They are only in the admin list for archive purposes.
+			if(rank == "Removed")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
 
 			var/rights = query.item[4]
 			if(istext(rights))	rights = text2num(rights)
@@ -115,8 +116,8 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 
 			//find the client for a ckey if they are connected and associate them with the new admin datum
 			D.associate(directory[ckey])
-
 		if(!admin_datums)
+			world.log << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
 			diary << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()

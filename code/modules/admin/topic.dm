@@ -1401,25 +1401,32 @@
 			var/path = text2path(dirty_path)
 			if(!path)
 				removed_paths += dirty_path
+				continue
 			else if(!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 				removed_paths += dirty_path
+				continue
 			else if(ispath(path, /obj/item/weapon/gun/energy/pulse_rifle))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
+					continue
 			else if(ispath(path, /obj/item/weapon/melee/energy/blade))//Not an item one should be able to spawn./N
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
+					continue
 			else if(ispath(path, /obj/effect/bhole))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
+					continue
 			else if(ispath(path, /mob))
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
-			else
-				paths += path
+					continue
+			paths += path
 
-		if(!paths)	return
-		else if (length(paths) > 5)
+		if(!paths)
+			alert("The path list you sent is empty")
+			return
+		if (length(paths) > 5)
 			alert("Select fewer object types, (max 5)")
 			return
 		else if (length(removed_paths))
@@ -1439,11 +1446,9 @@
 		if (!( where in list("onfloor","inhand","inmarked") ))
 			where = "onfloor"
 
-		//TODO ERRORAGE
 		if( where == "inhand" )
 			usr << "Support for inhand not available yet. Will spawn on floor."
 			where = "onfloor"
-		//END TODO ERRORAGE
 
 		if ( where == "inhand" )	//Can only give when human or monkey
 			if ( !( ishuman(usr) || ismonkey(usr) ) )
@@ -1452,6 +1457,7 @@
 			else if ( usr.get_active_hand() )
 				usr << "Your active hand is full. Spawning on floor."
 				where = "onfloor"
+
 		if ( where == "inmarked" )
 			if ( !marked_datum )
 				usr << "You don't have any object marked. Abandoning spawn."
@@ -1472,9 +1478,6 @@
 			if ( "inmarked" )
 				target = marked_datum
 
-
-		//TODO ERRORAGE - Give support for "inhand"
-
 		if(target)
 			for (var/path in paths)
 				for (var/i = 0; i < number; i++)
@@ -1486,6 +1489,8 @@
 							if(istype(O,/mob))
 								var/mob/M = O
 								M.real_name = obj_name
+
+
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")

@@ -160,25 +160,3 @@ proc/sql_commit_feedback()
 			if(!query.Execute())
 				var/err = query.ErrorMsg()
 				log_game("SQL ERROR during death reporting. Error : \[[err]\]\n")
-
-
-proc/debug_sql_commit_feedback()
-	if(!blackbox)
-		world << "Round ended without a blackbox recorder. No feedback was sent to the database."
-		return
-
-	//content is a list of lists. Each item in the list is a list with two fields, a variable name and a value. Items MUST only have these two values.
-	var/list/datum/feedback_variable/content = blackbox.get_round_feedback()
-
-	if(!content)
-		world << "Round ended without any feedback being generated. No feedback was sent to the database."
-		return
-
-	for(var/datum/feedback_variable/item in content)
-		var/variable = item.get_variable()
-		var/value = item.get_value()
-
-		world << "INSERT INTO erro_feedback (id, roundid, time, variable, value) VALUES (null, ABC, Now(), '[variable]', '[value]')"
-
-
-	world << "end"
