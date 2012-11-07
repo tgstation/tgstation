@@ -291,15 +291,10 @@
 			if("walk")
 				move_delay += 7+config.walk_speed
 
-		if (mob.movement_delay() != mob.lastmovementdelay)
-			mob.lastmovementdelay = mob.movement_delay()
+		if (move_delay != mob.lastmovementdelay)
+			mob.lastmovementdelay = move_delay
 			mob.glide_size = 40/mob.lastmovementdelay //Slightly faster than tile (32 pixels) per second assuming 10 FPS.
 			src << "Debug: Your new glide speed is [mob.glide_size]"
-		else
-			mob.lastmovementdelay = mob.movement_delay()
-
-		move_delay += mob.lastmovementdelay
-		move_delay += mob.grav_delay
 
 		if(config.Tickcomp)
 			move_delay -= 1.3
