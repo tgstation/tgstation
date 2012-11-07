@@ -307,8 +307,8 @@
 
 			var/obj/item/weapon/organ/H
 			switch(body_part)
-				if(UPPER_TORSO)
-					owner.gib()
+	//			if(UPPER_TORSO)				just no.
+	//				owner.gib()
 				if(LOWER_TORSO)
 					owner << "\red You are now sterile."
 				if(HEAD)

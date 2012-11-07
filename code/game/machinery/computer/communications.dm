@@ -27,6 +27,7 @@
 	var/const/STATE_STATUSDISPLAY = 7
 	var/const/STATE_ALERT_LEVEL = 8
 	var/const/STATE_CONFIRM_LEVEL = 9
+	var/const/STATE_CREWTRANSFER = 10
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
@@ -121,6 +122,15 @@
 				if(emergency_shuttle.online)
 					post_status("shuttle")
 			src.state = STATE_DEFAULT
+		if("crewtransfer")
+			src.state= STATE_DEFAULT
+			if(src.authenticated)
+				src.state = STATE_CREWTRANSFER
+		if("crewtransfer2")
+			if(src.authenticated)
+				init_shift_change(usr) //key difference here
+				if(emergency_shuttle.online)
+					post_status("shuttle")
 		if("cancelshuttle")
 			src.state = STATE_DEFAULT
 			if(src.authenticated)
@@ -313,6 +323,7 @@
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
 					else
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=callshuttle'>Call Emergency Shuttle</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crewtransfer'>Initiate Crew Transfer</A> \]"
 
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
 			else
@@ -320,6 +331,8 @@
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += "Are you sure you want to call the shuttle? \[ <A HREF='?src=\ref[src];operation=callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
+		if(STATE_CREWTRANSFER) // this is the shiftchage screen.
+			dat += "Are you sure you want to initiate a crew transfer? This will call the shuttle. \[ <a HREF='?src=\ref[src];operation=crewtransfer2'>OK</a> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
 		if(STATE_CANCELSHUTTLE)
 			dat += "Are you sure you want to cancel the shuttle? \[ <A HREF='?src=\ref[src];operation=cancelshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
 		if(STATE_MESSAGELIST)
@@ -458,6 +471,47 @@
 
 	return
 
+/proc/init_shift_change(var/mob/user, var/force = 0)
+	if ((!( ticker ) || emergency_shuttle.location))
+		return
+
+	if(emergency_shuttle.direction == -1)
+		user << "The shuttle may not be called while returning to CentCom."
+		return
+
+	if(emergency_shuttle.online)
+		user << "The shuttle is already on its way."
+		return
+
+	// if force is 0, some things may stop the shuttle call
+	if(!force)
+		if(emergency_shuttle.deny_shuttle)
+			user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
+			return
+
+		if(sent_strike_team == 1)
+			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
+			return
+
+		if(world.time < 54000) // 30 minute grace period to let the game get going
+			user << "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again."//may need to change "/600"
+			return
+
+		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
+			//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
+			emergency_shuttle.fake_recall = rand(300,500)
+
+		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
+			user << "Under directive 7-10, [station_name()] is quarantined until further notice."
+			return
+
+	emergency_shuttle.shuttlealert(1)
+	emergency_shuttle.incall()
+	log_game("[key_name(user)] has called the shuttle.")
+	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
+	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
+
+	return
 
 /proc/cancel_call_proc(var/mob/user)
 	if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0 || emergency_shuttle.timeleft() < 300))

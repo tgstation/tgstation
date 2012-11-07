@@ -820,14 +820,14 @@ Auto Patrol: []"},
 				projectile = /obj/item/projectile/energy/electrode
 		else if(lasercolor == "b")
 			if (src.emagged == 2)
-				projectile = /obj/item/projectile/omnitag
+				projectile = /obj/item/projectile/beam/omnitag
 			else
-				projectile = /obj/item/projectile/bluetag
+				projectile = /obj/item/projectile/beam/bluetag
 		else if(lasercolor == "r")
 			if (src.emagged == 2)
-				projectile = /obj/item/projectile/omnitag
+				projectile = /obj/item/projectile/beam/omnitag
 			else
-				projectile = /obj/item/projectile/redtag
+				projectile = /obj/item/projectile/beam/redtag
 
 	if (!( istype(U, /turf) ))
 		return
@@ -1011,7 +1011,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
 	if((src.lasercolor == "b") && (src.disabled == 0))
-		if(istype(Proj, /obj/item/projectile/redtag))
+		if(istype(Proj, /obj/item/projectile/beam/redtag))
 			src.disabled = 1
 			del (Proj)
 			sleep(100)
@@ -1019,7 +1019,7 @@ Auto Patrol: []"},
 		else
 			..()
 	else if((src.lasercolor == "r") && (src.disabled == 0))
-		if(istype(Proj, /obj/item/projectile/bluetag))
+		if(istype(Proj, /obj/item/projectile/beam/bluetag))
 			src.disabled = 1
 			del (Proj)
 			sleep(100)
