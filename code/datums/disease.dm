@@ -17,7 +17,7 @@ to null does not delete the object itself. Thank you.
 
 */
 
-var/list/diseases = typesof(/datum/disease, /datum/disease/advance) - /datum/disease - /datum/disease/advance
+var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 
 /datum/disease

@@ -4,7 +4,7 @@
 Sneezing
 
 	Very Noticable.
-	Decreases resistance.
+	Increases resistance.
 	Doesn't increase stage speed.
 	Low Level.
 
@@ -19,17 +19,17 @@ Bonus
 
 	name = "Sneezing"
 	stealth = -2
-	resistance = -1
+	resistance = 2
 	stage_speed = 0
 	level = 1
 
 /datum/symptom/sneeze/Activate(var/datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB + (A.stage * 2)))
+	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
-			if(1, 2, 3, 4)
-				M.emote("sniffs")
+			if(1, 2, 3)
+				M.visible_message("<B>[M]</B> sniffs.")
 			else
 				M.emote("sneeze")
 				A.spread(A.holder, 5, AIRBORNE)

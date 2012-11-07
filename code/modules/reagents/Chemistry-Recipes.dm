@@ -459,8 +459,8 @@ datum
 			name = "Mix Virus"
 			id = "mixvirus"
 			result = "blood"
-			required_reagents = list("blood" = 5, "virusfood" = 5)
-			result_amount = 5
+			required_reagents = list("blood" = 1, "virusfood" = 5)
+			result_amount = 1
 			var/level = 2
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)

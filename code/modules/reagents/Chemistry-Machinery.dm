@@ -503,7 +503,8 @@
 					D = archive_diseases[path]
 					vaccine_type = path
 				else
-					D = new vaccine_type(0, null)
+					if(vaccine_type in diseases)
+						D = new vaccine_type(0, null)
 
 				if(D)
 					B.name = "[D.name] vaccine bottle"
@@ -531,9 +532,11 @@
 			var/datum/disease/D = null
 			if(!type)
 				var/datum/disease/advance/A = archive_diseases[href_list["create_virus_culture"]]
-				D = new A.type(0, A)
+				if(A)
+					D = new A.type(0, A)
 			else
-				D = new type(0, null)
+				if(type in diseases) // Make sure this is a disease
+					D = new type(0, null)
 			var/list/data = list("viruses"=list(D))
 			var/name = sanitize(input(usr,"Name:","Name the culture",D.name))
 			if(!name || name == " ") name = D.name
@@ -597,6 +600,8 @@
 			dat += "The beaker is empty<BR>"
 		else if(!Blood)
 			dat += "No blood sample found in beaker"
+		else if(!Blood.data)
+			dat += "No blood data found in beaker."
 		else
 			dat += "<h3>Blood sample data:</h3>"
 			dat += "<b>Blood DNA:</b> [(Blood.data["blood_DNA"]||"none")]<BR>"
@@ -616,6 +621,9 @@
 								var/datum/disease/advance/A = D
 								D = archive_diseases[A.GetDiseaseID()]
 								disease_creation = A.GetDiseaseID()
+
+							if(!D)
+								CRASH("We weren't able to get the advance disease from the archive.")
 
 							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
 							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
@@ -657,6 +665,7 @@
 	user << browse("<TITLE>[src.name]</TITLE><BR>[dat]", "window=pandemic;size=575x400")
 	onclose(user, "pandemic")
 	return
+
 
 /obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))

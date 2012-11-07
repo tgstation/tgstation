@@ -1,10 +1,10 @@
 /*
 //////////////////////////////////////
 
-Headache
+Itching
 
-	Noticable.
-	Highly resistant.
+	Not noticable or unnoticable.
+	Resistant.
 	Increases stage speed..
 	Low Level.
 
@@ -15,17 +15,17 @@ BONUS
 //////////////////////////////////////
 */
 
-/datum/symptom/cough
+/datum/symptom/itching
 
-	name = "Headache"
-	stealth = -1
-	resistance = 4
-	stage_speed = 2
+	name = "Itching"
+	stealth = 0
+	resistance = 3
+	stage_speed = 3
 	level = 1
 
-/datum/symptom/cough/Activate(var/datum/disease/advance/A)
+/datum/symptom/itching/Activate(var/datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
-		M << "<span class='notice'>[pick("Your head hurts.", "Your head starts pounding.")]</span>"
+		M << "<span class='notice'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>"
 	return

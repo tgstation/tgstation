@@ -41,7 +41,7 @@ Bonus
 /datum/symptom/vomit/proc/Vomit(var/mob/living/M)
 
 	M.Stun(5)
-	M.emote("vomits on the floor")
+	M.visible_message("<B>[M]</B> vomits on the floor!")
 
 	M.nutrition -= 20
 	M.adjustToxLoss(-3)
@@ -79,7 +79,7 @@ Bonus
 /datum/symptom/vomit/blood/Vomit(var/mob/living/M)
 
 	M.Stun(5)
-	M.emote("vomits on the floor")
+	M.visible_message("<B>[M]</B> vomits on the floor!")
 
 	// They lose blood and health.
 	var/brute_dam = M.getBruteLoss()

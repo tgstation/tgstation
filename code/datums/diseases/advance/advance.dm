@@ -24,11 +24,10 @@ var/list/archive_diseases = list()
 	form = "Advance Disease" // Will let med-scanners know that this disease was engineered.
 	agent = "advance microbes"
 	max_stages = 5
-
+	spread = "Unknown"
 
 	// NEW VARS
 
-	var/alpha_level = 0 // To determine if the advanced disease will overwrite another advance disease.
 	var/list/symptoms = list() // The symptoms of the disease.
 
 /*
@@ -37,7 +36,7 @@ var/list/archive_diseases = list()
 
  */
 
-/datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D)
+/datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
 
 	// Setup our dictionary if it hasn't already.
 	if(!dictionary_symptoms.len)
@@ -53,7 +52,8 @@ var/list/archive_diseases = list()
 			symptoms = GenerateSymptoms()
 		else
 			symptoms = D.symptoms
-	Refresh() // Refresh our properties and cure.
+			name = D.name
+	Refresh(!copy)
 	..(process, D)
 	return
 
@@ -98,6 +98,12 @@ var/list/archive_diseases = list()
 		for(var/datum/symptom/S in possible_symptoms)
 			AddSymptom(new S.type)
 
+/datum/disease/advance/proc/HasSymptom(var/datum/symptom/S)
+	for(var/datum/symptom/symp in symptoms)
+		if(symp.id == S.id)
+			return 1
+	return 0
+
 // Will generate new unique symptoms, use this if there are none. Returns a list of symptoms that were generated.
 /datum/disease/advance/proc/GenerateSymptoms(var/type_level_limit = RANDOM_STARTING_LEVEL, var/amount_get = 0)
 
@@ -107,28 +113,34 @@ var/list/archive_diseases = list()
 	var/list/possible_symptoms = list()
 	for(var/symp in list_symptoms)
 		var/datum/symptom/S = new symp
-		if((S.level <= type_level_limit) && !(S in symptoms))
-			possible_symptoms += S
+		if(S.level <= type_level_limit)
+			if(!HasSymptom(S))
+				possible_symptoms += S
+
+	if(!possible_symptoms.len)
+		return
+		//error("Advance Disease - We weren't able to get any possible symptoms in GenerateSymptoms([type_level_limit], [amount_get])")
 
 	// Random chance to get more than one symptom
 	var/number_of = amount_get
 	if(!amount_get)
 		number_of = 1
-		while(prob(10))
+		while(prob(20))
 			number_of += 1
 
-	for(var/i = 0; number_of >= i; i++)
+	for(var/i = 1; number_of >= i; i++)
 		var/datum/symptom/S = pick(possible_symptoms)
 		generated += S
 		possible_symptoms -= S
 
 	return generated
 
-/datum/disease/advance/proc/Refresh()
+/datum/disease/advance/proc/Refresh(var/save = 1)
 	//world << "[src.name] \ref[src] - REFRESH!"
 	var/list/properties = GenerateProperties()
 	AssignProperties(properties)
-	archive_diseases[GetDiseaseID()] = src
+	if(save)
+		archive_diseases[GetDiseaseID()] = new /datum/disease/advance(0, src, 1)
 
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
@@ -137,7 +149,7 @@ var/list/archive_diseases = list()
 		CRASH("We did not have any symptoms before generating properties.")
 		return
 
-	var/list/properties = list("resistance" = 0, "stealth" = 0, "stage_rate" = 0, "tansmittable" = 0, "severity" = 0)
+	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "tansmittable" = 1, "severity" = 1)
 
 	for(var/datum/symptom/S in symptoms)
 
@@ -156,30 +168,32 @@ var/list/archive_diseases = list()
 
 		hidden = list( (properties["stealth"] > 2), (properties["stealth"] > 3) )
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
-		SetSpread(max(BLOOD, min(properties["tansmittable"] - symptoms.len, AIRBORNE)))
+		SetSpread(max(BLOOD, min(round(properties["tansmittable"] - (symptoms.len / 2)), AIRBORNE)))
 		permeability_mod = 0.5 * properties["transmittable"]
 		stage_prob = max(properties["stage_rate"], 1)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
+	else
+		CRASH("Our properties were empty or null!")
 
 
 // Assign the spread type and give it the correct description.
 /datum/disease/advance/proc/SetSpread(var/spread_id)
-	//world << "Setting spread type to [spread_id]"
 	switch(spread_id)
 
 		if(NON_CONTAGIOUS)
-			spread = "None"
+			src.spread = "None"
 		if(SPECIAL)
-			spread = "None"
+			src.spread = "None"
 		if(CONTACT_GENERAL, CONTACT_HANDS, CONTACT_FEET)
-			spread = "On contact"
+			src.spread = "On contact"
 		if(AIRBORNE)
-			spread = "Airborne"
+			src.spread = "Airborne"
 		if(BLOOD)
-			spread = "Blood"
+			src.spread = "Blood"
 
 	spread_type = spread_id
+	//world << "Setting spread type to [spread_id]/[spread]"
 
 /datum/disease/advance/proc/SetSeverity(var/level_sev)
 
@@ -204,9 +218,9 @@ var/list/archive_diseases = list()
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure(var/list/properties = list())
 	if(properties && properties.len)
-		var/res = max(properties["resistance"] - symptoms.len, 0)
+		var/res = max(properties["resistance"] - (symptoms.len / 2), 0)
 		//world << "Res = [res]"
-		switch(res)
+		switch(round(res))
 			// Due to complications, I cannot randomly generate cures or randomly give cures.
 			if(0)
 				cure_id = "nutriment"
@@ -244,8 +258,10 @@ var/list/archive_diseases = list()
 
 // Randomly generate a symptom, has a chance to lose or gain a symptom.
 /datum/disease/advance/proc/Evolve(var/level = 2)
-	AddSymptom(pick(GenerateSymptoms(level, 1)))
-	Refresh()
+	var/s = safe_pick_list(GenerateSymptoms(level, 1))
+	if(s)
+		AddSymptom(s)
+		Refresh()
 	return
 
 // Name the disease.
@@ -253,6 +269,7 @@ var/list/archive_diseases = list()
 	src.name = name
 	return
 
+// Return a unique ID of the disease.
 /datum/disease/advance/proc/GetDiseaseID()
 	var/list/L = list()
 	for(var/datum/symptom/S in symptoms)
@@ -264,9 +281,8 @@ var/list/archive_diseases = list()
 // we take a random symptom away and add the new one.
 /datum/disease/advance/proc/AddSymptom(var/datum/symptom/S)
 
-	for(var/datum/symptom/symp in symptoms)
-		if(S.id == symp.id)
-			return
+	if(HasSymptom(S))
+		return
 
 	if(symptoms.len < 4 + rand(-1, 1))
 		symptoms += S
@@ -275,7 +291,7 @@ var/list/archive_diseases = list()
 		symptoms += S
 	return
 
-// Simply removes the symptom at the moment.
+// Simply removes the symptom and refreshes.
 /datum/disease/advance/proc/RemoveSymptom(var/datum/symptom/S)
 	symptoms -= S
 	return
