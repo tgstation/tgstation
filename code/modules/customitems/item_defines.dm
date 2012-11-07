@@ -364,13 +364,13 @@
 
 //////////// Suits ////////////
 
-/obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
+/obj/item/clothing/suit/labcoat/fluff/pink //spaceman96: Trenna Seber
 	name = "pink labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a pink stripe down from the shoulders."
 	icon = 'custom_items.dmi'
 	icon_state = "labcoat_pink_open"
 
-/obj/item/clothing/suit/storage/det_suit/fluff/graycoat //vinceluk: Seth Sealis
+/obj/item/clothing/suit/det_suit/fluff/graycoat //vinceluk: Seth Sealis
 	name = "gray coat"
 	desc = "Old, worn out coat. It's seen better days."
 	icon = 'custom_items.dmi'
@@ -378,7 +378,7 @@
 	item_state = "graycoat"
 	color = "graycoat"
 
-/obj/item/clothing/suit/storage/det_suit/fluff/leatherjack //atomicdog92: Seth Sealis
+/obj/item/clothing/suit/det_suit/fluff/leatherjack //atomicdog92: Seth Sealis
 	name = "leather jacket"
 	desc = "A black leather coat, popular amongst punks, greasers, and other galactic scum."
 	icon = 'custom_items.dmi'
@@ -386,7 +386,7 @@
 	item_state = "leatherjack"
 	color = "leatherjack"
 
-/obj/item/clothing/suit/storage/labcoat/fluff/burnt //Jamini: Edwin Atweeke
+/obj/item/clothing/suit/labcoat/fluff/burnt //Jamini: Edwin Atweeke
 	name = "burnt labcoat"
 	desc = "This lab coat has clearly seen better, less burnt, days."
 	icon = 'custom_items.dmi'
@@ -483,7 +483,7 @@
 	icon_state = "cdc_jumpsuit"
 	color = "cdc_jumpsuit"
 
-/obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
+/obj/item/clothing/suit/labcoat/fluff/cdc_labcoat
 	name = "\improper CDC labcoat"
 	desc = "A standard-issue CDC labcoat that protects against minor chemical spills.  It has the name \"Wiles\" sewn on to the breast pocket."
 	icon = 'custom_items.dmi'
@@ -498,7 +498,7 @@
 	icon_state = "medical_short"
 	color = "medical_short"
 
-/obj/item/clothing/suit/storage/labcoat/fluff/red
+/obj/item/clothing/suit/labcoat/fluff/red
 	name = "red labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a red stripe on the shoulders and rolled up sleeves."
 	icon = 'custom_items.dmi'
@@ -506,7 +506,7 @@
 
 ////// Retired Patrol Outfit //desiderium: Rook Maudlin
 
-/obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat
+/obj/item/clothing/suit/det_suit/fluff/retpolcoat
 	name = "retired colony patrolman's coat"
 	desc = "A clean, black nylon windbreaker with the words \"OUTER LIGHT POLICE\" embroidered in gold-dyed thread on the back. \"RETIRED\" is tastefully embroidered below in a smaller font."
 	icon = 'custom_items.dmi'

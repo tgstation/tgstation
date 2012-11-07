@@ -18,8 +18,8 @@
 
 	src.load_mode()
 	src.load_motd()
-	src.load_admins()
 	src.load_mods()
+	src.load_admins()
 	investigate_reset()
 	if (config.usewhitelist)
 		load_whitelist()
