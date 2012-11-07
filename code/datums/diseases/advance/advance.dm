@@ -291,7 +291,7 @@ var/list/archive_diseases = list()
 		symptoms += S
 	return
 
-// Simply removes the symptom and refreshes.
+// Simply removes the symptom.
 /datum/disease/advance/proc/RemoveSymptom(var/datum/symptom/S)
 	symptoms -= S
 	return

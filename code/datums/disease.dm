@@ -120,9 +120,11 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(how_spread != AIRBORNE && how_spread != SPECIAL)
 		check_range = 1 // everything else, like infect-on-contact things, only infect things on top of it
 
-	for(var/mob/living/carbon/M in oview(check_range, source))
-		if(AStar(affected_mob.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, check_range))
-			M.contract_disease(src)
+	if(isturf(affected_mob.loc))
+		for(var/mob/living/carbon/M in oview(check_range, source))
+			if(isturf(M.loc))
+				if(AStar(affected_mob.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, check_range))
+					M.contract_disease(src)
 
 	return
 
