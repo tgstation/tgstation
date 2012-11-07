@@ -282,17 +282,19 @@
 					return 0
 
 		move_delay = world.time//set move delay
-
+		var/mdelay = 0
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
-					move_delay += 6
-				move_delay += 1+config.run_speed
+					mdelay += 6
+				mdelay += 1+config.run_speed
 			if("walk")
-				move_delay += 7+config.walk_speed
+				mdelay += 7+config.walk_speed
 
-		if (move_delay != mob.lastmovementdelay)
-			mob.lastmovementdelay = move_delay
+		move_delay += mdelay
+
+		if (mdelay != mob.lastmovementdelay)
+			mob.lastmovementdelay = mdelay
 			mob.glide_size = 40/mob.lastmovementdelay //Slightly faster than tile (32 pixels) per second assuming 10 FPS.
 			src << "Debug: Your new glide speed is [mob.glide_size]"
 
