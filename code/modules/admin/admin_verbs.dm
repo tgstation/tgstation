@@ -102,8 +102,7 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/toggleoocdead,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
-	/datum/admins/proc/adjump,
-	/client/proc/reload_admins
+	/datum/admins/proc/adjump
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
@@ -117,8 +116,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_debug_del_all,
 	/client/proc/cmd_debug_tog_aliens,
 	/client/proc/air_report,
-	)
-var/list/admin_verbs_advdebug = list(
+	/client/proc/reload_admins,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs
 	)
@@ -229,7 +227,6 @@ var/list/admin_verbs_hideable = list(
 		if(rights & R_STEALTH)		verbs += /client/proc/stealth
 		if(rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
 		if(rights & R_SOUNDS)		verbs += admin_verbs_sounds
-		if(rights & R_ADVDEBUG)		verbs += admin_verbs_advdebug
 
 /client/proc/remove_admin_verbs()
 	if(holder)

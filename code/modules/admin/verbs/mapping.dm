@@ -128,7 +128,7 @@ var/intercom_range_display_status = 0
 	set category = "Debug"
 	set name = "Debug verbs"
 
-	if(!check_rights(R_ADVDEBUG)) return
+	if(!check_rights(R_DEBUG)) return
 
 	src.verbs += /client/proc/do_not_use_these 			//-errorage
 	src.verbs += /client/proc/camera_view 				//-errorage

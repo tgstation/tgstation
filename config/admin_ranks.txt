@@ -20,8 +20,7 @@
 # +REJUV (or +REJUVINATE) = the ability to heal, respawn, modify damage and use godmode
 # +BUILD (or +BUILDMODE) = the ability to use buildmode
 # +SERVER = higher-risk admin verbs and abilities, such as those which affect the server configuration.
-# +DEBUG = debug tools used for diagnosing and fixing problems. The use of these requires some technical know-how, but can generally be used by trusted admins.
-# +ADVDEBUG = advanced debug tools, which can destroy the game if used improperly. Only suitable for coders.
+# +DEBUG = debug tools used for diagnosing and fixing problems. It's useful to give this to coders so they can investigate problems on a live server.
 # +VAREDIT = everyone may view viewvars/debugvars/whatever you call it. This keyword allows you to actually EDIT those variables.
 # +RIGHTS (or +PERMISSIONS) = allows you to promote and/or demote people.
 # +SOUND (or +SOUNDS) = allows you to upload and play sounds
@@ -37,4 +36,4 @@ Game Master		+EVERYTHING
 
 Host			+EVERYTHING
 
-Coder			+DEBUG +VAREDIT +SERVER +ADVDEBUG
+Coder			+DEBUG +VAREDIT +SERVER
