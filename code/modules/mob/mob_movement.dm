@@ -287,7 +287,7 @@
 			if("run")
 				if(mob.drowsyness > 0)
 					mdelay += 6
-				mdelay += 1+config.run_speed
+				mdelay += 2+config.run_speed
 			if("walk")
 				mdelay += 7+config.walk_speed
 
@@ -295,7 +295,7 @@
 
 		if (mdelay != mob.lastmovementdelay)
 			mob.lastmovementdelay = mdelay
-			mob.glide_size = 40/mob.lastmovementdelay //Slightly faster than tile (32 pixels) per second assuming 10 FPS.
+			mob.glide_size = 40*(world.tick_lag)/mob.lastmovementdelay
 			src << "Debug: Your new glide speed is [mob.glide_size]"
 
 		if(config.Tickcomp)
