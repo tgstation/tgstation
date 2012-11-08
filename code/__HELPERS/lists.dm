@@ -307,6 +307,6 @@ proc/listclearnulls(list/list)
 	return r
 
 /proc/safe_pick_list(var/list/L)
-	if(L.len)
+	if(L && L.len)
 		return pick(L)
 	return null

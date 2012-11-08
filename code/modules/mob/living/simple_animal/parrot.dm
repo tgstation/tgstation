@@ -529,7 +529,7 @@
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand.w_class <= 2 || C.r_hand.w_class <= 2)
+			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
 				return C
 	return null
 
@@ -558,7 +558,7 @@
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand.w_class <= 2 || C.r_hand.w_class <= 2)
+			if(C.l_hand && C.l_hand.w_class <= 2 || C.r_hand && C.r_hand.w_class <= 2)
 				return C
 	return null
 
@@ -609,10 +609,10 @@
 	var/obj/item/stolen_item = null
 
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.l_hand.w_class <= 2)
+		if(C.l_hand && C.l_hand.w_class <= 2)
 			stolen_item = C.l_hand
 
-		if(C.r_hand.w_class <= 2)
+		if(C.r_hand && C.r_hand.w_class <= 2)
 			stolen_item = C.r_hand
 
 		if(stolen_item)
