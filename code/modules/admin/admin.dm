@@ -386,31 +386,33 @@ var/global/floorIsLava = 0
 /datum/admins/proc/Secrets()
 	if(!check_rights(0))	return
 
-	var/dat = {"
-		<B>Choose a secret, any secret at all.</B><HR>
-		<B>Admin Secrets</B><BR>
-		<BR>
-		<A href='?src=\ref[src];secretsadmin=clear_bombs'>Remove all bombs currently in existence</A><BR>
-		<A href='?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
-		<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
-		<A href='?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
-		<A href='?src=\ref[src];secretsadmin=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
-		<A href='?src=\ref[src];secretsadmin=showailaws'>Show AI Laws</A><BR>
-		<A href='?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
-		<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
-		<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
-		<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR><BR>
-		<BR>
-		"}
+	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
+
+	if(check_rights(R_ADMIN,0))
+		dat += {"
+			<B>Admin Secrets</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsadmin=clear_bombs'>Remove all bombs currently in existence</A><BR>
+			<A href='?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
+			<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
+			<A href='?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
+			<A href='?src=\ref[src];secretsadmin=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
+			<A href='?src=\ref[src];secretsadmin=showailaws'>Show AI Laws</A><BR>
+			<A href='?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
+			<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
+			<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
+			<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR><BR>
+			<BR>
+			"}
 
 	if(check_rights(R_FUN,0))
 		dat += {"
 			<B>'Random' Events</B><BR>
 			<BR>
-			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors</A><BR>
-			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (Untested)</A><BR>
-			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes (Untested)</A><BR>
-			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob(Untested)</A><BR>
+			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors (aka lagocolyptic shower)</A><BR>
+			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (aka lagitational anomolag)</A><BR>
+			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes</A><BR>
+			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob</A><BR>
 			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
 			<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
@@ -449,7 +451,7 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
-			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS)</A><BR>
+			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			"}
 
 	if(check_rights(R_SERVER,0))

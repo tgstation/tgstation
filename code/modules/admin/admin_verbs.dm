@@ -14,7 +14,8 @@ var/list/admin_verbs_default = list(
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
 	/client/proc/toggle_hear_deadcast,	/*toggles whether we hear deadchat*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
-	/client/proc/investigate_show		/*various admintools for investigation. Such as a singulo grief-log*/
+	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
+	/client/proc/secrets
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
@@ -70,7 +71,6 @@ var/list/admin_verbs_fun = list(
 	/client/proc/drop_bomb,
 	/client/proc/toggle_gravity_on,
 	/client/proc/toggle_gravity_off,
-	/client/proc/secrets,
 	/client/proc/strike_team,
 	/client/proc/cinematic,
 	/client/proc/triple_ai,
@@ -84,8 +84,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/make_sound,
-	/client/proc/toggle_random_events,
-	/client/proc/cmd_admin_add_random_ai_law
+	/client/proc/toggle_random_events
 	)
 var/list/admin_verbs_server = list(
 	/client/proc/Set_Holiday,
@@ -102,7 +101,8 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/toggleoocdead,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
-	/datum/admins/proc/adjump
+	/datum/admins/proc/adjump,
+	/client/proc/toggle_random_events
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
