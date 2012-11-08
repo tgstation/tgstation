@@ -18,10 +18,10 @@
 
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
-	if(alt_title)
-		foundrecord.fields["real_rank"] = alt_title
-	else
-		foundrecord.fields["real_rank"] = assignment
+		if(alt_title)
+			foundrecord.fields["real_rank"] = alt_title
+		else
+			foundrecord.fields["real_rank"] = assignment
 
 
 

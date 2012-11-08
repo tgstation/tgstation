@@ -98,11 +98,12 @@
 						if(!M)
 							continue
 						var/turf/bl = get_turf(M)
-						bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
-						if((!isnull(M.reagent_glass)) && M.use_beaker)
-							bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
-						else
-							bdat += "Using Internal Synthesizer.<br>"
+						if(bl)
+							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
+							if((!isnull(M.reagent_glass)) && M.use_beaker)
+								bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
+							else
+								bdat += "Using Internal Synthesizer.<br>"
 
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
