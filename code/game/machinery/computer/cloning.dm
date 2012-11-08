@@ -378,13 +378,17 @@
 				temp = "Error: Clonepod malfunction."
 			else if(!config.revival_cloning)
 				temp = "Error: Unable to initiate cloning cycle."
-			else if(pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"]))
-				temp = "Initiating cloning cycle..."
-				records.Remove(C)
-				del(C)
-				menu = 1
 			else
-				temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
+				var/mob/selected = find_dead_player("[C.fields["ckey"]]")
+				selected << 'chime.ogg'	//probably not the best sound but I think it's reasonable
+				var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
+				if(answer != "No" && pod1.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"]))
+					temp = "Initiating cloning cycle..."
+					records.Remove(C)
+					del(C)
+					menu = 1
+				else
+					temp = "Initiating cloning cycle...<br>Error: Post-initialisation failed. Cloning cycle aborted."
 
 		else
 			temp = "Error: Data corruption."
@@ -406,9 +410,9 @@
 	if (subject.suiciding == 1)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 		return
-	if ((!subject.ckey) || (!subject.client))
-		scantemp = "Error: Mental interface failure."
-		return
+//	if ((!subject.ckey) || (!subject.client))
+//		scantemp = "Error: Mental interface failure."
+//		return
 	if (NOCLONE in subject.mutations)
 		scantemp = "Error: Mental interface failure."
 		return
