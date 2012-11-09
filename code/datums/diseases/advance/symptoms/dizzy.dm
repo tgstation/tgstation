@@ -6,6 +6,7 @@ Dizziness
 	Little bit hidden.
 	Lowers resistance considerably.
 	Decreases stage speed.
+	Reduced transmittability
 	Intense Level.
 
 Bonus
@@ -20,6 +21,7 @@ Bonus
 	stealth = 1
 	resistance = -2
 	stage_speed = -3
+	transmittable = -1
 	level = 4
 
 /datum/symptom/dizzy/Activate(var/datum/disease/advance/A)

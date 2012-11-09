@@ -6,6 +6,7 @@ Vomiting
 	Very Very Noticable.
 	Decreases resistance.
 	Doesn't increase stage speed.
+	Little transmittable.
 	Medium Level.
 
 Bonus
@@ -24,6 +25,7 @@ Bonus
 	stealth = -2
 	resistance = -1
 	stage_speed = 0
+	transmittable = 1
 	level = 3
 
 /datum/symptom/vomit/Activate(var/datum/disease/advance/A)
@@ -57,6 +59,7 @@ Vomiting Blood
 	Very Very Noticable.
 	Decreases resistance.
 	Decreases stage speed.
+	Little transmittable.
 	Intense level.
 
 Bonus
@@ -74,6 +77,7 @@ Bonus
 	stealth = -2
 	resistance = -1
 	stage_speed = -1
+	transmittable = 1
 	level = 4
 
 /datum/symptom/vomit/blood/Vomit(var/mob/living/M)

@@ -5,7 +5,8 @@ Coughing
 
 	Noticable.
 	No Resistance.
-	Doesn't increase stage speed..
+	Doesn't increase stage speed.
+	Transmittable.
 	Low Level.
 
 BONUS
@@ -20,6 +21,7 @@ BONUS
 	stealth = -1
 	resistance = 0
 	stage_speed = 0
+	transmittable = 2
 	level = 1
 
 /datum/symptom/cough/Activate(var/datum/disease/advance/A)

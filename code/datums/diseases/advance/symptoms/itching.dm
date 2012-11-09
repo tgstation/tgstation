@@ -5,7 +5,8 @@ Itching
 
 	Not noticable or unnoticable.
 	Resistant.
-	Increases stage speed..
+	Increases stage speed.
+	Little transmittable.
 	Low Level.
 
 BONUS
@@ -21,6 +22,7 @@ BONUS
 	stealth = 0
 	resistance = 3
 	stage_speed = 3
+	transmittable = 1
 	level = 1
 
 /datum/symptom/itching/Activate(var/datum/disease/advance/A)

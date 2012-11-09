@@ -70,6 +70,10 @@
 			if(prob(25))
 				message += " OLE!"
 
+	if ((HULK in mutations) && health >= 25)
+		if(copytext(message, 1, 2) != "*")
+			message = uppertext(message)  //because I don't know how to code properly in getting vars from other files -Bro
+
 	//Ninja mask obscures text and voice if set to do so.
 	//Would make it more global but it's sort of ninja specific.
 	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja)&&src.wear_mask:voice=="Unknown")

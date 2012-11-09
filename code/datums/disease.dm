@@ -120,11 +120,11 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(how_spread != AIRBORNE && how_spread != SPECIAL)
 		check_range = 1 // everything else, like infect-on-contact things, only infect things on top of it
 
-	if(isturf(affected_mob.loc))
+	if(isturf(source.loc))
 		for(var/mob/living/carbon/M in oview(check_range, source))
 			if(isturf(M.loc))
-				if(AStar(affected_mob.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, check_range))
-					M.contract_disease(src)
+				if(AStar(source.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, check_range))
+					M.contract_disease(src, 0, 1, force_spread)
 
 	return
 
@@ -140,6 +140,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		for(var/datum/disease/D in affected_mob.viruses)
 			if(D != src)
 				if(IsSame(D))
+					//error("Deleting [D.name] because it's the same as [src.name].")
 					del(D) // if there are somehow two viruses of the same kind in the system, delete the other one
 
 	if(holder == affected_mob)

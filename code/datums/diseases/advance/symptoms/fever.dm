@@ -6,6 +6,7 @@ Fever
 	No change to hidden.
 	Increases resistance.
 	Increases stage speed.
+	Little transmittable.
 	Low level.
 
 Bonus
@@ -20,6 +21,7 @@ Bonus
 	stealth = 0
 	resistance = 3
 	stage_speed = 3
+	transmittable = 1
 	level = 2
 
 /datum/symptom/fever/Activate(var/datum/disease/advance/A)

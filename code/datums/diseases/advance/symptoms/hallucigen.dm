@@ -6,6 +6,7 @@ Hallucigen
 	Very noticable.
 	Lowers resistance considerably.
 	Decreases stage speed.
+	Reduced transmittable.
 	Critical Level.
 
 Bonus
@@ -20,6 +21,7 @@ Bonus
 	stealth = -2
 	resistance = -3
 	stage_speed = -3
+	transmittable = -1
 	level = 5
 
 /datum/symptom/hallucigen/Activate(var/datum/disease/advance/A)

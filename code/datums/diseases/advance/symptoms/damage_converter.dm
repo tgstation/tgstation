@@ -6,6 +6,7 @@ Damage Converter
 	Little bit hidden.
 	Lowers resistance tremendously.
 	Decreases stage speed tremendously.
+	Reduced transmittablity
 	Intense Level.
 
 Bonus
@@ -18,8 +19,9 @@ Bonus
 
 	name = "Toxic Compensation"
 	stealth = 1
-	resistance = -5
-	stage_speed = -5
+	resistance = -4
+	stage_speed = -4
+	transmittable = -2
 	level = 4
 
 /datum/symptom/damage_converter/Activate(var/datum/disease/advance/A)

@@ -100,14 +100,14 @@ datum
 				var/datum/reagent/blood/self = src
 				src = null
 				for(var/datum/disease/D in self.data["viruses"])
-					var/datum/disease/virus = new D.type(D)
+					//var/datum/disease/virus = new D.type(0, D, 1)
 					// We don't spread.
-					if(virus.spread_type == SPECIAL || virus.spread_type == NON_CONTAGIOUS) continue
+					if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS) continue
 
 					if(method == TOUCH)
-						M.contract_disease(virus)
+						M.contract_disease(D)
 					else //injected
-						M.contract_disease(virus, 1, 0)
+						M.contract_disease(D, 1, 0)
 
 
 				/*

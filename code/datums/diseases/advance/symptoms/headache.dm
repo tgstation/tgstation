@@ -5,7 +5,8 @@ Headache
 
 	Noticable.
 	Highly resistant.
-	Increases stage speed..
+	Increases stage speed.
+	Not transmittable.
 	Low Level.
 
 BONUS
@@ -15,15 +16,16 @@ BONUS
 //////////////////////////////////////
 */
 
-/datum/symptom/cough
+/datum/symptom/headache
 
 	name = "Headache"
 	stealth = -1
 	resistance = 4
 	stage_speed = 2
+	transmittable = 0
 	level = 1
 
-/datum/symptom/cough/Activate(var/datum/disease/advance/A)
+/datum/symptom/headache/Activate(var/datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob

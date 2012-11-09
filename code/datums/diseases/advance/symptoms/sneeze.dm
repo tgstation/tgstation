@@ -6,6 +6,7 @@ Sneezing
 	Very Noticable.
 	Increases resistance.
 	Doesn't increase stage speed.
+	Very transmittable.
 	Low Level.
 
 Bonus
@@ -21,6 +22,7 @@ Bonus
 	stealth = -2
 	resistance = 2
 	stage_speed = 0
+	transmittable = 3
 	level = 1
 
 /datum/symptom/sneeze/Activate(var/datum/disease/advance/A)

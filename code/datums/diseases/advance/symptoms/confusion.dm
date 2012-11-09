@@ -6,6 +6,7 @@ Confusion
 	Little bit hidden.
 	Lowers resistance.
 	Decreases stage speed.
+	Not very transmittable.
 	Intense Level.
 
 Bonus
@@ -20,7 +21,9 @@ Bonus
 	stealth = 1
 	resistance = -1
 	stage_speed = -3
+	transmittable = 0
 	level = 4
+
 
 /datum/symptom/confusion/Activate(var/datum/disease/advance/A)
 	..()

@@ -25,6 +25,7 @@ var/list/archive_diseases = list()
 	agent = "advance microbes"
 	max_stages = 5
 	spread = "Unknown"
+	affected_species = list("Human","Monkey")
 
 	// NEW VARS
 
@@ -47,12 +48,15 @@ var/list/archive_diseases = list()
 	if(!istype(D))
 		D = null
 	// Generate symptoms if we weren't given any.
+
 	if(!symptoms || !symptoms.len)
+
 		if(!D || !D.symptoms || !D.symptoms.len)
 			symptoms = GenerateSymptoms()
 		else
 			symptoms = D.symptoms
 			name = D.name
+
 	Refresh(!copy)
 	..(process, D)
 	return
@@ -69,9 +73,14 @@ var/list/archive_diseases = list()
 // Compares type then ID.
 /datum/disease/advance/IsSame(var/datum/disease/advance/D)
 	if(!(istype(D, /datum/disease/advance)))
+		//error("Returning 0 because not same type.")
+
 		return 0
+	//error("Comparing [src.GetDiseaseID()] [D.GetDiseaseID()]")
 	if(src.GetDiseaseID() != D.GetDiseaseID())
+		//error("Returing 0")
 		return 0
+	//error("Returning 1")
 	return 1
 
 // To add special resistances.
@@ -149,14 +158,14 @@ var/list/archive_diseases = list()
 		CRASH("We did not have any symptoms before generating properties.")
 		return
 
-	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "tansmittable" = 1, "severity" = 1)
+	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "transmittable" = 1, "severity" = 1)
 
 	for(var/datum/symptom/S in symptoms)
 
 		properties["resistance"] += S.resistance
 		properties["stealth"] += S.stealth
 		properties["stage_rate"] += S.stage_speed
-		properties["tansmittable"] += S.transmittable
+		properties["transmittable"] += S.transmittable
 		properties["severity"] = max(properties["severity"], S.level) // severity is based on the highest level symptom
 
 	return properties
@@ -168,8 +177,8 @@ var/list/archive_diseases = list()
 
 		hidden = list( (properties["stealth"] > 2), (properties["stealth"] > 3) )
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
-		SetSpread(max(BLOOD, min(round(properties["tansmittable"] - (symptoms.len / 2)), AIRBORNE)))
-		permeability_mod = 0.5 * properties["transmittable"]
+		SetSpread(max(BLOOD, min(properties["transmittable"] - symptoms.len, AIRBORNE)))
+		permeability_mod = round(0.5 * properties["transmittable"])
 		stage_prob = max(properties["stage_rate"], 1)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
@@ -182,15 +191,15 @@ var/list/archive_diseases = list()
 	switch(spread_id)
 
 		if(NON_CONTAGIOUS)
-			src.spread = "None"
+			spread = "None"
 		if(SPECIAL)
-			src.spread = "None"
+			spread = "None"
 		if(CONTACT_GENERAL, CONTACT_HANDS, CONTACT_FEET)
-			src.spread = "On contact"
+			spread = "On contact"
 		if(AIRBORNE)
-			src.spread = "Airborne"
+			spread = "Airborne"
 		if(BLOOD)
-			src.spread = "Blood"
+			spread = "Blood"
 
 	spread_type = spread_id
 	//world << "Setting spread type to [spread_id]/[spread]"

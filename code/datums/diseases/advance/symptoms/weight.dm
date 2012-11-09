@@ -5,7 +5,8 @@ Weight Gain
 
 	Very Very Noticable.
 	Decreases resistance.
-	Decreases stage speed..
+	Decreases stage speed.
+	Reduced transmittable.
 	Intense Level.
 
 Bonus
@@ -20,6 +21,7 @@ Bonus
 	stealth = -3
 	resistance = -3
 	stage_speed = -2
+	transmittable = -2
 	level = 4
 
 /datum/symptom/weight_gain/Activate(var/datum/disease/advance/A)
@@ -44,6 +46,7 @@ Weight Loss
 	Very Very Noticable.
 	Decreases resistance.
 	Decreases stage speed.
+	Reduced Transmittable.
 	High level.
 
 Bonus
@@ -59,6 +62,7 @@ Bonus
 	stealth = -3
 	resistance = -2
 	stage_speed = -2
+	transmittable = -2
 	level = 3
 
 /datum/symptom/weight_loss/Activate(var/datum/disease/advance/A)
@@ -82,6 +86,7 @@ Weight Even
 	Very Noticable.
 	Decreases resistance.
 	Decreases stage speed.
+	Reduced transmittable.
 	High level.
 
 Bonus
@@ -98,6 +103,7 @@ Bonus
 	stealth = -3
 	resistance = -2
 	stage_speed = -2
+	transmittable = -2
 	level = 4
 
 /datum/symptom/weight_loss/Activate(var/datum/disease/advance/A)
