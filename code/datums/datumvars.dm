@@ -496,7 +496,7 @@ client
 			href_list["datumrefresh"] = href_list["ninja"]
 
 		else if(href_list["godmode"])
-			if(!check_rights(0))	return
+			if(!check_rights(R_REJUVINATE))	return
 
 			var/mob/M = locate(href_list["godmode"])
 			if(!istype(M))
@@ -517,7 +517,7 @@ client
 			src.cmd_admin_gib(M)
 
 		else if(href_list["build_mode"])
-			if(!check_rights(0))	return
+			if(!check_rights(R_BUILDMODE))	return
 
 			var/mob/M = locate(href_list["build_mode"])
 			if(!istype(M))
@@ -561,7 +561,7 @@ client
 			href_list["datumrefresh"] = href_list["make_skeleton"]
 
 		else if(href_list["delall"])
-			if(!check_rights(0))	return
+			if(!check_rights(R_DEBUG|R_SERVER))	return
 
 			var/obj/O = locate(href_list["delall"])
 			if(!isobj(O))

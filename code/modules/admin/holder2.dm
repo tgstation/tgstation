@@ -28,11 +28,11 @@ var/list/admin_datums = list()
 	admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)
-	if(C)
+	if(istype(C))
 		owner = C
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO
-		admins += C
+		admins |= C
 
 /datum/admins/proc/disassociate()
 	if(owner)
@@ -71,6 +71,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 					usr << "<font color='red'>Error: You are not an admin.</font>"
 	return 0
 
+//probably a bit iffy - will hopefully figure out a better solution
 /proc/check_if_greater_rights_than(client/other)
 	if(usr && usr.client)
 		if(usr.client.holder)
@@ -81,9 +82,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 					return 1	//we have all the rights they have and more
 		usr << "<font color='red'>Error: Cannot proceed. They have more or equal rights to us.</font>"
 	return 0
-
-/client/proc/update_admin()
-	add_admin_verbs()
 
 
 /client/proc/deadmin()

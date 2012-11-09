@@ -19,7 +19,7 @@
 	var/move_delay		= 1
 	var/moving			= null
 	var/adminobs		= null
-	var/deadchat		= 0
+	var/deadchat		= 1
 	var/changes			= 0
 	var/area			= null
 	var/played			= 0

@@ -39,6 +39,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 				if("varedit")					rights |= R_VAREDIT
 				if("everything","host","all")	rights |= R_HOST
 				if("sound","sounds")			rights |= R_SOUNDS
+				if("spawn","create")			rights |= R_SPAWN
 
 		admin_ranks[rank] = rights
 		previous_rights = rights
@@ -134,3 +135,24 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 	#endif
 
 
+/*
+#ifdef TESTING
+/client/verb/changerank(newrank in admin_ranks)
+	if(holder)
+		holder.rank = newrank
+		holder.rights = admin_ranks[newrank]
+	else
+		holder = new /datum/admins(newrank,admin_ranks[newrank],ckey)
+	remove_admin_verbs()
+	holder.associate(src)
+
+/client/verb/changerights(newrights as num)
+	if(holder)
+		holder.rights = newrights
+	else
+		holder = new /datum/admins("testing",newrights,ckey)
+	remove_admin_verbs()
+	holder.associate(src)
+
+#endif
+*/

@@ -1,5 +1,7 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 var/list/admin_verbs_default = list(
+	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
+	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/deadmin_self,			/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
@@ -48,7 +50,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
 	/client/proc/jumptomob,				/*allows us to jump to a specific mob*/
 	/client/proc/jumptoturf,			/*allows us to jump to a specific turf*/
-	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
 	/client/proc/admin_call_shuttle,	/*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcomm*/
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
@@ -86,6 +87,10 @@ var/list/admin_verbs_fun = list(
 	/client/proc/make_sound,
 	/client/proc/toggle_random_events
 	)
+var/list/admin_verbs_spawn = list(
+	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
+	/client/proc/respawn_character
+	)
 var/list/admin_verbs_server = list(
 	/client/proc/Set_Holiday,
 	/client/proc/ToRban,
@@ -97,8 +102,8 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/immreboot,
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
-	/datum/admins/proc/toggleooc,
-	/datum/admins/proc/toggleoocdead,
+	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
+	/client/proc/cmd_debug_del_all,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
@@ -113,6 +118,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/kill_airgroup,
 	/client/proc/debug_controller,
 	/client/proc/cmd_debug_mob_lists,
+	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
 	/client/proc/cmd_debug_tog_aliens,
 	/client/proc/air_report,
@@ -132,7 +138,7 @@ var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
 	)
 
-//verbs which can be hidden
+//verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
 	/client/proc/deadmin_self,
 	/client/proc/deadchat,
@@ -147,7 +153,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/admin_ghost,
 	/client/proc/toggle_view_range,
 	/datum/admins/proc/view_txt_log,
-	/datum/admins/proc/view_atk_log,
+//	/datum/admins/proc/view_atk_log,
 	/client/proc/cmd_admin_subtle_message,
 	/client/proc/cmd_admin_check_contents,
 	/datum/admins/proc/access_news_network,
@@ -214,63 +220,61 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/add_admin_verbs()
 	if(holder)
-		var/rights = holder.rights
 		verbs += admin_verbs_default
-		if(rights & R_BUILDMODE)	verbs += /client/proc/togglebuildmodeself
-		if(rights & R_ADMIN)		verbs += admin_verbs_admin
-		if(rights & R_BAN)			verbs += admin_verbs_ban
-		if(rights & R_FUN)			verbs += admin_verbs_fun
-		if(rights & R_SERVER)		verbs += admin_verbs_server
-		if(rights & R_DEBUG)		verbs += admin_verbs_debug
-		if(rights & R_POSSESS)		verbs += admin_verbs_possess
-		if(rights & R_PERMISSIONS)	verbs += admin_verbs_permissions
-		if(rights & R_STEALTH)		verbs += /client/proc/stealth
-		if(rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
-		if(rights & R_SOUNDS)		verbs += admin_verbs_sounds
+		if(holder.rights & R_BUILDMODE)		verbs += /client/proc/togglebuildmodeself
+		if(holder.rights & R_ADMIN)			verbs += admin_verbs_admin
+		if(holder.rights & R_BAN)			verbs += admin_verbs_ban
+		if(holder.rights & R_FUN)			verbs += admin_verbs_fun
+		if(holder.rights & R_SERVER)		verbs += admin_verbs_server
+		if(holder.rights & R_DEBUG)			verbs += admin_verbs_debug
+		if(holder.rights & R_POSSESS)		verbs += admin_verbs_possess
+		if(holder.rights & R_PERMISSIONS)	verbs += admin_verbs_permissions
+		if(holder.rights & R_STEALTH)		verbs += /client/proc/stealth
+		if(holder.rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
+		if(holder.rights & R_SOUNDS)		verbs += admin_verbs_sounds
+		if(holder.rights & R_SPAWN)			verbs += admin_verbs_spawn
 
 /client/proc/remove_admin_verbs()
-	if(holder)
-		verbs.Remove(
-			admin_verbs_default,
-			/client/proc/togglebuildmodeself,
-			admin_verbs_admin,
-			admin_verbs_ban,
-			admin_verbs_fun,
-			admin_verbs_server,
-			admin_verbs_debug,
-			admin_verbs_possess,
-			admin_verbs_permissions,
-			/client/proc/stealth,
-			admin_verbs_rejuv,
-			/client/proc/Cell,
-			/client/proc/do_not_use_these,
-			/client/proc/camera_view,
-			/client/proc/sec_camera_report,
-			/client/proc/intercom_view,
-			/client/proc/air_status,
-			/client/proc/atmosscan,
-			/client/proc/powerdebug,
-			/client/proc/count_objects_on_z_level,
-			/client/proc/count_objects_all,
-			/client/proc/cmd_assume_direct_control,
-			/client/proc/jump_to_dead_group,
-			/client/proc/startSinglo,
-			/client/proc/ticklag,
-			/client/proc/cmd_admin_grantfullaccess,
-			/client/proc/kaboom,
-			/client/proc/splash,
-			/client/proc/cmd_admin_areatest,
-			admin_verbs_sounds
-			)
+	verbs.Remove(
+		admin_verbs_default,
+		/client/proc/togglebuildmodeself,
+		admin_verbs_admin,
+		admin_verbs_ban,
+		admin_verbs_fun,
+		admin_verbs_server,
+		admin_verbs_debug,
+		admin_verbs_possess,
+		admin_verbs_permissions,
+		/client/proc/stealth,
+		admin_verbs_rejuv,
+		admin_verbs_sounds,
+		admin_verbs_spawn,
+		/*Debug verbs added by "show debug verbs"*/
+		/client/proc/Cell,
+		/client/proc/do_not_use_these,
+		/client/proc/camera_view,
+		/client/proc/sec_camera_report,
+		/client/proc/intercom_view,
+		/client/proc/air_status,
+		/client/proc/atmosscan,
+		/client/proc/powerdebug,
+		/client/proc/count_objects_on_z_level,
+		/client/proc/count_objects_all,
+		/client/proc/cmd_assume_direct_control,
+		/client/proc/jump_to_dead_group,
+		/client/proc/startSinglo,
+		/client/proc/ticklag,
+		/client/proc/cmd_admin_grantfullaccess,
+		/client/proc/kaboom,
+		/client/proc/splash,
+		/client/proc/cmd_admin_areatest
+		)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Adminverbs - Hide Most"
 	set category = "Admin"
 
-	verbs.Remove(
-		/client/proc/hide_most_verbs,
-		admin_verbs_hideable
-		)
+	verbs.Remove(/client/proc/hide_most_verbs, admin_verbs_hideable)
 	verbs += /client/proc/show_verbs
 
 	src << "<span class='interface'>Most of your adminverbs have been hidden.</span>"
@@ -281,21 +285,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Adminverbs - Hide All"
 	set category = "Admin"
 
-	verbs.Remove(
-		/client/proc/hide_verbs,
-		/client/proc/hide_most_verbs,
-		/client/proc/togglebuildmodeself,
-		admin_verbs_admin,
-		admin_verbs_ban,
-		admin_verbs_fun,
-		admin_verbs_server,
-		admin_verbs_debug,
-		admin_verbs_possess,
-		admin_verbs_permissions,
-		/client/proc/cmd_admin_rejuvenate,
-		/client/proc/stealth,
-		admin_verbs_rejuv
-		)
+	remove_admin_verbs()
 	verbs += /client/proc/show_verbs
 
 	src << "<span class='interface'>Almost all of your adminverbs have been hidden.</span>"

@@ -212,11 +212,11 @@ proc/tg_list2text(list/list, glue=",")
 /proc/angle2dir(var/degree)
 	degree = ((degree+22.5)%365)
 	if(degree < 45)		return NORTH
-	if(degree < 90)		return NORTH|EAST
+	if(degree < 90)		return NORTHEAST
 	if(degree < 135)	return EAST
-	if(degree < 180)	return SOUTH|EAST
+	if(degree < 180)	return SOUTHEAST
 	if(degree < 225)	return SOUTH
-	if(degree < 270)	return SOUTH|WEST
+	if(degree < 270)	return SOUTHWEST
 	if(degree < 315)	return WEST
 	return NORTH|WEST
 
@@ -224,24 +224,15 @@ proc/tg_list2text(list/list, glue=",")
 
 /proc/dir2angle(var/D)
 	switch(D)
-		if(1)
-			return 0
-		if(2)
-			return 180
-		if(4)
-			return 90
-		if(8)
-			return 270
-		if(5)
-			return 45
-		if(6)
-			return 135
-		if(9)
-			return 315
-		if(10)
-			return 225
-		else
-			return null
+		if(NORTH)		return 0
+		if(SOUTH)		return 180
+		if(EAST)		return 90
+		if(WEST)		return 270
+		if(NORTHEAST)	return 45
+		if(SOUTHEAST)	return 135
+		if(NORTHWEST)	return 315
+		if(SOUTHWEST)	return 225
+		else			return null
 
 //Returns the angle in english
 /proc/angle2text(var/degree)
@@ -262,4 +253,5 @@ proc/tg_list2text(list/list, glue=",")
 	if(rights & R_REJUVINATE)	. += "+REJUVINATE"
 	if(rights & R_VAREDIT)		. += "+VAREDIT"
 	if(rights & R_SOUNDS)		. += "+SOUND"
+	if(rights & R_SPAWN)		. += "+SPAWN"
 	return .

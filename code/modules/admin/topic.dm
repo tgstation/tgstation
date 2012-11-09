@@ -1,11 +1,9 @@
 /datum/admins/Topic(href, href_list)
 	..()
-	if(usr.client != src.owner)
+	if(usr.client != src.owner || !check_rights(0))
 		world << "\blue [usr.key] has attempted to override the admin panel!"
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
-
-	if(!check_rights(0))	return	//check they are an admin
 
 	if(href_list["makeAntag"])
 		switch(href_list["makeAntag"])
@@ -48,39 +46,34 @@
 				if(!src.makeDeathsquad())
 					usr << "\red Unfortunatly there were no candidates available"
 
-	if(href_list["editadminpermissions"])
-		if(!usr.client)
-			return
-
+	else if(href_list["editadminpermissions"])
 		var/adm_ckey = href_list["editadminckey"]
 		if(!adm_ckey)
 			usr << "\red no valid ckey"
 			return
 
-		if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-			usr << "\red You do not have permission to do this!"
-			message_admins("[key_name_admin(usr)] attempted to edit the admin permissions of [adm_ckey] without authentication!")
-			log_admin("[key_name(usr)] attempted to edit the admin permissions of [adm_ckey] without authentication!")
+		if(!check_rights(R_PERMISSIONS))
+			message_admins("[key_name_admin(usr)] attempted to edit the admin permissions of [adm_ckey] without sufficient rights.")
+			log_admin("[key_name(usr)] attempted to edit the admin permissions of [adm_ckey] without sufficient rights.")
 			return
 
 		switch(href_list["editadminpermissions"])
 			if("permissions")
 				var/list/permissionlist = list()
-				for(var/i = 1; i <= R_MAXPERMISSION; i = i << 1)
+				for(var/i=1, i<=R_MAXPERMISSION, i<<=1)		//that <<= is shorthand for i = i << 1. Which is a left bitshift
 					permissionlist[rights2text(i)] = i
 				var/new_permission
 				spawn(0)	//Safety
 					new_permission = input("Select a permission to turn on/off", "Permission toggle", null, null) as null|anything in permissionlist
-					if(!new_permission)
-						return
+					if(!new_permission)	return
 
 					message_admins("[key_name_admin(usr)] toggled the [new_permission] permission of [adm_ckey]")
 					log_admin("[key_name(usr)] toggled the [new_permission] permission of [adm_ckey]")
 					log_admin_permission_modification(adm_ckey, permissionlist[new_permission])
 			if("rank")
 				var/new_rank = input("Please, select a rank", "New rank for player", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer")
-				if(!new_rank)
-					return
+				if(!new_rank)	return
+
 				message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 				log_admin("[key_name(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 				log_admin_rank_modification(adm_ckey, new_rank)
@@ -91,11 +84,10 @@
 					log_admin_rank_modification(adm_ckey, "Removed")
 			if("add")
 				var/new_ckey = input(usr,"New admin's ckey","Admin ckey", null) as text|null
-				if(!new_ckey)
-					return
+				if(!new_ckey)	return
 				var/new_rank = input("Please, select a rank", "New rank for player", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer")
-				if(!new_rank)
-					return
+				if(!new_rank)	return
+
 				message_admins("[key_name_admin(usr)] added [new_ckey] as a new admin to the rank [new_rank]")
 				log_admin("[key_name(usr)] added [new_ckey] as a new admin to the rank [new_rank]")
 				log_admin_rank_modification(new_ckey, new_rank)
@@ -151,7 +143,7 @@
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["simplemake"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/M = locate(href_list["mob"])
 		if(!ismob(M))
@@ -784,7 +776,7 @@
 		usr << browse(dat, "window=f_secret")
 
 	else if(href_list["c_mode2"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN|R_SERVER))	return
 
 		if (ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
@@ -797,7 +789,7 @@
 		.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN|R_SERVER))	return
 
 		if(ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
@@ -810,7 +802,7 @@
 		.(href, list("f_secret"=1))
 
 	else if(href_list["monkeyone"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["monkeyone"])
 		if(!istype(H))
@@ -822,7 +814,7 @@
 		H.monkeyize()
 
 	else if(href_list["corgione"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["corgione"])
 		if(!istype(H))
@@ -1021,7 +1013,7 @@
 			usr << "Admin Rejuvinates have been disabled"
 
 	else if(href_list["makeai"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["makeai"])
 		if(!istype(H))
@@ -1033,7 +1025,7 @@
 		H.AIize()
 
 	else if(href_list["makealien"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["makealien"])
 		if(!istype(H))
@@ -1043,7 +1035,7 @@
 		usr.client.cmd_admin_alienize(H)
 
 	else if(href_list["makemetroid"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["makemetroid"])
 		if(!istype(H))
@@ -1053,7 +1045,7 @@
 		usr.client.cmd_admin_metroidize(H)
 
 	else if(href_list["makerobot"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/living/carbon/human/H = locate(href_list["makerobot"])
 		if(!istype(H))
@@ -1063,7 +1055,7 @@
 		usr.client.cmd_admin_robotize(H)
 
 	else if(href_list["makeanimal"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_SPAWN))	return
 
 		var/mob/M = locate(href_list["makeanimal"])
 		if(istype(M, /mob/new_player))
@@ -1342,19 +1334,19 @@
 		alert("Cannot make this mob a traitor! It has no mind!")
 
 	else if(href_list["create_object"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_SPAWN))	return
 		return create_object(usr)
 
 	else if(href_list["quick_create_object"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_SPAWN))	return
 		return quick_create_object(usr)
 
 	else if(href_list["create_turf"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_SPAWN))	return
 		return create_turf(usr)
 
 	else if(href_list["create_mob"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_SPAWN))	return
 		return create_mob(usr)
 
 	//Promote or Demote a client.
@@ -1377,10 +1369,11 @@
 			dat += "<A href='?src=\ref[src];chgadlvl=[rank];client4ad=\ref[C]'>[rank]</A><br>"
 		dat += "<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Deadmin</A>"
 
+		dat += "<br>NOTE: this screen currently does nothing<br>"
 		usr << browse(dat, "window=prom_demot;size=480x300")
 
 	else if(href_list["object_list"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_SPAWN))	return
 
 		if(!config.allow_admin_spawning)
 			usr << "Spawning of items is not allowed."
@@ -1418,9 +1411,8 @@
 					removed_paths += dirty_path
 					continue
 			else if(ispath(path, /mob))
-				if(!check_rights(R_FUN,0))
-					removed_paths += dirty_path
-					continue
+				removed_paths += dirty_path
+				continue
 			paths += path
 
 		if(!paths)
@@ -1538,23 +1530,6 @@
 							M.client.eye = M
 					del(O)
 				ok = 1*/
-			if("toxic")
-			/*
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","T")
-				for(var/obj/machinery/atmoalter/siphs/fullairsiphon/O in world)
-					O.t_status = 3
-				for(var/obj/machinery/atmoalter/siphs/scrubbers/O in world)
-					O.t_status = 1
-					O.t_per = 1000000.0
-				for(var/obj/machinery/atmoalter/canister/O in world)
-					if (!( istype(O, /obj/machinery/atmoalter/canister/oxygencanister) ))
-						O.t_status = 1
-						O.t_per = 1000000.0
-					else
-						O.t_status = 3
-			*/
-				usr << "HEH"
 			if("monkey")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","M")
@@ -1718,18 +1693,12 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BC")
 				switch(MAX_EXPLOSION_RANGE)
-					if(14)
-						MAX_EXPLOSION_RANGE = 16
-					if(16)
-						MAX_EXPLOSION_RANGE = 20
-					if(20)
-						MAX_EXPLOSION_RANGE = 28
-					if(28)
-						MAX_EXPLOSION_RANGE = 56
-					if(56)
-						MAX_EXPLOSION_RANGE = 128
-					if(128)
-						MAX_EXPLOSION_RANGE = 14
+					if(14)	MAX_EXPLOSION_RANGE = 16
+					if(16)	MAX_EXPLOSION_RANGE = 20
+					if(20)	MAX_EXPLOSION_RANGE = 28
+					if(28)	MAX_EXPLOSION_RANGE = 56
+					if(56)	MAX_EXPLOSION_RANGE = 128
+					if(128)	MAX_EXPLOSION_RANGE = 14
 				var/range_dev = MAX_EXPLOSION_RANGE *0.25
 				var/range_high = MAX_EXPLOSION_RANGE *0.5
 				var/range_low = MAX_EXPLOSION_RANGE

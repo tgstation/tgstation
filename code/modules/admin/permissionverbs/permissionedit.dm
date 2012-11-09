@@ -8,12 +8,7 @@
 	holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions()
-	if(!usr.client)
-		return
-
-	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
-		usr << "\red You do not have permission to do this!"
-		return
+	if(!check_rights(R_PERMISSIONS))	return
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
