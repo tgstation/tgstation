@@ -911,7 +911,7 @@ proc/build_surgery_steps_list()
 			target.apply_damage(10, BRUTE, affected)
 
 
-/datum/surgery_step/limb/prepeare
+/datum/surgery_step/limb/prepare
 	required_tool = /obj/item/weapon/cautery
 
 	min_duration = 60
@@ -931,6 +931,7 @@ proc/build_surgery_steps_list()
 		user.visible_message("\blue [user] has finished adjusting the area around [target]'s [affected.display_name] with \the [tool].",	\
 		"\blue You have finished adjusting the area around [target]'s [affected.display_name] with \the [tool].")
 		affected.status |= ORGAN_ATTACHABLE
+		affected.amputated = 1
 		affected.open = 0
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
