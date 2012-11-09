@@ -104,7 +104,7 @@
 	desc = "Can hold security gear like handcuffs and flashes."
 	icon_state = "securitybelt"
 	item_state = "security"//Could likely use a better one.
-	storage_slots = 4
+	storage_slots = 7
 	can_hold = list(
 		"/obj/item/weapon/grenade/flashbang",
 		"/obj/item/weapon/reagent_containers/spray/pepper",
@@ -114,7 +114,9 @@
 		"/obj/item/ammo_casing/shotgun",
 		"/obj/item/ammo_magazine",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
-		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly"
+		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly",
+		"/obj/item/weapon/melee/baton",
+		"/obj/item/weapon/gun/energy/taser"
 		)
 
 /obj/item/weapon/storage/belt/soulstone
