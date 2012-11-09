@@ -188,7 +188,7 @@
 		return
 	if (can_operate(M))	//Checks if mob is lying down on table for surgery
 		if(istype(M,/mob/living/carbon))
-			if (user.a_intent == "help" || (user.a_intent != "harm" && is_surgery_tool(src)))
+			if (user.a_intent != "harm")
 				if(surgery_steps == null) build_surgery_steps_list()
 				for(var/datum/surgery_step/S in surgery_steps)
 					//check if tool is right or close enough
