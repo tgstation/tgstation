@@ -378,8 +378,8 @@
 				if(!no_explode)
 					explosion(get_turf(owner),-1,-1,2,3)
 					var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-					spark_system.set_up(5, 0, src)
-					spark_system.attach(src)
+					spark_system.set_up(5, 0, owner)
+					spark_system.attach(owner)
 					spark_system.start()
 					spawn(10)
 						del(spark_system)
@@ -476,6 +476,17 @@
 				return "right hand"
 			else
 				return name
+
+	proc/robotize()
+		src.status &= ~ORGAN_BROKEN
+		src.status &= ~ORGAN_BLEEDING
+		src.status &= ~ORGAN_SPLINTED
+		src.status &= ~ORGAN_ATTACHABLE
+		src.status &= ~ORGAN_DESTROYED
+		src.status |= ORGAN_ROBOT
+		for (var/datum/organ/external/T in children)
+			if(T)
+				T.robotize()
 
 /datum/organ/external/chest
 	name = "chest"
