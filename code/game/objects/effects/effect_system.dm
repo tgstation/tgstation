@@ -1093,3 +1093,16 @@ steam.start() -- spawns the effect
 				M << "\red The solution violently explodes."
 
 			explosion(location, devastation, heavy, light, flash)
+
+	proc/holder_damage(var/atom/holder)
+		if(holder)
+			var/dmglevel = 4
+
+			if (round(amount/8) > 0)
+				dmglevel = 1
+			else if (round(amount/4) > 0)
+				dmglevel = 2
+			else if (round(amount/2) > 0)
+				dmglevel = 3
+
+			if(dmglevel<4) holder.ex_act(dmglevel)
