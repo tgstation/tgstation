@@ -1372,7 +1372,7 @@
 		dat += "<br>NOTE: this screen currently does nothing<br>"
 		usr << browse(dat, "window=prom_demot;size=480x300")
 
-	else if(href_list["object_list"])
+	else if(href_list["object_list"])			//this is the laggiest thing ever
 		if(!check_rights(R_SPAWN))	return
 
 		if(!config.allow_admin_spawning)
@@ -1410,18 +1410,15 @@
 				if(!check_rights(R_FUN,0))
 					removed_paths += dirty_path
 					continue
-			else if(ispath(path, /mob))
-				removed_paths += dirty_path
-				continue
 			paths += path
 
 		if(!paths)
 			alert("The path list you sent is empty")
 			return
-		if (length(paths) > 5)
+		if(length(paths) > 5)
 			alert("Select fewer object types, (max 5)")
 			return
-		else if (length(removed_paths))
+		else if(length(removed_paths))
 			alert("Removed:\n" + dd_list2text(removed_paths, "\n"))
 
 		var/list/offset = text2list(href_list["offset"],",")
