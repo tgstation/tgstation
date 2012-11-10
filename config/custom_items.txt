@@ -7,6 +7,7 @@ compactninja: Al Peterson: /obj/item/clothing/head/flatcap
 compactninja: Lister Black: /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle, /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle
 crazy2455: Murad Hassim: /obj/item/clothing/gloves/fluff/murad_hassim_1
 cubejackal: Barry Sharke: /obj/item/clothing/mask/fluff/electriccig
+daaneesh: Zelda Creedy: /obj/item/weapon/crowbar/fluff/zelda_creedy_1
 desiderium: Momiji Inubashiri: /obj/item/clothing/under/fluff/olddressuniform
 desiderium: Rook Maudlin: /obj/item/clothing/suit/det_suit/fluff/retpolcoat, /obj/item/clothing/head/det_hat/fluff/retpolcap, /obj/item/clothing/under/det/fluff/retpoluniform
 deusdactyl: James Girard: /obj/item/clothing/head/secsoft/fluff/swatcap, /obj/item/clothing/suit/armor/vest/fluff/deus_blueshield
@@ -52,3 +53,4 @@ vinceluk: Seth Sealis: /obj/item/clothing/suit/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
 whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1
 roaper: Ian Colm: /obj/item/weapon/card/id/fluff/ian_colmid
+

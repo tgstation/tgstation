@@ -287,6 +287,14 @@
 	icon_state = "wolfflight"
 	item_state = "wolfflight"
 
+/obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
+	name = "Zelda's Crowbar"
+	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "zeldacrowbar"
+	item_state = "crowbar"
+
+
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////
