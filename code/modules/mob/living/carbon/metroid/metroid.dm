@@ -201,13 +201,6 @@
 
 /mob/living/carbon/metroid/ex_act(severity)
 
-	if (stat == 2 && client)
-		return
-
-	else if (stat == 2 && !client)
-		del(src)
-		return
-
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
