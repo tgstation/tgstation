@@ -293,6 +293,15 @@
 
 //////////// Gloves ////////////
 
+/obj/item/clothing/gloves/fluff/murad_hassim_1
+	name = "Tajaran Surgical Gloves"
+	desc = "Reinforced sterile gloves custom tailored to comfortably accommodate Tajaran claws."
+	icon_state = "latex"
+	item_state = "lgloves"
+	siemens_coefficient = 0.30
+	permeability_coefficient = 0.01
+	color="white"
+
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
 	name = "mittens"
 	desc = "A pair of well worn, blue mittens."
