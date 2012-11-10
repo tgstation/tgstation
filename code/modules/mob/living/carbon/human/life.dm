@@ -353,12 +353,28 @@
 			if((COLD_RESISTANCE in mutations) || (prob(1)))
 				heal_organ_damage(0,1)
 
+		if(mHallucination in mutations)
+			hallucination = 100
+			halloss = 0
+
+		if(mSmallsize in mutations)
+			if(!(pass_flags & PASSTABLE))
+				pass_flags |= PASSTABLE
+		else
+			if(pass_flags & PASSTABLE)
+				pass_flags &= ~PASSTABLE
+
 		// Make nanoregen heal youu, -3 all damage types
-		if(NANOREGEN in augmentations)
+		if((NANOREGEN in augmentations) || (mRegen in mutations))
 			var/healed = 0
-			var/hptoreg = 3
-			if(stat==UNCONSCIOUS) hptoreg=1
+			var/hptoreg = 0
+			if(NANOREGEN in augmentations)
+				hptoreg += 3
+			if(mRegen in mutations)
+				hptoreg += 2
+			if(stat==UNCONSCIOUS) hptoreg/=2
 			if(stat==DEAD) hptoreg=0
+
 			for(var/i=0, i<hptoreg, i++)
 				var/list/damages = new/list()
 				if(getToxLoss())
@@ -403,6 +419,27 @@
 			if(healed)
 				if(prob(5))
 					src << "\blue You feel your wounds mending..."
+
+		if(!(/mob/living/carbon/human/proc/morph in src.verbs))
+			if(mMorph in mutations)
+				src.verbs += /mob/living/carbon/human/proc/morph
+		else
+			if(!(mMorph in mutations))
+				src.verbs -= /mob/living/carbon/human/proc/morph
+
+		if(!(/mob/living/carbon/human/proc/remoteobserve in src.verbs))
+			if(mRemote in mutations)
+				src.verbs += /mob/living/carbon/human/proc/remoteobserve
+		else
+			if(!(mRemote in mutations))
+				src.verbs -= /mob/living/carbon/human/proc/remoteobserve
+
+		if(!(/mob/living/carbon/human/proc/remotesay in src.verbs))
+			if(mRemotetalk in mutations)
+				src.verbs += /mob/living/carbon/human/proc/remotesay
+		else
+			if(!(mRemotetalk in mutations))
+				src.verbs -= /mob/living/carbon/human/proc/remotesay
 
 		if ((HULK in mutations) && health <= 25)
 			mutations.Remove(HULK)
@@ -535,10 +572,10 @@
 
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if(nodamage || REBREATHER in augmentations)
+		if(nodamage || (REBREATHER in augmentations) || (mNobreath in mutations))
 			return
 
-		if(!breath || (breath.total_moles == 0) || suiciding)
+		if(!breath || (breath.total_moles() == 0) || suiciding)
 			if(reagents.has_reagent("inaprovaline"))
 				return
 			if(suiciding)
@@ -966,7 +1003,7 @@
 				adjustToxLoss(-1)
 				adjustOxyLoss(-1)
 
-		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
+/*		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in mutations)
 			if(overeatduration < 100)
 				src << "\blue You feel fit again!"
@@ -975,7 +1012,7 @@
 				update_mutations(0)
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
-/*		else
+		else
 			if(overeatduration > 500)
 				src << "\red You suddenly feel blubbery!"
 				mutations.Add(FAT)
@@ -983,7 +1020,8 @@
 				update_mutations(0)
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
-AND YOU */
+*/
+
 		// nutrition decrease
 		if (nutrition > 0 && stat != 2)
 			nutrition = max (0, nutrition - HUNGER_FACTOR)
@@ -1394,7 +1432,8 @@ AND YOU */
 			if(machine)
 				if(!machine.check_eye(src))		reset_view(null)
 			else
-				if(!client.adminobs)			reset_view(null)
+				if(!(mRemote in mutations) && !client.adminobs)
+					reset_view(null)
 		return 1
 
 	proc/handle_random_events()

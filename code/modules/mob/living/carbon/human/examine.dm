@@ -193,6 +193,8 @@
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and [t_has] suffered major bloodloss!</span>\n"
 
+	if(mSmallsize in mutations)
+		msg += "[t_He] [t_is] small halfling!\n"
 
 	var/distance = get_dist(usr,src)
 	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
