@@ -526,9 +526,13 @@ obj/machinery/atmospherics/pipe
 		var/build_killswitch = 1
 
 		var/obj/machinery/atmospherics/node1
-		New()
+		New()		
 			initialize_directions = dir
 			..()
+
+		high_volume
+			name = "Larger vent"
+			volume = 1000
 
 		process()
 			if(!parent)
@@ -539,7 +543,7 @@ obj/machinery/atmospherics/pipe
 				..()
 				return
 			else
-				parent.mingle_with_turf(loc, 250)
+				parent.mingle_with_turf(loc, volume)
 /*
 			if(!node1)
 				if(!nodealert)
