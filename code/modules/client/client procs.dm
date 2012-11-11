@@ -176,3 +176,9 @@
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
 #undef MIN_CLIENT_VERSION
+
+//checks if a client is afk
+//3000 frames = 5 minutes
+/client/proc/is_afk(duration=3000)
+	if(inactivity > duration)	return inactivity
+	return 0

@@ -1169,6 +1169,8 @@
 		usr.client.debug_variables(M)
 
 	else if(href_list["adminplayerobservejump"])
+		if(!check_rights(R_ADMIN))	return
+
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 
 		var/client/C = usr.client
@@ -1177,6 +1179,8 @@
 		C.jumptomob(M)
 
 	else if(href_list["adminplayerobservecoodjump"])
+		if(!check_rights(R_ADMIN))	return
+
 		var/x = text2num(href_list["X"])
 		var/y = text2num(href_list["Y"])
 		var/z = text2num(href_list["Z"])
@@ -1240,6 +1244,8 @@
 		src.owner << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
 
 	else if(href_list["adminspawncookie"])
+		if(!check_rights(R_ADMIN|R_FUN))	return
+
 		var/mob/living/carbon/human/H = locate(href_list["adminspawncookie"])
 		if(!ishuman(H))
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
@@ -1262,6 +1268,8 @@
 		H << "\blue Your prayers have been answered!! You received the <b>best cookie</b>!"
 
 	else if(href_list["BlueSpaceArtillery"])
+		if(!check_rights(R_ADMIN|R_FUN))	return
+
 		var/mob/living/M = locate(href_list["BlueSpaceArtillery"])
 		if(!isliving(M))
 			usr << "This can only be used on instances of type /mob/living"
@@ -1587,6 +1595,23 @@
 					spawn(0)
 						H.corgize()
 				ok = 1
+			if("gravity")
+				if(!(ticker && ticker.mode))
+					usr << "Please wait until the game starts!  Not sure how it will work otherwise."
+					return
+				gravity_is_on = !gravity_is_on
+				for(var/area/A in world)
+					A.gravitychange(gravity_is_on,A)
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","Grav")
+				if(gravity_is_on)
+					log_admin("[key_name(usr)] toggled gravity on.", 1)
+					message_admins("\blue [key_name_admin(usr)] toggled gravity on.", 1)
+					command_alert("Gravity generators are again functioning within normal parameters. Sorry for any inconvenience.")
+				else
+					log_admin("[key_name(usr)] toggled gravity off.", 1)
+					message_admins("\blue [key_name_admin(usr)] toggled gravity off.", 1)
+					command_alert("Feedback surge detected in mass-distributions systems. Artifical gravity has been disabled whilst the system reinitializes. Further failures may result in a gravitational collapse and formation of blackholes. Have a nice day.")
 			if("power")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","P")
@@ -1856,6 +1881,11 @@
 				if(aliens_allowed)
 					alien_infestation()
 					message_admins("[key_name_admin(usr)] has spawned aliens", 1)
+			if("alien_silent")								//replaces the spawn_xeno verb
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","ALS")
+				if(aliens_allowed)
+					create_xeno()
 			if("comms_blackout")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","CB")
