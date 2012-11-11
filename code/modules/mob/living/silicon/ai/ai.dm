@@ -117,9 +117,20 @@
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static")
+	var/icontype = "" 
+	var/list/icons = list("Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static")
+	if (src.name == "B.A.N.N.E.D." && src.ckey == "spaceman96")
+		icons += "B.A.N.N.E.D."
+	if (src.name == "M00X-BC" && src.ckey == "searif")
+		icons += "M00X-BC"
+	if (src.name == "TRIBUNAL" && src.ckey == "serithi")
+		icons += "Tribunal"
+		icons += "Tribunal Malfunctioning"
+	if (src.name == "Skuld" && src.ckey == "ravensdale")
+		icons += "Skuld"
 /*	if(icontype == "Clown")
 		icon_state = "ai-clown2"*/
+	icontype = input("Please, select a display!", "AI", null/*, null*/) in icons
 	if(icontype == "Monochrome")
 		icon_state = "ai-mono"
 	else if(icontype == "Blue")
@@ -134,6 +145,14 @@
 		icon_state = "ai-malf"
 	else if(icontype == "Static")
 		icon_state = "ai-static"
+	else if(icontype == "M00X-BC")
+		icon_state = "ai-searif"
+	else if(icontype == "Tribunal")
+		icon_state = "ai-tribunal"
+	else if(icontype == "Tribunal Malfunctioning")
+		icon_state = "ai-tribunal-malf"
+	else if(icontype == "Skuld")
+		icon_state = "ai-ravensdale"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
