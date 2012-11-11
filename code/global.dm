@@ -128,6 +128,7 @@ var/datum/debug/debugobj
 var/datum/moduletypes/mods = new()
 
 var/wavesecret = 0
+var/gravity_is_on = 1
 
 var/shuttlecoming = 0
 
