@@ -282,23 +282,29 @@
 					return 0
 
 		move_delay = world.time//set move delay
-
+		var/mdelay = 0
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
-					move_delay += 6
-				move_delay += 1+config.run_speed
+					mdelay += 6
+				mdelay += 2+config.run_speed
 			if("walk")
-				move_delay += 7+config.walk_speed
-		move_delay += mob.movement_delay()
+				mdelay += 7+config.walk_speed
 
 		if(config.Tickcomp)
-			move_delay -= 1.3
+			mdelay -= 1.3
 			var/tickcomp = ((1/(world.tick_lag))*1.3)
-			move_delay = move_delay + tickcomp
+			mdelay += tickcomp
 
+		move_delay += mdelay
 
-
+		mob.UpdateGlide(mdelay)
+		if (mob.pulling)
+			if (istype(mob.pulling,/mob))
+				var/mob/M = mob.pulling
+				M.UpdateGlide(mdelay)
+			else
+				mob.pulling.glide_size = mob.glide_size
 
 		//We are now going to move
 		moving = 1
@@ -320,6 +326,7 @@
 								else
 									diag = null
 								if ((get_dist(mob, M) > 1 || diag))
+									M.UpdateGlide(mdelay)
 									step(M, get_dir(M.loc, T))
 				else
 					for(var/mob/M in L)
@@ -328,6 +335,7 @@
 							M.animate_movement = 3
 					for(var/mob/M in L)
 						spawn( 0 )
+							M.UpdateGlide(mdelay)
 							step(M, direct)
 							return
 						spawn( 1 )
@@ -506,3 +514,10 @@
 
 	prob_slip = round(prob_slip)
 	return(prob_slip)
+
+//Updates Glide_size of mob according to its speed.
+/mob/proc/UpdateGlide(var/mdelay = 2)
+	if (mdelay != lastmovementdelay)
+		lastmovementdelay = mdelay
+		glide_size = 32*(world.tick_lag)/lastmovementdelay
+		//src << "Debug: Your new glide speed is [glide_size]"
