@@ -43,14 +43,10 @@ obj/var/contaminated = 0
 obj/item/proc
 	can_contaminate()
 		return 0
-		//skytodo: tg has changed how suits are handled
-		/*
 		//Clothing and backpacks can be contaminated.
 		if(flags & PLASMAGUARD) return 0
-		if(flags & SUITSPACE) return 0
 		else if(istype(src,/obj/item/clothing)) return 1
 		else if(istype(src,/obj/item/weapon/storage/backpack)) return 1
-		*/
 
 	contaminate()
 		//Do a contamination overlay? Temporary measure to keep contamination less deadly than it was.
@@ -131,22 +127,21 @@ obj/item/proc
 
 /mob/living/carbon/human/proc/pl_head_protected()
 	//Checks if the head is adequately sealed.
-	//skytodo:
-	/*if(head)
+	if(head)
 		if(vsc.plc.PLASMAGUARD_ONLY)
-			if(head.flags & PLASMAGUARD || head.flags & HEADSPACE) return 1
-		else
-			if(head.flags & HEADCOVERSEYES) return 1*/
+			if(head.flags & PLASMAGUARD)
+				return 1
+		else if(head.flags & HEADCOVERSEYES)
+			return 1
 	return 0
 
 /mob/living/carbon/human/proc/pl_suit_protected()
 	//Checks if the suit is adequately sealed.
-	//skytodo:
-	/*if(wear_suit)
+	if(wear_suit)
 		if(vsc.plc.PLASMAGUARD_ONLY)
-			if(wear_suit.flags & PLASMAGUARD || wear_suit.flags & SUITSPACE) return 1
+			if(wear_suit.flags & PLASMAGUARD) return 1
 		else
-			if(wear_suit.flags_inv & HIDEJUMPSUIT) return 1*/
+			if(wear_suit.flags_inv & HIDEJUMPSUIT) return 1
 	return 0
 
 /mob/living/carbon/human/proc/suit_contamination()
