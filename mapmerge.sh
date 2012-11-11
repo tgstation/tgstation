@@ -1,8 +1,9 @@
-java -jar MapPatcher.jar -unpack $1 $1 > /dev/null
-java -jar MapPatcher.jar -unpack $2 $2 > /dev/null
-java -jar MapPatcher.jar -unpack $3 $3 > /dev/null
+java -jar MapPatcher.jar -merge $1 $2 $3 $2
+if [ "$?" -gt 0 ]
+then
+    echo "Unable to automatically resolve map conflicts, please merge manually."
+    exit 1
+fi
+java -jar MapPatcher.jar -clean $1 $2 $2
 
-cp $2 original.dmm
-
-echo "Map merge conflict, make sure to repack the map with MapPatcher -pack and clean it with MapPatcher -clean original.dmm"
 exit 0
