@@ -287,11 +287,28 @@
 	icon_state = "wolfflight"
 	item_state = "wolfflight"
 
+/obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
+	name = "Zelda's Crowbar"
+	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "zeldacrowbar"
+	item_state = "crowbar"
+
+
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////
 
 //////////// Gloves ////////////
+
+/obj/item/clothing/gloves/fluff/murad_hassim_1
+	name = "Tajaran Surgical Gloves"
+	desc = "Reinforced sterile gloves custom tailored to comfortably accommodate Tajaran claws."
+	icon_state = "latex"
+	item_state = "lgloves"
+	siemens_coefficient = 0.30
+	permeability_coefficient = 0.01
+	color="white"
 
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
 	name = "mittens"
@@ -361,6 +378,12 @@
 	desc = "Because when you're the toughest Mother Hubbard on the station, nobody's criticizing your fashion sense."
 	icon = 'custom_items.dmi'
 	icon_state = "enos_adlai_1"
+
+/obj/item/clothing/head/fluff/edvin_telephosphor_1 //foolamancer: Edvin Telephosphor
+	name = "Edvin's Hat"
+	desc = "A hat specially tailored for Skrellian anatomy. It has a yellow badge on the front, with a large red 'T' inscribed on it."
+	icon = 'custom_items.dmi'
+	icon_state = "edvin_telephosphor_1"
 
 //////////// Suits ////////////
 
