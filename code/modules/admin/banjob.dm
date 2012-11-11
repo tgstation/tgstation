@@ -48,24 +48,31 @@ DEBUG
 */
 
 /proc/jobban_loadbanfile()
-	var/savefile/S=new("data/job_full.ban")
-	S["keys[0]"] >> jobban_keylist
-	log_admin("Loading jobban_rank")
-	S["runonce"] >> jobban_runonce
+	if(config.ban_legacy_system)
+		var/savefile/S=new("data/job_full.ban")
+		S["keys[0]"] >> jobban_keylist
+		log_admin("Loading jobban_rank")
+		S["runonce"] >> jobban_runonce
 
-	/*
-	for(var/i = 1; i <= length(jobban_keylist); i++)
-		if( findtext(jobban_keylist[i],"##") )
-			var/index = findtext(jobban_keylist[i],"##")
-			var/s = jobban_keylist[i]
-			s = copytext( s , 1 , index ) //Removes the reason for the ban from this list
-			jobban_keylist[i] = s
-			world << "DEBUG: index: [index] - s: [s] - jobban_keylist\[[i]\] = [jobban_keylist[i]]"*/
+		if (!length(jobban_keylist))
+			jobban_keylist=list()
+			log_admin("jobban_keylist was empty")
+	else
+		if(!establish_db_connection())
+			world.log << "Database connection failed. Reverting to the legacy ban system."
+			diary << "Database connection failed. Reverting to the legacy ban system."
+			config.ban_legacy_system = 1
+			jobban_loadbanfile()
+			return
 
-	if (!length(jobban_keylist))
-		jobban_keylist=list()
-		log_admin("jobban_keylist was empty")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, job FROM erro_ban WHERE bantype = 'JOB_PERMABAN' AND isnull(unbanned)")
+		query.Execute()
 
+		while(query.NextRow())
+			var/ckey = query.item[1]
+			var/job = query.item[2]
+
+			jobban_keylist.Add("[ckey] - [job]")
 
 /proc/jobban_savebanfile()
 	var/savefile/S=new("data/job_full.ban")

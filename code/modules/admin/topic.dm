@@ -45,6 +45,60 @@
 				log_admin("[key_name(usr)] has spawned a death squad.")
 				if(!src.makeDeathsquad())
 					usr << "\red Unfortunatly there were no candidates available"
+	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
+		var/adminckey = href_list["dbsearchadmin"]
+		var/playerckey = href_list["dbsearchckey"]
+
+		DB_ban_panel(playerckey, adminckey)
+		return
+
+	else if(href_list["dbbanedit"])
+		var/banedit = href_list["dbbanedit"]
+		var/banid = text2num(href_list["dbbanid"])
+		if(!banedit || !banid)
+			return
+
+		DB_ban_edit(banid, banedit)
+		return
+
+	else if(href_list["dbbanaddtype"])
+
+		var/bantype = text2num(href_list["dbbanaddtype"])
+		var/banckey = href_list["dbbanaddckey"]
+		var/banduration = text2num(href_list["dbbaddduration"])
+		var/banjob = href_list["dbbanaddjob"]
+		var/banreason = href_list["dbbanreason"]
+
+		banckey = ckey(banckey)
+
+		switch(bantype)
+			if(BANTYPE_PERMA)
+				if(!banckey || !banreason)
+					usr << "Not enough parameters (Requires ckey and reason)"
+					return
+				banduration = null
+				banjob = null
+			if(BANTYPE_TEMP)
+				if(!banckey || !banreason || !banduration)
+					usr << "Not enough parameters (Requires ckey, reason and duration)"
+					return
+				banjob = null
+			if(BANTYPE_JOB_PERMA)
+				if(!banckey || !banreason || !banjob)
+					usr << "Not enough parameters (Requires ckey, reason and job)"
+					return
+				banduration = null
+
+		var/mob/playermob
+
+		for(var/mob/M in player_list)
+			if(M.ckey == banckey)
+				playermob = M
+				break
+
+		banreason = "(MANUAL BAN) "+banreason
+
+		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey)
 
 	else if(href_list["editadminpermissions"])
 		var/adm_ckey = href_list["editadminckey"]
@@ -595,6 +649,10 @@
 		//Unbanning joblist
 		//all jobs in joblist are banned already OR we didn't give a reason (implying they shouldn't be banned)
 		if(joblist.len) //at least 1 banned job exists in joblist so we have stuff to unban.
+			if(!config.ban_legacy_system)
+				usr << "Unfortunately, database based unbanning cannot be done through this panel"
+				DB_ban_panel(usr.client.ckey)
+				return
 			var/msg
 			for(var/job in joblist)
 				var/reason = jobban_isbanned(M, job)
