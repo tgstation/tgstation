@@ -481,17 +481,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 		var/image/lying		= image("icon_state" = "[t_color]_l")
 		var/image/standing	= image("icon_state" = "[t_color]_s")
 
-		if(FAT in mutations)
-			if(w_uniform.flags&ONESIZEFITSALL)
-				lying.icon		= 'icons/mob/uniform_fat.dmi'
-				standing.icon	= 'icons/mob/uniform_fat.dmi'
-			else
-				src << "\red You burst out of \the [w_uniform]!"
-				drop_from_inventory(w_uniform)
-				return
-		else
-			lying.icon		= 'icons/mob/uniform.dmi'
-			standing.icon	= 'icons/mob/uniform.dmi'
+
+		lying.icon		= 'icons/mob/uniform.dmi'
+		standing.icon	= 'icons/mob/uniform.dmi'
 
 		if(w_uniform.blood_DNA)
 			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "uniformblood2")
@@ -638,35 +630,21 @@ proc/get_damage_icon_part(damage_state, body_part)
 		var/image/lying		= image("icon" = 'icons/mob/suit.dmi', "icon_state" = "[wear_suit.icon_state]2")
 		var/image/standing	= image("icon" = 'icons/mob/suit.dmi', "icon_state" = "[wear_suit.icon_state]")
 
-		if(FAT in mutations)
-			if(!wear_suit.flags&ONESIZEFITSALL)
-				src << "\red You burst out of \the [wear_suit]!"
-				var/obj/item/clothing/c = wear_suit
-				wear_suit = null
-				if(client)
-					client.screen -= c
-				c.loc = loc
-				c.dropped(src)
-				c.layer = initial(c.layer)
-				lying		= null
-				standing	= null
+		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
+			drop_from_inventory(handcuffed)
+			drop_l_hand()
+			drop_r_hand()
 
-		else
-			if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
-				drop_from_inventory(handcuffed)
-				drop_l_hand()
-				drop_r_hand()
-
-			if(wear_suit.blood_DNA)
-				var/t_state
-				if( istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat) )
-					t_state = "armor"
-				else if( istype(wear_suit, /obj/item/clothing/suit/det_suit || /obj/item/clothing/suit/labcoat) )
-					t_state = "coat"
-				else
-					t_state = "suit"
-				lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_state]blood2")
-				standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_state]blood")
+		if(wear_suit.blood_DNA)
+			var/t_state
+			if( istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat) )
+				t_state = "armor"
+			else if( istype(wear_suit, /obj/item/clothing/suit/det_suit || /obj/item/clothing/suit/labcoat) )
+				t_state = "coat"
+			else
+				t_state = "suit"
+			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_state]blood2")
+			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_state]blood")
 
 		overlays_lying[SUIT_LAYER]		= lying
 		overlays_standing[SUIT_LAYER]	= standing

@@ -273,7 +273,7 @@ datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fue
 		arms_exposure = 1
 
 	//Get heat transfer coefficients for clothing.
-	//skytodo: different handling of temp with tg
+	//skytodo: different handling of temp with tg //Jesus, mate.  Don't ask me.  I have no diea how their crap works, and Aryn wrote this proc.
 	/*for(var/obj/item/clothing/C in src)
 		if(l_hand == C || r_hand == C) continue
 		if(C.body_parts_covered & HEAD)
