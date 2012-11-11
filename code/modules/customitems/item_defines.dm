@@ -379,6 +379,12 @@
 	icon = 'custom_items.dmi'
 	icon_state = "enos_adlai_1"
 
+/obj/item/clothing/head/fluff/edvin_telephosphor_1 //foolamancer: Edvin Telephosphor
+	name = "Edvin's Hat"
+	desc = "A hat specially tailored for Skrellian anatomy. It has a yellow badge on the front, with a large red 'T' inscribed on it."
+	icon = 'custom_items.dmi'
+	icon_state = "edvin_telephosphor_1"
+
 //////////// Suits ////////////
 
 /obj/item/clothing/suit/labcoat/fluff/pink //spaceman96: Trenna Seber
