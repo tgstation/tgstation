@@ -51,6 +51,8 @@
 				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes,block,dna,3)
 				domutcheck(M, null,1)
 				uses--
+			if(prob(5))
+				trigger_side_effect(M)
 
 	spawn(0)//this prevents the collapse of space-time continuum
 		user.drop_from_inventory(src)
