@@ -1580,3 +1580,14 @@ datum/design/security_hud
 	src.pixel_y = rand(-5.0, 5)
 
 
+/////////////////////////////////////////
+//////////////Borg Upgrades//////////////
+/////////////////////////////////////////
+datum/design/borg_syndicate_module
+	name = "Borg Illegal Weapons Upgrade"
+	desc = "Allows for the construction of illegal upgrades for cyborgs"
+	id = "borg_syndicate_module"
+	build_type = MECHFAB
+	req_tech = list("combat" = 4, "syndicate" = 3)
+	build_path = "/obj/item/borg/upgrade/syndicate"
+	category = "Cyborg Upgrade Modules"

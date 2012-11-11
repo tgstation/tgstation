@@ -65,4 +65,116 @@
 
 
 
+/obj/item/weapon/gun/projectile/automatic/l6_saw
+	name = "L6 SAW"
+	desc = "A rather traditionally made light machine gun with a pleasantly lacquered wooden pistol grip. Has 'Aussec Armoury- 2531' engraved on the reciever"
+	icon_state = "l4closed100"
+	item_state = "l6closedmag"
+	max_shells = 50
+	caliber = "a762"
+	origin_tech = "combat=5;materials=1;syndicate=2"
+	ammo_type = "/obj/item/ammo_casing/a762"
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	load_method = 2
+	//recoil = 1
+	var/cover_open = 0
+	var/mag_inserted = 1
+
+	attack_self(mob/user as mob)
+		if(!cover_open && mag_inserted)
+			cover_open = 1
+			icon_state = "l4open[round(((loaded.len)*2),25)]"
+			item_state = "l6openmag"
+			usr << "You open the [src]'s cover, allowing you to swap magazines."
+		else if(cover_open && mag_inserted)
+			cover_open = 0
+			icon_state = "l4closed[round(((loaded.len)*2),25)]"
+			item_state = "l6closedmag"
+			usr << "You close the [src]'s cover."
+		else if(!cover_open && !mag_inserted)
+			cover_open = 1
+			icon_state = "l4opennomag"
+			item_state = "l6opennomag"
+			usr << "You open the [src]'s cover, allowing you to swap magazines."
+		else if(cover_open && !mag_inserted)
+			cover_open = 0
+			icon_state = "l4closednomag"
+			item_state = "l6closednomag"
+			usr << "You close the [src]'s cover."
+			update_icon() //another update_icon() thing here, I know it's repeated in afterattack() but this one also takes into account cover_open
+		if(!cover_open)
+			icon_state = "l4closed[round(((loaded.len)*2),25)]"
+			item_state = "l6closedmag"
+		else
+			icon_state = "l4open[round(((loaded.len)*2),25)]"
+			item_state = "l6openmag"
+		//update_inv_l_hand()
+		//update_inv_r_hand()
+
+	afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+		if(cover_open)
+			usr << "The SAW cover is open! Close it before firing!"
+		else
+			..()
+			if(!cover_open && mag_inserted)
+				icon_state = "l4closed[round(((loaded.len)*2),25)]"
+				item_state = "l6closedmag"
+			else if(!cover_open && !mag_inserted)
+				icon_state = "l4closednomag"
+				item_state = "l6nomag"
+		//update_inv_l_hand()
+		//update_inv_r_hand()
+
+	/obj/item/weapon/gun/projectile/automatic/l6_saw/verb/remove_magazine()
+		set category = "Object"
+		set name = "Remove SAW magazine."
+		set src in view(1)
+		var/mob/M = usr
+
+		if(usr.canmove && !usr.stat && !usr.restrained() && !M.paralysis && ! M.stunned)
+			if(!cover_open)
+				usr << "The [src]'s cover is closed! You can't remove the magazine!"
+			else if (!cover_open && !mag_inserted)
+				usr << "The [src]'s cover is open but there's no magazine for you to remove!"
+			else if (cover_open && mag_inserted)
+				drop_mag()
+				loaded = list()
+				mag_inserted = 0
+				icon_state = "l4opennomag"
+				item_state = "l6opennomag"
+				usr << "You remove the magazine from the [src]!"
+		//update_inv_l_hand()
+		//update_inv_r_hand()
+
+	/obj/item/weapon/gun/projectile/automatic/l6_saw/proc/drop_mag()
+		empty_mag = new /obj/item/ammo_magazine/a762(src)
+		empty_mag.stored_ammo = loaded
+		empty_mag.icon_state = "a762-[round((loaded.len),10)]"
+		//desc = "There are [loaded] shells left!"
+		empty_mag.loc = get_turf(src.loc)
+		empty_mag = null
+
+
+	/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob)
+		if(!cover_open)
+			usr << "The [src]'s cover is closed! You can't insert a new mag!"
+		else if (cover_open && mag_inserted)
+			usr << "The [src] already has a magazine inserted!"
+		else if (cover_open && !mag_inserted)
+			mag_inserted = 1
+			usr << "You insert the magazine!"
+			icon_state = "l4openmag[round(((loaded.len)*2),25)]"
+			item_state = "l6openmag"
+			update_icon()
+			..()
+		//update_inv_l_hand() something pete suggested. Dunno if this is a proc already defined way up in the obj/ thing
+		//update_inv_r_hand() or if it's something I have to define myself
+
+
+/* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
+   Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.
+   However, it looks like subsequent guns that use removable magazines don't take that into account and just get
+   around simulating a removable magazine by adding the casings into the loaded list and spawning an empty magazine
+   when the gun is out of rounds. Which means you can't eject magazines with rounds in them. The below is a very
+   rough and poor attempt at making that happen. -Ausops */
 

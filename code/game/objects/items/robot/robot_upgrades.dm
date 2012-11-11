@@ -133,3 +133,20 @@
 			R.internals = src
 		R.icon_state="Miner+j"
 		return 1
+
+
+/obj/item/borg/upgrade/syndicate/
+	name = "Illegal Equipment Module"
+	desc = "Unlocks the hidden, deadlier functions of a cyborg"
+	construction_cost = list("metal"=10000,"glass"=15000,"diamond" = 10000)
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+
+/obj/item/borg/upgrade/syndicate/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+
+	if(R.emagged == 1)
+		return 0
+
+	R.emagged = 1
+	return 1
