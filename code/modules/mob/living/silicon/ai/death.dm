@@ -1,8 +1,9 @@
 /mob/living/silicon/ai/death(gibbed)
 	if(stat == DEAD)	return
 	stat = DEAD
-	icon_state = "ai-crash"
-
+	if (src.name == "Skuld" && src.ckey == "ravensdale")//checks ID of AI and player to see if it needs to pull the custom death sprite and goes to blue-screen if it doesn't
+		icon_state = "ai-ravensdale-crash"
+	else icon_state = "ai-crash"
 	update_canmove()
 	if(src.eyeobj)
 		src.eyeobj.setLoc(get_turf(src))

@@ -73,15 +73,6 @@
 	if(!blinded)
 		flick("flash", flash)
 
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		xgibs(loc, viruses)
-		del(src)
-		return
-
 	var/shielded = 0
 
 	var/b_loss = null

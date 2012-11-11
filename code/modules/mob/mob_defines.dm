@@ -2,7 +2,7 @@
 	density = 1
 	layer = 4.0
 	animate_movement = 2
-	flags = NOREACT
+//	flags = NOREACT
 	glide_size = 8
 	var/datum/mind/mind
 

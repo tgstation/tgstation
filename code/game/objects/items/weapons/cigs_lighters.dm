@@ -246,12 +246,6 @@ ZIPPO
 	icon_state = "cigarbutt"
 
 
-/obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/match))
-		..()
-	else
-		user << "<span class='notice'>\The [src] straight out REFUSES to be lit by such uncivilized means.</span>"
-
 /////////////////
 //SMOKING PIPES//
 /////////////////
@@ -304,12 +298,6 @@ ZIPPO
 		user << "<span class='notice'>You refill the pipe with tobacco.</span>"
 		smoketime = initial(smoketime)
 	return
-
-/obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/match))
-		..()
-	else
-		user << "<span class='notice'>\The [src] straight out REFUSES to be lit by such means.</span>"
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
 	name = "corn cob pipe"

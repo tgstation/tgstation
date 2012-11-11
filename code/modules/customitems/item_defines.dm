@@ -287,11 +287,28 @@
 	icon_state = "wolfflight"
 	item_state = "wolfflight"
 
+/obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
+	name = "Zelda's Crowbar"
+	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "zeldacrowbar"
+	item_state = "crowbar"
+
+
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////
 
 //////////// Gloves ////////////
+
+/obj/item/clothing/gloves/fluff/murad_hassim_1
+	name = "Tajaran Surgical Gloves"
+	desc = "Reinforced sterile gloves custom tailored to comfortably accommodate Tajaran claws."
+	icon_state = "latex"
+	item_state = "lgloves"
+	siemens_coefficient = 0.30
+	permeability_coefficient = 0.01
+	color="white"
 
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
 	name = "mittens"
@@ -362,15 +379,21 @@
 	icon = 'custom_items.dmi'
 	icon_state = "enos_adlai_1"
 
+/obj/item/clothing/head/fluff/edvin_telephosphor_1 //foolamancer: Edvin Telephosphor
+	name = "Edvin's Hat"
+	desc = "A hat specially tailored for Skrellian anatomy. It has a yellow badge on the front, with a large red 'T' inscribed on it."
+	icon = 'custom_items.dmi'
+	icon_state = "edvin_telephosphor_1"
+
 //////////// Suits ////////////
 
-/obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
+/obj/item/clothing/suit/labcoat/fluff/pink //spaceman96: Trenna Seber
 	name = "pink labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a pink stripe down from the shoulders."
 	icon = 'custom_items.dmi'
 	icon_state = "labcoat_pink_open"
 
-/obj/item/clothing/suit/storage/det_suit/fluff/graycoat //vinceluk: Seth Sealis
+/obj/item/clothing/suit/det_suit/fluff/graycoat //vinceluk: Seth Sealis
 	name = "gray coat"
 	desc = "Old, worn out coat. It's seen better days."
 	icon = 'custom_items.dmi'
@@ -378,7 +401,7 @@
 	item_state = "graycoat"
 	color = "graycoat"
 
-/obj/item/clothing/suit/storage/det_suit/fluff/leatherjack //atomicdog92: Seth Sealis
+/obj/item/clothing/suit/det_suit/fluff/leatherjack //atomicdog92: Seth Sealis
 	name = "leather jacket"
 	desc = "A black leather coat, popular amongst punks, greasers, and other galactic scum."
 	icon = 'custom_items.dmi'
@@ -386,7 +409,7 @@
 	item_state = "leatherjack"
 	color = "leatherjack"
 
-/obj/item/clothing/suit/storage/labcoat/fluff/burnt //Jamini: Edwin Atweeke
+/obj/item/clothing/suit/labcoat/fluff/burnt //Jamini: Edwin Atweeke
 	name = "burnt labcoat"
 	desc = "This lab coat has clearly seen better, less burnt, days."
 	icon = 'custom_items.dmi'
@@ -483,7 +506,7 @@
 	icon_state = "cdc_jumpsuit"
 	color = "cdc_jumpsuit"
 
-/obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
+/obj/item/clothing/suit/labcoat/fluff/cdc_labcoat
 	name = "\improper CDC labcoat"
 	desc = "A standard-issue CDC labcoat that protects against minor chemical spills.  It has the name \"Wiles\" sewn on to the breast pocket."
 	icon = 'custom_items.dmi'
@@ -498,7 +521,7 @@
 	icon_state = "medical_short"
 	color = "medical_short"
 
-/obj/item/clothing/suit/storage/labcoat/fluff/red
+/obj/item/clothing/suit/labcoat/fluff/red
 	name = "red labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a red stripe on the shoulders and rolled up sleeves."
 	icon = 'custom_items.dmi'
@@ -506,7 +529,7 @@
 
 ////// Retired Patrol Outfit //desiderium: Rook Maudlin
 
-/obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat
+/obj/item/clothing/suit/det_suit/fluff/retpolcoat
 	name = "retired colony patrolman's coat"
 	desc = "A clean, black nylon windbreaker with the words \"OUTER LIGHT POLICE\" embroidered in gold-dyed thread on the back. \"RETIRED\" is tastefully embroidered below in a smaller font."
 	icon = 'custom_items.dmi'

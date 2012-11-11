@@ -360,23 +360,27 @@
 							else
 								usr << "\blue You don't have an oxygen tank."
 		if("act_intent")
-			usr.a_intent_change("right")
-/*		if("help")
+			if(issilicon(usr))
+				if(usr.a_intent == "help")
+					usr.a_intent = "hurt"
+					usr.hud_used.action_intent.icon_state = "harm"
+				else
+					usr.a_intent = "help"
+					usr.hud_used.action_intent.icon_state = "help"
+			else
+				usr.a_intent_change("right")
+		if("help")
 			usr.a_intent = "help"
-			usr.hud_used.action_intent.icon_state = "help"
-			usr.hud_used.show_intent_icons = 0
+			usr.hud_used.action_intent.icon_state = "intent_help"
 		if("harm")
 			usr.a_intent = "hurt"
-			usr.hud_used.action_intent.icon_state = "harm"
-			usr.hud_used.show_intent_icons = 0
+			usr.hud_used.action_intent.icon_state = "intent_hurt"
 		if("grab")
 			usr.a_intent = "grab"
-			usr.hud_used.action_intent.icon_state = "grab"
-			usr.hud_used.show_intent_icons = 0
+			usr.hud_used.action_intent.icon_state = "intent_grab"
 		if("disarm")
 			usr.a_intent = "disarm"
-			usr.hud_used.action_intent.icon_state = "disarm"
-			usr.hud_used.show_intent_icons = 0	*/
+			usr.hud_used.action_intent.icon_state = "intent_disarm"
 		if("pull")
 			usr.stop_pulling()
 		if("throw")

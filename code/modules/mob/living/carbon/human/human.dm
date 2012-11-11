@@ -228,18 +228,6 @@
 	if(!blinded)
 		flick("flash", flash)
 
-// /obj/item/clothing/suit/bomb_suit(src)
-// /obj/item/clothing/head/bomb_hood(src)
-
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		gibs(loc, viruses)
-		del(src)
-		return
-
 	var/shielded = 0
 	var/b_loss = null
 	var/f_loss = null
@@ -828,3 +816,130 @@
 				spawn(350)	//wait 35 seconds before next volley
 					lastpuke = 0
 
+/mob/living/carbon/human/proc/morph()
+	set name = "Morph"
+	set category = "Superpower"
+	if(!(mMorph in mutations))
+		src.verbs -= /mob/living/carbon/human/proc/morph
+		return
+
+	var/new_facial = input("Please select facial hair color.", "Character Generation",rgb(r_facial,g_facial,b_facial)) as color
+	if(new_facial)
+		r_facial = hex2num(copytext(new_facial, 2, 4))
+		g_facial = hex2num(copytext(new_facial, 4, 6))
+		b_facial = hex2num(copytext(new_facial, 6, 8))
+
+	var/new_hair = input("Please select hair color.", "Character Generation",rgb(r_hair,g_hair,b_hair)) as color
+	if(new_facial)
+		r_hair = hex2num(copytext(new_hair, 2, 4))
+		g_hair = hex2num(copytext(new_hair, 4, 6))
+		b_hair = hex2num(copytext(new_hair, 6, 8))
+
+	var/new_eyes = input("Please select eye color.", "Character Generation",rgb(r_eyes,g_eyes,b_eyes)) as color
+	if(new_eyes)
+		r_eyes = hex2num(copytext(new_eyes, 2, 4))
+		g_eyes = hex2num(copytext(new_eyes, 4, 6))
+		b_eyes = hex2num(copytext(new_eyes, 6, 8))
+
+	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-s_tone]")  as text
+
+	if (!new_tone)
+		new_tone = 35
+	s_tone = max(min(round(text2num(new_tone)), 220), 1)
+	s_tone =  -s_tone + 35
+
+	// hair
+	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/hairs = list()
+
+	// loop through potential hairs
+	for(var/x in all_hairs)
+		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
+		hairs.Add(H.name) // add hair name to hairs
+		del(H) // delete the hair after it's all done
+
+	var/new_style = input("Please select hair style", "Character Generation",h_style)  as null|anything in hairs
+
+	// if new style selected (not cancel)
+	if (new_style)
+		h_style = new_style
+
+	// facial hair
+	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+	var/list/fhairs = list()
+
+	for(var/x in all_fhairs)
+		var/datum/sprite_accessory/facial_hair/H = new x
+		fhairs.Add(H.name)
+		del(H)
+
+	new_style = input("Please select facial style", "Character Generation",f_style)  as null|anything in fhairs
+
+	if(new_style)
+		f_style = new_style
+
+	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
+	if (new_gender)
+		if(new_gender == "Male")
+			gender = MALE
+		else
+			gender = FEMALE
+	regenerate_icons()
+	check_dna()
+
+	visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
+
+/mob/living/carbon/human/proc/remotesay()
+	set name = "Project mind"
+	set category = "Superpower"
+	if(!(mRemotetalk in src.mutations))
+		src.verbs -= /mob/living/carbon/human/proc/remotesay
+		return
+	var/list/creatures = list()
+	for(var/mob/living/carbon/h in world)
+		creatures += h
+	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
+	if (isnull(target))
+		return
+
+	var/say = input ("What do you wish to say")
+	if(mRemotetalk in target.mutations)
+		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
+	else
+		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
+	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
+	for(var/mob/dead/observer/G in world)
+		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
+
+/mob/living/carbon/human/proc/remoteobserve()
+	set name = "Remote View"
+	set category = "Superpower"
+
+	if(!(mRemote in src.mutations))
+		reset_view(0)
+		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
+		return
+
+	if(client.eye != client.mob)
+		reset_view(0)
+		return
+
+	var/list/mob/creatures = list()
+
+	for(var/mob/living/carbon/h in world)
+		var/turf/temp_turf = get_turf(h)
+		if(temp_turf.z != 1 && temp_turf.z != 5) //Not on mining or the station.
+			continue
+		creatures += h
+
+	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
+
+	if (target)
+		reset_view(target)
+	else
+		reset_view(0)
+
+/mob/living/carbon/human/proc/get_visible_gender()
+	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
+		return NEUTER
+	return gender

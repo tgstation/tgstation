@@ -308,6 +308,8 @@ var/MAX_EXPLOSION_RANGE = 14
 
 // mob/var/list/mutations
 
+#define STRUCDNASIZE 27
+
 	// Generic mutations:
 #define	TK				1
 #define COLD_RESISTANCE	2
@@ -349,6 +351,19 @@ var/MAX_EXPLOSION_RANGE = 14
 
 	//2spooky
 #define SKELETON 29
+
+// Other Mutations:
+#define mNobreath		100 	// no need to breathe
+#define mRemote			101 	// remote viewing
+#define mRegen			102 	// health regen
+#define mRun			103 	// no slowdown
+#define mRemotetalk		104 	// remote talking
+#define mMorph			105 	// changing appearance
+#define mBlend			106 	// nothing (seriously nothing)
+#define mHallucination	107 	// hallucinations
+#define mFingerprints	108 	// no fingerprints
+#define mShock			109 	// insulated hands
+#define mSmallsize		110 	// table climbing
 
 //disabilities
 #define NEARSIGHTED		1

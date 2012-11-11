@@ -70,15 +70,6 @@
 	if(!blinded)
 		flick("flash", flash)
 
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		gibs(loc, viruses)
-		del(src)
-		return
-
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
