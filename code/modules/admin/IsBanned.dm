@@ -1,7 +1,7 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 world/IsBanned(key,address,computer_id)
-	//if(ckey(key) in admin_datums)
-	//	return ..()
+	if(ckey(key) in admin_datums)
+		return ..()
 
 	if(config.ban_legacy_system)
 
