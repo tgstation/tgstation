@@ -17,6 +17,7 @@ fastler: Fastler Greay: /obj/item/weapon/card/id/fluff/lifetime
 fniff: Sarah Calvera: /obj/item/fluff/sarah_calvera_1
 fniff: Angleo Wilkerson: /obj/item/fluff/angelo_wilkerson_1
 foolamancer: Edvin Telephosphor: /obj/item/clothing/head/fluff/edvin_telephosphor_1
+furohman: Fay Sullivan: /obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1
 gvazdas: Sarah Carbrokes: /obj/item/fluff/sarah_carbrokes_1
 jamini: Edwin Atweeke: /obj/item/clothing/suit/labcoat/fluff/burnt
 leonheart11:  Johann Erzatz: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/johann_erzatz_1
@@ -39,8 +40,6 @@ serithi: Serithi Artalis: /obj/item/clothing/glasses/fluff/serithi_artalis_1, /o
 sirribbit: /obj/item/weapon/clipboard/fluff/mcreary_journal
 sicktrigger: David Fanning: /obj/item/fluff/david_fanning_1
 silentthunder: Val McNeil: /obj/item/fluff/val_mcneil_1
-sniperyeti: Patrick Harris: /obj/item/weapon/lighter/zippo/fluff/sniperyeti_1
-sniperyeti: Susan Harris: /obj/item/weapon/lighter/zippo/fluff/sniperyeti_1
 spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/suit/labcoat/fluff/pink
 sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
 staghorn: Mara Kilpatrick: /obj/item/clothing/mask/mara_kilpatrick_1
