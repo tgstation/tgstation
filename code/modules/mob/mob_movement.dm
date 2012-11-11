@@ -520,4 +520,4 @@
 	if (mdelay != lastmovementdelay)
 		lastmovementdelay = mdelay
 		glide_size = 32*(world.tick_lag)/lastmovementdelay
-		src << "Debug: Your new glide speed is [glide_size]"
+		//src << "Debug: Your new glide speed is [glide_size]"
