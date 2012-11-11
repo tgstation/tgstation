@@ -61,13 +61,13 @@
 			H.monkeyize()
 
 proc/trigger_side_effect(mob/living/carbon/human/H)
-	if(!istype(H)) return
+	if(!istype(H)) returngit a
 	var/tp = pick(typesof(/datum/genetics/side_effect) - /datum/genetics/side_effect)
 	var/datum/genetics/side_effect/S = new tp
 
 	S.start(H)
 	spawn(20)
-		H.Weaken(S.duration)
+		H.Weaken(rand(0, S.duration / 20))
 	sleep(S.duration)
 	H.SetWeakened(0)
 	S.finish(H)
