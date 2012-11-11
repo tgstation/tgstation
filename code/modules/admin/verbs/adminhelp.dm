@@ -100,7 +100,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 			if(ai_found)
 				check_laws_text = (" (<A HREF='?src=\ref[X.holder];adminchecklaws=[ref_mob]'>CL</A>)")
 
-			var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>) [check_laws_text]:</b> [msg]"
+			var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>) [check_laws_text]:</b> [msg]"
 			msg_to_send = replacetext(msg_to_send, "HOLDERREF", "\ref[X.holder]")
 			msg_to_send = replacetext(msg_to_send, "ADMINREF", "\ref[X]")
 			X << msg_to_send

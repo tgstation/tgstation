@@ -1168,10 +1168,6 @@
 		var/mob/M = locate(href_list["adminplayervars"])
 		usr.client.debug_variables(M)
 
-	else if(href_list["adminplayersubtlemessage"])
-		var/mob/M = locate(href_list["adminplayersubtlemessage"])
-		usr.client.cmd_admin_subtle_message(M)
-
 	else if(href_list["adminplayerobservejump"])
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 
@@ -1241,7 +1237,7 @@
 		src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;"
 		src.owner << "Location = [location_description];"
 		src.owner << "[special_role_description]"
-		src.owner << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
+		src.owner << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
 
 	else if(href_list["adminspawncookie"])
 		var/mob/living/carbon/human/H = locate(href_list["adminspawncookie"])
@@ -1264,13 +1260,6 @@
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
 		H << "\blue Your prayers have been answered!! You received the <b>best cookie</b>!"
-
-	else if(href_list["traitor_panel_pp"])
-		var/mob/M = locate(href_list["traitor_panel_pp"])
-		if(!ismob(M))
-			usr << "This can only be used on instances of type /mob."
-			return
-		show_traitor_panel(M)
 
 	else if(href_list["BlueSpaceArtillery"])
 		var/mob/living/M = locate(href_list["BlueSpaceArtillery"])
@@ -1356,7 +1345,6 @@
 		if(!check_rights(R_ADMIN))	return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")	return
-
 		var/mob/M = locate(href_list["getmob"])
 		usr.client.Getmob(M)
 
@@ -1367,29 +1355,29 @@
 		usr.client.sendmob(M)
 
 	else if(href_list["narrateto"])
+		if(!check_rights(R_ADMIN))	return
+
 		var/mob/M = locate(href_list["narrateto"])
 		usr.client.cmd_admin_direct_narrate(M)
 
 	else if(href_list["subtlemessage"])
+		if(!check_rights(R_ADMIN))	return
+
 		var/mob/M = locate(href_list["subtlemessage"])
 		usr.client.cmd_admin_subtle_message(M)
 
 	else if(href_list["traitor"])
+		if(!check_rights(R_ADMIN))	return
+
 		if(!ticker || !ticker.mode)
 			alert("The game hasn't started yet!")
 			return
 
 		var/mob/M = locate(href_list["traitor"])
-		if(!istype(M))
-			player_panel_new()
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob."
 			return
-		if(isalien(M))
-			alert("Is an [M.mind ? M.mind.special_role : "Alien"]!", "[M.key]")
-			return
-		if(M.mind)
-			M.mind.edit_memory()
-			return
-		alert("Cannot make this mob a traitor! It has no mind!")
+		show_traitor_panel(M)
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
@@ -2065,7 +2053,7 @@
 			if (ok)
 				world << text("<B>A secret has been activated by []!</B>", usr.key)
 
-	if(href_list["secretsadmin"])
+	else if(href_list["secretsadmin"])
 		if(!check_rights(R_ADMIN))	return
 
 		var/ok = 0

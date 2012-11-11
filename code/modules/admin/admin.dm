@@ -48,9 +48,9 @@ var/global/floorIsLava = 0
 
 	body += "<br><br>\[ "
 	body += "<a href='?src=\ref[src];adminplayervars=\ref[M]'>VV</a> - "
-	body += "<a href='?src=\ref[src];traitor_panel_pp=\ref[M]'>TP</a> - "
+	body += "<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> - "
 	body += "<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> - "
-	body += "<a href='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</a> - "
+	body += "<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> - "
 	body += "<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
@@ -371,14 +371,13 @@ var/global/floorIsLava = 0
 	if(master_mode == "secret")
 		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
 
-	if(check_rights(R_ADMIN))
-		dat += {"
-			<BR>
-			<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
-			<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
-			<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>
-			<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>
-			"}
+	dat += {"
+		<BR>
+		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
+		<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
+		<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>
+		<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>
+		"}
 
 	usr << browse(dat, "window=admin2;size=210x180")
 	return
@@ -823,9 +822,13 @@ var/global/floorIsLava = 0
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
 
-	if (!M.mind)
-		usr << "Sorry, this mob has no mind!"
+	if(!istype(M))
+		usr << "This can only be used on instances of type /mob"
 		return
+	if(!M.mind)
+		usr << "This mob has no mind!"
+		return
+
 	M.mind.edit_memory()
 	feedback_add_details("admin_verb","STP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
