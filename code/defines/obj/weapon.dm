@@ -1068,9 +1068,9 @@
 
 	New()
 		..()
+		info = ""
 		for(var/tp in typesof(/datum/genetics/side_effect) - /datum/genetics/side_effect)
 			var/datum/genetics/side_effect/S = new tp
-			info = ""
 			info += "<B>Name:</B>\t [S.name]<BR>"
 			info += "<B>Symptom:</B>\t [S.symptom]<BR>"
 			info += "<B>Treatment:</B>\t [S.treatment]<BR>"

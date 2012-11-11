@@ -61,6 +61,7 @@
 			H.monkeyize()
 
 proc/trigger_side_effect(mob/living/carbon/human/H)
+	if(!istype(H)) return
 	var/tp = pick(typesof(/datum/genetics/side_effect) - /datum/genetics/side_effect)
 	var/datum/genetics/side_effect/S = new tp
 
