@@ -203,6 +203,10 @@
 			if(W.germ_level > 1000)
 				owner.adjustToxLoss(1 * wound_update_accuracy)
 
+			// Salving also helps against infection
+			if(W.germ_level > 0 && W.salved && prob(2))
+				W.germ_level = 0
+				
 		// sync the organ's damage with its wounds
 		src.update_damages()
 
@@ -212,6 +216,14 @@
 			if(W.internal) continue
 			rval |= !W.bandaged
 			W.bandaged = 1
+		return rval
+
+	proc/clamp()
+		var/rval = 0
+		for(var/datum/wound/W in wounds)
+			if(W.internal) continue
+			rval |= !W.clamped
+			W.clamped = 1
 		return rval
 
 	proc/salve()
@@ -254,7 +266,7 @@
 		if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
 			src.fracture()
 		if(germ_level > 0)
-			for(var/datum/wound/W in wounds) if(!W.bandaged)
+			for(var/datum/wound/W in wounds) if(!W.bandaged && !W.salved)
 				W.germ_level = max(W.germ_level, germ_level)
 		return
 

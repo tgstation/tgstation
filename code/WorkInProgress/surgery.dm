@@ -134,7 +134,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] clamps bleeders in [target]'s [affected.display_name] with \the [tool].",	\
 		"\blue You clamp bleeders in [target]'s [affected.display_name] with \the [tool].")
-		affected.bandage()
+		affected.clamp()
 		affected.status &= ~ORGAN_BLEEDING
 		spread_germs_to_organ(affected, user)
 

@@ -25,6 +25,8 @@
 
 	// is the wound bandaged?
 	var/tmp/bandaged = 0
+	// Similar to bandaged, but works differently
+	var/tmp/clamped = 0
 	// is the wound salved?
 	var/tmp/salved = 0
 	// is the wound disinfected?
@@ -127,7 +129,7 @@
 
 	proc/bleeding()
 		// internal wounds don't bleed in the sense of this function
-		return (!bandaged && (damage_type == BRUISE && damage >= 20 || damage_type == CUT) && current_stage <= max_bleeding_stage && !src.internal)
+		return (!(bandaged||clamped) && (damage_type == BRUISE && damage >= 20 || damage_type == CUT) && current_stage <= max_bleeding_stage && !src.internal)
 
 /** CUTS **/
 /datum/wound/cut
