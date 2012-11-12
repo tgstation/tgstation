@@ -1595,6 +1595,10 @@
 					spawn(0)
 						H.corgize()
 				ok = 1
+			if("striketeam")
+				if(usr.client.strike_team())
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","Strike")
 			if("gravity")
 				if(!(ticker && ticker.mode))
 					usr << "Please wait until the game starts!  Not sure how it will work otherwise."

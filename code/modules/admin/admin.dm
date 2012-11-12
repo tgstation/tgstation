@@ -416,6 +416,7 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
 			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
+			<A href='?src=\ref[src];secretsfun=striketeam'>Send in a strike team</A><BR>
 			<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
 			<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
 			<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
