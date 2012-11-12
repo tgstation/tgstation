@@ -651,7 +651,7 @@
 		if(joblist.len) //at least 1 banned job exists in joblist so we have stuff to unban.
 			if(!config.ban_legacy_system)
 				usr << "Unfortunately, database based unbanning cannot be done through this panel"
-				DB_ban_panel(usr.client.ckey)
+				DB_ban_panel(M.ckey)
 				return
 			var/msg
 			for(var/job in joblist)

@@ -28,5 +28,8 @@
 	//the type of the ID the player will have
 	var/idtype = /obj/item/weapon/card/id
 
+	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
+	var/req_admin_notify
+
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1

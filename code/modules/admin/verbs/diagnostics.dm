@@ -134,7 +134,7 @@
 
 	if(!check_rights(R_SERVER))	return
 
-	message_admins("[usr] manually reloaded admins.txt")
+	message_admins("[usr] manually reloaded admins")
 	load_admins()
 	feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
