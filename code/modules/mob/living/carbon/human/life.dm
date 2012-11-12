@@ -1078,8 +1078,9 @@ AND YOU */
 			else if(sleeping)
 				handle_dreams()
 				adjustHalLoss(-5)
-				if(mind.active || immune_to_ssd)
-					sleeping = max(sleeping-1, 0)
+				if (mind)
+					if(mind.active || immune_to_ssd)
+						sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS
 				if( prob(10) && health && !hal_crit )
