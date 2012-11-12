@@ -57,6 +57,15 @@ proc/build_surgery_steps_list()
 		var/datum/surgery_step/S = new T
 		surgery_steps += S
 
+proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
+	if(!istype(user) || !istype(E)) return
+
+	var/germ_level = user.germ_level
+	if(user.gloves)
+		germ_level = user.gloves.germ_level
+
+	E.germ_level = germ_level
+
 
 //////////////////////////////////////////////////////////////////
 //						COMMON STEPS							//
@@ -97,6 +106,7 @@ proc/build_surgery_steps_list()
 		"\blue You have made an incision on [target]'s [affected.display_name] with \the [tool].",)
 		affected.open = 1
 		affected.createwound(CUT, 1)
+		spread_germs_to_organ(affected, user)
 		if (target_zone == "head")
 			target.brain_op_stage = 1
 
@@ -126,6 +136,7 @@ proc/build_surgery_steps_list()
 		"\blue You clamp bleeders in [target]'s [affected.display_name] with \the [tool].")
 		affected.bandage()
 		affected.status &= ~ORGAN_BLEEDING
+		spread_germs_to_organ(affected, user)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -166,6 +177,7 @@ proc/build_surgery_steps_list()
 			self_msg = "\blue You keep the incision open on [target]'s lower abdomen with \the [tool]."
 		user.visible_message(msg, self_msg)
 		affected.open = 2
+		spread_germs_to_organ(affected, user)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -199,6 +211,7 @@ proc/build_surgery_steps_list()
 		user.visible_message("\blue [user] cauterizes the incision on [target]'s [affected.display_name] with \the [tool].", \
 		"\blue You cauterize the incision on [target]'s [affected.display_name] with \the [tool].")
 		affected.open = 0
+		affected.germ_level = 0
 		affected.status &= ~ORGAN_BLEEDING
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -282,7 +295,7 @@ proc/build_surgery_steps_list()
 
 
 //////////////////////////////////////////////////////////////////
-//				    INTERNAL WOUND PATCHING						//
+//					INTERNAL WOUND PATCHING						//
 //////////////////////////////////////////////////////////////////
 
 
@@ -346,6 +359,7 @@ proc/build_surgery_steps_list()
 		user.visible_message("\blue [user] applies some [tool] to [target]'s bone in [affected.display_name]", \
 			"\blue You apply some [tool] to [target]'s bone in [affected.display_name] with \the [tool].")
 		affected.stage = 1
+		spread_germs_to_organ(affected, user)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -373,10 +387,12 @@ proc/build_surgery_steps_list()
 			user.visible_message("\blue [user] sets the bone in [target]'s [affected.display_name] in place with \the [tool].", \
 				"\blue You set the bone in [target]'s [affected.display_name] in place with \the [tool].")
 			affected.stage = 2
+			spread_germs_to_organ(affected, user)
 		else
 			user.visible_message("\blue [user] sets the bone in [target]'s [affected.display_name]\red in the WRONG place with \the [tool].", \
 				"\blue You set the bone in [target]'s [affected.display_name]\red in the WRONG place with \the [tool].")
 			affected.fracture()
+			spread_germs_to_organ(affected, user)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -403,6 +419,7 @@ proc/build_surgery_steps_list()
 		user.visible_message("\blue [user] sets [target]'s [affected.display_name] skull with \the [tool]." , \
 			"\blue You set [target]'s [affected.display_name] skull with \the [tool].")
 		affected.stage = 2
+		spread_germs_to_organ(affected, user)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -435,6 +452,7 @@ proc/build_surgery_steps_list()
 		affected.status &= ~ORGAN_SPLINTED
 		affected.stage = 0
 		affected.perma_injury = 0
+		spread_germs_to_organ(affected, user)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -691,7 +709,7 @@ proc/build_surgery_steps_list()
 		"You begin to cut through [target]'s skull with \the [tool].")
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] has cut through [target]'s skull open with \the [tool].",        \
+		user.visible_message("\blue [user] has cut through [target]'s skull open with \the [tool].",		\
 		"\blue You have cut through [target]'s skull open with \the [tool].")
 		target.brain_op_stage = 2
 

@@ -41,6 +41,9 @@
 	// internal wounds can only be fixed through surgery
 	var/internal = 0
 
+	// amount of germs in the wound
+	var/germ_level = 0
+
 	// helper lists
 	var/tmp/list/desc_list = list()
 	var/tmp/list/damage_list = list()
@@ -143,7 +146,7 @@
 /datum/wound/gaping_wound
 	max_bleeding_stage = 2
 	stages = list("gaping wound" = 50, "large blood soaked clot" = 25, "large clot" = 15, "small angry scar" = 5, \
-	               "small straight scar" = 0)
+				   "small straight scar" = 0)
 
 /datum/wound/big_gaping_wound
 	max_bleeding_stage = 2

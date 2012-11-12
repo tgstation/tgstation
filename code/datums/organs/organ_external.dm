@@ -33,6 +33,9 @@
 	var/open = 0
 	var/stage = 0
 
+	// INTERNAL germs inside the organ, this is BAD if it's greater 0
+	var/germ_level = 0
+
 		// how often wounds should be updated, a higher number means less often
 	var/wound_update_accuracy = 20 // update every 20 ticks(roughly every minute)
 	New(var/datum/organ/external/P)
@@ -195,6 +198,11 @@
 				// amount of healing is spread over all the wounds
 				W.heal_damage((wound_update_accuracy * amount * W.amount * config.organ_regeneration_multiplier) / (20*owner.number_wounds+1))
 
+			if(W.germ_level > 100 && prob(10))
+				owner.adjustToxLoss(1 * wound_update_accuracy)
+			if(W.germ_level > 1000)
+				owner.adjustToxLoss(1 * wound_update_accuracy)
+
 		// sync the organ's damage with its wounds
 		src.update_damages()
 
@@ -222,6 +230,12 @@
 	proc/get_damage_fire()
 		return burn_dam
 
+	proc/is_infected()
+		for(var/datum/wound/W in wounds)
+			if(W.germ_level > 100)
+				return 1
+		return 0
+
 	process()
 		// process wounds, doing healing etc., only do this every 4 ticks to save processing power
 		if(owner.life_tick % wound_update_accuracy == 0)
@@ -239,6 +253,9 @@
 				return
 		if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
 			src.fracture()
+		if(germ_level > 0)
+			for(var/datum/wound/W in wounds) if(!W.bandaged)
+				W.germ_level = max(W.germ_level, germ_level)
 		return
 
 	proc/fracture()
