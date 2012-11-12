@@ -260,7 +260,7 @@
 			del(src)
 
 	/obj/machinery/atmospherics/unary/vent_scrubber/Del()
-		if (initial_loc)
+		if (initial_loc.air_scrub_info)
 			initial_loc.air_scrub_info -= id_tag
 		..()
 		return
