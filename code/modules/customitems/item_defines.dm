@@ -115,13 +115,13 @@
 	icon_on = "blackzippoon"
 	icon_off = "blackzippo"
 
-/obj/item/weapon/lighter/zippo/fluff/sniperyeti_1 //sniperyeti: Patrick Harris/Susan Harris
-	name = "red black zippo"
-	desc = "A shiny red zippo lighter that looks like it's in perfect condition."
+/obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1 //furohman: Fay Sullivan
+	name = "Graduation Lighter"
+	desc = "A silver engraved lighter with 41 on one side and Tharsis University on the other. The lid reads Fay Sullivan, Cybernetic Engineering, 2541"
 	icon = 'custom_items.dmi'
-	icon_state = "redzippo"
-	icon_on = "redzippoon"
-	icon_off = "redzippo"
+	icon_state = "gradzippo"
+	icon_on = "gradzippoon"
+	icon_off = "gradzippo"
 
 /obj/item/weapon/lighter/zippo/fluff/executivekill_1 //executivekill: Hunter Duke
 	name = "Gonzo Fist zippo"
