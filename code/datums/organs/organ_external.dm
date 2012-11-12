@@ -464,7 +464,7 @@
 
 			// Possibly trigger an internal wound, too.
 			if(damage > 10 && prob(damage))
-				var/datum/wound/internal_bleeding/I = new (5)
+				var/datum/wound/internal_bleeding/I = new (15)
 				wounds += I
 
 			// check whether we can add the wound to an existing wound
