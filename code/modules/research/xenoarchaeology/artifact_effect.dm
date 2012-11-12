@@ -1,3 +1,4 @@
+//
 
 /datum/artifact_effect
 	var/artifact_id = ""       // Display ID of the spawning artifact
@@ -49,13 +50,12 @@
 /datum/artifact_effect/proc/DoEffect(var/atom/originator)
 	archived_loc = originator.loc
 	if (src.effectmode == "contact")
-		var/mob/user = originator
+		var/mob/living/user = originator
 		if(!user)
 			return
 		switch(src.effecttype)
 			if("healing")
 				//caeltodo
-				/*
 				if (istype(user, /mob/living/carbon/human/))
 					user << "\blue You feel a soothing energy invigorate you."
 
@@ -80,9 +80,7 @@
 						H.vessel.add_reagent("blood",50)
 						spawn(1)
 							H.fixblood()
-						H.update_body()
-						H.update_face()
-						H.UpdateDamageIcon()
+						H.regenerate_icons()
 					return 1
 					//
 				if (istype(user, /mob/living/carbon/monkey/))
@@ -131,7 +129,6 @@
 					user.adjustFireLoss(40)
 					return 1
 				else user << "Nothing happens."
-				*/
 			if("forcefield")
 				while(created_field.len < 16)
 					var/obj/effect/energy_field/E = new (locate(user.x,user.y,user.z))
@@ -156,7 +153,6 @@
 	else if (src.effectmode == "aura")
 		switch(src.effecttype)
 			//caeltodo
-			/*
 			if("healing")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
@@ -226,7 +222,6 @@
 						D.charge -= 10
 						if(prob(10)) M << "\red SYSTEM ALERT: Energy draining field detected!"
 				return 1
-			*/
 			if("planthelper")
 				for (var/obj/machinery/hydroponics/H in range(src.aurarange,originator))
 					//makes weeds and shrooms and stuff more potent too
@@ -247,7 +242,6 @@
 			O.show_message(text("<b>[]</b> emits a pulse of energy!", originator), 1)
 		switch(src.effecttype)
 			//caeltodo
-			/*
 			if("healing")
 				for (var/mob/living/carbon/M in range(src.aurarange,originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
@@ -298,7 +292,6 @@
 					M.adjustFireLoss(10)
 					M.updatehealth()
 				return 1
-				*/
 			if("cellcharge")
 				for (var/obj/machinery/power/apc/C in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/B in C.contents)
@@ -353,7 +346,6 @@
 			O.show_message(text("<b>[]</b> emits a powerful burst of energy!", originator), 1)
 		switch(src.effecttype)
 			//caeltodo
-			/*
 			if("healing")
 				for (var/mob/living/carbon/M in world)
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
@@ -400,7 +392,6 @@
 					M.adjustFireLoss(5)
 					M.updatehealth()
 				return 1
-				*/
 			if("cellcharge")
 				for (var/obj/machinery/power/apc/C in world)
 					for (var/obj/item/weapon/cell/B in C.contents)
@@ -482,7 +473,3 @@
 			E.loc = locate(originator.x - 2,originator.y - 1,originator.z)
 			E = created_field[16]
 			E.loc = locate(originator.x - 2,originator.y - 2,originator.z)
-
-	/*for(var/obj/effect/energy_field/F in created_field)
-		created_field.Remove(F)
-		del F*/
