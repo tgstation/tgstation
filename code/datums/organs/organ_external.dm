@@ -462,7 +462,10 @@
 
 					W = new wound_type(damage)
 
-
+			// Possibly trigger an internal wound, too.
+			if(damage > 10 && prob(damage))
+				var/datum/wound/internal_bleeding/I = new (5)
+				wounds += I
 
 			// check whether we can add the wound to an existing wound
 			for(var/datum/wound/other in wounds)
