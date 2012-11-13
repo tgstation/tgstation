@@ -180,7 +180,7 @@ datum/preferences
 			dat += "<b>Adminhelp sound</b>: "
 			dat += "[(sound_adminhelp)?"On":"Off"] <a href='byond://?src=\ref[user];preference=hear_adminhelps'>toggle</a><br>"
 
-			if(user.client.holder.rights & R_FUN)
+			if(config.allow_admin_ooccolor && check_rights(R_FUN,0))
 				dat += "<br><b>OOC</b><br>"
 				dat += "<a href='byond://?src=\ref[user];preference=ooccolor;task=input'>Change color</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font><br>"
 

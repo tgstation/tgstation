@@ -51,7 +51,7 @@
 			if(holder)
 				if(!holder.fakekey || C.holder)
 					if(holder.rights & R_ADMIN)
-						C << "<font color=[holder.ooccolor]><b><span class='prefix'>OOC:</span> <EM>[key][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
+						C << "<font color=[config.allow_admin_ooccolor ? holder.ooccolor :"#b82e00" ]><b><span class='prefix'>OOC:</span> <EM>[key][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
 					else
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[key][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else

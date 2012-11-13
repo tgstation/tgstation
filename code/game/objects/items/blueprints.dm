@@ -64,7 +64,7 @@ move an amendment</a> to the drawing.</p>
 "}
 		if (AREA_SPECIAL)
 			text += {"
-<p>This place doesn't noted on this blueprints.</p>
+<p>This place doesn't noted on these blueprints.</p>
 "}
 		else
 			return
