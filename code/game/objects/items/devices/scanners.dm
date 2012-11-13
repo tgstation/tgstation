@@ -1,4 +1,3 @@
-
 /*
 CONTAINS:
 T-RAY
@@ -117,6 +116,9 @@ MASS SPECTROMETER
 		user.show_message(text("\blue [] | [] | [] | []", fake_oxy > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", M.getToxLoss() > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", M.getFireLoss() > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", M.getBruteLoss() > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
 	else
 		user.show_message(text("\blue [] | [] | [] | []", M.getOxyLoss() > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", M.getToxLoss() > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", M.getFireLoss() > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", M.getBruteLoss() > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
+	if (istype(M, /mob/living/carbon/human))
+		if(M:virus2 || M:reagents.total_volume > 0)
+			user.show_message(text("\red Warning: Unknown substance detected in subject's blood."))
 	if (M.getCloneLoss())
 		user.show_message(text("\red Subject appears to have been imperfectly cloned."), 1)
 	for(var/datum/disease/D in M.viruses)
