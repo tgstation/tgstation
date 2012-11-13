@@ -307,22 +307,17 @@
 
 	sleep(100)
 */
+	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
+	sleep(600)
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(istype(H,/mob/living/carbon/human))
 			H.apply_effect((rand(15,75)),IRRADIATE,0)
 			if (prob(5))
 				H.apply_effect((rand(90,150)),IRRADIATE,0)
-			if (prob(25))
-				if (prob(75))
-					randmutb(H)
-					domutcheck(H,null,1)
-				else
-					randmutg(H)
-					domutcheck(H,null,1)
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
-	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
+	command_alert("Radiation levels are within standard parameters again.", "Anomaly Alert")
 	world << sound('sound/AI/radiation.ogg')
 
 

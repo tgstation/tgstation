@@ -944,6 +944,12 @@
 		return NEUTER
 	return gender
 
+/mob/living/carbon/human/proc/increase_germ_level(n)
+    if(gloves)
+        gloves.germ_level += n
+    else
+        germ_level += n
+        
 /mob/living/carbon/human/revive()
 	for (var/datum/organ/external/O in organs)
 		O.status &= ~ORGAN_BROKEN

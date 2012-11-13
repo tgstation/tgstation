@@ -40,6 +40,7 @@
 	permeability_mod = 15//likely to infect
 	can_carry = 0
 	var/gibbed = 0
+	stage_minimum_age = 300
 
 /datum/disease/alien_embryo/stage_act()
 	..()

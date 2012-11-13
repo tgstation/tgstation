@@ -280,7 +280,7 @@
 						var/splint = ""
 						var/internal_bleeding = ""
 						for(var/datum/wound/W in e.wounds) if(W.internal)
-							internal_bleeding = "Internal Bleeding:"
+							internal_bleeding = "<br>Internal Bleeding"
 							break
 						if(e.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
@@ -293,7 +293,7 @@
 						if(e.implant)
 							imp = "Implanted:"
 						if(!AN && !open && !infected & !imp)
-							AN = "None"
+							AN = "None:"
 						if(!(e.status & ORGAN_DESTROYED))
 							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[bled][AN][splint][open][infected][imp][internal_bleeding]</td>"
 						else

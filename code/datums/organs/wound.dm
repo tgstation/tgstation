@@ -25,6 +25,8 @@
 
 	// is the wound bandaged?
 	var/tmp/bandaged = 0
+	// Similar to bandaged, but works differently
+	var/tmp/clamped = 0
 	// is the wound salved?
 	var/tmp/salved = 0
 	// is the wound disinfected?
@@ -40,6 +42,9 @@
 
 	// internal wounds can only be fixed through surgery
 	var/internal = 0
+
+	// amount of germs in the wound
+	var/germ_level = 0
 
 	// helper lists
 	var/tmp/list/desc_list = list()
@@ -94,8 +99,7 @@
 	// heal the given amount of damage, and if the given amount of damage was more
 	// than what needed to be healed, return how much heal was left
 	// set @heals_internal to also heal internal organ damage
-	// TODO: set heals_internal to 0 by default
-	proc/heal_damage(amount, heals_internal = 1)
+	proc/heal_damage(amount, heals_internal = 0)
 		if(src.internal && !heals_internal)
 			// heal nothing
 			return amount
@@ -124,7 +128,7 @@
 
 	proc/bleeding()
 		// internal wounds don't bleed in the sense of this function
-		return (!bandaged && (damage_type == BRUISE && damage >= 20 || damage_type == CUT) && current_stage <= max_bleeding_stage && !src.internal)
+		return (!(bandaged||clamped) && (damage_type == BRUISE && damage >= 20 || damage_type == CUT) && current_stage <= max_bleeding_stage && !src.internal)
 
 /** CUTS **/
 /datum/wound/cut
@@ -143,7 +147,7 @@
 /datum/wound/gaping_wound
 	max_bleeding_stage = 2
 	stages = list("gaping wound" = 50, "large blood soaked clot" = 25, "large clot" = 15, "small angry scar" = 5, \
-	               "small straight scar" = 0)
+				   "small straight scar" = 0)
 
 /datum/wound/big_gaping_wound
 	max_bleeding_stage = 2

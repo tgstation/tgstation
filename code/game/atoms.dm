@@ -9,6 +9,7 @@
 	var/last_bumped = 0
 	var/pass_flags = 0
 	var/throwpass = 0
+	var/germ_level = 0 // The higher the germ level, the more germ on the atom.
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -121,7 +122,7 @@
  * Recursevly searches all atom contens (including contents contents and so on).
  *
  * ARGS: path - search atom contents for atoms of this type
- *       list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
+ *	   list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
  *
  * RETURNS: list of found atoms
  */
@@ -419,8 +420,8 @@ its easier to just keep the beam vertical.
 		A.fingerprints = list()
 	if(!istype(A.fingerprintshidden,/list))
 		A.fingerprintshidden = list()
-	A.fingerprints |= fingerprints            //detective
-	A.fingerprintshidden |= fingerprintshidden    //admin
+	A.fingerprints |= fingerprints			//detective
+	A.fingerprintshidden |= fingerprintshidden	//admin
 	A.fingerprintslast = fingerprintslast
 
 
@@ -555,6 +556,7 @@ its easier to just keep the beam vertical.
 
 /atom/proc/clean_blood()
 	clean_prints()
+	src.germ_level = 0
 	if(istype(blood_DNA, /list))
 		del(blood_DNA)
 		return 1
