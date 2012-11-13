@@ -3,7 +3,6 @@
 	layer = 4.0
 	animate_movement = 2
 //	flags = NOREACT
-	glide_size = 8
 	var/datum/mind/mind
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
@@ -228,5 +227,3 @@
 	var/can_stand = 1 //Whether this mob have ability to stand
 
 	var/immune_to_ssd = 0
-//Animation speed changer
-	var/lastmovementdelay = 0
