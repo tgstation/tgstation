@@ -99,6 +99,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] starts the incision on [target]'s [affected.display_name] with \the [tool].", \
 		"You start the incision on [target]'s [affected.display_name] with \the [tool].")
+		target.custom_pain("You feel a horrible pain as if from a sharp knife in your [affected.display_name]!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -129,6 +130,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] starts clamping bleeders in [target]'s [affected.display_name] with \the [tool].", \
 		"You start clamping bleeders in [target]'s [affected.display_name] with \the [tool].")
+		target.custom_pain("The pain in your [affected.display_name] is maddening!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -164,6 +166,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 			msg = "[user] starts to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
 			self_msg = "You start to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
 		user.visible_message(msg, self_msg)
+		target.custom_pain("It feels like the skin on your [affected.display_name] is on fire!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -205,6 +208,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] is beginning to cauterize the incision on [target]'s [affected.display_name] with \the [tool]." , \
 		"You are beginning to cauterize the incision on [target]'s [affected.display_name] with \the [tool].")
+		target.custom_pain("Your [affected.display_name] is being burned!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -248,6 +252,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts to separating [target]'s appendix from the abdominal wall with \the [tool].", \
 		"You start to separating [target]'s appendix from the abdominal wall with \the [tool]." )
+		target.custom_pain("The pain in your abdomen is living hell!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] has separated [target]'s appendix with \the [tool]." , \
@@ -272,6 +277,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts removing [target]'s appendix with \the [tool].", \
 		"You start removing [target]'s appendix with \the [tool].")
+		target.custom_pain("Someone's ripping out your bowels!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] has removed [target]'s appendix with \the [tool].", \
@@ -317,6 +323,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		if (affected.stage == 0)
 			user.visible_message("[user] starts patching the damaged vein in [target]'s [affected.display_name] with \the [tool]." , \
 			"You start patching the damaged vein in [target]'s [affected.display_name] with \the [tool].")
+		target.custom_pain("The pain in [affected.display_name] is unbearable!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -353,6 +360,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		if (affected.stage == 0)
 			user.visible_message("[user] starts applying medication to the damaged bones in [target]'s [affected.display_name] with \the [tool]." , \
 			"You start applying medication to the damaged bones in [target]'s [affected.display_name] with \the [tool].")
+		target.custom_pain("Something in your [affected.display_name] is causing you a lot of pain!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -380,6 +388,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] is beginning to set the bone in [target]'s [affected.display_name] in place with \the [tool]." , \
 			"You are beginning to set the bone in [target]'s [target_zone] in place with \the [tool].")
+		target.custom_pain("The pain in your [affected.display_name] is going to make you pass out!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
