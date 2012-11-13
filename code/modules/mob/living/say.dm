@@ -372,7 +372,7 @@ var/list/department_radio_keys = list(
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = say_quote(message)
+		var/message_a = say_quote(message,is_speaking_soghun,is_speaking_skrell,is_speaking_taj)
 
 		if (italics)
 			message_a = "<i>[message_a]</i>"
