@@ -260,6 +260,8 @@
 /mob/living/proc/revive()
 	setToxLoss(0)
 	setOxyLoss(0)
+	setCloneLoss(0)
+	setBrainLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
@@ -276,6 +278,8 @@
 	heal_overall_damage(1000, 1000)
 	buckled = initial(src.buckled)
 	handcuffed = initial(src.handcuffed)
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
 	if(stat == 2)
 		dead_mob_list -= src
 		living_mob_list += src

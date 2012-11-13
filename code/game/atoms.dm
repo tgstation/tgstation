@@ -1216,12 +1216,10 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			// ------- YOU ARE CLICKING ON AN OBJECT THAT'S INACCESSIBLE TO YOU AND IS NOT YOUR HUD -------
 			if((LASER in usr:mutations) && usr:a_intent == "hurt" && world.time >= usr.next_move)
 				// ------- YOU HAVE THE LASER MUTATION, YOUR INTENT SET TO HURT AND IT'S BEEN MORE THAN A DECISECOND SINCE YOU LAS TATTACKED -------
-				var/turf/oloc
+
 				var/turf/T = get_turf(usr)
 				var/turf/U = get_turf(src)
-				if(istype(src, /turf)) oloc = src
-				else
-					oloc = loc
+
 
 				if(istype(usr, /mob/living/carbon/human))
 					usr:nutrition -= rand(1,5)
@@ -1234,7 +1232,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 				A.firer = usr
 				A.def_zone = usr:get_organ_target()
-				A.original = oloc
+				A.original = src
 				A.current = T
 				A.yo = U.y - T.y
 				A.xo = U.x - T.x

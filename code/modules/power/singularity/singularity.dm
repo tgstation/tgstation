@@ -302,10 +302,10 @@ var/global/list/uneatable = list(
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 	else if(!(movement_dir in cardinal))
-		movement_dir = pick(NORTH, SOUTH, EAST, WEST)
+		movement_dir = pick(NORTH, EAST, WEST, SOUTH)
 
 	if(movement_dir == last_failed_movement)
-		var/list/L = new/list(NORTH, SOUTH, EAST, WEST)
+		var/list/L = new/list(NORTH, EAST, WEST, SOUTH)
 		L.Remove(last_failed_movement)
 		movement_dir = pick(L)
 
