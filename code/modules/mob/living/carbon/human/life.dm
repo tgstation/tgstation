@@ -670,6 +670,7 @@
 				else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 					if(prob(20))
 						spawn(0) emote(pick("giggle", "laugh"))
+				SA.moles = 0
 
 		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 			if(breath.temperature < 260.15)
@@ -1116,8 +1117,9 @@
 			else if(sleeping)
 				handle_dreams()
 				adjustHalLoss(-5)
-				if(mind.active || immune_to_ssd)
-					sleeping = max(sleeping-1, 0)
+				if (mind)
+					if(mind.active || immune_to_ssd)
+						sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS
 				if( prob(10) && health && !hal_crit )

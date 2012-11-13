@@ -272,16 +272,25 @@
 
 /datum/supply_packs/virus
 	name = "Virus crate"
-	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/flu_virion,
+	contains = list(/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random
+/*	VIRUS2 4LIFE
+					/obj/item/weapon/reagent_containers/glass/bottle/flu_virion,
 					/obj/item/weapon/reagent_containers/glass/bottle/cold,
 					/obj/item/weapon/reagent_containers/glass/bottle/fake_gbs,
 					/obj/item/weapon/reagent_containers/glass/bottle/magnitis,
-//					/obj/item/weapon/reagent_containers/glass/bottle/wizarditis, worse than GBS if anything
-//					/obj/item/weapon/reagent_containers/glass/bottle/gbs, No. Just no.
+					/obj/item/weapon/reagent_containers/glass/bottle/wizarditis, worse than GBS if anything
+					/obj/item/weapon/reagent_containers/glass/bottle/gbs, No. Just no.
 					/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/weapon/reagent_containers/glass/bottle/brainrot,
 					/obj/item/weapon/storage/syringes,
-					/obj/item/weapon/storage/beakerbox)
+					/obj/item/weapon/storage/beakerbox
+*/
+					)
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "Virus crate"
