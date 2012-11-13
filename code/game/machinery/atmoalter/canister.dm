@@ -199,6 +199,9 @@
 	return src.attack_hand(user)
 
 /obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
+	return src.interact(user)
+
+/obj/machinery/portable_atmospherics/canister/interact(var/mob/user as mob)
 	if (src.destroyed)
 		return
 
