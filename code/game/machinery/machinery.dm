@@ -184,15 +184,18 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
+/obj/machinery/interact(mob/user as mob)
+	return src.attack_hand(user)
+
 /obj/machinery/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
 	if(user.lying || user.stat)
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
-		usr << "\red You don't have the dexterity to do this!"
+	if ( ! (istype(user, /mob/living/carbon/human) || \
+			istype(user, /mob/living/silicon) || \
+			istype(user, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+		user << "\red You don't have the dexterity to do this!"
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick
