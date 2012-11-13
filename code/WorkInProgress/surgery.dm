@@ -1,4 +1,3 @@
-
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M)
 	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
@@ -64,7 +63,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	if(user.gloves)
 		germ_level = user.gloves.germ_level
 
-	E.germ_level = germ_level
+	E.germ_level = max(E.germ_level, germ_level)
 
 
 //////////////////////////////////////////////////////////////////
