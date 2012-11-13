@@ -739,12 +739,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		if (prob(15)) //Give the AI a chance of intercepting the message
 			var/who = src.owner
+			var/sp_word = "from"
 			if(prob(50))
 				who = P:owner
+				sp_word = "to"
 			for(var/mob/living/silicon/ai/ai in mob_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.aiPDA != P && ai.aiPDA != src)
-					ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
+					ai.show_message("<i>Intercepted message [sp_word] <b>[who]</b>: [t]</i>")
 
 		if (!P.silent)
 			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
