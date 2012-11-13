@@ -205,6 +205,7 @@
 			if(4)
 				display_msg = "vibrates!"
 	else
+		my_effect.HaltEffect()
 		switch(rand(2))
 			if(0)
 				display_msg = "grows dull!"
@@ -223,7 +224,7 @@
 	else if (my_effect.trigger != "touch" && !src.activated) user << "Nothing happens."
 
 	if (my_effect.effectmode == "contact" && src.activated && src.charged)
-		my_effect.DoEffect(src)
+		my_effect.DoEffect(user)
 		src.charged = 0
 		src.chargetime = src.recharge
 

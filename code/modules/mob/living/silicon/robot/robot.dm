@@ -277,14 +277,6 @@
 	if(!blinded)
 		flick("flash", flash)
 
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		del(src)
-		return
-
 	switch(severity)
 		if(1.0)
 			if (stat != 2)

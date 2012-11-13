@@ -28,11 +28,11 @@
 /obj/item/weapon/storage/firstaid/regular/New()
 	..()
 	if (empty) return
+	new /obj/item/device/healthanalyzer( src )
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/stack/medical/ointment(src)
 	return

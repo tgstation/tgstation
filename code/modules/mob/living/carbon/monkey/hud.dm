@@ -16,6 +16,55 @@
 	src.adding += using
 	action_intent = using
 
+//intent small hud objects
+	var/icon/ico
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
+	using = new /obj/screen( src )
+	using.name = "help"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = 21
+	src.adding += using
+	help_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
+	using = new /obj/screen( src )
+	using.name = "disarm"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = 21
+	src.adding += using
+	disarm_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
+	using = new /obj/screen( src )
+	using.name = "grab"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = 21
+	src.adding += using
+	grab_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
+	using = new /obj/screen( src )
+	using.name = "harm"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = 21
+	src.adding += using
+	hurt_intent = using
+
+//end intent small hud objects
+
 	using = new /obj/screen()
 	using.name = "mov_intent"
 	using.dir = SOUTHWEST

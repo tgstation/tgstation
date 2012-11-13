@@ -115,13 +115,13 @@
 	icon_on = "blackzippoon"
 	icon_off = "blackzippo"
 
-/obj/item/weapon/lighter/zippo/fluff/sniperyeti_1 //sniperyeti: Patrick Harris/Susan Harris
-	name = "red black zippo"
-	desc = "A shiny red zippo lighter that looks like it's in perfect condition."
+/obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1 //furohman: Fay Sullivan
+	name = "Graduation Lighter"
+	desc = "A silver engraved lighter with 41 on one side and Tharsis University on the other. The lid reads Fay Sullivan, Cybernetic Engineering, 2541"
 	icon = 'custom_items.dmi'
-	icon_state = "redzippo"
-	icon_on = "redzippoon"
-	icon_off = "redzippo"
+	icon_state = "gradzippo"
+	icon_on = "gradzippoon"
+	icon_off = "gradzippo"
 
 /obj/item/weapon/lighter/zippo/fluff/executivekill_1 //executivekill: Hunter Duke
 	name = "Gonzo Fist zippo"
@@ -287,11 +287,28 @@
 	icon_state = "wolfflight"
 	item_state = "wolfflight"
 
+/obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
+	name = "Zelda's Crowbar"
+	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "zeldacrowbar"
+	item_state = "crowbar"
+
+
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////
 
 //////////// Gloves ////////////
+
+/obj/item/clothing/gloves/fluff/murad_hassim_1
+	name = "Tajaran Surgical Gloves"
+	desc = "Reinforced sterile gloves custom tailored to comfortably accommodate Tajaran claws."
+	icon_state = "latex"
+	item_state = "lgloves"
+	siemens_coefficient = 0.30
+	permeability_coefficient = 0.01
+	color="white"
 
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
 	name = "mittens"
@@ -361,6 +378,12 @@
 	desc = "Because when you're the toughest Mother Hubbard on the station, nobody's criticizing your fashion sense."
 	icon = 'custom_items.dmi'
 	icon_state = "enos_adlai_1"
+
+/obj/item/clothing/head/fluff/edvin_telephosphor_1 //foolamancer: Edvin Telephosphor
+	name = "Edvin's Hat"
+	desc = "A hat specially tailored for Skrellian anatomy. It has a yellow badge on the front, with a large red 'T' inscribed on it."
+	icon = 'custom_items.dmi'
+	icon_state = "edvin_telephosphor_1"
 
 //////////// Suits ////////////
 
