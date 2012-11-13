@@ -61,6 +61,7 @@ datum/mind
 		if(current)					//remove ourself from our old body's mind variable
 			if(changeling)
 				current.remove_changeling_powers()
+				current.verbs -= /datum/changeling/proc/EvolutionMenu
 			current.mind = null
 		if(new_character.mind)		//remove any mind currently in our new body's mind variable
 			new_character.mind.current = null
