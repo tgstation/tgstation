@@ -186,8 +186,8 @@
 				// let the GC handle the deletion of the wound
 			if(W.internal && !W.is_treated())
 				// internal wounds get worse over time
-				W.open_wound(0.5 * wound_update_accuracy)
-				owner.vessel.remove_reagent("blood",0.1 * W.damage * wound_update_accuracy)
+				W.open_wound(0.1 * wound_update_accuracy)
+				owner.vessel.remove_reagent("blood",0.2 * W.damage * wound_update_accuracy)
 
 			if(W.is_treated())
 				// slow healing
@@ -206,7 +206,7 @@
 			// Salving also helps against infection
 			if(W.germ_level > 0 && W.salved && prob(2))
 				W.germ_level = 0
-				
+
 		// sync the organ's damage with its wounds
 		src.update_damages()
 

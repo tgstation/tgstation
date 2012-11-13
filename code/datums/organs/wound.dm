@@ -99,8 +99,7 @@
 	// heal the given amount of damage, and if the given amount of damage was more
 	// than what needed to be healed, return how much heal was left
 	// set @heals_internal to also heal internal organ damage
-	// TODO: set heals_internal to 0 by default
-	proc/heal_damage(amount, heals_internal = 1)
+	proc/heal_damage(amount, heals_internal = 0)
 		if(src.internal && !heals_internal)
 			// heal nothing
 			return amount
