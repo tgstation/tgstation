@@ -251,6 +251,7 @@
 						user << "\blue Now adding plating..."
 						if (do_after(user,40))
 							if(!src || !S || S.amount < 2) return
+							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ReplaceWithMineralWall("clown")
