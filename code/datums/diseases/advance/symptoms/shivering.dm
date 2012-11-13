@@ -1,7 +1,7 @@
 /*
 //////////////////////////////////////
 
-Fever
+Shivering
 
 	No change to hidden.
 	Increases resistance.
@@ -10,25 +10,25 @@ Fever
 	Low level.
 
 Bonus
-	Heats up your body.
+	Cools down your body.
 
 //////////////////////////////////////
 */
 
-/datum/symptom/fever
+/datum/symptom/shivering
 
-	name = "Fever"
+	name = "Shivering"
 	stealth = 0
-	resistance = 3
-	stage_speed = 3
+	resistance = 2
+	stage_speed = 2
 	transmittable = 1
 	level = 2
 
-/datum/symptom/fever/Activate(var/datum/disease/advance/A)
+/datum/symptom/shivering/Activate(var/datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/carbon/M = A.affected_mob
-		M << "<span class='notice'>[pick("You feel hot.", "You feel like you're burning.")]</span>"
-		M.bodytemperature += 20 * A.stage
+		M << "<span class='notice'>[pick("You feel cold.", "You start shaking from the cold.")]</span>"
+		M.bodytemperature -= 20 * A.stage
 
 	return

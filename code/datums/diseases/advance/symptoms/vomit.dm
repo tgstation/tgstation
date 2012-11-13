@@ -91,5 +91,5 @@ Bonus
 		M.adjustBruteLoss(3)
 
 	var/turf/pos = get_turf(M)
-	pos.add_vomit_floor(M)
+	pos.add_blood_floor(M)
 	playsound(pos, 'sound/effects/splat.ogg', 50, 1)

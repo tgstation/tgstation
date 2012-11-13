@@ -12,7 +12,7 @@ datum
 		var/description = ""
 		var/datum/reagents/holder = null
 		var/reagent_state = SOLID
-		var/data = null
+		var/list/data = null
 		var/volume = 0
 		var/nutriment_factor = 0
 		//var/list/viruses = list()
@@ -99,27 +99,17 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				var/datum/reagent/blood/self = src
 				src = null
-				for(var/datum/disease/D in self.data["viruses"])
-					//var/datum/disease/virus = new D.type(0, D, 1)
-					// We don't spread.
-					if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS) continue
+				if(self.data && self.data["viruses"])
+					for(var/datum/disease/D in self.data["viruses"])
+						//var/datum/disease/virus = new D.type(0, D, 1)
+						// We don't spread.
+						if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS) continue
 
-					if(method == TOUCH)
-						M.contract_disease(D)
-					else //injected
-						M.contract_disease(D, 1, 0)
+						if(method == TOUCH)
+							M.contract_disease(D)
+						else //injected
+							M.contract_disease(D, 1, 0)
 
-
-				/*
-				if(self.data["virus"])
-					var/datum/disease/V = self.data["virus"]
-					if(M.resistances.Find(V.type)) return
-					if(method == TOUCH)//respect all protective clothing...
-						M.contract_disease(V)
-					else //injected
-						M.contract_disease(V, 1, 0)
-				return
-				*/
 
 
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place

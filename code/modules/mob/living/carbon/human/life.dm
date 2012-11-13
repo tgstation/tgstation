@@ -160,7 +160,7 @@
 			if (prob(10))
 				stuttering = max(10, stuttering)
 		if (getBrainLoss() >= 60 && stat != 2)
-			if (prob(7))
+			if (prob(3))
 				switch(pick(1,2,3))
 					if(1)
 						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
@@ -209,12 +209,8 @@
 			emote("collapse")
 
 		if ((HULK in mutations) && health >= 25)
-			if (prob(7))
-				switch(pick(1,2))
-					if(1)
-						say(pick("HGH!", "PROTEIN!", "OH YEAH!", "HULK SMASH!", "HULK NOT LIKE BOOKS!", "HNNNNNNNNNGGGGGGH!", ))
-					if(2)
-						emote("flexes")
+			if (prob(3))
+				say(pick("HGH!", "PROTEIN!", "OH YEAH!", "HULK SMASH!", "HULK NOT LIKE BOOKS!", "HNNNNNNNNNGGGGGGH!", ))
 		if (radiation)
 			if (radiation > 100)
 				radiation = 100

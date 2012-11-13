@@ -475,8 +475,27 @@ datum
 
 			mix_virus_2
 
-				required_reagents = list("blood" = 5, "mutagen" = 5)
+				name = "Mix Virus 2"
+				id = "mixvirus2"
+				required_reagents = list("blood" = 1, "mutagen" = 5)
 				level = 4
+
+			rem_virus
+
+				name = "Devolve Virus"
+				id = "remvirus"
+				required_reagents = list("blood" = 1, "synaptizine" = 5)
+
+				on_reaction(var/datum/reagents/holder, var/created_volume)
+
+					var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+					if(B && B.data)
+						var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
+						if(D)
+							D.Devolve()
+					holder.del_reagent(id)
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

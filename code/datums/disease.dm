@@ -30,6 +30,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/cure_list = null // allows for multiple possible cure combinations
 	var/cure_chance = 8//chance for the cure to do its job
 	var/spread = null //spread type description
+	var/initial_spread = null
 	var/spread_type = AIRBORNE
 	var/contagious_period = 0//the disease stage when it can be spread
 	var/list/affected_species = list()
@@ -58,7 +59,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		//world << "[affected_mob] is carrier"
 		return
 
-	spread = (cure_present?"Remissive":initial(spread))
+	spread = (cure_present?"Remissive":initial_spread)
 
 	if(stage > max_stages)
 		stage = max_stages
@@ -94,7 +95,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return result
 
 
-/datum/disease/proc/spread(var/atom/source=null, var/airborne_range = 3,  var/force_spread)
+/datum/disease/proc/spread(var/atom/source=null, var/airborne_range = 2,  var/force_spread)
 	//world << "Disease [src] proc spread was called from holder [source]"
 
 	// If we're overriding how we spread, say so here
@@ -174,11 +175,15 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
 	if(process)					 // Viruses in list are considered active.
 		active_diseases += src
+	initial_spread = spread
 
 /datum/disease/proc/IsSame(var/datum/disease/D)
 	if(istype(src, D.type))
 		return 1
 	return 0
+
+/datum/disease/proc/Copy()
+	return new type(0, src)
 
 /*
 /datum/disease/Del()

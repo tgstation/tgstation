@@ -499,7 +499,7 @@ its easier to just keep the beam vertical.
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M as mob)
-	if( istype(M, /mob/living/carbon/monkey) )
+	if( istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/human))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source1 = src
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
@@ -522,11 +522,7 @@ its easier to just keep the beam vertical.
 	else if( istype(M, /mob/living/silicon/robot ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
-			var/obj/effect/decal/cleanable/oil/this = new /obj/effect/decal/cleanable/oil(source2)
-			for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = new D.type
-				this.viruses += newDisease
-				newDisease.holder = this
+			new /obj/effect/decal/cleanable/oil(source2)
 
 /atom/proc/clean_prints()
 	if(istype(fingerprints, /list))

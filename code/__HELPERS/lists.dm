@@ -305,8 +305,3 @@ proc/listclearnulls(list/list)
 				r += bit
 
 	return r
-
-/proc/safe_pick_list(var/list/L)
-	if(L && L.len)
-		return pick(L)
-	return null

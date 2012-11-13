@@ -31,7 +31,7 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3)
-				M.visible_message("<B>[M]</B> sniffs.")
+				M.emote("sniff")
 			else
 				M.emote("sneeze")
 				A.spread(A.holder, 5, AIRBORNE)

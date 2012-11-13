@@ -72,7 +72,7 @@
 
 	if ((HULK in mutations) && health >= 25)
 		if(copytext(message, 1, 2) != "*")
-			message = uppertext(message)  //because I don't know how to code properly in getting vars from other files -Bro
+			message = "[uppertext(message)]!!" //because I don't know how to code properly in getting vars from other files -Bro
 
 	//Ninja mask obscures text and voice if set to do so.
 	//Would make it more global but it's sort of ninja specific.

@@ -11,6 +11,7 @@
 
 var/list/archive_diseases = list()
 
+
 /*
 
 	PROPERTIES
@@ -54,7 +55,8 @@ var/list/archive_diseases = list()
 		if(!D || !D.symptoms || !D.symptoms.len)
 			symptoms = GenerateSymptoms()
 		else
-			symptoms = D.symptoms
+			for(var/datum/symptom/S in D.symptoms)
+				symptoms += new S.type
 			name = D.name
 
 	Refresh(!copy)
@@ -93,6 +95,9 @@ var/list/archive_diseases = list()
 	del(src)	//delete the datum to stop it processing
 	return
 
+// Returns the advance disease with a different reference memory.
+/datum/disease/advance/Copy()
+	return new /datum/disease/advance(0, src, 1)
 
 /*
 
@@ -178,7 +183,7 @@ var/list/archive_diseases = list()
 		hidden = list( (properties["stealth"] > 2), (properties["stealth"] > 3) )
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
 		SetSpread(max(BLOOD, min(properties["transmittable"] - symptoms.len, AIRBORNE)))
-		permeability_mod = round(0.5 * properties["transmittable"])
+		permeability_mod = max(round(0.5 * properties["transmittable"]), 1)
 		stage_prob = max(properties["stage_rate"], 1)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
@@ -250,12 +255,18 @@ var/list/archive_diseases = list()
 				cure_id = "ethylredoxrazine"
 
 			if(6)
-				cure_id = "silver"
+				cure_id = "synaptizine"
 
 			if(7)
-				cure_id = "gold"
+				cure_id = "silver"
 
 			if(8)
+				cure_id = "gold"
+
+			if(9)
+				cure_id = "mindbreaker"
+
+			else
 				cure_id = "plasma"
 
 		// Get the cure name from the cure_id
@@ -267,10 +278,19 @@ var/list/archive_diseases = list()
 
 // Randomly generate a symptom, has a chance to lose or gain a symptom.
 /datum/disease/advance/proc/Evolve(var/level = 2)
-	var/s = safe_pick_list(GenerateSymptoms(level, 1))
+	var/s = safepick(GenerateSymptoms(level, 1))
 	if(s)
 		AddSymptom(s)
 		Refresh()
+	return
+
+// Randomly remove a symptom.
+/datum/disease/advance/proc/Devolve()
+	if(symptoms.len > 1)
+		var/s = safepick(symptoms)
+		if(s)
+			RemoveSymptom(s)
+			Refresh()
 	return
 
 // Name the disease.
@@ -293,7 +313,7 @@ var/list/archive_diseases = list()
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < 4 + rand(-1, 1))
+	if(symptoms.len < 3 + rand(-1, 1))
 		symptoms += S
 	else
 		RemoveSymptom(pick(symptoms))
@@ -314,9 +334,13 @@ var/list/archive_diseases = list()
 // Mix a list of advance diseases and return the mixed result.
 /proc/Advance_Mix(var/list/D_list)
 
+	//world << "Mixing!!!!"
+
 	var/list/diseases = list()
-	for(var/datum/disease/advance/A in D_list)
-		diseases += A
+
+	for(var/datum/disease/advance/A in D_list.Copy())
+		diseases += A.Copy()
+
 	if(!diseases.len)
 		return null
 	if(diseases.len <= 1)
@@ -330,15 +354,26 @@ var/list/archive_diseases = list()
 
 		var/datum/disease/advance/D1 = pick(diseases)
 		diseases -= D1
-		D_list -= D1
 
 		var/datum/disease/advance/D2 = pick(diseases)
 		D2.Mix(D1)
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
+	//world << "END MIXING!!!!!"
 	var/datum/disease/advance/to_return = pick(diseases)
 	to_return.Refresh()
 	return to_return
 
+/proc/SetViruses(var/datum/reagent/R, var/list/data)
+	if(data)
+		var/list/preserve = list()
+		if(istype(data) && data["viruses"])
+			for(var/datum/disease/A in data["viruses"])
+				preserve += A.Copy()
+			R.data = data.Copy()
+		else
+			R.data = data
+		if(preserve.len)
+			R.data["viruses"] = preserve
 
 #undef RANDOM_STARTING_LEVEL

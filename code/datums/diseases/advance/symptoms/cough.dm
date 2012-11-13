@@ -30,7 +30,7 @@ BONUS
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3)
-				M << "<span notice='notice'>[pick("You swallow excess mucus.", "You lightly cough .")]</span>"
+				M << "<span notice='notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>"
 			else
 				M.emote("cough")
 				M.drop_item()
