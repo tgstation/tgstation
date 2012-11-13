@@ -93,6 +93,9 @@
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 
+	var/assistant_maint = 0 //Do assistants get maint access?
+	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -335,6 +338,12 @@
 
 				if("automute_on")
 					automute_on = 1
+
+				if("assistant_maint")
+					config.assistant_maint = 1
+
+				if("gateway_delay")
+					config.gateway_delay = text2num(value)
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

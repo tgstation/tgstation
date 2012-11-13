@@ -180,7 +180,10 @@
 		if("Station Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
 		if("Assistant")
-			return list()
+			if(config.assistant_maint)
+				return list(access_maint_tunnels)
+			else
+				return list()
 		if("Chaplain")
 			return list(access_morgue, access_chapel_office, access_crematorium)
 		if("Detective")
