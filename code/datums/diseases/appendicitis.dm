@@ -12,7 +12,7 @@
 	severity = "Medium"
 	longevity = 1000
 	hidden = list(0, 1)
-	stage_minimum_age = 100 // at least 100 life ticks per stage
+	stage_minimum_age = 300 // at least 200 life ticks per stage
 
 /datum/disease/appendicitis/stage_act()
 	..()
