@@ -289,7 +289,7 @@ var/global/list/uneatable = list(
 					continue
 				if(O.invisibility == 101)
 					src.consume(O)
-		T.ReplaceWithSpace()
+		T.ChangeTurf(/turf/space)
 		gain = 2
 	src.energy += gain
 	return
@@ -505,7 +505,7 @@ var/global/list/uneatable = list(
 					continue
 				if(O.invisibility == 101)
 					src.consume(O)
-		A:ReplaceWithSpace()
+		A:ChangeTurf(/turf/space)
 	return
 
 /obj/machinery/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO

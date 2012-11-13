@@ -82,7 +82,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithWall()
+							Tsrc.ChangeTurf(/turf/simulated/wall)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/X in Tsrc.loc)
@@ -106,7 +106,7 @@
 								S.use(1)
 								user << "\blue Wall fully reinforced!"
 								var/turf/Tsrc = get_turf(src)
-								Tsrc.ReplaceWithRWall()
+								Tsrc.ChangeTurf(/turf/simulated/wall)
 								for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 									P.layer = 1
 								for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)

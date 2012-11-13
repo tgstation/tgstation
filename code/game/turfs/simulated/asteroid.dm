@@ -74,7 +74,7 @@
 			iterations = min_amount
 		for(var/i=0 to iterations)
 			new contains(src)
-	ReplaceWithSpace()
+	ChangeTurf(/turf/space)
 
 
 /turf/simulated/wall/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)//TODO

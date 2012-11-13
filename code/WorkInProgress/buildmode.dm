@@ -186,28 +186,28 @@
 			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
 				if(istype(object,/turf/space))
 					var/turf/T = object
-					T.ReplaceWithFloor()
+					T.ChangeTurf(/turf/simulated/floor)
 					return
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
-					T.ReplaceWithWall()
+					T.ChangeTurf(/turf/simulated/wall)
 					return
 				else if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
-					T.ReplaceWithRWall()
+					T.ChangeTurf(/turf/simulated/wall/r_wall)
 					return
 			else if(pa.Find("right"))
 				if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
-					T.ReplaceWithFloor()
+					T.ChangeTurf(/turf/simulated/floor)
 					return
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
-					T.ReplaceWithSpace()
+					T.ChangeTurf(/turf/space)
 					return
 				else if(istype(object,/turf/simulated/wall/r_wall))
 					var/turf/T = object
-					T.ReplaceWithWall()
+					T.ChangeTurf(/turf/simulated/wall)
 					return
 				else if(istype(object,/obj))
 					del(object)

@@ -279,7 +279,7 @@
 					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
-						target:ReplaceWithPlating()
+						target:ChangeTurf(/turf/simulated/floor/plating)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.use_power(energy_drain)
 				else if (istype(target, /turf/simulated/floor))
@@ -288,7 +288,7 @@
 					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
-						target:ReplaceWithSpace()
+						target:ChangeTurf(/turf/space)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.use_power(energy_drain)
 				else if (istype(target, /obj/machinery/door/airlock))
@@ -306,7 +306,7 @@
 					set_ready_state(0)
 					if(do_after_cooldown(target))
 						if(disabled) return
-						target:ReplaceWithPlating()
+						target:ChangeTurf(/turf/simulated/floor/plating)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
 						chassis.use_power(energy_drain*2)
@@ -315,7 +315,7 @@
 					set_ready_state(0)
 					if(do_after_cooldown(target))
 						if(disabled) return
-						target:ReplaceWithWall()
+						target:ChangeTurf(/turf/simulated/wall)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
 						chassis.use_power(energy_drain*2)

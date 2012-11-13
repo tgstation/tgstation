@@ -117,7 +117,7 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-	ReplaceWithPlating(explode)
+	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/examine()
 	set src in oview(1)
@@ -129,7 +129,7 @@
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			src.ReplaceWithSpace()
+			src.ChangeTurf(/turf/space)
 			return
 		if(2.0)
 			if (prob(50))
@@ -338,7 +338,7 @@
 	O.density = 1
 	O.layer = 5
 
-	var/turf/simulated/floor/F = ReplaceWithPlating()
+	var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
 	F.burn_tile()
 	F.icon_state = "wall_thermite"
 	user << "<span class='warning'>The thermite melts through the wall.</span>"
@@ -352,7 +352,7 @@
 	if (prob(15))
 		dismantle_wall()
 	else if(prob(70))
-		ReplaceWithPlating()
+		ChangeTurf(/turf/simulated/floor/plating)
 	else
 		ReplaceWithLattice()
 	return 0
