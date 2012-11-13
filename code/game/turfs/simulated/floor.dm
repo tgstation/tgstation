@@ -27,6 +27,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
+	var/mineral = "metal"
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
 
 

@@ -538,9 +538,9 @@
 					return
 
 			if(3.0)
-				if(M.mind && M.mind.changeling)
+				/*if(M.mind && M.mind.changeling)
 					user << "\red The neural tissue regrows before your eyes as you cut it."
-					return
+					return*/
 
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))

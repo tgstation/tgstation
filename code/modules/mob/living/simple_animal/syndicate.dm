@@ -101,7 +101,7 @@
 				stop_automated_movement = 1
 				if(!target_mob || SA_attackable(target_mob))
 					stance = SYNDICATE_STANCE_IDLE
-				if(target_mob in view(7, src))
+				if(target_mob in view(10, src))
 					if(ranged)
 						if(get_dist(src, target_mob) <= 6)
 							OpenFire(target_mob)
@@ -117,7 +117,7 @@
 					stance = SYNDICATE_STANCE_IDLE
 					target_mob = null
 					return
-				if(!(target_mob in view(7, src)))
+				if(!(target_mob in view(10, src)))
 					stance = SYNDICATE_STANCE_IDLE
 					target_mob = null
 					return
@@ -187,7 +187,7 @@
 
 /mob/living/simple_animal/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
-		if(prob(80))
+		if(prob(65))
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
 				damage = 0
