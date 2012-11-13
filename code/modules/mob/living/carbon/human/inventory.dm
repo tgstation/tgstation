@@ -587,7 +587,7 @@ It can still be worn/put on as normal.
 						target.internal = target.belt
 					if (target.internal)
 						for(var/mob/M in viewers(target, 1))
-							M.show_message("[source] is now running on internals.", 1)
+							M.show_message("[target] is now running on internals.", 1)
 						target.internal.add_fingerprint(source)
 						if (target.internals)
 							target.internals.icon_state = "internal1"

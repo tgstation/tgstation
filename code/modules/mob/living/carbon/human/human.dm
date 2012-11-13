@@ -944,9 +944,30 @@
 		return NEUTER
 	return gender
 
-
 /mob/living/carbon/human/proc/increase_germ_level(n)
     if(gloves)
         gloves.germ_level += n
     else
         germ_level += n
+        
+/mob/living/carbon/human/revive()
+	for (var/datum/organ/external/O in organs)
+		O.status &= ~ORGAN_BROKEN
+		O.status &= ~ORGAN_BLEEDING
+		O.status &= ~ORGAN_SPLINTED
+		O.status &= ~ORGAN_ATTACHABLE
+		if (!O.amputated)
+			O.status &= ~ORGAN_DESTROYED
+		O.wounds.Cut()
+
+	vessel.add_reagent("blood",560-vessel.total_volume)
+	fixblood()
+	for (var/obj/item/weapon/organ/head/H in world)
+		if(H.brainmob)
+			if(H.brainmob.real_name == src.real_name)
+				if(H.brainmob.mind)
+					H.brainmob.mind.transfer_to(src)
+					del(H)
+
+
+	..()
