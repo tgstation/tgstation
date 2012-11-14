@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/item/weapon
 	name = "weapon"
 	icon = 'icons/obj/weapons.dmi'
@@ -37,14 +35,17 @@
 	m_amt = 1000
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
+	var/cooldown = 0	//shield bash cooldown. based on world.time
 
 	IsShield()
 		return 1
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/melee/baton))
-			user.visible_message("<span class='warning'>[user] bashes their [src] with [W]!</span>")
-			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			if(cooldown < world.time - 25)
+				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+				cooldown = world.time
 		else
 			..()
 

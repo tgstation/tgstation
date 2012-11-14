@@ -10,6 +10,23 @@
 /obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
+	var/cooldown = 0
+
+//all credit to skasi for toy mech fun ideas
+/obj/item/toy/prize/attack_self(mob/user as mob)
+	if(cooldown < world.time - 8)
+		user << "<span class='notice'>You play with [src].</span>"
+		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
+		cooldown = world.time
+
+/obj/item/toy/prize/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(cooldown < world.time - 8)
+			user << "<span class='notice'>You play with [src].</span>"
+			playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
+			cooldown = world.time
+			return
+	..()
 
 /obj/item/toy/prize/ripley
 	name = "toy ripley"
