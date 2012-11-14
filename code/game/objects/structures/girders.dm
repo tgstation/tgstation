@@ -83,8 +83,6 @@
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall)
-							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-								P.layer = 1
 							for(var/turf/simulated/wall/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
@@ -107,8 +105,6 @@
 								user << "\blue Wall fully reinforced!"
 								var/turf/Tsrc = get_turf(src)
 								Tsrc.ChangeTurf(/turf/simulated/wall)
-								for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-									P.layer = 1
 								for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
 									if(X)	X.add_hiddenprint(usr)
 								del(src)
@@ -140,8 +136,6 @@
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/gold)
-							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
@@ -163,8 +157,6 @@
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/silver)
-							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
@@ -186,8 +178,6 @@
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/diamond)
-							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
@@ -209,8 +199,6 @@
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/uranium)
-							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
@@ -232,8 +220,6 @@
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/plasma)
-							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
@@ -255,8 +241,6 @@
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/clown)
-							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
@@ -278,8 +262,6 @@
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/sandstone)
-							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
-								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 								if(X)	X.add_hiddenprint(usr)
 							del(src)
