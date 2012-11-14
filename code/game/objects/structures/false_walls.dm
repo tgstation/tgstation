@@ -146,7 +146,7 @@
 			if(!mineral || mineral == "metal")
 				T.ChangeTurf(/turf/simulated/wall)
 			else
-				T.ReplaceWithMineralWall(mineral)
+				T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 			del(src)
 
 		if( istype(W, /obj/item/weapon/weldingtool) )
@@ -156,7 +156,7 @@
 				if(!mineral)
 					T.ChangeTurf(/turf/simulated/wall)
 				else
-					T.ReplaceWithMineralWall(mineral)
+					T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 				if(mineral != "plasma")//Stupid shit keeps me from pushing the attackby() to plasma walls -Sieve
 					T = get_turf(src)
 					T.attackby(W,user)
@@ -169,7 +169,7 @@
 		if(!mineral)
 			T.ChangeTurf(/turf/simulated/wall)
 		else
-			T.ReplaceWithMineralWall(mineral)
+			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 		if(mineral != "plasma")
 			T = get_turf(src)
 			T.attackby(W,user)
@@ -181,7 +181,7 @@
 		if(!mineral)
 			T.ChangeTurf(/turf/simulated/wall)
 		else
-			T.ReplaceWithMineralWall(mineral)
+			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 		T = get_turf(src)
 		T.attackby(W,user)
 		del(src)
@@ -191,7 +191,7 @@
 		if(!mineral)
 			T.ChangeTurf(/turf/simulated/wall)
 		else
-			T.ReplaceWithMineralWall(mineral)
+			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 		if(mineral != "plasma")
 			T = get_turf(src)
 			T.attackby(W,user)
@@ -308,9 +308,8 @@
 			active = 1
 			for(var/mob/living/L in range(3,src))
 				L.apply_effect(12,IRRADIATE,0)
-			for(var/turf/simulated/wall/mineral/T in range(3,src))
-				if(T.mineral == "uranium")
-					T.radiate()
+			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
+				T.radiate()
 			last_event = world.time
 			active = null
 			return

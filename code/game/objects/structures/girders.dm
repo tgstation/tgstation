@@ -139,7 +139,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("gold")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/gold)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -162,7 +162,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("silver")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/silver)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -185,7 +185,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("diamond")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/diamond)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -208,7 +208,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("uranium")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/uranium)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -231,7 +231,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("plasma")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/plasma)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -254,7 +254,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("clown")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/clown)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -277,7 +277,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("sandstone")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/sandstone)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)

@@ -1524,16 +1524,21 @@
 		if(target)
 			for (var/path in paths)
 				for (var/i = 0; i < number; i++)
-					var/atom/O = new path(target)
-					if(O)
-						O.dir = obj_dir
-						if(obj_name)
-							O.name = obj_name
-							if(istype(O,/mob))
-								var/mob/M = O
-								M.real_name = obj_name
-
-
+					if(path in typesof(/turf))
+						var/turf/O = target
+						var/turf/N = O.ChangeTurf(path)
+						if(N)
+							if(obj_name)
+								N.name = obj_name
+					else
+						var/atom/O = new path(target)
+						if(O)
+							O.dir = obj_dir
+							if(obj_name)
+								O.name = obj_name
+								if(istype(O,/mob))
+									var/mob/M = O
+									M.real_name = obj_name
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")

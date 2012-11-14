@@ -217,9 +217,8 @@
 
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 
-	if(N in typesof(/turf/simulated))
+	if(N in typesof(/turf/simulated/floor))
 		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
-
 		W.Assimilate_Air()
 
 		W.lighting_lumcount += old_lumcount
@@ -234,7 +233,6 @@
 		return W
 	else
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
-
 		W.lighting_lumcount += old_lumcount
 		if(old_lumcount != W.lighting_lumcount)
 			W.lighting_changed = 1
@@ -272,30 +270,9 @@
 	air.toxins = (atox/max(turf_count,1))
 	air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
 
-/turf/proc/ReplaceWithFloor()
-	return
-
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
-
-/turf/proc/ReplaceWithMineralWall(var/ore)
-	var/old_icon = icon_state
-
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
-	var/turf/simulated/wall/mineral/S = new /turf/simulated/wall/mineral( locate(src.x, src.y, src.z) )
-	S.lighting_lumcount += old_lumcount
-	if(old_lumcount != S.lighting_lumcount)
-		S.lighting_changed = 1
-		lighting_controller.changed_turfs += S
-
-	S.icon_old = old_icon
-	S.mineral = ore
-	S.New()//Hackish as fuck, but what can you do? -Sieve	//build it into the goddamn new() call up there ^ ~Carn
-															//e.g. new(turf/loc, mineral)
-	S.levelupdate()
-	return S
-
 
 /turf/proc/kill_creatures(mob/U = null)//Will kill people/creatures and damage mechs./N
 //Useful to batch-add creatures to the list.
