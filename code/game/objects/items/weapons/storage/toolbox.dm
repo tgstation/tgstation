@@ -20,7 +20,7 @@
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/device/analyzer(src)
+	new /obj/item/device/t_scanner(src)
 	new /obj/item/weapon/wirecutters(src)
 
 /obj/item/weapon/storage/toolbox/electrical/New()
