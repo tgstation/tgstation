@@ -272,34 +272,36 @@
 
 	// focus most of the blast on one organ
 	var/datum/organ/external/take_blast = pick(organs)
-	update |= take_blast.take_damage(b_loss * 0.9, f_loss * 0.9)
+	update |= take_blast.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
 
 	// distribute the remaining 10% on all limbs equally
 	b_loss *= 0.1
 	f_loss *= 0.1
 
+	var/weapon_message = "Explosive Blast"
+
 	for(var/datum/organ/external/temp in organs)
 		switch(temp.name)
 			if("head")
-				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
+				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
 			if("chest")
-				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4)
+				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4, used_weapon = weapon_message)
 			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("r_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("r_foot")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_foot")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 	if(update)	UpdateDamageIcon()
 
 
@@ -945,11 +947,11 @@
 	return gender
 
 /mob/living/carbon/human/proc/increase_germ_level(n)
-    if(gloves)
-        gloves.germ_level += n
-    else
-        germ_level += n
-        
+	if(gloves)
+		gloves.germ_level += n
+	else
+		germ_level += n
+		
 /mob/living/carbon/human/revive()
 	for (var/datum/organ/external/O in organs)
 		O.status &= ~ORGAN_BROKEN

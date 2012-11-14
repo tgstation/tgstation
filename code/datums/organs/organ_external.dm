@@ -122,6 +122,8 @@
 
 			if(status & ORGAN_BROKEN)
 				owner.emote("scream")
+				
+		if(used_weapon) add_autopsy_data(used_weapon, brute + burn)
 
 		owner.updatehealth()
 
@@ -518,6 +520,17 @@
 		for (var/datum/organ/external/T in children)
 			if(T)
 				T.robotize()
+
+	proc/add_autopsy_data(var/used_weapon, var/damage)
+		var/datum/autopsy_data/W = autopsy_data[used_weapon]
+		if(!W)
+			W = new()
+			W.weapon = used_weapon
+			autopsy_data[used_weapon] = W
+
+		W.hits += 1
+		W.damage += damage
+		W.time_inflicted = world.time
 
 /datum/organ/external/chest
 	name = "chest"

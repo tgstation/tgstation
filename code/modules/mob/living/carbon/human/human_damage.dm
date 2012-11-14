@@ -116,7 +116,7 @@
 	if(update)	UpdateDamageIcon()
 
 // damage MANY external organs, in random order
-/mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0)
+/mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0, var/used_weapon = null)
 	if(nodamage)	return	//godmode
 	var/list/datum/organ/external/parts = get_damageable_organs()
 	var/update = 0
@@ -126,7 +126,7 @@
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
 
-		update |= picked.take_damage(brute,burn,sharp)
+		update |= picked.take_damage(brute,burn,sharp,used_weapon)
 
 		brute	-= (picked.brute_dam - brute_was)
 		burn	-= (picked.burn_dam - burn_was)
@@ -154,7 +154,7 @@
 		zone = "head"
 	return organs_by_name[zone]
 
-/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0)
+/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0, var/used_weapon = null)
 	if((damagetype != BRUTE) && (damagetype != BURN))
 		..(damage, damagetype, def_zone, blocked)
 		return 1
@@ -176,10 +176,10 @@
 
 	switch(damagetype)
 		if(BRUTE)
-			if(organ.take_damage(damage, 0, sharp))
+			if(organ.take_damage(damage, 0, sharp, used_weapon))
 				UpdateDamageIcon()
 		if(BURN)
-			if(organ.take_damage(0, damage, sharp))
+			if(organ.take_damage(0, damage, sharp, used_weapon))
 				UpdateDamageIcon()
 	updatehealth()
 	return 1
