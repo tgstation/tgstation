@@ -111,6 +111,7 @@
 /obj/structure/window/attack_hand()
 	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 		usr << "\blue You smash through the window."
+		usr.say(pick("RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
 				O << "\red [usr] smashes through the window!"
@@ -124,6 +125,7 @@
 /obj/structure/window/attack_paw()
 	if ((HULK in usr.mutations))
 		usr << "\blue You smash through the window."
+		usr.say(pick("RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
 				O << "\red [usr] smashes through the window!"

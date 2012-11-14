@@ -208,9 +208,6 @@
 			Weaken(3)
 			emote("collapse")
 
-		if ((HULK in mutations) && health >= 25)
-			if (prob(3))
-				say(pick("HGH!", "PROTEIN!", "OH YEAH!", "HULK SMASH!", "HULK NOT LIKE BOOKS!", "HNNNNNNNNNGGGGGGH!", ))
 		if (radiation)
 			if (radiation > 100)
 				radiation = 100
