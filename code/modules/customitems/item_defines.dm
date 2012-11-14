@@ -55,6 +55,12 @@
 	icon_state = "david_fanning_1"
 	item_state = "david_fanning_1"
 
+/obj/item/fluff/john_mckeever_1 //kirbyelder: John McKeever
+	name = "Suspicious Paper"
+	desc = "A piece of paper reading: Smash = 1/3 Leaf Juice, 1/3 Tricker, 1/3 Aajkli Extract"
+	icon_state = "paper"
+	item_state = "paper"
+
 //////////////////////////////////
 ////////// Usable Items //////////
 //////////////////////////////////
