@@ -186,7 +186,7 @@
 		if("Detective")
 			return list(access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 		if("Medical Doctor")
-			return list(access_medical, access_morgue, access_surgery)
+			return list(access_medical, access_morgue, access_surgery, access_virology)
 		if("Botanist")	// -- TLE
 			return list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 		if("Librarian") // -- TLE
