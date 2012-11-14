@@ -189,7 +189,7 @@
 				W.open_wound(0.1 * wound_update_accuracy)
 				owner.vessel.remove_reagent("blood",0.2 * W.damage * wound_update_accuracy)
 
-			if(W.is_treated())
+			if(W.bandaged || W.salved)
 				// slow healing
 				var/amount = 0.2
 				if(W.is_treated())
