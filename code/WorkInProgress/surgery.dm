@@ -1007,19 +1007,14 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 
 //////////////////////////////////////////////////////////////////
-//						ALIEN SURGERY							//
+//			RIBCAGE SURGERY(LUNGS AND ALIENS)					//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/alien
+/datum/surgery_step/ribcage
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/embryo = 0
-		for(var/datum/disease/alien_embryo/A in target.viruses)
-			embryo = 1
-			break
+		return target_zone == "chest"
 
-		return embryo && target_zone == "chest"
-
-/datum/surgery_step/alien/saw_ribcage
+/datum/surgery_step/ribcage/saw_ribcage
 	required_tool = /obj/item/weapon/circular_saw
 
 	min_duration = 50
@@ -1027,7 +1022,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return ..() && target.embryo_op_stage == 0 && affected.open >= 2
+		return ..() && target.ribcage_op_stage == 0 && affected.open >= 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] begins to cut through [target]'s ribcage with \the [tool].", \
@@ -1037,21 +1032,21 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] has cut through [target]'s ribcage open with \the [tool].",		\
 		"\blue You have cut through [target]'s ribcage open with \the [tool].")
-		target.embryo_op_stage = 1
+		target.ribcage_op_stage = 1
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cracking [target]'s ribcage with \the [tool]!" , \
 		"\red Your hand slips, cracking [target]'s ribcage with \the [tool]!" )
 
 
-/datum/surgery_step/alien/retract_ribcage
+/datum/surgery_step/ribcage/retract_ribcage
 	required_tool = /obj/item/weapon/retractor
 
 	min_duration = 30
 	max_duration = 40
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && target.embryo_op_stage == 1
+		return ..() && target.ribcage_op_stage == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/msg = "[user] starts to force open the ribcage in [target]'s torso with \the [tool]."
@@ -1063,7 +1058,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		var/msg = "\blue [user] forces open [target]'s ribcage with \the [tool]."
 		var/self_msg = "\blue You force open [target]'s ribcage with \the [tool]."
 		user.visible_message(msg, self_msg)
-		target.embryo_op_stage = 2
+		target.ribcage_op_stage = 2
 
 		// Whoops!
 		if(prob(10))
@@ -1077,14 +1072,64 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		affected.fracture()
 
-/datum/surgery_step/alien/remove_embryo
+/datum/surgery_step/ribcage/close_ribcage
+	required_tool = /obj/item/weapon/retractor
+
+	min_duration = 20
+	max_duration = 40
+
+	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		return ..() && target.ribcage_op_stage == 2
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/msg = "[user] starts bending [target]'s ribcage back into place with \the [tool]."
+		var/self_msg = "You start bending [target]'s ribcage back into place with \the [tool]."
+		user.visible_message(msg, self_msg)
+		target.custom_pain("Something hurts horribly in your chest!",1)
+
+	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/msg = "[user] bends [target]'s ribcage back into place with \the [tool]."
+		var/self_msg = "You bends [target]'s ribcage back into place with \the [tool]."
+		user.visible_message(msg, self_msg)
+
+		target.ribcage_op_stage = 1
+
+/datum/surgery_step/ribcage/mend_ribcage
+	required_tool = /obj/item/weapon/bonegel
+
+	min_duration = 20
+	max_duration = 40
+
+	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		return ..() && target.ribcage_op_stage == 1
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/msg = "[user] starts applying \the [tool] to [target]'s ribcage."
+		var/self_msg = "You start applying \the [tool] to [target]'s ribcage."
+		user.visible_message(msg, self_msg)
+		target.custom_pain("Something hurts horribly in your chest!",1)
+
+
+	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/msg = "[user] applied \the [tool] to [target]'s ribcage."
+		var/self_msg = "You applied \the [tool] to [target]'s ribcage."
+		user.visible_message(msg, self_msg)
+
+		target.ribcage_op_stage = 0
+
+
+/datum/surgery_step/ribcage/remove_embryo
 	required_tool = /obj/item/weapon/hemostat
 
 	min_duration = 80
 	max_duration = 100
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && target.embryo_op_stage == 2
+		var/embryo = 0
+		for(var/datum/disease/alien_embryo/A in target.viruses)
+			embryo = 1
+			break
+		return ..() && embryo && target.ribcage_op_stage == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/msg = "[user] starts to pull something out from [target]'s ribcage with \the [tool]."
@@ -1099,52 +1144,6 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		var/mob/living/carbon/alien/larva/stupid = new(target.loc)
 		stupid.death(0)
 
-		target.embryo_op_stage = 3
-
 		for(var/datum/disease/alien_embryo in target.viruses)
 			alien_embryo.cure()
 
-/datum/surgery_step/alien/close_ribcage
-	required_tool = /obj/item/weapon/retractor
-
-	min_duration = 20
-	max_duration = 40
-
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return target.embryo_op_stage >= 2
-
-	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "[user] starts bending [target]'s ribcage back into place with \the [tool]."
-		var/self_msg = "You start bending [target]'s ribcage back into place with \the [tool]."
-		user.visible_message(msg, self_msg)
-		target.custom_pain("Something hurts horribly in your chest!",1)
-
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "[user] bends [target]'s ribcage back into place with \the [tool]."
-		var/self_msg = "You bends [target]'s ribcage back into place with \the [tool]."
-		user.visible_message(msg, self_msg)
-
-		target.embryo_op_stage = 1
-
-/datum/surgery_step/alien/mend_ribcage
-	required_tool = /obj/item/weapon/bonegel
-
-	min_duration = 20
-	max_duration = 40
-
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return target.embryo_op_stage == 1
-
-	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "[user] starts applying \the [tool] to [target]'s ribcage."
-		var/self_msg = "You start applying \the [tool] to [target]'s ribcage."
-		user.visible_message(msg, self_msg)
-		target.custom_pain("Something hurts horribly in your chest!",1)
-
-
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "[user] applied \the [tool] to [target]'s ribcage."
-		var/self_msg = "You applied \the [tool] to [target]'s ribcage."
-		user.visible_message(msg, self_msg)
-
-		target.embryo_op_stage = 0
