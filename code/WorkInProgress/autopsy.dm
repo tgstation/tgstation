@@ -72,7 +72,7 @@
 	var/scan_data = ""
 
 	if(timeofdeath)
-		scan_data += "<b>Time since death:</b> [round((world.time - timeofdeath) / (60*10))] minutes<br><br>"
+		scan_data += "<b>Time of death:</b> [worldtime2text(timeofdeath)]<br><br>"
 
 	var/n = 1
 	for(var/wdata_idx in wdata)
@@ -93,7 +93,7 @@
 			total_score+=W.damage
 
 
-			var/wound_age = world.time - W.time_inflicted
+			var/wound_age = W.time_inflicted
 			age = max(age, wound_age)
 
 		var/damage_desc
@@ -119,7 +119,7 @@
 		if(damaging_weapon)
 			scan_data += "Severity: [damage_desc]<br>"
 			scan_data += "Hits by weapon: [total_hits]<br>"
-		scan_data += "Age of wound: [round(age / (60*10))] minutes<br>"
+		scan_data += "Approximate time of wound infliction: [worldtime2text(age)]<br>"
 		scan_data += "Affected limbs: [D.organ_names]<br>"
 		scan_data += "Possible weapons:<br>"
 		for(var/weapon_name in weapon_chances)
