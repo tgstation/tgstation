@@ -47,6 +47,11 @@
 	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/locked[] = list()
 
+
+
+/*
+ * This item is completely unused, but removing it will break something in R&D and Radio code causing PDA and Ninja code to fail on compile
+ */
 /obj/item/device/infra_sensor
 	name = "Infrared Sensor"
 	desc = "Scans for infrared beams in the vicinity."
@@ -56,6 +61,10 @@
 	item_state = "electronic"
 	m_amt = 150
 	origin_tech = "magnets=2"
+/*
+ *
+ */
+
 
 
 /obj/effect/laser
