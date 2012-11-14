@@ -459,15 +459,18 @@
 				radiation = 0
 
 			else
+				var/damage = 0
 				switch(radiation)
 					if(1 to 49)
 						radiation--
 						if(prob(25))
 							adjustToxLoss(1)
+							damage = 1
 							updatehealth()
 
 					if(50 to 74)
 						radiation -= 2
+						damage = 1
 						adjustToxLoss(1)
 						if(prob(5))
 							radiation -= 5
@@ -479,13 +482,18 @@
 					if(75 to 100)
 						radiation -= 3
 						adjustToxLoss(3)
+						damage = 1
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)
 							domutcheck(src,null)
 							emote("gasp")
 						updatehealth()
-
+							
+				if(damage && organs.len)
+					var/V = pick(organs)
+					var/datum/organ/external/O = organs[V]
+					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
 		if(reagents.has_reagent("lexorin")) return
@@ -688,22 +696,22 @@
 
 			switch(breath.temperature)
 				if(-INFINITY to 120)
-					apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
 					fire_alert = max(fire_alert, 1)
 				if(120 to 200)
-					apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
 					fire_alert = max(fire_alert, 1)
 				if(200 to 260)
-					apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
 					fire_alert = max(fire_alert, 1)
 				if(360 to 400)
-					apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
 					fire_alert = max(fire_alert, 2)
 				if(400 to 1000)
-					apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Heat")
 					fire_alert = max(fire_alert, 2)
 				if(1000 to INFINITY)
-					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
 					fire_alert = max(fire_alert, 2)
 
 		if(oxyloss >= 50 && prob(oxyloss / 5))
@@ -1062,6 +1070,21 @@
 		else
 			dizziness = max(0, dizziness - 3)
 			jitteriness = max(0, jitteriness - 3)
+
+
+		if(life_tick % 10 == 0)
+			// handle trace chemicals for autopsy
+			for(var/V in organs)
+				var/datum/organ/O = organs[V]
+				for(var/chemID in O.trace_chemicals)
+					O.trace_chemicals[chemID] = O.trace_chemicals[chemID] - 1
+					if(O.trace_chemicals[chemID] <= 0)
+						O.trace_chemicals.Remove(chemID)
+		for(var/datum/reagent/A in reagents.reagent_list)
+			// add chemistry traces to a random organ
+			var/V = pick(organs)
+			var/datum/organ/O = organs[V]
+			O.trace_chemicals[A.name] = 100
 
 		updatehealth()
 
