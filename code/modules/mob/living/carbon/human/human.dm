@@ -973,12 +973,12 @@
 	..()
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
-	var/datum/organ/external/chest/E = get_organs("chest")
+	var/datum/organ/external/chest/E = get_organ("chest")
 	return E.ruptured_lungs
 
 
 /mob/living/carbon/human/proc/rupture_lung()
-	var/datum/organ/external/chest/E = get_organs("chest")
+	var/datum/organ/external/chest/E = get_organ("chest")
 	
 	if(E.ruptured_lungs == 0)
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)

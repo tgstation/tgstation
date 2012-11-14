@@ -1162,13 +1162,13 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		target.custom_pain("The pain in your chest is living hell!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/affected = get_organ("chest")
+		var/datum/organ/external/chest/affected = target.get_organ("chest")
 		user.visible_message("[user] mends the rupture in [target]'s lungs with \the [tool].", \
 		"You mend the rupture in [target]'s lungs with \the [tool]." )
 		affected.ruptured_lungs = 0
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/affected = get_organ("chest")
+		var/datum/organ/external/chest/affected = target.get_organ("chest")
 		user.visible_message("\red [user]'s hand slips, slicing an artery inside [target]'s chest with \the [tool]!", \
 		"\red Your hand slips, slicing an artery inside [target]'s chest with \the [tool]!")
 		affected.createwound(CUT, 20)
