@@ -221,7 +221,7 @@
 	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])") //BS12 EDIT ALG
 
 
-	//spawn(1800)            // this wont work right
+	//spawn(1800)			// this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
 
@@ -624,7 +624,7 @@
 		user << "\red You're going to need to remove that mask/helmet/glasses first."
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N     Metroids also don't have eyes!
+	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N	 Metroids also don't have eyes!
 		user << "\red You cannot locate any eyes on this creature!"
 		return
 

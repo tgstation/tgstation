@@ -395,6 +395,7 @@
 	M.dna.check_integrity()
 
 	M.disabilities = 0
+	M.sdisabilities = 0
 	var/old_mutations = M.mutations
 	M.mutations = list()
 
@@ -454,7 +455,7 @@
 			M << "\blue Your muscles hurt."
 			M.mutations.Add(HULK)
 	if (isblockon(getblock(M.dna.struc_enzymes, HEADACHEBLOCK,3),HEADACHEBLOCK))
-		M.disabilities |= 2
+		M.disabilities |= EPILEPSY
 		M << "\red You get a headache."
 	if (isblockon(getblock(M.dna.struc_enzymes, FAKEBLOCK,3),FAKEBLOCK))
 		M << "\red You feel strange."
@@ -466,13 +467,13 @@
 		else
 			randmutg(M)
 	if (isblockon(getblock(M.dna.struc_enzymes, COUGHBLOCK,3),COUGHBLOCK))
-		M.disabilities |= 4
+		M.disabilities |= COUGHING
 		M << "\red You start coughing."
 	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),CLUMSYBLOCK))
 		M << "\red You feel lightheaded."
 		M.mutations.Add(CLUMSY)
 	if (isblockon(getblock(M.dna.struc_enzymes, TWITCHBLOCK,3),TWITCHBLOCK))
-		M.disabilities |= 8
+		M.disabilities |= TOURETTES
 		M << "\red You twitch."
 	if (isblockon(getblock(M.dna.struc_enzymes, XRAYBLOCK,3),XRAYBLOCK))
 		if(probinj(30,inj) || (XRAY in old_mutations))
@@ -482,25 +483,25 @@
 			M.see_invisible = 2
 			M.mutations.Add(XRAY)
 	if (isblockon(getblock(M.dna.struc_enzymes, NERVOUSBLOCK,3),NERVOUSBLOCK))
-		M.disabilities |= 16
+		M.disabilities |= NERVOUS
 		M << "\red You feel nervous."
 	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),FIREBLOCK))
 		if(probinj(30,inj) || (COLD_RESISTANCE in old_mutations))
 			M << "\blue Your body feels warm."
 			M.mutations.Add(COLD_RESISTANCE)
 	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),BLINDBLOCK))
-		M.disabilities |= 128
+		M.sdisabilities |= BLIND
 		M << "\red You can't seem to see anything."
 	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),TELEBLOCK))
 		if(probinj(15,inj) || (TK in old_mutations))
 			M << "\blue You feel smarter."
 			M.mutations.Add(TK)
 	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),DEAFBLOCK))
-		M.disabilities |= 32
+		M.sdisabilities |= DEAF
 		M.ear_deaf = 1
 		M << "\red Its kinda quiet.."
 	if (isblockon(getblock(M.dna.struc_enzymes, GLASSESBLOCK,3),GLASSESBLOCK))
-		M.disabilities |= 1
+		M.disabilities |= NEARSIGHTED
 		M << "Your eyes feel weird..."
 
 	/* If you want the new mutations to work, UNCOMMENT THIS.

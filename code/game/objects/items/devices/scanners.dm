@@ -1,4 +1,3 @@
-
 /*
 CONTAINS:
 T-RAY
@@ -127,6 +126,9 @@ MASS SPECTROMETER
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 ? 		"\red Severe oxygen deprivation detected\blue" 	: 	"Subject bloodstream oxygen level normal"
 	user.show_message("[OX] | [TX] | [BU] | [BR]")
+	if (istype(M, /mob/living/carbon/human))
+		if(M:virus2 || M:reagents.total_volume > 0)
+			user.show_message(text("\red Warning: Unknown substance detected in subject's blood."))
 	if (M.getCloneLoss())
 		user.show_message("\red Subject appears to have been imperfectly cloned.")
 	for(var/datum/disease/D in M.viruses)
@@ -148,6 +150,9 @@ MASS SPECTROMETER
 			if(e.status & ORGAN_BROKEN)
 				if(((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg")) && (!(e.status & ORGAN_SPLINTED)))
 					user << "\red Unsecured fracture in subject [limb]. Splinting recommended for transport."
+			if(e.is_infected())
+				user << "\red Infected wound detected in subject [limb]. Disinfection recommended."
+				
 		for(var/name in H.organs_by_name)
 			var/datum/organ/external/e = H.organs_by_name[name]
 			if(e.status & ORGAN_BROKEN)
