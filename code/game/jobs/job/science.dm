@@ -31,6 +31,7 @@
 	spawn_positions = 3
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
+	alt_titles = list("Xenoarcheologist", "Anomalist", "Plasma Researcher", "Xenobiologist")
 
 
 	equip(var/mob/living/carbon/human/H)

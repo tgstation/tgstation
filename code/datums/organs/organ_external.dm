@@ -189,12 +189,11 @@
 				W.open_wound(0.1 * wound_update_accuracy)
 				owner.vessel.remove_reagent("blood",0.2 * W.damage * wound_update_accuracy)
 
-			if(W.is_treated())
+			if(W.bandaged || W.salved)
 				// slow healing
 				var/amount = 0.2
-				if(W.bandaged) amount++
-				if(W.salved) amount++
-				if(W.disinfected) amount++
+				if(W.is_treated())
+					amount += 10
 				// amount of healing is spread over all the wounds
 				W.heal_damage((wound_update_accuracy * amount * W.amount * config.organ_regeneration_multiplier) / (20*owner.number_wounds+1))
 
@@ -527,6 +526,7 @@
 	max_damage = 150
 	min_broken_damage = 75
 	body_part = UPPER_TORSO
+	var/ruptured_lungs = 0
 
 /datum/organ/external/groin
 	name = "groin"
