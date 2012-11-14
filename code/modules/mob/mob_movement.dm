@@ -282,6 +282,7 @@
 					return 0
 
 		move_delay = world.time//set move delay
+
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
@@ -293,7 +294,11 @@
 
 		if(config.Tickcomp)
 			move_delay -= 1.3
-//			var/tickcomp = ((1/(world.tick_lag))*1.3)
+			var/tickcomp = ((1/(world.tick_lag))*1.3)
+			move_delay = move_delay + tickcomp
+
+
+
 
 		//We are now going to move
 		moving = 1
