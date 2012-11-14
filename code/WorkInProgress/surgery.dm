@@ -1147,3 +1147,29 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		for(var/datum/disease/alien_embryo in target.viruses)
 			alien_embryo.cure()
 
+/datum/surgery_step/ribcage/fix_lungs
+	required_tool = /obj/item/weapon/scalpel
+
+	min_duration = 70
+	max_duration = 90
+
+	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		return ..() && target.is_lung_ruptured()
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		user.visible_message("[user] starts mending the rupture in [target]'s lungs with \the [tool].", \
+		"You start mending the rupture in [target]'s lungs with \the [tool]." )
+		target.custom_pain("The pain in your chest is living hell!",1)
+
+	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/chest/affected = get_organ("chest")
+		user.visible_message("[user] mends the rupture in [target]'s lungs with \the [tool].", \
+		"You mend the rupture in [target]'s lungs with \the [tool]." )
+		affected.ruptured_lungs = 0
+
+	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/chest/affected = get_organ("chest")
+		user.visible_message("\red [user]'s hand slips, slicing an artery inside [target]'s chest with \the [tool]!", \
+		"\red Your hand slips, slicing an artery inside [target]'s chest with \the [tool]!")
+		affected.createwound(CUT, 20)
+

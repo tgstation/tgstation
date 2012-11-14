@@ -527,6 +527,7 @@
 	max_damage = 150
 	min_broken_damage = 75
 	body_part = UPPER_TORSO
+	var/ruptured_lungs = 0
 
 /datum/organ/external/groin
 	name = "groin"
