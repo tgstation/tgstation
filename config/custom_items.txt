@@ -20,6 +20,7 @@ foolamancer: Edvin Telephosphor: /obj/item/clothing/head/fluff/edvin_telephospho
 furohman: Fay Sullivan: /obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1
 gvazdas: Sarah Carbrokes: /obj/item/fluff/sarah_carbrokes_1
 jamini: Edwin Atweeke: /obj/item/clothing/suit/labcoat/fluff/burnt
+kirbyelder: John McKeever: /obj/item/paper/fluff/john_mckeever_1
 leonheart11:  Johann Erzatz: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/johann_erzatz_1
 lexusjjss: Lexus Langg: /obj/item/weapon/clipboard/fluff/smallnote, /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask
 lexusjjss: Zachary Tomlinson: /obj/item/weapon/clipboard/fluff/smallnote, /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask
