@@ -40,7 +40,7 @@
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
-	alt_titles = list("Surgeon", "Emergency Physician")
+	alt_titles = list("Surgeon", "Emergency Physician", "Virologist")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -50,12 +50,18 @@
 			if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
 			if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_med(H), slot_back)
 			if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-		if(H.mind.role_alt_title && H.mind.role_alt_title == "Emergency Physician")
-			H.equip_if_possible(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
-			H.equip_if_possible(new /obj/item/clothing/suit/fr_jacket(H), slot_wear_suit)
-		else if(H.mind.role_alt_title && H.mind.role_alt_title == "Surgeon")
-			H.equip_if_possible(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
-			H.equip_if_possible(new /obj/item/clothing/suit/labcoat(H), slot_wear_suit)
+		if (H.mind.role_alt_title)
+			switch(H.mind.role_alt_title)
+				if("Emergency Physician")
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/fr_jacket(H), slot_wear_suit)
+				if("Surgeon")
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat(H), slot_wear_suit)
+				if("Virologist")
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat/virologist(H), slot_wear_suit)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
 		else
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat(H), slot_wear_suit)
@@ -115,7 +121,7 @@
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
 		return 1
 
-
+/*
 
 /datum/job/virologist
 	title = "Virologist"
@@ -146,5 +152,5 @@
 		else
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		return 1
-
+*/
 
