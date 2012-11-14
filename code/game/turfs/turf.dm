@@ -217,7 +217,7 @@
 
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 
-	if(N in typesof(/turf/simulated/floor))
+	if(ispath(N, /turf/simulated/floor))
 		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
 		W.Assimilate_Air()
 

@@ -122,7 +122,7 @@
 /turf/simulated/wall/examine()
 	set src in oview(1)
 
-	usr << "[desc]."
+	usr << "[desc]"
 	return
 
 /turf/simulated/wall/ex_act(severity)
