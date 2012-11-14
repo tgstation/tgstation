@@ -491,8 +491,7 @@
 						updatehealth()
 							
 				if(damage && organs.len)
-					var/V = pick(organs)
-					var/datum/organ/external/O = organs[V]
+					var/datum/organ/external/O = pick(organs)
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
@@ -1074,16 +1073,14 @@
 
 		if(life_tick % 10 == 0)
 			// handle trace chemicals for autopsy
-			for(var/V in organs)
-				var/datum/organ/O = organs[V]
+			for(var/datum/organ/O in organs)
 				for(var/chemID in O.trace_chemicals)
 					O.trace_chemicals[chemID] = O.trace_chemicals[chemID] - 1
 					if(O.trace_chemicals[chemID] <= 0)
 						O.trace_chemicals.Remove(chemID)
 		for(var/datum/reagent/A in reagents.reagent_list)
 			// add chemistry traces to a random organ
-			var/V = pick(organs)
-			var/datum/organ/O = organs[V]
+			var/datum/organ/O = pick(organs)
 			O.trace_chemicals[A.name] = 100
 
 		updatehealth()
