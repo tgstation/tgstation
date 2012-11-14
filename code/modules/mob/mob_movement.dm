@@ -293,7 +293,7 @@
 
 		if(config.Tickcomp)
 			move_delay -= 1.3
-			var/tickcomp = ((1/(world.tick_lag))*1.3)
+//			var/tickcomp = ((1/(world.tick_lag))*1.3)
 
 		//We are now going to move
 		moving = 1

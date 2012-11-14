@@ -104,7 +104,7 @@
 			holder.update_icon()
 		if(holder && istype(holder.loc,/obj/item/weapon/grenade/chem_grenade))
 			var/obj/item/weapon/grenade/chem_grenade/grenade = holder.loc
-			grenade.c_state(scanning)
+			grenade.primed(scanning)
 		return
 
 
