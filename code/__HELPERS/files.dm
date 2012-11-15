@@ -13,6 +13,6 @@
 	return text
 
 //Sends resource files to client cache
-/mob/proc/getFiles()
+/client/proc/getFiles()
 	for(var/file in args)
 		src << browse_rsc(file)

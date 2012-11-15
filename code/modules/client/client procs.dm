@@ -116,6 +116,8 @@
 
 	log_client_to_db()
 
+	getFiles('html/search.js','html/panels.css')
+
 
 	//////////////
 	//DISCONNECT//

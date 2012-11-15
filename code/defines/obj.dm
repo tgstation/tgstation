@@ -48,25 +48,6 @@
 	var/locked[] = list()
 
 
-
-/*
- * This item is completely unused, but removing it will break something in R&D and Radio code causing PDA and Ninja code to fail on compile
- */
-/obj/item/device/infra_sensor
-	name = "Infrared Sensor"
-	desc = "Scans for infrared beams in the vicinity."
-	icon_state = "infra_sensor"
-	var/passive = 1.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
-	m_amt = 150
-	origin_tech = "magnets=2"
-/*
- *
- */
-
-
-
 /obj/effect/laser
 	name = "laser"
 	desc = "IT BURNS!!!"

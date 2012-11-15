@@ -838,12 +838,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		user.drop_item()
-		C.loc = src
-		user << "<span class='notice'>You insert [C] into [src].</span>"
 		cartridge = C
-		if(C:radio)
-			C:radio.hostpda = src
+		user.drop_item()
+		cartridge.loc = src
+		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
+		cartridge = C
+		if(cartridge.radio)
+			cartridge.radio.hostpda = src
 
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C

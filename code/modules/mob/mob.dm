@@ -376,7 +376,7 @@ var/list/slot_equipment_priority = list( \
 	set name = "Changelog"
 	set category = "OOC"
 	if (client)
-		src.getFiles('html/postcardsmall.jpg',
+		client.getFiles('html/postcardsmall.jpg',
 							 'html/somerights20.png',
 							 'html/88x31.png',
 							 'html/bug-minus.png',

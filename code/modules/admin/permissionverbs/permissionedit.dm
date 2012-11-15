@@ -2,74 +2,51 @@
 	set category = "Admin"
 	set name = "Permissions Panel"
 	set desc = "Edit admin permissions"
-
-	if(!holder)
-		return
-	holder.edit_admin_permissions()
+	if(!check_rights(R_PERMISSIONS))	return
+	usr.client.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions()
 	if(!check_rights(R_PERMISSIONS))	return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
-		usr << "\red Failed to establish database connection"
-		return
+	var/output = {"<!DOCTYPE html>
+<html>
+<head>
+<title>Permissions Panel</title>
+<script type='text/javascript' src='search.js'></script>
+<link rel='stylesheet' type='text/css' href='panels.css'>
+</head>
+<body onload='selectTextField();updateSearch();'>
+<div id='main'><table id='searchable' cellspacing='0'>
+<tr class='title'>
+<th style='width:125px;text-align:right;'>CKEY <a class='small' href='?src=\ref[src];editrights=add'>\[+\]</a></th>
+<th style='width:125px;'>RANK</th><th style='width:100%;'>PERMISSIONS</th>
+</tr>
+"}
 
-	var/DBQuery/select_query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin ORDER BY rank, ckey")
-	select_query.Execute()
+	for(var/adm_ckey in admin_datums)
+		var/datum/admins/D = admin_datums[adm_ckey]
+		if(!D)	continue
+		var/rank = D.rank ? D.rank : "*none*"
+		var/rights = rights2text(D.rights," ")
+		if(!rights)	rights = "*none*"
 
-	var/output = "<div align='center'><h1>Current admins</h1>"
-
-	output += "<a href=\"byond://?src=\ref[src];editadminpermissions=add;editadminckey=none\">Add new admin</a>"
-
-	output += "<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0'>"
-	output += "<tr>"
-	output += "<th width='125'><b>CKEY</b></th>"
-	output += "<th width='125'><b>RANK</b></th>"
-	output += "<th width='25'><b>LEVEL</b></th>"
-	output += "<th width='75'><b>PERMISSIONS</b></th>"
-	output += "<th width='150'><b>OPTIONS</b></th>"
-	output += "</tr>"
-
-	var/color1 = "#f4f4f4"
-	var/color2 = "#e7e7e7"
-	var/i = 1	//Used to determine the color of each row
-
-	while(select_query.NextRow())
-		i = !i
-		var/adm_ckey = select_query.item[1]
-		var/adm_rank = select_query.item[2]
-		var/adm_level = select_query.item[3]
-		var/adm_flags = text2num(select_query.item[4])
-
-		var/rights_text = rights2text(adm_flags)
-		rights_text = replacetextEx(rights_text, "+", "<br>+")
-		if(length(rights_text) > 5)
-			rights_text = copytext(rights_text, 5)	//Removes the first <br>, which replacetextEx() adds.
-
-		output += "<tr bgcolor='[(i % 2) ? color1 : color2]'>"
-		output += "<td align='center'><b>[adm_ckey]</b></td>"
-		output += "<td align='center'><b>[adm_rank]</b></td>"
-		output += "<td align='center'>[adm_level]</td>"
-		output += "<td align='center'>"
-		output += "<font size='2'>[rights_text]</font>"
-		output += "</td>"
-		output += "<td align='center'><font size='2'>"
-
-		//Options
-		output += "<a href=\"byond://?src=\ref[src];editadminpermissions=permissions;editadminckey=[adm_ckey]\">PERMISSIONS</a><br>"
-		output += "<a href=\"byond://?src=\ref[src];editadminpermissions=rank;editadminckey=[adm_ckey]\">RANK</a><br>"
-		output += "<a href=\"byond://?src=\ref[src];editadminpermissions=remove;editadminckey=[adm_ckey]\">REMOVE</a>"
-
-		output += "</font></td>"
+		output += "<tr>"
+		output += "<td style='text-align:right;'>[adm_ckey] <a class='small' href='?src=\ref[src];editrights=remove;ckey=[adm_ckey]'>\[-\]</a></td>"
+		output += "<td><a href='?src=\ref[src];editrights=rank;ckey=[adm_ckey]'>[rank]</a></td>"
+		output += "<td><a class='small' href='?src=\ref[src];editrights=permissions;ckey=[adm_ckey]'>[rights]</a></font></td>"
 		output += "</tr>"
 
-	output += "</table></div>"
+	output += {"
+</table></div>
+<div id='top'><b>Search:</b> <input type='text' id='filter' value='' style='width:70%;' onkeyup='updateSearch();'></div>
+</body>
+</html>"}
 
-	usr << browse(output,"window=editadminpermissions;size=600x500")
-
+	usr << browse(output,"window=editrights;size=600x500")
 
 /datum/admins/proc/log_admin_rank_modification(var/adm_ckey, var/new_rank)
+	if(config.admin_legacy_system)	return
+
 	if(!usr.client)
 		return
 
@@ -117,9 +94,8 @@
 			log_query.Execute()
 			usr << "\blue Admin rank changed."
 
-
-
 /datum/admins/proc/log_admin_permission_modification(var/adm_ckey, var/new_permission)
+	if(config.admin_legacy_system)	return
 
 	if(!usr.client)
 		return
