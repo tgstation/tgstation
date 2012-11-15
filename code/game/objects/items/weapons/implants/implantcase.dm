@@ -37,7 +37,7 @@
 		else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 			if(!src.imp)	return
 			if(!src.imp.allow_reagents)	return
-			if(src.imp.reagents.total_volume >= 10)
+			if(src.imp.reagents.total_volume >= src.imp.reagents.maximum_volume)
 				user << "\red [src] is full."
 			else
 				spawn(5)

@@ -459,8 +459,8 @@ datum
 			name = "Mix Virus"
 			id = "mixvirus"
 			result = "blood"
-			required_reagents = list("blood" = 1, "virusfood" = 5)
-			result_amount = 1
+			required_reagents = list("virusfood" = 5)
+			required_catalysts = list("blood")
 			var/level = 2
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
@@ -471,20 +471,19 @@ datum
 					if(D)
 						D.Evolve(level - rand(0, 1))
 
-				holder.del_reagent(id)
 
 			mix_virus_2
 
 				name = "Mix Virus 2"
 				id = "mixvirus2"
-				required_reagents = list("blood" = 1, "mutagen" = 5)
+				required_reagents = list("mutagen" = 5)
 				level = 4
 
 			rem_virus
 
 				name = "Devolve Virus"
 				id = "remvirus"
-				required_reagents = list("blood" = 1, "synaptizine" = 5)
+				required_reagents = list("synaptizine" = 5)
 
 				on_reaction(var/datum/reagents/holder, var/created_volume)
 
@@ -493,7 +492,6 @@ datum
 						var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 						if(D)
 							D.Devolve()
-					holder.del_reagent(id)
 
 
 
