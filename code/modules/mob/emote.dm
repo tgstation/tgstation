@@ -31,13 +31,13 @@ mob/proc/custom_emote(var/m_type=1,var/message = null)
 			if (istype(M, /mob/new_player))
 				continue
 			if(findtext(message," snores.")) //Because we have so many sleeping people.
-				continue
+				break // can break here simply..
 			if(M.stat == 2 && M.client.ghost_sight && !(M in viewers(src,null)))
 				M.show_message(message)
 
 
 		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
+			for (var/mob/O in get_mobs_in_view(world.view,src))
 				if(istype(O,/mob/living/carbon/human))
 					for(var/mob/living/parasite/P in O:parasites)
 						P.show_message(message, m_type)
