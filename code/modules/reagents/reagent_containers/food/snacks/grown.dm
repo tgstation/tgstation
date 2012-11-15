@@ -223,7 +223,7 @@
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
 			reagents.add_reagent("nutriment", round((potency / 10), 1))
-			reagents.add_reagent("radium", 3+round(potency / 5, 1))
+			reagents.add_reagent("uranium", 3+round(potency / 5, 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
@@ -612,6 +612,18 @@
 			reagents.add_reagent("nutriment", 1+round((potency / 25), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
+	seed = "/obj/item/seeds/kudzuseed"
+	name = "kudzu pod"
+	desc = "<I>Pueraria Virallis</I>: An invasive species with vines that rapidly creep and wrap around whatever they contact."
+	icon_state = "kudzupod"
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment",1+round((potency / 50), 1))
+			reagents.add_reagent("anti_toxin",1+round((potency / 25), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = "/obj/item/seeds/icepepperseed"
 	name = "ice-pepper"
@@ -817,6 +829,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
 	user.SetLuminosity(round(user.luminosity + (potency/10),1))
 	SetLuminosity(round(potency/10,1))
+
 
 // *************************************
 // Complex Grown Object Defines -

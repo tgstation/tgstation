@@ -979,6 +979,32 @@
 	plant_type = 0
 	growthstages = 5
 
+/obj/item/seeds/kudzuseed
+	name = "pack of kudzu seeds"
+	desc = "These seeds grow into a weed that grows incredibly fast."
+	icon_state = "seed-kudzu"
+	mypath = "/obj/item/seeds/kudzuseed"
+	species = "kudzu"
+	plantname = "Kudzu"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod"
+	lifespan = 20
+	endurance = 10
+	maturation = 6
+	production = 6
+	yield = 4
+	potency = 10
+	growthstages = 4
+	plant_type = 1
+
+/obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
+	if(istype(user.loc,/turf/space))
+		return
+	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
+	new /obj/effect/spacevine_controller(user.loc)
+	del(src)
+
+
+
 /*  // Maybe one day when I get it to work like a grenade which exlodes gibs.
 /obj/item/seeds/gibtomatoseed
 	name = "Gib Tomato seeds"

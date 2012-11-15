@@ -406,10 +406,8 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
 	if ( src.weedlevel > 5 )
 		del(src.myseed)
-		switch(rand(100))
-			if(1 to 33)		src.myseed = new /obj/item/seeds/libertymycelium
-			if(34 to 66)	src.myseed = new /obj/item/seeds/angelmycelium
-			else			src.myseed = new /obj/item/seeds/deathnettleseed
+		var/newWeed = pick(/obj/item/seeds/libertymycelium, /obj/item/seeds/angelmycelium, /obj/item/seeds/deathnettleseed, /obj/item/seeds/kudzuseed)
+		src.myseed = new newWeed
 		src.dead = 0
 		src.hardmutate()
 		src.planted = 1
