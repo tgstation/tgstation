@@ -118,7 +118,6 @@
 		usr << "\blue \The [src] was bitten multiple times!"
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return 1
 	var/inaccurate = 0
@@ -137,6 +136,8 @@
 		)
 		inaccurate = 1
 	else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
+		if(!iscarbon(user))
+			return 1
 		user << "\red You slip [W] inside [src]."
 		user.u_equip(W)
 		if ((user.client && user.s_active != src))

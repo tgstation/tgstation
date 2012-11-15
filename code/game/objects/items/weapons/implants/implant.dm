@@ -130,7 +130,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	trigger(emote, source as mob)
 		if(emote == "deathgasp")
-			src.activate(50)
+			src.activate(src.reagents.total_volume)
 		return
 
 
