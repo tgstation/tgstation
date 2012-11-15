@@ -157,6 +157,7 @@
 	throw_range = 3
 	origin_tech = "materials=4"
 	perunit = 2000
+	sheettype = "gold"
 
 /obj/item/stack/sheet/gold/New(loc,amount)
 	..()
@@ -179,6 +180,7 @@
 	throw_range = 3
 	origin_tech = "materials=3"
 	perunit = 2000
+	sheettype = "silver"
 
 /obj/item/stack/sheet/silver/New(loc,amount)
 	..()
@@ -194,6 +196,7 @@
 	throw_range = 3
 	origin_tech = "materials=6"
 	perunit = 3750
+	sheettype = "diamond"
 
 /obj/item/stack/sheet/diamond/New(loc,amount)
 	..()
@@ -210,6 +213,7 @@
 	throw_range = 3
 	origin_tech = "materials=5"
 	perunit = 2000
+	sheettype = "uranium"
 
 /obj/item/stack/sheet/enruranium
 	name = "enriched uranium"
@@ -232,6 +236,7 @@
 	throw_range = 3
 	origin_tech = "plasmatech=2;materials=2"
 	perunit = 2000
+	sheettype = "plasma"
 
 /obj/item/stack/sheet/adamantine
 	name = "adamantine"
@@ -265,6 +270,7 @@
 	throw_range = 3
 	origin_tech = "materials=4"
 	perunit = 2000
+	sheettype = "clown"
 
 /obj/item/stack/sheet/clown/New(loc,amount)
 	..()

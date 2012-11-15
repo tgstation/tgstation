@@ -26,6 +26,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	throw_speed = 4
 	throw_range = 5
 	origin_tech = "materials=1"
+	sheettype = "sandstone"
 
 /obj/item/stack/sheet/sandstone
 	New(var/loc, var/amount=null)
