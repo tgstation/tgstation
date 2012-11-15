@@ -270,11 +270,6 @@
 
 		return 1
 
-	proc/handle_virus_updates()
-		if(bodytemperature > 409)
-			for(var/datum/disease/D in viruses)
-				D.cure()
-		return
 
 /*/mob/living/carbon/brain/emp_act(severity)
 	if(!(container && istype(container, /obj/item/device/mmi)))

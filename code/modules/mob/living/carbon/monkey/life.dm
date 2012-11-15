@@ -29,8 +29,6 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
-		//Disease Check
-		handle_virus_updates()
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
@@ -566,11 +564,6 @@
 				emote("scratch")
 				return
 
-	proc/handle_virus_updates()
-		if(bodytemperature > 406)
-			for(var/datum/disease/D in viruses)
-				D.cure()
-		return
 
 	proc/handle_changeling()
 		if(mind && mind.changeling)

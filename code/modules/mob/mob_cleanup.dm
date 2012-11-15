@@ -22,6 +22,12 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 		if(A.GetDiseaseID() in resistances)
 			//world << "It resisted us!"
 			return
+		var/count = 0
+		for(var/datum/disease/advance/AD in viruses)
+			count++
+		if(count >= 3)
+			return
+
 	else
 		if(src.resistances.Find(virus.type))
 			//world << "Normal virus and resisted"

@@ -31,6 +31,7 @@ var/list/archive_diseases = list()
 	// NEW VARS
 
 	var/list/symptoms = list() // The symptoms of the disease.
+	var/id = ""
 
 /*
 
@@ -38,7 +39,7 @@ var/list/archive_diseases = list()
 
  */
 
-/datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+/datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D)
 
 	// Setup our dictionary if it hasn't already.
 	if(!dictionary_symptoms.len)
@@ -57,9 +58,8 @@ var/list/archive_diseases = list()
 		else
 			for(var/datum/symptom/S in D.symptoms)
 				symptoms += new S.type
-			name = D.name
 
-	Refresh(!copy)
+	Refresh()
 	..(process, D)
 	return
 
@@ -149,12 +149,19 @@ var/list/archive_diseases = list()
 
 	return generated
 
-/datum/disease/advance/proc/Refresh(var/save = 1)
+/datum/disease/advance/proc/Refresh(var/new_name = 0)
 	//world << "[src.name] \ref[src] - REFRESH!"
 	var/list/properties = GenerateProperties()
 	AssignProperties(properties)
-	if(save)
+
+	if(!archive_diseases[GetDiseaseID()])
+		if(new_name)
+			AssignName()
+		archive_diseases[GetDiseaseID()] = src // So we don't infinite loop
 		archive_diseases[GetDiseaseID()] = new /datum/disease/advance(0, src, 1)
+
+	var/datum/disease/advance/A = archive_diseases[GetDiseaseID()]
+	AssignName(A.name)
 
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
@@ -184,7 +191,7 @@ var/list/archive_diseases = list()
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
 		SetSpread(max(BLOOD, min(properties["transmittable"] - symptoms.len, AIRBORNE)))
 		permeability_mod = max(round(0.5 * properties["transmittable"]), 1)
-		stage_prob = max(properties["stage_rate"], 1)
+		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
 	else
@@ -213,7 +220,7 @@ var/list/archive_diseases = list()
 
 	switch(level_sev)
 
-		if(0)
+		if(-INFINITY to 0)
 			severity = "Non-Threat"
 		if(1)
 			severity = "Minor"
@@ -223,7 +230,7 @@ var/list/archive_diseases = list()
 			severity = "Harmful"
 		if(4)
 			severity = "Dangerous!"
-		if(5)
+		if(5 to INFINITY)
 			severity = "BIOHAZARD THREAT!"
 		else
 			severity = "Unknown"
@@ -300,11 +307,15 @@ var/list/archive_diseases = list()
 
 // Return a unique ID of the disease.
 /datum/disease/advance/proc/GetDiseaseID()
+
 	var/list/L = list()
 	for(var/datum/symptom/S in symptoms)
 		L += S.id
 	L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
-	return dd_list2text(L, ":")
+	var/result = dd_list2text(L, ":")
+	id = result
+	return result
+
 
 // Add a symptom, if it is over the limit (with a small chance to be able to go over)
 // we take a random symptom away and add the new one.
@@ -313,7 +324,7 @@ var/list/archive_diseases = list()
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < 3 + rand(-1, 1))
+	if(symptoms.len < 5 + rand(-1, 1))
 		symptoms += S
 	else
 		RemoveSymptom(pick(symptoms))
@@ -338,7 +349,7 @@ var/list/archive_diseases = list()
 
 	var/list/diseases = list()
 
-	for(var/datum/disease/advance/A in D_list.Copy())
+	for(var/datum/disease/advance/A in D_list)
 		diseases += A.Copy()
 
 	if(!diseases.len)
@@ -361,7 +372,7 @@ var/list/archive_diseases = list()
 	 // Should be only 1 entry left, but if not let's only return a single entry
 	//world << "END MIXING!!!!!"
 	var/datum/disease/advance/to_return = pick(diseases)
-	to_return.Refresh()
+	to_return.Refresh(1)
 	return to_return
 
 /proc/SetViruses(var/datum/reagent/R, var/list/data)

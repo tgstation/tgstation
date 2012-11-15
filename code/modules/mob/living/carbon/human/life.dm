@@ -67,9 +67,6 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
-		//Disease Check
-		handle_virus_updates()
-
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
 
@@ -1219,12 +1216,6 @@
 			var/turf/currentTurf = loc
 			if(!currentTurf.lighting_lumcount)
 				playsound_local(src,pick(scarySounds),50, 1, -1)
-
-	proc/handle_virus_updates()
-		if(bodytemperature > 406)
-			for(var/datum/disease/D in viruses)
-				D.cure()
-		return
 
 	proc/handle_stomach()
 		spawn(0)

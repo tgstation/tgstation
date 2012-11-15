@@ -77,6 +77,16 @@
 		..()
 		reagents.add_reagent("anti_toxin", 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/mutagen
+	name = "unstable mutagen bottle"
+	desc = "A small bottle of unstable mutagen. Randomly changes the DNA structure of whoever comes in contact."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle20"
+
+	New()
+		..()
+		reagents.add_reagent("mutagen", 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/ammonia
 	name = "ammonia bottle"
 	desc = "A small bottle."

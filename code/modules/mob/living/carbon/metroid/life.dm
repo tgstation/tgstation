@@ -361,12 +361,6 @@
 				A.rabid = rabid
 				del(src)
 
-/mob/living/carbon/metroid/proc/handle_virus_updates()
-	if(bodytemperature > 406)
-		for(var/datum/disease/D in viruses)
-			D.cure()
-	return
-
 /mob/living/carbon/metroid/proc/handle_targets()
 	if(Tempstun)
 		if(!Victim) // not while they're eating!

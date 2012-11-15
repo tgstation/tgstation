@@ -785,7 +785,7 @@ datum
 			id = "m_tele"
 			result = null
 			required_reagents = list("sacid" = 1, "blood" = 1)
-			required_catalysts = list("plasma" = 1, "mutagen" = 1)
+			required_catalysts = list("plasma" = 1)
 			result_amount = 1
 			required_container = /obj/item/metroid_core
 			required_other = 4

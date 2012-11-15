@@ -364,11 +364,6 @@
 	proc/handle_random_events()
 		return
 
-	proc/handle_virus_updates()
-		if(bodytemperature > 406)
-			for(var/datum/disease/D in viruses)
-				D.cure()
-		return
 
 	proc/handle_stomach()
 		spawn(0)

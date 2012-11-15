@@ -565,6 +565,20 @@
 		src.temphtml = ""
 		src.updateUsrDialog()
 		return
+	else if(href_list["name_disease"])
+		var/new_name = stripped_input(usr, "Name the Disease", "New Name", "", MAX_NAME_LEN)
+		if(stat & (NOPOWER|BROKEN)) return
+		if(usr.stat || usr.restrained()) return
+		if(!in_range(src, usr)) return
+		var/id = href_list["name_disease"]
+		if(archive_diseases[id])
+			var/datum/disease/advance/A = archive_diseases[id]
+			A.AssignName(new_name)
+			for(var/datum/disease/advance/AD in active_diseases)
+				AD.Refresh()
+		src.updateUsrDialog()
+
+
 	else
 		usr << browse(null, "window=pandemic")
 		src.updateUsrDialog()
@@ -621,6 +635,8 @@
 								var/datum/disease/advance/A = D
 								D = archive_diseases[A.GetDiseaseID()]
 								disease_creation = A.GetDiseaseID()
+								if(D.name == "Unknown")
+									dat += "<b><a href='?src=\ref[src];name_disease=[A.GetDiseaseID()]'>Name Disease</a></b><BR>"
 
 							if(!D)
 								CRASH("We weren't able to get the advance disease from the archive.")
