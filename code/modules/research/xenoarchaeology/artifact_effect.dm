@@ -143,6 +143,8 @@
 					randomturfs.Add(T)
 				if(randomturfs.len > 0)
 					user << "\red You are suddenly zapped away elsewhere!"
+					if (user.buckled)
+						user.buckled.unbuckle()
 					user.loc = pick(randomturfs)
 					var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 					sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
@@ -334,6 +336,8 @@
 						randomturfs.Add(T)
 					if(randomturfs.len > 0)
 						M << "\red You are displaced by a strange force!"
+						if(M.buckled)
+							M.buckled.unbuckle()
 						M.loc = pick(randomturfs)
 						var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 						sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
@@ -421,6 +425,8 @@
 						randomturfs.Add(T)
 					if(randomturfs.len > 0)
 						M << "\red You are displaced by a strange force!"
+						if(M.buckled)
+							M.buckled.unbuckle()
 						M.loc = pick(randomturfs)
 						var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 						sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
