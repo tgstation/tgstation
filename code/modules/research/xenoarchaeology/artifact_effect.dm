@@ -60,10 +60,8 @@
 					user << "\blue You feel a soothing energy invigorate you."
 
 					var/mob/living/carbon/human/H = user
-					for(var/A in H.organs)
-						var/datum/organ/external/affecting = null
-						if(!H.organs[A])    continue
-						affecting = H.organs[A]
+					for(var/datum/organ/external/affecting in H.organs)
+						if(!affecting)    continue
 						if(!istype(affecting, /datum/organ/external))    continue
 						affecting.heal_damage(25, 25)    //fixes getting hit after ingestion, killing you when game updates organ health
 						//user:heal_organ_damage(25, 25)
