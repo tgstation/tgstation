@@ -549,8 +549,7 @@ It can still be worn/put on as normal.
 					O.show_message("\red [source] performs CPR on [target]!", 1)
 				target << "\blue <b>You feel a breath of fresh air enter your lungs. It feels good.</b>"
 				source << "\red Repeat at least every 7 seconds."
-				spawn(3)
-					target.cpr_time = 1
+				target.cpr_time = 1
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = item
 			if(S)
