@@ -361,6 +361,8 @@
 	desc = "It's full of watery goodness."
 	icon_state = "watermelon"
 	potency = 10
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
+	slices_num = 5
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
@@ -939,14 +941,3 @@
 		src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
 		del(src)
 		return
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
-	name = "Watermelon"
-	icon_state = "A juicy watermelon"
-	icon_state = "watermelon"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
-	slices_num = 5
-	New()
-		..()
-		reagents.add_reagent("nutriment", 10)
-		bitesize = 2
