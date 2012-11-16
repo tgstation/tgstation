@@ -319,10 +319,9 @@
 		return 0
 
 	proc/setAmputatedTree()
-		for(var/datum/organ/external/O in owner.organs)
-			if(O.parent == src)
-				O.amputated=amputated
-				O.setAmputatedTree()
+		for(var/datum/organ/external/O in children)
+			O.amputated=amputated
+			O.setAmputatedTree()
 
 	proc/droplimb(var/override = 0,var/no_explode = 0)
 		if(destspawn) return
