@@ -160,9 +160,6 @@
 					rights |= admin_ranks[new_rank]					//we input an existing rank, use its rights
 
 			if(D)
-				if((D != usr.client.holder) && (D.rights & R_PERMISSIONS))	//we can't edit another admin with PERMISSIONS rights
-					usr << "<font color='red'>Error: Topic 'editrights': That ckey has PERMISSIONS rights. We cannot modify.</font>"
-					return
 				D.disassociate()									//remove adminverbs and unlink from client
 				D.rank = new_rank									//update the rank
 				D.rights = rights									//update the rights based on admin_ranks (default: 0)
