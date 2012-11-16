@@ -122,7 +122,7 @@
 
 			if(status & ORGAN_BROKEN)
 				owner.emote("scream")
-				
+
 		if(used_weapon) add_autopsy_data(used_weapon, brute + burn)
 
 		owner.updatehealth()
@@ -464,7 +464,7 @@
 					W = new wound_type(damage)
 
 			// Possibly trigger an internal wound, too.
-			if(damage > 10 && prob(damage))
+			if(damage > 10 && prob(damage) && type != BURN)
 				var/datum/wound/internal_bleeding/I = new (15)
 				wounds += I
 
