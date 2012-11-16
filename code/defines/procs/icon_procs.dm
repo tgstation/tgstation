@@ -7,6 +7,16 @@
 #define TO_HEX_DIGIT(n) ascii2text((n&15) + ((n&15)<10 ? 48 : 87))
 
 icon
+	proc/MakeLying()
+		var/icon/I = new(src,dir=SOUTH)
+		I.BecomeLying()
+		return I
+
+	proc/BecomeLying()
+		Turn(90)
+		Shift(SOUTH,6)
+		Shift(EAST,1)
+
 	// Multiply all alpha values by this float
 	proc/ChangeOpacity(opacity = 1.0)
 		MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,opacity, 0,0,0,0)
