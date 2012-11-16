@@ -277,6 +277,10 @@ datum
 
 			proc/ConsiderRebuild(var/turf/simulated/T, var/turf/NT)
 
+				//zones should naturally spread to these tiles eventually
+				if(!T.zone || !NT.zone)
+					return
+
 				if(istype(NT, /turf/simulated) && NT.zone != T.zone)
 					T.zone.RemoveTurf(NT)
 					if(NT.zone)
