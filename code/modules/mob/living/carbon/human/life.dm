@@ -1475,6 +1475,7 @@
 				if(!machine.check_eye(src))		reset_view(null)
 			else
 				if(!(remoteview_target && mRemote in mutations && remoteview_target.stat==CONSCIOUS) && !client.adminobs)
+					remoteview_target = null
 					reset_view(null)
 		return 1
 
