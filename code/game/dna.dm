@@ -399,9 +399,17 @@
 	var/old_mutations = M.mutations
 	M.mutations = list()
 
-	M.see_in_dark = 2
-	M.see_invisible = 0
+//	M.see_in_dark = 2
+//	M.see_invisible = 0
 
+	if(PLANT in old_mutations)
+		M.mutations.Add(PLANT)
+	if(SKELETON in old_mutations)
+		M.mutations.Add(SKELETON)
+	if(FAT in old_mutations)
+		M.mutations.Add(FAT)
+	if(HUSK in old_mutations)
+		M.mutations.Add(HUSK)
 
 	if(ismuton(NOBREATHBLOCK,M))
 		if(probinj(45,inj) || (mNobreath in old_mutations))
@@ -478,9 +486,9 @@
 	if (isblockon(getblock(M.dna.struc_enzymes, XRAYBLOCK,3),XRAYBLOCK))
 		if(probinj(30,inj) || (XRAY in old_mutations))
 			M << "\blue The walls suddenly disappear."
-			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-			M.see_in_dark = 8
-			M.see_invisible = 2
+//			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
+//			M.see_in_dark = 8
+//			M.see_invisible = 2
 			M.mutations.Add(XRAY)
 	if (isblockon(getblock(M.dna.struc_enzymes, NERVOUSBLOCK,3),NERVOUSBLOCK))
 		M.disabilities |= NERVOUS

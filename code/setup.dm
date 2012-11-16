@@ -351,6 +351,7 @@ var/MAX_EXPLOSION_RANGE = 14
 
 	//2spooky
 #define SKELETON 29
+#define PLANT 30
 
 // Other Mutations:
 #define mNobreath		100 	// no need to breathe
@@ -595,3 +596,6 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define HOSTILE_STANCE_ATTACK 3
 #define HOSTILE_STANCE_ATTACKING 4
 #define HOSTILE_STANCE_TIRED 5
+
+#define LEFT 1
+#define RIGHT 2
