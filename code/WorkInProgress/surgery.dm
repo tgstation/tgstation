@@ -110,12 +110,17 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		spread_germs_to_organ(affected, user)
 		if (target_zone == "head")
 			target.brain_op_stage = 1
+		if (prob(40))
+			if (ishuman(user))
+				user:bloody_hands(target)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, slicing open [target]'s [affected.display_name] in a wrong spot with \the [tool]!", \
 		"\red Your hand slips, slicing open [target]'s [affected.display_name] in a wrong spot with \the [tool]!")
 		affected.createwound(CUT, 10)
+		if (ishuman(user))
+			user:bloody_hands(target)
 
 /datum/surgery_step/generic/clamp_bleeders
 	required_tool = /obj/item/weapon/hemostat
@@ -145,6 +150,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\red [user]'s hand slips, tearing blood vessals and causing massive bleeding in [target]'s [affected.display_name] with the \[tool]!",	\
 		"\red Your hand slips, tearing blood vessels and causing massive bleeding in [target]'s [affected.display_name] with \the [tool]!",)
 		affected.createwound(CUT, 10)
+		if (ishuman(user))
+			user:bloody_hands(target)
 
 /datum/surgery_step/generic/retract_skin
 	required_tool = /obj/item/weapon/retractor
@@ -181,6 +188,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message(msg, self_msg)
 		affected.open = 2
 		spread_germs_to_organ(affected, user)
+		if (prob(60))
+			if (ishuman(user))
+				user:bloody_hands(target)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -258,12 +268,17 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\blue [user] has separated [target]'s appendix with \the [tool]." , \
 		"\blue You have separated [target]'s appendix with \the [tool].")
 		target.op_stage.appendix = 1
+		if (prob(40))
+			if (ishuman(user))
+				user:bloody_hands(target)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/groin = target.get_organ("groin")
 		user.visible_message("\red [user]'s hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!", \
 		"\red Your hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!")
-		groin.createwound(CUT, 50)
+		groin.createwound(CUT, 50, 1)
+		if (ishuman(user))
+			user:bloody_body(target)
 
 /datum/surgery_step/appendectomy/remove_appendix
 	required_tool = /obj/item/weapon/hemostat
@@ -292,6 +307,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 			new /obj/item/weapon/reagent_containers/food/snacks/appendix(get_turf(target))
 		target.resistances += app
 		target.op_stage.appendix = 2
+		if (prob(40))
+			if (ishuman(user))
+				user:bloody_hands(target)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -333,6 +351,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		for(var/datum/wound/W in affected.wounds) if(W.internal)
 			affected.wounds -= W
 			affected.update_damages()
+		if (prob(40))
+			if (ishuman(user))
+				user:bloody_hands(target)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -368,6 +389,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 			"\blue You apply some [tool] to [target]'s bone in [affected.display_name] with \the [tool].")
 		affected.stage = 1
 		spread_germs_to_organ(affected, user)
+		if (prob(80))
+			if (ishuman(user))
+				user:bloody_hands(target)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -462,6 +486,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		affected.stage = 0
 		affected.perma_injury = 0
 		spread_germs_to_organ(affected, user)
+		if (prob(80))
+			if (ishuman(user))
+				user:bloody_hands(target)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -641,6 +668,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\red [user]'s hand slips, clamping [target]'s trachea shut for a moment with \the [tool]!", \
 		"\red Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!")
 		target.losebreath += 10
+		if (ishuman(user))
+			user:bloody_body(target)
+			user:bloody_hands(target)
 
 /datum/surgery_step/face/fix_face
 	required_tool = /obj/item/weapon/retractor
@@ -748,7 +778,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
 		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
-		target.apply_damage(50, BRUTE, "head")
+		target.apply_damage(50, BRUTE, "head", 1)
 
 /datum/surgery_step/brain/saw_spine
 	required_tool = /obj/item/weapon/circular_saw
@@ -783,7 +813,10 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
 		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
-		target.apply_damage(30, BRUTE, "head")
+		target.apply_damage(30, BRUTE, "head", 1)
+		if (ishuman(user))
+			user:bloody_body(target)
+			user:bloody_hands(target)
 
 
 //////////////////////////////////////////////////////////////////
@@ -1065,6 +1098,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 			var/datum/organ/external/affected = target.get_organ(target_zone)
 			affected.fracture()
 
+		if (ishuman(user))
+			user:bloody_hands(target)
+
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/msg = "\red [user]'s hand slips, breaking [target]'s ribcage!"
 		var/self_msg = "\red Your hand slips, breaking [target]'s ribcage!"
@@ -1147,6 +1183,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		for(var/datum/disease/alien_embryo in target.viruses)
 			alien_embryo.cure()
 
+		if (ishuman(user))
+			user:bloody_hands(target)
+
 /datum/surgery_step/ribcage/fix_lungs
 	required_tool = /obj/item/weapon/scalpel
 
@@ -1172,4 +1211,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\red [user]'s hand slips, slicing an artery inside [target]'s chest with \the [tool]!", \
 		"\red Your hand slips, slicing an artery inside [target]'s chest with \the [tool]!")
 		affected.createwound(CUT, 20)
+		if (ishuman(user))
+			user:bloody_hands(target)
+			user:bloody_body(target)
 

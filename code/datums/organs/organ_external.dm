@@ -122,7 +122,7 @@
 
 			if(status & ORGAN_BROKEN)
 				owner.emote("scream")
-				
+
 		if(used_weapon) add_autopsy_data(used_weapon, brute + burn)
 
 		owner.updatehealth()
@@ -421,7 +421,7 @@
 			// force the icon to rebuild
 			owner.regenerate_icons()
 
-	proc/createwound(var/type = CUT, var/damage)
+	proc/createwound(var/type = CUT, var/damage, var/internal = 0)
 		if(hasorgans(owner))
 			var/wound_type
 			var/size = min( max( 1, damage/10 ) , 6)
@@ -464,7 +464,7 @@
 					W = new wound_type(damage)
 
 			// Possibly trigger an internal wound, too.
-			if(damage > 10 && prob(damage))
+			if(internal || (damage > 10 && prob(damage) && type != "BURN"))
 				var/datum/wound/internal_bleeding/I = new (15)
 				wounds += I
 

@@ -148,21 +148,8 @@ emp_act
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if(get_dist(H, src) > 1) //people with TK won't get smeared with blood
-					if(H.wear_suit)
-						H.wear_suit.add_blood(src)
-						H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
-					else if(H.w_uniform)
-						H.w_uniform.add_blood(src)
-						H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
-					if (H.gloves)
-						H.gloves.add_blood(H)
-						H.gloves:transfer_blood = 2
-						H.gloves:bloody_hands_mob = H
-					else
-						H.add_blood(H)
-						H.bloody_hands = 2
-						H.bloody_hands_mob = H
-					H.update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
+					H.bloody_body(src)
+					H.bloody_hands(src)
 
 		switch(hit_area)
 			if("head")//Harder to score a stun but if you do it lasts a bit longer
@@ -189,10 +176,23 @@ emp_act
 					visible_message("\red <B>[src] has been knocked down!</B>")
 
 				if(bloody)
+					bloody_body(src)
 
-					if(wear_suit)
-						wear_suit.add_blood(src)
-						update_inv_wear_suit(0)
-					if(w_uniform)
-						w_uniform.add_blood(src)
-						update_inv_w_uniform(0)
+/mob/living/carbon/human/proc/bloody_hands(var/mob/living/source)
+	if (gloves)
+		gloves.add_blood(source)
+		gloves:transfer_blood = 2
+		gloves:bloody_hands_mob = source
+	else
+		add_blood(source)
+		bloody_hands = 2
+		bloody_hands_mob = source
+	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
+
+/mob/living/carbon/human/proc/bloody_body(var/mob/living/source)
+	if(wear_suit)
+		wear_suit.add_blood(source)
+		update_inv_wear_suit(0)
+	if(w_uniform)
+		w_uniform.add_blood(source)
+		update_inv_w_uniform(0)
