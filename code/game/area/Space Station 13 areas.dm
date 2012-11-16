@@ -1447,6 +1447,30 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Strange Station"
 	icon_state = "away"
 
+/area/awaymission/wwmines
+	name = "\improper Wild West Mines"
+	icon_state = "away1"
+	luminosity = 1
+	requires_power = 0
+
+/area/awaymission/wwgov
+	name = "\improper Wild West Mansion"
+	icon_state = "away2"
+	luminosity = 1
+	requires_power = 0
+
+/area/awaymission/wwrefine
+	name = "\improper Wild West Refinery"
+	icon_state = "away3"
+	luminosity = 1
+	requires_power = 0
+
+/area/awaymission/wwvault
+	name = "\improper Wild West Vault"
+	icon_state = "away3"
+	requires_power = 0
+	luminosity = 0
+
 /area/awaymission/desert
 	name = "Mars"
 	icon_state = "away"

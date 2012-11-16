@@ -9,3 +9,4 @@
 #maps/RandomZLevels/spacebattle.dmm
 #maps/RandomZLevels/beach.dmm
 #maps/RandomZLevels/Academy.dmm
+#maps/RandomZLevels/wildwest.dmm

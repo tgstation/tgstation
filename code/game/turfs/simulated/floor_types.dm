@@ -195,3 +195,10 @@
 					if(istype(get_step(src,direction),/turf/simulated/floor))
 						var/turf/simulated/floor/FF = get_step(src,direction)
 						FF.update_icon() //so siding get updated properly
+
+
+
+/turf/simulated/floor/ironsand/New()
+	..()
+	name = "Iron Sand"
+	icon_state = "ironsand[rand(1,15)]"

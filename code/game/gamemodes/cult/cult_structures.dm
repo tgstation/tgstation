@@ -18,7 +18,7 @@
 	name = "Pylon"
 	desc = "A floating crystal that hums with an unearthly energy"
 	icon_state = "pylon"
-
+	luminosity = 5
 
 /obj/structure/cult/tome
 	name = "Desk"

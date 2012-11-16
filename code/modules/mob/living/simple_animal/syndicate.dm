@@ -42,6 +42,7 @@
 
 	var/stance = SYNDICATE_STANCE_IDLE	//Used to determine behavior
 	var/mob/living/target_mob
+	var/hostile = 0
 
 /mob/living/simple_animal/syndicate/Life()
 	..()
@@ -53,11 +54,11 @@
 			new weapon2 (src.loc)
 		del src
 		return
-
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
-		if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
-			obstacle.attack_animal(src)
+	if(hostile)
+		for(dir in list(NORTH,EAST,SOUTH,WEST))
+			var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
+			if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
+				obstacle.attack_animal(src)
 
 	if(health < 1)
 		Die()
@@ -76,7 +77,7 @@
 	if(!stat)
 		switch(stance)
 			if(SYNDICATE_STANCE_IDLE)
-
+				hostile = 0
 				stop_automated_movement = 0
 
 				for(var/atom/A in view(7,src))
@@ -99,6 +100,7 @@
 
 			if(SYNDICATE_STANCE_ATTACK)	//This one should only be active for one tick
 				stop_automated_movement = 1
+				hostile = 1
 				if(!target_mob || SA_attackable(target_mob))
 					stance = SYNDICATE_STANCE_IDLE
 				if(target_mob in view(10, src))
@@ -113,6 +115,7 @@
 
 			if(SYNDICATE_STANCE_ATTACKING)
 				stop_automated_movement = 1
+				hostile = 1
 				if(!target_mob || SA_attackable(target_mob))
 					stance = SYNDICATE_STANCE_IDLE
 					target_mob = null

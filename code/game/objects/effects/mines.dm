@@ -35,6 +35,16 @@
 	spawn(0)
 		del(src)
 
+/obj/effect/mine/proc/triggerrad1(obj)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+	obj:radiation += 5000
+	randmutb(obj)
+	domutcheck(obj,null)
+	spawn(0)
+		del(src)
+
 /obj/effect/mine/proc/triggerstun(obj)
 	if(ismob(obj))
 		var/mob/M = obj
@@ -102,6 +112,11 @@
 	name = "Radiation Mine"
 	icon_state = "uglymine"
 	triggerproc = "triggerrad"
+
+/obj/effect/mine/meatgrinder
+	name = "Meat Grinder"
+	icon_state = "uglymine"
+	triggerproc = "triggerrad1"
 
 /obj/effect/mine/plasma
 	name = "Plasma Mine"
