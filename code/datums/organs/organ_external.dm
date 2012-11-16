@@ -5,7 +5,9 @@
 	name = "external"
 	var/icon_name = null
 	var/body_part = null
+	var/icon_position = 0
 
+	var/dropped = 0
 	var/damage_state = "00"
 	var/brute_dam = 0
 	var/burn_dam = 0
@@ -63,8 +65,7 @@
 			var/nux = brute * rand(10,15)
 			if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
 				if(prob(5 * brute))
-					status |= ORGAN_DESTROYED
-					droplimb()
+					droplimb(1)
 					return
 
 			else if(prob(nux))
@@ -75,8 +76,7 @@
 		else if(brute > 20)
 			if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
 				if(prob(5 * brute))
-					status |= ORGAN_DESTROYED
-					droplimb()
+					droplimb(1)
 					return
 
 		// If the limbs can break, make sure we don't exceed the maximum damage a limb can take before breaking
@@ -319,10 +319,18 @@
 			return 1
 		return 0
 
+	proc/setAmputatedTree()
+		for(var/datum/organ/external/O in owner.organs)
+			if(O.parent == src)
+				O.amputated=amputated
+
 	proc/droplimb(var/override = 0,var/no_explode = 0)
+		if(dropped) return
 		if(override)
 			status |= ORGAN_DESTROYED
 		if(status & ORGAN_DESTROYED)
+			dropped = 1
+
 			if(status & ORGAN_SPLINTED)
 				status &= ~ORGAN_SPLINTED
 			if(implant)
@@ -337,8 +345,8 @@
 
 			var/obj/item/weapon/organ/H
 			switch(body_part)
-	//			if(UPPER_TORSO)				just no.
-	//				owner.gib()
+//				if(UPPER_TORSO)
+//					owner.gib()
 				if(LOWER_TORSO)
 					owner << "\red You are now sterile."
 				if(HEAD)
@@ -398,6 +406,19 @@
 					owner.u_equip(owner.shoes)
 			if(ismonkey(owner))
 				H.icon = 'monkey.dmi'
+			else if(owner.dna && owner.dna.mutantrace)
+				var/icon/I
+				switch(owner.dna.mutantrace)
+					if("tajaran")
+						I = 'icons/mob/human_races/r_tajaran.dmi'
+					if("lizard")
+						I = 'icons/mob/human_races/r_lizard.dmi'
+					if("skrell")
+						I = 'icons/mob/human_races/r_skrell.dmi'
+				if(I)
+					I.BecomeLying()
+					H.icon = I
+
 			var/lol = pick(cardinal)
 			step(H,lol)
 			destspawn = 1
@@ -573,6 +594,7 @@
 	max_damage = 75
 	min_broken_damage = 30
 	body_part = LEG_LEFT
+	icon_position = LEFT
 
 /datum/organ/external/r_arm
 	name = "r_arm"
@@ -589,6 +611,7 @@
 	max_damage = 75
 	min_broken_damage = 30
 	body_part = LEG_RIGHT
+	icon_position = RIGHT
 
 /datum/organ/external/l_foot
 	name = "l_foot"
@@ -597,6 +620,7 @@
 	max_damage = 40
 	min_broken_damage = 15
 	body_part = FOOT_LEFT
+	icon_position = LEFT
 
 /datum/organ/external/r_foot
 	name = "r_foot"
@@ -605,6 +629,7 @@
 	max_damage = 40
 	min_broken_damage = 15
 	body_part = FOOT_RIGHT
+	icon_position = RIGHT
 
 /datum/organ/external/r_hand
 	name = "r_hand"
@@ -627,7 +652,7 @@
 ****************************************************/
 
 obj/item/weapon/organ
-	icon = 'human.dmi'
+	icon = 'icons/mob/human.dmi'
 
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)
