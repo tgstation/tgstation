@@ -35,11 +35,11 @@
 		if(!devastated)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder(src)
-			var/M = text2path("/obj/item/stack/sheet/[mineral]")
+			var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 			new M( src )
 			new M( src )
 		else
-			var/M = text2path("/obj/item/stack/sheet/[mineral]")
+			var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 			new M( src )
 			new M( src )
 			new /obj/item/stack/sheet/metal( src )

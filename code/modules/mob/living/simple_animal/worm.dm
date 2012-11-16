@@ -174,18 +174,18 @@
 		for(var/atom/movable/stomachContent in contents)
 			if(prob(digestionProbability))
 				if(istype(stomachContent,/obj/item/stack)) //converts to plasma, keeping the stack value
-					if(!istype(stomachContent,/obj/item/stack/sheet/plasma))
+					if(!istype(stomachContent,/obj/item/stack/sheet/mineral/plasma))
 						var/obj/item/stack/oldStack = stomachContent
-						new /obj/item/stack/sheet/plasma(src, oldStack.amount)
+						new /obj/item/stack/sheet/mineral/plasma(src, oldStack.amount)
 						del(oldStack)
 						continue
 				else if(istype(stomachContent,/obj/item)) //converts to plasma, keeping the w_class
 					var/obj/item/oldItem = stomachContent
-					new /obj/item/stack/sheet/plasma(src, oldItem.w_class)
+					new /obj/item/stack/sheet/mineral/plasma(src, oldItem.w_class)
 					del(oldItem)
 					continue
 				else
-					new /obj/item/stack/sheet/plasma(src, flatPlasmaValue) //just flat amount
+					new /obj/item/stack/sheet/mineral/plasma(src, flatPlasmaValue) //just flat amount
 					del(stomachContent)
 					continue
 

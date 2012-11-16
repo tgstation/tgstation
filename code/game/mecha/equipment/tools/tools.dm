@@ -837,7 +837,7 @@
 		return
 
 	proc/init()
-		fuel = new /obj/item/stack/sheet/plasma(src)
+		fuel = new /obj/item/stack/sheet/mineral/plasma(src)
 		fuel.amount = 0
 		pr_mech_generator = new /datum/global_iterator/mecha_generator(list(src),0)
 		pr_mech_generator.set_delay(equip_cooldown)
@@ -967,7 +967,7 @@
 	reliability = 1000
 
 	init()
-		fuel = new /obj/item/stack/sheet/uranium(src)
+		fuel = new /obj/item/stack/sheet/mineral/uranium(src)
 		fuel.amount = 0
 		pr_mech_generator = new /datum/global_iterator/mecha_generator/nuclear(list(src),0)
 		pr_mech_generator.set_delay(equip_cooldown)

@@ -460,22 +460,22 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				type = /obj/item/stack/sheet/glass
 				res_amount = "g_amount"
 			if("gold")
-				type = /obj/item/stack/sheet/gold
+				type = /obj/item/stack/sheet/mineral/gold
 				res_amount = "gold_amount"
 			if("silver")
-				type = /obj/item/stack/sheet/silver
+				type = /obj/item/stack/sheet/mineral/silver
 				res_amount = "silver_amount"
 			if("plasma")
-				type = /obj/item/stack/sheet/plasma
+				type = /obj/item/stack/sheet/mineral/plasma
 				res_amount = "plasma_amount"
 			if("uranium")
-				type = /obj/item/stack/sheet/uranium
+				type = /obj/item/stack/sheet/mineral/uranium
 				res_amount = "uranium_amount"
 			if("diamond")
-				type = /obj/item/stack/sheet/diamond
+				type = /obj/item/stack/sheet/mineral/diamond
 				res_amount = "diamond_amount"
 			if("clown")
-				type = /obj/item/stack/sheet/clown
+				type = /obj/item/stack/sheet/mineral/clown
 				res_amount = "clown_amount"
 		if(ispath(type) && hasvar(linked_lathe, res_amount))
 			var/obj/item/stack/sheet/sheet = new type(linked_lathe.loc)
@@ -493,10 +493,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				type = /obj/item/stack/sheet/glass
 				res_amount = "g_amount"
 			if("gold")
-				type = /obj/item/stack/sheet/gold
+				type = /obj/item/stack/sheet/mineral/gold
 				res_amount = "gold_amount"
 			if("diamond")
-				type = /obj/item/stack/sheet/diamond
+				type = /obj/item/stack/sheet/mineral/diamond
 				res_amount = "diamond_amount"
 		if(ispath(type) && hasvar(linked_imprinter, res_amount))
 			var/obj/item/stack/sheet/sheet = new type(linked_imprinter.loc)

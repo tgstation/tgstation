@@ -237,35 +237,35 @@
 				if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_gold > 0)
 						ore_gold--;
-						new /obj/item/stack/sheet/gold(output.loc)
+						new /obj/item/stack/sheet/mineral/gold(output.loc)
 					else
 						on = 0
 					continue
 				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_silver > 0)
 						ore_silver--;
-						new /obj/item/stack/sheet/silver(output.loc)
+						new /obj/item/stack/sheet/mineral/silver(output.loc)
 					else
 						on = 0
 					continue
 				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_diamond > 0)
 						ore_diamond--;
-						new /obj/item/stack/sheet/diamond(output.loc)
+						new /obj/item/stack/sheet/mineral/diamond(output.loc)
 					else
 						on = 0
 					continue
 				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_plasma > 0)
 						ore_plasma--;
-						new /obj/item/stack/sheet/plasma(output.loc)
+						new /obj/item/stack/sheet/mineral/plasma(output.loc)
 					else
 						on = 0
 					continue
 				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
 					if (ore_uranium > 0)
 						ore_uranium--;
-						new /obj/item/stack/sheet/uranium(output.loc)
+						new /obj/item/stack/sheet/mineral/uranium(output.loc)
 					else
 						on = 0
 					continue
@@ -287,7 +287,7 @@
 				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
 					if (ore_clown > 0)
 						ore_clown--;
-						new /obj/item/stack/sheet/clown(output.loc)
+						new /obj/item/stack/sheet/mineral/clown(output.loc)
 					else
 						on = 0
 					continue
@@ -297,7 +297,7 @@
 					if (ore_uranium >= 2 && ore_diamond >= 1)
 						ore_uranium -= 2
 						ore_diamond -= 1
-						new /obj/item/stack/sheet/adamantine(output.loc)
+						new /obj/item/stack/sheet/mineral/adamantine(output.loc)
 					else
 						on = 0
 					continue
@@ -305,7 +305,7 @@
 					if (ore_silver >= 1 && ore_plasma >= 3)
 						ore_silver -= 1
 						ore_plasma -= 3
-						new /obj/item/stack/sheet/mythril(output.loc)
+						new /obj/item/stack/sheet/mineral/mythril(output.loc)
 					else
 						on = 0
 					continue*/

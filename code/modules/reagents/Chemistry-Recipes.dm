@@ -445,7 +445,7 @@ datum
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/stack/sheet/plasma(location)
+				new /obj/item/stack/sheet/mineral/plasma(location)
 				return
 
 		virus_food
