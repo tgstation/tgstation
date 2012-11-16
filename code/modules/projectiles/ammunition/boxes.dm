@@ -95,7 +95,7 @@
 
 /obj/item/ammo_magazine/a762
 	name = "magazine (a762)"
-	icon_state = "a762-50"
+	icon_state = "a762"
 	origin_tech = "combat=2"
 	ammo_type = "/obj/item/ammo_casing/a762"
 	max_ammo = 50
@@ -103,7 +103,7 @@
 
 /obj/item/ammo_magazine/a762/empty
 	name = "magazine (a762)"
-	icon_state = "a762-0"
+	icon_state = "a762"
 	ammo_type = "/obj/item/ammo_casing/a762"
 	max_ammo = 0
 	multiple_sprites = 1
