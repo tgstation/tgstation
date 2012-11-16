@@ -387,7 +387,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] is beginning to set the bone in [target]'s [affected.display_name] in place with \the [tool]." , \
-			"You are beginning to set the bone in [target]'s [target_zone] in place with \the [tool].")
+			"You are beginning to set the bone in [target]'s [affected.display_name] in place with \the [tool].")
 		target.custom_pain("The pain in your [affected.display_name] is going to make you pass out!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -425,15 +425,15 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\blue [user] sets [target]'s [affected.display_name] skull with \the [tool]." , \
-			"\blue You set [target]'s [affected.display_name] skull with \the [tool].")
+		user.visible_message("\blue [user] sets [target]'s skull with \the [tool]." , \
+			"\blue You set [target]'s skull with \the [tool].")
 		affected.stage = 2
 		spread_germs_to_organ(affected, user)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, damaging [target]'s [affected.display_name] face with \the [tool]!"  , \
-			"\red Your hand slips, damaging [target]'s [affected.display_name] face with \the [tool]!")
+		user.visible_message("\red [user]'s hand slips, damaging [target]'s face with \the [tool]!"  , \
+			"\red Your hand slips, damaging [target]'s face with \the [tool]!")
 		var/datum/organ/external/head/h = affected
 		h.createwound(BRUISE, 10)
 		h.disfigured = 1

@@ -277,6 +277,7 @@ datum
 
 			proc/ConsiderRebuild(var/turf/simulated/T, var/turf/NT)
 
+				if(!istype(T)) return
 				//zones should naturally spread to these tiles eventually
 				if(!T.zone || !NT.zone)
 					return
