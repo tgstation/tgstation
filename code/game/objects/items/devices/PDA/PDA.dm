@@ -842,7 +842,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		user.drop_item()
 		cartridge.loc = src
 		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
-		cartridge = C
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
 
