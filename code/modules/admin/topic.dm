@@ -117,7 +117,7 @@
 				return
 			adm_ckey = new_ckey
 			task = "rank"
-		else
+		else if(task != "show")
 			adm_ckey = ckey(href_list["ckey"])
 			if(!adm_ckey)
 				usr << "<font color='red'>Error: Topic 'editrights': No valid ckey</font>"
@@ -1444,29 +1444,6 @@
 		if(!check_rights(R_SPAWN))	return
 		return create_mob(usr)
 
-	//Promote or Demote a client.
-	else if(href_list["prom_demot"])
-		if(!check_rights(R_PERMISSIONS))	return
-
-		var/client/C = locate(href_list["prom_demot"])
-		if(!istype(C))
-			usr << "This can only be used on instances of type /client"
-			return
-
-		var/dat = "[C] is a "
-		if(C.holder)
-			dat += "[C.holder.rank]"
-		else
-			dat += "non-admin"
-		dat += "<br><br>Change [C]'s rank?<br>"
-
-		for(var/rank in admin_ranks)
-			dat += "<A href='?src=\ref[src];chgadlvl=[rank];client4ad=\ref[C]'>[rank]</A><br>"
-		dat += "<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Deadmin</A>"
-
-		dat += "<br>NOTE: this screen currently does nothing<br>"
-		usr << browse(dat, "window=prom_demot;size=480x300")
-
 	else if(href_list["object_list"])			//this is the laggiest thing ever
 		if(!check_rights(R_SPAWN))	return
 
@@ -2122,6 +2099,11 @@
 				feedback_add_details("admin_secrets_fun_used","K")
 				spacevine_infestation()
 				message_admins("[key_name_admin(usr)] has spawned spacevines", 1)
+			if("onlyone")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","OO")
+				usr.client.only_one()
+//				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if (ok)
