@@ -6459,7 +6459,7 @@
 "cuk" = (/obj/machinery/door/window{dir = 1; name = "Secure Storage"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "cul" = (/obj/item/weapon/crowbar,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "cum" = (/obj/machinery/atmospherics/pipe/simple{dir = 10},/obj/structure/table,/obj/effect/landmark{name = "Syndicate-Bomb"},/turf/unsimulated/floor{icon_state = "floor4"},/area/syndicate_station/start)
-"cun" = (/obj/machinery/door/poddoor{id = "syndicate"; name = "Teleporter"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
+"cun" = (/obj/machinery/door/poddoor{id = "smindicate"; name = "Teleporter"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/syndicate_station/start)
 "cuo" = (/obj/machinery/dna_scannernew,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/administration/centcom)
 "cup" = (/obj/machinery/computer/cloning,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/administration/centcom)
 "cuq" = (/obj/machinery/clonepod,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/administration/centcom)
