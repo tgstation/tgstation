@@ -390,16 +390,17 @@ obj/structure/door_assembly
 						src.airlock_type = /obj/machinery/door/airlock/glass
 						src.base_icon_state = "door_as_g" //this will be applied to the icon_state with the correct state number at the proc's end.
 				else if(istype(G, /obj/item/stack/sheet/mineral))
+					var/M = G.sheettype
 					if(G.amount>=2)
 						playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 						user.visible_message("[user] adds [G.name] to the airlock assembly.", "You start to install [G.name] into the airlock assembly.")
 						if(do_after(user, 40))
-							user << "\blue You installed [G.sheettype] plating into the airlock assembly!"
+							user << "\blue You installed [M] plating into the airlock assembly!"
 							G.use(2)
-							src.mineral = "[G.sheettype]"
-							src.name = "Near finished [G.sheettype] Airlock Assembly"
-							src.airlock_type = text2path ("/obj/machinery/door/airlock/[G.sheettype]")
-							src.base_icon_state = "door_as_[G.sheettype]"
+							src.mineral = "[M]"
+							src.name = "Near finished [M] Airlock Assembly"
+							src.airlock_type = text2path ("/obj/machinery/door/airlock/[M]")
+							src.base_icon_state = "door_as_[M]"
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)

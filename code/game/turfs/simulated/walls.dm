@@ -35,14 +35,23 @@
 		if(!devastated)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 			new /obj/structure/girder(src)
-			var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-			new M( src )
-			new M( src )
+			if (mineral == "metal")
+				new /obj/item/stack/sheet/metal( src )
+				new /obj/item/stack/sheet/metal( src )
+			else
+				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+				new M( src )
+				new M( src )
 		else
-			var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-			new M( src )
-			new M( src )
-			new /obj/item/stack/sheet/metal( src )
+			if (mineral == "metal")
+				new /obj/item/stack/sheet/metal( src )
+				new /obj/item/stack/sheet/metal( src )
+				new /obj/item/stack/sheet/metal( src )
+			else
+				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+				new M( src )
+				new M( src )
+				new /obj/item/stack/sheet/metal( src )
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/effect/decal/poster))

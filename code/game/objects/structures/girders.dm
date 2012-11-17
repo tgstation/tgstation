@@ -121,11 +121,12 @@
 							return
 
 			if(S.sheettype)
+				var/M = S.sheettype
 				if(!anchored)
 					if(S.amount < 2) return
 					S.use(2)
 					user << "\blue You create a false wall! Push on it to open or close the passage."
-					var/F = text2path("/obj/structure/falsewall/[S.sheettype]")
+					var/F = text2path("/obj/structure/falsewall/[M]")
 					new F (src.loc)
 					del(src)
 				else
@@ -136,7 +137,7 @@
 						S.use(2)
 						user << "\blue You added the plating!"
 						var/turf/Tsrc = get_turf(src)
-						Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[S.sheettype]"))
+						Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[M]"))
 						for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
 							if(X)	X.add_hiddenprint(usr)
 						del(src)
