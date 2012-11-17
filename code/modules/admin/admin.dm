@@ -794,7 +794,7 @@ var/global/floorIsLava = 0
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
-	if(!check_rights(R_DEBUG))	return
+	if(!check_rights(R_SPAWN))	return
 
 	var/list/types = typesof(/atom)
 	var/list/matches = new()
