@@ -706,7 +706,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				holder.clear_reagents()
 
-				var/virus = pick(/datum/disease/flu, /datum/disease/cold, \
+				var/virus = pick(/datum/disease/advance/flu, /datum/disease/advance/cold, \
 				 /datum/disease/pierrot_throat, /datum/disease/fake_gbs, \
 				 /datum/disease/brainrot, /datum/disease/magnitis)
 
