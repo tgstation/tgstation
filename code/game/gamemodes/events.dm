@@ -206,7 +206,7 @@
 //	world << sound('sound/AI/outbreak7.ogg')
 	var/virus_type
 	if(!virus)
-		virus_type = pick(/datum/disease/dnaspread,/datum/disease/flu,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
+		virus_type = pick(/datum/disease/dnaspread,/datum/disease/advance/flu,/datum/disease/advance/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
 	else
 		switch(virus)
 			if("fake gbs")
@@ -220,16 +220,16 @@
 			if("brain rot")
 				virus_type = /datum/disease/brainrot
 			if("cold")
-				virus_type = /datum/disease/cold
+				virus_type = /datum/disease/advance/cold
 			if("retrovirus")
 				virus_type = /datum/disease/dnaspread
 			if("flu")
-				virus_type = /datum/disease/flu
+				virus_type = /datum/disease/advance/flu
 //			if("t-virus")
 //				virus_type = /datum/disease/t_virus
 			if("pierrot's throat")
 				virus_type = /datum/disease/pierrot_throat
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
 
 		var/foundAlready = 0 // don't infect someone that already has the virus
 		for(var/datum/disease/D in H.viruses)

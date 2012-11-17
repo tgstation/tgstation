@@ -96,8 +96,8 @@ var/list/archive_diseases = list()
 	return
 
 // Returns the advance disease with a different reference memory.
-/datum/disease/advance/Copy()
-	return new /datum/disease/advance(0, src, 1)
+/datum/disease/advance/Copy(var/process = 0)
+	return new /datum/disease/advance(process, src, 1)
 
 /*
 
@@ -288,7 +288,7 @@ var/list/archive_diseases = list()
 	var/s = safepick(GenerateSymptoms(level, 1))
 	if(s)
 		AddSymptom(s)
-		Refresh()
+		Refresh(1)
 	return
 
 // Randomly remove a symptom.
@@ -297,7 +297,7 @@ var/list/archive_diseases = list()
 		var/s = safepick(symptoms)
 		if(s)
 			RemoveSymptom(s)
-			Refresh()
+			Refresh(1)
 	return
 
 // Name the disease.

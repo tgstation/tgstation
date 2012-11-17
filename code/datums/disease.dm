@@ -182,8 +182,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		return 1
 	return 0
 
-/datum/disease/proc/Copy()
-	return new type(0, src)
+/datum/disease/proc/Copy(var/process = 0)
+	return new type(process, src)
 
 /*
 /datum/disease/Del()

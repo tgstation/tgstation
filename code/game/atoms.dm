@@ -459,7 +459,7 @@ its easier to just keep the beam vertical.
 			if(!B.blood_DNA[M.dna.unique_enzymes])
 				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 			for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = new D.type
+				var/datum/disease/newDisease = D.Copy(1)
 				B.viruses += newDisease
 				newDisease.holder = B
 			return 1 //we bloodied the floor
@@ -468,7 +468,7 @@ its easier to just keep the beam vertical.
 		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
 		newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 		for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = new D.type
+			var/datum/disease/newDisease = D.Copy(1)
 			newblood.viruses += newDisease
 			newDisease.holder = newblood
 		return 1 //we bloodied the floor
@@ -493,7 +493,7 @@ its easier to just keep the beam vertical.
 			this.icon_state = "vomittox_[pick(1,4)]"
 
 		for(var/datum/disease/D in M.viruses)
-			var/datum/disease/newDisease = new D.type
+			var/datum/disease/newDisease = D.Copy(1)
 			this.viruses += newDisease
 			newDisease.holder = this
 
@@ -505,7 +505,7 @@ its easier to just keep the beam vertical.
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
 			this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 			for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = new D.type
+				var/datum/disease/newDisease = D.Copy(1)
 				this.viruses += newDisease
 				newDisease.holder = this
 
@@ -515,7 +515,7 @@ its easier to just keep the beam vertical.
 			var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(source2)
 			this.blood_DNA["UNKNOWN BLOOD"] = "X*"
 			for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = new D.type
+				var/datum/disease/newDisease = D.Copy(1)
 				this.viruses += newDisease
 				newDisease.holder = this
 

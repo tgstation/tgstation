@@ -2064,7 +2064,7 @@
 			if("virus")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","V")
-				var/answer = alert("Do you want this to be a random disease or do you have something in mind?",,"Virus2","Random","Choose")
+				var/answer = alert("Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose")
 				if(answer=="Random")
 					viral_outbreak()
 					message_admins("[key_name_admin(usr)] has triggered a virus outbreak", 1)
@@ -2074,17 +2074,43 @@
 					viral_outbreak(V)
 					message_admins("[key_name_admin(usr)] has triggered a virus outbreak of [V]", 1)
 				else
-					usr << "Nope"
-					/*
-					var/lesser = (alert("Do you want to infect the mob with a major or minor disease?",,"Major","Minor") == "Minor")
-					var/mob/living/carbon/victim = input("Select a mob to infect", "Virus2") as null|mob in world
-					if(!istype(victim)) return
-					if(lesser)
-						infect_mob_random_lesser(victim)
-					else
-						infect_mob_random_greater(victim)
-					message_admins("[key_name_admin(usr)] has infected [victim] with a [lesser ? "minor" : "major"] virus2.", 1)
-					*/
+					var/i = 5
+
+					var/datum/disease/advance/D = new(0, null)
+					D.symptoms = list()
+
+					var/list/symptoms = list()
+					symptoms += "Done"
+					symptoms += list_symptoms.Copy()
+					do
+						var/symptom = input("Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
+						if(istext(symptom))
+							i = 0
+						else if(ispath(symptom))
+							var/datum/symptom/S = new symptom
+							if(!D.HasSymptom(S))
+								D.symptoms += S
+								i -= 1
+					while(i > 0)
+
+					if(D.symptoms.len > 0)
+
+						var/new_name = input("Name your new disease.", "New Name")
+						D.AssignName(new_name)
+						D.Refresh()
+
+						for(var/datum/disease/advance/AD in active_diseases)
+							AD.Refresh()
+
+						for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
+							if(!H.has_disease(D))
+								H.contract_disease(D, 1)
+								break
+
+						var/list/name_symptoms = list()
+						for(var/datum/symptom/S in D.symptoms)
+							name_symptoms += S.name
+						message_admins("[key_name_admin(usr)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]", 1)
 			if("retardify")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","RET")

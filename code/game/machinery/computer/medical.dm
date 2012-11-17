@@ -74,6 +74,8 @@
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					for(var/Dt in typesof(/datum/disease/))
 						var/datum/disease/Dis = new Dt(0)
+						if(istype(Dis, /datum/disease/advance))
+							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
 						if(!Dis.desc)
 							continue
 						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"

@@ -648,12 +648,14 @@
 
 							if(istype(D, /datum/disease/advance))
 								var/datum/disease/advance/A = D
-								dat += "<b>Symptoms:</b>"
+								dat += "<b>Symptoms:</b> "
+								var/english_symptoms = list()
 								for(var/datum/symptom/S in A.symptoms)
-									dat += " [S.name] "
+									english_symptoms += S.name
+								dat += english_list(english_symptoms)
 
 
-			dat += "<b>Contains antibodies to:</b> "
+			dat += "<BR><b>Contains antibodies to:</b> "
 			if(Blood.data["resistances"])
 				var/list/res = Blood.data["resistances"]
 				if(res.len)
