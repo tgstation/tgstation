@@ -356,7 +356,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(src) || istype(src,/mob/living/carbon/alien/humanoid))
+	if(ishuman(src) || isalienadult(src) || isbrain(src))
 		switch(input)
 			if("help","disarm","grab","hurt")
 				a_intent = input

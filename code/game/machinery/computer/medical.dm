@@ -84,12 +84,14 @@
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
 					for(var/obj/machinery/bot/medbot/M in world)
+						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
-						bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
-						if((!isnull(M.reagent_glass)) && M.use_beaker)
-							bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
-						else
-							bdat += "Using Internal Synthesizer.<br>"
+						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
+							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
+							if((!isnull(M.reagent_glass)) && M.use_beaker)
+								bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
+							else
+								bdat += "Using Internal Synthesizer.<br>"
 
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
