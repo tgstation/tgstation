@@ -1034,3 +1034,15 @@
 		R.UnlinkSelf()
 		R << "Buffers flushed and reset. Camera system shutdown.  All systems operational."
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
+
+/mob/living/silicon/robot/mode()
+	set name = "Activate Held Object"
+	set category = "IC"
+	set src = usr
+
+	if(module_active)
+
+		var/obj/item/W = module_active
+		if (W)
+			W.attack_self(src)
+	return
