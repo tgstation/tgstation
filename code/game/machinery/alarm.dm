@@ -71,6 +71,7 @@
 	var/aidisabled = 0
 	var/AAlarmwires = 31
 	var/shorted = 0
+	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
  // Uses code from apc.dm
 
@@ -142,14 +143,28 @@
 	var/list/air_vent_info
 	var/list/air_scrub_info
 
-/obj/machinery/alarm/New()
+/obj/machinery/alarm/New(nloc, ndir, nbuild)
 	..()
+	if(nloc)
+		loc = nloc
+
+	if(ndir)
+		dir = ndir
+
+	if(nbuild)
+		buildstage = 0
+		wiresexposed = 1
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
+		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+
 	alarm_area = get_area(loc)
 	if (alarm_area.master)
 		alarm_area = alarm_area.master
 	area_uid = alarm_area.uid
 	if (name == "alarm")
 		name = "[alarm_area.name] Air Alarm"
+
+	update_icon()
 
 /obj/machinery/alarm/initialize()
 	set_frequency(frequency)
@@ -268,6 +283,7 @@
 			//world << "AAlarm Wire Cut"
 
 	src.updateDialog()
+	update_icon()
 
 	return
 
@@ -298,6 +314,7 @@
 	//	if(AALARM_WIRE_AALARM)
 			//world << "AAlarm Wire mended"
 
+	update_icon()
 	src.updateDialog()
 	return
 
@@ -869,8 +886,18 @@ table tr:first-child th:first-child { border: none;}
 
 /obj/machinery/alarm/update_icon()
 	if(wiresexposed)
-		icon_state = "alarmx"
+		switch(buildstage)
+			if(2)
+				if(src.AAlarmwires == 0) // All wires cut
+					icon_state = "alarm_b2"
+				else
+					icon_state = "alarmx"
+			if(1)
+				icon_state = "alarm_b2"
+			if(0)
+				icon_state = "alarm_b1"
 		return
+
 	if((stat & (NOPOWER|BROKEN)) || shorted)
 		icon_state = "alarmp"
 		return
@@ -968,36 +995,81 @@ table tr:first-child th:first-child { border: none;}
 	update_icon()
 
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
-/*	if (istype(W, /obj/item/weapon/wirecutters))
-		stat ^= BROKEN
-		src.add_fingerprint(user)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] has []activated []!", user, (stat&BROKEN) ? "de" : "re", src), 1)
-		update_icon()
-		return
-*/
-	if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
-		//user << "You pop the Air Alarm's maintence panel open."
-		wiresexposed = !wiresexposed
-		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
-		update_icon()
-		return
+	switch(buildstage)
+		if(2)
+			if(istype(W, /obj/item/weapon/wirecutters) && AAlarmwires == 0)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				user << "You cut the final wires."
+				var/obj/item/weapon/cable_coil/cable = new /obj/item/weapon/cable_coil( src.loc )
+				cable.amount = 5
+				buildstage = 1
+				update_icon()
+				return
 
-	if (wiresexposed && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
-		return src.attack_hand(user)
+			if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				wiresexposed = !wiresexposed
+				user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+				update_icon()
+				return
 
+			if (wiresexposed && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
+				return src.attack_hand(user)
+			else if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
+				if(stat & (NOPOWER|BROKEN))
+					user << "It does nothing"
+				else
+					if(src.allowed(usr) && !isWireCut(AALARM_WIRE_IDSCAN))
+						locked = !locked
+						user << "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface."
+						src.updateUsrDialog()
+					else
+						user << "\red Access denied."
+				return
+		if(1)
+			if(istype(W, /obj/item/weapon/crowbar) && AAlarmwires == 0)
+				user << "You pry out the circuit."
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				spawn(20)
+					new /obj/item/weapon/airalarm_electronics( src.loc )
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					buildstage = 0
+					update_icon()
+				return
 
-	else if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
-		if(stat & (NOPOWER|BROKEN))
-			user << "It does nothing"
-		else
-			if(src.allowed(usr) && !isWireCut(AALARM_WIRE_IDSCAN))
-				locked = !locked
-				user << "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface."
-				src.updateUsrDialog()
-			else
-				user << "\red Access denied."
-		return
+			if(istype(W, /obj/item/weapon/cable_coil))
+				var/obj/item/weapon/cable_coil/cable = W
+				if(cable.amount < 5)
+					user << "You need more cable!"
+					return
+
+				user << "You start wiring the air alarm!"
+				spawn(20)
+					cable.amount -= 5
+					if(!cable.amount)
+						del(cable)
+
+					user << "You wire the air alarm!"
+					src.AAlarmwires = 31
+					buildstage = 2
+					update_icon()
+				return
+		if(0)
+			if(istype(W, /obj/item/weapon/airalarm_electronics))
+				user << "You insert the circuit!"
+				buildstage = 1
+				update_icon()
+				user.drop_item()
+				del(W)
+				return
+
+			if(istype(W, /obj/item/weapon/wrench))
+				user << "You detach \the [src] from the wall!"
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				new /obj/item/alarm_frame( user.loc )
+				del(src)
+				return
+
 	return ..()
 
 /obj/machinery/alarm/power_change()
@@ -1008,8 +1080,94 @@ table tr:first-child th:first-child { border: none;}
 	spawn(rand(0,15))
 		update_icon()
 
+/*
+AIR ALARM CIRCUIT
+Just a object used in constructing air alarms
+*/
+/obj/item/weapon/airalarm_electronics
+	name = "air alarm electronics"
+	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon_state = "door_electronics"
+	desc = "Looks like a circuit. Probably is."
+	w_class = 2.0
+	m_amt = 50
+	g_amt = 50
+
+
+/*
+AIR ALARM ITEM
+Handheld air alarm frame, for placing on walls
+Code shamelessly copied from apc_frame
+*/
+/obj/item/alarm_frame
+	name = "air alarm frame"
+	desc = "Used for building Air Alarms"
+	icon = 'icons/obj/monitors.dmi'
+	icon_state = "alarm_bitem"
+	flags = FPRINT | TABLEPASS| CONDUCT
+
+/obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
+		del(src)
+		return
+	..()
+
+/obj/item/alarm_frame/proc/try_build(turf/on_wall)
+	if (get_dist(on_wall,usr)>1)
+		return
+
+	var/ndir = get_dir(on_wall,usr)
+	if (!(ndir in cardinal))
+		return
+
+	var/turf/loc = get_turf_loc(usr)
+	var/area/A = loc.loc
+	if (!istype(loc, /turf/simulated/floor))
+		usr << "\red Air Alarm cannot be placed on this spot."
+		return
+	if (A.requires_power == 0 || A.name == "Space")
+		usr << "\red Air Alarm cannot be placed in this area."
+		return
+
+	if(gotwallitem(loc, ndir))
+		usr << "\red There's already an item on this wall!"
+		return
+
+	new /obj/machinery/alarm(loc, ndir, 1)
+
+	del(src)
+
+
+/*
+FIRE ALARM
+*/
 /obj/machinery/firealarm
 	var/last_process = 0
+	var/wiresexposed = 0
+	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+
+/obj/machinery/firealarm/update_icon()
+
+	if(wiresexposed)
+		switch(buildstage)
+			if(2)
+				icon_state="fire_b2"
+			if(1)
+				icon_state="fire_b1"
+			if(0)
+				icon_state="fire_b0"
+
+		return
+
+	if(stat & BROKEN)
+		icon_state = "firex"
+	else if(stat & NOPOWER)
+		icon_state = "firep"
+	else if(!src.detecting)
+		icon_state = "fire1"
+	else
+		icon_state = "fire0"
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
@@ -1030,29 +1188,76 @@ table tr:first-child th:first-child { border: none;}
 	if(prob(50/severity)) alarm()
 	..()
 
-/obj/machinery/firealarm/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wirecutters))
-		src.detecting = !( src.detecting )
-		if (src.detecting)
-			user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
-		else
-			user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
-	else
-		src.alarm()
+/obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
 	src.add_fingerprint(user)
+
+	if (istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
+		wiresexposed = !wiresexposed
+		update_icon()
+		return
+
+	if(wiresexposed)
+		switch(buildstage)
+			if(2)
+				if (istype(W, /obj/item/device/multitool))
+					src.detecting = !( src.detecting )
+					if (src.detecting)
+						user.visible_message("\red [user] has reconnected [src]'s detecting unit!", "You have reconnected [src]'s detecting unit.")
+					else
+						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
+
+				else if (istype(W, /obj/item/weapon/wirecutters))
+					buildstage = 1
+					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil()
+					coil.amount = 5
+					coil.loc = user.loc
+					user << "You cut the wires from \the [src]"
+					update_icon()
+			if(1)
+				if(istype(W, /obj/item/weapon/cable_coil))
+					var/obj/item/weapon/cable_coil/coil = W
+					if(coil.amount < 5)
+						user << "You need more cable for this!"
+						return
+
+					coil.amount -= 5
+					if(!coil.amount)
+						del(coil)
+
+					buildstage = 2
+					user << "You wire \the [src]!"
+					update_icon()
+
+				else if(istype(W, /obj/item/weapon/crowbar))
+					user << "You pry out the circuit!"
+					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+					spawn(20)
+						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
+						circuit.loc = user.loc
+						buildstage = 0
+						update_icon()
+			if(0)
+				if(istype(W, /obj/item/weapon/firealarm_electronics))
+					user << "You insert the circuit!"
+					del(W)
+					buildstage = 1
+					update_icon()
+
+				else if(istype(W, /obj/item/weapon/wrench))
+					user << "You remove the fire alarm assembly from the wall!"
+					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
+					frame.loc = user.loc
+					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+					del(src)
+		return
+
+	src.alarm()
 	return
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(stat & (NOPOWER|BROKEN))
 		return
-
-//	var/area/A = src.loc
-//	A = A.loc
-
-//	if(A.fire)
-//		src.icon_state = "fire1"
-//	else
-//		src.icon_state = "fire0"
 
 	if(src.timing)
 		if(src.time > 0)
@@ -1069,14 +1274,17 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/firealarm/power_change()
 	if(powered(ENVIRON))
 		stat &= ~NOPOWER
-		icon_state = "fire0"
+		update_icon()
 	else
 		spawn(rand(0,15))
 			stat |= NOPOWER
-			icon_state = "firep"
+			update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))
+		return
+
+	if (buildstage != 2)
 		return
 
 	user.set_machine(src)
@@ -1120,23 +1328,25 @@ table tr:first-child th:first-child { border: none;}
 	..()
 	if (usr.stat || stat & (BROKEN|NOPOWER))
 		return
+
+	if (buildstage != 2)
+		return
+
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.set_machine(src)
 		if (href_list["reset"])
 			src.reset()
-		else
-			if (href_list["alarm"])
-				src.alarm()
-			else
-				if (href_list["time"])
-					src.timing = text2num(href_list["time"])
-					last_process = world.timeofday
-					processing_objects.Add(src)
-				else
-					if (href_list["tp"])
-						var/tp = text2num(href_list["tp"])
-						src.time += tp
-						src.time = min(max(round(src.time), 0), 120)
+		else if (href_list["alarm"])
+			src.alarm()
+		else if (href_list["time"])
+			src.timing = text2num(href_list["time"])
+			last_process = world.timeofday
+			processing_objects.Add(src)
+		else if (href_list["tp"])
+			var/tp = text2num(href_list["tp"])
+			src.time += tp
+			src.time = min(max(round(src.time), 0), 120)
+
 		src.updateUsrDialog()
 
 		src.add_fingerprint(usr)
@@ -1154,6 +1364,7 @@ table tr:first-child th:first-child { border: none;}
 		return
 	for(var/area/RA in A.related)
 		RA.firereset()
+	update_icon()
 	return
 
 /obj/machinery/firealarm/proc/alarm()
@@ -1165,8 +1376,84 @@ table tr:first-child th:first-child { border: none;}
 		return
 	for(var/area/RA in A.related)
 		RA.firealert()
+	update_icon()
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
+
+/obj/machinery/firealarm/New(loc, dir, building)
+	..()
+
+	if(loc)
+		src.loc = loc
+
+	if(dir)
+		src.dir = dir
+
+	if(building)
+		buildstage = 0
+		wiresexposed = 1
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
+		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+
+	update_icon()
+
+/*
+FIRE ALARM CIRCUIT
+Just a object used in constructing fire alarms
+*/
+/obj/item/weapon/firealarm_electronics
+	name = "fire alarm electronics"
+	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon_state = "door_electronics"
+	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
+	w_class = 2.0
+	m_amt = 50
+	g_amt = 50
+
+
+/*
+FIRE ALARM ITEM
+Handheld fire alarm frame, for placing on walls
+Code shamelessly copied from apc_frame
+*/
+/obj/item/firealarm_frame
+	name = "fire alarm frame"
+	desc = "Used for building Fire Alarms"
+	icon = 'icons/obj/monitors.dmi'
+	icon_state = "fire_bitem"
+	flags = FPRINT | TABLEPASS| CONDUCT
+
+/obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
+		del(src)
+		return
+	..()
+
+/obj/item/firealarm_frame/proc/try_build(turf/on_wall)
+	if (get_dist(on_wall,usr)>1)
+		return
+
+	var/ndir = get_dir(on_wall,usr)
+	if (!(ndir in cardinal))
+		return
+
+	var/turf/loc = get_turf_loc(usr)
+	var/area/A = loc.loc
+	if (!istype(loc, /turf/simulated/floor))
+		usr << "\red Fire Alarm cannot be placed on this spot."
+		return
+	if (A.requires_power == 0 || A.name == "Space")
+		usr << "\red Fire Alarm cannot be placed in this area."
+		return
+
+	if(gotwallitem(loc, ndir))
+		usr << "\red There's already an item on this wall!"
+		return
+
+	new /obj/machinery/firealarm(loc, ndir, 1)
+
+	del(src)
 
 /obj/machinery/partyalarm/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
