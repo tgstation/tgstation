@@ -489,7 +489,7 @@
 							domutcheck(src,null)
 							emote("gasp")
 						updatehealth()
-							
+
 				if(damage && organs.len)
 					var/datum/organ/external/O = pick(organs)
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
@@ -1480,7 +1480,7 @@
 				if((mRemote in mutations) && remoteview_target)
 					if(remoteview_target.stat==CONSCIOUS)
 						isRemoteObserve = 1
-				if(!isRemoteObserve && !client.adminobs)
+				if(!isRemoteObserve && client && !client.adminobs)
 					remoteview_target = null
 					reset_view(null)
 		return 1
