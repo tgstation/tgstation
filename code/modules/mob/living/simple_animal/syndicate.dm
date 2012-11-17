@@ -26,7 +26,7 @@
 	melee_damage_upper = 10
 	attacktext = "punches"
 	a_intent = "harm"
-	var/corpse = /obj/effect/landmark/corpse/syndicatesoldier
+	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
 	var/weapon1
 	var/weapon2
 	min_oxy = 5
@@ -225,7 +225,7 @@
 	icon_state = "syndicatemeleespace"
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
-	corpse = /obj/effect/landmark/corpse/syndicatecommando
+	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
 	speed = 0
 
 /mob/living/simple_animal/syndicate/melee/space/Process_Spacemove(var/check_drift = 0)
@@ -251,7 +251,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
-	corpse = /obj/effect/landmark/corpse/syndicatecommando
+	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
 	speed = 0
 
 /mob/living/simple_animal/syndicate/ranged/space/Process_Spacemove(var/check_drift = 0)

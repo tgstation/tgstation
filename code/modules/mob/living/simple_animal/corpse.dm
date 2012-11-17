@@ -1,10 +1,13 @@
-//These are meant for spawning on maps, namely Away Missions.
+//Meant for simple animals to drop lootable human bodies.
 
 //If someone can do this in a neater way, be my guest-Kor
 
+//This has to be seperate from the Away Mission corpses, because New() doesn't work for those, and initialize() doesn't work for these.
+
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 
-/obj/effect/landmark/corpse
+
+/obj/effect/landmark/mobcorpse
 	name = "Unknown"
 	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
@@ -24,10 +27,10 @@
 	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
 	var/corpseidicon = null //For setting it to be a gold, silver, centcomm etc ID
 
-/obj/effect/landmark/corpse/initialize()
+/obj/effect/landmark/mobcorpse/New()
 	createCorpse()
 
-/obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
+/obj/effect/landmark/mobcorpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
 	M.real_name = src.name
 	M.stat = 2 //Kills the new mob
@@ -70,13 +73,9 @@
 
 
 
-// I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
+//List of different corpse types
 
-
-
-
-
-/obj/effect/landmark/corpse/syndicatesoldier
+/obj/effect/landmark/mobcorpse/syndicatesoldier
 	name = "Syndicate Operative"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/armor/vest
@@ -92,7 +91,7 @@
 
 
 
-/obj/effect/landmark/corpse/syndicatecommando
+/obj/effect/landmark/mobcorpse/syndicatecommando
 	name = "Syndicate Commando"
 	corpseuniform = /obj/item/clothing/under/syndicate
 	corpsesuit = /obj/item/clothing/suit/space/rig/syndi
@@ -109,52 +108,7 @@
 
 
 
-///////////Civilians//////////////////////
-
-/obj/effect/landmark/corpse/chef
-	name = "Chef"
-	corpseuniform = /obj/item/clothing/under/rank/chef
-	corpsesuit = /obj/item/clothing/suit/chef/classic
-	corpseshoes = /obj/item/clothing/shoes/black
-	corpsehelmet = /obj/item/clothing/head/chefhat
-	corpseback = /obj/item/weapon/storage/backpack
-	corpseradio = /obj/item/device/radio/headset
-	corpseid = 1
-	corpseidjob = "Chef"
-	corpseidaccess = "Chef"
-
-
-/obj/effect/landmark/corpse/doctor
-	name = "Doctor"
-	corpseradio = /obj/item/device/radio/headset/headset_med
-	corpseuniform = /obj/item/clothing/under/rank/medical
-	corpsesuit = /obj/item/clothing/suit/labcoat
-	corpseback = /obj/item/weapon/storage/backpack/medic
-	corpsepocket1 = /obj/item/device/flashlight/pen
-	corpseshoes = /obj/item/clothing/shoes/black
-	corpseid = 1
-	corpseidjob = "Medical Doctor"
-	corpseidaccess = "Medical Doctor"
-
-/obj/effect/landmark/corpse/engineer
-	name = "Engineer"
-	corpseradio = /obj/item/device/radio/headset/headset_eng
-	corpseuniform = /obj/item/clothing/under/rank/engineer
-	corpseback = /obj/item/weapon/storage/backpack/industrial
-	corpseshoes = /obj/item/clothing/shoes/orange
-	corpsebelt = /obj/item/weapon/storage/belt/utility/full
-	corpsegloves = /obj/item/clothing/gloves/yellow
-	corpsehelmet = /obj/item/clothing/head/hardhat
-	corpseid = 1
-	corpseidjob = "Station Engineer"
-	corpseidaccess = "Station Engineer"
-
-/obj/effect/landmark/corpse/engineer/rig
-	corpsesuit = /obj/item/clothing/suit/space/rig
-	corpsemask = /obj/item/clothing/mask/breath
-	corpsehelmet = /obj/item/clothing/head/helmet/space/rig
-
-/obj/effect/landmark/corpse/clown
+/obj/effect/landmark/mobcorpse/clown
 	name = "Clown"
 	corpseuniform = /obj/item/clothing/under/rank/clown
 	corpseshoes = /obj/item/clothing/shoes/clown_shoes
@@ -165,52 +119,3 @@
 	corpseid = 1
 	corpseidjob = "Clown"
 	corpseidaccess = "Clown"
-
-/obj/effect/landmark/corpse/scientist
-	name = "Scientist"
-	corpseradio = /obj/item/device/radio/headset/headset_sci
-	corpseuniform = /obj/item/clothing/under/rank/scientist
-	corpsesuit = /obj/item/clothing/suit/labcoat/science
-	corpseback = /obj/item/weapon/storage/backpack
-	corpseshoes = /obj/item/clothing/shoes/white
-	corpseid = 1
-	corpseidjob = "Scientist"
-	corpseidaccess = "Scientist"
-
-/obj/effect/landmark/corpse/miner
-	corpseradio = /obj/item/device/radio/headset/headset_mine
-	corpseuniform = /obj/item/clothing/under/rank/miner
-	corpsegloves = /obj/item/clothing/gloves/black
-	corpseback = /obj/item/weapon/storage/backpack/industrial
-	corpseshoes = /obj/item/clothing/shoes/black
-	corpseid = 1
-	corpseidjob = "Shaft Miner"
-	corpseidaccess = "Shaft Miner"
-
-/////////////////Officers//////////////////////
-
-/obj/effect/landmark/corpse/bridgeofficer
-	name = "Bridge Officer"
-	corpseradio = /obj/item/device/radio/headset/heads/hop
-	corpseuniform = /obj/item/clothing/under/rank/centcom_officer
-	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
-	corpseshoes = /obj/item/clothing/shoes/black
-	corpseglasses = /obj/item/clothing/glasses/sunglasses
-	corpseid = 1
-	corpseidjob = "Bridge Officer"
-	corpseidaccess = "Captain"
-
-/obj/effect/landmark/corpse/commander
-	name = "Commander"
-	corpseuniform = /obj/item/clothing/under/rank/centcom_commander
-	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
-	corpseradio = /obj/item/device/radio/headset/heads/captain
-	corpseglasses = /obj/item/clothing/glasses/eyepatch
-	corpsemask = /obj/item/clothing/mask/cigarette/cigar/cohiba
-	corpsehelmet = /obj/item/clothing/head/centhat
-	corpsegloves = /obj/item/clothing/gloves/swat
-	corpseshoes = /obj/item/clothing/shoes/swat
-	corpsepocket1 = /obj/item/weapon/lighter/zippo
-	corpseid = 1
-	corpseidjob = "Commander"
-	corpseidaccess = "Captain"

@@ -50,7 +50,7 @@
 /mob/living/simple_animal/clown/Life()
 	..()
 	if(stat == 2)
-		new /obj/effect/landmark/corpse/clown (src.loc)
+		new /obj/effect/landmark/mobcorpse/clown (src.loc)
 		del src
 		return
 

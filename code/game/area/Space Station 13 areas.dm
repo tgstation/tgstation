@@ -1468,6 +1468,11 @@ proc/process_ghost_teleport_locs()
 /area/awaymission/wwvault
 	name = "\improper Wild West Vault"
 	icon_state = "away3"
+	luminosity = 0
+
+/area/awaymission/wwvaultdoors
+	name = "\improper Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
+	icon_state = "away2"
 	requires_power = 0
 	luminosity = 0
 

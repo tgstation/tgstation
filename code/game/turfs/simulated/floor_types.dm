@@ -198,7 +198,7 @@
 
 
 
-/turf/simulated/floor/ironsand/New()
+/turf/simulated/floor/plating/ironsand/New()
 	..()
 	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
