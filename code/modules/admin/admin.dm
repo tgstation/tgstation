@@ -4,16 +4,10 @@ var/global/floorIsLava = 0
 
 
 ////////////////////////////////
-/proc/message_admins(var/text, var/admin_ref = 0, var/admin_holder_ref = 0)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
-	log_adminwarn(rendered)
-	for(var/client/C in admins)
-		var/msg = rendered
-		if(admin_ref)
-			msg = replacetext(msg, "%admin_ref%", "\ref[C]")
-		if(admin_holder_ref && C.holder)
-			msg = replacetext(msg, "%holder_ref%", "\ref[C.holder]")
-		C << msg
+/proc/message_admins(var/msg)
+	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+	log_adminwarn(msg)
+	admins << msg
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
