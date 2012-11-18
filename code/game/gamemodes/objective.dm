@@ -52,7 +52,7 @@ datum/objective/assassinate
 
 	check_completion()
 		if(target && target.current)
-			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 				return 1
 			return 0
 		return 1
@@ -79,7 +79,7 @@ datum/objective/mutiny
 
 	check_completion()
 		if(target && target.current)
-			if(target.current.stat == DEAD || !ishuman(target.current))
+			if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 				return 1
 			var/turf/T = get_turf(target.current)
 			if(T && (T.z != 1))			//If they leave the station they count as dead for this
