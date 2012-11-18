@@ -188,7 +188,7 @@
 			if(W.internal && !W.is_treated())
 				// internal wounds get worse over time
 				W.open_wound(0.1 * wound_update_accuracy)
-				owner.vessel.remove_reagent("blood",0.2 * W.damage * wound_update_accuracy)
+				owner.vessel.remove_reagent("blood",0.07 * W.damage * wound_update_accuracy)
 
 			if(W.bandaged || W.salved)
 				// slow healing
