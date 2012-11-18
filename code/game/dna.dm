@@ -116,8 +116,9 @@
 	uni_identity = temp
 
 	var/mutstring = ""
-	for(var/i = 1, i <= 13, i++)
+	for(var/i = 1, i <= STRUCDNASIZE, i++)
 		mutstring += add_zero2(num2hex(rand(1,1024)),3)
+
 
 	struc_enzymes = mutstring
 
