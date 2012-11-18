@@ -568,7 +568,7 @@
 
 
 		if(!lung_ruptured && breath)
-			if(breath.total_moles < BREATH_VOLUME / 5 || breath.total_moles > BREATH_VOLUME * 5)
+			if(breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
 				if(prob(5))
 					rupture_lung()
 
