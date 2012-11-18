@@ -1,8 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/structure/closet/crate
-	desc = "A crate."
-	name = "Crate"
+	name = "crate"
+	desc = "A rectangular steel crate."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
 	density = 1
@@ -12,6 +12,7 @@
 	opened = 0
 	flags = FPRINT
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
+	var/rigged = 0
 
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
@@ -250,8 +251,24 @@
 	src.opened = 0
 
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
-	if(opened) close()
-	else open()
+	if(opened)
+		close()
+	else
+		if(rigged && locate(/obj/item/device/radio/electropack) in src)
+			if(isliving(user))
+				var/mob/living/L = user
+				var/protected = 0
+				if(ishuman(L))
+					var/mob/living/carbon/human/H = L
+					if(H.gloves && H.gloves.siemens_coefficient < 0.2)
+						protected = 1
+				if(!protected)
+					L.electrocute_act(17, src)
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(5, 1, src)
+					s.start()
+					return
+		open()
 	return
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
@@ -300,6 +317,27 @@
 			W.loc = src.loc
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
+	else if(istype(W, /obj/item/weapon/cable_coil))
+		if(rigged)
+			user << "<span class='notice'>[src] is already rigged!</span>"
+			return
+		user  << "<span class='notice'>You rig [src].</span>"
+		user.drop_item()
+		del(W)
+		rigged = 1
+		return
+	else if(istype(W, /obj/item/device/radio/electropack))
+		if(rigged)
+			user  << "<span class='notice'>You attach [W] to [src].</span>"
+			user.drop_item()
+			W.loc = src
+			return
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(rigged)
+			user  << "<span class='notice'>You cut away the wiring.</span>"
+			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			rigged = 0
+			return
 	else return attack_hand(user)
 
 /obj/structure/closet/crate/secure/emp_act(severity)
