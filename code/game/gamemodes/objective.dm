@@ -5,13 +5,14 @@ datum/objective
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
+	var/completed = 0					//currently only used for custom objectives.
 
 	New(var/text)
 		if(text)
 			explanation_text = text
 
 	proc/check_completion()
-		return 1
+		return completed
 
 	proc/find_target()
 		var/list/possible_targets = list()

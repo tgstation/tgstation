@@ -324,7 +324,7 @@ datum/mind
 		else
 			var/obj_count = 1
 			for(var/datum/objective/objective in objectives)
-				out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a><br>"
+				out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'><font color=[objective.completed ? "green" : "red"]>Toggle Completion</font></a><br>"
 				obj_count++
 		out += "<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>"
 
@@ -464,8 +464,13 @@ datum/mind
 
 		else if (href_list["obj_delete"])
 			var/datum/objective/objective = locate(href_list["obj_delete"])
-			if (!objective) return
+			if(!istype(objective))	return
 			objectives -= objective
+
+		else if(href_list["obj_completed"])
+			var/datum/objective/objective = locate(href_list["obj_completed"])
+			if(!istype(objective))	return
+			objective.completed = !objective.completed
 
 		else if (href_list["revolution"])
 			switch(href_list["revolution"])
