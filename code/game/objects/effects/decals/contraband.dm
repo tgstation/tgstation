@@ -18,46 +18,46 @@
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
 
 
-/obj/item/weapon/contraband/poster/New(turf/loc,var/given_serial=0)
-	if(given_serial==0)
-		serial_number = rand(1,NUM_OF_POSTER_DESIGNS)
-		src.resulting_poster = new(serial_number)
+/obj/item/weapon/contraband/poster/New(turf/loc, var/given_serial = 0)
+	if(given_serial == 0)
+		serial_number = rand(1, NUM_OF_POSTER_DESIGNS)
+		resulting_poster = new(serial_number)
 	else
 		serial_number = given_serial
 		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
-	src.name += " - No. [serial_number]"
+	name += " - No. [serial_number]"
 	..(loc)
 
 
 /*/obj/item/weapon/contraband/poster/attack(mob/M as mob, mob/user as mob)
 	src.add_fingerprint(user)
-	if(src.resulting_poster)
-		src.resulting_poster.add_fingerprint(user)
+	if(resulting_poster)
+		resulting_poster.add_fingerprint(user)
 	..()*/
 
 /*/obj/item/weapon/contraband/poster/attack(atom/A, mob/user as mob) //This shit is handled through the wall's attackby()
-	if (istype(A, /turf/simulated/wall))
-		if(src.resulting_poster == null)
+	if(istype(A, /turf/simulated/wall))
+		if(resulting_poster == null)
 			return
 		else
 			var/turf/simulated/wall/W = A
 			var/check = 0
 			var/stuff_on_wall = 0
-			for( var/obj/O in W.contents) //Let's see if it already has a poster on it or too much stuff
+			for(var/obj/O in W.contents) //Let's see if it already has a poster on it or too much stuff
 				if(istype(O,/obj/structure/sign/poster))
 					check = 1
 					break
 				stuff_on_wall++
-				if(stuff_on_wall==3)
+				if(stuff_on_wall == 3)
 					check = 1
 					break
 
 			if(check)
-				user << "<FONT COLOR='RED'>The wall is far too cluttered to place a poster!</FONT>"
+				user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
 				return
 
-			src.resulting_poster.loc = W //Looks like it's uncluttered enough. Place the poster
-			W.contents += src.resulting_poster
+			resulting_poster.loc = W //Looks like it's uncluttered enough. Place the poster
+			W.contents += resulting_poster
 
 			del(src)*/
 
@@ -70,15 +70,16 @@ obj/structure/sign/poster
 	desc = "A large piece of space-resistant printed paper. It's considered contraband."
 	icon = 'icons/obj/contraband.dmi'
 	anchored = 1
-	var/serial_number //Will hold the value of src.loc if nobody initialises it
+	var/serial_number	//Will hold the value of src.loc if nobody initialises it
 	var/ruined = 0
 
 
 obj/structure/sign/poster/New(var/serial)
 
-	src.serial_number = serial
+	serial_number = serial
 
-	if(serial_number==src.loc){serial_number = rand(1,NUM_OF_POSTER_DESIGNS);} //This is for the mappers that want individual posters without having to use rolled posters.
+	if(serial_number == loc)
+		serial_number = rand(1, NUM_OF_POSTER_DESIGNS)	//This is for the mappers that want individual posters without having to use rolled posters.
 
 	icon_state = "poster[serial_number]"
 
@@ -140,41 +141,40 @@ obj/structure/sign/poster/New(var/serial)
 	..()
 
 obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if( istype(W, /obj/item/weapon/wirecutters) )
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-		if(src.ruined)
-			user << "<FONT COLOR='BLUE'>You remove the remnants of the poster.</FONT>"
+	if(istype(W, /obj/item/weapon/wirecutters))
+		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		if(ruined)
+			user << "<span class='notice'>You remove the remnants of the poster.</span>"
 			del(src)
 		else
-			user << "<FONT COLOR='BLUE'>You carefully remove the poster from the wall.</FONT>"
-			src.roll_and_drop(user.loc)
+			user << "<span class='notice'>You carefully remove the poster from the wall.</span>"
+			roll_and_drop(user.loc)
 		return
 
 
 /obj/structure/sign/poster/attack_hand(mob/user as mob)
-	if(src.ruined)
+	if(ruined)
 		return
 	var/temp_loc = user.loc
 	switch(alert("Do I want to rip the poster from the wall?","You think...","Yes","No"))
 		if("Yes")
 			if(user.loc != temp_loc)
 				return
-			for (var/mob/O in hearers(5, src.loc))
-				O.show_message("<FONT COLOR='RED'>[user.name] rips the [src.name] in a single, decisive motion!</FONT>" )
-				playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
-				src.ruined = 1
-				src.icon_state = "poster_ripped"
-				src.name = "Ripped poster"
-				src.desc = "You can't make out anything from the poster's original print. It's ruined."
-				src.add_fingerprint(user)
+			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
+			playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
+			ruined = 1
+			icon_state = "poster_ripped"
+			name = "ripped poster"
+			desc = "You can't make out anything from the poster's original print. It's ruined."
+			add_fingerprint(user)
 		if("No")
 			return
 
 /obj/structure/sign/poster/proc/roll_and_drop(turf/loc)
-	var/obj/item/weapon/contraband/poster/P = new(src,src.serial_number)
+	var/obj/item/weapon/contraband/poster/P = new(src, serial_number)
 	P.resulting_poster = src
 	P.loc = loc
-	src.loc = P
+	loc = P
 
 
 //seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
@@ -182,13 +182,13 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!P.resulting_poster)	return
 
 	var/stuff_on_wall = 0
-	for( var/obj/O in src.contents) //Let's see if it already has a poster on it or too much stuff
+	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
 		if(istype(O,/obj/structure/sign/poster))
-			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
+			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
 			return
 		stuff_on_wall++
-		if(stuff_on_wall==3)
-			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
+		if(stuff_on_wall == 3)
+			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
 			return
 
 	user << "<span class='notice'>You start placing the poster on the wall...</span>" //Looks like it's uncluttered enough. Place the poster.
