@@ -750,7 +750,7 @@ datum/mind
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
 							log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
-							message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]", 1)
+							message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]")
 							src = null
 							M = H.monkeyize()
 							src = M.mind
@@ -780,7 +780,7 @@ datum/mind
 								D.cure(0)
 								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]", 1)
+						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
 						var/obj/item/weapon/dnainjector/m2h/m2h = new
 						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
 						src = null

@@ -475,7 +475,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	space_ninja_arrival(input, mission)
 
-	message_admins("\blue [key] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]", 1)
+	message_admins("\blue [key_name_admin(key)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]")
 	log_admin("[key] used Spawn Space Ninja.")
 
 	return

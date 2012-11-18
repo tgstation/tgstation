@@ -27,7 +27,7 @@
 						entry += " - <font color='black'><b>DEAD</b></font>"
 			if(is_special_character(C.mob))
 				entry += " - <b><font color='red'>Antagonist</font></b>"
-			entry += " (<A HREF='?src=\ref[holder];adminmoreinfo=\ref[C.mob]'>?</A>)"
+			entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 			Lines += entry
 	else
 		for(var/client/C in clients)

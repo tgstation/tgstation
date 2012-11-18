@@ -417,7 +417,7 @@ client
 			var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null),1,MAX_NAME_LEN)
 			if( !new_name || !M )	return
 
-			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].", 1)
+			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")
 			M.fully_replace_character_name(M.real_name,new_name)
 			href_list["datumrefresh"] = href_list["rename"]
 
@@ -590,7 +590,7 @@ client
 						usr << "No objects of this type exist"
 						return
 					log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
-					message_admins("\blue [key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ", 1)
+					message_admins("\blue [key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
 				if("Type and subtypes")
 					var/i = 0
 					for(var/obj/Obj in world)
@@ -601,7 +601,7 @@ client
 						usr << "No objects of this type exist"
 						return
 					log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
-					message_admins("\blue [key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ", 1)
+					message_admins("\blue [key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
 
 		else if(href_list["explode"])
 			if(!check_rights(0))	return
@@ -774,7 +774,7 @@ client
 
 			if(amount != 0)
 				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-				message_admins("\blue [key_name(usr)] dealt [amount] amount of [Text] damage to [L] ", 1)
+				message_admins("\blue [key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 		else
 			. = 0

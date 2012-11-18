@@ -593,7 +593,7 @@ ________________________________________________________________________________
 									grant_kamikaze(U)//Give them verbs and change variables as necessary.
 									U.regenerate_icons()//Update their clothing.
 									ninjablade()//Summon two energy blades.
-									message_admins("\blue [U.key] used KAMIKAZE mode.", 1)//Let the admins know.
+									message_admins("\blue [key_name_admin(U)] used KAMIKAZE mode.")//Let the admins know.
 									s_busy = 0
 									return
 							sleep(s_delay)

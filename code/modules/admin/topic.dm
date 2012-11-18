@@ -1,5 +1,6 @@
 /datum/admins/Topic(href, href_list)
 	..()
+
 	if(usr.client != src.owner || !check_rights(0))
 		world << "\blue [usr.key] has attempted to override the admin panel!"
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")

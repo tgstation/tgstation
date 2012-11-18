@@ -475,68 +475,52 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 /proc/key_name(var/whom, var/include_link = null, var/include_name = 1)
-	var/mob/the_mob = null
-	var/client/the_client = null
-	var/the_key = ""
+	var/mob/M
+	var/client/C
+	var/key
 
-	if (isnull(whom))
-		return "*null*"
-	else if (istype(whom, /client))
-		the_client = whom
-		the_mob = the_client.mob
-		the_key = the_client.key
-	else if (ismob(whom))
-		the_mob = whom
-		the_client = the_mob.client
-		the_key = the_mob.key
-	else if (istype(whom, /datum))
-		var/datum/the_datum = whom
-		return "*invalid:[the_datum.type]*"
+	if(!whom)	return "*null*"
+	if(istype(whom, /client))
+		C = whom
+		M = C.mob
+		key = C.key
+	else if(ismob(whom))
+		M = whom
+		C = M.client
+		key = M.key
+	else if(istype(whom, /datum))
+		var/datum/D = whom
+		return "*invalid:[D.type]*"
 	else
 		return "*invalid*"
 
-	var/text = ""
+	. = ""
 
-	if (!the_key)
-		text += "*no client*"
-	else
-		var/linked = 1
-		if (include_link && !isnull(the_mob))
-			if (istext(include_link))
-				text += "<a href=\"byond://?src=[include_link];priv_msg=\ref[the_client]\">"
-			else
-				if(ismob(include_link))
-					var/mob/MM = include_link
-					if(MM.client)
-						text += "<a href=\"byond://?src=\ref[MM.client];priv_msg=\ref[the_client]\">"
-					else
-						linked = 0
-				else if (istype(include_link, /client))
-					text += "<a href=\"byond://?src=\ref[include_link];priv_msg=\ref[the_client]\">"
-				else
-					linked = 0
+	if(key)
+		if(include_link && C)
+			. += "<a href='?priv_msg=\ref[C]'>"
 
-		if (the_client && the_client.holder && the_client.holder.fakekey && !include_name)
-			text += "Administrator"
+		if(C && C.holder && C.holder.fakekey && !include_name)
+			. += "Administrator"
 		else
-			text += "[the_key]"
+			. += key
 
-		if (!isnull(include_link) && !isnull(the_mob))
-			if(linked)
-				text += "</a>"
-			else
-				text += " (DC)"
+		if(include_link)
+			if(C)	. += "</a>"
+			else	. += " (DC)"
+	else
+		. += "*no key*"
 
-	if (include_name && !isnull(the_mob))
-		if (the_mob.real_name)
-			text += "/([the_mob.real_name])"
-		else if (the_mob.name)
-			text += "/([the_mob.name])"
+	if(include_name && M)
+		if(M.real_name)
+			. += "/([M.real_name])"
+		else if(M.name)
+			. += "/([M.name])"
 
-	return text
+	return .
 
 /proc/key_name_admin(var/whom, var/include_name = 1)
-	return key_name(whom, "%admin_ref%", include_name)
+	return key_name(whom, 1, include_name)
 
 
 // Registers the on-close verb for a browse window (client/verb/.windowclose)

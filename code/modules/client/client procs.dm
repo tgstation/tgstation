@@ -47,12 +47,16 @@
 
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [href]<br>"
+		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+
+	switch(href_list["_src_"])
+		if("holder")	hsrc = usr.client.holder
+		if("usr")		hsrc = usr
 
 	if(view_var_Topic(href,href_list,hsrc))	//Until viewvars can be rewritten as datum/admins/Topic()
 		return
 
-	..()	//redirect to [locate(hsrc)]/Topic()
+	..()	//redirect to hsrc.Topic()
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
@@ -181,6 +185,6 @@
 
 //checks if a client is afk
 //3000 frames = 5 minutes
-/client/proc/is_afk(duration=3000)
+/client/proc/is_afk(duration=AFK_THRESHOLD)
 	if(inactivity > duration)	return inactivity
 	return 0
