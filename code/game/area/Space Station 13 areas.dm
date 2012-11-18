@@ -917,7 +917,7 @@ proc/process_ghost_teleport_locs()
 	music = "signal"
 
 /area/teleporter/gateway
-	name = "\improper Secure Construction Area"
+	name = "\improper Gateway"
 	icon_state = "teleporter"
 	music = "signal"
 
