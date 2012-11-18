@@ -46,7 +46,7 @@
 
 /obj/item/weapon/stamp/denied
 	name = "\improper DENIED rubber stamp"
-	icon_state = "stamp-qm"
+	icon_state = "stamp-deny"
 	color = "redcoat"
 
 /obj/item/weapon/stamp/clown
@@ -56,4 +56,4 @@
 
 
 /obj/item/weapon/stamp/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
+	return attack_hand(user)

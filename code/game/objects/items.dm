@@ -101,6 +101,13 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
+	if (hasorgans(user))
+		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
+		if (user.hand)
+			temp = user:organs_by_name["l_hand"]
+		if(temp && temp.status & ORGAN_DESTROYED)
+			user << "<span class = 'warning'> Yo- wait a minute."
+			return
 	if (istype(src.loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
@@ -179,6 +186,23 @@
 
 	if (!istype(M)) // not sure if this is the right thing...
 		return
+	if (can_operate(M))	//Checks if mob is lying down on table for surgery
+		if(istype(M,/mob/living/carbon))
+			if (user.a_intent != "harm")
+				if(surgery_steps == null) build_surgery_steps_list()
+				for(var/datum/surgery_step/S in surgery_steps)
+					//check if tool is right or close enough
+					if(istype(src, S.required_tool) || (S.allowed_tools && src.type in S.allowed_tools ))
+						if(S.can_use(user, M, user.zone_sel.selecting, src))	//is this step possible?
+							S.begin_step(user, M, user.zone_sel.selecting, src)
+							if(do_mob(user, M, rand(S.min_duration, S.max_duration)))
+								S.end_step(user, M, user.zone_sel.selecting, src)
+							else
+								S.fail_step(user, M, user.zone_sel.selecting, src)
+							return		  //don't want to do weapony things after surgery
+		if (is_surgery_tool(src))
+			return
+
 	var/messagesource = M
 
 	if (istype(M,/mob/living/carbon/brain))
@@ -197,7 +221,7 @@
 	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])") //BS12 EDIT ALG
 
 
-	//spawn(1800)            // this wont work right
+	//spawn(1800)			// this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
 
@@ -363,13 +387,6 @@
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
-
-		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
-				if(!(flags & ONESIZEFITSALL))
-					if(!disable_warning)
-						H << "\red You're too fat to wear the [name]."
-					return 0
 
 		switch(slot)
 			if(slot_l_hand)
@@ -607,7 +624,7 @@
 		user << "\red You're going to need to remove that mask/helmet/glasses first."
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N     Metroids also don't have eyes!
+	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N	 Metroids also don't have eyes!
 		user << "\red You cannot locate any eyes on this creature!"
 		return
 

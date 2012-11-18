@@ -153,8 +153,8 @@
 		if(istype(P,/obj/item/projectile/beam)) src.Artifact_Activate()
 		else if(istype(P,/obj/item/projectile/ion)) src.Artifact_Activate()
 		else if(istype(P,/obj/item/projectile/energy)) src.Artifact_Activate()
-		else if(istype(P,/obj/item/projectile/bluetag)) src.Artifact_Activate()
-		else if(istype(P,/obj/item/projectile/redtag)) src.Artifact_Activate()
+		else if(istype(P,/obj/item/projectile/beam/bluetag)) src.Artifact_Activate()
+		else if(istype(P,/obj/item/projectile/beam/redtag)) src.Artifact_Activate()
 	if (my_effect.trigger == "heat")
 		if(istype(P,/obj/item/projectile/temp)) src.Artifact_Activate()
 
@@ -205,6 +205,7 @@
 			if(4)
 				display_msg = "vibrates!"
 	else
+		my_effect.HaltEffect()
 		switch(rand(2))
 			if(0)
 				display_msg = "grows dull!"
@@ -223,7 +224,7 @@
 	else if (my_effect.trigger != "touch" && !src.activated) user << "Nothing happens."
 
 	if (my_effect.effectmode == "contact" && src.activated && src.charged)
-		my_effect.DoEffect(src)
+		my_effect.DoEffect(user)
 		src.charged = 0
 		src.chargetime = src.recharge
 

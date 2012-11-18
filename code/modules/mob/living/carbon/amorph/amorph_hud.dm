@@ -10,7 +10,7 @@
 	src.darkMask = list(  )
 	src.intent_small_hud_objects = list(  )
 
-	src.g_dither = new src.h_type( src )
+	src.g_dither = new /obj/screen( src )
 	src.g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	src.g_dither.name = "Mask"
 	src.g_dither.icon = ui_style
@@ -18,7 +18,7 @@
 	src.g_dither.layer = 18
 	src.g_dither.mouse_opacity = 0
 
-	src.alien_view = new src.h_type(src)
+	src.alien_view = new /obj/screen(src)
 	src.alien_view.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	src.alien_view.name = "Alien"
 	src.alien_view.icon = ui_style
@@ -26,7 +26,7 @@
 	src.alien_view.layer = 18
 	src.alien_view.mouse_opacity = 0
 
-	src.blurry = new src.h_type( src )
+	src.blurry = new /obj/screen( src )
 	src.blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	src.blurry.name = "Blurry"
 	src.blurry.icon = ui_style
@@ -34,7 +34,7 @@
 	src.blurry.layer = 17
 	src.blurry.mouse_opacity = 0
 
-	src.druggy = new src.h_type( src )
+	src.druggy = new /obj/screen( src )
 	src.druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	src.druggy.name = "Druggy"
 	src.druggy.icon = ui_style
@@ -44,7 +44,7 @@
 
 	var/obj/screen/using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "act_intent"
 	using.dir = SOUTHWEST
 	using.icon = ui_style
@@ -55,45 +55,55 @@
 	action_intent = using
 
 //intent small hud objects
-	using = new src.h_type( src )
+	var/icon/ico
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
+	using = new /obj/screen( src )
 	using.name = "help"
-	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "help" ? "help_small_active" : "help_small")
-	using.screen_loc = ui_help_small
+	using.icon = ico
+	using.screen_loc = ui_acti
 	using.layer = 21
 	src.adding += using
 	help_intent = using
 
-	using = new src.h_type( src )
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
+	using = new /obj/screen( src )
 	using.name = "disarm"
-	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "disarm" ? "disarm_small_active" : "disarm_small")
-	using.screen_loc = ui_disarm_small
+	using.icon = ico
+	using.screen_loc = ui_acti
 	using.layer = 21
 	src.adding += using
 	disarm_intent = using
 
-	using = new src.h_type( src )
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
+	using = new /obj/screen( src )
 	using.name = "grab"
-	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "grab" ? "grab_small_active" : "grab_small")
-	using.screen_loc = ui_grab_small
+	using.icon = ico
+	using.screen_loc = ui_acti
 	using.layer = 21
 	src.adding += using
 	grab_intent = using
 
-	using = new src.h_type( src )
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
+	using = new /obj/screen( src )
 	using.name = "harm"
-	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm_small_active" : "harm_small")
-	using.screen_loc = ui_harm_small
+	using.icon = ico
+	using.screen_loc = ui_acti
 	using.layer = 21
 	src.adding += using
 	hurt_intent = using
 
 //end intent small hud objects
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "mov_intent"
 	using.dir = SOUTHWEST
 	using.icon = ui_style
@@ -103,7 +113,7 @@
 	src.adding += using
 	move_intent = using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "drop"
 	using.icon = ui_style
 	using.icon_state = "act_drop"
@@ -111,7 +121,7 @@
 	using.layer = 19
 	src.adding += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "r_hand"
 	using.dir = WEST
 	using.icon = ui_style
@@ -123,7 +133,7 @@
 	src.r_hand_hud_object = using
 	src.adding += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "l_hand"
 	using.dir = EAST
 	using.icon = ui_style
@@ -135,7 +145,7 @@
 	src.l_hand_hud_object = using
 	src.adding += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "hand"
 	using.dir = SOUTH
 	using.icon = ui_style
@@ -144,7 +154,7 @@
 	using.layer = 19
 	src.adding += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "hand"
 	using.dir = SOUTH
 	using.icon = ui_style
@@ -153,7 +163,7 @@
 	using.layer = 19
 	src.adding += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "mask"
 	using.dir = NORTH
 	using.icon = ui_style
@@ -162,7 +172,7 @@
 	using.layer = 19
 	src.adding += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = "back"
 	using.dir = NORTHEAST
 	using.icon = ui_style
@@ -171,7 +181,7 @@
 	using.layer = 19
 	src.adding += using
 
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = null
 	using.icon = ui_style
 	using.icon_state = "dither50"
@@ -179,7 +189,7 @@
 	using.layer = 17
 	using.mouse_opacity = 0
 	src.vimpaired += using
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = null
 	using.icon = ui_style
 	using.icon_state = "dither50"
@@ -187,7 +197,7 @@
 	using.layer = 17
 	using.mouse_opacity = 0
 	src.vimpaired += using
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = null
 	using.icon = ui_style
 	using.icon_state = "dither50"
@@ -195,7 +205,7 @@
 	using.layer = 17
 	using.mouse_opacity = 0
 	src.vimpaired += using
-	using = new src.h_type( src )
+	using = new /obj/screen( src )
 	using.name = null
 	using.icon = ui_style
 	using.icon_state = "dither50"

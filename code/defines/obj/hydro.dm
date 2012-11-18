@@ -962,6 +962,23 @@
 	plant_type = 0
 	growthstages = 5
 
+/obj/item/seeds/cherryseed
+	name = "pack of cherry pits"
+	desc = "Careful not to crack a tooth on one... That'd be the pits."
+	icon_state = "seed-cherry"
+	mypath = "/obj/item/seeds/cherryseed"
+	species = "cherry"
+	plantname = "Cherry Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/cherries"
+	lifespan = 35
+	endurance = 35
+	maturation = 5
+	production = 5
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 5
+
 /*  // Maybe one day when I get it to work like a grenade which exlodes gibs.
 /obj/item/seeds/gibtomatoseed
 	name = "Gib Tomato seeds"
@@ -1051,9 +1068,17 @@
 		if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 			user.show_message("<span class='notice'>You make planks out of the [src]!</span>", 1)
 			for(var/i=0,i<2,i++)
-				new /obj/item/stack/sheet/wood (src.loc)
+				var/obj/item/stack/sheet/wood/NG = new (user.loc)
+				for (var/obj/item/stack/sheet/wood/G in user.loc)
+					if(G==NG)
+						continue
+					if(G.amount>=G.max_amount)
+						continue
+					G.attackby(NG, user)
+					usr << "You add the newly-formed wood to the stack. It now contains [NG.amount] planks."
 			del(src)
 			return
+
 
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	name = "sunflower"
@@ -1318,4 +1343,5 @@
 	New()
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
+
 

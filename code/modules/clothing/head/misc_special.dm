@@ -24,29 +24,29 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	icon_action_button = "action_welding"
 
-	attack_self()
-		toggle()
+/obj/item/clothing/head/welding/attack_self()
+	toggle()
 
 
-	verb/toggle()
-		set category = "Object"
-		set name = "Adjust welding mask"
-		set src in usr
+/obj/item/clothing/head/welding/verb/toggle()
+	set category = "Object"
+	set name = "Adjust welding mask"
+	set src in usr
 
-		if(usr.canmove && !usr.stat && !usr.restrained())
-			if(src.up)
-				src.up = !src.up
-				src.flags |= HEADCOVERSEYES
-				flags_inv |= HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-				icon_state = "welding"
-				usr << "You flip the mask down to protect your eyes."
-			else
-				src.up = !src.up
-				src.flags &= ~HEADCOVERSEYES
-				flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
-				icon_state = "weldingup"
-				usr << "You push the mask up out of your face."
-			usr.update_inv_head()	//so our mob-overlays update
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		if(src.up)
+			src.up = !src.up
+			src.flags |= HEADCOVERSEYES | HEADCOVERSMOUTH
+			flags_inv |= HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+			icon_state = initial(icon_state)
+			usr << "You flip the [src] down to protect your eyes."
+		else
+			src.up = !src.up
+			src.flags &= ~HEADCOVERSEYES | HEADCOVERSMOUTH
+			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
+			icon_state = "[initial(icon_state)]up"
+			usr << "You push the [src] up out of your face."
+		usr.update_inv_head()	//so our mob-overlays update
 
 
 /*

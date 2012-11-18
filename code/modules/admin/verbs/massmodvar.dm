@@ -5,6 +5,8 @@
 
 	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
 
+	if(!admin_rank_check(src.holder.level, 3)) return
+
 	if(A && A.type)
 		if(typesof(A.type))
 			switch(input("Strict object type detection?") as null|anything in list("Strictly this type","This type and subtypes", "Cancel"))

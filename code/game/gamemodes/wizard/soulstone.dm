@@ -167,7 +167,7 @@
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 				switch(construct_class)
 					if("Juggernaut")
-						var/mob/living/simple_animal/constructarmoured/Z = new /mob/living/simple_animal/constructarmoured (get_turf(T.loc))
+						var/mob/living/simple_animal/construct/armoured/Z = new /mob/living/simple_animal/construct/armoured (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
 							if(ticker.mode.name == "cult")
@@ -183,7 +183,7 @@
 						del(C)
 
 					if("Wraith")
-						var/mob/living/simple_animal/constructwraith/Z = new /mob/living/simple_animal/constructwraith (get_turf(T.loc))
+						var/mob/living/simple_animal/construct/wraith/Z = new /mob/living/simple_animal/construct/wraith (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
 							if(ticker.mode.name == "cult")
@@ -199,7 +199,7 @@
 						del(C)
 
 					if("Artificer")
-						var/mob/living/simple_animal/constructbuilder/Z = new /mob/living/simple_animal/constructbuilder (get_turf(T.loc))
+						var/mob/living/simple_animal/construct/builder/Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
 							if(ticker.mode.name == "cult")

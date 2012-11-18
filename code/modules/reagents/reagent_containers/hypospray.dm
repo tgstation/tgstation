@@ -20,7 +20,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/New() //comment this to make hypos start off empty
 	..()
-	reagents.add_reagent("tricordrazine", 30)
+	reagents.add_reagent("doctorsdelight", 30)
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M as mob, mob/user as mob)

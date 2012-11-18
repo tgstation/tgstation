@@ -44,6 +44,17 @@
 	return 1
 
 
+proc/airborne_can_reach(turf/source, turf/target)
+	var/obj/dummy = new(source)
+	dummy.flags = FPRINT | TABLEPASS
+	dummy.pass_flags = PASSTABLE
+
+	for(var/i=0, i<5, i++) if(!step_towards(dummy, target)) break
+
+	var/rval = (dummy.loc in range(1,target))
+	del dummy
+	return rval
+
 /proc/infect_virus2(var/mob/living/carbon/M,var/datum/disease2/disease/disease,var/forced = 0)
 	if(M.virus2)
 		return

@@ -288,8 +288,7 @@ Auto Patrol: []"},
 					maxstuns--
 					if (maxstuns <= 0)
 						target = null
-					for(var/mob/O in viewers(src, null))
-						O.show_message("\red <B>[src.target] has been stunned by [src]!</B>", 1, "\red You hear someone fall", 2)
+					visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
 
 					mode = SECBOT_PREP_ARREST
 					src.anchored = 1
@@ -321,8 +320,7 @@ Auto Patrol: []"},
 			if (!src.target.handcuffed && !src.arrest_type)
 				playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 				mode = SECBOT_ARREST
-				for(var/mob/O in viewers(src, null))
-					O.show_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>", 1)
+				visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
 				spawn(60)
 					if (get_dist(src, src.target) <= 1)
@@ -822,14 +820,14 @@ Auto Patrol: []"},
 				projectile = /obj/item/projectile/energy/electrode
 		else if(lasercolor == "b")
 			if (src.emagged == 2)
-				projectile = /obj/item/projectile/omnitag
+				projectile = /obj/item/projectile/beam/omnitag
 			else
-				projectile = /obj/item/projectile/bluetag
+				projectile = /obj/item/projectile/beam/bluetag
 		else if(lasercolor == "r")
 			if (src.emagged == 2)
-				projectile = /obj/item/projectile/omnitag
+				projectile = /obj/item/projectile/beam/omnitag
 			else
-				projectile = /obj/item/projectile/redtag
+				projectile = /obj/item/projectile/beam/redtag
 
 	if (!( istype(U, /turf) ))
 		return
@@ -1013,7 +1011,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
 	if((src.lasercolor == "b") && (src.disabled == 0))
-		if(istype(Proj, /obj/item/projectile/redtag))
+		if(istype(Proj, /obj/item/projectile/beam/redtag))
 			src.disabled = 1
 			del (Proj)
 			sleep(100)
@@ -1021,7 +1019,7 @@ Auto Patrol: []"},
 		else
 			..()
 	else if((src.lasercolor == "r") && (src.disabled == 0))
-		if(istype(Proj, /obj/item/projectile/bluetag))
+		if(istype(Proj, /obj/item/projectile/beam/bluetag))
 			src.disabled = 1
 			del (Proj)
 			sleep(100)

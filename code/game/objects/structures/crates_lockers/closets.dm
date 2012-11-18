@@ -15,6 +15,14 @@
 	var/storage_capacity = 20 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
+/obj/structure/closet/New()
+	..()
+	spawn(1)
+		if(!opened)		// if closed, any item at the crate's loc is put in the contents
+			for(var/obj/item/I in src.loc)
+				if(I.density || I.anchored || I == src) continue
+				I.loc = src
+
 /obj/structure/closet/alter_health()
 	return get_turf(src)
 
@@ -147,6 +155,13 @@
 
 	return
 
+/obj/structure/closet/attack_animal(mob/living/simple_animal/user as mob)
+	if(user.wall_smash)
+		visible_message("\red [user] destroys the [src]. ")
+		for(var/atom/movable/A as mob|obj in src)
+			A.loc = src.loc
+		del(src)
+
 // this should probably use dump_contents()
 /obj/structure/closet/blob_act()
 	if(prob(75))
@@ -201,7 +216,7 @@
 	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if(istype(O, /obj/screen) || istype(O, /obj/hud))	//fix for HUD elements making their way into the world	-Pete
+	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
 		return
 	if(O.loc == user)
 		return

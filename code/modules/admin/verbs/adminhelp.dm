@@ -14,9 +14,10 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-	src.verbs -= /client/verb/adminhelp
+	/**src.verbs -= /client/verb/adminhelp
 	spawn(1200)
-		src.verbs += /client/verb/adminhelp	// 2 minute cool-down for adminhelps
+		src.verbs += /client/verb/adminhelp	// 2 minute cool-down for adminhelps//Go to hell
+	**/
 
 	if(!msg)	return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
@@ -128,10 +129,12 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 			send2irc(ckey, "[original_msg] - No admins online")
 		else
 			send2irc(ckey, "[original_msg] - All admins AFK ([admin_number_afk])")
+	else
+		send2irc(ckey, original_msg)
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 proc/send2irc(msg,msg2)
 	if(config.useircbot)
-		shell("python nudge.py [msg] [msg2]")
+		shell("python [config.nudge_script_path] [msg] [msg2]")
 	return

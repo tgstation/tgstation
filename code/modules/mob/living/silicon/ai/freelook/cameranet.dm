@@ -73,7 +73,8 @@ var/datum/cameranet/cameranet = new()
 // Removes a camera from a chunk.
 
 /datum/cameranet/proc/removeCamera(obj/machinery/camera/c)
-	majorChunkChange(c, 0)
+	if(c.can_use())
+		majorChunkChange(c, 0)
 
 // Add a camera to a chunk.
 
@@ -81,15 +82,13 @@ var/datum/cameranet/cameranet = new()
 	if(c.can_use())
 		majorChunkChange(c, 1)
 
-// Used for Cyborg cameras. It is the same as "add" but named differently for easier readability
-// and to allow the user know what it is for. Since portable cameras can be in ANY chunk, we have to
-// all it to be added to all chunks. If the camera is disabled, it will instead remove.
+// Used for Cyborg cameras. Since portable cameras can be in ANY chunk.
 
 /datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c)
 	if(c.can_use())
 		majorChunkChange(c, 1)
-	else
-		majorChunkChange(c, 0)
+	//else
+	//	majorChunkChange(c, 0)
 
 // Never access this proc directly!!!!
 // This will update the chunk and all the surrounding chunks.

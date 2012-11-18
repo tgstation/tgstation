@@ -109,6 +109,7 @@ var/list/sacrificed = list()
 				"\red You hear an anguished scream.")
 				if(is_convertable_to_cult(M.mind))
 					ticker.mode.add_cultist(M.mind)
+					M.mind.special_role = "Cultist"
 					M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 					M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 					return 1
@@ -130,7 +131,7 @@ var/list/sacrificed = list()
 					M.say("Tok-lyr rqa'nap g[pick("'","`")]lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
-				new /obj/machinery/singularity/narsie(src.loc)
+				new /obj/machinery/singularity/narsie/large(src.loc)
 				if(ticker.mode.name == "cult")
 					ticker.mode:eldergod = 0
 				return
@@ -390,6 +391,7 @@ var/list/sacrificed = list()
 			else
 				ticker.mode.cult+=D.mind
 
+			D.mind.special_role = "Cultist"
 			D << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 			D << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 

@@ -1009,6 +1009,9 @@ table tr:first-child th:first-child { border: none;}
 	spawn(rand(0,15))
 		update_icon()
 
+/obj/machinery/firealarm
+	var/last_process = 0
+
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
 		if(temperature > T0C+200)
@@ -1040,26 +1043,28 @@ table tr:first-child th:first-child { border: none;}
 	src.add_fingerprint(user)
 	return
 
-/obj/machinery/firealarm/process()
+/obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(stat & (NOPOWER|BROKEN))
 		return
 
-	var/area/A = src.loc
-	A = A.loc
+//	var/area/A = src.loc
+//	A = A.loc
 
-	if(A.fire)
-		src.icon_state = "fire1"
-	else
-		src.icon_state = "fire0"
+//	if(A.fire)
+//		src.icon_state = "fire1"
+//	else
+//		src.icon_state = "fire0"
 
-	if (src.timing)
-		if (src.time > 0)
-			src.time = round(src.time) - 1
+	if(src.timing)
+		if(src.time > 0)
+			src.time = src.time - ((world.timeofday - last_process)/10)
 		else
-			alarm()
+			src.alarm()
 			src.time = 0
 			src.timing = 0
+			processing_objects.Remove(src)
 		src.updateDialog()
+	last_process = world.timeofday
 	return
 
 /obj/machinery/firealarm/power_change()
@@ -1090,8 +1095,8 @@ table tr:first-child th:first-child { border: none;}
 			d2 = text("<A href='?src=\ref[];time=0'>Stop Time Lock</A>", src)
 		else
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
-		var/second = src.time % 60
-		var/minute = (src.time - second) / 60
+		var/second = round(src.time) % 60
+		var/minute = (round(src.time) - second) / 60
 		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>Fire alarm</B> [d1]\n<HR>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
 		user << browse(dat, "window=firealarm")
 		onclose(user, "firealarm")
@@ -1105,8 +1110,8 @@ table tr:first-child th:first-child { border: none;}
 			d2 = text("<A href='?src=\ref[];time=0'>[]</A>", src, stars("Stop Time Lock"))
 		else
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
-		var/second = src.time % 60
-		var/minute = (src.time - second) / 60
+		var/second = round(src.time) % 60
+		var/minute = (round(src.time) - second) / 60
 		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
 		user << browse(dat, "window=firealarm")
 		onclose(user, "firealarm")
@@ -1126,6 +1131,8 @@ table tr:first-child th:first-child { border: none;}
 			else
 				if (href_list["time"])
 					src.timing = text2num(href_list["time"])
+					last_process = world.timeofday
+					processing_objects.Add(src)
 				else
 					if (href_list["tp"])
 						var/tp = text2num(href_list["tp"])

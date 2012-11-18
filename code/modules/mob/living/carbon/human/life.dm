@@ -1,8 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
-#define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-#define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /3) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
+#define HUMAN_MAX_OXYLOSS 1 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
+#define HUMAN_CRIT_MAX_OXYLOSS ( (last_tick_duration) /5) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 100HP to get through, so (1/3)*last_tick_duration per second. Breaths however only happen every 4 ticks.
 
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
@@ -38,13 +38,14 @@
 
 	..()
 
+	/*
 	//This code is here to try to determine what causes the gender switch to plural error. Once the error is tracked down and fixed, this code should be deleted
 	//Also delete var/prev_gender once this is removed.
 	if(prev_gender != gender)
 		prev_gender = gender
 		if(gender in list(PLURAL, NEUTER))
 			message_admins("[src] ([ckey]) gender has been changed to plural or neuter. Please record what has happened recently to the person and then notify coders. (<A HREF='?src=%holder_ref%;adminmoreinfo=\ref[src]'>?</A>)  (<A HREF='?src=%holder_ref%;adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=%admin_ref%;priv_msg=\ref[src]'>PM</A>) (<A HREF='?src=%holder_ref%;adminplayerobservejump=\ref[src]'>JMP</A>)",1,1) //The 1,1 at the end is there to make '%holder_ref%' get replaced with the actual ref object
-
+	*/
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
@@ -91,6 +92,10 @@
 	//stuff in the stomach
 	handle_stomach()
 
+	handle_shock()
+
+	handle_pain()
+
 	//Status updates, death etc.
 	handle_regular_status_updates()		//TODO: optimise ~Carn
 	update_canmove()
@@ -122,6 +127,78 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 /mob/living/carbon/human
+
+	proc/handle_blood()
+		// take care of blood and blood loss
+		if(stat < 2)
+			var/blood_volume = round(vessel.get_reagent_amount("blood"))
+			if(blood_volume < 560 && blood_volume)
+				var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
+				if(B) // Make sure there's some blood at all
+					if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
+						for(var/datum/reagent/blood/D in vessel.reagent_list)
+							if(D.data["donor"] == src)
+								B = D
+								break
+					var/datum/reagent/nutriment/F = locate() in vessel.reagent_list
+					if(F != null)
+						if(F.volume >= 1)
+							// nutriment speeds it up quite a bit
+							B.volume += 0.4
+							F.volume -= 0.1
+					else
+						//At this point, we dun care which blood we are adding to, as long as they get more blood.
+						B.volume = B.volume + 0.1 // regenerate blood VERY slowly
+
+
+			switch(blood_volume)
+				if(501 to 10000)
+					if(pale)
+						pale = 0
+						update_body()
+				if(336 to 500)
+					if(!pale)
+						pale = 1
+						update_body()
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel [word]"
+					if(prob(1))
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel [word]"
+					if(oxyloss < 20)
+						// hint that they're getting close to suffocation
+						oxyloss += 3
+				if(224 to 335)
+					if(!pale)
+						pale = 1
+						update_body()
+					eye_blurry += 6
+					if(oxyloss < 50)
+						oxyloss += 10
+					oxyloss += 1
+					if(prob(15))
+						Paralyse(rand(1,3))
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel extremely [word]"
+				if(122 to 244)
+					oxyloss += 5
+					toxloss += 5
+					if(prob(15))
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel extremely [word]"
+				if(0 to 122)
+					death()
+
+
+			var/blood_max = 0
+			for(var/datum/organ/external/temp in organs)
+				if(!(temp.status & ORGAN_BLEEDING) || temp.status & ORGAN_ROBOT)
+					continue
+				for(var/datum/wound/W in temp.wounds) if(W.bleeding())
+					blood_max += W.damage / 4
+				if(temp.status & ORGAN_DESTROYED && !(temp.status & ORGAN_GAUZED))
+					blood_max += 20 //Yer missing a fucking limb.
+			drip(blood_max)
 
 	proc/handle_disabilities()
 		if (disabilities & EPILEPSY)
@@ -165,7 +242,7 @@
 					if(1)
 						say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
 					if(2)
-						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom"))
+						say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
 					if(3)
 						emote("drool")
 
@@ -181,6 +258,12 @@
 			number_wounds += E.number_wounds
 
 		var/leg_tally = 2
+		var/canstand_l = 1  //Can stand on left leg
+		var/canstand_r = 1  //Can stand on right leg
+		var/hasleg_l = 1  //Have left leg
+		var/hasleg_r = 1  //Have right leg
+		var/hasarm_l = 1  //Have left arm
+		var/hasarm_r = 1  //Have right arm
 		for(var/datum/organ/external/E in organs)
 			E.process()
 			if(E.status & ORGAN_ROBOT && prob(E.brute_dam + E.burn_dam))
@@ -207,7 +290,7 @@
 				else if(E.name == "l_leg" || E.name == "l_foot" \
 					|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 					leg_tally--									// let it fail even if just foot&leg
-			if(E.status & ORGAN_BROKEN || E.status & ORGAN_DESTROYED)
+			if(E.status & ORGAN_BROKEN || (E.status & ORGAN_DESTROYED && !E.amputated))
 				if(E.name == "l_hand" || E.name == "l_arm")
 					if(hand && equipped())
 						if(E.status & ORGAN_SPLINTED && prob(10))
@@ -228,6 +311,7 @@
 					|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 					if(!(E.status & ORGAN_SPLINTED))
 						leg_tally--									// let it fail even if just foot&leg
+
 		// standing is poor
 		if(leg_tally <= 0 && !paralysis && !(lying || resting) && prob(5))
 			emote("scream")
@@ -235,36 +319,127 @@
 			paralysis = 10
 
 
+		//Check arms and legs for existence
+		var/datum/organ/external/E
+		E = get_organ("l_leg")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			canstand_l = 0
+			hasleg_l = 0
+		E = get_organ("r_leg")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			canstand_r = 0
+			hasleg_r = 0
+		E = get_organ("l_foot")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			canstand_l = 0
+		E = get_organ("r_foot")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			canstand_r = 0
+		E = get_organ("l_arm")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			hasarm_l = 0
+		E = get_organ("r_arm")
+		if(E.status & ORGAN_DESTROYED && !(E.status & ORGAN_SPLINTED))
+			hasarm_r = 0
+
+		// Can stand if have at least one full leg (with leg and foot parts present)
+		// Has limbs to move around if at least one arm or leg is at least partially there
+		can_stand = canstand_l||canstand_r
+		has_limbs = hasleg_l||hasleg_r||hasarm_l||hasarm_r
+
+
 	proc/handle_mutations_and_radiation()
 		if(getFireLoss())
-			if((COLD_RESISTANCE in mutations) || (prob(1) && prob(75)))
+			if((COLD_RESISTANCE in mutations) || (prob(1)))
 				heal_organ_damage(0,1)
 
+		if(mHallucination in mutations)
+			hallucination = 100
+			halloss = 0
+
+		if(mSmallsize in mutations)
+			if(!(pass_flags & PASSTABLE))
+				pass_flags |= PASSTABLE
+		else
+			if(pass_flags & PASSTABLE)
+				pass_flags &= ~PASSTABLE
+
 		// Make nanoregen heal youu, -3 all damage types
-		if(NANOREGEN in augmentations)
+		if((NANOREGEN in augmentations) || (mRegen in mutations))
 			var/healed = 0
-			if(getToxLoss())
-				adjustToxLoss(-3)
-				healed = 1
-			if(getOxyLoss())
-				adjustOxyLoss(-3)
-				healed = 1
-			if(getCloneLoss())
-				adjustCloneLoss(-3)
-				healed = 1
-			if(getBruteLoss())
-				heal_organ_damage(3,0)
-				healed = 1
-			if(getFireLoss())
-				heal_organ_damage(0,3)
-				healed = 1
-			if(halloss > 0)
-				halloss -= 3
-				if(halloss < 0) halloss = 0
-				healed = 1
+			var/hptoreg = 0
+			if(NANOREGEN in augmentations)
+				hptoreg += 3
+			if(mRegen in mutations)
+				hptoreg += 2
+			if(stat==UNCONSCIOUS) hptoreg/=2
+			if(stat==DEAD) hptoreg=0
+
+			for(var/i=0, i<hptoreg, i++)
+				var/list/damages = new/list()
+				if(getToxLoss())
+					damages+="tox"
+				if(getOxyLoss())
+					damages+="oxy"
+				if(getCloneLoss())
+					damages+="clone"
+				if(getBruteLoss())
+					damages+="brute"
+				if(getFireLoss())
+					damages+="burn"
+				if(halloss != 0)
+					damages+="hal"
+
+				if(damages.len)
+					switch(pick(damages))
+						if("tox")
+							adjustToxLoss(-1)
+							healed = 1
+						if("oxy")
+							adjustOxyLoss(-1)
+							healed = 1
+						if("clone")
+							adjustCloneLoss(-1)
+							healed = 1
+						if("brute")
+							heal_organ_damage(1,0)
+							healed = 1
+						if("burn")
+							heal_organ_damage(0,1)
+							healed = 1
+						if("hal")
+							if(halloss > 0)
+								halloss -= 1
+							if(halloss < 0)
+								halloss = 0
+							healed = 1
+				else
+					break
+
 			if(healed)
 				if(prob(5))
 					src << "\blue You feel your wounds mending..."
+
+		if(!(/mob/living/carbon/human/proc/morph in src.verbs))
+			if(mMorph in mutations)
+				src.verbs += /mob/living/carbon/human/proc/morph
+		else
+			if(!(mMorph in mutations))
+				src.verbs -= /mob/living/carbon/human/proc/morph
+
+		if(!(/mob/living/carbon/human/proc/remoteobserve in src.verbs))
+			if(mRemote in mutations)
+				src.verbs += /mob/living/carbon/human/proc/remoteobserve
+		else
+			if(!(mRemote in mutations))
+				src.verbs -= /mob/living/carbon/human/proc/remoteobserve
+
+		if(!(/mob/living/carbon/human/proc/remotesay in src.verbs))
+			if(mRemotetalk in mutations)
+				src.verbs += /mob/living/carbon/human/proc/remotesay
+		else
+			if(!(mRemotetalk in mutations))
+				src.verbs -= /mob/living/carbon/human/proc/remotesay
 
 		if ((HULK in mutations) && health <= 25)
 			mutations.Remove(HULK)
@@ -284,15 +459,18 @@
 				radiation = 0
 
 			else
+				var/damage = 0
 				switch(radiation)
 					if(1 to 49)
 						radiation--
 						if(prob(25))
 							adjustToxLoss(1)
+							damage = 1
 							updatehealth()
 
 					if(50 to 74)
 						radiation -= 2
+						damage = 1
 						adjustToxLoss(1)
 						if(prob(5))
 							radiation -= 5
@@ -304,25 +482,35 @@
 					if(75 to 100)
 						radiation -= 3
 						adjustToxLoss(3)
+						damage = 1
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)
 							domutcheck(src,null)
 							emote("gasp")
 						updatehealth()
-
+							
+				if(damage && organs.len)
+					var/datum/organ/external/O = pick(organs)
+					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
 
 	proc/breathe()
-
 		if(reagents.has_reagent("lexorin")) return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
+
+		var/lung_ruptured = is_lung_ruptured()
+		if(lung_ruptured && prob(2))
+			spawn emote("me", 1, "coughs up blood!")
+			src.drip(10)
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
 		// HACK NEED CHANGING LATER
 		if(health < 0)
 			losebreath++
-
+		if(lung_ruptured && prob(4))
+			spawn emote("me", 1, "gasps for air!")
+			losebreath += 5
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
 			if (prob(10)) //Gasp per 10 ticks? Sounds about right.
@@ -397,10 +585,10 @@
 
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if(nodamage || REBREATHER in augmentations)
+		if(nodamage || (REBREATHER in augmentations) || (mNobreath in mutations))
 			return
 
-		if(!breath || (breath.total_moles == 0) || suiciding)
+		if(!breath || (breath.total_moles() == 0) || suiciding)
 			if(reagents.has_reagent("inaprovaline"))
 				return
 			if(suiciding)
@@ -480,7 +668,7 @@
 
 		if(Toxins_pp > safe_toxins_max) // Too much toxins
 			var/ratio = breath.toxins/safe_toxins_max
-			adjustToxLoss(min(ratio, 10))	//Limit amount of damage toxin exposure can do per second
+			adjustToxLoss(min(ratio, MIN_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 			toxins_alert = max(toxins_alert, 1)
 		else
 			toxins_alert = 0
@@ -495,6 +683,7 @@
 				else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 					if(prob(20))
 						spawn(0) emote(pick("giggle", "laugh"))
+				SA.moles = 0
 
 		if( (abs(310.15 - breath.temperature) > 50) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 			if(breath.temperature < 260.15)
@@ -506,23 +695,26 @@
 
 			switch(breath.temperature)
 				if(-INFINITY to 120)
-					apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Cold")
 					fire_alert = max(fire_alert, 1)
 				if(120 to 200)
-					apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Cold")
 					fire_alert = max(fire_alert, 1)
 				if(200 to 260)
-					apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Cold")
 					fire_alert = max(fire_alert, 1)
 				if(360 to 400)
-					apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head", used_weapon = "Excessive Heat")
 					fire_alert = max(fire_alert, 2)
 				if(400 to 1000)
-					apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head", used_weapon = "Excessive Heat")
 					fire_alert = max(fire_alert, 2)
 				if(1000 to INFINITY)
-					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
 					fire_alert = max(fire_alert, 2)
+
+		if(oxyloss >= 50 && prob(oxyloss / 5))
+			rupture_lung()
 
 		//Temporary fixes to the alerts.
 
@@ -812,7 +1004,8 @@
 	proc/handle_chemicals_in_body()
 		if(reagents) reagents.metabolize(src)
 
-		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
+//		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
+		if(PLANT in mutations)
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(isturf(loc)) //else, there's considered to be no light
 				var/turf/T = loc
@@ -828,7 +1021,7 @@
 				adjustToxLoss(-1)
 				adjustOxyLoss(-1)
 
-		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
+/*		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in mutations)
 			if(overeatduration < 100)
 				src << "\blue You feel fit again!"
@@ -845,6 +1038,7 @@
 				update_mutations(0)
 				update_inv_w_uniform(0)
 				update_inv_wear_suit()
+*/
 
 		// nutrition decrease
 		if (nutrition > 0 && stat != 2)
@@ -857,7 +1051,8 @@
 			if(overeatduration > 1)
 				overeatduration -= 2 //doubled the unfat rate
 
-		if(dna && dna.mutantrace == "plant")
+//		if(dna && dna.mutantrace == "plant")
+		if(PLANT in mutations)
 			if(nutrition < 200)
 				take_overall_damage(2,0)
 
@@ -877,6 +1072,19 @@
 			dizziness = max(0, dizziness - 3)
 			jitteriness = max(0, jitteriness - 3)
 
+
+		if(life_tick % 10 == 0)
+			// handle trace chemicals for autopsy
+			for(var/datum/organ/O in organs)
+				for(var/chemID in O.trace_chemicals)
+					O.trace_chemicals[chemID] = O.trace_chemicals[chemID] - 1
+					if(O.trace_chemicals[chemID] <= 0)
+						O.trace_chemicals.Remove(chemID)
+		for(var/datum/reagent/A in reagents.reagent_list)
+			// add chemistry traces to a random organ
+			var/datum/organ/O = pick(organs)
+			O.trace_chemicals[A.name] = 100
+
 		updatehealth()
 
 		return //TODO: DEFERRED
@@ -888,12 +1096,15 @@
 		else				//ALIVE. LIGHTS ARE ON
 			updatehealth()	//TODO
 			handle_organs()
+			handle_blood()
 			if(health <= config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 				blinded = 1
 				silent = 0
 				return 1
 
+			// the analgesic effect wears off slowly
+			analgesic = max(0, analgesic - 1)
 
 			//UNCONSCIOUS. NO-ONE IS HOME
 			if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
@@ -937,7 +1148,9 @@
 			else if(sleeping)
 				handle_dreams()
 				adjustHalLoss(-5)
-				sleeping = max(sleeping-1, 0)
+				if (mind)
+					if(mind.active || immune_to_ssd)
+						sleeping = max(sleeping-1, 0)
 				blinded = 1
 				stat = UNCONSCIOUS
 				if( prob(10) && health && !hal_crit )
@@ -953,7 +1166,7 @@
 			else if(eye_blind)			//blindness, heals slowly over time
 				eye_blind = max(eye_blind-1,0)
 				blinded = 1
-			else if(istype(glasses, /obj/item/clothing/glasses/blindfold))	//resting your eyes with a blindfold heals blurry eyes faster
+			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold))	//resting your eyes with a blindfold heals blurry eyes faster
 				eye_blurry = max(eye_blurry-3, 0)
 				blinded = 1
 			else if(eye_blurry)	//blurry eyes heal slowly
@@ -979,12 +1192,20 @@
 
 			if(stuttering)
 				stuttering = max(stuttering-1, 0)
-
+			if (src.slurring)
+				slurring = max(slurring-1, 0)
 			if(silent)
 				silent = max(silent-1, 0)
 
 			if(druggy)
 				druggy = max(druggy-1, 0)
+
+			// Increase germ_level regularly
+			if(prob(40))
+				germ_level += 1
+			// If you're dirty, your gloves will become dirty, too.
+			if(gloves && germ_level > gloves.germ_level && prob(10))
+				gloves.germ_level += 1
 		return 1
 
 	proc/handle_regular_hud_updates()
@@ -994,64 +1215,78 @@
 			if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 				del(hud)
 
-		client.screen.Remove(hud_used.blurry, hud_used.druggy, hud_used.vimpaired, hud_used.darkMask)
+		client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
 
 		update_action_buttons()
 
-		if(!src.oxyloss)
-			damageoverlay.icon_state = "oxydamageoverlay0"
-		else
-			switch(oxyloss)
-				if(0 to 10)
-					damageoverlay.icon_state = "oxydamageoverlay0"
-				if(10 to 20)
-					damageoverlay.icon_state = "oxydamageoverlay1"
-				if(20 to 25)
-					damageoverlay.icon_state = "oxydamageoverlay2"
-				if(25 to 30)
-					damageoverlay.icon_state = "oxydamageoverlay3"
-				if(30 to 35)
-					damageoverlay.icon_state = "oxydamageoverlay4"
-				if(35 to 40)
-					damageoverlay.icon_state = "oxydamageoverlay5"
-				if(40 to 45)
-					damageoverlay.icon_state = "oxydamageoverlay6"
-				if(45 to INFINITY)
-					damageoverlay.icon_state = "oxydamageoverlay7"
-
 		if(damageoverlay.overlays)
 			damageoverlay.overlays = list()
-		var/hurtdamage = src.getBruteLoss() + src.getFireLoss()
-		if(hurtdamage)
-			var/image/I
-			switch(hurtdamage)
-				if(10 to 20)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay1")
-				if(20 to 30)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay2")
-				if(30 to 40)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay3")
-				if(40 to 45)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay4")
-				if(45 to 50)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay5")
-				if(50 to 56)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay6")
-				if(56 to 62)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay7")
-				if(62 to 68)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay8")
-				if(68 to 74)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay9")
-				if(74 to 80)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay10")
-				if(80 to 86)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay11")
-				if(86 to 92)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay12")
-				if(92 to INFINITY)
-					I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay13")
-			damageoverlay.overlays += I
+
+		if(stat == UNCONSCIOUS)
+			//Critical damage passage overlay
+			if(health <= 0)
+				var/image/I
+				switch(health)
+					if(-20 to -10)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage1")
+					if(-30 to -20)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage2")
+					if(-40 to -30)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage3")
+					if(-50 to -40)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage4")
+					if(-60 to -50)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage5")
+					if(-70 to -60)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage6")
+					if(-80 to -70)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage7")
+					if(-90 to -80)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage8")
+					if(-95 to -90)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage9")
+					if(-INFINITY to -95)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage10")
+				damageoverlay.overlays += I
+		else
+			//Oxygen damage overlay
+			if(oxyloss)
+				var/image/I
+				switch(oxyloss)
+					if(10 to 20)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay1")
+					if(20 to 25)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay2")
+					if(25 to 30)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay3")
+					if(30 to 35)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay4")
+					if(35 to 40)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay5")
+					if(40 to 45)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay6")
+					if(45 to INFINITY)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "oxydamageoverlay7")
+				damageoverlay.overlays += I
+
+			//Fire and Brute damage overlay (BSSR)
+			var/hurtdamage = src.getBruteLoss() + src.getFireLoss()
+			if(hurtdamage)
+				var/image/I
+				switch(hurtdamage)
+					if(10 to 25)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay1")
+					if(25 to 40)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay2")
+					if(40 to 55)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay3")
+					if(55 to 70)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay4")
+					if(70 to 85)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay5")
+					if(85 to INFINITY)
+						I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "brutedamageoverlay6")
+				damageoverlay.overlays += I
 
 		if( stat == DEAD )
 			sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
@@ -1062,9 +1297,13 @@
 			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 			if(dna)
 				switch(dna.mutantrace)
-					if("lizard","metroid")
+					if("metroid")
 						see_in_dark = 3
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
+					if("lizard")
+						see_in_dark = 3
+					if("tajaran")
+						see_in_dark = 8
 					else
 						see_in_dark = 2
 
@@ -1145,8 +1384,6 @@
 			else
 				see_invisible = SEE_INVISIBLE_LIVING
 
-			if(sleep && !hal_crit)	sleep.icon_state = "sleep[sleeping]"	//used?
-
 			if(healths)
 				switch(hal_screwyhud)
 					if(1)	healths.icon_state = "health6"
@@ -1215,46 +1452,44 @@
 				else			blind.layer = 0
 
 			if( disabilities & NEARSIGHTED && !istype(glasses, /obj/item/clothing/glasses/regular) )
-				client.screen += hud_used.vimpaired
-			if(eye_blurry)			client.screen += hud_used.blurry
-			if(druggy)				client.screen += hud_used.druggy
+				client.screen += global_hud.vimpaired
+			if(eye_blurry)			client.screen += global_hud.blurry
+			if(druggy)				client.screen += global_hud.druggy
+
+			var/masked = 0
 
 			if( istype(head, /obj/item/clothing/head/welding) )
 				var/obj/item/clothing/head/welding/O = head
 				if(!O.up && tinted_weldhelh)
-					client.screen += hud_used.darkMask
+					client.screen += global_hud.darkMask
+					masked = 1
+
+			if(!masked && istype(glasses, /obj/item/clothing/glasses/welding) )
+				var/obj/item/clothing/glasses/welding/O = glasses
+				if(!O.up && tinted_weldhelh)
+					client.screen += global_hud.darkMask
 
 			if(eye_stat > 20)
-				if(eye_stat > 30)	client.screen += hud_used.darkMask
-				else				client.screen += hud_used.vimpaired
+				if(eye_stat > 30)	client.screen += global_hud.darkMask
+				else				client.screen += global_hud.vimpaired
 
 			if(machine)
 				if(!machine.check_eye(src))		reset_view(null)
 			else
-				if(!client.adminobs)			reset_view(null)
+				var/isRemoteObserve = 0
+				if((mRemote in mutations) && remoteview_target)
+					if(remoteview_target.stat==CONSCIOUS)
+						isRemoteObserve = 1
+				if(!isRemoteObserve && !client.adminobs)
+					remoteview_target = null
+					reset_view(null)
 		return 1
 
 	proc/handle_random_events()
 		// Puke if toxloss is too high
 		if(!stat)
 			if (getToxLoss() >= 45 && nutrition > 20)
-				lastpuke ++
-				if(lastpuke >= 25) // about 25 second delay I guess
-					Stun(5)
-
-					for(var/mob/O in viewers(world.view, src))
-						O.show_message(text("<b>\red [] throws up!</b>", src), 1)
-					playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-					var/turf/location = loc
-					if (istype(location, /turf/simulated))
-						location.add_vomit_floor(src, 1)
-
-					nutrition -= 20
-					adjustToxLoss(-3)
-
-					// make it so you can only puke so fast
-					lastpuke = 0
+				vomit()
 
 		//0.1% chance of playing a scary sound to someone who's in complete darkness
 		if(isturf(loc) && rand(1,1000) == 1)
@@ -1266,7 +1501,28 @@
 		if(bodytemperature > 406)
 			for(var/datum/disease/D in viruses)
 				D.cure()
-		return
+
+		if(!virus2)
+			for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
+				if(B.virus2 && get_infection_chance())
+					infect_virus2(src,B.virus2)
+			for(var/obj/effect/decal/cleanable/mucus/M in view(1,src))
+				if(M.virus2 && get_infection_chance())
+					infect_virus2(src,M.virus2)
+		else
+			if(isnull(virus2)) // Trying to figure out a runtime error that keeps repeating
+				CRASH("virus2 nulled before calling activate()")
+			else
+				virus2.activate(src)
+
+			// activate may have deleted the virus
+			if(!virus2) return
+
+			// check if we're immune
+			if(virus2.antigen & src.antibodies) virus2.dead = 1
+
+
+			return
 
 	proc/handle_stomach()
 		spawn(0)
@@ -1288,6 +1544,44 @@
 	proc/handle_changeling()
 		if(mind && mind.changeling)
 			mind.changeling.regenerate()
+
+	handle_shock()
+		..()
+
+		if(analgesic) return // analgesic avoids all traumatic shock temporarily
+
+		if(health < 0)// health 0 makes you immediately collapse
+			shock_stage = max(shock_stage, 61)
+
+		if(traumatic_shock >= 80)
+			shock_stage += 1
+		else
+			shock_stage = min(shock_stage, 100)
+			shock_stage = max(shock_stage-1, 0)
+			return
+
+		if(shock_stage == 10)
+			src << "<font color='red'><b>"+pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")
+
+		if(shock_stage >= 30)
+			if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
+			eye_blurry = max(2, eye_blurry)
+			stuttering = max(stuttering, 5)
+
+		if(shock_stage == 40)
+			src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
+
+		if (shock_stage >= 60)
+			if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
+			if (prob(5))
+				Stun(20)
+				lying = 1
+
+		if(shock_stage == 80)
+			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
+
+		if (shock_stage > 80)
+			Paralyse(rand(15,28))
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

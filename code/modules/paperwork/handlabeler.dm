@@ -10,7 +10,7 @@
 /obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user as mob)
 	if(!mode)	//if it's off, give up.
 		return
-	if(A==loc)		// if placing the labeller into something (e.g. backpack)
+	if(A == loc)	// if placing the labeller into something (e.g. backpack)
 		return		// don't set a label
 
 	if(!labels_left)
@@ -29,22 +29,21 @@
 		user << "<span class='notice'>You can't label cyborgs.</span>"
 		return
 
-	for(var/mob/M in viewers())
-		if ((M.client && !( M.blinded )))
-			M << "\blue [user] labels [A] as [label]."
+	user.visible_message("<span class='notice'>[user] labels [A] as [label].</span>", \
+						 "<span class='notice'>You label [A] as [label].</span>")
 	A.name = "[A.name] ([label])"
 
-/obj/item/weapon/hand_labeler/attack_self()
+/obj/item/weapon/hand_labeler/attack_self(mob/user as mob)
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
-		usr << "<span class='notice'>You turn on \the [src].</span>"
+		user << "<span class='notice'>You turn on \the [src].</span>"
 		//Now let them chose the text.
-		var/str = copytext(reject_bad_text(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		var/str = copytext(reject_bad_text(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
-			usr << "<span class='notice'>Invalid text.</span>"
+			user << "<span class='notice'>Invalid text.</span>"
 			return
 		label = str
-		usr << "<span class='notice'>You set the text to '[str]'.</span>"
+		user << "<span class='notice'>You set the text to '[str]'.</span>"
 	else
-		usr << "<span class='notice'>You turn off \the [src].</span>"
+		user << "<span class='notice'>You turn off \the [src].</span>"

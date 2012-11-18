@@ -81,6 +81,9 @@
 	if(href_list["togglep"])
 		src.toggle_power()
 		investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr.key]","singulo")
+		if (active)
+			message_admins("PA Control Computer turned ON by [key_name(usr, usr.client)](<A HREF='?src=%holder_ref%;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <A HREF='?src=%holder_ref%;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			log_game("PA Control Computer turned ON by [usr.ckey]([usr]) in ([x],[y],[z])")
 	else if(href_list["scan"])
 		src.part_scan()
 	else if(href_list["strengthup"])
@@ -88,6 +91,8 @@
 		if(strength > 2)
 			strength = 2
 		else
+			message_admins("PA Control Computer increased to [strength] by [key_name(usr, usr.client)](<A HREF='?src=%holder_ref%;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <A HREF='?src=%holder_ref%;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			log_game("PA Control Computer increased to [strength] by [usr.ckey]([usr]) in ([x],[y],[z])")
 			investigate_log("increased to <font color='red'>[strength]</font> by [usr.key]","singulo")
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
 			part.strength = strength

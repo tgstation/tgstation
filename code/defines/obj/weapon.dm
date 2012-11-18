@@ -19,6 +19,7 @@
 	throw_range = 4
 	w_class = 2
 	attack_verb = list("called", "rang")
+	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
@@ -502,83 +503,6 @@
 /obj/item/weapon/soap/syndie
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
-
-/obj/item/weapon/bedsheet
-	name = "bedsheet"
-	desc = "Nice, linen, bedsheet. Perfect to put on."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "sheet"
-	layer = 4.0
-	item_state = "bedsheet"
-	throwforce = 1
-	w_class = 1.0
-	throw_speed = 2
-	throw_range = 10
-	color = "white"
-
-/obj/item/weapon/bedsheet/blue
-	icon_state = "sheetblue"
-	color = "blue"
-
-/obj/item/weapon/bedsheet/green
-	icon_state = "sheetgreen"
-	color = "green"
-
-/obj/item/weapon/bedsheet/orange
-	icon_state = "sheetorange"
-	color = "orange"
-
-/obj/item/weapon/bedsheet/purple
-	icon_state = "sheetpurple"
-	color = "purple"
-
-/obj/item/weapon/bedsheet/rainbow
-	icon_state = "sheetrainbow"
-	color = "rainbow"
-
-/obj/item/weapon/bedsheet/red
-	icon_state = "sheetred"
-	color = "red"
-
-/obj/item/weapon/bedsheet/yellow
-	icon_state = "sheetyellow"
-	color = "yellow"
-
-/obj/item/weapon/bedsheet/mime
-	icon_state = "sheetmime"
-	color = "mime"
-
-/obj/item/weapon/bedsheet/clown
-	icon_state = "sheetclown"
-	color = "clown"
-
-/obj/item/weapon/bedsheet/captain
-	icon_state = "sheetcaptain"
-	color = "captain"
-
-/obj/item/weapon/bedsheet/rd
-	icon_state = "sheetrd"
-	color = "director"
-
-/obj/item/weapon/bedsheet/medical
-	icon_state = "sheetmedical"
-	color = "medical"
-
-/obj/item/weapon/bedsheet/hos
-	icon_state = "sheethos"
-	color = "hosred"
-
-/obj/item/weapon/bedsheet/hop
-	icon_state = "sheethop"
-	color = "hop"
-
-/obj/item/weapon/bedsheet/ce
-	icon_state = "sheetce"
-	color = "chief"
-
-/obj/item/weapon/bedsheet/brown
-	icon_state = "sheetbrown"
-	color = "brown"
 
 /obj/item/weapon/bikehorn
 	name = "bike horn"
@@ -1116,6 +1040,10 @@
 	name = "paper- 'Greetings from Billy Bob'"
 	info = "<B>Hey fellow botanist!</B><BR>\n<BR>\nI didn't trust the station folk so I left<BR>\na couple of weeks ago. But here's some<BR>\ninstructions on how to operate things here.<BR>\nYou can grow plants and each iteration they become<BR>\nstronger, more potent and have better yield, if you<BR>\nknow which ones to pick. Use your botanist's analyzer<BR>\nfor that. You can turn harvested plants into seeds<BR>\nat the seed extractor, and replant them for better stuff!<BR>\nSometimes if the weed level gets high in the tray<BR>\nmutations into different mushroom or weed species have<BR>\nbeen witnessed. On the rare occassion even weeds mutate!<BR>\n<BR>\nEither way, have fun!<BR>\n<BR>\nBest regards,<BR>\nBilly Bob Johnson.<BR>\n<BR>\nPS.<BR>\nHere's a few tips:<BR>\nIn nettles, potency = damage<BR>\nIn amanitas, potency = deadliness + side effect<BR>\nIn Liberty caps, potency = drug power + effect<BR>\nIn chilis, potency = heat<BR>\n<B>Nutrients keep mushrooms alive!</B><BR>\n<B>Water keeps weeds such as nettles alive!</B><BR>\n<B>All other plants need both.</B>"
 
+/obj/item/weapon/paper/djstation
+	name = "paper - 'DJ Listening Outpost'"
+	info = "<B>Welcome new owner!</B><BR><BR>You have purchased the latest in listening equipment. The telecommunication setup we created is the best in listening to common and private radio fequencies. Here is a step by step guide to start listening in on those saucy radio channels:<br><ol><li>Equip yourself with a multi-tool</li><li>Use the multitool on each machine, that is the broadcaster, receiver and the relay.</li><li>Turn all the machines on, it has already been configured for you to listen on.</li></ol> Simple as that. Now to listen to the private channels, you'll have to configure the intercoms, located on the front desk. Here is a list of frequencies for you to listen on.<br><ul><li>145.7 - Common Channel</li><li>144.7 - Private AI Channel</li><li>135.9 - Security Channel</li><li>135.7 - Engineering Channel</li><li>135.5 - Medical Channel</li><li>135.3 - Command Channel</li><li>135.1 - Science Channel</li><li>134.9 - Mining Channel</li><li>134.7 - Cargo Channel</li>"
+
 /obj/item/weapon/paper/flag
 	icon_state = "flag_neutral"
 	item_state = "paper"
@@ -1135,6 +1063,20 @@
 	name = "paper- 'Standard Operating Procedure'"
 	info = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by reseting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alrms in front of ship.<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area!"
 
+/obj/item/weapon/paper/genetics_side_effects
+	name = "paper - 'Genetical Side-Effects and Treatments'"
+
+	New()
+		..()
+		info = ""
+		for(var/tp in typesof(/datum/genetics/side_effect) - /datum/genetics/side_effect)
+			var/datum/genetics/side_effect/S = new tp
+			info += "<B>Name:</B>\t [S.name]<BR>"
+			info += "<B>Symptom:</B>\t [S.symptom]<BR>"
+			info += "<B>Treatment:</B>\t [S.treatment]<BR>"
+			info += "<B>Effect:</B>\t [S.effect]<BR>"
+			info += "<BR>"
+
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -1147,18 +1089,6 @@
 	throw_speed = 7
 	throw_range = 15
 	attack_verb = list("banned")
-
-/obj/item/weapon/pen/sleepypen
-	desc = "It's a normal black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	slot_flags = SLOT_BELT
-	origin_tech = "materials=2;biotech=1;syndicate=7"
-
-/obj/item/weapon/pen/paralysis
-	desc = "It's a normal black ink pen with a sharp point."
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	slot_flags = SLOT_BELT
-	origin_tech = "materials=2;biotech=1;syndicate=5"
 
 /obj/item/weapon/rack_parts
 	name = "rack parts"
@@ -1312,19 +1242,6 @@
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
 	flags = null
-
-/obj/item/weapon/teleportation_scroll
-	name = "scroll of teleportation"
-	desc = "A scroll for moving around."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll"
-	var/uses = 4.0
-	flags = FPRINT | TABLEPASS
-	w_class = 2.0
-	item_state = "paper"
-	throw_speed = 4
-	throw_range = 20
-	origin_tech = "bluespace=4"
 
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
@@ -1658,6 +1575,11 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = 1
 
+/obj/item/weapon/scalpel/stabslash
+	name = "\proper Stabslash The Pains of Healing"
+	desc = "All craftsmanship is of highest quality. On it is image of doctor and patient. Doctor is panicing. Patien is asleep."
+	icon_state = "stabslash"
+
 /obj/item/weapon/retractor
 	name = "retractor"
 	desc = "Retracts stuff."
@@ -1724,6 +1646,32 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharp = 1
+
+/obj/item/weapon/bonegel
+	name = "bone gel"
+	icon = 'surgery.dmi'
+	icon_state = "bone-gel"
+	force = 0
+	throwforce = 1.0
+
+/obj/item/weapon/FixOVein
+	name = "FixOVein"
+	icon = 'surgery.dmi'
+	icon_state = "fixovein"
+	force = 0
+	throwforce = 1.0
+	origin_tech = "materials=1;biotech=3"
+	var/usage_amount = 10
+
+/obj/item/weapon/bonesetter
+	name = "bone setter"
+	icon = 'surgery.dmi'
+	icon_state = "bone setter"
+	force = 8.0
+	throwforce = 9.0
+	throw_speed = 3
+	throw_range = 5
+	attack_verb = list("attacked", "hit", "bludgeoned")
 
 /obj/item/weapon/syntiflesh
 	name = "syntiflesh"
@@ -2016,3 +1964,17 @@
 	icon_state = "capacitor"
 	desc = "A debug item for research."
 	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
+
+/obj/item/weapon/autopsy_scanner
+	name = "autopsy scanner"
+	desc = "Extracts information on wounds."
+	icon = 'icons/obj/autopsy_scanner.dmi'
+	icon_state = ""
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
+
+/obj/item/weapon/autopsy_scanner/var/list/datum/autopsy_data_scanner/wdata = list()
+/obj/item/weapon/autopsy_scanner/var/list/datum/autopsy_data_scanner/chemtraces = list()
+/obj/item/weapon/autopsy_scanner/var/target_name = null
+/obj/item/weapon/autopsy_scanner/var/timeofdeath = null

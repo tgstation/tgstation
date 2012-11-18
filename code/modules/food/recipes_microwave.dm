@@ -1,6 +1,8 @@
 
 // see code/datums/recipe.dm
 
+
+/* No telebacon. just no...
 /datum/recipe/telebacon
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
@@ -8,12 +10,14 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
 
+I said no!
 /datum/recipe/syntitelebacon
 	items = list(
 		/obj/item/weapon/syntiflesh,
 		/obj/item/device/assembly/signaler
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
+*/
 
 /datum/recipe/friedegg
 	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
@@ -45,6 +49,14 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly
+
+/datum/recipe/jellydonut/roro
+	reagents = list("rorojelly" = 5, "flour" = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/rorojelly
+
+/datum/recipe/jellydonut/cherry
+	reagents = list("cherryjelly" = 5, "flour" = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
 
 /datum/recipe/donut
 	reagents = list("flour" = 5)
@@ -356,6 +368,13 @@
 		 /obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie
+
+/datum/recipe/cherrypie
+	reagents = list("flour" = 10)
+	items = list(
+		 /obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cherrypie
 /*
 /datum/recipe/berrypie
 	reagents = list("berryjuice" = 5)
@@ -761,7 +780,14 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/rorotoast
+	result = /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/roro
+
+/datum/recipe/jelliedtoast
+	reagents = list("cherryjelly" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry
 
 /datum/recipe/milosoup
 	reagents = list("water" = 10)
@@ -878,10 +904,13 @@
 
 /datum/recipe/roroburger
 	reagents = list("rorojelly" = 5, "flour" = 15)
-	items = list(
-		// /obj/item/weapon/reagent_containers/food/snacks/flour,
-	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/roroburger
+	items = list()
+	result = /obj/item/weapon/reagent_containers/food/snacks/jellyburger/roro
+
+/datum/recipe/jellyburger
+	reagents = list("cherryjelly" = 5, "flour" = 15)
+	items = list()
+	result = /obj/item/weapon/reagent_containers/food/snacks/jellyburger/cherry
 
 /datum/recipe/twobread
 	reagents = list("wine" = 5)
@@ -897,7 +926,15 @@
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/rorosandwich
+	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/roro
+
+/datum/recipe/cherrysandwich
+	reagents = list("cherryjelly" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/cherry
 
 /datum/recipe/orangecake
 	reagents = list("milk" = 5, "flour" = 15)
@@ -1070,6 +1107,10 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/herbsalad
+	make_food(var/obj/container as obj)
+		var/obj/item/weapon/reagent_containers/food/snacks/herbsalad/being_cooked = ..(container)
+		being_cooked.reagents.del_reagent("toxin")
+		return being_cooked
 
 /datum/recipe/aesirsalad
 	items = list(
@@ -1089,6 +1130,10 @@
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/validsalad
+	make_food(var/obj/container as obj)
+		var/obj/item/weapon/reagent_containers/food/snacks/validsalad/being_cooked = ..(container)
+		being_cooked.reagents.del_reagent("toxin")
+		return being_cooked
 
 /datum/recipe/cracker
 	reagents = list("flour" = 5, "sodiumchloride" = 1)

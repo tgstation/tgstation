@@ -35,7 +35,7 @@
 
 		NC.mergeConnectedNetworks(NC.d2)
 		NC.mergeConnectedNetworksOnTurf()
-		if(powernet==null)
+		if(powernet == null)
 			if(NC.powernet == null)
 				NC.powernet = new()
 				powernets += NC.powernet
@@ -523,3 +523,24 @@ obj/structure/cable/proc/cableColor(var/colorC)
 			icon = 'icons/obj/power_cond_cyan.dmi'
 		if("white")
 			icon = 'icons/obj/power_cond_white.dmi'
+
+
+/obj/item/weapon/cable_coil/attack(mob/M as mob, mob/user as mob)
+	if(hasorgans(M))
+		var/datum/organ/external/S = M:get_organ(user.zone_sel.selecting)
+		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+			return ..()
+		if(S.burn_dam > 0)
+			S.heal_damage(0,15,0,1)
+			if(user != M)
+				user.visible_message("\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
+				"\red You repair some burn damage on your [S.display_name]",\
+				"You hear wires being cut.")
+			else
+				user.visible_message("\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
+				"\red You repair some burn damage on your [S.display_name]",\
+				"You hear wires being cut.")
+		else
+			user << "Nothing to fix!"
+	else
+		return ..()

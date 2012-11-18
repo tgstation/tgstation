@@ -166,8 +166,7 @@
 
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(!istype(W, /obj/item/weapon/wrench) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
-		for(var/mob/V in viewers(src, null))
-			V.show_message(text("\red [user] hits the [src] with a [W]!"))
+		visible_message("\red [user] hits the [src] with a [W]!")
 		src.health -= W.force
 		src.add_fingerprint(user)
 		healthcheck()

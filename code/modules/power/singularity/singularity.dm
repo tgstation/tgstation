@@ -465,6 +465,22 @@ var/global/list/uneatable = list(
 	grav_pull = 10 //How many tiles out do we pull?
 	consume_range = 3 //How many tiles out do we eat
 
+/obj/machinery/singularity/narsie/large
+	name = "Nar-Sie"
+	icon = 'icons/obj/narsie.dmi'
+	// Pixel stuff centers Narsie.
+	pixel_x = -236
+	pixel_y = -256
+	current_size = 12
+	move_self = 1 //Do we move on our own?
+	consume_range = 12 //How many tiles out do we eat
+
+/obj/machinery/singularity/narsie/large/New()
+	..()
+	world << "<font size='28' color='red'><b>NAR-SIE HAS RISEN</b></font>"
+	if(emergency_shuttle)
+		emergency_shuttle.incall(0.5) // Cannot recall
+
 /obj/machinery/singularity/narsie/process()
 	eat()
 	if(!target || prob(5))

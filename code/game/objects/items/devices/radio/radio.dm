@@ -210,14 +210,13 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if (!connection)
 		return
 
-	Broadcast_Message(connection, new /mob/living/silicon/ai(src),
+	Broadcast_Message(connection, new /mob/living/silicon/ai(src,null,null,1),
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
 						4, 0, 1)
 	return
 
-/obj/item/device/radio/talk_into(mob/M as mob, message, channel)
-
+/obj/item/device/radio/talk_into(mob/living/M as mob, message, channel)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -299,10 +298,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		// --- Modifications to the mob's identity ---
 
 		// The mob is disguising their identity:
-		if (istype(M.wear_mask, /obj/item/clothing/mask/gas/voice))
-			if(M.wear_mask:vchange)
-				displayname = M.wear_mask:voice
-				jobname = "Unknown"
+		if (ishuman(M) && M.GetVoice() != real_name)
+			displayname = M.GetVoice()
+			jobname = "Unknown"
 			voicemask = 1
 
 
@@ -472,7 +470,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 				continue
 			if (R.say_understands(M))
-				if (!ishuman(M) || istype(M.wear_mask, /obj/item/clothing/mask/gas/voice))
+				if (ishuman(M) && M.GetVoice() != M.real_name)
 					heard_masked += R
 				else
 					heard_normal += R
@@ -556,10 +554,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			if (length(heard_masked))
 				var/N = M.name
 				var/J = eqjobname
-				if (istype(M.wear_mask, /obj/item/clothing/mask/gas/voice)&&M.wear_mask:vchange)
-				//To properly have the ninja show up on radio. Could also be useful for similar items.
-				//Would not be necessary but the mob could be wearing a mask that is not a voice changer.
-					N = M.wear_mask:voice
+				if(ishuman(M) && M.GetVoice() != M.real_name)
+					N = M.GetVoice()
 					J = "Unknown"
 				var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 				for (var/mob/R in heard_masked)
@@ -616,24 +612,24 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/proc/receive_range(freq, level)
 	// check if this radio can receive on the given frequency, and if so,
 	// what the range is in which mobs will hear the radio
-	// returns: 0 if can't receive, range otherwise
+	// returns: -1 if can't receive, range otherwise
 
 	if (!(wires & WIRE_RECEIVE))
-		return 0
+		return -1
 	if(!listening)
-		return 0
+		return -1
 	if(level != 0)
 		var/turf/position = get_turf(src)
 		if(isnull(position) || position.z != level)
-			return 0
+			return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
-			return 0
+			return -1
 	if (!on)
-		return 0
+		return -1
 	if (!freq) //recieved on main frequency
 		if (!listening)
-			return 0
+			return -1
 	else
 		var/accept = (freq==frequency && listening)
 		if (!accept)
@@ -643,14 +639,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					accept = 1
 					break
 		if (!accept)
-			return 0
+			return -1
 
 	return canhear_range
 
 /obj/item/device/radio/proc/send_hear(freq, level)
 
 	var/range = receive_range(freq, level)
-	if(range > 0)
+	if(range > -1)
 		return get_mobs_in_view(canhear_range, src)
 
 
@@ -798,4 +794,16 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	dat+={"[text_wires()]</TT></body></html>"}
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
+	return
+
+
+/obj/item/device/radio/proc/config(op)
+	if(radio_controller)
+		for (var/ch_name in channels)
+			radio_controller.remove_object(src, radiochannels[ch_name])
+	secure_radio_connections = new
+	channels = op
+	if(radio_controller)
+		for (var/ch_name in op)
+			secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 	return

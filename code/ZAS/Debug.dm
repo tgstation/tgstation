@@ -32,7 +32,7 @@ zone/proc
 			M << "Pressure: [air.return_pressure()]"
 			M << ""
 			M << "Space Tiles: [length(unsimulated_tiles)]"
-			//M << "Movable Objects: [length(movable_objects)]"		//skytodo
+			M << "Movable Objects: [length(movables())]"
 			M << "<u>Connections: [length(connections)]</u>"
 
 			for(var/connection/C in connections)

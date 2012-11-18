@@ -62,13 +62,14 @@
 /mob/proc/say_quote(var/text,var/is_speaking_soghun,var/is_speaking_skrell,var/is_speaking_tajaran)
 	if(!text)
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+		//tcomms code is still runtiming somewhere here
 	var/ending = copytext(text, length(text))
 	if (is_speaking_soghun)
 		return "hisses, \"<span class='species'>[text]</span>\"";
 	if (is_speaking_skrell)
 		return "warbles, \"<span class='species'>[text]</span>\"";
 	if (is_speaking_tajaran)
-		return "purrs, \"<span class='species'>[text]</span>\"";
+		return "mrowls, \"<span class='species'>[text]</span>\"";
 //Needs Virus2
 //	if (src.disease_symptoms & DISEASE_HOARSE)
 //		return "rasps, \"[text]\"";

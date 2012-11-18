@@ -15,7 +15,7 @@
 	item_state = "r_suit"
 	color = "warden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/rank/security
 	name = "security officer's jumpsuit"
@@ -24,7 +24,7 @@
 	item_state = "r_suit"
 	color = "secred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 /*
  * Detective
@@ -36,7 +36,7 @@
 	item_state = "det"
 	color = "detective"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/head/det_hat
@@ -56,7 +56,7 @@
 	item_state = "r_suit"
 	color = "hosred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 
 
 /obj/item/clothing/head/helmet/HoS
@@ -95,8 +95,8 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/hos/jensen
-	name = "armored trenchoat"
-	desc = "A trenchoat augmented with a special alloy for some protection and style"
+	name = "armored trenchcoat"
+	desc = "A trenchcoat augmented with a special alloy for some protection and style."
 	icon_state = "jensencoat"
 	item_state = "jensencoat"
 	flags_inv = 0

@@ -67,6 +67,21 @@
 	ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	return ..(gibbed)
 
+/mob/living/carbon/human/proc/makeSkeleton()
+	if(SKELETON in src.mutations)	return
+
+	if(f_style)
+		f_style = "Shaved"
+	if(h_style)
+		h_style = "Bald"
+	update_hair(0)
+
+	mutations.Add(SKELETON)
+	status_flags |= DISFIGURED
+	update_body(0)
+	update_mutantrace()
+	return
+
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(HUSK in mutations)	return
 

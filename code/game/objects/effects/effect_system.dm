@@ -407,7 +407,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/chem_smoke/Move()
 	..()
-	for(var/atom/A in view(1, src))
+	for(var/atom/A in view(2, src))
 		if(reagents.has_reagent("radium")||reagents.has_reagent("uranium")||reagents.has_reagent("carbon")||reagents.has_reagent("thermite"))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
 			if(prob(5))
 				reagents.reaction(A)
@@ -1093,3 +1093,16 @@ steam.start() -- spawns the effect
 				M << "\red The solution violently explodes."
 
 			explosion(location, devastation, heavy, light, flash)
+
+	proc/holder_damage(var/atom/holder)
+		if(holder)
+			var/dmglevel = 4
+
+			if (round(amount/8) > 0)
+				dmglevel = 1
+			else if (round(amount/4) > 0)
+				dmglevel = 2
+			else if (round(amount/2) > 0)
+				dmglevel = 3
+
+			if(dmglevel<4) holder.ex_act(dmglevel)

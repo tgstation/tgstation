@@ -202,8 +202,7 @@ Class Procs:
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
-			for(var/mob/M in viewers(src, null))
-				M << "\red [H] stares cluelessly at [src] and drools."
+			visible_message("\red [H] stares cluelessly at [src] and drools.")
 			return 1
 		else if(prob(H.getBrainLoss()))
 			user << "\red You momentarily forget how to use [src]."

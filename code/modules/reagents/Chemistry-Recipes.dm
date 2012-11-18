@@ -27,9 +27,14 @@ datum
 			required_reagents = list("water" = 1, "potassium" = 1)
 			result_amount = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/location = get_turf(holder.my_atom)
 				var/datum/effect/effect/system/reagents_explosion/e = new()
-				e.set_up(round (created_volume/10, 1), location, 0, 0)
+				e.set_up(round (created_volume/10, 1), holder.my_atom, 0, 0)
+				e.holder_damage(holder.my_atom)
+				if(isliving(holder.my_atom))
+					e.amount *= 0.5
+					var/mob/living/L = holder.my_atom
+					if(L.stat!=DEAD)
+						e.amount *= 0.5
 				e.start()
 				holder.clear_reagents()
 				return
@@ -89,6 +94,20 @@ datum
 			result = "mutagen"
 			required_reagents = list("radium" = 1, "phosphorus" = 1, "chlorine" = 1)
 			result_amount = 3
+
+		tramadol
+			name = "Tramadol"
+			id = "tramadol"
+			result = "tramadol"
+			required_reagents = list("inaprovaline" = 1, "ethanol" = 1, "oxygen" = 1)
+			result_amount = 3
+
+		oxycodone
+			name = "Oxycodone"
+			id = "oxycodone"
+			result = "oxycodone"
+			required_reagents = list("ethanol" = 1, "tramadol" = 1, "plasma" = 1)
+			result_amount = 1
 
 		//cyanide
 		//	name = "Cyanide"
@@ -166,6 +185,13 @@ datum
 			result = "kelotane"
 			required_reagents = list("silicon" = 1, "carbon" = 1)
 			result_amount = 2
+
+		virus_food
+			name = "Virus Food"
+			id = "virusfood"
+			result = "virusfood"
+			required_reagents = list("water" = 1, "milk" = 1)
+			result_amount = 5
 
 		leporazine
 			name = "Leporazine"
@@ -296,9 +322,14 @@ datum
 			required_reagents = list("glycerol" = 1, "pacid" = 1, "sacid" = 1)
 			result_amount = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/location = get_turf(holder.my_atom)
 				var/datum/effect/effect/system/reagents_explosion/e = new()
-				e.set_up(round (created_volume/2, 1), location, 0, 0)
+				e.set_up(round (created_volume/2, 1), holder.my_atom, 0, 0)
+				e.holder_damage(holder.my_atom)
+				if(isliving(holder.my_atom))
+					e.amount *= 0.5
+					var/mob/living/L = holder.my_atom
+					if(L.stat!=DEAD)
+						e.amount *= 0.5
 				e.start()
 
 				holder.clear_reagents()
@@ -422,10 +453,10 @@ datum
 			required_reagents = list("carpotoxin" = 5, "stoxin" = 5, "copper" = 5)
 			result_amount = 2
 
-		LSD
-			name = "LSD"
-			id = "LSD"
-			result = "LSD"
+		mindbreaker
+			name = "Mindbreaker Toxin"
+			id = "mindbreaker"
+			result = "mindbreaker"
 			required_reagents = list("silicon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 			result_amount = 5
 

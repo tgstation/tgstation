@@ -938,7 +938,7 @@
 /obj/structure/disposalpipe/sortjunction
 
 	icon_state = "pipe-j1s"
-	var/sortType = 0
+	var/sortType = 0	//Look at the list called TAGGERLOCATIONS in setup.dm
 	var/posdir = 0
 	var/negdir = 0
 	var/sortdir = 0
@@ -1335,3 +1335,13 @@
 		dirs = alldirs.Copy()
 
 	src.streak(dirs)
+
+/obj/effect/decal/cleanable/blood/drip
+	name = "drips of blood"
+	desc = "It's red."
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'drip.dmi'
+	icon_state = "1"

@@ -61,6 +61,7 @@
 	switch(M.a_intent)
 		if("help")
 			if(health > config.health_threshold_crit)
+				diary << "\[[time2text(world.timeofday, "hh:mm.ss")]\] CPR BUGHINTING: [M] shakes [src]: health - [health], threshold - [config.health_threshold_crit]. Health details: OX [getOxyLoss()] TX [getToxLoss()] BU [getFireLoss()] BR [getBruteLoss()]  Blood: [round(vessel.get_reagent_amount("blood"))] out of 560"
 				help_shake_act(M)
 				return 1
 //			if(M.health < -75)	return 0
@@ -191,6 +192,27 @@
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
+
+			if (istype(r_hand,/obj/item/weapon/gun) || istype(l_hand,/obj/item/weapon/gun))
+				var/obj/item/weapon/gun/W = null
+				var/chance = 0
+
+				if (istype(l_hand,/obj/item/weapon/gun))
+					W = l_hand
+					chance = hand ? 40 : 20
+
+				if (istype(r_hand,/obj/item/weapon/gun))
+					W = r_hand
+					chance = !hand ? 40 : 20
+
+				if (prob(chance))
+					visible_message("<spawn class=danger>[src]'s [W] goes off during struggle!")
+					var/list/turfs = list()
+					for(var/turf/T in view())
+						turfs += T
+					var/turf/target = pick(turfs)
+					return W.afterattack(target,src)
+
 			var/randn = rand(1, 100)
 			if (randn <= 25)
 				apply_effect(4, WEAKEN, run_armor_check(affecting, "melee"))

@@ -43,7 +43,10 @@
 			O.transfer_soul("SHADE", src, user)
 		else
 			if(O.force)
-				health -= O.force
+				var/damage = O.force
+				if (O.damtype == HALLOSS)
+					damage = 0
+				health -= damage
 				for(var/mob/M in viewers(src, null))
 					if ((M.client && !( M.blinded )))
 						M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")

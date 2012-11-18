@@ -152,10 +152,8 @@ datum
 				var/start_time = world.timeofday
 
 				for(var/turf/simulated/S in world)
-					if(!S.blocks_air && !S.parent && S.z < 5) // Added last check to force skipping asteroid z-levels -- TLE
+					if(!S.blocks_air && !S.parent)
 						assemble_group_turf(S)
-					if(S.z > 4) // Skipping asteroids -- TLE
-						continue
 					S.update_air_properties()
 
 				world << "\red \b Geometry processed in [(world.timeofday-start_time)/10] seconds!"

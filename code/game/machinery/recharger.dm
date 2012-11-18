@@ -11,6 +11,8 @@ obj/machinery/recharger
 	var/obj/item/weapon/charging = null
 
 obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
+	if(istype(user,/mob/living/silicon))
+		return
 	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
 		if(charging)
 			return

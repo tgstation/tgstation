@@ -1,3 +1,16 @@
+/obj/item/weapon/teleportation_scroll
+	name = "scroll of teleportation"
+	desc = "A scroll for moving around."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "scroll"
+	var/uses = 4.0
+	flags = FPRINT | TABLEPASS
+	w_class = 2.0
+	item_state = "paper"
+	throw_speed = 4
+	throw_range = 20
+	origin_tech = "bluespace=4"
+
 /obj/item/weapon/teleportation_scroll/attack_self(mob/user as mob)
 	user.machine = src
 	var/dat = "<B>Teleportation Scroll:</B><BR>"
@@ -12,7 +25,7 @@
 
 /obj/item/weapon/teleportation_scroll/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained())
+	if (usr.stat || usr.restrained() || src.loc != usr)
 		return
 	var/mob/living/carbon/human/H = usr
 	if (!( istype(H, /mob/living/carbon/human)))

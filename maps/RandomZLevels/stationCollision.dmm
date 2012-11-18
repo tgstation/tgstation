@@ -129,7 +129,7 @@
 "cy" = (/obj/machinery/portable_atmospherics/canister/toxins{destroyed = 1},/turf/simulated/floor/airless{icon_state = "damaged4"},/area/awaymission/northblock)
 "cz" = (/obj/machinery/door/window/eastleft,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
 "cA" = (/obj/machinery/emitter{anchored = 1; dir = 1; icon_state = "emitter"; state = 2},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
-"cB" = (/obj/item/clothing/mask/facehugger/angry,/mob/living/carbon/alien/humanoid/queen{fireloss = 300; stat = 2},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
+"cB" = (/obj/item/clothing/mask/facehugger,/mob/living/carbon/alien/humanoid/queen{fireloss = 300; stat = 2},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
 "cC" = (/obj/effect/decal/remains/human,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
 "cD" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
 "cE" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (WEST)"; icon_state = "heater"; dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor{icon_state = "dark"},/area/awaymission/research)

@@ -18,10 +18,6 @@
 	var/datum/radio_frequency/radio_connection
 	var/deadman = 0
 
-	proc
-		signal()
-
-
 	New()
 		..()
 		spawn(40)
@@ -104,7 +100,7 @@
 		return
 
 
-	signal()
+	proc/signal()
 		if(!radio_connection) return
 
 		var/datum/signal/signal = new
@@ -130,7 +126,7 @@
 		else if(holder)
 			holder.process_activation(src, 1, 0)
 		else
-			..()
+			..(radio)
 		return 1
 
 
@@ -140,8 +136,9 @@
 		if(!(src.wires & WIRE_RADIO_RECEIVE))	return 0
 		pulse(1)
 
-		for(var/mob/O in hearers(1, src.loc))
-			O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+		if(!holder)
+			for(var/mob/O in hearers(1, src.loc))
+				O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
 		return
 
 

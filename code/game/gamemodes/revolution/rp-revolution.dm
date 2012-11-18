@@ -280,46 +280,6 @@
 	return 1
 
 
-/*obj/item/weapon/paper/communist_manifesto
-	name = "Communist Manifesto"
-	icon = 'books.dmi'
-	icon_state = "redcommunist"
-	info = "Supporters of the Revolution:<br><br>"
-	attack(mob/living/carbon/M as mob, mob/user as mob)
-		if(user.mind in ticker.mode:head_revolutionaries)
-			if(RevConvert(M,user))
-				for(var/mob/O in viewers(user, null))
-					O.show_message(text("\red [] converts [] with the Communist Manifesto!", user, M))
-				info += "[M.real_name]<br>"
-			else
-				for(var/mob/O in viewers(user, null))
-					O.show_message(text("\red [] fails to convert [] with the Communist Manifesto!", user, M))
-		else
-			usr << "\red You are completely confounded as to the operation of this tome."
-		return
-
-proc/RevConvert(mob/living/carbon/M,mob/user)
-	if(!istype(M)) return 0
-	if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-		user << "\red <b>[M] is already a revolutionary!</b>"
-		return 0
-	else if(M.mind in ticker.mode:get_unconvertables())
-		user << "\red <b>[M] cannot be a revolutionary!</b>"
-		return 0
-	else
-		if(world.time < M.mind.rev_cooldown)
-			user << "\red Wait five seconds before reconversion attempt."
-			return 0
-		user << "\red Attempting to convert [M]..."
-		var/choice = alert(M,"Asked by [user]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
-		if(choice == "Yes!")
-			ticker.mode:add_revolutionary(M.mind)
-			user << "\blue <b>[M] joins the revolution!</b>"
-			. = 1
-		else if(choice == "No!")
-			user << "\red <b>[M] does not support the revolution!</b>"
-			. = 0
-		M.mind.rev_cooldown = world.time+50*/
 
 mob/living/carbon/human/proc
 	RevConvert(mob/M as mob in oview(src))

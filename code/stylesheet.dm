@@ -13,7 +13,7 @@ em						{font-style: normal;	font-weight: bold;}
 
 .prefix					{					font-weight: bold;}
 
-.ooc					{color: #002eb8;	font-weight: bold;}
+.ooc					{					font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #b82e00;	font-weight: bold;}
 
@@ -24,10 +24,9 @@ em						{font-style: normal;	font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #5c00e6;}
-.species				{color: #803B56;}
 .radio					{color: #008000;}
 .deptradio				{color: #993399;}
-.comradio				{color: #ACA82D;}
+.comradio				{color: #885500;}
 .syndradio				{color: #6D3F40;}
 
 .alert					{color: #ff0000;}
@@ -49,5 +48,10 @@ h1.alert, h2.alert		{color: #000000;}
 
 .alien					{color: #543354;}
 .newscaster				{color: #800000;}
+
+.mod					{color: #735638;	font-weight: bold;}
+.modooc					{color: #184880;	font-weight: bold;}
+.adminmod				{color: #402A14;	font-weight: bold;}
+.species				{color: #803B56;}
 
 </style>"}

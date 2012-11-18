@@ -53,6 +53,11 @@ datum/mind
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 
+	var/rev_cooldown = 0
+
+	// the world.time since the mob has been brigged, or -1 if not at all
+	var/brigged_since = -1
+
 	New(var/key)
 		src.key = key
 
@@ -340,6 +345,10 @@ datum/mind
 		if(!usr.client.holder)
 			message_admins("\red [key_name(usr)] tried to access [current]'s mind without authorization.")
 			log_admin("[key_name(usr)] tried to access [current]'s mind without authorization.")
+			return
+
+		if (!(usr.client.holder.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master")))
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
 
 		if (href_list["role_edit"])
@@ -725,6 +734,11 @@ datum/mind
 						special_role = null
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>"
 						log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
+						if(isAI(current))
+							var/mob/living/silicon/ai/A = current
+							A.set_zeroth_law("")
+							A.show_laws()
+
 
 				if("traitor")
 					if(!(src in ticker.mode.traitors))
@@ -732,6 +746,10 @@ datum/mind
 						special_role = "traitor"
 						current << "<B>\red You are a traitor!</B>"
 						log_admin("[key_name_admin(usr)] has traitor'ed [current].")
+						if(isAI(current))
+							var/mob/living/silicon/ai/A = current
+							call(/datum/game_mode/proc/add_law_zero)(A)
+							A.show_laws()
 
 				if("autoobjectives")
 					ticker.mode.forge_traitor_objectives(src)
@@ -1070,6 +1088,37 @@ datum/mind
 		fail |= !ticker.mode.equip_revolutionary(current)
 
 
+	// check whether this mind's mob has been brigged for the given duration
+	// have to call this periodically for the duration to work properly
+	proc/is_brigged(duration)
+		var/turf/T = current.loc
+		if(!istype(T))
+			brigged_since = -1
+			return 0
+
+		var/is_currently_brigged = 0
+
+		if(istype(T.loc,/area/security/brig))
+			is_currently_brigged = 1
+			for(var/obj/item/weapon/card/id/card in current)
+				is_currently_brigged = 0
+				break // if they still have ID they're not brigged
+			for(var/obj/item/device/pda/P in current)
+				if(P.id)
+					is_currently_brigged = 0
+					break // if they still have ID they're not brigged
+
+		if(!is_currently_brigged)
+			brigged_since = -1
+			return 0
+
+		if(brigged_since == -1)
+			brigged_since = world.time
+
+		return (duration <= world.time - brigged_since)
+
+
+
 
 //Initialisation procs
 /mob/living/proc/mind_initialize()
@@ -1153,17 +1202,17 @@ datum/mind
 	..()
 	mind.assigned_role = "Shade"
 
-/mob/living/simple_animal/constructbuilder/mind_initialize()
+/mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
 	mind.special_role = "Cultist"
 
-/mob/living/simple_animal/constructwraith/mind_initialize()
+/mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
 	mind.special_role = "Cultist"
 
-/mob/living/simple_animal/constructarmoured/mind_initialize()
+/mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"

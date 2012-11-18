@@ -8,6 +8,11 @@ client
 		//set src in world
 
 
+		if(!usr.client || !usr.client.holder)
+			usr << "\red You need to be an administrator to access this."
+			return
+
+
 		var/title = ""
 		var/body = ""
 
@@ -244,6 +249,7 @@ client
 			body += "<option value='byond://?src=\ref[src];godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
 			body += "<option value='byond://?src=\ref[src];direct_control=\ref[D]'>Assume Direct Control</option>"
+			body += "<option value='byond://?src=\ref[src];make_skeleton=\ref[D]'>Make 2spooky</option>"
 			body += "<option value='byond://?src=\ref[src];drop_everything=\ref[D]'>Drop Everything</option>"
 			body += "<option value='byond://?src=\ref[src];regenerateicons=\ref[D]'>Regenerate Icons</option>"
 			if(ishuman(D))
@@ -402,6 +408,7 @@ client
 		else if (href_list["rename"])
 			var/mob/M = locate(href_list["rename"])
 			if(!istype(M))	return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null),1,MAX_NAME_LEN)
 			if( !new_name || !M )	return
 
@@ -467,6 +474,7 @@ client
 				return
 			if(!src.holder)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			src.give_spell(MOB)
 			href_list["datumrefresh"] = href_list["give_spell"]
 		else if (href_list["ninja"])
@@ -479,6 +487,7 @@ client
 				return
 			if(!src.holder)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			src.cmd_admin_ninjafy(MOB)
 			href_list["datumrefresh"] = href_list["ninja"]
 		else if (href_list["godmode"])
@@ -491,6 +500,7 @@ client
 				return
 			if(!src.holder)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			src.cmd_admin_godmode(MOB)
 			href_list["datumrefresh"] = href_list["godmode"]
 		else if (href_list["gib"])
@@ -503,6 +513,7 @@ client
 				return
 			if(!src.holder)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			src.cmd_admin_gib(MOB)
 
 		else if (href_list["build_mode"])
@@ -515,6 +526,7 @@ client
 				return
 			if(!src.holder)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			togglebuildmode(MOB)
 			href_list["datumrefresh"] = href_list["build_mode"]
 
@@ -530,6 +542,7 @@ client
 				return
 
 			if(usr.client)
+				if(!admin_rank_check(src.holder.level, 3)) return
 				usr.client.cmd_admin_drop_everything(MOB)
 
 		else if (href_list["direct_control"])
@@ -544,12 +557,30 @@ client
 				return
 
 			if(usr.client)
+				if(!admin_rank_check(src.holder.level, 3)) return
 				usr.client.cmd_assume_direct_control(MOB)
+
+		else if (href_list["make_skeleton"])
+			if(!href_list["make_skeleton"])
+				return
+			var/mob/MOB = locate(href_list["make_skeleton"])
+			if(!MOB)
+				return
+			if(!ismob(MOB))
+				return
+			if(!src.holder)
+				return
+
+			if(ishuman(MOB))
+				if(!admin_rank_check(src.holder.level, 3)) return
+				var/mob/living/carbon/human/HUMANMOB = MOB
+				HUMANMOB.makeSkeleton()
 
 		else if (href_list["delall"])
 			if(!href_list["delall"])
 				return
 			var/atom/A = locate(href_list["delall"])
+			if(!admin_rank_check(src.holder.level, 3)) return
 			if(!A)
 				return
 			if(!isobj(A))
@@ -596,6 +627,7 @@ client
 				return
 			if(!isobj(A) && !ismob(A) && !isturf(A))
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			src.cmd_admin_explosion(A)
 			href_list["datumrefresh"] = href_list["explode"]
 		else if (href_list["emp"])
@@ -606,6 +638,7 @@ client
 				return
 			if(!isobj(A) && !ismob(A) && !isturf(A))
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			src.cmd_admin_emp(A)
 			href_list["datumrefresh"] = href_list["emp"]
 		else if (href_list["mark_object"])
@@ -616,9 +649,11 @@ client
 				return
 			if(!src.holder)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			src.holder.marked_datum = D
 			href_list["datumrefresh"] = href_list["mark_object"]
 		else if (href_list["rotatedatum"])
+			if(!admin_rank_check(src.holder.level, 3)) return
 			if(!href_list["rotatedir"])
 				return
 			var/atom/A = locate(href_list["rotatedatum"])
@@ -639,6 +674,7 @@ client
 			var/mob/M = locate(href_list["makemonkey"])
 			if(!M)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			if(!ishuman(M))
 				usr << "This can only be done to objects of type /mob/living/carbon/human"
 				return
@@ -656,6 +692,7 @@ client
 			var/mob/M = locate(href_list["makerobot"])
 			if(!M)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			if(!ishuman(M))
 				usr << "This can only be done to objects of type /mob/living/carbon/human"
 				return
@@ -673,6 +710,7 @@ client
 			var/mob/M = locate(href_list["makealien"])
 			if(!M)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			if(!ishuman(M))
 				usr << "This can only be done to objects of type /mob/living/carbon/human"
 				return
@@ -690,6 +728,7 @@ client
 			var/mob/M = locate(href_list["makemetroid"])
 			if(!M)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			if(!ishuman(M))
 				usr << "This can only be done to objects of type /mob/living/carbon/human"
 				return
@@ -707,6 +746,7 @@ client
 			var/mob/M = locate(href_list["makeai"])
 			if(!M)
 				return
+			if(!admin_rank_check(src.holder.level, 3)) return
 			if(!ishuman(M))
 				usr << "This can only be done to objects of type /mob/living/carbon/human"
 				return
@@ -722,6 +762,7 @@ client
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
 		else if (href_list["setmutantrace"])
 			var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
+			if(!admin_rank_check(src.holder.level, 3)) return
 			if(!istype(H))
 				usr << "This can only be done to objects of type /mob/living/carbon/human"
 				return
@@ -740,6 +781,7 @@ client
 				H.update_mutantrace()
 		else if (href_list["regenerateicons"])
 			var/mob/M = locate(href_list["regenerateicons"])
+			if(!admin_rank_check(src.holder.level, 3)) return
 			if(!istype(M))
 				usr << "This can only be done to objects of type /mob"
 				return
@@ -753,6 +795,8 @@ client
 
 			if(!isliving(M)) return
 			var/mob/living/L = M
+
+			if(!admin_rank_check(src.holder.level, 3)) return
 
 			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
 			if(Text == "brute")

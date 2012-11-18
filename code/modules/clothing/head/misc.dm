@@ -53,13 +53,11 @@
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
-	desc = "It's a very convincing replica."
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-
 
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
@@ -153,7 +151,7 @@
 	item_state = "bowler"
 	flags = FPRINT | TABLEPASS
 
-//stylish new hats
+//stylish bs12 hats
 
 /obj/item/clothing/head/bowlerhat
 	name = "bowler hat"
@@ -196,3 +194,12 @@
 	item_state = "fez"
 	desc = "You should wear a fez. Fezzes are cool."
 	flags = FPRINT|TABLEPASS
+
+//end bs12 hats
+
+/obj/item/clothing/head/witchwig
+	name = "witch costume wig"
+	desc = "Eeeee~heheheheheheh!"
+	icon_state = "witch"
+	item_state = "witch"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR

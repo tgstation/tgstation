@@ -1,12 +1,13 @@
+
 /proc/start_events()
 	//changed to a while(1) loop since they are more efficient.
 	//Moved the spawn in here to allow it to be called with advance proc call if it crashes.
 	//and also to stop spawn copying variables from the game ticker
 	spawn(3000)
 		while(1)
-//			if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
-//				spawn(1)
-//					dust_swarm("weak") //BS12 EDIT
+			/*if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
+				spawn(1)
+					dust_swarm("weak")*/
 			if (!event)
 				//CARN: checks to see if random events are enabled.
 				if(config.allow_random_events && prob(eventchance))
@@ -16,7 +17,7 @@
 					Holiday_Random_Event()
 			else
 				event = 0
-			sleep(1200)
+			sleep(2400)
 
 /proc/event()
 	event = 1
@@ -36,13 +37,13 @@
 				meteor_wave()
 				spawn_meteors()
 
-		if(2)
+		/*if(2)
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('sound/AI/granomalies.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 			spawn(rand(50, 300))
-				del(bh)
+				del(bh)*/
 		/*
 		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
@@ -77,13 +78,14 @@
 		if(6)
 			viral_outbreak()
 		if(7)
-			alien_infestation()
+			if(prob(10))
+				alien_infestation()
 		if(8)
 			prison_break()
 		if(9)
 			carp_migration()
-		if(10)
-			immovablerod()
+		/*if(10)
+			immovablerod()*/
 		if(11)
 			lightsout(1,2)
 		if(12)
@@ -270,11 +272,14 @@
 				vents += temp_vent
 
 	var/list/candidates = list() //List of candidate KEYs to control the new larvae. ~Carn
-	for(var/mob/dead/observer/G in player_list)
-		if(G.client.be_alien)
-			if(((G.client.inactivity/10)/60) <= 5)
-				if(!(G.mind && G.mind.current && G.mind.current != DEAD))
-					candidates += G.key
+	var/i = 0
+	while(candidates.len <= 0 && i < 5)
+		for(var/mob/dead/observer/G in player_list)
+			if(G.client.be_alien)
+				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
+					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+						candidates += G.key
+		i++
 
 	if(prob(33)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
@@ -302,22 +307,17 @@
 
 	sleep(100)
 */
+	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
+	sleep(600)
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(istype(H,/mob/living/carbon/human))
 			H.apply_effect((rand(15,75)),IRRADIATE,0)
 			if (prob(5))
 				H.apply_effect((rand(90,150)),IRRADIATE,0)
-			if (prob(25))
-				if (prob(75))
-					randmutb(H)
-					domutcheck(H,null,1)
-				else
-					randmutg(H)
-					domutcheck(H,null,1)
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
-	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
+	command_alert("Radiation levels are within standard parameters again.", "Anomaly Alert")
 	world << sound('sound/AI/radiation.ogg')
 
 
@@ -343,20 +343,16 @@
 			for (var/obj/machinery/power/apc/temp_apc in A)
 				temp_apc.overload_lighting()
 
-		for(var/area/A in areas)
 			for (var/obj/structure/closet/secure_closet/brig/temp_closet in A)
 				temp_closet.locked = 0
 				temp_closet.icon_state = temp_closet.icon_closed
 
-		for(var/area/A in areas)
 			for (var/obj/machinery/door/airlock/security/temp_airlock in A)
-				temp_airlock.prison_open()
+				spawn(0) temp_airlock.prison_open()
 
-		for(var/area/A in areas)
 			for (var/obj/machinery/door/airlock/glass_security/temp_glassairlock in A)
-				temp_glassairlock.prison_open()
+				spawn(0) temp_glassairlock.prison_open()
 
-		for(var/area/A in areas)
 			for (var/obj/machinery/door_timer/temp_timer in A)
 				temp_timer.releasetime = 1
 
@@ -368,7 +364,7 @@
 /proc/carp_migration() // -- Darem
 	for(var/obj/effect/landmark/C in landmarks_list)
 		if(C.name == "carpspawn")
-			new /mob/living/simple_animal/carp(C.loc)
+			new /mob/living/simple_animal/hostile/carp(C.loc)
 	//sleep(100)
 	spawn(rand(300, 600)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
@@ -433,7 +429,10 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 			var/list/pos_crew = list()
 			for(var/mob/living/carbon/human/pos in player_list)
 				pos_crew += pos.real_name
-			crew = pick(pos_crew)
+			if(pos_crew.len)
+				crew = pick(pos_crew)
+			else
+				crew = "Any Human"
 			switch(rand(1,14))
 				if(1)
 					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
@@ -472,10 +471,10 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 					M << "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED"
 					M.add_ion_law("YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
 				if(13)
-					M << "\red [crew] is [allergysev] to [allergy]. LAWS UPDATED"
-					M.add_ion_law("[crew] is [allergysev] to [allergy]. LAWS UPDATED")
+					M << "\red [crew] is [allergysev] to [allergy]...LAWS UPDATED"
+					M.add_ion_law("[crew] is [allergysev] to [allergy]")
 				if(14)
-					M << "\ref THE STATION IS [who2pref] [who2]"
+					M << "\red THE STATION IS [who2pref] [who2]...LAWS UPDATED"
 					M.add_ion_law("THE STATION IS [who2pref] [who2]")
 
 	if(botEmagChance)
@@ -525,5 +524,4 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		world << "Finished processing FIREDOORS. Processed: [firedoornum]"
 
 	world << "Ion Storm Main Done"
-
 	*/

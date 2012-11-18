@@ -127,6 +127,8 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["slotname"] << src.slot_name
 	F["lobby_music"] << src.lobby_music
 
+	F["organ_data"] << src.organ_data
+
 	return 1
 
 // loads the savefile corresponding to the mob's ckey
@@ -135,6 +137,7 @@ datum/preferences/proc/savefile_save(mob/user)
 // returns 0 if savefile did not exist
 
 datum/preferences/proc/savefile_load(mob/user)
+	if(user.client == null) return 0
 	if(IsGuestKey(user.key))	return 0
 
 	var/path = savefile_path(user)
@@ -258,6 +261,9 @@ datum/preferences/proc/savefile_load(mob/user)
 
 	if(isnull(metadata))
 		metadata = ""
+
+	F["organ_data"] >> src.organ_data
+	if(!src.organ_data) src.organ_data = list()
 
 	//NOTE: Conversion things go inside this if statement
 	//When updating the save file remember to add 1 to BOTH the savefile constants

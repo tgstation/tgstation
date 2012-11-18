@@ -34,7 +34,7 @@
 			if(R && R.cell)
 				if(mode == 1 && reagents.total_volume < 30) 	//Don't recharge reagents and drain power if the storage is full.
 					R.cell.use(charge_cost) 					//Take power from borg...
-					reagents.add_reagent("tricordrazine",5)		//And fill hypo with reagent.
+					reagents.add_reagent("doctorsdelight",5)		//And fill hypo with reagent.
 				if(mode == 2 && reagents.total_volume < 30)
 					R.cell.use(charge_cost)
 					reagents.add_reagent("inaprovaline", 5)
@@ -78,7 +78,7 @@
 		mode = 1
 		charge_tick = 0
 		reagents.clear_reagents()
-		user << "\blue Synthesizer is now producing 'Tricordrazine'."
+		user << "\blue Synthesizer is now producing 'Doctor's Delight'."
 		return
 
 /obj/item/weapon/reagent_containers/borghypo/examine()

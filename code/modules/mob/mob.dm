@@ -327,6 +327,31 @@ var/list/slot_equipment_priority = list( \
 	if (popup)
 		memory()
 
+/mob/proc/update_flavor_text()
+	set src in usr
+	if(usr != src)
+		usr << "No."
+	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
+
+	if(msg != null)
+		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+		msg = html_encode(msg)
+
+		flavor_text = msg
+
+/mob/proc/warn_flavor_changed()
+	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
+		src << "<h2 class='alert'>OOC Warning:</h2>"
+		src << "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>"
+
+/mob/proc/print_flavor_text()
+	if (flavor_text && flavor_text != "")
+		var/msg = dd_replacetext(flavor_text, "\n", " ")
+		if(lentext(msg) <= 40)
+			return "\blue [msg]"
+		else
+			return "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
+
 /*
 /mob/verb/help()
 	set name = "Help"
@@ -372,10 +397,7 @@ var/list/slot_equipment_priority = list( \
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
-	for(var/obj/screen/t in usr.client.screen)
-		if (t.loc == null)
-			//t = null
-			del(t)
+	client.screen.Cut()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
@@ -408,6 +430,7 @@ var/list/slot_equipment_priority = list( \
 							 'html/wrench-screwdriver.png',
 							 'html/spell-check.png',
 							 'html/burn-exclamation.png',
+							 'html/tg-notif.png',
 							 'html/chevron.png',
 							 'html/chevron-expand.png',
 							 'html/changelog.css',
@@ -537,9 +560,26 @@ var/list/slot_equipment_priority = list( \
 		var/t1 = text("window=[href_list["mach_close"]]")
 		machine = null
 		src << browse(null, t1)
+
+	if(href_list["flavor_more"])
+		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, dd_replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
+		onclose(usr, "[name]")
+	if(href_list["flavor_change"])
+		update_flavor_text()
 //	..()
 	return
 
+
+/mob/proc/pull_damage()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.health - H.halloss <= config.health_threshold_crit)
+			for(var/name in H.organs_by_name)
+				var/datum/organ/external/e = H.organs_by_name[name]
+				if((H.lying) && ((e.status & ORGAN_BROKEN && !(e.status & ORGAN_SPLINTED)) || e.status & ORGAN_BLEEDING) && (H.getBruteLoss() + H.getFireLoss() >= 100))
+					return 1
+					break
+		return 0
 
 /mob/MouseDrop(mob/M as mob)
 	..()
@@ -747,15 +787,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 			lying = 0
 		else
 			lying = 1
-	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) )
+	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		lying = 1
 		canmove = 0
 	else if( stunned )
 //		lying = 0
 		canmove = 0
 	else
-		lying = 0
-		canmove = 1
+		lying = !can_stand
+		canmove = has_limbs
 
 	if(lying)
 		density = 0
@@ -894,5 +934,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		return 1
 	return 0
 
-mob/proc/flash_weak_pain()
+/mob/proc/get_species()
+	return ""
+
+/mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)

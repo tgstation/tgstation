@@ -49,6 +49,11 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.stat || usr.restrained())
+		return
+
 	src.dir = turn(src.dir, 90)
 	handle_rotation()
 	return

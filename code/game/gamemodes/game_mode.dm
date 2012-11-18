@@ -324,6 +324,8 @@ Whitespace:Seperator;
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
 
+/datum/game_mode/proc/latespawn(var/mob)
+
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
 	if(player.preferences.be_special & role)
 		return 1

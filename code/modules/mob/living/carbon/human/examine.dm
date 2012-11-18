@@ -63,10 +63,17 @@
 
 	//uniform
 	if(w_uniform && !skipjumpsuit)
+		//Ties
+		var/tie_msg
+		if(istype(w_uniform,/obj/item/clothing/under))
+			var/obj/item/clothing/under/U = w_uniform
+			if(U.hastie)
+				tie_msg += " with \icon[U.hastie] \a [U.hastie]"
+
 		if(w_uniform.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name]!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][tie_msg]!</span>\n"
 		else
-			msg += "[t_He] [t_is] wearing \icon[w_uniform] \a [w_uniform].\n"
+			msg += "[t_He] [t_is] wearing \icon[w_uniform] \a [w_uniform][tie_msg].\n"
 
 	//head
 	if(head)
@@ -162,7 +169,7 @@
 
 	//ID
 	if(wear_id)
-		var/id
+		/*var/id
 		if(istype(wear_id, /obj/item/device/pda))
 			var/obj/item/device/pda/pda = wear_id
 			id = pda.owner
@@ -171,8 +178,8 @@
 			id = idcard.registered_name
 		if(id && (id != real_name) && (get_dist(src, usr) <= 1) && prob(10))
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_id] \a [wear_id] yet something doesn't seem right...</span>\n"
-		else
-			msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
+		else*/
+		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
 
 	//Jitters
 	if(is_jittery)
@@ -186,41 +193,57 @@
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and [t_has] suffered major bloodloss!</span>\n"
 
-	if(stat == DEAD || (status_flags & FAKEDEATH))
-		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
+	if(mSmallsize in mutations)
+		msg += "[t_He] [t_is] small halfling!\n"
 
-		if(!key)
-			var/foundghost = 0
-			if(mind)
-				for(var/mob/dead/observer/G in player_list)
-					if(G.mind == mind)
-						foundghost = 1
-						break
-			if(!foundghost)
-				msg += " and [t_his] soul has departed"
-		msg += "...</span>\n"
+	var/distance = get_dist(usr,src)
+	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
+		distance = 1
+	if (src.stat == 1 || stat == 2)
+		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
+		if((stat == 2 || src.health < config.health_threshold_crit) && distance <= 3)
+			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
+		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
+			for(var/mob/O in viewers(usr.loc, null))
+				O.show_message("[usr] checks [src]'s pulse.", 1)
+			spawn(15)
+				usr << "\blue [t_He] has a pulse!"
 
-	else
-		if(stat == UNCONSCIOUS)
-			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
-		else if(getBrainLoss() >= 60)
-			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
-
-		if(!key)
-			msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
-		else if(!client)
-			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
+	if (src.stat == 2 || (status_flags & FAKEDEATH))
+		if(distance <= 1)
+			if(istype(usr, /mob/living/carbon/human) && usr.stat == 0)
+				for(var/mob/O in viewers(usr.loc, null))
+					O.show_message("[usr] checks [src]'s pulse.", 1)
+			spawn(15)
+				var/foundghost = 0
+				if(src.client)
+					foundghost = 1
+				if(!foundghost)
+					usr << "<span class='deadsay'>[t_He] has no pulse and [t_his] soul has departed...</span>"
+				else
+					usr << "<span class='deadsay'>[t_He] has no pulse...</span>"
 
 	msg += "<span class='warning'>"
 
 	if(nutrition < 100)
 		msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= 500)
-		if(usr.nutrition < 100)
+		/*if(usr.nutrition < 100)
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
-		else
-			msg += "[t_He] [t_is] quite chubby.\n"
+		else*/
+		msg += "[t_He] [t_is] quite chubby.\n"
+
 	msg += "</span>"
+
+	if(stat == UNCONSCIOUS)
+		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
+	else if(getBrainLoss() >= 60)
+		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
+
+	if(!key && brain_op_stage != 4 && stat != DEAD)
+		msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely</span>\n"
+	else if(!client && brain_op_stage != 4 && stat != DEAD)
+		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
@@ -253,10 +276,16 @@
 			else if(temp.wounds.len > 0)
 				var/list/wound_descriptors = list()
 				for(var/datum/wound/W in temp.wounds)
-					if(W.desc in wound_descriptors)
-						wound_descriptors[W.desc] += W.amount
+					if(W.internal && !temp.open) continue // can't see internal wounds
+					var/this_wound_desc = W.desc
+					if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
+					else if(W.bandaged) this_wound_desc = "bandaged [this_wound_desc]"
+					if(W.germ_level > 1000) this_wound_desc = "badly infected [this_wound_desc]"
+					else if(W.germ_level > 100) this_wound_desc = "lightly infected [this_wound_desc]"
+					if(this_wound_desc in wound_descriptors)
+						wound_descriptors[this_wound_desc] += W.amount
 						continue
-					wound_descriptors[W.desc] = W.amount
+					wound_descriptors[this_wound_desc] = W.amount
 				var/list/flavor_text = list()
 				var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
 				"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")
@@ -384,6 +413,8 @@
 
 			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
 			//msg += "\[Set Hostile Identification\]\n"
+
+	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span>"
 

@@ -79,7 +79,7 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 //Syndicate sub-machine guns.
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
 
-/obj/item/weapon/gun/projectile/automatic/c20r/New()
+/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/New()
 	for(var/ammo in loaded)
 		if(prob(95)) //95% chance
 			loaded -= ammo
@@ -95,7 +95,7 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 //Lasers
 /obj/item/weapon/gun/energy/laser/practice/sc_laser
 	name = "Old laser"
-	desc = "A once potent weapon, years of dust have collected in the chamber and lens of this weapon, weakening the beam signifigantly."
+	desc = "A once potent weapon, years of dust have collected in the chamber and lens of this weapon, weakening the beam significantly."
 	clumsy_check = 0
 
 /*

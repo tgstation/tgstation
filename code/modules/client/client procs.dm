@@ -87,11 +87,14 @@
 	///////////
 	//CONNECT//
 	///////////
-/client/New()
-	//Connection-Type and client byond_version checking
-	if( connection != "seeker" || (byond_version < MIN_CLIENT_VERSION))	//Out of date or wrong connection type. Update your client!!
-		del(src)
-		return
+/client/New(TopicData)
+	TopicData = null							//Prevent calls to client.Topic from connect
+
+	if(connection != "seeker")					//Invalid connection type.
+		return null
+	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
+		return null
+
 
 	if(IsGuestKey(key))
 		alert(src,"Baystation12 doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
@@ -103,8 +106,15 @@
 		host = key
 		world.update_status()
 
-	//calls mob.Login()
-	..()
+	//Admin Authorisation
+	var/datum/admins/Admin_Obj = admins[ckey]
+	if(istype(Admin_Obj))
+		admin_list += src
+		holder = Admin_Obj
+		holder.owner = src
+		holder.state = null
+
+	. = ..()	//calls mob.Login()
 
 	//makejson()
 
@@ -113,14 +123,6 @@
 		src << "<h2 class='alert'>A custom event is taking place. OOC Info:</h2>"
 		src << "<span class='alert'>[html_encode(custom_event_msg)]</span>"
 		src << "<br>"
-
-	//Admin Authorisation
-	var/datum/admins/Admin_Obj = admins[ckey]
-	if(istype(Admin_Obj))
-		admin_list += src
-		holder = Admin_Obj
-		holder.owner = src
-		holder.state = null
 
 	..()	//calls mob.Login()
 

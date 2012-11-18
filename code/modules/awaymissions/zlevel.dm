@@ -36,7 +36,7 @@ proc/createRandomZlevel()
 		if (!name)
 			continue
 
-		potentialRandomZlevels.Add(t)
+		potentialRandomZlevels.Add(name)
 
 
 	if(potentialRandomZlevels.len)

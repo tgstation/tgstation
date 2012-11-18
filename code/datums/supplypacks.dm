@@ -8,7 +8,7 @@
 /datum/supply_packs
 	var/name = null
 	var/list/contains = list()
-	var/manifest
+	var/manifest = ""
 	var/amount = null
 	var/cost = null
 	var/containertype = null
@@ -18,7 +18,7 @@
 	var/contraband = 0
 
 /datum/supply_packs/New()
-	manifest = "<ul>"
+	manifest += "<ul>"
 	for(var/path in contains)
 		if(!path)	continue
 		var/atom/movable/AM = new path()
@@ -272,16 +272,25 @@
 
 /datum/supply_packs/virus
 	name = "Virus crate"
-	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/flu_virion,
+	contains = list(/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random,
+					/obj/item/weapon/virusdish/random
+/*	VIRUS2 4LIFE
+					/obj/item/weapon/reagent_containers/glass/bottle/flu_virion,
 					/obj/item/weapon/reagent_containers/glass/bottle/cold,
 					/obj/item/weapon/reagent_containers/glass/bottle/fake_gbs,
 					/obj/item/weapon/reagent_containers/glass/bottle/magnitis,
-//					/obj/item/weapon/reagent_containers/glass/bottle/wizarditis, worse than GBS if anything
-//					/obj/item/weapon/reagent_containers/glass/bottle/gbs, No. Just no.
+					/obj/item/weapon/reagent_containers/glass/bottle/wizarditis, worse than GBS if anything
+					/obj/item/weapon/reagent_containers/glass/bottle/gbs, No. Just no.
 					/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/weapon/reagent_containers/glass/bottle/brainrot,
 					/obj/item/weapon/storage/syringes,
-					/obj/item/weapon/storage/beakerbox)
+					/obj/item/weapon/storage/beakerbox
+*/
+					)
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "Virus crate"
@@ -575,12 +584,8 @@
 					/obj/item/clothing/head/collectable/thunderdome,
 					/obj/item/clothing/head/collectable/swat,
 					/obj/item/clothing/head/collectable/metroid,
-					/obj/item/clothing/head/collectable/metroid,
-					/obj/item/clothing/head/collectable/police,
 					/obj/item/clothing/head/collectable/police,
 					/obj/item/clothing/head/collectable/slime,
-					/obj/item/clothing/head/collectable/slime,
-					/obj/item/clothing/head/collectable/xenom,
 					/obj/item/clothing/head/collectable/xenom,
 					/obj/item/clothing/head/collectable/petehat)
 	name = "Collectable hat crate!"
@@ -589,10 +594,7 @@
 	containername = "Collectable hats crate! Brought to you by Bass.inc!"
 
 /datum/supply_packs/randomised/New()
-	var/list/tempContains = list()
-	for(var/i = 0,i<num_contained,i++)
-		tempContains += pick(contains)
-	contains = tempContains
+	manifest += "Contains any [num_contained] of:"
 	..()
 
 

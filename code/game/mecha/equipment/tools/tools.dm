@@ -393,8 +393,9 @@
 			return
 		var/area/thearea = pick(theareas)
 		var/list/L = list()
+		var/turf/pos = get_turf(src)
 		for(var/turf/T in get_area_turfs(thearea.type))
-			if(!T.density)
+			if(!T.density && pos.z == T.z)
 				var/clear = 1
 				for(var/obj/O in T)
 					if(O.density)
@@ -746,6 +747,8 @@
 		var/charge = 0
 		if(pow_chan)
 			charge = 1000 //making magic
+		else
+			return chassis.dyngetcharge()
 		return charge
 
 	proc/get_power_channel(var/area/A)

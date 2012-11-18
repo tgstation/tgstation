@@ -68,13 +68,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(!istype(usr, /mob/living/carbon/human))
 			usr << "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans."
 			return 0
-		if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
+		if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(user:wear_suit, /obj/item/clothing/suit/space/rig/wizard))
 			usr << "I don't feel strong enough without my robe."
 			return 0
 		if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
 			usr << "I don't feel strong enough without my sandals."
 			return 0
-		if(!istype(usr:head, /obj/item/clothing/head/wizard))
+		if(!istype(usr:head, /obj/item/clothing/head/wizard) && !istype(user:head, /obj/item/clothing/head/helmet/space/rig/wizard))
 			usr << "I don't feel strong enough without my hat."
 			return 0
 

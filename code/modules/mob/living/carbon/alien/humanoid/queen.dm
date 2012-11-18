@@ -6,7 +6,7 @@
 	health = 250
 	icon_state = "alienq_s"
 	nopush = 1
-	heal_rate = 5
+	heal_rate = 10 // Let's regenerate more than our average underling.
 	plasma_rate = 20
 
 

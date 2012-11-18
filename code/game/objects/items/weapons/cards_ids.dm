@@ -27,6 +27,18 @@
 /*
  * ID CARDS
  */
+/obj/item/weapon/card/id/examine()
+	..()
+	read()
+
+/obj/item/weapon/card/id/New()
+	..()
+	spawn(30)
+	if(istype(loc, /mob/living/carbon/human))
+		blood_type = loc:dna:b_type
+		dna_hash = loc:dna:unique_enzymes
+		fingerprint_hash = md5(loc:dna:uni_identity)
+
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
@@ -48,6 +60,9 @@
 	set src in usr
 
 	usr << text("\icon[] []: The current assignment on the card is [].", src, src.name, src.assignment)
+	usr << "The blood type on the card is [blood_type]."
+	usr << "The DNA hash on the card is [dna_hash]."
+	usr << "The fingerprint hash on the card is [fingerprint_hash]."
 	return
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)

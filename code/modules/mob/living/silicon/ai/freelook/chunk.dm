@@ -15,10 +15,15 @@
 	var/visible = 0
 	var/changed = 0
 	var/updating = 0
+	var/x = 0
+	var/y = 0
+	var/z = 0
 
 // Add an AI eye to the chunk, then update if changed.
 
 /datum/camerachunk/proc/add(mob/aiEye/ai)
+	if(!ai.ai)
+		return
 	ai.visibleCameraChunks += src
 	if(ai.ai.client)
 		ai.ai.client.images += obscured
@@ -30,6 +35,8 @@
 // Remove an AI eye from the chunk, then update if changed.
 
 /datum/camerachunk/proc/remove(mob/aiEye/ai)
+	if(!ai.ai)
+		return
 	ai.visibleCameraChunks -= src
 	if(ai.ai.client)
 		ai.ai.client.images -= obscured
@@ -65,8 +72,17 @@
 
 	var/list/newVisibleTurfs = list()
 
-	for(var/obj/machinery/camera/c in cameras)
+	for(var/camera in cameras)
+		var/obj/machinery/camera/c = camera
+
+		if(!c)
+			continue
+
 		if(!c.can_use())
+			continue
+
+		var/turf/point = locate(src.x + 8, src.y + 8, src.z)
+		if(get_dist(point, c) > 24)
 			continue
 
 		for(var/turf/t in c.can_see())
@@ -81,13 +97,14 @@
 	visibleTurfs = newVisibleTurfs
 	obscuredTurfs = turfs - newVisibleTurfs
 
-
 	for(var/turf in visAdded)
 		var/turf/t = turf
 		if(t.obscured)
 			obscured -= t.obscured
 			for(var/eye in seenby)
 				var/mob/aiEye/m = eye
+				if(!m || !m.ai)
+					continue
 				if(m.ai.client)
 					m.ai.client.images -= t.obscured
 
@@ -100,8 +117,9 @@
 			obscured += t.obscured
 			for(var/eye in seenby)
 				var/mob/aiEye/m = eye
-				if(!m)
+				if(!m || !m.ai)
 					seenby -= m
+					continue
 				if(m.ai.client)
 					m.ai.client.images += t.obscured
 
@@ -113,17 +131,23 @@
 	x &= ~0xf
 	y &= ~0xf
 
+	src.x = x
+	src.y = y
+	src.z = z
+
 	for(var/obj/machinery/camera/c in range(16, locate(x + 8, y + 8, z)))
 		if(c.can_use())
 			cameras += c
 
 	for(var/turf/t in range(10, locate(x + 8, y + 8, z)))
-
 		if(t.x >= x && t.y >= y && t.x < x + 16 && t.y < y + 16)
 			turfs += t
 
 	for(var/camera in cameras)
 		var/obj/machinery/camera/c = camera
+		if(!c)
+			continue
+
 		if(!c.can_use())
 			continue
 

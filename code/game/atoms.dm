@@ -9,6 +9,7 @@
 	var/last_bumped = 0
 	var/pass_flags = 0
 	var/throwpass = 0
+	var/germ_level = 0 // The higher the germ level, the more germ on the atom.
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -121,7 +122,7 @@
  * Recursevly searches all atom contens (including contents contents and so on).
  *
  * ARGS: path - search atom contents for atoms of this type
- *       list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
+ *	   list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
  *
  * RETURNS: list of found atoms
  */
@@ -335,6 +336,7 @@ its easier to just keep the beam vertical.
 
 /atom/proc/add_fingerprint(mob/living/M as mob)
 	if(isnull(M)) return
+	if(isAI(M)) return
 	if(isnull(M.key)) return
 	if (!( src.flags ) & FPRINT)
 		return
@@ -344,6 +346,12 @@ its easier to just keep the beam vertical.
 			fingerprintshidden = list()
 		//Fibers~
 		add_fibers(M)
+		//He has no prints!
+		if (mFingerprints in M.mutations)
+			if(fingerprintslast != M.key)
+				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
+				fingerprintslast = M.key
+			return 0
 		//Now, lets get to the dirty work.
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
@@ -412,8 +420,8 @@ its easier to just keep the beam vertical.
 		A.fingerprints = list()
 	if(!istype(A.fingerprintshidden,/list))
 		A.fingerprintshidden = list()
-	A.fingerprints |= fingerprints            //detective
-	A.fingerprintshidden |= fingerprintshidden    //admin
+	A.fingerprints |= fingerprints			//detective
+	A.fingerprintshidden |= fingerprintshidden	//admin
 	A.fingerprintslast = fingerprintslast
 
 
@@ -548,6 +556,7 @@ its easier to just keep the beam vertical.
 
 /atom/proc/clean_blood()
 	clean_prints()
+	src.germ_level = 0
 	if(istype(blood_DNA, /list))
 		del(blood_DNA)
 		return 1
@@ -1037,6 +1046,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			// ------- CLICKED OBJECT EXISTS IN GAME WORLD, DISTANCE FROM PERSON TO OBJECT IS 1 SQUARE OR THEY'RE ON THE SAME SQUARE -------
 
 			var/direct = get_dir(usr, src)
+			var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( usr.loc )
 			var/ok = 0
 			if ( (direct - 1) & direct)
 
@@ -1068,12 +1078,35 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 					var/check_1 = 0
 					var/check_2 = 0
-					check_1 = CanReachThrough(get_turf(usr), Step_1, src) && CanReachThrough(Step_1, get_turf(src), src)
+					if(step_to(D, Step_1))
+						check_1 = 1
+						for(var/obj/border_obstacle in Step_1)
+							if(border_obstacle.flags & ON_BORDER)
+								if(!border_obstacle.CheckExit(D, src))
+									check_1 = 0
+									// ------- YOU TRIED TO CLICK ON AN ITEM THROUGH A WINDOW (OR SIMILAR THING THAT LIMITS ON BORDERS) ON ONE OF THE DIRECITON TILES -------
+						for(var/obj/border_obstacle in get_turf(src))
+							if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
+								if(!border_obstacle.CanPass(D, D.loc, 1, 0))
+									// ------- YOU TRIED TO CLICK ON AN ITEM THROUGH A WINDOW (OR SIMILAR THING THAT LIMITS ON BORDERS) ON THE TILE YOU'RE ON -------
+									check_1 = 0
 
-					check_2 = CanReachThrough(get_turf(usr), Step_2, src) && CanReachThrough(Step_2, get_turf(src), src)
+					D.loc = usr.loc
+					if(step_to(D, Step_2))
+						check_2 = 1
 
-					ok = (check_1 || check_2)
+						for(var/obj/border_obstacle in Step_2)
+							if(border_obstacle.flags & ON_BORDER)
+								if(!border_obstacle.CheckExit(D, src))
+									check_2 = 0
+						for(var/obj/border_obstacle in get_turf(src))
+							if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
+								if(!border_obstacle.CanPass(D, D.loc, 1, 0))
+									check_2 = 0
 
+
+					if(check_1 || check_2)
+						ok = 1
 						// ------- YOU CAN REACH THE ITEM THROUGH AT LEAST ONE OF THE TWO DIRECTIONS. GOOD. -------
 
 					/*
@@ -1086,12 +1119,34 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					*/
 			else
 				// ------- OBJECT IS ON A CARDINAL TILE (NORTH, SOUTH, EAST OR WEST OR THE TILE YOU'RE ON) -------
-				ok = CanReachThrough(get_turf(usr), get_turf(src), src)
+				if(loc == usr.loc)
+					ok = 1
+					// ------- OBJECT IS ON THE SAME TILE AS YOU -------
+				else
+					ok = 1
+
+					//Now, check objects to block exit that are on the border
+					for(var/obj/border_obstacle in usr.loc)
+						if(border_obstacle.flags & ON_BORDER)
+							if(!border_obstacle.CheckExit(D, src))
+								ok = 0
+
+					//Next, check objects to block entry that are on the border
+					for(var/obj/border_obstacle in get_turf(src))
+						if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
+							if(!border_obstacle.CanPass(D, D.loc, 1, 0))
+								ok = 0
 				/*
 					See the previous More info, for... more info...
 				*/
 
-			//del(D)			// Garbage Collect Dummy			D.loc = null			D = null			// ------- DUMMY OBJECT'S SERVED IT'S PURPOSE, IT'S REWARDED WITH A SWIFT DELETE -------			if (!( ok ))
+			//del(D)
+			// Garbage Collect Dummy
+			D.loc = null
+			D = null
+
+			// ------- DUMMY OBJECT'S SERVED IT'S PURPOSE, IT'S REWARDED WITH A SWIFT DELETE -------
+			if (!( ok ))
 				// ------- TESTS ABOVE DETERMINED YOU CANNOT REACH THE TILE -------
 				return 0
 
@@ -1207,43 +1262,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 				usr.next_move = world.time + 6
 	return
-////////////////////////////////////////
-///IMPORTANT: CACHE FOR DUMMY OBJECTS///
-//Used to cut down on stupid deletions//
-////////////////////////////////////////
-var/list/DummyCache = list()
-
-/proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
-
-	var/obj/item/weapon/dummy/D = locate() in DummyCache
-	if(!D)
-		D = new /obj/item/weapon/dummy( srcturf )
-	else
-		DummyCache.Remove(D)
-		D.loc = srcturf
-
-	if(targetturf.density && targetturf != get_turf(target))
-		return 0
-
-	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle in srcturf)
-		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CheckExit(D, targetturf))
-				D.loc = null
-				DummyCache.Add(D)
-				return 0
-
-	//Next, check objects to block entry that are on the border
-	for(var/obj/border_obstacle in targetturf)
-		if((border_obstacle.flags & ON_BORDER) && (target != border_obstacle))
-			if(!border_obstacle.CanPass(D, srcturf, 1, 0))
-				D.loc = null
-				DummyCache.Add(D)
-				return 0
-
-	D.loc = null
-	DummyCache.Add(D)
-	return 1
 
 /atom/proc/ShiftClick(var/mob/M as mob)
 
@@ -1355,4 +1373,17 @@ var/list/DummyCache = list()
 		return 0
 
 /atom/proc/checkpass(passflag)
-	return pass_flags&passflag/*/client/verb/check_dummy()	set name = "List Dummies"	set category = "Debug"	var/list/dummies = list()	for(var/obj/item/weapon/dummy/D in world)		usr << "[D] - [D.x], [D.y], [D.z] - [D.loc]"		dummies += D	usr << "[dummies.len] found!"*/
+	return pass_flags&passflag
+
+/*
+/client/verb/check_dummy()
+	set name = "List Dummies"
+	set category = "Debug"
+
+	var/list/dummies = list()
+	for(var/obj/item/weapon/dummy/D in world)
+		usr << "[D] - [D.x], [D.y], [D.z] - [D.loc]"
+		dummies += D
+	usr << "[dummies.len] found!"
+*/
+

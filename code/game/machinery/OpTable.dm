@@ -52,26 +52,20 @@
 /obj/machinery/optable/attack_paw(mob/user as mob)
 	if ((HULK in usr.mutations))
 		usr << text("\blue You destroy the operating table.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("\red [usr] destroys the operating table.")
+		visible_message("\red [usr] destroys the operating table!")
 		src.density = 0
 		del(src)
 	if (!( locate(/obj/machinery/optable, user.loc) ))
 		step(user, get_dir(user, src))
 		if (user.loc == src.loc)
 			user.layer = TURF_LAYER
-			for(var/mob/M in viewers(user, null))
-				M.show_message("The monkey hides under the table!", 1)
-				//Foreach goto(69)
+			visible_message("The monkey hides under the table!")
 	return
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
 	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 		usr << text("\blue You destroy the table.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("\red [usr] destroys the table.")
+		visible_message("\red [usr] destroys the operating table!")
 		src.density = 0
 		del(src)
 	return
@@ -118,8 +112,7 @@
 				M.client.eye = src
 			M.resting = 1
 			M.loc = src.loc
-			for (var/mob/C in viewers(src))
-				C.show_message("\red [M] has been laid on the operating table by [user].", 3)
+			visible_message("\red [M] has been laid on the operating table by [user].", 3)
 			for(var/obj/O in src)
 				O.loc = src.loc
 			src.add_fingerprint(user)

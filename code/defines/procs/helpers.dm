@@ -327,8 +327,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(isAI(src))
 				var/mob/living/silicon/ai/A = src
 				oldname = null//don't bother with the records update crap
-				world << "<b>[newname] is the AI!</b>"
-				world << sound('sound/AI/newAI.ogg')
+				//world << "<b>[newname] is the AI!</b>"
+				//world << sound('sound/AI/newAI.ogg')
 				// Set eyeobj name
 				if(A.eyeobj)
 					A.eyeobj.name = "[newname] (AI Eye)"
@@ -1352,6 +1352,15 @@ proc/is_hot(obj/item/W as obj)
 		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
 		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
 		istype(W, /obj/item/weapon/twohanded/fireaxe) \
+	)
+/proc/is_surgery_tool(obj/item/W as obj)
+	return (	\
+	istype(W, /obj/item/weapon/scalpel)			||	\
+	istype(W, /obj/item/weapon/hemostat)		||	\
+	istype(W, /obj/item/weapon/retractor)		||	\
+	istype(W, /obj/item/weapon/cautery)			||	\
+	istype(W, /obj/item/weapon/bonegel)			||	\
+	istype(W, /obj/item/weapon/bonesetter)
 	)
 
 /proc/reverse_direction(var/dir)

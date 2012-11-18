@@ -22,7 +22,7 @@
 		name = "Popcorn"
 		icon_state = "popcorn"
 	sosjerky
-		name = "Sosjerky"
+		name = "Scaredy's Private Reserve Beef Jerky"
 		icon_state = "sosjerky"
 	syndi_cakes
 		name = "Syndi cakes"

@@ -2,7 +2,7 @@
 	density = 1
 	layer = 4.0
 	animate_movement = 2
-	flags = NOREACT
+//	flags = NOREACT
 	var/datum/mind/mind
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
@@ -14,9 +14,6 @@
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
-	var/obj/screen/mach = null
-	var/obj/screen/sleep = null
-	var/obj/screen/rest = null
 	var/obj/screen/pullin = null
 	var/obj/screen/internals = null
 	var/obj/screen/oxygen = null
@@ -63,9 +60,12 @@
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
 	var/stuttering = null	//Carbon
-	var/slurring = null
+	var/slurring = null		//Carbon
 	var/real_name = null
 //	var/original_name = null //Original name is only used in ghost chat! Depracated, now used bb
+	var/flavor_text = ""
+	var/med_record = ""
+	var/sec_record = ""
 	var/blinded = null
 	var/bhunger = 0			//Carbon
 	var/ajourn = 0
@@ -124,7 +124,7 @@
 
 	var/seer = 0 //for cult//Carbon, probably Human
 
-	var/obj/hud/hud_used = null
+	var/datum/hud/hud_used = null
 
 	//var/list/organs = list(  ) //moved to human.
 	var/list/grabbed_by = list(  )
@@ -224,3 +224,8 @@
 	var/tajaran_talk_understand = 0
 	var/soghun_talk_understand = 0
 	var/skrell_talk_understand = 0
+
+	var/has_limbs = 1 //Whether this mob have any limbs he can move with
+	var/can_stand = 1 //Whether this mob have ability to stand
+
+	var/immune_to_ssd = 0

@@ -6,6 +6,7 @@
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 	var/totalPlayers = 0		 //Player counts for the Lobby tab
 	var/totalPlayersReady = 0
+	universal_speak = 1
 
 	invisibility = 101
 
@@ -53,7 +54,7 @@
 				var/isadmin = 0
 				if(src.client && src.client.holder)
 					isadmin = 1
-				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\")")
+				var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_poll_question WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM erro_poll_vote WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM erro_poll_textreply WHERE ckey = \"[ckey]\")")
 				query.Execute()
 				var/newpoll = 0
 				while(query.NextRow())
@@ -83,24 +84,33 @@
 				break
 
 		//shh ;)
-		var/music = ticker.login_music
-		if(ckey == "cajoes")
-			music = 'sound/music/dangerzone.ogg'
-		else if(ckey == "duntada")
-			music = 'sound/music/you_are_likely_to_be_eaten.ogg'
-		else if(ckey == "misterbook")
-			music = 'sound/music/dinosaur.ogg'
-		else if(ckey == "chinsky")
-			music = 'sound/music/soviet_anthem.ogg'
-		else if(ckey == "abi79")
-			music = 'sound/music/spinmeround.ogg'
-		else if(ckey == "mloc")
-			music = 'sound/music/cantina1_short.ogg'
-		else if(ckey == "applemaster")
-			music = 'sound/music/elektronik_supersonik.ogg'
-		else if(ckey == "wrongnumber")
-			music = 'sound/music/greenthumb.ogg'
-		src << sound(music, repeat = 0, wait = 0, volume = 85, channel = 1)	//MAD JAMZ
+		switch(src.key)
+			if("caelaislinn")
+				src << sound('sound/music/drive_me_closer.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("daneesh")
+				src << sound('sound/music/ill_make_a_man_out_of_you.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("doughnuts")
+				src << sound('sound/music/ultimate_showdown.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("themij")
+				src << sound('sound/music/pegasus.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("searif")
+				src << sound('sound/music/pegasus.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("danny220")
+				src << sound('sound/music/dirty_hands.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("sparklysheep")
+				src << sound('sound/music/dirty_hands.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("pobiega")
+				src << sound('sound/music/the_gabber_robots.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("chinsky")
+				src << sound('sound/music/cotton_eye_joe.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("russkisam")
+				src << sound('sound/music/elektronik_supersonik.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("duntadaman")
+				src << sound('sound/music/spinmeround.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			if("misterbook")
+				src << sound('sound/music/down_with_the_sickness.ogg', repeat = 0, wait = 0, volume = 85, channel = 1)
+			else
+				src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
 
 	proc/Stopmusic()
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
@@ -137,24 +147,7 @@
 			return 1
 
 		if(href_list["ready"])
-			var/num_old_slots = GetAvailableAlienPlayerSlots()
-			var/new_slots = num_old_slots
-			if(!ready)
-				if(num_old_slots >= 1 || preferences.species == "Human")
-					ready = 1
-					new_slots = GetAvailableAlienPlayerSlots()
-				else
-					src << "\red Unable to declare ready. Too many players have already elected to play as aliens."
-			else
-				ready = 0
-				new_slots = GetAvailableAlienPlayerSlots()
-
-			if(num_old_slots < 1 && new_slots >= 1)
-				for(var/mob/new_player/N in world)
-					N << "\blue A new alien player slot has opened."
-			else if(num_old_slots >= 1 && new_slots < 1)
-				for(var/mob/new_player/N in world)
-					N << "\red New alien players can no longer enter the game."
+			ready = !ready
 
 		if(href_list["refresh"])
 			src << browse(null, "window=playersetup") //closes the player setup window
@@ -188,15 +181,13 @@
 
 		if(href_list["late_join"])
 			if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-				usr << "/red The round is either not ready, or has already finished..."
+				usr << "\red The round is either not ready, or has already finished..."
 				return
 
 			if(preferences.species != "Human")
 				if(!is_alien_whitelisted(src, preferences.species) && config.usealienwhitelist)
 					src << alert("You are currently not whitelisted to play [preferences.species].")
 					return 0
-				else if(GetAvailableAlienPlayerSlots() >= 1)
-					src << "\red Unable to join game. Too many players have already joined as aliens."
 
 			LateChoices()
 
@@ -302,13 +293,35 @@
 				src.poll_player(pollid)
 			return
 
-		if(href_list["votepollid"] && href_list["voteoptionid"])
-			usr << "\red DB usage has been disabled and that option should not have been available."
-			return
-
+		if(href_list["votepollid"] && href_list["votetype"])
 			var/pollid = text2num(href_list["votepollid"])
-			var/optionid = text2num(href_list["voteoptionid"])
-			vote_on_poll(pollid, optionid)
+			var/votetype = href_list["votetype"]
+			switch(votetype)
+				if("OPTION")
+					var/optionid = text2num(href_list["voteoptionid"])
+					vote_on_poll(pollid, optionid)
+				if("TEXT")
+					var/replytext = href_list["replytext"]
+					log_text_poll_reply(pollid, replytext)
+				if("NUMVAL")
+					var/id_min = text2num(href_list["minid"])
+					var/id_max = text2num(href_list["maxid"])
+
+					if( (id_max - id_min) > 100 )	//Basic exploit prevention
+						usr << "The option ID difference is too big. Please contact administration or the database admin."
+						return
+
+					for(var/optionid = id_min; optionid<= id_max; optionid++)
+						if(!isnull(href_list["o[optionid]"]))	//Test if this optionid was replied to
+							var/rating
+							if(href_list["o[optionid]"] == "abstain")
+								rating = null
+							else
+								rating = text2num(href_list["o[optionid]"])
+								if(!isnum(rating))
+									return
+
+							vote_on_numval_poll(pollid, optionid, rating)
 
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)
@@ -323,35 +336,28 @@
 			src << alert("[rank] is not available. Please try another.")
 			return 0
 
-		var/num_old_slots = GetAvailableAlienPlayerSlots()
-		var/new_slots = num_old_slots
 		if(preferences.species != "Human")
 			if(!is_alien_whitelisted(src, preferences.species) && config.usealienwhitelist)
 				src << alert("You are currently not whitelisted to play [preferences.species].")
-				return 0
-			else if(num_old_slots < 1)
-				src << "\red Unable to join game. Too many players have already joined as aliens."
 				return 0
 
 		job_master.AssignRole(src, rank, 1)
 
 		var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 		job_master.EquipRank(character, rank, 1)					//equips the human
+		EquipCustomItems(character)
 		character.loc = pick(latejoin)
 		character.lastarea = get_area(loc)
+
+		if(character.client)
+			character.client.be_syndicate = preferences.be_special
+
+		ticker.mode.latespawn(character)
 
 		if(character.mind.assigned_role != "Cyborg")
 			data_core.manifest_inject(character)
 			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 			AnnounceArrival(character, rank)
-
-			new_slots = GetAvailableAlienPlayerSlots()
-			if(num_old_slots < 1 && new_slots >= 1)
-				for(var/mob/new_player/N in world)
-					N << "\blue A new alien player slot has opened."
-			else if(num_old_slots >= 1 && new_slots < 1)
-				for(var/mob/new_player/N in world)
-					N << "\red New alien players can no longer enter the game."
 
 		else
 			character.Robotize()
@@ -362,6 +368,13 @@
 			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)// BS12 EDIT Arrivals Announcement Computer, rather than the AI.
 			a.autosay("\"[character.real_name],[character.wear_id.assignment ? " [character.wear_id.assignment]," : "" ] has arrived on the station.\"", "Arrivals Announcement Computer")
 			del(a)
+			/*
+			var/mob/living/silicon/ai/announcer = new (null)
+			announcer.name = "Arrivals Announcement Computer"
+			announcer.real_name = "Arrivals Announcement Computer"
+			a.autosay("\"[character.real_name],[character.wear_id.assignment ? " [character.wear_id.assignment]," : "" ] has arrived on the station.\"", announcer)
+			del(announcer)
+			*/
 
 	proc/LateChoices()
 		var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
@@ -394,6 +407,19 @@
 		var/mob/living/carbon/human/new_character = new(loc)
 		new_character.lastarea = get_area(loc)
 
+		if(preferences.species == "Tajaran") //This is like the worst, but it works, so meh. - Erthilo
+			if(is_alien_whitelisted(src, "Tajaran") || !config.usealienwhitelist)
+				new_character.dna.mutantrace = "tajaran"
+				new_character.tajaran_talk_understand = 1
+		if(preferences.species == "Soghun")
+			if(is_alien_whitelisted(src, "Soghun") || !config.usealienwhitelist)
+				new_character.dna.mutantrace = "lizard"
+				new_character.soghun_talk_understand = 1
+		if(preferences.species == "Skrell")
+			if(is_alien_whitelisted(src, "Skrell") || !config.usealienwhitelist)
+				new_character.dna.mutantrace = "skrell"
+				new_character.skrell_talk_understand = 1
+
 		if(ticker.random_players)
 			new_character.gender = pick(MALE, FEMALE)
 			preferences.randomize_name()
@@ -415,19 +441,6 @@
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = preferences.b_type
 
-		if(preferences.species == "Tajaran") //This is like the worst, but it works, so meh. - Erthilo
-			if(is_alien_whitelisted(src, "Tajaran") || !config.usealienwhitelist)
-				new_character.dna.mutantrace = "tajaran"
-				new_character.tajaran_talk_understand = 1
-		if(preferences.species == "Soghun")
-			if(is_alien_whitelisted(src, "Soghun") || !config.usealienwhitelist)
-				new_character.dna.mutantrace = "lizard"
-				new_character.soghun_talk_understand = 1
-		if(preferences.species == "Skrell")
-			if(is_alien_whitelisted(src, "Skrell") || !config.usealienwhitelist)
-				new_character.dna.mutantrace = "skrell"
-				new_character.skrell_talk_understand = 1
-
 		new_character.key = key		//Manually transfer the key to log them in
 
 		return new_character
@@ -446,22 +459,3 @@
 	proc/close_spawn_windows()
 		src << browse(null, "window=latechoices") //closes late choices window
 		src << browse(null, "window=playersetup") //closes the player setup window
-
-#define MAX_ALIEN_PLAYER_PERCENT 20
-
-//cael - this should probably be moved to ticker or somewhere, but it's fine here for now
-//limits the number of alien players in a game
-/proc/GetAvailableAlienPlayerSlots()
-	var/num_players = 0
-
-	//check new players
-	for(var/mob/new_player/N in world)
-		if(N.preferences && N.ready)
-			num_players++
-
-	//check players already spawned, only count humans or aliens
-	for(var/mob/living/carbon/human/H in world)
-		if(H.ckey)
-			num_players++
-
-	return round(num_players * (MAX_ALIEN_PLAYER_PERCENT / 100))

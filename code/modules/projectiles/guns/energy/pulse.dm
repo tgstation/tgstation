@@ -32,6 +32,8 @@
 				projectile_type = "/obj/item/projectile/beam/pulse"
 		return
 
+	isHandgun()
+		return 0
 
 /obj/item/weapon/gun/energy/pulse_rifle/destroyer
 	name = "pulse destroyer"
@@ -48,5 +50,8 @@
 	desc = "It's not the size of the gun, it's the size of the hole it puts through people."
 	icon_state = "m1911-p"
 	cell_type = "/obj/item/weapon/cell/infinite"
+
+	isHandgun()
+		return 1
 
 

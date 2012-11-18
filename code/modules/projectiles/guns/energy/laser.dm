@@ -12,7 +12,7 @@
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
-	projectile_type = "/obj/item/projectile/practice"
+	projectile_type = "/obj/item/projectile/beam/practice"
 	clumsy_check = 0
 
 obj/item/weapon/gun/energy/laser/retro
@@ -71,6 +71,8 @@ obj/item/weapon/gun/energy/laser/retro
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	projectile_type = "/obj/item/projectile/beam/heavylaser"
 
+	isHandgun()
+		return 0
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
@@ -88,7 +90,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser tag gun"
 	icon_state = "bluetag"
 	desc = "Standard issue weapon of the Imperial Guard"
-	projectile_type = "/obj/item/projectile/bluetag"
+	projectile_type = "/obj/item/projectile/beam/bluetag"
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0
@@ -125,7 +127,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser tag gun"
 	icon_state = "redtag"
 	desc = "Standard issue weapon of the Imperial Guard"
-	projectile_type = "/obj/item/projectile/redtag"
+	projectile_type = "/obj/item/projectile/beam/redtag"
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0

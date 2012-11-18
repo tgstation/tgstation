@@ -33,9 +33,7 @@
 	if(charged == 1)
 		new /obj/effect/rend(get_turf(usr))
 		charged = 0
-		for(var/mob/M in viewers(usr, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("\red <B>[src] hums with power as [usr] deals a blow to reality itself!</B>")
+		visible_message("\red <B>[src] hums with power as [usr] deals a blow to reality itself!</B>")
 	else
 		user << "\red The unearthly energies that powered the blade are now dormant"
 

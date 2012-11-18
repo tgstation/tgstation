@@ -554,4 +554,8 @@
 	..()
 	return
 
+/obj/item/weapon/storage/pill_bottle/New()
+	pixel_x = rand (-7,7)
+	pixel_y = rand (-7,7)
+	..()
 ////////////////////////////////////////////////////////////////////////////////

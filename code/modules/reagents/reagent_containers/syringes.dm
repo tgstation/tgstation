@@ -75,6 +75,9 @@
 						if(NOCLONE in T.mutations) //target done been et, no more blood in him
 							user << "\red You are unable to locate any blood."
 							return
+						if(ishuman(T))
+							if(T:vessel.get_reagent_amount("blood") < amount)
+								return
 						B.holder = src
 						B.volume = amount
 						//set reagent data
@@ -93,6 +96,8 @@
 
 							B.data["viruses"] += new D.type
 
+						if(T.virus2)
+							B.data["virus2"] = T.virus2.getcopy()
 
 						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
 						if(T.resistances&&T.resistances.len)
@@ -105,6 +110,10 @@
 							temp_chem += R.name
 							temp_chem[R.name] = R.volume
 						B.data["trace_chem"] = list2params(temp_chem)
+						B.data["antibodies"] = T.antibodies
+
+						if(ishuman(T))
+							T:vessel.remove_reagent("blood",amount) // Removes blood if human
 
 						src.reagents.reagent_list += B
 						src.reagents.update_total()
@@ -158,7 +167,18 @@
 				if(ismob(target) && target == user)
 					src.reagents.reaction(target, INGEST)
 				spawn(5)
-					var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+					var/datum/reagent/blood/B
+					for(var/datum/reagent/blood/d in src.reagents.reagent_list)
+						B = d
+						break
+					var/trans
+					if(B && ishuman(target))
+						var/mob/living/carbon/human/H = target
+						trans = B.volume > 5? 5 : B.volume
+						H.vessel.add_reagent("blood",trans,B.data)
+						src.reagents.remove_reagent("blood",trans)
+					else
+						trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
 					if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 						mode = SYRINGE_DRAW

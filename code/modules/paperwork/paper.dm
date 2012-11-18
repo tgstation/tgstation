@@ -5,18 +5,18 @@
 	icon_state = "paper"
 	throwforce = 0
 	w_class = 1.0
-	throw_speed = 3
-	throw_range = 15
+	throw_range = 1
+	throw_speed = 1
 	layer = 4
 	pressure_resistance = 1
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
 	attack_verb = list("")
 
-	var/info	//What's actually written on the paper.
-	var/info_links //A different version of the paper which includes html links at fields and EOF
-	var/stamps	//The (text for the) stamps on the paper.
-	var/fields  //Amount of user created fields
+	var/info		//What's actually written on the paper.
+	var/info_links	//A different version of the paper which includes html links at fields and EOF
+	var/stamps		//The (text for the) stamps on the paper.
+	var/fields		//Amount of user created fields
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
@@ -29,25 +29,25 @@
 
 /obj/item/weapon/paper/New()
 	..()
-	src.pixel_y = rand(-8, 8)
-	src.pixel_x = rand(-9, 9)
+	pixel_y = rand(-8, 8)
+	pixel_x = rand(-9, 9)
 	spawn(2)
-		if(src.info)
-			src.overlays += "paper_words"
+		update_icon()
 		updateinfolinks()
 		return
 
 /obj/item/weapon/paper/update_icon()
-	if(src.info)
-		src.overlays += "paper_words"
-	return
+	if(info)
+		icon_state = "paper_words"
+		return
+	icon_state = "paper"
 
 /obj/item/weapon/paper/examine()
 	set src in oview(1)
 
 //	..()	//We don't want them to see the dumb "this is a paper" thing every time.
-	// I didn't like the idea that people can read tiny pieces of paper from across the room.
-	// Now you need to be next to the paper in order to read it.
+// I didn't like the idea that people can read tiny pieces of paper from across the room.
+// Now you need to be next to the paper in order to read it.
 	if(in_range(usr, src))
 		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
@@ -64,12 +64,12 @@
 	set category = "Object"
 	set src in usr
 
-	if ((CLUMSY in usr.mutations) && prob(50))
+	if((CLUMSY in usr.mutations) && prob(50))
 		usr << "<span class='warning'>You cut yourself on the paper.</span>"
 		return
 	var/n_name = input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text
 	n_name = copytext(n_name, 1, 32)
-	if ((loc == usr && usr.stat == 0))
+	if((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 	return
@@ -79,18 +79,18 @@
 	if(rigged && (Holiday == "April Fool's Day"))
 		if(spam_flag == 0)
 			spam_flag = 1
-			playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 			spawn(20)
 				spam_flag = 0
 	return
 
 /obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
 	var/dist
-	if (istype(user) && user.current) //is AI
+	if(istype(user) && user.current) //is AI
 		dist = get_dist(src, user.current)
 	else //cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
-	if (dist < 2)
+	if(dist < 2)
 		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
 	else
@@ -142,12 +142,15 @@
 		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
+
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
 	stamps = null
 	stamped = list()
 	overlays = null
 	updateinfolinks()
+	update_icon()
+
 
 /obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
@@ -187,7 +190,7 @@
 
 //	t = dd_replacetext(t, "#", "") // Junk converted to nothing!
 
-	//Count the fields
+//Count the fields
 	var/laststart = 1
 	while(1)
 		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
@@ -220,9 +223,10 @@
 		\[hr\] : Adds a horizontal rule.
 	</BODY></HTML>"}, "window=paper_help")
 
+
 /obj/item/weapon/paper/Topic(href, href_list)
 	..()
-	if ((usr.stat || usr.restrained()))
+	if((usr.stat || usr.restrained()))
 		return
 
 	if(href_list["write"])
@@ -237,7 +241,7 @@
 			iscrayon = 1
 
 
-		if ((!in_range(src, usr) && src.loc != usr && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
+		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
 			return
 
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
@@ -250,8 +254,8 @@
 
 		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]") // Update the window
 
-		if(!overlays.Find("paper_words"))
-			overlays += "paper_words"
+		update_icon()
+
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
 	..()
@@ -259,43 +263,33 @@
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
 
-	if (istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
+	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
+		user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
 		//openhelp(user)
 		return
 	else if(istype(P, /obj/item/weapon/stamp))
-		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.get_active_hand() != P))
+		if((!in_range(src, usr) && loc != user && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != user && user.get_active_hand() != P))
 			return
 
 		stamps += (stamps=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the [P.name].</i>"
 
-		switch(P.type)
-			if(/obj/item/weapon/stamp/captain)
-				overlays += "paper_stamped_cap"
-			if(/obj/item/weapon/stamp/hop)
-				overlays += "paper_stamped_hop"
-			if(/obj/item/weapon/stamp/hos)
-				overlays += "paper_stamped_hos"
-			if(/obj/item/weapon/stamp/ce)
-				overlays += "paper_stamped_ce"
-			if(/obj/item/weapon/stamp/rd)
-				overlays += "paper_stamped_rd"
-			if(/obj/item/weapon/stamp/cmo)
-				overlays += "paper_stamped_cmo"
-			if(/obj/item/weapon/stamp/denied)
-				overlays += "paper_stamped_denied"
-			if(/obj/item/weapon/stamp/clown)
-				if (!clown)
-					usr << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
-					return
-				else
-					overlays += "paper_stamped_clown"
-			else
-				overlays += "paper_stamped"
+		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+		stampoverlay.pixel_x = rand(-2, 2)
+		stampoverlay.pixel_y = rand(-3, 2)
+
+		if(istype(P, /obj/item/weapon/stamp/clown))
+			if(!clown)
+				user << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
+				return
+
+		stampoverlay.icon_state = "paper_[P.icon_state]"
+
 		if(!stamped)
 			stamped = new
 		stamped += P.type
+		overlays += stampoverlay
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 
 	add_fingerprint(user)
+	return

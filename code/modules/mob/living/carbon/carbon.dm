@@ -50,6 +50,13 @@
 
 /mob/living/carbon/attack_hand(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
+	if (hasorgans(M))
+		var/datum/organ/external/temp = M:organs_by_name["r_hand"]
+		if (M.hand)
+			temp = M:organs_by_name["l_hand"]
+		if(temp && temp.status & ORGAN_DESTROYED)
+			M << "\red Yo- wait a minute."
+			return
 
 	for(var/datum/disease/D in viruses)
 		var/s_spread_type
@@ -88,6 +95,13 @@
 /mob/living/carbon/attack_paw(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
 
+	if (hasorgans(M))
+		var/datum/organ/external/temp = M:organs_by_name["r_hand"]
+		if (M.hand)
+			temp = M:organs_by_name["l_hand"]
+		if(temp && temp.status & ORGAN_DESTROYED)
+			M << "\red Yo- wait a minute."
+			return
 
 	for(var/datum/disease/D in viruses)
 		var/s_spread_type
@@ -127,7 +141,7 @@
 	shock_damage *= siemens_coeff
 	if (shock_damage<1)
 		return 0
-	src.take_overall_damage(0,shock_damage)
+	src.take_overall_damage(0,shock_damage,used_weapon="Electrocution")
 	//src.burn_skin(shock_damage)
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
@@ -211,9 +225,13 @@
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
+				if(org.status & ORGAN_DESTROYED)
+					status = "MISSING!"
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.getDisplayName(),status),1)
+			if((SKELETON in H.mutations) && (!H.w_uniform) && (!H.wear_suit))
+				H.play_xylophone()
 		else
 			var/t_him = "it"
 			if (src.gender == MALE)
@@ -335,10 +353,12 @@
 		if(H.gloves)
 			if(H.gloves.clean_blood())
 				H.update_inv_gloves(0)
+			H.gloves.germ_level = 0
 		else
 			if(H.bloody_hands)
 				H.bloody_hands = 0
 				H.update_inv_gloves(0)
+			H.germ_level = 0
 	update_icons()	//apply the now updated overlays to the mob
 
 
@@ -430,5 +450,9 @@
 */
 
 
-
 		item.throw_at(target, item.throw_range, item.throw_speed)
+
+/mob/living/carbon/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > CARBON_LIFEFORM_FIRE_RESISTANCE)
+		adjustFireLoss(CARBON_LIFEFORM_FIRE_DAMAGE)
+	..()

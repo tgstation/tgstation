@@ -16,6 +16,12 @@
 //			verbs += /client/proc/air_status //Air things
 //			verbs += /client/proc/Cell //More air things
 
+/client/proc/admin_rank_check(var/rank, var/requested)
+	if(rank < requested)
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return(0)
+	return(1)
+
 /client/proc/update_admins(var/rank)
 	if(!holder)
 		holder = new /datum/admins(rank)
@@ -40,6 +46,7 @@
 	if(!need_update)	return
 
 	clear_admin_verbs()
+	handle_permission_verbs()
 
 	switch(rank)
 		if("Game Master")
@@ -68,8 +75,6 @@
 				verbs += /client/proc/cmd_admin_delete
 				verbs += /client/proc/cmd_admin_add_freeform_ai_law
 				verbs += /client/proc/cmd_admin_rejuvenate
-				//verbs += /client/proc/cmd_admin_drop_everything		--Merged with view variables
-				//verbs += /client/proc/cmd_modify_object_variables 	--Merged with view variables
 
 		if ("Admin Candidate")
 			holder.level = 2
@@ -81,7 +86,6 @@
 				verbs += /client/proc/Jump
 				verbs += /client/proc/jumptokey
 				verbs += /client/proc/jumptomob
-				//verbs += /client/proc/cmd_admin_attack_log			--Merged with view variables
 
 		if ("Temporary Admin")
 			holder.level = 1
@@ -97,9 +101,6 @@
 //			del(src)
 //			return
 
-		if ("Retired Admin")
-			holder.level = -3
-
 		else
 			del(holder)
 			return
@@ -107,54 +108,90 @@
 	if (holder)		//THE BELOW handles granting powers. The above is for special cases only!
 		holder.owner = src
 
-		//---- Special Admin Ranks
-
-		//Retired admin
+		//---- Special Admin Ranks		//Retired admin
 		if (holder.level == -3)
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/cmd_mod_say
 			return
 
 		//Admin Observer
-		if (holder.level == -1)
-			verbs += /client/proc/investigate_show
-			verbs += /client/proc/cmd_admin_say
-			verbs += /client/proc/cmd_mod_say
-			verbs += /client/proc/cmd_admin_gib_self
-			verbs += /client/proc/update_mob_sprite
+		if (holder.level >= -1)
+			seeprayers = 1
+
+			verbs += /client/proc/cmd_admin_say //Allows anyone rank -1 or higher to use asay -- removed when it hits 0 (mods), added again at 1 (Temp Admin)
+			verbs += /client/proc/cmd_mod_say   //Allows anyone rank -1 or higher to use msay
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/toggleadminhelpsound
+		else
 			return
 
 		//Moderator
-		if (holder.level == 0)
-			verbs += /client/proc/cmd_admin_pm_context
+		if (holder.level >= 0)
 			verbs += /client/proc/cmd_admin_pm_panel
+			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/hide_verbs
-			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/Report
 			verbs += /client/proc/display_admin_reports
 			verbs += /datum/admins/proc/show_skills
-			verbs += /client/proc/mod_panel
 			verbs += /client/proc/admin_ghost
+			verbs += /datum/admins/proc/show_player_info
+			verbs += /datum/admins/proc/PlayerNotes
+		else
 			return
 
-		//---- Full Admin Ranks
-		if (holder.level > 0)
-			verbs += /client/proc/cmd_admin_say
-			verbs += /client/proc/cmd_mod_say
-			verbs += /client/proc/admin_ghost
+		//Extra moderator commands
+		if(holder.level == 0)
+			verbs += /client/proc/mod_panel
+			verbs -= /client/proc/cmd_admin_say
+			return
 
 		//Temporary Admin
 		if (holder.level >= 1)
+			verbs += /client/proc/investigate_show
+			verbs += /client/proc/cmd_admin_say
+			verbs += /datum/admins/proc/startnow
 			verbs += /datum/admins/proc/delay								//game start delay
 			verbs += /datum/admins/proc/immreboot							//immediate reboot
-			verbs += /datum/admins/proc/restart							//restart
+			verbs += /datum/admins/proc/restart								//restart
 			verbs += /client/proc/cmd_admin_check_contents
 			verbs += /client/proc/cmd_admin_create_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/playernotes
+			verbs += /datum/admins/proc/announce
+			verbs += /datum/admins/proc/startnow
+			verbs += /datum/admins/proc/toggleAI							//Toggle the AI
+			verbs += /datum/admins/proc/toggleenter							//Toggle enterting
+			verbs += /datum/admins/proc/toggleguests						//Toggle guests entering
+			verbs += /datum/admins/proc/toggleooc							//toggle ooc
+			verbs += /datum/admins/proc/toggleoocdead						//toggle ooc for dead/unc
+			verbs += /datum/admins/proc/show_player_panel
+			verbs += /client/proc/deadchat									//toggles deadchat
+			verbs += /client/proc/cmd_admin_subtle_message
+			verbs += /client/proc/dsay
+			verbs += /client/proc/admin_ghost
+			verbs += /client/proc/game_panel
+			verbs += /client/proc/player_panel
+			verbs += /client/proc/player_panel_new
+			verbs += /client/proc/unban_panel
+			verbs += /client/proc/jobbans
+			verbs += /client/proc/unjobban_panel
+			verbs += /client/proc/hide_verbs
+			verbs += /client/proc/general_report
+			verbs += /client/proc/air_report
+			verbs += /client/proc/check_ai_laws
+			verbs += /client/proc/investigate_show
+			verbs += /client/proc/cmd_admin_gib_self
+			verbs += /client/proc/player_panel_new
+			verbs += /client/proc/cmd_admin_change_custom_event
+			verbs += /client/proc/game_panel
+			verbs += /client/proc/unjobban_panel
+			verbs += /client/proc/jobbans
+			verbs += /client/proc/unban_panel
+			verbs += /datum/admins/proc/toggleooc
+			verbs += /datum/admins/proc/toggleoocdead
+		else
+			return
 
 		//Admin Candidate
 		if (holder.level >= 2)
@@ -163,13 +200,12 @@
 			verbs += /client/proc/check_antagonists
 			verbs += /client/proc/play_sound
 			verbs += /client/proc/stealth
-			verbs += /client/proc/deadmin_self
-		else	return
+		else
+			return
 
 		//Trial Admin
 		if (holder.level >= 3)
 			deadchat = 1
-			seeprayers = 1
 
 			verbs += /client/proc/invisimin
 			verbs += /datum/admins/proc/view_txt_log
@@ -177,31 +213,30 @@
 			verbs += /datum/admins/proc/toggleaban						//abandon mob
 			verbs += /datum/admins/proc/show_traitor_panel
 			verbs += /client/proc/getserverlog							//fetch an old serverlog to look at
-			//verbs += /client/proc/cmd_admin_remove_plasma 			--This proc is outdated, does not do anything
 			verbs += /client/proc/admin_call_shuttle
 			verbs += /client/proc/admin_cancel_shuttle
 			verbs += /client/proc/cmd_admin_dress
 			verbs += /client/proc/respawn_character
 			verbs += /client/proc/spawn_xeno
 			verbs += /client/proc/toggleprayers
-			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
 			verbs += /client/proc/one_click_antag
-//BS12 Commands
+
+			//bs12 specific
 			verbs += /client/proc/admin_deny_shuttle
 			verbs += /client/proc/editappear
-		else	return
+		else
+			return
 
 		//Badmin
 		if (holder.level >= 4)
 			verbs += /datum/admins/proc/adrev								//toggle admin revives
-			verbs += /datum/admins/proc/adspawn							//toggle admin item spawning
+			verbs += /datum/admins/proc/adspawn								//toggle admin item spawning
 			verbs += /client/proc/debug_variables
-			verbs += /datum/admins/proc/access_news_network               //Admin access to the newscaster network
+			verbs += /datum/admins/proc/access_news_network					//Admin access to the newscaster network
 			verbs += /client/proc/cmd_modify_ticker_variables
-			verbs += /client/proc/Debug2								//debug toggle switch
+			verbs += /client/proc/Debug2									//debug toggle switch
 			verbs += /client/proc/toggle_view_range
 			verbs += /client/proc/Getmob
 			verbs += /client/proc/Getkey
@@ -217,13 +252,11 @@
 			verbs += /client/proc/hide_most_verbs
 			verbs += /client/proc/jumptocoord
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/giveruntimelog						//used by coders to retrieve runtime logs
-			//verbs += /client/proc/cmd_admin_godmode					--Merged with view variables
-			//verbs += /client/proc/cmd_admin_gib 						--Merged with view variables
-			//verbs += /proc/togglebuildmode 							--Merged with view variables
-			//verbs += /client/proc/cmd_modify_object_variables 		--Merged with view variables
+			verbs += /client/proc/giveruntimelog							//used by coders to retrieve runtime logs
 			verbs += /client/proc/togglebuildmodeself
-		else	return
+			verbs += /client/proc/debug_controller
+		else
+			return
 
 		//Game Admin
 		if (holder.level >= 5)
@@ -235,38 +268,29 @@
 			verbs += /client/proc/cmd_admin_world_narrate
 			verbs += /client/proc/cmd_debug_del_all
 			verbs += /client/proc/cmd_debug_tog_aliens
-//			verbs += /client/proc/mapload
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
 			verbs += /client/proc/kill_airgroup
-			//verbs += /client/proc/cmd_admin_drop_everything			--Merged with view variables
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
 			verbs += /client/proc/send_space_ninja
-			verbs += /client/proc/restart_controller					//Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
-			verbs += /client/proc/debug_controller
-//			verbs += /client/proc/Blobize								//I need to remember to move/remove this later
-//			verbs += /client/proc/Blobcount								//I need to remember to move/remove this later
-			verbs += /client/proc/toggle_clickproc 						//TODO ERRORAGE (Temporary proc while the new clickproc is being tested)
+			verbs += /client/proc/restart_controller						//Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
+			verbs += /client/proc/toggle_clickproc 							//TODO ERRORAGE (Temporary proc while the new clickproc is being tested)
 			verbs += /client/proc/toggle_gravity_on
 			verbs += /client/proc/toggle_gravity_off
 			verbs += /client/proc/toggle_random_events
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/Set_Holiday							//Force-set a Holiday
+			verbs += /client/proc/Set_Holiday								//Force-set a Holiday
 			verbs += /client/proc/admin_memo
-			verbs += /client/proc/ToRban								//ToRban  frontend to access its features.
-			//verbs += /client/proc/cmd_mass_modify_object_variables 	--Merged with view variables
-			//verbs += /client/proc/cmd_admin_explosion					--Merged with view variables
-			//verbs += /client/proc/cmd_admin_emp						--Merged with view variables
-			//verbs += /client/proc/give_spell 							--Merged with view variables
-			//verbs += /client/proc/cmd_admin_ninjafy					--Merged with view variables
-			//verbs += /client/proc/cmd_switch_radio					--removed as tcommsat is staying
-		else	return
+			verbs += /client/proc/ToRban									//ToRban  frontend to access its features.
+			verbs += /client/proc/game_panel
+		else
+			return
 
 		//Game Master
 		if (holder.level >= 6)
 			verbs += /datum/admins/proc/toggle_aliens						//toggle aliens
-			verbs += /datum/admins/proc/toggle_space_ninja				//toggle ninjas
+			verbs += /datum/admins/proc/toggle_space_ninja					//toggle ninjas
 			verbs += /datum/admins/proc/adjump
 			verbs += /client/proc/callproc
 			verbs += /client/proc/triple_ai
@@ -278,12 +302,13 @@
 			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
-			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/cinematic								//show a cinematic sequence
-			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
+			verbs += /client/proc/cinematic									//show a cinematic sequence
+			verbs += /client/proc/startSinglo								//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/toggle_log_hrefs
 			verbs += /client/proc/cmd_debug_mob_lists
-		else	return
+			verbs += /client/proc/set_ooc
+		else
+			return
 	return
 
 
@@ -411,39 +436,22 @@
 		/client/proc/cmd_debug_mob_lists,
 		/datum/admins/proc/access_news_network,
 		/client/proc/one_click_antag,
-		/client/proc/invisimin
+		/client/proc/invisimin,
+		/client/proc/set_ooc,
+
+		//bs12 verbs
+		/client/proc/update_mob_sprite,
+		/client/proc/mod_panel,
+		/client/proc/admin_deny_shuttle,
+		/client/proc/playernotes,
+		/datum/admins/proc/show_skills,
+		/client/proc/Report,
+		/client/proc/display_admin_reports,
+		/client/proc/editappear,
+		/client/proc/cmd_mod_say,
+		/client/proc/playernotes,
+		/client/proc/cmd_admin_change_custom_event
 	)
-	//verbs -= /client/proc/mapload
-	//verbs -= /client/proc/cmd_admin_drop_everything					--merged with view variables
-	//verbs -= /client/proc/give_spell 									--Merged with view variables
-	//verbs -= /client/proc/cmd_admin_ninjafy 							--Merged with view variables
-	//verbs -= /client/proc/cmd_modify_object_variables 				--Merged with view variables
-	//verbs -= /client/proc/cmd_admin_explosion							--Merged with view variables
-	//verbs -= /client/proc/cmd_admin_emp								--Merged with view variables
-	//verbs -= /client/proc/cmd_admin_godmode							--Merged with view variables
-	//verbs -= /client/proc/cmd_admin_gib 								--Merged with view variables
-	//verbs -= /client/proc/cmd_mass_modify_object_variables			--Merged with view variables
-	//verbs -= /client/proc/cmd_admin_attack_log						--Merged with view variables
-	//verbs -= /proc/togglebuildmode									--Merged with view variables
-	//verbs -= /client/proc/cmd_admin_prison 							--Merged with player panel
-	//verbs -= /datum/admins/proc/unprison 								--Merged with player panel
-	//verbs -= /client/proc/cmd_switch_radio							--removed because tcommsat is staying
-	//	verbs -= /client/proc/Blobize
-	//	verbs -= /client/proc/Blobcount
-	//verbs -= /client/proc/warn
-	//verbs -= /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
-	//verbs -= /client/proc/cmd_admin_remove_plasma						--This proc is outdated, does not do anything
-//BS12 Admin Verbs
-	verbs -= /client/proc/update_mob_sprite
-	verbs -= /client/proc/mod_panel
-	verbs -= /client/proc/admin_deny_shuttle
-	verbs -= /client/proc/playernotes
-	verbs -= /datum/admins/proc/show_skills
-	verbs -= /client/proc/Report
-	verbs -= /client/proc/display_admin_reports
-	verbs -= /client/proc/editappear
-	verbs -= /client/proc/cmd_mod_say
-	verbs -= /client/proc/playernotes
 	return
 
 /client/proc/admin_ghost()
@@ -486,10 +494,15 @@
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			usr << "\red <b>You are now visible to other players.</b>"
+			mob << "\red <b>Invisimin off. Invisibility reset.</b>"
+			mob.icon_state = "ghost"
+			mob.icon = 'human.dmi'
+			mob.update_icons()
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			usr << "\blue <b>You are now invisible to other players.</b>"
+			mob << "\blue <b>Invisimin on. You are now as invisible as a ghost.</b>"
+			mob.icon_state = "ghost"
+			mob.icon = 'mob.dmi'
 
 
 /client/proc/player_panel()
@@ -506,14 +519,6 @@
 	if(holder)
 		holder.player_panel_new()
 	feedback_add_details("admin_verb","PPN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
-/client/proc/mod_panel()
-	set name = "Moderator Panel"
-	set category = "Admin"
-	if(holder)
-		holder.mod_panel()
-	feedback_add_details("admin_verb","MDRP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/check_antagonists()
@@ -581,13 +586,6 @@
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", 1)
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/playernotes()
-	set name = "Show Player Info"
-	set category = "Admin"
-	if(holder)
-		holder.PlayerNotes()
-	return
 
 #define AUTOBATIME 10
 /client/proc/warn(var/mob/M in player_list)
@@ -833,86 +831,106 @@
 			config.log_hrefs = 1
 			src << "<b>Started logging hrefs</b>"
 
+/client/proc/check_ai_laws()
+	set name = "Check AI Laws"
+	set category = "Admin"
+	if(holder)
+		src.holder.output_ai_laws()
+
+
+//---- bs12 verbs ----
+
+/client/proc/mod_panel()
+	set name = "Moderator Panel"
+	set category = "Admin"
+	if(holder)
+		holder.mod_panel()
+//	feedback_add_details("admin_verb","MP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
 /client/proc/editappear(mob/living/carbon/human/M as mob in world)
 	set name = "Edit Appearance"
 	set category = "Fun"
-	if(!istype(M, /mob/living/carbon/human))
+
+	usr << "\red This proc has been temporarily disabled."
+	return
+
+	//some random errors here, cbb fixing them right now
+	//todo
+	/*if(!istype(M, /mob/living/carbon/human))
 		usr << "\red You can only do this to humans!"
 		return
-	switch(alert("You sure you wish to edit this mob's appearance?",,"Yes","No"))
+	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Soghun and Tajaran can result in unintended consequences.",,"Yes","No"))
 		if("No")
 			return
-	if(!ishuman(M))
-		usr << "\red Non-humans are not editable yet!"
-	else
-		var/new_facial = input("Please select facial hair color.", "Character Generation") as color
-		if(new_facial)
-			M.r_facial = hex2num(copytext(new_facial, 2, 4))
-			M.g_facial = hex2num(copytext(new_facial, 4, 6))
-			M.b_facial = hex2num(copytext(new_facial, 6, 8))
+	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
+	if(new_facial)
+		M.r_facial = hex2num(copytext(new_facial, 2, 4))
+		M.g_facial = hex2num(copytext(new_facial, 4, 6))
+		M.b_facial = hex2num(copytext(new_facial, 6, 8))
 
-		var/new_hair = input("Please select hair color.", "Character Generation") as color
-		if(new_facial)
-			M.r_hair = hex2num(copytext(new_hair, 2, 4))
-			M.g_hair = hex2num(copytext(new_hair, 4, 6))
-			M.b_hair = hex2num(copytext(new_hair, 6, 8))
+	var/new_hair = input("Please select hair color.", "Character Generation") as color
+	if(new_facial)
+		M.r_hair = hex2num(copytext(new_hair, 2, 4))
+		M.g_hair = hex2num(copytext(new_hair, 4, 6))
+		M.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-		var/new_eyes = input("Please select eye color.", "Character Generation") as color
-		if(new_eyes)
-			M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
-			M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
-			M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+	var/new_eyes = input("Please select eye color.", "Character Generation") as color
+	if(new_eyes)
+		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
+		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
+		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-		var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
-		if (new_tone)
-			M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-			M.s_tone =  -M.s_tone + 35
+	if (new_tone)
+		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+		M.s_tone =  -M.s_tone + 35
 
-		// hair
-		var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
-		var/list/hairs = list()
+	// hair
+	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/hairs = list()
 
-		// loop through potential hairs
-		for(var/x in all_hairs)
-			var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
-			hairs.Add(H.name) // add hair name to hairs
-			del(H) // delete the hair after it's all done
+	// loop through potential hairs
+	for(var/x in all_hairs)
+		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
+		hairs.Add(H.name) // add hair name to hairs
+		del(H) // delete the hair after it's all done
 
-		var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
+	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
 
-		// if new style selected (not cancel)
-		if (new_style)
-			M.h_style = new_style
+	// if new style selected (not cancel)
+	if (new_style)
+		M.h_style = new_style
 
-			for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
-				var/datum/sprite_accessory/hair/H = new x // create new hair datum
-				if(H.name == new_style)
-					M.h_style = H // assign the hair_style variable a new hair datum
-					break
-				else
-					del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
+		for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
+			var/datum/sprite_accessory/hair/H = new x // create new hair datum
+			if(H.name == new_style)
+				M.hair_style = H // assign the hair_style variable a new hair datum
+				break
+			else
+				del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
 
-		// facial hair
-		var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
-		var/list/fhairs = list()
+	// facial hair
+	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+	var/list/fhairs = list()
 
+	for(var/x in all_fhairs)
+		var/datum/sprite_accessory/facial_hair/H = new x
+		fhairs.Add(H.name)
+		del(H)
+
+	new_style = input("Please select facial style", "Character Generation")  as null|anything in fhairs
+
+	if(new_style)
+		M.f_style = new_style
 		for(var/x in all_fhairs)
 			var/datum/sprite_accessory/facial_hair/H = new x
-			fhairs.Add(H.name)
-			del(H)
-
-		new_style = input("Please select facial style", "Character Generation")  as null|anything in fhairs
-
-		if(new_style)
-			M.f_style = new_style
-			for(var/x in all_fhairs)
-				var/datum/sprite_accessory/facial_hair/H = new x
-				if(H.name == new_style)
-					M.f_style = H
-					break
-				else
-					del(H)
+			if(H.name == new_style)
+				M.facial_hair_style = H
+				break
+			else
+				del(H)
 
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
@@ -920,14 +938,14 @@
 			M.gender = MALE
 		else
 			M.gender = FEMALE
-	M.regenerate_icons()
+	M.rebuild_appearance()
 	M.update_body()
 	M.check_dna(M)
+	*/
 
-
-/client/proc/check_ai_laws()
-	set name = "Check AI Laws"
+/client/proc/playernotes()
+	set name = "Show Player Info"
 	set category = "Admin"
 	if(holder)
-		src.holder.output_ai_laws()
-
+		holder.PlayerNotes()
+	return

@@ -88,9 +88,14 @@ datum
 					var/current_reagent_transfer = current_reagent.volume * part
 					if(preserve_data)
 						trans_data = current_reagent.data
-					R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
-					src.remove_reagent(current_reagent.id, current_reagent_transfer)
-
+					if((current_reagent.id == "blood" && !ishuman(target)) || current_reagent.id != "blood")
+						R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+						src.remove_reagent(current_reagent.id, current_reagent_transfer)
+					else if(current_reagent.id == "blood" && ishuman(target)) // can never be sure
+						var/mob/living/carbon/human/H = target
+						H.vessel.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+						src.remove_reagent(current_reagent.id, current_reagent_transfer)
+						H.vessel.update_total()
 				src.update_total()
 				R.update_total()
 				R.handle_reactions()
@@ -246,8 +251,9 @@ datum
 								multiplier = max(multiplier, 1) //this shouldnt happen ...
 								add_reagent(C.result, C.result_amount*multiplier)
 
-							for(var/mob/M in viewers(4, get_turf(my_atom)) )
-								M << "\blue \icon[my_atom] The solution begins to bubble."
+							if(!isliving(my_atom))
+								for(var/mob/M in viewers(4, get_turf(my_atom)) )
+									M << "\blue \icon[my_atom] The solution begins to bubble."
 
 							if(istype(my_atom, /obj/item/metroid_core))
 								var/obj/item/metroid_core/ME = my_atom
@@ -391,13 +397,17 @@ datum
 
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
-					if (R.id == reagent)
-						R.volume -= amount
-						update_total()
-						if(!safety)//So it does not handle reactions when it need not to
-							handle_reactions()
-						my_atom.on_reagent_change()
-						return 0
+					var/datum/compare = chemical_reagents_list[reagent]
+					if(istype(R,compare))
+						var/amt = max(0,min(R.volume,amount))
+						R.volume -= amt
+						amount -= amt
+						if(amount<=0)
+							update_total()
+							if(!safety)//So it does not handle reactions when it need not to
+								handle_reactions()
+							my_atom.on_reagent_change()
+							return 0
 
 				return 1
 
@@ -405,7 +415,8 @@ datum
 
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
-					if (R.id == reagent)
+					var/datum/compare = chemical_reagents_list[reagent]
+					if(istype(R,compare))
 						if(!amount) return R
 						else
 							if(R.volume >= amount) return R
@@ -414,12 +425,14 @@ datum
 				return 0
 
 			get_reagent_amount(var/reagent)
+				var/amnt = 0
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
-					if (R.id == reagent)
-						return R.volume
+					var/datum/compare = chemical_reagents_list[reagent]
+					if(istype(R,compare))
+						amnt += R.volume
 
-				return 0
+				return amnt
 
 			get_reagents()
 				var/res = ""

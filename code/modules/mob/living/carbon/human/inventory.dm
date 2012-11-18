@@ -181,9 +181,6 @@
 		src.r_hand = null
 		update_inv_r_hand()
 
-	//check later on if our species can't wear some clothes
-	var/cur_species = get_species()
-
 	W.loc = src
 	switch(slot)
 		if(slot_back)
@@ -228,21 +225,9 @@
 			W.equipped(src, slot)
 			update_inv_glasses(redraw_mob)
 		if(slot_gloves)
-			var/broken = 0
-			if(cur_species == "Tajaran")
-				if(prob(5))
-					src.visible_message("\red Your feet burst out of the [W], ripping them to shreds!", "\red [src]'s feet burst out of the [W], ripping them to shreds!", "\red You hear a ripping, tearing sound!")
-					apply_damage(5)
-					broken = 1
-					spawn(0)
-						del(W)
-				else if(prob(50))
-					src << "\red You hurt your feet forcing them into the [W]!"
-					apply_damage(5)
-			if(!broken)
-				src.gloves = W
-				W.equipped(src, slot)
-				update_inv_gloves(redraw_mob)
+			src.gloves = W
+			W.equipped(src, slot)
+			update_inv_gloves(redraw_mob)
 		if(slot_head)
 			src.head = W
 			if(head.flags & BLOCKHAIR)
@@ -252,21 +237,9 @@
 			W.equipped(src, slot)
 			update_inv_head(redraw_mob)
 		if(slot_shoes)
-			var/broken = 0
-			if(cur_species == "Tajaran")
-				if(prob(5))
-					src.visible_message("\red Your feet burst out of the [W], ripping them to shreds!", "\red [src]'s feet burst out of the [W], ripping them to shreds!", "\red You hear a ripping, tearing sound!")
-					apply_damage(5)
-					broken = 1
-					spawn(0)
-						del(W)
-				else if(prob(50))
-					src << "\red You hurt your feet forcing them into the [W]!"
-					apply_damage(5)
-			if(!broken)
-				src.shoes = W
-				W.equipped(src, slot)
-				update_inv_shoes(redraw_mob)
+			src.shoes = W
+			W.equipped(src, slot)
+			update_inv_shoes(redraw_mob)
 		if(slot_wear_suit)
 			src.wear_suit = W
 			W.equipped(src, slot)
@@ -295,40 +268,9 @@
 			src << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
 			return
 
-
-	//can't quite fit some alien bodyparts
-	if( W.body_parts_covered & LOWER_TORSO && W.flags_inv & HIDEJUMPSUIT && (cur_species == "Tajaran" || cur_species == "Soghun"))
-		if(prob(50))
-			src << "\red You twist your tail trying to fit it in!"
-			apply_damage(5)
-	if( W.body_parts_covered & HEAD && W.flags & BLOCKHAIR && (cur_species == "Skrell"))
-		if(prob(50))
-			src << "\red You twist your eartails trying to fit it in!"
-			apply_damage(5)
-
 	W.layer = 20
 
 	return
-
-/*
-/mob/living/carbon/human/proc/update_tail_showing(var/update_icons=1)
-	overlays_lying[TAIL_LAYER] 		= null
-	overlays_standing[TAIL_LAYER] 	= null
-	var/cur_species = get_species()
-	if( cur_species == "Tajaran")
-		if(!wear_suit || !(wear_suit.flags_inv & HIDEJUMPSUIT) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			overlays_lying[TAIL_LAYER]		= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "tajtail_l")
-			overlays_standing[TAIL_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "tajtail_s")
-	else if( cur_species == "Soghun")
-		if(!wear_suit || !(wear_suit.flags_inv & HIDEJUMPSUIT) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			overlays_lying[TAIL_LAYER]		= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "sogtail_l")
-			overlays_standing[TAIL_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "sogtail_s")
-
-	if(update_icons)   update_icons()
-
-*/
-
-
 
 /obj/effect/equip_e
 	name = "equip e"
@@ -491,8 +433,9 @@
 						return
 				message = "\red <B>[source] is trying to empty [target]'s pockets.</B>"
 			if("CPR")
-				if (target.cpr_time >= world.time + 3)
+				if (!target.cpr_time)
 					del(src)
+				target.cpr_time = 0
 				message = "\red <B>[source] is trying perform CPR on [target]!</B>"
 			if("id")
 				message = "\red <B>[source] is trying to take off [target.wear_id] from [target]'s uniform!</B>"
@@ -598,10 +541,7 @@ It can still be worn/put on as normal.
 			if (target.legcuffed)
 				strip_item = target.legcuffed
 		if("CPR")
-			if (target.cpr_time >= world.time + 30)
-				del(src)
 			if ((target.health >= -99.0 && target.health <= 0))
-				target.cpr_time = world.time
 				var/suff = min(target.getOxyLoss(), 7)
 				target.adjustOxyLoss(-suff)
 				target.updatehealth()
@@ -609,6 +549,7 @@ It can still be worn/put on as normal.
 					O.show_message("\red [source] performs CPR on [target]!", 1)
 				target << "\blue <b>You feel a breath of fresh air enter your lungs. It feels good.</b>"
 				source << "\red Repeat at least every 7 seconds."
+				target.cpr_time = 1
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = item
 			if(S)
@@ -645,7 +586,7 @@ It can still be worn/put on as normal.
 						target.internal = target.belt
 					if (target.internal)
 						for(var/mob/M in viewers(target, 1))
-							M.show_message("[source] is now running on internals.", 1)
+							M.show_message("[target] is now running on internals.", 1)
 						target.internal.add_fingerprint(source)
 						if (target.internals)
 							target.internals.icon_state = "internal1"

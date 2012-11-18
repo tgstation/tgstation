@@ -23,7 +23,7 @@
 	if(istype(A, /obj/effect/proc_holder/spell))
 		return
 
-	if(istype(A, /obj/structure/reagent_dispensers)) //this block copypasted from reagent_containers/glass, for lack of a better solution
+	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
 			user << "<span class='notice'>\The [A] is empty.</span>"
 			return
@@ -42,7 +42,7 @@
 
 	var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
-	reagents.trans_to(D, amount_per_transfer_from_this)
+	reagents.trans_to(D, amount_per_transfer_from_this, 1/3)
 
 	D.name = "chemicals"
 	D.icon = 'icons/obj/chempuff.dmi'
@@ -128,7 +128,7 @@
 	if(istype(A, /obj/effect/proc_holder/spell))
 		return
 
-	if(istype(A, /obj/structure/reagent_dispensers)) //this block copypasted from reagent_containers/glass, for lack of a better solution
+	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
 			user << "<span class='notice'>\The [A] is empty.</span>"
 			return

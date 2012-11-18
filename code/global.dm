@@ -4,7 +4,6 @@ var/global/obj/effect/datacore/data_core = null
 var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null
 
-	//obj/hud/main_hud1 = null
 
 var/global/list/machines = list()
 var/global/list/processing_objects = list()
@@ -35,8 +34,28 @@ var/FIREBLOCK = 0
 var/XRAYBLOCK = 0
 var/CLUMSYBLOCK = 0
 var/FAKEBLOCK = 0
+var/COUGHBLOCK = 0
+var/GLASSESBLOCK = 0
+var/EPILEPSYBLOCK = 0
+var/TWITCHBLOCK = 0
+var/NERVOUSBLOCK = 0
+var/MONKEYBLOCK = 27
+
 var/BLOCKADD = 0
 var/DIFFMUT = 0
+
+var/HEADACHEBLOCK = 0
+var/NOBREATHBLOCK = 0
+var/REMOTEVIEWBLOCK = 0
+var/REGENERATEBLOCK = 0
+var/INCREASERUNBLOCK = 0
+var/REMOTETALKBLOCK = 0
+var/MORPHBLOCK = 0
+var/BLENDBLOCK = 0
+var/HALLUCINATIONBLOCK = 0
+var/NOPRINTSBLOCK = 0
+var/SHOCKIMMUNITYBLOCK = 0
+var/SMALLSIZEBLOCK = 0
 
 var/skipupdate = 0
 	///////////////
@@ -49,7 +68,7 @@ var/blobevent = 0
 var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null
-var/station_name = "Baystation12"
+var/station_name = "NSV Exodus"
 var/game_version = "Baystation12"
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
@@ -211,5 +230,31 @@ var/forum_authenticated_group = "10"
 	// For FTP requests. (i.e. downloading runtime logs.)
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.
 var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finished setting up and stuff.
-
 var/custom_event_msg = null
+
+#define BUILDMODE	1
+#define ADMIN		2
+#define BAN			4
+#define FUN			8
+#define SERVER		16
+#define ADMDEBUG	32
+#define POSSESS		64
+#define PERMISSIONS	128
+//Keep this list synced with the #defines above
+var/global/list/permissionwords = list("BUILDMODE", "ADMIN", "BAN", "FUN", "SERVER", "DEBUG", "POSSESS", "EDITPERMISSIONS")
+
+
+
+//Please do not edit these values. The database assigning proper rights relies on this. You can add new values, just don't change existing ones.
+//This list is separate from the list used ingame, so that one can be edited with little consequence. This one is tied to the database
+//The database admins should be consulted before any edits to this list.
+#define SQL_BUILDMODE	1
+#define SQL_ADMIN		2
+#define SQL_BAN			4
+#define SQL_FUN			8
+#define SQL_SERVER		16
+#define SQL_DEBUG		32
+#define SQL_POSSESS		64
+#define SQL_PERMISSIONS	128
+//Same rules apply to this list as to the values above. You can only add stuff to it.
+var/global/list/permissionwords_sql = list("BUILDMODE", "ADMIN", "BAN", "FUN", "SERVER", "DEBUG", "POSSESS", "EDITPERMISSIONS")

@@ -11,16 +11,18 @@
 					return
 				else
 					return ..(message)
+			if(stat == DEAD)
+				return ..(message)
 
 		if(length(message) >= 1) //In case people forget the '*help' command, this will slow them the message and prevent people from saying one letter at a time
 			if (copytext(message, 1, 2) != "*")
 				return
 
 	if(src.dna)
-		if(src.dna.mutantrace == "lizard")
+		/*if(src.dna.mutantrace == "lizard") //Soghun stutterss-s-ss-sss.
 			if(copytext(message, 1, 2) != "*")
 				message = dd_replacetext(message, "s", stutter("ss"))
-
+*/
 		if(src.dna.mutantrace == "metroid" && prob(5))
 			if(copytext(message, 1, 2) != "*")
 				if(copytext(message, 1, 2) == ";")
@@ -32,7 +34,7 @@
 				for(var/i = 0,i<imax,i++)
 					message += "E"
 
-	if(stat != 2)
+	if(stat != DEAD)
 		for(var/datum/disease/pierrot_throat/D in viruses)
 			var/list/temp_message = dd_text2list(message, " ") //List each word in the message
 			var/list/pick_list = list()
@@ -115,6 +117,8 @@
 			message = dd_replacetext(message, ".", "")
 			message = lowertext(message)
 			*/
+	if (src.slurring)
+		message = slur(message)
 	..(message)
 
 /mob/living/carbon/human/say_understands(var/other)
@@ -131,3 +135,15 @@
 	if (istype(other, /mob/living/carbon/metroid))
 		return 1
 	return ..()
+
+/mob/living/carbon/human/GetVoice()
+	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
+		var/obj/item/clothing/mask/gas/voice/V = src.wear_mask
+		if(V.vchange)
+			return V.voice
+		else
+			return name
+	if(mind && mind.changeling && mind.changeling.mimicing)
+		return mind.changeling.mimicing
+	return real_name
+

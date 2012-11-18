@@ -29,7 +29,7 @@ def YTCV4(youtube_url,cache=1,debug=0):
         try:
             prev_dict = pickle.load(tiedosto)
         except EOFError: # Cache is corrupt
-            os.remove(directory+"/nano/"+tiedosto.name)
+            os.remove(directory+tiedosto.name)
             print "REMOVED CORRUPT CACHE: "+tiedosto.name
             prev_dict = {}
         tiedosto.close() # I think this should belong here.

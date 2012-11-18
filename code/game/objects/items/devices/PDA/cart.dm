@@ -231,6 +231,14 @@
 			if("message")
 				status_signal.data["msg1"] = data1
 				status_signal.data["msg2"] = data2
+				if(loc)
+					var/obj/item/PDA = loc
+					var/mob/user = PDA.fingerprintslast
+					if(istype(PDA.loc,/mob/living))
+						name = PDA.loc
+					log_admin("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
+					message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
+
 			if("alert")
 				status_signal.data["picture_state"] = data1
 
@@ -428,8 +436,9 @@ Code:
 						menu += "No bots found.<BR>"
 
 					else
-						for(var/obj/machinery/bot/secbot/B in SC.botlist)
-							menu += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
+						for(var/obj/machinery/bot/B in SC.botlist)
+							if (B)
+								menu += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
 
 					menu += "<BR><A href='byond://?src=\ref[SC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
 
@@ -495,7 +504,8 @@ Code:
 
 					else
 						for(var/obj/machinery/bot/mulebot/B in QC.botlist)
-							menu += "<A href='byond://?src=\ref[QC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
+							if(B && B.loc)
+								menu += "<A href='byond://?src=\ref[QC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
 
 					menu += "<BR><A href='byond://?src=\ref[QC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
 

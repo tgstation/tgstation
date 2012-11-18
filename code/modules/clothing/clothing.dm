@@ -90,7 +90,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/suits.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
@@ -102,7 +102,7 @@ BLIND     // can't see anything
 	name = "Space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
@@ -152,6 +152,8 @@ BLIND     // can't see anything
 		hastie = I
 		I.loc = src
 		user << "<span class='notice'>You attach [I] to [src].</span>"
+		if (istype(hastie,/obj/item/clothing/tie/holster))
+			verbs += /obj/item/clothing/under/proc/holster
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
@@ -204,7 +206,7 @@ BLIND     // can't see anything
 	..()
 
 /obj/item/clothing/under/verb/removetie()
-	set name = "Remove Tie"
+	set name = "Remove Accessory"
 	set category = "Object"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
@@ -213,6 +215,8 @@ BLIND     // can't see anything
 	if(hastie)
 		usr.put_in_hands(hastie)
 		hastie = null
+		if (istype(hastie,/obj/item/clothing/tie/holster))
+			verbs -= /obj/item/clothing/under/proc/holster
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
@@ -221,3 +225,40 @@ BLIND     // can't see anything
 /obj/item/clothing/under/rank/New()
 	sensor_mode = pick(0,1,2,3)
 	..()
+
+/obj/item/clothing/under/proc/holster()
+	set name = "Holster"
+	set category = "Object"
+	set src in usr
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat) return
+
+	if (!hastie || !istype(hastie,/obj/item/clothing/tie/holster))
+		usr << "\red You need a holster for that!"
+		return
+	var/obj/item/clothing/tie/holster/H = hastie
+
+	if(!H.holstered)
+		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
+			usr << "\blue You need your gun equiped to holster it."
+			return
+		var/obj/item/weapon/gun/W = usr.get_active_hand()
+		if (!W.isHandgun())
+			usr << "\red This gun won't fit in \the [H]!"
+			return
+		H.holstered = usr.get_active_hand()
+		usr.drop_item()
+		H.holstered.loc = src
+		usr.visible_message("\blue [usr] holsters \the [H.holstered].", "You holster \the [H.holstered].")
+	else
+		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
+			usr << "\red You need an empty hand to draw the gun!"
+		else
+			if(usr.a_intent == "hurt")
+				usr.visible_message("\red [usr] draws \the [H.holstered], ready to shoot!", \
+				"\red You draw \the [H.holstered], ready to shoot!")
+			else
+				usr.visible_message("\blue [usr] draws \the [H.holstered], pointing it at the ground.", \
+				"\blue You draw \the [H.holstered], pointing it at tthe ground.")
+			usr.put_in_hands(H.holstered)
+			H.holstered = null

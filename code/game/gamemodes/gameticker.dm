@@ -7,7 +7,7 @@ var/global/datum/controller/gameticker/ticker
 
 
 /datum/controller/gameticker
-	var/const/restart_timeout = 250
+	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_PREGAME
 
 	var/hide_mode = 0
@@ -124,7 +124,7 @@ var/global/datum/controller/gameticker/ticker
 			if (S.name != "AI")
 				del(S)
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
-//		world << sound('sound/AI/welcome.ogg') // Skie
+		world << sound('sound/AI/welcome.ogg') // Skie
 		//Holiday Round-start stuff	~Carn
 		Holiday_Game_Start()
 
@@ -287,6 +287,7 @@ var/global/datum/controller/gameticker/ticker
 					captainless=0
 				if(player.mind.assigned_role != "MODE")
 					job_master.EquipRank(player, player.mind.assigned_role, 0)
+					EquipCustomItems(player)
 		if(captainless)
 			world << "Captainship not forced on anyone."
 

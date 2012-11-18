@@ -2,6 +2,7 @@
 	name = "Shutters"
 	icon = 'icons/obj/doors/rapid_pdoor.dmi'
 	icon_state = "shutter1"
+	power_channel = ENVIRON
 
 /obj/machinery/door/poddoor/shutters/New()
 	..()

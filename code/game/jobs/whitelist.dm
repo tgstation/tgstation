@@ -1,6 +1,6 @@
 #define WHITELISTFILE "data/whitelist.txt"
 
-var/list/whitelist
+var/list/whitelist = list()
 
 /proc/load_whitelist()
 	var/text = file2text(WHITELISTFILE)
@@ -14,7 +14,7 @@ var/list/whitelist
 		return 0
 	return ("[M.ckey]" in whitelist)
 
-var/list/alien_whitelist
+var/list/alien_whitelist = list()
 
 proc/load_alienwhitelist()
 	var/text = file2text("config/alienwhitelist.txt")

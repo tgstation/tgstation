@@ -1,3 +1,4 @@
+//Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 /client/verb/wiki()
 	set name = "wiki"
 	set desc = "Visit the wiki."
@@ -30,59 +31,6 @@
 	src << browse(file(RULES_FILE), "window=rules;size=480x320")
 #undef RULES_FILE
 
-/client/verb/a_intent_left()
-	set name = "a-intent-left"
-	set hidden = 1
-
-	if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
-		switch(usr.a_intent)
-			if("help")
-				usr.a_intent = "hurt"
-				usr.hud_used.action_intent.icon_state = "intent_hurt"
-			if("disarm")
-				usr.a_intent = "help"
-				usr.hud_used.action_intent.icon_state = "intent_help"
-			if("grab")
-				usr.a_intent = "disarm"
-				usr.hud_used.action_intent.icon_state = "intent_disarm"
-			if("hurt")
-				usr.a_intent = "grab"
-				usr.hud_used.action_intent.icon_state = "intent_grab"
-	else if(issilicon(usr))
-		if(usr.a_intent == "help")
-			usr.a_intent = "hurt"
-			usr.hud_used.action_intent.icon_state = "harm"
-		else
-			usr.a_intent = "help"
-			usr.hud_used.action_intent.icon_state = "help"
-
-/client/verb/a_intent_right()
-	set name = "a-intent-right"
-	set hidden = 1
-
-	if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
-		switch(usr.a_intent)
-			if("help")
-				usr.a_intent = "disarm"
-				usr.hud_used.action_intent.icon_state = "intent_disarm"
-			if("disarm")
-				usr.a_intent = "grab"
-				usr.hud_used.action_intent.icon_state = "intent_grab"
-			if("grab")
-				usr.a_intent = "hurt"
-				usr.hud_used.action_intent.icon_state = "intent_hurt"
-			if("hurt")
-				usr.a_intent = "help"
-				usr.hud_used.action_intent.icon_state = "intent_help"
-	else if(issilicon(usr))
-		if(usr.a_intent == "help")
-			usr.a_intent = "hurt"
-			usr.hud_used.action_intent.icon_state = "harm"
-		else
-			usr.a_intent = "help"
-			usr.hud_used.action_intent.icon_state = "help"
-
-
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"
@@ -99,8 +47,13 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tr = throw
 \tt = say
 \tx = swap-hand
+\tz = activate held object (or y)
 \tf = cycle-intents-left
 \tg = cycle-intents-right
+\t1 = help-intent
+\t2 = disarm-intent
+\t3 = grab-intent
+\t4 = harm-intent
 </font>"}
 
 	var/other = {"<font color='purple'>
@@ -113,8 +66,19 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+e = equip
 \tCtrl+r = throw
 \tCtrl+x = swap-hand
+\tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
 \tCtrl+g = cycle-intents-right
+\tCtrl+1 = help-intent
+\tCtrl+2 = disarm-intent
+\tCtrl+3 = grab-intent
+\tCtrl+4 = harm-intent
+\tDEL = pull
+\tINS = cycle-intents-right
+\tHOME = drop
+\tPGUP = swap-hand
+\tPGDN = activate held object
+\tEND = throw
 </font>"}
 
 	var/admin = {"<font color='purple'>

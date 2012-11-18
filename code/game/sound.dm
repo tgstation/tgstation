@@ -19,7 +19,7 @@
 
 	if (vary)
 		S.frequency = rand(32000, 55000)
-	for (var/mob/M in range(world.view+extrarange, source))       // Plays for people in range.
+	for (var/mob/M in range(world.view+extrarange, source))	   // Plays for people in range.
 		if(locate(/mob/, M))
 			var/mob/M2 = locate(/mob/, M)
 			if (M2.client)
@@ -48,6 +48,16 @@
 							S.pan = max(-100, min(100, dx/8.0 * 100))
 
 						M << S
+
+	for(var/obj/mecha/mech in range(world.view+extrarange, source))
+		var/mob/M = mech.occupant
+		if (M && M.client)
+			if(M.ear_deaf <= 0 || !M.ear_deaf)
+				if(isturf(source))
+					var/dx = source.x - M.x
+					S.pan = max(-100, min(100, dx/8.0 * 100))
+
+				M << S
 																		// Now plays for people in lockers!  -- Polymorph
 
 /mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num)
@@ -78,12 +88,14 @@
 client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful
 	set category = "Special Verbs"
 	set name = "Toggle Ambience"
+
 	usr:client:no_ambi = !usr:client:no_ambi
+
 	if(usr:client:no_ambi)
-		usr << sound(pick('sound/ambience/shipambience.ogg','sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg','sound/ambience/ambimalf.ogg','sound/ambience/ambispace.ogg','sound/ambience/ambimine.ogg','sound/music/title2.ogg'), repeat = 0, wait = 0, volume = 0, channel = 2)
-	else
-		usr << sound(pick('sound/ambience/shipambience.ogg','sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg','sound/ambience/ambimalf.ogg','sound/ambience/ambispace.ogg','sound/ambience/ambimine.ogg','sound/music/title2.ogg'), repeat = 1, wait = 0, volume = 35, channel = 2)
-	usr << "Toggled ambience sound."
+		usr << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
+		usr << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
+
+	usr << "Toggled ambient sound [usr:client:no_ambi?"off":"on"]."
 	return
 
 

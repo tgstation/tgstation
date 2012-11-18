@@ -5,7 +5,7 @@
 	desc = "It's a useless heap of junk... <i>or is it?</i>"
 	gender = PLURAL
 	density = 0
-	anchored = 0
+	anchored = 1
 	layer = 2
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"

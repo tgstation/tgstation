@@ -10,26 +10,57 @@
 
 	volume = 750
 
-	stationary
-		name = "Stationary Air Scrubber"
-		icon_state = "scrubber:0"
-		anchored = 1
-		volume = 30000
-		volume_rate = 5000
+/obj/machinery/portable_atmospherics/scrubber/huge
+	name = "Huge Air Scrubber"
+	icon_state = "scrubber:0"
+	anchored = 1
+	volume = 50000
+	volume_rate = 5000
 
-		attack_hand(var/mob/user as mob)
-			usr << "\blue You can't directly interact with this machine. Use the area atmos computer."
+	var/global/gid = 1
+	var/id = 0
+	New()
+		..()
+		id = gid
+		gid++
 
-		update_icon()
-			src.overlays = 0
+		name = "[name] (ID [id])"
 
+	attack_hand(var/mob/user as mob)
+		usr << "\blue You can't directly interact with this machine. Use the area atmos computer."
+
+	update_icon()
+		src.overlays = 0
+
+		if(on)
+			icon_state = "scrubber:1"
+		else
+			icon_state = "scrubber:0"
+
+	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if(istype(W, /obj/item/weapon/wrench))
 			if(on)
-				icon_state = "scrubber:1"
-			else
-				icon_state = "scrubber:0"
+				user << "\blue Turn it off first!"
+				return
 
-		attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+			anchored = !anchored
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			user << "\blue You [anchored ? "wrench" : "unwrench"] \the [src]."
+
 			return
+
+		..()
+
+/obj/machinery/portable_atmospherics/scrubber/huge/stationary
+	name = "Stationary Air Scrubber"
+
+	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if(istype(W, /obj/item/weapon/wrench))
+			user << "\blue The bolts are too tight for you to unscrew!"
+			return
+
+		..()
+
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
 	src.overlays = 0

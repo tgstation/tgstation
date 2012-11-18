@@ -7,12 +7,17 @@
 	config_tag = "Extend-A-Traitormongous"
 
 	var/list/possible_traitors
+	var/num_players = 0
 
 /datum/game_mode/traitor/autotraitor/announce()
 	..()
-	world << "<B>This is a test bed for theories and methods to implement an infinite traitor round.  Traitors will be added to the round automagically as needed.<br>Expect bugs.</B>"
+	world << "<B>Game mode is AutoTraitor. Traitors will be added to the round automagically as needed.<br>Expect bugs.</B>"
 
 /datum/game_mode/traitor/autotraitor/pre_setup()
+
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
+
 	possible_traitors = get_players_for_role(BE_TRAITOR)
 
 	for(var/datum/mind/player in possible_traitors)
@@ -134,33 +139,6 @@
 		//else
 			//message_admins("Number of Traitors is at maximum.  Not making a new Traitor.")
 
-
-/*	Old equation.  Commenting out.
-		target_traitors = max(1, min(round((playercount + r) / 10, 1), traitors_possible))
-		message_admins("Target Traitor Count is: [target_traitors]")
-
-		if (traitorcount < target_traitors)
-			message_admins("Number of Traitors is below Target.  Making a new Traitor.")
-			var/mob/living/newtraitor = pick(possible_traitors)
-			message_admins("[newtraitor.real_name] is the new Traitor.")
-
-			for(var/datum/objective/o in SelectObjectives(newtraitor.mind.assigned_role, newtraitor.mind))
-				o.owner = newtraitor.mind
-				newtraitor.mind.objectives += o
-
-			equip_traitor(newtraitor)
-			traitors += newtraitor.mind
-			newtraitor << "\red <B>ATTENTION:</B> \black It is time to pay your debt to the Syndicate..."
-			newtraitor << "<B>You are now a traitor.</B>"
-			newtraitor.mind.special_role = "traitor"
-			var/obj_count = 1
-			newtraitor << "\blue Your current objectives:"
-			for(var/datum/objective/objective in newtraitor.mind.objectives)
-				newtraitor << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-				obj_count++
-		else
-			message_admins("Number of Traitors is at Target.  No new Traitor.")
-*/
 		traitorcheckloop()
 
 

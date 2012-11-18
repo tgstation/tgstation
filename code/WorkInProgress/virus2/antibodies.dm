@@ -9,10 +9,13 @@ datum/reagent/antibodies
 	color = "#0050F0"
 
 	reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-		if(istype(M,/mob/living/carbon/human))
+		if(istype(M,/mob/living/carbon))
 			if(src.data && method == INGEST)
-				if(src.data["antibodies"] & M:virus2.antigen)
+				if(M:virus2) if(src.data["antibodies"] & M:virus2.antigen)
 					M:virus2.dead = 1
+			// if the virus is killed this way it immunizes
+			//		M:antibodies |= M:virus2.antigen
+				M:antibodies |= src.data["antibodies"]
 		return
 
 // reserving some numbers for later special antigens
@@ -42,7 +45,7 @@ var/global/list/ANTIGENS = list("[ANTIGEN_A]" = "A", "[ANTIGEN_B]" = "B", "[ANTI
 	icon_state = "health"
 	w_class = 2.0
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | USEDELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
 
 
 /obj/item/device/antibody_scanner/attack(mob/living/carbon/human/M as mob, mob/user as mob)

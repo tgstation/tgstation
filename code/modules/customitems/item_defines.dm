@@ -55,6 +55,12 @@
 	icon_state = "david_fanning_1"
 	item_state = "david_fanning_1"
 
+/obj/item/fluff/john_mckeever_1 //kirbyelder: John McKeever
+	name = "Suspicious Paper"
+	desc = "A piece of paper reading: Smash = 1/3 Leaf Juice, 1/3 Tricker, 1/3 Aajkli Extract"
+	icon_state = "paper"
+	item_state = "paper"
+
 //////////////////////////////////
 ////////// Usable Items //////////
 //////////////////////////////////
@@ -115,13 +121,13 @@
 	icon_on = "blackzippoon"
 	icon_off = "blackzippo"
 
-/obj/item/weapon/lighter/zippo/fluff/sniperyeti_1 //sniperyeti: Patrick Harris/Susan Harris
-	name = "red black zippo"
-	desc = "A shiny red zippo lighter that looks like it's in perfect condition."
+/obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1 //furohman: Fay Sullivan
+	name = "Graduation Lighter"
+	desc = "A silver engraved lighter with 41 on one side and Tharsis University on the other. The lid reads Fay Sullivan, Cybernetic Engineering, 2541"
 	icon = 'custom_items.dmi'
-	icon_state = "redzippo"
-	icon_on = "redzippoon"
-	icon_off = "redzippo"
+	icon_state = "gradzippo"
+	icon_on = "gradzippoon"
+	icon_off = "gradzippo"
 
 /obj/item/weapon/lighter/zippo/fluff/executivekill_1 //executivekill: Hunter Duke
 	name = "Gonzo Fist zippo"
@@ -284,23 +290,31 @@
 	name = "old red flashlight"
 	desc = "A very old, childlike flashlight."
 	icon = 'custom_items.dmi'
-	icon_state = "wolfflight0"
-	w_class = 2
+	icon_state = "wolfflight"
 	item_state = "wolfflight"
-	flags = FPRINT | TABLEPASS | CONDUCT
-	slot_flags = SLOT_BELT
-	m_amt = 50
-	g_amt = 20
-	on = 0
-	brightness_on = 4 //luminosity when on
-	icon_on = "wolfflight1"
-	icon_off = "wolfflight0"
+
+/obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
+	name = "Zelda's Crowbar"
+	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "zeldacrowbar"
+	item_state = "crowbar"
+
 
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////
 
 //////////// Gloves ////////////
+
+/obj/item/clothing/gloves/fluff/murad_hassim_1
+	name = "Tajaran Surgical Gloves"
+	desc = "Reinforced sterile gloves custom tailored to comfortably accommodate Tajaran claws."
+	icon_state = "latex"
+	item_state = "lgloves"
+	siemens_coefficient = 0.30
+	permeability_coefficient = 0.01
+	color="white"
 
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
 	name = "mittens"
@@ -341,19 +355,19 @@
 	icon = 'custom_items.dmi'
 	icon_state = "swatcap"
 
-/obj/item/clothing/head/helmet/welding/fluff/alice_mccrea_1 //madmalicemccrea: Alice McCrea
+/obj/item/clothing/head/welding/fluff/alice_mccrea_1 //madmalicemccrea: Alice McCrea
 	name = "flame decal welding helmet"
 	desc = "A welding helmet adorned with flame decals, and several cryptic slogans of varying degrees of legibility. \"Fly the Friendly Skies\" is clearly visible, written above the visor, for some reason."
 	icon = 'custom_items.dmi'
 	icon_state = "alice_mccrea_1"
 
-/obj/item/clothing/head/helmet/welding/fluff/yuki_matsuda_1 //searif: Yuki Matsuda
+/obj/item/clothing/head/welding/fluff/yuki_matsuda_1 //searif: Yuki Matsuda
 	name = "white decal welding helmet"
 	desc = "A white welding helmet with a character written across it."
 	icon = 'custom_items.dmi'
 	icon_state = "yuki_matsuda_1"
 
-/obj/item/clothing/head/helmet/welding/fluff/norah_briggs_1 //bountylord13: Norah Briggs
+/obj/item/clothing/head/welding/fluff/norah_briggs_1 //bountylord13: Norah Briggs
 	name = "blue flame decal welding helmet"
 	desc = "A welding helmet with blue flame decals on it."
 	icon = 'custom_items.dmi'
@@ -371,15 +385,21 @@
 	icon = 'custom_items.dmi'
 	icon_state = "enos_adlai_1"
 
+/obj/item/clothing/head/fluff/edvin_telephosphor_1 //foolamancer: Edvin Telephosphor
+	name = "Edvin's Hat"
+	desc = "A hat specially tailored for Skrellian anatomy. It has a yellow badge on the front, with a large red 'T' inscribed on it."
+	icon = 'custom_items.dmi'
+	icon_state = "edvin_telephosphor_1"
+
 //////////// Suits ////////////
 
-/obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
+/obj/item/clothing/suit/labcoat/fluff/pink //spaceman96: Trenna Seber
 	name = "pink labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a pink stripe down from the shoulders."
 	icon = 'custom_items.dmi'
 	icon_state = "labcoat_pink_open"
 
-/obj/item/clothing/suit/storage/det_suit/fluff/graycoat //vinceluk: Seth Sealis
+/obj/item/clothing/suit/det_suit/fluff/graycoat //vinceluk: Seth Sealis
 	name = "gray coat"
 	desc = "Old, worn out coat. It's seen better days."
 	icon = 'custom_items.dmi'
@@ -387,7 +407,7 @@
 	item_state = "graycoat"
 	color = "graycoat"
 
-/obj/item/clothing/suit/storage/det_suit/fluff/leatherjack //atomicdog92: Seth Sealis
+/obj/item/clothing/suit/det_suit/fluff/leatherjack //atomicdog92: Seth Sealis
 	name = "leather jacket"
 	desc = "A black leather coat, popular amongst punks, greasers, and other galactic scum."
 	icon = 'custom_items.dmi'
@@ -395,7 +415,7 @@
 	item_state = "leatherjack"
 	color = "leatherjack"
 
-/obj/item/clothing/suit/storage/labcoat/fluff/burnt //Jamini: Edwin Atweeke
+/obj/item/clothing/suit/labcoat/fluff/burnt //Jamini: Edwin Atweeke
 	name = "burnt labcoat"
 	desc = "This lab coat has clearly seen better, less burnt, days."
 	icon = 'custom_items.dmi'
@@ -492,7 +512,7 @@
 	icon_state = "cdc_jumpsuit"
 	color = "cdc_jumpsuit"
 
-/obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
+/obj/item/clothing/suit/labcoat/fluff/cdc_labcoat
 	name = "\improper CDC labcoat"
 	desc = "A standard-issue CDC labcoat that protects against minor chemical spills.  It has the name \"Wiles\" sewn on to the breast pocket."
 	icon = 'custom_items.dmi'
@@ -507,7 +527,7 @@
 	icon_state = "medical_short"
 	color = "medical_short"
 
-/obj/item/clothing/suit/storage/labcoat/fluff/red
+/obj/item/clothing/suit/labcoat/fluff/red
 	name = "red labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a red stripe on the shoulders and rolled up sleeves."
 	icon = 'custom_items.dmi'
@@ -515,7 +535,7 @@
 
 ////// Retired Patrol Outfit //desiderium: Rook Maudlin
 
-/obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat
+/obj/item/clothing/suit/det_suit/fluff/retpolcoat
 	name = "retired colony patrolman's coat"
 	desc = "A clean, black nylon windbreaker with the words \"OUTER LIGHT POLICE\" embroidered in gold-dyed thread on the back. \"RETIRED\" is tastefully embroidered below in a smaller font."
 	icon = 'custom_items.dmi'

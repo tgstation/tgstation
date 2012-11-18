@@ -81,7 +81,7 @@
 		icon_state = "secborg"
 		modtype = "Synd"
 	else
-		laws = new /datum/ai_laws/asimov()
+		laws = new /datum/ai_laws/nanotrasen()
 		connected_ai = select_active_ai_with_fewest_borgs()
 		if(connected_ai)
 			connected_ai.connected_robots += src
@@ -99,6 +99,9 @@
 			camera.status = 0
 	..()
 
+	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
+
+
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
 /mob/living/silicon/robot/Del()
@@ -114,6 +117,7 @@
 	if(module)
 		return
 	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
+	var/channels = list()
 	if(module)
 		return
 	switch(mod)
@@ -146,6 +150,7 @@
 			icon_state = "Miner"
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
+			channels = list("Mining" = 1)
 
 		if("Medical")
 			updatename(mod)
@@ -155,6 +160,7 @@
 			modtype = "Med"
 			nopush = 1
 			feedback_inc("cyborg_medical",1)
+			channels = list("Medical" = 1)
 
 		if("Security")
 			updatename(mod)
@@ -165,6 +171,7 @@
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
 			nopush = 1
 			feedback_inc("cyborg_security",1)
+			channels = list("Security" = 1)
 
 		if("Engineering")
 			updatename(mod)
@@ -173,6 +180,7 @@
 			icon_state = "landmate"
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
+			channels = list("Engineering" = 1)
 
 		if("Janitor")
 			updatename(mod)
@@ -183,6 +191,7 @@
 			feedback_inc("cyborg_janitor",1)
 
 	overlays -= "eyes" //Takes off the eyes that it started with
+	radio.config(channels)
 	updateicon()
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
@@ -267,14 +276,6 @@
 /mob/living/silicon/robot/ex_act(severity)
 	if(!blinded)
 		flick("flash", flash)
-
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		del(src)
-		return
 
 	switch(severity)
 		if(1.0)
@@ -527,6 +528,8 @@
 					src << "\red > N"
 					sleep(20)
 					src << "\red ERRORERRORERROR"
+					src << "<b>Obey these laws:</b>"
+					laws.show_laws(src)
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
 					if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
 						for(var/obj/item/weapon/pickaxe/borgdrill/D in src.module.modules)
@@ -618,7 +621,7 @@
 		if ("disarm")
 			if(!(lying))
 				if (rand(1,100) <= 85)
-					Stun(5)
+					Stun(10)
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
 					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)

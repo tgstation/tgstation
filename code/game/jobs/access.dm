@@ -186,7 +186,7 @@
 		if("Detective")
 			return list(access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 		if("Medical Doctor")
-			return list(access_medical, access_morgue, access_surgery)
+			return list(access_medical, access_morgue, access_surgery, access_virology)
 		if("Botanist")	// -- TLE
 			return list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 		if("Librarian") // -- TLE
@@ -196,9 +196,9 @@
 		if("Captain")
 			return get_all_accesses()
 		if("Security Officer")
-			return list(access_security, access_brig, access_court)
+			return list(access_security, access_brig, access_court,access_maint_tunnels) // Massively requested that sec get there maintenance access back //
 		if("Warden")
-			return list(access_security, access_brig, access_armory, access_court)
+			return list(access_security, access_brig, access_armory, access_court,access_maint_tunnels)
 		if("Scientist")
 			return list(access_tox, access_tox_storage, access_research, access_xenobiology)
 		if("Head of Security")
@@ -229,7 +229,7 @@
 		if("Chef")
 			return list(access_kitchen, access_morgue)
 		if("Roboticist")
-			return list(access_robotics, access_tech_storage, access_morgue) //As a job that handles so many corpses, it makes sense for them to have morgue access.
+			return list(access_robotics, access_tech_storage, access_morgue)  //As a job that handles so many corpses, it makes sense for them to have morgue access.
 		if("Cargo Technician")
 			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 		if("Shaft Miner")
@@ -496,15 +496,21 @@
 	var/jobName
 	var/realJobName
 
+	// hack for alt titles
+	if(istype(loc, /mob))
+		var/mob/M = loc
+		if(M.mind.role_alt_title == jobName && M.mind.assigned_role in get_all_jobs())
+			return M.mind.assigned_role
+
 	if(istype(src, /obj/item/device/pda))
 		if(src:id)
 			jobName = src:id:assignment
 			realJobName = src:id:assignment_real_title
 	if(istype(src, /obj/item/weapon/card/id))
 		jobName = src:assignment
-		realJobName = src:id:assignment_real_title
+		realJobName = src:assignment_real_title
 
-	if(realJobName in get_all_jobs())
+	if( (realJobName in get_all_jobs()) || (jobName in get_all_jobs()) )
 		return jobName
 
 	return "Unknown"

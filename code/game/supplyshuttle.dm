@@ -49,6 +49,11 @@ var/list/mechtoys = list(
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)
+
+	var/obj/structure/stool/bed/B = A
+	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+		return 0
+
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/metroid))	//If your not laying down, or a small creature, no pass.
@@ -297,7 +302,18 @@ var/list/mechtoys = list(
 			if(SP.access)
 				A:req_access = list()
 				A:req_access += text2num(SP.access)
-			for(var/typepath in SP.contains)
+
+			var/list/contains
+			if(istype(SP,/datum/supply_packs/randomised))
+				var/datum/supply_packs/randomised/SPR = SP
+				contains = list()
+				if(SPR.contains.len)
+					for(var/j=1,j<=SPR.num_contained,j++)
+						contains += pick(SPR.contains)
+			else
+				contains = SP.contains
+
+			for(var/typepath in contains)
 				if(!typepath)	continue
 				var/atom/B2 = new typepath(A)
 				if(SP.amount && B2:amount) B2:amount = SP.amount
@@ -385,7 +401,7 @@ var/list/mechtoys = list(
 		var/timeout = world.time + 600
 		var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text),1,MAX_MESSAGE_LEN)
 		if(world.time > timeout)	return
-		if(!reason)	reason = "*None Provided*"
+		if(!reason)	return
 
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
@@ -558,7 +574,7 @@ var/list/mechtoys = list(
 		var/timeout = world.time + 600
 		var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text),1,MAX_MESSAGE_LEN)
 		if(world.time > timeout)	return
-		if(!reason)	reason = "*None Provided*"
+		if(!reason)	return
 
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"

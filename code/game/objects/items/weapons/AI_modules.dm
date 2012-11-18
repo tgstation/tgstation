@@ -48,7 +48,8 @@ AI MODULES
 			comp.current.show_laws()
 			for(var/mob/living/silicon/robot/R in mob_list)
 				if(R.lawupdate && (R.connected_ai == comp.current))
-					R << "Your AI has set your 'laws waiting' flag."
+					R << "These are your laws now:"
+					R.show_laws()
 			usr << "Upload complete. The AI's laws have been modified."
 
 
@@ -249,7 +250,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform // Slightly more dynamic freeform module -- TLE
 	name = "'Freeform' AI Module"
-	var/newFreeFormLaw = ""
+	var/newFreeFormLaw = "freeform"
 	var/lawpos = 15
 	desc = "A 'freeform' AI module: '<freeform>'"
 	origin_tech = "programming=4;materials=4"
@@ -257,11 +258,11 @@ AI MODULES
 /obj/item/weapon/aiModule/freeform/attack_self(var/mob/user as mob)
 	..()
 	lawpos = 0
-	lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num
-	if(lawpos < 15) return
+	while(lawpos < 15)
+		lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num
 	lawpos = min(lawpos, 50)
 	var/newlaw = ""
-	var/targName = stripped_input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw, MAX_MESSAGE_LEN)
+	var/targName = copytext(sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw)),1,MAX_MESSAGE_LEN)
 	newFreeFormLaw = targName
 	desc = "A 'freeform' AI module: ([lawpos]) '[newFreeFormLaw]'"
 

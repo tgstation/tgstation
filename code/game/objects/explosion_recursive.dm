@@ -105,9 +105,6 @@ proc/explosion_rec(turf/epicenter, power)
 /turf/simulated/wall
 	explosion_resistance = 5
 
-/turf/simulated/r_wall
-	explosion_resistance = 25
-
 /turf/simulated/wall/r_wall
 	explosion_resistance = 25
 

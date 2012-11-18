@@ -16,7 +16,8 @@
 #define MOLES_O2STANDARD MOLES_CELLSTANDARD*O2STANDARD	// O2 standard value (21%)
 #define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD	// N2 standard value (79%)
 
-#define MOLES_PLASMA_VISIBLE	0.5 //Moles in a standard cell after which plasma is visible
+#define MOLES_PLASMA_VISIBLE	0.7 //Moles in a standard cell after which plasma is visible
+#define MIN_PLASMA_DAMAGE 20
 
 #define BREATH_VOLUME 0.5	//liters in a normal breath
 #define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
@@ -25,8 +26,8 @@
 	//Amount of air needed before pass out/suffocation commences
 
 // Pressure limits.
-#define HAZARD_HIGH_PRESSURE 750	//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
-#define WARNING_HIGH_PRESSURE 525 	//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
+#define HAZARD_HIGH_PRESSURE 550	//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
+#define WARNING_HIGH_PRESSURE 325 	//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
 #define WARNING_LOW_PRESSURE 50 	//This is when the gray low pressure icon is displayed. (it is 2.5 * HAZARD_LOW_PRESSURE)
 #define HAZARD_LOW_PRESSURE 20		//This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
 
@@ -38,12 +39,14 @@
 
 #define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
-#define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE 15000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
+#define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE 30000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
 #define FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 15000 //for fire helmet quality items (red and white hardhats)
 #define HELMET_MIN_COLD_PROTECITON_TEMPERATURE 160	//For normal helmets
 #define HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For normal helmets
 #define ARMOR_MIN_COLD_PROTECITON_TEMPERATURE 160	//For armor
 #define ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For armor
+#define FIRESUIT_MIN_COLD_PROTECITON_TEMPERATURE 50	//These need better cold protect
+#define SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE 5000	//These need better heat protect
 
 #define GLOVES_MIN_COLD_PROTECITON_TEMPERATURE 2.0	//For some gloves (black and)
 #define GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE 1500		//For some gloves
@@ -61,7 +64,7 @@
 #define DOOR_CRUSH_DAMAGE 10
 
 // Factor of how fast mob nutrition decreases
-#define	HUNGER_FACTOR 0.1
+#define	HUNGER_FACTOR 0.05
 #define	REAGENTS_METABOLISM 0.4
 
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
@@ -81,11 +84,12 @@
 #define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		T20C+10
 #define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	T20C+200
 
-#define FLOOR_HEAT_TRANSFER_COEFFICIENT 0.08
-#define WALL_HEAT_TRANSFER_COEFFICIENT 0.03
-#define SPACE_HEAT_TRANSFER_COEFFICIENT 0.20 //a hack to partly simulate radiative heat
-#define OPEN_HEAT_TRANSFER_COEFFICIENT 0.40
-#define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.10 //a hack for now
+#define FLOOR_HEAT_TRANSFER_COEFFICIENT 0.4
+#define WALL_HEAT_TRANSFER_COEFFICIENT 0.0
+#define DOOR_HEAT_TRANSFER_COEFFICIENT 0.0
+#define SPACE_HEAT_TRANSFER_COEFFICIENT 0.2 //a hack to partly simulate radiative heat
+#define OPEN_HEAT_TRANSFER_COEFFICIENT 0.4
+#define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.1 //a hack for now
 	//Must be between 0 and 1. Values closer to 1 equalize temperature faster
 	//Should not exceed 0.4 else strange heat flow occur
 
@@ -94,7 +98,13 @@
 #define FIRE_SPREAD_RADIOSITY_SCALE		0.85
 #define FIRE_CARBON_ENERGY_RELEASED	  500000 //Amount of heat released per mole of burnt carbon into the tile
 #define FIRE_PLASMA_ENERGY_RELEASED	 3000000 //Amount of heat released per mole of burnt plasma into the tile
-#define FIRE_GROWTH_RATE			25000 //For small fires
+#define FIRE_GROWTH_RATE			40000 //For small fires
+
+#define WATER_BOIL_TEMP 393
+
+// Fire Damage
+#define CARBON_LIFEFORM_FIRE_RESISTANCE 200+T0C
+#define CARBON_LIFEFORM_FIRE_DAMAGE		4
 
 //Plasma fire properties
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
@@ -106,6 +116,16 @@
 #define T0C 273.15					// 0degC
 #define T20C 293.15					// 20degC
 #define TCMB 2.7					// -270.3degC
+
+#define SPECIFIC_HEAT_TOXIN		200
+#define SPECIFIC_HEAT_AIR		20
+#define SPECIFIC_HEAT_CDO		30
+#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
+	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
+
+#define MINIMUM_HEAT_CAPACITY	0.0003
+#define QUANTIZE(variable)		(round(variable,0.0001))
+#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
 
 var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
 
@@ -121,6 +141,8 @@ var/MAX_EXPLOSION_RANGE = 14
 //#define MAX_EXPLOSION_RANGE		14					// Defaults to 12 (was 8) -- TLE
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
+
+#define ALIEN_SELECT_AFK_BUFFER 1 // How many minutes that a person can be AFK before not being allowed to be an alien.
 
 #define NORMPIPERATE 30					//pipe-insulation rate divisor
 #define HEATPIPERATE 8					//heat-exch pipe insulation
@@ -173,7 +195,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
-#define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh) --jumpsuit only (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
+#define PLASMAGUARD 8192		//Does not get contaminated by plasma.
 
 #define	NOREACT		16384 		//Reagents dont' react inside this container.
 
@@ -286,6 +308,8 @@ var/MAX_EXPLOSION_RANGE = 14
 
 // mob/var/list/mutations
 
+#define STRUCDNASIZE 27
+
 	// Generic mutations:
 #define	TK				1
 #define COLD_RESISTANCE	2
@@ -324,6 +348,23 @@ var/MAX_EXPLOSION_RANGE = 14
 #define REFLEXES		27 	// dodge 50% of projectiles
 #define NANOREGEN		28 	// regenerative nanobots, -3 all damage types per second
 
+
+	//2spooky
+#define SKELETON 29
+#define PLANT 30
+
+// Other Mutations:
+#define mNobreath		100 	// no need to breathe
+#define mRemote			101 	// remote viewing
+#define mRegen			102 	// health regen
+#define mRun			103 	// no slowdown
+#define mRemotetalk		104 	// remote talking
+#define mMorph			105 	// changing appearance
+#define mBlend			106 	// nothing (seriously nothing)
+#define mHallucination	107 	// hallucinations
+#define mFingerprints	108 	// no fingerprints
+#define mShock			109 	// insulated hands
+#define mSmallsize		110 	// table climbing
 
 //disabilities
 #define NEARSIGHTED		1
@@ -431,7 +472,7 @@ var/list/liftable_structures = list(\
 	/obj/machinery/hydroponics, \
 	/obj/machinery/computer, \
 	/obj/machinery/optable, \
-	/obj/machinery/dispenser, \
+	/obj/structure/dispenser, \
 	/obj/machinery/gibber, \
 	/obj/machinery/microwave, \
 	/obj/machinery/vending, \
@@ -505,7 +546,21 @@ var/list/liftable_structures = list(\
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
 
+// Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
+// the index of the sort department that you want. For example, sortType set to 2 will reroute all packages
+// tagged for the Cargo Bay.
+var/list/TAGGERLOCATIONS = list("Disposals",
+	"Cargo Bay", "QM Office", "Engineering", "CE Office",
+	"Atmospherics", "Security", "HoS Office", "Medbay",
+	"CMO Office", "Chemistry", "Research", "RD Office",
+	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
+	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
+
+#define MIN_PLAYER_AGE 19
+#define MAX_PLAYER_AGE 60
+
 //Damage things
+
 #define CUT 		"cut"
 #define BRUISE		"bruise"
 #define BRUTE		"brute"
@@ -524,31 +579,23 @@ var/list/liftable_structures = list(\
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
 
-/////////////////
-//ORGAN DEFINES//
-/////////////////
+///////////////////ORGAN DEFINES///////////////////
+
 #define ORGAN_CUT_AWAY 1
 #define ORGAN_GAUZED 2
 #define ORGAN_ATTACHABLE 4
 #define ORGAN_BLEEDING 8
-#define ORGAN_BANDAGED 16
 #define ORGAN_BROKEN 32
 #define ORGAN_DESTROYED 64
 #define ORGAN_ROBOT 128
 #define ORGAN_SPLINTED 256
 #define SALVED 512
 
-#define MIN_PLAYER_AGE 18
-#define MAX_PLAYER_AGE 65
+#define HOSTILE_STANCE_IDLE 1
+#define HOSTILE_STANCE_ALERT 2
+#define HOSTILE_STANCE_ATTACK 3
+#define HOSTILE_STANCE_ATTACKING 4
+#define HOSTILE_STANCE_TIRED 5
 
-//needed for ZAS
-
-#define SPECIFIC_HEAT_TOXIN		200
-#define SPECIFIC_HEAT_AIR		20
-#define SPECIFIC_HEAT_CDO		30
-#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
-	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
-
-#define MINIMUM_HEAT_CAPACITY	0.0003
-#define QUANTIZE(variable)		(round(variable,0.0001))
-#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
+#define LEFT 1
+#define RIGHT 2

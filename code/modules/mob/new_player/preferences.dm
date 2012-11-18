@@ -16,7 +16,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 var/global/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "Mankini", "Love-Hearts", "Black2", "Grey2", "Stripey", "Kinky", "None") //Curse whoever made male/female underwear diffrent colours
 var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "Babydoll", "Baby-Blue", "Green", "Pink", "Kinky", "None")
-var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
+var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
 
 var/const/BE_TRAITOR   =(1<<0)
 var/const/BE_OPERATIVE =(1<<1)
@@ -272,7 +272,7 @@ datum/preferences
 		if(jobban_isbanned(user, "Records"))
 			dat += "<b>You are banned from using character records.</b><br>"
 		else
-			dat += "<b><a href=\"byond://?src=\ref[user];preference=records;task=input\">Character Records</a></b><br><br>"
+			dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br><br>"
 
 		dat += "<b>Flavor Text</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'>Change</a><br>"
@@ -295,6 +295,35 @@ datum/preferences
 		dat += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[user];preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
+
+		dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust Limbs</a><br>"
+		for(var/name in organ_data)
+			var/status = organ_data[name]
+			var/organ_name = null
+			switch(name)
+				if("l_arm")
+					organ_name = "left arm"
+				if("r_arm")
+					organ_name = "right arm"
+				if("l_leg")
+					organ_name = "left leg"
+				if("r_leg")
+					organ_name = "right leg"
+				if("l_foot")
+					organ_name = "left foot"
+				if("r_foot")
+					organ_name = "right foot"
+				if("l_hand")
+					organ_name = "left hand"
+				if("r_hand")
+					organ_name = "right hand"
+
+			if(status == "cyborg")
+				dat += "\tRobotical [organ_name] prothesis<br>"
+			if(status == "amputated")
+				dat += "\tAmputated [organ_name]<br>"
+		dat+="<br>"
+
 
 		if(gender == MALE)
 			dat += "Underwear: <a href =\"byond://?src=\ref[user];preference=underwear;task=input\"><b>[underwear_m[underwear]]</b></a><br>"
@@ -372,14 +401,14 @@ datum/preferences
 		HTML += "<tt><center>"
 		HTML += "<b>Set Character Records</b><br>"
 
-		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;med_record=1\">Medical Records</a><br>"
+		HTML += "<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"
 
 		if(lentext(med_record) <= 40)
 			HTML += "[med_record]"
 		else
 			HTML += "[copytext(med_record, 1, 37)]..."
 
-		HTML += "<br><br><a href=\"byond://?src=\ref[user];preferences=1;sec_record=1\">Security Records</a><br>"
+		HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
 
 		if(lentext(sec_record) <= 40)
 			HTML += "[sec_record]<br>"
@@ -387,7 +416,7 @@ datum/preferences
 			HTML += "[copytext(sec_record, 1, 37)]...<br>"
 
 		HTML += "<br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;records=-1\">\[Done\]</a>"
+		HTML += "<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
 		HTML += "</center></tt>"
 
 		user << browse(null, "window=preferences")
@@ -424,7 +453,7 @@ datum/preferences
 
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
-
+		if (!job_master)		return
 		for(var/datum/job/job in job_master.occupations)
 
 			index += 1
@@ -471,6 +500,8 @@ datum/preferences
 				HTML += " <font color=orange>\[Low]</font>"
 			else
 				HTML += " <font color=red>\[NEVER]</font>"
+			if(job.alt_titles)
+				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetAltTitle(job)]\]</a></td></tr>"
 			HTML += "</a></td></tr>"
 
 		HTML += "</td'></tr></table>"
@@ -596,7 +627,6 @@ datum/preferences
 
 	proc/process_link(mob/user, list/href_list)
 		if(!user)	return
-
 		if(href_list["preference"] == "job")
 			switch(href_list["task"])
 				if("close")
@@ -605,6 +635,14 @@ datum/preferences
 				if("random")
 					userandomjob = !userandomjob
 					SetChoices(user)
+				if ("alt_title")
+					var/datum/job/job = locate(href_list["job"])
+					if (job)
+						var/choices = list(job.title) + job.alt_titles
+						var/choice = input("Pick a title for [job.title].", "Character Generation", GetAltTitle(job)) as anything in choices | null
+						if(choice)
+							SetAltTitle(job, choice)
+							SetChoices(user)
 				if("input")
 					SetJob(user, href_list["text"])
 				else
@@ -645,6 +683,32 @@ datum/preferences
 				SetSkills(user)
 			return 1
 
+		else if(href_list["preference"] == "records")
+			if(text2num(href_list["record"]) >= 1)
+				SetRecords(user)
+				return
+			else
+				user << browse(null, "window=records")
+			if(href_list["task"] == "med_record")
+				var/medmsg = input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message
+
+				if(medmsg != null)
+					medmsg = copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN)
+					medmsg = html_encode(medmsg)
+
+					med_record = medmsg
+					SetRecords(user)
+
+			if(href_list["task"] == "sec_record")
+				var/secmsg = input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message
+
+				if(secmsg != null)
+					secmsg = copytext(secmsg, 1, MAX_PAPER_MESSAGE_LEN)
+					secmsg = html_encode(secmsg)
+
+					sec_record = secmsg
+					SetRecords(user)
+
 		switch(href_list["task"])
 			if("random")
 				switch(href_list["preference"])
@@ -679,14 +743,14 @@ datum/preferences
 						randomize_skin_tone()
 
 					if("bag")
-						backbag = rand(1,3)
+						backbag = rand(1,4)
 
 					if("all")
 						gender = pick(MALE,FEMALE)
 						randomize_name()
 						age = rand(17,45)
 						underwear = rand(1,12)
-						backbag = rand(1,3)
+						backbag = rand(1,4)
 						randomize_hair_color("hair")
 						randomize_hair(gender)
 						randomize_hair_color("facial")
@@ -814,10 +878,6 @@ datum/preferences
 						var/list/valid_hairstyles = list()
 						for(var/hairstyle in hair_styles_list)
 							var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-							if(gender == MALE && !S.choose_male)
-								continue
-							if(gender == FEMALE && !S.choose_female)
-								continue
 							if( !(species in S.species_allowed))
 								continue
 
@@ -911,32 +971,56 @@ datum/preferences
 						else
 							user << browse(null, "window=disabil")
 
-					if("records")
-						if(text2num(href_list["records"]) >= 1)
-							SetRecords(user)
-							return
-						else
-							user << browse(null, "window=records")
+					if("limbs")
+						var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
+						if(!limb_name) return
 
-					if("med_record")
-						var/medmsg = input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message
+						var/limb = null
+						var/second_limb = null // if you try to change the arm, the hand should also change
+						var/third_limb = null  // if you try to unchange the hand, the arm should also change
+						switch(limb_name)
+							if("Left Leg")
+								limb = "l_leg"
+								second_limb = "l_foot"
+							if("Right Leg")
+								limb = "r_leg"
+								second_limb = "r_foot"
+							if("Left Arm")
+								limb = "l_arm"
+								second_limb = "l_hand"
+							if("Right Arm")
+								limb = "r_arm"
+								second_limb = "r_hand"
+							if("Left Foot")
+								limb = "l_foot"
+								third_limb = "l_leg"
+							if("Right Foot")
+								limb = "r_foot"
+								third_limb = "r_leg"
+							if("Left Hand")
+								limb = "l_hand"
+								third_limb = "l_arm"
+							if("Right Hand")
+								limb = "r_hand"
+								third_limb = "r_arm"
 
-						if(medmsg != null)
-							medmsg = copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN)
-							medmsg = html_encode(medmsg)
+						var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
+						if(!new_state) return
 
-							med_record = medmsg
-							SetRecords(user)
+						switch(new_state)
+							if("Normal")
+								organ_data[limb] = null
+								if(third_limb)
+									organ_data[third_limb] = null
+							if("Amputated")
+								organ_data[limb] = "amputated"
+								if(second_limb)
+									organ_data[second_limb] = "amputated"
+							if("Prothesis")
+								organ_data[limb] = "cyborg"
+								if(second_limb)
+									organ_data[second_limb] = "cyborg"
 
-					if("sec_record")
-						var/secmsg = input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message
-
-						if(secmsg != null)
-							secmsg = copytext(secmsg, 1, MAX_PAPER_MESSAGE_LEN)
-							secmsg = html_encode(secmsg)
-
-							sec_record = secmsg
-							SetRecords(user)
 
 			else
 				switch(href_list["preference"])
@@ -1062,6 +1146,10 @@ datum/preferences
 		if(character.dna)
 			character.dna.real_name = character.real_name
 
+		character.flavor_text = flavor_text
+		character.med_record = med_record
+		character.sec_record = sec_record
+
 		character.gender = gender
 
 		character.age = age
@@ -1085,6 +1173,22 @@ datum/preferences
 		character.h_style = h_style
 		character.f_style = f_style
 
+		character.skills = skills
+
+		// Destroy/cyborgize organs
+		for(var/name in organ_data)
+			var/datum/organ/external/O = character.organs_by_name[name]
+			if(!O) continue
+
+			var/status = organ_data[name]
+			if(status == "amputated")
+				O.amputated = 1
+				O.status |= ORGAN_DESTROYED
+				O.destspawn = 1
+			else if(status == "cyborg")
+				O.status |= ORGAN_ROBOT
+
+
 		switch(UI_style)
 			if("Orange")
 				character.UI = 'icons/mob/screen1_Orange.dmi'
@@ -1098,7 +1202,7 @@ datum/preferences
 			underwear = 1 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me.
 		character.underwear = underwear
 
-		if(backbag > 3 || backbag < 1)
+		if(backbag > 4 || backbag < 1)
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
@@ -1126,6 +1230,7 @@ datum/preferences
 			C.midis = src.midis
 			C.be_alien = be_special & BE_ALIEN
 			C.be_pai = be_special & BE_PAI
+			C.be_syndicate = be_special & BE_TRAITOR
 			if(isnull(src.ghost_ears)) src.ghost_ears = 1 //There were problems where the default was null before someone saved their profile.
 			C.ghost_ears = src.ghost_ears
 			C.ghost_sight = src.ghost_sight

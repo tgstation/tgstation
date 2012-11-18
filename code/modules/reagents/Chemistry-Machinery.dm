@@ -17,7 +17,7 @@
 	var/recharged = 0
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
 	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
-	"copper","mercury","radium","water","ethanol","sugar","sacid")
+	"copper","mercury","radium","water","ethanol","sugar","sacid","milk")
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
@@ -25,7 +25,7 @@
 	var/oldenergy = energy
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
-		use_power(2000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
+		use_power(3000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 
 /obj/machinery/chem_dispenser/power_change()
 	if(powered())
@@ -185,6 +185,9 @@
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
 	var/mode = 0
 	var/condi = 0
+	var/bottlesprite = "1" //yes, strings
+	var/pillsprite = "1"
+	var/client/has_sprites = list()
 	var/useramount = 30 // Last used amount
 
 /obj/machinery/chem_master/New()
@@ -347,6 +350,7 @@
 			P.name = "[name] pill"
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
+			P.icon_state = "pill"+pillsprite
 			reagents.trans_to(P,50)
 
 		else if (href_list["createbottle"])
@@ -357,11 +361,33 @@
 				P.name = "[name] bottle"
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
+				P.icon_state = "bottle"+bottlesprite
 				reagents.trans_to(P,30)
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P,50)
-
+		else if(href_list["change_pill"])
+			#define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
+			var/dat = "<table>"
+			for(var/i = 1 to MAX_PILL_SPRITE)
+				dat += "<tr><td><a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a></td></tr>"
+			dat += "</table>"
+			usr << browse(dat, "window=chem_master")
+			return
+		else if(href_list["change_bottle"])
+			#define MAX_BOTTLE_SPRITE 20 //max icon state of the bottle sprites
+			var/dat = "<table>"
+			for(var/i = 1 to MAX_BOTTLE_SPRITE)
+				dat += "<tr><td><a href=\"?src=\ref[src]&bottle_sprite=[i]\"><img src=\"bottle[i].png\" /></a></td></tr>"
+			dat += "</table>"
+			usr << browse(dat, "window=chem_master")
+			return
+		else if(href_list["pill_sprite"])
+			pillsprite = href_list["pill_sprite"]
+		else if(href_list["bottle_sprite"])
+			bottlesprite = href_list["bottle_sprite"]
+		else
+			usr << browse(null, "window=chem_master")
 	src.updateUsrDialog()
 	return
 
@@ -372,6 +398,13 @@
 	return src.attack_hand(user)
 
 /obj/machinery/chem_master/attack_hand(mob/user as mob)
+	if(!(user.client in has_sprites))	//yes, it's in three places, so they get downloaded even when they arent going to be shown, because they could be in the future
+		spawn()
+			has_sprites += user.client
+			for(var/i = 1 to MAX_PILL_SPRITE)
+				usr << browse_rsc(icon('chemical.dmi', "pill" + num2text(i)), "pill[i].png")
+			for(var/i = 1 to MAX_BOTTLE_SPRITE)
+				usr << browse_rsc(icon('chemical.dmi', "bottle" + num2text(i)), "bottle[i].png")
 	if(stat & BROKEN)
 		return
 	user.machine = src
@@ -418,8 +451,8 @@
 		else
 			dat += "Empty<BR>"
 		if(!condi)
-			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><BR>"
-			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"
+			dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
+			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A><a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></a>"
 		else
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"
 	if(!condi)
@@ -515,6 +548,7 @@
 			src.temphtml = "The replicator is not ready yet."
 		src.updateUsrDialog()
 		return
+	/*
 	else if (href_list["create_virus_culture"])
 		if(!wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
@@ -535,6 +569,7 @@
 			src.temphtml = "The replicator is not ready yet."
 		src.updateUsrDialog()
 		return
+	*/
 	else if (href_list["empty_beaker"])
 		beaker.reagents.clear_reagents()
 		src.updateUsrDialog()
@@ -596,7 +631,7 @@
 					for(var/datum/disease/D in Blood.data["viruses"])
 						if(!D.hidden[PANDEMIC])
 
-							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[D.type]'>Create virus culture bottle</A>":"none"]<BR>"
+							dat += "<b>Disease Agent:</b> [D?"[D.agent]":"none"]<BR>"
 							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
 							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
 							dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
@@ -696,7 +731,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 
 
 
@@ -761,7 +797,7 @@
 			O.contents -= G
 			G.loc = src
 			holdingitems += G
-			if((holdingitems && holdingitems.len >= limit) || beaker.reagents.total_volume >= 80) //Sanity checking so the blender doesn't overfill
+			if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
 				user << "You fill the All-In-One grinder to the brim."
 				break
 
@@ -960,7 +996,7 @@
 	spawn(60)
 		inuse = 0
 		interact(usr)
-	//Snacks
+	//Snacks and Plants
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
@@ -973,10 +1009,15 @@
 
 			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 			var/amount = allowed[r_id]
-			if(amount == 0)
-				if (O.reagents != null && O.reagents.has_reagent("nutriment"))
-					beaker.reagents.add_reagent(r_id, min(O.reagents.get_reagent_amount("nutriment"), space))
-					O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
+			if(amount <= 0)
+				if(amount == 0)
+					if (O.reagents != null && O.reagents.has_reagent("nutriment"))
+						beaker.reagents.add_reagent(r_id, min(O.reagents.get_reagent_amount("nutriment"), space))
+						O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
+				else
+					if (O.reagents != null && O.reagents.has_reagent("nutriment"))
+						beaker.reagents.add_reagent(r_id, min(round(O.reagents.get_reagent_amount("nutriment")*abs(amount)), space))
+						O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
 
 			else
 				O.reagents.trans_id_to(beaker, r_id, min(amount, space))

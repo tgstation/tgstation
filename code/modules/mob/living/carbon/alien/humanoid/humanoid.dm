@@ -60,20 +60,6 @@
 		tally = -1 // hunters go supersuperfast
 	return (tally + move_delay_add + config.alien_delay)
 
-//This needs to be fixed
-/mob/living/carbon/alien/humanoid/Stat()
-	..()
-
-	statpanel("Status")
-	if (client && client.holder)
-		stat(null, "([x], [y], [z])")
-
-	stat(null, "Intent: [a_intent]")
-	stat(null, "Move Mode: [m_intent]")
-
-	if (client.statpanel == "Status")
-		stat(null, "Plasma Stored: [getPlasma()]")
-
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
@@ -86,15 +72,6 @@
 /mob/living/carbon/alien/humanoid/ex_act(severity)
 	if(!blinded)
 		flick("flash", flash)
-
-	if (stat == 2 && client)
-		gib()
-		return
-
-	else if (stat == 2 && !client)
-		xgibs(loc, viruses)
-		del(src)
-		return
 
 	var/shielded = 0
 
@@ -427,7 +404,7 @@
 				if ((HULK in M.mutations) || (SUPRSTR in M.augmentations))//HULK SMASH
 					damage += 14
 					spawn(0)
-						Paralyse(5)
+						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
@@ -537,14 +514,5 @@ In all, this is a lot like the monkey code. /N
 	user << browse(dat, text("window=mob[name];size=340x480"))
 	onclose(user, "mob[name]")
 	return
-
-/mob/living/carbon/alien/humanoid/updatehealth()
-	if(nodamage)
-		health = maxHealth
-		stat = CONSCIOUS
-	else
-		//oxyloss is only used for suicide
-		//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
 
