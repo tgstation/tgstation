@@ -564,7 +564,7 @@
 "kR" = (/obj/structure/table,/obj/item/weapon/paper/pamphlet{pixel_x = 2; pixel_y = 2},/obj/item/weapon/paper/pamphlet{pixel_x = -2; pixel_y = -2},/turf/simulated/floor{tag = "icon-warningcorner (WEST)"; icon_state = "warningcorner"; dir = 8},/area/awaymission/gateroom)
 "kS" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/awaymission/gateroom)
 "kT" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/awaymission/gateroom)
-"kU" = (/obj/structure/table,/obj/item/weapon/camera_test,/turf/simulated/floor{tag = "icon-warningcorner (EAST)"; icon_state = "warningcorner"; dir = 4},/area/awaymission/gateroom)
+"kU" = (/obj/structure/table,/obj/item/device/camera,/turf/simulated/floor{tag = "icon-warningcorner (EAST)"; icon_state = "warningcorner"; dir = 4},/area/awaymission/gateroom)
 "kV" = (/obj/structure/stool/bed/chair/comfy/brown{tag = "icon-comfychair_brown (WEST)"; icon_state = "comfychair_brown"; dir = 8},/turf/simulated/floor{icon_state = "wood"},/area/awaymission/southblock)
 "kW" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/awaymission/arrivalblock)
 "kX" = (/obj/structure/stool/bed/chair,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/awaymission/arrivalblock)

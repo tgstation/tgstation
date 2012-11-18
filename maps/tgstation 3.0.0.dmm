@@ -623,7 +623,7 @@
 "alY" = (/obj/structure/table/woodentable,/obj/machinery/recharger{pixel_y = 4},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "alZ" = (/obj/machinery/light{dir = 1},/obj/structure/filingcabinet,/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "ama" = (/obj/structure/table/woodentable,/obj/item/weapon/soap/deluxe,/turf/simulated/floor/wood,/area/crew_quarters/captain)
-"amb" = (/obj/structure/table/woodentable,/obj/item/weapon/camera_test,/obj/item/weapon/storage/photo_album{pixel_y = -10},/turf/simulated/floor/wood,/area/crew_quarters/captain)
+"amb" = (/obj/structure/table/woodentable,/obj/item/device/camera,/obj/item/weapon/storage/photo_album{pixel_y = -10},/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "amc" = (/obj/machinery/computer/arcade,/turf/simulated/floor/wood,/area/crew_quarters/captain)
 "amd" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor{dir = 8; icon_state = "brown"},/area/hallway/primary/central)
 "ame" = (/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{dir = 8; icon_state = "brown"},/area/hallway/primary/central)

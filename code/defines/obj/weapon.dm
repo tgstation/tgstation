@@ -412,15 +412,6 @@
 	throw_speed = 4
 	throw_range = 5
 
-/obj/item/weapon/camera
-	name = "camera"
-	desc = "Use this to take pictures."
-	icon_state = "camera"
-	var/last_pic = 1.0
-	item_state = "wrench"
-	w_class = 2.0
-	origin_tech = "magnets=1"
-
 /obj/item/weapon/card
 	name = "card"
 	desc = "Does card things."
@@ -1221,7 +1212,7 @@
 	pressure_resistance = 70
 
 
-/obj/item/weapon/camera_bug
+/obj/item/device/camera_bug
 	name = "camera bug"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "flash"
