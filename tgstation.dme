@@ -799,7 +799,6 @@
 #include "code\game\turfs\simulated.dm"
 #include "code\game\turfs\turf.dm"
 #include "code\game\turfs\unsimulated.dm"
-#include "code\game\turfs\simulated\asteroid.dm"
 #include "code\game\turfs\simulated\floor.dm"
 #include "code\game\turfs\simulated\floor_types.dm"
 #include "code\game\turfs\simulated\walls.dm"
