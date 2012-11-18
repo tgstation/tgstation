@@ -111,7 +111,7 @@ var/list/beam_master = list()
 
 
 
-/obj/item/projectile/beam/bluetag
+/obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"
 	icon_state = "bluelaser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -126,7 +126,7 @@ var/list/beam_master = list()
 				M.Weaken(5)
 		return 1
 
-/obj/item/projectile/beam/redtag
+/obj/item/projectile/beam/lastertag/red
 	name = "lasertag beam"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -141,7 +141,7 @@ var/list/beam_master = list()
 				M.Weaken(5)
 		return 1
 
-/obj/item/projectile/beam/omnitag//A laser tag bolt that stuns EVERYONE
+/obj/item/projectile/beam/lastertag/omni//A laser tag bolt that stuns EVERYONE
 	name = "lasertag beam"
 	icon_state = "omnilaser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
