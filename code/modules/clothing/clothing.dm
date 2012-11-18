@@ -259,6 +259,6 @@ BLIND     // can't see anything
 				"\red You draw \the [H.holstered], ready to shoot!")
 			else
 				usr.visible_message("\blue [usr] draws \the [H.holstered], pointing it at the ground.", \
-				"\blue You draw \the [H.holstered], pointing it at tthe ground.")
+				"\blue You draw \the [H.holstered], pointing it at the ground.")
 			usr.put_in_hands(H.holstered)
 			H.holstered = null
