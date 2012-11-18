@@ -67,7 +67,7 @@
 "bo" = (/obj/structure/rack,/turf/simulated/floor/plating{tag = "icon-warnplate (NORTH)"; icon_state = "warnplate"; dir = 1},/area/awaymission/BMPship3)
 "bp" = (/turf/simulated/floor/plating{tag = "icon-warnplate (NORTH)"; icon_state = "warnplate"; dir = 1},/area/awaymission/BMPship3)
 "bq" = (/turf/simulated/floor/plating{tag = "icon-warnplate (NORTHEAST)"; icon_state = "warnplate"; dir = 5},/area/awaymission/BMPship3)
-"br" = (/obj/effect/sign/vacuum,/turf/simulated/shuttle/wall{tag = "icon-swall1"; icon_state = "swall1"},/area/awaymission/BMPship3)
+"br" = (/obj/structure/sign/vacuum,/turf/simulated/shuttle/wall{tag = "icon-swall1"; icon_state = "swall1"},/area/awaymission/BMPship3)
 "bs" = (/turf/simulated/floor/plating/airless{tag = "icon-platingdmg1"; icon_state = "platingdmg1"},/area/awaymission/BMPship1)
 "bt" = (/turf/simulated/floor/plating/airless{tag = "icon-panelscorched"; icon_state = "panelscorched"},/area/awaymission/BMPship1)
 "bu" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/obj/item/clothing/glasses/regular/hipster,/turf/simulated/floor/plating/airless,/area/awaymission/BMPship1)

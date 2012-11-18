@@ -15,7 +15,7 @@
 	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as Contraband aboard Nanotrasen© Space Facilities."
 	icon_state = "rolled_poster"
 	var/serial_number = 0
-	var/obj/effect/decal/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
+	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
 
 
 /obj/item/weapon/contraband/poster/New(turf/loc,var/given_serial=0)
@@ -44,7 +44,7 @@
 			var/check = 0
 			var/stuff_on_wall = 0
 			for( var/obj/O in W.contents) //Let's see if it already has a poster on it or too much stuff
-				if(istype(O,/obj/effect/decal/poster))
+				if(istype(O,/obj/structure/sign/poster))
 					check = 1
 					break
 				stuff_on_wall++
@@ -65,7 +65,7 @@
 
 //############################## THE ACTUAL DECALS ###########################
 
-obj/effect/decal/poster
+obj/structure/sign/poster
 	name = "poster"
 	desc = "A large piece of space-resistant printed paper. It's considered contraband."
 	icon = 'icons/obj/contraband.dmi'
@@ -74,7 +74,7 @@ obj/effect/decal/poster
 	var/ruined = 0
 
 
-obj/effect/decal/poster/New(var/serial)
+obj/structure/sign/poster/New(var/serial)
 
 	src.serial_number = serial
 
@@ -139,7 +139,7 @@ obj/effect/decal/poster/New(var/serial)
 			desc = "Why are you still here?"
 	..()
 
-obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
+obj/structure/sign/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if( istype(W, /obj/item/weapon/wirecutters) )
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(src.ruined)
@@ -151,7 +151,7 @@ obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
 
 
-/obj/effect/decal/poster/attack_hand(mob/user as mob)
+/obj/structure/sign/poster/attack_hand(mob/user as mob)
 	if(src.ruined)
 		return
 	var/temp_loc = user.loc
@@ -170,7 +170,7 @@ obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if("No")
 			return
 
-/obj/effect/decal/poster/proc/roll_and_drop(turf/loc)
+/obj/structure/sign/poster/proc/roll_and_drop(turf/loc)
 	var/obj/item/weapon/contraband/poster/P = new(src,src.serial_number)
 	P.resulting_poster = src
 	P.loc = loc
@@ -183,7 +183,7 @@ obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	var/stuff_on_wall = 0
 	for( var/obj/O in src.contents) //Let's see if it already has a poster on it or too much stuff
-		if(istype(O,/obj/effect/decal/poster))
+		if(istype(O,/obj/structure/sign/poster))
 			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
 			return
 		stuff_on_wall++
@@ -194,7 +194,7 @@ obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user << "<span class='notice'>You start placing the poster on the wall...</span>" //Looks like it's uncluttered enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
-	var/obj/effect/decal/poster/D = P.resulting_poster
+	var/obj/structure/sign/poster/D = P.resulting_poster
 
 	var/temp_loc = user.loc
 	flick("poster_being_set",D)
