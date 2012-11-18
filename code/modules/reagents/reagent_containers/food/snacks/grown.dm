@@ -333,8 +333,22 @@
 	New()
 		..()
 		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.maximum_volume = 20
 			reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
-			bitesize = 1+round(reagents.total_volume / 2, 1)
+			bitesize = reagents.maximum_volume // Always eat the apple in one
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
+	seed = "/obj/item/seeds/poisonedappleseed"
+	name = "apple"
+	desc = "It's a little piece of Eden."
+	icon_state = "apple"
+	potency = 15
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.maximum_volume = 20
+			reagents.add_reagent("cyanide", 1+round((potency / 5), 1))
+			bitesize = reagents.maximum_volume // Always eat the apple in one
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
 	seed = "/obj/item/seeds/goldappleseed"

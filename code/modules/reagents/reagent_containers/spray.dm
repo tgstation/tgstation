@@ -10,7 +10,7 @@
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
-	amount_per_transfer_from_this = 5
+	amount_per_transfer_from_this = 10
 	volume = 250
 	possible_transfer_amounts = null
 
@@ -79,6 +79,16 @@
 		usr << "[round(R.volume)] units of [R.name] left."
 	return
 
+/obj/item/weapon/reagent_containers/spray/verb/empty()
+
+	set name = "Empty Spray Bottle"
+	set category = "Object"
+	set src in usr
+
+	if(isturf(usr.loc))
+		usr << "<span class='notice'>You empty the [src] onto the floor.</span>"
+		reagents.reaction(usr.loc)
+		spawn(5) src.reagents.clear_reagents()
 
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner

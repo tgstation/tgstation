@@ -706,6 +706,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/poisonedappleseed
+	name = "pack of apple seeds"
+	desc = "These seeds grow into apple trees."
+	icon_state = "seed-apple"
+	mypath = "/obj/item/seeds/poisonedappleseed"
+	species = "apple"
+	plantname = "Apple Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned"
+	lifespan = 55
+	endurance = 35
+	maturation = 6
+	production = 6
+	yield = 5
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/goldappleseed
 	name = "pack of golden apple seeds"
 	desc = "These seeds grow into golden apple trees. Good thing there are no firebirds in space."
