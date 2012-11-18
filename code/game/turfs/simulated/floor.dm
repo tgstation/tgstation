@@ -185,7 +185,7 @@ turf/simulated/floor/proc/update_icon()
 	if (is_light_floor())
 		var/obj/item/stack/tile/light/T = floor_tile
 		T.on = !T.on
-	update_icon()
+		update_icon()
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
 		return
 	if (user.pulling.anchored)

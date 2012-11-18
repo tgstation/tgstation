@@ -202,3 +202,8 @@
 	..()
 	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
+
+/turf/simulated/floor/plating/snow
+	name = "snow"
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "snow"
