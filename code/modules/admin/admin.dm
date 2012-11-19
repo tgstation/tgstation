@@ -38,7 +38,7 @@ var/global/floorIsLava = 0
 		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
 
 	body += "<br><br>\[ "
-	body += "<a href='?src=\ref[src];adminplayervars=\ref[M]'>VV</a> - "
+	body += "<a href='?_src_=vars;Vars=\ref[M]'>VV</a> - "
 	body += "<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> - "
 	body += "<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> - "
 	body += "<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> - "

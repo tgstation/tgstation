@@ -61,7 +61,7 @@
 			else
 				msg += " - Playing"
 
-			if(C.inactivity > AFK_THRESHOLD)
+			if(C.is_afk())
 				msg += " (AFK)"
 			msg += "\n"
 	else

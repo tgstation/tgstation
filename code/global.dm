@@ -51,6 +51,7 @@ var/diaryofmeanpeople = null
 var/href_logfile = null
 var/station_name = null
 var/game_version = "/tg/ Station 13"
+var/changelog_hash = ""
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0

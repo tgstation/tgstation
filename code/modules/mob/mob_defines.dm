@@ -201,9 +201,6 @@
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 
-	var/datum/preferences/storedpreferences = null
-
-
 	var/list/radar_blips = list() // list of screen objects, radar blips
 	var/radar_open = 0 	// nonzero is radar is open
 

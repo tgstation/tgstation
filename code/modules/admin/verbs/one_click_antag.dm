@@ -63,17 +63,13 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		var/datum/preferences/preferences = new
-
-		if(!applicant.stat)
-			if(applicant.mind)
-				if (!applicant.mind.special_role)
-					if(!jobban_isbanned(applicant, "traitor") && !jobban_isbanned(applicant, "Syndicate"))
-						if(!(applicant.job in temp.restricted_jobs))
-							if(applicant.client)
-								if(preferences.savefile_load(applicant, 0))
-									if(preferences.be_special & BE_TRAITOR)
-										candidates += applicant
+		if(applicant.client.prefs.be_special & BE_TRAITOR)
+			if(!applicant.stat)
+				if(applicant.mind)
+					if (!applicant.mind.special_role)
+						if(!jobban_isbanned(applicant, "traitor") && !jobban_isbanned(applicant, "Syndicate"))
+							if(!(applicant.job in temp.restricted_jobs))
+								candidates += applicant
 
 	if(candidates.len)
 		var/numTratiors = min(candidates.len, 3)
@@ -99,18 +95,13 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-
-		var/datum/preferences/preferences = new
-
-		if(!applicant.stat)
-			if(applicant.mind)
-				if (!applicant.mind.special_role)
-					if(!jobban_isbanned(applicant, "changeling") && !jobban_isbanned(applicant, "Syndicate"))
-						if(!(applicant.job in temp.restricted_jobs))
-							if(applicant.client)
-								if(preferences.savefile_load(applicant, 0))
-									if(preferences.be_special & BE_CHANGELING)
-										candidates += applicant
+		if(applicant.client.prefs.be_special & BE_CHANGELING)
+			if(!applicant.stat)
+				if(applicant.mind)
+					if (!applicant.mind.special_role)
+						if(!jobban_isbanned(applicant, "changeling") && !jobban_isbanned(applicant, "Syndicate"))
+							if(!(applicant.job in temp.restricted_jobs))
+								candidates += applicant
 
 	if(candidates.len)
 		var/numChanglings = min(candidates.len, 3)
@@ -134,18 +125,13 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-
-		var/datum/preferences/preferences = new
-
-		if(!applicant.stat)
-			if(applicant.mind)
-				if (!applicant.mind.special_role)
-					if(!jobban_isbanned(applicant, "revolutionary") && !jobban_isbanned(applicant, "Syndicate"))
-						if(!(applicant.job in temp.restricted_jobs))
-							if(applicant.client)
-								if(preferences.savefile_load(applicant, 0))
-									if(preferences.be_special & BE_REV)
-										candidates += applicant
+		if(applicant.client.prefs.be_special & BE_REV)
+			if(applicant.stat == CONSCIOUS)
+				if(applicant.mind)
+					if(!applicant.mind.special_role)
+						if(!jobban_isbanned(applicant, "revolutionary") && !jobban_isbanned(applicant, "Syndicate"))
+							if(!(applicant.job in temp.restricted_jobs))
+								candidates += applicant
 
 	if(candidates.len)
 		var/numRevs = min(candidates.len, 3)
@@ -204,18 +190,13 @@ client/proc/one_click_antag()
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-
-		var/datum/preferences/preferences = new
-
-		if(!applicant.stat)
-			if(applicant.mind)
-				if (!applicant.mind.special_role)
-					if(!jobban_isbanned(applicant, "cultist") && !jobban_isbanned(applicant, "Syndicate"))
-						if(!(applicant.job in temp.restricted_jobs))
-							if(applicant.client)
-								if(preferences.savefile_load(applicant, 0))
-									if(preferences.be_special & BE_CULTIST)
-										candidates += applicant
+		if(applicant.client.prefs.be_special & BE_CULTIST)
+			if(applicant.stat == CONSCIOUS)
+				if(applicant.mind)
+					if(!applicant.mind.special_role)
+						if(!jobban_isbanned(applicant, "cultist") && !jobban_isbanned(applicant, "Syndicate"))
+							if(!(applicant.job in temp.restricted_jobs))
+								candidates += applicant
 
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)

@@ -9,7 +9,7 @@
 #define RECOMMENDED_VERSION 494
 /world/New()
 	..()
-
+	changelog_hash = md5('html/changelog.html')
 	src.load_configuration()
 
 	if (config && config.server_name != null && config.server_suffix && world.port > 0)
@@ -172,14 +172,16 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
-	for(var/client/C)
-		if( !C.holder && (C.inactivity >= INACTIVITY_KICK) )
-			if(C.mob)
-				if(!istype(C.mob, /mob/dead/))
-					log_access("AFK: [key_name(C)]")
-					C << "\red You have been inactive for more than 10 minutes and have been disconnected."
-			del(C)
-	spawn(3000) KickInactiveClients()//more or less five minutes
+	spawn(-1)
+		set background = 1
+		while(1)
+			sleep(INACTIVITY_KICK)
+			for(var/client/C in clients)
+				if(C.is_afk(INACTIVITY_KICK))
+					if(!istype(C.mob, /mob/dead))
+						log_access("AFK: [key_name(C)]")
+						C << "\red You have been inactive for more than 10 minutes and have been disconnected."
+						del(C)
 #undef INACTIVITY_KICK
 
 

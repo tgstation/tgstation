@@ -1,7 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /mob/new_player
-	var/datum/preferences/preferences = null
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 	var/totalPlayers = 0		 //Player counts for the Lobby tab
@@ -105,14 +104,11 @@
 		if(!client)	return 0
 
 		if(href_list["show_preferences"])
-			preferences.ShowChoices(src)
+			client.prefs.ShowChoices(src)
 			return 1
 
 		if(href_list["ready"])
-			if(!ready)
-				ready = 1
-			else
-				ready = 0
+			ready = !ready
 
 		if(href_list["refresh"])
 			src << browse(null, "window=playersetup") //closes the player setup window
@@ -121,6 +117,7 @@
 		if(href_list["observe"])
 
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+				if(!client)	return 1
 				var/mob/dead/observer/observer = new()
 
 				spawning = 1
@@ -132,12 +129,12 @@
 				src << "\blue Now teleporting."
 				observer.loc = O.loc
 				observer.key = key
-				if(preferences.be_random_name)
-					preferences.randomize_name()
-				observer.name = preferences.real_name
+				if(client.prefs.be_random_name)
+					client.prefs.randomize_name()
+				observer.name = client.prefs.real_name
 				observer.real_name = observer.name
 
-				preferences.copy_to_observer(observer)
+				client.prefs.copy_to_observer(observer)
 
 				del(src)
 				return 1
@@ -196,13 +193,10 @@
 				usr << browse(null,"window=privacypoll")
 
 		if(!ready && href_list["preference"])
-			preferences.process_link(src, href_list)
+			if(client)
+				client.prefs.process_link(src, href_list)
 		else if(!href_list["late_join"])
 			new_player_panel()
-
-		if(href_list["priv_msg"])
-			..()	//pass PM calls along to /mob/Topic
-			return
 
 		if(href_list["showpoll"])
 			handle_player_polling()
@@ -319,10 +313,10 @@
 
 		if(ticker.random_players)
 			new_character.gender = pick(MALE, FEMALE)
-			preferences.randomize_name()
-			preferences.randomize_appearance_for(new_character)
+			client.prefs.randomize_name()
+			client.prefs.randomize_appearance_for(new_character)
 		else
-			preferences.copy_to(new_character)
+			client.prefs.copy_to(new_character)
 
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
@@ -336,7 +330,7 @@
 
 		new_character.name = real_name
 		new_character.dna.ready_dna(new_character)
-		new_character.dna.b_type = preferences.b_type
+		new_character.dna.b_type = client.prefs.b_type
 
 		new_character.key = key		//Manually transfer the key to log them in
 

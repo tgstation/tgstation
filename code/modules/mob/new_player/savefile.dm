@@ -1,237 +1,201 @@
 #define SAVEFILE_VERSION_MIN	7
 #define SAVEFILE_VERSION_MAX	7
 
-datum/preferences/proc/savefile_path(mob/user)
-	if(!user.client)
-		return null
-	else
-		return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences[user.client.activeslot].sav"
+/datum/preferences/proc/load_path(ckey)
+	if(!ckey)	return
+	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/preferences.sav"
 
-datum/preferences/proc/savefile_saveslot(mob/user,var/slot)//Mirrors default slot across each save
-	if(!user.client)
-		return null
-	else
-		for(var/i = 1; i <= MAX_SAVE_SLOTS; i += 1)
-			var/savefile/F = new /savefile("data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences[i].sav")
-			F["default_slot"] << slot
-	return 1
+/datum/preferences/proc/load_preferences()
+	if(!path)				return 0
+	if(!fexists(path))		return 0
 
-datum/preferences/proc/savefile_save(mob/user)
-	if (IsGuestKey(user.key))
-		return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
 
-	var/savefile/F = new /savefile(src.savefile_path(user))
-//	var/version
-//	F["version"] >> version
+	S["version"] >> savefile_version
 
-	F["version"] << SAVEFILE_VERSION_MAX
+	//general preferences
+	S["ooccolor"]			>> ooccolor
+	S["lastchangelog"]		>> lastchangelog
+	S["UI_style"]			>> UI_style
+	S["be_special"]			>> be_special
+	S["default_slot"]		>> default_slot
 
-	F["real_name"] << src.real_name
-	F["name_is_always_random"] << src.be_random_name
+	//to be consolidated into a bitfield
+	S["sound_adminhelp"]	>> sound_adminhelp
+	S["lobby_music"]		>> lobby_music
+	S["midis"]				>> midis
+	S["ghost_ears"]			>> ghost_ears
+	S["ghost_sight"]		>> ghost_sight
 
-	F["gender"] << src.gender
-	F["age"] << src.age
+	//Conversion
+/*	if(!savefile_version || savefile_version < SAVEFILE_VERSION_MIN || savefile_version > SAVEFILE_VERSION_MAX)
+		if(!savefile_update())
+			fdel(path)
+			C << "<font color='red'>Error: savefile_load(): Your savefile was not compatible and had to be deleted.</font>"
+			return 0	*/
 
-	//Job data
-	F["job_civilian_high"] << src.job_civilian_high
-	F["job_civilian_med"] << src.job_civilian_med
-	F["job_civilian_low"] << src.job_civilian_low
+	//Sanitize
+	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
+	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
+	UI_style		= sanitize_inlist(UI_style, list("Midnight","Orange","old"), initial(UI_style))
+	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
+	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 
-	F["job_medsci_high"] << src.job_medsci_high
-	F["job_medsci_med"] << src.job_medsci_med
-	F["job_medsci_low"] << src.job_medsci_low
-
-	F["job_engsec_high"] << src.job_engsec_high
-	F["job_engsec_med"] << src.job_engsec_med
-	F["job_engsec_low"] << src.job_engsec_low
-
-	F["userandomjob"] << src.userandomjob
-
-	//Body data
-	F["hair_red"] << src.r_hair
-	F["hair_green"] << src.g_hair
-	F["hair_blue"] << src.b_hair
-	F["facial_red"] << src.r_facial
-	F["facial_green"] << src.g_facial
-	F["facial_blue"] << src.b_facial
-	F["skin_tone"] << src.s_tone
-	F["hair_style_name"] << src.h_style
-	F["facial_style_name"] << src.f_style
-	F["eyes_red"] << src.r_eyes
-	F["eyes_green"] << src.g_eyes
-	F["eyes_blue"] << src.b_eyes
-	F["blood_type"] << src.b_type
-	F["underwear"] << src.underwear
-	F["backbag"] << src.backbag
-	F["backbag"] << src.backbag
-
-
-
-	F["be_special"] << src.be_special
-	//F["UI"] << src.UI
-	if(isnull(UI_style))
-		UI_style = "Midnight"
-	F["UI_style"] << UI_style
-	F["midis"] << src.midis
-	F["ghost_ears"] << src.ghost_ears
-	F["ghost_sight"] << src.ghost_sight
-	F["ooccolor"] << src.ooccolor
-	F["lastchangelog"] << src.lastchangelog
-
-	F["OOC_Notes"] << src.metadata
-
-	F["sound_adminhelp"] << src.sound_adminhelp
-	F["default_slot"] << src.default_slot
-	F["slotname"] << src.slot_name
-	F["lobby_music"] << src.lobby_music
+	sound_adminhelp	= sanitize_integer(sound_adminhelp, 0, 1, initial(sound_adminhelp))
+	lobby_music		= sanitize_integer(lobby_music, 0, 1, initial(lobby_music))
+	midis			= sanitize_integer(midis, 0, 1, initial(midis))
+	ghost_ears		= sanitize_integer(ghost_ears, 0, 1, initial(ghost_ears))
+	ghost_sight		= sanitize_integer(ghost_sight, 0, 1, initial(ghost_sight))
 
 	return 1
 
-// loads the savefile corresponding to the mob's ckey
-// if silent=true, report incompatible savefiles
-// returns 1 if loaded (or file was incompatible)
-// returns 0 if savefile did not exist
+/datum/preferences/proc/save_preferences()
+	if(!path)				return 0
 
-datum/preferences/proc/savefile_load(mob/user)
-	if(IsGuestKey(user.key))	return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
 
-	var/path = savefile_path(user)
+	//general preferences
+	S["ooccolor"]			<< ooccolor
+	S["lastchangelog"]		<< lastchangelog
+	S["UI_style"]			<< UI_style
+	S["be_special"]			<< be_special
+	S["default_slot"]		<< default_slot
 
-	if(!fexists(path))
-		//Is there a preference file before this was committed?
-		path = "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences.sav"
-		if(!fexists(path))
-			//No there is not
-			return 0
-		else
-			//Yes there is. Let's rename it.
-			var/savefile/oldsave = new/savefile(path)
-			fcopy(oldsave, savefile_path(user))
-			fdel(path) // We don't need the old file anymore
-			path = savefile_path(user)
-			// Did nothing break?
-			if(!fexists(path))
-				return 0
-
-	var/savefile/F = new /savefile(path)
-
-	var/version = null
-	F["version"] >> version
-
-	if(isnull(version) || version < SAVEFILE_VERSION_MIN || version > SAVEFILE_VERSION_MAX)
-		fdel(path)
-		if(version)
-			alert(user, "Your savefile was incompatible with this version and was deleted.")
-		return 0
-
-	F["real_name"] >> src.real_name
-	F["gender"] >> src.gender
-	F["age"] >> src.age
-
-	F["hair_red"] >> src.r_hair
-	F["hair_green"] >> src.g_hair
-	F["hair_blue"] >> src.b_hair
-	F["facial_red"] >> src.r_facial
-	F["facial_green"] >> src.g_facial
-	F["facial_blue"] >> src.b_facial
-	F["skin_tone"] >> src.s_tone
-	F["hair_style_name"] >> src.h_style
-	F["facial_style_name"] >> src.f_style
-	F["eyes_red"] >> src.r_eyes
-	F["eyes_green"] >> src.g_eyes
-	F["eyes_blue"] >> src.b_eyes
-	F["blood_type"] >> src.b_type
-	F["underwear"] >> src.underwear
-	if(underwear == 0) underwear = 12 //For old players who have 0 in their savefile
-	F["backbag"] >> src.backbag
-	if(isnull(backbag)) backbag = 2
-	F["name_is_always_random"] >> src.be_random_name
-	F["midis"] >> src.midis
-	F["ghost_ears"] >> src.ghost_ears
-	if(isnull(ghost_ears)) ghost_ears = 1 //Hotfix
-	F["ghost_sight"] >> src.ghost_sight
-	if(isnull(ghost_sight)) ghost_sight = 1 //Hotfix
-	F["ooccolor"] >> src.ooccolor
-	F["lastchangelog"] >> src.lastchangelog
-	//F["UI"] >> src.UI
-	F["UI_style"] >> src.UI_style
-	if(isnull(UI_style))
-		UI_style = "Midnight"
-	F["be_special"] >> src.be_special
-
-	F["job_civilian_high"] >> src.job_civilian_high
-	F["job_civilian_med"] >> src.job_civilian_med
-	F["job_civilian_low"] >> src.job_civilian_low
-
-	F["job_medsci_high"] >> src.job_medsci_high
-	F["job_medsci_med"] >> src.job_medsci_med
-	F["job_medsci_low"] >> src.job_medsci_low
-
-	F["job_engsec_high"] >> src.job_engsec_high
-	F["job_engsec_med"] >> src.job_engsec_med
-	F["job_engsec_low"] >> src.job_engsec_low
-
-	F["userandomjob"] >> src.userandomjob
-
-	F["OOC_Notes"] >> src.metadata
-
-	F["sound_adminhelp"] >> src.sound_adminhelp
-	F["default_slot"] >> src.default_slot
-	if(isnull(default_slot))
-		default_slot = 1
-	F["slotname"] >> src.slot_name
-	F["lobby_music"] >> src.lobby_music
-	if(isnull(lobby_music))
-		lobby_music = 1
-
-	if(isnull(metadata))
-		metadata = ""
-
-	//NOTE: Conversion things go inside this if statement
-	//When updating the save file remember to add 1 to BOTH the savefile constants
-	//Also take the old conversion things that no longer apply out of this if
-	if(version && version < SAVEFILE_VERSION_MAX)
-		convert_hairstyles() // convert version 4 hairstyles to version 5
+	//to be consolidated into a bitfield
+	S["sound_adminhelp"]	<< sound_adminhelp
+	S["lobby_music"]		<< lobby_music
+	S["midis"]				<< midis
+	S["ghost_ears"]			<< ghost_ears
+	S["ghost_sight"]		<< ghost_sight
 
 	return 1
+
+/datum/preferences/proc/load_character(slot)
+	if(!path)				return 0
+	if(!fexists(path))		return 0
+
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	if(!slot)	slot = default_slot
+	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	if(slot != default_slot)
+		default_slot = slot
+		S["default_slot"] << slot
+	S.cd = "/character[slot]"
+
+	//Character
+	S["OOC_Notes"]			>> metadata
+	S["real_name"]			>> real_name
+	S["name_is_always_random"] >> be_random_name
+	S["gender"]				>> gender
+	S["age"]				>> age
+	//colors to be consolidated into hex strings (requires some work with dna code)
+	S["hair_red"]			>> r_hair
+	S["hair_green"]			>> g_hair
+	S["hair_blue"]			>> b_hair
+	S["facial_red"]			>> r_facial
+	S["facial_green"]		>> g_facial
+	S["facial_blue"]		>> b_facial
+	S["skin_tone"]			>> s_tone
+	S["hair_style_name"]	>> h_style
+	S["facial_style_name"]	>> f_style
+	S["eyes_red"]			>> r_eyes
+	S["eyes_green"]			>> g_eyes
+	S["eyes_blue"]			>> b_eyes
+	S["underwear"]			>> underwear
+	S["backbag"]			>> backbag
+
+	//Jobs
+	S["userandomjob"]		>> userandomjob
+	S["job_civilian_high"]	>> job_civilian_high
+	S["job_civilian_med"]	>> job_civilian_med
+	S["job_civilian_low"]	>> job_civilian_low
+	S["job_medsci_high"]	>> job_medsci_high
+	S["job_medsci_med"]		>> job_medsci_med
+	S["job_medsci_low"]		>> job_medsci_low
+	S["job_engsec_high"]	>> job_engsec_high
+	S["job_engsec_med"]		>> job_engsec_med
+	S["job_engsec_low"]		>> job_engsec_low
+
+	//Sanitize
+	metadata		= sanitize_text(metadata, initial(metadata))
+	real_name		= reject_bad_name(real_name)
+	if(!real_name)	randomize_name()
+	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
+	gender			= sanitize_gender(gender)
+	age				= sanitize_integer(age, 17, 85, initial(age))
+	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
+	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
+	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
+	r_facial		= sanitize_integer(r_facial, 0, 255, initial(r_facial))
+	g_facial		= sanitize_integer(g_facial, 0, 255, initial(g_facial))
+	b_facial		= sanitize_integer(b_facial, 0, 255, initial(b_facial))
+	s_tone			= sanitize_integer(s_tone, -185, 34, initial(s_tone))
+	h_style			= sanitize_inlist(h_style, hair_styles_list, initial(h_style))
+	f_style			= sanitize_inlist(f_style, facial_hair_styles_list, initial(f_style))
+	r_eyes			= sanitize_integer(r_eyes, 0, 255, initial(r_eyes))
+	g_eyes			= sanitize_integer(g_eyes, 0, 255, initial(g_eyes))
+	b_eyes			= sanitize_integer(b_eyes, 0, 255, initial(b_eyes))
+	underwear		= sanitize_integer(underwear, 1, underwear_m.len, initial(underwear))
+	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
+
+	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
+	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
+	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
+	job_civilian_low = sanitize_integer(job_civilian_low, 0, 65535, initial(job_civilian_low))
+	job_medsci_high = sanitize_integer(job_medsci_high, 0, 65535, initial(job_medsci_high))
+	job_medsci_med = sanitize_integer(job_medsci_med, 0, 65535, initial(job_medsci_med))
+	job_medsci_low = sanitize_integer(job_medsci_low, 0, 65535, initial(job_medsci_low))
+	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
+	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
+	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
+
+	return 1
+
+/datum/preferences/proc/save_character()
+	if(!path)				return 0
+
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	S.cd = "/character[default_slot]"
+
+	//Character
+	S["OOC_Notes"]			<< metadata
+	S["real_name"]			<< real_name
+	S["name_is_always_random"] << be_random_name
+	S["gender"]				<< gender
+	S["age"]				<< age
+	S["hair_red"]			<< r_hair
+	S["hair_green"]			<< g_hair
+	S["hair_blue"]			<< b_hair
+	S["facial_red"]			<< r_facial
+	S["facial_green"]		<< g_facial
+	S["facial_blue"]		<< b_facial
+	S["skin_tone"]			<< s_tone
+	S["hair_style_name"]	<< h_style
+	S["facial_style_name"]	<< f_style
+	S["eyes_red"]			<< r_eyes
+	S["eyes_green"]			<< g_eyes
+	S["eyes_blue"]			<< b_eyes
+	S["underwear"]			<< underwear
+	S["backbag"]			<< backbag
+
+	//Jobs
+	S["userandomjob"]		<< userandomjob
+	S["job_civilian_high"]	<< job_civilian_high
+	S["job_civilian_med"]	<< job_civilian_med
+	S["job_civilian_low"]	<< job_civilian_low
+	S["job_medsci_high"]	<< job_medsci_high
+	S["job_medsci_med"]		<< job_medsci_med
+	S["job_medsci_low"]		<< job_medsci_low
+	S["job_engsec_high"]	<< job_engsec_high
+	S["job_engsec_med"]		<< job_engsec_med
+	S["job_engsec_low"]		<< job_engsec_low
+
+	return 1
+
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
-
-
-
-datum/preferences/proc/convert_hairstyles()
-	// convert hairstyle names from old savefiles
-	switch(h_style)
-		if("Balding")
-			h_style = "Balding Hair"
-		if("Fag")
-			h_style = "Flow Hair"
-		if("Jensen Hair")
-			h_style = "Adam Jensen Hair"
-		if("Kusangi Hair")
-			h_style = "Kusanagi Hair"
-
-	switch(f_style)
-		if("Watson")
-			f_style = "Watson Mustache"
-		if("Chaplin")
-			f_style = "Square Mustache"
-		if("Selleck")
-			f_style = "Selleck Mustache"
-		if("Van Dyke")
-			f_style = "Van Dyke Mustache"
-		if("Elvis")
-			f_style = "Elvis Sideburns"
-		if("Abe")
-			f_style = "Abraham Lincoln Beard"
-		if("Hipster")
-			f_style = "Hipster Beard"
-		if("Hogan")
-			f_style = "Hulk Hogan Mustache"
-		if("Jensen Goatee")
-			f_style = "Adam Jensen Beard"
-	return
-
-#undef SAVEFILE_VERSION_MIN
-#undef SAVEFILE_VERSION_MAX

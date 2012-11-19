@@ -158,7 +158,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 		var/list/candidates = list()	//list of candidate keys
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client && !G.client.holder && ((G.client.inactivity/10)/60) <= 5)
+			if(G.client && !G.client.holder && !G.client.is_afk())
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 					candidates += G.key
 		if(!candidates.len)	return

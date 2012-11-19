@@ -1433,7 +1433,7 @@ window "rpane"
 		lock = none
 	elem "rulesb"
 		type = BUTTON
-		pos = 289,0
+		pos = 278,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1459,9 +1459,37 @@ window "rpane"
 		is-checked = false
 		group = "rpanemode"
 		button-type = pushbutton
+	elem "changelog"
+		type = BUTTON
+		pos = 341,0
+		size = 67x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Changelog"
+		image = ""
+		command = "Changelog"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
 	elem "forumb"
 		type = BUTTON
-		pos = 224,0
+		pos = 215,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1489,7 +1517,7 @@ window "rpane"
 		button-type = pushbutton
 	elem "wikib"
 		type = BUTTON
-		pos = 160,0
+		pos = 152,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none

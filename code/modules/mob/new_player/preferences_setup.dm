@@ -14,7 +14,6 @@ datum/preferences
 		randomize_eyes_color()
 		underwear = 1
 		backbag = 2
-		b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
 		age = rand(19,35)
 		copy_to(H,1)
 

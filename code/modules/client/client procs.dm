@@ -50,11 +50,10 @@
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	switch(href_list["_src_"])
-		if("holder")	hsrc = usr.client.holder
-		if("usr")		hsrc = usr
-
-	if(view_var_Topic(href,href_list,hsrc))	//Until viewvars can be rewritten as datum/admins/Topic()
-		return
+		if("holder")	hsrc = holder
+		if("usr")		hsrc = mob
+		if("prefs")		return prefs.process_link(usr,href_list)
+		if("vars")		return view_var_Topic(href,href_list,hsrc)
 
 	..()	//redirect to hsrc.Topic()
 
@@ -108,6 +107,12 @@
 		admins += src
 		holder.owner = src
 
+	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
+	prefs = preferences_datums[ckey]
+	if(!prefs)
+		prefs = new /datum/preferences(src)
+		preferences_datums[ckey] = prefs
+
 	. = ..()	//calls mob.Login()
 
 	if( (world.address == address || !address) && !host )
@@ -120,7 +125,10 @@
 
 	log_client_to_db()
 
-	getFiles('html/search.js','html/panels.css')
+	send_resources()
+
+	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
+		winset(src, "rpane.changelog", "background-color=#eaeaea;font-style=bold")
 
 
 	//////////////
@@ -185,6 +193,51 @@
 
 //checks if a client is afk
 //3000 frames = 5 minutes
-/client/proc/is_afk(duration=AFK_THRESHOLD)
+/client/proc/is_afk(duration=3000)
 	if(inactivity > duration)	return inactivity
 	return 0
+
+//send resources to the client. It's here in its own proc so we can move it around easiliy if need be
+/client/proc/send_resources()
+	getFiles(
+		'html/search.js',
+		'html/panels.css',
+		'icons/pda_icons/pda_atmos.png',
+		'icons/pda_icons/pda_back.png',
+		'icons/pda_icons/pda_bell.png',
+		'icons/pda_icons/pda_blank.png',
+		'icons/pda_icons/pda_boom.png',
+		'icons/pda_icons/pda_bucket.png',
+		'icons/pda_icons/pda_crate.png',
+		'icons/pda_icons/pda_cuffs.png',
+		'icons/pda_icons/pda_eject.png',
+		'icons/pda_icons/pda_exit.png',
+		'icons/pda_icons/pda_flashlight.png',
+		'icons/pda_icons/pda_honk.png',
+		'icons/pda_icons/pda_mail.png',
+		'icons/pda_icons/pda_medical.png',
+		'icons/pda_icons/pda_menu.png',
+		'icons/pda_icons/pda_mule.png',
+		'icons/pda_icons/pda_notes.png',
+		'icons/pda_icons/pda_power.png',
+		'icons/pda_icons/pda_rdoor.png',
+		'icons/pda_icons/pda_reagent.png',
+		'icons/pda_icons/pda_refresh.png',
+		'icons/pda_icons/pda_scanner.png',
+		'icons/pda_icons/pda_signaler.png',
+		'icons/pda_icons/pda_status.png',
+		'icons/spideros_icons/sos_1.png',
+		'icons/spideros_icons/sos_2.png',
+		'icons/spideros_icons/sos_3.png',
+		'icons/spideros_icons/sos_4.png',
+		'icons/spideros_icons/sos_5.png',
+		'icons/spideros_icons/sos_6.png',
+		'icons/spideros_icons/sos_7.png',
+		'icons/spideros_icons/sos_8.png',
+		'icons/spideros_icons/sos_9.png',
+		'icons/spideros_icons/sos_10.png',
+		'icons/spideros_icons/sos_11.png',
+		'icons/spideros_icons/sos_12.png',
+		'icons/spideros_icons/sos_13.png',
+		'icons/spideros_icons/sos_14.png'
+		)

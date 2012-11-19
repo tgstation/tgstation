@@ -482,11 +482,6 @@ var/list/liftable_structures = list(\
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
 
-//The number of deciseconds which someone needs to be inactive to be classified as AFK:
-#define AFK_THRESHOLD 3000
-
-
-
 #define SEE_INVISIBLE_MINIMUM 5
 
 #define SEE_INVISIBLE_OBSERVER_NOLIGHTING 15
