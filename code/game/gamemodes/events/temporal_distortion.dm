@@ -1,1 +1,0 @@
-/proc/temporal_distortion()
