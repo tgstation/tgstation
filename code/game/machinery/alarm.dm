@@ -750,6 +750,8 @@ table tr:first-child th:first-child { border: none;}
 			src.mend(t1)
 		else
 			src.cut(t1)
+		spawn(1)
+			src.updateUsrDialog()
 	else if (href_list["pulse"])
 		var/t1 = text2num(href_list["pulse"])
 		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
@@ -760,6 +762,8 @@ table tr:first-child th:first-child { border: none;}
 			return
 		else
 			src.pulse(t1)
+		spawn(1)
+			src.updateUsrDialog()
 
 
 
@@ -960,7 +964,7 @@ table tr:first-child th:first-child { border: none;}
 		mode=AALARM_MODE_SCRUBBING
 		apply_mode()
 
-	src.updateDialog()
+	//src.updateDialog()
 	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)

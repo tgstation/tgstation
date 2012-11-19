@@ -351,7 +351,7 @@ datum
 						if(R.id == "blood" && reagent == "blood")
 							if(R.data && data)
 
-								if(R.data["viruses"] && data["viruses"])
+								if(R.data["viruses"] || data["viruses"])
 
 									var/list/mix1 = R.data["viruses"]
 									var/list/mix2 = data["viruses"]

@@ -11,6 +11,13 @@
 
 var/list/archive_diseases = list()
 
+// The order goes from easy to cure to hard to cure.
+var/list/advance_cures = 	list(
+									"nutriment", "sugar", "orangejuice",
+									"spaceacillin", "kelotane", "ethanol",
+									"leporazine", "synaptizine", "lipozine",
+									"silver", "gold", "plasma"
+								)
 
 /*
 
@@ -191,6 +198,7 @@ var/list/archive_diseases = list()
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
 		SetSpread(max(BLOOD, min(properties["transmittable"] - symptoms.len, AIRBORNE)))
 		permeability_mod = max(round(0.5 * properties["transmittable"]), 1)
+		cure_chance = 10 - min(max(properties["resistance"], -5), 5) // can be between 5 and 15
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
@@ -239,42 +247,9 @@ var/list/archive_diseases = list()
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure(var/list/properties = list())
 	if(properties && properties.len)
-		var/res = max(properties["resistance"] - (symptoms.len / 2), 0)
+		var/res = min(max(properties["resistance"] - (symptoms.len / 2), 1), advance_cures.len)
 		//world << "Res = [res]"
-		switch(round(res))
-			// Due to complications, I cannot randomly generate cures or randomly give cures.
-			if(0)
-				cure_id = "nutriment"
-
-			if(1)
-				cure_id = "sodiumchloride"
-
-			if(2)
-				cure_id = "orangejuice"
-
-			if(3)
-				cure_id = "spaceacillin"
-
-			if(4)
-				cure_id = "ethanol"
-
-			if(5)
-				cure_id = "ethylredoxrazine"
-
-			if(6)
-				cure_id = "synaptizine"
-
-			if(7)
-				cure_id = "silver"
-
-			if(8)
-				cure_id = "gold"
-
-			if(9)
-				cure_id = "mindbreaker"
-
-			else
-				cure_id = "plasma"
+		cure_id = advance_cures[res]
 
 		// Get the cure name from the cure_id
 		var/datum/reagent/D = chemical_reagents_list[cure_id]

@@ -4,8 +4,8 @@
 Coughing
 
 	Noticable.
-	No Resistance.
-	Doesn't increase stage speed.
+	Little Resistance.
+	Doesn't increase stage speed much.
 	Transmittable.
 	Low Level.
 
@@ -19,9 +19,9 @@ BONUS
 
 	name = "Cough"
 	stealth = -1
-	resistance = 0
-	stage_speed = 0
-	transmittable = 2
+	resistance = 3
+	stage_speed = 1
+	transmittable = 1
 	level = 1
 
 /datum/symptom/cough/Activate(var/datum/disease/advance/A)
@@ -33,5 +33,7 @@ BONUS
 				M << "<span notice='notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>"
 			else
 				M.emote("cough")
-				M.drop_item()
+				var/obj/item/I = M.get_active_hand()
+				if(I && I.w_class < 3)
+					M.drop_item()
 	return
