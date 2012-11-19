@@ -461,6 +461,7 @@ The else statement is for equipping stuff to empty slots.
 It can still be worn/put on as normal.
 */
 /obj/effect/equip_e/human/done()	//TODO: And rewrite this :< ~Carn
+	target.cpr_time = 1
 	if(!source || !target) return		//Target or source no longer exist
 	if(source.loc != s_loc) return		//source has moved
 	if(target.loc != t_loc) return		//target has moved
@@ -549,7 +550,6 @@ It can still be worn/put on as normal.
 					O.show_message("\red [source] performs CPR on [target]!", 1)
 				target << "\blue <b>You feel a breath of fresh air enter your lungs. It feels good.</b>"
 				source << "\red Repeat at least every 7 seconds."
-				target.cpr_time = 1
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = item
 			if(S)
