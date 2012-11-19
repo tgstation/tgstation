@@ -133,7 +133,7 @@
 					return 0
 
 
-	src.heal_level = rand(75,100) //Randomizes what health the clone is when ejected
+	src.heal_level = rand(0,40) //Randomizes what health the clone is when ejected
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1
