@@ -414,18 +414,20 @@ mob/proc
 		 so try not to get on their bad side.\black ))"
 		if(targeted_by.len == 1)
 			spawn(0)
-				target_locked = new /obj/effect/target_locked(src) //Add the overlay
-				overlays += target_locked
+				//target_locked = new /obj/effect/target_locked(src) //Add the overlay
+				//overlays += target_locked
 				spawn(0) //Make it show the 2 states properly
-					if(target_locked)
-						target_locked.icon_state = "locking"
-					if (ispath(src,mob/living/carbon/human))
-						src:update_icons()
+					//if(target_locked)
+					//	target_locked.icon_state = "locking"
+					//update_icons()
+					update_targeted()
+					//overlays += target_locked
 					sleep(20)
-					if(target_locked)
-						target_locked.icon_state = "locked"
-					if (ispath(src,mob/living/carbon/human))
-						src:update_icons()
+					//if(target_locked)
+					//	target_locked.icon_state = "locked"
+					//update_icons()
+					update_targeted()
+					//overlays += target_locked
 				var/mob/T = I.loc
 				//Adding the buttons to the controler person
 				if(T)
@@ -463,7 +465,7 @@ mob/proc
 		if(!I.silenced)
 			for(var/mob/M in viewers(src))
 				M << 'TargetOff.ogg'
-		del(target_locked) //Remove the overlay
+		//del(target_locked) //Remove the overlay
 		targeted_by -= I
 		I.target.Remove(src) //De-target them
 		if(!I.target.len)
@@ -473,10 +475,8 @@ mob/proc
 			del(T.item_use_icon)
 			del(T.gun_move_icon)
 			del(T.gun_run_icon)
-		if(!targeted_by.len) del targeted_by
-		spawn(1)
-			if (ispath(src,mob/living/carbon/human))
-				src:update_icons()
+		//if(!targeted_by.len) del targeted_by
+		spawn(1) /*update_icons()*/ update_targeted()
 
 /*	Captive(var/obj/item/weapon/gun/I)
 		Sound(src,'CounterAttack.ogg')

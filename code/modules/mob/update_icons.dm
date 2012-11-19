@@ -5,6 +5,7 @@
 	return
 
 /mob/proc/update_icons()
+	world << "[src] CALLED THE MOB VERSION OF UPDATE_ICONS"
 	return
 
 /mob/proc/update_hud()
@@ -62,4 +63,7 @@
 	return
 
 /mob/proc/update_inv_ears()
+	return
+
+/mob/proc/update_targeted()
 	return

@@ -132,7 +132,7 @@ Please contact me on #coderbus IRC. ~Carn x
 //this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
 //I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
 /mob/living/carbon/human/update_icons()
-
+	world << "[src] CALLED THE HUMAN VERSION OF UPDATE_ICONS"
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
 	overlays = null
@@ -443,18 +443,19 @@ proc/get_damage_icon_part(damage_state, body_part)
 	update_hair(0)
 	if(update_icons)   update_icons()
 
-/mob/living/carbon/human/proc/update_targeted(var/update_icons=1)
+/mob/living/carbon/human/update_targeted(var/update_icons=1)
 	// If someone's targeting you
 	if (targeted_by.len)
 
 		//If the target is already there and finished locking (after two seconds), put in locked state and be done
-		if (overlays_standing[TARGETED_LAYER])
+		if (overlays_standing[TARGETED_LAYER]||overlays_lying[TARGETED_LAYER])
 			var/target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locked")
 			overlays_lying[TARGETED_LAYER] = target_locked
 			overlays_standing[TARGETED_LAYER] = target_locked
 			return
 
-		var/target_locking = new/image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locking")
+		var/target_locking = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locking")
+		world << "TARGET_LOCKING IS [target_locking]"
 
 		//Put in our overlay, since it isn't already there
 		overlays_lying[TARGETED_LAYER]		= target_locking
