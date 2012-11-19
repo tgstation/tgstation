@@ -1051,5 +1051,4 @@
 #include "maps\RandomZLevels\Academy.dm"
 #include "maps\RandomZLevels\stationCollision.dm"
 #include "maps\RandomZLevels\wildwest.dm"
-#include "maps\RandomZLevels\wildwest.dmm"
 // END_INCLUDE
