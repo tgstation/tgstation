@@ -86,7 +86,7 @@ var/list/department_radio_keys = list(
 		return say_dead(message)
 
 	if (src.client)
-		if(client.muted & MUTE_IC)
+		if(client.prefs.muted & MUTE_IC)
 			src << "\red You cannot speak in IC (muted)."
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))

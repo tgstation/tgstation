@@ -8,7 +8,7 @@
 	log_whisper("[src.name]/[src.key] : [message]")
 
 	if (src.client)
-		if (src.client.muted & MUTE_IC)
+		if (src.client.prefs.muted & MUTE_IC)
 			src << "\red You cannot whisper (muted)."
 			return
 

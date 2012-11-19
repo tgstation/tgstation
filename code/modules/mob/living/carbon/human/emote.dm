@@ -79,7 +79,7 @@
 			if(silent)
 				return
 			if (src.client)
-				if (client.muted & MUTE_IC)
+				if (client.prefs.muted & MUTE_IC)
 					src << "\red You cannot send IC messages (muted)."
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))

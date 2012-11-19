@@ -6,7 +6,6 @@
 	var/buildmode		= 0
 	var/seeprayers		= 1
 
-	var/muted			= 0
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 

@@ -154,19 +154,19 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 
 	if(automute)
 		muteunmute = "auto-muted"
-		M.client.muted |= mute_type
+		M.client.prefs.muted |= mute_type
 		log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]")
 		message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(M)] from [mute_string].", 1)
 		M << "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin."
 		feedback_add_details("admin_verb","AUTOMUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 
-	if(M.client.muted & mute_type)
+	if(M.client.prefs.muted & mute_type)
 		muteunmute = "unmuted"
-		M.client.muted &= ~mute_type
+		M.client.prefs.muted &= ~mute_type
 	else
 		muteunmute = "muted"
-		M.client.muted |= mute_type
+		M.client.prefs.muted |= mute_type
 
 	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].", 1)

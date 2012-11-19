@@ -43,6 +43,7 @@ datum/preferences
 
 	//non-preference stuff
 	var/warns = 0
+	var/muted = 0
 	var/last_ip
 	var/last_id
 

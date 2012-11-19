@@ -7,7 +7,7 @@
 		return
 	if(!src.mob)
 		return
-	if(src.muted & MUTE_DEADCHAT)
+	if(prefs.muted & MUTE_DEADCHAT)
 		src << "\red You cannot send DSAY messages (muted)."
 		return
 

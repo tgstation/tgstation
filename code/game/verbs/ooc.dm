@@ -33,7 +33,7 @@
 		if(!dooc_allowed && deadchat != 0)
 			usr << "\red OOC for dead mobs has been turned off."
 			return
-		if(muted & MUTE_OOC)
+		if(prefs.muted & MUTE_OOC)
 			src << "\red You cannot use OOC (muted)."
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
