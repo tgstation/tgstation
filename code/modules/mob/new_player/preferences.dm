@@ -36,10 +36,17 @@ var/const/MAX_SAVE_SLOTS = 3
 
 
 datum/preferences
+	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
 	var/savefile_version = 0
 
+	//non-preference stuff
+	var/warns = 0
+	var/last_ip
+	var/last_id
+
+	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#b82e00"
 	var/midis = 1						//Play admin midis
@@ -50,37 +57,26 @@ datum/preferences
 	var/sound_adminhelp = 0
 	var/lobby_music = 1					//Whether or not to play the lobby music(Defaults yes)
 
-
-	var/real_name
-	var/be_random_name = 0
-	var/gender = MALE
-	var/age = 30.0
-	var/b_type = "A+"
-		//Just like it sounds
-	var/underwear = 1
-	var/backbag = 2
-
-		//Hair type
-	var/h_style = "Bald"
-		//Hair color
-	var/r_hair = 0
-	var/g_hair = 0
-	var/b_hair = 0
-
-		//Face hair type
-	var/f_style = "Shaved"
-		//Face hair color
-	var/r_facial = 0
-	var/g_facial = 0
-	var/b_facial = 0
-
-		//Skin color
-	var/s_tone = 0
-
-		//Eye color
-	var/r_eyes = 0
-	var/g_eyes = 0
-	var/b_eyes = 0
+	//character preferences
+	var/real_name						//our character's name
+	var/be_random_name = 0				//whether we are a random name every round
+	var/gender = MALE					//gender of character (well duh)
+	var/age = 30						//age of character
+	var/b_type = "A+"					//blood type (not-chooseable)
+	var/underwear = 1					//underwear type
+	var/backbag = 2						//backpack type
+	var/h_style = "Bald"				//Hair type
+	var/r_hair = 0						//Hair color
+	var/g_hair = 0						//Hair color
+	var/b_hair = 0						//Hair color
+	var/f_style = "Shaved"				//Face hair type
+	var/r_facial = 0					//Face hair color
+	var/g_facial = 0					//Face hair color
+	var/b_facial = 0					//Face hair color
+	var/s_tone = 0						//Skin color
+	var/r_eyes = 0						//Eye color
+	var/g_eyes = 0						//Eye color
+	var/b_eyes = 0						//Eye color
 
 		//Mob preview
 	var/icon/preview_icon_front = null

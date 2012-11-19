@@ -294,6 +294,9 @@
 				alert(usr, "This ban has already been lifted / does not exist.", "Error", "Ok")
 				unbanpanel()
 
+	else if(href_list["warn"])
+		usr.client.warn(href_list["warn"])
+
 	else if(href_list["unbane"])
 		if(!check_rights(R_BAN))	return
 
