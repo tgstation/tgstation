@@ -28,6 +28,13 @@
 	var/obj/screen/pressure = null
 	var/obj/screen/damageoverlay = null
 	var/obj/screen/pain = null
+	var/obj/screen/gun/item/item_use_icon = null
+	var/obj/screen/gun/move/gun_move_icon = null
+	var/obj/screen/gun/run/gun_run_icon = null
+	var/obj/screen/gun/mode/gun_setting_icon = null
+
+//	var/total_luminosity = 0 //This controls luminosity for mobs, when you pick up lights and such this is edited.  If you want the mob to use lights it must update its lum in its life proc or such.  Note clamp this value around 7 or such to prevent massive light lag.
+//	var/last_luminosity = 0
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.

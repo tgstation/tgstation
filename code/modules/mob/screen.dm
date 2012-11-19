@@ -5,6 +5,7 @@
 	unacidable = 1
 	var/id = 0.0
 	var/obj/master
+	var/gun_click_time = -100 //I'm lazy.
 
 /obj/screen/inventory
 	var/slot_id
@@ -63,6 +64,33 @@
 	icon_state = "zone_sel"
 	var/selecting = "chest"
 	screen_loc = ui_zonesel
+
+/obj/screen/gun
+	name = "gun"
+	icon = 'screen1.dmi'
+	master = null
+	dir = 2
+
+	move
+		name = "Allow Walking"
+		icon_state = "no_walk"
+		screen_loc = ui_gun2
+
+	run
+		name = "Allow Running"
+		icon_state = "no_run"
+		screen_loc = ui_gun3
+
+	item
+		name = "Allow Item Use"
+		icon_state = "no_item"
+		screen_loc = ui_gun1
+
+	mode
+		name = "Toggle Gun Mode"
+		icon_state = "gun"
+		screen_loc = ui_gun_select
+		dir = 1
 
 
 /obj/screen/zone_sel/MouseDown(location, control,params)
@@ -455,6 +483,64 @@
 
 		if("radar closed")
 			usr:start_radar()
+
+		if("Allow Walking")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetMove()
+			gun_click_time = world.time
+
+		if("Disallow Walking")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetMove()
+			gun_click_time = world.time
+
+		if("Allow Running")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetRun()
+			gun_click_time = world.time
+
+		if("Disallow Running")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetRun()
+			gun_click_time = world.time
+
+		if("Allow Item Use")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetClick()
+			gun_click_time = world.time
+
+
+		if("Disallow Item Use")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetClick()
+			gun_click_time = world.time
+
+		if("Toggle Gun Mode")
+			usr.client.ToggleGunMode()
 
 		else
 			DblClick()
