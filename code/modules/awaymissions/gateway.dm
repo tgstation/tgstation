@@ -7,10 +7,12 @@
 	anchored = 1
 	var/active = 0
 
+
 /obj/machinery/gateway/initialize()
 	update_icon()
 	if(dir == 2)
 		density = 0
+
 
 /obj/machinery/gateway/update_icon()
 	if(active)
@@ -32,17 +34,19 @@
 	var/wait = 0				//this just grabs world.time at world start
 	var/obj/machinery/gateway/centeraway/awaygate = null //inb4 this doesnt work at all
 
+
 /obj/machinery/gateway/centerstation/initialize()
 	update_icon()
-	returndestination = get_step(loc, SOUTH)
 	wait = world.time + config.gateway_delay	//+ thirty minutes default
-	awaygate = locate(/obj/machinery/gateway/centeraway, world)
+	awaygate = locate(/obj/machinery/gateway/centeraway)
+
 
 /obj/machinery/gateway/centerstation/update_icon()
 	if(active)
 		icon_state = "oncenter"
 		return
 	icon_state = "offcenter"
+
 
 
 obj/machinery/gateway/centerstation/process()
@@ -52,6 +56,7 @@ obj/machinery/gateway/centerstation/process()
 
 	if(active)
 		use_power(5000)
+
 
 /obj/machinery/gateway/centerstation/proc/detect()
 	linked = list()	//clear the list
@@ -72,17 +77,17 @@ obj/machinery/gateway/centerstation/process()
 	if(linked.len == 8)
 		ready = 1
 
+
 /obj/machinery/gateway/centerstation/proc/toggleon(mob/user as mob)
-	if(!ready) return
-	if(linked.len != 8) return
-	if(!powered()) return
-	if(awaygate == null)
+	if(!ready)			return
+	if(linked.len != 8)	return
+	if(!powered())		return
+	if(!awaygate)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return
 	if(world.time < wait)
 		user << "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>"
 		return
-
 
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 1
@@ -91,6 +96,7 @@ obj/machinery/gateway/centerstation/process()
 	update_icon()
 	density = 0
 
+
 /obj/machinery/gateway/centerstation/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 0
@@ -98,6 +104,7 @@ obj/machinery/gateway/centerstation/process()
 	active = 0
 	update_icon()
 	density = 1
+
 
 /obj/machinery/gateway/centerstation/attack_hand(mob/user as mob)
 	if(!ready)
@@ -109,15 +116,13 @@ obj/machinery/gateway/centerstation/process()
 	toggleoff()
 
 
-
 //okay, here's the good teleporting stuff
 /obj/machinery/gateway/centerstation/HasEntered(mob/user as mob)
-	if(!ready) return
-	if(!active) return
-	if(awaygate == null) return
+	if(!ready)		return
+	if(!active)		return
+	if(!awaygate)	return
 	if(awaygate.calibrated)
-		calibrateddestination = get_step(awaygate.loc, SOUTH)
-		user.loc = calibrateddestination
+		user.loc = get_step(awaygate.loc, SOUTH)
 		return
 	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
@@ -128,8 +133,10 @@ obj/machinery/gateway/centerstation/process()
 		return
 
 
-
-
+/obj/machinery/gateway/centerstation/attackby(obj/item/device/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/device/multitool))
+		user << "\black The gate is already calibrated, there is no work for you to do here."
+		return
 
 /////////////////////////////////////Away////////////////////////
 
@@ -141,12 +148,12 @@ obj/machinery/gateway/centerstation/process()
 	var/calibrated = 1
 	var/list/linked = list()	//a list of the connected gateway chunks
 	var/ready = 0
-	var/stationgate = null
+	var/obj/machinery/gateway/centeraway/stationgate = null
+
 
 /obj/machinery/gateway/centeraway/initialize()
 	update_icon()
-	calibrateddestination = get_step(loc, SOUTH)
-	stationgate = locate(/obj/machinery/gateway/centerstation, world)
+	stationgate = locate(/obj/machinery/gateway/centerstation)
 
 
 /obj/machinery/gateway/centeraway/update_icon()
@@ -176,11 +183,10 @@ obj/machinery/gateway/centerstation/process()
 		ready = 1
 
 
-
 /obj/machinery/gateway/centeraway/proc/toggleon(mob/user as mob)
-	if(!ready) return
-	if(linked.len != 8) return
-	if(stationgate == null)
+	if(!ready)			return
+	if(linked.len != 8)	return
+	if(!stationgate)
 		user << "<span class='notice'>Error: No destination found.</span>"
 		return
 
@@ -191,6 +197,7 @@ obj/machinery/gateway/centerstation/process()
 	update_icon()
 	density = 0
 
+
 /obj/machinery/gateway/centeraway/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 0
@@ -198,7 +205,6 @@ obj/machinery/gateway/centerstation/process()
 	active = 0
 	update_icon()
 	density = 1
-
 
 
 /obj/machinery/gateway/centeraway/attack_hand(mob/user as mob)
@@ -210,19 +216,20 @@ obj/machinery/gateway/centerstation/process()
 		return
 	toggleoff()
 
+
 /obj/machinery/gateway/centeraway/HasEntered(mob/user as mob)
-	if(!ready) return
-	if(!active) return
-	user.loc = returndestination
+	if(!ready)	return
+	if(!active)	return
+	user.loc = get_step(stationgate.loc, SOUTH)
 	user.dir = SOUTH
 
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/device/multitool))
-		if(calibrated == 1)
+		if(calibrated)
 			user << "\black The gate is already calibrated, there is no work for you to do here."
 			return
 		else
-			user << "\blue <b>Recalibration successful!</b>: \black The gates systems have been fine tuned, travel to the gate will now be on target."
+			user << "\blue <b>Recalibration successful!</b>: \black This gates systems have been fine tuned, travel to this gate will now be on target."
 			calibrated = 1
 			return
