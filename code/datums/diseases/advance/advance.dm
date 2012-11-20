@@ -39,6 +39,7 @@ var/list/advance_cures = 	list(
 
 	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
+	var/processing = 0
 
 /*
 
@@ -70,10 +71,22 @@ var/list/advance_cures = 	list(
 	..(process, D)
 	return
 
+/datum/disease/advance/Del()
+	if(processing)
+		for(var/datum/symptom/S in symptoms)
+			S.End(src)
+	..()
+
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
 	..()
 	if(symptoms && symptoms.len)
+
+		if(!processing)
+			processing = 1
+			for(var/datum/symptom/S in symptoms)
+				S.Start(src)
+
 		for(var/datum/symptom/S in symptoms)
 			S.Activate(src)
 	else
@@ -392,6 +405,8 @@ var/list/advance_cures = 	list(
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
+			if(H.z != 1)
+				continue
 			if(!H.has_disease(D))
 				H.contract_disease(D, 1)
 				break

@@ -103,7 +103,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(force_spread)
 		how_spread = force_spread
 
-	if(how_spread == SPECIAL || how_spread == NON_CONTAGIOUS)//does not spread
+	if(how_spread == SPECIAL || how_spread == NON_CONTAGIOUS || how_spread == BLOOD)//does not spread
 		return
 
 	if(stage < contagious_period) //the disease is not contagious at this stage

@@ -21,7 +21,7 @@ BONUS
 	stealth = -1
 	resistance = 3
 	stage_speed = 1
-	transmittable = 1
+	transmittable = 2
 	level = 1
 
 /datum/symptom/cough/Activate(var/datum/disease/advance/A)

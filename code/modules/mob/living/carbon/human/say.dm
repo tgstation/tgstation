@@ -147,5 +147,19 @@
 			return name
 	if(mind && mind.changeling && mind.changeling.mimicing)
 		return mind.changeling.mimicing
+	if(GetSpecialVoice())
+		return GetSpecialVoice()
 	return real_name
+
+/mob/living/carbon/human/proc/SetSpecialVoice(var/new_voice)
+	if(new_voice)
+		special_voice = new_voice
+	return
+
+/mob/living/carbon/human/proc/UnsetSpecialVoice()
+	special_voice = ""
+	return
+
+/mob/living/carbon/human/proc/GetSpecialVoice()
+	return special_voice
 

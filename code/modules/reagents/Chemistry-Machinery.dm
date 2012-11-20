@@ -509,7 +509,6 @@
 				if(D)
 					B.name = "[D.name] vaccine bottle"
 					B.reagents.add_reagent("vaccine",15,vaccine_type)
-					del(D)
 					wait = 1
 					var/datum/reagents/R = beaker.reagents
 					var/datum/reagent/blood/Blood = null
