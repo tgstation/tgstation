@@ -32,8 +32,7 @@
 	var/list/linked = list()
 	var/ready = 0				//have we got all the parts for a gateway?
 	var/wait = 0				//this just grabs world.time at world start
-	var/obj/machinery/gateway/centeraway/awaygate = null //inb4 this doesnt work at all
-
+	var/obj/machinery/gateway/centeraway/awaygate = null
 
 /obj/machinery/gateway/centerstation/initialize()
 	update_icon()
@@ -94,7 +93,6 @@ obj/machinery/gateway/centerstation/process()
 		G.update_icon()
 	active = 1
 	update_icon()
-	density = 0
 
 
 /obj/machinery/gateway/centerstation/proc/toggleoff()
@@ -103,7 +101,6 @@ obj/machinery/gateway/centerstation/process()
 		G.update_icon()
 	active = 0
 	update_icon()
-	density = 1
 
 
 /obj/machinery/gateway/centerstation/attack_hand(mob/user as mob)
@@ -117,18 +114,18 @@ obj/machinery/gateway/centerstation/process()
 
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/HasEntered(mob/user as mob)
+/obj/machinery/gateway/centerstation/Bumped(atom/movable/M as mob|obj)
 	if(!ready)		return
 	if(!active)		return
 	if(!awaygate)	return
 	if(awaygate.calibrated)
-		user.loc = get_step(awaygate.loc, SOUTH)
+		M.loc = get_step(awaygate.loc, SOUTH)
 		return
 	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
-			user.loc = dest.loc
-			user.dir = SOUTH
+			M.loc = dest.loc
+			M.dir = SOUTH
 			use_power(5000)
 		return
 
@@ -195,7 +192,6 @@ obj/machinery/gateway/centerstation/process()
 		G.update_icon()
 	active = 1
 	update_icon()
-	density = 0
 
 
 /obj/machinery/gateway/centeraway/proc/toggleoff()
@@ -204,7 +200,6 @@ obj/machinery/gateway/centerstation/process()
 		G.update_icon()
 	active = 0
 	update_icon()
-	density = 1
 
 
 /obj/machinery/gateway/centeraway/attack_hand(mob/user as mob)
@@ -217,11 +212,11 @@ obj/machinery/gateway/centerstation/process()
 	toggleoff()
 
 
-/obj/machinery/gateway/centeraway/HasEntered(mob/user as mob)
+/obj/machinery/gateway/centeraway/Bumped(atom/movable/M as mob|obj)
 	if(!ready)	return
 	if(!active)	return
-	user.loc = get_step(stationgate.loc, SOUTH)
-	user.dir = SOUTH
+	M.loc = get_step(stationgate.loc, SOUTH)
+	M.dir = SOUTH
 
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W as obj, mob/user as mob)
