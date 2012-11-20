@@ -59,8 +59,10 @@ obj/item/weapon/gun/energy/staff
 		charge_tick = 0
 		if(!power_supply) return 0
 		power_supply.give(200)
-		update_icon()
 		return 1
+
+	update_icon()
+		return
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
