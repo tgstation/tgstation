@@ -55,9 +55,10 @@
 
 	update_icon()
 		..()
-		overlays = null
 		if(empty_mag)
-			overlays += "c20r-[round(loaded.len,4)]"
+			icon_state = "c20r-[round(loaded.len,4)]"
+		else
+			icon_state = "c20r"
 		return
 
 
@@ -68,6 +69,7 @@
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = 4
+	slot_flags = 0
 	max_shells = 50
 	caliber = "a762"
 	origin_tech = "combat=5;materials=1;syndicate=2"
@@ -79,55 +81,57 @@
 	var/mag_inserted = 1
 
 
-	attack_self(mob/user as mob)
-		cover_open = !cover_open
-		user << "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>"
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user as mob)
+	cover_open = !cover_open
+	user << "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>"
+	update_icon()
+
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
+	icon_state = "l6[cover_open ? "open" : "closed"][mag_inserted ? round(loaded.len, 25) : "-empty"]"
+
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+	if(cover_open)
+		user << "<span class='notice'>[src]'s cover is open! Close it before firing!</span>"
+	else
+		..()
 		update_icon()
 
 
-	update_icon()
-		icon_state = "l6[cover_open ? "open" : "closed"][mag_inserted ? round(loaded.len, 25) : "-empty"]"
-
-
-	afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
-		if(cover_open)
-			user << "<span class='notice'>[src]'s cover is open! Close it before firing!</span>"
-		else
-			..()
-			update_icon()
-
-
-	attack_hand(mob/user as mob)
-		if(loc != user)
-			..()
-			return	//let them pick it up
-		if(!cover_open)
-			user << "<span class='notice'>[src]'s cover is closed! You can't remove the magazine!</span>"
-		else if (cover_open && mag_inserted)
-			//drop the mag
-			empty_mag = new /obj/item/ammo_magazine/a762(src)
-			empty_mag.stored_ammo = loaded
-			empty_mag.icon_state = "a762-[round(loaded.len, 10)]"
-			empty_mag.desc = "There are [loaded.len] shells left!"
-			empty_mag.loc = get_turf(src.loc)
-			user.put_in_hands(empty_mag)
-			empty_mag = null
-			mag_inserted = 0
-			loaded = list()
-			update_icon()
-			user << "<span class='notice'>You remove the magazine from [src].</span>"
-
-
-	/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob)
-		if(!cover_open)
-			user << "<span class='notice'>The [src]'s cover is closed! You can't insert a new mag!</span>"
-		else if (cover_open && mag_inserted)
-			user << "<span class='notice'>The [src] already has a magazine inserted!</span>"
-		else if (cover_open && !mag_inserted)
-			mag_inserted = 1
-			user << "<span class='notice'>You insert the magazine!</span>"
-			update_icon()
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user as mob)
+	if(loc != user)
 		..()
+		return	//let them pick it up
+	if(!cover_open)
+		..()
+	else if(cover_open && mag_inserted)
+		//drop the mag
+		empty_mag = new /obj/item/ammo_magazine/a762(src)
+		empty_mag.stored_ammo = loaded
+		empty_mag.icon_state = "a762-[round(loaded.len, 10)]"
+		empty_mag.desc = "There are [loaded.len] shells left!"
+		empty_mag.loc = get_turf(src.loc)
+		user.put_in_hands(empty_mag)
+		empty_mag = null
+		mag_inserted = 0
+		loaded = list()
+		update_icon()
+		user << "<span class='notice'>You remove the magazine from [src].</span>"
+
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(var/obj/item/A as obj, mob/user as mob)
+	if(!cover_open)
+		user << "<span class='notice'>[src]'s cover is closed! You can't insert a new mag!</span>"
+		return
+	else if(cover_open && mag_inserted)
+		user << "<span class='notice'>[src] already has a magazine inserted!</span>"
+		return
+	else if(cover_open && !mag_inserted)
+		mag_inserted = 1
+		user << "<span class='notice'>You insert the magazine!</span>"
+		update_icon()
+	..()
 
 
 /* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
