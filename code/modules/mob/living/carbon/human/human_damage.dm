@@ -126,6 +126,7 @@
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
 
+
 		update |= picked.take_damage(brute,burn)
 
 		brute	-= (picked.brute_dam - brute_was)
@@ -170,6 +171,7 @@
 		if(!def_zone)	def_zone = ran_zone(def_zone)
 		organ = get_organ(check_zone(def_zone))
 	if(!organ)	return 0
+
 	if(blocked)
 		damage = (damage/(blocked+1))
 
@@ -178,10 +180,15 @@
 
 	switch(damagetype)
 		if(BRUTE)
+			damageoverlaytemp = 20
 			if(organ.take_damage(damage, 0))
 				UpdateDamageIcon()
 		if(BURN)
+			damageoverlaytemp = 20
 			if(organ.take_damage(0, damage))
 				UpdateDamageIcon()
+
+	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
+
 	updatehealth()
 	return 1

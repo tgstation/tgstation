@@ -36,6 +36,7 @@
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
 
+	var/damageoverlaytemp = 0
 	var/emote_allowed = 1
 	var/computer_id = null
 	var/lastattacker = null

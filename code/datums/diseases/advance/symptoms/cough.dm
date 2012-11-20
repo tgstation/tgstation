@@ -10,7 +10,7 @@ Coughing
 	Low Level.
 
 BONUS
-	Will force the affected mob to drop items!
+	Will force the affected mob to drop small items!
 
 //////////////////////////////////////
 */
