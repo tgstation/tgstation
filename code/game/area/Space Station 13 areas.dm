@@ -1493,9 +1493,12 @@ proc/process_ghost_teleport_locs()
 	icon_state = "away3"
 
 /area/awaymission/spacebattle
-	name = "\improper Nanotrasen Cruiser"
+	name = "\improper Space Battle"
 	icon_state = "away"
 	requires_power = 0
+
+/area/awaymission/spacebattle/cruiser
+	name = "\improper Nanotrasen Cruiser"
 
 /area/awaymission/spacebattle/syndicate1
 	name = "\improper Syndicate Assault Ship 1"
