@@ -425,7 +425,7 @@ var/list/admin_verbs_hideable = list(
 	if(!check_rights(R_ADMIN))	return
 
 	if(!warned_ckey || !istext(warned_ckey))	return
-	if(ckey in admin_datums)
+	if(warned_ckey in admin_datums)
 		usr << "<font color='red'>Error: warn(): You can't warn admins.</font>"
 		return
 
