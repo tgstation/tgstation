@@ -197,6 +197,10 @@
 		if(R.canhear_range == 0)
 			if(ismob(R.loc))
 				. |= R.loc
+				// Ghost being able to hear radio.
+				var/turf/T = get_turf(R.loc)
+				for(var/mob/dead/observer/O in T)
+					. |= O
 			continue
 
 		var/turf/speaker = get_turf(R)
