@@ -82,9 +82,7 @@
 								log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a <b>syringegun</b> ([R])</font>")
 							if(D.reagents)
 								D.reagents.trans_to(M, 15)
-							M.take_organ_damage(5)
-							for(var/mob/O in viewers(world.view, D))
-								O.show_message("\red [M.name] is hit by the syringe!", 1)
+							M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
 
 							del(D)
 					if(D)

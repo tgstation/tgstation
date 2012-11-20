@@ -257,13 +257,7 @@
 		if(rigged && locate(/obj/item/device/radio/electropack) in src)
 			if(isliving(user))
 				var/mob/living/L = user
-				var/protected = 0
-				if(ishuman(L))
-					var/mob/living/carbon/human/H = L
-					if(H.gloves && H.gloves.siemens_coefficient < 0.2)
-						protected = 1
-				if(!protected)
-					L.electrocute_act(17, src)
+				if(L.electrocute_act(17, src))
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 					s.set_up(5, 1, src)
 					s.start()
@@ -274,13 +268,13 @@
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
 	if(locked && !broken)
 		if (allowed(user))
-			user << "<span class='notice'>You unlock \the [src].</span>"
+			user << "<span class='notice'>You unlock [src].</span>"
 			src.locked = 0
 			overlays = null
 			overlays += greenlight
 			return
 		else
-			user << "<span class='notice'>\The [src] is locked.</span>"
+			user << "<span class='notice'>[src] is locked.</span>"
 			return
 	else
 		..()
