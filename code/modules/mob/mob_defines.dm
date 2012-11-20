@@ -44,7 +44,7 @@
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
 
-	var/emote_allowed = 1
+	var/use_me = 1 //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null
@@ -234,3 +234,4 @@
 	var/can_stand = 1 //Whether this mob have ability to stand
 
 	var/immune_to_ssd = 0
+

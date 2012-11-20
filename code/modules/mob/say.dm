@@ -17,7 +17,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	if(ishuman(src) || isrobot(src))
+	if(use_me)
 		usr.emote("me",1,message)
 	else
 		usr.emote(message)

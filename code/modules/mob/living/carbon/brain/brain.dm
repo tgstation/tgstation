@@ -5,6 +5,7 @@
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/alert = null
+	use_me = 0 //Can't use the me verb, it's a freaking immobile brain
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(1000)
@@ -48,6 +49,8 @@
 
 
 /mob/living/carbon/brain/update_canmove()
-	if(in_contents_of(/obj/mecha))	canmove = 1
+	if(in_contents_of(/obj/mecha))
+		canmove = 1
+		use_me = 1 //If it can move, let it emote
 	else							canmove = 0
 	return canmove

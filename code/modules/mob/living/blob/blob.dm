@@ -8,6 +8,7 @@
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	var/ghost_name = "Unknown"
 	var/creating_blob = 0
+	use_me = 0 //Blobs can't emote
 
 
 	New()
