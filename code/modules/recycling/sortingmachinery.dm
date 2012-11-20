@@ -84,7 +84,7 @@
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
-	w_class = 5.0 //to prevent issues with the package wrapper being put inside the container it is wrapping
+	w_class = 3.0
 	var/amount = 25.0
 
 
@@ -116,10 +116,8 @@
 					P.icon_state = "deliverycrate2"
 				else if (P.w_class <= 3.0)
 					P.icon_state = "deliverycrate3"
-				else if (P.w_class <= 4.0)
-					P.icon_state = "deliverycrate4"
 				else
-					P.icon_state = "deliverycrate5"
+					P.icon_state = "deliverycrate4"
 				P.wrapped = O
 				O.loc = P
 				P.add_fingerprint(usr)
