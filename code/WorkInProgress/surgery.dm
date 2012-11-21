@@ -308,6 +308,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 /datum/surgery_step/fix_vein
 	required_tool = /obj/item/weapon/FixOVein
 
+	min_duration = 70
+	max_duration = 90
+
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 
@@ -855,7 +858,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		target.cores--
 		user.visible_message("\blue [user] cuts out one of [target]'s cores with \the [tool].",,	\
 		"\blue You cut out one of [target]'s cores with \the [tool]. [target.cores] cores left.")
-		new/obj/item/metroid_core(target.loc)
+		if(target.cores >= 0)
+			new/obj/item/metroid_core(target.loc)
 		if(target.cores <= 0)
 			target.icon_state = "baby roro dead-nocore"
 

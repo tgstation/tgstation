@@ -86,13 +86,12 @@
 				else
 					H.Stun(time)
 				if(H.stat != 2)	H.stat = 1
-				for(var/mob/O in viewers(H, null))
-					O.show_message(text("\red <B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.", 2)
+				user.visible_message("\red <B>[H] has been knocked unconscious!</B>", "\red <B>You knock [H] unconscious!</B>")
+				return
 			else
-				H << text("\red [] tried to knock you unconscious!",user)
+				H.visible_message("\red [user] tried to knock [H] unconscious!", "\red [user] tried to knock you unconscious!")
 				H.eye_blurry += 3
-
-	return
+	return ..()
 
 /*
  * Trays - Agouri
