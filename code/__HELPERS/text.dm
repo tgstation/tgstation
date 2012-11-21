@@ -324,3 +324,9 @@
 		if(a == character)
 			count++
 	return count
+
+/proc/reverse_text(var/text = "")
+	var/new_text = ""
+	for(var/i = length(text); i > 0; i--)
+		new_text += copytext(text, i, i+1)
+	return new_text

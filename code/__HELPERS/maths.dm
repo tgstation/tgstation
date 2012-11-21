@@ -54,6 +54,9 @@ var/const/Sqrt2	= 1.41421356
 /proc/IsOdd(x)
 	return !IsEven(x)
 
+/proc/IsMultiple(x, y)
+	return x % y == 0
+
 // Least Common Multiple
 /proc/Lcm(a, b)
 	return abs(a) / Gcd(a, b) * abs(b)
