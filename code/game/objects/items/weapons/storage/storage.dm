@@ -341,7 +341,7 @@
 	set name = "Empty Contents"
 	set category = "Object"
 
-	if(!ishuman(usr) || usr.stat || usr.restrained())
+	if((!ishuman(usr) && (src.loc != usr)) || usr.stat || usr.restrained())
 		return
 
 	var/turf/T = get_turf(src)
