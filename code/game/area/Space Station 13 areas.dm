@@ -459,6 +459,10 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Syndicate Station Location 6"
 	icon_state = "green"
 
+/area/syndicate_station/transit
+	name = "\improper Syndicate Station Transit"
+	icon_state = "shuttle"
+
 /area/wizard_station
 	name = "\improper Wizard's Den"
 	icon_state = "yellow"

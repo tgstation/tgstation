@@ -237,7 +237,6 @@ client/proc/one_click_antag()
 	if(candidates.len)
 		var/numagents = 5
 		var/agentcount = 0
-		syndicate_begin()
 
 		for(var/i = 0, i<numagents,i++)
 			shuffle(candidates) //More shuffles means more randoms
