@@ -1470,7 +1470,7 @@
 "aCn" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
 "aCo" = (/obj/machinery/atmospherics/pipe/manifold{color = "blue"; icon_state = "manifold-b-f"; level = 1; name = "pipe manifold"},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
 "aCp" = (/obj/item/stack/sheet/plasteel{amount = 10},/obj/structure/table,/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/ai_monitored/storage/eva)
-"aCq" = (/obj/machinery/suit_storage_unit/standard_unit,/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
+"aCq" = (/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/clothing/suit/space/rig/medical,/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space/rig/medical,/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
 "aCr" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor{dir = 8; icon_state = "bluecorner"},/area/hallway/primary/fore)
 "aCs" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor{icon_state = "bluecorner"},/area/hallway/primary/fore)
 "aCt" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/simulated/floor/plating,/area/maintenance/fsmaint)

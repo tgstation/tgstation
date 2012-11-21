@@ -105,3 +105,18 @@
 	unacidable = 1
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/emergency_oxygen)
+
+
+
+//Medical Rig
+/obj/item/clothing/head/helmet/space/rig/medical
+	name = "medical hardsuit helmet"
+	icon_state = "rig0-medical"
+	item_state = "medical_helm"
+	color = "medical"
+
+/obj/item/clothing/suit/space/rig/medical
+	icon_state = "rig-medical"
+	name = "mining medical"
+	item_state = "medical_hardsuit"
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
