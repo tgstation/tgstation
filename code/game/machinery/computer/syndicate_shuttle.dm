@@ -60,6 +60,8 @@
 	<a href='?src=\ref[src];station_sw=1'>South West of SS13</a> |
 	<a href='?src=\ref[src];station_s=1'>South of SS13</a> |
 	<a href='?src=\ref[src];station_se=1'>South East of SS13</a><br>
+	<a href='?src=\ref[src];commssat=1'>South of the Communication Satellite"</a> |
+	<a href='?src=\ref[src];mining=1'>North of the Mining Asteroid</a><br>
 	<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
 	user << browse(dat, "window=computer;size=575x450")
@@ -77,17 +79,21 @@
 	if(href_list["syndicate"])
 		syndicate_move_to(/area/syndicate_station/start)
 	else if(href_list["station_nw"])
-		syndicate_move_to(/area/syndicate_station/two)
+		syndicate_move_to(/area/syndicate_station/northwest)
 	else if(href_list["station_n"])
-		syndicate_move_to(/area/syndicate_station/five)
+		syndicate_move_to(/area/syndicate_station/north)
 	else if(href_list["station_ne"])
-		syndicate_move_to(/area/syndicate_station/three)
+		syndicate_move_to(/area/syndicate_station/northeast)
 	else if(href_list["station_sw"])
-		syndicate_move_to(/area/syndicate_station/one)
+		syndicate_move_to(/area/syndicate_station/southwest)
 	else if(href_list["station_s"])
-		syndicate_move_to(/area/syndicate_station/six)
+		syndicate_move_to(/area/syndicate_station/south)
 	else if(href_list["station_se"])
-		syndicate_move_to(/area/syndicate_station/four)
+		syndicate_move_to(/area/syndicate_station/southeast)
+	else if(href_list["commssat"])
+		syndicate_move_to(/area/syndicate_station/commssat)
+	else if(href_list["mining"])
+		syndicate_move_to(/area/syndicate_station/mining)
 
 	add_fingerprint(usr)
 	updateUsrDialog()

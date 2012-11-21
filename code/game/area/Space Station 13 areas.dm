@@ -426,41 +426,50 @@ proc/process_ghost_teleport_locs()
 
 //ENEMY
 
+//names are used
 /area/syndicate_station
 	name = "\improper Syndicate Station"
 	icon_state = "yellow"
 	requires_power = 0
 
 /area/syndicate_station/start
-	name = "\improper Syndicate Station Start"
+	name = "\improper Syndicate Forward Operating Base"
 	icon_state = "yellow"
 
-/area/syndicate_station/one
-	name = "\improper Syndicate Station Location 1"
-	icon_state = "green"
+/area/syndicate_station/southwest
+	name = "south-west of SS13"
+	icon_state = "southwest"
 
-/area/syndicate_station/two
-	name = "\improper Syndicate Station Location 2"
-	icon_state = "green"
+/area/syndicate_station/northwest
+	name = "north-west of SS13"
+	icon_state = "northwest"
 
-/area/syndicate_station/three
-	name = "\improper Syndicate Station Location 3"
-	icon_state = "green"
+/area/syndicate_station/northeast
+	name = "north-east of SS13"
+	icon_state = "northeast"
 
-/area/syndicate_station/four
-	name = "\improper Syndicate Station Location 4"
-	icon_state = "green"
+/area/syndicate_station/southeast
+	name = "south-east of SS13"
+	icon_state = "southeast"
 
-/area/syndicate_station/five
-	name = "\improper Syndicate Station Location 5"
-	icon_state = "green"
+/area/syndicate_station/north
+	name = "north of SS13"
+	icon_state = "north"
 
-/area/syndicate_station/six
-	name = "\improper Syndicate Station Location 6"
-	icon_state = "green"
+/area/syndicate_station/south
+	name = "south of SS13"
+	icon_state = "south"
+
+/area/syndicate_station/commssat
+	name = "south of the communication satellite"
+	icon_state = "south"
+
+/area/syndicate_station/mining
+	name = "north of the mining asteroid"
+	icon_state = "north"
 
 /area/syndicate_station/transit
-	name = "\improper Syndicate Station Transit"
+	name = "hyperspace"
 	icon_state = "shuttle"
 
 /area/wizard_station

@@ -1,14 +1,14 @@
 /obj/item/weapon/trashbag
 	name = "trash bag"
-	desc = "A heavy-duty, no fun allowed trash bag."
+	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon = 'icons/obj/trash.dmi'
 	icon_state = "trashbag0"
 	item_state = "trashbag"
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
-	w_class = 2.0
-	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
-	var/capacity = 25; //the number of trash it can carry.
+	w_class = 4
+	var/mode = 1		//0 = pick one at a time, 1 = pick all on tile
+	var/capacity = 25	//the amount of trash it can carry.
 
 /obj/item/weapon/trashbag/update_icon()
 	if(contents.len == 0)
@@ -19,13 +19,13 @@
 		icon_state = "trashbag2"
 	else icon_state = "trashbag3"
 
-/obj/item/weapon/trashbag/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/item/weapon/trashbag/attackby(obj/item/I as obj, mob/user as mob)
 	..()
 	if(contents.len < capacity)
-		if(istype(W, /obj/item))
-			if(W.w_class <= 2)
-				var/obj/item/O = W
-				contents += O
+		if(istype(I, /obj/item))
+			if(I.w_class <= 2)
+				user.drop_item()
+				I.loc = src
 	else
 		user << "<span class='notice'>[src] is full!</span>"
 
@@ -36,7 +36,7 @@
 		update_icon()
 		user << "<span class='notice'>You empty [src] onto [user.loc].</span>"
 
-/obj/item/weapon/trashbag/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+/obj/item/weapon/trashbag/afterattack(atom/target as mob|obj|turf|area, mob/user as mob|obj, flag)
 	if(istype(target, /obj/item))
 		var/obj/item/W = target
 		if(W.w_class <= 2)
@@ -47,7 +47,7 @@
 						if(istype(O, /obj/item/weapon/disk/nuclear)) continue //No nuke disks - Nodrak
 						if(contents.len < capacity)
 							if(O.w_class <= 2)
-								contents += O;
+								O.loc = src
 						else
 							user << "<span class='notice'>[src] is full!</span>"
 							break

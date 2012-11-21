@@ -14,15 +14,6 @@
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "cultpack"
 
-/obj/item/weapon/storage/trashbag
-	name = "trash bag"
-	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
-	icon_state = "trashbag"
-	item_state = "trashbag"
-	w_class = 4.0
-	storage_slots = 20
-	max_w_class = 1
-	max_combined_w_class = 20
 /*
 /obj/item/weapon/storage/lbe
 	name = "Load Bearing Equipment"
@@ -31,6 +22,7 @@
 	w_class = 2.0
 	max_combined_w_class = 17
 */
+
 /obj/item/weapon/storage/pill_bottle
 	name = "pill bottle"
 	desc = "It's an airtight container for storing medication."
