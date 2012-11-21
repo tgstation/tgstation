@@ -1,18 +1,47 @@
-#define SAVEFILE_VERSION_MIN	7
-#define SAVEFILE_VERSION_MAX	7
+#define SAVEFILE_VERSION_MIN	8
+#define SAVEFILE_VERSION_MAX	8
 
-/datum/preferences/proc/load_path(ckey)
+//handles converting savefiles to new formats
+//MAKE SURE YOU KEEP THIS UP TO DATE!
+//If the sanity checks are capable of handling any issues. Only increase SAVEFILE_VERSION_MAX,
+//this will mean that savefile_version will still be over SAVEFILE_VERSION_MIN, meaning
+//this savefile update doesn't run everytime we load from the savefile.
+//This is mainly for format changes, such as the bitflags in toggles changing order or something.
+/datum/preferences/proc/savefile_update()
+	if(savefile_version < 6)	//really old savefile.
+		return 0
+
+	if(savefile_version < 8)	//lazily delete everything + additional files so they can be saved in the new format
+		for(var/ckey in preferences_datums)
+			var/datum/preferences/D = preferences_datums[ckey]
+			if(D == src)
+				var/delpath = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/"
+				if(delpath && fexists(delpath))
+					fdel(delpath)
+				break
+		savefile_version = 8
+
+	//save format changes
+	save_preferences()
+	save_character()
+	return 1
+
+/datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)	return
-	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/preferences.sav"
+	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_preferences()
 	if(!path)				return 0
 	if(!fexists(path))		return 0
-
 	var/savefile/S = new /savefile(path)
 	if(!S)					return 0
 
 	S["version"] >> savefile_version
+	//Conversion
+	if(!savefile_version || !isnum(savefile_version) || savefile_version < SAVEFILE_VERSION_MIN || savefile_version > SAVEFILE_VERSION_MAX)
+		if(!savefile_update())
+			fdel(path)
+			return 0
 
 	//general preferences
 	S["ooccolor"]			>> ooccolor
@@ -20,20 +49,7 @@
 	S["UI_style"]			>> UI_style
 	S["be_special"]			>> be_special
 	S["default_slot"]		>> default_slot
-
-	//to be consolidated into a bitfield
-	S["sound_adminhelp"]	>> sound_adminhelp
-	S["lobby_music"]		>> lobby_music
-	S["midis"]				>> midis
-	S["ghost_ears"]			>> ghost_ears
-	S["ghost_sight"]		>> ghost_sight
-
-	//Conversion
-/*	if(!savefile_version || savefile_version < SAVEFILE_VERSION_MIN || savefile_version > SAVEFILE_VERSION_MAX)
-		if(!savefile_update())
-			fdel(path)
-			C << "<font color='red'>Error: savefile_load(): Your savefile was not compatible and had to be deleted.</font>"
-			return 0	*/
+	S["toggles"]			>> toggles
 
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
@@ -41,20 +57,17 @@
 	UI_style		= sanitize_inlist(UI_style, list("Midnight","Orange","old"), initial(UI_style))
 	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
-
-	sound_adminhelp	= sanitize_integer(sound_adminhelp, 0, 1, initial(sound_adminhelp))
-	lobby_music		= sanitize_integer(lobby_music, 0, 1, initial(lobby_music))
-	midis			= sanitize_integer(midis, 0, 1, initial(midis))
-	ghost_ears		= sanitize_integer(ghost_ears, 0, 1, initial(ghost_ears))
-	ghost_sight		= sanitize_integer(ghost_sight, 0, 1, initial(ghost_sight))
+	if(isnull(toggles))	toggles = initial(toggles)
+	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 
 	return 1
 
 /datum/preferences/proc/save_preferences()
 	if(!path)				return 0
-
 	var/savefile/S = new /savefile(path)
 	if(!S)					return 0
+
+	S["version"] << savefile_version
 
 	//general preferences
 	S["ooccolor"]			<< ooccolor
@@ -62,20 +75,13 @@
 	S["UI_style"]			<< UI_style
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
-
-	//to be consolidated into a bitfield
-	S["sound_adminhelp"]	<< sound_adminhelp
-	S["lobby_music"]		<< lobby_music
-	S["midis"]				<< midis
-	S["ghost_ears"]			<< ghost_ears
-	S["ghost_sight"]		<< ghost_sight
+	S["toggles"]			<< toggles
 
 	return 1
 
 /datum/preferences/proc/load_character(slot)
 	if(!path)				return 0
 	if(!fexists(path))		return 0
-
 	var/savefile/S = new /savefile(path)
 	if(!S)					return 0
 	if(!slot)	slot = default_slot
@@ -156,7 +162,6 @@
 
 /datum/preferences/proc/save_character()
 	if(!path)				return 0
-
 	var/savefile/S = new /savefile(path)
 	if(!S)					return 0
 	S.cd = "/character[default_slot]"

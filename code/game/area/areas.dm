@@ -244,67 +244,73 @@
 
 
 /area/Entered(A)
-
-	var/sound = null
 	var/musVolume = 25
-	sound = 'sound/ambience/ambigen1.ogg'
+	var/sound = 'sound/ambience/ambigen1.ogg'
 
+	if(!istype(A,/mob/living))	return
 
-	if (ismob(A))
+	var/mob/living/L = A
+	if(!L.ckey)	return
 
-		if (istype(A, /mob/dead/observer)) return
-		if (!A:ckey)
-			return
+	if(!L.lastarea)
+		L.lastarea = get_area(L.loc)
+	var/area/newarea = get_area(L.loc)
+	var/area/oldarea = L.lastarea
+	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
+		thunk(L)
 
-		if(istype(A,/mob/living))
-			if(!A:lastarea)
-				A:lastarea = get_area(A:loc)
-			//world << "Entered new area [get_area(A:loc)]"
-			var/area/newarea = get_area(A:loc)
-			var/area/oldarea = A:lastarea
-			if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (A:m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
-				thunk(A)
+	L.lastarea = newarea
 
-			A:lastarea = newarea
+	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
 
-		//if (A:ear_deaf) return
+	if(!L.client.ambience_playing)
+		L.client.ambience_playing = 1
+		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
-		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-			A:client:ambience_playing = 1
-			A << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
-
+	if(prob(35))
 		switch(src.name)
-			if ("Chapel") sound = pick('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
-			if ("Morgue") sound = pick('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/ambience/title2.ogg')
-			if ("Space") sound = pick('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
-			if ("Engine Control", "Engineering", "Engineering SMES") sound = pick('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
-			if ("AI Satellite Teleporter Room") sound = pick('sound/ambience/ambimalf.ogg')
-			if ("AI Upload Foyer") sound = pick('sound/ambience/ambimalf.ogg')
-			if ("AI Upload Chamber") sound = pick('sound/ambience/ambimalf.ogg')
-			if ("Mine")
+			if("Chapel")
+				sound = pick('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
+			if("Morgue")
+				sound = pick('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/ambience/title2.ogg')
+			if("Space")
+				sound = pick('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+			if("Engine Control", "Engineering", "Engineering SMES")
+				sound = pick('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
+			if("AI Satellite Teleporter Room")
+				sound = pick('sound/ambience/ambimalf.ogg')
+			if("AI Upload Foyer")
+				sound = pick('sound/ambience/ambimalf.ogg')
+			if("AI Upload Chamber")
+				sound = pick('sound/ambience/ambimalf.ogg')
+			if("Mine")
 				sound = pick('sound/ambience/ambimine.ogg')
 				musVolume = 25
-
-			if("Telecoms Teleporter") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecoms Central Compartment") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecoms Satellite") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecoms Foyer") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecommunications Satellite West Wing") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecommunications Satellite East Wing") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecoms Control Room") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-			if("Telecommunications Satellite Lounge") sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-
+			if("Telecoms Teleporter")
+				sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+			if("Telecoms Central Compartment")
+				sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+			if("Telecoms Satellite")
+				sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+			if("Telecoms Foyer")
+				sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+			if("Telecommunications Satellite West Wing")
+				sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+			if("Telecommunications Satellite East Wing")
+				sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+			if("Telecoms Control Room")
+				sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+			if("Telecommunications Satellite Lounge")
+				sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 			else
 				sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
-
-
-		if (prob(35))
-			if(A && A:client && !A:client:played && !A:client:no_ambi)
-				A << sound(sound, repeat = 0, wait = 0, volume = musVolume, channel = 1)
-				A:client:played = 1
-				spawn(600)
-					if(A && A:client)
-						A:client:played = 0
+		if(!L.client.played)
+			L << sound(sound, repeat = 0, wait = 0, volume = musVolume, channel = 1)
+			L.client.played = 1
+			spawn(600)			//ewww - this is very very bad
+				if(L.&& L.client)
+					L.client.played = 0
 
 
 /area/proc/gravitychange(var/gravitystate = 0, var/area/A)

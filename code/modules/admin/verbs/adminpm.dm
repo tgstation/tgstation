@@ -73,7 +73,7 @@
 			src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
 
 		//play the recieving admin the adminhelp sound (if they have them enabled)
-		if(C.holder.sound_adminhelp)
+		if(C.prefs.toggles & SOUND_ADMINHELP)
 			C << 'sound/effects/adminhelp.ogg'
 
 	else

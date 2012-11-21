@@ -30,5 +30,4 @@
 	spawn(40)
 		if(client)
 			handle_privacy_poll()
-			if(client.prefs.lobby_music)
-				Playmusic()
+			client.playtitlemusic()

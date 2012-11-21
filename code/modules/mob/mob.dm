@@ -402,29 +402,21 @@ var/list/slot_equipment_priority = list( \
 		prefs.save_preferences()
 		winset(src, "rpane.changelog", "background-color=none;font-style=;")
 
-/client/var/ghost_ears = 0
 /client/verb/toggle_ghost_ears()
 	set name = "Ghost ears"
 	set category = "OOC"
 	set desc = "Hear talks from everywhere"
-	ghost_ears = !ghost_ears
-	if (ghost_ears)
-		usr << "\blue Now you hear all speech in the world"
-	else
-		usr << "\blue Now you hear speech only from nearest creatures."
+	prefs.toggles ^= CHAT_GHOSTEARS
+	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"]."
+	prefs.save_preferences()
 
-/client/var/ghost_sight = 0
 /client/verb/toggle_ghost_sight()
 	set name = "Ghost sight"
 	set category = "OOC"
 	set desc = "Hear emotes from everywhere"
-	ghost_sight = !ghost_sight
-	if (ghost_sight)
-		usr << "\blue Now you hear all emotes in the world"
-	else
-		usr << "\blue Now you hear emotes only from nearest creatures."
-
-
+	prefs.toggles ^= CHAT_GHOSTSIGHT
+	src << "As a ghost, you will now [(prefs.toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"]."
+	prefs.save_preferences()
 
 /mob/verb/observe()
 	set name = "Observe"

@@ -227,6 +227,19 @@ var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finis
 
 #define R_HOST			65535
 
+//Preference toggles
+#define SOUND_ADMINHELP	1
+#define SOUND_MIDI		2
+#define SOUND_AMBIENCE	4
+#define SOUND_LOBBY		8
+#define CHAT_OOC		16
+#define CHAT_DEAD		32
+#define CHAT_GHOSTEARS	64
+#define CHAT_GHOSTSIGHT	128
+#define CHAT_PRAYER		256
+#define CHAT_RADIO		512
+
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_PRAYER|CHAT_RADIO)
 
 //Database connections
 //A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).

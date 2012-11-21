@@ -276,7 +276,7 @@ var/list/department_radio_keys = list(
 			continue //skip monkeys and leavers
 		if (istype(M, /mob/new_player))
 			continue
-		if(M.stat == 2 && M.client.ghost_ears)
+		if(M.stat == DEAD && (M.client.prefs & CHAT_GHOSTEARS))
 			listening|=M
 
 	var/turf/T = get_turf(src)

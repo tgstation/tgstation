@@ -61,21 +61,6 @@
 		src << browse(output,"window=playersetup;size=210x240;can_close=0")
 		return
 
-	proc/Playmusic()
-		while(!ticker) // wait for ticker to be created
-			sleep(1)
-
-		var/waits = 0
-		var/maxwaits = 100
-		while(!ticker.login_music)
-			sleep(2)
-
-			waits++ // prevents DDoSing the server via badminery
-			if(waits >= maxwaits)
-				break
-
-		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
-
 	Stat()
 		..()
 
@@ -131,10 +116,8 @@
 				if(client.prefs.be_random_name)
 					client.prefs.randomize_name()
 				observer.name = client.prefs.real_name
-				observer.key = key
 				observer.real_name = observer.name
-
-				client.prefs.copy_to_observer(observer)
+				observer.key = key
 
 				del(src)
 				return 1

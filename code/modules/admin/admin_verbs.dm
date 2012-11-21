@@ -16,7 +16,6 @@ var/list/admin_verbs_default = list(
 	/client/proc/deadchat,				/*toggles deadchat on/off*/
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
-	/client/proc/toggle_hear_deadcast,	/*toggles whether we hear deadchat*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/secrets
@@ -140,7 +139,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/deadmin_self,
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
-	/client/proc/toggle_hear_deadcast,
 	/client/proc/toggle_hear_radio,
 	/datum/admins/proc/show_traitor_panel,
 	/datum/admins/proc/toggleenter,
@@ -396,9 +394,11 @@ var/list/admin_verbs_hideable = list(
 /client/proc/colorooc()
 	set category = "Fun"
 	set name = "OOC Text Color"
-	if(holder)
-		var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-		if(new_ooccolor)	holder.ooccolor = new_ooccolor
+	if(!holder)	return
+	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+	if(new_ooccolor)
+		prefs.ooccolor = new_ooccolor
+		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -535,11 +535,9 @@ var/list/admin_verbs_hideable = list(
 	set name = "Toggle Adminhelp Sound"
 	set category = "Admin"
 	if(!holder)	return
-	holder.sound_adminhelp = !holder.sound_adminhelp
-	if(holder.sound_adminhelp)
-		usr << "You will now hear a sound when adminhelps arrive"
-	else
-		usr << "You will no longer hear a sound when adminhelps arrive"
+	prefs.toggles ^= SOUND_ADMINHELP
+	prefs.save_preferences()
+	usr << "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive"
 	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/object_talk(var/msg as text) // -- TLE
@@ -576,22 +574,13 @@ var/list/admin_verbs_hideable = list(
 	world << "Testing of new click proc [using_new_click_proc ? "enabled" : "disabled"]"
 	feedback_add_details("admin_verb","TNCP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggle_hear_deadcast()
-	set name = "Toggle Hear Deadcast"
-	set category = "Admin"
-
-	if(!holder) return
-	STFU_ghosts = !STFU_ghosts
-	usr << "You will now [STFU_ghosts ? "not hear" : "hear"] ghosts"
-	feedback_add_details("admin_verb","THDC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/toggle_hear_radio()
 	set name = "Toggle Hear Radio"
 	set category = "Admin"
-
 	if(!holder) return
-	STFU_radio = !STFU_radio
-	usr << "You will now [STFU_radio ? "not hear" : "hear"] radio chatter from nearby radios or speakers"
+	prefs.toggles ^= CHAT_RADIO
+	prefs.save_preferences()
+	usr << "You will [(prefs.toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/deadmin_self()

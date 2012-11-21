@@ -88,7 +88,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	for(var/client/X in admins)
 		if(X.is_afk())
 			admin_number_afk++
-		if(X.holder.sound_adminhelp)
+		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
 		X << msg
 

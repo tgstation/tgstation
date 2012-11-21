@@ -50,13 +50,9 @@ datum/preferences
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#b82e00"
-	var/midis = 1						//Play admin midis
-	var/ghost_ears = 1					//Toggle ghost ears
-	var/ghost_sight = 1
 	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
-	var/sound_adminhelp = 0
-	var/lobby_music = 1					//Whether or not to play the lobby music(Defaults yes)
+	var/toggles = TOGGLES_DEFAULT
 
 	//character preferences
 	var/real_name						//our character's name
@@ -97,7 +93,7 @@ datum/preferences
 	var/job_engsec_low = 0
 
 		// Want randomjob if preferences already filled - Donkie
-	var/userandomjob = 1 // Defaults to 1 for less assistants!
+	var/userandomjob = 1 //defaults to 1 for fewer assistants
 
 		// OOC Metadata:
 	var/metadata = ""
@@ -149,17 +145,17 @@ datum/preferences
 
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>"
-		dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
-		dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[lobby_music == 1 ? "Yes" : "No"]</b></a><br>"
-		dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
-		dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
+		dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>"
+		dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>"
+		dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? "Nearest Creatures" : "All Speech"]</b></a><br>"
+		dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
 
 		if(config.allow_Metadata)
 			dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
 
 		if(user.client && user.client.holder)
 			dat += "<b>Adminhelp sound</b>: "
-			dat += "[(sound_adminhelp)?"On":"Off"] <a href='?_src_=prefs;preference=hear_adminhelps'>toggle</a><br>"
+			dat += "[(toggles & SOUND_ADMINHELP)?"On":"Off"] <a href='?_src_=prefs;preference=hear_adminhelps'>toggle</a><br>"
 
 			if(config.allow_admin_ooccolor && check_rights(R_ADMIN,0))
 				dat += "<br><b>OOC</b><br>"
@@ -492,8 +488,6 @@ datum/preferences
 						be_special = 0
 						be_random_name = 0
 						UI_style = "Midnight"
-						midis = 1
-						ghost_ears = 1
 						userandomjob = 1
 
 			if("input")
@@ -586,7 +580,7 @@ datum/preferences
 							gender = MALE
 
 					if("hear_adminhelps")
-						sound_adminhelp = !sound_adminhelp
+						toggles ^= SOUND_ADMINHELP
 
 					if("ui")
 						switch(UI_style)
@@ -605,20 +599,20 @@ datum/preferences
 						be_random_name = !be_random_name
 
 					if("hear_midis")
-						midis = !midis
+						toggles ^= SOUND_MIDI
 
 					if("lobby_music")
-						lobby_music = !lobby_music
-						if(lobby_music)
+						toggles ^= SOUND_LOBBY
+						if(toggles & SOUND_LOBBY)
 							user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
 						else
 							user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 					if("ghost_ears")
-						ghost_ears = !ghost_ears
+						toggles ^= CHAT_GHOSTEARS
 
 					if("ghost_sight")
-						ghost_sight = !ghost_sight
+						toggles ^= CHAT_GHOSTSIGHT
 
 					if("save")
 						save_preferences()
@@ -692,28 +686,9 @@ datum/preferences
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
-		if(!safety)//To prevent run-time errors due to null datum when using randomize_appearance_for()
-			spawn(10)
-				if(character&&character.client)
-					setup_client(character.client)
-
 		//Debugging report to track down a bug, which randomly assigned the plural gender to people.
 		if(character.gender in list(PLURAL, NEUTER))
 			if(isliving(src)) //Ghosts get neuter by default
 				message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 				character.gender = MALE
 
-	proc/copy_to_observer(mob/dead/observer/character)
-		spawn(10)
-			if(character && character.client)
-				setup_client(character.client)
-
-	proc/setup_client(var/client/C)
-		if(C)
-			if(C.holder)
-				C.holder.sound_adminhelp = src.sound_adminhelp
-				C.holder.ooccolor = src.ooccolor
-			C.midis = src.midis
-			if(isnull(src.ghost_ears)) src.ghost_ears = 1 //There were problems where the default was null before someone saved their profile.
-			C.ghost_ears = src.ghost_ears
-			C.ghost_sight = src.ghost_sight
