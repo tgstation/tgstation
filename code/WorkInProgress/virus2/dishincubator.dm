@@ -165,5 +165,5 @@
 		if(beaker)
 			if(!beaker.reagents.remove_reagent("virusfood",5))
 				foodsupply += 10
-			if(!beaker.reagents.remove_reagent("toxins",1))
+			if(!beaker.reagents.remove_reagent("toxin",1))
 				toxins += 1
