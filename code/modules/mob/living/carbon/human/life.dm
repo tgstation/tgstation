@@ -773,6 +773,18 @@
 				heal_overall_damage(1,1)
 				adjustToxLoss(-1)
 				adjustOxyLoss(-1)
+		if(dna && dna.mutantrace == "shadow")
+			var/light_amount = 0
+			if(isturf(loc))
+				var/turf/T = loc
+				var/area/A = T.loc
+				if(A)
+					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
+					else						light_amount =  10
+			if(light_amount > 2) //if there's enough light, start dying
+				take_overall_damage(2,1)
+			else if (light_amount < 2) //heal in the dark
+				heal_overall_damage(1,1)
 
 		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in mutations)
