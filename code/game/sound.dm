@@ -75,17 +75,7 @@
 
 	src << S
 
-client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful
-	set category = "Special Verbs"
-	set name = "Toggle Ambience"
-	prefs.toggles ^= SOUND_AMBIENCE
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_AMBIENCE)
-		src << "You will now hear ambient sounds."
-	else
-		src << "You will no longer hear ambient sounds."
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
-		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
-	return
-
-
+/client/proc/playtitlemusic()
+	if(!ticker || !ticker.login_music)	return
+	if(prefs.toggles & SOUND_LOBBY)
+		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS

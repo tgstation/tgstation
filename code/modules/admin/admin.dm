@@ -681,24 +681,6 @@ var/global/floorIsLava = 0
 
 	world.Reboot()
 
-/client/proc/deadchat()
-	set category = "Admin"
-	set desc="Toggles Deadchat Visibility"
-	set name="Deadchat Visibility"
-	prefs.toggles ^= CHAT_DEAD
-	prefs.save_preferences()
-	src << "You will [(prefs.toggles & CHAT_DEAD) ? "now" : "no longer"] see deadchat."
-	feedback_add_details("admin_verb","TDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/toggleprayers()
-	set category = "Admin"
-	set desc="Toggles Prayer Visibility"
-	set name="Prayer Visibility"
-	prefs.toggles ^= CHAT_PRAYER
-	prefs.save_preferences()
-	src << "You will [(prefs.toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
-	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"

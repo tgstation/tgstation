@@ -530,16 +530,6 @@ var/list/admin_verbs_hideable = list(
 		togglebuildmode(src.mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/client/proc/toggleadminhelpsound()
-	set name = "Toggle Adminhelp Sound"
-	set category = "Admin"
-	if(!holder)	return
-	prefs.toggles ^= SOUND_ADMINHELP
-	prefs.save_preferences()
-	usr << "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive"
-	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/object_talk(var/msg as text) // -- TLE
 	set category = "Special Verbs"
 	set name = "oSay"
@@ -573,15 +563,6 @@ var/list/admin_verbs_hideable = list(
 	using_new_click_proc = !using_new_click_proc
 	world << "Testing of new click proc [using_new_click_proc ? "enabled" : "disabled"]"
 	feedback_add_details("admin_verb","TNCP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/toggle_hear_radio()
-	set name = "Toggle Hear Radio"
-	set category = "Admin"
-	if(!holder) return
-	prefs.toggles ^= CHAT_RADIO
-	prefs.save_preferences()
-	usr << "You will [(prefs.toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers"
-	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/deadmin_self()
 	set name = "De-admin self"

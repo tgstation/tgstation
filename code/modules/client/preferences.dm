@@ -20,18 +20,6 @@ var/global/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "M
 var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "Babydoll", "Baby-Blue", "Green", "Pink", "Kinky", "None")
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 
-var/const/BE_TRAITOR   =(1<<0)
-var/const/BE_OPERATIVE =(1<<1)
-var/const/BE_CHANGELING=(1<<2)
-var/const/BE_WIZARD    =(1<<3)
-var/const/BE_MALF      =(1<<4)
-var/const/BE_REV       =(1<<5)
-var/const/BE_ALIEN     =(1<<6)
-var/const/BE_PAI       =(1<<7)
-var/const/BE_CULTIST   =(1<<8)
-var/const/BE_MONKEY    =(1<<9)
-
-
 var/const/MAX_SAVE_SLOTS = 3
 
 

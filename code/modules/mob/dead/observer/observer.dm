@@ -230,21 +230,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//Maybe in the future we can add more <i>spooky</i> code here!
 	return
 */
-/mob/dead/observer/verb/toggle_alien_candidate()
-	set name = "Toggle Be Alien Candidate"
-	set category = "Ghost"
-	set desc = "Determines whether you will or will not be an alien candidate when someone bursts."
-	if(client)
-		client.prefs.be_special ^= BE_ALIEN
-		src << "You are now [(client.prefs.be_special & BE_ALIEN) ? "included in" : "excluded from"] alien candidate lists until end of round."
-
-/mob/dead/observer/verb/toggle_pai_candidate()
-	set name = "Toggle Be pAI Candidate"
-	set category = "Ghost"
-	set desc = "Receive a pop-up request when a pAI device requests a new personality. (toggle)"
-	if(client)
-		client.prefs.be_special ^= BE_PAI
-		src << "You will [(client.prefs.be_special & BE_PAI) ? "now" : "no longer" ] recieve pAI recruitment pop-ups."
 
 /mob/dead/observer/memory()
 	set hidden = 1

@@ -241,6 +241,32 @@ var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finis
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_PRAYER|CHAT_RADIO)
 
+#define BE_TRAITOR		1
+#define BE_OPERATIVE	2
+#define BE_CHANGELING	4
+#define BE_WIZARD		8
+#define BE_MALF			16
+#define BE_REV			32
+#define BE_ALIEN		64
+#define BE_PAI			128
+#define BE_CULTIST		256
+#define BE_MONKEY		512
+#define BE_NINJA		1024
+
+var/list/be_special_flags = list(
+	"Traitor" = BE_TRAITOR,
+	"Operative" = BE_OPERATIVE,
+	"Changeling" = BE_CHANGELING,
+	"Wizard" = BE_WIZARD,
+	"Malf AI" = BE_MALF,
+	"Revolutionary" = BE_REV,
+	"Xenomorph" = BE_ALIEN,
+	"pAI" = BE_PAI,
+	"Cultist" = BE_CULTIST,
+	"Monkey" = BE_MONKEY,
+	"Ninja" = BE_NINJA
+	)
+
 //Database connections
 //A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).
 var/DBConnection/dbcon = new()	//Feedback database (New database)

@@ -1,10 +1,3 @@
-/client/verb/listen_ooc()
-	set name = "Un/Mute OOC"
-	set category = "OOC"
-	prefs.toggles ^= CHAT_OOC
-	prefs.save_preferences()
-	src << "You will [(prefs.toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel."
-
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
