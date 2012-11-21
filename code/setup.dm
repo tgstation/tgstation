@@ -19,8 +19,9 @@
 #define MOLES_PLASMA_VISIBLE	0.7 //Moles in a standard cell after which plasma is visible
 #define MIN_PLASMA_DAMAGE 20
 
-#define BREATH_VOLUME 0.5	//liters in a normal breath
-#define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
+#define BREATH_VOLUME 5	//liters in a normal breath
+#define BREATH_MOLES (ONE_ATMOSPHERE * BREATH_VOLUME /(T20C*R_IDEAL_GAS_EQUATION))
+#define BREATH_PERCENTAGE BREATH_MOLES/MOLES_CELLSTANDARD
 	//Amount of air to take a from a tile
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
 	//Amount of air needed before pass out/suffocation commences

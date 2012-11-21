@@ -499,6 +499,7 @@
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 		var/lung_ruptured = is_lung_ruptured()
+
 		if(lung_ruptured && prob(2))
 			spawn emote("me", 1, "coughs up blood!")
 			src.drip(10)
@@ -564,6 +565,12 @@
 				if(istype(loc, /obj/))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
+
+
+		if(!lung_ruptured && breath)
+			if(breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
+				if(prob(5))
+					rupture_lung()
 
 		handle_breath(breath)
 
@@ -712,9 +719,6 @@
 				if(1000 to INFINITY)
 					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
 					fire_alert = max(fire_alert, 2)
-
-		if(oxyloss >= 50 && prob(oxyloss / 5))
-			rupture_lung()
 
 		//Temporary fixes to the alerts.
 
