@@ -539,6 +539,13 @@
 					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
 					breath = loc.remove_air(breath_moles)
+
+
+					if(!lung_ruptured)
+						if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
+							if(prob(5))
+								rupture_lung()
+
 					// Handle chem smoke effect  -- Doohl
 					var/block = 0
 					if(wear_mask)
@@ -565,12 +572,6 @@
 				if(istype(loc, /obj/))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
-
-
-		if(!lung_ruptured && breath)
-			if(breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
-				if(prob(5))
-					rupture_lung()
 
 		handle_breath(breath)
 
