@@ -145,7 +145,8 @@
 
 	bullet_act(var/obj/item/projectile/Proj)
 		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-			explode()
+			if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+				explode()
 
 	blob_act()
 		explode()

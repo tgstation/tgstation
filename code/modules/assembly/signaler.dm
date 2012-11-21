@@ -31,7 +31,7 @@
 		spawn(10)
 			process_cooldown()
 
-//		signal()
+		signal()
 		return 1
 
 	update_icon()

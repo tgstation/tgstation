@@ -12,7 +12,7 @@
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
-	projectile_type = "/obj/item/projectile/practice"
+	projectile_type = "/obj/item/projectile/beam/practice"
 	clumsy_check = 0
 
 obj/item/weapon/gun/energy/laser/retro
@@ -90,7 +90,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser tag gun"
 	icon_state = "bluetag"
 	desc = "Standard issue weapon of the Imperial Guard"
-	projectile_type = "/obj/item/projectile/beam/bluetag"
+	projectile_type = "/obj/item/projectile/beam/lastertag/blue"
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0
@@ -127,7 +127,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser tag gun"
 	icon_state = "redtag"
 	desc = "Standard issue weapon of the Imperial Guard"
-	projectile_type = "/obj/item/projectile/beam/redtag"
+	projectile_type = "/obj/item/projectile/beam/lastertag/red"
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
 	var/charge_tick = 0

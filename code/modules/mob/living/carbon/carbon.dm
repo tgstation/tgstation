@@ -141,7 +141,7 @@
 	shock_damage *= siemens_coeff
 	if (shock_damage<1)
 		return 0
-	src.take_overall_damage(0,shock_damage)
+	src.take_overall_damage(0,shock_damage,used_weapon="Electrocution")
 	//src.burn_skin(shock_damage)
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
@@ -353,10 +353,12 @@
 		if(H.gloves)
 			if(H.gloves.clean_blood())
 				H.update_inv_gloves(0)
+			H.gloves.germ_level = 0
 		else
 			if(H.bloody_hands)
 				H.bloody_hands = 0
 				H.update_inv_gloves(0)
+			H.germ_level = 0
 	update_icons()	//apply the now updated overlays to the mob
 
 

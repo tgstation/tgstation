@@ -221,7 +221,7 @@
 	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])") //BS12 EDIT ALG
 
 
-	//spawn(1800)            // this wont work right
+	//spawn(1800)			// this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
 
@@ -387,13 +387,6 @@
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
-
-		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
-			if(FAT in H.mutations)
-				if(!(flags & ONESIZEFITSALL))
-					if(!disable_warning)
-						H << "\red You're too fat to wear the [name]."
-					return 0
 
 		switch(slot)
 			if(slot_l_hand)
@@ -631,7 +624,7 @@
 		user << "\red You're going to need to remove that mask/helmet/glasses first."
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N     Metroids also don't have eyes!
+	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N	 Metroids also don't have eyes!
 		user << "\red You cannot locate any eyes on this creature!"
 		return
 

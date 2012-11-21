@@ -186,7 +186,7 @@
 		if("Detective")
 			return list(access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 		if("Medical Doctor")
-			return list(access_medical, access_morgue, access_surgery)
+			return list(access_medical, access_morgue, access_surgery, access_virology)
 		if("Botanist")	// -- TLE
 			return list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 		if("Librarian") // -- TLE
@@ -499,7 +499,7 @@
 	// hack for alt titles
 	if(istype(loc, /mob))
 		var/mob/M = loc
-		if(M.mind.role_alt_title == jobName && M.mind.assigned_role in get_all_jobs())
+		if(M.mind && M.mind.role_alt_title == jobName && M.mind.assigned_role in get_all_jobs())
 			return M.mind.assigned_role
 
 	if(istype(src, /obj/item/device/pda))

@@ -90,7 +90,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/suits.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
@@ -249,16 +249,16 @@ BLIND     // can't see anything
 		H.holstered = usr.get_active_hand()
 		usr.drop_item()
 		H.holstered.loc = src
-		usr.visible_message("\blue [usr] holsters \the [H.holstered].", "You holster \the [H.holstered].")
+		usr.visible_message("\blue \The [usr] holsters \the [H.holstered].", "You holster \the [H.holstered].")
 	else
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
 			usr << "\red You need an empty hand to draw the gun!"
 		else
 			if(usr.a_intent == "hurt")
-				usr.visible_message("\red [usr] draws \the [H.holstered], ready to shoot!", \
+				usr.visible_message("\red \The [usr] draws \the [H.holstered], ready to shoot!", \
 				"\red You draw \the [H.holstered], ready to shoot!")
 			else
-				usr.visible_message("\blue [usr] draws \the [H.holstered], pointing it at the ground.", \
-				"\blue You draw \the [H.holstered], pointing it at tthe ground.")
+				usr.visible_message("\blue \The [usr] draws \the [H.holstered], pointing it at the ground.", \
+				"\blue You draw \the [H.holstered], pointing it at the ground.")
 			usr.put_in_hands(H.holstered)
 			H.holstered = null
