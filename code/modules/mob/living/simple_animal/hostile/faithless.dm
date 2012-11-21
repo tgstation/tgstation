@@ -11,12 +11,12 @@
 	response_harm = "hits the"
 	speed = -1
 	stop_automated_movement_when_pulled = 0
-	maxHealth = 100
-	health = 100
+	maxHealth = 80
+	health = 80
 
 	harm_intent_damage = 10
-	melee_damage_lower = 18
-	melee_damage_upper = 18
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	attacktext = "grips"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 
@@ -42,6 +42,6 @@
 	. =..()
 	var/mob/living/L = .
 	if(istype(L))
-		if(prob(15))
+		if(prob(12))
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")

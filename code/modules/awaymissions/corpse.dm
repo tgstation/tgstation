@@ -187,6 +187,12 @@
 	corpseidjob = "Shaft Miner"
 	corpseidaccess = "Shaft Miner"
 
+/obj/effect/landmark/corpse/miner/rig
+	corpsesuit = /obj/item/clothing/suit/space/rig/mining
+	corpsemask = /obj/item/clothing/mask/breath
+	corpsehelmet = /obj/item/clothing/head/helmet/space/rig/mining
+
+
 /////////////////Officers//////////////////////
 
 /obj/effect/landmark/corpse/bridgeofficer
