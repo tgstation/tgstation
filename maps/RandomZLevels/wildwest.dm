@@ -68,7 +68,7 @@
 			if("Immortality")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
-				user.verbs += /mob/living/carbon/verb/immortality
+				user.verbs += /mob/living/carbon/proc/immortality
 				user.dna.mutantrace = "shadow"
 				user.update_mutantrace()
 			if("To Kill")
@@ -142,7 +142,7 @@
 
 /////For the Wishgranter///////////
 
-/mob/living/carbon/verb/immortality()
+/mob/living/carbon/proc/immortality()
 	set category = "Immortality"
 	set name = "Resurrection"
 
