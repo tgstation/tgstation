@@ -437,39 +437,39 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 
 /area/syndicate_station/southwest
-	name = "south-west of SS13"
+	name = "\improper south-west of SS13"
 	icon_state = "southwest"
 
 /area/syndicate_station/northwest
-	name = "north-west of SS13"
+	name = "\improper north-west of SS13"
 	icon_state = "northwest"
 
 /area/syndicate_station/northeast
-	name = "north-east of SS13"
+	name = "\improper north-east of SS13"
 	icon_state = "northeast"
 
 /area/syndicate_station/southeast
-	name = "south-east of SS13"
+	name = "\improper south-east of SS13"
 	icon_state = "southeast"
 
 /area/syndicate_station/north
-	name = "north of SS13"
+	name = "\improper north of SS13"
 	icon_state = "north"
 
 /area/syndicate_station/south
-	name = "south of SS13"
+	name = "\improper south of SS13"
 	icon_state = "south"
 
 /area/syndicate_station/commssat
-	name = "south of the communication satellite"
+	name = "\improper south of the communication satellite"
 	icon_state = "south"
 
 /area/syndicate_station/mining
-	name = "north of the mining asteroid"
+	name = "\improper north east of the mining asteroid"
 	icon_state = "north"
 
 /area/syndicate_station/transit
-	name = "hyperspace"
+	name = "\improper hyperspace"
 	icon_state = "shuttle"
 
 /area/wizard_station

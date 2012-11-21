@@ -53,6 +53,7 @@
 	user.set_machine(src)
 
 	var/dat = {"Location: [curr_location]<br>
+	Ready to move[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
 	<a href='?src=\ref[src];syndicate=1'>Syndicate Space</a><br>
 	<a href='?src=\ref[src];station_nw=1'>North West of SS13</a> |
 	<a href='?src=\ref[src];station_n=1'>North of SS13</a> |
@@ -60,8 +61,8 @@
 	<a href='?src=\ref[src];station_sw=1'>South West of SS13</a> |
 	<a href='?src=\ref[src];station_s=1'>South of SS13</a> |
 	<a href='?src=\ref[src];station_se=1'>South East of SS13</a><br>
-	<a href='?src=\ref[src];commssat=1'>South of the Communication Satellite"</a> |
-	<a href='?src=\ref[src];mining=1'>North of the Mining Asteroid</a><br>
+	<a href='?src=\ref[src];commssat=1'>South of the Communication Satellite</a> |
+	<a href='?src=\ref[src];mining=1'>North East of the Mining Asteroid</a><br>
 	<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
 	user << browse(dat, "window=computer;size=575x450")
