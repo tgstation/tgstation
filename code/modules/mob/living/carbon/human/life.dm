@@ -187,6 +187,7 @@
 						var/word = pick("dizzy","woosey","faint")
 						src << "\red You feel extremely [word]"
 				if(0 to 122)
+					toxloss += 200
 					death()
 
 
