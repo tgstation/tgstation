@@ -199,12 +199,12 @@
 
 
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user as mob)
-	var/protected = 0
-	var/mob/living/carbon/human/H = user
+//	var/protected = 0
+//	var/mob/living/carbon/human/H = user
 	if(!src.panelopen)
 		return
 
-	if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
+	/*if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(istype(G,/obj/item/clothing/gloves/yellow))
@@ -213,7 +213,7 @@
 	if(!protected)
 		playsound(src.loc, "sparks", 75, 1, -1)
 		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
-		return
+		return*/
 	else  //welp, the guy is protected, we can continue
 		if(src.issuperUV)
 			user << "You slide the dial back towards \"185nm\"."
@@ -225,12 +225,12 @@
 
 
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user as mob)
-	var/protected = 0
-	var/mob/living/carbon/human/H = user
+//	var/protected = 0
+//	var/mob/living/carbon/human/H = user
 	if(!src.panelopen) //Needed check due to bugs
 		return
 
-	if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
+	/*if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(istype(G,/obj/item/clothing/gloves/yellow) )
@@ -239,7 +239,7 @@
 	if(!protected)
 		playsound(src.loc, "sparks", 75, 1, -1)
 		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
-		return
+		return*/
 	else
 		user << "You push the button. The coloured LED next to it changes."
 		src.safetieson = !src.safetieson
@@ -406,7 +406,7 @@
 		if(user != OCCUPANT)
 			OCCUPANT << "<font color='blue'>The machine kicks you out!</font>"
 		if(user.loc != src.loc)
-			OCCUPANT << "<font color='blue'>You leave the not-so-cosy confines of the SSU.</font>"
+			OCCUPANT << "<font color='blue'>You leave the not-so-cozy confines of the SSU.</font>"
 
 		src.OCCUPANT.client.eye = src.OCCUPANT.client.mob
 		src.OCCUPANT.client.perspective = MOB_PERSPECTIVE
