@@ -44,8 +44,6 @@
 	else
 		world.log << "Tgstation database connection established."
 
-	sleep(50)
-
 	plmaster = new /obj/effect/overlay(  )
 	plmaster.icon = 'icons/effects/tile_effects.dmi'
 	plmaster.icon_state = "plasma"
