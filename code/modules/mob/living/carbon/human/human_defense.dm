@@ -178,14 +178,14 @@ emp_act
 				if(bloody)
 					bloody_body(src)
 
-/mob/living/carbon/human/proc/bloody_hands(var/mob/living/source)
+/mob/living/carbon/human/proc/bloody_hands(var/mob/living/source, var/amount = 2)
 	if (gloves)
 		gloves.add_blood(source)
-		gloves:transfer_blood = 2
+		gloves:transfer_blood = amount
 		gloves:bloody_hands_mob = source
 	else
 		add_blood(source)
-		bloody_hands = 2
+		bloody_hands = amount
 		bloody_hands_mob = source
 	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
