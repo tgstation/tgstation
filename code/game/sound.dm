@@ -19,7 +19,7 @@
 
 	if (vary)
 		S.frequency = rand(32000, 55000)
-	for (var/mob/M in range(world.view+extrarange, source))       // Plays for people in range.
+	for (var/mob/M in range(world.view+extrarange, source))	   // Plays for people in range.
 		if(locate(/mob/, M))
 			var/mob/M2 = locate(/mob/, M)
 			if (M2.client)
@@ -48,6 +48,16 @@
 							S.pan = max(-100, min(100, dx/8.0 * 100))
 
 						M << S
+
+	for(var/obj/mecha/mech in range(world.view+extrarange, source))
+		var/mob/M = mech.occupant
+		if (M && M.client)
+			if(M.ear_deaf <= 0 || !M.ear_deaf)
+				if(isturf(source))
+					var/dx = source.x - M.x
+					S.pan = max(-100, min(100, dx/8.0 * 100))
+
+				M << S
 																		// Now plays for people in lockers!  -- Polymorph
 
 /mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num)

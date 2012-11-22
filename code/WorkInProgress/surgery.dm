@@ -326,6 +326,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 /datum/surgery_step/fix_vein
 	required_tool = /obj/item/weapon/FixOVein
 
+	min_duration = 70
+	max_duration = 90
+
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 
@@ -888,7 +891,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		target.cores--
 		user.visible_message("\blue [user] cuts out one of [target]'s cores with \the [tool].",,	\
 		"\blue You cut out one of [target]'s cores with \the [tool]. [target.cores] cores left.")
-		new/obj/item/metroid_core(target.loc)
+		if(target.cores >= 0)
+			new/obj/item/metroid_core(target.loc)
 		if(target.cores <= 0)
 			target.icon_state = "baby roro dead-nocore"
 
@@ -992,6 +996,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		"\blue You have finished adjusting the area around [target]'s [affected.display_name] with \the [tool].")
 		affected.status |= ORGAN_ATTACHABLE
 		affected.amputated = 1
+		affected.setAmputatedTree()
 		affected.open = 0
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -1124,8 +1129,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		target.custom_pain("Something hurts horribly in your chest!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "[user] bends [target]'s ribcage back into place with \the [tool]."
-		var/self_msg = "You bends [target]'s ribcage back into place with \the [tool]."
+		var/msg = "\blue [user] bends [target]'s ribcage back into place with \the [tool]."
+		var/self_msg = "\blue You bend [target]'s ribcage back into place with \the [tool]."
 		user.visible_message(msg, self_msg)
 
 		target.ribcage_op_stage = 1
@@ -1147,8 +1152,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "[user] applied \the [tool] to [target]'s ribcage."
-		var/self_msg = "You applied \the [tool] to [target]'s ribcage."
+		var/msg = "\blue [user] applied \the [tool] to [target]'s ribcage."
+		var/self_msg = "\blue You applied \the [tool] to [target]'s ribcage."
 		user.visible_message(msg, self_msg)
 
 		target.ribcage_op_stage = 0
@@ -1202,8 +1207,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/affected = target.get_organ("chest")
-		user.visible_message("[user] mends the rupture in [target]'s lungs with \the [tool].", \
-		"You mend the rupture in [target]'s lungs with \the [tool]." )
+		user.visible_message("\blue [user] mends the rupture in [target]'s lungs with \the [tool].", \
+		"\blue You mend the rupture in [target]'s lungs with \the [tool]." )
 		affected.ruptured_lungs = 0
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

@@ -195,10 +195,13 @@
 			m_type = 2
 
 		if("law")
-			message = "<B>[src]</B> shows its legal authorization barcode."
+			if (istype(module,/obj/item/weapon/robot_module/security))
+				message = "<B>[src]</B> shows its legal authorization barcode."
 
-			playsound(src.loc, 'biamthelaw.ogg', 50, 0)
-			m_type = 2
+				playsound(src.loc, 'biamthelaw.ogg', 50, 0)
+				m_type = 2
+			else
+				src << "You are not THE LAW, pal."
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))

@@ -119,6 +119,8 @@
 			if(!unmarked || !C.powernet)
 				if(C.d1 == fdir || C.d2 == fdir)
 					. += C
+				else if(C.d1 == turn(C.d2, 180))
+					. += C
 	return .
 
 

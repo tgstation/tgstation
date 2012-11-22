@@ -489,7 +489,7 @@
 							domutcheck(src,null)
 							emote("gasp")
 						updatehealth()
-							
+
 				if(damage && organs.len)
 					var/datum/organ/external/O = pick(organs)
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
@@ -499,6 +499,7 @@
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 		var/lung_ruptured = is_lung_ruptured()
+
 		if(lung_ruptured && prob(2))
 			spawn emote("me", 1, "coughs up blood!")
 			src.drip(10)
@@ -564,6 +565,12 @@
 				if(istype(loc, /obj/))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
+
+
+		if(!lung_ruptured && breath)
+			if(breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
+				if(prob(5))
+					rupture_lung()
 
 		handle_breath(breath)
 
@@ -712,9 +719,6 @@
 				if(1000 to INFINITY)
 					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
 					fire_alert = max(fire_alert, 2)
-
-		if(oxyloss >= 50 && prob(oxyloss / 5))
-			rupture_lung()
 
 		//Temporary fixes to the alerts.
 
@@ -1004,7 +1008,8 @@
 	proc/handle_chemicals_in_body()
 		if(reagents) reagents.metabolize(src)
 
-		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
+//		if(dna && dna.mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
+		if(PLANT in mutations)
 			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 			if(isturf(loc)) //else, there's considered to be no light
 				var/turf/T = loc
@@ -1050,7 +1055,8 @@
 			if(overeatduration > 1)
 				overeatduration -= 2 //doubled the unfat rate
 
-		if(dna && dna.mutantrace == "plant")
+//		if(dna && dna.mutantrace == "plant")
+		if(PLANT in mutations)
 			if(nutrition < 200)
 				take_overall_damage(2,0)
 
@@ -1295,9 +1301,13 @@
 			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 			if(dna)
 				switch(dna.mutantrace)
-					if("lizard","metroid")
+					if("metroid")
 						see_in_dark = 3
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
+					if("lizard")
+						see_in_dark = 3
+					if("tajaran")
+						see_in_dark = 8
 					else
 						see_in_dark = 2
 
@@ -1470,7 +1480,12 @@
 			if(machine)
 				if(!machine.check_eye(src))		reset_view(null)
 			else
-				if(!(mRemote in mutations) && !client.adminobs)
+				var/isRemoteObserve = 0
+				if((mRemote in mutations) && remoteview_target)
+					if(remoteview_target.stat==CONSCIOUS)
+						isRemoteObserve = 1
+				if(!isRemoteObserve && client && !client.adminobs)
+					remoteview_target = null
 					reset_view(null)
 		return 1
 

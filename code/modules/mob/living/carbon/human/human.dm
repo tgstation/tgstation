@@ -821,6 +821,12 @@
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
 	set category = "Superpower"
+	
+	if(stat!=CONSCIOUS)
+		reset_view(0)
+		remoteview_target = null
+		return
+
 	if(!(mMorph in mutations))
 		src.verbs -= /mob/living/carbon/human/proc/morph
 		return
@@ -894,6 +900,12 @@
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
 	set category = "Superpower"
+
+	if(stat!=CONSCIOUS)
+		reset_view(0)
+		remoteview_target = null
+		return
+
 	if(!(mRemotetalk in src.mutations))
 		src.verbs -= /mob/living/carbon/human/proc/remotesay
 		return
@@ -917,12 +929,19 @@
 	set name = "Remote View"
 	set category = "Superpower"
 
+	if(stat!=CONSCIOUS)
+		remoteview_target = null
+		reset_view(0)
+		return
+
 	if(!(mRemote in src.mutations))
+		remoteview_target = null
 		reset_view(0)
 		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
 		return
 
 	if(client.eye != client.mob)
+		remoteview_target = null
 		reset_view(0)
 		return
 
@@ -930,15 +949,17 @@
 
 	for(var/mob/living/carbon/h in world)
 		var/turf/temp_turf = get_turf(h)
-		if(temp_turf.z != 1 && temp_turf.z != 5) //Not on mining or the station.
+		if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
 			continue
 		creatures += h
 
 	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
 
 	if (target)
+		remoteview_target = target
 		reset_view(target)
 	else
+		remoteview_target = null
 		reset_view(0)
 
 /mob/living/carbon/human/proc/get_visible_gender()

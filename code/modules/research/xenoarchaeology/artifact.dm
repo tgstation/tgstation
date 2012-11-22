@@ -153,8 +153,6 @@
 		if(istype(P,/obj/item/projectile/beam)) src.Artifact_Activate()
 		else if(istype(P,/obj/item/projectile/ion)) src.Artifact_Activate()
 		else if(istype(P,/obj/item/projectile/energy)) src.Artifact_Activate()
-		else if(istype(P,/obj/item/projectile/beam/bluetag)) src.Artifact_Activate()
-		else if(istype(P,/obj/item/projectile/beam/redtag)) src.Artifact_Activate()
 	if (my_effect.trigger == "heat")
 		if(istype(P,/obj/item/projectile/temp)) src.Artifact_Activate()
 

@@ -61,7 +61,7 @@
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
-	return round(5.5*charge/capacity)
+	return round(5.5*charge/(capacity ? capacity : 5e6))
 
 #define SMESRATE 0.05			// rate of internal charge to external power
 

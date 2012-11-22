@@ -221,7 +221,7 @@
 				findarti++
 				cur_artifact = A
 			if (findarti == 1)
-				if(cur_artifact.being_used)
+				if(cur_artifact && cur_artifact.being_used)
 					var/message = "<b>[src]</b> states, \"Cannot analyse. Excess energy drain is disrupting signal.\""
 					src.visible_message(message, message)
 				else
