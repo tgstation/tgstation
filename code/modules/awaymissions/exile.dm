@@ -42,10 +42,10 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/implanter/exile
-		new /obj/item/weapon/implantcase/exile
-		new /obj/item/weapon/implantcase/exile
-		new /obj/item/weapon/implantcase/exile
-		new /obj/item/weapon/implantcase/exile
-		new /obj/item/weapon/implantcase/exile
+		new /obj/item/weapon/implanter/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
+		new /obj/item/weapon/implantcase/exile(src)
 		return

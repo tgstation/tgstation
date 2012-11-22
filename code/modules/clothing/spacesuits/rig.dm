@@ -117,6 +117,6 @@
 
 /obj/item/clothing/suit/space/rig/medical
 	icon_state = "rig-medical"
-	name = "mining medical"
+	name = "medical hardsuit"
 	item_state = "medical_hardsuit"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)

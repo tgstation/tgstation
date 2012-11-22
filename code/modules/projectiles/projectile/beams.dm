@@ -41,7 +41,7 @@
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
 	icon_state = "emitter"
-
+	damage = 30
 
 
 /obj/item/projectile/bluetag

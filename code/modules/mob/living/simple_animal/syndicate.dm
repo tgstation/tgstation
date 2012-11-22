@@ -190,7 +190,7 @@
 
 /mob/living/simple_animal/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
-		if(prob(65))
+		if(prob(80))
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
 				damage = 0
