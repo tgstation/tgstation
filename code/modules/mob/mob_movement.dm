@@ -267,8 +267,6 @@
 
 	if((istype(mob.loc, /turf/space)) || (mob.lastarea.has_gravity == 0))
 		if(!mob.Process_Spacemove(0))	return 0
-	else
-		mob.floatiness = 0
 
 
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
@@ -470,10 +468,6 @@
 
 		dense_object++
 		break
-
-	//Makes the mob floaty
-	src.floatiness = 1
-	src.make_floaty()
 
 	if(!dense_object && (locate(/obj/structure/lattice) in oview(1, src)))
 		dense_object++
