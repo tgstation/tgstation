@@ -282,15 +282,15 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] has removed [target]'s appendix with \the [tool].", \
 		"\blue You have removed [target]'s appendix with \the [tool].")
-		var/datum/disease/appendicitis/app = null
+		var/app = 0
 		for(var/datum/disease/appendicitis/appendicitis in target.viruses)
-			app = appendicitis
+			app = 1
 			appendicitis.cure()
+			target.resistances += appendicitis
 		if (app)
 			new /obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed(get_turf(target))
 		else
 			new /obj/item/weapon/reagent_containers/food/snacks/appendix(get_turf(target))
-		target.resistances += app
 		target.op_stage.appendix = 2
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
