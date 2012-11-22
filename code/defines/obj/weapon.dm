@@ -988,6 +988,12 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
+/obj/item/weapon/staff/broom
+	name = "broom"
+	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "broom"
+
 /obj/item/weapon/staff/stick
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."
