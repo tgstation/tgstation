@@ -5,6 +5,7 @@
 	icon_state = "spaceworm"
 	icon_living = "spaceworm"
 	icon_dead = "spacewormdead"
+	status_flags = 0
 
 	speak_emote = list("transmits") //not supposed to be used under AI control
 	emote_hear = list("transmits")  //I'm just adding it so it doesn't runtime if controlled by player who speaks
@@ -29,7 +30,6 @@
 
 	a_intent = "harm" //so they don't get pushed around
 
-	nopush = 1
 	wall_smash = 1
 
 	speed = -1

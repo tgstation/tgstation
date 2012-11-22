@@ -9,7 +9,7 @@
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	density = 0
-	nodamage = 1 // You can't damage it.
+	status_flags = GODMODE  // You can't damage it.
 	mouse_opacity = 0
 
 // Movement code. Returns 0 to stop air movement from moving it.

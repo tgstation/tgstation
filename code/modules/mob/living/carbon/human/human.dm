@@ -8,7 +8,7 @@
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
-	nodamage = 1
+	status_flags = GODMODE|CANPUSH
 
 
 
@@ -82,7 +82,7 @@
 			if(prob(99))
 				now_pushing = 0
 				return
-		if(tmob.nopush)
+		if(!(tmob.status_flags & CANPUSH))
 			now_pushing = 0
 			return
 

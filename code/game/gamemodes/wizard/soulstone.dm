@@ -71,7 +71,7 @@
 
 			if ("Summon")
 				for(var/mob/living/simple_animal/shade/A in src)
-					A.nodamage = 0
+					A.status_flags &= ~GODMODE
 					A.canmove = 1
 					A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
 					A.loc = U.loc
@@ -124,7 +124,7 @@
 							del(animation)
 							var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( T.loc )
 							S.loc = C //put shade in stone
-							S.nodamage = 1 //So they won't die inside the stone somehow
+							S.status_flags |= GODMODE //So they won't die inside the stone somehow
 							S.canmove = 0//Can't move out of the soul stone
 							S.name = "Shade of [T.real_name]"
 							S.real_name = "Shade of [T.real_name]"
@@ -151,7 +151,7 @@
 						U << "\red <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!"
 					else
 						T.loc = C //put shade in stone
-						T.nodamage = 1
+						T.status_flags |= GODMODE
 						T.canmove = 0
 						T.health = T.maxHealth
 						C.icon_state = "soulstone2"

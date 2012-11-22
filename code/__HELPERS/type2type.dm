@@ -255,3 +255,9 @@ proc/tg_list2text(list/list, glue=",")
 	if(rights & R_SOUNDS)		. += "[seperator]+SOUND"
 	if(rights & R_SPAWN)		. += "[seperator]+SPAWN"
 	return .
+
+/proc/ui_style2icon(ui_style)
+	switch(ui_style)
+		if("old")		return 'icons/mob/screen1_old.dmi'
+		if("Orange")	return 'icons/mob/screen1_Orange.dmi'
+		else			return 'icons/mob/screen1_Midnight.dmi'

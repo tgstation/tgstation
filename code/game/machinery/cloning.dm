@@ -113,7 +113,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace)
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(mindref)
@@ -144,7 +144,6 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 	occupant = H
-	H.UI = UI // set interface preference
 
 	if(!clonename)	//to prevent null names
 		clonename = "clone ([rand(0,999)])"

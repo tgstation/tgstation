@@ -112,15 +112,11 @@
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	if (M.nodamage == 1)
-		M.nodamage = 0
-		usr << "\blue Toggled OFF"
-	else
-		M.nodamage = 1
-		usr << "\blue Toggled ON"
+	M.status_flags ^= GODMODE
+	usr << "\blue Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]"
 
-	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]")
-	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]", 1)
+	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
+	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]", 1)
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

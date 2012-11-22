@@ -1,7 +1,5 @@
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 
-
-var/const/Pi 	= 3.14159265
 var/const/E		= 2.71828183
 var/const/Sqrt2	= 1.41421356
 

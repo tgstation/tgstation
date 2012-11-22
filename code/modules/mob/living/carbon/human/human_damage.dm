@@ -1,6 +1,6 @@
 //Updates the mob's health from organs and mob damage variables
 /mob/living/carbon/human/updatehealth()
-	if(nodamage)
+	if(status_flags & GODMODE)
 		health = 100
 		stat = CONSCIOUS
 		return
@@ -117,7 +117,7 @@
 
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(var/brute, var/burn)
-	if(nodamage)	return	//godmode
+	if(status_flags & GODMODE)	return	//godmode
 	var/list/datum/organ/external/parts = get_damageable_organs()
 	var/update = 0
 	while(parts.len && (brute>0 || burn>0) )

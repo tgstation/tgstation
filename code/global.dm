@@ -206,67 +206,6 @@ var/forum_authenticated_group = "10"
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.
 var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finished setting up and stuff.
 
-
-//Please don't edit these values without speaking to Errorage first	~Carn
-//Admin Permissions
-#define R_BUILDMODE		1
-#define R_ADMIN			2
-#define R_BAN			4
-#define R_FUN			8
-#define R_SERVER		16
-#define R_DEBUG			32
-#define R_POSSESS		64
-#define R_PERMISSIONS	128
-#define R_STEALTH		256
-#define R_REJUVINATE	512
-#define R_VAREDIT		1024
-#define R_SOUNDS		2048
-#define R_SPAWN			4096
-
-#define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
-
-#define R_HOST			65535
-
-//Preference toggles
-#define SOUND_ADMINHELP	1
-#define SOUND_MIDI		2
-#define SOUND_AMBIENCE	4
-#define SOUND_LOBBY		8
-#define CHAT_OOC		16
-#define CHAT_DEAD		32
-#define CHAT_GHOSTEARS	64
-#define CHAT_GHOSTSIGHT	128
-#define CHAT_PRAYER		256
-#define CHAT_RADIO		512
-
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_PRAYER|CHAT_RADIO)
-
-#define BE_TRAITOR		1
-#define BE_OPERATIVE	2
-#define BE_CHANGELING	4
-#define BE_WIZARD		8
-#define BE_MALF			16
-#define BE_REV			32
-#define BE_ALIEN		64
-#define BE_PAI			128
-#define BE_CULTIST		256
-#define BE_MONKEY		512
-#define BE_NINJA		1024
-
-var/list/be_special_flags = list(
-	"Traitor" = BE_TRAITOR,
-	"Operative" = BE_OPERATIVE,
-	"Changeling" = BE_CHANGELING,
-	"Wizard" = BE_WIZARD,
-	"Malf AI" = BE_MALF,
-	"Revolutionary" = BE_REV,
-	"Xenomorph" = BE_ALIEN,
-	"pAI" = BE_PAI,
-	"Cultist" = BE_CULTIST,
-	"Monkey" = BE_MONKEY,
-	"Ninja" = BE_NINJA
-	)
-
 //Database connections
 //A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).
 var/DBConnection/dbcon = new()	//Feedback database (New database)

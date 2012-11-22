@@ -26,8 +26,7 @@
 	var/name			// the preview name of the accessory
 
 	// Determines if the accessory will be skipped or included in random hair generations
-	var/choose_female = 1
-	var/choose_male = 1
+	var/gender = NEUTER
 
 
 /*
@@ -97,12 +96,12 @@
 	pompadour
 		name = "Pompadour"
 		icon_state = "hair_pompadour"
-		choose_female = 0
+		gender = MALE
 
 	quiff
 		name = "Quiff"
 		icon_state = "hair_quiff"
-		choose_female = 0
+		gender = MALE
 
 	bedhead
 		name = "Bedhead"
@@ -119,37 +118,37 @@
 	beehive
 		name = "Beehive"
 		icon_state = "hair_beehive"
-		choose_male = 0
+		gender = FEMALE
 
 	bobcurl
 		name = "Bobcurl"
 		icon_state = "hair_bobcurl"
-		choose_male = 0
+		gender = FEMALE
 
 	bob
 		name = "Bob"
 		icon_state = "hair_bobcut"
-		choose_male = 0
+		gender = FEMALE
 
 	bowl
 		name = "Bowl"
 		icon_state = "hair_bowlcut"
-		choose_female = 0
+		gender = MALE
 
 	buzz
 		name = "Buzzcut"
 		icon_state = "hair_buzzcut"
-		choose_female = 0
+		gender = MALE
 
 	crew
 		name = "Crewcut"
 		icon_state = "hair_crewcut"
-		choose_female = 0
+		gender = MALE
 
 	combover
 		name = "Combover"
 		icon_state = "hair_combover"
-		choose_female = 0
+		gender = MALE
 
 	devillock
 		name = "Devil Lock"
@@ -158,7 +157,7 @@
 	dreadlocks
 		name = "Dreadlocks"
 		icon_state = "hair_dreads"
-		choose_female = 0 // okay.jpg
+		gender = MALE // okay.jpg
 
 	curls
 		name = "Curls"
@@ -175,12 +174,12 @@
 	afro_large
 		name = "Big Afro"
 		icon_state = "hair_bigafro"
-		choose_female = 0
+		gender = MALE
 
 	sargeant
 		name = "Flat Top"
 		icon_state = "hair_sargeant"
-		choose_female = 0
+		gender = MALE
 
 	emo
 		name = "Emo"
@@ -197,27 +196,27 @@
 	hitop
 		name = "Hitop"
 		icon_state = "hair_hitop"
-		choose_female = 0
+		gender = MALE
 
 	mohawk
 		name = "Mohawk"
 		icon_state = "hair_d"
-		choose_female = 0 // gross
+		gender = MALE // gross
 
 	jensen
 		name = "Adam Jensen Hair"
 		icon_state = "hair_jensen"
-		choose_female = 0
+		gender = MALE
 
 	gelled
 		name = "Gelled Back"
 		icon_state = "hair_gelled"
-		choose_male = 0
+		gender = FEMALE
 
 	spiky
 		name = "Spiky"
 		icon_state = "hair_spikey"
-		choose_female = 0
+		gender = MALE
 
 	kusangi
 		name = "Kusanagi Hair"
@@ -226,32 +225,32 @@
 	kagami
 		name = "Pigtails"
 		icon_state = "hair_kagami"
-		choose_male = 0
+		gender = FEMALE
 
 	himecut
 		name = "Hime Cut"
 		icon_state = "hair_himecut"
-		choose_male = 0
+		gender = FEMALE
 
 	braid
 		name = "Floorlength Braid"
 		icon_state = "hair_braid"
-		choose_male = 0
+		gender = FEMALE
 
 	odango
 		name = "Odango"
 		icon_state = "hair_odango"
-		choose_male = 0
+		gender = FEMALE
 
 	ombre
 		name = "Ombre"
 		icon_state = "hair_ombre"
-		choose_male = 0
+		gender = FEMALE
 
 	updo
 		name = "Updo"
 		icon_state = "hair_updo"
-		choose_male = 0
+		gender = FEMALE
 
 	skinhead
 		name = "Skinhead"
@@ -260,12 +259,12 @@
 	balding
 		name = "Balding Hair"
 		icon_state = "hair_e"
-		choose_female = 0 // turnoff!
+		gender = MALE // turnoff!
 
 	bald
 		name = "Bald"
 		icon_state = "bald"
-		choose_female = 0
+		gender = MALE
 
 /*
 ///////////////////////////////////
@@ -278,12 +277,12 @@
 /datum/sprite_accessory/facial_hair
 
 	icon = 'icons/mob/human_face.dmi'
-	choose_female = 0 // barf (unless you're a dorf, dorfs dig chix /w beards :P)
+	gender = MALE // barf (unless you're a dorf, dorfs dig chix /w beards :P)
 
 	shaved
 		name = "Shaved"
 		icon_state = "bald"
-		choose_female = 1 // shaved is the only facial hair on women because why would chicks have beards???
+		gender = NEUTER
 
 	watson
 		name = "Watson Mustache"
@@ -348,9 +347,3 @@
 	dwarf
 		name = "Dwarf Beard"
 		icon_state = "facial_dwarf"
-
-
-
-
-
-

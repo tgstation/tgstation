@@ -64,7 +64,7 @@
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
-			if(tmob.nopush)
+			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return
 
@@ -142,7 +142,6 @@
 	attacktext = "smashes their armoured gauntlet into"
 	speed = 3
 	wall_smash = 1
-	nopush = 1
 	attack_sound = 'sound/weapons/punch3.ogg'
 
 /mob/living/simple_animal/construct/armoured/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -212,7 +211,6 @@
 	attacktext = "rams"
 	speed = 0
 	wall_smash = 1
-	nopush = 1
 	attack_sound = 'sound/weapons/punch2.ogg'
 
 
@@ -236,7 +234,6 @@
 	attacktext = "brutally crushes"
 	speed = 5
 	wall_smash = 1
-	nopush = 1
 	attack_sound = 'sound/weapons/punch4.ogg'
 	var/energy = 0
 	var/max_energy = 1000

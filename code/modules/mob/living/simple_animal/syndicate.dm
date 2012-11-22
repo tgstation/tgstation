@@ -186,7 +186,7 @@
 	weapon1 = /obj/item/weapon/melee/energy/sword/red
 	weapon2 = /obj/item/weapon/shield/energy
 	attacktext = "slashes"
-	nopush = 1
+	status_flags = CANSTUN|CANWEAKEN|CANPARALYSE
 
 /mob/living/simple_animal/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)
@@ -276,7 +276,7 @@
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
-			if(tmob.nopush)
+			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return
 

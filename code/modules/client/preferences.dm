@@ -16,9 +16,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
 )
 
-var/global/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "Mankini", "Love-Hearts", "Black2", "Grey2", "Stripey", "Kinky", "None") //Curse whoever made male/female underwear diffrent colours
-var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "Babydoll", "Baby-Blue", "Green", "Pink", "Kinky", "None")
-var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 
 var/const/MAX_SAVE_SLOTS = 3
 
@@ -94,7 +91,8 @@ datum/preferences
 			if(load_preferences())
 				load_character()
 				return
-	randomize_name()
+	gender = pick(MALE, FEMALE)
+	real_name = random_name(gender)
 
 /datum/preferences
 	proc/ShowChoices(mob/user)
@@ -420,63 +418,49 @@ datum/preferences
 			if("random")
 				switch(href_list["preference"])
 					if("name")
-						randomize_name()
-
+						real_name = random_name(gender)
 					if("age")
-						age = rand(17, 85)
-
-//					if("b_type")
-//						b_type = pick( 31;"A+", 7;"A-", 8;"B+", 2;"B-", 2;"AB+", 1;"AB-", 40;"O+", 9;"O-" )
-
+						age = rand(AGE_MIN, AGE_MAX)
 					if("hair")
-						randomize_hair_color("hair")
-
+						r_hair = rand(0,255)
+						g_hair = rand(0,255)
+						b_hair = rand(0,255)
 					if("h_style")
-						randomize_hair(gender)
-
+						h_style = random_hair_style(gender)
 					if("facial")
-						randomize_hair_color("facial")
-
+						r_facial = rand(0,255)
+						g_facial = rand(0,255)
+						b_facial = rand(0,255)
 					if("f_style")
-						randomize_facial(gender)
-
+						f_style = random_facial_hair_style(gender)
 					if("underwear")
-						underwear = rand(1,12)
-
+						underwear = rand(1,underwear_m.len)
 					if("eyes")
-						randomize_eyes_color()
-
+						r_eyes = rand(0,255)
+						g_eyes = rand(0,255)
+						b_eyes = rand(0,255)
 					if("s_tone")
-						randomize_skin_tone()
-
+						s_tone = random_skin_tone()
 					if("bag")
 						backbag = rand(1,3)
-
 					if("all")
 						gender = pick(MALE,FEMALE)
-						randomize_name()
-						age = rand(17,85)
+						real_name = random_name(gender)
+						age = rand(AGE_MIN,AGE_MAX)
 						underwear = rand(1,12)
 						backbag = rand(1,3)
-						randomize_hair_color("hair")
-						randomize_hair(gender)
-						randomize_hair_color("facial")
-						randomize_facial(gender)
-						randomize_eyes_color()
-						randomize_skin_tone()
-						job_civilian_high = 0
-						job_civilian_med = 0
-						job_civilian_low = 0
-						job_medsci_high = 0
-						job_medsci_med = 0
-						job_medsci_low = 0
-						job_engsec_high = 0
-						job_engsec_med = 0
-						job_engsec_low = 0
-						be_special = 0
-						be_random_name = 0
-						UI_style = "Midnight"
-						userandomjob = 1
+						r_hair = rand(0,255)
+						g_hair = rand(0,255)
+						b_hair = rand(0,255)
+						r_facial = r_hair
+						g_facial = g_hair
+						b_facial = b_hair
+						r_eyes = rand(0,255)
+						g_eyes = rand(0,255)
+						b_eyes = rand(0,255)
+						h_style = random_hair_style(gender)
+						f_style = random_facial_hair_style(gender)
+						s_tone = random_skin_tone()
 
 			if("input")
 				switch(href_list["preference"])
@@ -488,19 +472,14 @@ datum/preferences
 							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 					if("age")
-						var/new_age = input(user, "Choose your character's age:\n(17-85)", "Character Preference") as num|null
+						var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 						if(new_age)
-							age = max(min(round(text2num(new_age)), 85), 17)
+							age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 					if("metadata")
 						var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
 						if(new_metadata)
 							metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
-
-//					if("b_type")
-//						var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
-//						if(new_b_type)
-//							b_type = new_b_type
 
 					if("hair")
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
@@ -547,8 +526,7 @@ datum/preferences
 					if("s_tone")
 						var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
 						if(new_s_tone)
-							s_tone = max(min(round(new_s_tone), 220), 1)
-							s_tone = -s_tone + 35
+							s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 					if("ooccolor")
 						var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
@@ -618,7 +596,7 @@ datum/preferences
 
 	proc/copy_to(mob/living/carbon/human/character, safety = 0)
 		if(be_random_name)
-			randomize_name()
+			real_name = random_name()
 
 		if(config.humans_need_surnames)
 			var/firstspace = findtext(real_name, " ")
@@ -629,14 +607,12 @@ datum/preferences
 				real_name += "[pick(last_names)]"
 
 		character.real_name = real_name
-
+		character.name = character.real_name
 		if(character.dna)
 			character.dna.real_name = character.real_name
 
 		character.gender = gender
-
 		character.age = age
-
 		character.b_type = b_type
 
 		character.r_eyes = r_eyes
@@ -656,17 +632,7 @@ datum/preferences
 		character.h_style = h_style
 		character.f_style = f_style
 
-		switch(UI_style)
-			if("Midnight")
-				character.UI = 'icons/mob/screen1_Midnight.dmi'
-			if("Orange")
-				character.UI = 'icons/mob/screen1_Orange.dmi'
-			if("old")
-				character.UI = 'icons/mob/screen1_old.dmi'
-			else
-				character.UI = 'icons/mob/screen1_Midnight.dmi'
-
-		if(underwear > 12 || underwear < 1)
+		if(underwear > underwear_m.len || underwear < 1)
 			underwear = 1 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me.
 		character.underwear = underwear
 

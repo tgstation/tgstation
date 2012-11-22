@@ -91,7 +91,7 @@
 		return //TODO: DEFERRED
 
 	proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-		if(nodamage) return
+		if(status_flags & GODMODE) return
 
 		if(exposed_temperature > bodytemperature)
 			var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)

@@ -44,7 +44,3 @@
 			if(65 to 70)	. += ascii2text(ascii+32)	//letters A to F - translates to lowercase
 			else			return default
 	return .
-
-
-
-

@@ -4,7 +4,7 @@
 	maxHealth = 250
 	health = 250
 	icon_state = "alienq_s"
-	nopush = 1
+	status_flags = CANPARALYSE
 	heal_rate = 5
 	plasma_rate = 20
 

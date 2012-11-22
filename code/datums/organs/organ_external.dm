@@ -78,7 +78,7 @@
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
 /datum/organ/external/proc/take_damage(brute, burn)
-	if(owner && owner.nodamage)	return 0	//godmode
+	if(owner && (owner.status_flags & GODMODE))	return 0	//godmode
 	brute	= max(brute,0)
 	burn	= max(burn,0)
 

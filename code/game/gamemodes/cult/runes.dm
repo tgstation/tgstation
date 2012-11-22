@@ -382,7 +382,7 @@ var/list/sacrificed = list()
 					D.real_name = copytext(P.info, 1, MAX_NAME_LEN)
 					break
 			D.universal_speak = 1
-			D.nodamage = 0
+			D.status_flags &= ~GODMODE
 
 			D.key = ghost.key
 

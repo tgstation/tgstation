@@ -155,7 +155,7 @@
 			hands.icon_state = "medical"
 			icon_state = "surgeon"
 			modtype = "Med"
-			nopush = 1
+			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_medical",1)
 
 		if("Security")
@@ -165,7 +165,7 @@
 			icon_state = "bloodhound"
 			modtype = "Sec"
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
-			nopush = 1
+			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
 
 		if("Engineering")
@@ -327,7 +327,7 @@
 					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
-			if(tmob.nopush)
+			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return
 		now_pushing = 0

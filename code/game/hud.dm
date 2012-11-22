@@ -241,9 +241,11 @@ datum/hud/New(mob/owner)
 
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob)) return 0
+	if(!mymob.client) return 0
+	var/ui_style = ui_style2icon(mymob.client.prefs.UI_style)
 
 	if(ishuman(mymob))
-		human_hud(mymob.UI) // Pass the player the UI style chosen in preferences
+		human_hud(ui_style) // Pass the player the UI style chosen in preferences
 
 		if(RADAR in mymob.augmentations)
 			spawn()
@@ -253,10 +255,10 @@ datum/hud/New(mob/owner)
 					mymob:place_radar_closed()
 
 	else if(ismonkey(mymob))
-		monkey_hud(mymob.UI)
+		monkey_hud(ui_style)
 
 	else if(isbrain(mymob))
-		brain_hud(mymob.UI)
+		brain_hud(ui_style)
 
 	else if(islarva(mymob))
 		larva_hud()

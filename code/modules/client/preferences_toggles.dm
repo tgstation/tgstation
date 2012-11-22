@@ -119,3 +119,4 @@
 	prefs.be_special ^= role_flag
 	prefs.save_preferences()
 	src << "You will [(prefs.be_special & role_flag) ? "now" : "no longer"] be considered for [role] events (where possible)."
+	feedback_add_details("admin_verb","TBeSpecial") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

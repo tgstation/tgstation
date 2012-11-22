@@ -10,7 +10,6 @@
 	//Not in use yet
 	var/obj/effect/organstructure/organStructure = null
 
-//	var/uses_hud = 0
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
@@ -61,11 +60,9 @@
 	var/ear_damage = null	//Carbon
 	var/stuttering = null	//Carbon
 	var/real_name = null
-//	var/original_name = null //Original name is only used in ghost chat! Depracated, now used bb
 	var/blinded = null
 	var/bhunger = 0			//Carbon
 	var/ajourn = 0
-//	var/rejuv = null
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/antitoxs = null
@@ -120,7 +117,6 @@
 
 	var/datum/hud/hud_used = null
 
-	//var/list/organs = list(  ) //moved to human.
 	var/list/grabbed_by = list(  )
 	var/list/requests = list(  )
 
@@ -137,10 +133,6 @@
 
 	var/job = null//Living
 
-	var/nodamage = 0
-
-	var/be_syndicate = 0//This really should be a client variable.
-	var/be_random_name = 0
 	var/const/blindness = 1//Carbon
 	var/const/deafness = 2//Carbon
 	var/const/muteness = 4//Carbon
@@ -193,10 +185,7 @@
 
 	var/update_icon = 1 //Set to 1 to trigger update_icons() at the next life() call
 
-	var/UI = 'icons/mob/screen1_Midnight.dmi' // For changing the UI from preferences
-
-	var/status_flags = 255	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
-	var/nopush = 0 //Can they be shoved?
+	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
 	var/area/lastarea = null
 

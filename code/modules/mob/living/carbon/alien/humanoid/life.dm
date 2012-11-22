@@ -167,7 +167,7 @@
 		return null
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if(nodamage)
+		if(status_flags & GODMODE)
 			return
 
 		if(!breath || (breath.total_moles() == 0))
@@ -459,6 +459,6 @@
 						del(M)
 						continue
 					if(air_master.current_cycle%3==1)
-						if(!M.nodamage)
+						if(!(status_flags & GODMODE))
 							M.adjustBruteLoss(5)
 						nutrition += 10
