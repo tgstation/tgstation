@@ -75,6 +75,12 @@
 	icon = 'custom_items.dmi'
 	icon_state = "fancypen"
 
+/obj/item/weapon/pen/fluff/fountainpen //paththegreat: Eli Stevens
+	name = "Engraved Fountain Pen"
+	desc = "An expensive looking pen with the initials E.S. engraved into the side."
+	icon = 'custom_items.dmi'
+	icon_state = "fountainpen"
+
 /obj/item/fluff/victor_kaminsky_1 //chinsky: Victor Kaminski
 	name = "golden detective's badge"
 	desc = "NanoTrasen Security Department detective's badge, made from gold. Badge number is 564."

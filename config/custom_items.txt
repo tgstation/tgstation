@@ -32,6 +32,7 @@ nerezza: Asher Spock: /obj/item/weapon/reagent_containers/hypospray/fluff/asher_
 nerezza: Asher Spock: /obj/item/weapon/card/id/fluff/asher_spock_2
 orangebottle: Lillian Levett: /obj/item/weapon/pen/fluff/fancypen
 orangebottle: Lilliana Reade: /obj/item/weapon/pen/fluff/fancypen
+paththegreat: Eli Stevens: /obj/item/weapon/pen/fluff/fountainpen
 phaux: Tian Krieger: /obj/item/clothing/under/fluff/tian_dress
 rawrtaicho: Riley Rohtin: /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1
 roaper: Enos Adlai: /obj/item/clothing/head/fluff/enos_adlai_1
@@ -54,4 +55,3 @@ vinceluk: Seth Sealis: /obj/item/clothing/suit/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
 whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1
 roaper: Ian Colm: /obj/item/weapon/card/id/fluff/ian_colmid
-
