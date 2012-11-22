@@ -1,5 +1,4 @@
 /mob/living/carbon/human
-
 	//Hair colour and style
 	var/r_hair = 0
 	var/g_hair = 0

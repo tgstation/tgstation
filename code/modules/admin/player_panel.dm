@@ -231,7 +231,7 @@
 					else if(ismetroid(M))
 						M_job = "Metroid"
 					else if(ismonkey(M))
-						M_job = "Moneky"
+						M_job = "Monkey"
 					else if(isalien(M)) //aliens
 						if(islarva(M))
 							M_job = "Alien larva"

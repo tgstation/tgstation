@@ -36,7 +36,6 @@
 	var/obj/screen/zone_sel/zone_sel = null
 
 	var/damageoverlaytemp = 0
-	var/emote_allowed = 1
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null
@@ -127,7 +126,6 @@
 	var/coughedtime = null
 
 	var/inertia_dir = 0
-	var/footstep = 1
 
 	var/music_lastplayed = "null"
 
@@ -171,7 +169,7 @@
 	var/obj/effect/proc_holder/spell/list/spell_list = list()
 
 //Changlings, but can be used in other modes
-	var/obj/effect/proc_holder/changpower/list/power_list = list()
+//	var/obj/effect/proc_holder/changpower/list/power_list = list()
 
 //List of active diseases
 

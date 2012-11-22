@@ -20,13 +20,13 @@
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
+				var/obj/item/clothing/shoes/clown_shoes/O = H.shoes
 				if(H.m_intent == "run")
-					if(H.footstep >= 2)
-						H.footstep = 0
-					else
-						H.footstep++
-					if(H.footstep == 0)
+					if(O.footstep >= 2)
+						O.footstep = 0
 						playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
+					else
+						O.footstep++
 				else
 					playsound(src, "clownstep", 20, 1)
 
@@ -55,7 +55,7 @@
 						M.inertia_dir = 0
 						return
 
-			if(2) //lube
+			if(2) //lube		//can cause infinite loops - needs work
 				if(!istype(M, /mob/living/carbon/metroid))
 					M.stop_pulling()
 					step(M, M.dir)
