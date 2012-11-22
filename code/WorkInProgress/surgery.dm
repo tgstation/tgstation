@@ -1093,8 +1093,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		target.custom_pain("Something hurts horribly in your chest!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "[user] bends [target]'s ribcage back into place with \the [tool]."
-		var/self_msg = "You bends [target]'s ribcage back into place with \the [tool]."
+		var/msg = "\blue [user] bends [target]'s ribcage back into place with \the [tool]."
+		var/self_msg = "\blue You bend [target]'s ribcage back into place with \the [tool]."
 		user.visible_message(msg, self_msg)
 
 		target.ribcage_op_stage = 1
@@ -1116,8 +1116,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/msg = "[user] applied \the [tool] to [target]'s ribcage."
-		var/self_msg = "You applied \the [tool] to [target]'s ribcage."
+		var/msg = "\blue [user] applied \the [tool] to [target]'s ribcage."
+		var/self_msg = "\blue You applied \the [tool] to [target]'s ribcage."
 		user.visible_message(msg, self_msg)
 
 		target.ribcage_op_stage = 0
@@ -1168,8 +1168,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/affected = target.get_organ("chest")
-		user.visible_message("[user] mends the rupture in [target]'s lungs with \the [tool].", \
-		"You mend the rupture in [target]'s lungs with \the [tool]." )
+		user.visible_message("\blue [user] mends the rupture in [target]'s lungs with \the [tool].", \
+		"\blue You mend the rupture in [target]'s lungs with \the [tool]." )
 		affected.ruptured_lungs = 0
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
