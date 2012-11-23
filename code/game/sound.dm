@@ -19,10 +19,13 @@
 
 	if (vary)
 		S.frequency = rand(32000, 55000)
-	for (var/mob/M in range(world.view+extrarange, source))       // Plays for people in range.
-		if(locate(/mob/, M))
+
+	for (var/A in range(world.view+extrarange, source))       // Plays for people in range.
+
+		if(ismob(A))
+			var/mob/M = A
 			var/mob/M2 = locate(/mob/, M)
-			if (M2.client)
+			if (M2 && M2.client)
 				if(M2.ear_deaf <= 0 || !M.ear_deaf)
 					if(isturf(source))
 						var/dx = source.x - M2.x
@@ -30,17 +33,17 @@
 
 					M2 << S
 
-		if (M.client)
-			if(M.ear_deaf <= 0 || !M.ear_deaf)
-				if(isturf(source))
-					var/dx = source.x - M.x
-					S.pan = max(-100, min(100, dx/8.0 * 100))
+			if (M.client)
+				if(M.ear_deaf <= 0 || !M.ear_deaf)
+					if(isturf(source))
+						var/dx = source.x - M.x
+						S.pan = max(-100, min(100, dx/8.0 * 100))
 
-				M << S
+					M << S
 
-	for(var/obj/structure/closet/L in range(world.view+extrarange, source))
-		if(locate(/mob/, L))
-			for(var/mob/M in L)
+		if(istype(A, /obj/structure/closet))
+			var/obj/O = A
+			for(var/mob/M in O)
 				if (M.client)
 					if(M.ear_deaf <= 0 || !M.ear_deaf)
 						if(isturf(source))

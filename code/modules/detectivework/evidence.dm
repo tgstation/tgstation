@@ -89,6 +89,5 @@
 		new /obj/item/weapon/evidencebag(src)
 		new /obj/item/weapon/evidencebag(src)
 		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/f_card(src)
 		..()
 		return

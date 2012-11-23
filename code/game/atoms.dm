@@ -336,8 +336,10 @@ its easier to just keep the beam vertical.
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
 			fingerprintshidden = list()
+
 		//Fibers~
 		add_fibers(M)
+
 		//Now, lets get to the dirty work.
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
@@ -346,55 +348,43 @@ its easier to just keep the beam vertical.
 				H.dna = new /datum/dna(null)
 				H.dna.real_name = H.real_name
 		H.check_dna()
+
 		//Now, deal with gloves.
 		if (H.gloves && H.gloves != src)
 			if(fingerprintslast != H.key)
 				fingerprintshidden += text("\[[]\](Wearing gloves). Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 				fingerprintslast = H.key
 			H.gloves.add_fingerprint(M)
+
 		//Deal with gloves the pass finger/palm prints.
 		if(H.gloves != src)
 			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
 			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
+
 		//More adminstuffz
 		if(fingerprintslast != H.key)
 			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), H.real_name, H.key)
 			fingerprintslast = H.key
+
 		//Make the list if it does not exist.
 		if(!fingerprints)
 			fingerprints = list()
+
 		//Hash this shit.
 		var/full_print = md5(H.dna.uni_identity)
-		//Smudge up dem prints some
-		for(var/P in fingerprints)
-			if(P == full_print)
-				continue
-			var/test_print = stars(fingerprints[P], rand(85,95))
-			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-				fingerprints.Remove(P)
-			else
-				fingerprints[P] = test_print
-		var/print = fingerprints[full_print] //Find if the print is already there.
-		//It is not!  We need to add it!
-		if(!print)
-			fingerprints[full_print] = stars(full_print, H.gloves ? rand(10,20) : rand(25,40))
-		//It's there, lets merge this shit!
-		else
-			fingerprints[full_print] = stringmerge(print, stars(full_print, (H.gloves ? rand(10,20) : rand(25,40))))
+
+		// Add the fingerprints
+		fingerprints[full_print] = full_print
+
 		return 1
 	else
 		//Smudge up dem prints some
-		for(var/P in fingerprints)
-			var/test_print = stars(fingerprints[P], rand(85,95))
-			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-				fingerprints.Remove(P)
-			else
-				fingerprints[P] = test_print
 		if(fingerprintslast != M.key)
 			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key)
 			fingerprintslast = M.key
+
 	//Cleaning up shit.
 	if(fingerprints && !fingerprints.len)
 		del(fingerprints)
@@ -406,8 +396,8 @@ its easier to just keep the beam vertical.
 		A.fingerprints = list()
 	if(!istype(A.fingerprintshidden,/list))
 		A.fingerprintshidden = list()
-	A.fingerprints |= fingerprints            //detective
-	A.fingerprintshidden |= fingerprintshidden    //admin
+	A.fingerprints |= fingerprints.Copy()            //detective
+	A.fingerprintshidden |= fingerprintshidden.Copy()    //admin
 	A.fingerprintslast = fingerprintslast
 
 

@@ -617,25 +617,6 @@
 /obj/item/weapon/dummy/blob_act()
 	return
 
-/obj/item/weapon/f_card
-	name = "finger print card"
-	desc = "Used to take fingerprints."
-	icon = 'icons/obj/card.dmi'
-	icon_state = "fingerprint0"
-	var/amount = 10.0
-	item_state = "paper"
-	throwforce = 1
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 5
-
-
-/obj/item/weapon/fcardholder
-	name = "fingerprint card case"
-	desc = "Apply finger print card."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "fcardholder0"
-	item_state = "clipboard"
 
 /*
 /obj/item/weapon/game_kit

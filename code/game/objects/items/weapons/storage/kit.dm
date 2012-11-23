@@ -104,18 +104,6 @@
 	..()
 	return
 
-/obj/item/weapon/storage/fcard_kit/New()
-
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	..()
-	return
-
 /obj/item/weapon/storage/id_kit/New()
 
 	new /obj/item/weapon/card/id(src)

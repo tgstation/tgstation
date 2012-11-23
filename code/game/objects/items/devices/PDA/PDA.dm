@@ -298,7 +298,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=Forensic Scan'><img src=pda_scanner.png> [scanmode == 2 ? "Disable" : "Enable"] Forensic Scanner</a></li>"
 					if(istype(cartridge.radio, /obj/item/radio/integrated/beepsky))
 						dat += "<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>"
 						dat += "</ul>"
@@ -513,11 +512,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						scanmode = 0
 					else if((!isnull(cartridge)) && (cartridge.access_medical))
 						scanmode = 1
-				if("Forensic Scan")
-					if(scanmode == 2)
-						scanmode = 0
-					else if((!isnull(cartridge)) && (cartridge.access_security))
-						scanmode = 2
 				if("Reagent Scan")
 					if(scanmode == 3)
 						scanmode = 0
@@ -939,27 +933,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 	switch(scanmode)
-		if(2)
-			if(!istype(A, /obj/item/weapon/f_card))
-				if (!A.fingerprints)
-					user << "\blue Unable to locate any fingerprints on [A]!"
-				else
-					user << "\blue Isolated [A:fingerprints.len] fingerprints."
-					var/list/prints = A:fingerprints
-					var/list/complete_prints = list()
-					for(var/i in prints)
-						var/print = prints[i]
-						if(stringpercent(print) <= FINGERPRINT_COMPLETE)
-							complete_prints += print
-					if(complete_prints.len < 1)
-						user << "\blue No intact prints found"
-					else
-						user << "\blue Found [complete_prints.len] intact prints"
-						for(var/i in complete_prints)
-							user << "\blue [i]"
-				if(cartridge && cartridge.access_security)
-					cartridge.add_data(A)
-					user << "Data added to internal storage.  Scan with a High-Resolution Scanner to retreive."
 
 		if(3)
 			if(!isnull(A.reagents))

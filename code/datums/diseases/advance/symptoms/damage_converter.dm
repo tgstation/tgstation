@@ -29,7 +29,7 @@ Bonus
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
-			if(5)
+			if(4, 5)
 				Convert(M)
 	return
 
@@ -39,5 +39,5 @@ Bonus
 		var/get_damage = rand(1, 2)
 		M.adjustFireLoss(-get_damage)
 		M.adjustBruteLoss(-get_damage)
-		M.adjustToxLoss(get_damage * 2)
+		M.adjustToxLoss(get_damage)
 		return 1

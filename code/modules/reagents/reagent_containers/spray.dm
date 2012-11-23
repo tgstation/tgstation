@@ -71,6 +71,11 @@
 		log_game("[key_name(user)] fired Space lube from a spray bottle.")
 	return
 
+/obj/item/weapon/reagent_containers/spray/attack_self(var/mob/user)
+
+	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
+	user << "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
+
 
 /obj/item/weapon/reagent_containers/spray/examine()
 	set src in usr

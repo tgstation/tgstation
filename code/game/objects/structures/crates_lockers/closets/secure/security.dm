@@ -180,8 +180,6 @@
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/cartridge/detective(src)
-		new /obj/item/weapon/storage/fcard_kit(src)
-		new /obj/item/weapon/fcardholder(src)
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/detective_scanner(src)
 		new /obj/item/weapon/storage/box/evidence(src)

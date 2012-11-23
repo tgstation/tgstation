@@ -65,8 +65,10 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		stage = max_stages
 	if(stage_prob != 0 && prob(stage_prob) && stage != max_stages && !cure_present) //now the disease shouldn't get back up to stage 4 in no time
 		stage++
-	if(stage != 1 && (prob(1) || (cure_present && prob(cure_chance))))
+		//world << "up"
+	if(cure_present && prob(cure_chance))
 		stage--
+		//world << "down"
 	else if(stage <= 1 && ((prob(1) && curable) || (cure_present && prob(cure_chance))))
 //		world << "Cured as stage act"
 		cure()
