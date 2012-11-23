@@ -86,10 +86,6 @@
 /mob/living/carbon/human/proc/drip(var/amt as num)
 	if(!amt)
 		return
-	if(bodytemperature < 170)
-		// if the body is cooled enough, the metabolism is basically stopped,
-		// which will prevent from bleeding out
-		return
 
 	var/amm = 0.1 * amt
 	var/turf/T = get_turf(src)

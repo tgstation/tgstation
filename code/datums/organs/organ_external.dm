@@ -185,7 +185,7 @@
 			if(W.damage == 0 && W.created + 10 * 10 * 60 <= world.time)
 				wounds -= W
 				// let the GC handle the deletion of the wound
-			if(W.internal && !W.is_treated())
+			if(W.internal && !W.is_treated() && owner.bodytemperature >= 170)
 				// internal wounds get worse over time
 				W.open_wound(0.1 * wound_update_accuracy)
 				owner.vessel.remove_reagent("blood",0.07 * W.damage * wound_update_accuracy)
