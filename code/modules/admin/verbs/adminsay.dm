@@ -25,7 +25,7 @@
 	for (var/client/C in admin_list)
 		if (src.holder.rank == "Admin Observer")
 			C << "<span class='adminobserver'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, C)]:</EM> <span class='message'>[msg]</span></span>"
-		else if(C.holder.level != 0)
+		else if(C.holder && C.holder.level != 0)
 			C << "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, C)]</EM> (<A HREF='?src=\ref[C.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
 
 /client/proc/cmd_mod_say(msg as text)

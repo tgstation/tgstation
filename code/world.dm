@@ -18,8 +18,8 @@
 
 	src.load_mode()
 	src.load_motd()
-	src.load_mods()
 	src.load_admins()
+	src.load_mods()
 	investigate_reset()
 	if (config.usewhitelist)
 		load_whitelist()
@@ -146,6 +146,8 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 		if(revdata)	s["revision"] = revdata.revision
 		s["admins"] = admins
+
+		s["end"] = "end"
 
 		return list2params(s)
 
