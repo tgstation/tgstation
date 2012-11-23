@@ -1037,7 +1037,7 @@
 					if("lizard","metroid")
 						see_in_dark = 3
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
-					else if("shadow")
+					if("shadow")
 						see_in_dark = 8
 					else
 						see_in_dark = 2

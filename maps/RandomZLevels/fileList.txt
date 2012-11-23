@@ -11,3 +11,4 @@
 #maps/RandomZLevels/Academy.dmm
 #maps/RandomZLevels/wildwest.dmm
 #maps/RandomZLevels/challenge.dmm
+#maps/RandomZLevels/listeningpost.dmm
