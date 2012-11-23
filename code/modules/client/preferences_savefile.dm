@@ -18,7 +18,7 @@
 				if(delpath && fexists(delpath))
 					fdel(delpath)
 				break
-		savefile_version = 8
+		return 0
 
 	if(savefile_version == SAVEFILE_VERSION_MAX)	//update successful.
 		save_preferences()
@@ -29,6 +29,7 @@
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)	return
 	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
+	savefile_version = SAVEFILE_VERSION_MAX
 
 /datum/preferences/proc/load_preferences()
 	if(!path)				return 0
@@ -40,7 +41,6 @@
 	//Conversion
 	if(!savefile_version || !isnum(savefile_version) || savefile_version < SAVEFILE_VERSION_MIN || savefile_version > SAVEFILE_VERSION_MAX)
 		if(!savefile_update())  //handles updates
-			fdel(path)			//handles deleting old files for which an update clause has not been defined
 			savefile_version = SAVEFILE_VERSION_MAX
 			save_preferences()
 			save_character()

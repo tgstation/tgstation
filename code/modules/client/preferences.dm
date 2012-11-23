@@ -89,8 +89,8 @@ datum/preferences
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
 			if(load_preferences())
-				load_character()
-				return
+				if(load_character())
+					return
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
 
