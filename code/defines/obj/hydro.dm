@@ -33,6 +33,16 @@
 	var/growthstages = 0
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 
+/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "*** <B>[plantname]</B> ***"
+		user << "-Plant Endurance: \blue [endurance]"
+		user << "-Plant Lifespan: \blue [lifespan]"
+		if(yield != -1)
+			user << "-Plant Yield: \blue [yield]"
+		user << "-Plant Production: \blue [production]"
+		if(potency != -1)
+			user << "-Plant Potency: \blue [potency]"
 
 /obj/item/seeds/chiliseed
 	name = "pack of chili seeds"

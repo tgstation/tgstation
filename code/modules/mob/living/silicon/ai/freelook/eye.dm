@@ -36,10 +36,13 @@
 // It will also stream the chunk that the new loc is in.
 
 /mob/aiEye/proc/setLoc(var/T)
-	T = get_turf(T)
-	loc = T
-	cameranet.visibility(src)
+
 	if(ai)
+		if(!isturf(ai.loc))
+			return
+		T = get_turf(T)
+		loc = T
+		cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
 		//Holopad
@@ -114,7 +117,6 @@
 		user.sprint = initial
 
 	user.cameraFollow = null
-	src.eye = user.eyeobj
 
 	//user.unset_machine() //Uncomment this if it causes problems.
 	//user.lightNearbyCamera()
