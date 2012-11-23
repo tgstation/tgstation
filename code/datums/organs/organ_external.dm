@@ -188,7 +188,9 @@
 			if(W.internal && !W.is_treated())
 				// internal wounds get worse over time
 				W.open_wound(0.1 * wound_update_accuracy)
-				owner.vessel.remove_reagent("blood",0.2 * W.damage * wound_update_accuracy)
+				owner.vessel.remove_reagent("blood",0.07 * W.damage * wound_update_accuracy)
+				if(prob(1 * wound_update_accuracy))
+					owner.custom_pain("You feel a stabbing pain in your [display_name]!",1)
 
 			if(W.bandaged || W.salved)
 				// slow healing
@@ -489,9 +491,11 @@
 					W = new wound_type(damage)
 
 			// Possibly trigger an internal wound, too.
-			if(damage > 10 && prob(damage) && type != BURN)
+			var/local_damage = brute_dam + burn_dam + damage
+			if(damage > 10 && type != BURN && local_damage > 20 && prob(damage))
 				var/datum/wound/internal_bleeding/I = new (15)
 				wounds += I
+				owner.custom_pain("You feel something rip in your [display_name]!", 1)
 
 			// check whether we can add the wound to an existing wound
 			for(var/datum/wound/other in wounds)

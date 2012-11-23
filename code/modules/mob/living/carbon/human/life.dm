@@ -187,6 +187,10 @@
 						var/word = pick("dizzy","woosey","faint")
 						src << "\red You feel extremely [word]"
 				if(0 to 122)
+					// There currently is a strange bug here. If the mob is not below -100 health
+					// when death() is called, apparently they will be just fine, and this way it'll
+					// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
+					toxloss += 300 // just to be safe!
 					death()
 
 
@@ -489,7 +493,7 @@
 							domutcheck(src,null)
 							emote("gasp")
 						updatehealth()
-							
+
 				if(damage && organs.len)
 					var/datum/organ/external/O = pick(organs)
 					if(istype(O)) O.add_autopsy_data("Radiation Poisoning", damage)
@@ -499,6 +503,7 @@
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 		var/lung_ruptured = is_lung_ruptured()
+
 		if(lung_ruptured && prob(2))
 			spawn emote("me", 1, "coughs up blood!")
 			src.drip(10)
@@ -527,7 +532,7 @@
 			if(!breath)
 				if(isobj(loc))
 					var/obj/location_as_object = loc
-					breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
+					breath = location_as_object.handle_internal_lifeform(src, BREATH_MOLES)
 				else if(isturf(loc))
 					var/breath_moles = 0
 					/*if(environment.return_pressure() > ONE_ATMOSPHERE)
@@ -538,6 +543,13 @@
 					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
 					breath = loc.remove_air(breath_moles)
+
+
+					if(!lung_ruptured)
+						if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
+							if(prob(5))
+								rupture_lung()
+
 					// Handle chem smoke effect  -- Doohl
 					var/block = 0
 					if(wear_mask)
@@ -712,9 +724,6 @@
 				if(1000 to INFINITY)
 					apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
 					fire_alert = max(fire_alert, 2)
-
-		if(oxyloss >= 50 && prob(oxyloss / 5))
-			rupture_lung()
 
 		//Temporary fixes to the alerts.
 
@@ -1480,7 +1489,7 @@
 				if((mRemote in mutations) && remoteview_target)
 					if(remoteview_target.stat==CONSCIOUS)
 						isRemoteObserve = 1
-				if(!isRemoteObserve && !client.adminobs)
+				if(!isRemoteObserve && client && !client.adminobs)
 					remoteview_target = null
 					reset_view(null)
 		return 1

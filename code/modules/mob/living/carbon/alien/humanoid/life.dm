@@ -418,8 +418,8 @@
 		if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
 		//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 		//blame the person who coded them. Temporary fix added.
-
-		client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
+		if (client)
+			client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
 		if ((blind && stat != 2))
 			if ((blinded))
@@ -441,7 +441,7 @@
 				if (!( machine.check_eye(src) ))
 					reset_view(null)
 			else
-				if(!client.adminobs)
+				if(client && !client.adminobs)
 					reset_view(null)
 
 		return 1
