@@ -2,13 +2,14 @@ var/datum/controller/vote/vote = new()
 
 datum/controller/vote
 	var/initiator = null
-	var/started_timeofday = null
+	var/started_time = null
 	var/time_remaining = 0
 	var/mode = null
 	var/question = null
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
+	var/list/current_votes = list()
 
 	New()
 		if(vote != src)
@@ -18,28 +19,29 @@ datum/controller/vote
 
 	proc/process()	//called by master_controller
 		if(mode)
-			time_remaining = started_timeofday + config.vote_period
-			if(world.timeofday < started_timeofday)
-				time_remaining -= 864000
-			time_remaining = round((time_remaining - world.timeofday)/10)
+			// No more change mode votes after the game has started.
+			// 3 is GAME_STATE_PLAYING, but that #define is undefined for some reason
+			if(mode == "gamemode" && ticker.current_state >= 3)
+				world << "<b>Voting aborted due to game start.</b>"
+				src.reset()
+				return
 
-			var/i=1
+			// Calculate how much time is remaining by comparing current time, to time of vote start,
+			// plus vote duration
+			time_remaining = round((started_time + config.vote_period - world.time)/10)
+
 			if(time_remaining < 0)
 				result()
-				while(i<=voting.len)
-					var/client/C = voting[i]
+				for(var/client/C in voting)
 					if(C)
 						C << browse(null,"window=vote;can_close=0")
-					i++
 				reset()
 			else
-				while(i<=voting.len)
-					var/client/C = voting[i]
+				for(var/client/C in voting)
 					if(C)
 						C << browse(vote.interface(C),"window=vote;can_close=0")
-						i++
-					else
-						voting.Cut(i,i+1)
+
+				voting.Cut()
 
 	proc/reset()
 		initiator = null
@@ -49,6 +51,7 @@ datum/controller/vote
 		choices.Cut()
 		voted.Cut()
 		voting.Cut()
+		current_votes.Cut()
 
 	proc/get_result()
 		//get the highest number of votes
@@ -111,6 +114,10 @@ datum/controller/vote
 							restart = 1
 						else
 							master_mode = .
+				if("crew_transfer")
+					if(. == "Initiate Crew Transfer")
+						init_shift_change(null, 1)
+
 
 		if(restart)
 			world << "World restarting due to vote..."
@@ -122,30 +129,34 @@ datum/controller/vote
 
 		return .
 
-	proc/submit_vote(var/vote)
+	proc/submit_vote(var/ckey, var/vote)
 		if(mode)
 			if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
 				return 0
-			if(!(usr.ckey in voted))
-				if(vote && 1<=vote && vote<=choices.len)
-					voted += usr.ckey
-					choices[choices[vote]]++	//check this
-					return vote
+			if(current_votes[ckey])
+				choices[choices[current_votes[ckey]]]--
+			if(vote && 1<=vote && vote<=choices.len)
+				voted += usr.ckey
+				choices[choices[vote]]++	//check this
+				current_votes[ckey] = vote
+				return vote
 		return 0
 
 	proc/initiate_vote(var/vote_type, var/initiator_key)
 		if(!mode)
-			if(started_timeofday != null)
-				var/next_allowed_timeofday = (started_timeofday + config.vote_delay)
-				if(world.timeofday < started_timeofday)
-					next_allowed_timeofday -= 864000
-				if(next_allowed_timeofday > world.timeofday)
+			if(started_time != null)
+				var/next_allowed_time = (started_time + config.vote_delay)
+				if(next_allowed_time > world.time)
 					return 0
 
 			reset()
 			switch(vote_type)
 				if("restart")	choices.Add("Restart Round","Continue Playing")
-				if("gamemode")	choices.Add(config.votable_modes)
+				if("gamemode")
+					choices.Add(config.votable_modes)
+				if("crew_transfer")
+					question = "End the shift?"
+					choices.Add("Initiate Crew Transfer", "Continue The Round")
 				if("custom")
 					question = html_encode(input(usr,"What is the vote for?") as text|null)
 					if(!question)	return 0
@@ -156,7 +167,7 @@ datum/controller/vote
 				else			return 0
 			mode = vote_type
 			initiator = initiator_key
-			started_timeofday = world.timeofday
+			started_time = world.time
 			var/text = "[capitalize(mode)] vote started by [initiator]."
 			log_vote(text)
 			world << "<font color='purple'><b>[text]</b>\nType vote to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
@@ -179,10 +190,14 @@ datum/controller/vote
 			if(question)	. += "<h2>Vote: '[question]'</h2>"
 			else			. += "<h2>Vote: [capitalize(mode)]</h2>"
 			. += "Time Left: [time_remaining] s<hr><ul>"
-			for(var/i=1,i<=choices.len,i++)
+			for(var/i = 1, i <= choices.len, i++)
 				var/votes = choices[choices[i]]
 				if(!votes)	votes = 0
-				. += "<li><a href='?src=\ref[src];vote=[i]'>[choices[i]]</a> ([votes] votes)</li>"
+				if(current_votes[C.ckey] == i)
+					. += "<li><b><a href='?src=\ref[src];vote=[i]'>[choices[i]]</a> ([votes] votes)</b></li>"
+				else
+					. += "<li><a href='?src=\ref[src];vote=[i]'>[choices[i]]</a> ([votes] votes)</li>"
+
 			. += "</ul><hr>"
 			if(admin)
 				. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
@@ -193,6 +208,11 @@ datum/controller/vote
 				. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 			else
 				. += "<font color='grey'>Restart (Disallowed)</font>"
+			. += "</li><li>"
+			if(trialmin || config.allow_vote_restart)
+				. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
+			else
+				. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
 			if(trialmin)
 				. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 			. += "</li><li>"
@@ -235,11 +255,14 @@ datum/controller/vote
 			if("gamemode")
 				if(config.allow_vote_mode || usr.client.holder)
 					initiate_vote("gamemode",usr.key)
+			if("crew_transfer")
+				if(config.allow_vote_restart || usr.client.holder)
+					initiate_vote("crew_transfer",usr.key)
 			if("custom")
 				if(usr.client.holder)
 					initiate_vote("custom",usr.key)
 			else
-				submit_vote(round(text2num(href_list["vote"])))
+				submit_vote(usr.ckey, round(text2num(href_list["vote"])))
 		usr.vote()
 
 
