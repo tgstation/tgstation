@@ -18,6 +18,7 @@ fniff: Sarah Calvera: /obj/item/fluff/sarah_calvera_1
 fniff: Angleo Wilkerson: /obj/item/fluff/angelo_wilkerson_1
 foolamancer: Edvin Telephosphor: /obj/item/clothing/head/fluff/edvin_telephosphor_1
 furohman: Fay Sullivan: /obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1
+furlucis: Chal Appara: /obj/item/clothing/gloves/fluff/chal_appara_1
 gvazdas: Sarah Carbrokes: /obj/item/fluff/sarah_carbrokes_1
 jamini: Edwin Atweeke: /obj/item/clothing/suit/labcoat/fluff/burnt
 kirbyelder: John McKeever: /obj/item/paper/fluff/john_mckeever_1

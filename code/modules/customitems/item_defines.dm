@@ -345,6 +345,12 @@
 	item_state = "bluegloves"
 	color="blue"
 
+/obj/item/clothing/gloves/fluff/chal_appara_1 //furlucis: Chal Appara
+	name = "Left Black Glove"
+	desc = "The left one of a pair of black gloves. Wonder where the other one went..."
+	icon = 'custom_items.dmi'
+	icon_state = "chal_appara_1"
+
 //////////// Eye Wear ////////////
 
 /obj/item/clothing/glasses/meson/fluff/book_berner_1 //asanadas: Book Berner
