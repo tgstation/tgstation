@@ -130,7 +130,7 @@
 
 	proc/handle_blood()
 		// take care of blood and blood loss
-		if(stat < 2)
+		if(stat < 2 && bodytemperature >= 170)
 			var/blood_volume = round(vessel.get_reagent_amount("blood"))
 			if(blood_volume < 560 && blood_volume)
 				var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
