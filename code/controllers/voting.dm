@@ -21,7 +21,7 @@ datum/controller/vote
 		if(mode)
 			// No more change mode votes after the game has started.
 			// 3 is GAME_STATE_PLAYING, but that #define is undefined for some reason
-			if(mode == "gamemode" && ticker.current_state >= 3)
+			if(mode == "gamemode" && ticker.current_state >= 2)
 				world << "<b>Voting aborted due to game start.</b>"
 				src.reset()
 				return
@@ -151,10 +151,15 @@ datum/controller/vote
 
 			reset()
 			switch(vote_type)
-				if("restart")	choices.Add("Restart Round","Continue Playing")
+				if("restart")
+					choices.Add("Restart Round","Continue Playing")
 				if("gamemode")
+					if(ticker.current_state >= 2)
+						return 0
 					choices.Add(config.votable_modes)
 				if("crew_transfer")
+					if(ticker.current_state <= 2)
+						return 0
 					question = "End the shift?"
 					choices.Add("Initiate Crew Transfer", "Continue The Round")
 				if("custom")
