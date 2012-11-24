@@ -143,6 +143,14 @@
 	icon_on = "gonzozippoon"
 	icon_off = "gonzozippo"
 
+/obj/item/weapon/lighter/zippo/fluff/naples_1 //naples: Russell Vierson
+	name = "Engraved zippo"
+	desc = "A intricately engraved Zippo lighter."
+	icon = 'custom_items.dmi'
+	icon_state = "engravedzippo"
+	icon_on = "engravedzippoon"
+	icon_off = "engravedzippo"
+
 /obj/item/weapon/fluff/cado_keppel_1 //sparklysheep: Cado Keppel
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic. It has a small K etched into its side."
