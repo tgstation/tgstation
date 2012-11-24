@@ -8,6 +8,7 @@
 	var/projectiletype
 	var/projectilesound
 	var/casingtype
+	stop_automated_movement_when_pulled = 0
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
 

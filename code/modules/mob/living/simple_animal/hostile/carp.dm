@@ -14,7 +14,6 @@
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
 	speed = -1
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 25
 	health = 25
 

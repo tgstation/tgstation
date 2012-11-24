@@ -130,3 +130,24 @@
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(var/check_drift = 0)
 	return
+
+
+
+/mob/living/simple_animal/hostile/viscerator
+	name = "viscerator"
+	desc = "A small, twin-bladed machine capable of inflicting very deadly lacerations."
+	icon_state = "viscerator"
+	pass_flags = PASSTABLE
+	health = 15
+	maxHealth = 15
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attacktext = "cuts"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	faction = "syndicate"
+
+/mob/living/simple_animal/hostile/viscerator/Die()
+	..()
+	visible_message("\red <b>[src]</b> is smashed into pieces!")
+	del src
+	return

@@ -10,7 +10,6 @@
 	response_disarm = "shoves"
 	response_harm = "hits the"
 	speed = -1
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 80
 	health = 80
 
