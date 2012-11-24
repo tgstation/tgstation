@@ -359,6 +359,12 @@
 	icon = 'custom_items.dmi'
 	icon_state = "serithi_artalis_1"
 
+/obj/item/clothin/glasses/fluff/uzenwa_sissra_1 //sparklysheep: Uzenwa Sissra
+	name = "Scanning Goggles"
+	desc = "A very oddly shaped pair of goggles with bits of wire poking out the sides. A soft humming sound emanates from it."
+	icon = 'custom_items.dmi'
+	icon_state = "uzenwa_sissra_1"
+
 //////////// Hats ////////////
 //Removed by request
 /*
