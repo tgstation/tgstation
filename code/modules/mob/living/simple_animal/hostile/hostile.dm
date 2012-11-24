@@ -9,6 +9,7 @@
 	var/projectilesound
 	var/casingtype
 	var/target //used for shooting
+	var/incombat = 0 //if they're attacking stuff
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
 
@@ -94,15 +95,24 @@
 		return 0
 	if(client)
 		return 0
+
+	if(incombat)
+		for(dir in list(NORTH,EAST,SOUTH,WEST))
+			var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
+			if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
+				obstacle.attack_animal(src)
 	if(!stat)
 		switch(stance)
 			if(HOSTILE_STANCE_IDLE)
+				incombat = 0
 				target_mob = FindTarget()
 
 			if(HOSTILE_STANCE_ATTACK)
+				incombat = 1
 				MoveToTarget()
 
 			if(HOSTILE_STANCE_ATTACKING)
+				incombat = 1
 				AttackTarget()
 
 
@@ -116,15 +126,15 @@
 		spawn(1)
 			Shoot(tturf, src.loc, src)
 			if(casingtype)
-				new casingtype
+				new casingtype(get_turf(src))
 		spawn(4)
 			Shoot(tturf, src.loc, src)
 			if(casingtype)
-				new casingtype
+				new casingtype(get_turf(src))
 		spawn(6)
 			Shoot(tturf, src.loc, src)
 			if(casingtype)
-				new casingtype
+				new casingtype(get_turf(src))
 	else
 		Shoot(tturf, src.loc, src)
 		if(casingtype)

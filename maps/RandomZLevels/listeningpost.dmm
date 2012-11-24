@@ -10,7 +10,7 @@
 "j" = (/obj/structure/table,/turf/simulated/floor,/area/awaymission/listeningpost)
 "k" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/awaymission/listeningpost)
 "l" = (/obj/machinery/computer/message_monitor,/turf/simulated/floor,/area/awaymission/listeningpost)
-"m" = (/obj/structure/stool/bed/chair{dir = 4},/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/mob/living/simple_animal/syndicate,/turf/simulated/floor,/area/awaymission/listeningpost)
+"m" = (/obj/structure/stool/bed/chair{dir = 4},/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/mob/living/simple_animal/hostile/syndicate,/turf/simulated/floor,/area/awaymission/listeningpost)
 "n" = (/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/turf/simulated/floor,/area/awaymission/listeningpost)
 "o" = (/obj/structure/table,/obj/item/weapon/paper{info = "Intercepted Nanotrasen military communications. A convoy is scheduled to transfer nuclear warheads to a new military base. This is as good a chance as any to get our hands on some heavy weaponry, I suggest we take it."; name = "Intelligence"},/turf/simulated/floor,/area/awaymission/listeningpost)
 "p" = (/obj/structure/rack,/obj/item/clothing/suit/space/syndicate/black/red,/obj/item/clothing/head/helmet/space/syndicate/black,/turf/simulated/floor,/area/awaymission/listeningpost)
