@@ -119,3 +119,17 @@
 	corpseid = 1
 	corpseidjob = "Clown"
 	corpseidaccess = "Clown"
+
+/obj/effect/landmark/mobcorpse/pirate
+	name = "Pirate"
+	corpseuniform = /obj/item/clothing/under/pirate
+	corpseshoes = /obj/item/clothing/shoes/jackboots
+	corpseglasses = /obj/item/clothing/glasses/eyepatch
+	corpsehelmet = /obj/item/clothing/head/bandana
+
+/obj/effect/landmark/mobcorpse/pirateranged
+	name = "Pirate"
+	corpseuniform = /obj/item/clothing/under/pirate
+	corpseshoes = /obj/item/clothing/shoes/jackboots
+	corpsesuit = /obj/item/clothing/suit/pirate
+	corpsehelmet = /obj/item/clothing/head/pirate

@@ -24,6 +24,7 @@
 	speed = -1
 	stop_automated_movement = 1
 	status_flags = 0
+	faction = "cult"
 
 
 	Life()

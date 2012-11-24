@@ -23,6 +23,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	faction = "cult"
 
 
 /mob/living/simple_animal/construct/Life()
@@ -204,7 +205,7 @@
 	icon_living = "artificer"
 	maxHealth = 50
 	health = 50
-	response_harm   = "viciously beats"
+	response_harm = "viciously beats"
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
