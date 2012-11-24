@@ -32,8 +32,6 @@
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
 
-	..()
-
 	if(!setup_database_connection())
 		world.log << "Your server failed to establish a connection with the feedback database."
 	else
@@ -57,6 +55,7 @@
 	slmaster.mouse_opacity = 0
 
 	src.update_status()
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	master_controller = new /datum/controller/game_controller()
 	spawn(-1)
@@ -85,7 +84,6 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	jobban_loadbanfile()
 	jobban_updatelegacybans()
 	LoadBans()
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 	sleep_offline = 1

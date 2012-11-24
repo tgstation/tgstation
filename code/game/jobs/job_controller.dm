@@ -9,12 +9,6 @@ var/global/datum/controller/occupations/job_master
 	var/list/job_debug = list()
 
 
-	New()
-		spawn(1)
-			SetupOccupations()
-		return
-
-
 	proc/SetupOccupations(var/faction = "Station")
 		occupations = list()
 		var/list/all_jobs = typesof(/datum/job)

@@ -263,12 +263,12 @@
 	if(M == assailant && state >= 2)
 		if( ( ishuman(user) && (FAT in user.mutations) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
-			assailant.visible_message("\red <B>[user] is attempting to devour [affecting]!</B>")
+			user.visible_message("\red <B>[user] is attempting to devour [affecting]!</B>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
 				if(!do_mob(user, affecting)||!do_after(user, 30)) return
 			else
 				if(!do_mob(user, affecting)||!do_after(user, 100)) return
-			assailant.visible_message("\red <B>[user] devours [affecting]!</B>")
+			user.visible_message("\red <B>[user] devours [affecting]!</B>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)
 			del(src)
