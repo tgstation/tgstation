@@ -8,8 +8,6 @@
 	var/projectiletype
 	var/projectilesound
 	var/casingtype
-	var/target //used for shooting
-	var/incombat = 0 //if they're attacking stuff
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
 
@@ -19,7 +17,7 @@
 
 		if(isliving(A))
 			var/mob/living/L = A
-			if(L.faction == src.faction)
+			if(L.faction == src.faction && !attack_same)
 				continue
 			else
 				if(!L.stat)
@@ -42,11 +40,9 @@
 		if(ranged)
 			if(get_dist(src, target_mob) <= 6)
 				OpenFire(target_mob)
-			else
-				walk_to(src, target_mob, 1, 2)
 		else
-			walk_to(src, target_mob, 1, 2)
 			stance = HOSTILE_STANCE_ATTACKING
+		walk_to(src, target_mob, 1, 2)
 
 /mob/living/simple_animal/hostile/proc/AttackTarget()
 
@@ -96,30 +92,24 @@
 	if(client)
 		return 0
 
-	if(incombat)
-		for(dir in list(NORTH,EAST,SOUTH,WEST))
-			var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
-			if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
-				obstacle.attack_animal(src)
 	if(!stat)
 		switch(stance)
 			if(HOSTILE_STANCE_IDLE)
-				incombat = 0
 				target_mob = FindTarget()
 
 			if(HOSTILE_STANCE_ATTACK)
-				incombat = 1
+				DestroySurroundings()
 				MoveToTarget()
 
 			if(HOSTILE_STANCE_ATTACKING)
-				incombat = 1
+				DestroySurroundings()
 				AttackTarget()
 
 
 
 /mob/living/simple_animal/hostile/proc/OpenFire(target_mob)
-	src.target = target_mob
-	visible_message("\red <b>[src]</b> fires at [src.target]!", 1)
+	var/target = target_mob
+	visible_message("\red <b>[src]</b> fires at [target]!", 1)
 
 	var/tturf = get_turf(target)
 	if(rapid)
@@ -162,3 +152,9 @@
 	spawn( 0 )
 		A.process()
 	return
+
+/mob/living/simple_animal/hostile/proc/DestroySurroundings()
+	for(var/dir in cardinal) // North, South, East, West
+		var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
+		if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
+			obstacle.attack_animal(src)

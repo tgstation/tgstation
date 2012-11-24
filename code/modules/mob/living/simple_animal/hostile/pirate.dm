@@ -47,11 +47,11 @@
 	weapon1 = /obj/item/weapon/gun/energy/laser
 
 
-/mob/living/simple_animal/hostile/pirate/Life()
+/mob/living/simple_animal/hostile/pirate/Die()
 	..()
-	if(stat == 2)
+	if(corpse)
 		new corpse (src.loc)
-		if(weapon1)
-			new weapon1 (src.loc)
-		del src
-		return
+	if(weapon1)
+		new weapon1 (src.loc)
+	del src
+	return

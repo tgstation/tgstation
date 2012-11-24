@@ -34,6 +34,18 @@
 	wall_smash = 1
 	faction = "syndicate"
 
+
+/mob/living/simple_animal/hostile/syndicate/Die()
+	..()
+	if(corpse)
+		new corpse (src.loc)
+	if(weapon1)
+		new weapon1 (src.loc)
+	if(weapon2)
+		new weapon2 (src.loc)
+	del src
+	return
+
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/hostile/syndicate/melee
@@ -118,15 +130,3 @@
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(var/check_drift = 0)
 	return
-
-
-/mob/living/simple_animal/hostile/syndicate/Life()
-	..()
-	if(stat == 2)
-		new corpse (src.loc)
-		if(weapon1)
-			new weapon1 (src.loc)
-		if(weapon2)
-			new weapon2 (src.loc)
-		del src
-		return
