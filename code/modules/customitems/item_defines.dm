@@ -75,6 +75,12 @@
 	icon = 'custom_items.dmi'
 	icon_state = "fancypen"
 
+/obj/item/weapon/pen/fluff/fountainpen //paththegreat: Eli Stevens
+	name = "Engraved Fountain Pen"
+	desc = "An expensive looking pen with the initials E.S. engraved into the side."
+	icon = 'custom_items.dmi'
+	icon_state = "fountainpen"
+
 /obj/item/fluff/victor_kaminsky_1 //chinsky: Victor Kaminski
 	name = "golden detective's badge"
 	desc = "NanoTrasen Security Department detective's badge, made from gold. Badge number is 564."
@@ -175,6 +181,13 @@
 	desc = "A shiny metal flask. It appears to have a Greek symbol inscribed on it."
 	icon = 'custom_items.dmi'
 	icon_state = "shinyflask"
+	volume = 50
+
+/obj/item/weapon/reagent_containers/food/drinks/flask/fluff/lithiumflask //mcgulliver: Wox Derax
+	name = "Lithium Flask"
+	desc = "A flask with a Lithium Atom symbol on it."
+	icon = 'custom_items.dmi'
+	icon_state = "lithiumflask"
 	volume = 50
 
 /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle //compactninja: Lister Black
