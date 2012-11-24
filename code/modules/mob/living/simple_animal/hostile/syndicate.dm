@@ -33,7 +33,7 @@
 	unsuitable_atoms_damage = 15
 	wall_smash = 1
 	faction = "syndicate"
-
+	status_flags = CANPUSH
 
 /mob/living/simple_animal/hostile/syndicate/Die()
 	..()
@@ -56,7 +56,7 @@
 	weapon1 = /obj/item/weapon/melee/energy/sword/red
 	weapon2 = /obj/item/weapon/shield/energy
 	attacktext = "slashes"
-	status_flags = CANSTUN|CANWEAKEN|CANPARALYSE
+	status_flags = 0
 
 /mob/living/simple_animal/hostile/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(O.force)

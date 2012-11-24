@@ -25,6 +25,7 @@
 	stop_automated_movement = 1
 	status_flags = 0
 	faction = "cult"
+	status_flags = CANPUSH
 
 
 	Life()
