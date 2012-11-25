@@ -323,9 +323,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		if (affected.stage == 0)
-			user.visible_message("[user] starts patching the damaged vein in [target]'s [affected.display_name] with \the [tool]." , \
-			"You start patching the damaged vein in [target]'s [affected.display_name] with \the [tool].")
+		user.visible_message("[user] starts patching the damaged vein in [target]'s [affected.display_name] with \the [tool]." , \
+		"You start patching the damaged vein in [target]'s [affected.display_name] with \the [tool].")
 		target.custom_pain("The pain in [affected.display_name] is unbearable!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -1159,7 +1158,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	max_duration = 90
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return ..() && target.is_lung_ruptured()
+		return ..() && target.is_lung_ruptured() && target.ribcage_op_stage == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts mending the rupture in [target]'s lungs with \the [tool].", \
