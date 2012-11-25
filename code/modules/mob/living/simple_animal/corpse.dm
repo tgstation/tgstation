@@ -120,6 +120,8 @@
 	corpseidjob = "Clown"
 	corpseidaccess = "Clown"
 
+
+
 /obj/effect/landmark/mobcorpse/pirate
 	name = "Pirate"
 	corpseuniform = /obj/item/clothing/under/pirate
@@ -127,9 +129,20 @@
 	corpseglasses = /obj/item/clothing/glasses/eyepatch
 	corpsehelmet = /obj/item/clothing/head/bandana
 
-/obj/effect/landmark/mobcorpse/pirateranged
-	name = "Pirate"
-	corpseuniform = /obj/item/clothing/under/pirate
-	corpseshoes = /obj/item/clothing/shoes/jackboots
+
+
+/obj/effect/landmark/mobcorpse/pirate/ranged
+	name = "Pirate Gunner"
 	corpsesuit = /obj/item/clothing/suit/pirate
 	corpsehelmet = /obj/item/clothing/head/pirate
+
+
+
+/obj/effect/landmark/mobcorpse/russian
+	name = "Russian"
+	corpseuniform = /obj/item/clothing/under/soviet
+	corpseshoes = /obj/item/clothing/shoes/jackboots
+	corpsehelmet = /obj/item/clothing/head/bearpelt
+
+/obj/effect/landmark/mobcorpse/russian/ranged
+	corpsehelmet = /obj/item/clothing/head/ushanka

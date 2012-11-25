@@ -43,7 +43,7 @@
 	ranged = 1
 	rapid = 1
 	projectiletype = /obj/item/projectile/beam
-	corpse = /obj/effect/landmark/mobcorpse/pirateranged
+	corpse = /obj/effect/landmark/mobcorpse/pirate/ranged
 	weapon1 = /obj/item/weapon/gun/energy/laser
 
 

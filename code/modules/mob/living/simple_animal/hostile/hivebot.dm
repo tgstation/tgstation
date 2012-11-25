@@ -7,6 +7,8 @@
 	desc = "A small robot"
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "basic"
+	icon_living = "basic"
+	icon_dead = "basic"
 	health = 15
 	maxHealth = 15
 	melee_damage_lower = 2
@@ -15,6 +17,15 @@
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	projectiletype = /obj/item/projectile/hivebotbullet
 	faction = "hivebot"
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "Hivebot"
@@ -47,6 +58,7 @@
 	desc = "Some odd beacon thing"
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "def_radar-off"
+	icon_living = "def_radar-off"
 	health = 200
 	maxHealth = 200
 	status_flags = 0
