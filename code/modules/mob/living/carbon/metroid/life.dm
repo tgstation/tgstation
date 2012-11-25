@@ -11,9 +11,6 @@
 		//Chemicals in the body
 		handle_chemicals_in_body()
 
-		//Disease Check
-		//handle_virus_updates() There is no disease that affects metroids
-
 		handle_nutrition()
 
 		handle_targets()

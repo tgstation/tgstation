@@ -52,36 +52,17 @@
 	if(!istype(M, /mob/living/carbon)) return
 
 	for(var/datum/disease/D in viruses)
-		var/s_spread_type
-		if(D.spread_type!=SPECIAL && D.spread_type!=AIRBORNE)
-			s_spread_type = D.spread_type
-			D.spread_type = CONTACT_HANDS
-			M.contract_disease(D)
-			D.spread_type = s_spread_type
+		world << "1 [D.spread]"
+		if(D.spread_by_touch())
+			world << "1 contract"
+			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-		var/s_spread_type
-		if(D.spread_type!=SPECIAL && D.spread_type!=AIRBORNE)
-			s_spread_type = D.spread_type
-			D.spread_type = CONTACT_HANDS
-			contract_disease(D)
-			D.spread_type = s_spread_type
+		world << "2 [D.spread]"
+		if(D.spread_by_touch())
+			world << "2 contract"
+			contract_disease(D, 0, 1, CONTACT_HANDS)
 
-	/*		// old code: doesn't support multiple viruses
-	if(src.virus || M.virus)
-		var/s_spread_type
-		if(src.virus && src.virus.spread_type!=SPECIAL && src.virus.spread_type!=AIRBORNE)
-			s_spread_type = src.virus.spread_type
-			src.virus.spread_type = CONTACT_HANDS
-			M.contract_disease(src.virus)
-			src.virus.spread_type = s_spread_type
-
-		if(M.virus && M.virus.spread_type!=SPECIAL && M.virus.spread_type!=AIRBORNE)
-			s_spread_type = M.virus.spread_type
-			M.virus.spread_type = CONTACT_GENERAL
-			src.contract_disease(M.virus)
-			M.virus.spread_type = s_spread_type
-	*/
 	return
 
 
@@ -90,37 +71,15 @@
 
 
 	for(var/datum/disease/D in viruses)
-		var/s_spread_type
-		if(D.spread_type!=SPECIAL && D.spread_type!=AIRBORNE)
-			s_spread_type = D.spread_type
-			D.spread_type = CONTACT_HANDS
-			M.contract_disease(D)
-			D.spread_type = s_spread_type
+
+		if(D.spread_by_touch())
+			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-		var/s_spread_type
-		if(D.spread_type!=SPECIAL && D.spread_type!=AIRBORNE)
-			s_spread_type = D.spread_type
-			D.spread_type = CONTACT_HANDS
-			contract_disease(D)
-			D.spread_type = s_spread_type
 
-	/*
+		if(D.spread_by_touch())
+			contract_disease(D, 0, 1, CONTACT_HANDS)
 
-	if(src.virus || M.virus)
-		var/s_spread_type
-		if(src.virus && src.virus.spread_type!=SPECIAL && src.virus.spread_type!=AIRBORNE)
-			s_spread_type = src.virus.spread_type
-			src.virus.spread_type = CONTACT_HANDS
-			M.contract_disease(src.virus)
-			src.virus.spread_type = s_spread_type
-
-		if(M.virus && M.virus.spread_type!=SPECIAL && M.virus.spread_type!=AIRBORNE)
-			s_spread_type = M.virus.spread_type
-			M.virus.spread_type = CONTACT_GENERAL
-			src.contract_disease(M.virus)
-			M.virus.spread_type = s_spread_type
-	*/
 	return
 
 /mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)

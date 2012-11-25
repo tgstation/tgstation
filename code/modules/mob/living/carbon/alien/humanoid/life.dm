@@ -47,9 +47,6 @@
 	//to find it.
 	blinded = null
 
-	//Disease Check
-	//handle_virus_updates() There is no disease that affects aliens
-
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 

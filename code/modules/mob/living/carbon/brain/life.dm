@@ -10,9 +10,6 @@
 		//Chemicals in the body
 		handle_chemicals_in_body()
 
-		//Disease Check
-		//handle_virus_updates() There is no disease that affects brains
-
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(loc)
 		environment = loc.return_air()

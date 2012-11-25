@@ -232,6 +232,9 @@
 	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
 
 		var/foundAlready = 0 // don't infect someone that already has the virus
+		var/turf/T = get_turf(H)
+		if(T.z != 1)
+			continue
 		for(var/datum/disease/D in H.viruses)
 			foundAlready = 1
 		if(H.stat == 2 || foundAlready)
@@ -298,6 +301,9 @@
 	sleep(100)
 */
 	for(var/mob/living/carbon/human/H in living_mob_list)
+		var/turf/T = get_turf(H)
+		if(T.z != 1)
+			continue
 		if(istype(H,/mob/living/carbon/human))
 			H.apply_effect((rand(15,75)),IRRADIATE,0)
 			if (prob(5))
@@ -310,6 +316,9 @@
 					randmutg(H)
 					domutcheck(H,null,1)
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
+		var/turf/T = get_turf(M)
+		if(T.z != 1)
+			continue
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
 	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")

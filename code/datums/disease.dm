@@ -63,13 +63,15 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 	if(stage > max_stages)
 		stage = max_stages
-	if(stage_prob != 0 && prob(stage_prob) && stage != max_stages && !cure_present) //now the disease shouldn't get back up to stage 4 in no time
+
+	if(stage < max_stages && prob(stage_prob) && !cure_present) //now the disease shouldn't get back up to stage 4 in no time
 		stage++
 		//world << "up"
-	if(cure_present && prob(cure_chance))
+	if(stage > 0 && (cure_present && prob(cure_chance)))
 		stage--
 		//world << "down"
-	else if(stage <= 1 && ((prob(1) && curable) || (cure_present && prob(cure_chance))))
+
+	if(stage <= 1 && ((prob(1) && curable) || (cure_present && prob(cure_chance))))
 //		world << "Cured as stage act"
 		cure()
 		return
@@ -96,6 +98,11 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 	return result
 
+/datum/disease/proc/spread_by_touch()
+	switch(spread_type)
+		if(CONTACT_FEET, CONTACT_HANDS, CONTACT_GENERAL)
+			return 1
+	return 0
 
 /datum/disease/proc/spread(var/atom/source=null, var/airborne_range = 2,  var/force_spread)
 	//world << "Disease [src] proc spread was called from holder [source]"

@@ -118,6 +118,28 @@
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
+/obj/item/weapon/reagent_containers/glass/bottle/epiglottis_virion
+	name = "Epiglottis virion culture bottle"
+	desc = "A small bottle. Contains Epiglottis virion culture in synthblood medium."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
+	New()
+		..()
+		var/datum/disease/F = new /datum/disease/advance/heal(0)
+		var/list/data = list("viruses"= list(F))
+		reagents.add_reagent("blood", 20, data)
+
+/obj/item/weapon/reagent_containers/glass/bottle/liver_enhance_virion
+	name = "Liver enhancement virion culture bottle"
+	desc = "A small bottle. Contains liver enhancement virion culture in synthblood medium."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
+	New()
+		..()
+		var/datum/disease/F = new /datum/disease/advance/voice_change(0)
+		var/list/data = list("viruses"= list(F))
+		reagents.add_reagent("blood", 20, data)
+
 /obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat
 	name = "Pierrot's Throat culture bottle"
 	desc = "A small bottle. Contains H0NI<42 virion culture in synthblood medium."

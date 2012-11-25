@@ -382,11 +382,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		sleep(rand(10,25)) // wait a little...
 
-		if(signal.data["done"])
+		if(signal.data["done"] && position.z in signal.data["level"])
 			// we're done here.
 			return
 
-	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet.
+	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
 	  	// Send a mundane broadcast with limited targets:
 
 		//THIS IS TEMPORARY.

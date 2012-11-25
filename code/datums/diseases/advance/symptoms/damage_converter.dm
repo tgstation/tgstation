@@ -15,7 +15,7 @@ Bonus
 //////////////////////////////////////
 */
 
-/datum/symptom/damage_converter // Not the egg
+/datum/symptom/damage_converter
 
 	name = "Toxic Compensation"
 	stealth = 1
