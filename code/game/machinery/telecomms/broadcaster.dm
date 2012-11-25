@@ -29,13 +29,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	if(signal.data["reject"])
 		return
 
-	//Is it a test signal?
-	if(signal.data["type"] == 4)
-		var/datum/signal/S = signal.data["original"]
-		S.data["done"] = 1
-		S.data["level"] += listening_level
-		return
-
 	if(signal.data["message"])
 
 		// Prevents massive radio spam
@@ -54,6 +47,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
 		signal.data["level"] |= listening_level
+
+		// Is it a test signal? Don't send it.
+		if(signal.data["type"] == 4)
+			return
 
 	   /** #### - Normal Broadcast - #### **/
 
