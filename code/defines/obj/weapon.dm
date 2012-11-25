@@ -714,23 +714,23 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 0
 	w_class = 3.0
-	throw_speed = 2
-	throw_range = 0 //cannot be thrown
 	origin_tech = "materials=1"
-	var/breakouttime = 300 //Deciseconds = 30s = 0.5 minute
+	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
-	icon_state = "beartrap"
+	throw_speed = 2
+	throw_range = 1
+	icon_state = "beartrap0"
 	desc = "A trap used to catch bears and other legged creatures."
-	breakouttime = 300 //Deciseconds = 30s = 0.5 minute
 	var/armed = 0
 
-/obj/item/weapon/legcuffs/beartrap/attack_self()
+/obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
 	..()
-	if(ishuman(usr) && !usr.stat && !usr.restrained())
+	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
-		usr << "\blue \the [src] is now [(armed)?"armed":"disarmed"]"
+		icon_state = "beartrap[armed]"
+		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
 
 /obj/item/weapon/legcuffs/beartrap/HasEntered(AM as mob|obj)
 	if(armed)
