@@ -35,6 +35,11 @@
 		return 1
 	return 0
 
+/proc/ismetroidadult(A)
+	if(istype(A, /mob/living/carbon/metroid/adult))
+		return 1
+	return 0
+
 /proc/isrobot(A)
 	if(istype(A, /mob/living/silicon/robot))
 		return 1

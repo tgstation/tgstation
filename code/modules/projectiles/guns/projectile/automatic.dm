@@ -11,11 +11,11 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
-	name = "mini-uzi"
+	name = "Uzi"
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses .45 rounds."
 	icon_state = "mini-uzi"
 	w_class = 3.0
-	max_shells = 20
+	max_shells = 16
 	caliber = ".45"
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	ammo_type = "/obj/item/ammo_casing/c45"
@@ -103,7 +103,7 @@
 	if(loc != user)
 		..()
 		return	//let them pick it up
-	if(!cover_open)
+	if(!cover_open || (cover_open && !mag_inserted))
 		..()
 	else if(cover_open && mag_inserted)
 		//drop the mag
