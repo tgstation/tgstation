@@ -32,3 +32,12 @@
 		name = "Liver Enhancer"
 		symptoms = list(new/datum/symptom/heal)
 	..(process, D, copy)
+
+
+// Hullucigen
+
+/datum/disease/advance/hullucigen/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+	if(!D)
+		name = "Reality Impairment"
+		symptoms = list(new/datum/symptom/hallucigen)
+	..(process, D, copy)

@@ -286,10 +286,11 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/magnitis,
 					/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/weapon/reagent_containers/glass/bottle/brainrot,
-					/obj/item/weapon/reagent_containers/glass/bottle/mutagen,
+					/obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion,
 					/obj/item/weapon/storage/syringes,
-					/obj/item/weapon/storage/beakerbox)
-	cost = 20
+					/obj/item/weapon/storage/beakerbox,
+					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
+	cost = 25
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "Virus crate"
 	access = access_cmo
