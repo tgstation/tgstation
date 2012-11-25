@@ -782,6 +782,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Remove id"
 	set src in usr
 
+	if(issilicon(usr))
+		return
+
 	if ( !(usr.stat || usr.restrained()) )
 		if(id)
 			remove_id()
@@ -795,6 +798,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "Object"
 	set name = "Remove pen"
 	set src in usr
+
+	if(issilicon(usr))
+		return
 
 	if ( !(usr.stat || usr.restrained()) )
 		var/obj/item/weapon/pen/O = locate() in src

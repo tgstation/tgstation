@@ -70,7 +70,6 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
-	flags = MASKINTERNALS
 
 //Shoes
 /obj/item/clothing/shoes
