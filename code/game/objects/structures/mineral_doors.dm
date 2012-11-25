@@ -56,8 +56,13 @@
 		if(ismob(user))
 			var/mob/M = user
 			if(world.time - user.last_bumped <= 60) return //NOTE do we really need that?
-			if(M.client && !M:handcuffed)
-				SwitchState()
+			if(M.client)
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					if(!C.handcuffed)
+						SwitchState()
+				else
+					SwitchState()
 		else if(istype(user, /obj/mecha))
 			SwitchState()
 

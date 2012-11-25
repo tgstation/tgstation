@@ -755,7 +755,7 @@ var/list/sacrificed = list()
 				if(iscultist(C) && !C.stat)
 					users+=C
 			if(users.len>=3)
-				var/mob/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - users)
+				var/mob/living/carbon/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - users)
 				if(!cultist)
 					return fizzle()
 				if (cultist == user) //just to be sure.
@@ -805,7 +805,7 @@ var/list/sacrificed = list()
 				if(iscultist(C) && !C.stat)
 					users+=C
 			if(users.len>=3)
-				var/mob/cultist = input("Choose the one who you want to summon", "Followers of Geometer") as null|anything in (cultists - user)
+				var/mob/living/carbon/cultist = input("Choose the one who you want to summon", "Followers of Geometer") as null|anything in (cultists - user)
 				if(!cultist)
 					return fizzle()
 				if (cultist == user) //just to be sure.

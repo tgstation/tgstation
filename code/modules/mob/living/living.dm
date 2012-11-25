@@ -262,7 +262,9 @@
 	ear_damage = 0
 	heal_overall_damage(1000, 1000)
 	buckled = initial(src.buckled)
-	handcuffed = initial(src.handcuffed)
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		C.handcuffed = initial(C.handcuffed)
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	if(stat == 2)

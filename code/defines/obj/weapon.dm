@@ -739,16 +739,16 @@
 				var/mob/living/carbon/H = AM
 				if(H.m_intent == "run")
 					armed = 0
-					usr.legcuffed = src
-					src.loc = usr
-					usr.update_inv_legcuffed()
+					H.legcuffed = src
+					src.loc = H
+					H.update_inv_legcuffed()
 					H << "\red <B>You step on \the [src]!</B>"
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 					for(var/mob/O in viewers(H, null))
 						if(O == H)
 							continue
 						O.show_message("\red <B>[H] steps on \the [src].</B>", 1)
-		if(isanimal(AM))
+		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
 			SA.health = 0

@@ -438,3 +438,49 @@
 	if(exposed_temperature > CARBON_LIFEFORM_FIRE_RESISTANCE)
 		adjustFireLoss(CARBON_LIFEFORM_FIRE_DAMAGE)
 	..()
+
+/mob/living/carbon/can_use_hands()
+	if(handcuffed)
+		return 0
+	if(buckled && ! istype(buckled, /obj/structure/stool/bed/chair)) // buckling does not restrict hands
+		return 0
+	return 1
+
+/mob/living/carbon/restrained()
+	if (handcuffed)
+		return 1
+	return
+
+/mob/living/carbon/u_equip(obj/item/W as obj)
+	if(!W)	return 0
+
+	else if (W == handcuffed)
+		handcuffed = null
+		update_inv_handcuffed()
+
+	else if (W == legcuffed)
+		legcuffed = null
+		update_inv_legcuffed()
+	else
+	 ..()
+
+	return
+
+/mob/living/carbon/show_inv(mob/living/carbon/user as mob)
+	user.set_machine(src)
+	var/dat = {"
+	<B><HR><FONT size=3>[name]</FONT></B>
+	<BR><HR>
+	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
+	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
+	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
+	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
+	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
+	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
+	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
+	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
+	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR>"}
+	user << browse(dat, text("window=mob[];size=325x500", name))
+	onclose(user, "mob[name]")
+	return
