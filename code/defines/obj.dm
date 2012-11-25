@@ -128,13 +128,6 @@
 	anchored = 1
 	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
 
-/obj/effect/deskclutter
-	name = "desk clutter"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "deskclutter"
-	desc = "Some clutter the detective has accumalated over the years..."
-	anchored = 1
-
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 // TODO: robust mixology system! (and merge with beakers, maybe)

@@ -7157,7 +7157,7 @@
 "cHG" = (/turf/unsimulated/wall{icon_state = "rock"; name = "rock"},/area/planet/clown)
 "cHH" = (/obj/structure/bookcase,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "cHI" = (/obj/structure/stool/bed/chair{dir = 4},/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
-"cHJ" = (/obj/structure/table/woodentable,/obj/effect/deskclutter,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
+"cHJ" = (/obj/structure/table/woodentable,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "cHK" = (/obj/structure/table/woodentable,/obj/item/weapon/dice/d20,/obj/item/weapon/dice,/turf/unsimulated/floor{dir = 8; icon_state = "wood"},/area/wizard_station)
 "cHL" = (/obj/structure/rack,/obj/item/clothing/suit/wizrobe/marisa,/obj/item/clothing/shoes/sandal/marisa,/obj/item/clothing/head/wizard/marisa,/obj/item/weapon/staff/broom,/turf/unsimulated/floor{icon_state = "grimy"},/area/wizard_station)
 "cHM" = (/obj/structure/rack,/obj/item/clothing/suit/wizrobe/magusblue,/obj/item/clothing/head/wizard/magus,/obj/item/weapon/staff,/turf/unsimulated/floor{icon_state = "grimy"},/area/wizard_station)

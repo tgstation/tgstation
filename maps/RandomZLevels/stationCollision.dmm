@@ -115,7 +115,7 @@
 "ck" = (/obj/item/weapon/shard{icon_state = "small"},/mob/living/carbon/alien/larva{bruteloss = 50; fireloss = 150; stat = 2},/turf/simulated/floor{dir = 2; icon_state = "warning"},/area/awaymission/research)
 "cl" = (/obj/item/weapon/shard{icon_state = "medium"},/obj/item/weapon/shard{icon_state = "small"},/obj/effect/alien/weeds/node,/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/awaymission/research)
 "cm" = (/obj/structure/table,/obj/item/weapon/clipboard,/obj/item/weapon/paper,/obj/item/weapon/paper,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
-"cn" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/effect/critter/hivebot{opensdoors = 0},/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/awaymission/research)
+"cn" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/mob/living/simple_animal/hostile/hivebot{opensdoors = 0},/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/awaymission/research)
 "co" = (/obj/structure/window/reinforced,/turf/simulated/floor{dir = 2; icon_state = "warning"},/area/awaymission/research)
 "cp" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/awaymission/research)
 "cq" = (/obj/machinery/door/window/southright,/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/research)
