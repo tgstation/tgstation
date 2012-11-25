@@ -198,6 +198,14 @@
 	icon_state = "lithiumflask"
 	volume = 50
 
+/obj/item/weapon/reagent_containers/glass/beaker/large/fluff/nashida_bishara_1 //rukral:Nashida Bisha'ra
+	name = "Nashida's Etched Beaker"
+	desc = "The message: 'Please do not be removing this beaker from the chemistry lab. If lost, return to Nashida Bisha'ra' can be seen etched into the side of this 100 unit beaker."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "beakerlarge"
+	g_amt = 5000
+	volume = 100
+
 /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle //compactninja: Lister Black
 	name = "Pill bottle (anti-depressants)"
 	desc = "Contains pills used to deal with depression. They appear to be prescribed to Lister Black"
