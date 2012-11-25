@@ -32,6 +32,8 @@
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
 
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+
 	if(!setup_database_connection())
 		world.log << "Your server failed to establish a connection with the feedback database."
 	else
@@ -55,7 +57,6 @@
 	slmaster.mouse_opacity = 0
 
 	src.update_status()
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	master_controller = new /datum/controller/game_controller()
 	spawn(-1)

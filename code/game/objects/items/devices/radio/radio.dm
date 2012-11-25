@@ -394,7 +394,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		Broadcast_Message(connection, M, voicemask, M.voice_message,
 						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type, signal.data["compression"], position.z)
+		                  filter_type, signal.data["compression"], list(position.z), connection.frequency)
 
 
 
@@ -598,9 +598,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		return -1
 	if(!listening)
 		return -1
-	if(level != 0)
+	if(!(0 in level))
 		var/turf/position = get_turf(src)
-		if(isnull(position) || position.z != level)
+		if(!position || !(position.z in level))
 			return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
@@ -620,7 +620,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					break
 		if (!accept)
 			return -1
-
 	return canhear_range
 
 /obj/item/device/radio/proc/send_hear(freq, level)

@@ -187,32 +187,23 @@
 	return hear
 
 
-/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios, var/level = 0)
+/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 	. = list()
 
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
 	for(var/obj/item/device/radio/R in radios)
-		// This is usually for headsets, which only the wearer can hear.
-		if(R.canhear_range == 0)
-			if(ismob(R.loc))
-				. |= R.loc
-				// Ghost being able to hear radio.
-				var/turf/T = get_turf(R.loc)
-				for(var/mob/dead/observer/O in T)
-					. |= O
-			continue
 
 		var/turf/speaker = get_turf(R)
 		if(speaker)
 			for(var/turf/T in hear(R.canhear_range,speaker))
-				speaker_coverage += T
+				speaker_coverage[T] = T
 
 	// Try to find all the players who can hear the message
 	for(var/mob/M in player_list)
 		var/turf/ear = get_turf(M)
-		if(ear && (level == 0 || level == ear.z))
-			if(ear in speaker_coverage)
+		if(ear)
+			if(speaker_coverage[ear])
 				. |= M
 
 	return .
