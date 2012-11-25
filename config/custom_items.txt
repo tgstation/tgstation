@@ -39,6 +39,7 @@ paththegreat: Eli Stevens: /obj/item/weapon/pen/fluff/fountainpen
 phaux: Tian Krieger: /obj/item/clothing/under/fluff/tian_dress
 rawrtaicho: Riley Rohtin: /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1
 roaper: Enos Adlai: /obj/item/clothing/head/fluff/enos_adlai_1
+rukral: Nashida Bisha'ra: /obj/item/weapon/reagent_containers/glass/beaker/large/fluff/nashida_bishara_1
 searif: Yuki Matsuda: /obj/item/clothing/under/fluff/jumpsuitdown, /obj/item/clothing/head/welding/fluff/yuki_matsuda_1
 searif: Ara Al-Jazari: /obj/item/clothing/under/rank/bartender/fluff/classy
 serithi: Serithi Artalis: /obj/item/clothing/glasses/fluff/serithi_artalis_1, /obj/item/clothing/shoes/fluff/leatherboots
@@ -47,7 +48,7 @@ sicktrigger: David Fanning: /obj/item/fluff/david_fanning_1
 silentthunder: Val McNeil: /obj/item/fluff/val_mcneil_1
 spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/suit/labcoat/fluff/pink
 sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
-sparklysheep: Uzenwa Sissra: /obj/item/clothin/glasses/fluff/uzenwa_sissra_1
+sparklysheep: Uzenwa Sissra: /obj/item/clothing/glasses/fluff/uzenwa_sissra_1
 staghorn: Mara Kilpatrick: /obj/item/clothing/mask/mara_kilpatrick_1
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
 thatoneguy: Hugo Cinderbatch: /obj/item/weapon/fluff/hugo_cinderbacth_1
