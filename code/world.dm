@@ -9,30 +9,45 @@
 #define RECOMMENDED_VERSION 494
 /world/New()
 	..()
-	changelog_hash = md5('html/changelog.html')
-	src.load_configuration()
 
-	if (config && config.server_name != null && config.server_suffix && world.port > 0)
+	if(byond_version < RECOMMENDED_VERSION)
+		world.log << "Your server's byond version does not meet the recommended requirements for TGstation code. Please update BYOND"
+
+	changelog_hash = md5('html/changelog.html')
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+
+	href_logfile = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] hrefs.html")
+	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
+	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+	diaryofmeanpeople = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] Attack.log")
+	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+
+	load_configuration()
+	load_mode()
+	load_motd()
+	load_admins()
+	LoadBansjob()
+	if(config.usewhitelist)
+		load_whitelist()
+	jobban_loadbanfile()
+	jobban_updatelegacybans()
+	LoadBans()
+
+	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
 
-	src.load_mode()
-	src.load_motd()
-	load_admins()
 	investigate_reset()
-	if (config.usewhitelist)
-		load_whitelist()
-	LoadBansjob()
 	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
+
 	src.update_status()
+
 	makepowernets()
 
 	sun = new /datum/sun()
 	radio_controller = new /datum/controller/radio()
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
-
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	if(!setup_database_connection())
 		world.log << "Your server failed to establish a connection with the feedback database."
@@ -44,13 +59,13 @@
 	else
 		world.log << "Tgstation database connection established."
 
-	plmaster = new /obj/effect/overlay(  )
+	plmaster = new /obj/effect/overlay()
 	plmaster.icon = 'icons/effects/tile_effects.dmi'
 	plmaster.icon_state = "plasma"
 	plmaster.layer = FLY_LAYER
 	plmaster.mouse_opacity = 0
 
-	slmaster = new /obj/effect/overlay(  )
+	slmaster = new /obj/effect/overlay()
 	slmaster.icon = 'icons/effects/tile_effects.dmi'
 	slmaster.icon_state = "sleeping_agent"
 	slmaster.layer = FLY_LAYER
@@ -63,28 +78,6 @@
 		master_controller.setup()
 		lighting_controller.Initialize()
 
-	if(byond_version < RECOMMENDED_VERSION)
-		world.log << "Your server's byond version does not meet the recommended requirements for TGstation code. Please update BYOND"
-
-	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
-	diary << {"
-
-Starting up. [time2text(world.timeofday, "hh:mm.ss")]
----------------------
-"}
-
-	diaryofmeanpeople = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] Attack.log")
-	diaryofmeanpeople << {"
-
-Starting up. [time2text(world.timeofday, "hh:mm.ss")]
----------------------
-"}
-
-	href_logfile = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] hrefs.html")
-
-	jobban_loadbanfile()
-	jobban_updatelegacybans()
-	LoadBans()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 	sleep_offline = 1
@@ -158,8 +151,8 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	spawn(0)
 		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
 
-	for(var/client/C)
-		if (config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+	for(var/client/C in clients)
+		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
 		else
 			C << link("byond://[world.address]:[world.port]")
@@ -223,17 +216,16 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 	var/list/features = list()
 
-	if (!ticker)
+	if(ticker)
+		if(master_mode)
+			features += master_mode
+	else
 		features += "<b>STARTING</b>"
-
-	if (ticker && master_mode)
-		features += master_mode
 
 	if (!enter_allowed)
 		features += "closed"
 
-	if (abandon_allowed)
-		features += abandon_allowed ? "respawn" : "no respawn"
+	features += abandon_allowed ? "respawn" : "no respawn"
 
 	if (config && config.allow_vote_mode)
 		features += "vote"
