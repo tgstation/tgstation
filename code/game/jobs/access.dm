@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/var/const/access_security = 1
-/var/const/access_brig = 2
+/var/const/access_security = 1 // Security equipment
+/var/const/access_brig = 2 // Brig timers and permabrig
 /var/const/access_armory = 3
 /var/const/access_forensics_lockers= 4
 /var/const/access_medical = 5
@@ -61,6 +61,8 @@
 /var/const/access_RC_announce = 59 //Request console announcements
 /var/const/access_keycard_auth = 60 //Used for events which require at least two people to confirm them
 /var/const/access_tcomsat = 61 // has access to the entire telecomms satellite / machinery
+/var/const/access_gateway = 62
+/var/const/access_sec_doors = 63 // Security front doors
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -187,7 +189,7 @@
 		if("Chaplain")
 			return list(access_morgue, access_chapel_office, access_crematorium)
 		if("Detective")
-			return list(access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
+			return list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 		if("Medical Doctor")
 			return list(access_medical, access_morgue, access_surgery)
 		if("Botanist")	// -- TLE
@@ -199,24 +201,24 @@
 		if("Captain")
 			return get_all_accesses()
 		if("Security Officer")
-			return list(access_security, access_brig, access_court)
+			return list(access_security, access_sec_doors, access_brig, access_court)
 		if("Warden")
-			return list(access_security, access_brig, access_armory, access_court)
+			return list(access_security, access_sec_doors, access_brig, access_armory, access_court)
 		if("Scientist")
 			return list(access_tox, access_tox_storage, access_research, access_xenobiology)
 		if("Head of Security")
 			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_genetics, access_court,
-			            access_teleporter, access_heads, access_tech_storage, access_security, access_brig, access_atmospherics,
+			            access_teleporter, access_heads, access_tech_storage, access_security, access_sec_doors, access_brig, access_atmospherics,
 			            access_maint_tunnels, access_bar, access_janitor, access_kitchen, access_robotics, access_armory, access_hydroponics,
 			            access_theatre, access_research, access_hos, access_RC_announce, access_forensics_lockers, access_keycard_auth)
 		if("Head of Personnel")
-			return list(access_security, access_brig, access_court, access_forensics_lockers,
+			return list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
 			            access_tox, access_tox_storage, access_chemistry, access_medical, access_genetics, access_engine,
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
-			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth)
+			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 		if("Bartender")
@@ -248,7 +250,7 @@
 			return list(access_rd, access_heads, access_tox, access_genetics,
 			            access_tox_storage, access_teleporter,
 			            access_research, access_robotics, access_xenobiology,
-			            access_RC_announce, access_keycard_auth, access_tcomsat)
+			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway)
 		if("Virologist")
 			return list(access_medical, access_virology)
 		if("Chief Medical Officer")
@@ -280,7 +282,7 @@
 			return get_all_centcom_access()
 
 /proc/get_all_accesses()
-	return list(access_security, access_brig, access_armory, access_forensics_lockers, access_court,
+	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
 	            access_medical, access_genetics, access_morgue, access_rd,
 	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_emergency_storage, access_change_ids, access_ai_upload,
@@ -290,7 +292,7 @@
 	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_mint_vault, access_mint,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat)
+	            access_keycard_auth, access_tcomsat, access_gateway)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
@@ -303,15 +305,15 @@
 		if(0)
 			return get_all_accesses()
 		if(1) //security
-			return list(access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
+			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
 		if(2) //medbay
 			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
 		if(3) //research
 			return list(access_research, access_tox, access_tox_storage, access_xenobiology, access_rd)
 		if(4) //engineering and maintenance
-			return list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_tech_storage, access_atmospherics, access_construction, access_robotics, access_ce)
+			return list(access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_construction, access_robotics, access_ce)
 		if(5) //command
-			return list(access_heads, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_all_personal_lockers, access_heads_vault, access_RC_announce, access_keycard_auth, access_tcomsat, access_hop, access_captain)
+			return list(access_heads, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_all_personal_lockers, access_heads_vault, access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_hop, access_captain)
 		if(6) //station general
 			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
 		if(7) //supply
@@ -346,7 +348,7 @@
 		if(access_security)
 			return "Security"
 		if(access_brig)
-			return "Brig Cells"
+			return "Holding Cells"
 		if(access_court)
 			return "Courtroom"
 		if(access_forensics_lockers)
@@ -461,6 +463,10 @@
 			return "Keycode Auth. Device"
 		if(access_tcomsat)
 			return "Telecommunications"
+		if(access_gateway)
+			return "Gateway"
+		if(access_sec_doors)
+			return "Brig"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

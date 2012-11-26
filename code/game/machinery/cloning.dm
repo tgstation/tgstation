@@ -133,7 +133,7 @@
 					return 0
 
 
-	src.heal_level = rand(75,100) //Randomizes what health the clone is when ejected
+	src.heal_level = rand(60,100) //Randomizes what health the clone is when ejected
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1
@@ -151,7 +151,7 @@
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(190) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
+	H.adjustCloneLoss(src.heal_level + 100) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
 	H.adjustBrainLoss(heal_level)
 	H.Paralyse(4)
 
