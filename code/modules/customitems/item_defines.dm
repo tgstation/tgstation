@@ -61,6 +61,11 @@
 	icon_state = "paper"
 	item_state = "paper"
 
+/obj/item/fluff/maurice_bedford_1
+	name = "Monogrammed Handkerchief"
+	desc = "A neatly folded handkerchief embroidered with a 'M'."
+	icon_state = "maurice_bedford_1"
+
 //////////////////////////////////
 ////////// Usable Items //////////
 //////////////////////////////////
