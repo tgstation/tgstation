@@ -387,7 +387,7 @@
 	icon_state = "uzenwa_sissra_1"
 
 /obj/item/clothing/glasses/welding/fluff/ian_colm_2 //roaper: Ian Colm
-	name = "Welding Goggles"
+	name = "Ian's Goggles"
 	desc = "A pair of goggles used in the application of welding."
 	icon = 'custom_items.dmi'
 	icon_state = "ian_colm_1"
