@@ -123,3 +123,13 @@
 			M.show_message("\blue The radiation beam dissipates harmlessly through your body.")
 		else
 			return 1
+
+
+/obj/item/projectile/beam/mindflayer
+	name = "flayer ray"
+
+	on_hit(var/atom/target, var/blocked = 0)
+		if(ishuman(target))
+			var/mob/living/carbon/human/M = target
+			M.adjustBrainLoss(20)
+			M.hallucination += 20
