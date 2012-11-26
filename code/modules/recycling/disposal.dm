@@ -155,6 +155,9 @@
 		else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 			msg = "[user.name] stuffs [target.name] into the [src]!"
 			user << "You stuff [target.name] into the [src]!"
+			log_attack("<font color='red'>[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.</font>")
+			log_admin("ATTACK: [usr] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.")
+			msg_admin_attack("ATTACK: [user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.")
 		else
 			return
 		if (target.client)
