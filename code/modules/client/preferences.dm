@@ -210,10 +210,12 @@ datum/preferences
 		user << browse(dat, "window=preferences;size=560x560")
 
 	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 550, height = 500)
-		 //limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
-		 //splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
-		 //width	 - Screen' width. Defaults to 550 to make it look nice.
-		 //height 	 - Screen's height. Defaults to 500 to make it look nice.
+		if(!job_master)	return
+
+		//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
+		//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
+		//width	 - Screen' width. Defaults to 550 to make it look nice.
+		//height 	 - Screen's height. Defaults to 500 to make it look nice.
 
 
 		var/HTML = "<body>"
