@@ -243,7 +243,13 @@ turf/proc/shift_to_subarea()
 	// change the turf's area depending on its brightness
 	// restrict light to valid levels
 	var/light = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
-	var/new_tag = "[Area.type]sd_L[light]"
+	//var/new_tag = "[Area.type]sd_L[light]"
+
+	var/new_tag
+	if(length(Area.tag) > 5)
+		new_tag = "[copytext(Area.tag,1,-5)]sd_L[light]"
+	else
+		new_tag = "[Area.type]sd_L[light]"
 
 	if(Area.tag!=new_tag)	//skip if already in this area
 		var/area/A = locate(new_tag)	// find an appropriate area
