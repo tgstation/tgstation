@@ -93,15 +93,27 @@
 				user << "\red [target] is full."
 				return
 
+
+
+			var/datum/reagent/refill
+			var/datum/reagent/refillName
+			if(isrobot(user))
+				refill = reagents.get_master_reagent_id()
+				refillName = reagents.get_master_reagent_name()
+
 			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user << "\blue You transfer [trans] units of the solution to [target]."
 
 			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 				var/mob/living/silicon/robot/bro = user
-				bro.cell.use(30)
-				var/refill = reagents.get_master_reagent_id()
-				spawn(600)
+				var/chargeAmount = max(30,4*trans)
+				bro.cell.use(chargeAmount)
+				user << "Now synthesizing [trans] units of [refillName]..."
+
+
+				spawn(300)
 					reagents.add_reagent(refill, trans)
+					user << "Cyborg [src] refilled."
 
 		return
 
