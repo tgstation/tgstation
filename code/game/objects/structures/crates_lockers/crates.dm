@@ -145,6 +145,15 @@
 	icon_opened = "secgearcrateopen"
 	icon_closed = "secgearcrate"
 
+/obj/structure/closet/crate/secure/hydrosec
+	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
+	name = "secure hydroponics crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "hydrosecurecrate"
+	density = 1
+	icon_opened = "hydrosecurecrateopen"
+	icon_closed = "hydrosecurecrate"
+
 /obj/structure/closet/crate/secure/bin
 	desc = "A secure bin."
 	name = "Secure bin"

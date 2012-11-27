@@ -137,6 +137,26 @@
 		beakers += B2
 		icon_state = "grenade"
 
+/obj/item/weapon/grenade/chem_grenade/antiweed
+	name = "weedkiller grenade"
+	desc = "Used for purging large areas of invasive plant species. Contents under pressure. Do not directly inhale contents."
+	path = 1
+	stage = 2
+
+	New()
+		..()
+		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+
+		B1.reagents.add_reagent("plantbgone", 25)
+		B1.reagents.add_reagent("potassium", 25)
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("sugar", 25)
+
+		beakers += B1
+		beakers += B2
+		icon_state = "grenade"
+
 /obj/item/weapon/grenade/chem_grenade/cleaner
 	name = "Cleaner Grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."

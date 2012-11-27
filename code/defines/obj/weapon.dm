@@ -1435,6 +1435,27 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
+/obj/item/weapon/scythe
+	icon_state = "scythe0"
+	name = "scythe"
+	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
+	force = 16.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 3
+	w_class = 4.0
+	flags = FPRINT | TABLEPASS | NOSHIELD
+	slot_flags = SLOT_BACK
+	origin_tech = "materials=2;combat=2"
+	attack_verb = list("chopped", "sliced", "cut", "reaped")
+
+/obj/item/weapon/scythe/afterattack(atom/A, mob/user as mob)
+	if(istype(A, /obj/effect/spacevine))
+		for(var/obj/effect/spacevine/B in orange(A,1))
+			if(prob(80))
+				del B
+		del A
+
 /*
 /obj/item/weapon/cigarpacket
 	name = "Pete's Cuban Cigars"

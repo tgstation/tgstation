@@ -243,6 +243,16 @@
 	containername = "Seeds crate"
 	access = access_hydroponics
 
+/datum/supply_packs/weedcontrol
+	name = "Weed Control Crate"
+	contains = list(/obj/item/weapon/scythe,
+					/obj/item/clothing/mask/gas,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/grenade/chem_grenade/antiweed)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure/hydrosec
+	containername = "Weed control crate"
+	access = access_hydroponics
 
 /datum/supply_packs/exoticseeds
 	name = "Exotic Seeds Crate"
