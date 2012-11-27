@@ -376,11 +376,7 @@ var/list/sacrificed = list()
 			usr.visible_message("\red A shape forms in the center of the rune. A shape of... a man.", \
 			"\red A shape forms in the center of the rune. A shape of... a man.", \
 			"\red You hear liquid flowing.")
-			D.real_name = "Unknown"
-			for(var/obj/item/weapon/paper/P in this_rune.loc)
-				if(P.info)
-					D.real_name = copytext(P.info, 1, MAX_NAME_LEN)
-					break
+			D.real_name = "[pick(first_names_male)] [pick(last_names)]"
 			D.universal_speak = 1
 			D.status_flags &= ~GODMODE
 
