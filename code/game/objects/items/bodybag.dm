@@ -2,7 +2,7 @@
 
 /obj/item/bodybag
 	name = "body bag"
-	desc = "A folded bag designed to contain dead things."
+	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
 
@@ -34,7 +34,7 @@
 
 /obj/structure/closet/body_bag
 	name = "body bag"
-	desc = "A bag designed to contain dead things."
+	desc = "A plastic bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_closed"
 	icon_closed = "bodybag_closed"

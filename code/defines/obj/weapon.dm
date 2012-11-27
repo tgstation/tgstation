@@ -132,20 +132,6 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
-/obj/item/weapon/bodybag
-	name = "body bag"
-	desc = "A plastic bag designed for the storage and transportation of cadavers."
-	icon = 'icons/obj/closet.dmi'
-	icon_state = "bodybag"
-	force = 5.0
-	throwforce = 5.0
-	throw_speed = 1
-	throw_range = 4
-	w_class = 1.0
-	g_amt = 7500
-	m_amt = 1000
-	origin_tech = "materials=2"
-
 /obj/item/weapon/rsf
 	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
