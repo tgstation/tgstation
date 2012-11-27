@@ -469,23 +469,6 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	return
 
-
-/obj/mecha/proc/attack_critter(obj/effect/critter/C)
-	src.log_message("Attack by creature. Attacker - [C].",1)
-	var/damage = max(0, rand(C.melee_damage_lower - 5, C.melee_damage_upper - 5 ))
-
-	if(!prob(src.deflect_chance) && damage > 0)
-		src.take_damage(damage)
-		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		playsound(src.loc, "sparks", 50, 1)
-		visible_message("\red <b>[C]</b> hits [src.name]'s armor!")
-	else
-		src.log_append_to_last("Armor saved.")
-		src.occupant_message("\blue <b>[C]'s</b> attack is stopped by the armor.")
-		visible_message("\blue <b>[C]</b> rebounds off [src.name]'s armor!")
-	return
-
-
 /obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
 	src.log_message("Hit by [A].",1)
 	call((proc_res["dynhitby"]||src), "dynhitby")(A)

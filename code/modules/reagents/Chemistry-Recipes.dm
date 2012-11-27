@@ -789,7 +789,7 @@ datum
 			required_other = 4
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 
-				var/list/critters = typesof(/obj/effect/critter) - /obj/effect/critter // list of possible critters
+				var/list/critters = typesof(/mob/living/simple_animal/hostile) - /mob/living/simple_animal/hostile // list of possible hostile mobs
 
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
@@ -799,7 +799,7 @@ datum
 
 				for(var/i = 1, i <= created_volume, i++)
 					var/chosen = pick(critters)
-					var/obj/effect/critter/C = new chosen
+					var/mob/living/simple_animal/hostile/C = new chosen
 					C.loc = get_turf_loc(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)

@@ -66,14 +66,6 @@
 					open()
 			return
 
-		if(istype(AM, /obj/effect/critter))
-			var/obj/effect/critter/critter = AM
-			if(critter.opensdoors)	return
-			if(src.check_access_list(critter.access_list))
-				if(density)
-					open()
-			return
-
 		if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
 			if(density)

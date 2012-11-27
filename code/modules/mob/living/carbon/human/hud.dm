@@ -438,10 +438,6 @@ Radar-related things
 		if(M.stat == 2) continue
 		found_targets.Add(M)
 
-	for(var/obj/effect/critter/C in orange(max_dist, distance_ref))
-		if(!C.alive) continue
-		found_targets.Add(C)
-
 	for(var/obj/mecha/M in orange(max_dist, distance_ref))
 		if(!M.occupant) continue
 		found_targets.Add(M)
@@ -494,10 +490,6 @@ Radar-related things
 			else
 				blip.icon_state = "unknownblip"
 				blip.name = "Unknown Organism"
-
-		else if(istype(A, /obj/effect/critter))
-			blip.icon_state = "unknownblip"
-			blip.name = "Unknown Organism"
 
 		else if(istype(A, /obj/mecha))
 			blip.icon_state = "roboblip"
