@@ -372,14 +372,6 @@
 	icon = 'custom_items.dmi'
 	icon_state = "book_berner_1"
 
-/*
-/obj/item/clothing/glasses/fluff/serithi_artalis_1 //serithi: Serithi Artalis
-	name = "extranet HUD"
-	desc = "A heads-up display with limited connectivity to the NanoTrasen Extranet, capable of displaying information from official NanoTrasen records."
-	icon = 'custom_items.dmi'
-	icon_state = "serithi_artalis_1"
-*/
-
 /obj/item/clothing/glasses/fluff/uzenwa_sissra_1 //sparklysheep: Uzenwa Sissra
 	name = "Scanning Goggles"
 	desc = "A very oddly shaped pair of goggles with bits of wire poking out the sides. A soft humming sound emanates from it."
@@ -432,13 +424,6 @@
 	desc = "Hey, I think we're missing a hazard vest..."
 	icon = 'custom_items.dmi'
 	icon_state = "taryn_kifer_1"
-
-/*/obj/item/clothing/head/fluff/enos_adlai_1 //roaper: Enos Adlai
-	name = "comfy cap"
-	desc = "Because when you're the toughest Mother Hubbard on the station, nobody's criticizing your fashion sense."
-	icon = 'custom_items.dmi'
-	icon_state = "enos_adlai_1"
-*/
 
 /obj/item/clothing/head/fluff/edvin_telephosphor_1 //foolamancer: Edvin Telephosphor
 	name = "Edvin's Hat"
