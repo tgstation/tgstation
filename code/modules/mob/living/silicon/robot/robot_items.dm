@@ -3,7 +3,7 @@
 
 /obj/item/weapon/tray/robotray
 	name = "RoboTray"
-	desc = "An autoloading tray specilized made for carrying refreshments."
+	desc = "An autoloading tray specialized for carrying refreshments."
 
 /obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user as mob)
 	if ( !target )
