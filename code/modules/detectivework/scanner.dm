@@ -18,8 +18,10 @@
 		user << "<span class='notice'>Printing report, please wait...</span>"
 		spawn(100)
 			var/obj/item/weapon/paper/P = new(get_turf(src))
-			P.info = "<center><font size='4'>Scanner Report</font></center><HR><BR>"
+			P.name = "paper- 'Scanner Report'"
+			P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
 			P.info += dd_list2text(log, "<BR>")
+			P.info += "<HR><B>Notes:</B><BR>"
 			P.info_links = P.info
 
 			user.put_in_hands(P)
@@ -35,31 +37,42 @@
 	if(!scanning)
 		scanning = 1
 		spawn(0)
-			add_log(user, "<font color='blue'>Scanning [M]...</font>")
-			if (!ishuman(M))
-				add_log(user, "<span class='warning'>[M] is not human and cannot have the fingerprints.</span>")
-			else
-				if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
-					add_log(user, "<span class='info'>No fingerprints found on [M]</span>")
-				else
-					add_log(user, "<span class='info'>Fingerprints found on [M]. Analysing...</span>")
+
+			var/scanned_something = 0
+			user << "<span class='notice'>You scan [M]. The scanner is analysing the results...</span>"
+			add_log(null, "<B>[time2text(world.time + 432000, "hh:mm:ss")] - [M]</B>")
+			if(ishuman(M))
+				if (istype(M.dna, /datum/dna) && !M.gloves)
 					sleep(30)
-					add_log(user, "<span class='info'>[M]'s Fingerprints: [md5(M.dna.uni_identity)]</span>")
+					add_log(user, "<span class='info'><B>Prints:</B></span>")
+					add_log(user, "[md5(M.dna.uni_identity)]")
+					scanned_something = 1
 
 			if ( !M.blood_DNA || !M.blood_DNA.len )
-				add_log(user, "<span class='info'>No blood found on [M]</span>")
 				if(M.blood_DNA)
 					del(M.blood_DNA)
 			else
-				add_log(user, "<span class='info'>Blood found on [M]. Analysing...</span>")
 				sleep(30)
+				add_log(user, "<span class='info'><B>Blood:</B></span>")
+				scanned_something = 1
 				for(var/blood in M.blood_DNA)
-					add_log(user, "<span class='info'>Blood type: [M.blood_DNA[blood]]\nDNA: [blood]</span>")
-			add_log(null, "<font color='blue'>Ending scan report.</font>")
+					add_log(user, "Type: <font color='red'>[M.blood_DNA[blood]]</font> DNA: <font color='red'>[blood]</font>")
+
+			if(!scanned_something)
+				add_log(null, "<I># No forensic traces found #</I>")
+				user.visible_message("\The [user] scans \the [M] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
+				"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [M]!</span>",\
+				"You hear a faint hum of electrical equipment.")
+			else
+				user.visible_message("\The [user] scans \the [M] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
+				"<span class='notice'>You finish scanning \the [M].</span>",\
+				"You hear a faint hum of electrical equipment.")
+			add_log(null, "---------------------------------------------------------")
 			scanning = 0
 			return
 
 /obj/item/device/detective_scanner/afterattack(atom/A as obj|turf|area, mob/user as mob)
+	// Note, don't add formating, such as <span class>, as it won't show up in the logs.
 	if(!in_range(A,user))
 		return
 	if(!isturf(A) && !isobj(A))
@@ -73,7 +86,8 @@
 
 		spawn(0)
 
-			add_log(user, "<font color='blue'>Scanning [A]...</font>")
+			user << "<span class='notice'>You scan [A]. The scanner is analysing the results...</span>"
+			add_log(null, "<B>[time2text(world.time + 432000, "hh:mm:ss")] - [capitalize(A.name)]</B>")
 			//PRINTS
 			if(!A.fingerprints || !A.fingerprints.len)
 				if(A.fingerprints)
@@ -84,40 +98,40 @@
 				for(var/i in A.fingerprints)
 					var/print = A.fingerprints[i]
 					completed_prints += print
-				if(completed_prints.len < 1)
-					add_log(user, "<span class='info'>No intact prints found</span>")
-				else
-					add_log(user, "<span class='info'>Found [completed_prints.len] intact print[completed_prints.len == 1 ? "" : "s"]. Analysing...</span>")
+
+				if(completed_prints.len)
+
 					sleep(30)
+					add_log(user, "<span class='info'><B>Prints:</B></span>")
 					for(var/i in completed_prints)
-						add_log(user, "&nbsp;&nbsp;&nbsp;&nbsp;[i]")
+						add_log(user, "[i]")
 
 			//FIBERS
 			if(A.suit_fibers && A.suit_fibers.len)
-				add_log(user, "<span class='info'>Fibers found. Analysing...</span>")
 				sleep(30)
+				add_log(user, "<span class='info'><B>Fibers:</B></span>")
 				for(var/fiber in A.suit_fibers)
-					add_log(user, "&nbsp;&nbsp;&nbsp;&nbsp;[fiber]")
+					add_log(user, "[fiber]")
 
 			//Blood
 			if (A.blood_DNA && A.blood_DNA.len)
-				add_log(user, "<span class='info'>Blood found. Analysing...</span>")
 				sleep(30)
+				add_log(user, "<span class='info'><B>Blood:</B></span>")
 				for(var/blood in A.blood_DNA)
-					add_log(user, "&nbsp;&nbsp;&nbsp;&nbsp;Blood type: <font color='red'>[A.blood_DNA[blood]]</font> DNA: <font color='red'>[blood]</font>")
+					add_log(user, "Type: <font color='red'>[A.blood_DNA[blood]]</font> DNA: <font color='red'>[blood]</font>")
 
 			//General
 			if ((!A.fingerprints || !A.fingerprints.len) && (!A.suit_fibers || !A.suit_fibers.len) && (!A.blood_DNA || !A.blood_DNA.len))
-				add_log(null, "Unable to locate any fingerprints, materials, fibers, or blood.")
+				add_log(null, "<I># No forensic traces found #</I>")
 				user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
 				"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [A]!</span>",\
 				"You hear a faint hum of electrical equipment.")
 			else
 				user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-				"You finish scanning \the [A].",\
+				"<span class='notice'>You finish analysing \the [A].</span>",\
 				"You hear a faint hum of electrical equipment.")
 
-			add_log(null, "<font color='blue'>Ending scan report.</font>")
+			add_log(null, "---------------------------------------------------------")
 			scanning = 0
 			return 0
 
@@ -125,6 +139,6 @@
 	if(scanning)
 		if(user)
 			user << msg
-		log += "<span class='prefix'>[time2text(world.time + 432000, "hh:mm:ss")]</span>:&nbsp;&nbsp;[msg]"
+		log += "&nbsp;&nbsp;[msg]"
 	else
 		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")
