@@ -50,6 +50,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// Is it a test signal? Don't send it.
 		if(signal.data["type"] == 4)
+			if(original)
+				original.data = signal.data
 			return
 
 	   /** #### - Normal Broadcast - #### **/
