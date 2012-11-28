@@ -127,7 +127,7 @@
 	if (amount > 100)
 		amount = 100
 
-	for(var/mob/player)
+	for(var/mob/player in player_list)
 		if (player.machine == src && player.client)
 			updateWindow(player)
 
@@ -149,7 +149,7 @@
 	user.drop_item()
 	B.loc = src
 	user << "You add the beaker to the machine!"
-	for(var/mob/player)
+	for(var/mob/player in player_list)
 		if (player.machine == src && player.client)
 			updateWindow(player)
 
@@ -244,7 +244,6 @@
 		src.updateUsrDialog()
 	return
 
-
 /obj/machinery/chem_master/Topic(href, href_list)
 	if(stat & (BROKEN|NOPOWER)) return
 	if(usr.stat || usr.restrained()) return
@@ -273,58 +272,42 @@
 				dat += "<TITLE>Condimaster 3000</TITLE>Condiment infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
 			usr << browse(dat, "window=chem_master;size=575x400")
 			return
-		else if (href_list["add1"])
 
-			/*
-			(this fixes a pretty serious exploit) ~~ Doohl
-			R.remove_reagent(href_list["add1"], 1) //Remove/add used instead of trans_to since we're moving a specific reagent.
-			reagents.add_reagent(href_list["add1"], 1)
-			*/
+		else if (href_list["add"])
 
-			R.trans_id_to(src, href_list["add1"], 1)
+			if(href_list["amount"])
+				var/id = href_list["add"]
+				var/amount = text2num(href_list["amount"])
+				R.trans_id_to(src, id, amount)
 
-		else if (href_list["add5"])
-			R.trans_id_to(src, href_list["add5"], 5)
-		else if (href_list["add10"])
-			R.trans_id_to(src, href_list["add10"], 10)
-		else if (href_list["addall"])
-			var/temp_amt = R.get_reagent_amount(href_list["addall"])
-			R.trans_id_to(src, href_list["addall"], temp_amt)
 		else if (href_list["addcustom"])
 
 			var/id = href_list["addcustom"]
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
-			var/realamount = R.get_reagent_amount(id)
-			R.trans_id_to(src, href_list["addcustom"], realamount)
+			src.Topic(null, list("amount" = "[useramount]", "add" = "[id]"))
 
-		else if (href_list["remove1"])
-			reagents.remove_reagent(href_list["remove1"], 1)
-			if(mode) R.add_reagent(href_list["remove1"], 1)
-		else if (href_list["remove5"])
-			reagents.remove_reagent(href_list["remove5"], 5)
-			if(mode) R.add_reagent(href_list["remove5"], 5)
-		else if (href_list["remove10"])
-			reagents.remove_reagent(href_list["remove10"], 10)
-			if(mode) R.add_reagent(href_list["remove10"], 10)
-		else if (href_list["removeall"])
-			if(mode)
-				var/temp_amt = reagents.get_reagent_amount(href_list["removeall"])
-				R.add_reagent(href_list["removeall"], temp_amt)
-			reagents.del_reagent(href_list["removeall"])
+		else if (href_list["remove"])
+
+			if(href_list["amount"])
+				var/id = href_list["remove"]
+				var/amount = text2num(href_list["amount"])
+				if(mode)
+					reagents.trans_id_to(beaker, id, amount)
+				else
+					reagents.remove_reagent(id, amount)
+
+
 		else if (href_list["removecustom"])
 
 			var/id = href_list["removecustom"]
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
-			reagents.remove_reagent(id, useramount)
-			if(mode) R.add_reagent(id, useramount)
+			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
 
 		else if (href_list["toggle"])
-			if(mode)
-				mode = 0
-			else
-				mode = 1
+			mode = !mode
+
 		else if (href_list["main"])
 			attack_hand(usr)
 			return
@@ -397,23 +380,21 @@
 			for(var/datum/reagent/G in R.reagent_list)
 				dat += "[G.name] , [G.volume] Units - "
 				dat += "<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>(Analyze)</A> "
-				dat += "<A href='?src=\ref[src];add1=[G.id]'>(1)</A> "
-				if(G.volume >= 5) dat += "<A href='?src=\ref[src];add5=[G.id]'>(5)</A> "
-				if(G.volume >= 10) dat += "<A href='?src=\ref[src];add10=[G.id]'>(10)</A> "
-				dat += "<A href='?src=\ref[src];addall=[G.id]'>(All)</A> "
+				dat += "<A href='?src=\ref[src];add=[G.id];amount=1'>(1)</A> "
+				dat += "<A href='?src=\ref[src];add=[G.id];amount=5'>(5)</A> "
+				dat += "<A href='?src=\ref[src];add=[G.id];amount=10'>(10)</A> "
+				dat += "<A href='?src=\ref[src];add=[G.id];amount=[G.volume]'>(All)</A> "
 				dat += "<A href='?src=\ref[src];addcustom=[G.id]'>(Custom)</A><BR>"
-		if(!mode)
-			dat += "<HR>Transfer to <A href='?src=\ref[src];toggle=1'>disposal:</A><BR>"
-		else
-			dat += "<HR>Transfer to <A href='?src=\ref[src];toggle=1'>beaker:</A><BR>"
+
+		dat += "<HR>Transfer to <A href='?src=\ref[src];toggle=1'>[(!mode ? "disposal" : "beaker")]:</A><BR>"
 		if(reagents.total_volume)
 			for(var/datum/reagent/N in reagents.reagent_list)
 				dat += "[N.name] , [N.volume] Units - "
 				dat += "<A href='?src=\ref[src];analyze=1;desc=[N.description];name=[N.name]'>(Analyze)</A> "
-				dat += "<A href='?src=\ref[src];remove1=[N.id]'>(1)</A> "
-				if(N.volume >= 5) dat += "<A href='?src=\ref[src];remove5=[N.id]'>(5)</A> "
-				if(N.volume >= 10) dat += "<A href='?src=\ref[src];remove10=[N.id]'>(10)</A> "
-				dat += "<A href='?src=\ref[src];removeall=[N.id]'>(All)</A> "
+				dat += "<A href='?src=\ref[src];remove=[N.id];amount=1'>(1)</A> "
+				dat += "<A href='?src=\ref[src];remove=[N.id];amount=5'>(5)</A> "
+				dat += "<A href='?src=\ref[src];remove=[N.id];amount=10'>(10)</A> "
+				dat += "<A href='?src=\ref[src];remove=[N.id];amount=[N.volume]'>(All)</A> "
 				dat += "<A href='?src=\ref[src];removecustom=[N.id]'>(Custom)</A><BR>"
 		else
 			dat += "Empty<BR>"
