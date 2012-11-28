@@ -55,6 +55,15 @@ BLIND     // can't see anything
 	..()
 	return
 
+/obj/item/clothing/gloves/emp_act(severity)
+	if(cell)
+		cell.charge -= 1000 / severity
+		if (cell.charge < 0)
+			cell.charge = 0
+		if(cell.reliability != 100 && prob(50/severity))
+			cell.reliability -= 10 / severity
+	..()
+
 
 //Head
 /obj/item/clothing/head
