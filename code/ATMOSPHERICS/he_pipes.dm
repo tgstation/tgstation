@@ -34,6 +34,9 @@ obj/machinery/atmospherics/pipe/simple/heat_exchanging
 			if(target.initialize_directions_he & get_dir(target,src))
 				node2 = target
 				break
+
+		var/turf/T = src.loc			// hide if turf is not intact
+		hide(T.intact)
 		update_icon()
 		return
 
@@ -102,5 +105,15 @@ obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction
 				node2 = target
 				break
 
+		var/turf/T = src.loc			// hide if turf is not intact
+		hide(T.intact)
 		update_icon()
 		return
+
+obj/machinery/atmospherics/pipe/simple/heat_exchanging/hidden
+	level = 1
+	icon_state = "intact-f"
+
+obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/hidden
+	level = 1
+	icon_state = "intact-f"
