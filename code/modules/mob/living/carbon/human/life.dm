@@ -140,7 +140,7 @@
 							if(D.data["donor"] == src)
 								B = D
 								break
-					var/datum/reagent/nutriment/F = locate() in vessel.reagent_list
+					var/datum/reagent/nutriment/F = locate() in reagents.reagent_list
 					if(F != null)
 						if(F.volume >= 1)
 							// nutriment speeds it up quite a bit
