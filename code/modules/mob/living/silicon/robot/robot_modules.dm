@@ -170,7 +170,7 @@
 		..()
 		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
-		src.modules += new /obj/item/weapon/pen(src)
+		src.modules += new /obj/item/weapon/pen/robopen(src)
 
 		var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 		M.matter = 30
