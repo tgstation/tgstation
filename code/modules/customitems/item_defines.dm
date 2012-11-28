@@ -61,6 +61,11 @@
 	icon_state = "paper"
 	item_state = "paper"
 
+/obj/item/fluff/maurice_bedford_1
+	name = "Monogrammed Handkerchief"
+	desc = "A neatly folded handkerchief embroidered with a 'M'."
+	icon_state = "maurice_bedford_1"
+
 //////////////////////////////////
 ////////// Usable Items //////////
 //////////////////////////////////
@@ -301,7 +306,7 @@
 	icon = 'custom_items.dmi'
 	icon_state = "odysseus_spec_id"
 
-/obj/item/weapon/card/id/fluff/ian_colmid //Roaper: Ian Colm
+/obj/item/weapon/card/id/fluff/ian_colm_1 //Roaper: Ian Colm
 	name = "Technician"
 	desc = "An old ID with the words 'Ian Colm's Technician ID' printed on it.."
 	icon = 'custom_items.dmi'
@@ -367,17 +372,17 @@
 	icon = 'custom_items.dmi'
 	icon_state = "book_berner_1"
 
-/obj/item/clothing/glasses/fluff/serithi_artalis_1 //serithi: Serithi Artalis
-	name = "extranet HUD"
-	desc = "A heads-up display with limited connectivity to the NanoTrasen Extranet, capable of displaying information from official NanoTrasen records."
-	icon = 'custom_items.dmi'
-	icon_state = "serithi_artalis_1"
-
 /obj/item/clothing/glasses/fluff/uzenwa_sissra_1 //sparklysheep: Uzenwa Sissra
 	name = "Scanning Goggles"
 	desc = "A very oddly shaped pair of goggles with bits of wire poking out the sides. A soft humming sound emanates from it."
 	icon = 'custom_items.dmi'
 	icon_state = "uzenwa_sissra_1"
+
+/obj/item/clothing/glasses/welding/fluff/ian_colm_2 //roaper: Ian Colm
+	name = "Ian's Goggles"
+	desc = "A pair of goggles used in the application of welding."
+	icon = 'custom_items.dmi'
+	icon_state = "ian_colm_1"
 
 //////////// Hats ////////////
 //Removed by request
@@ -419,12 +424,6 @@
 	desc = "Hey, I think we're missing a hazard vest..."
 	icon = 'custom_items.dmi'
 	icon_state = "taryn_kifer_1"
-
-/obj/item/clothing/head/fluff/enos_adlai_1 //roaper: Enos Adlai
-	name = "comfy cap"
-	desc = "Because when you're the toughest Mother Hubbard on the station, nobody's criticizing your fashion sense."
-	icon = 'custom_items.dmi'
-	icon_state = "enos_adlai_1"
 
 /obj/item/clothing/head/fluff/edvin_telephosphor_1 //foolamancer: Edvin Telephosphor
 	name = "Edvin's Hat"
@@ -534,13 +533,13 @@
 
 //////////// Shoes ////////////
 
-/obj/item/clothing/shoes/fluff/leatherboots //serithi: Serithi Artalis
+/*/obj/item/clothing/shoes/fluff/leatherboots //serithi: Serithi Artalis
 	name = "leather boots"
 	desc = "A pair of leather boots. Well-worn, but still kept in good condition. There is a small \"S\" scratched into the back of each boot."
 	icon = 'custom_items.dmi'
 	icon_state = "leatherboots"
 	item_state = "jackboots"
-
+*/
 //////////// Sets ////////////
 
 ////// CDC //deusdactyl: Roger Wiles
