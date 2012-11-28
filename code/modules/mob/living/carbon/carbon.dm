@@ -52,15 +52,15 @@
 	if(!istype(M, /mob/living/carbon)) return
 
 	for(var/datum/disease/D in viruses)
-		world << "1 [D.spread]"
+
 		if(D.spread_by_touch())
-			world << "1 contract"
+
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-		world << "2 [D.spread]"
+
 		if(D.spread_by_touch())
-			world << "2 contract"
+
 			contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	return
