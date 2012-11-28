@@ -74,7 +74,7 @@
 
 	//First, check objects to block exit that are not on the border
 	for(var/obj/obstacle in mover.loc)
-		if((obstacle.flags & ~ON_BORDER) && (mover != obstacle) && (forget != obstacle))
+		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
 			if(!obstacle.CheckExit(mover, src))
 				mover.Bump(obstacle, 1)
 				return 0
