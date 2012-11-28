@@ -29,6 +29,7 @@ madmalicemccrea: Alice McCrea: /obj/item/clothing/head/welding/fluff/alice_mccre
 mangled: Li Matsuda: /obj/item/weapon/lighter/zippo/fluff/li_matsuda_1
 maximumbob: Maurice Bedford: /obj/item/fluff/maurice_bedford_1
 mcgulliver: Wox Derax: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/lithiumflask
+misterbook: Smoke Perkins: /obj/item/clothing/mask/cigarette/pipe
 misterfox: Rashid Siraj: /obj/item/weapon/storage/bible/tajaran
 morrinn: Maye Day: /obj/item/weapon/storage/fluff/maye_daye_1
 naples: Russell Vierson: /obj/item/weapon/lighter/zippo/fluff/naples_1
@@ -47,6 +48,7 @@ searif: Ara Al-Jazari: /obj/item/clothing/under/rank/bartender/fluff/classy
 sirribbit: /obj/item/weapon/clipboard/fluff/mcreary_journal
 sicktrigger: David Fanning: /obj/item/fluff/david_fanning_1
 silentthunder: Val McNeil: /obj/item/fluff/val_mcneil_1
+sniperyeti: Susan Harris: /obj/item/clothing/shoes/magboots/fluff/susan_harris_1
 spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/suit/labcoat/fluff/pink
 sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
 sparklysheep: Uzenwa Sissra: /obj/item/clothing/glasses/fluff/uzenwa_sissra_1
