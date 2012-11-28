@@ -332,11 +332,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if(is_freq_listening(signal))
 		if(istype(machine_from, /obj/machinery/telecomms/receiver))
 			//If the signal is compressed, send it to the bus.
-			relay_information(signal, "/obj/machinery/telecomms/bus") // ideally relay the copied information to bus units
+			relay_information(signal, "/obj/machinery/telecomms/bus", 1) // ideally relay the copied information to bus units
 		else
 			// Get a list of relays that we're linked to, then send the signal to their levels.
-			relay_information(signal, "/obj/machinery/telecomms/relay")
-			relay_information(signal, "/obj/machinery/telecomms/broadcaster") // Send it to a broadcaster.
+			relay_information(signal, "/obj/machinery/telecomms/relay", 1)
+			relay_information(signal, "/obj/machinery/telecomms/broadcaster", 1) // Send it to a broadcaster.
 
 
 /*
@@ -417,12 +417,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/bus/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 	if(is_freq_listening(signal))
-		if(change_frequency)
 
-			world << "changing [signal.frequency] to [change_frequency]"
+		if(change_frequency)
 			signal.frequency = change_frequency
 
-		if(!istype(machine_from, /obj/machinery/telecomms/processor)) // Signal must be ready (stupid assuming machine), let's send it
+		if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready (stupid assuming machine), let's send it
 			// send to one linked processor unit
 			var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor")
 

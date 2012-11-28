@@ -64,23 +64,31 @@
 /obj/machinery/telecomms/bus/preset_one
 	id = "Bus 1"
 	network = "tcommsat"
+	freq_listening = list(1351, 1355)
 	autolinkers = list("processor1", "science", "medical")
 
 /obj/machinery/telecomms/bus/preset_two
 	id = "Bus 2"
 	network = "tcommsat"
+	freq_listening = list(1347, 1349)
 	autolinkers = list("processor2", "cargo", "mining")
 
 /obj/machinery/telecomms/bus/preset_three
 	id = "Bus 3"
 	network = "tcommsat"
+	freq_listening = list(1359, 1353)
 	autolinkers = list("processor3", "security", "command")
 
 /obj/machinery/telecomms/bus/preset_four
 	id = "Bus 4"
 	network = "tcommsat"
+	freq_listening = list(1359)
 	autolinkers = list("processor4", "engineering", "common")
 
+/obj/machinery/telecomms/bus/preset_four/New()
+	for(var/i = 1441, i < 1489, i += 2)
+		freq_listening |= i
+	..()
 
 //Processors
 
