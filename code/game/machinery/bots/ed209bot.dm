@@ -194,11 +194,12 @@ Auto Patrol: []"},
 				user << "<span class='notice'>Access denied.</span>"
 	else
 		..()
-		if (!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
-			src.target = user
-			if(lasercolor)//To make up for the fact that lasertag bots don't hunt
-				src.shootAt(user)
-			src.mode = SECBOT_HUNT
+		if (!istype(W, /obj/item/weapon/screwdriver) && (!src.target))
+			if(hasvar(W,"force") && W.force)//If force is defined and non-zero
+				src.target = user
+				if(lasercolor)//To make up for the fact that lasertag bots don't hunt
+					src.shootAt(user)
+				src.mode = SECBOT_HUNT
 
 /obj/machinery/bot/ed209/Emag(mob/user as mob)
 	..()
