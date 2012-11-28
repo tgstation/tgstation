@@ -262,7 +262,7 @@
 	if(href_list["change_freq"])
 
 		var/newfreq = input(usr, "Specify a new frequency for new signals to change to. Enter null to turn off frequency changing. Decimals assigned automatically.", src, network) as null|num
-		if(usr in range(1, src))
+		if(canAccess(usr))
 			if(newfreq)
 				if(findtext(num2text(newfreq), "."))
 					newfreq *= 10 // shift the decimal one place
@@ -302,13 +302,13 @@
 
 			if("id")
 				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
-				if(newid && usr in range(1, src))
+				if(newid && canAccess(usr))
 					id = newid
 					temp = "<font color = #666633>-% New ID assigned: \"[id]\" %-</font color>"
 
 			if("network")
 				var/newnet = input(usr, "Specify the new network for this machine. This will break all current links.", src, network) as null|text
-				if(newnet && usr in range(1, src))
+				if(newnet && canAccess(usr))
 
 					if(length(newnet) > 15)
 						temp = "<font color = #666633>-% Too many characters in new network tag %-</font color>"
@@ -324,7 +324,7 @@
 
 			if("freq")
 				var/newfreq = input(usr, "Specify a new frequency to filter (GHz). Decimals assigned automatically.", src, network) as null|num
-				if(newfreq && usr in range(1, src))
+				if(newfreq && canAccess(usr))
 					if(findtext(num2text(newfreq), "."))
 						newfreq *= 10 // shift the decimal one place
 					if(!(newfreq in freq_listening) && newfreq < 10000)
@@ -383,6 +383,11 @@
 	src.add_fingerprint(usr)
 
 	updateUsrDialog()
+
+/obj/machinery/telecomms/proc/canAccess(var/mob/user)
+	if(issilicon(user) || in_range(user, src))
+		return 1
+	return 0
 
 #undef TELECOMM_Z
 #undef STATION_Z

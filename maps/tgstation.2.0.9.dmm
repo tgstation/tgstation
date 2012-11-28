@@ -5123,7 +5123,7 @@
 "bUA" = (/obj/machinery/door/airlock/medical{name = "Virology Access"; req_access_txt = "39"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor{icon_state = "whitehall"; dir = 1},/area/medical/medbay)
 "bUB" = (/obj/machinery/door/airlock/maintenance{name = "Medical Maintenance"; req_access_txt = "5"},/turf/simulated/floor/plating,/area/medical/surgery)
 "bUC" = (/obj/structure/table,/obj/item/device/assembly/igniter{pixel_x = -5; pixel_y = 3},/obj/item/device/assembly/igniter{pixel_x = 5; pixel_y = -4},/obj/item/device/assembly/igniter{pixel_x = 2; pixel_y = 6},/obj/item/device/assembly/igniter{pixel_x = 2; pixel_y = -1},/turf/simulated/floor{icon_state = "floorgrime"},/area/toxins/misc_lab)
-"bUD" = (/obj/machinery/camera{c_tag = "Misc Test Chamber"; dir = 1; network = "misc"; pixel_x = 0},/turf/simulated/floor{icon_state = "floorgrime"},/area/toxins/misc_lab)
+"bUD" = (/obj/machinery/camera{c_tag = "Misc Test Chamber"; dir = 1; network = "SS13"; pixel_x = 0},/turf/simulated/floor{icon_state = "floorgrime"},/area/toxins/misc_lab)
 "bUE" = (/obj/structure/extinguisher_cabinet{pixel_x = 5; pixel_y = -32},/turf/simulated/floor{icon_state = "floorgrime"},/area/toxins/misc_lab)
 "bUF" = (/obj/machinery/door_control{id = "misclab"; name = "Test Chamber Blast Doors"; pixel_x = 6; pixel_y = -24; req_access_txt = "7"},/turf/simulated/floor{icon_state = "floorgrime"},/area/toxins/misc_lab)
 "bUG" = (/obj/machinery/alarm{dir = 1; icon_state = "alarm0"; pixel_y = -22},/obj/item/weapon/crowbar/red,/obj/item/weapon/wrench,/turf/simulated/floor{icon_state = "floorgrime"},/area/toxins/misc_lab)
