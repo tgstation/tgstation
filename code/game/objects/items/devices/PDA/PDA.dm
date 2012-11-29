@@ -13,6 +13,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ID | SLOT_BELT
+	light_on = 0 //Is the flashlight function on?
+	brightness_on = 4 //Luminosity for the flashlight function
 
 	//Main variables
 	var/owner = null
@@ -22,8 +24,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
-	var/fon = 0 //Is the flashlight function on?
-	var/f_lum = 4 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
@@ -192,14 +192,22 @@ var/global/list/obj/item/device/pda/PDAs = list()
  *	The Actual PDA
  */
 /obj/item/device/pda/pickup(mob/user)
-	if(fon)
+	if(light_on)
+		if(user.luminosity < brightness_on)
+			user.SetLuminosity(brightness_on)
 		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity + f_lum)
 
 /obj/item/device/pda/dropped(mob/user)
-	if(fon)
-		user.SetLuminosity(user.luminosity - f_lum)
-		SetLuminosity(f_lum)
+	if(light_on)
+		if ((layer <= 3) || (loc != user.loc))
+			user.SetLuminosity(search_light(user, src))
+			SetLuminosity(brightness_on)
+
+/obj/item/device/pda/equipped(mob/user, slot)
+	if(light_on)
+		if(user.luminosity < brightness_on)
+			user.SetLuminosity(brightness_on)
+		SetLuminosity(0)
 
 /obj/item/device/pda/New()
 	..()
@@ -320,7 +328,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (cartridge.access_remote_door)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [light_on ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
 					if(pai.loc != src)
 						pai = null
@@ -495,14 +503,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //MAIN FUNCTIONS===================================
 
 				if("Light")
-					if(fon)
-						fon = 0
-						if(src in U.contents)	U.SetLuminosity(U.luminosity - f_lum)
-						else					SetLuminosity(0)
+					if(light_on)
+						light_on = 0
+						if(src in U.contents)
+							U.SetLuminosity(search_light(U, src))
+						else
+							SetLuminosity(0)
 					else
-						fon = 1
-						if(src in U.contents)	U.SetLuminosity(U.luminosity + f_lum)
-						else					SetLuminosity(f_lum)
+						light_on = 1
+						if((src in U.contents) && (U.luminosity < brightness_on))
+							U.SetLuminosity(brightness_on)
+						else
+							SetLuminosity(brightness_on)
 				if("Medical Scan")
 					if(scanmode == 1)
 						scanmode = 0

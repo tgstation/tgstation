@@ -6,8 +6,8 @@
 	item_state = "eng_helm"
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight)
-	var/brightness_on = 4 //luminosity when on
-	var/on = 0
+	brightness_on = 4 //luminosity when on
+	light_on = 0
 	color = "engineering" //Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
 	icon_action_button = "action_hardhat"
 	heat_protection = HEAD
@@ -17,24 +17,35 @@
 		if(!isturf(user.loc))
 			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
 			return
-		on = !on
-		icon_state = "rig[on]-[color]"
+		light_on = !light_on
+		icon_state = "rig[light_on]-[color]"
 //		item_state = "rig[on]-[color]"
 
-		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
-		else	user.SetLuminosity(user.luminosity - brightness_on)
+		if((light_on) && (user.luminosity < brightness_on))
+			user.SetLuminosity(brightness_on)
+		else
+			user.SetLuminosity(search_light(user, src))
 
 	pickup(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity + brightness_on)
-//			user.UpdateLuminosity()
+		if(light_on)
+			if (user.luminosity < brightness_on)
+				user.SetLuminosity(brightness_on)
+//			user.UpdateLuminosity()	//TODO: Carn
 			SetLuminosity(0)
 
 	dropped(mob/user)
-		if(on)
-			user.SetLuminosity(user.luminosity - brightness_on)
-//			user.UpdateLuminosity()
-			SetLuminosity(brightness_on)
+		if(light_on)
+			if ((layer <= 3) || (loc != user.loc))
+				user.SetLuminosity(search_light(user, src))
+				SetLuminosity(brightness_on)
+	//			user.UpdateLuminosity()
+
+	equipped(mob/user, slot)
+		if(light_on)
+			if (user.luminosity < brightness_on)
+				user.SetLuminosity(brightness_on)
+//			user.UpdateLuminosity()	//TODO: Carn
+			SetLuminosity(0)
 
 /obj/item/clothing/suit/space/rig
 	name = "engineering hardsuit"
