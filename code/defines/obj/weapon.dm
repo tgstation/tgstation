@@ -1425,7 +1425,7 @@
 	icon_state = "scythe0"
 	name = "scythe"
 	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
-	force = 16.0
+	force = 13.0
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 3
