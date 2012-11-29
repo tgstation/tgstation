@@ -15,7 +15,9 @@
 
 		var addedSomething = 0
 
-		for(var/obj/item/I in pickup)
+		for(var/obj/item/weapon/reagent_containers/food/I in pickup)
+
+
 			if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
 				var/add = 0
 				if(I.w_class == 1.0)
