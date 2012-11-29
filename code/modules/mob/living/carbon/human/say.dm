@@ -23,7 +23,7 @@
 			if(copytext(message, 1, 2) != "*")
 				message = replacetext(message, "s", stutter("ss"))
 
-		if(src.dna.mutantrace == "metroid" && prob(5))
+		if(src.dna.mutantrace == "slime" && prob(5))
 			if(copytext(message, 1, 2) != "*")
 				if(copytext(message, 1, 2) == ";")
 					message = ";"
@@ -134,7 +134,7 @@
 		return 1
 	if (istype(other, /mob/living/carbon/brain))
 		return 1
-	if (istype(other, /mob/living/carbon/metroid))
+	if (istype(other, /mob/living/carbon/slime))
 		return 1
 	return ..()
 

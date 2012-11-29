@@ -48,7 +48,7 @@
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
 
-		if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N
+		if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N
 			user << "\red You cannot locate any eyes on this creature!"
 			return
 
@@ -286,7 +286,7 @@
 						M:appendix_op_stage = 4.0
 		return
 
-	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/metroid))
+	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/slime))
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
@@ -306,7 +306,7 @@
 
 		switch(M:brain_op_stage)
 			if(0.0)
-				if(istype(M, /mob/living/carbon/metroid))
+				if(istype(M, /mob/living/carbon/slime))
 					if(M.stat == 2)
 						for(var/mob/O in (viewers(M) - user - M))
 							O.show_message("\red [M.name] is beginning to have its flesh cut open with [src] by [user].", 1)
@@ -346,7 +346,7 @@
 				M:brain_op_stage = 1.0
 
 			if(1)
-				if(istype(M, /mob/living/carbon/metroid))
+				if(istype(M, /mob/living/carbon/slime))
 					if(M.stat == 2)
 						for(var/mob/O in (viewers(M) - user - M))
 							O.show_message("\red [M.name] is having its silky inndards cut apart with [src] by [user].", 1)
@@ -355,11 +355,11 @@
 						M:brain_op_stage = 2.0
 					return
 			if(2.0)
-				if(istype(M, /mob/living/carbon/metroid))
+				if(istype(M, /mob/living/carbon/slime))
 					if(M.stat == 2)
-						var/mob/living/carbon/metroid/Metroid = M
-						if(Metroid.cores > 0)
-							if(istype(M, /mob/living/carbon/metroid))
+						var/mob/living/carbon/slime/slime = M
+						if(slime.cores > 0)
+							if(istype(M, /mob/living/carbon/slime))
 								user << "\red You attempt to remove [M]'s core, but [src] is ineffective!"
 					return
 
@@ -413,7 +413,7 @@
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
 
-		if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N
+		if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N
 			user << "\red You cannot locate any eyes on this creature!"
 			return
 
@@ -467,7 +467,7 @@
 
 	src.add_fingerprint(user)
 
-	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/metroid))
+	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/slime))
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
@@ -487,7 +487,7 @@
 
 		switch(M:brain_op_stage)
 			if(1.0)
-				if(istype(M, /mob/living/carbon/metroid))
+				if(istype(M, /mob/living/carbon/slime))
 					return
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
@@ -519,21 +519,21 @@
 				M:brain_op_stage = 2.0
 
 			if(2.0)
-				if(istype(M, /mob/living/carbon/metroid))
+				if(istype(M, /mob/living/carbon/slime))
 					if(M.stat == 2)
-						var/mob/living/carbon/metroid/Metroid = M
-						if(Metroid.cores > 0)
+						var/mob/living/carbon/slime/slime = M
+						if(slime.cores > 0)
 							for(var/mob/O in (viewers(M) - user - M))
 								O.show_message("\red [M.name] is having one of its cores sawed out with [src] by [user].", 1)
 
-							Metroid.cores--
-							M << "\red [user] begins to remove one of your cores with [src]! ([Metroid.cores] cores remaining)"
-							user << "\red You cut one of [M]'s cores out with [src]! ([Metroid.cores] cores remaining)"
+							slime.cores--
+							M << "\red [user] begins to remove one of your cores with [src]! ([slime.cores] cores remaining)"
+							user << "\red You cut one of [M]'s cores out with [src]! ([slime.cores] cores remaining)"
 
-							new/obj/item/metroid_core(M.loc)
+							new/obj/item/slime_core(M.loc)
 
-							if(Metroid.cores <= 0)
-								M.icon_state = "baby roro dead-nocore"
+							if(slime.cores <= 0)
+								M.icon_state = "baby slime dead-nocore"
 
 					return
 

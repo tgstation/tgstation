@@ -73,9 +73,9 @@ datum
 			on_update(var/atom/A)
 				return
 
-		rorojelly
-			name = "Roro Jelly"
-			id = "rorojelly"
+		slimejelly
+			name = "slime Jelly"
+			id = "slimejelly"
 			description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 			reagent_state = LIQUID
 			color = "#801E28" // rgb: 128, 30, 40
@@ -210,7 +210,7 @@ datum
 							T.overlays -= T.wet_overlay
 							T.wet_overlay = null
 
-				for(var/mob/living/carbon/metroid/M in T)
+				for(var/mob/living/carbon/slime/M in T)
 					M.adjustToxLoss(rand(15,20))
 
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
@@ -1022,7 +1022,7 @@ datum
 					for(var/obj/effect/decal/cleanable/C in src)
 						del(C)
 
-					for(var/mob/living/carbon/metroid/M in T)
+					for(var/mob/living/carbon/slime/M in T)
 						M.adjustToxLoss(rand(5,10))
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -1104,8 +1104,8 @@ datum
 				return
 			reaction_obj(var/obj/O, var/volume)
 				src = null
-				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/roro))
-					var/obj/item/weapon/reagent_containers/food/snacks/egg/roro/egg = O
+				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
+					var/obj/item/weapon/reagent_containers/food/snacks/egg/slime/egg = O
 					if (egg.grown)
 						egg.Hatch()
 				if((!O) || (!volume))	return 0
@@ -1792,15 +1792,15 @@ datum
 						M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(holder.has_reagent("frostoil"))
 							holder.remove_reagent("frostoil", 5)
-						if(istype(M, /mob/living/carbon/metroid))
+						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature += rand(5,20)
 					if(15 to 25)
 						M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-						if(istype(M, /mob/living/carbon/metroid))
+						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature += rand(10,20)
 					if(25 to INFINITY)
 						M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
-						if(istype(M, /mob/living/carbon/metroid))
+						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature += rand(15,20)
 				data++
 				..()
@@ -1878,23 +1878,23 @@ datum
 						M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(holder.has_reagent("capsaicin"))
 							holder.remove_reagent("capsaicin", 5)
-						if(istype(M, /mob/living/carbon/metroid))
+						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature -= rand(5,20)
 					if(15 to 25)
 						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-						if(istype(M, /mob/living/carbon/metroid))
+						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature -= rand(10,20)
 					if(25 to INFINITY)
 						M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(prob(1)) M.emote("shiver")
-						if(istype(M, /mob/living/carbon/metroid))
+						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature -= rand(15,20)
 				data++
 				..()
 				return
 
 			reaction_turf(var/turf/simulated/T, var/volume)
-				for(var/mob/living/carbon/metroid/M in T)
+				for(var/mob/living/carbon/slime/M in T)
 					M.adjustToxLoss(rand(15,30))
 
 		sodiumchloride

@@ -50,9 +50,9 @@ I said no!
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/jelly
 
-/datum/recipe/jellydonut/roro
-	reagents = list("rorojelly" = 5, "flour" = 5)
-	result = /obj/item/weapon/reagent_containers/food/snacks/donut/rorojelly
+/datum/recipe/jellydonut/slime
+	reagents = list("slimejelly" = 5, "flour" = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
 
 /datum/recipe/jellydonut/cherry
 	reagents = list("cherryjelly" = 5, "flour" = 5)
@@ -775,12 +775,12 @@ I said no!
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/stew
 
-/datum/recipe/rorotoast
-	reagents = list("rorojelly" = 5)
+/datum/recipe/slimetoast
+	reagents = list("slimejelly" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/roro
+	result = /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/slime
 
 /datum/recipe/jelliedtoast
 	reagents = list("cherryjelly" = 5)
@@ -902,10 +902,10 @@ I said no!
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/applecake
 
-/datum/recipe/roroburger
-	reagents = list("rorojelly" = 5, "flour" = 15)
+/datum/recipe/slimeburger
+	reagents = list("slimejelly" = 5, "flour" = 15)
 	items = list()
-	result = /obj/item/weapon/reagent_containers/food/snacks/jellyburger/roro
+	result = /obj/item/weapon/reagent_containers/food/snacks/jellyburger/slime
 
 /datum/recipe/jellyburger
 	reagents = list("cherryjelly" = 5, "flour" = 15)
@@ -920,13 +920,13 @@ I said no!
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/twobread
 
-/datum/recipe/rorosandwich
-	reagents = list("rorojelly" = 5)
+/datum/recipe/slimesandwich
+	reagents = list("slimejelly" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/roro
+	result = /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime
 
 /datum/recipe/cherrysandwich
 	reagents = list("cherryjelly" = 5)
@@ -989,11 +989,11 @@ I said no!
 	result = /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
 
 
-/datum/recipe/rorosoup
-	reagents = list("water" = 10, "rorojelly" = 5)
+/datum/recipe/slimesoup
+	reagents = list("water" = 10, "slimejelly" = 5)
 	items = list(
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/rorosoup
+	result = /obj/item/weapon/reagent_containers/food/snacks/slimesoup
 
 /datum/recipe/clownstears
 	reagents = list("water" = 10)
@@ -1002,14 +1002,14 @@ I said no!
 		/obj/item/weapon/ore/clown,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/clownstears
-
-/datum/recipe/boiledrorocore
+/*
+/datum/recipe/boiledslimeextract
 	reagents = list("water" = 5)
 	items = list(
-		/obj/item/metroid_core,
+		/obj/item/slime_core,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/boiledrorocore
-
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledslimecore
+*/
 /datum/recipe/braincake
 	reagents = list("milk" = 5, "flour" = 15)
 	items = list(

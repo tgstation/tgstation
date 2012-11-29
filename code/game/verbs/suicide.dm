@@ -154,7 +154,7 @@
 		updatehealth()
 
 
-/mob/living/carbon/metroid/verb/suicide()
+/mob/living/carbon/slime/verb/suicide()
 	set hidden = 1
 	if (stat == 2)
 		src << "You're already dead!"

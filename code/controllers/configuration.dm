@@ -87,7 +87,7 @@
 	var/robot_delay = 0
 	var/monkey_delay = 0
 	var/alien_delay = 0
-	var/metroid_delay = 0
+	var/slime_delay = 0
 	var/animal_delay = 0
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
@@ -376,8 +376,8 @@
 					config.monkey_delay = value
 				if("alien_delay")
 					config.alien_delay = value
-				if("metroid_delay")
-					config.metroid_delay = value
+				if("slime_delay")
+					config.slime_delay = value
 				if("animal_delay")
 					config.animal_delay = value
 				else

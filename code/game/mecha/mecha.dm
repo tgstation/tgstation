@@ -964,7 +964,7 @@
 		usr << "\red Access denied"
 		src.log_append_to_last("Permission denied.")
 		return
-	for(var/mob/living/carbon/metroid/M in range(1,usr))
+	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)
 			usr << "You're too busy getting your life sucked out of you."
 			return

@@ -267,8 +267,8 @@ its easier to just keep the beam vertical.
 /atom/proc/attack_larva(mob/user as mob)
 	return
 
-// for metroids
-/atom/proc/attack_metroid(mob/user as mob)
+// for slimes
+/atom/proc/attack_slime(mob/user as mob)
 	return
 
 /atom/proc/hand_h(mob/user as mob)			//human (hand) - restrained
@@ -288,7 +288,7 @@ its easier to just keep the beam vertical.
 	src.hand_p(user)
 	return
 
-/atom/proc/hand_m(mob/user as mob)			//metroid - restrained
+/atom/proc/hand_m(mob/user as mob)			//slime - restrained
 	return
 
 
@@ -589,8 +589,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				src.attack_paw(usr)
 			else if(isalienadult(usr))
 				src.attack_alien(usr)
-			else if(ismetroid(usr))
-				src.attack_metroid(usr)
+			else if(isslime(usr))
+				src.attack_slime(usr)
 			else if(isanimal(usr))
 				src.attack_animal(usr)
 			else
@@ -608,7 +608,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				src.hand_p(usr, usr.hand)
 			else if(isalienadult(usr))
 				src.hand_al(usr, usr.hand)
-			else if(ismetroid(usr))
+			else if(isslime(usr))
 				return
 			else if(isanimal(usr))
 				return
@@ -819,28 +819,28 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if ( !alien.restrained() )
 				attack_larva(alien)
 
-	else if(ismetroid(usr))
-		var/mob/living/carbon/metroid/metroid = usr
-		//-metroid stuff-
+	else if(isslime(usr))
+		var/mob/living/carbon/slime/slime = usr
+		//-slime stuff-
 
-		if(metroid.stat)
+		if(slime.stat)
 			return
 
-		var/in_range = in_range(src, metroid) || src.loc == metroid
+		var/in_range = in_range(src, slime) || src.loc == slime
 
 		if (in_range)
-			if ( !metroid.restrained() )
+			if ( !slime.restrained() )
 				if (W)
-					attackby(W,metroid)
+					attackby(W,slime)
 					if (W)
-						W.afterattack(src, metroid)
+						W.afterattack(src, slime)
 				else
-					attack_metroid(metroid)
+					attack_slime(slime)
 			else
-				hand_m(metroid, metroid.hand)
+				hand_m(slime, slime.hand)
 		else
-			if ( (W) && !metroid.restrained() )
-				W.afterattack(src, metroid)
+			if ( (W) && !slime.restrained() )
+				W.afterattack(src, slime)
 
 
 	else if(isanimal(usr))
@@ -1152,8 +1152,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 						src.attack_larva(usr)
 					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
 						src.attack_ai(usr, usr.hand)
-					else if(istype(usr, /mob/living/carbon/metroid))
-						src.attack_metroid(usr)
+					else if(istype(usr, /mob/living/carbon/slime))
+						src.attack_slime(usr)
 					else if(istype(usr, /mob/living/simple_animal))
 						src.attack_animal(usr)
 		else

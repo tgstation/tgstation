@@ -10,10 +10,10 @@
 	desc = "It smells faintly of plasma"
 	icon_state = "petehat"
 
-/obj/item/clothing/head/collectable/metroid
-	name = "collectable metroid cap!"
+/obj/item/clothing/head/collectable/slime
+	name = "collectable slime cap!"
 	desc = "It just latches right in place!"
-	icon_state = "metroid"
+	icon_state = "slime"
 
 /obj/item/clothing/head/collectable/xenom
 	name = "collectable xenomorph helmet!"

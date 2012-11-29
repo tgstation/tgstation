@@ -1,10 +1,10 @@
-/mob/living/carbon/metroid/death(gibbed)
+/mob/living/carbon/slime/death(gibbed)
 	if(stat == DEAD)	return
 	stat = DEAD
-	icon_state = "baby roro dead"
+	icon_state = "baby slime dead"
 
 	if(!gibbed)
-		if(istype(src, /mob/living/carbon/metroid/adult))
+		if(istype(src, /mob/living/carbon/slime/adult))
 			ghostize()
 			explosion(loc, -1,-1,3,12)
 			if(src)	del(src)

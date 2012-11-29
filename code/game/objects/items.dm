@@ -202,75 +202,75 @@
 		power *= 2
 
 	if(!istype(M, /mob/living/carbon/human))
-		if(istype(M, /mob/living/carbon/metroid))
-			var/mob/living/carbon/metroid/Metroid = M
+		if(istype(M, /mob/living/carbon/slime))
+			var/mob/living/carbon/slime/slime = M
 			if(prob(25))
 				user << "\red [src] passes right through [M]!"
 				return
 
 			if(power > 0)
-				Metroid.attacked += 10
+				slime.attacked += 10
 
-			if(Metroid.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
-				Metroid.Discipline = 0
+			if(slime.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
+				slime.Discipline = 0
 
 			if(power >= 3)
-				if(istype(Metroid, /mob/living/carbon/metroid/adult))
+				if(istype(slime, /mob/living/carbon/slime/adult))
 					if(prob(5 + round(power/2)))
 
-						if(Metroid.Victim)
-							if(prob(80) && !Metroid.client)
-								Metroid.Discipline++
-						Metroid.Victim = null
-						Metroid.anchored = 0
+						if(slime.Victim)
+							if(prob(80) && !slime.client)
+								slime.Discipline++
+						slime.Victim = null
+						slime.anchored = 0
 
 						spawn()
-							if(Metroid)
-								Metroid.SStun = 1
+							if(slime)
+								slime.SStun = 1
 								sleep(rand(5,20))
-								if(Metroid)
-									Metroid.SStun = 0
+								if(slime)
+									slime.SStun = 0
 
 						spawn(0)
-							if(Metroid)
-								Metroid.canmove = 0
-								step_away(Metroid, user)
+							if(slime)
+								slime.canmove = 0
+								step_away(slime, user)
 								if(prob(25 + power))
 									sleep(2)
-									if(Metroid && user)
-										step_away(Metroid, user)
-								Metroid.canmove = 1
+									if(slime && user)
+										step_away(slime, user)
+								slime.canmove = 1
 
 				else
 					if(prob(10 + power*2))
-						if(Metroid)
-							if(Metroid.Victim)
-								if(prob(80) && !Metroid.client)
-									Metroid.Discipline++
+						if(slime)
+							if(slime.Victim)
+								if(prob(80) && !slime.client)
+									slime.Discipline++
 
-									if(Metroid.Discipline == 1)
-										Metroid.attacked = 0
+									if(slime.Discipline == 1)
+										slime.attacked = 0
 
 								spawn()
-									if(Metroid)
-										Metroid.SStun = 1
+									if(slime)
+										slime.SStun = 1
 										sleep(rand(5,20))
-										if(Metroid)
-											Metroid.SStun = 0
+										if(slime)
+											slime.SStun = 0
 
-							Metroid.Victim = null
-							Metroid.anchored = 0
+							slime.Victim = null
+							slime.anchored = 0
 
 
 						spawn(0)
-							if(Metroid && user)
-								step_away(Metroid, user)
-								Metroid.canmove = 0
+							if(slime && user)
+								step_away(slime, user)
+								slime.canmove = 0
 								if(prob(25 + power*4))
 									sleep(2)
-									if(Metroid && user)
-										step_away(Metroid, user)
-								Metroid.canmove = 1
+									if(slime && user)
+										step_away(slime, user)
+								slime.canmove = 1
 
 
 		var/showname = "."
@@ -296,7 +296,7 @@
 	else
 		switch(src.damtype)
 			if("brute")
-				if(istype(src, /mob/living/carbon/metroid))
+				if(istype(src, /mob/living/carbon/slime))
 					M.adjustBrainLoss(power)
 
 				else
@@ -596,7 +596,7 @@
 		user << "\red You're going to need to remove that mask/helmet/glasses first."
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N     Metroids also don't have eyes!
+	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
 		user << "\red You cannot locate any eyes on this creature!"
 		return
 

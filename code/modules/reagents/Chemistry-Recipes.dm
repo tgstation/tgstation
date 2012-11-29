@@ -7,7 +7,7 @@ datum
 		var/list/required_reagents = new/list()
 		var/list/required_catalysts = new/list()
 
-		// Both of these variables are mostly going to be used with Metroid cores - but if you want to, you can use them for other things
+		// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
 		var/atom/required_container = null // the container required for the reaction to happen
 		var/required_other = 0 // an integer required for the reaction to happen
 
@@ -616,40 +616,40 @@ datum
 			result_amount = 5
 
 
-/////////////////////////////////////METROID CORE REACTIONS ///////////////////////////////
+/////////////////////////////////////slime CORE REACTIONS ///////////////////////////////
 
-		metroidpepper
-			name = "Metroid Condensedcapaicin"
+		slimepepper
+			name = "Slime Condensedcapaicin"
 			id = "m_condensedcapaicin"
 			result = "condensedcapsaicin"
 			required_reagents = list("sugar" = 1)
 			result_amount = 1
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 1
-		metroidfrost
-			name = "Metroid Frost Oil"
+		slimefrost
+			name = "Slime Frost Oil"
 			id = "m_frostoil"
 			result = "frostoil"
 			required_reagents = list("water" = 1)
 			result_amount = 1
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 1
-		metroidglycerol
-			name = "Metroid Glycerol"
+		slimeglycerol
+			name = "Slime Glycerol"
 			id = "m_glycerol"
 			result = "glycerol"
 			required_reagents = list("blood" = 1)
 			result_amount = 1
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 1
 
-		metroid_explosion
-			name = "Metroid Explosion"
+		slime_explosion
+			name = "Slime Explosion"
 			id = "m_explosion"
 			result = null
 			required_reagents = list("blood" = 1)
 			result_amount = 2
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
@@ -659,50 +659,50 @@ datum
 
 				holder.clear_reagents()
 				return
-		metroidjam
-			name = "Metroid Jam"
+		slimejam
+			name = "Slime Jam"
 			id = "m_jam"
-			result = "metroid"
+			result = "slime"
 			required_reagents = list("water" = 1)
 			result_amount = 1
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 2
-		metroidsynthi
-			name = "Metroid Synthetic Flesh"
+		slimesynthi
+			name = "Slime Synthetic Flesh"
 			id = "m_flesh"
 			result = null
 			required_reagents = list("sugar" = 1)
 			result_amount = 1
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
 				new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(location)
 				return
 
-		metroidenzyme
-			name = "Metroid Enzyme"
+		slimeenzyme
+			name = "Slime Enzyme"
 			id = "m_enzyme"
 			result = "enzyme"
 			required_reagents = list("blood" = 1, "water" = 1)
 			result_amount = 2
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 3
-		metroidplasma
-			name = "Metroid Plasma"
+		slimeplasma
+			name = "Slime Plasma"
 			id = "m_plasma"
 			result = "plasma"
 			required_reagents = list("sugar" = 1, "blood" = 2)
 			result_amount = 2
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 3
-		metroidvirus
-			name = "Metroid Virus"
+		slimevirus
+			name = "Slime Virus"
 			id = "m_virus"
 			result = null
 			required_reagents = list("sugar" = 1, "sacid" = 1)
 			result_amount = 2
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 3
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				holder.clear_reagents()
@@ -720,14 +720,14 @@ datum
 
 				return
 
-		metroidteleport
-			name = "Metroid Teleport"
+		slimeteleport
+			name = "Slime Teleport"
 			id = "m_tele"
 			result = null
 			required_reagents = list("pacid" = 2, "mutagen" = 2)
 			required_catalysts = list("plasma" = 1)
 			result_amount = 1
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 4
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 
@@ -779,14 +779,14 @@ datum
 									sleep(20)
 									M.client.screen -= blueeffect
 									del(blueeffect)
-		metroidcrit
-			name = "Metroid Crit"
+		slimecrit
+			name = "Slime Crit"
 			id = "m_tele"
 			result = null
 			required_reagents = list("sacid" = 1, "blood" = 1)
 			required_catalysts = list("plasma" = 1)
 			result_amount = 1
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 4
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 
@@ -805,13 +805,13 @@ datum
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)
 							step(C, pick(NORTH,SOUTH,EAST,WEST))
-		metroidbork
-			name = "Metroid Bork"
+		slimebork
+			name = "Slime Bork"
 			id = "m_tele"
 			result = null
 			required_reagents = list("sugar" = 1, "water" = 1)
 			result_amount = 2
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 4
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 
@@ -835,33 +835,33 @@ datum
 
 
 
-		metroidchloral
-			name = "Metroid Chloral"
+		slimechloral
+			name = "Slime Chloral"
 			id = "m_bunch"
 			result = "chloralhydrate"
 			required_reagents = list("blood" = 1, "water" = 2)
 			result_amount = 2
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 5
-		metroidretro
-			name = "Metroid Retro"
+		slimeretro
+			name = "Slime Retro"
 			id = "m_xeno"
 			result = null
 			required_reagents = list("sugar" = 1)
 			result_amount = 1
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 5
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/datum/disease/F = new /datum/disease/dna_retrovirus(0)
 				var/list/data = list("viruses"= list(F))
 				holder.add_reagent("blood", 20, data)
-		metroidfoam
-			name = "Metroid Foam"
+		slimefoam
+			name = "Slime Foam"
 			id = "m_foam"
 			result = null
 			required_reagents = list("sacid" = 1)
 			result_amount = 2
-			required_container = /obj/item/metroid_core
+			required_container = /obj/item/slime_core
 			required_other = 5
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)

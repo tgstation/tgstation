@@ -262,8 +262,8 @@
 			if("sentinel")			M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
-			if("metroid")			M.change_mob_type( /mob/living/carbon/metroid , null, null, delmob )
-			if("adultmetroid")		M.change_mob_type( /mob/living/carbon/metroid/adult , null, null, delmob )
+			if("slime")			M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
+			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
 			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 			if("cat")				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
@@ -1137,15 +1137,15 @@
 
 		usr.client.cmd_admin_alienize(H)
 
-	else if(href_list["makemetroid"])
+	else if(href_list["makeslime"])
 		if(!check_rights(R_SPAWN))	return
 
-		var/mob/living/carbon/human/H = locate(href_list["makemetroid"])
+		var/mob/living/carbon/human/H = locate(href_list["makeslime"])
 		if(!istype(H))
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
 
-		usr.client.cmd_admin_metroidize(H)
+		usr.client.cmd_admin_slimeize(H)
 
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))	return

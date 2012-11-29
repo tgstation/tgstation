@@ -60,9 +60,9 @@
 			..()
 
 
-		metroid
-			input = /mob/living/carbon/metroid
-			output = /obj/item/weapon/reagent_containers/glass/beaker/roro
+		slime
+			input = /mob/living/carbon/slime
+			output = /obj/item/weapon/reagent_containers/glass/beaker/slime
 
 		monkey
 			process(loc, what)

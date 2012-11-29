@@ -213,7 +213,7 @@
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
 
-	for(var/mob/living/carbon/metroid/M in view(1,src))
+	for(var/mob/living/carbon/slime/M in view(1,src))
 		M.UpdateFeed(src)
 
 	return
@@ -265,7 +265,7 @@
 	return
 
 
-/mob/living/carbon/alien/humanoid/attack_metroid(mob/living/carbon/metroid/M as mob)
+/mob/living/carbon/alien/humanoid/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -280,7 +280,7 @@
 
 		var/damage = rand(1, 3)
 
-		if(istype(M, /mob/living/carbon/metroid/adult))
+		if(istype(M, /mob/living/carbon/slime/adult))
 			damage = rand(10, 40)
 		else
 			damage = rand(5, 35)

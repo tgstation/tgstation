@@ -1,7 +1,7 @@
-/mob/living/carbon/metroid
-	name = "baby roro"
+/mob/living/carbon/slime
+	name = "baby slime"
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "baby roro"
+	icon_state = "baby slime"
 	pass_flags = PASSTABLE
 	voice_message = "skree!"
 	say_message = "hums"
@@ -17,33 +17,33 @@
 
 	see_in_dark = 8
 
-	// canstun and canweaken don't affect metroids because they ignore stun and weakened variables
+	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
 	status_flags = CANPARALYSE|CANPUSH
 
-	var/cores = 3 // the number of /obj/item/metroid_core's the metroid has left inside
+	var/cores = 3 // the number of /obj/item/slime_core's the slime has left inside
 
 	var/powerlevel = 0 	// 1-10 controls how much electricity they are generating
-	var/amount_grown = 0 // controls how long the metroid has been overfed, if 10, grows into an adult
+	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows into an adult
 						 // if adult: if 10: reproduces
 
 
-	var/mob/living/Victim = null // the person the metroid is currently feeding on
-	var/mob/living/Target = null // AI variable - tells the Metroid to hunt this down
+	var/mob/living/Victim = null // the person the slime is currently feeding on
+	var/mob/living/Target = null // AI variable - tells the slime to hunt this down
 
 	var/attacked = 0 // determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
-	var/tame = 0 // if set to 1, the Metroid will not eat humans ever, or attack them
-	var/rabid = 0 // if set to 1, the Metroid will attack and eat anything it comes in contact with
+	var/tame = 0 // if set to 1, the slime will not eat humans ever, or attack them
+	var/rabid = 0 // if set to 1, the slime will attack and eat anything it comes in contact with
 
 	var/list/Friends = list() // A list of potential friends
-	var/list/FriendsWeight = list() // A list containing values respective to Friends. This determines how many times a Metroid "likes" something. If the Metroid likes it more than 2 times, it becomes a friend
+	var/list/FriendsWeight = list() // A list containing values respective to Friends. This determines how many times a slime "likes" something. If the slime likes it more than 2 times, it becomes a friend
 
-	// Metroids pass on genetic data, so all their offspring have the same "Friends",
+	// slimes pass on genetic data, so all their offspring have the same "Friends",
 
-/mob/living/carbon/metroid/adult
-	name = "adult roro"
+/mob/living/carbon/slime/adult
+	name = "adult slime"
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "adult roro"
+	icon_state = "adult slime"
 
 	health = 200
 	gender = NEUTER
@@ -52,25 +52,25 @@
 	nutrition = 800 // 1200 = max
 
 
-/mob/living/carbon/metroid/New()
+/mob/living/carbon/slime/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "baby roro")
-		name = text("baby roro ([rand(1, 1000)])")
+	if(name == "baby slime")
+		name = text("baby slime ([rand(1, 1000)])")
 	else
-		name = text("adult roro ([rand(1,1000)])")
+		name = text("adult slime ([rand(1,1000)])")
 	real_name = name
 	spawn (1)
 		regenerate_icons()
 		src << "\blue Your icons have been generated!"
 	..()
 
-/mob/living/carbon/metroid/adult/New()
-	verbs.Remove(/mob/living/carbon/metroid/verb/ventcrawl)
+/mob/living/carbon/slime/adult/New()
+	verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
 	..()
 
-/mob/living/carbon/metroid/movement_delay()
+/mob/living/carbon/slime/movement_delay()
 	var/tally = 0
 
 	var/health_deficiency = (100 - health)
@@ -80,22 +80,22 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
 	if(reagents)
-		if(reagents.has_reagent("hyperzine")) // hyperzine slows Metroids down
+		if(reagents.has_reagent("hyperzine")) // hyperzine slows slimes down
 			tally *= 2 // moves twice as slow
 
 		if(reagents.has_reagent("frostoil")) // frostoil also makes them move VEEERRYYYYY slow
 			tally *= 5
 
-	if(health <= 0) // if damaged, the metroid moves twice as slow
+	if(health <= 0) // if damaged, the slime moves twice as slow
 		tally *= 2
 
 	if (bodytemperature >= 330.23) // 135 F
-		return -1	// Metroids become supercharged at high temperatures
+		return -1	// slimes become supercharged at high temperatures
 
-	return tally+config.metroid_delay
+	return tally+config.slime_delay
 
 
-/mob/living/carbon/metroid/Bump(atom/movable/AM as mob|obj, yes)
+/mob/living/carbon/slime/Bump(atom/movable/AM as mob|obj, yes)
 	spawn( 0 )
 		if ((!( yes ) || now_pushing))
 			return
@@ -115,9 +115,9 @@
 
 
 					if(istype(AM, /obj/structure/window) || istype(AM, /obj/structure/grille))
-						if(istype(src, /mob/living/carbon/metroid/adult))
+						if(istype(src, /mob/living/carbon/slime/adult))
 							if(nutrition <= 600 && !Atkcool)
-								AM.attack_metroid(src)
+								AM.attack_slime(src)
 								spawn()
 									Atkcool = 1
 									sleep(15)
@@ -125,7 +125,7 @@
 						else
 							if(nutrition <= 500 && !Atkcool)
 								if(prob(5))
-									AM.attack_metroid(src)
+									AM.attack_slime(src)
 									spawn()
 										Atkcool = 1
 										sleep(15)
@@ -134,7 +134,7 @@
 		if(ismob(AM))
 			var/mob/tmob = AM
 
-			if(istype(src, /mob/living/carbon/metroid/adult))
+			if(istype(src, /mob/living/carbon/slime/adult))
 				if(istype(tmob, /mob/living/carbon/human))
 					if(prob(90))
 						now_pushing = 0
@@ -162,22 +162,22 @@
 		return
 	return
 
-/mob/living/carbon/metroid/Process_Spacemove()
+/mob/living/carbon/slime/Process_Spacemove()
 	return 2
 
 
-/mob/living/carbon/metroid/Stat()
+/mob/living/carbon/slime/Stat()
 	..()
 
 	statpanel("Status")
-	if(istype(src, /mob/living/carbon/metroid/adult))
+	if(istype(src, /mob/living/carbon/slime/adult))
 		stat(null, "Health: [round((health / 200) * 100)]%")
 	else
 		stat(null, "Health: [round((health / 150) * 100)]%")
 
 
 	if (client.statpanel == "Status")
-		if(istype(src,/mob/living/carbon/metroid/adult))
+		if(istype(src,/mob/living/carbon/slime/adult))
 			stat(null, "Nutrition: [nutrition]/1200")
 			if(amount_grown >= 10)
 				stat(null, "You can reproduce!")
@@ -189,21 +189,21 @@
 		stat(null,"Power Level: [powerlevel]")
 
 
-/mob/living/carbon/metroid/adjustFireLoss(amount)
+/mob/living/carbon/slime/adjustFireLoss(amount)
 	..(-abs(amount)) // Heals them
 	return
 
-/mob/living/carbon/metroid/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/carbon/slime/bullet_act(var/obj/item/projectile/Proj)
 	attacked += 10
 	..(Proj)
 	return 0
 
 
-/mob/living/carbon/metroid/emp_act(severity)
+/mob/living/carbon/slime/emp_act(severity)
 	powerlevel = 0 // oh no, the power!
 	..()
 
-/mob/living/carbon/metroid/ex_act(severity)
+/mob/living/carbon/slime/ex_act(severity)
 
 	if (stat == 2 && client)
 		return
@@ -234,7 +234,7 @@
 	updatehealth()
 
 
-/mob/living/carbon/metroid/blob_act()
+/mob/living/carbon/slime/blob_act()
 	if (stat == 2)
 		return
 	var/shielded = 0
@@ -256,14 +256,14 @@
 	return
 
 
-/mob/living/carbon/metroid/u_equip(obj/item/W as obj)
+/mob/living/carbon/slime/u_equip(obj/item/W as obj)
 	return
 
 
-/mob/living/carbon/metroid/attack_ui(slot)
+/mob/living/carbon/slime/attack_ui(slot)
 	return
 
-/mob/living/carbon/metroid/meteorhit(O as obj)
+/mob/living/carbon/slime/meteorhit(O as obj)
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
@@ -275,7 +275,7 @@
 	return
 
 
-/mob/living/carbon/metroid/Move(a, b, flag)
+/mob/living/carbon/slime/Move(a, b, flag)
 
 	var/t7 = 1
 	if (restrained())
@@ -337,7 +337,7 @@
 	return
 
 
-/mob/living/carbon/metroid/attack_metroid(mob/living/carbon/metroid/M as mob)
+/mob/living/carbon/slime/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -353,7 +353,7 @@
 		var/damage = rand(1, 3)
 		attacked += 5
 
-		if(istype(src, /mob/living/carbon/metroid/adult))
+		if(istype(src, /mob/living/carbon/slime/adult))
 			damage = rand(1, 6)
 		else
 			damage = rand(1, 3)
@@ -366,7 +366,7 @@
 	return
 
 
-/mob/living/carbon/metroid/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
@@ -380,7 +380,7 @@
 		adjustBruteLoss(damage)
 		updatehealth()
 
-/mob/living/carbon/metroid/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
@@ -401,16 +401,16 @@
 				return
 			if (health > 0)
 				attacked += 10
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				//playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
+						O.show_message(text("\red <B>[M.name] has attacked [src]!</B>"), 1)
 				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
 
 
-/mob/living/carbon/metroid/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -466,7 +466,7 @@
 				if(prob(80) && !client)
 					Discipline++
 
-					if(!istype(src, /mob/living/carbon/metroid/adult))
+					if(!istype(src, /mob/living/carbon/slime/adult))
 						if(Discipline == 1)
 							attacked = 0
 
@@ -566,7 +566,7 @@
 
 
 
-/mob/living/carbon/metroid/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/carbon/slime/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -591,7 +591,7 @@
 					damage = rand(20, 40)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has slashed [name]!</B>", M), 1)
+							O.show_message(text("\red <B>[] has attacked [name]!</B>", M), 1)
 				else
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
@@ -635,7 +635,7 @@
 					anchored = 0
 					if(prob(80) && !client)
 						Discipline++
-						if(!istype(src, /mob/living/carbon/metroid))
+						if(!istype(src, /mob/living/carbon/slime))
 							if(Discipline == 1)
 								attacked = 0
 
@@ -660,15 +660,15 @@
 	return
 
 
-/mob/living/carbon/metroid/restrained()
+/mob/living/carbon/slime/restrained()
 	return 0
 
 
-mob/living/carbon/metroid/var/co2overloadtime = null
-mob/living/carbon/metroid/var/temperature_resistance = T0C+75
+mob/living/carbon/slime/var/co2overloadtime = null
+mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 
-/mob/living/carbon/metroid/show_inv(mob/user as mob)
+/mob/living/carbon/slime/show_inv(mob/user as mob)
 
 	user.set_machine(src)
 	var/dat = {"
@@ -680,22 +680,22 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 	onclose(user, "mob[name]")
 	return
 
-/mob/living/carbon/metroid/updatehealth()
+/mob/living/carbon/slime/updatehealth()
 	if(status_flags & GODMODE)
-		if(istype(src, /mob/living/carbon/metroid/adult))
+		if(istype(src, /mob/living/carbon/slime/adult))
 			health = 200
 		else
 			health = 150
 		stat = CONSCIOUS
 	else
-		// metroids can't suffocate unless they suicide. They are also not harmed by fire
-		if(istype(src, /mob/living/carbon/metroid/adult))
+		// slimes can't suffocate unless they suicide. They are also not harmed by fire
+		if(istype(src, /mob/living/carbon/slime/adult))
 			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 		else
 			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
 
-/mob/living/carbon/metroid/proc/get_obstacle_ok(atom/A)
+/mob/living/carbon/slime/proc/get_obstacle_ok(atom/A)
 	var/direct = get_dir(src, A)
 	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( src.loc )
 	var/ok = 0
@@ -777,12 +777,12 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 	return 1
 
 
-// Basically this Metroid Core catalyzes reactions that normally wouldn't happen anywhere
-/obj/item/metroid_core
-	name = "roro core"
-	desc = "A very slimy and tender part of a Rorobeast. Legends claim these to have \"magical powers\"."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "roro core"
+// Basically this slime Core catalyzes reactions that normally wouldn't happen anywhere
+/obj/item/slime_core
+	name = "slime extract"
+	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "slime extract"
 	flags = TABLEPASS
 	force = 1.0
 	w_class = 1.0
@@ -794,7 +794,7 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 	var/Flush = 30
 	var/Uses = 5 // uses before it goes inert
 
-/obj/item/metroid_core/New()
+/obj/item/slime_core/New()
 		..()
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
@@ -815,45 +815,45 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 				Flush = 30
 */
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/roro
-	name = "roro egg"
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime
+	name = "slime egg"
 	desc = "A small, gelatinous egg."
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "roro egg-growing"
+	icon_state = "slime egg-growing"
 	bitesize = 12
 	origin_tech = "biotech=4"
 	var/grown = 0
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/roro/New()
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime/New()
 	..()
 	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("rorojelly", 1)
+	reagents.add_reagent("slimejelly", 1)
 	spawn(rand(1200,1500))//the egg takes a while to "ripen"
 		Grow()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/roro/proc/Grow()
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
 	grown = 1
-	icon_state = "roro egg-grown"
+	icon_state = "slime egg-grown"
 	processing_objects.Add(src)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/roro/proc/Hatch()
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	processing_objects.Remove(src)
 	var/turf/T = get_turf(src)
 	src.visible_message("\blue The [name] pulsates and quivers!")
 	spawn(rand(50,100))
 		src.visible_message("\blue The [name] bursts open!")
-		new/mob/living/carbon/metroid(T)
+		new/mob/living/carbon/slime(T)
 		del(src)
 
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/roro/process()
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime/process()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	if (environment.toxins > MOLES_PLASMA_VISIBLE)//plasma exposure causes the egg to hatch
 		src.Hatch()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/roro/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype( W, /obj/item/toy/crayon ))
 		return
 	else

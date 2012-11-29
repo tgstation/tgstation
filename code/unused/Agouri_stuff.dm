@@ -219,7 +219,7 @@
 					else
 						M.inertia_dir = 0
 						return
-				else if(!istype(M, /mob/living/carbon/metroid))
+				else if(!istype(M, /mob/living/carbon/slime))
 					if (M.m_intent == "run")
 						M.stop_pulling()
 						step(M, M.dir)
@@ -232,7 +232,7 @@
 						return
 
 			if(2) //lube
-				if(!istype(M, /mob/living/carbon/metroid))
+				if(!istype(M, /mob/living/carbon/slime))
 					M.stop_pulling()
 					step(M, M.dir)
 					spawn(1) step(M, M.dir)

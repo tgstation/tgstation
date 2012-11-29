@@ -97,7 +97,7 @@ var/global/floorIsLava = 0
 				body += "<A href='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | "
 				body += "<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | "
 				body += "<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | "
-				body += "<A href='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> "
+				body += "<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A> "
 
 			//Simple Animals
 			if(isanimal(M))
@@ -114,8 +114,8 @@ var/global/floorIsLava = 0
 			body += "<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>, "
 			body += "<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A> \] "
 			body += "<A href='?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A> "
-			body += "\[ Metroid: <A href='?src=\ref[src];simplemake=metroid;mob=\ref[M]'>Baby</A>, "
-			body += "<A href='?src=\ref[src];simplemake=adultmetroid;mob=\ref[M]'>Adult</A> \] "
+			body += "\[ slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>, "
+			body += "<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A> \] "
 			body += "<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> | "
 			body += "<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> | "
 			body += "<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> | "
