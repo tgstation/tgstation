@@ -1178,12 +1178,16 @@
 
 /obj/item/weapon/a_gift
 	name = "gift"
-	desc = "A gift it appears."
+	desc = "PRESENTS!!!! eek!"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "gift"
 	item_state = "gift"
 	pressure_resistance = 70
 
+/obj/item/weapon/a_gift/New()
+	pixel_x = rand(-10,10)
+	pixel_y = rand(-10,10)
+	return ..()
 
 /obj/item/device/camera_bug
 	name = "camera bug"

@@ -158,7 +158,7 @@ HOSTEDBY Yournamehere
 #POPUP_ADMIN_PM
 
 ## Remove the # to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
-#ALLOW_HOLIDAYS
+ALLOW_HOLIDAYS
 
 ##Remove the # mark if you are going to use the SVN irc bot to relay adminhelps
 #USEIRCBOT

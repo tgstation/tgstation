@@ -6,6 +6,14 @@
 	var/id = 0.0
 	var/obj/master
 
+/obj/screen/text
+	icon = null
+	icon_state = null
+	mouse_opacity = 0
+	screen_loc = "CENTER-7,CENTER-7"
+	maptext_height = 480
+	maptext_width = 480
+
 /obj/screen/inventory
 	var/slot_id
 

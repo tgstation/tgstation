@@ -304,3 +304,21 @@ proc/isInSight(var/atom/A, var/atom/B)
 						candidates += G.key
 		i++
 	return candidates
+
+/proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
+	if(!isobj(O))	O = new /obj/screen/text()
+	O.maptext = maptext
+	O.maptext_height = maptext_height
+	O.maptext_width = maptext_width
+	O.screen_loc = screen_loc
+	return O
+
+/proc/Show2Group4Delay(obj/O, list/group, delay=0)
+	if(!isobj(O))	return
+	if(!group)	group = clients
+	for(var/client/C in group)
+		C.screen += O
+	if(delay)
+		spawn(delay)
+			for(var/client/C in group)
+				C.screen -= O
