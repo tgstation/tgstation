@@ -213,7 +213,7 @@
 			name = "Yann"
 			desc = "Mon dieu! C'est un chien!"
 			speak = list("le woof!", "le bark!", "JAPPE!!")
-			emote_see = list("cowers in fear", "surrenders", "plays dead","looks as though there is a wall in front of \him")
+			emote_see = list("cowers in fear", "surrenders", "plays dead","looks as though there is a wall in front of him")
 		if(/obj/item/clothing/head/det_hat)
 			name = "Detective [real_name]"
 			desc = "[name] sees through your lies..."

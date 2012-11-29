@@ -174,5 +174,5 @@ var/global/Holiday = null
 		if("End of the World")
 			if(prob(eventchance))	GameOver()
 
-//		if("Christmas")
-//			if(!prob(eventchance))	return
+		if("Christmas","Christmas Eve")
+			if(prob(eventchance))	ChristmasEvent()
