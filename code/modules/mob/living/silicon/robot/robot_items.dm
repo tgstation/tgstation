@@ -1,5 +1,6 @@
 // A special tray for the service droid. Allow droid to pick up and drop items as if they were using the tray normally
 // Click on table to unload, click on item to load. Otherwise works identically to a tray.
+// Unlike the base item "tray", robotrays ONLY pick up food, drinks and condiments.
 
 /obj/item/weapon/tray/robotray
 	name = "RoboTray"
@@ -8,7 +9,9 @@
 /obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user as mob)
 	if ( !target )
 		return
-	if ( istype(target,/obj/item)) //pick up items, mostly copied from base tray pickup
+	// pick up items, mostly copied from base tray pickup proc
+	// see code\game\objects\items\weapons\kitchen.dm line 241
+	if ( istype(target,/obj/item))
 		if ( !isturf(target.loc) ) // Don't load up stuff if it's inside a container or mob!
 			return
 		var turf/pickup = target.loc
@@ -38,8 +41,10 @@
 
 		return
 
+	// Unloads the tray, copied from base item's proc dropped() and altered
+	// see code\game\objects\items\weapons\kitchen.dm line 263
 
-	if ( isturf(target) || istype(target,/obj/structure/table) ) // Unload the tray!
+	if ( isturf(target) || istype(target,/obj/structure/table) )
 		var foundtable = istype(target,/obj/structure/table/)
 		if ( !foundtable ) //it must be a turf!
 			for(var/obj/structure/table/T in target)
@@ -78,6 +83,9 @@
 
 	return ..()
 
+
+
+
 // A special pen for service droids. Can be toggled to switch between normal writting mode, and paper rename mode
 // Allows service droids to rename paper items.
 
@@ -95,6 +103,9 @@
 	if (mode == 2)
 		mode = 1
 		user << "Changed printing mode to 'Write Paper'"
+
+// Copied over from paper's rename verb
+// see code\modules\paperwork\paper.dm line 62
 
 /obj/item/weapon/pen/robopen/proc/RenamePaper(mob/user as mob,obj/paper as obj)
 	if ( !user || !paper )
