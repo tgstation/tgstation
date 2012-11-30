@@ -246,6 +246,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/janitor(H), slot_belt)
+		H.equip_to_slot_or_del(new /obj/item/key(H), slot_l_store)
 		return 1
 
 

@@ -98,6 +98,12 @@
 /obj/structure/stool/bed/chair/office
 	anchored = 0
 
+/obj/structure/stool/bed/chair/office/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/weldingtool))
+		icon = 'icons/obj/joustchair.dmi'
+		pixel_x = -16
+		pixel_y = -16
+
 /obj/structure/stool/bed/chair/comfy/black
 	icon_state = "comfychair_black"
 
