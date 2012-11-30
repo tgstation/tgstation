@@ -327,14 +327,14 @@
 
 			adjustToxLoss(rand(0,5))
 
-		else
-			if(istype(src, /mob/living/carbon/slime/adult))
-				if(nutrition >= 1000)
-					if(prob(40)) amount_grown++
+	else
+		if(istype(src, /mob/living/carbon/slime/adult))
+			if(nutrition >= 1000)
+				if(prob(40)) amount_grown++
 
-			else
-				if(nutrition >= 800)
-					if(prob(40)) amount_grown++
+		else
+			if(nutrition >= 800)
+				if(prob(40)) amount_grown++
 
 	if(amount_grown >= 10 && !Victim && !Target)
 		if(istype(src, /mob/living/carbon/slime/adult))
