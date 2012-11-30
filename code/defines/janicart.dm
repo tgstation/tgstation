@@ -29,7 +29,7 @@
 		if(reagents.total_volume < 1)
 			user << "<span class='notice'>This pimpin' ride is out of water!</span>"
 	else if(istype(W, /obj/item/key))
-		user << "Hold [I] in one of your hands while you drive this pimpin' ride."
+		user << "Hold [W] in one of your hands while you drive this pimpin' ride."
 	return
 
 /obj/structure/stool/bed/chair/janicart/relaymove(mob/user, direction)
