@@ -516,20 +516,7 @@ its easier to just keep the beam vertical.
 			var/turf/simulated/source2 = src
 			new /obj/effect/decal/cleanable/oil(source2)
 
-/atom/proc/clean_prints()
-	if(istype(fingerprints, /list))
-		//Smudge up dem prints some
-		for(var/P in fingerprints)
-			var/test_print = stars(fingerprints[P], rand(10,20))
-			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-				fingerprints.Remove(P)
-			else
-				fingerprints[P] = test_print
-		if(!fingerprints.len)
-			del(fingerprints)
-
 /atom/proc/clean_blood()
-	clean_prints()
 	if(istype(blood_DNA, /list))
 		del(blood_DNA)
 		return 1

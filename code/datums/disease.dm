@@ -44,7 +44,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/permeability_mod = 1//permeability modifier coefficient.
 	var/desc = null//description. Leave it null and this disease won't show in med records.
 	var/severity = null//severity descr
-	var/longevity = 250//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
+	var/longevity = 150//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
 	var/list/hidden = list(0, 0)
 	var/can_carry = 1 // If the disease allows "carriers".
 	// if hidden[1] is true, then virus is hidden from medical scanners
@@ -183,7 +183,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 /datum/disease/New(var/process=1, var/datum/disease/D)//process = 1 - adding the object to global list. List is processed by master controller.
 	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
-	if(process)					 // Viruses in list are considered active.
+	if(process)				 // Viruses in list are considered active.
 		active_diseases += src
 	initial_spread = spread
 

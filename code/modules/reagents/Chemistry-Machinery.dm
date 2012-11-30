@@ -498,7 +498,7 @@
 							Blood = L
 							break
 					var/list/res = Blood.data["resistances"]
-					spawn(res.len*500)
+					spawn(res.len*200)
 						src.wait = null
 		else
 			src.temphtml = "The replicator is not ready yet."
@@ -525,7 +525,7 @@
 			B.reagents.add_reagent("blood",20,data)
 			src.updateUsrDialog()
 			wait = 1
-			spawn(2000)
+			spawn(1000)
 				src.wait = null
 		else
 			src.temphtml = "The replicator is not ready yet."
@@ -624,6 +624,7 @@
 							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
 							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
 							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
+							dat += "<b>Spread:</b> [(D.spread||"none")]<BR>"
 							dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
 
 							if(istype(D, /datum/disease/advance))

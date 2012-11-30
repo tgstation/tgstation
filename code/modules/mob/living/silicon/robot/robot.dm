@@ -1040,9 +1040,8 @@
 	set category = "IC"
 	set src = usr
 
-	if(module_active)
+	var/obj/item/W = get_active_hand()
+	if (W)
+		W.attack_self(src)
 
-		var/obj/item/W = module_active
-		if (W)
-			W.attack_self(src)
 	return

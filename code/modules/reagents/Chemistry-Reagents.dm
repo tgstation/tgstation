@@ -125,7 +125,7 @@ datum
 						blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 
 					for(var/datum/disease/D in self.data["viruses"])
-						var/datum/disease/newVirus = D.Copy()
+						var/datum/disease/newVirus = D.Copy(1)
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
 
@@ -136,7 +136,7 @@ datum
 						blood_prop = new(T)
 						blood_prop.blood_DNA["Non-Human DNA"] = "A+"
 					for(var/datum/disease/D in self.data["viruses"])
-						var/datum/disease/newVirus = D.Copy()
+						var/datum/disease/newVirus = D.Copy(1)
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
 
@@ -146,7 +146,7 @@ datum
 						blood_prop = new(T)
 						blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
 					for(var/datum/disease/D in self.data["viruses"])
-						var/datum/disease/newVirus = D.Copy()
+						var/datum/disease/newVirus = D.Copy(1)
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
 				return
