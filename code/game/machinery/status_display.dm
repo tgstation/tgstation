@@ -52,6 +52,12 @@
 
 		update()
 
+	emp_act(severity)
+		if(stat & (BROKEN|NOPOWER))
+			..(severity)
+			return
+		set_picture("ai_bsod")
+		..(severity)
 
 	// set what is displayed
 
@@ -270,6 +276,13 @@
 			return
 
 		update()
+
+	emp_act(severity)
+		if(stat & (BROKEN|NOPOWER))
+			..(severity)
+			return
+		set_picture("ai_bsod")
+		..(severity)
 
 	proc/update()
 

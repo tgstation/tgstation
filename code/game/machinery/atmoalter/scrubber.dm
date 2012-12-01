@@ -10,6 +10,17 @@
 
 	volume = 750
 
+/obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+
+	if(prob(50/severity))
+		on = !on
+		update_icon()
+
+	..(severity)
+
 /obj/machinery/portable_atmospherics/scrubber/huge
 	name = "Huge Air Scrubber"
 	icon_state = "scrubber:0"

@@ -230,7 +230,13 @@
 					del(src)
 					return
 		return
-
+	emp_act(severity)
+		if(stat & (BROKEN|NOPOWER))
+			..(severity)
+			return
+		if(occupant)
+			go_out()
+		..(severity)
 
 	alter_health(mob/living/M as mob)
 		if (M.health > 0)

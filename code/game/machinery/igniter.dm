@@ -100,6 +100,12 @@
 		location.hotspot_expose(1000,500,1)
 	return 1
 
+/obj/machinery/sparker/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+	ignite()
+	..(severity)
 
 /obj/machinery/ignition_switch/attack_ai(mob/user as mob)
 	return src.attack_hand(user)

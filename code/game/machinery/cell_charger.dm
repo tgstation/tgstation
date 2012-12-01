@@ -79,6 +79,14 @@
 	attack_ai(mob/user)
 		return
 
+	emp_act(severity)
+		if(stat & (BROKEN|NOPOWER))
+			return
+		if(charging)
+			charging.emp_act(severity)
+		..(severity)
+
+
 	process()
 		//world << "ccpt [charging] [stat]"
 		if(!charging || (stat & (BROKEN|NOPOWER)) || !anchored)

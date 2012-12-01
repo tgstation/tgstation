@@ -431,6 +431,34 @@
 	src.updateUsrDialog()
 	return
 
+/obj/machinery/computer/med_data/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+
+	for(var/datum/data/record/R in data_core.medical)
+		if(prob(10/severity))
+			switch(rand(1,6))
+				if(1)
+					R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
+				if(2)
+					R.fields["sex"]	= pick("Male", "Female")
+				if(3)
+					R.fields["age"] = rand(5, 85)
+				if(4)
+					R.fields["b_type"] = pick("A-", "B-", "AB-", "O-", "A+", "B+", "AB+", "O+")
+				if(5)
+					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
+				if(6)
+					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
+			continue
+
+		else if(prob(1))
+			del(R)
+			continue
+
+	..(severity)
+
 
 /obj/machinery/computer/med_data/laptop
 	name = "Medical Laptop"

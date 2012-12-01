@@ -43,6 +43,13 @@
 			usr << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
 		return
 
+	emp_act(severity)
+		if(stat & (BROKEN|NOPOWER))
+			..(severity)
+			return
+		if(cell)
+			cell.emp_act(severity)
+		..(severity)
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/weapon/cell))

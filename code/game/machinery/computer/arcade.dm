@@ -270,3 +270,19 @@
 				A.icon_state = "4"
 
 			del(src)
+/obj/machinery/computer/arcade/emp_act(severity)
+	if(stat & (NOPOWER|BROKEN))
+		..(severity)
+		return
+	var/empprize = null
+	var/num_of_prizes = 0
+	switch(severity)
+		if(1)
+			num_of_prizes = rand(1,4)
+		if(2)
+			num_of_prizes = rand(0,2)
+	for(num_of_prizes; num_of_prizes > 0; num_of_prizes--)
+		empprize = pickweight(prizes)
+		new empprize(src.loc)
+
+	..(severity)

@@ -80,6 +80,21 @@ obj/machinery/recharger/process()
 			else
 				icon_state = "recharger2"
 
+obj/machinery/recharger/emp_act(severity)
+	if(stat & (NOPOWER|BROKEN) || !anchored)
+		..(severity)
+		return
+
+	if(istype(charging,  /obj/item/weapon/gun/energy))
+		var/obj/item/weapon/gun/energy/E = charging
+		if(E.power_supply)
+			E.power_supply.emp_act(severity)
+
+	else if(istype(charging, /obj/item/weapon/melee/baton))
+		var/obj/item/weapon/melee/baton/B = charging
+		B.charges = 0
+	..(severity)
+
 obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(charging)
 		icon_state = "recharger1"
