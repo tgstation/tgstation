@@ -217,6 +217,14 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	doortype = 21
 	glass = 1
 
+
+/obj/machinery/door/airlock/update_heat_protection(var/turf/simulated/source)
+	if(istype(source))
+		if(src.density)
+			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
+		else
+			source.thermal_conductivity = initial(source.thermal_conductivity)
+
 /obj/machinery/door/airlock/glass_mining
 	name = "Maintenance Hatch"
 	icon = 'icons/obj/doors/Doorminingglass.dmi'
