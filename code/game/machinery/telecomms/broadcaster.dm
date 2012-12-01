@@ -37,6 +37,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		var/datum/signal/original = signal.data["original"]
 		if(original)
 			original.data["done"] = 1
+			original.data["compression"] = signal.data["compression"]
+			original.data["level"] = signal.data["level"]
 
 		var/signal_message = "[signal.frequency]:[signal.data["message"]]:[signal.data["realname"]]"
 		if(signal_message in recentmessages)
@@ -47,12 +49,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
 		signal.data["level"] |= listening_level
-
-		// Is it a test signal? Don't send it.
-		if(signal.data["type"] == 4)
-			if(original)
-				original.data = signal.data
-			return
 
 	   /** #### - Normal Broadcast - #### **/
 
