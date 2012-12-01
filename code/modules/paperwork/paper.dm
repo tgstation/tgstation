@@ -226,7 +226,7 @@
 
 /obj/item/weapon/paper/Topic(href, href_list)
 	..()
-	if((usr.stat || usr.restrained()))
+	if(!usr || (usr.stat || usr.restrained()))
 		return
 
 	if(href_list["write"])

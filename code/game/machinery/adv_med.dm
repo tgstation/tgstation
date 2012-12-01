@@ -235,6 +235,9 @@
 				else
 					dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
 
+					if(occupant.virus2)
+						dat += text("<font color='red'>Viral pathogen detected in blood stream.</font><BR>")
+
 					dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.getBruteLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getBruteLoss())
 					dat += text("[]\t-Respiratory Damage %: []</FONT><BR>", (occupant.getOxyLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getOxyLoss())
 					dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.getToxLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getToxLoss())
@@ -279,9 +282,12 @@
 						var/bled = ""
 						var/splint = ""
 						var/internal_bleeding = ""
+						var/lung_ruptured = ""
 						for(var/datum/wound/W in e.wounds) if(W.internal)
 							internal_bleeding = "<br>Internal Bleeding"
 							break
+						if(istype(e, /datum/organ/external/chest) && e:ruptured_lungs)
+							lung_ruptured = "Lung Ruptured:"
 						if(e.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
 						if(e.status & ORGAN_BLEEDING)
@@ -295,7 +301,7 @@
 						if(!AN && !open && !infected & !imp)
 							AN = "None:"
 						if(!(e.status & ORGAN_DESTROYED))
-							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[bled][AN][splint][open][infected][imp][internal_bleeding]</td>"
+							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
 						else
 							dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"

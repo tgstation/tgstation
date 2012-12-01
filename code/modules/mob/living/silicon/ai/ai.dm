@@ -117,7 +117,7 @@
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = "" 
+	var/icontype = ""
 	var/list/icons = list("Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static")
 	if (src.name == "B.A.N.N.E.D." && src.ckey == "spaceman96")
 		icons += "B.A.N.N.E.D."
@@ -708,3 +708,25 @@
 				src.current = camera
 				src.current.SetLuminosity(AI_CAMERA_LUMINOSITY)
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
+
+
+/mob/living/silicon/ai/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wrench))
+		if(anchored)
+			user.visible_message("\blue \The [user] starts to unbolt \the [src] from the plating...")
+			if(!do_after(user,40))
+				user.visible_message("\blue \The [user] decides not to unbolt \the [src].")
+				return
+			user.visible_message("\blue \The [user] finishes unfastening \the [src]!")
+			anchored = 0
+			return
+		else
+			user.visible_message("\blue \The [user] starts to bolt \the [src] to the plating...")
+			if(!do_after(user,40))
+				user.visible_message("\blue \The [user] decides not to bolt \the [src].")
+				return
+			user.visible_message("\blue \The [user] finishes fastening down \the [src]!")
+			anchored = 1
+			return
+	else
+		return ..()

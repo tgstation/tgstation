@@ -55,7 +55,7 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
 	name = "autoinjector"
 	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
-	icon_state = "autoinjector1"
+	icon_state = "autoinjector"
 	item_state = "autoinjector"
 	amount_per_transfer_from_this = 5
 	volume = 5

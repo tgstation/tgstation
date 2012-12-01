@@ -5,6 +5,7 @@
 	name = "external"
 	var/icon_name = null
 	var/body_part = null
+	var/icon_position = 0
 
 	var/damage_state = "00"
 	var/brute_dam = 0
@@ -63,8 +64,7 @@
 			var/nux = brute * rand(10,15)
 			if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
 				if(prob(5 * brute))
-					status |= ORGAN_DESTROYED
-					droplimb()
+					droplimb(1)
 					return
 
 			else if(prob(nux))
@@ -75,8 +75,7 @@
 		else if(brute > 20)
 			if(config.limbs_can_break && brute_dam >= max_damage * config.organ_health_multiplier)
 				if(prob(5 * brute))
-					status |= ORGAN_DESTROYED
-					droplimb()
+					droplimb(1)
 					return
 
 		// If the limbs can break, make sure we don't exceed the maximum damage a limb can take before breaking
@@ -122,6 +121,8 @@
 
 			if(status & ORGAN_BROKEN)
 				owner.emote("scream")
+
+		if(used_weapon) add_autopsy_data(used_weapon, brute + burn)
 
 		owner.updatehealth()
 
@@ -184,17 +185,18 @@
 			if(W.damage == 0 && W.created + 10 * 10 * 60 <= world.time)
 				wounds -= W
 				// let the GC handle the deletion of the wound
-			if(W.internal && !W.is_treated())
+			if(W.internal && !W.is_treated() && owner.bodytemperature >= 170)
 				// internal wounds get worse over time
 				W.open_wound(0.1 * wound_update_accuracy)
-				owner.vessel.remove_reagent("blood",0.2 * W.damage * wound_update_accuracy)
+				owner.vessel.remove_reagent("blood",0.07 * W.damage * wound_update_accuracy)
+				if(prob(1 * wound_update_accuracy))
+					owner.custom_pain("You feel a stabbing pain in your [display_name]!",1)
 
-			if(W.is_treated())
+			if(W.bandaged || W.salved)
 				// slow healing
 				var/amount = 0.2
-				if(W.bandaged) amount++
-				if(W.salved) amount++
-				if(W.disinfected) amount++
+				if(W.is_treated())
+					amount += 10
 				// amount of healing is spread over all the wounds
 				W.heal_damage((wound_update_accuracy * amount * W.amount * config.organ_regeneration_multiplier) / (20*owner.number_wounds+1))
 
@@ -318,10 +320,19 @@
 			return 1
 		return 0
 
+	proc/setAmputatedTree()
+		for(var/datum/organ/external/O in children)
+			O.amputated=amputated
+			O.setAmputatedTree()
+
 	proc/droplimb(var/override = 0,var/no_explode = 0)
+		if(destspawn) return
 		if(override)
 			status |= ORGAN_DESTROYED
 		if(status & ORGAN_DESTROYED)
+			if(body_part == UPPER_TORSO)
+				return
+
 			if(status & ORGAN_SPLINTED)
 				status &= ~ORGAN_SPLINTED
 			if(implant)
@@ -336,8 +347,8 @@
 
 			var/obj/item/weapon/organ/H
 			switch(body_part)
-	//			if(UPPER_TORSO)				just no.
-	//				owner.gib()
+//				if(UPPER_TORSO)
+//					owner.gib()
 				if(LOWER_TORSO)
 					owner << "\red You are now sterile."
 				if(HEAD)
@@ -395,8 +406,25 @@
 					if(ismonkey(owner))
 						H.icon_state = "l_foot_l"
 					owner.u_equip(owner.shoes)
-			if(ismonkey(owner))
-				H.icon = 'monkey.dmi'
+			if(H)
+				if(ismonkey(owner))
+					H.icon = 'monkey.dmi'
+				else if(ishuman(owner) && owner.dna)
+					var/icon/I
+					switch(owner.dna.mutantrace)
+						if("tajaran")
+							I = new('icons/mob/human_races/r_tajaran.dmi')
+						if("lizard")
+							I = new('icons/mob/human_races/r_lizard.dmi')
+						if("skrell")
+							I = new('icons/mob/human_races/r_skrell.dmi')
+						else
+							I = new('icons/mob/human_races/r_human.dmi')
+					if(I)
+						H.icon = I.MakeLying()
+				else
+					H.icon_state = initial(H.icon_state)+"_l"
+
 			var/lol = pick(cardinal)
 			step(H,lol)
 			destspawn = 1
@@ -463,9 +491,11 @@
 					W = new wound_type(damage)
 
 			// Possibly trigger an internal wound, too.
-			if(damage > 10 && prob(damage))
+			var/local_damage = brute_dam + burn_dam + damage
+			if(damage > 10 && type != BURN && local_damage > 20 && prob(damage))
 				var/datum/wound/internal_bleeding/I = new (15)
 				wounds += I
+				owner.custom_pain("You feel something rip in your [display_name]!", 1)
 
 			// check whether we can add the wound to an existing wound
 			for(var/datum/wound/other in wounds)
@@ -520,6 +550,17 @@
 			if(T)
 				T.robotize()
 
+	proc/add_autopsy_data(var/used_weapon, var/damage)
+		var/datum/autopsy_data/W = autopsy_data[used_weapon]
+		if(!W)
+			W = new()
+			W.weapon = used_weapon
+			autopsy_data[used_weapon] = W
+
+		W.hits += 1
+		W.damage += damage
+		W.time_inflicted = world.time
+
 /datum/organ/external/chest
 	name = "chest"
 	icon_name = "chest"
@@ -527,6 +568,7 @@
 	max_damage = 150
 	min_broken_damage = 75
 	body_part = UPPER_TORSO
+	var/ruptured_lungs = 0
 
 /datum/organ/external/groin
 	name = "groin"
@@ -560,6 +602,7 @@
 	max_damage = 75
 	min_broken_damage = 30
 	body_part = LEG_LEFT
+	icon_position = LEFT
 
 /datum/organ/external/r_arm
 	name = "r_arm"
@@ -576,6 +619,7 @@
 	max_damage = 75
 	min_broken_damage = 30
 	body_part = LEG_RIGHT
+	icon_position = RIGHT
 
 /datum/organ/external/l_foot
 	name = "l_foot"
@@ -584,6 +628,7 @@
 	max_damage = 40
 	min_broken_damage = 15
 	body_part = FOOT_LEFT
+	icon_position = LEFT
 
 /datum/organ/external/r_foot
 	name = "r_foot"
@@ -592,6 +637,7 @@
 	max_damage = 40
 	min_broken_damage = 15
 	body_part = FOOT_RIGHT
+	icon_position = RIGHT
 
 /datum/organ/external/r_hand
 	name = "r_hand"
@@ -614,7 +660,7 @@
 ****************************************************/
 
 obj/item/weapon/organ
-	icon = 'human.dmi'
+	icon = 'icons/mob/human_races/r_human.dmi'
 
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)
@@ -705,25 +751,25 @@ obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 obj/item/weapon/organ/l_arm
 	name = "left arm"
-	icon_state = "l_arm_l"
+	icon_state = "l_arm"
 obj/item/weapon/organ/l_foot
 	name = "left foot"
-	icon_state = "l_foot_l"
+	icon_state = "l_foot"
 obj/item/weapon/organ/l_hand
 	name = "left hand"
-	icon_state = "l_hand_l"
+	icon_state = "l_hand"
 obj/item/weapon/organ/l_leg
 	name = "left leg"
-	icon_state = "l_leg_l"
+	icon_state = "l_leg"
 obj/item/weapon/organ/r_arm
 	name = "right arm"
-	icon_state = "r_arm_l"
+	icon_state = "r_arm"
 obj/item/weapon/organ/r_foot
 	name = "right foot"
-	icon_state = "r_foot_l"
+	icon_state = "r_foot"
 obj/item/weapon/organ/r_hand
 	name = "right hand"
-	icon_state = "r_hand_l"
+	icon_state = "r_hand"
 obj/item/weapon/organ/r_leg
 	name = "right leg"
-	icon_state = "r_leg_l"
+	icon_state = "r_leg"

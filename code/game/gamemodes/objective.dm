@@ -474,6 +474,19 @@ datum/objective/steal
 					for(var/mob/living/silicon/ai/M in C)
 						if(istype(M, /mob/living/silicon/ai) && M.stat != 2) //See if any AI's are alive inside that card.
 							return 1
+				for(var/mob/living/silicon/ai/ai in world)
+					if(istype(ai.loc, /turf))
+						var/area/check_area = get_area(ai)
+						if(istype(check_area, /area/shuttle/escape/centcom))
+							return 1
+						if(istype(check_area, /area/shuttle/escape_pod1/centcom))
+							return 1
+						if(istype(check_area, /area/shuttle/escape_pod2/centcom))
+							return 1
+						if(istype(check_area, /area/shuttle/escape_pod3/centcom))
+							return 1
+						if(istype(check_area, /area/shuttle/escape_pod5/centcom))
+							return 1
 			else
 
 				for(var/obj/I in all_items) //Check for items

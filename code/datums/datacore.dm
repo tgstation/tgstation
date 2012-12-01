@@ -28,7 +28,9 @@
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
 	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
-		if(H.mind.assigned_role)
+		if(H.mind.role_alt_title)
+			assignment = H.mind.role_alt_title
+		else if(H.mind.assigned_role)
 			assignment = H.mind.assigned_role
 		else if(H.job)
 			assignment = H.job
@@ -111,29 +113,31 @@ proc/get_id_photo(var/mob/living/carbon/human/H)
 	var/g = "m"
 	if (H.gender == FEMALE)
 		g = "f"
+
+	var/icon/icobase
 	switch(H.get_species())
 		if("Tajaran")
-			preview_icon = new /icon('icons/effects/species.dmi', "tajaran_[g]_s")
-			preview_icon.Blend(new /icon('icons/effects/species.dmi', "tajtail_s"), ICON_OVERLAY)
+			icobase = 'icons/mob/human_races/r_tajaran.dmi'
 		if( "Soghun")
-			preview_icon = new /icon('icons/effects/species.dmi', "lizard_[g]_s")
-			preview_icon.Blend(new /icon('icons/effects/species.dmi', "sogtail_s"), ICON_OVERLAY)
+			icobase = 'icons/mob/human_races/r_lizard.dmi'
 		if("Skrell")
-			preview_icon = new /icon('icons/effects/species.dmi', "skrell_[g]_s")
+			icobase = 'icons/mob/human_races/r_skrell.dmi'
 		else
-			preview_icon = new /icon('human.dmi', "torso_[g]_s")
-			preview_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
-			preview_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
-			preview_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY)
+			icobase = 'icons/mob/human_races/r_human.dmi'
 
-			for(var/datum/organ/external/E in H.organs)
-				if(E.status & ORGAN_CUT_AWAY) continue
+	preview_icon = new /icon(icobase, "torso_[g]")
+	var/icon/temp
+	temp = new /icon(icobase, "groin_[g]")
+	preview_icon.Blend(temp, ICON_OVERLAY)
+	temp = new /icon(icobase, "head_[g]")
+	preview_icon.Blend(temp, ICON_OVERLAY)
 
-				var/icon/temp = new /icon('human.dmi', "[E.name]_s")
-				if(E.status & ORGAN_ROBOT)
-					temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-
-				preview_icon.Blend(temp, ICON_OVERLAY)
+	for(var/datum/organ/external/E in H.organs)
+		if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
+		temp = new /icon(icobase, "[E.name]")
+		if(E.status & ORGAN_ROBOT)
+			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+		preview_icon.Blend(temp, ICON_OVERLAY)
 
 	// Skin tone
 	if(H.get_species() == "Human")

@@ -123,7 +123,7 @@
 					D.open()
 		for (var/mob/living/silicon/ai/aiPlayer in player_list)
 			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/station_alert/a in player_list)
+		for (var/obj/machinery/computer/station_alert/a in world)
 			a.cancelAlarm("Fire", src, src)
 	return
 

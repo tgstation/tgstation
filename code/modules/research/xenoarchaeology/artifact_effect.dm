@@ -60,10 +60,8 @@
 					user << "\blue You feel a soothing energy invigorate you."
 
 					var/mob/living/carbon/human/H = user
-					for(var/A in H.organs)
-						var/datum/organ/external/affecting = null
-						if(!H.organs[A])    continue
-						affecting = H.organs[A]
+					for(var/datum/organ/external/affecting in H.organs)
+						if(!affecting)    continue
 						if(!istype(affecting, /datum/organ/external))    continue
 						affecting.heal_damage(25, 25)    //fixes getting hit after ingestion, killing you when game updates organ health
 						//user:heal_organ_damage(25, 25)
@@ -145,6 +143,8 @@
 					randomturfs.Add(T)
 				if(randomturfs.len > 0)
 					user << "\red You are suddenly zapped away elsewhere!"
+					if (user.buckled)
+						user.buckled.unbuckle()
 					user.loc = pick(randomturfs)
 					var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 					sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
@@ -336,6 +336,8 @@
 						randomturfs.Add(T)
 					if(randomturfs.len > 0)
 						M << "\red You are displaced by a strange force!"
+						if(M.buckled)
+							M.buckled.unbuckle()
 						M.loc = pick(randomturfs)
 						var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 						sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
@@ -423,6 +425,8 @@
 						randomturfs.Add(T)
 					if(randomturfs.len > 0)
 						M << "\red You are displaced by a strange force!"
+						if(M.buckled)
+							M.buckled.unbuckle()
 						M.loc = pick(randomturfs)
 						var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 						sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is

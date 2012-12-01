@@ -1964,3 +1964,17 @@
 	icon_state = "capacitor"
 	desc = "A debug item for research."
 	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
+
+/obj/item/weapon/autopsy_scanner
+	name = "autopsy scanner"
+	desc = "Extracts information on wounds."
+	icon = 'icons/obj/autopsy_scanner.dmi'
+	icon_state = ""
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
+
+/obj/item/weapon/autopsy_scanner/var/list/datum/autopsy_data_scanner/wdata = list()
+/obj/item/weapon/autopsy_scanner/var/list/datum/autopsy_data_scanner/chemtraces = list()
+/obj/item/weapon/autopsy_scanner/var/target_name = null
+/obj/item/weapon/autopsy_scanner/var/timeofdeath = null

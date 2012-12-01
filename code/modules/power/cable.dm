@@ -527,7 +527,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 
 /obj/item/weapon/cable_coil/attack(mob/M as mob, mob/user as mob)
 	if(hasorgans(M))
-		var/datum/organ/external/S = M:organs[user.zone_sel.selecting]
+		var/datum/organ/external/S = M:get_organ(user.zone_sel.selecting)
 		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 		if(S.burn_dam > 0)

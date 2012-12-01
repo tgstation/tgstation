@@ -90,7 +90,7 @@
 					src.see_in_dark = 0
 					src.see_invisible = SEE_INVISIBLE_LIVING
 
-					if (((!loc.master.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item))
+					if (((!loc.master.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item) && !istype(get_area(src), /area/shuttle))
 						if (src:aiRestorePowerRoutine==0)
 							src:aiRestorePowerRoutine = 1
 

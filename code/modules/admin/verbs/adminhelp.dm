@@ -129,6 +129,8 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 			send2irc(ckey, "[original_msg] - No admins online")
 		else
 			send2irc(ckey, "[original_msg] - All admins AFK ([admin_number_afk])")
+	else
+		send2irc(ckey, original_msg)
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 

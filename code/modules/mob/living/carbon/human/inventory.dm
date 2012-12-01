@@ -433,8 +433,9 @@
 						return
 				message = "\red <B>[source] is trying to empty [target]'s pockets.</B>"
 			if("CPR")
-				if (target.cpr_time >= world.time + 3)
+				if (!target.cpr_time)
 					del(src)
+				target.cpr_time = 0
 				message = "\red <B>[source] is trying perform CPR on [target]!</B>"
 			if("id")
 				message = "\red <B>[source] is trying to take off [target.wear_id] from [target]'s uniform!</B>"
@@ -460,6 +461,7 @@ The else statement is for equipping stuff to empty slots.
 It can still be worn/put on as normal.
 */
 /obj/effect/equip_e/human/done()	//TODO: And rewrite this :< ~Carn
+	target.cpr_time = 1
 	if(!source || !target) return		//Target or source no longer exist
 	if(source.loc != s_loc) return		//source has moved
 	if(target.loc != t_loc) return		//target has moved
@@ -540,10 +542,7 @@ It can still be worn/put on as normal.
 			if (target.legcuffed)
 				strip_item = target.legcuffed
 		if("CPR")
-			if (target.cpr_time >= world.time + 30)
-				del(src)
 			if ((target.health >= -99.0 && target.health <= 0))
-				target.cpr_time = world.time
 				var/suff = min(target.getOxyLoss(), 7)
 				target.adjustOxyLoss(-suff)
 				target.updatehealth()

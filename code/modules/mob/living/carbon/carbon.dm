@@ -141,7 +141,7 @@
 	shock_damage *= siemens_coeff
 	if (shock_damage<1)
 		return 0
-	src.take_overall_damage(0,shock_damage)
+	src.take_overall_damage(0,shock_damage,used_weapon="Electrocution")
 	//src.burn_skin(shock_damage)
 	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()

@@ -152,17 +152,21 @@ MASS SPECTROMETER
 					user << "\red Unsecured fracture in subject [limb]. Splinting recommended for transport."
 			if(e.is_infected())
 				user << "\red Infected wound detected in subject [limb]. Disinfection recommended."
-				
+
 		for(var/name in H.organs_by_name)
 			var/datum/organ/external/e = H.organs_by_name[name]
 			if(e.status & ORGAN_BROKEN)
 				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
 				break
+		for(var/datum/organ/external/e in H.organs)
+			for(var/datum/wound/W in e.wounds) if(W.internal)
+				user.show_message(text("\red Internal bleeding detected. Advanced scanner required for location."), 1)
+				break
 		if(M:vessel)
 			var/blood_volume = round(M:vessel.get_reagent_amount("blood"))
 			var/blood_percent =  blood_volume / 560
 			blood_percent *= 100
-			if(blood_volume <= 448)
+			if(blood_volume <= 500)
 				user.show_message("\red <b>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl")
 			else if(blood_volume <= 336)
 				user.show_message("\red <b>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl")
