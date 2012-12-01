@@ -37,7 +37,7 @@
 
 /obj/structure/closet/secure_closet/exile
 	name = "Exile Implants"
-	req_access = list(access_heads)
+	req_access = list(access_hos)
 
 	New()
 		..()
