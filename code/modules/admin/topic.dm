@@ -143,27 +143,31 @@
 			else
 				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer","*New Rank*")
 
-			var/rights = 0
+			var/rights = D.rights
 			switch(new_rank)
 				if(null,"") return
 				if("*New Rank*")
-					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null) as null|text)
+					new_rank = input("Please input a new rank", "New custom rank", null, null) as null|text
+					if(config.admin_legacy_system)
+						new_rank = ckeyEx(new_rank)
 					if(!new_rank)
 						usr << "<font color='red'>Error: Topic 'editrights': Invalid rank</font>"
 						return
-					if(admin_ranks.len)
-						if(new_rank in admin_ranks)
-							rights |= admin_ranks[new_rank]			//we typed a rank which already exists, use its rights
-						else
-							admin_ranks[new_rank] = 0				//add the new rank to admin_ranks
+					if(config.admin_legacy_system)
+						if(admin_ranks.len)
+							if(new_rank in admin_ranks)
+								rights = admin_ranks[new_rank]		//we typed a rank which already exists, use its rights
+							else
+								admin_ranks[new_rank] = 0			//add the new rank to admin_ranks
 				else
-					new_rank = ckeyEx(new_rank)
-					rights |= admin_ranks[new_rank]					//we input an existing rank, use its rights
+					if(config.admin_legacy_system)
+						new_rank = ckeyEx(new_rank)
+						rights = admin_ranks[new_rank]				//we input an existing rank, use its rights
 
 			if(D)
-				D.disassociate()									//remove adminverbs and unlink from client
-				D.rank = new_rank									//update the rank
-				D.rights = rights									//update the rights based on admin_ranks (default: 0)
+				D.disassociate()								//remove adminverbs and unlink from client
+				D.rank = new_rank								//update the rank
+				D.rights = rights								//update the rights based on admin_ranks (default: 0)
 			else
 				D = new /datum/admins(new_rank, rights, adm_ckey)
 
