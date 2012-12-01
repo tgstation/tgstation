@@ -289,6 +289,9 @@
 				W.dropped(user)
 				user << "\red God damnit!"
 
+	if(istype(W, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
+		return
+
 	handle_item_insertion(W)
 	return
 

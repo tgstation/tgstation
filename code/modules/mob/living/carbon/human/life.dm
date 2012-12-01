@@ -130,7 +130,7 @@
 
 	proc/handle_blood()
 		// take care of blood and blood loss
-		if(stat < 2)
+		if(stat < 2 && bodytemperature >= 170)
 			var/blood_volume = round(vessel.get_reagent_amount("blood"))
 			if(blood_volume < 560 && blood_volume)
 				var/datum/reagent/blood/B = locate() in vessel.reagent_list //Grab some blood
@@ -187,6 +187,10 @@
 						var/word = pick("dizzy","woosey","faint")
 						src << "\red You feel extremely [word]"
 				if(0 to 122)
+					// There currently is a strange bug here. If the mob is not below -100 health
+					// when death() is called, apparently they will be just fine, and this way it'll
+					// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
+					toxloss += 300 // just to be safe!
 					death()
 
 
@@ -528,7 +532,7 @@
 			if(!breath)
 				if(isobj(loc))
 					var/obj/location_as_object = loc
-					breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
+					breath = location_as_object.handle_internal_lifeform(src, BREATH_MOLES)
 				else if(isturf(loc))
 					var/breath_moles = 0
 					/*if(environment.return_pressure() > ONE_ATMOSPHERE)
@@ -539,6 +543,13 @@
 					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
 					breath = loc.remove_air(breath_moles)
+
+
+					if(!lung_ruptured)
+						if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
+							if(prob(5))
+								rupture_lung()
+
 					// Handle chem smoke effect  -- Doohl
 					var/block = 0
 					if(wear_mask)
@@ -565,12 +576,6 @@
 				if(istype(loc, /obj/))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
-
-
-		if(!lung_ruptured && breath)
-			if(breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
-				if(prob(5))
-					rupture_lung()
 
 		handle_breath(breath)
 
