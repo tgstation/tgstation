@@ -23,40 +23,12 @@
 
 	if (istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/affecting = H.get_organ("chest")
+		var/datum/organ/external/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
 		if(affecting.status & ORGAN_ROBOT)
 			user << "\red This isn't useful at all on a robotic limb.."
 			return 1
 
-		if(istype(user, /mob/living/carbon/human))
-			var/mob/living/carbon/human/user2 = user
-			affecting = H.get_organ(check_zone(user2.zone_sel.selecting))
-		else
-			if(!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
-				affecting = H.get_organ("head")
-
-		// If we're targetting arms or legs, also heal the respective hand/foot
-		if(affecting.name in list("l_arm","r_arm","l_leg","r_leg"))
-			var/datum/organ/external/child
-			if(affecting.name == "l_arm")
-				child = H.get_organ("l_hand")
-			else if(affecting.name == "r_arm")
-				child = H.get_organ("r_hand")
-			else if(affecting.name == "r_leg")
-				child = H.get_organ("r_foot")
-			else if(affecting.name == "l_leg")
-				child = H.get_organ("l_foot")
-
-			if(src.heal_brute)
-				if(!affecting.bandage() && !child.bandage())
-					user << "\red The wounds on this limb have already been bandaged."
-					return 1
-			else if(src.heal_burn)
-				if(!affecting.salve() && !child.salve())
-					user << "\red The wounds on this limb have already been salved."
-					return 1
-		else
 			if(src.heal_brute)
 				if(!affecting.bandage())
 					user << "\red The wounds on this limb have already been bandaged."
