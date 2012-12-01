@@ -26,6 +26,12 @@ obj/machinery/atmospherics/binary/pump
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	highcap
+		name = "High capacity gas pump"
+		desc = "A high capacity pump"
+
+		target_pressure = 15000000
+
 	on
 		on = 1
 		icon_state = "intact_on"
