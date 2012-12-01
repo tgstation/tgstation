@@ -529,7 +529,7 @@
 	desc = "A colorful pair of magboots with the name Susan Harris clearly written on the back."
 	icon = 'custom_items.dmi'
 	icon_state = "atmosmagboots0"
-	verb/toggle()
+	toggle()
 		set name = "Toggle Magboots"
 		set category = "Object"
 		set src in usr
