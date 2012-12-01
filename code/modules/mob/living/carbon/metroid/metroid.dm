@@ -1,6 +1,6 @@
 /mob/living/carbon/slime
 	name = "baby slime"
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/slimes.dmi'
 	icon_state = "baby slime"
 	pass_flags = PASSTABLE
 	voice_message = "skree!"
@@ -42,7 +42,7 @@
 
 /mob/living/carbon/slime/adult
 	name = "adult slime"
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/slimes.dmi'
 	icon_state = "adult slime"
 
 	health = 200
@@ -781,7 +781,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/slime_core
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/slimes.dmi'
 	icon_state = "slime extract"
 	flags = TABLEPASS
 	force = 1.0
