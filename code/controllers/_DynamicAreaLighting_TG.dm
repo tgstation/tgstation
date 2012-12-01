@@ -353,6 +353,13 @@ atom
 						if (I.brightness_on > brightness)
 							brightness = I.brightness_on
 
+		else
+			for (I in M.contents) //Justin Case
+				if (I)
+					if ((I.light_on) && (I != W)) //an item emitting light other than itself
+						if (I.brightness_on > brightness)
+							brightness = I.brightness_on
+
 		return brightness
 
 #undef LIGHTING_MAX_LUMINOSITY
