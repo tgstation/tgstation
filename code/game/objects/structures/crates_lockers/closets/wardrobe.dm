@@ -279,6 +279,26 @@
 	return
 
 
+/obj/structure/closet/wardrobe/medic_white
+	name = "medical wardrobe"
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/virology_white/New()
+	new /obj/item/clothing/under/rank/medical(src)
+	new /obj/item/clothing/under/rank/medical(src)
+	new /obj/item/clothing/under/rank/medical/blue(src)
+	new /obj/item/clothing/under/rank/medical/green(src)
+	new /obj/item/clothing/under/rank/medical/purple(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/suit/labcoat(src)
+	new /obj/item/clothing/suit/labcoat(src)
+	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/clothing/mask/surgical(src)
+	return
+
+
 /obj/structure/closet/wardrobe/grey
 	name = "grey wardrobe"
 	icon_state = "grey"

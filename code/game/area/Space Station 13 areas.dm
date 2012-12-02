@@ -684,6 +684,26 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Captain's Quarters"
 	icon_state = "captain"
 
+/area/crew_quarters/heads/hop
+	name = "\improper Head of Personnel's Quarters"
+	icon_state = "head_quarters"
+
+/area/crew_quarters/heads/hor
+	name = "\improper Research Director's Quarters"
+	icon_state = "head_quarters"
+
+/area/crew_quarters/heads/chief
+	name = "\improper Chief Engineer's Quarters"
+	icon_state = "head_quarters"
+
+/area/crew_quarters/heads/hos
+	name = "\improper Head of Security's Quarters"
+	icon_state = "head_quarters"
+
+/area/crew_quarters/heads/cmo
+	name = "\improper Chief Medical Officer's Quarters"
+	icon_state = "head_quarters"
+
 /area/crew_quarters/courtroom
 	name = "\improper Courtroom"
 	icon_state = "courtroom"
@@ -999,6 +1019,10 @@ proc/process_ghost_teleport_locs()
 
 /area/security/main
 	name = "\improper Security Office"
+	icon_state = "security"
+
+/area/security/lobby
+	name = "\improper Security lobby"
 	icon_state = "security"
 
 /area/security/brig
