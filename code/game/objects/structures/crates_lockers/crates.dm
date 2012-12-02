@@ -252,7 +252,7 @@
 	for(var/obj/O in get_turf(src))
 		if(itemcount >= storage_capacity)
 			break
-		if(O.density || O.anchored || O == src) continue
+		if(O.density || O.anchored || istype(O,/obj/structure/closet)) continue
 		O.loc = src
 		itemcount++
 
