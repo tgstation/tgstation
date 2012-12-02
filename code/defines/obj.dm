@@ -119,7 +119,7 @@
 	var/moving = null
 	var/list/parts = list(  )
 
-/obj/effect/showcase
+/obj/structure/showcase
 	name = "Showcase"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showcase_1"

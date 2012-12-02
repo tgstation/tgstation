@@ -44,7 +44,7 @@
 	else
 		return null
 
-/obj/proc/initialize()
+/atom/movable/proc/initialize()
 	return
 
 /obj/proc/updateUsrDialog()

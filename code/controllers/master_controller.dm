@@ -69,7 +69,7 @@ datum/controller/game_controller/proc/setup()
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
 	sleep(-1)
-	for(var/obj/object in world)
+	for(var/atom/movable/object in world)
 		object.initialize()
 
 	world << "\red \b Initializing pipe networks"

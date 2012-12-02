@@ -64,6 +64,11 @@ obj/item/weapon/gun/energy/staff
 	update_icon()
 		return
 
+/obj/item/weapon/gun/energy/staff/animate
+	name = "staff of animation"
+	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
+	projectile_type = "/obj/item/projectile/animate"
+
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."

@@ -1195,6 +1195,13 @@ proc/get_mob_with_client_list()
 		location = location.loc
 	return null
 
+/proc/get(atom/loc, type)
+	while(loc)
+		if(istype(loc, type))
+			return loc
+		loc = loc.loc
+	return null
+
 /proc/get_turf_or_move(turf/location)
 	return get_turf(location)
 
