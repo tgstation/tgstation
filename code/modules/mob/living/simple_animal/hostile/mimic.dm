@@ -174,6 +174,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		maxHealth = health
 		if(staff)
 			src.staff = staff
+			faction = "\ref[staff]" // very unique
 		return 1
 	return
 

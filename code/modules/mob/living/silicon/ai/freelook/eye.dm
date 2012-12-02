@@ -140,8 +140,10 @@
 	if(src.eyeobj && src.loc)
 		src.eyeobj.loc = src.loc
 	else
-		src << "ERROR: Eyeobj not found. Please report this to Giacom. Creating new eye..."
+		src << "ERROR: Eyeobj not found. Creating new eye..."
 		src.eyeobj = new(src.loc)
+		src.eyeobj.ai = src
+		src.eyeobj.name = "[src.name] (AI Eye)" // Give it a name
 
 	if(client && client.eye)
 		client.eye = src
