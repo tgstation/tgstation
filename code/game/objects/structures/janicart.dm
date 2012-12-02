@@ -7,6 +7,7 @@
 	flags = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
+	var/obj/item/weapon/trashbag/mybag	= null
 
 /obj/structure/stool/bed/chair/janicart/New()
 	handle_rotation()
@@ -19,6 +20,8 @@
 /obj/structure/stool/bed/chair/janicart/examine()
 	set src in usr
 	usr << "\icon[src] This pimpin' ride contains [reagents.total_volume] unit\s of water!"
+	if(mybag)
+		usr << "\A [mybag] is hanging on the pimpin' ride."
 
 /obj/structure/stool/bed/chair/janicart/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/mop))
@@ -30,15 +33,29 @@
 			user << "<span class='notice'>This pimpin' ride is out of water!</span>"
 	else if(istype(W, /obj/item/key))
 		user << "Hold [W] in one of your hands while you drive this pimpin' ride."
-	return
+	else if(istype(W, /obj/item/weapon/trashbag))
+		user << "<span class='notice'>You hook the trashbag onto the pimpin' ride.</span>"
+		user.drop_item()
+		W.loc = src
+		mybag = W
+
+
+/obj/structure/stool/bed/chair/janicart/attack_hand(mob/user)
+	if(mybag)
+		mybag.loc = get_turf(user)
+		user.put_in_hands(mybag)
+		mybag = null
+
 
 /obj/structure/stool/bed/chair/janicart/relaymove(mob/user, direction)
+	if(user.stat || user.stunned)
+		unbuckle()
 	if(istype(user.l_hand, /obj/item/key) || istype(user.r_hand, /obj/item/key))
 		step(src, direction)
 		update_mob()
 		handle_rotation()
 	else
-		user << "<span class='notice'>You'll need the keys to drive this pimpin' ride.</span>"
+		user << "<span class='notice'>You'll need the keys in one of your hands to drive this pimpin' ride.</span>"
 
 /obj/structure/stool/bed/chair/janicart/Move()
 	..()
@@ -53,8 +70,8 @@
 	unbuckle()
 
 	M.visible_message(\
-		"<span class='notice'>[M] climbs onto [src]!</span>",\
-		"<span class='notice'>You climb onto [src]!</span>")
+		"<span class='notice'>[M] climbs onto the pimpin' ride!</span>",\
+		"<span class='notice'>You climb onto the pimpin' ride!</span>")
 	M.buckled = src
 	M.loc = loc
 	M.dir = dir
