@@ -16,6 +16,32 @@
 	w_class = 3.0
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 
+/obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
+	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
+		var/mob/M = usr
+		if (!( istype(over_object, /obj/screen) ))
+			return ..()
+		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+			return
+		playsound(src.loc, "rustle", 50, 1, -5)
+		if (!( M.restrained() ) && !( M.stat ))
+			switch(over_object.name)
+				if("r_hand")
+					M.u_equip(src)
+					M.put_in_r_hand(src)
+				if("l_hand")
+					M.u_equip(src)
+					M.put_in_l_hand(src)
+			src.add_fingerprint(usr)
+			return
+		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+			if (usr.s_active)
+				usr.s_active.close(usr)
+			src.show_to(usr)
+			return
+	return
+
+
 /obj/item/weapon/storage/proc/return_inv()
 
 	var/list/L = list(  )
@@ -410,143 +436,6 @@
 	del(src)
 //BubbleWrap END
 
-/obj/item/weapon/storage/box/
-	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
-
-/obj/item/weapon/storage/box/survival/New()
-	..()
-	contents = list()
-	sleep(1)
-	new /obj/item/clothing/mask/breath( src )
-	new /obj/item/weapon/tank/emergency_oxygen( src )
-	return
-
-/obj/item/weapon/storage/box/engineer/New()
-	..()
-	contents = list()
-	sleep(1)
-	new /obj/item/clothing/mask/breath( src )
-	new /obj/item/weapon/tank/emergency_oxygen/engi( src )
-	return
-
-/obj/item/weapon/storage/box/syndicate/New()
-	..()
-	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1)))
-		if ("bloodyspai")
-			new /obj/item/clothing/under/chameleon(src)
-			new /obj/item/clothing/mask/gas/voice(src)
-			new /obj/item/weapon/card/id/syndicate(src)
-			new /obj/item/clothing/shoes/syndigaloshes(src)
-			return
-
-		if ("stealth")
-			new /obj/item/weapon/gun/energy/crossbow(src)
-			new /obj/item/weapon/pen/paralysis(src)
-			new /obj/item/device/chameleon(src)
-			return
-
-		if ("screwed")
-			new /obj/effect/spawner/newbomb/timer/syndicate(src)
-			new /obj/effect/spawner/newbomb/timer/syndicate(src)
-			new /obj/item/device/powersink(src)
-			new /obj/item/clothing/suit/space/syndicate(src)
-			new /obj/item/clothing/head/helmet/space/syndicate(src)
-			return
-
-		if ("guns")
-			new /obj/item/weapon/gun/projectile(src)
-			new /obj/item/ammo_magazine/a357(src)
-			new /obj/item/weapon/card/emag(src)
-			new /obj/item/weapon/plastique(src)
-			return
-
-		if ("murder")
-			new /obj/item/weapon/melee/energy/sword(src)
-			new /obj/item/clothing/glasses/thermal/syndi(src)
-			new /obj/item/weapon/card/emag(src)
-			new /obj/item/clothing/shoes/syndigaloshes(src)
-			return
-
-		if("freedom")
-			var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
-			O.imp = new /obj/item/weapon/implant/freedom(O)
-			var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
-			U.imp = new /obj/item/weapon/implant/uplink(U)
-			return
-
-		if ("hacker")
-			new /obj/item/weapon/aiModule/syndicate(src)
-			new /obj/item/weapon/card/emag(src)
-			new /obj/item/device/encryptionkey/binary(src)
-			return
-
-		if ("lordsingulo")
-			new /obj/item/device/radio/beacon/syndicate(src)
-			new /obj/item/clothing/suit/space/syndicate(src)
-			new /obj/item/clothing/head/helmet/space/syndicate(src)
-			new /obj/item/weapon/card/emag(src)
-			return
-
-/obj/item/weapon/storage/dice/New()
-	new /obj/item/weapon/dice( src )
-	new /obj/item/weapon/dice/d20( src )
-	..()
-	return
-
-/obj/item/weapon/storage/mousetraps/New()
-	new /obj/item/device/assembly/mousetrap( src )
-	new /obj/item/device/assembly/mousetrap( src )
-	new /obj/item/device/assembly/mousetrap( src )
-	new /obj/item/device/assembly/mousetrap( src )
-	new /obj/item/device/assembly/mousetrap( src )
-	new /obj/item/device/assembly/mousetrap( src )
-	..()
-	return
-
-/obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
-
-	if (ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
-		var/mob/M = usr
-		if (!( istype(over_object, /obj/screen) ))
-			return ..()
-		if ((!( M.restrained() ) && !( M.stat ) /*&& M.pocket == src*/))
-			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src)
-					M.put_in_r_hand(src)
-				if("l_hand")
-					M.u_equip(src)
-					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
-			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if (usr.s_active)
-				usr.s_active.close(usr)
-			src.show_to(usr)
-			return
-	return   ///////////////////////////////////////////////////////Alright, that should do it. *MARKER* for any possible runtimes
 
 
-/obj/item/weapon/storage/pill_bottle/verb/toggle_mode()
-	set name = "Switch Pill Bottle Method"
-	set category = "Object"
 
-	mode = !mode
-	switch (mode)
-		if(1)
-			usr << "The pill bottle now picks up all pills in a tile at once."
-		if(0)
-			usr << "The pill bottle now picks up one pill at a time."
-
-/obj/item/weapon/storage/pillbottlebox/New()
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	new /obj/item/weapon/storage/pill_bottle( src )
-	..()
-	return
-
-////////////////////////////////////////////////////////////////////////////////
