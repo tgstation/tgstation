@@ -85,12 +85,12 @@ ZIPPO
 
 	else if(istype(W, /obj/item/weapon/lighter/zippo))
 		var/obj/item/weapon/lighter/zippo/Z = W
-		if(Z.lit)
+		if(Z.light_on)
 			light("<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.</span>")
 
 	else if(istype(W, /obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/L = W
-		if(L.lit)
+		if(L.light_on)
 			light("<span class='notice'>After some fiddling, [user] manages to light their [name] with [W].</span>")
 
 	else if(istype(W, /obj/item/weapon/match))
@@ -375,7 +375,8 @@ ZIPPO
 	flags = TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("burnt", "singed")
-	var/lit = 0
+	light_on = 0
+	brightness_on = 2 //luminosity when on
 
 /obj/item/weapon/lighter/zippo
 	name = "Zippo lighter"
@@ -394,8 +395,8 @@ ZIPPO
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 	if(user.r_hand == src || user.l_hand == src)
-		if(!lit)
-			lit = 1
+		if(!light_on)
+			light_on = 1
 			icon_state = icon_on
 			item_state = icon_on
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
@@ -411,10 +412,11 @@ ZIPPO
 						user.apply_damage(2,BURN,"r_hand")
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
-			user.SetLuminosity(user.luminosity + 2)
+			if (user.luminosity < brightness_on)
+				user.SetLuminosity(brightness_on)
 			processing_objects.Add(src)
 		else
-			lit = 0
+			light_on = 0
 			icon_state = icon_off
 			item_state = icon_off
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
@@ -422,7 +424,7 @@ ZIPPO
 			else
 				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
 
-			user.SetLuminosity(user.luminosity - 2)
+			user.SetLuminosity(search_light(user, src))
 			processing_objects.Remove(src)
 	else
 		return ..()
@@ -433,7 +435,7 @@ ZIPPO
 	if(!istype(M, /mob))
 		return
 
-	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && light_on)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
 			cig.attackby(src, user)
@@ -453,14 +455,24 @@ ZIPPO
 
 
 /obj/item/weapon/lighter/pickup(mob/user)
-	if(lit)
+	if(light_on)
+		if (user.luminosity < brightness_on)
+			user.SetLuminosity(brightness_on)
 		SetLuminosity(0)
-		user.SetLuminosity(user.luminosity+2)
 	return
 
 
 /obj/item/weapon/lighter/dropped(mob/user)
-	if(lit)
-		user.SetLuminosity(user.luminosity-2)
-		SetLuminosity(2)
+	if(light_on)
+		if ((layer <= 3) || (loc != user.loc))
+			user.SetLuminosity(search_light(user, src))
+			SetLuminosity(brightness_on)
+	return
+
+
+/obj/item/weapon/lighter/equipped(mob/user, slot)
+	if(light_on)
+		if (user.luminosity < brightness_on)
+			user.SetLuminosity(brightness_on)
+		SetLuminosity(0)
 	return
