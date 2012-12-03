@@ -140,12 +140,11 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 	var/list/candidates = list()	//list of candidate keys
 	for(var/mob/dead/observer/G in player_list)
-		if(G.client && !G.client.holder && ((G.client.inactivity/10)/60) <= 5)
+		if(G.client && !G.client.holder && ((G.client.inactivity/10)/60) <= 5 && G.client.be_spaceninja)
 			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 				candidates += G.key
 	if(!candidates.len)	return
 	candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
-
 
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))

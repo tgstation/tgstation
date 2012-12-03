@@ -529,22 +529,6 @@
 	desc = "A colorful pair of magboots with the name Susan Harris clearly written on the back."
 	icon = 'custom_items.dmi'
 	icon_state = "atmosmagboots0"
-	toggle()
-		set name = "Toggle Magboots"
-		set category = "Object"
-		set src in usr
-		if(src.magpulse)
-			src.flags &= ~NOSLIP
-			src.slowdown = SHOES_SLOWDOWN
-			src.magpulse = 0
-			icon_state = "atmosmagboots0"
-			usr << "You disable the mag-pulse traction system."
-		else
-			src.flags |= NOSLIP
-			src.slowdown = 2
-			src.magpulse = 1
-			icon_state = "atmosmagboots1"
-			usr << "You enable the mag-pulse traction system."
 
 //////////// Sets ////////////
 
