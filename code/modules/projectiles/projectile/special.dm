@@ -79,7 +79,8 @@
 
 	on_hit(var/atom/target, var/blocked = 0)
 		var/mob/living/M = target
-		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
+//		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
+		if(ishuman(target) && (PLANT in M.mutations)) //Plantmen possibly get mutated and damaged by the rays.
 			if(prob(15))
 				M.apply_effect((rand(30,80)),IRRADIATE)
 				M.Weaken(5)
@@ -116,7 +117,8 @@
 
 	on_hit(var/atom/target, var/blocked = 0)
 		var/mob/M = target
-		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //These rays make plantmen fat.
+//		if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //These rays make plantmen fat.
+		if(ishuman(target) && (PLANT in M.mutations)) //These rays make plantmen fat.
 			if(M.nutrition < 500) //sanity check
 				M.nutrition += 30
 		else if (istype(target, /mob/living/carbon/))

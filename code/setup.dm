@@ -20,6 +20,7 @@
 #define MIN_PLASMA_DAMAGE 20
 
 #define BREATH_VOLUME 0.5	//liters in a normal breath
+#define BREATH_MOLES (ONE_ATMOSPHERE * BREATH_VOLUME /(T20C*R_IDEAL_GAS_EQUATION))
 #define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
 	//Amount of air to take a from a tile
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
@@ -195,7 +196,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
-#define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh) --jumpsuit only (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
+#define PLASMAGUARD 8192		//Does not get contaminated by plasma.
 
 #define	NOREACT		16384 		//Reagents dont' react inside this container.
 
@@ -308,6 +309,8 @@ var/MAX_EXPLOSION_RANGE = 14
 
 // mob/var/list/mutations
 
+#define STRUCDNASIZE 27
+
 	// Generic mutations:
 #define	TK				1
 #define COLD_RESISTANCE	2
@@ -349,6 +352,20 @@ var/MAX_EXPLOSION_RANGE = 14
 
 	//2spooky
 #define SKELETON 29
+#define PLANT 30
+
+// Other Mutations:
+#define mNobreath		100 	// no need to breathe
+#define mRemote			101 	// remote viewing
+#define mRegen			102 	// health regen
+#define mRun			103 	// no slowdown
+#define mRemotetalk		104 	// remote talking
+#define mMorph			105 	// changing appearance
+#define mBlend			106 	// nothing (seriously nothing)
+#define mHallucination	107 	// hallucinations
+#define mFingerprints	108 	// no fingerprints
+#define mShock			109 	// insulated hands
+#define mSmallsize		110 	// table climbing
 
 //disabilities
 #define NEARSIGHTED		1
@@ -580,3 +597,6 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define HOSTILE_STANCE_ATTACK 3
 #define HOSTILE_STANCE_ATTACKING 4
 #define HOSTILE_STANCE_TIRED 5
+
+#define LEFT 1
+#define RIGHT 2

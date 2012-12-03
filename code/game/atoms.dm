@@ -9,6 +9,7 @@
 	var/last_bumped = 0
 	var/pass_flags = 0
 	var/throwpass = 0
+	var/germ_level = 0 // The higher the germ level, the more germ on the atom.
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -121,7 +122,7 @@
  * Recursevly searches all atom contens (including contents contents and so on).
  *
  * ARGS: path - search atom contents for atoms of this type
- *       list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
+ *	   list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
  *
  * RETURNS: list of found atoms
  */
@@ -335,6 +336,7 @@ its easier to just keep the beam vertical.
 
 /atom/proc/add_fingerprint(mob/living/M as mob)
 	if(isnull(M)) return
+	if(isAI(M)) return
 	if(isnull(M.key)) return
 	if (!( src.flags ) & FPRINT)
 		return
@@ -344,6 +346,12 @@ its easier to just keep the beam vertical.
 			fingerprintshidden = list()
 		//Fibers~
 		add_fibers(M)
+		//He has no prints!
+		if (mFingerprints in M.mutations)
+			if(fingerprintslast != M.key)
+				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
+				fingerprintslast = M.key
+			return 0
 		//Now, lets get to the dirty work.
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
@@ -412,8 +420,8 @@ its easier to just keep the beam vertical.
 		A.fingerprints = list()
 	if(!istype(A.fingerprintshidden,/list))
 		A.fingerprintshidden = list()
-	A.fingerprints |= fingerprints            //detective
-	A.fingerprintshidden |= fingerprintshidden    //admin
+	A.fingerprints |= fingerprints			//detective
+	A.fingerprintshidden |= fingerprintshidden	//admin
 	A.fingerprintslast = fingerprintslast
 
 
@@ -548,6 +556,7 @@ its easier to just keep the beam vertical.
 
 /atom/proc/clean_blood()
 	clean_prints()
+	src.germ_level = 0
 	if(istype(blood_DNA, /list))
 		del(blood_DNA)
 		return 1

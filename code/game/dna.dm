@@ -56,9 +56,9 @@
 			temp += add_zero2(num2hex((hair),1), 3)
 
 			uni_identity = temp
-		if(length(struc_enzymes)!= 42)
+		if(length(struc_enzymes)!= 3*STRUCDNASIZE)
 			var/mutstring = ""
-			for(var/i = 1, i <= 13, i++)
+			for(var/i = 1, i <= STRUCDNASIZE, i++)
 				mutstring += add_zero2(num2hex(rand(1,1024)),3)
 
 			struc_enzymes = mutstring
@@ -66,7 +66,7 @@
 			unique_enzymes = md5(character.real_name)
 	else
 		if(length(uni_identity) != 39) uni_identity = "00600200A00E0110148FC01300B0095BD7FD3F4"
-		if(length(struc_enzymes)!= 42) struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4000"
+		if(length(struc_enzymes)!= 3*STRUCDNASIZE) struc_enzymes = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B0FD6"
 
 /datum/dna/proc/ready_dna(mob/living/carbon/human/character)
 	var/temp
@@ -116,8 +116,9 @@
 	uni_identity = temp
 
 	var/mutstring = ""
-	for(var/i = 1, i <= 13, i++)
+	for(var/i = 1, i <= STRUCDNASIZE, i++)
 		mutstring += add_zero2(num2hex(rand(1,1024)),3)
+
 
 	struc_enzymes = mutstring
 
@@ -268,12 +269,12 @@
 		else
 			return 0
 
-	if (bnumber == HULKBLOCK || bnumber == TELEBLOCK)
+	if (bnumber == HULKBLOCK || bnumber == TELEBLOCK || bnumber == NOBREATHBLOCK || bnumber == NOPRINTSBLOCK || bnumber == SMALLSIZEBLOCK || bnumber == SHOCKIMMUNITYBLOCK)
 		if (temp2 >= 3500 + BLOCKADD)
 			return 1
 		else
 			return 0
-	if (bnumber == XRAYBLOCK || bnumber == FIREBLOCK)
+	if (bnumber == XRAYBLOCK || bnumber == FIREBLOCK || bnumber == REMOTEVIEWBLOCK || bnumber == REGENERATEBLOCK || bnumber == INCREASERUNBLOCK || bnumber == REMOTETALKBLOCK || bnumber == MORPHBLOCK)
 		if (temp2 >= 3050 + BLOCKADD)
 			return 1
 		else
@@ -285,11 +286,14 @@
 	else
 		return 0
 
+/proc/ismuton(var/block,var/mob/M)
+	return isblockon(getblock(M.dna.struc_enzymes, block,3),block)
+
 /proc/randmutb(mob/M as mob)
 	if(!M)	return
 	var/num
 	var/newdna
-	num = pick(1,3,FAKEBLOCK,5,CLUMSYBLOCK,7,9,BLINDBLOCK,DEAFBLOCK)
+	num = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK)
 	M.dna.check_integrity()
 	newdna = setblock(M.dna.struc_enzymes,num,toggledblock(getblock(M.dna.struc_enzymes,num,3)),3)
 	M.dna.struc_enzymes = newdna
@@ -299,7 +303,7 @@
 	if(!M)	return
 	var/num
 	var/newdna
-	num = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK)
+	num = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
 	M.dna.check_integrity()
 	newdna = setblock(M.dna.struc_enzymes,num,toggledblock(getblock(M.dna.struc_enzymes,num,3)),3)
 	M.dna.struc_enzymes = newdna
@@ -309,13 +313,13 @@
 	if(!M)	return
 	M.dna.check_integrity()
 	if(type)
-		for(var/i = 1, i <= 13, i++)
+		for(var/i = 1, i <= STRUCDNASIZE-1, i++)
 			if(prob(p))
 				M.dna.uni_identity = setblock(M.dna.uni_identity, i, add_zero2(num2hex(rand(1,4095), 1), 3), 3)
 		updateappearance(M, M.dna.uni_identity)
 
 	else
-		for(var/i = 1, i <= 13, i++)
+		for(var/i = 1, i <= STRUCDNASIZE-1, i++)
 			if(prob(p))
 				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, add_zero2(num2hex(rand(1,4095), 1), 3), 3)
 		domutcheck(M, null)
@@ -325,7 +329,7 @@
 	if(!M)	return
 	var/num
 	var/newdna
-	num = pick(1,2,3,4,5,6,7,8,9,10,11,12,13)
+	num = rand(1,STRUCDNASIZE-1)
 	M.dna.check_integrity()
 	newdna = setblock(M.dna.uni_identity,num,add_zero2(num2hex(rand(1,4095),1),3),3)
 	M.dna.uni_identity = newdna
@@ -383,32 +387,86 @@
 	else
 		return 0
 
+/proc/probinj(var/pr, var/inj)
+	return prob(pr+inj*pr)
+
 /proc/domutcheck(mob/living/M as mob, connected, inj)
-	//telekinesis = 1
-	//firemut = 2
-	//xray = 4
-	//hulk = 8
-	//clumsy = 16
+	if (!M) return
+
 	M.dna.check_integrity()
 
 	M.disabilities = 0
 	M.sdisabilities = 0
+	var/old_mutations = M.mutations
 	M.mutations = list()
 
-	M.see_in_dark = 2
-	M.see_invisible = SEE_INVISIBLE_LIVING
+//	M.see_in_dark = 2
+//	M.see_invisible = 0
 
-	if (isblockon(getblock(M.dna.struc_enzymes, 1,3),1))
-		M.disabilities |= NEARSIGHTED
-		M << "\red Your eyes feel strange."
-	if (isblockon(getblock(M.dna.struc_enzymes, HULKBLOCK,3),2))
-		if(inj || prob(10))
+	if(PLANT in old_mutations)
+		M.mutations.Add(PLANT)
+	if(SKELETON in old_mutations)
+		M.mutations.Add(SKELETON)
+	if(FAT in old_mutations)
+		M.mutations.Add(FAT)
+	if(HUSK in old_mutations)
+		M.mutations.Add(HUSK)
+
+	if(ismuton(NOBREATHBLOCK,M))
+		if(probinj(45,inj) || (mNobreath in old_mutations))
+			M << "\blue You feel no need to breathe."
+			M.mutations.Add(mNobreath)
+	if(ismuton(REMOTEVIEWBLOCK,M))
+		if(probinj(45,inj) || (mRemote in old_mutations))
+			M << "\blue Your mind expands"
+			M.mutations.Add(mRemote)
+	if(ismuton(REGENERATEBLOCK,M))
+		if(probinj(45,inj) || (mRegen in old_mutations))
+			M << "\blue You feel strange"
+			M.mutations.Add(mRegen)
+	if(ismuton(INCREASERUNBLOCK,M))
+		if(probinj(45,inj) || (mRun in old_mutations))
+			M << "\blue You feel quick"
+			M.mutations.Add(mRun)
+	if(ismuton(REMOTETALKBLOCK,M))
+		if(probinj(45,inj) || (mRemotetalk in old_mutations))
+			M << "\blue You expand your mind outwards"
+			M.mutations.Add(mRemotetalk)
+	if(ismuton(MORPHBLOCK,M))
+		if(probinj(45,inj) || (mMorph in old_mutations))
+			M.mutations.Add(mMorph)
+			M << "\blue Your skin feels strange"
+	if(ismuton(BLENDBLOCK,M))
+		if(probinj(45,inj) || (mBlend in old_mutations))
+			M.mutations.Add(mBlend)
+			M << "\blue You feel alone"
+	if(ismuton(HALLUCINATIONBLOCK,M))
+		if(probinj(45,inj) || (mHallucination in old_mutations))
+			M.mutations.Add(mHallucination)
+			M << "\blue Your mind says 'Hello'"
+	if(ismuton(NOPRINTSBLOCK,M))
+		if(probinj(45,inj) || (mFingerprints in old_mutations))
+			M.mutations.Add(mFingerprints)
+			M << "\blue Your fingers feel numb"
+	if(ismuton(SHOCKIMMUNITYBLOCK,M))
+		if(probinj(45,inj) || (mShock in old_mutations))
+			M.mutations.Add(mShock)
+			M << "\blue You feel strange"
+	if(ismuton(SMALLSIZEBLOCK,M))
+		if(probinj(45,inj) || (mSmallsize in old_mutations))
+			M << "\blue Your skin feels rubbery"
+			M.mutations.Add(mSmallsize)
+
+
+
+	if (isblockon(getblock(M.dna.struc_enzymes, HULKBLOCK,3),HULKBLOCK))
+		if(probinj(5,inj) || (HULK in old_mutations))
 			M << "\blue Your muscles hurt."
 			M.mutations.Add(HULK)
-	if (isblockon(getblock(M.dna.struc_enzymes, 3,3),3))
+	if (isblockon(getblock(M.dna.struc_enzymes, HEADACHEBLOCK,3),HEADACHEBLOCK))
 		M.disabilities |= EPILEPSY
 		M << "\red You get a headache."
-	if (isblockon(getblock(M.dna.struc_enzymes, FAKEBLOCK,3),4))
+	if (isblockon(getblock(M.dna.struc_enzymes, FAKEBLOCK,3),FAKEBLOCK))
 		M << "\red You feel strange."
 		if (prob(95))
 			if(prob(50))
@@ -417,40 +475,43 @@
 				randmuti(M)
 		else
 			randmutg(M)
-	if (isblockon(getblock(M.dna.struc_enzymes, 5,3),5))
+	if (isblockon(getblock(M.dna.struc_enzymes, COUGHBLOCK,3),COUGHBLOCK))
 		M.disabilities |= COUGHING
 		M << "\red You start coughing."
-	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),6))
+	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),CLUMSYBLOCK))
 		M << "\red You feel lightheaded."
 		M.mutations.Add(CLUMSY)
-	if (isblockon(getblock(M.dna.struc_enzymes, 7,3),7))
+	if (isblockon(getblock(M.dna.struc_enzymes, TWITCHBLOCK,3),TWITCHBLOCK))
 		M.disabilities |= TOURETTES
 		M << "\red You twitch."
-	if (isblockon(getblock(M.dna.struc_enzymes, XRAYBLOCK,3),8))
-		if(inj || prob(30))
+	if (isblockon(getblock(M.dna.struc_enzymes, XRAYBLOCK,3),XRAYBLOCK))
+		if(probinj(30,inj) || (XRAY in old_mutations))
 			M << "\blue The walls suddenly disappear."
-			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-			M.see_in_dark = 8
-			M.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+//			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
+//			M.see_in_dark = 8
+//			M.see_invisible = 2
 			M.mutations.Add(XRAY)
-	if (isblockon(getblock(M.dna.struc_enzymes, 9,3),9))
+	if (isblockon(getblock(M.dna.struc_enzymes, NERVOUSBLOCK,3),NERVOUSBLOCK))
 		M.disabilities |= NERVOUS
 		M << "\red You feel nervous."
-	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),10))
-		if(inj || prob(30))
+	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),FIREBLOCK))
+		if(probinj(30,inj) || (COLD_RESISTANCE in old_mutations))
 			M << "\blue Your body feels warm."
 			M.mutations.Add(COLD_RESISTANCE)
-	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),11))
+	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),BLINDBLOCK))
 		M.sdisabilities |= BLIND
 		M << "\red You can't seem to see anything."
-	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),12))
-		if(inj || prob(25))
+	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),TELEBLOCK))
+		if(probinj(15,inj) || (TK in old_mutations))
 			M << "\blue You feel smarter."
 			M.mutations.Add(TK)
-	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),13))
+	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),DEAFBLOCK))
 		M.sdisabilities |= DEAF
 		M.ear_deaf = 1
-		M << "\red You can't seem to hear anything..."
+		M << "\red Its kinda quiet.."
+	if (isblockon(getblock(M.dna.struc_enzymes, GLASSESBLOCK,3),GLASSESBLOCK))
+		M.disabilities |= NEARSIGHTED
+		M << "Your eyes feel weird..."
 
 	/* If you want the new mutations to work, UNCOMMENT THIS.
 	if(istype(M, /mob/living/carbon))
@@ -459,7 +520,7 @@
 	*/
 
 //////////////////////////////////////////////////////////// Monkey Block
-	if (isblockon(getblock(M.dna.struc_enzymes, 14,3),14) && istype(M, /mob/living/carbon/human))
+	if (isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
 	// human > monkey
 		var/mob/living/carbon/human/H = M
 		H.monkeyizing = 1
@@ -529,7 +590,7 @@
 		del(M)
 		return
 
-	if (!isblockon(getblock(M.dna.struc_enzymes, 14,3),14) && !istype(M, /mob/living/carbon/human))
+	if (!isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && !istype(M, /mob/living/carbon/human))
 	// monkey > human,
 		var/mob/living/carbon/monkey/Mo = M
 		Mo.monkeyizing = 1
@@ -897,6 +958,21 @@
 	onclose(user, "scannernew")
 	return
 
+/obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(var/buffer)
+	var/list/arr = list()
+	for(var/i = 1, i <= length(buffer)/3, i++)
+		arr += "[i]:[copytext(buffer,i*3-2,i*3+1)]"
+	return arr
+
+/obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(var/obj/item/weapon/dnainjector/I, var/blk, var/buffer)
+	var/pos = findtext(blk,":")
+	if(!pos) return 0
+	var/id = text2num(copytext(blk,1,pos))
+	if(!id) return 0
+	I.block = id
+	I.dna = copytext(buffer,id*3-2,id*3+1)
+	return 1
+
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
 		return
@@ -1135,7 +1211,7 @@
 				src.temphtml += text("<A href='?src=\ref[];strucpulse=1'>Irradiate</A><BR>", src)
 				src.delete = 0
 		if (href_list["strucmenuplus"])
-			if (src.strucblock < 14)
+			if (src.strucblock < STRUCDNASIZE)
 				src.strucblock++
 			else
 				src.strucblock = 1
@@ -1144,7 +1220,7 @@
 			if (src.strucblock > 1)
 				src.strucblock--
 			else
-				src.strucblock = 14
+				src.strucblock = STRUCDNASIZE
 			dopage(src,"strucmenu")
 		if (href_list["strucmenusubplus"])
 			if (src.subblock < 3)
@@ -1161,7 +1237,7 @@
 		if (href_list["semenuset"] && href_list["semenusubset"]) // This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
 			var/menuset = text2num(href_list["semenuset"])
 			var/menusubset = text2num(href_list["semenusubset"])
-			if ((menuset <= 14) && (menuset >= 1))
+			if ((menuset <= STRUCDNASIZE) && (menuset >= 1))
 				src.strucblock = menuset
 			if ((menusubset <= 3) && (menusubset >= 1))
 				src.subblock = menusubset
@@ -1191,9 +1267,9 @@
 						oldblock = src.strucblock
 						block = miniscramble(block, src.radstrength, src.radduration)
 						newblock = null
-						if (src.strucblock > 1 && src.strucblock < 5)
+						if (src.strucblock > 1 && src.strucblock < STRUCDNASIZE/2)
 							src.strucblock++
-						else if (src.strucblock > 5 && src.strucblock < 14)
+						else if (src.strucblock > STRUCDNASIZE/2 && src.strucblock < STRUCDNASIZE)
 							src.strucblock--
 						if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
 						if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
@@ -1236,7 +1312,7 @@
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer1owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer1label)
 			if (src.connected.occupant && !(NOCLONE in src.connected.occupant.mutations)) src.temphtml += text("Save : <A href='?src=\ref[];b1addui=1'>UI</A> - <A href='?src=\ref[];b1adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b1addse=1'>SE</A><BR>", src, src, src)
-			if (src.buffer1) src.temphtml += text("Transfer to: <A href='?src=\ref[];b1transfer=1'>Occupant</A> - <A href='?src=\ref[];b1injector=1'>Injector</A><BR>", src, src)
+			if (src.buffer1) src.temphtml += text("Transfer to: <A href='?src=\ref[];b1transfer=1'>Occupant</A> - <A href='?src=\ref[];b1injector=1'>Full Injector</A> - <A href='?src=\ref[];b1injector=2'>Iso Injector</A><BR>", src, src, src)
 			//if (src.buffer1) src.temphtml += text("<A href='?src=\ref[];b1iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer1) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=1'>Save To</a> | <A href='?src=\ref[src];load_disk=1'>Load From</a><br>"
 			if (src.buffer1) src.temphtml += text("<A href='?src=\ref[];b1label=1'>Edit Label</A><BR>", src)
@@ -1250,7 +1326,7 @@
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer2owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer2label)
 			if (src.connected.occupant && !(NOCLONE in src.connected.occupant.mutations)) src.temphtml += text("Save : <A href='?src=\ref[];b2addui=1'>UI</A> - <A href='?src=\ref[];b2adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b2addse=1'>SE</A><BR>", src, src, src)
-			if (src.buffer2) src.temphtml += text("Transfer to: <A href='?src=\ref[];b2transfer=1'>Occupant</A> - <A href='?src=\ref[];b2injector=1'>Injector</A><BR>", src, src)
+			if (src.buffer2) src.temphtml += text("Transfer to: <A href='?src=\ref[];b2transfer=1'>Occupant</A> - <A href='?src=\ref[];b2injector=1'>Full Injector</A> - <A href='?src=\ref[];b2injector=2'>Iso Injector</A><BR>", src, src, src)
 			//if (src.buffer2) src.temphtml += text("<A href='?src=\ref[];b2iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer2) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=2'>Save To</a> | <A href='?src=\ref[src];load_disk=2'>Load From</a><br>"
 			if (src.buffer2) src.temphtml += text("<A href='?src=\ref[];b2label=1'>Edit Label</A><BR>", src)
@@ -1264,7 +1340,7 @@
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer3owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer3label)
 			if (src.connected.occupant && !(NOCLONE in src.connected.occupant.mutations)) src.temphtml += text("Save : <A href='?src=\ref[];b3addui=1'>UI</A> - <A href='?src=\ref[];b3adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b3addse=1'>SE</A><BR>", src, src, src)
-			if (src.buffer3) src.temphtml += text("Transfer to: <A href='?src=\ref[];b3transfer=1'>Occupant</A> - <A href='?src=\ref[];b3injector=1'>Injector</A><BR>", src, src)
+			if (src.buffer3) src.temphtml += text("Transfer to: <A href='?src=\ref[];b3transfer=1'>Occupant</A> - <A href='?src=\ref[];b3injector=1'>Full Injector</A> - <A href='?src=\ref[];b3injector=2'>Iso Injector</A><BR>", src, src, src)
 			//if (src.buffer3) src.temphtml += text("<A href='?src=\ref[];b3iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer3) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=3'>Save To</a> | <A href='?src=\ref[src];load_disk=3'>Load From</a><br>"
 			if (src.buffer3) src.temphtml += text("<A href='?src=\ref[];b3label=1'>Edit Label</A><BR>", src)
@@ -1443,49 +1519,76 @@
 			src.delete = 0
 		if (href_list["b1injector"])
 			if (src.injectorready)
+				var/success = 1
 				var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
-				I.dna = src.buffer1
 				I.dnatype = src.buffer1type
-				I.loc = src.loc
-				I.name += " ([src.buffer1label])"
-				if (src.buffer1iue) I.ue = src.buffer1owner //lazy haw haw
-				src.temphtml = "Injector created."
-				src.delete = 0
-				src.injectorready = 0
-				spawn(300)
-					src.injectorready = 1
+				if(href_list["b1injector"]=="2")
+					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(src.buffer1)
+					success = setInjectorBlock(I,blk,src.buffer1)
+				else
+					I.dna = src.buffer1
+				if(success)
+					I.loc = src.loc
+					I.name += " ([src.buffer1label])"
+					if (src.buffer1iue) I.ue = src.buffer1owner //lazy haw haw
+					src.temphtml = "Injector created."
+					src.delete = 0
+					src.injectorready = 0
+					spawn(300)
+						src.injectorready = 1
+				else
+					src.temphtml = "Error in injector creation."
+					src.delete = 0
 			else
 				src.temphtml = "Replicator not ready yet."
 				src.delete = 0
 		if (href_list["b2injector"])
 			if (src.injectorready)
+				var/success = 1
 				var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
-				I.dna = src.buffer2
 				I.dnatype = src.buffer2type
-				I.loc = src.loc
-				I.name += " ([src.buffer2label])"
-				if (src.buffer2iue) I.ue = src.buffer2owner //lazy haw haw
-				src.temphtml = "Injector created."
-				src.delete = 0
-				src.injectorready = 0
-				spawn(300)
-					src.injectorready = 1
+				if(href_list["b2injector"]=="2")
+					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(src.buffer2)
+					success = setInjectorBlock(I,blk,src.buffer2)
+				else
+					I.dna = src.buffer2
+				if(success)
+					I.loc = src.loc
+					I.name += " ([src.buffer2label])"
+					if (src.buffer2iue) I.ue = src.buffer2owner //lazy haw haw
+					src.temphtml = "Injector created."
+					src.delete = 0
+					src.injectorready = 0
+					spawn(300)
+						src.injectorready = 1
+				else
+					src.temphtml = "Error in injector creation."
+					src.delete = 0
 			else
 				src.temphtml = "Replicator not ready yet."
 				src.delete = 0
 		if (href_list["b3injector"])
 			if (src.injectorready)
+				var/success = 1
 				var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
-				I.dna = src.buffer3
 				I.dnatype = src.buffer3type
-				I.loc = src.loc
-				I.name += " ([src.buffer3label])"
-				if (src.buffer3iue) I.ue = src.buffer3owner //lazy haw haw
-				src.temphtml = "Injector created."
-				src.delete = 0
-				src.injectorready = 0
-				spawn(300)
-					src.injectorready = 1
+				if(href_list["b3injector"]=="2")
+					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(src.buffer3)
+					success = setInjectorBlock(I,blk,src.buffer3)
+				else
+					I.dna = src.buffer3
+				if(success)
+					I.loc = src.loc
+					I.name += " ([src.buffer3label])"
+					if (src.buffer3iue) I.ue = src.buffer3owner //lazy haw haw
+					src.temphtml = "Injector created."
+					src.delete = 0
+					src.injectorready = 0
+					spawn(300)
+						src.injectorready = 1
+				else
+					src.temphtml = "Error in injector creation."
+					src.delete = 0
 			else
 				src.temphtml = "Replicator not ready yet."
 				src.delete = 0

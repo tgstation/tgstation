@@ -851,7 +851,7 @@
 			. = t_air.return_pressure()
 	return
 
-//skytodo:
+//skytodo: //No idea what you want me to do here, mate.
 /obj/mecha/proc/return_temperature()
 	. = 0
 	if(use_internal_tank)

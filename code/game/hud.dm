@@ -33,6 +33,7 @@
 #define ui_monkey_back "6:14,1:5"	//monkey
 
 //Lower right, persistant menu
+#define ui_dropbutton "11:22,1:5"
 #define ui_drop_throw "14:28,2:7"
 #define ui_pull_resist "13:26,2:7"
 #define ui_acti "13:26,1:5"
@@ -168,6 +169,10 @@ var/datum/global_hud/global_hud = new()
 			O.mouse_opacity = 0
 
 
+/datum/hud/var/obj/screen/grab_intent
+/datum/hud/var/obj/screen/hurt_intent
+/datum/hud/var/obj/screen/disarm_intent
+/datum/hud/var/obj/screen/help_intent
 
 /datum/hud
 	var/mob/mymob

@@ -260,5 +260,7 @@ proc/tg_list2text(list/list, glue=",")
 	return dir2text(angle2dir(degree))
 
 //Returns the world time in english
-proc/worldtime2text()
-	return "[round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"
+proc/worldtime2text(var/time = 0)
+	if(time == 0)
+		time = world.time
+	return "[round(time / 36000)+12]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"

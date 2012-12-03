@@ -73,6 +73,24 @@ obj/machinery/door/airlock/close(surpress_send)
 	if(!surpress_send) send_status()
 
 
+obj/machinery/door/airlock/Bumped(atom/AM)
+	..(AM)
+	if(istype(AM, /obj/mecha))
+		var/obj/mecha/mecha = AM
+		if(density && radio_connection && mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
+			var/datum/signal/signal = new
+			signal.transmission_method = 1 //radio signal
+			signal.data["tag"] = id_tag
+			signal.data["timestamp"] = world.time
+
+			signal.data["door_status"] = density?("closed"):("open")
+			signal.data["lock_status"] = locked?("locked"):("unlocked")
+
+			signal.data["bumped_with_access"] = 1
+
+			radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
+	return
+		
 obj/machinery/door/airlock/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	if(new_frequency)

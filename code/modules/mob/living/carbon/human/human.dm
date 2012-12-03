@@ -272,34 +272,36 @@
 
 	// focus most of the blast on one organ
 	var/datum/organ/external/take_blast = pick(organs)
-	update |= take_blast.take_damage(b_loss * 0.9, f_loss * 0.9)
+	update |= take_blast.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
 
 	// distribute the remaining 10% on all limbs equally
 	b_loss *= 0.1
 	f_loss *= 0.1
 
+	var/weapon_message = "Explosive Blast"
+
 	for(var/datum/organ/external/temp in organs)
 		switch(temp.name)
 			if("head")
-				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2)
+				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
 			if("chest")
-				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4)
+				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4, used_weapon = weapon_message)
 			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("r_leg")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("r_foot")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_foot")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("r_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 			if("l_arm")
-				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 	if(update)	UpdateDamageIcon()
 
 
@@ -815,4 +817,194 @@
 				adjustToxLoss(-3)
 				spawn(350)	//wait 35 seconds before next volley
 					lastpuke = 0
+
+/mob/living/carbon/human/proc/morph()
+	set name = "Morph"
+	set category = "Superpower"
+
+	if(stat!=CONSCIOUS)
+		reset_view(0)
+		remoteview_target = null
+		return
+
+	if(!(mMorph in mutations))
+		src.verbs -= /mob/living/carbon/human/proc/morph
+		return
+
+	var/new_facial = input("Please select facial hair color.", "Character Generation",rgb(r_facial,g_facial,b_facial)) as color
+	if(new_facial)
+		r_facial = hex2num(copytext(new_facial, 2, 4))
+		g_facial = hex2num(copytext(new_facial, 4, 6))
+		b_facial = hex2num(copytext(new_facial, 6, 8))
+
+	var/new_hair = input("Please select hair color.", "Character Generation",rgb(r_hair,g_hair,b_hair)) as color
+	if(new_facial)
+		r_hair = hex2num(copytext(new_hair, 2, 4))
+		g_hair = hex2num(copytext(new_hair, 4, 6))
+		b_hair = hex2num(copytext(new_hair, 6, 8))
+
+	var/new_eyes = input("Please select eye color.", "Character Generation",rgb(r_eyes,g_eyes,b_eyes)) as color
+	if(new_eyes)
+		r_eyes = hex2num(copytext(new_eyes, 2, 4))
+		g_eyes = hex2num(copytext(new_eyes, 4, 6))
+		b_eyes = hex2num(copytext(new_eyes, 6, 8))
+
+	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation", "[35-s_tone]")  as text
+
+	if (!new_tone)
+		new_tone = 35
+	s_tone = max(min(round(text2num(new_tone)), 220), 1)
+	s_tone =  -s_tone + 35
+
+	// hair
+	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/hairs = list()
+
+	// loop through potential hairs
+	for(var/x in all_hairs)
+		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
+		hairs.Add(H.name) // add hair name to hairs
+		del(H) // delete the hair after it's all done
+
+	var/new_style = input("Please select hair style", "Character Generation",h_style)  as null|anything in hairs
+
+	// if new style selected (not cancel)
+	if (new_style)
+		h_style = new_style
+
+	// facial hair
+	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+	var/list/fhairs = list()
+
+	for(var/x in all_fhairs)
+		var/datum/sprite_accessory/facial_hair/H = new x
+		fhairs.Add(H.name)
+		del(H)
+
+	new_style = input("Please select facial style", "Character Generation",f_style)  as null|anything in fhairs
+
+	if(new_style)
+		f_style = new_style
+
+	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
+	if (new_gender)
+		if(new_gender == "Male")
+			gender = MALE
+		else
+			gender = FEMALE
+	regenerate_icons()
+	check_dna()
+
+	visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
+
+/mob/living/carbon/human/proc/remotesay()
+	set name = "Project mind"
+	set category = "Superpower"
+
+	if(stat!=CONSCIOUS)
+		reset_view(0)
+		remoteview_target = null
+		return
+
+	if(!(mRemotetalk in src.mutations))
+		src.verbs -= /mob/living/carbon/human/proc/remotesay
+		return
+	var/list/creatures = list()
+	for(var/mob/living/carbon/h in world)
+		creatures += h
+	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
+	if (isnull(target))
+		return
+
+	var/say = input ("What do you wish to say")
+	if(mRemotetalk in target.mutations)
+		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
+	else
+		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
+	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
+	for(var/mob/dead/observer/G in world)
+		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
+
+/mob/living/carbon/human/proc/remoteobserve()
+	set name = "Remote View"
+	set category = "Superpower"
+
+	if(stat!=CONSCIOUS)
+		remoteview_target = null
+		reset_view(0)
+		return
+
+	if(!(mRemote in src.mutations))
+		remoteview_target = null
+		reset_view(0)
+		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
+		return
+
+	if(client.eye != client.mob)
+		remoteview_target = null
+		reset_view(0)
+		return
+
+	var/list/mob/creatures = list()
+
+	for(var/mob/living/carbon/h in world)
+		var/turf/temp_turf = get_turf(h)
+		if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
+			continue
+		creatures += h
+
+	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
+
+	if (target)
+		remoteview_target = target
+		reset_view(target)
+	else
+		remoteview_target = null
+		reset_view(0)
+
+/mob/living/carbon/human/proc/get_visible_gender()
+	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
+		return NEUTER
+	return gender
+
+/mob/living/carbon/human/proc/increase_germ_level(n)
+	if(gloves)
+		gloves.germ_level += n
+	else
+		germ_level += n
+
+/mob/living/carbon/human/revive()
+	for (var/datum/organ/external/O in organs)
+		O.status &= ~ORGAN_BROKEN
+		O.status &= ~ORGAN_BLEEDING
+		O.status &= ~ORGAN_SPLINTED
+		O.status &= ~ORGAN_ATTACHABLE
+		if (!O.amputated)
+			O.status &= ~ORGAN_DESTROYED
+		O.wounds.Cut()
+
+	vessel.add_reagent("blood",560-vessel.total_volume)
+	fixblood()
+	for (var/obj/item/weapon/organ/head/H in world)
+		if(H.brainmob)
+			if(H.brainmob.real_name == src.real_name)
+				if(H.brainmob.mind)
+					H.brainmob.mind.transfer_to(src)
+					del(H)
+
+
+	..()
+
+/mob/living/carbon/human/proc/is_lung_ruptured()
+	var/datum/organ/external/chest/E = get_organ("chest")
+	return E.ruptured_lungs
+
+
+/mob/living/carbon/human/proc/rupture_lung()
+	var/datum/organ/external/chest/E = get_organ("chest")
+
+	if(E.ruptured_lungs == 0)
+		src.custom_pain("You feel a stabbing pain in your chest!", 1)
+
+	E.ruptured_lungs = 1
 

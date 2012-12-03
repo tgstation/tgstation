@@ -133,7 +133,7 @@
 					return 0
 
 
-	src.heal_level = rand(75,100) //Randomizes what health the clone is when ejected
+	src.heal_level = rand(0,40) //Randomizes what health the clone is when ejected
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1
@@ -190,7 +190,8 @@
 		randmutb(H) //Sometimes the clones come out wrong.
 
 	H.f_style = "Shaved"
-	H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+	if(mrace == "none") //no more xenos losing ears/tentacles
+		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
 	if(H.dna)
 		H.dna.mutantrace = mrace
