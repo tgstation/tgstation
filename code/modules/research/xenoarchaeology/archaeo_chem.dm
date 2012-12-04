@@ -56,7 +56,6 @@ datum
 			result = "lithiumsodiumtungstate"
 			required_reagents = list("lithium" = 1, "sodium" = 2, "tungsten" = 1, "oxygen" = 4)
 			result_amount = 8
-			requires_heating = 1
 
 		density_separated_liquid
 			name = "Density separated sample"

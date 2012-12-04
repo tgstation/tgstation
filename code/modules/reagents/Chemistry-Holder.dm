@@ -253,7 +253,7 @@ datum
 							//try and grab any data so we can preserve it across reactions
 							//added for xenoarchaeology, might be used for other things but this is a bit dodge
 							var/preserved_data = null
-							for(var/B in src.reagent_list)
+							for(var/B in C.required_reagents)
 								if(!preserved_data)
 									var/temp_data = get_data(B)
 									if(temp_data)
@@ -464,6 +464,7 @@ datum
 
 			//two slightly dodge helper functions to preserve data across reactions (needed for xenoarch)
 			get_data(var/reagent_id)
+				world << "attempting to get data ([reagent_id])"
 				for(var/R in reagent_list)
 					var/datum/reagent/D = reagent_list[R]
 					if(D.id == reagent_id)
@@ -471,6 +472,7 @@ datum
 						return D.data
 
 			set_data(var/reagent_id, var/new_data)
+				world << "attempting to set data ([reagent_id])"
 				for(var/R in reagent_list)
 					var/datum/reagent/D = reagent_list[R]
 					if(D.id == reagent_id)
