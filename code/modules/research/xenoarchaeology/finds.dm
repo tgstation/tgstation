@@ -1,4 +1,4 @@
-//original code and idea from Alfie275 (luna) and ISaidNo (goon) - with thanks
+//original code and idea from Alfie275 (luna era) and ISaidNo (goonservers) - with thanks
 
 
 
@@ -11,23 +11,20 @@
 	desc = "It looks extremely delicate."
 	icon = 'mining.dmi'
 	icon_state = "sliver0"	//0-4
+	w_class = 1
 	//item_state = "electronic"
 	var/source_rock = "/turf/simulated/mineral/archaeo"
 	item_state = ""
 	var/datum/geosample/geological_data
 
 /obj/item/weapon/rocksliver/New()
-	icon_state = "sliver[rand(0,4)]"
+	icon_state = "ore2"//"sliver[rand(0,4)]"
 
 
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // strange rocks
-
-/obj/item/weapon/ore/strangerock
-	var/datum/geosample/geological_data
-	var/source_rock = "/turf/simulated/mineral"
 
 /obj/item/weapon/ore/strangerock/New()
 	..()
@@ -66,19 +63,7 @@
 
 	else if(istype(W,/obj/item/device/core_sampler/))
 		var/obj/item/device/core_sampler/S = W
-		if(S.filled_bag)
-			user << "\red The core sampler is full!"
-		else if(S.num_stored_bags < 1)
-			user << "\red The core sampler is out of sample bags!"
-		else
-			S.filled_bag = new /obj/item/weapon/storage/samplebag(S)
-			S.icon_state = "sampler1"
-
-			for(var/i=0, i<7, i++)
-				var/obj/item/weapon/rocksliver/R = new /obj/item/weapon/rocksliver(S.filled_bag)
-				R.source_rock = src.source_rock
-				R.geological_data = src.geological_data
-			user << "\blue You take a core sample of the [src]."
+		S.sample_item(src, user)
 
 /*Code does not work, likely due to removal/change of acid_act proc
 //Strange rocks currently melt to gooey grey w/ acid application (see reactions)

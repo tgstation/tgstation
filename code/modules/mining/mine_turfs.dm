@@ -16,6 +16,7 @@
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/artifactChance = 0.3	//percent chance to spawn a xenoarchaelogical artifact
 	var/last_act = 0
+	var/datum/geosample/geological_data
 
 /turf/simulated/mineral/Del()
 	return
@@ -53,6 +54,9 @@
 			T = get_step(src, WEST)
 			if (T)
 				T.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
+
+	src.geological_data = new /datum/geosample
+	src.geological_data.UpdateTurf(src)
 
 	if (mineralName && mineralAmt && spread && spreadChance)
 		if(prob(spreadChance))
@@ -102,6 +106,9 @@
 			if(M)
 				src = M
 				M.levelupdate()
+				if(!geological_data)
+					src.geological_data = new /datum/geosample
+				src.geological_data.UpdateTurf(src)
 	else if (prob(artifactChance))
 		//spawn a rare, xeno-arch artifact here
 		new/obj/machinery/artifact(src)
@@ -220,6 +227,11 @@
 		usr << "\red You don't have the dexterity to do this!"
 		return
 
+	if (istype(W, /obj/item/device/core_sampler))
+		var/obj/item/device/core_sampler/C = W
+		C.sample_item(src, user)
+		return
+
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
@@ -250,27 +262,34 @@
 	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
 		var/i
 		for (i=0;i<mineralAmt;i++)
+			var/obj/item/weapon/ore/O
 			if (src.mineralName == "Uranium")
-				new /obj/item/weapon/ore/uranium(src)
+				O = new /obj/item/weapon/ore/uranium(src)
 			if (src.mineralName == "Iron")
-				new /obj/item/weapon/ore/iron(src)
+				O = new /obj/item/weapon/ore/iron(src)
 			if (src.mineralName == "Gold")
-				new /obj/item/weapon/ore/gold(src)
+				O = new /obj/item/weapon/ore/gold(src)
 			if (src.mineralName == "Silver")
-				new /obj/item/weapon/ore/silver(src)
+				O = new /obj/item/weapon/ore/silver(src)
 			if (src.mineralName == "Plasma")
-				new /obj/item/weapon/ore/plasma(src)
+				O = new /obj/item/weapon/ore/plasma(src)
 			if (src.mineralName == "Diamond")
-				new /obj/item/weapon/ore/diamond(src)
+				O = new /obj/item/weapon/ore/diamond(src)
 			if (src.mineralName == "Archaeo")
 				//spawn strange rocks here
 				//if(prob(10) || delicate)
 				if(prob(50)) //Don't have delicate tools (hand pick/excavation tool) yet, temporarily change to 50% instead of 10% -Mij
-					new /obj/item/weapon/ore/strangerock(src)
+					O = new /obj/item/weapon/ore/strangerock(src)
 				else
 					destroyed = 1
 			if (src.mineralName == "Clown")
-				new /obj/item/weapon/ore/clown(src)
+				O = new /obj/item/weapon/ore/clown(src)
+			if(O)
+				if(!src.geological_data)
+					src.geological_data = new /datum/geosample
+					src.geological_data.UpdateTurf(src)
+				O.geological_data = src.geological_data
+
 	if (prob(src.artifactChance))
 		//spawn a rare, xeno-archaelogical artifact here
 		new /obj/machinery/artifact(src)
