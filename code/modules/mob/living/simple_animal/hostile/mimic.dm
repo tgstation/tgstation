@@ -135,6 +135,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	maxHealth = 100
 	var/obj/item/staff = null // the staff that changed they, never attack the bearer of this staff
 	var/destroy_objects = 0
+	var/knockdown_people = 0
 
 /mob/living/simple_animal/hostile/mimic/copy/New(loc, var/obj/copy, var/obj/item/staff)
 	..(loc)
@@ -164,6 +165,10 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		if(istype(O, /obj/structure))
 			health = (anchored * 50) + 50
 			destroy_objects = 1
+			if(O.density && O.anchored)
+				knockdown_people = 1
+				melee_damage_lower *= 2
+				melee_damage_upper *= 2
 		else if(istype(O, /obj/item))
 			var/obj/item/I = O
 			health = 15 * I.w_class
@@ -182,3 +187,11 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	if(destroy_objects)
 		..()
 
+/mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
+	. =..()
+	if(knockdown_people)
+		var/mob/living/L = .
+		if(istype(L))
+			if(prob(15))
+				L.Weaken(1)
+				L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
