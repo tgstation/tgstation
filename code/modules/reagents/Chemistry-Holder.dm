@@ -204,6 +204,14 @@ datum
 				do
 					reaction_occured = 0
 					for(var/datum/chemical_reaction/C in chemical_reactions_list)
+						//check if this recipe needs to be heated to mix
+						if(C.requires_heating)
+							if(istype(my_atom.loc, /obj/machinery/bunsen_burner))
+								if(!my_atom.loc:heated)
+									continue
+							else
+								continue
+
 						var/total_required_reagents = C.required_reagents.len
 						var/total_matching_reagents = 0
 						var/total_required_catalysts = C.required_catalysts.len
@@ -242,7 +250,14 @@ datum
 
 						if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
 							var/multiplier = min(multipliers)
-							for(var/B in C.required_reagents)
+							//try and grab any data so we can preserve it across reactions
+							//added for xenoarchaeology, might be used for other things but this is a bit dodge
+							var/preserved_data = null
+							for(var/B in src.reagent_list)
+								if(!preserved_data)
+									var/temp_data = get_data(B)
+									if(temp_data)
+										preserved_data = temp_data
 								remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
 
 							var/created_volume = C.result_amount*multiplier
@@ -250,6 +265,11 @@ datum
 								feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
 								multiplier = max(multiplier, 1) //this shouldnt happen ...
 								add_reagent(C.result, C.result_amount*multiplier)
+								set_data(C.result, preserved_data)
+
+								//add secondary products
+								for(var/S in C.secondary_results)
+									add_reagent(S, C.result_amount * C.secondary_results[S] * multiplier)
 
 							if(!isliving(my_atom))
 								for(var/mob/M in viewers(4, get_turf(my_atom)) )
@@ -441,6 +461,21 @@ datum
 					res += A.name
 
 				return res
+
+			//two slightly dodge helper functions to preserve data across reactions (needed for xenoarch)
+			get_data(var/reagent_id)
+				for(var/R in reagent_list)
+					var/datum/reagent/D = reagent_list[R]
+					if(D.id == reagent_id)
+						world << "proffering a data-carrying reagent ([reagent_id])"
+						return D.data
+
+			set_data(var/reagent_id, var/new_data)
+				for(var/R in reagent_list)
+					var/datum/reagent/D = reagent_list[R]
+					if(D.id == reagent_id)
+						world << "reagent data set ([reagent_id])"
+						D.data = new_data
 
 
 ///////////////////////////////////////////////////////////////////////////////////

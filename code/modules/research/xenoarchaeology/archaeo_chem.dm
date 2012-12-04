@@ -1,6 +1,5 @@
 
 //chemistry stuff here so that it can be easily viewed/modified
-/*
 datum
 	reagent
 		tungsten	//used purely to make lith-sodi-tungs
@@ -20,18 +19,18 @@ datum
 		ground_rock
 			name = "Ground Rock"
 			id = "ground_rock"
-			description = "A fine dust made of ground up geological samples."
+			description = "A fine dust made of ground up rock."
 			reagent_state = SOLID
 			color = "#C81040" 	//rgb: 200, 16, 64
 								//todo: make this brown
 
 		density_separated_sample
-			name = "Density separated sample"
+			name = "Analysis sample"
 			id = "density_separated_sample"
-			description = "A watery paste which has had density separation applied to its contents."
+			description = "A watery paste used in chemical analysis."
 			reagent_state = LIQUID
 			color = "#C81040" 	//rgb: 200, 16, 64
-								//todo: make this white
+								//todo: make this browny-white
 
 		analysis_sample
 			name = "Analysis sample"
@@ -57,6 +56,7 @@ datum
 			result = "lithiumsodiumtungstate"
 			required_reagents = list("lithium" = 1, "sodium" = 2, "tungsten" = 1, "oxygen" = 4)
 			result_amount = 8
+			requires_heating = 1
 
 		density_separated_liquid
 			name = "Density separated sample"
@@ -74,4 +74,3 @@ datum
 			required_reagents = list("density_separated_sample" = 5)
 			result_amount = 4
 			requires_heating = 1
-*/

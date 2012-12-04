@@ -1304,6 +1304,7 @@
 #include "code\modules\research\xenoarchaeology\artifact_harvester.dm"
 #include "code\modules\research\xenoarchaeology\artifact_misc.dm"
 #include "code\modules\research\xenoarchaeology\artifact_synthetic.dm"
+#include "code\modules\research\xenoarchaeology\bunsen_burner.dm"
 #include "code\modules\research\xenoarchaeology\core_sampler.dm"
 #include "code\modules\research\xenoarchaeology\finds.dm"
 #include "code\modules\research\xenoarchaeology\geosample.dm"
