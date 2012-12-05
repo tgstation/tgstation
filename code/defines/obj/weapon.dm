@@ -458,9 +458,14 @@
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
-	desc = "Shhhhh."
 	access = list(access_maint_tunnels)
 	origin_tech = "syndicate=3"
+
+/obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = O
+		src.access |= I.access
+
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
