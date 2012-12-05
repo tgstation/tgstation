@@ -464,20 +464,14 @@ datum
 
 			//two slightly dodge helper functions to preserve data across reactions (needed for xenoarch)
 			get_data(var/reagent_id)
-				world << "attempting to get data ([reagent_id])"
-				for(var/R in reagent_list)
-					var/datum/reagent/D = reagent_list[R]
-					if(D.id == reagent_id)
-						world << "proffering a data-carrying reagent ([reagent_id])"
-						return D.data
+				for(var/datum/reagent/R in reagent_list)
+					if(R.id == reagent_id)
+						return R.data
 
 			set_data(var/reagent_id, var/new_data)
-				world << "attempting to set data ([reagent_id])"
-				for(var/R in reagent_list)
-					var/datum/reagent/D = reagent_list[R]
-					if(D.id == reagent_id)
-						world << "reagent data set ([reagent_id])"
-						D.data = new_data
+				for(var/datum/reagent/R in reagent_list)
+					if(R.id == reagent_id)
+						R.data = new_data
 
 
 ///////////////////////////////////////////////////////////////////////////////////
