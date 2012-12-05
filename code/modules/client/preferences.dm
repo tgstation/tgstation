@@ -446,23 +446,7 @@ datum/preferences
 					if("bag")
 						backbag = rand(1,3)
 					if("all")
-						gender = pick(MALE,FEMALE)
-						real_name = random_name(gender)
-						age = rand(AGE_MIN,AGE_MAX)
-						underwear = rand(1,12)
-						backbag = rand(1,3)
-						r_hair = rand(0,255)
-						g_hair = rand(0,255)
-						b_hair = rand(0,255)
-						r_facial = r_hair
-						g_facial = g_hair
-						b_facial = b_hair
-						r_eyes = rand(0,255)
-						g_eyes = rand(0,255)
-						b_eyes = rand(0,255)
-						h_style = random_hair_style(gender)
-						f_style = random_facial_hair_style(gender)
-						s_tone = random_skin_tone()
+						randomize_appearance_for()	//no params needed
 
 			if("input")
 				switch(href_list["preference"])
