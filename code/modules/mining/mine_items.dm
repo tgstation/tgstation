@@ -53,10 +53,10 @@ proc/move_mining_shuttle()
 		if (mining_shuttle_location == 1)
 			fromArea = locate(/area/shuttle/mining/outpost)
 			toArea = locate(/area/shuttle/mining/station)
+
 		else
 			fromArea = locate(/area/shuttle/mining/station)
 			toArea = locate(/area/shuttle/mining/outpost)
-
 
 		var/list/dstturfs = list()
 		var/throwy = world.maxy
@@ -91,6 +91,18 @@ proc/move_mining_shuttle()
 			mining_shuttle_location = 0
 		else
 			mining_shuttle_location = 1
+
+		for(var/mob/M in toArea)
+			if(M.client)
+				spawn(0)
+					if(M.buckled)
+						shake_camera(M, 3, 1) // buckled, not a lot of shaking
+					else
+						shake_camera(M, 10, 1) // unbuckled, HOLY SHIT SHAKE THE ROOM
+			if(istype(M, /mob/living/carbon))
+				if(!M.buckled)
+					M.Weaken(3)
+
 		mining_shuttle_moving = 0
 	return
 
