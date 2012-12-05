@@ -186,6 +186,7 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/crayonbox(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/toy/waterflower(H), slot_in_backpack)
 		H.mutations.Add(CLUMSY)
 		return 1
 

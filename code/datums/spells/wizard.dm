@@ -200,26 +200,27 @@
 	disabilities = 1
 	duration = 300
 
-/obj/effect/proc_holder/spell/targeted/projectile/fireball
+/obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 
 	school = "evocation"
-	charge_max = 200
+	charge_max = 100
 	clothes_req = 0
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
+	range = 20
 
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"
-	proj_lingering = 1
-	proj_type = "/obj/effect/proc_holder/spell/targeted/trigger/fireball"
+	proj_type = "/obj/effect/proc_holder/spell/turf/fireball"
 
 	proj_lifespan = 200
 	proj_step_delay = 1
 
-/obj/effect/proc_holder/spell/targeted/trigger/fireball
-	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/fireball","/obj/effect/proc_holder/spell/targeted/explosion/fireball")
+/obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
+	explosion(T, -1, 1, 2, 3)
+
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/fireball
 	amt_dam_brute = 20

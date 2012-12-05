@@ -58,7 +58,7 @@
 		if(href_list["spell_choice"])
 			if(src.uses >= 1 && src.max_uses >=1 && text2num(href_list["spell_choice"]) < 19)
 				src.uses--
-				var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock","Summon Guns","Staff of Change","Six Soul Stone Shards and the spell Artificer","Mastercrafted Armor Set")
+				var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock","Summon Guns","Staff of Change","Six Soul Stone Shards and the spell Artificer","Mastercrafted Armor Set", "Staff of Animation")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in usr.spell_list)
 					if(available_spells[text2num(href_list["spell_choice"])] == aspell.name)
@@ -74,7 +74,7 @@
 							src.temp = "This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage."
 						if ("2")
 							feedback_add_details("wizard_spell_learned","FB") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							usr.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/fireball(usr)
+							usr.spell_list += new /obj/effect/proc_holder/spell/dumbfire/fireball(usr)
 							src.temp = "This spell fires a fireball in the direction you're facing and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
 						if ("3")
 							feedback_add_details("wizard_spell_learned","DG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
