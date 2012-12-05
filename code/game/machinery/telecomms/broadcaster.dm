@@ -341,8 +341,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Engineering"
 			if(1359)
 				freq_text = "Security"
-			if(1349)
-				freq_text = "Mining"
+//			if(1349)
+//				freq_text = "Mining"
 			if(1347)
 				freq_text = "Cargo"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
@@ -398,8 +398,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
-				if(1349)
-					blackbox.msg_mining += blackbox_msg
+//				if(1349)
+//					blackbox.msg_mining += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else
@@ -613,8 +613,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Engineering"
 			if(1359)
 				freq_text = "Security"
-			if(1349)
-				freq_text = "Mining"
+//			if(1349)
+//				freq_text = "Mining"
 			if(1347)
 				freq_text = "Cargo"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
@@ -669,8 +669,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
-				if(1349)
-					blackbox.msg_mining += blackbox_msg
+//				if(1349)
+//					blackbox.msg_mining += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else

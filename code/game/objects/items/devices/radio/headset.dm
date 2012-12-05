@@ -134,7 +134,7 @@
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/hop
-
+/*
 /obj/item/device/radio/headset/headset_mine
 	name = "mining radio headset"
 	desc = "Headset used by miners. How useless. To access the mining channel, use :d."
@@ -148,10 +148,10 @@
 	icon_state = "cargo_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/heads/qm
-
+*/
 /obj/item/device/radio/headset/headset_cargo
 	name = "cargo radio headset"
-	desc = "Headset used by the QM's slaves. To access the cargo channel, use :q."
+	desc = "A headset used by the QM and his slaves. To access the cargo channel, use :q."
 	icon_state = "cargo_headset"
 	item_state = "headset"
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
