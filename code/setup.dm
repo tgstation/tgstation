@@ -534,7 +534,7 @@ var/list/liftable_structures = list(\
 #define INVISIBILITY_MAXIMUM 100
 
 //Object specific defines
-#define CANDLE_LUM 3 //For how bright candles are
+//#define CANDLE_LUM 3 //For how bright candles are //Why is this here? Moved to candle.dm (brightness_on) -SweeperM
 
 
 //Some mob defines below
