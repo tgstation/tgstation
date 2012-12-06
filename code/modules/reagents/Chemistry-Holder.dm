@@ -393,6 +393,8 @@ datum
 					my_atom.on_reagent_change()
 					handle_reactions()
 					return 0
+				else
+					warning("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 
 				handle_reactions()
 

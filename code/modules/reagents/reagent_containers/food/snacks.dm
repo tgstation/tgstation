@@ -1022,7 +1022,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
-		reagents.add_reagent("doctor_delight", 2)
+		reagents.add_reagent("doctorsdelight", 5)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
@@ -1754,7 +1754,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
-		reagents.add_reagent("doctor_delight", 5)
+		reagents.add_reagent("doctorsdelight", 5)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart
