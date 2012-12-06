@@ -72,7 +72,7 @@
 	name = "Captain's Encryption Key"
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	icon_state = "cap_cypherkey"
-	channels = list("Command" = 1, "Science" = 0, "Medical" = 0, "Security" = 1, "Engineering" = 0, "Supply" = 0)
+	channels = list("Command" = 1, "Security" = 1, "Engineering" = 0, "Science" = 0, "Medical" = 0, "Supply" = 0)
 
 /obj/item/device/encryptionkey/heads/rd
 	name = "Research Director's Encryption Key"
@@ -102,7 +102,7 @@
 	name = "Head of Personnel's Encryption Key"
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	icon_state = "hop_cypherkey"
-	channels = list("Command" = 1, "Supply" = 1, "Security" = 0)
+	channels = list("Supply" = 1, "Command" = 1, "Security" = 0)
 /*
 /obj/item/device/encryptionkey/headset_mine
 	name = "Mining Radio Encryption Key"
@@ -117,7 +117,7 @@
 	channels = list("Cargo" = 1, "Mining" = 1)
 */
 /obj/item/device/encryptionkey/headset_cargo
-	name = "Cargo Radio Encryption Key"
+	name = "Supply Radio Encryption Key"
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	icon_state = "cargo_cypherkey"
 	channels = list("Supply" = 1)
