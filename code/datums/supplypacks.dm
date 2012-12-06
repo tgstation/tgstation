@@ -634,7 +634,7 @@
 	name = "Contraband crate"
 	cost = 30
 	containertype = /obj/structure/closet/crate
-	containername = "Contraband crate"
+	containername = "Unlabeled crate"
 	contraband = 1
 
 /datum/supply_packs/boxes
