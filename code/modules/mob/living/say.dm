@@ -13,8 +13,7 @@ var/list/department_radio_keys = list(
 	  ":b" = "binary",
 	  ":a" = "alientalk",
 	  ":t" = "Syndicate",
-	  ":d" = "Mining",
-	  ":q" = "Cargo",
+	  ":u" = "Supply",
 	  ":g" = "changeling",
 
 	  ":R" = "right hand",
@@ -30,8 +29,7 @@ var/list/department_radio_keys = list(
 	  ":B" = "binary",
 	  ":A" = "alientalk",
 	  ":T" = "Syndicate",
-	  ":D" = "Mining",
-	  ":Q" = "Cargo",
+	  ":U" = "Supply",
 	  ":G" = "changeling",
 
 	  //kinda localization -- rastaf0
@@ -49,8 +47,7 @@ var/list/department_radio_keys = list(
 	  ":è" = "binary",
 	  ":ô" = "alientalk",
 	  ":å" = "Syndicate",
-	  ":â" = "Mining",
-	  ":é" = "Cargo",
+	  ":é" = "Supply",
 	  ":ï" = "changeling"
 )
 
