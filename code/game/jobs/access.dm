@@ -197,7 +197,7 @@
 		if("Librarian") // -- TLE
 			return list(access_library)
 		if("Lawyer") //Muskets 160910
-			return list(access_lawyer, access_court)
+			return list(access_lawyer, access_court, access_sec_doors)
 		if("Captain")
 			return get_all_accesses()
 		if("Security Officer")
@@ -244,11 +244,11 @@
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_ai_upload, access_construction, access_robotics,
+			            access_heads, access_ai_upload, access_construction, access_robotics, access_sec_doors,
 			            access_mint, access_ce, access_RC_announce, access_keycard_auth, access_tcomsat)
 		if("Research Director")
 			return list(access_rd, access_heads, access_tox, access_genetics,
-			            access_tox_storage, access_teleporter,
+			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology,
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway)
 		if("Virologist")
@@ -256,7 +256,7 @@
 		if("Chief Medical Officer")
 			return list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth)
+			access_keycard_auth, access_sec_doors)
 		else
 			return list()
 

@@ -409,7 +409,7 @@
 "ahS" = (/obj/machinery/light_construct/small{dir = 4},/turf/simulated/floor/plating/airless,/area)
 "ahT" = (/obj/machinery/atmospherics/unary/vent_pump{on = 1},/turf/simulated/floor{dir = 8; icon_state = "redcorner"},/area/security/brig)
 "ahU" = (/obj/machinery/atmospherics/pipe/manifold{color = "blue"; dir = 8; icon_state = "manifold-b-f"; initialize_directions = 11; level = 1; name = "pipe manifold"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor,/area/security/brig)
-"ahV" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/door/airlock/security{name = "Evidence Storage"; req_access = null; req_access_txt = "63"},/turf/simulated/floor,/area/security/brig)
+"ahV" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/door/airlock/security{name = "Evidence Storage"; req_access = null; req_access_txt = "1"},/turf/simulated/floor,/area/security/brig)
 "ahW" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9; pixel_y = 0},/turf/simulated/floor,/area/security/brig)
 "ahX" = (/obj/machinery/door/airlock/glass_security{name = "Warden's Office"; req_access_txt = "3"},/turf/simulated/floor{icon_state = "showroomfloor"},/area/security/warden)
 "ahY" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor{icon_state = "showroomfloor"},/area/security/warden)
