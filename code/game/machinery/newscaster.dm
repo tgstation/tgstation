@@ -300,7 +300,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 							dat+="-[MESSAGE.body] <BR>"
 							if(MESSAGE.img)
 								usr << browse_rsc(MESSAGE.img, "tmp_photo.png")
-								dat+="<img src='tmp_photo.png'><BR><BR>"
+								dat+="<img src='tmp_photo.png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
@@ -397,7 +397,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B>Photo:</B>: "
 				if(news_network.wanted_issue.img)
 					usr << browse_rsc(news_network.wanted_issue.img, "tmp_photo.png")
-					dat+="<BR><img src='tmp_photo.png'>"
+					dat+="<BR><img src='tmp_photo.png' width = '180'>"
 				else
 					dat+="None"
 				dat+="<BR><BR><A href='?src=\ref[src];setScreen=[0]'>Back</A><BR>"

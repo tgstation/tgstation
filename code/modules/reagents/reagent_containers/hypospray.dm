@@ -33,14 +33,20 @@
 		user << "\blue You inject [M] with the hypospray."
 		M << "\red You feel a tiny prick!"
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.ckey])</font>")
-
-		log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
+
+			var/list/injected = list()
+			for(var/datum/reagent/R in src.reagents.reagent_list)
+				injected += R.name
+
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
 			user << "\blue [trans] units injected.  [reagents.total_volume] units remaining in the hypospray."
+
+			var/contained = english_list(injected)
+
+			log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected ([contained]) with [src.name] by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.ckey]) with [contained]</font>")
+
 	return
