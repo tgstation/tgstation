@@ -209,7 +209,7 @@ datum/preferences
 
 		user << browse(dat, "window=preferences;size=560x560")
 
-	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 550, height = 500)
+	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 550, height = 550)
 		if(!job_master)	return
 
 		//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
@@ -221,7 +221,7 @@ datum/preferences
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
 		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br><br>"
-		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a> - <a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br><br>" // Easier to press up here.
+		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -281,8 +281,8 @@ datum/preferences
 
 		HTML += "</center></table>"
 
-		HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=[userandomjob ? "green>Get random job if preferences unavailable" : "red>Be assistant if preference unavailable"]</font></a></u></center>"
-
+		HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=[userandomjob ? "green>Get random job if preferences unavailable" : "red>Be assistant if preference unavailable"]</font></a></u></center><br>"
+		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
 		HTML += "</tt>"
 
 		user << browse(null, "window=preferences")

@@ -5663,7 +5663,7 @@
 "ceU" = (/obj/machinery/light/small,/turf/simulated/floor/engine{name = "n2 floor"; nitrogen = 100000; oxygen = 0},/area/atmos)
 "ceV" = (/obj/machinery/light/small,/turf/simulated/floor/engine{name = "o2 floor"; nitrogen = 0; oxygen = 100000},/area/atmos)
 "ceW" = (/obj/machinery/light/small,/turf/simulated/floor/engine{name = "air floor"; nitrogen = 10580; oxygen = 2644},/area/atmos)
-"ceX" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8; frequency = 1439; icon_state = "off"; id_tag = null; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/obj/structure/table,/obj/item/weapon/reagent_containers/spray/cleaner,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/machinery/light,/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
+"ceX" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8; frequency = 1439; icon_state = "off"; id_tag = null; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/obj/structure/table,/obj/item/weapon/reagent_containers/spray/cleaner,/obj/item/weapon/reagent_containers/syringe/antiviral,/obj/machinery/light,/obj/structure/reagent_dispensers/virusfood{pixel_x = -30},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
 "ceY" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
 "ceZ" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
 "cfa" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 8},/obj/machinery/light,/obj/structure/sign/deathsposal{pixel_x = 0; pixel_y = -32},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)

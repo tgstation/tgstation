@@ -151,3 +151,15 @@
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
 	del(src)
+
+/obj/structure/reagent_dispensers/virusfood
+	name = "Virus Food Dispenser"
+	desc = "A dispenser of virus food."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "virusfoodtank"
+	amount_per_transfer_from_this = 10
+	anchored = 1
+
+	New()
+		..()
+		reagents.add_reagent("virusfood", 1000)
