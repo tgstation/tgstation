@@ -80,7 +80,7 @@
 		M.show_message( message, 1, blind_message, 2)
 
 
-//This is aweful
+//This is awful
 /mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	//Holding a balloon will shield you from an item that is_sharp() ... cause that makes sense
@@ -108,7 +108,7 @@
 	//If the mob is not wearing a shield or otherwise is not shielded
 	if ((!( shielded ) || !( W.flags ) & NOSHIELD))
 		spawn( 0 )
-			if (W)
+			if (W && istype(W, /obj/item)) //The istype is necessary for things like bodybags which are structures that do not have an attack() proc.
 				W.attack(src, user)
 				return
 	return

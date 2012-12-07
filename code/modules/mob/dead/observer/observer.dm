@@ -165,6 +165,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
 		L+=T
+
+	if(!L || !L.len)
+		usr << "No area available."
+
 	usr.loc = pick(L)
 
 /mob/dead/observer/verb/follow()
