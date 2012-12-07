@@ -52,13 +52,33 @@
 	if (istype(O, /obj/item/weapon/plantbag))
 		var/obj/item/weapon/plantbag/S = O
 		if (S.mode == 1)
-			for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(src.x,src.y,src.z))
-				if (S.contents.len < S.capacity)
-					S.contents += G;
-				else
-					user << "\blue The plant bag is full."
-					return
-			user << "\blue You pick up all the plants."
+			for(var/obj/item/G in get_turf(src))
+				if(istype(G, /obj/item/seeds) || istype(G, /obj/item/weapon/reagent_containers/food/snacks/grown))
+					if (S.contents.len < S.capacity)
+						S.contents += G
+					else
+						user << "\blue The plant bag is full."
+						return
+			user << "\blue You pick up all the plants and seeds."
+		else
+			if (S.contents.len < S.capacity)
+				S.contents += src;
+			else
+				user << "\blue The plant bag is full."
+	return
+
+/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (istype(O, /obj/item/weapon/plantbag))
+		var/obj/item/weapon/plantbag/S = O
+		if (S.mode == 1)
+			for(var/obj/item/G in get_turf(src))
+				if(istype(G, /obj/item/seeds) || istype(G, /obj/item/weapon/reagent_containers/food/snacks/grown))
+					if (S.contents.len < S.capacity)
+						S.contents += G
+					else
+						user << "\blue The plant bag is full."
+						return
+			user << "\blue You pick up all the plants and seeds."
 		else
 			if (S.contents.len < S.capacity)
 				S.contents += src;
@@ -852,6 +872,7 @@
 // Putting these at the bottom so they don't clutter the list up. -Cheridan
 // *************************************
 
+/*
 //This object is just a transition object. All it does is make a grass tile and delete itself.
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass
 	seed = "/obj/item/seeds/grassseed"
@@ -863,6 +884,7 @@
 		new/obj/item/stack/tile/grass(src.loc)
 		spawn(5) //Workaround to keep harvesting from working weirdly.
 			del(src)
+*/
 
 //This object is just a transition object. All it does is make dosh and delete itself. -Cheridan
 /obj/item/weapon/reagent_containers/food/snacks/grown/money

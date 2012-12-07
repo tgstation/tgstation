@@ -231,7 +231,7 @@
 	return
 
 /obj/machinery/door/proc/requiresID()
-	return 0
+	return 1
 
 /obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
 	if(!air_master) return 0

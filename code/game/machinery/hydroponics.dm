@@ -812,6 +812,16 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	parent.update_tray()
 
+/obj/item/seeds/grassseed/harvest(mob/user = usr)
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/t_yield = round(yield*parent.yieldmod)
+
+	if(t_yield > 0)
+		var/obj/item/stack/tile/grass/new_grass = new/obj/item/stack/tile/grass(user.loc)
+		new_grass.amount = t_yield
+
+	parent.update_tray()
+
 /obj/item/seeds/gibtomato/harvest(mob/user = usr)
 	var/produce = text2path(productname)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access

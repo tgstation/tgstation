@@ -221,7 +221,7 @@ datum/preferences
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
 		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br><br>"
-		HTML += "<a align='center' href='?_src_=prefs;preference=job;task=close'>\[Done\]</a><br><br>" // Easier to press up here.
+		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a> - <a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br><br>" // Easier to press up here.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -317,6 +317,20 @@ datum/preferences
 		SetChoices(user)
 		return 1
 
+	proc/ResetJobs()
+
+		job_civilian_high = 0
+		job_civilian_med = 0
+		job_civilian_low = 0
+
+		job_medsci_high = 0
+		job_medsci_med = 0
+		job_medsci_low = 0
+
+		job_engsec_high = 0
+		job_engsec_med = 0
+		job_engsec_low = 0
+
 
 	proc/GetJobDepartment(var/datum/job/job, var/level)
 		if(!job || !level)	return 0
@@ -407,6 +421,9 @@ datum/preferences
 				if("close")
 					user << browse(null, "window=mob_occupation")
 					ShowChoices(user)
+				if("reset")
+					ResetJobs()
+					SetChoices(user)
 				if("random")
 					userandomjob = !userandomjob
 					SetChoices(user)

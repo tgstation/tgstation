@@ -1,5 +1,15 @@
 /datum/intercept_text
 	var/text
+	/*
+	var/prob_correct_person_lower = 20
+	var/prob_correct_person_higher = 80
+	var/prob_correct_job_lower = 20
+	var/prob_correct_job_higher = 80
+	var/prob_correct_prints_lower = 20
+	var/prob_correct_print_higher = 80
+	var/prob_correct_objective_lower = 20
+	var/prob_correct_objective_higher = 80
+	*/
 	var/list/org_names_1 = list(
 		"Blighted",
 		"Defiled",

@@ -21,7 +21,7 @@
 	w_class = 1
 
 /obj/item/weapon/plantbag/attack_self(mob/user as mob)
-	for (var/obj/item/weapon/reagent_containers/food/snacks/grown/O in contents)
+	for (var/obj/item/O in contents)
 		contents -= O
 		O.loc = user.loc
 	user << "\blue You empty the plant bag."
