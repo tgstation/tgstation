@@ -296,11 +296,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					if( isemptylist(src.viewing_channel.messages) )
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
+						var/i = 0
 						for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
+							i++
 							dat+="-[MESSAGE.body] <BR>"
 							if(MESSAGE.img)
-								usr << browse_rsc(MESSAGE.img, "tmp_photo.png")
-								dat+="<img src='tmp_photo.png' width = '180'><BR><BR>"
+								usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
+								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
@@ -396,8 +398,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
 				dat+="<B>Photo:</B>: "
 				if(news_network.wanted_issue.img)
-					usr << browse_rsc(news_network.wanted_issue.img, "tmp_photo.png")
-					dat+="<BR><img src='tmp_photo.png' width = '180'>"
+					usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
+					dat+="<BR><img src='tmp_photow.png' width = '180'>"
 				else
 					dat+="None"
 				dat+="<BR><BR><A href='?src=\ref[src];setScreen=[0]'>Back</A><BR>"
