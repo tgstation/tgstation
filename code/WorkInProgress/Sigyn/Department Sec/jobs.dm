@@ -73,6 +73,8 @@ proc/assign_sec_to_department(var/mob/living/carbon/human/H)
 		return 1
 
 /obj/item/device/radio/headset/headset_sec/department/New()
+	if(radio_controller)
+		initialize()
 	recalculateChannels()
 
 /obj/item/device/radio/headset/headset_sec/department/engi
