@@ -102,8 +102,8 @@
 					target.client.screen -= W
 				if (W)
 					W.loc = target.loc
-					W.dropped(target)
 					W.layer = initial(W.layer)
+					W.dropped(target)
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item))
@@ -112,6 +112,8 @@
 					item.layer = 20
 					target.l_hand = item
 					item.loc = target
+					item.dropped(source)
+					item.equipped(target,target.l_hand)
 		if("r_hand")
 			if (target.r_hand)
 				var/obj/item/W = target.r_hand
@@ -120,8 +122,8 @@
 					target.client.screen -= W
 				if (W)
 					W.loc = target.loc
-					W.dropped(target)
 					W.layer = initial(W.layer)
+					W.dropped(target)
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item))
@@ -130,6 +132,8 @@
 					item.layer = 20
 					target.r_hand = item
 					item.loc = target
+					item.dropped(source)
+					item.equipped(target,target.r_hand)
 		if("back")
 			if (target.back)
 				var/obj/item/W = target.back
