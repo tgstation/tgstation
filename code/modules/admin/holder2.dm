@@ -2707,5 +2707,5 @@ var/list/admin_datums = list()
 			if("show")
 				show_player_info(ckey)
 			if("list")
-				PlayerNotes(href_list["index"])
+				PlayerNotesPage(href_list["index"])
 		return

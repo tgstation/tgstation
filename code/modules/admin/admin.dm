@@ -174,16 +174,18 @@ var/global/floorIsLava = 0
 /datum/player_info/var/timestamp // Because this is bloody annoying
 
 #define PLAYER_NOTES_ENTRIES_PER_PAGE 50
-/datum/admins/proc/PlayerNotes(var/page = 1)
+/datum/admins/proc/PlayerNotes()
 	set category = "Admin"
 	set name = "Player Notes"
-	var/dat = "<B>Player notes</B><HR>"
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
 		usr << "Error: you are not an admin!"
 		return
+	PlayerNotesPage(1)
 
+/datum/admins/proc/PlayerNotesPage(page)
+	var/dat = "<B>Player notes</B><HR>"
 	var/savefile/S=new("data/player_notes.sav")
 	var/list/note_keys
 	S >> note_keys
@@ -195,14 +197,17 @@ var/global/floorIsLava = 0
 
 		// Display the notes on the current page
 		var/number_pages = note_keys.len / PLAYER_NOTES_ENTRIES_PER_PAGE
+		// Emulate ceil(why does BYOND not have ceil)
+		if(number_pages != round(number_pages))
+			number_pages = round(number_pages) + 1
 		var/page_index = page - 1
 		if(page_index < 0 || page_index >= number_pages)
 			return
 
-		for(var/index = page_index * PLAYER_NOTES_ENTRIES_PER_PAGE + 1, \
-			index <= (page_index + 1) * PLAYER_NOTES_ENTRIES_PER_PAGE, \
-			index++)
-
+		var/lower_bound = page_index * PLAYER_NOTES_ENTRIES_PER_PAGE + 1
+		var/upper_bound = (page_index + 1) * PLAYER_NOTES_ENTRIES_PER_PAGE
+		upper_bound = min(upper_bound, note_keys.len)
+		for(var/index = lower_bound, index <= upper_bound, index++)
 			var/t = note_keys[index]
 			dat += "<tr><td><a href='?src=\ref[src];notes=show;ckey=[t]'>[t]</a></td></tr>"
 
