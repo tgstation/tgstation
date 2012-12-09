@@ -173,10 +173,11 @@ var/global/floorIsLava = 0
 /datum/player_info/var/content // text content of the information
 /datum/player_info/var/timestamp // Because this is bloody annoying
 
-/datum/admins/proc/PlayerNotes()
+#define PLAYER_NOTES_ENTRIES_PER_PAGE 50
+/datum/admins/proc/PlayerNotes(var/page = 1)
 	set category = "Admin"
 	set name = "Player Notes"
-	var/dat = "<B>Player notes</B><HR><table>"
+	var/dat = "<B>Player notes</B><HR>"
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
@@ -189,10 +190,32 @@ var/global/floorIsLava = 0
 	if(!note_keys)
 		dat += "No notes found."
 	else
+		dat += "<table>"
 		sortList(note_keys)
-		for(var/t in note_keys)
+
+		// Display the notes on the current page
+		var/number_pages = note_keys.len / PLAYER_NOTES_ENTRIES_PER_PAGE
+		var/page_index = page - 1
+		if(page_index < 0 || page_index >= number_pages)
+			return
+
+		for(var/index = page_index * PLAYER_NOTES_ENTRIES_PER_PAGE + 1, \
+			index <= (page_index + 1) * PLAYER_NOTES_ENTRIES_PER_PAGE, \
+			index++)
+
+			var/t = note_keys[index]
 			dat += "<tr><td><a href='?src=\ref[src];notes=show;ckey=[t]'>[t]</a></td></tr>"
-	dat += "</table>"
+
+		dat += "</table><br>"
+
+		// Display a footer to select different pages
+		for(var/index = 1, index <= number_pages, index++)
+			if(index == page)
+				dat += "<b>"
+			dat += "<a href='?src=\ref[src];notes=list;index='[index]'>[index]</a> "
+			if(index == page)
+				dat += "</b>"
+
 	usr << browse(dat, "window=player_notes;size=400x400")
 
 
