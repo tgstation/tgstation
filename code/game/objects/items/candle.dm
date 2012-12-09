@@ -5,9 +5,11 @@
 	icon_state = "candle1"
 	item_state = "candle1"
 	w_class = 1
+	light_on = 0
+	brightness_on = 3 //luminosity when on
 
 	var/wax = 200
-	var/lit = 0
+
 	proc
 		light(var/flavor_text = "\red [usr] lights the [name].")
 
@@ -19,7 +21,7 @@
 		else if(wax>80)
 			i = 2
 		else i = 3
-		icon_state = "candle[i][lit ? "_lit" : ""]"
+		icon_state = "candle[i][light_on ? "_lit" : ""]"
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -30,30 +32,30 @@
 				light("\red [user] casually lights the [name] with [W], what a badass.")
 		else if(istype(W, /obj/item/weapon/lighter))
 			var/obj/item/weapon/lighter/L = W
-			if(L.lit)
+			if(L.light_on)
 				light()
 		else if(istype(W, /obj/item/weapon/match))
 			var/obj/item/weapon/match/M = W
-			if(M.lit)
+			if(M.light_on)
 				light()
 		else if(istype(W, /obj/item/candle))
 			var/obj/item/candle/C = W
-			if(C.lit)
+			if(C.light_on)
 				light()
 
 
 	light(var/flavor_text = "\red [usr] lights the [name].")
-		if(!src.lit)
-			src.lit = 1
+		if(!src.light_on)
+			src.light_on = 1
 			//src.damtype = "fire"
 			for(var/mob/O in viewers(usr, null))
 				O.show_message(flavor_text, 1)
-			SetLuminosity(CANDLE_LUM)
+			SetLuminosity(brightness_on)
 			processing_objects.Add(src)
 
 
 	process()
-		if(!lit)
+		if(!light_on)
 			return
 		wax--
 		if(!wax)
@@ -68,20 +70,29 @@
 
 
 	attack_self(mob/user as mob)
-		if(lit)
-			lit = 0
+		if(light_on)
+			light_on = 0
 			update_icon()
 			SetLuminosity(0)
-			user.SetLuminosity(user.luminosity - CANDLE_LUM)
+			user.SetLuminosity(search_light(user, src))
 
 
 	pickup(mob/user)
-		if(lit)
+		if(light_on)
+			if (user.luminosity < brightness_on)
+				user.SetLuminosity(brightness_on)
 			SetLuminosity(0)
-			user.SetLuminosity(user.luminosity + CANDLE_LUM)
 
 
 	dropped(mob/user)
-		if(lit)
-			user.SetLuminosity(user.luminosity - CANDLE_LUM)
-			SetLuminosity(CANDLE_LUM)
+		if(light_on)
+			if ((layer <= 3) || (loc != user.loc))
+				user.SetLuminosity(search_light(user, src))
+				SetLuminosity(brightness_on)
+
+
+	equipped(mob/user, slot)
+		if(light_on)
+			if (user.luminosity < brightness_on)
+				user.SetLuminosity(brightness_on)
+			SetLuminosity(0)

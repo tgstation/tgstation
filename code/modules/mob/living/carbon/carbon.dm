@@ -421,19 +421,19 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
+	item.layer = initial(item.layer)
 	u_equip(item)
 	update_icons()
-	if(src.client)
-		src.client.screen -= item
+	//if(src.client)
+		//src.client.screen -= item
 
-	item.loc = src.loc
+	//item.loc = src.loc
 
-	if(istype(item, /obj/item))
-		item:dropped(src) // let it know it's been dropped
+	//if(istype(item, /obj/item))
+		//item:dropped(src) // let it know it's been dropped
 
 	//actually throw it!
 	if (item)
-		item.layer = initial(item.layer)
 		src.visible_message("\red [src] has thrown [item].")
 
 		if(!src.lastarea)

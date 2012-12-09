@@ -10,12 +10,13 @@
 	m_amt = 50
 	g_amt = 20
 	icon_action_button = "action_flashlight"
-	var/on = 0
-	var/brightness_on = 4 //luminosity when on
+	light_on = 0
+	brightness_on = 4 //luminosity when on
+	var brightness = 0
 
 /obj/item/device/flashlight/initialize()
 	..()
-	if(on)
+	if(light_on)
 		icon_state = "[initial(icon_state)]-on"
 		SetLuminosity(brightness_on)
 	else
@@ -23,16 +24,16 @@
 		SetLuminosity(0)
 
 /obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
-	if(on)
+	if(light_on)
 		icon_state = "[initial(icon_state)]-on"
-		if(loc == user)
-			user.SetLuminosity(user.luminosity + brightness_on)
+		if((loc == user) && (user.luminosity < brightness_on))
+			user.SetLuminosity(brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(brightness_on)
 	else
 		icon_state = initial(icon_state)
 		if(loc == user)
-			user.SetLuminosity(user.luminosity - brightness_on)
+			user.SetLuminosity(search_light(user, src))
 		else if(isturf(loc))
 			SetLuminosity(0)
 
@@ -40,14 +41,14 @@
 	if(!isturf(user.loc))
 		user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
 		return
-	on = !on
+	light_on = !light_on
 	update_brightness(user)
 	return
 
 
 /obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
 	add_fingerprint(user)
-	if(on && user.zone_sel.selecting == "eyes")
+	if(light_on && user.zone_sel.selecting == "eyes")
 
 		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -88,15 +89,24 @@
 
 
 /obj/item/device/flashlight/pickup(mob/user)
-	if(on)
-		user.SetLuminosity(user.luminosity + brightness_on)
+	if(light_on)
+		if (user.luminosity < brightness_on)
+			user.SetLuminosity(brightness_on)
 		SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
-	if(on)
-		user.SetLuminosity(user.luminosity - brightness_on)
-		SetLuminosity(brightness_on)
+	if(light_on)
+		if ((layer <= 3) || (loc != user.loc))
+			user.SetLuminosity(search_light(user, src))
+			SetLuminosity(brightness_on)
+
+
+/obj/item/device/flashlight/equipped(mob/user, slot)
+	if(light_on)
+		if (user.luminosity < brightness_on)
+			user.SetLuminosity(brightness_on)
+		SetLuminosity(0)
 
 
 /obj/item/device/flashlight/pen
@@ -119,7 +129,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	m_amt = 0
 	g_amt = 0
-	on = 1
+	light_on = 1
 
 
 // green-shaded desk lamp
@@ -159,14 +169,14 @@
 	var/turf/pos = get_turf(src)
 	pos.hotspot_expose(produce_heat, 5)
 	fuel = max(fuel - 1, 0)
-	if(!fuel || !on)
+	if(!fuel || !light_on)
 		turn_off()
 		if(!fuel)
 			src.icon_state = "[initial(icon_state)]-empty"
 		processing_objects -= src
 
 /obj/item/device/flashlight/flare/proc/turn_off()
-	on = 0
+	light_on = 0
 	src.force = initial(src.force)
 	src.damtype = initial(src.damtype)
 	if(ismob(loc))
@@ -182,12 +192,12 @@
 	if(!fuel)
 		user << "<span class='notice'>It's out of fuel.</span>"
 		return
-	if(!on)
+	if(!light_on)
 		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
 	else
 		return
 	// All good, turn it on.
-	on = 1
+	light_on = 1
 	update_brightness(user)
 	src.force = on_damage
 	src.damtype = "fire"
