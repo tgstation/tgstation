@@ -133,6 +133,19 @@ proc/Airflow(zone/A, zone/B)
 			else
 				connected_turfs |= C.B
 
+	// Only play a sound effect every once in a while
+	if(A.playsound_cooldown <= 0 && B.playsound_cooldown <= 0)
+		// Play a nice sound effect at one of the bordering turfs
+
+		A.playsound_cooldown = rand(2, 5)
+		B.playsound_cooldown = rand(2, 5)
+
+		var/turf/random_border = pick(connected_turfs)
+		play_wind_sound(random_border, abs(n))
+	else
+		A.playsound_cooldown--
+		B.playsound_cooldown--
+
 	//Get lists of things that can be thrown across the room for each zone.
 	var/list/pplz = B.movables()
 	var/list/otherpplz = A.movables()
@@ -200,6 +213,17 @@ proc/AirflowSpace(zone/A)
 	var/list/connected_turfs = A.unsimulated_tiles //The midpoints are now all the space connections.
 	var/list/pplz = A.movables() //We only need to worry about things in the zone, not things in space.
 
+	// Only play a sound effect every once in a while
+	if(A.playsound_cooldown <= 0)
+		// Play a nice sound effect at one of the bordering turfs
+
+		A.playsound_cooldown = rand(2, 5)
+
+		var/turf/random_border = pick(connected_turfs)
+		play_wind_sound(random_border, abs(n))
+	else
+		A.playsound_cooldown--
+
 	for(var/atom/movable/M in pplz)
 
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
@@ -222,6 +246,22 @@ proc/AirflowSpace(zone/A)
 				spawn
 					if(M) M.GotoAirflowDest(n/10)
 					//Sometimes shit breaks, and M isn't there after the spawn.
+
+proc/play_wind_sound(var/turf/random_border, var/n)
+	if(random_border)
+		world << n
+		var/windsound = 'sound/effects/wind/wind_1_1.ogg'
+		switch(n)
+			if(0 to 30)
+				windsound = pick('sound/effects/wind/wind_2_1.ogg', 'sound/effects/wind/wind_2_2.ogg')
+			if(31 to 40)
+				windsound = pick('sound/effects/wind/wind_3_1.ogg')
+			if(41 to 60)
+				windsound = pick('sound/effects/wind/wind_4_1.ogg', 'sound/effects/wind/wind_4_2.ogg')
+			if(61 to 1000000)
+				windsound = pick('sound/effects/wind/wind_5_1.ogg')
+
+		playsound(random_border, windsound, 50, 1, 1)
 
 atom/movable
 	var/tmp/turf/airflow_dest

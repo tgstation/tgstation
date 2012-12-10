@@ -16,6 +16,9 @@ zone
 		last_update = 0
 		progress = "nothing"
 
+		// To make sure you're not spammed to death by airflow sound effects
+		tmp/playsound_cooldown = 0
+
 //CREATION AND DELETION
 	New(turf/start)
 		. = ..()
