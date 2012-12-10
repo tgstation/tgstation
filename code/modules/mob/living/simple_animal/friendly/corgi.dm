@@ -23,10 +23,12 @@
 
 /mob/living/simple_animal/corgi/Life()
 	..()
-	regenerate_icons()
+	//regenerate_icons() //Don't call this every life tick.
+	//I'm serious. If you're going to enable dressing up Ian,
+	//Find a GOOD place to call regenerate_icons().
 
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
-	/*
+	/* If you're turning this back on, scroll down and uncomment target_updated
 	user.machine = src
 	if(user.stat) return
 
@@ -391,7 +393,14 @@
 			overlays += back_icon
 	return
 
-
+//UNCOMMENT THIS WHEN YOU UNCOMMENT CODE FOR DRESSING UP IAN
+/*//Call when target overlay should be added/removed
+/mob/living/simple_animal/friendly/corgi/update_targeted()
+	if(!targeted_by && target_locked)
+		del(target_locked)
+	regenerate_icons()
+	if (targeted_by && target_locked)
+		overlays += target_locked*/
 
 /mob/living/simple_animal/corgi/puppy
 	name = "\improper corgi puppy"

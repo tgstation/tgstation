@@ -5,7 +5,6 @@
 	return
 
 /mob/proc/update_icons()
-	world << "[src] CALLED THE MOB VERSION OF UPDATE_ICONS"
 	return
 
 /mob/proc/update_hud()

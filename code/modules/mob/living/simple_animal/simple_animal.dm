@@ -433,3 +433,11 @@
 		if (M.occupant)
 			return (0)
 	return (1)
+
+//Call when target overlay should be added/removed
+/mob/living/simple_animal/update_targeted()
+	if(!targeted_by && target_locked)
+		del(target_locked)
+	overlays = null
+	if (targeted_by && target_locked)
+		overlays += target_locked
