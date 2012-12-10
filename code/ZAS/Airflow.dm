@@ -249,8 +249,7 @@ proc/AirflowSpace(zone/A)
 
 proc/play_wind_sound(var/turf/random_border, var/n)
 	if(random_border)
-		world << n
-		var/windsound = 'sound/effects/wind/wind_1_1.ogg'
+		var/windsound = 'sound/effects/wind/wind_2_1.ogg'
 		switch(n)
 			if(0 to 30)
 				windsound = pick('sound/effects/wind/wind_2_1.ogg', 'sound/effects/wind/wind_2_2.ogg')
