@@ -134,17 +134,14 @@ proc/Airflow(zone/A, zone/B)
 				connected_turfs |= C.B
 
 	// Only play a sound effect every once in a while
-	if(A.playsound_cooldown <= 0 && B.playsound_cooldown <= 0)
+	if(A.playsound_cooldown <= world.time && B.playsound_cooldown <= world.time)
 		// Play a nice sound effect at one of the bordering turfs
 
-		A.playsound_cooldown = rand(2, 5)
-		B.playsound_cooldown = rand(2, 5)
+		A.playsound_cooldown = world.time + rand(30, 70)
+		B.playsound_cooldown = world.time + rand(30, 70)
 
 		var/turf/random_border = pick(connected_turfs)
 		play_wind_sound(random_border, abs(n))
-	else
-		A.playsound_cooldown--
-		B.playsound_cooldown--
 
 	//Get lists of things that can be thrown across the room for each zone.
 	var/list/pplz = B.movables()
@@ -214,15 +211,13 @@ proc/AirflowSpace(zone/A)
 	var/list/pplz = A.movables() //We only need to worry about things in the zone, not things in space.
 
 	// Only play a sound effect every once in a while
-	if(A.playsound_cooldown <= 0)
+	if(A.playsound_cooldown <= world.time)
 		// Play a nice sound effect at one of the bordering turfs
 
-		A.playsound_cooldown = rand(2, 5)
+		A.playsound_cooldown = world.time + rand(30, 70)
 
 		var/turf/random_border = pick(connected_turfs)
 		play_wind_sound(random_border, abs(n))
-	else
-		A.playsound_cooldown--
 
 	for(var/atom/movable/M in pplz)
 
