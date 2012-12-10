@@ -325,7 +325,7 @@ ZIPPO
 /obj/item/weapon/cigpacket/New()
 	..()
 	flags |= NOREACT
-	create_reagents(15*cigcount)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
+	create_reagents(15 * cigcount)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
 
 /obj/item/weapon/cigpacket/Del()
 	..()
@@ -345,12 +345,26 @@ ZIPPO
 			var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
 			reagents.trans_to(W, (reagents.total_volume/cigcount))
 			user.put_in_active_hand(W)
-			reagents.maximum_volume = 15*cigcount
+			reagents.maximum_volume = 15 * cigcount
 			cigcount--
+			update_icon()
 	else
 		return ..()
-	update_icon()
-	return
+
+/obj/item/weapon/cigpacket/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M, /mob))
+		return
+
+	if(M == user && user.zone_sel.selecting == "mouth" && cigcount > 0 && !user.wear_mask)
+		var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
+		reagents.trans_to(W, (reagents.total_volume/cigcount))
+		user.equip_to_slot_if_possible(W, slot_wear_mask)
+		reagents.maximum_volume = 15 * cigcount
+		cigcount--
+		user << "<span class='notice'>You take a cigarette out of the pack.</span>"
+		update_icon()
+	else
+		..()
 
 /obj/item/weapon/cigpacket/dromedaryco
 	name = "DromedaryCo packet"
