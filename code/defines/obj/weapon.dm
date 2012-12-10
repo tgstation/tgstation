@@ -1185,8 +1185,8 @@
 	name = "gift"
 	desc = "PRESENTS!!!! eek!"
 	icon = 'icons/obj/items.dmi'
-	icon_state = "gift"
-	item_state = "gift"
+	icon_state = "gift1"
+	item_state = "gift1"
 	pressure_resistance = 70
 
 /obj/item/weapon/a_gift/New()

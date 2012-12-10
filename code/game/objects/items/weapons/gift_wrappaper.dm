@@ -7,6 +7,12 @@
 /*
  * Gifts
  */
+
+
+/obj/item/weapon/a_gift/New()
+	..()
+	icon_state = "gift[pick("1", "2", "3")]"
+
 /obj/item/weapon/gift/attack_self(mob/user as mob)
 	user.drop_item()
 	if(src.gift)
@@ -20,7 +26,6 @@
 /obj/item/weapon/a_gift/ex_act()
 	del(src)
 	return
-
 
 /obj/effect/spresent/relaymove(mob/user as mob)
 	if (user.stat)

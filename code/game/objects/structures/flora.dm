@@ -21,8 +21,8 @@
 	icon_state = "pine_c"
 
 /obj/structure/flora/tree/pine/New()
-	icon_state = "pine_c"
 	..()
+	icon_state = "pine_c"
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
