@@ -170,7 +170,7 @@
 		..()
 		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
-		src.modules += new /obj/item/weapon/pen(src)
+		src.modules += new /obj/item/weapon/pen/robopen(src)
 
 		var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 		M.matter = 30
@@ -182,7 +182,7 @@
 		L.light_on = 1
 		src.modules += L
 
-		src.modules += new /obj/item/weapon/tray(src)
+		src.modules += new /obj/item/weapon/tray/robotray(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 		src.emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 
