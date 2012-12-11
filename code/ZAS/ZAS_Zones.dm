@@ -164,6 +164,16 @@ zone/proc/process()
 				RemoveTurf(T)
 		if(unsimulated_tiles)
 			var/moved_air = ShareSpace(air,unsimulated_tiles)
+
+			// Only play a sound effect every once in a while
+			if(playsound_cooldown <= world.time)
+				// Play a nice sound effect at one of the bordering turfs
+
+				playsound_cooldown = world.time + rand(30, 70)
+
+				var/turf/random_border = pick(contents)
+				play_wind_sound(random_border, abs(moved_air))
+
 			if(moved_air > vsc.airflow_lightest_pressure)
 				AirflowSpace(src)
 
@@ -242,7 +252,17 @@ zone/proc/process()
 		for(var/zone/Z in connected_zones)
 			if(air && Z.air)
 				//Ensure we're not doing pointless calculations on equilibrium zones.
-				if(abs(air.total_moles() - Z.air.total_moles()) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
+				var/moles_delta = abs(air.total_moles() - Z.air.total_moles())
+				if(moles_delta > 0.1)
+					// Only play a sound effect every once in a while
+					if(playsound_cooldown <= world.time)
+						// Play a nice sound effect at one of the bordering turfs
+
+						playsound_cooldown = world.time + rand(30, 70)
+
+						var/turf/random_border = pick(contents)
+						play_wind_sound(random_border, abs(moved_air))
+				if(moles_delta > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
 					if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
 						Airflow(src,Z)
 					ShareRatio( air , Z.air , connected_zones[Z] )
@@ -453,6 +473,21 @@ zone/proc/Rebuild()
 				var/turf/simulated/T = get_step(S,direction)
 				if(istype(T) && T.zone && S.CanPass(null, T, 0, 0))
 					T.zone.AddTurf(S)
+
+proc/play_wind_sound(var/turf/random_border, var/n)
+	if(random_border)
+		var/windsound = 'sound/effects/wind/wind_2_1.ogg'
+		switch(n)
+			if(0 to 30)
+				windsound = pick('sound/effects/wind/wind_2_1.ogg', 'sound/effects/wind/wind_2_2.ogg')
+			if(31 to 40)
+				windsound = pick('sound/effects/wind/wind_3_1.ogg')
+			if(41 to 60)
+				windsound = pick('sound/effects/wind/wind_4_1.ogg', 'sound/effects/wind/wind_4_2.ogg')
+			if(61 to 1000000)
+				windsound = pick('sound/effects/wind/wind_5_1.ogg')
+
+		playsound(random_border, windsound, 50, 1, 1)
 
 //UNUSED
 /*
