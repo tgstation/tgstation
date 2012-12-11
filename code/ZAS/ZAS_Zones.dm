@@ -371,7 +371,8 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 	A.carbon_dioxide = max(0, (A.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg )
 	A.toxins = max(0, (A.toxins - plasma_avg) * (1-ratio) + plasma_avg )
 
-	A.temperature = max(TCMB, (A.temperature - temp_avg) * (1-ratio) + temp_avg )
+	// EXPERIMENTAL: Disable space being cold
+	//A.temperature = max(TCMB, (A.temperature - temp_avg) * (1-ratio) + temp_avg )
 
 	for(var/datum/gas/G in A.trace_gases)
 		var/G_avg = (G.moles*size + 0) / (size+share_size)
