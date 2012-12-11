@@ -58,7 +58,7 @@
 	if(!prob(chance * eventchance))
 		return 0
 
-	switch()
+	switch(picked_event)
 		if("Meteor")
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			world << sound('sound/AI/meteors.ogg')
