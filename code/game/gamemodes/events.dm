@@ -70,7 +70,7 @@
 				spawn_meteors()
 		if("Blob")
 			mini_blob_event()
-		if("Radiation|)
+		if("Radiation")
 			high_radiation_event()
 		if("Virus")
 			viral_outbreak()
