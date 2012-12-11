@@ -378,6 +378,41 @@ datum/objective/survive
 			return 0
 		return 1
 
+// Similar to the anti-rev objective, but for traitors
+datum/objective/brig
+	var/already_completed = 0
+
+	find_target()
+		..()
+		if(target && target.current)
+			explanation_text = "Have [target.current.real_name], the [target.assigned_role] brigged for 20 minutes."
+		else
+			explanation_text = "Free Objective"
+		return target
+
+
+	find_target_by_role(role, role_type=0)
+		..(role, role_type)
+		if(target && target.current)
+			explanation_text = "Have [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] brigged for 10 minutes."
+		else
+			explanation_text = "Free Objective"
+		return target
+
+	check_completion()
+		if(already_completed)
+			return 1
+
+		if(target && target.current)
+			if(target.current.stat == DEAD)
+				return 0
+			// Make the actual required time a bit shorter than the official time
+			if(target.is_brigged(10 * 60 * 5))
+				already_completed = 1
+				return 1
+			return 0
+		return 0
+
 
 datum/objective/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
