@@ -258,7 +258,7 @@ var/list/sharing_lookup_table = list(0.06, 0.11, 0.15, 0.18, 0.20, 0.21)
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
-		ratio = 0.99
+		ratio = 0.50
 
 		size = max(1,A.group_multiplier)
 		share_size = max(1,B.group_multiplier)
@@ -283,9 +283,6 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 		plasma_avg = (full_plasma + s_full_plasma) / (size + share_size)
 
 		temp_avg = (A.temperature * full_heat_capacity + B.temperature * s_full_heat_capacity) / (full_heat_capacity + s_full_heat_capacity)
-
-	if(sharing_lookup_table.len >= connecting_tiles) //6 or more interconnecting tiles will max at 42% of air moved per tick.
-		ratio = sharing_lookup_table[connecting_tiles]
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
@@ -342,7 +339,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 
 	var
 		// Depressurize very, very fast(it's fine since many rooms are internally multiple zones)
-		ratio = 0.99
+		ratio = 0.50
 
 		old_pressure = A.return_pressure()
 
@@ -356,16 +353,10 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 
 		full_heat_capacity = A.heat_capacity() * size
 
-		oxy_avg = (full_oxy + unsim_oxygen) / (size + share_size)
-		nit_avg = (full_nitro + unsim_nitrogen) / (size + share_size)
-		co2_avg = (full_co2 + unsim_co2) / (size + share_size)
-		plasma_avg = (full_plasma + unsim_plasma) / (size + share_size)
-
-		temp_avg = (A.temperature * full_heat_capacity + unsim_temperature * unsim_heat_capacity) / (full_heat_capacity + unsim_heat_capacity)
-
-	if(sharing_lookup_table.len >= unsimulated_tiles.len) //6 or more interconnecting tiles will max at 42% of air moved per tick.
-		ratio = sharing_lookup_table[unsimulated_tiles.len]
-	ratio *= 2
+		oxy_avg = (full_oxy + unsim_oxygen * 4) / (size + share_size * 4)
+		nit_avg = (full_nitro + unsim_nitrogen * 4) / (size + share_size * 4)
+		co2_avg = (full_co2 + unsim_co2 * 4) / (size + share_size * 4)
+		plasma_avg = (full_plasma + unsim_plasma * 4) / (size + share_size * 4)
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
