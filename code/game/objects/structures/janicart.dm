@@ -121,7 +121,7 @@
 
 /obj/structure/stool/bed/chair/janicart/bullet_act(var/obj/item/projectile/Proj)
 	if(buckled_mob)
-		if(prob(50))
+		if(prob(65))
 			return buckled_mob.bullet_act(Proj)
 	visible_message("<span class='warning'>[Proj] ricochets off the pimpin' ride!</span>")
 
