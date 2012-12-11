@@ -36,6 +36,8 @@
 
 /turf/simulated/mineral/New()
 
+	src.geological_data = new /datum/geosample(src)
+
 	spawn(1)
 		var/turf/T
 		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
@@ -54,9 +56,6 @@
 			T = get_step(src, WEST)
 			if (T)
 				T.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
-
-	src.geological_data = new /datum/geosample
-	src.geological_data.UpdateTurf(src)
 
 	if (mineralName && mineralAmt && spread && spreadChance)
 		if(prob(spreadChance))
@@ -286,8 +285,7 @@
 				O = new /obj/item/weapon/ore/clown(src)
 			if(O)
 				if(!src.geological_data)
-					src.geological_data = new /datum/geosample
-					src.geological_data.UpdateTurf(src)
+					src.geological_data = new /datum/geosample(src)
 				O.geological_data = src.geological_data
 
 	if (prob(src.artifactChance))

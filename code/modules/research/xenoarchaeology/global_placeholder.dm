@@ -1,0 +1,13 @@
+//todo: move these into global.dm
+
+var/FIND_NOTHING = 0
+var/FIND_PLANT = 1
+var/FIND_BIO = 2
+var/FIND_METEORIC = 3
+var/FIND_ICE = 4
+var/FIND_CRYSTALLINE = 6
+var/FIND_METALLIC = 7
+var/FIND_IGNEOUS = 8
+var/FIND_METAMORPHIC = 9
+var/FIND_CARBONATE = 10
+var/FIND_SEDIMENTARY = 11

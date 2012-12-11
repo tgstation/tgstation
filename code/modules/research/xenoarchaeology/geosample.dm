@@ -1,22 +1,25 @@
 
+
 datum/geosample
-	var/scrambled = 0	//if this sample has been mixed with other samples
+	var/scrambled = 0						//if this sample has been mixed with other samples
 	//
-	var/age = 0
-	var/age_thousand = 0					//age can correspond to different artifacts
+	var/age = 0								//age can correspond to different archaeological finds
+	var/age_thousand = 0
 	var/age_million = 0
 	var/age_billion = 0
 	var/artifact_id = ""					//id of a nearby artifact, if there is one
-	var/artifact_strength = 0				//proportional to distance
-	var/responsive_reagent = ""				///each reagent corresponds to a different type of find
-	var/reagent_response = ""				//likelihood of there being finds there
+	var/artifact_distance = 0				//proportional to distance
+	var/main_find = ""						//carrier reagent that the main body of the tile responds to
+	var/secondary_find = ""					//carrier reagent that the floor of the turf responds to
 	//
 	var/source_mineral
+	var/list/specifity_offsets = list()
 
 datum/geosample/New(var/turf/simulated/mineral/container)
 	UpdateTurf(container)
+	artifact_distance = rand(500,999999)
 
-//this function should only be called once. it's here just in case
+//this should only need to be called once
 datum/geosample/proc/UpdateTurf(var/turf/simulated/mineral/container)
 	source_mineral = container.mineralName
 	age = rand(1,999)
@@ -42,7 +45,7 @@ datum/geosample/proc/UpdateTurf(var/turf/simulated/mineral/container)
 			age_million = rand(1,999)
 			age_billion = rand(10, 13)
 		if("Clown")
-			age = rand(-1,-999)
+			age = rand(-1,-999)				//thats_the_joke.mp4
 			age_thousand = rand(-1,-999)
 		/*if("Archaeo")
 			//snowflake
