@@ -216,8 +216,8 @@
 	seed = "/obj/item/seeds/glowberryseed"
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
-	var/on = 1
-	var/brightness_on = 2 //luminosity when on
+	light_on = 1
+	brightness_on = 2 //luminosity when on
 	icon_state = "glowberrypile"
 	New()
 		..()

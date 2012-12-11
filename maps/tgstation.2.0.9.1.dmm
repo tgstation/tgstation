@@ -784,7 +784,7 @@
 "apd" = (/turf/simulated/floor/carpet,/area/security/detectives_office)
 "ape" = (/obj/structure/table/woodentable,/obj/item/weapon/cigpacket,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/obj/item/clothing/glasses/sunglasses,/turf/simulated/floor/carpet,/area/security/detectives_office)
 "apf" = (/obj/structure/table/woodentable,/obj/item/weapon/paper_bin{pixel_x = -3; pixel_y = 7},/obj/item/weapon/pen,/turf/simulated/floor/carpet,/area/security/detectives_office)
-"apg" = (/obj/structure/table/woodentable,/obj/item/device/flashlight/lamp/green{on = 0; pixel_x = -3; pixel_y = 8},/obj/item/weapon/book/manual/security_space_law,/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
+"apg" = (/obj/structure/table/woodentable,/obj/item/device/flashlight/lamp/green{light_on = 0; pixel_x = -3; pixel_y = 8},/obj/item/weapon/book/manual/security_space_law,/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
 "aph" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/machinery/requests_console{department = "Law office"; pixel_x = -32; pixel_y = 0},/turf/simulated/floor/wood,/area/lawoffice)
 "api" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/wood,/area/lawoffice)
 "apj" = (/obj/structure/table/woodentable,/obj/item/weapon/book/manual/security_space_law,/obj/item/weapon/book/manual/security_space_law,/obj/item/weapon/pen/red,/turf/simulated/floor/wood,/area/lawoffice)

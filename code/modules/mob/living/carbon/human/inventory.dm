@@ -159,9 +159,8 @@
 				client.screen -= W
 			W.loc = loc
 			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-
+			//if(W)
+				//W.layer = initial(W.layer)
 	update_action_buttons()
 	return 1
 
@@ -592,7 +591,15 @@ It can still be worn/put on as normal.
 							target.internals.icon_state = "internal1"
 	if(slot_to_process)
 		if(strip_item) //Stripping an item from the mob
-			target.u_equip(strip_item)
+			var/obj/item/W = strip_item
+			target.u_equip(W)
+			if (target.client)
+				target.client.screen -= W
+			if (W)
+				W.loc = target.loc
+				W.layer = initial(W.layer)
+				W.dropped(target)
+			W.add_fingerprint(source)
 			if(slot_to_process == slot_l_store) //pockets! Needs to process the other one too. Snowflake code, wooo! It's not like anyone will rewrite this anytime soon. If I'm wrong then... CONGRATULATIONS! ;)
 				if(target.r_store)
 					target.u_equip(target.r_store) //At this stage l_store is already processed by the code above, we only need to process r_store.
@@ -601,6 +608,7 @@ It can still be worn/put on as normal.
 				if(item.mob_can_equip(target, slot_to_process, 0))
 					source.u_equip(item)
 					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)
+					item.dropped(source)
 					source.update_icons()
 					target.update_icons()
 
