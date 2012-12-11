@@ -94,15 +94,12 @@ var/list/advance_cures = 	list(
 
 // Compares type then ID.
 /datum/disease/advance/IsSame(var/datum/disease/advance/D)
-	if(!(istype(D, /datum/disease/advance)))
-		//error("Returning 0 because not same type.")
 
+	if(!(istype(D, /datum/disease/advance)))
 		return 0
-	//error("Comparing [src.GetDiseaseID()] [D.GetDiseaseID()]")
+
 	if(src.GetDiseaseID() != D.GetDiseaseID())
-		//error("Returing 0")
 		return 0
-	//error("Returning 1")
 	return 1
 
 // To add special resistances.

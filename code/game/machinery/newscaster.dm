@@ -816,8 +816,14 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 						dat+="No Feed stories stem from this channel..."
 					else
 						dat+="<ul>"
+						var/i = 0
 						for(var/datum/feed_message/MESSAGE in C.messages)
-							dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
+							i++
+							dat+="-[MESSAGE.body] <BR>"
+							if(MESSAGE.img)
+								user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
+								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
+							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
 						dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
@@ -828,7 +834,13 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 				if(src.important_message!=null)
 					dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"
 					dat+="<B>Criminal name</B>: <FONT COLOR='maroon'>[important_message.author]</FONT><BR>"
-					dat+="<B>Description</B>: [important_message.body]"
+					dat+="<B>Description</B>: [important_message.body]<BR>"
+					dat+="<B>Photo:</B>: "
+					if(important_message.img)
+						user << browse_rsc(important_message.img, "tmp_photow.png")
+						dat+="<BR><img src='tmp_photow.png' width = '180'>"
+					else
+						dat+="None"
 				else
 					dat+="<I>Apart from some uninteresting Classified ads, there's nothing on this page...</I>"
 				if(scribble_page==curr_page)
