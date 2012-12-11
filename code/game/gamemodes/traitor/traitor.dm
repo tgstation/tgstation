@@ -99,11 +99,16 @@
 				kill_objective.owner = traitor
 				kill_objective.find_target()
 				traitor.objectives += kill_objective
-			if(34 to 66)
+			if(34 to 50)
 				var/datum/objective/brig/brig_objective = new
 				brig_objective.owner = traitor
 				brig_objective.find_target()
-				traitor.objectives += kill_objective
+				traitor.objectives += brig_objective
+			if(51 to 66)
+				var/datum/objective/harm/harm_objective = new
+				harm_objective.owner = traitor
+				harm_objective.find_target()
+				traitor.objectives += harm_objective
 			else
 				var/datum/objective/steal/steal_objective = new
 				steal_objective.owner = traitor
