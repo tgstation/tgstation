@@ -274,7 +274,7 @@
 				if(E.name == "l_hand" || E.name == "l_arm")
 					if(hand && equipped())
 						drop_item()
-						emote("custom v drops what they were holding, their [E.display_name?"[E.display_name]":"[E]"] malfunctioning!")
+						emote("me", 1, "drops what they were holding, their [E.display_name?"[E.display_name]":"[E]"] malfunctioning!")
 						var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 						spark_system.set_up(5, 0, src)
 						spark_system.attach(src)
@@ -284,7 +284,7 @@
 				else if(E.name == "r_hand" || E.name == "r_arm")
 					if(!hand && equipped())
 						drop_item()
-						emote("custom v drops what they were holding, their [E.display_name?"[E.display_name]":"[E]"] malfunctioning!")
+						emote("me", 1, "drops what they were holding, their [E.display_name?"[E.display_name]":"[E]"] malfunctioning!")
 						var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 						spark_system.set_up(5, 0, src)
 						spark_system.attach(src)
@@ -799,6 +799,10 @@
 			var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 			if(adjusted_pressure > HAZARD_HIGH_PRESSURE)
 				adjustBruteLoss( min( (adjusted_pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT , MAX_PRESSURE_DAMAGE) )
+		else if(pressure <= 50)
+			var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+			if(adjusted_pressure < 50)
+				adjustBruteLoss( (50 - adjusted_pressure) / 50 )
 		return
 
 	/*

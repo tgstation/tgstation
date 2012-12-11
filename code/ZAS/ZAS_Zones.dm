@@ -258,7 +258,7 @@ var/list/sharing_lookup_table = list(0.06, 0.11, 0.15, 0.18, 0.20, 0.21)
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
-		ratio = 0.41
+		ratio = 0.99
 
 		size = max(1,A.group_multiplier)
 		share_size = max(1,B.group_multiplier)
@@ -342,7 +342,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 
 	var
 		// Depressurize very, very fast(it's fine since many rooms are internally multiple zones)
-		ratio = 0.81
+		ratio = 0.99
 
 		old_pressure = A.return_pressure()
 

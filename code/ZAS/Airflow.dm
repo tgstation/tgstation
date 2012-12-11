@@ -255,7 +255,7 @@ proc/play_wind_sound(var/turf/random_border, var/n)
 			if(61 to 1000000)
 				windsound = pick('sound/effects/wind/wind_5_1.ogg')
 
-		playsound(random_border, windsound, 50, 1, 1)
+		playsound(random_border, windsound, 100, 1, 1)
 
 atom/movable
 	var/tmp/turf/airflow_dest
