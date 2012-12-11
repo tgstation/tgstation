@@ -10,24 +10,56 @@
 					dust_swarm("weak")*/
 			if (!event)
 				//CARN: checks to see if random events are enabled.
-				if(config.allow_random_events && prob(eventchance))
-					event()
-					hadevent = 1
+				if(config.allow_random_events)
+					hadevent = event()
 				else
 					Holiday_Random_Event()
 			else
 				event = 0
 			sleep(2400)
 
+// Doesn't necessarily trigger an event, but might. Returns 1 if it did.
 /proc/event()
 	event = 1
 
-	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13,14, 15) //so ninjas don't cause "empty" events.
+	var/minutes_passed = world.time/600
 
-	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
-		eventNumbersToPickFrom += 3
-	switch(pick(eventNumbersToPickFrom))
-		if(1)
+	var/engineer_count = number_active_with_role("Engineer")
+	var/security_count = number_active_with_role("Security")
+	var/medical_count = number_active_with_role("Medical")
+	var/AI_count = number_active_with_role("AI")
+	
+	// Maps event names to event chances
+	// For each chance, 100 represents "normal likelihood", anything below 100 is "reduced likelihood", anything above 100 is "increased likelihood"
+	var/list/possibleEvents = list()
+
+	// Check for additional possible events
+	possibleEvents["Carp"] = 50 + 50 * engineer_count
+	possibleEvents["Lights"] = 100
+	possibleEvents["Communications"] = 50 + 50 * AI_count
+	possibleEvents["Alien"] = 10
+	if(AI_count >= 1)
+		possibleEvents["Ion Storm"] = AI_count * 50 + engineer_count * 10
+	if(engineer_count >= 1 && minutes_passed >= 30) // Give engineers time to set up engine
+		possibleEvents["Meteor"] = 80 * engineer_count
+		possibleEvents["Blob"] = 30 * engineer_count
+		possibleEvents["Spacevine"] = 30 * engineer_count
+	if(medical_count >= 1)
+		possibleEvents["Radiation"] = medical_count * 100
+		possibleEvents["Virus"] = medical_count * 50
+		possibleEvents["Appendicitis"] = medical_count * 50
+	if(security_count >= 1)
+		possibleEvents["Prison Break"] = security_count * 50
+		
+	var/picked_event = pick(possibleEvents)
+	var/chance = possibleEvents[picked_event]
+
+	// Trigger the event based on how likely it currently is.
+	if(!prob(chance * eventchance))
+		return 0
+
+	switch()
+		if("Meteor")
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			world << sound('sound/AI/meteors.ogg')
 			spawn(100)
@@ -36,66 +68,30 @@
 			spawn(700)
 				meteor_wave()
 				spawn_meteors()
-
-		/*if(2)
-			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			world << sound('sound/AI/granomalies.ogg')
-			var/turf/T = pick(blobstart)
-			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
-			spawn(rand(50, 300))
-				del(bh)*/
-		/*
-		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
-			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			world << sound('sound/AI/spanomalies.ogg')
-			var/list/turfs = new
-			var/turf/picked
-			for(var/turf/simulated/floor/T in world)
-				if(T.z == 1)
-					turfs += T
-			for(var/turf/simulated/floor/T in turfs)
-				if(prob(20))
-					spawn(50+rand(0,3000))
-						picked = pick(turfs)
-						var/obj/effect/portal/P = new /obj/effect/portal( T )
-						P.target = picked
-						P.creator = null
-						P.icon = 'icons/obj/objects.dmi'
-						P.failchance = 0
-						P.icon_state = "anom"
-						P.name = "wormhole"
-						spawn(rand(300,600))
-							del(P)
-		*/
-		/*if(3)
-			if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
-				space_ninja_arrival()//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.*/
-		if(4)
+		if("Blob")
 			mini_blob_event()
-
-		if(5)
+		if("Radiation|)
 			high_radiation_event()
-		if(6)
+		if("Virus")
 			viral_outbreak()
-		if(7)
-			if(prob(10))
-				alien_infestation()
-		if(8)
+		if("Alien")
+			alien_infestation()
+		if("Prison Break")
 			prison_break()
-		if(9)
+		if("Carp")
 			carp_migration()
-		/*if(10)
-			immovablerod()*/
-		if(11)
+		if("Lights")
 			lightsout(1,2)
-		if(12)
+		if("Appendicitis")
 			appendicitis()
-		if(13)
+		if("Ion Storm")
 			IonStorm()
-		if(14)
+		if("Spacevine")
 			spacevine_infestation()
-		if(15)
+		if("Communications")
 			communications_blackout()
+
+	return 1
 
 /proc/communications_blackout(var/silent = 1)
 
@@ -525,3 +521,38 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 
 	world << "Ion Storm Main Done"
 	*/
+
+// Returns how many characters are currently active(not logged out, not AFK for more than 10 minutes)
+// with a specific role.
+// Note that this isn't sorted by department, because e.g. having a roboticist shouldn't make meteors spawn.
+proc/number_active_with_role(role)
+	var/count = 0
+	for(var/mob/M in player_list)
+		if(!M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
+			continue
+		switch(role)
+			if("Engineer")
+				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "engineering robot module")
+					count++
+				if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer"))
+					count++
+			if("Medical")
+				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "medical robot module")
+					count++
+				if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
+					count++
+			if("Security")
+				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "security robot module")
+					count++
+				if(M.mind.assigned_role in security_positions)
+					count++
+			if("Scientist")
+				if(M.mind.assigned_role in list("Research Director", "Scientist"))
+					count++
+			if("AI")
+				if(M.mind.assigned_role == "AI")
+					count++
+			if("Cyborg")
+				if(M.mind.assigned_role == "Cyborg")
+					count++
+	return count
