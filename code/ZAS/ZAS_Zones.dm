@@ -261,7 +261,7 @@ zone/proc/process()
 						playsound_cooldown = world.time + rand(30, 70)
 
 						var/turf/random_border = pick(contents)
-						play_wind_sound(random_border, abs(moved_air))
+						play_wind_sound(random_border, abs(moles_delta))
 				if(moles_delta > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
 					if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
 						Airflow(src,Z)
