@@ -28,7 +28,7 @@
 	var/security_count = number_active_with_role("Security")
 	var/medical_count = number_active_with_role("Medical")
 	var/AI_count = number_active_with_role("AI")
-	
+
 	// Maps event names to event chances
 	// For each chance, 100 represents "normal likelihood", anything below 100 is "reduced likelihood", anything above 100 is "increased likelihood"
 	var/list/possibleEvents = list()
@@ -50,12 +50,12 @@
 		possibleEvents["Appendicitis"] = medical_count * 50
 	if(security_count >= 1)
 		possibleEvents["Prison Break"] = security_count * 50
-		
+
 	var/picked_event = pick(possibleEvents)
 	var/chance = possibleEvents[picked_event]
 
 	// Trigger the event based on how likely it currently is.
-	if(!prob(chance * eventchance))
+	if(!prob(chance * eventchance * player_list.len / 20)) // "normal" event chance at 20 players
 		return 0
 
 	switch(picked_event)
