@@ -207,16 +207,15 @@
 		if("Scientist")
 			return list(access_tox, access_tox_storage, access_research, access_xenobiology)
 		if("Head of Security")
-			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_genetics, access_court,
-			            access_teleporter, access_heads, access_tech_storage, access_security, access_sec_doors, access_brig, access_atmospherics,
-			            access_maint_tunnels, access_bar, access_janitor, access_kitchen, access_robotics, access_armory, access_hydroponics,
-			            access_theatre, access_research, access_hos, access_RC_announce, access_forensics_lockers, access_keycard_auth, access_gateway)
+			return list(access_security, access_sec_doors, access_brig, access_armory, access_court,
+			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
+			            access_research, access_engine, access_mining, access_medical,
+			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
 		if("Head of Personnel")
 			return list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
-			            access_tox, access_tox_storage, access_chemistry, access_medical, access_genetics, access_engine,
-			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
-			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
+			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
+			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor,
+			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway)
 		if("Atmospheric Technician")
@@ -245,7 +244,7 @@
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_ai_upload, access_construction, access_robotics, access_sec_doors,
-			            access_mint, access_ce, access_RC_announce, access_keycard_auth, access_tcomsat)
+			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat)
 		if("Research Director")
 			return list(access_rd, access_heads, access_tox, access_genetics,
 			            access_tox_storage, access_teleporter, access_sec_doors,
