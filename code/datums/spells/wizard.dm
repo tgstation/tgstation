@@ -54,7 +54,7 @@
 	invocation_type = "shout"
 	range = 1
 
-	destroys = "gib"
+	destroys = "gib_brain"
 
 	sparks_spread = 1
 	sparks_amt = 4
