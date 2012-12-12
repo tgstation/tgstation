@@ -20,7 +20,7 @@
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_c"
 
-/obj/structure/flora/tree/pine/New()
+/obj/structure/flora/tree/pine/xmas/New()
 	..()
 	icon_state = "pine_c"
 
