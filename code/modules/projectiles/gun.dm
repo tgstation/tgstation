@@ -120,5 +120,9 @@
 		in_chamber = null
 
 		update_icon()
-		return
+
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
 

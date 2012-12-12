@@ -23,9 +23,6 @@
 		return 1
 	return 0
 
-/obj/item/weapon/melee/energy/sword/attack(target as mob, mob/user as mob)
-	..()
-
 /obj/item/weapon/melee/energy/sword/New()
 	color = pick("red","blue","green","purple")
 
