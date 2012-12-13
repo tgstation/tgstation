@@ -3802,7 +3802,7 @@
 "bvf" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "bvg" = (/obj/structure/stool/bed/chair,/obj/effect/landmark/start{name = "Geneticist"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "bvh" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
-"bvi" = (/obj/machinery/door/airlock/glass_research{name = "Genetics Research"; req_access_txt = "5; 9; 47"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
+"bvi" = (/obj/machinery/door/airlock/glass_research{name = "Genetics Research"; req_access_txt = "5; 9"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "bvj" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "bvk" = (/obj/machinery/atmospherics/pipe/manifold{color = "blue"; icon_state = "manifold-b-f"; level = 1; name = "pipe manifold"},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "bvl" = (/obj/machinery/camera{c_tag = "Genetics Research"; dir = 1; network = "RD"; pixel_x = 0},/obj/machinery/camera{c_tag = "Genetics Lab"; dir = 1; network = "SS13"; pixel_x = 22},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{dir = 4; icon_state = "whitepurple"},/area/medical/genetics)
