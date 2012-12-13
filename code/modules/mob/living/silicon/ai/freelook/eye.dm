@@ -41,8 +41,8 @@
 		if(!isturf(ai.loc))
 			return
 		T = get_turf(T)
+		cameranet.visibility(src, T)
 		loc = T
-		cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
 		//Holopad

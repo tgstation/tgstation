@@ -31,12 +31,12 @@ var/datum/cameranet/cameranet = new()
 
 // Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
 
-/datum/cameranet/proc/visibility(mob/aiEye/ai)
+/datum/cameranet/proc/visibility(mob/aiEye/ai, var/turf/T)
 	// 0xf = 15
-	var/x1 = max(0, ai.x - 16) & ~0xf
-	var/y1 = max(0, ai.y - 16) & ~0xf
-	var/x2 = min(world.maxx, ai.x + 16) & ~0xf
-	var/y2 = min(world.maxy, ai.y + 16) & ~0xf
+	var/x1 = max(0, T.x - 16) & ~0xf
+	var/y1 = max(0, T.y - 16) & ~0xf
+	var/x2 = min(world.maxx, T.x + 16) & ~0xf
+	var/y2 = min(world.maxy, T.y + 16) & ~0xf
 
 	var/list/visibleChunks = list()
 
