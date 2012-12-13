@@ -146,6 +146,12 @@
 		reagents.add_reagent("cryoxadone", 30)
 		update_icon()
 
+/obj/item/weapon/reagent_containers/glass/beaker/sulphuric
+	New()
+		..()
+		reagents.add_reagent("sacid", 50)
+		update_icon()
+
 /obj/item/weapon/reagent_containers/glass/beaker/slime
 	New()
 		..()

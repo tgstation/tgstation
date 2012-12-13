@@ -178,7 +178,7 @@
 /proc/get_access(job)
 	switch(job)
 		if("Geneticist")
-			return list(access_medical, access_morgue, access_genetics)
+			return list(access_medical, access_morgue, access_genetics, access_research)
 		if("Station Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
 		if("Assistant")
@@ -209,12 +209,12 @@
 		if("Head of Security")
 			return list(access_security, access_sec_doors, access_brig, access_armory, access_court,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
-			            access_research, access_engine, access_mining, access_medical,
+			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
 		if("Head of Personnel")
 			return list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
 			            access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
-			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor,
+			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction,
 			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway)
@@ -233,17 +233,17 @@
 		if("Chef")
 			return list(access_kitchen, access_morgue)
 		if("Roboticist")
-			return list(access_robotics, access_tech_storage, access_morgue) //As a job that handles so many corpses, it makes sense for them to have morgue access.
+			return list(access_robotics, access_tech_storage, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 		if("Cargo Technician")
 			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 		if("Shaft Miner")
-			return list(access_mining, access_mint, access_mining_station)
+			return list(access_mining, access_mint, access_mining_station, access_mailsorting)
 		if("Quartermaster")
 			return list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_ai_upload, access_construction, access_robotics, access_sec_doors,
+			            access_heads, access_ai_upload, access_construction, access_sec_doors,
 			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat)
 		if("Research Director")
 			return list(access_rd, access_heads, access_tox, access_genetics,
@@ -373,7 +373,7 @@
 		if(access_engine)
 			return "Engineering"
 		if(access_engine_equip)
-			return "APCs"
+			return "Power Equipment"
 		if(access_maint_tunnels)
 			return "Maintenance"
 		if(access_external_airlocks)
@@ -439,7 +439,7 @@
 		if(access_mining_office)
 			return "Mining Office"
 		if(access_mailsorting)
-			return "Delivery Office"
+			return "Cargo Office"
 		if(access_mint)
 			return "Mint"
 		if(access_mint_vault)
@@ -447,7 +447,7 @@
 		if(access_heads_vault)
 			return "Main Vault"
 		if(access_mining_station)
-			return "Mining Station EVA"
+			return "Mining EVA"
 		if(access_xenobiology)
 			return "Xenobiology Lab"
 		if(access_hop)
@@ -491,8 +491,8 @@
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Chef", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
-				"Atmospheric Technician", "Roboticist", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
-				"Research Director", "Scientist", "Head of Security", "Warden", "Detective", "Security Officer")
+				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
+				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")

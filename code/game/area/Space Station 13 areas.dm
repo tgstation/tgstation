@@ -594,11 +594,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "fsmaint"
 
 /area/maintenance/asmaint
-	name = "Library Maintenance"
+	name = "Medbay Maintenance"
 	icon_state = "asmaint"
 
 /area/maintenance/asmaint2
-	name = "Med-Sci Maintenance"
+	name = "Science Maintenance"
 	icon_state = "asmaint"
 
 /area/maintenance/apmaint
@@ -622,7 +622,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "pmaint"
 
 /area/maintenance/aft
-	name = "Robotics Maintenance"
+	name = "Engineering Maintenance"
 	icon_state = "amaint"
 
 /area/maintenance/storage
@@ -851,10 +851,10 @@ proc/process_ghost_teleport_locs()
 
 	engineering
 		name = "Engineering"
-		icon_state = "engine"
+		icon_state = "engine_smes"
 
 	break_room
-		name = "\improper Engineering Break Room"
+		name = "\improper Engineering Foyer"
 		icon_state = "engine"
 
 	chiefs_office
@@ -911,15 +911,19 @@ proc/process_ghost_teleport_locs()
 
 
 /area/assembly/chargebay
-	name = "\improper Recharging Bay"
+	name = "\improper Mech Bay"
 	icon_state = "mechbay"
 
 /area/assembly/showroom
 	name = "\improper Robotics Showroom"
 	icon_state = "showroom"
 
-/area/assembly/assembly_line
-	name = "\improper Robotics Assembly Line"
+/area/assembly/robotics
+	name = "\improper Robotics Lab"
+	icon_state = "ass_line"
+
+/area/assembly/assembly_line //Derelict Assembly Line
+	name = "\improper Assembly Line"
 	icon_state = "ass_line"
 
 //Teleporter
@@ -1006,7 +1010,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "cloning"
 
 /area/medical/sleeper
-	name = "\improper Medical Sleeper Room"
+	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
 
 //Security
@@ -1068,6 +1072,22 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Security Checkpoint"
 	icon_state = "security"
 
+/area/security/checkpoint/supply
+	name = "Security Post - Cargo Bay"
+	icon_state = "checkpoint1"
+
+/area/security/checkpoint/engineering
+	name = "Security Post - Engineering"
+	icon_state = "checkpoint1"
+
+/area/security/checkpoint/medical
+	name = "Security Post - Medbay"
+	icon_state = "checkpoint1"
+
+/area/security/checkpoint/science
+	name = "Security Post - Science"
+	icon_state = "checkpoint1"
+
 /area/security/vacantoffice
 	name = "\improper Vacant Office"
 	icon_state = "security"
@@ -1119,7 +1139,7 @@ proc/process_ghost_teleport_locs()
 //Toxins
 
 /area/toxins/lab
-	name = "\improper Research Lab"
+	name = "\improper Research and Development"
 	icon_state = "toxlab"
 
 /area/toxins/xenobiology
