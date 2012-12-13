@@ -102,7 +102,7 @@
 			name = "Signal Ace 2"
 			desc = "Complete with integrated radio signaler!"
 			icon_state = "cart-tox"
-//			access_reagent_scanner = 1
+			access_reagent_scanner = 1
 
 		New()
 			..()
@@ -172,7 +172,7 @@
 		icon_state = "cart-rd"
 		access_manifest = 1
 		access_status_display = 1
-//		access_reagent_scanner = 1
+		access_reagent_scanner = 1
 
 		New()
 			..()
