@@ -1,3 +1,4 @@
+hi
 // Add custom items you give to people here, and put their icons in custom_items.dmi
 // Remember to change 'icon = 'custom_items.dmi'' for items not using /obj/item/fluff as a base
 // Clothing item_state doesn't use custom_items.dmi. Just add them to the normal clothing files.
@@ -500,6 +501,41 @@
 	item_state = "ara_bar_uniform"
 	color = "ara_bar_uniform"
 
+/////// NT-SID Suit //Zuhayr: Jane Doe
+
+/obj/item/clothing/under/fluff/jane_sidsuit
+	name = "NT-SID jumpsuit"
+	desc = "A NanoTrasen Synthetic Intelligence Division jumpsuit, issued to 'volunteers'. On other people it looks fine, but right here a scientist has noted: on you it looks stupid."
+
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "jane_sid_suit"
+	item_state = "jane_sid_suit"
+	color = "jane_sid_suit"
+	has_sensor = 2
+	sensor_mode = 3
+	flags = FPRINT | TABLEPASS
+
+
+//Suit roll-down toggle.
+/obj/item/clothing/under/fluff/jane_sidsuit/verb/toggle_zipper()
+	set name = "Toggle Jumpsuit Zipper"
+	set category = "Object"
+	set src in usr
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return 0
+
+	if(src.icon_state == "jane_sid_suit_down")
+		src.color = "jane_sid_suit"
+		usr << "You zip up the [src]."
+	else
+		src.color = "jane_sid_suit_down"
+		usr << "You unzip and roll down the [src]."
+
+	src.icon_state = "[color]"
+	src.item_state = "[color]"
+	usr.update_inv_w_uniform()
+
 //////////// Masks ////////////
 
 /*
@@ -521,6 +557,23 @@
 	icon_state = "mara_kilpatrick_1"
 	flags = FPRINT|TABLEPASS
 	w_class = 1
+
+////// Small locket - Altair An-Nasaqan - Serithi
+
+/obj/item/clothing/tie/fluff/altair_locket
+	name = "small locket"
+	desc = "A small golden locket attached to an Ii'rka-reed string. Inside the locket is a holo-picture of a female Tajaran, and an inscription writtin in Siik'mas."
+	icon = 'custom_items.dmi'
+	icon_state = "altair_locket"
+	item_state = "altair_locket"
+	color = "altair_locket"
+	slot_flags = 0
+	flags = FPRINT|TABLEPASS
+	w_class = 1
+	slot_flags = SLOT_MASK
+
+	//overlays_lying[FACEMASK_LAYER]	= lying
+	//overlays_standing[FACEMASK_LAYER]	= standing
 
 //////////// Shoes ////////////
 
@@ -593,3 +646,13 @@
 	icon_state = "retpoluniform"
 	color = "retpoluniform"
 
+//////////// Weapons ////////////
+
+///// Colt Peacemaker - Ana Ka'Rimah - SueTheCake
+
+/obj/item/weapon/gun/energy/stunrevolver/fluff/ana_peacemaker
+
+	name = "Peacemaker"
+	desc = "A nickel-plated revolver with pearl grips. It has a certain Old West flair!"
+	icon = 'custom_items.dmi'
+	icon_state = "peacemaker"
