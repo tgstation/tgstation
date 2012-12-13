@@ -462,12 +462,11 @@ Alien plants should do something if theres a lot of poison
 		healthcheck()
 
 /obj/effect/alien/egg/HasProximity(atom/movable/AM as mob|obj)
-	if(!CanHug(AM))
-		return
-	if(status == GROWN && iscarbon(AM) && !isalien(AM))
-
+	if(status == GROWN)
+		if(!CanHug(AM))
+			return
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.has_disease(/datum/disease/alien_embryo))
+		if(C.stat == CONSCIOUS && C.has_disease(new /datum/disease/alien_embryo(0)))
 			return
 
 		status = BURST
