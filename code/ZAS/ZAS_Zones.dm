@@ -33,7 +33,7 @@ zone
 			if(!istype(T,/turf/simulated))
 				AddTurf(T)
 
-		//Generate the gas_mixture for use in this zone by using the average of the gases
+		//Generate the gas_mixture for use in txhis zone by using the average of the gases
 		//defined at startup.
 		air = new
 		var/members = contents.len
@@ -283,6 +283,7 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 
 	if(sharing_lookup_table.len >= connecting_tiles) //6 or more interconnecting tiles will max at 42% of air moved per tick.
 		ratio = sharing_lookup_table[connecting_tiles]
+	ratio *= 3
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
@@ -345,23 +346,23 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 		size = max(1,A.group_multiplier)
 		share_size = max(1,unsimulated_tiles.len)
 
-		full_oxy = A.oxygen * size
-		full_nitro = A.nitrogen * size
-		full_co2 = A.carbon_dioxide * size
-		full_plasma = A.toxins * size
+		//full_oxy = A.oxygen * size
+		//full_nitro = A.nitrogen * size
+		//full_co2 = A.carbon_dioxide * size
+		//full_plasma = A.toxins * size
 
-		full_heat_capacity = A.heat_capacity() * size
+		//full_heat_capacity = A.heat_capacity() * size
 
-		oxy_avg = (full_oxy + unsim_oxygen) / (size + share_size)
-		nit_avg = (full_nitro + unsim_nitrogen) / (size + share_size)
-		co2_avg = (full_co2 + unsim_co2) / (size + share_size)
-		plasma_avg = (full_plasma + unsim_plasma) / (size + share_size)
+		oxy_avg = unsim_oxygen//(full_oxy + unsim_oxygen) / (size + share_size)
+		nit_avg = unsim_nitrogen//(full_nitro + unsim_nitrogen) / (size + share_size)
+		co2_avg = unsim_co2//(full_co2 + unsim_co2) / (size + share_size)
+		plasma_avg = unsim_plasma//(full_plasma + unsim_plasma) / (size + share_size)
 
-		temp_avg = (A.temperature * full_heat_capacity + unsim_temperature * unsim_heat_capacity) / (full_heat_capacity + unsim_heat_capacity)
+		temp_avg = unsim_temperature//(A.temperature * full_heat_capacity + unsim_temperature * unsim_heat_capacity) / (full_heat_capacity + unsim_heat_capacity)
 
 	if(sharing_lookup_table.len >= unsimulated_tiles.len) //6 or more interconnecting tiles will max at 42% of air moved per tick.
 		ratio = sharing_lookup_table[unsimulated_tiles.len]
-	ratio *= 2
+	ratio *= 3
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
