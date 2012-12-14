@@ -11,6 +11,7 @@
 	density = 0
 	status_flags = GODMODE  // You can't damage it.
 	mouse_opacity = 0
+	see_in_dark = 7
 
 // Movement code. Returns 0 to stop air movement from moving it.
 /mob/aiEye/Move()
@@ -41,8 +42,8 @@
 		if(!isturf(ai.loc))
 			return
 		T = get_turf(T)
-		cameranet.visibility(src, T)
 		loc = T
+		cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
 		//Holopad
