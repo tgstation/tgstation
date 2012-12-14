@@ -243,12 +243,12 @@
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_ai_upload, access_construction, access_sec_doors,
+			            access_heads, access_construction, access_sec_doors,
 			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat)
 		if("Research Director")
 			return list(access_rd, access_heads, access_tox, access_genetics,
 			            access_tox_storage, access_teleporter, access_sec_doors,
-			            access_research, access_robotics, access_xenobiology,
+			            access_research, access_robotics, access_xenobiology, access_ai_upload,
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway)
 		if("Virologist")
 			return list(access_medical, access_virology)
