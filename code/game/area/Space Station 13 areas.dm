@@ -1364,7 +1364,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "ai_upload"
 
 /area/turret_protected/ai_upload_foyer
-	name = "Secure Network Access"
+	name = "AI Upload Access"
 	icon_state = "ai_foyer"
 
 /area/turret_protected/ai
