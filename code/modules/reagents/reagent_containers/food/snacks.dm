@@ -335,7 +335,7 @@
 	desc = "Like life, it never quite tastes the same."
 	icon_state = "donut1"
 	New()
-
+		..()
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("sprinkles", 1)
 		bitesize = 10
