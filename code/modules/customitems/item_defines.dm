@@ -575,6 +575,15 @@ hi
 	//overlays_lying[FACEMASK_LAYER]	= lying
 	//overlays_standing[FACEMASK_LAYER]	= standing
 
+/obj/item/clothing/tie/fluff/nasir_khayyam_1
+	name = "medallion"
+	desc = "This silvered medallion bears the symbol of the Hadii Clan of the Tajaran."
+	icon = 'custom_items.dmi'
+	icon_state = "nasir_khayyam_1"
+	flags = FPRINT|TABLEPASS
+	w_class = 1
+	slot_flags = SLOT_MASK
+
 //////////// Shoes ////////////
 
 /obj/item/clothing/shoes/magboots/fluff/susan_harris_1 //sniperyeti: Susan Harris
