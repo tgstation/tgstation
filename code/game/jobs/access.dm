@@ -308,15 +308,15 @@
 		if(2) //medbay
 			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
 		if(3) //research
-			return list(access_research, access_tox, access_tox_storage, access_xenobiology, access_rd)
+			return list(access_research, access_tox, access_tox_storage, access_robotics, access_xenobiology, access_rd)
 		if(4) //engineering and maintenance
-			return list(access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_construction, access_robotics, access_ce)
+			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_ce)
 		if(5) //command
 			return list(access_heads, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_all_personal_lockers, access_heads_vault, access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_hop, access_captain)
 		if(6) //station general
 			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
 		if(7) //supply
-			return list(access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_mining, access_mining_station)
+			return list(access_mailsorting, access_cargo, access_cargo_bot, access_mining, access_mining_station, access_qm)
 
 /proc/get_region_accesses_name(var/code)
 	switch(code)
