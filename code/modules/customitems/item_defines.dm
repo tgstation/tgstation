@@ -71,6 +71,7 @@ hi
 ////////// Usable Items //////////
 //////////////////////////////////
 
+
 /obj/item/weapon/pen/fluff/multi //spaceman96: Trenna Seber
 	name = "multicolor pen"
 	desc = "It's a cool looking pen. Lots of colors!"
@@ -331,10 +332,17 @@ hi
 /obj/item/weapon/crowbar/fluff/zelda_creedy_1 //daaneesh: Zelda Creedy
 	name = "Zelda's Crowbar"
 	desc = "A pink crow bar that has an engraving that reads, 'To Zelda. Love always, Dawn'"
-	icon = 'icons/obj/custom_items.dmi'
+	icon = 'custom_items.dmi'
 	icon_state = "zeldacrowbar"
 	item_state = "crowbar"
 
+////// Ripley customisation kit - Butchery Royce - MayeDay
+
+/obj/item/weapon/fluff/butcher_royce_1
+	name = "Ripley customisation kit"
+	desc = "A kit containing all the needed tools and parts to turn an APLU Ripley into a Titan's Fist worker mech."
+	icon = 'custom_items.dmi'
+	icon_state = "royce_kit"
 
 //////////////////////////////////
 //////////// Clothing ////////////
@@ -572,8 +580,7 @@ hi
 	w_class = 1
 	slot_flags = SLOT_MASK
 
-	//overlays_lying[FACEMASK_LAYER]	= lying
-	//overlays_standing[FACEMASK_LAYER]	= standing
+//////  Medallion - Nasir Khayyam - Jamini
 
 /obj/item/clothing/tie/fluff/nasir_khayyam_1
 	name = "medallion"
@@ -583,6 +590,16 @@ hi
 	flags = FPRINT|TABLEPASS
 	w_class = 1
 	slot_flags = SLOT_MASK
+
+////// Emerald necklace - Ty Foster - Nega
+
+/obj/item/clothing/mask/mara_kilpatrick_1
+	name = "emerald necklace"
+	desc = "A brass necklace with a green emerald placed at the end. It has a small inscription on the top of the chain, saying \'Foster\'"
+	icon = 'custom_items.dmi'
+	icon_state = "ty_foster"
+	flags = FPRINT|TABLEPASS
+	w_class = 1
 
 //////////// Shoes ////////////
 
