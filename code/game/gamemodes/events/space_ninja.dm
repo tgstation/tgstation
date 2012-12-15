@@ -93,7 +93,33 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 /var/global/toggle_space_ninja = 1//If ninjas can spawn or not.
 /var/global/sent_ninja_to_station = 0//If a ninja is already on the station.
 
-/proc/space_ninja_arrival()
+/proc/choose_space_ninja()
+	var/list/candidates = list()	//list of candidate keys
+	for(var/mob/dead/observer/G in player_list)
+		if(G.client && ((G.client.inactivity/10)/60) <= 5 && G.client.be_spaceninja)
+			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+				candidates += G
+	if(!candidates.len)	return
+	candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
+
+	//loop over all viable candidates, giving them a popup asking if they want to be space ninja
+	var/mob/dead/observer/accepted_ghost
+	while(candidates.len && !accepted_ghost)
+		//ask a different random candidate
+		var/mob/dead/observer/G = pick(candidates)
+		//give the popup a 30 second timeout in case the player is AFK
+		if(sd_Alert(G, "A space ninja is about to spawn. Would you like to play as the ninja?", "Space Ninja", list("Yes","No"), "Yes", 300, 1, "350x125") == "Yes")
+			accepted_ghost = G
+		else
+			candidates -= G
+
+	if(accepted_ghost)
+		//someone accepted
+		space_ninja_arrival(accepted_ghost)
+
+/proc/space_ninja_arrival(var/mob/dead/observer/G)
+	if(!G)
+		return choose_space_ninja()
 
 	var/datum/game_mode/current_mode = ticker.mode
 	var/datum/mind/current_mind
@@ -137,18 +163,9 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 		if(L.name == "carpspawn")
 			spawn_list.Add(L)
 
-
-	var/list/candidates = list()	//list of candidate keys
-	for(var/mob/dead/observer/G in player_list)
-		if(G.client && !G.client.holder && ((G.client.inactivity/10)/60) <= 5 && G.client.be_spaceninja)
-			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-				candidates += G.key
-	if(!candidates.len)	return
-	candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
-
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))
-	new_ninja.key = pick(candidates)
+	new_ninja.key = G.ckey
 	new_ninja.wear_suit:randomize_param()//Give them a random set of suit parameters.
 	new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
 	new_ninja.internals.icon_state = "internal1"

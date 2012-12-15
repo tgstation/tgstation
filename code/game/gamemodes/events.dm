@@ -21,8 +21,11 @@
 
 /proc/event()
 	event = 1
+	if(!sent_ninja_to_station)
+		choose_space_ninja()
+		return
 
-	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13,14, 15) //so ninjas don't cause "empty" events.
+	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13,14,15) //so ninjas don't cause "empty" events.
 
 	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
 		eventNumbersToPickFrom += 3
@@ -36,7 +39,6 @@
 			spawn(700)
 				meteor_wave()
 				spawn_meteors()
-
 		/*if(2)
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('sound/AI/granomalies.ogg')
@@ -44,8 +46,7 @@
 			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 			spawn(rand(50, 300))
 				del(bh)*/
-		/*
-		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
+		/*if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('sound/AI/spanomalies.ogg')
 			var/list/turfs = new
@@ -65,14 +66,12 @@
 						P.icon_state = "anom"
 						P.name = "wormhole"
 						spawn(rand(300,600))
-							del(P)
-		*/
-		/*if(3)
-			if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
-				space_ninja_arrival()//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.*/
+							del(P)*/
+		if(3)
+			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
+			choose_space_ninja()
 		if(4)
 			mini_blob_event()
-
 		if(5)
 			high_radiation_event()
 		if(6)
