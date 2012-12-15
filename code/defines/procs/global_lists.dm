@@ -10,6 +10,7 @@ var/global/list/client_list = list()				//List of all clients, based on ckey
 var/global/list/cable_list = list()					//Index for all cables, so that powernets don't have to look through the entire world all the time
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
 var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessory/facial_hair indexed by name
+var/global/list/skin_styles_list = list()			//stores /datum/sprite_accessory/skin indexed by name
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 var/global/list/landmarks_list = list()				//list of all landmarks created
@@ -26,11 +27,20 @@ var/global/list/landmarks_list = list()				//list of all landmarks created
 	for(var/path in paths)
 		var/datum/sprite_accessory/hair/H = new path()
 		hair_styles_list[H.name] = H
+
 	//Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
 	paths = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
 	for(var/path in paths)
 		var/datum/sprite_accessory/facial_hair/H = new path()
 		facial_hair_styles_list[H.name] = H
+
+	//Skin Styles - Initialise all /datum/sprite_accessory/skin into a list indexed by the name
+	//Check to make sure the icon file exists first
+	paths = typesof(/datum/sprite_accessory/skin) - /datum/sprite_accessory/skin
+	for(var/path in paths)
+		var/datum/sprite_accessory/skin/S = new path()
+		if(fexists("[S.icon].dmi"))
+			skin_styles_list[S.name] = S
 
 proc/make_player_list()//Global proc that rebuilds the player list
 	for(var/mob/p in player_list)//Clears out everyone that logged out

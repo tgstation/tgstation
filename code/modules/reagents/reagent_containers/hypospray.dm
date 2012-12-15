@@ -6,8 +6,9 @@
 	name = "hypospray"
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "hypo"
+	item_state = "hypo1"
 	icon_state = "hypo"
+	var/original_icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = null
@@ -56,6 +57,7 @@
 	name = "autoinjector"
 	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
 	icon_state = "autoinjector"
+	original_icon_state = "autoinjector"
 	item_state = "autoinjector"
 	amount_per_transfer_from_this = 5
 	volume = 5
@@ -74,9 +76,9 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
 	if(reagents.total_volume > 0)
-		icon_state = "[initial(icon_state)]1"
+		icon_state = "[original_icon_state]1"
 	else
-		icon_state = "[initial(icon_state)]0"
+		icon_state = "[original_icon_state]0"
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/examine()
 	..()
