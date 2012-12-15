@@ -171,7 +171,7 @@ datum/objective/hijack
 
 
 datum/objective/block
-	explanation_text = "Do not allow any humans to escape on the shuttle alive."
+	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 
 
 	check_completion()
@@ -278,10 +278,19 @@ datum/objective/steal
 		"the station blueprints" = /obj/item/blueprints,
 		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 		"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
+		"a slime core" = /obj/item/slime_core,
+		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		"a research directors jumpsuit" = /obj/item/clothing/under/rank/research_director,
+		"a chief engineers jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
+		"a chief medical officers jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
+		"a head of securitys jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
+		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
+		"the captains pinpointer" = /obj/item/weapon/pinpointer,
+		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 	)
 
 	var/global/possible_items_special[] = list(
-		"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
+		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
 		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
 		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
