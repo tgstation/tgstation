@@ -138,10 +138,10 @@
 //all air alarms in area are connected via magic
 /area
 	var/obj/machinery/alarm/master_air_alarm
-	var/list/air_vent_names
-	var/list/air_scrub_names
-	var/list/air_vent_info
-	var/list/air_scrub_info
+	var/list/air_vent_names = list()
+	var/list/air_scrub_names = list()
+	var/list/air_vent_info = list()
+	var/list/air_scrub_info = list()
 
 /obj/machinery/alarm/New(nloc, ndir, nbuild)
 	..()
@@ -179,11 +179,6 @@
 		for (var/obj/machinery/alarm/AA in A)
 			if (!(AA.stat & (NOPOWER|BROKEN)))
 				alarm_area.master_air_alarm = AA
-				if (!alarm_area.air_vent_names)
-					alarm_area.air_vent_names = new
-					alarm_area.air_scrub_names = new
-					alarm_area.air_vent_info = new
-					alarm_area.air_scrub_info = new
 				return 1
 	return 0
 
@@ -378,46 +373,6 @@
 		return 1
 	else
 		return 0
-
-/obj/machinery/alarm/receive_signal(datum/signal/signal)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if (alarm_area.master_air_alarm != src)
-		if (master_is_operating())
-			return
-		elect_master()
-		if (alarm_area.master_air_alarm != src)
-			return
-	if(!signal || signal.encryption)
-		return
-	var/id_tag = signal.data["tag"]
-	if (!id_tag)
-		return
-	if (signal.data["area"] != area_uid)
-		return
-	if (signal.data["sigtype"] != "status")
-		return
-
-	var/dev_type = signal.data["device"]
-	if(!(id_tag in alarm_area.air_scrub_names) && !(id_tag in alarm_area.air_vent_names))
-		register_env_machine(id_tag, dev_type)
-	if(dev_type == "AScr")
-		alarm_area.air_scrub_info[id_tag] = signal.data
-	else if(dev_type == "AVP")
-		alarm_area.air_vent_info[id_tag] = signal.data
-
-/obj/machinery/alarm/proc/register_env_machine(var/m_id, var/device_type)
-	var/new_name
-	if (device_type=="AVP")
-		new_name = "[alarm_area.name] Vent Pump #[alarm_area.air_vent_names.len+1]"
-		alarm_area.air_vent_names[m_id] = new_name
-	else if (device_type=="AScr")
-		new_name = "[alarm_area.name] Air Scrubber #[alarm_area.air_scrub_names.len+1]"
-		alarm_area.air_scrub_names[m_id] = new_name
-	else
-		return
-	spawn (10)
-		send_signal(m_id, list("init" = new_name) )
 
 /obj/machinery/alarm/proc/refresh_all()
 	for(var/id_tag in alarm_area.air_vent_names)

@@ -162,6 +162,12 @@
 				"sigtype" = "status"
 			)
 
+			if(!initial_loc.air_vent_names[id_tag])
+				var/new_name = "[initial_loc.name] Vent Pump #[initial_loc.air_vent_names.len+1]"
+				initial_loc.air_vent_names[id_tag] = new_name
+				src.name = new_name
+			initial_loc.air_vent_info[id_tag] = signal.data
+
 			radio_connection.post_signal(src, signal, radio_filter_out)
 
 			return 1
@@ -183,62 +189,62 @@
 		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 			return 0
 
-		if("purge" in signal.data)
+		if(signal.data["purge"] != null)
 			pressure_checks &= ~1
 			pump_direction = 0
 
-		if("stabalize" in signal.data)
+		if(signal.data["stabalize"] != null)
 			pressure_checks |= 1
 			pump_direction = 1
 
-		if("power" in signal.data)
+		if(signal.data["power"] != null)
 			on = text2num(signal.data["power"])
 
-		if("power_toggle" in signal.data)
+		if(signal.data["power_toggle"] != null)
 			on = !on
 
-		if("checks" in signal.data)
+		if(signal.data["checks"] != null)
 			pressure_checks = text2num(signal.data["checks"])
 
-		if("checks_toggle" in signal.data)
+		if(signal.data["checks_toggle"] != null)
 			pressure_checks = (pressure_checks?0:3)
 
-		if("direction" in signal.data)
+		if(signal.data["direction"] != null)
 			pump_direction = text2num(signal.data["direction"])
 
-		if("set_internal_pressure" in signal.data)
+		if(signal.data["set_internal_pressure"] != null)
 			internal_pressure_bound = between(
 				0,
 				text2num(signal.data["set_internal_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
 
-		if("set_external_pressure" in signal.data)
+		if(signal.data["set_external_pressure"] != null)
 			external_pressure_bound = between(
 				0,
 				text2num(signal.data["set_external_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
 
-		if("adjust_internal_pressure" in signal.data)
+		if(signal.data["adjust_internal_pressure"] != null)
 			internal_pressure_bound = between(
 				0,
 				internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
 
-		if("adjust_external_pressure" in signal.data)
+		if(signal.data["adjust_external_pressure"] != null)
 			external_pressure_bound = between(
 				0,
 				external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),
 				ONE_ATMOSPHERE*50
 			)
 
-		if("init" in signal.data)
+		if(signal.data["init"] != null)
 			name = signal.data["init"]
 			return
 
-		if("status" in signal.data)
+		if(signal.data["status"] != null)
 			spawn(2)
 				broadcast_status()
 			return //do not update_icon
@@ -326,5 +332,6 @@
 /obj/machinery/atmospherics/unary/vent_pump/Del()
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
+		initial_loc.air_vent_names -= id_tag
 	..()
 	return
