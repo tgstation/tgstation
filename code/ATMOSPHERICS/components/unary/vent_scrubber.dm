@@ -259,7 +259,7 @@
 			new /obj/item/pipe(loc, make_from=src)
 			del(src)
 
-	/obj/machinery/atmospherics/unary/vent_scrubber/Del()
-		initial_loc.air_scrub_info -= id_tag
-		..()
-		return
+/obj/machinery/atmospherics/unary/vent_scrubber/Del()
+	initial_loc.air_scrub_info -= id_tag
+	..()
+	return
