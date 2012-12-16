@@ -288,6 +288,13 @@ datum/shuttle_controller
 
 				if(1)
 
+					// Just before it leaves, close the damn doors!
+					if(timeleft == 2 || timeleft == 1)
+						var/area/start_location = locate(/area/shuttle/escape/station)
+						for(var/obj/machinery/door/D in start_location)
+							spawn(0)
+								D.close()
+
 					if(timeleft>0)
 						return 0
 

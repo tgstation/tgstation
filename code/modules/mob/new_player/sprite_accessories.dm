@@ -331,3 +331,29 @@
 		name = "Tajaran Ears"
 		icon_state = "tajears"
 		species_allowed = list("Tajaran")
+
+//skin styles - WIP
+
+/datum/sprite_accessory/skin
+	human
+		name = "Default human skin"
+		icon = "human"
+
+	human_tatt01
+		name = "Tatt01 human skin"
+		icon = "human_tattoo1"
+
+	tajaran
+		name = "Default tajaran skin"
+		icon = "tajaran"
+		species_allowed = list("Tajaran")
+
+	soghun
+		name = "Default soghun skin"
+		icon = "soghun"
+		species_allowed = list("Soghun")
+
+	skrell
+		name = "Default skrell skin"
+		icon = "skrell"
+		species_allowed = list("Skrell")

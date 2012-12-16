@@ -397,6 +397,7 @@
 #include "code\defines\procs\icon_procs_readme.dm"
 #include "code\defines\procs\logging.dm"
 #include "code\defines\procs\religion_name.dm"
+#include "code\defines\procs\sd_Alert.dm"
 #include "code\defines\procs\station_name.dm"
 #include "code\defines\procs\statistics.dm"
 #include "code\defines\procs\syndicate_name.dm"
