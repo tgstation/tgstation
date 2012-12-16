@@ -74,7 +74,7 @@
 			base_chance = 1.1
 
 	// Trigger the event based on how likely it currently is.
-	if(!prob(chance * eventchance * base_chance / ( 100 * 100))) // "normal" event chance at 20 players
+	if(!prob(chance * eventchance * base_chance / 100)) // "normal" event chance at 20 players
 		return 0
 
 	switch(picked_event)
