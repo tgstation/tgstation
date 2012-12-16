@@ -790,7 +790,20 @@ datum
 			required_other = 4
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 
-				var/list/critters = typesof(/mob/living/simple_animal/hostile) - /mob/living/simple_animal/hostile // list of possible hostile mobs
+				var/blocked = list(/mob/living/simple_animal/hostile,
+					/mob/living/simple_animal/hostile/pirate,
+					/mob/living/simple_animal/hostile/pirate/ranged,
+					/mob/living/simple_animal/hostile/russian,
+					/mob/living/simple_animal/hostile/russian/ranged,
+					/mob/living/simple_animal/hostile/syndicate,
+					/mob/living/simple_animal/hostile/syndicate/melee,
+					/mob/living/simple_animal/hostile/syndicate/melee/space,
+					/mob/living/simple_animal/hostile/syndicate/ranged,
+					/mob/living/simple_animal/hostile/syndicate/ranged/space,
+					/mob/living/simple_animal/hostile/alien/queen/large,
+					/mob/living/simple_animal/clown
+					)//exclusion list for things you don't want the reaction to create.
+				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
