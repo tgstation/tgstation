@@ -214,6 +214,7 @@
 
 	proc/bandage()
 		var/rval = 0
+		src.status &= ~ORGAN_BLEEDING
 		for(var/datum/wound/W in wounds)
 			if(W.internal) continue
 			rval |= !W.bandaged
@@ -355,7 +356,7 @@
 					H = new /obj/item/weapon/organ/head(owner.loc, owner)
 					if(ishuman(owner))
 						if(owner.gender == FEMALE)
-							H.icon_state = "head_f_l"
+							H.icon_state = "head_f"
 						H.overlays += owner.generate_head_icon()
 					H:transfer_identity(owner)
 					H.pixel_x = -10
@@ -681,7 +682,7 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 
 obj/item/weapon/organ/head
 	name = "head"
-	icon_state = "head_m_l"
+	icon_state = "head_m"
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
 

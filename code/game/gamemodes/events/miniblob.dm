@@ -9,7 +9,7 @@
 	blobevent = 1
 	spawn(0)
 		dotheblobbaby()
-	spawn(3000)
+	spawn(12000) // blob event can last up to 20 minutes
 		blobevent = 0
 	spawn(rand(1000, 2000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
@@ -25,5 +25,5 @@
 				if(B.z != 1)
 					continue
 				B.Life()
-		spawn(70)
+		spawn(280) // advance 1 tile every 30 seconds
 			dotheblobbaby()

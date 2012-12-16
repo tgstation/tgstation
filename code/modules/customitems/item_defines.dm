@@ -61,6 +61,11 @@
 	icon_state = "paper"
 	item_state = "paper"
 
+/obj/item/fluff/maurice_bedford_1
+	name = "Monogrammed Handkerchief"
+	desc = "A neatly folded handkerchief embroidered with a 'M'."
+	icon_state = "maurice_bedford_1"
+
 //////////////////////////////////
 ////////// Usable Items //////////
 //////////////////////////////////
@@ -301,7 +306,7 @@
 	icon = 'custom_items.dmi'
 	icon_state = "odysseus_spec_id"
 
-/obj/item/weapon/card/id/fluff/ian_colmid //Roaper: Ian Colm
+/obj/item/weapon/card/id/fluff/ian_colm_1 //Roaper: Ian Colm
 	name = "Technician"
 	desc = "An old ID with the words 'Ian Colm's Technician ID' printed on it.."
 	icon = 'custom_items.dmi'
@@ -367,28 +372,19 @@
 	icon = 'custom_items.dmi'
 	icon_state = "book_berner_1"
 
-/obj/item/clothing/glasses/fluff/serithi_artalis_1 //serithi: Serithi Artalis
-	name = "extranet HUD"
-	desc = "A heads-up display with limited connectivity to the NanoTrasen Extranet, capable of displaying information from official NanoTrasen records."
-	icon = 'custom_items.dmi'
-	icon_state = "serithi_artalis_1"
-
 /obj/item/clothing/glasses/fluff/uzenwa_sissra_1 //sparklysheep: Uzenwa Sissra
 	name = "Scanning Goggles"
 	desc = "A very oddly shaped pair of goggles with bits of wire poking out the sides. A soft humming sound emanates from it."
 	icon = 'custom_items.dmi'
 	icon_state = "uzenwa_sissra_1"
 
+/obj/item/clothing/glasses/welding/fluff/ian_colm_2 //roaper: Ian Colm
+	name = "Ian's Goggles"
+	desc = "A pair of goggles used in the application of welding."
+	icon = 'custom_items.dmi'
+	icon_state = "ian_colm_1"
+
 //////////// Hats ////////////
-//Removed by request
-/*
-/obj/item/clothing/head/helmet/hardhat/fluff/greg_anderson_1 //deusdactyl: Greg Anderson
-	name = "old hard hat"
-	desc = "An old dented hard hat with the nametag \"Anderson\". It seems to be backwards."
-	icon_state = "hardhat0_dblue" //Already an in-game sprite
-	item_state = "hardhat0_dblue"
-	color = "dblue"
-*/
 
 /obj/item/clothing/head/secsoft/fluff/swatcap //deusdactyl: James Girard
 	name = "\improper SWAT hat"
@@ -419,12 +415,6 @@
 	desc = "Hey, I think we're missing a hazard vest..."
 	icon = 'custom_items.dmi'
 	icon_state = "taryn_kifer_1"
-
-/obj/item/clothing/head/fluff/enos_adlai_1 //roaper: Enos Adlai
-	name = "comfy cap"
-	desc = "Because when you're the toughest Mother Hubbard on the station, nobody's criticizing your fashion sense."
-	icon = 'custom_items.dmi'
-	icon_state = "enos_adlai_1"
 
 /obj/item/clothing/head/fluff/edvin_telephosphor_1 //foolamancer: Edvin Telephosphor
 	name = "Edvin's Hat"
@@ -534,25 +524,31 @@
 
 //////////// Shoes ////////////
 
-/obj/item/clothing/shoes/fluff/leatherboots //serithi: Serithi Artalis
-	name = "leather boots"
-	desc = "A pair of leather boots. Well-worn, but still kept in good condition. There is a small \"S\" scratched into the back of each boot."
+/obj/item/clothing/shoes/magboots/fluff/susan_harris_1 //sniperyeti: Susan Harris
+	name = "Susan's Magboots"
+	desc = "A colorful pair of magboots with the name Susan Harris clearly written on the back."
 	icon = 'custom_items.dmi'
-	icon_state = "leatherboots"
-	item_state = "jackboots"
+	icon_state = "atmosmagboots0"
+	toggle()
+		set name = "Toggle Magboots"
+		set category = "Object"
+		set src in usr
+		if(src.magpulse)
+			src.flags &= ~NOSLIP
+			src.slowdown = SHOES_SLOWDOWN
+			src.magpulse = 0
+			icon_state = "atmosmagboots0"
+			usr << "You disable the mag-pulse traction system."
+		else
+			src.flags |= NOSLIP
+			src.slowdown = 2
+			src.magpulse = 1
+			icon_state = "atmosmagboots1"
+			usr << "You enable the mag-pulse traction system."
 
 //////////// Sets ////////////
 
-////// CDC //deusdactyl: Roger Wiles
-//Removed by request.
 /*
-/obj/item/clothing/under/rank/virologist/fluff/cdc_jumpsuit
-	name = "\improper CDC jumpsuit"
-	desc = "A modified standard-issue CDC jumpsuit made of a special fiber that gives special protection against biohazards.  It has a biohazard symbol sewn into the back."
-	icon = 'custom_items.dmi'
-	icon_state = "cdc_jumpsuit"
-	color = "cdc_jumpsuit"
-
 /obj/item/clothing/suit/labcoat/fluff/cdc_labcoat
 	name = "\improper CDC labcoat"
 	desc = "A standard-issue CDC labcoat that protects against minor chemical spills.  It has the name \"Wiles\" sewn on to the breast pocket."
