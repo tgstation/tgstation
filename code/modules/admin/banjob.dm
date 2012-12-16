@@ -24,7 +24,7 @@ var/jobban_keylist[0]		//to store the keys & ranks
 				return "Whitelisted Job"
 
 		for (var/s in jobban_keylist)
-			if( findtext(s,"[M.ckey] - [rank]") )
+			if( findtext(s,"[M.ckey] - [rank]") == 1 )
 				var/startpos = findtext(s, "## ")+3
 				if(startpos && startpos<length(s))
 					var/text = copytext(s, startpos, 0)
