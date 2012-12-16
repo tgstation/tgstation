@@ -359,9 +359,9 @@
 		if(access_morgue)
 			return "Morgue"
 		if(access_tox)
-			return "Research Lab"
+			return "R&D Lab"
 		if(access_tox_storage)
-			return "Toxins Storage"
+			return "Toxins Lab"
 		if(access_chemistry)
 			return "Chemistry Lab"
 		if(access_rd)
