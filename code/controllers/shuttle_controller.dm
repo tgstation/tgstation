@@ -288,6 +288,12 @@ datum/shuttle_controller
 
 				if(1)
 
+					// Just before it leaves, close the damn doors!
+					if(timeleft == 2 || timeleft == 1)
+						for(var/obj/machinery/door/D in end_location)
+							spawn(0)
+								D.close()
+
 					if(timeleft>0)
 						return 0
 
