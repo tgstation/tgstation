@@ -106,6 +106,7 @@ datum/objective/mutiny/rp
 
 	// less violent rev objectives
 	check_completion()
+		var/rval = 1
 		if(target && target.current)
 			if(target.current.stat == DEAD || target.current.handcuffed || !ishuman(target.current))
 				return 1
@@ -115,9 +116,9 @@ datum/objective/mutiny/rp
 					return 1
 			var/turf/T = get_turf(target.current)
 			if(T && (T.z != 1))			//If they leave the station they count as dead for this
-				return 2
+				rval = 2
 			return 0
-		return 1
+		return rval
 
 datum/objective/anti_revolution/execute
 	find_target()
