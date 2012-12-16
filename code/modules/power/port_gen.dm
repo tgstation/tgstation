@@ -57,44 +57,42 @@ display round(lastgen) and plasmatank amount
 	var/recent_fault = 0
 	var/power_output = 1
 
-	proc/HasFuel() //Placeholder for fuel check.
-		return 1
+/obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
+	return 1
 
-	proc/UseFuel() //Placeholder for fuel use.
+/obj/machinery/power/port_gen/proc/UseFuel() //Placeholder for fuel use.
+	return
+
+/obj/machinery/power/port_gen/proc/handleInactive()
+	return
+
+/obj/machinery/power/port_gen/process()
+	if(active && HasFuel() && !crit_fail && anchored)
+		if(prob(reliability))
+			add_avail(power_gen * power_output)
+		else if(!recent_fault)
+			recent_fault = 1
+		else crit_fail = 1
+		UseFuel()
+		src.updateDialog()
+
+	else
+		active = 0
+		icon_state = initial(icon_state)
+		handleInactive()
+
+/obj/machinery/power/port_gen/attack_hand(mob/user as mob)
+	if(..())
+		return
+	if(!anchored)
 		return
 
-	proc/handleInactive()
-		return
-
-	process()
-		if(active && HasFuel() && !crit_fail && anchored)
-			if(prob(reliability))
-				add_avail(power_gen * power_output)
-			else if(!recent_fault)
-				recent_fault = 1
-			else crit_fail = 1
-			UseFuel()
-			for(var/mob/M in viewers(1, src))
-				if (M.client && M.machine == src)
-					src.updateUsrDialog()
-
-		else
-			active = 0
-			icon_state = initial(icon_state)
-			handleInactive()
-
-	attack_hand(mob/user as mob)
-		if(..())
-			return
-		if(!anchored)
-			return
-
-	examine()
-		set src in oview(1)
-		if(active)
-			usr << "\blue The generator is on."
-		else
-			usr << "\blue The generator is off."
+/obj/machinery/power/port_gen/examine()
+	set src in oview(1)
+	if(active)
+		usr << "\blue The generator is on."
+	else
+		usr << "\blue The generator is off."
 
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"

@@ -41,12 +41,19 @@
 		dy = c / abs(s)
 
 
-	for(var/obj/machinery/power/tracker/T in machines)
-		T.set_angle(angle)
+	for(var/M in machines)
 
-	for(var/obj/machinery/power/solar/S in machines)
-		if(S.control)
-			occlusion(S)
+		// Solar Tracker
+		if(istype(M, /obj/machinery/power/tracker))
+			var/obj/machinery/power/tracker/T = M
+			T.set_angle(angle)
+
+		// Solar Panel
+		else if(istype(M, /obj/machinery/power/solar))
+			var/obj/machinery/power/solar/S = M
+			if(S.control)
+				occlusion(S)
+
 
 
 // for a solar panel, trace towards sun to see if we're in shadow

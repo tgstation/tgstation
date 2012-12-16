@@ -364,6 +364,36 @@
 	containertype = /obj/structure/largecrate
 	containername = "fuel tank crate"
 
+/datum/supply_packs/solar
+	name = "Solar Pack crate"
+	contains  = list(/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly, // 21 Solar Assemblies. 1 Extra for the controller
+					/obj/item/weapon/circuitboard/solar_control,
+					/obj/item/weapon/tracker_electronics,
+					/obj/item/weapon/paper/solar)
+	cost = 20
+	containertype = /obj/structure/closet/crate
+	containername = "solar pack crate"
+
 /datum/supply_packs/engine
 	name = "Emitter crate"
 	contains = list(/obj/machinery/emitter,

@@ -92,6 +92,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	normalspeed = 1
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
+	var/heat_proof = 0 // For glass airlocks
 
 /obj/machinery/door/airlock/command
 	name = "Airlock"
@@ -216,14 +217,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	opacity = 0
 	doortype = 21
 	glass = 1
-
-
-/obj/machinery/door/airlock/update_heat_protection(var/turf/simulated/source)
-	if(istype(source))
-		if(src.density)
-			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
-		else
-			source.thermal_conductivity = initial(source.thermal_conductivity)
+	heat_proof = 1
 
 /obj/machinery/door/airlock/glass_mining
 	name = "Maintenance Hatch"
@@ -638,6 +632,13 @@ About the new airlock wires panel:
 	else
 		return 0
 
+
+/obj/machinery/door/airlock/update_heat_protection(var/turf/simulated/source)
+	if(istype(source))
+		if(src.density && (src.opacity || src.heat_proof))
+			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
+		else
+			source.thermal_conductivity = initial(source.thermal_conductivity)
 
 /obj/machinery/door/airlock/update_icon()
 	if(overlays) overlays = null

@@ -14,6 +14,15 @@
 
 	var/sun_angle = 0		// sun angle as set by sun datum
 
+/obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/solar_assembly/S)
+	..(loc)
+	if(!S)
+		S = new /obj/item/solar_assembly(src)
+		S.glass_type = /obj/item/stack/sheet/glass
+		S.tracker = 1
+		S.anchored = 1
+	S.loc = src
+	connect_to_network()
 
 // called by datum/sun/calc_position() as sun's angle changes
 /obj/machinery/power/tracker/proc/set_angle(var/angle)
@@ -31,12 +40,29 @@
 	// ***TODO: better communication system using network
 	if(powernet)
 		for(var/obj/machinery/power/solar_control/C in powernet.nodes)
-			C.tracker_update(angle)
+			if(get_dist(C, src) < SOLAR_MAX_DIST)
+				C.tracker_update(angle)
 
+
+/obj/machinery/power/tracker/attackby(var/obj/item/weapon/W, var/mob/user)
+
+	if(iscrowbar(W))
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		if(do_after(user, 50))
+			var/obj/item/solar_assembly/S = locate() in src
+			if(S)
+				S.loc = src.loc
+				S.give_glass()
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")
+			del(src)
+		return
+	..()
 
 // timed process
 // make sure we can draw power from the powernet
 /obj/machinery/power/tracker/process()
+
 	var/avail = surplus()
 
 	if(avail > 500)
@@ -48,3 +74,13 @@
 // override power change to do nothing since we don't care about area power
 /obj/machinery/power/tracker/power_change()
 	return
+
+
+// Tracker Electronic
+
+/obj/item/weapon/tracker_electronics
+
+	name = "tracker electronics"
+	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon_state = "door_electronics"
+	w_class = 2.0

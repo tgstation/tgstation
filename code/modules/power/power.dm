@@ -9,6 +9,10 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
+/obj/machinery/power/Del()
+	disconnect_from_network()
+	..()
+
 // common helper procs for all power machines
 /obj/machinery/power/proc/add_avail(var/amount)
 	if(powernet)
@@ -37,6 +41,9 @@
 
 	if(!src.loc)
 		return 0
+
+	if(!use_power)
+		return 1
 
 	var/area/A = src.loc.loc		// make sure it's in an area
 	if(!A || !isarea(A) || !A.master)
