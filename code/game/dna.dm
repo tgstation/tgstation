@@ -188,7 +188,9 @@
 	return result
 
 /proc/setblock(istring, blocknumber, replacement, blocksize)
-	if(!istring || !blocknumber || !replacement || !blocksize)	return 0
+	if(!blocknumber)
+		return istring
+	if(!istring || !replacement || !blocksize)	return 0
 	var/result = getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 	return result
 
