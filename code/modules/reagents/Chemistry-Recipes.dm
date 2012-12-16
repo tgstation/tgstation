@@ -662,7 +662,7 @@ datum
 		slimejam
 			name = "Slime Jam"
 			id = "m_jam"
-			result = "slime Jelly"
+			result = "slimejelly"
 			required_reagents = list("water" = 1)
 			result_amount = 1
 			required_container = /obj/item/slime_core
