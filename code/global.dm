@@ -59,7 +59,7 @@ var/SMALLSIZEBLOCK = 0
 
 var/skipupdate = 0
 	///////////////
-var/eventchance = 3 //% per 5 mins
+var/eventchance = 10 //% per 5 mins
 var/event = 0
 var/hadevent = 0
 var/blobevent = 0
