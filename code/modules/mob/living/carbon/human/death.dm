@@ -15,7 +15,7 @@
 		if(istype(E, /datum/organ/external/chest))
 			continue
 		// Only make the limb drop if it's not too damaged
-		if(prob(100 - E.damage))
+		if(prob(100 - E.get_damage()))
 			// Override the current limb status and don't cause an explosion
 			E.droplimb(1,1)
 
