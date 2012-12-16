@@ -21,8 +21,11 @@
 
 /proc/event()
 	event = 1
+	if(!sent_ninja_to_station)
+		choose_space_ninja()
+		return
 
-	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13,14, 15) //so ninjas don't cause "empty" events.
+	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13,14,15) //so ninjas don't cause "empty" events.
 
 	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
 		eventNumbersToPickFrom += 3
@@ -36,9 +39,11 @@
 			spawn(700)
 				meteor_wave()
 				spawn_meteors()
+		if(3)
+			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
+			choose_space_ninja()
 		if(4)
 			mini_blob_event()
-
 		if(5)
 			high_radiation_event()
 		if(6)

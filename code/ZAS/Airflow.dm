@@ -133,15 +133,16 @@ proc/Airflow(zone/A, zone/B)
 			else
 				connected_turfs |= C.B
 
-	//Get lists of things that can be thrown across the room for each zone.
-	var/list/pplz = B.movables()
-	var/list/otherpplz = A.movables()
+	//Get lists of things that can be thrown across the room for each zone (assumes air is moving from zone B to zone A)
+	var/list/air_sucked = B.movables()
+	var/list/air_repelled = A.movables()
 	if(n < 0)
-		var/list/temporary_pplz = pplz
-		pplz = otherpplz
-		otherpplz = temporary_pplz
+		//air is moving from zone A to zone B
+		var/list/temporary_pplz = air_sucked
+		air_sucked = air_repelled
+		air_repelled = temporary_pplz
 
-	for(var/atom/movable/M in pplz)
+	for(var/atom/movable/M in air_sucked)
 
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
@@ -166,7 +167,7 @@ proc/Airflow(zone/A, zone/B)
 				spawn M.GotoAirflowDest(abs(n)/5)
 
 	//Do it again for the stuff in the other zone, making it fly away.
-	for(var/atom/movable/M in otherpplz)
+	for(var/atom/movable/M in air_repelled)
 
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
@@ -240,12 +241,15 @@ atom/movable
 		if(airflow_dest == loc)
 			step_away(src,loc)
 		if(ismob(src))
-			if(src:nodamage) return
+			if(src:nodamage)
+				return
 			if(istype(src, /mob/living/carbon/human))
-				if(istype(src, /mob/living/carbon/human))
-					if(src:buckled) return
-					if(src:shoes)
-						if(src:shoes.type == /obj/item/clothing/shoes/magboots && src:shoes.flags & NOSLIP) return
+				if(src:buckled)
+					return
+				if(src:shoes)
+					if(src:shoes.type == /obj/item/clothing/shoes/magboots)
+						if(src:shoes.flags & NOSLIP)
+							return
 			src << "\red You are sucked away by airflow!"
 		var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 		if(airflow_falloff < 1)
@@ -266,9 +270,15 @@ atom/movable
 			airflow_speed -= vsc.airflow_speed_decay
 			if(airflow_speed > 7)
 				if(airflow_time++ >= airflow_speed - 7)
+					if(od)
+						density = 0
 					sleep(1 * tick_multiplier)
 			else
+				if(od)
+					density = 0
 				sleep(max(1,10-(airflow_speed+3)) * tick_multiplier)
+			if(od)
+				density = 1
 			if ((!( src.airflow_dest ) || src.loc == src.airflow_dest))
 				src.airflow_dest = locate(min(max(src.x + xo, 1), world.maxx), min(max(src.y + yo, 1), world.maxy), src.z)
 			if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
@@ -276,7 +286,8 @@ atom/movable
 			if(!istype(loc, /turf))
 				return
 			step_towards(src, src.airflow_dest)
-			if(ismob(src) && src:client) src:client:move_delay = world.time + vsc.airflow_mob_slowdown
+			if(ismob(src) && src:client)
+				src:client:move_delay = world.time + vsc.airflow_mob_slowdown
 		airflow_dest = null
 		airflow_speed = 0
 		airflow_time = 0
@@ -295,12 +306,15 @@ atom/movable
 		if(airflow_dest == loc)
 			step_away(src,loc)
 		if(ismob(src))
-			if(src:nodamage) return
+			if(src:nodamage)
+				return
 			if(istype(src, /mob/living/carbon/human))
-				if(istype(src, /mob/living/carbon/human))
-					if(src:buckled) return
-					if(src:shoes)
-						if(src:shoes.type == /obj/item/clothing/shoes/magboots && src:shoes.flags & NOSLIP) return
+				if(src:buckled)
+					return
+				if(src:shoes)
+					if(src:shoes.type == /obj/item/clothing/shoes/magboots)
+						if(src:shoes.flags & NOSLIP)
+							return
 			src << "\red You are pushed away by airflow!"
 		var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 		if(airflow_falloff < 1)
@@ -331,7 +345,8 @@ atom/movable
 			if(!istype(loc, /turf))
 				return
 			step_towards(src, src.airflow_dest)
-			if(ismob(src) && src:client) src:client:move_delay = world.time + vsc.airflow_mob_slowdown
+			if(ismob(src) && src:client)
+				src:client:move_delay = world.time + vsc.airflow_mob_slowdown
 		airflow_dest = null
 		airflow_speed = 0
 		airflow_time = 0
