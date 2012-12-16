@@ -11,6 +11,14 @@
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
 
+	for(var/datum/organ/external/E in src.organs)
+		if(istype(E, /datum/organ/external/chest))
+			continue
+		// Only make the limb drop if it's not too damaged
+		if(prob(100 - E.damage))
+			// Override the current limb status and don't cause an explosion
+			E.droplimb(1,1)
+
 	flick("gibbed-h", animation)
 	hgibs(loc, viruses, dna)
 
