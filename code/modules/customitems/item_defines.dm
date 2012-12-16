@@ -67,6 +67,15 @@ hi
 	desc = "A neatly folded handkerchief embroidered with a 'M'."
 	icon_state = "maurice_bedford_1"
 
+/obj/item/weapon/book/fluff/johnathan_falcian_1
+	name = "sketchbook"
+	desc = "A small, well-used sketchbook."
+	icon = 'custom_items.dmi'
+	icon_state = "johnathan_notebook"
+	dat = "In the notebook there are numerous drawings of various crew-mates, locations, and scenes on the ship. They are of fairly good quality."
+	author = "Johnathan Falcian"
+	title = "Falcian's sketchbook"
+
 //////////////////////////////////
 ////////// Usable Items //////////
 //////////////////////////////////
@@ -393,6 +402,19 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "ian_colm_1"
 
+////// Medical eyepatch - Thysse Ezinwa - Jadepython
+/obj/item/clothing/glasses/eyepatch/fluff/thysse_1
+	name = "medical eyepatch"
+	desc = "On the strap, EZINWA is written in white block letters."
+
+////// Safety Goggles - Arjun Chopra - MindPhyre - APPROVED
+/obj/item/clothing/glasses/fluff/arjun_chopra_1
+	name = "safety goggles"
+	desc = "A used pair of leather safety goggles."
+	icon = 'custom_items.dmi'
+	icon_state = "arjun_chopra"
+	item_state = "arjun_chopra"
+
 //////////// Hats ////////////
 
 /obj/item/clothing/head/secsoft/fluff/swatcap //deusdactyl: James Girard
@@ -523,7 +545,6 @@ hi
 	sensor_mode = 3
 	flags = FPRINT | TABLEPASS
 
-
 //Suit roll-down toggle.
 /obj/item/clothing/under/fluff/jane_sidsuit/verb/toggle_zipper()
 	set name = "Toggle Jumpsuit Zipper"
@@ -543,6 +564,16 @@ hi
 	src.icon_state = "[color]"
 	src.item_state = "[color]"
 	usr.update_inv_w_uniform()
+
+////// Wyatt's Ex-Commander Jumpsuit - RawrTaicho
+/obj/item/clothing/under/fluff/wyatt_1
+
+	name = "ex-commander jumpsuit"
+	desc = "A standard Central Command Engineering Commander jumpsuit tailored to fight the wearer tightly. It has a Medal of Service pinned onto the left side of it."
+	icon = 'custom_items.dmi'
+	icon_state = "wyatt_uniform"
+	item_state = "wyatt_uniform"
+	color = "wyatt_uniform"
 
 //////////// Masks ////////////
 
