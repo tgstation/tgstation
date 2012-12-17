@@ -45,7 +45,7 @@
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
-	req_access = list(access_atmospherics)
+	req_access = list(access_construction)
 	var/path[] = new()
 	var/targetdirection
 
