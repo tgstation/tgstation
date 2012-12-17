@@ -547,7 +547,7 @@ datum/design/telecomms_processor
 	build_path = "/obj/item/weapon/circuitboard/telecomms/processor"
 
 datum/design/telecomms_server
-	name = "Circuit Design (Subspace Receiver)"
+	name = "Circuit Design (Telecommunication Server)"
 	desc = "Allows for the construction of Telecommunications Servers."
 	id = "s-server"
 	req_tech = list("programming" = 4, "engineering" = 4)
