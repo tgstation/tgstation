@@ -53,28 +53,28 @@
 		possibleEvents["Appendicitis"] = medical_count * 50
 	if(security_count >= 1)
 		possibleEvents["Prison Break"] = security_count * 50
-        possibleEvents["Space Ninja"] = security_count * 10 // very low chance for space ninja event
+		possibleEvents["Space Ninja"] = security_count * 10 // very low chance for space ninja event
 
 	var/picked_event = pick(possibleEvents)
 	var/chance = possibleEvents[picked_event]
 
-    var/base_chance = 0.4
-    switch(player_list.len)
-        if(5 to 10)
-            base_chance = 0.6
-        if(11 to 15)
-            base_chance = 0.7
-        if(16 to 20)
-            base_chance = 0.8
-        if(21 to 25)
-            base_chance = 0.9
-        if(26 to 30)
-            base_chance = 1.0
-        if(30 to 100000)
-            base_chance = 1.1
+	var/base_chance = 0.4
+	switch(player_list.len)
+		if(5 to 10)
+			base_chance = 0.6
+		if(11 to 15)
+			base_chance = 0.7
+		if(16 to 20)
+			base_chance = 0.8
+		if(21 to 25)
+			base_chance = 0.9
+		if(26 to 30)
+			base_chance = 1.0
+		if(30 to 100000)
+			base_chance = 1.1
 
 	// Trigger the event based on how likely it currently is.
-	if(!prob(chance * eventchance * base_chance)) // "normal" event chance at 20 players
+	if(!prob(chance * eventchance * base_chance / 100)) // "normal" event chance at 20 players
 		return 0
 
 	switch(picked_event)
@@ -89,7 +89,7 @@
 				spawn_meteors()
 		if("Blob")
 			mini_blob_event()
-        if("Space Ninja")
+		if("Space Ninja")
 			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
 			choose_space_ninja()
 		if("Radiation")
