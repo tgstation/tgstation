@@ -16,7 +16,7 @@
 	req_access =list(access_medical)
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 //var/emagged = 0
-	var/list/botcard_access = list(access_medical, access_morgue, access_genetics, access_robotics)
+	var/list/botcard_access = list(access_medical)
 	var/obj/item/weapon/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
 	var/frustration = 0
@@ -28,13 +28,13 @@
 	var/last_newpatient_speak = 0 //Don't spam the "HEY I'M COMING" messages
 	var/currently_healing = 0
 	var/injection_amount = 15 //How much reagent do we inject at a time?
-	var/heal_threshold = 15 //Start healing when they have this much damage in a category
+	var/heal_threshold = 10 //Start healing when they have this much damage in a category
 	var/use_beaker = 0 //Use reagents in beaker instead of default treatment agents.
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute = "bicaridine"
-	var/treatment_oxy = "dexalin"
-	var/treatment_fire = "kelotane"
-	var/treatment_tox = "anti_toxin"
+	var/treatment_brute = "tricordrazine"
+	var/treatment_oxy = "tricordrazine"
+	var/treatment_fire = "tricordrazine"
+	var/treatment_tox = "tricordrazine"
 	var/treatment_virus = "spaceacillin"
 	var/shut_up = 0 //self explanatory :)
 
@@ -43,6 +43,9 @@
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
 	treatment_oxy = "dexalinp"
+	treatment_brute = "bicaridine"
+	treatment_fire = "kelotane"
+	treatment_tox = "anti_toxin"
 
 /obj/item/weapon/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
