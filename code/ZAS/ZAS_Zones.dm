@@ -304,13 +304,6 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 
 		temp_avg = (A.temperature * full_heat_capacity + B.temperature * s_full_heat_capacity) / (full_heat_capacity + s_full_heat_capacity)
 
-<<<<<<< HEAD
-=======
-	if(sharing_lookup_table.len >= connecting_tiles) //6 or more interconnecting tiles will max at 42% of air moved per tick.
-		ratio = sharing_lookup_table[connecting_tiles]
-	ratio *= 3
-
->>>>>>> bc318a3c8e40f9a2eed179318e17f56ce828ab1e
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
 	A.carbon_dioxide = max(0, (A.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg )
@@ -380,23 +373,11 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles)
 
 		//full_heat_capacity = A.heat_capacity() * size
 
-<<<<<<< HEAD
-		oxy_avg = (full_oxy + unsim_oxygen * 4) / (size + share_size * 4)
-		nit_avg = (full_nitro + unsim_nitrogen * 4) / (size + share_size * 4)
-		co2_avg = (full_co2 + unsim_co2 * 4) / (size + share_size * 4)
-		plasma_avg = (full_plasma + unsim_plasma * 4) / (size + share_size * 4)
-=======
 		oxy_avg = unsim_oxygen//(full_oxy + unsim_oxygen) / (size + share_size)
 		nit_avg = unsim_nitrogen//(full_nitro + unsim_nitrogen) / (size + share_size)
 		co2_avg = unsim_co2//(full_co2 + unsim_co2) / (size + share_size)
 		plasma_avg = unsim_plasma//(full_plasma + unsim_plasma) / (size + share_size)
 
-		temp_avg = unsim_temperature//(A.temperature * full_heat_capacity + unsim_temperature * unsim_heat_capacity) / (full_heat_capacity + unsim_heat_capacity)
-
-	if(sharing_lookup_table.len >= unsimulated_tiles.len) //6 or more interconnecting tiles will max at 42% of air moved per tick.
-		ratio = sharing_lookup_table[unsimulated_tiles.len]
-	ratio *= 3
->>>>>>> bc318a3c8e40f9a2eed179318e17f56ce828ab1e
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
