@@ -315,6 +315,8 @@ Whitespace:Seperator;
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
+                log_admin("[applicant.key] drafted into antagonist role against their preferences.")
+                message_admins("[applicant.key] drafted into antagonist role against their preferences.")
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
