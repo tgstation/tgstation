@@ -125,6 +125,8 @@ var/list/sacrificed = list()
 /////////////////////////////////////////FOURTH RUNE
 
 		tearreality()
+			if(src.z != 1) // station z level
+				return fizzle()
 			var/cultist_count = 0
 			for(var/mob/M in range(1,src))
 				if(iscultist(M) && !M.stat)
