@@ -1249,10 +1249,10 @@ datum
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
-				if(M.getOxyLoss() && prob(40)) M.adjustOxyLoss(-1)
-				if(M.getBruteLoss() && prob(40)) M.heal_organ_damage(1,0)
-				if(M.getFireLoss() && prob(40)) M.heal_organ_damage(0,1)
-				if(M.getToxLoss() && prob(40)) M.adjustToxLoss(-1)
+				if(M.getOxyLoss() && prob(80)) M.adjustOxyLoss(-1)
+				if(M.getBruteLoss() && prob(80)) M.heal_organ_damage(1,0)
+				if(M.getFireLoss() && prob(80)) M.heal_organ_damage(0,1)
+				if(M.getToxLoss() && prob(80)) M.adjustToxLoss(-1)
 				..()
 				return
 
@@ -3258,10 +3258,10 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M.getOxyLoss() && prob(50)) M.adjustOxyLoss(-2)
-				if(M.getBruteLoss() && prob(60)) M.heal_organ_damage(2,0)
-				if(M.getFireLoss() && prob(50)) M.heal_organ_damage(0,2)
-				if(M.getToxLoss() && prob(50)) M.adjustToxLoss(-2)
+				if(M.getOxyLoss() && prob(80)) M.adjustOxyLoss(-2)
+				if(M.getBruteLoss() && prob(80)) M.heal_organ_damage(2,0)
+				if(M.getFireLoss() && prob(80)) M.heal_organ_damage(0,2)
+				if(M.getToxLoss() && prob(80)) M.adjustToxLoss(-2)
 				if(M.dizziness !=0) M.dizziness = max(0,M.dizziness-15)
 				if(M.confused !=0) M.confused = max(0,M.confused - 5)
 				..()
