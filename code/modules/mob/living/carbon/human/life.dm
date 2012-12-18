@@ -799,6 +799,10 @@
 			var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 			if(adjusted_pressure > HAZARD_HIGH_PRESSURE)
 				adjustBruteLoss( min( (adjusted_pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT , MAX_PRESSURE_DAMAGE) )
+		else if(pressure <= 50)
+			var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+			if(adjusted_pressure < 50)
+				adjustBruteLoss( (50 - adjusted_pressure) / 50 )
 		return
 
 	/*

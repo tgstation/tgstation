@@ -1552,8 +1552,8 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)//no more mr. panacea
+				// Only consume 0.1 units per tick
 				holder.remove_reagent(src.id, 0.2)
-				..()
 				return
 
 		carpotoxin
@@ -2147,6 +2147,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 30)
 				if(!data) data = 1
+
 				switch(data)
 					if(1 to 5)
 						if (!M.stuttering) M.stuttering = 1
