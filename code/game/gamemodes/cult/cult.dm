@@ -52,12 +52,12 @@
 
 
 /datum/game_mode/cult/pre_setup()
-	//if(prob(50))
-	//	objectives += "survive"
-	//	objectives += "sacrifice"
-	//else
-	objectives += "eldergod"
-		//objectives += "sacrifice"
+	if(prob(50))
+		objectives += "survive"
+		objectives += "sacrifice"
+	else
+		objectives += "eldergod"
+		objectives += "sacrifice"
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -116,7 +116,7 @@
 				else
 					explanation = "Free objective."
 			if("eldergod")
-				explanation = "Nar-Sie wishes to consume the station! Summon Nar-Sie via the use of the appropriate rune (Hell join self) on the station's level. It will only work if nine cultists stand near it and the rune is on the same level as the station."
+				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 	cult_mind.current << "The convert rune is join blood self"
