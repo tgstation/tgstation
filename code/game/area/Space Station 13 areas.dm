@@ -925,6 +925,9 @@ proc/process_ghost_teleport_locs()
 /area/assembly/assembly_line //Derelict Assembly Line
 	name = "\improper Assembly Line"
 	icon_state = "ass_line"
+	power_equip = 0
+	power_light = 0
+	power_environ = 0
 
 //Teleporter
 
