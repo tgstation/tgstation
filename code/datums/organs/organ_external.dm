@@ -514,10 +514,15 @@
 	proc/emp_act(severity)
 		if(!(status & ORGAN_ROBOT))
 			return
-		if(prob(30*severity))
+		var/probability = 30
+		var/damage = 15
+		if(severity == 2)
+			probability = 1
+			damage = 3
+		if(prob(probability))
 			droplimb(1)
 		else
-			take_damage(4(4-severity), 0, 1, used_weapon = "EMP")
+			take_damage(damage, 0, 1, used_weapon = "EMP")
 
 	proc/getDisplayName()
 		switch(name)
