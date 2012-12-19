@@ -113,9 +113,10 @@ emp_act
 /mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	if(!I || !user)	return 0
 
-	var/target_zone = get_zone_with_miss_chance(user.zone_sel.selecting)
+	var/target_zone = get_zone_with_miss_chance(user.zone_sel.selecting, src)
 	if(!target_zone)
 		visible_message("\red <B>[user] misses [src] with \the [I]!")
+		return
 		
 	var/datum/organ/external/affecting = get_organ(target_zone)
 	if (!affecting)

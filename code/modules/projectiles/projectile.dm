@@ -80,7 +80,11 @@
 				forcedodge = 1
 			else
 				var/distance = get_dist(original,loc)
-				def_zone = ran_zone(def_zone, 100-(5*distance)) //Lower accurancy/longer range tradeoff.
+				//Lower accurancy/longer range tradeoff.
+				def_zone = get_zone_with_miss_chance(def_zone, src, 3*distance)
+
+				if(!def_zone)
+					visible_message("\The [src] misses [M] narrowly.")
 				if(silenced)
 					M << "\red You've been shot in the [def_zone] by the [src.name]!"
 				else
