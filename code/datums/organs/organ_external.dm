@@ -426,8 +426,22 @@
 				else
 					H.icon_state = initial(H.icon_state)+"_l"
 
-			var/lol = pick(cardinal)
-			step(H,lol)
+			if(status & ORGAN_ROBOT)
+				del H
+				switch(body_part)
+					if(LEG_RIGHT)
+						H = new /obj/item/robot_parts/r_leg(owner.loc)
+					if(LEG_LEFT)
+						H = new /obj/item/robot_parts/l_leg(owner.loc)
+					if(ARM_RIGHT)
+						H = new /obj/item/robot_parts/r_arm(owner.loc)
+					if(ARM_LEFT)
+						H = new /obj/item/robot_parts/l_arm(owner.loc)
+
+			if(H)
+				var/lol = pick(cardinal)
+				step(H,lol)
+				
 			destspawn = 1
 			if(status & ORGAN_ROBOT)
 				owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
