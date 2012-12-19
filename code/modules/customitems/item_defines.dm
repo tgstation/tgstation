@@ -697,3 +697,9 @@ hi
 	desc = "A nickel-plated revolver with pearl grips. It has a certain Old West flair!"
 	icon = 'custom_items.dmi'
 	icon_state = "peacemaker"
+
+///// Well-used baton - Oen'g Issek - Donofnyc3
+
+/obj/item/weapon/melee/baton/fluff/oeng_baton
+	name = "well-used stun baton"
+	desc = "A stun baton used for incapacitating targets; there seems to be a bunch of tally marks set into the handle."
