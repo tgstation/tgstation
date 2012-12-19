@@ -10,6 +10,8 @@
 	w_class = 3
 	var/charges = 10
 	var/status = 0
+	var/mob/foundmob = "" //Used in throwing proc.
+
 	origin_tech = "combat=2"
 
 
@@ -99,7 +101,12 @@
 				H.apply_effect(10, STUTTER, 0)
 				charges--
 
-				H.visible_message("<span class='danger'>[src], thrown by ([src.fingerprintslast]) hits [H] with stunning end!</span>")
+				for(var/mob/M in player_list) if(M.key == src.fingerprintslast)
+					foundmob = M
+					break
+
+				H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H] and stuns them!</span>")
+
 				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src.name] (([src.fingerprintslast]))</font>"
 				log_attack("<font color='red'>Flying [src.name], thrown by ([src.fingerprintslast]) stunned [H.name] ([H.ckey])</font>" )
 
