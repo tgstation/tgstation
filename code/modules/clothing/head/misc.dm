@@ -158,6 +158,13 @@
 	item_state = "witch"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 
+/obj/item/clothing/head/chicken
+	name = "chicken suit head"
+	desc = "Bkaw!"
+	icon_state = "chickenhead"
+	item_state = "chickensuit"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
 	desc = "Fuzzy."
