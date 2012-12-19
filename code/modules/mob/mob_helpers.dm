@@ -165,12 +165,13 @@ proc/hasorgans(A)
 
 // Emulates targetting a specific body part, and miss chances
 // May return null if missed
+// miss_chance_mod may be negative.
 /proc/get_zone_with_miss_chance(zone, var/mob/target, var/miss_chance_mod = 0)
 	zone = check_zone(zone)
 
 	// you can only miss if your target is standing and not restrained
 	if(!target.buckled && !target.lying) 
-		var/miss_chance = 10 + miss_chance_mod
+		var/miss_chance = max(10 + miss_chance_mod, 0)
 		switch(zone)
 			if("head")
 				miss_chance = 40

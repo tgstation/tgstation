@@ -80,11 +80,13 @@
 				forcedodge = 1
 			else
 				var/distance = get_dist(original,loc)
-				//Lower accurancy/longer range tradeoff.
-				def_zone = get_zone_with_miss_chance(def_zone, src, 3*distance)
+				//Lower accurancy/longer range tradeoff. Distance matters a lot here, so at
+				// close distance, actually RAISE the chance to hit.
+				def_zone = get_zone_with_miss_chance(def_zone, src, -30 + 8*distance)
 
 				if(!def_zone)
 					visible_message("\The [src] misses [M] narrowly.")
+					return
 				if(silenced)
 					M << "\red You've been shot in the [def_zone] by the [src.name]!"
 				else
