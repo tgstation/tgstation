@@ -264,7 +264,10 @@
 		clown = 1
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
+		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )
+			P:RenamePaper(user,src)
+		else
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links][stamps]</BODY></HTML>", "window=[name]")
 		//openhelp(user)
 		return
 	else if(istype(P, /obj/item/weapon/stamp))
