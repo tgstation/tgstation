@@ -9,20 +9,20 @@ proc/assign_sec_to_department(var/mob/living/carbon/human/H)
 		switch(department)
 			if("supply")
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/supply(H), slot_ears)
-				access = list(access_cargo, access_mining)
-				destination = /area/quartermaster/storage
+				access = list(access_mailsorting, access_mining)
+				destination = /area/security/checkpoint/supply
 			if("engineering")
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/engi(H), slot_ears)
 				access = list(access_construction, access_engine)
-				destination = /area/engine/break_room
+				destination = /area/security/checkpoint/engineering
 			if("medical")
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/med(H), slot_ears)
 				access = list(access_medical)
-				destination = /area/medical/medbay
+				destination = /area/security/checkpoint/medical
 			if("science")
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/sci(H), slot_ears)
 				access = list(access_research)
-				destination = /area/medical/research
+				destination = /area/security/checkpoint/science
 			else
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_ears)
 
