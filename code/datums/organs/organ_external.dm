@@ -426,8 +426,22 @@
 				else
 					H.icon_state = initial(H.icon_state)+"_l"
 
-			var/lol = pick(cardinal)
-			step(H,lol)
+			if(status & ORGAN_ROBOT)
+				del H
+				switch(body_part)
+					if(LEG_RIGHT)
+						H = new /obj/item/robot_parts/r_leg(owner.loc)
+					if(LEG_LEFT)
+						H = new /obj/item/robot_parts/l_leg(owner.loc)
+					if(ARM_RIGHT)
+						H = new /obj/item/robot_parts/r_arm(owner.loc)
+					if(ARM_LEFT)
+						H = new /obj/item/robot_parts/l_arm(owner.loc)
+
+			if(H)
+				var/lol = pick(cardinal)
+				step(H,lol)
+				
 			destspawn = 1
 			if(status & ORGAN_ROBOT)
 				owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
@@ -514,10 +528,15 @@
 	proc/emp_act(severity)
 		if(!(status & ORGAN_ROBOT))
 			return
-		if(prob(30*severity))
+		var/probability = 30
+		var/damage = 15
+		if(severity == 2)
+			probability = 1
+			damage = 3
+		if(prob(probability))
 			droplimb(1)
 		else
-			take_damage(4(4-severity), 0, 1, used_weapon = "EMP")
+			take_damage(damage, 0, 1, used_weapon = "EMP")
 
 	proc/getDisplayName()
 		switch(name)
