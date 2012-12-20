@@ -36,40 +36,6 @@
 			spawn(700)
 				meteor_wave()
 				spawn_meteors()
-
-		/*if(2)
-			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			world << sound('sound/AI/granomalies.ogg')
-			var/turf/T = pick(blobstart)
-			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
-			spawn(rand(50, 300))
-				del(bh)*/
-		/*
-		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
-			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			world << sound('sound/AI/spanomalies.ogg')
-			var/list/turfs = new
-			var/turf/picked
-			for(var/turf/simulated/floor/T in world)
-				if(T.z == 1)
-					turfs += T
-			for(var/turf/simulated/floor/T in turfs)
-				if(prob(20))
-					spawn(50+rand(0,3000))
-						picked = pick(turfs)
-						var/obj/effect/portal/P = new /obj/effect/portal( T )
-						P.target = picked
-						P.creator = null
-						P.icon = 'icons/obj/objects.dmi'
-						P.failchance = 0
-						P.icon_state = "anom"
-						P.name = "wormhole"
-						spawn(rand(300,600))
-							del(P)
-		*/
-		if(3)
-			if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
-				space_ninja_arrival()//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
 		if(4)
 			mini_blob_event()
 

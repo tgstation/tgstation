@@ -1150,6 +1150,7 @@
 #include "code\modules\mob\living\silicon\robot\life.dm"
 #include "code\modules\mob\living\silicon\robot\login.dm"
 #include "code\modules\mob\living\silicon\robot\robot.dm"
+#include "code\modules\mob\living\silicon\robot\robot_items.dm"
 #include "code\modules\mob\living\silicon\robot\robot_modules.dm"
 #include "code\modules\mob\living\silicon\robot\robot_movement.dm"
 #include "code\modules\mob\living\silicon\robot\say.dm"

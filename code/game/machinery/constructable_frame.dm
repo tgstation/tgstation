@@ -154,7 +154,7 @@
 									update_desc()
 									break
 							user << desc
-							if(P.loc != src && !istype(P, /obj/item/weapon/cable_coil))
+							if(P && P.loc != src && !istype(P, /obj/item/weapon/cable_coil))
 								user << "\red You cannot add that component to the machine!"
 
 
