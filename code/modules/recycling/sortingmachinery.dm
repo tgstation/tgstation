@@ -39,8 +39,8 @@
 		return
 
 /obj/item/smallDelivery
-	desc = "A small wrapped package."
-	name = "small parcel"
+	desc = "A wrapped package."
+	name = "parcel"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrateSmall"
 	var/obj/item/wrapped = null
