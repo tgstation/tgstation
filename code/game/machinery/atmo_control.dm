@@ -97,6 +97,39 @@ obj/machinery/computer/general_air_control
 		..()
 		src.updateDialog()
 
+	attackby(I as obj, user as mob)
+		if(istype(I, /obj/item/weapon/screwdriver))
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			if(do_after(user, 20))
+				if (src.stat & BROKEN)
+					user << "\blue The broken glass falls out."
+					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+					new /obj/item/weapon/shard( src.loc )
+					var/obj/item/weapon/circuitboard/air_management/M = new /obj/item/weapon/circuitboard/air_management( A )
+					for (var/obj/C in src)
+						C.loc = src.loc
+					M.frequency = src.frequency
+					A.circuit = M
+					A.state = 3
+					A.icon_state = "3"
+					A.anchored = 1
+					del(src)
+				else
+					user << "\blue You disconnect the monitor."
+					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+					var/obj/item/weapon/circuitboard/air_management/M = new /obj/item/weapon/circuitboard/air_management( A )
+					for (var/obj/C in src)
+						C.loc = src.loc
+					M.frequency = src.frequency
+					A.circuit = M
+					A.state = 4
+					A.icon_state = "4"
+					A.anchored = 1
+					del(src)
+		else
+			src.attack_hand(user)
+		return
+
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption) return
 
@@ -263,6 +296,38 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 		var/cutoff_temperature = 2000
 		var/on_temperature = 1200
 
+		attackby(I as obj, user as mob)
+			if(istype(I, /obj/item/weapon/screwdriver))
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				if(do_after(user, 20))
+					if (src.stat & BROKEN)
+						user << "\blue The broken glass falls out."
+						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+						new /obj/item/weapon/shard( src.loc )
+						var/obj/item/weapon/circuitboard/injector_control/M = new /obj/item/weapon/circuitboard/injector_control( A )
+						for (var/obj/C in src)
+							C.loc = src.loc
+						M.frequency = src.frequency
+						A.circuit = M
+						A.state = 3
+						A.icon_state = "3"
+						A.anchored = 1
+						del(src)
+					else
+						user << "\blue You disconnect the monitor."
+						var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+						var/obj/item/weapon/circuitboard/injector_control/M = new /obj/item/weapon/circuitboard/injector_control( A )
+						for (var/obj/C in src)
+							C.loc = src.loc
+						M.frequency = src.frequency
+						A.circuit = M
+						A.state = 4
+						A.icon_state = "4"
+						A.anchored = 1
+						del(src)
+			else
+				src.attack_hand(user)
+			return
 
 		process()
 			if(automation)
