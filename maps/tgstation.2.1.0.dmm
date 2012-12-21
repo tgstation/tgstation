@@ -3941,7 +3941,7 @@
 "bxO" = (/obj/structure/stool/bed/chair,/obj/machinery/atmospherics/pipe/manifold{color = "blue"; dir = 8; icon_state = "manifold-b-f"; initialize_directions = 11; level = 1; name = "pipe manifold"},/turf/simulated/floor{icon_state = "dark"},/area/medical/sleeper)
 "bxP" = (/obj/structure/stool/bed/chair,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/medical/sleeper)
 "bxQ" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/wall,/area/medical/sleeper)
-"bxR" = (/obj/structure/closet,/obj/structure/closet/secure_closet/medical1,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/sleeper)
+"bxR" = (/obj/structure/closet/secure_closet/medical1,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/sleeper)
 "bxS" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{icon_state = "white"},/area/medical/sleeper)
 "bxT" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/turf/simulated/floor{icon_state = "white"},/area/medical/sleeper)
 "bxU" = (/obj/machinery/sleep_console{icon_state = "sleeperconsole-r"; orient = "RIGHT"},/obj/machinery/light,/turf/simulated/floor{tag = "icon-whitehall (WEST)"; icon_state = "whitehall"; dir = 8},/area/medical/sleeper)
