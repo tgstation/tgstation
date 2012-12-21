@@ -228,6 +228,9 @@
 /obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
 	holographic_items.Remove(obj)
 
+	if(obj == null)
+		return
+
 	if(isobj(obj))
 		var/mob/M = obj.loc
 		if(ismob(M))
