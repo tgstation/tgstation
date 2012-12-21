@@ -146,7 +146,8 @@
 
 
 /obj/machinery/computer/pod/process()
-	..()
+	if(!..())
+		return
 	if(timing)
 		if(time > 0)
 			time = round(time) - 1

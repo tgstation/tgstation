@@ -108,11 +108,9 @@
 	return
 
 /obj/machinery/computer/aifixer/process()
-	if(stat & (NOPOWER|BROKEN))
+	if(..())
+		src.updateDialog()
 		return
-
-	src.updateDialog()
-	return
 
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	if(..())
@@ -144,3 +142,19 @@
 	return
 
 
+/obj/machinery/computer/aifixer/update_icon()
+	..()
+	// Broken / Unpowered
+	if((stat & BROKEN) || (stat & NOPOWER))
+		overlays = null
+
+	// Working / Powered
+	else
+		if (occupant)
+			switch (occupant.stat)
+				if (0)
+					overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
+				if (2)
+					overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
+		else
+			overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")

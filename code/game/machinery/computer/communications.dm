@@ -35,9 +35,9 @@
 
 
 /obj/machinery/computer/communications/process()
-	..()
-	if(state != STATE_STATUSDISPLAY)
-		src.updateDialog()
+	if(..())
+		if(state != STATE_STATUSDISPLAY)
+			src.updateDialog()
 
 
 /obj/machinery/computer/communications/Topic(href, href_list)

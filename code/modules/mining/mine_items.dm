@@ -116,6 +116,8 @@ proc/move_mining_shuttle()
 	var/location = 0 //0 = station, 1 = mining base
 
 /obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
+	if(..(user))
+		return
 	src.add_fingerprint(usr)
 	var/dat
 	dat = text("<center>Mining shuttle:<br> <b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>")

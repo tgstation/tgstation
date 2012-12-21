@@ -65,7 +65,7 @@
 	..()
 	return
 
-/obj/machinery/computer/message_monitor/power_change()
+/obj/machinery/computer/message_monitor/update_icon()
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -74,7 +74,7 @@
 	else
 		icon_state = normal_icon
 
-/obj/machinery/computer/message_monitor/process()
+/obj/machinery/computer/message_monitor/initialize()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		if(message_servers && message_servers.len > 0)

@@ -126,10 +126,6 @@
 		return
 
 
-/obj/machinery/power/monitor/process()
-	if(!(stat & (NOPOWER|BROKEN)) )
-		use_power(250)
-
 /obj/machinery/power/monitor/power_change()
 
 	if(stat & BROKEN)

@@ -219,18 +219,6 @@
 	src.blocked = 0
 	return
 
-/obj/machinery/computer/arcade/power_change()
-
-	if(stat & BROKEN)
-		icon_state = "arcadeb"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				src.icon_state = "arcade0"
-				stat |= NOPOWER
 
 /obj/machinery/computer/arcade/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)

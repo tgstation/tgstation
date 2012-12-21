@@ -25,6 +25,8 @@
 		return
 
 	attack_hand(var/mob/user as mob)
+		if(..(user))
+			return
 		src.add_fingerprint(usr)
 		var/dat = {"
 		<html>

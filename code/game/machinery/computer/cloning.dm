@@ -454,15 +454,14 @@
 			break
 	return selected_record
 
-/obj/machinery/computer/cloning/power_change()
+/obj/machinery/computer/cloning/update_icon()
 
 	if(stat & BROKEN)
 		icon_state = "commb"
 	else
-		if( powered() )
+		if(stat & NOPOWER)
+			src.icon_state = "c_unpowered"
+			stat |= NOPOWER
+		else
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				stat |= NOPOWER

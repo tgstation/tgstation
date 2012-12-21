@@ -198,6 +198,8 @@
 
 /obj/machinery/computer/HolodeckControl/process()
 
+	if(!..())
+		return
 	if(active)
 
 		if(!checkInteg(linkedholodeck))
