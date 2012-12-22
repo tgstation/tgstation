@@ -181,3 +181,22 @@
 	New()
 		..()
 		reagents.add_reagent("bicaridine", 30)
+
+/obj/item/weapon/reagent_containers/pill/happy
+	name = "Happy pill"
+	desc = "Happy happy joy joy!"
+	icon_state = "pill18"
+	New()
+		..()
+		reagents.add_reagent("space_drugs", 15)
+		reagents.add_reagent("sugar", 15)
+
+/obj/item/weapon/reagent_containers/pill/zoom
+	name = "Zoom pill"
+	desc = "Zoooom!"
+	icon_state = "pill18"
+	New()
+		..()
+		reagents.add_reagent("impedrezene", 10)
+		reagents.add_reagent("synaptizine", 5)
+		reagents.add_reagent("hyperzine", 5)
