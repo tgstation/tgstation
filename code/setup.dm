@@ -66,7 +66,10 @@
 
 // Factor of how fast mob nutrition decreases
 #define	HUNGER_FACTOR 0.05
-#define	REAGENTS_METABOLISM 0.4
+#define	REAGENTS_METABOLISM 0.02
+// By defining the effect multiplier this way, it'll exactly adjust
+// all effects according to how they originally were with the 0.4 metabolism
+#define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
 
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
 	//Minimum ratio of air that must move to/from a tile to suspend group processing
