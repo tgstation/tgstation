@@ -83,9 +83,9 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(prob(10))
 					M << "\red Your insides are burning!"
-					M.adjustToxLoss(rand(20,60))
+					M.adjustToxLoss(rand(20,60)*REAGENTS_EFFECT_MULTIPLIER)
 				else if(prob(40))
-					M.heal_organ_damage(5,0)
+					M.heal_organ_damage(5*REAGENTS_EFFECT_MULTIPLIER,0)
 				..()
 				return
 
@@ -308,29 +308,29 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.drowsyness = max(M.drowsyness-2, 0)
+				M.drowsyness = max(M.drowsyness-2*REAGENTS_EFFECT_MULTIPLIER, 0)
 				if(holder.has_reagent("toxin"))
-					holder.remove_reagent("toxin", 2)
+					holder.remove_reagent("toxin", 2*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("stoxin"))
-					holder.remove_reagent("stoxin", 2)
+					holder.remove_reagent("stoxin", 2*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("plasma"))
-					holder.remove_reagent("plasma", 1)
+					holder.remove_reagent("plasma", 1*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("sacid"))
-					holder.remove_reagent("sacid", 1)
+					holder.remove_reagent("sacid", 1*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("cyanide"))
-					holder.remove_reagent("cyanide", 1)
+					holder.remove_reagent("cyanide", 1*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("amatoxin"))
-					holder.remove_reagent("amatoxin", 2)
+					holder.remove_reagent("amatoxin", 2*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("chloralhydrate"))
-					holder.remove_reagent("chloralhydrate", 5)
+					holder.remove_reagent("chloralhydrate", 5*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("carpotoxin"))
-					holder.remove_reagent("carpotoxin", 1)
+					holder.remove_reagent("carpotoxin", 1*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("zombiepowder"))
-					holder.remove_reagent("zombiepowder", 0.5)
+					holder.remove_reagent("zombiepowder", 0.5*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("mindbreaker"))
-					holder.remove_reagent("mindbreaker", 2)
-				M.hallucination = max(0, M.hallucination - 5)
-				M.adjustToxLoss(-2)
+					holder.remove_reagent("mindbreaker", 2*REAGENTS_EFFECT_MULTIPLIER)
+				M.hallucination = max(0, M.hallucination - 5*REAGENTS_EFFECT_MULTIPLIER)
+				M.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -343,7 +343,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1.5)
+				M.adjustToxLoss(1.5*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -356,8 +356,8 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(3)
-				M.adjustOxyLoss(3)
+				M.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER)
+				M.adjustOxyLoss(3*REAGENTS_EFFECT_MULTIPLIER)
 				M.sleeping += 1
 				..()
 				return
@@ -442,7 +442,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.losebreath >= 10)
 					M.losebreath = max(10, M.losebreath-5)
-				holder.remove_reagent(src.id, 0.2)
+				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				return
 
 		space_drugs
@@ -459,7 +459,7 @@ datum
 					if(M.canmove)
 						if(prob(10)) step(M, pick(cardinal))
 				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
-				holder.remove_reagent(src.id, 0.2)
+				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				return
 
 		serotrotium
@@ -472,7 +472,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(ishuman(M))
 					if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
-					holder.remove_reagent(src.id, 0.1)
+					holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
 				return
 
 /*		silicate
@@ -588,7 +588,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.take_organ_damage(1, 0)
+				M.take_organ_damage(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 				..()
 				return
 
@@ -601,7 +601,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1)
+				M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -642,7 +642,7 @@ datum
 			color = "#808080" // rgb: 128, 128, 128
 
 			on_mob_life(var/mob/living/M as mob)
-				M.nutrition += 1
+				M.nutrition += 1*REAGENTS_EFFECT_MULTIPLIER
 				..()
 				return
 
@@ -655,8 +655,8 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1)
-				M.take_organ_damage(0, 1)
+				M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER)
+				M.take_organ_damage(0, 1*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
@@ -728,7 +728,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1)
+				M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -910,7 +910,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M.dna) return //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 				if(!M) M = holder.my_atom
-				M.apply_effect(10,IRRADIATE,0)
+				M.apply_effect(10*REAGENTS_EFFECT_MULTIPLIER,IRRADIATE,0)
 				..()
 				return
 
@@ -938,7 +938,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.nutrition += nutriment_factor
+				M.nutrition += nutriment_factor*REAGENTS_EFFECT_MULTIPLIER
 				..()
 				return
 
@@ -1007,7 +1007,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.apply_effect(1,IRRADIATE,0)
+				M.apply_effect(1*REAGENTS_EFFECT_MULTIPLIER,IRRADIATE,0)
 				..()
 				return
 
@@ -1058,7 +1058,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(1)
+				M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -1160,8 +1160,8 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(holder.has_reagent("inaprovaline"))
-					holder.remove_reagent("inaprovaline", 2)
-				M.adjustToxLoss(1)
+					holder.remove_reagent("inaprovaline", 2*REAGENTS_EFFECT_MULTIPLIER)
+				M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 			reaction_obj(var/obj/O, var/volume)
@@ -1214,7 +1214,7 @@ datum
 				M.make_dizzy(1)
 				if(!M.confused) M.confused = 1
 				M.confused = max(M.confused, 20)
-				holder.remove_reagent(src.id, 0.2)
+				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				..()
 				return
 
@@ -1230,7 +1230,7 @@ datum
 					return
 				if(!M) M = holder.my_atom
 				if(prob(33))
-					M.take_organ_damage(1, 0)
+					M.take_organ_damage(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 				M.adjustOxyLoss(3)
 				if(prob(20)) M.emote("gasp")
 				..()
@@ -1247,7 +1247,7 @@ datum
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
-				M.heal_organ_damage(0,2)
+				M.heal_organ_damage(0,2*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -1262,7 +1262,7 @@ datum
 				if(M.stat == 2.0) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
 					return
 				if(!M) M = holder.my_atom
-				M.heal_organ_damage(0,3)
+				M.heal_organ_damage(0,3*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -1277,9 +1277,9 @@ datum
 				if(M.stat == 2.0)
 					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
-				M.adjustOxyLoss(-2)
+				M.adjustOxyLoss(-2*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("lexorin"))
-					holder.remove_reagent("lexorin", 2)
+					holder.remove_reagent("lexorin", 2*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -1296,7 +1296,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.adjustOxyLoss(-M.getOxyLoss())
 				if(holder.has_reagent("lexorin"))
-					holder.remove_reagent("lexorin", 2)
+					holder.remove_reagent("lexorin", 2*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -1311,10 +1311,10 @@ datum
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
-				if(M.getOxyLoss() && prob(40)) M.adjustOxyLoss(-1)
-				if(M.getBruteLoss() && prob(40)) M.heal_organ_damage(1,0)
-				if(M.getFireLoss() && prob(40)) M.heal_organ_damage(0,1)
-				if(M.getToxLoss() && prob(40)) M.adjustToxLoss(-1)
+				if(M.getOxyLoss() && prob(40)) M.adjustOxyLoss(-1*REAGENTS_EFFECT_MULTIPLIER)
+				if(M.getBruteLoss() && prob(40)) M.heal_organ_damage(1*REAGENTS_EFFECT_MULTIPLIER,0)
+				if(M.getFireLoss() && prob(40)) M.heal_organ_damage(0,1*REAGENTS_EFFECT_MULTIPLIER)
+				if(M.getToxLoss() && prob(40)) M.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -1397,7 +1397,7 @@ datum
 				M.AdjustWeakened(-1)
 				if(holder.has_reagent("mindbreaker"))
 					holder.remove_reagent("mindbreaker", 5)
-				M.hallucination = max(0, M.hallucination - 10)
+				M.hallucination = max(0, M.hallucination - 10*REAGENTS_EFFECT_MULTIPLIER)
 				if(prob(60))	M.adjustToxLoss(1)
 				..()
 				return
@@ -1413,7 +1413,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.jitteriness = max(M.jitteriness-5,0)
-				if(prob(80)) M.adjustBrainLoss(1)
+				if(prob(80)) M.adjustBrainLoss(1*REAGENTS_EFFECT_MULTIPLIER)
 				if(prob(50)) M.drowsyness = max(M.drowsyness, 3)
 				if(prob(10)) M.emote("drool")
 				..()
@@ -1428,7 +1428,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.radiation = max(M.radiation-3,0)
+				M.radiation = max(M.radiation-3*REAGENTS_EFFECT_MULTIPLIER,0)
 				..()
 				return
 
@@ -1443,10 +1443,10 @@ datum
 				if(M.stat == 2.0)
 					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
-				M.radiation = max(M.radiation-7,0)
-				M.adjustToxLoss(-1)
+				M.radiation = max(M.radiation-7*REAGENTS_EFFECT_MULTIPLIER,0)
+				M.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER)
 				if(prob(15))
-					M.take_organ_damage(1, 0)
+					M.take_organ_damage(1*REAGENTS_EFFECT_MULTIPLIER, 0)
 				..()
 				return
 
@@ -1459,7 +1459,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustBrainLoss(-3)
+				M.adjustBrainLoss(-3*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -1491,7 +1491,7 @@ datum
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
-				M.heal_organ_damage(2,0)
+				M.heal_organ_damage(2*REAGENTS_EFFECT_MULTIPLIER,0)
 				..()
 				return
 
@@ -1505,7 +1505,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(prob(5)) M.emote(pick("twitch","blink_r","shiver"))
-				holder.remove_reagent(src.id, 0.2)
+				holder.remove_reagent(src.id, 0.5 * REAGENTS_METABOLISM)
 				..()
 				return
 
@@ -1552,8 +1552,7 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)//no more mr. panacea
-				// Only consume 0.1 units per tick
-				holder.remove_reagent(src.id, 0.2)
+				..()
 				return
 
 		carpotoxin
@@ -1565,7 +1564,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.adjustToxLoss(2)
+				M.adjustToxLoss(2*REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
@@ -1578,8 +1577,8 @@ datum
 			on_mob_life(var/mob/living/carbon/M as mob)
 				if(!M) M = holder.my_atom
 				M.status_flags |= FAKEDEATH
-				M.adjustOxyLoss(0.5)
-				M.adjustToxLoss(0.5)
+				M.adjustOxyLoss(0.5*REAGENTS_EFFECT_MULTIPLIER)
+				M.adjustToxLoss(0.5*REAGENTS_EFFECT_MULTIPLIER)
 				M.Weaken(10)
 				M.silent = max(M.silent, 10)
 				M.tod = worldtime2text()
@@ -1713,7 +1712,7 @@ datum
 						M.sleeping += 1
 					if(61 to INFINITY)
 						M.sleeping += 1
-						M.adjustToxLoss(data - 50)
+						M.adjustToxLoss((data - 50) * REAGENTS_EFFECT_MULTIPLIER)
 				..()
 				return
 
