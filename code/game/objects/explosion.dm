@@ -20,7 +20,16 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
 		playsound(epicenter, "explosion", 100, 1, round(devastation_range,1) )
-
+		
+		var/close = range(world.view+round(devastation_range,1), epicenter)
+		// to all distanced mobs play a different sound
+		for(var/mob/M in world) if(M.z == epicenter.z) if(!(M in close))
+			// check if the mob can hear
+			if(M.ear_deaf <= 0 || !M.ear_deaf) if(!istype(M.loc,/turf/space))
+				M << 'explosionfar.ogg'
+		if (adminlog)
+			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] (<a href=\"byond://?src=%admin_ref%;teleto=\ref[epicenter]\">Jump</a>)", admin_ref = 1)
+			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
 
 		var/lighting_controller_was_processing = lighting_controller.processing	//Pause the lighting updates for a bit
 		lighting_controller.processing = 0
