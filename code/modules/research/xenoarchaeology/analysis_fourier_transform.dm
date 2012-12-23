@@ -12,25 +12,30 @@ obj/machinery/anomaly/fourier_transform/ScanResults()
 	var/carrier
 	var/num_reagents = 0
 
-	for(var/reagent/A in held_container.reagents.reagent_list)
+	for(var/datum/reagent/A in held_container.reagents.reagent_list)
 		var/datum/reagent/R = A
-		if(istype(R,datum/reagent/density_separated_liquid))
-			scanned_sample = R.data
-		else if(istype(R,datum/reagent/analysis_sample))
+		if(istype(R, /datum/reagent/analysis_sample))
 			scanned_sample = R.data
 		else
-			carrier = R.type
+			carrier = R.id
 		num_reagents++
 
 	if(num_reagents == 2 && scanned_sample && carrier)
 		//all necessary components are present
 		var/specifity = GetResultSpecifity(scanned_sample, carrier)
 		var/distance = scanned_sample.artifact_distance
-		if(specifity > 0.6)
-			artifact_distance += rand(-0.1, 0.1) * artifact_distance
+		if(distance > 0)
+			var/accuracy = 0.9
+			if(specifity > 0.6)
+				distance += (0.2 * rand() - 0.1) * distance
+			else
+				var/offset = 1 - specifity
+				distance += distance * rand(-100 * offset, 100 * offset) / 100
+				accuracy = specifity
+			results = "Fourier transform analysis on anomalous energy absorption through carrier ([carrier]) indicates source located inside emission radius ([100 * accuracy]% accuracy): [distance]."
+			if(carrier == scanned_sample.source_mineral)
+				results += "<br>Warning, analysis may be contaminated by high quantities of molecular carrier present throughout sample."
 		else
-			var/offset = 1 - specifity
-			artifact_distance += rand(-offset, offset) * artifact_distance
-		results = "Anomalous energy absorption through carrier ([carrier.id]) indicates emission radius: [artifact_distance]"
+			results = "Standard energy dispersion detected throughout sample."
 
 	return results

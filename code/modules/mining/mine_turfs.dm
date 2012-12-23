@@ -36,8 +36,6 @@
 
 /turf/simulated/mineral/New()
 
-	src.geological_data = new /datum/geosample(src)
-
 	spawn(1)
 		var/turf/T
 		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
@@ -70,6 +68,9 @@
 		if(prob(spreadChance))
 			if(istype(get_step(src, EAST), /turf/simulated/mineral/random))
 				new src.type(get_step(src, EAST))
+
+	src.geological_data = new /datum/geosample(src)
+
 	return
 
 /turf/simulated/mineral/random
