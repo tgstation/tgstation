@@ -65,12 +65,23 @@ DEBUG
 			jobban_loadbanfile()
 			return
 
+		//Job permabans
 		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, job FROM erro_ban WHERE bantype = 'JOB_PERMABAN' AND isnull(unbanned)")
 		query.Execute()
 
 		while(query.NextRow())
 			var/ckey = query.item[1]
 			var/job = query.item[2]
+
+			jobban_keylist.Add("[ckey] - [job]")
+
+		//Job tempbans
+		var/DBQuery/query1 = dbcon.NewQuery("SELECT ckey, job FROM erro_ban WHERE bantype = 'JOB_TEMPBAN' AND isnull(unbanned) AND expiration_time > Now()")
+		query1.Execute()
+
+		while(query1.NextRow())
+			var/ckey = query1.item[1]
+			var/job = query1.item[2]
 
 			jobban_keylist.Add("[ckey] - [job]")
 

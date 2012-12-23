@@ -89,6 +89,10 @@
 					usr << "Not enough parameters (Requires ckey, reason and job)"
 					return
 				banduration = null
+			if(BANTYPE_JOB_TEMP)
+				if(!banckey || !banreason || !banjob || !banduration)
+					usr << "Not enough parameters (Requires ckey, reason and job)"
+					return
 
 		var/mob/playermob
 
@@ -675,25 +679,59 @@
 
 		//Banning comes first
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
-			var/reason = input(usr,"Reason?","Please State Reason","") as text|null
-			if(reason)
-				var/msg
-				for(var/job in notbannedlist)
-					ban_unban_log_save("[key_name(usr)] jobbanned [key_name(M)] from [job]. reason: [reason]")
-					log_admin("[key_name(usr)] banned [key_name(M)] from [job]")
-					feedback_inc("ban_job",1)
-					DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, job)
-					feedback_add_details("ban_job","- [job]")
-					jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
-					if(!msg)	msg = job
-					else		msg += ", [job]"
-				notes_add(M.ckey, "Banned  from [msg] - [reason]")
-				message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg]", 1)
-				M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>"
-				M << "\red <B>The reason is: [reason]</B>"
-				M << "\red Jobban can be lifted only upon request."
-				href_list["jobban2"] = 1 // lets it fall through and refresh
-				return 1
+			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
+				if("Yes")
+					if(config.ban_legacy_system)
+						usr << "\red Your server is using the legacy banning system, which does not support temporary job bans. Consider upgrading. Aborting ban."
+						return
+					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
+					if(!mins)
+						return
+					var/reason = input(usr,"Reason?","Please State Reason","") as text|null
+					if(!reason)
+						return
+
+					var/msg
+					for(var/job in notbannedlist)
+						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
+						log_admin("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes")
+						feedback_inc("ban_job_tmp",1)
+						DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job)
+						feedback_add_details("ban_job_tmp","- [job]")
+						jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]") //Legacy banning does not support temporary jobbans.
+						if(!msg)
+							msg = job
+						else
+							msg += ", [job]"
+					notes_add(M.ckey, "Banned  from [msg] - [reason]")
+					message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes", 1)
+					M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>"
+					M << "\red <B>The reason is: [reason]</B>"
+					M << "\red This jobban will be lifted in [mins] minutes."
+					href_list["jobban2"] = 1 // lets it fall through and refresh
+					return 1
+				if("No")
+					var/reason = input(usr,"Reason?","Please State Reason","") as text|null
+					if(reason)
+						var/msg
+						for(var/job in notbannedlist)
+							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
+							log_admin("[key_name(usr)] perma-banned [key_name(M)] from [job]")
+							feedback_inc("ban_job",1)
+							DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, job)
+							feedback_add_details("ban_job","- [job]")
+							jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
+							if(!msg)	msg = job
+							else		msg += ", [job]"
+						notes_add(M.ckey, "Banned  from [msg] - [reason]")
+						message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg]", 1)
+						M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>"
+						M << "\red <B>The reason is: [reason]</B>"
+						M << "\red Jobban can be lifted only upon request."
+						href_list["jobban2"] = 1 // lets it fall through and refresh
+						return 1
+				if("Cancel")
+					return
 
 		//Unbanning joblist
 		//all jobs in joblist are banned already OR we didn't give a reason (implying they shouldn't be banned)
