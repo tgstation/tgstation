@@ -240,8 +240,14 @@ var/global/floorIsLava = 0
 				if( isemptylist(src.admincaster_feed_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
+					var/i = 0
 					for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
-						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
+						i++
+						dat+="-[MESSAGE.body] <BR>"
+						if(MESSAGE.img)
+							usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
+							dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
+						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 			dat+="<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[1]'>Back</A>"
 		if(10)
@@ -329,6 +335,12 @@ var/global/floorIsLava = 0
 			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
 			dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
 			dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
+			dat+="<B>Photo:</B>: "
+			if(news_network.wanted_issue.img)
+				usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
+				dat+="<BR><img src='tmp_photow.png' width = '180'>"
+			else
+				dat+="None"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A><BR>"
 		if(19)
 			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] successfully edited.</FONT><BR><BR>"

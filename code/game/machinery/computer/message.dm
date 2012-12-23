@@ -405,7 +405,7 @@
 						//Get out list of viable PDAs
 						var/list/obj/item/device/pda/sendPDAs = list()
 						for(var/obj/item/device/pda/P in PDAs)
-							if(!P.owner || P.toff) continue
+							if(!P.owner || P.toff || P.hidden) continue
 							sendPDAs += P
 						if(PDAs && PDAs.len > 0)
 							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortAtom(sendPDAs)
@@ -437,7 +437,7 @@
 
 						var/obj/item/device/pda/PDARec = null
 						for (var/obj/item/device/pda/P in PDAs)
-							if (!P.owner||P.toff)	continue
+							if (!P.owner || P.toff || P.hidden)	continue
 							if(P.owner == customsender)
 								PDARec = P
 						//Sender isn't faking as someone who exists

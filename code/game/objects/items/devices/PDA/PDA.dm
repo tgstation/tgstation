@@ -37,6 +37,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/notehtml = ""
 	var/cart = "" //A place to stick cartridge menu information
 	var/detonate = 1 // Can the PDA be blown up?
+	var/hidden = 0 // Is the PDA hidden from the PDA list?
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -130,7 +131,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-syn"
 	name = "Military PDA"
 	owner = "John Doe"
-	toff = 1
+	hidden = 1
 
 /obj/item/device/pda/chaplain
 	icon_state = "pda-holy"
@@ -360,7 +361,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 				if (!toff)
 					for (var/obj/item/device/pda/P in sortAtom(PDAs))
-						if (!P.owner||P.toff||P == src)	continue
+						if (!P.owner||P.toff||P == src||P.hidden)	continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
 						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate) && P.detonate)
 							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"
@@ -1018,6 +1019,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	for (var/obj/item/device/pda/P in PDAs)
 		if (!P.owner)
+			continue
+		else if(P.hidden)
 			continue
 		else if (P == src)
 			continue
