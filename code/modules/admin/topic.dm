@@ -147,7 +147,9 @@
 			else
 				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer","*New Rank*")
 
-			var/rights = D.rights
+			var/rights = 0
+			if(D)
+				rights = D.rights
 			switch(new_rank)
 				if(null,"") return
 				if("*New Rank*")
