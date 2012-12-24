@@ -116,44 +116,44 @@
 				misc[name] = rank
 
 		if(heads.len > 0)
-			dat += "<tr><th colspan=2>Heads</th></tr>"
+			dat += "<tr><th colspan=3>Heads</th></tr>"
 			for(name in heads)
 				dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[heads[name]]</td><td>[isactive[name]]</td></tr>"
 				even = !even
 		if(sec.len > 0)
-			dat += "<tr><th colspan=2>Security</th></tr>"
+			dat += "<tr><th colspan=3>Security</th></tr>"
 			for(name in sec)
 				dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sec[name]]</td><td>[isactive[name]]</td></tr>"
 				even = !even
 		if(eng.len > 0)
-			dat += "<tr><th colspan=2>Engineering</th></tr>"
+			dat += "<tr><th colspan=3>Engineering</th></tr>"
 			for(name in eng)
 				dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[eng[name]]</td><td>[isactive[name]]</td></tr>"
 				even = !even
 		if(med.len > 0)
-			dat += "<tr><th colspan=2>Medical</th></tr>"
+			dat += "<tr><th colspan=3>Medical</th></tr>"
 			for(name in med)
 				dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[med[name]]</td><td>[isactive[name]]</td></tr>"
 				even = !even
 		if(sci.len > 0)
-			dat += "<tr><th colspan=2>Science</th></tr>"
+			dat += "<tr><th colspan=3>Science</th></tr>"
 			for(name in sci)
 				dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sci[name]]</td><td>[isactive[name]]</td></tr>"
 				even = !even
 		if(civ.len > 0)
-			dat += "<tr><th colspan=2>Civilian</th></tr>"
+			dat += "<tr><th colspan=3>Civilian</th></tr>"
 			for(name in civ)
 				dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[civ[name]]</td><td>[isactive[name]]</td></tr>"
 				even = !even
 		// in case somebody is insane and added them to the manifest, why not
 		if(bot.len > 0)
-			dat += "<tr><th colspan=2>Silicon</th></tr>"
+			dat += "<tr><th colspan=3>Silicon</th></tr>"
 			for(name in bot)
 				dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[bot[name]]</td><td>[isactive[name]]</td></tr>"
 				even = !even
 		// misc guys
 		if(misc.len > 0)
-			dat += "<tr><th colspan=2>Miscellaneous</th></tr>"
+			dat += "<tr><th colspan=3>Miscellaneous</th></tr>"
 			for(name in misc)
 				dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[misc[name]]</td><td>[isactive[name]]</td></tr>"
 				even = !even
