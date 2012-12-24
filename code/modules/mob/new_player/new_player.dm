@@ -394,7 +394,11 @@
 		dat += "Choose from the following open positions:<br>"
 		for(var/datum/job/job in job_master.occupations)
 			if(job && IsJobAvailable(job.title))
-				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+				var/active = 0
+				// Only players with the job assigned and AFK for less than 10 minutes count as active
+				for(var/mob/M in player_list) if(M.mind && M.client && M.assigned_job == job && M.client.inactivity <= 10 * 60 * 10)
+					active++
+				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions]) (Active: [active])</a><br>"
 
 		dat += "</center>"
 		src << browse(dat, "window=latechoices;size=300x640;can_close=1")
