@@ -92,6 +92,7 @@
 		// Take blood
 		else if(mode == "take")
 			var/amount = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+			amount = min(amount, 4)
 			// If the beaker is full, ping
 			if(amount == 0)
 				if(prob(5)) visible_message("\The [src] pings.")
