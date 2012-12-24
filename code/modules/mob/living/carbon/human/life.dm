@@ -198,6 +198,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					toxloss += 300 // just to be safe!
 					death()
 
+			// Without enough blood you slowly go hungry.
+			if(blood_volume < BLOOD_VOLUME_SAFE)
+				if(nutrition >= 300)
+					nutrution -= 10
+				else if(nutrition >= 200)
+					nutrition -= 3
 
 			var/blood_max = 0
 			for(var/datum/organ/external/temp in organs)
@@ -1416,13 +1422,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 							if(0 to 20)				healths.icon_state = "health5"
 							else					healths.icon_state = "health6"
 
-			var/adjusted_nutrition = nutrition
-			// With not enough blood, make it seem as though hungry, since eating will
-			// help regenerate blood
-			if(vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE)
-				adjusted_nutrition = min(200, nutrition)
 			if(nutrition_icon)
-				switch(adjusted_nutrition)
+				switch(nutrition)
 					if(450 to INFINITY)				nutrition_icon.icon_state = "nutrition0"
 					if(350 to 450)					nutrition_icon.icon_state = "nutrition1"
 					if(250 to 350)					nutrition_icon.icon_state = "nutrition2"
