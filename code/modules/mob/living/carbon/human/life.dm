@@ -21,6 +21,11 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 2 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 4 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+var/const/BLOOD_VOLUME_SAFE = 501
+var/const/BLOOD_VOLUME_OKAY = 336
+var/const/BLOOD_VOLUME_BAD = 224
+var/const/BLOOD_VOLUME_SURVIVE = 122
+
 /mob/living/carbon/human
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
@@ -152,11 +157,11 @@
 
 
 			switch(blood_volume)
-				if(501 to 10000)
+				if(BLOOD_VOLUME_SAFE to 10000)
 					if(pale)
 						pale = 0
 						update_body()
-				if(336 to 500)
+				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 					if(!pale)
 						pale = 1
 						update_body()
@@ -168,7 +173,7 @@
 					if(oxyloss < 20)
 						// hint that they're getting close to suffocation
 						oxyloss += 3
-				if(224 to 335)
+				if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 					if(!pale)
 						pale = 1
 						update_body()
@@ -180,13 +185,13 @@
 						Paralyse(rand(1,3))
 						var/word = pick("dizzy","woosey","faint")
 						src << "\red You feel extremely [word]"
-				if(122 to 244)
+				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 					oxyloss += 5
 					toxloss += 5
 					if(prob(15))
 						var/word = pick("dizzy","woosey","faint")
 						src << "\red You feel extremely [word]"
-				if(0 to 122)
+				if(0 to BLOOD_VOLUME_SURVIVE)
 					// There currently is a strange bug here. If the mob is not below -100 health
 					// when death() is called, apparently they will be just fine, and this way it'll
 					// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
@@ -1411,8 +1416,13 @@
 							if(0 to 20)				healths.icon_state = "health5"
 							else					healths.icon_state = "health6"
 
+			var/adjusted_nutrition = nutrition
+			// With not enough blood, make it seem as though hungry, since eating will
+			// help regenerate blood
+			if(vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE)
+				adjusted_nutrition = min(200, nutrition)
 			if(nutrition_icon)
-				switch(nutrition)
+				switch(adjusted_nutrition)
 					if(450 to INFINITY)				nutrition_icon.icon_state = "nutrition0"
 					if(350 to 450)					nutrition_icon.icon_state = "nutrition1"
 					if(250 to 350)					nutrition_icon.icon_state = "nutrition2"
