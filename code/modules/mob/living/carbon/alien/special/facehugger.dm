@@ -15,7 +15,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
-	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH|MASKCOVERSEYES
+	flags = FPRINT | TABLEPASS | MASKCOVERSMOUTH | MASKCOVERSEYES | MASKINTERNALS
 	throw_range = 5
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
@@ -35,7 +35,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		return
 
 /obj/item/clothing/mask/facehugger/attack_hand(user as mob)
-	if(stat == CONSCIOUS && !isalien(user))
+	if((stat == CONSCIOUS && !sterile) && !isalien(user))
 		Attach(user)
 		return
 	else
@@ -85,13 +85,14 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /obj/item/clothing/mask/facehugger/on_found(mob/finder as mob)
-	HasProximity(finder)
-	return 1
-
-/obj/item/clothing/mask/facehugger/dropped()
-	..()
-	GoActive()
+	if(stat == CONSCIOUS)
+		HasProximity(finder)
+		return 1
 	return
+
+/obj/item/clothing/mask/facehugger/HasProximity(atom/movable/AM as mob|obj)
+	if(CanHug(AM))
+		Attach(AM)
 
 /obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom)
 	Attach(hit_atom)
@@ -109,19 +110,18 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	var/mob/living/L = M //just so I don't need to use :
 
+	if(loc == L) return
 	if(stat != CONSCIOUS)	return
 	if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 
 	var/mob/living/carbon/target = L
 
-	for(var/mob/O in viewers(target, null))
-		O.show_message("\red \b [src] leaps at [target]'s face!", 1)
+	target.visible_message("\red \b [src] leaps at [target]'s face!")
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(H.head && H.head.flags & HEADCOVERSMOUTH)
-			for(var/mob/O in viewers(H, null))
-				O.show_message("\red \b [src] smashes against [H]'s [H.head]!", 1)
+			H.visible_message("\red \b [src] smashes against [H]'s [H.head]!")
 			Die()
 			return
 
@@ -131,13 +131,9 @@ var/const/MAX_ACTIVE_TIME = 400
 		if(!W.canremove)	return
 		target.drop_from_inventory(W)
 
-		for(var/mob/O in viewers(target, null))
-			O.show_message("\red \b [src] tears [W] off of [target]'s face!", 1)
+		target.visible_message("\red \b [src] tears [W] off of [target]'s face!")
 
-	loc = target
-	layer = 20
-	target.wear_mask = src
-	target.update_inv_wear_mask()
+	target.equip_to_slot(src, slot_wear_mask)
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
@@ -158,14 +154,11 @@ var/const/MAX_ACTIVE_TIME = 400
 			target.status_flags |= XENO_HOST
 			break
 
-		for(var/mob/O in viewers(target,null))
-			O.show_message("\red \b [src] falls limp after violating [target]'s face!", 1)
+		target.visible_message("\red \b [src] falls limp after violating [target]'s face!")
 
 		Die()
 	else
-		for(var/mob/O in viewers(target,null))
-			O.show_message("\red \b [src] violates [target]'s face!", 1)
-	target.update_inv_wear_mask()
+		target.visible_message("\red \b [src] violates [target]'s face!")
 	return
 
 /obj/item/clothing/mask/facehugger/proc/GoActive()
@@ -205,16 +198,12 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon_state = "[initial(icon_state)]_dead"
 	stat = DEAD
 
-	for(var/mob/O in viewers(src, null))
-		O.show_message("\red \b[src] curls up into a ball!", 1)
+	src.visible_message("\red \b[src] curls up into a ball!")
 
 	return
 
-/obj/item/clothing/mask/facehugger/HasProximity(atom/movable/AM as mob|obj)
-	if(CanHug(AM))
-		Attach(AM)
-
 /proc/CanHug(var/mob/M)
+
 	if(!iscarbon(M) || isalien(M))
 		return 0
 	var/mob/living/carbon/C = M
