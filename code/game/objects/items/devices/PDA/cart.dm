@@ -10,7 +10,7 @@
 	var/access_security = 0
 	var/access_engine = 0
 	var/access_medical = 0
-	var/access_manifest = 0
+	var/access_manifest = 1 // Make all jobs able to access the manifest
 	var/access_clown = 0
 	var/access_mime = 0
 	var/access_janitor = 0
@@ -268,9 +268,8 @@ Code:
 
 				menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 				menu += "Entries cannot be modified from this terminal.<br><br>"
-				if(!isnull(data_core.general))
-					for (var/datum/data/record/t in sortRecord(data_core.general))
-						menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+				if(data_core)
+					menu += data_core.get_manifest()
 				menu += "<br>"
 
 
