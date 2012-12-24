@@ -269,7 +269,7 @@ Code:
 				menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 				menu += "Entries cannot be modified from this terminal.<br><br>"
 				if(data_core)
-					menu += data_core.get_manifest()
+					menu += data_core.get_manifest(1) // make it monochrome
 				menu += "<br>"
 
 
