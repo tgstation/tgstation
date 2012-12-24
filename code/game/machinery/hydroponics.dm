@@ -1014,8 +1014,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "soil"
 	density = 0
-	New()
-		..()
+	use_power = 0
+
 	updateicon() // Same as normal but with the overlays removed - Cheridan.
 		overlays = null
 		if(planted)

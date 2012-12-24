@@ -19,6 +19,7 @@
 
 	icon_state = "apc0"
 	anchored = 1
+	use_power = 0
 	req_access = list(access_engine_equip)
 	var/area/area
 	var/areastring = null

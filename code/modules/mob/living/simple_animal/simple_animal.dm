@@ -422,10 +422,10 @@
 /mob/living/simple_animal/proc/SA_attackable(target_mob)
 	if (isliving(target_mob))
 		var/mob/living/L = target_mob
-		if(!L.stat)
-			return (0)
+		if(L.stat != DEAD)
+			return 0
 	if (istype(target_mob,/obj/mecha))
 		var/obj/mecha/M = target_mob
 		if (M.occupant)
-			return (0)
-	return (1)
+			return 0
+	return 1

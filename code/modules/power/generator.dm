@@ -12,6 +12,7 @@
 	icon_state = "teg"
 	anchored = 1
 	density = 1
+	use_power = 0
 
 	var/obj/machinery/atmospherics/binary/circulator/circ1
 	var/obj/machinery/atmospherics/binary/circulator/circ2

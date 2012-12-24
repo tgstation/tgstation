@@ -11,11 +11,13 @@
 	var/move_to_delay = 2 //delay for the automated movement.
 	var/list/friends = list()
 	stop_automated_movement_when_pulled = 0
+	var/destroy_surroundings = 1
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
 
 	var/atom/T = null
 	stop_automated_movement = 0
+	var/list/non_threat_targets = list() // Targets which it will target if there are no other targets
 	for(var/atom/A in ListTargets())
 
 		if(isliving(A))
@@ -25,16 +27,25 @@
 			else if(L in friends)
 				continue
 			else
-				if(!L.stat)
+
+				if(L.stat == CONSCIOUS)
 					stance = HOSTILE_STANCE_ATTACK
 					T = L
 					break
+				else if(L.stat == UNCONSCIOUS)
+					non_threat_targets += L
+				continue
+
 		if(istype(A, /obj/mecha))
 			var/obj/mecha/M = A
 			if (M.occupant)
 				stance = HOSTILE_STANCE_ATTACK
 				T = M
 				break
+
+	if(!T && non_threat_targets.len)
+		T = pick(non_threat_targets)
+
 	return T
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget()
@@ -160,7 +171,8 @@
 	return
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
-	for(var/dir in cardinal) // North, South, East, West
-		var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
-		if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
-			obstacle.attack_animal(src)
+	if(destroy_surroundings)
+		for(var/dir in cardinal) // North, South, East, West
+			var/obj/structure/obstacle = locate(/obj/structure, get_step(src, dir))
+			if(istype(obstacle, /obj/structure/window) || istype(obstacle, /obj/structure/closet) || istype(obstacle, /obj/structure/table) || istype(obstacle, /obj/structure/grille))
+				obstacle.attack_animal(src)

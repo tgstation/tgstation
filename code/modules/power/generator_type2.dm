@@ -4,6 +4,7 @@
 	icon_state = "teg"
 	anchored = 1
 	density = 1
+	use_power = 0
 
 	var/obj/machinery/atmospherics/unary/generator_input/input1
 	var/obj/machinery/atmospherics/unary/generator_input/input2

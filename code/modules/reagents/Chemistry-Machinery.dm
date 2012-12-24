@@ -8,7 +8,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = 1
+	use_power = 0
 	idle_power_usage = 40
 	var/energy = 100
 	var/max_energy = 100
