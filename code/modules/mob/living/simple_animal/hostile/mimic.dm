@@ -134,7 +134,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	health = 100
 	maxHealth = 100
 	var/obj/item/staff = null // the staff that changed they, never attack the bearer of this staff
-	destroy_surroundings = 0
+	var/destroy_objects = 0
 	var/knockdown_people = 0
 
 /mob/living/simple_animal/hostile/mimic/copy/New(loc, var/obj/copy, var/obj/item/staff)
@@ -164,7 +164,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 		if(istype(O, /obj/structure))
 			health = (anchored * 50) + 50
-			destroy_surroundings = 1
+			destroy_objects = 1
 			if(O.density && O.anchored)
 				knockdown_people = 1
 				melee_damage_lower *= 2
@@ -182,6 +182,10 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			faction = "\ref[staff]" // very unique
 		return 1
 	return
+
+/mob/living/simple_animal/hostile/mimic/copy/DestroySurroundings()
+	if(destroy_objects)
+		..()
 
 /mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
 	. =..()
