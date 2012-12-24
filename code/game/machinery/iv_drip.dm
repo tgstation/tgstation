@@ -158,7 +158,7 @@
 	if(mode == "give")
 		mode = "take"
 		usr << "The IV drip is now taking blood."
-	if(mode == "take")
+	else if(mode == "take")
 		mode = "give"
 		usr << "The IV drip is now giving blood."
 
