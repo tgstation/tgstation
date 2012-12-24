@@ -213,7 +213,7 @@
 				user << "\red Disconnect wires first."
 				return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			user << "You trying to remove the power control board..."
+			user << "You are trying to remove the power control board..." //lpeters - fixed grammar issues
 			if(do_after(user, 50))
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
@@ -243,7 +243,7 @@
 			return
 		else
 			if (stat & MAINT)
-				user << "\red There is no any connector for your power cell."
+				user << "\red There is no connector for your power cell."
 				return
 			user.drop_item()
 			W.loc = src
@@ -341,7 +341,7 @@
 		if (src.loc:intact)
 			user << "\red You must remove the floor plating in front of the APC first."
 			return
-		user << "You begin to cut cables..."
+		user << "You begin to cut the cables..."
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 50))
 			if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
@@ -351,8 +351,8 @@
 				return
 			new /obj/item/weapon/cable_coil(loc,10)
 			user.visible_message(\
-				"\red [user.name] cut cables and dismantled the power terminal.",\
-				"You cut cables and dismantle the power terminal.")
+				"\red [user.name] cut the cables and dismantled the power terminal.",\
+				"You cut the cables and dismantle the power terminal.")
 			del(terminal)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user << "You trying to insert the power control board into the frame..."
@@ -369,7 +369,7 @@
 		if (WT.get_fuel() < 3)
 			user << "\blue You need more welding fuel to complete this task."
 			return
-		user << "You start welding APC frame..."
+		user << "You start welding the APC frame..."
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 		if(do_after(user, 50))
 			if(!src || !WT.remove_fuel(3, user)) return
@@ -383,7 +383,7 @@
 				new /obj/item/apc_frame(loc)
 				user.visible_message(\
 					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
-					"You cut APC frame from the wall.",\
+					"You cut the APC frame from the wall.",\
 					"\red You hear welding.")
 			del(src)
 			return
