@@ -401,18 +401,22 @@
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Emitter crate"
-	access = access_heads
+	access = access_ce
 
 /datum/supply_packs/engine/field_gen
 	name = "Field Generator crate"
 	contains = list(/obj/machinery/field_generator,
 					/obj/machinery/field_generator)
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Field Generator crate"
+	access = access_ce
 
 /datum/supply_packs/engine/sing_gen
 	name = "Singularity Generator crate"
 	contains = list(/obj/machinery/the_singularitygen)
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Singularity Generator crate"
+	access = access_ce
 
 /datum/supply_packs/engine/collector
 	name = "Collector crate"
@@ -431,7 +435,9 @@
 					/obj/structure/particle_accelerator/particle_emitter/right,
 					/obj/structure/particle_accelerator/power_box,
 					/obj/structure/particle_accelerator/end_cap)
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Particle Accelerator crate"
+	access = access_ce
 
 /datum/supply_packs/mecha_ripley
 	name = "Circuit Crate (\"Ripley\" APLU)"
@@ -487,7 +493,7 @@
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "Plasma assembly crate"
-	access = access_tox
+	access = access_tox_storage
 
 /datum/supply_packs/weapons
 	name = "Weapons crate"
