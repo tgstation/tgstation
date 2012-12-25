@@ -351,7 +351,7 @@
 		if(access_court)
 			return "Courtroom"
 		if(access_forensics_lockers)
-			return "Detective's Office"
+			return "Forensics"
 		if(access_medical)
 			return "Medical"
 		if(access_genetics)
@@ -421,7 +421,7 @@
 		if(access_cmo)
 			return "Chief Medical Officer"
 		if(access_qm)
-			return "Quartermaster's Office"
+			return "Quartermaster"
 		if(access_clown)
 			return "HONK! Access"
 		if(access_mime)
