@@ -284,12 +284,12 @@
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
 	            access_medical, access_genetics, access_morgue, access_rd,
 	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
-	            access_external_airlocks, access_emergency_storage, access_change_ids, access_ai_upload,
+	            access_external_airlocks, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
-	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
-	            access_theatre, access_research, access_mining, access_mailsorting, access_mint_vault, access_mint,
+	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
+	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
+	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway)
 
@@ -312,11 +312,11 @@
 		if(4) //engineering and maintenance
 			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_ce)
 		if(5) //command
-			return list(access_heads, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_all_personal_lockers, access_heads_vault, access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_hop, access_captain)
+			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_tcomsat, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
 		if(6) //station general
 			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
 		if(7) //supply
-			return list(access_mailsorting, access_cargo, access_cargo_bot, access_mining, access_mining_station, access_qm)
+			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_qm)
 
 /proc/get_region_accesses_name(var/code)
 	switch(code)
@@ -365,7 +365,7 @@
 		if(access_chemistry)
 			return "Chemistry Lab"
 		if(access_rd)
-			return "RD Private"
+			return "Research Director"
 		if(access_bar)
 			return "Bar"
 		if(access_janitor)
@@ -391,7 +391,7 @@
 		if(access_heads)
 			return "Bridge"
 		if(access_captain)
-			return "Captain Private"
+			return "Captain"
 		if(access_all_personal_lockers)
 			return "Personal Lockers"
 		if(access_chapel_office)
@@ -419,7 +419,7 @@
 		if(access_virology)
 			return "Virology"
 		if(access_cmo)
-			return "CMO Private"
+			return "Chief Medical Officer"
 		if(access_qm)
 			return "Quartermaster's Office"
 		if(access_clown)
@@ -451,11 +451,11 @@
 		if(access_xenobiology)
 			return "Xenobiology Lab"
 		if(access_hop)
-			return "HoP Private"
+			return "Head of Personnel"
 		if(access_hos)
-			return "HoS Private"
+			return "Head of Security"
 		if(access_ce)
-			return "CE Private"
+			return "Chief Engineer"
 		if(access_RC_announce)
 			return "RC Announcements"
 		if(access_keycard_auth)

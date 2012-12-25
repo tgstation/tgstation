@@ -303,6 +303,7 @@ var/list/mechtoys = list(
 			if(SP.access)
 				A:req_access = list()
 				A:req_access += text2num(SP.access)
+				slip.info += "ACCESS RESTRICTION: [replacetext(get_access_desc(SP.access))]"
 
 			var/list/contains
 			if(istype(SP,/datum/supply_packs/randomised))
@@ -411,6 +412,7 @@ var/list/mechtoys = list(
 		reqform.info += "RANK: [idrank]<br>"
 		reqform.info += "REASON: [reason]<br>"
 		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
+		reqform.info += "ACCESS RESTRICTION: [replacetext(get_access_desc(P.access))]<br>"
 		reqform.info += "CONTENTS:<br>"
 		reqform.info += P.manifest
 		reqform.info += "<hr>"
@@ -584,6 +586,7 @@ var/list/mechtoys = list(
 		reqform.info += "RANK: [idrank]<br>"
 		reqform.info += "REASON: [reason]<br>"
 		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
+		reqform.info += "ACCESS RESTRICTION: [replacetext(get_access_desc(P.access))]<br>"
 		reqform.info += "CONTENTS:<br>"
 		reqform.info += P.manifest
 		reqform.info += "<hr>"
