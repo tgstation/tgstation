@@ -88,6 +88,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/generic/cut_open
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 90
 	max_duration = 110
@@ -121,6 +122,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/generic/clamp_bleeders
 	required_tool = /obj/item/weapon/hemostat
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/weapon/mousetrap)
 
 	min_duration = 40
 	max_duration = 60
@@ -152,6 +154,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/generic/retract_skin
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
 
 	min_duration = 30
 	max_duration = 40
@@ -202,6 +205,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/generic/cauterize
 	required_tool = /obj/item/weapon/cautery
+	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 
 	min_duration = 70
 	max_duration = 100
@@ -247,6 +251,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/appendectomy/cut_appendix
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 70
 	max_duration = 90
@@ -275,6 +280,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/appendectomy/remove_appendix
 	required_tool = /obj/item/weapon/hemostat
+	allowed_tools = list(/obj/item/weapon/wirecutters)
 
 	min_duration = 60
 	max_duration = 80
@@ -316,6 +322,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/fix_vein
 	required_tool = /obj/item/weapon/FixOVein
+	allowed_tools = list(/obj/item/weapon/cable_coil)
 
 	min_duration = 70
 	max_duration = 90
@@ -359,6 +366,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/glue_bone
 	required_tool = /obj/item/weapon/bonegel
+	allowed_tools = list(/obj/item/weapon/screwdriver)
 
 	min_duration = 50
 	max_duration = 60
@@ -389,6 +397,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/set_bone
 	required_tool = /obj/item/weapon/bonesetter
+	allowed_tools = list(/obj/item/weapon/wrench)
 
 	min_duration = 60
 	max_duration = 70
@@ -424,6 +433,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/mend_skull
 	required_tool = /obj/item/weapon/bonesetter
+	allowed_tools = list(/obj/item/weapon/wrench)
 
 	min_duration = 60
 	max_duration = 70
@@ -453,6 +463,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/finish_bone
 	required_tool = /obj/item/weapon/bonegel
+	allowed_tools = list(/obj/item/weapon/screwdriver)
 
 	min_duration = 50
 	max_duration = 60
@@ -497,6 +508,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/eye/cut_open
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 90
 	max_duration = 110
@@ -521,6 +533,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/eye/lift_eyes
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
 
 	min_duration = 30
 	max_duration = 40
@@ -545,6 +558,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/eye/mend_eyes
 	required_tool = /obj/item/weapon/hemostat
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/weapon/mousetrap)
 
 	min_duration = 80
 	max_duration = 100
@@ -569,6 +583,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/eye/cauterize
 	required_tool = /obj/item/weapon/cautery
+	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 
 	min_duration = 70
 	max_duration = 100
@@ -610,6 +625,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/generic/cut_face
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 90
 	max_duration = 110
@@ -635,6 +651,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/face/mend_vocal
 	required_tool = /obj/item/weapon/hemostat
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/weapon/mousetrap)
 
 	min_duration = 70
 	max_duration = 90
@@ -661,6 +678,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/face/fix_face
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
 
 	min_duration = 80
 	max_duration = 100
@@ -685,6 +703,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/face/cauterize
 	required_tool = /obj/item/weapon/cautery
+	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 
 	min_duration = 70
 	max_duration = 100
@@ -746,6 +765,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/brain/cut_brain
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 80
 	max_duration = 100
@@ -819,6 +839,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/metroid/cut_flesh
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 30
 	max_duration = 50
@@ -841,6 +862,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/metroid/cut_innards
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 30
 	max_duration = 50
@@ -908,6 +930,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/limb/cut
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 80
 	max_duration = 100
@@ -934,6 +957,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/limb/mend
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
 
 	min_duration = 80
 	max_duration = 100
@@ -964,6 +988,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/limb/prepare
 	required_tool = /obj/item/weapon/cautery
+	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 
 	min_duration = 60
 	max_duration = 70
@@ -1066,6 +1091,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/ribcage/retract_ribcage
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/crowbar)
 
 	min_duration = 30
 	max_duration = 40
@@ -1102,6 +1128,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/ribcage/close_ribcage
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/crowbar)
 
 	min_duration = 20
 	max_duration = 40
@@ -1179,6 +1206,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/ribcage/fix_lungs
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 70
 	max_duration = 90

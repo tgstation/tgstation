@@ -192,7 +192,7 @@
 				if(surgery_steps == null) build_surgery_steps_list()
 				for(var/datum/surgery_step/S in surgery_steps)
 					//check if tool is right or close enough
-					if(istype(src, S.required_tool) || (S.allowed_tools && src.type in S.allowed_tools ))
+					if(istype(src, S.required_tool) || (S.allowed_tools && (src.type in S.allowed_tools) ))
 						if(S.can_use(user, M, user.zone_sel.selecting, src))	//is this step possible?
 							S.begin_step(user, M, user.zone_sel.selecting, src)
 							if(do_mob(user, M, rand(S.min_duration, S.max_duration)))
