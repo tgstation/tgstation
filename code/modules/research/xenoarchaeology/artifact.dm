@@ -1,10 +1,18 @@
 //Part of ISaidNo's public release around July 2011(ish), multiple changes
 //many thanks
 
+#define PLASMA_SPAWN 1
+#define N2_SPAWN 2
+#define CO2_SPAWN 3
+#define RADIATE 4
+#define VIRUS 5
+#define HEAT 6
+#define COLD 7
+
 /obj/machinery/artifact
 	name = "alien artifact"
 	desc = "A large alien device."
-	icon = 'anomaly.dmi'
+	icon = 'xenoarchaeology.dmi'
 	icon_state = "ano00"
 	var/icon_num = 0
 	anchored = 0
@@ -21,55 +29,51 @@
 /obj/machinery/artifact/New()
 	..()
 	// Origin and appearance randomisation
-	// cael - need some more icons
 
 	my_effect = new()
 
-	src.origin = pick("ancient","martian","wizard","eldritch","precursor")
-	switch(src.origin)
-		if("ancient") icon_num = pick(2)//src.icon_state = pick("ano2")
-		if("martian") icon_num = pick(4)//src.icon_state = pick("ano4")
-		if("wizard") icon_num = pick(0,1)//src.icon_state = pick("ano0","ano1")
-		if("eldritch") icon_num = pick(3)//src.icon_state = pick("ano3")
-		if("precursor") icon_num = pick(5)//src.icon_state = pick("ano5")
+
+	icon_num = rand(0,5)
 	icon_state = "ano[icon_num]0"
 
-	// Low-ish random chance to not look like it's origin
-	if(prob(20)) src.icon_state = pick("ano00","ano10","ano20","ano30","ano40","ano50")
-
 	// Power randomisation
-	my_effect.trigger = pick("force","energy","chemical","heat","touch")
-	if (my_effect.trigger == "chemical") my_effect.triggerX = pick("hydrogen","corrosive","volatile","toxic")
+	my_effect.trigger = pick("force","energy","chemical","heat","touch","presence")
+	if (my_effect.trigger == "chemical")
+		my_effect.triggerX = pick("hydrogen","corrosive","volatile","toxic")
 
-	// Ancient Artifacts focus on robotic/technological effects
-	// Martian Artifacts focus on biological effects
-	// Wizard Artifacts focus on weird shit
-	// Eldritch Artifacts are 100% bad news
-	// Precursor Artifacts do everything
-	switch(src.origin)
-		if("ancient") my_effect.effecttype = pick("roboheal","robohurt","cellcharge","celldrain")
-		if("martian") my_effect.effecttype = pick("healing","injure"/*,"stun"*/,"planthelper")
-		if("wizard") my_effect.effecttype = pick(/*"stun",*/"forcefield","teleport")
-		if("eldritch") my_effect.effecttype = pick("injure",/*"stun",*/"robohurt","celldrain")
-		if("precursor") my_effect.effecttype = pick("healing","injure",/*"stun",*/"roboheal","robohurt","cellcharge","celldrain","planthelper","forcefield","teleport")
+	my_effect.effecttype = pick("healing","injure","stun","roboheal","robohurt","cellcharge","celldrain","planthelper","forcefield","teleport","dnaswitch","emp","sleepy")
 
 	// Select range based on the power
 	var/canworldpulse = 1
 	switch(my_effect.effecttype)
-		if("healing") my_effect.effectmode = pick("aura","pulse","contact")
-		if("injure") my_effect.effectmode = pick("aura","pulse","contact")
-		// if("stun") my_effect.effectmode = pick("aura","pulse","contact")
-		if("roboheal") my_effect.effectmode = pick("aura","pulse","contact")
-		if("robohurt") my_effect.effectmode = pick("aura","pulse","contact")
-		if("cellcharge") my_effect.effectmode = pick("aura","pulse")
-		if("celldrain") my_effect.effectmode = pick("aura","pulse")
+		if("healing")
+			my_effect.effectmode = pick("aura","pulse","contact")
+		if("injure")
+			my_effect.effectmode = pick("aura","pulse","contact")
+		if("stun")
+			my_effect.effectmode = pick("aura","pulse","contact")
+		if("roboheal")
+			my_effect.effectmode = pick("aura","pulse","contact")
+		if("robohurt")
+			my_effect.effectmode = pick("aura","pulse","contact")
+		if("sleepy")
+			my_effect.effectmode = pick("aura","pulse","contact")
+		if("cellcharge")
+			my_effect.effectmode = pick("aura","pulse")
+		if("celldrain")
+			my_effect.effectmode = pick("aura","pulse")
 		if("planthelper")
 			my_effect.effectmode = pick("aura","pulse")
 			canworldpulse = 0
 		if("forcefield")
 			my_effect.effectmode = "contact"
 			canworldpulse = 0
-		if("teleport") my_effect.effectmode = pick("pulse","contact")
+		if("teleport")
+			my_effect.effectmode = pick("pulse","contact")
+		if("genderswitch")
+			my_effect.effectmode = pick("pulse","contact")
+		if("emp")
+			my_effect.effectmode = pick("pulse","contact")
 
 	// Recharge timer & range setup
 	if (my_effect.effectmode == "aura")
@@ -191,26 +195,28 @@
 	src.activated = !src.activated
 	var/display_msg = ""
 	if(activated)
-		switch(rand(4))
-			if(0)
-				display_msg = "momentarily glows brightly!"
-			if(1)
-				display_msg = "distorts slightly for a moment!"
-			if(2)
-				display_msg = "makes a slightly clicking noise!"
-			if(3)
-				display_msg = "flickers slightly!"
-			if(4)
-				display_msg = "vibrates!"
+		if(prob(30))
+			switch(rand(4))
+				if(0)
+					display_msg = "momentarily glows brightly!"
+				if(1)
+					display_msg = "distorts slightly for a moment!"
+				if(2)
+					display_msg = "makes a slightly clicking noise!"
+				if(3)
+					display_msg = "flickers slightly!"
+				if(4)
+					display_msg = "vibrates!"
 	else
 		my_effect.HaltEffect()
-		switch(rand(2))
-			if(0)
-				display_msg = "grows dull!"
-			if(1)
-				display_msg = "fades in intensity!"
-			if(2)
-				display_msg = "suddenly becomes very quiet!"
+		if(prob(30))
+			switch(rand(2))
+				if(0)
+					display_msg = "grows dull!"
+				if(1)
+					display_msg = "fades in intensity!"
+				if(2)
+					display_msg = "suddenly becomes very quiet!"
 
 	icon_state = "ano[icon_num][activated]"
 	for(var/mob/O in viewers(src, null))
@@ -232,17 +238,3 @@
 /obj/machinery/artifact/Move()
 	..()
 	my_effect.update_move(src, src.loc)
-
-
-/proc/artifact_checkgood(var/datum/artifact_effect/A)
-	switch(A.effecttype)
-		if("healing") return 1
-		if("injure") return 0
-		// if("stun") return 0
-		if("roboheal") return 1
-		if("robohurt") return 0
-		if("cellcharge") return 1
-		if("celldrain") return 1
-		if("planthelper") return 1
-		if("forcefield") return 1
-		if("teleport") return 0

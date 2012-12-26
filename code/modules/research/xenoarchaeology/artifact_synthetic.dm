@@ -1,7 +1,7 @@
 
 /obj/item/weapon/anobattery
 	name = "Anomaly power battery"
-	icon = 'anomaly.dmi'
+	icon = 'xenoarchaeology.dmi'
 	icon_state = "anobattery0"
 	var/datum/artifact_effect/battery_effect
 	var/capacity = 200
@@ -16,7 +16,7 @@
 
 /obj/item/weapon/anodevice
 	name = "Anomaly power utilizer"
-	icon = 'anomaly.dmi'
+	icon = 'xenoarchaeology.dmi'
 	icon_state = "anodev"
 	var/cooldown = 0
 	var/activated = 0

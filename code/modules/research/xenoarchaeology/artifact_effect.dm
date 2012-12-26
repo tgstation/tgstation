@@ -93,38 +93,38 @@
 			if("injure")
 				if (istype(user, /mob/living/carbon/))
 					user << "\red A painful discharge of energy strikes you!"
-					user.adjustOxyLoss(25)
-					user.adjustToxLoss(25)
-					user.adjustBruteLoss(25)
-					user.adjustFireLoss(25)
-					user.adjustBrainLoss(25)
+					user.adjustOxyLoss(rand(5,25))
+					user.adjustToxLoss(rand(5,25))
+					user.adjustBruteLoss(rand(5,25))
+					user.adjustFireLoss(rand(5,25))
+					user.adjustBrainLoss(rand(5,25))
 					user.radiation += 25
 					user.nutrition -= min(50, user.nutrition)
-					user.stunned += 6
+					user.make_dizzy(6)
 					user.weakened += 6
 					return 1
 				else user << "Nothing happens."
 			if("stun")
 				if (istype(user, /mob/living/carbon/))
 					user << "\red A powerful force overwhelms your consciousness."
-					user.paralysis += 30
-					user.stunned += 45
 					user.weakened += 45
 					user.stuttering += 45
+					if(prob(50))
+						user.stunned += rand(1,10)
 					return 1
 				else user << "Nothing happens."
 			if("roboheal")
 				if (istype(user, /mob/living/silicon/robot))
 					user << "\blue Your systems report damaged components mending by themselves!"
-					user.adjustBruteLoss(-30)
-					user.adjustFireLoss(-30)
+					user.adjustBruteLoss(rand(-10,-30))
+					user.adjustFireLoss(rand(-10,-30))
 					return 1
 				else user << "Nothing happens."
 			if("robohurt")
 				if (istype(user, /mob/living/silicon/robot))
 					user << "\red Your systems report severe damage has been inflicted!"
-					user.adjustBruteLoss(40)
-					user.adjustFireLoss(40)
+					user.adjustBruteLoss(rand(10,50))
+					user.adjustFireLoss(rand(10,50))
 					return 1
 				else user << "Nothing happens."
 			if("forcefield")
@@ -133,6 +133,7 @@
 					created_field.Add(E)
 					E.strength = 1
 					E.density = 1
+					E.anchored = 1
 					E.invisibility = 0
 				return 1
 			if("teleport")
@@ -149,6 +150,11 @@
 					var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 					sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
 					sparks.start()
+				return 1
+			if("sleepy")
+				user << pick("\blue You feel like taking a nap.","\blue You feel a yawn coming on.","\blue You feel a little tired.")
+				user.drowsyness = min(user.drowsyness + rand(5,25), 50)
+				user.eye_blurry = min(user.eye_blurry + rand(1,3), 50)
 				return 1
 	else if (src.effectmode == "aura")
 		switch(src.effecttype)
@@ -237,6 +243,13 @@
 							H.weedlevel -= 1
 						H.lastcycle += 5
 				return 1
+			if("sleepy")
+				for (var/mob/living/carbon/M in range(src.aurarange,originator))
+					if(prob(10))
+						M << pick("\blue You feel like taking a nap.","\blue You feel a yawn coming on.","\blue You feel a little tired.")
+					M.drowsyness = min(M.drowsyness + 1, 25)
+					M.eye_blurry = min(M.eye_blurry + 1, 25)
+				return 1
 	else if (src.effectmode == "pulse")
 		for(var/mob/O in viewers(originator, null))
 			O.show_message(text("<b>[]</b> emits a pulse of energy!", originator), 1)
@@ -264,7 +277,7 @@
 					M.adjustToxLoss(5)
 					M.adjustOxyLoss(5)
 					M.adjustBrainLoss(5)
-					M.stunned += 3
+					M.make_dizzy(6)
 					M.weakened += 3
 					M.updatehealth()
 				return 1
@@ -274,7 +287,6 @@
 						continue
 					M << "\red A wave of energy overwhelms your senses!"
 					M.paralysis += 3
-					M.stunned += 4
 					M.weakened += 4
 					M.stuttering += 4
 				return 1
@@ -309,7 +321,7 @@
 				for (var/obj/machinery/power/smes/S in range (src.aurarange,originator)) S.charge -= 400
 				for (var/mob/living/silicon/robot/M in range(src.aurarange,originator))
 					for (var/obj/item/weapon/cell/D in M.contents)
-						D.charge -= 500
+						D.charge -= min(D.charge, 500)
 						M << "\red SYSTEM ALERT: Severe energy drain detected!"
 				return 1
 			if("planthelper")
@@ -343,13 +355,40 @@
 						sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
 						sparks.start()
 				return 1
+			if("dnaswitch")
+				for(var/mob/living/H in range(src.aurarange,originator))
+					if(ishuman(H) && istype(H:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(H:head,/obj/item/clothing/head/bio_hood/anomaly))
+						continue
+
+					if(prob(30))
+						H << pick("\green You feel a little different.","\green You feel strange.","\green You feel different.")
+					//todo
+					if (H.gender == FEMALE)
+						H.gender = MALE
+					else
+						H.gender = FEMALE
+					/*H.dna.ready_dna(H)
+					H.update_body()
+					H.update_face()*/
+				return 1
+			if("emp")
+				empulse(get_turf(originator), aurarange/2, aurarange)
+				return 1
+			if("sleepy")
+				for (var/mob/living/carbon/M in range(src.aurarange,originator))
+					if(prob(30))
+						M << pick("\blue You feel like taking a nap.","\blue You feel a yawn coming on.","\blue You feel a little tired.")
+					if(prob(50))
+						M.drowsyness = min(M.drowsyness + rand(1,5), 25)
+					if(prob(50))
+						M.eye_blurry = min(M.eye_blurry + rand(1,5), 25)
+				return 1
 	else if (src.effectmode == "worldpulse")
 		for(var/mob/O in viewers(originator, null))
 			O.show_message(text("<b>[]</b> emits a powerful burst of energy!", originator), 1)
 		switch(src.effecttype)
-			//caeltodo
 			if("healing")
-				for (var/mob/living/carbon/M in world)
+				for (var/mob/living/carbon/M in range(200, originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\blue Waves of soothing energy wash over you."
@@ -361,7 +400,7 @@
 					M.updatehealth()
 				return 1
 			if("injure")
-				for (var/mob/living/carbon/human/M in world)
+				for (var/mob/living/carbon/human/M in range(200, originator))
 					M << "\red A wave of painful energy strikes you!"
 					M.adjustBruteLoss(3)
 					M.adjustFireLoss(3)
@@ -371,31 +410,30 @@
 					M.updatehealth()
 				return 1
 			if("stun")
-				for (var/mob/living/carbon/M in world)
+				for (var/mob/living/carbon/M in range(200, originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\red A powerful force causes you to black out momentarily."
 					M.paralysis += 5
-					M.stunned += 8
 					M.weakened += 8
 					M.stuttering += 8
 				return 1
 			if("roboheal")
-				for (var/mob/living/silicon/robot/M in world)
+				for (var/mob/living/silicon/robot/M in range(200, originator))
 					M << "\blue SYSTEM ALERT: Structural damage has been repaired by energy pulse!"
 					M.adjustBruteLoss(-5)
 					M.adjustFireLoss(-5)
 					M.updatehealth()
 				return 1
 			if("robohurt")
-				for (var/mob/living/silicon/robot/M in world)
+				for (var/mob/living/silicon/robot/M in range(200, originator))
 					M << "\red SYSTEM ALERT: Structural damage inflicted by energy pulse!"
 					M.adjustBruteLoss(5)
 					M.adjustFireLoss(5)
 					M.updatehealth()
 				return 1
 			if("cellcharge")
-				for (var/obj/machinery/power/apc/C in world)
+				for (var/obj/machinery/power/apc/C in range(200, originator))
 					for (var/obj/item/weapon/cell/B in C.contents)
 						B.charge += 100
 				for (var/obj/machinery/power/smes/S in range (src.aurarange,src)) S.charge += 250
@@ -405,17 +443,17 @@
 						M << "\blue SYSTEM ALERT: Energy boost detected!"
 				return 1
 			if("celldrain")
-				for (var/obj/machinery/power/apc/C in world)
+				for (var/obj/machinery/power/apc/C in range(200, originator))
 					for (var/obj/item/weapon/cell/B in C.contents)
-						B.charge -= 250
+						B.charge -= min(B.charge,250)
 				for (var/obj/machinery/power/smes/S in range (src.aurarange,src)) S.charge -= 250
 				for (var/mob/living/silicon/robot/M in world)
 					for (var/obj/item/weapon/cell/D in M.contents)
-						D.charge -= 250
+						D.charge -= min(D.charge,250)
 						M << "\red SYSTEM ALERT: Energy drain detected!"
 				return 1
 			if("teleport")
-				for (var/mob/living/M in world)
+				for (var/mob/living/M in range(200, originator))
 					if(ishuman(M) && istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					var/list/randomturfs = new/list()
@@ -432,6 +470,27 @@
 						sparks.set_up(3, 0, get_turf(originator)) //no idea what the 0 is
 						sparks.start()
 				return 1
+			if("dnaswitch")
+				for(var/mob/living/H in range(200, originator))
+					if(ishuman(H) && istype(H:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(H:head,/obj/item/clothing/head/bio_hood/anomaly))
+						continue
+
+					if(prob(30))
+						H << pick("\green You feel a little different.","\green You feel strange.","\green You feel different.")
+					//todo
+					if (H.gender == FEMALE)
+						H.gender = MALE
+					else
+						H.gender = FEMALE
+					/*H.dna.ready_dna(H)
+					H.update_body()
+					H.update_face()*/
+				return 1
+			if("sleepy")
+				for(var/mob/living/H in range(200, originator))
+					H.drowsyness = min(H.drowsyness + rand(5,15), 50)
+					H.eye_blurry = min(H.eye_blurry + rand(5,15), 50)
+				return 1
 
 //initially for the force field artifact
 /datum/artifact_effect/proc/update_move(var/atom/originator)
@@ -443,6 +502,7 @@
 				created_field.Add(E)
 				E.strength = 1
 				E.density = 1
+				E.anchored = 1
 				E.invisibility = 0
 
 			var/obj/effect/energy_field/E = created_field[1]

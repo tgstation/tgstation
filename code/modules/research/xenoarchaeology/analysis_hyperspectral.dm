@@ -23,8 +23,15 @@ obj/machinery/anomaly/hyperspectral/ScanResults()
 	if(num_reagents == 2 && scanned_sample && carrier)
 		//all necessary components are present
 		var/specifity = GetResultSpecifity(scanned_sample, carrier)
-		results = "Spectral signature over carrier ([carrier], [specifity]):<br>"
-		results += "<img src=\"http://i.imgur.com/YAcOE.jpg\"></img><br>"
+		results = "Spectral signature over carrier ([carrier]):<br>"
+		if(specifity <= 0.25)
+			results += "<img src=\"http://i.imgur.com/TAQHn.jpg\"></img><br>"
+		else if(specifity <= 0.5)
+			results += "<img src=\"http://i.imgur.com/EwOZ7.jpg\"></img><br>"
+		else if(specifity <= 0.75)
+			results += "<img src=\"http://i.imgur.com/1qCae.jpg\"></img><br>"
+		else
+			results += "<img src=\"http://i.imgur.com/9T9nc.jpg\"></img><br>"
 		if(scanned_sample.artifact_id && prob(specifity * 100))
 			results += "Anomalous exotic energy signature detected: [scanned_sample.artifact_id]."
 
