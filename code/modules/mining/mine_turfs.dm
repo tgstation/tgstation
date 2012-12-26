@@ -277,11 +277,12 @@
 				O = new /obj/item/weapon/ore/diamond(src)
 			if (src.mineralName == "Archaeo")
 				//spawn strange rocks here
+				new /obj/item/weapon/archaeological_find(src)
 				//if(prob(10) || delicate)
-				if(prob(50)) //Don't have delicate tools (hand pick/excavation tool) yet, temporarily change to 50% instead of 10% -Mij
+				/*if(prob(50)) //Don't have delicate tools (hand pick/excavation tool) yet, temporarily change to 50% instead of 10% -Mij
 					O = new /obj/item/weapon/ore/strangerock(src)
 				else
-					destroyed = 1
+					destroyed = 1*/
 			if (src.mineralName == "Clown")
 				O = new /obj/item/weapon/ore/clown(src)
 			if(O)
