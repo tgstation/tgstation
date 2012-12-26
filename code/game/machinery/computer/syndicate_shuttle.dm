@@ -5,7 +5,7 @@
 	name = "syndicate shuttle terminal"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
-	req_access = list()
+	req_access = list(access_syndicate)
 	var/area/curr_location
 	var/moving = 0
 	var/lastMove = 0
@@ -47,7 +47,7 @@
 
 /obj/machinery/computer/syndicate_station/attack_hand(mob/user as mob)
 	if(!allowed(user))
-		user << "<span class='notice'>Access Denied.</span>"
+		user << "\red Access Denied"
 		return
 
 	user.set_machine(src)

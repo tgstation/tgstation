@@ -200,8 +200,14 @@
 	name = "ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
+	req_access = list(access_syndicate)
 
-
+/obj/machinery/computer/pod/old/syndicate/attack_hand(var/mob/user as mob)
+	if(!allowed(user))
+		user << "\red Access Denied"
+		return
+	else
+		..()
 
 /obj/machinery/computer/pod/old/swf
 	name = "Magix System IV"
