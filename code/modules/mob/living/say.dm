@@ -425,9 +425,10 @@ var/list/department_radio_keys = list(
 			del(B)
 		*/
 
-	//talking crystals
-	for(var/obj/item/weapon/talkingcrystal/O in view(3,src))
-		O.catchMessage(message,src)
+	//talking items
+	for(var/obj/item/weapon/O in view(3,src))
+		if(O.listening_to_players)
+			O.catchMessage(message, src)
 
 	log_say("[name]/[key] : [message]")
 
