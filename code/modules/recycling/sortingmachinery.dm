@@ -195,7 +195,7 @@
 /obj/machinery/disposal/deliveryChute
 	name = "Delivery chute"
 	desc = "A chute for big and small packages alike!"
-	density = 0
+	density = 1
 	icon_state = "intake"
 
 	var/c_mode = 0
@@ -213,7 +213,16 @@
 	update()
 		return
 
-	HasEntered(AM as mob|obj) //Go straight into the chute
+	Bumped(var/atom/movable/AM) //Go straight into the chute
+		switch(dir)
+			if(NORTH)
+				if(AM.loc.y != src.loc.y+1) return
+			if(EAST)
+				if(AM.loc.x != src.loc.x+1) return
+			if(SOUTH)
+				if(AM.loc.y != src.loc.y-1) return
+			if(WEST)
+				if(AM.loc.x != src.loc.x-1) return
 		if(istype(AM, /obj/item/projectile) || istype(AM, /obj/item/weapon/dummy))	return
 
 		if(istype(AM, /obj))
