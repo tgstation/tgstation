@@ -167,6 +167,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon_state = "pda-bar"
 
 /obj/item/device/pda/atmos
+	default_cartridge = /obj/item/weapon/cartridge/atmos
 	icon_state = "pda-atmo"
 
 /obj/item/device/pda/chemist
@@ -315,13 +316,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<ul>"
 				if (cartridge)
 					if (cartridge.access_janitor)
-						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Equipment Locator</a></li>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
 					if (cartridge.access_reagent_scanner)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Reagent Scan'><img src=pda_reagent.png> [scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
 					if (cartridge.access_engine)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Halogen Counter'><img src=pda_reagent.png> [scanmode == 4 ? "Disable" : "Enable"] Halogen Counter</a></li>"
+					if (cartridge.access_atmos)
+						dat += "<li><a href='byond://?src=\ref[src];choice=Gas Scan'><img src=pda_reagent.png> [scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
 					if (cartridge.access_remote_door)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
@@ -527,6 +530,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if ( !(last_honk && world.time < last_honk + 20) )
 						playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 						last_honk = world.time
+				if("Gas Scan")
+					if(scanmode == 5)
+						scanmode = 0
+					else if((!isnull(cartridge)) && (cartridge.access_atmos))
+						scanmode = 5
 
 //MESSENGER/NOTE FUNCTIONS===================================
 
@@ -956,6 +964,63 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			else
 				user << "\blue No significant chemical agents found in [A]."
 
+		if(5)
+			if((istype(A, /obj/item/weapon/tank)) || (istype(A, /obj/machinery/portable_atmospherics)))
+				var/obj/icon = A
+				for (var/mob/O in viewers(user, null))
+					O << "\red [user] has used [src] on \icon[icon] [A]"
+				var/pressure = A:air_contents.return_pressure()
+
+				var/total_moles = A:air_contents.total_moles()
+
+				user << "\blue Results of analysis of \icon[icon]"
+				if (total_moles>0)
+					var/o2_concentration = A:air_contents.oxygen/total_moles
+					var/n2_concentration = A:air_contents.nitrogen/total_moles
+					var/co2_concentration = A:air_contents.carbon_dioxide/total_moles
+					var/plasma_concentration = A:air_contents.toxins/total_moles
+
+					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
+
+					user << "\blue Pressure: [round(pressure,0.1)] kPa"
+					user << "\blue Nitrogen: [round(n2_concentration*100)]%"
+					user << "\blue Oxygen: [round(o2_concentration*100)]%"
+					user << "\blue CO2: [round(co2_concentration*100)]%"
+					user << "\blue Plasma: [round(plasma_concentration*100)]%"
+					if(unknown_concentration>0.01)
+						user << "\red Unknown: [round(unknown_concentration*100)]%"
+					user << "\blue Temperature: [round(A:air_contents.temperature-T0C)]&deg;C"
+				else
+					user << "\blue Tank is empty!"
+
+			if (istype(A, /obj/machinery/atmospherics/pipe/tank))
+				var/obj/icon = A
+				for (var/mob/O in viewers(user, null))
+					O << "\red [user] has used [src] on \icon[icon] [A]"
+
+				var/pressure = A:parent.air.return_pressure()
+				var/total_moles = A:parent.air.total_moles()
+
+				user << "\blue Results of analysis of \icon[icon]"
+				if (total_moles>0)
+					var/o2_concentration = A:parent.air.oxygen/total_moles
+					var/n2_concentration = A:parent.air.nitrogen/total_moles
+					var/co2_concentration = A:parent.air.carbon_dioxide/total_moles
+					var/plasma_concentration = A:parent.air.toxins/total_moles
+
+					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
+
+					user << "\blue Pressure: [round(pressure,0.1)] kPa"
+					user << "\blue Nitrogen: [round(n2_concentration*100)]%"
+					user << "\blue Oxygen: [round(o2_concentration*100)]%"
+					user << "\blue CO2: [round(co2_concentration*100)]%"
+					user << "\blue Plasma: [round(plasma_concentration*100)]%"
+					if(unknown_concentration>0.01)
+						user << "\red Unknown: [round(unknown_concentration*100)]%"
+					user << "\blue Temperature: [round(A:parent.air.temperature-T0C)]&deg;C"
+				else
+					user << "\blue Tank is empty!"
+
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info
 		user << "\blue Paper scanned." //concept of scanning paper copyright brainoblivion 2009
@@ -1105,7 +1170,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	new /obj/item/device/pda(src)
 	new /obj/item/device/pda(src)
 
-	var/newcart = pick(1,2,3,4)
+	var/newcart = pick(1,2,3,4,5)
 	switch(newcart)
 		if(1)
 			new /obj/item/weapon/cartridge/engineering(src)
@@ -1115,6 +1180,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			new /obj/item/weapon/cartridge/medical(src)
 		if(4)
 			new /obj/item/weapon/cartridge/signal/toxins(src)
+		if(5)
+			new /obj/item/weapon/cartridge/quartermaster(src)
 
 	new /obj/item/weapon/cartridge/head(src)
 

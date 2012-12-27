@@ -9,6 +9,7 @@
 	var/obj/item/radio/integrated/radio = null
 	var/access_security = 0
 	var/access_engine = 0
+	var/access_atmos = 0
 	var/access_medical = 0
 	var/access_manifest = 0
 	var/access_clown = 0
@@ -36,6 +37,11 @@
 		name = "Power-ON Cartridge"
 		icon_state = "cart-e"
 		access_engine = 1
+
+	atmos
+		name = "BreatheDeep Cartridge"
+		icon_state = "cart-a"
+		access_atmos = 1
 
 	medical
 		name = "Med-U Cartridge"
@@ -103,6 +109,7 @@
 			desc = "Complete with integrated radio signaler!"
 			icon_state = "cart-tox"
 			access_reagent_scanner = 1
+			access_atmos = 1
 
 		New()
 			..()
@@ -134,6 +141,8 @@
 		access_manifest = 1
 		access_status_display = 1
 		access_quartermaster = 1
+		access_janitor = 1
+		access_security = 1
 
 		New()
 			..()
@@ -158,6 +167,7 @@
 		access_manifest = 1
 		access_status_display = 1
 		access_engine = 1
+		access_atmos = 1
 
 	cmo
 		name = "Med-U DELUXE"
@@ -173,6 +183,7 @@
 		access_manifest = 1
 		access_status_display = 1
 		access_reagent_scanner = 1
+		access_atmos = 1
 
 		New()
 			..()
@@ -189,6 +200,8 @@
 		access_medical = 1
 		access_reagent_scanner = 1
 		access_status_display = 1
+		access_atmos = 1
+		access_janitor = 1
 
 	syndicate
 		name = "Detomatix Cartridge"

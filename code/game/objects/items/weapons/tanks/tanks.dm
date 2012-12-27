@@ -81,7 +81,7 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 
-	if ((istype(W, /obj/item/device/analyzer) || (istype(W, /obj/item/device/pda))) && get_dist(user, src) <= 1)
+	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		for (var/mob/O in viewers(user, null))
 			O << "\red [user] has used [W] on \icon[icon] [src]"
 

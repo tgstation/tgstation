@@ -106,7 +106,7 @@
 				user << "\blue Nothing happens."
 				return
 
-	else if ((istype(W, /obj/item/device/analyzer) || (istype(W, /obj/item/device/pda))) && get_dist(user, src) <= 1)
+	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		visible_message("\red [user] has used [W] on \icon[icon]")
 		if(air_contents)
 			var/pressure = air_contents.return_pressure()
