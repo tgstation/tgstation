@@ -201,7 +201,6 @@
 		access_reagent_scanner = 1
 		access_status_display = 1
 		access_atmos = 1
-		access_janitor = 1
 
 	syndicate
 		name = "Detomatix Cartridge"
