@@ -21,10 +21,7 @@ proc/sql_poll_players()
 proc/sql_poll_admins()
 	if(!sqllogging)
 		return
-	var/admincount = 0
-	for (var/client/C in admin_list)
-		if(C)
-			admincount += 1
+	var/admincount = admins.len
 	var/DBConnection/dbcon = new()
 	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 	if(!dbcon.IsConnected())

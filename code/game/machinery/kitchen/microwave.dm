@@ -139,7 +139,7 @@
 	return 0
 
 /obj/machinery/microwave/attack_hand(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	interact(user)
 
 /*******************
@@ -357,7 +357,7 @@
 	if(..())
 		return
 
-	usr.machine = src
+	usr.set_machine(src)
 	if(src.operating)
 		src.updateUsrDialog()
 		return

@@ -90,7 +90,7 @@
 	..()
 	//NOTE: If a room requires more than one access (IE: Morgue + medbay) set the req_acesss_txt to "5;6" if it requires 5 and 6
 	if(src.req_access_txt)
-		var/list/req_access_str = dd_text2list(req_access_txt,";")
+		var/list/req_access_str = text2list(req_access_txt,";")
 		if(!req_access)
 			req_access = list()
 		for(var/x in req_access_str)
@@ -99,7 +99,7 @@
 				req_access += n
 
 	if(src.req_one_access_txt)
-		var/list/req_one_access_str = dd_text2list(req_one_access_txt,";")
+		var/list/req_one_access_str = text2list(req_one_access_txt,";")
 		if(!req_one_access)
 			req_one_access = list()
 		for(var/x in req_one_access_str)

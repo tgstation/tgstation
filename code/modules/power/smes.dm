@@ -180,11 +180,11 @@
 
 /obj/machinery/power/smes/proc/interact(mob/user)
 	if(get_dist(src, user) > 1 && !istype(user, /mob/living/silicon/ai))
-		user.machine = null
+		user.unset_machine()
 		user << browse(null, "window=smes")
 		return
 
-	user.machine = src
+	user.set_machine(src)
 
 	var/t = "<TT><B>SMES Power Storage Unit</B> [n_tag? "([n_tag])" : null]<HR><PRE>"
 
@@ -228,7 +228,7 @@
 
 		if( href_list["close"] )
 			usr << browse(null, "window=smes")
-			usr.machine = null
+			usr.unset_machine()
 			return
 
 		else if( href_list["cmode"] )
@@ -299,7 +299,7 @@
 
 	else
 		usr << browse(null, "window=smes")
-		usr.machine = null
+		usr.unset_machine()
 	return
 
 

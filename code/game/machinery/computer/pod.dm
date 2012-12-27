@@ -118,7 +118,7 @@
 		return
 
 	var/dat = "<HTML><BODY><TT><B>[title]</B>"
-	user.machine = src
+	user.set_machine(src)
 	if(connected)
 		var/d2
 		if(timing)	//door controls do not need timers.
@@ -162,7 +162,7 @@
 	if(..())
 		return
 	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["power"])
 			var/t = text2num(href_list["power"])
 			t = min(max(0.25, t), 16)

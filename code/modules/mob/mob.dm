@@ -1,10 +1,16 @@
 /mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
+	mob_list -= src
+	dead_mob_list -= src
+	living_mob_list -= src
 	ghostize()
-	remove_from_mob_list(src)
 	..()
 
 /mob/New()
-	add_to_mob_list(src)
+	mob_list += src
+	if(stat == DEAD)
+		dead_mob_list += src
+	else
+		living_mob_list += src
 	..()
 
 /mob/proc/Cell()
@@ -213,7 +219,7 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/show_inv(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
@@ -550,7 +556,7 @@ var/list/slot_equipment_priority = list( \
 	set name = "Cancel Camera View"
 	set category = "OOC"
 	reset_view(null)
-	machine = null
+	unset_machine()
 	if(istype(src, /mob/living))
 		if(src:cameraFollow)
 			src:cameraFollow = null
@@ -558,7 +564,7 @@ var/list/slot_equipment_priority = list( \
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 
 	if(href_list["flavor_more"])
@@ -713,18 +719,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(statpanel("Status"))	//not looking at that panel
 
 		if(client && client.holder)
-			stat(null,"Location: \t ([x], [y], [z])")
-			stat(null,"CPU: \t [world.cpu]")
+			stat(null,"Location:\t([x], [y], [z])")
+			stat(null,"CPU:\t[world.cpu]")
+			stat(null,"Instances:\t[world.contents.len]")
 
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"Air-[master_controller.air_cost]\t Sun-[master_controller.sun_cost]")
-				stat(null,"Mob-[master_controller.mobs_cost]\t #[mob_list.len]")
-				stat(null,"Dis-[master_controller.diseases_cost]\t #[active_diseases.len]")
-				stat(null,"Mch-[master_controller.machines_cost]\t #[machines.len]")
-				stat(null,"Obj-[master_controller.objects_cost]\t #[processing_objects.len]")
-				stat(null,"Net-[master_controller.networks_cost]\t Pnet-[master_controller.powernets_cost]")
-				stat(null,"Tick-[master_controller.ticker_cost]\t ALL-[master_controller.total_cost]")
+				stat(null,"Air-[master_controller.air_cost]\tSun-[master_controller.sun_cost]")
+				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
+				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
+				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")
+				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
+				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
+				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
 
@@ -897,16 +904,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
 	return
-
-/*
- * Sends resource files to client cache
- */
-/mob/proc/getFiles()
-	if(!isemptylist(args))
-		for(var/file in args)
-			src << browse_rsc(file)
-		return 1
-	return 0
 
 /mob/proc/get_species()
 	return ""

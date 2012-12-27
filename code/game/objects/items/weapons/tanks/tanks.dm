@@ -118,7 +118,7 @@
 /obj/item/weapon/tank/attack_self(mob/user as mob)
 	if (!(src.air_contents))
 		return
-	user.machine = src
+	user.set_machine(src)
 
 	var/using_internal
 	if(istype(loc,/mob/living/carbon))
@@ -142,7 +142,7 @@
 	if (usr.stat|| usr.restrained())
 		return
 	if (src.loc == usr)
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["dist_p"])
 			var/cp = text2num(href_list["dist_p"])
 			src.distribute_pressure += cp

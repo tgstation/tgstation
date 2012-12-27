@@ -72,12 +72,12 @@
 
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!istype(user, /mob/living/silicon))
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=powcomp")
 			return
 
 
-	user.machine = src
+	user.set_machine(src)
 	var/t = "<TT><B>Power Monitoring</B><HR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
@@ -119,7 +119,7 @@
 	..()
 	if( href_list["close"] )
 		usr << browse(null, "window=powcomp")
-		usr.machine = null
+		usr.unset_machine()
 		return
 	if( href_list["update"] )
 		src.updateDialog()

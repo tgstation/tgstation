@@ -150,7 +150,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/ed209/Topic(href, href_list)
 	if (..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(lasercolor && (istype(usr,/mob/living/carbon/human)))
 		var/mob/living/carbon/human/H = usr

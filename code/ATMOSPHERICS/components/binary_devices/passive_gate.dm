@@ -138,7 +138,7 @@ obj/machinery/atmospherics/binary/passive_gate
 		if(!src.allowed(user))
 			user << "\red Access denied."
 			return
-		usr.machine = src
+		usr.set_machine(src)
 		interact(user)
 		return
 
@@ -149,7 +149,7 @@ obj/machinery/atmospherics/binary/passive_gate
 		if(href_list["set_press"])
 			var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
 			src.target_pressure = max(0, min(4500, new_pressure))
-		usr.machine = src
+		usr.set_machine(src)
 		src.update_icon()
 		src.updateUsrDialog()
 		return

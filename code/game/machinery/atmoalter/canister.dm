@@ -159,6 +159,12 @@
 	healthcheck()
 	return
 
+/obj/machinery/portable_atmospherics/canister/bullet_act(var/obj/item/projectile/Proj)
+	if(Proj.damage)
+		src.health -= round(Proj.damage / 2)
+		healthcheck()
+	..()
+
 /obj/machinery/portable_atmospherics/canister/meteorhit(var/obj/O as obj)
 	src.health = 0
 	healthcheck()
@@ -196,7 +202,7 @@
 	if (src.destroyed)
 		return
 
-	user.machine = src
+	user.set_machine(src)
 	var/holding_text
 	if(holding)
 		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
@@ -226,7 +232,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 		return
 
 	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.machine = src
+		usr.set_machine(src)
 
 		if(href_list["toggle"])
 			if (valve_open)
@@ -275,16 +281,6 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 	else
 		usr << browse(null, "window=canister")
 		return
-	return
-
-/obj/machinery/portable_atmospherics/canister/bullet_act(var/obj/item/projectile/Proj)
-	health -= Proj.damage
-	if(Proj.flag == "bullet")
-		src.health = 0
-		spawn( 0 )
-			healthcheck()
-			return
-	..()
 	return
 
 /obj/machinery/portable_atmospherics/canister/toxins/New()

@@ -24,13 +24,11 @@
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
-		M.visible_message("\red [hit_atom] has been hit by [src].")
-		if(isobj(src))//Hate typecheckin for a child object but this is just fixing crap another guy broke so if someone wants to put the time in and make this proper feel free.
-			M.take_organ_damage(src:throwforce)
+		M.hitby(src)
 
-			log_attack("<font color='red'>[hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])</font>")
-			log_admin("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
-			msg_admin_attack("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
+		log_attack("<font color='red'>[hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])</font>")
+		log_admin("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
+		msg_admin_attack("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom
@@ -62,7 +60,7 @@
 		return null
 
 /atom/proc/check_eye(user as mob)
-	if (istype(user, /mob/living/silicon/ai))
+	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
 		return 1
 	return
 

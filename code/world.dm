@@ -135,7 +135,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 		var/n = 0
 		var/admins = 0
 
-		for(var/client/C in client_list)
+		for(var/client/C in clients)
 			if(C.holder)
 				if(C.holder.fakekey)
 					continue	//so stealthmins aren't revealed by the hub
@@ -179,11 +179,10 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 
 /world/proc/load_mode()
-	var/text = file2text("data/mode.txt")
-	if (text)
-		var/list/lines = dd_text2list(text, "\n")
-		if (lines[1])
-			master_mode = lines[1]
+	var/list/Lines = file2list("data/mode.txt")
+	if(Lines.len)
+		if(Lines[1])
+			master_mode = Lines[1]
 			diary << "Saved mode is '[master_mode]'"
 
 /world/proc/save_mode(var/the_mode)
@@ -196,25 +195,20 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 /world/proc/load_admins()
 	if(config.admin_legacy_system)
-		//Legacy admin system uses admins.txt
-		var/text = file2text("config/admins.txt")
-		if (!text)
-			diary << "Failed to load config/admins.txt\n"
-		else
-			var/list/lines = dd_text2list(text, "\n")
-			for(var/line in lines)
-				if (!line)
-					continue
+		//Legacy admin system uses admins.txt	- It's not fucking legacy Erro. It's standard. I can assure you more people will be using 'legacy' than sql. SQL is lame. ~carnie
+		var/list/Lines = file2list("config/admins.txt")
+		for(var/line in Lines)
+			if(!line)	continue
 
-				if (copytext(line, 1, 2) == ";")
-					continue
+			if(copytext(line, 1, 2) == ";")
+				continue
 
-				var/pos = findtext(line, " - ", 1, null)
-				if (pos)
-					var/m_key = copytext(line, 1, pos)
-					var/a_lev = copytext(line, pos + 3, length(line) + 1)
-					admins[m_key] = new /datum/admins(a_lev)
-					diary << ("ADMIN: [m_key] = [a_lev]")
+			var/pos = findtext(line, " - ", 1, null)
+			if(pos)
+				var/m_key = copytext(line, 1, pos)
+				var/a_lev = copytext(line, pos + 3, length(line) + 1)
+				admin_datums[m_key] = new /datum/admins(a_lev)
+				diary << ("ADMIN: [m_key] = [a_lev]")
 	else
 		//The current admin system uses SQL
 		var/user = sqlfdbklogin
@@ -269,9 +263,9 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 			var/datum/admins/AD = new /datum/admins(adminrank)
 			AD.level = adminlevel //Legacy support for old verbs
 			AD.sql_permissions = permissions_actual
-			admins[adminckey] = AD
+			admin_datums[adminckey] = AD
 
-		if(!admins)
+		if(!admin_datums)
 			diary << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()
@@ -285,7 +279,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 		if (!text)
 			diary << "Failed to load config/mods.txt\n"
 		else
-			var/list/lines = dd_text2list(text, "\n")
+			var/list/lines = text2list(text, "\n")
 			for(var/line in lines)
 				if (!line)
 					continue

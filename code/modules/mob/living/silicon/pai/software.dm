@@ -28,7 +28,7 @@
 	var/dat = ""
 	var/left_part = ""
 	var/right_part = softwareMenu()
-	src.machine = src
+	src.set_machine(src)
 
 	if(temp)
 		left_part = temp

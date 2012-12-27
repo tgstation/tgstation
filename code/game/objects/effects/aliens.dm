@@ -28,7 +28,7 @@
 	density = 1
 	opacity = 1
 	anchored = 1
-	var/health = 50
+	var/health = 200
 	//var/mob/living/affecting = null
 
 	wall
@@ -41,7 +41,17 @@
 		desc = "Purple slime just thin enough to let light pass through."
 		icon_state = "resinmembrane"
 		opacity = 0
-		health = 20
+		health = 120
+
+/obj/effect/alien/resin/New()
+	..()
+	var/turf/T = get_turf(src)
+	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+
+/obj/effect/alien/resin/Del()
+	var/turf/T = get_turf(src)
+	T.thermal_conductivity = initial(T.thermal_conductivity)
+	..()
 
 /obj/effect/alien/resin/proc/healthcheck()
 	if(health <=0)
@@ -113,7 +123,7 @@
 	for(var/mob/O in oviewers(src))
 		O.show_message("\red [usr] claws at the resin!", 1)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	health -= rand(10, 20)
+	health -= rand(40, 60)
 	if(health <= 0)
 		usr << "\green You slice the [name] to pieces."
 		for(var/mob/O in oviewers(src))
@@ -299,24 +309,49 @@ Alien plants should do something if theres a lot of poison
 	opacity = 0
 	anchored = 1
 
-	var/obj/target
+	var/atom/target
 	var/ticks = 0
+	var/target_strength = 0
+
+/obj/effect/alien/acid/New(loc, target)
+	..(loc)
+	src.target = target
+
+	if(isturf(target)) // Turf take twice as long to take down.
+		target_strength = 8
+	else
+		target_strength = 4
+	tick()
 
 /obj/effect/alien/acid/proc/tick()
 	if(!target)
 		del(src)
+
 	ticks += 1
-	for(var/mob/O in hearers(src, null))
-		O.show_message("\green <B>[src.target] sizzles and begins to melt under the bubbling mess of acid!</B>", 1)
-	if(prob(ticks*10))
+
+	if(ticks >= target_strength)
+
 		for(var/mob/O in hearers(src, null))
 			O.show_message("\green <B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B>", 1)
-//		if(target.occupant) //I tried to fix mechas-with-humans-getting-deleted. Made them unacidable for now.
-//			target.ex_act(1)
-		del(target)
+
+		if(istype(target, /turf/simulated/wall)) // I hate turf code.
+			var/turf/simulated/wall/W = target
+			W.dismantle_wall(1)
+		else
+			del(target)
 		del(src)
 		return
-	spawn(rand(200, 400)) tick()
+
+	switch(target_strength - ticks)
+		if(6)
+			visible_message("\green <B>[src.target] is holding up against the acid!</B>")
+		if(4)
+			visible_message("\green <B>[src.target]\s structure is being melted by the acid!</B>")
+		if(2)
+			visible_message("\green <B>[src.target] is struggling to withstand the acid!</B>")
+		if(0 to 1)
+			visible_message("\green <B>[src.target] begins to crumble under the acid!</B>")
+	spawn(rand(150, 200)) tick()
 
 /*
  * Egg

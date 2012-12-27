@@ -3,11 +3,8 @@
 var/list/whitelist = list()
 
 /proc/load_whitelist()
-	var/text = file2text(WHITELISTFILE)
-	if (!text)
-		diary << "Failed to [WHITELISTFILE]\n"
-	else
-		whitelist = dd_text2list(text, "\n")
+	whitelist = file2list(WHITELISTFILE)
+	if(!whitelist.len)	whitelist = null
 
 /proc/check_whitelist(mob/M /*, var/rank*/)
 	if(!whitelist)
@@ -21,7 +18,7 @@ proc/load_alienwhitelist()
 	if (!text)
 		diary << "Failed to load config/alienwhitelist.txt\n"
 	else
-		alien_whitelist = dd_text2list(text, "\n")
+		alien_whitelist = text2list(text, "\n")
 
 /proc/is_alien_whitelisted(mob/M, var/species)
 	if(!alien_whitelist)

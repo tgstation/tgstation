@@ -102,9 +102,11 @@ datum
 				src = null
 				for(var/datum/disease/D in self.data["viruses"])
 					var/datum/disease/virus = new D.type
+					// We don't spread.
+					if(virus.spread_type == SPECIAL || virus.spread_type == NON_CONTAGIOUS) continue
+
 					if(method == TOUCH)
 						M.contract_disease(virus)
-
 					else //injected
 						M.contract_disease(virus, 1, 0)
 
@@ -1166,8 +1168,8 @@ datum
 				return
 			reaction_obj(var/obj/O, var/volume)
 				src = null
-				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/roro_egg))
-					var/obj/item/weapon/reagent_containers/food/snacks/roro_egg/egg = O
+				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/roro))
+					var/obj/item/weapon/reagent_containers/food/snacks/egg/roro/egg = O
 					if (egg.grown)
 						egg.Hatch()
 				if((!O) || (!volume))	return 0

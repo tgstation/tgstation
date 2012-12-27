@@ -132,7 +132,7 @@
 
 	attack_self(mob/user as mob)
 		if(!user)	return 0
-		user.machine = src
+		user.set_machine(src)
 		interact(user)
 		return 1
 

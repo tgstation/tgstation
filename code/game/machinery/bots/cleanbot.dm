@@ -76,7 +76,7 @@
 	. = ..()
 	if (.)
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	interact(user)
 
 /obj/machinery/bot/cleanbot/proc/interact(mob/user as mob)
@@ -105,7 +105,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 /obj/machinery/bot/cleanbot/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")

@@ -225,7 +225,7 @@
 
 		src.add_fingerprint(user)
 		if(stat & BROKEN)
-			user.machine = null
+			user.unset_machine()
 			return
 
 		var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
@@ -250,7 +250,7 @@
 		dat += "Pressure: [round(per, 1)]%<BR></body>"
 
 
-		user.machine = src
+		user.set_machine(src)
 		user << browse(dat, "window=disposal;size=360x170")
 		onclose(user, "disposal")
 
@@ -272,10 +272,10 @@
 			return
 
 		if (in_range(src, usr) && istype(src.loc, /turf))
-			usr.machine = src
+			usr.set_machine(src)
 
 			if(href_list["close"])
-				usr.machine = null
+				usr.unset_machine()
 				usr << browse(null, "window=disposal")
 				return
 
@@ -294,7 +294,7 @@
 				eject()
 		else
 			usr << browse(null, "window=disposal")
-			usr.machine = null
+			usr.unset_machine()
 			return
 		return
 

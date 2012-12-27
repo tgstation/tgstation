@@ -1,9 +1,15 @@
+var/list/ai_list = list()
+
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
+	var/is_in_use = 0
 	if (subject!=null)
-		for(var/mob/living/silicon/ai/M in player_list)
+		for(var/A in ai_list)
+			var/mob/living/silicon/ai/M = A
 			if ((M.client && M.machine == subject))
+				is_in_use = 1
 				subject.attack_ai(M)
+	return is_in_use
 
 
 /mob/living/silicon/ai
@@ -105,9 +111,13 @@
 				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 			job = "AI"
-
-	add_to_mob_list(src)
+	ai_list += src
+	..()
 	return
+
+/mob/living/silicon/ai/Del()
+	ai_list -= src
+	..()
 
 
 /mob/living/silicon/ai/verb/pick_icon()
@@ -321,7 +331,7 @@
 		if (href_list["mach_close"] == "aialerts")
 			viewalerts = 0
 		var/t1 = text("window=[]", href_list["mach_close"])
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 	if (href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
@@ -550,7 +560,7 @@
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
 	set name = "Jump To Network"
-	machine = null
+	unset_machine()
 	src.cameraFollow = null
 	var/cameralist[0]
 

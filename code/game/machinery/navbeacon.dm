@@ -39,7 +39,7 @@
 
 		codes = new()
 
-		var/list/entries = dd_text2list(codes_txt, ";")	// entries are separated by semicolons
+		var/list/entries = text2list(codes_txt, ";")	// entries are separated by semicolons
 
 		for(var/e in entries)
 			var/index = findtext(e, "=")		// format is "key=value"
@@ -186,7 +186,7 @@ Transponder Codes:<UL>"}
 			return
 		if ((in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
 			if(open && !locked)
-				usr.machine = src
+				usr.set_machine(src)
 
 				if (href_list["freq"])
 					freq = sanitize_frequency(freq + text2num(href_list["freq"]))

@@ -13,13 +13,13 @@
 /obj/machinery/vending/New()
 	..()
 	spawn(4)
-		src.slogan_list = dd_text2list(src.product_slogans, ";")
-		var/list/temp_paths = dd_text2list(src.product_paths, ";")
-		var/list/temp_amounts = dd_text2list(src.product_amounts, ";")
-		var/list/temp_hidden = dd_text2list(src.product_hidden, ";")
-		var/list/temp_hideamt = dd_text2list(src.product_hideamt, ";")
-		var/list/temp_coin = dd_text2list(src.product_coin, ";")
-		var/list/temp_coin_amt = dd_text2list(src.product_coin_amt, ";")
+		src.slogan_list = text2list(src.product_slogans, ";")
+		var/list/temp_paths = text2list(src.product_paths, ";")
+		var/list/temp_amounts = text2list(src.product_amounts, ";")
+		var/list/temp_hidden = text2list(src.product_hidden, ";")
+		var/list/temp_hideamt = text2list(src.product_hideamt, ";")
+		var/list/temp_coin = text2list(src.product_coin, ";")
+		var/list/temp_coin_amt = text2list(src.product_coin_amt, ";")
 		//Little sanity check here
 		if ((isnull(temp_paths)) || (isnull(temp_amounts)) || (temp_paths.len != temp_amounts.len) || (temp_hidden.len != temp_hideamt.len))
 			stat |= BROKEN
@@ -128,7 +128,7 @@
 /obj/machinery/vending/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	user.machine = src
+	user.set_machine(src)
 
 	if(src.seconds_electrified != 0)
 		if(src.shock(user, 100))
@@ -223,7 +223,7 @@
 
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		usr.set_machine(src)
 		if ((href_list["vend"]) && (src.vend_ready))
 
 			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH

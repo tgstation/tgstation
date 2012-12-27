@@ -46,7 +46,7 @@
 	if(..())
 		return
 
-	user.machine = src
+	user.set_machine(src)
 	var/dat
 	if (!( ticker ))
 		return
@@ -171,7 +171,7 @@
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)

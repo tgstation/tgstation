@@ -216,14 +216,14 @@
 /mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
 	usr:cameraFollow = null
 	if (!C)
-		src.machine = null
+		src.unset_machine()
 		src.reset_view(null)
 		return 0
 	if (stat == 2 || !C.status || C.network != src.network) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
-	src.machine = src
+	src.set_machine(src)
 	src:current = C
 	src.reset_view(C)
 	return 1
@@ -233,7 +233,7 @@
 	set category = "pAI Commands"
 	set name = "Cancel Camera View"
 	src.reset_view(null)
-	src.machine = null
+	src.unset_machine()
 	src:cameraFollow = null
 
 //Addition by Mord_Sith to define AI's network change ability
@@ -242,7 +242,7 @@
 	set category = "pAI Commands"
 	set name = "Change Camera Network"
 	src.reset_view(null)
-	src.machine = null
+	src.unset_machine()
 	src:cameraFollow = null
 	var/cameralist[0]
 

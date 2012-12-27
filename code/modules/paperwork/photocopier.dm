@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/machinery/photocopier
 	name = "photocopier"
 	icon = 'icons/obj/library.dmi'
@@ -23,7 +21,7 @@
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		user.set_machine(src)
 
 		var/dat = "Photocopier<BR><BR>"
 		if(copy || photocopy)

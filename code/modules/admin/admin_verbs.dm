@@ -25,8 +25,8 @@
 /client/proc/update_admins(var/rank)
 	if(!holder)
 		holder = new /datum/admins(rank)
-		admin_list |= src
-		admins[ckey] = holder
+		admins |= src
+		admin_datums[ckey] = holder
 
 	var/need_update = 0
 	//check if our rank has changed
@@ -294,7 +294,6 @@
 			verbs += /datum/admins/proc/adjump
 			verbs += /client/proc/callproc
 			verbs += /client/proc/triple_ai
-			verbs += /client/proc/get_admin_state
 			verbs += /client/proc/reload_admins
 			verbs += /client/proc/cmd_debug_make_powernets
 			verbs += /client/proc/object_talk
@@ -341,7 +340,6 @@
 		/client/proc/show_verbs,
 		/client/proc/colorooc,
 		/client/proc/triple_ai,
-		/client/proc/get_admin_state,
 		/client/proc/reload_admins,
 		/client/proc/kill_air,
 		/client/proc/cmd_debug_make_powernets,
@@ -474,11 +472,11 @@
 			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
+/*
 /client/proc/get_admin_state()
 	set name = "Get Admin State"
 	set category = "Debug"
-	for(var/client/C in admin_list)
+	for(var/client/C in admins)
 		if(C.holder.state == 1)
 			src << "[C.key] is playing - [C.holder.state]"
 		else if(C.holder.state == 2)
@@ -486,6 +484,7 @@
 		else
 			src << "[C.key] is undefined - [C.holder.state]"
 	feedback_add_details("admin_verb","GAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+*/
 
 /client/proc/invisimin()
 	set name = "Invisimin"
@@ -651,6 +650,17 @@
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
+
+/client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
+	set category = "Fun"
+	set name = "Give Disease"
+	set desc = "Gives a Disease to a mob."
+	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in diseases
+	if(!D) return
+	T.contract_disease(new D, 1)
+	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
+	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the disease [D].", 1)
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"

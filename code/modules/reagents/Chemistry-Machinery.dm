@@ -98,7 +98,7 @@
 	if(usr.stat || usr.restrained()) return
 	if(!in_range(src, usr)) return
 
-	usr.machine = src
+	usr.set_machine(src)
 
 	if (data == "amountc")
 		var/num = input("Enter desired output amount", "Amount", "30") as num
@@ -162,7 +162,7 @@
 /obj/machinery/chem_dispenser/attack_hand(mob/user as mob)
 	if(stat & BROKEN)
 		return
-	user.machine = src
+	user.set_machine(src)
 
 	initWindow(user)
 	updateWindow(user)
@@ -254,7 +254,7 @@
 	if(!in_range(src, usr)) return
 
 	src.add_fingerprint(usr)
-	usr.machine = src
+	usr.set_machine(src)
 
 
 	if (href_list["ejectp"])
@@ -263,7 +263,7 @@
 			loaded_pill_bottle = null
 	else if(href_list["close"])
 		usr << browse(null, "window=chemmaster")
-		usr.machine = null
+		usr.unset_machine()
 		return
 
 	if(beaker)
@@ -407,7 +407,7 @@
 				usr << browse_rsc(icon('chemical.dmi', "bottle" + num2text(i)), "bottle[i].png")
 	if(stat & BROKEN)
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/dat = ""
 	if(!beaker)
 		dat = "Please insert beaker.<BR>"
@@ -521,7 +521,7 @@
 	if(usr.stat || usr.restrained()) return
 	if(!in_range(src, usr)) return
 
-	usr.machine = src
+	usr.set_machine(src)
 	if(!beaker) return
 
 	if (href_list["create_vaccine"])
@@ -601,7 +601,7 @@
 /obj/machinery/computer/pandemic/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/dat = ""
 	if(src.temphtml)
 		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
@@ -824,7 +824,7 @@
 	return 0
 
 /obj/machinery/reagentgrinder/attack_hand(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	interact(user)
 
 /obj/machinery/reagentgrinder/proc/interact(mob/user as mob) // The microwave Menu
@@ -876,7 +876,7 @@
 /obj/machinery/reagentgrinder/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	switch(href_list["action"])
 		if ("grind")
 			grind()

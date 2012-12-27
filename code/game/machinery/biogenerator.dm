@@ -77,7 +77,7 @@
 /obj/machinery/biogenerator/proc/interact(mob/user as mob)
 	if(stat & BROKEN)
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/dat = "<TITLE>Biogenerator</TITLE>Biogenerator:<BR>"
 	if (processing)
 		dat += "<FONT COLOR=red>Biogenerator is processing! Please wait...</FONT>"
@@ -206,7 +206,7 @@
 	if(usr.stat || usr.restrained()) return
 	if(!in_range(src, usr)) return
 
-	usr.machine = src
+	usr.set_machine(src)
 
 	switch(href_list["action"])
 		if("activate")

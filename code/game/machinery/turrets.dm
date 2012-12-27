@@ -356,7 +356,7 @@
 			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>"
 			if (locked)
 				if (user.machine==src)
-					user.machine = null
+					user.unset_machine()
 					user << browse(null, "window=turretid")
 			else
 				if (user.machine==src)
@@ -374,11 +374,11 @@
 	if ( get_dist(src, user) > 0 )
 		if ( !issilicon(user) )
 			user << "<span class='notice'>You are too far away.</span>"
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=turretid")
 			return
 
-	user.machine = src
+	user.set_machine(src)
 	var/loc = src.loc
 	if (istype(loc, /turf))
 		loc = loc:loc
@@ -515,7 +515,7 @@
 
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		user.set_machine(src)
 		var/dat = {"<html>
 						<head><title>[src] Control</title></head>
 						<body>
