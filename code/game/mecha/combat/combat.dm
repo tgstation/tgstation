@@ -1,5 +1,5 @@
 /obj/mecha/combat
-	var/force = 30
+	force = 30
 	var/damtype = "brute"
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1

@@ -792,7 +792,7 @@
 			ER.set_ready_state(1)
 			return
 		var/cur_charge = ER.chassis.get_charge()
-		if(isnull(cur_charge))
+		if(isnull(cur_charge) || !ER.chassis.cell)
 			stop()
 			ER.set_ready_state(1)
 			ER.occupant_message("No powercell detected.")
