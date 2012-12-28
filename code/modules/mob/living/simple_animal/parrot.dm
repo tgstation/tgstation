@@ -39,7 +39,7 @@
 	emote_hear = list("squawks","bawks")
 	emote_see = list("flutters its wings")
 
-	speak_chance = 8//4% (1 in 25) chance every tick
+	speak_chance = 1//1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
 
@@ -104,6 +104,7 @@
 	if(held_item)
 		held_item.loc = src.loc
 		held_item = null
+	walk(src,0)
 	..()
 
 /*
@@ -305,7 +306,6 @@
 
 		speak.Add(pick(speech_buffer))
 		clearlist(speech_buffer)
-
 
 
 //-----SLEEPING
@@ -512,7 +512,7 @@
  */
 
 /mob/living/simple_animal/parrot/movement_delay()
-	if(client && parrot_state != "parrot_fly")
+	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
 		icon_state = "parrot_fly"
 	..()
 
@@ -529,7 +529,7 @@
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand.w_class <= 2 || C.r_hand.w_class <= 2)
+			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
 				return C
 	return null
 
@@ -558,7 +558,7 @@
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand.w_class <= 2 || C.r_hand.w_class <= 2)
+			if(C.l_hand && C.l_hand.w_class <= 2 || C.r_hand && C.r_hand.w_class <= 2)
 				return C
 	return null
 
@@ -609,10 +609,10 @@
 	var/obj/item/stolen_item = null
 
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.l_hand.w_class <= 2)
+		if(C.l_hand && C.l_hand.w_class <= 2)
 			stolen_item = C.l_hand
 
-		if(C.r_hand.w_class <= 2)
+		if(C.r_hand && C.r_hand.w_class <= 2)
 			stolen_item = C.r_hand
 
 		if(stolen_item)

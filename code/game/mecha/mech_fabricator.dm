@@ -113,6 +113,7 @@
 
 	"Cyborg Upgrade Modules" = list(
 						/obj/item/borg/upgrade/reset,
+						/obj/item/borg/upgrade/rename,
 						/obj/item/borg/upgrade/restart,
 						/obj/item/borg/upgrade/vtec,
 						/obj/item/borg/upgrade/tasercooler,

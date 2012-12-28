@@ -30,7 +30,7 @@
 		alert("Admin jumping disabled")
 	return
 
-/client/proc/jumptomob(var/mob/M in sortmobs())
+/client/proc/jumptomob(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Jump to Mob"
 

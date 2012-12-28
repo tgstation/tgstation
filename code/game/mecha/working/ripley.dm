@@ -19,7 +19,7 @@
 	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."
 	name = "APLU \"Firefighter\""
 	icon_state = "firefighter"
-	max_temperature = 2500
+	max_temperature = 4500
 	health = 250
 	lights_power = 8
 	damage_absorption = list("fire"=0.5,"bullet"=0.8,"bomb"=0.5)

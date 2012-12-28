@@ -438,10 +438,12 @@
 /obj/machinery/power/apc/attack_hand(mob/user)
 //	if (!can_use(user)) This already gets called in interact() and in topic()
 //		return
+	if(!user)
+		return
 	src.add_fingerprint(user)
-	if(opened && (!issilicon(user)))
+	if(usr == user && opened && (!issilicon(user)))
 		if(cell)
-			usr.put_in_hands(cell)
+			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
 			cell.updateicon()
 
@@ -450,7 +452,7 @@
 			//user << "You remove the power cell."
 			charging = 0
 			src.updateicon()
-			return
+		return
 	if(stat & (BROKEN|MAINT))
 		return
 
@@ -488,7 +490,7 @@
 
 
 
-/obj/machinery/power/apc/proc/interact(mob/user)
+/obj/machinery/power/apc/interact(mob/user)
 	if(!user)
 		return
 

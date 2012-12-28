@@ -115,8 +115,6 @@
 						C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
 					del(G)
 					log_attack("<font color='red'>[usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.</font>")
-					log_admin("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
-					msg_admin_attack("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
 			return
 
 		if(!I)	return
@@ -139,6 +137,7 @@
 		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
 			return
 		src.add_fingerprint(user)
+		var/target_loc = target.loc
 		var/msg
 		for (var/mob/V in viewers(usr))
 			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
@@ -148,6 +147,8 @@
 				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
 		if(!do_after(usr, 20))
 			return
+		if(target_loc != target.loc)
+			return
 		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
 												// must be awake, not stunned or whatever
 			msg = "[user.name] climbs into the [src]."
@@ -156,8 +157,6 @@
 			msg = "[user.name] stuffs [target.name] into the [src]!"
 			user << "You stuff [target.name] into the [src]!"
 			log_attack("<font color='red'>[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.</font>")
-			log_admin("ATTACK: [usr] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.")
-			msg_admin_attack("ATTACK: [user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.")
 		else
 			return
 		if (target.client)
@@ -221,7 +220,7 @@
 		interact(user, 0)
 
 	// user interaction
-	proc/interact(mob/user, var/ai=0)
+	interact(mob/user, var/ai=0)
 
 		src.add_fingerprint(user)
 		if(stat & BROKEN)

@@ -386,7 +386,8 @@ Alien plants should do something if theres a lot of poison
 		if(isalien(user))
 			switch(status)
 				if(BURST)
-					user << "\red The child is already gone."
+					user << "\red You clear the hatched egg."
+					del(src)
 					return
 				if(GROWING)
 					user << "\red The child is not developed yet."

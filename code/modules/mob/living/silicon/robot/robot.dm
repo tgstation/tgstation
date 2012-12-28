@@ -970,7 +970,7 @@
 		s_active.close(src)
 
 	if(module)
-		if(module.type == /obj/item/weapon/robot_module/janitor)	//you'd think checking the module would work
+		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()

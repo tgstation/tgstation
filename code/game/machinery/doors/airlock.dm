@@ -296,11 +296,10 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		spawn (0) target_tile.hotspot_expose(temperature, 400)
 	for(var/obj/structure/falsewall/plasma/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
-		T.ReplaceWithMineralWall("plasma")
+		T.ChangeTurf(/turf/simulated/wall/mineral/plasma/)
 		del (F)
-	for(var/turf/simulated/wall/mineral/W in range(3,src))
-		if(mineral == "plasma")
-			W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame
+	for(var/turf/simulated/wall/mineral/plasma/W in range(3,src))
+		W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame
 	for(var/obj/machinery/door/airlock/plasma/D in range(3,src))
 		D.ignite(temperature/4)
 	new/obj/structure/door_assembly/door_assembly_0( src.loc )

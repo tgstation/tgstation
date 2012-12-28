@@ -9,59 +9,50 @@
 		else
 			src << "\blue You are no longer listening to messages on the OOC channel."
 
-/mob/verb/ooc(msg as text)
+/client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
-	if (IsGuestKey(src.key))
+
+	if(!mob)	return
+
+	if(IsGuestKey(key))
 		src << "Guests may not use OOC."
 		return
+
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if(!msg)
-		return
-	else if (!src.client.listen_ooc)
+	if(!msg)	return
+
+	if(!listen_ooc)
 		src << "\red You have OOC muted."
 		return
-	else if (!ooc_allowed && !src.client.holder)
-		src << "\red OOC is globally muted"
-		return
-	else if (!dooc_allowed && !src.client.holder && (src.client.deadchat != 0))
-		usr << "\red OOC for dead mobs has been turned off."
-		return
-	else if (src.client)
-		if(src.client.muted & MUTE_OOC)
+
+	if(!holder)
+		if(!ooc_allowed)
+			src << "\red OOC is globally muted"
+			return
+		if(!dooc_allowed && deadchat != 0)
+			usr << "\red OOC for dead mobs has been turned off."
+			return
+		if(muted & MUTE_OOC)
 			src << "\red You cannot use OOC (muted)."
 			return
-
-		if (src.client.handle_spam_prevention(msg,MUTE_OOC))
+		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
-	else if (findtext(msg, "byond://") && !src.client.holder)
-		src << "<B>Advertising other servers is not allowed.</B>"
-		log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
-		message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
-		return
+		if(findtext(msg, "byond://"))
+			src << "<B>Advertising other servers is not allowed.</B>"
+			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
+			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
+			return
 
-	log_ooc("[src.name]/[src.key] : [msg]")
+	log_ooc("[mob.name]/[key] : [msg]")
 
-	for (var/client/C)
+	for(var/client/C in clients)
 		if(C.listen_ooc)
-			if (src.client.holder)
-				if(!src.client.holder.fakekey || C.holder)
-
-					if (src.client.holder.rank == "Admin Observer")
-						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-					else if (src.client.holder.level >= 5)
-						C << "<font color=[src.client.holder.ooccolor]><b><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
-
-					else if (src.client.holder.rank == "Retired Admin")
-						C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-					else if (src.client.holder.rank == "Moderator")
-						C << "<span class='modooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-					else
-						C << "<span class='adminooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.holder.fakekey ? "/([src.client.holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-				else
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.holder.fakekey ? src.client.holder.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span></font>"
-			else
-				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>"
+			if(holder)
+				if(!holder.fakekey || C.holder)
+					if(holder.rights & R_ADMIN)
+						C << "<font color=[config.allow_admin_ooccolor ? holder.ooccolor :"#b82e00" ]><b><span class='prefix'>OOC:</span> <EM>[key][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
+						//todo: other adminranks OOC
 
 var/global/normal_ooc_colour = "#002eb8"
 

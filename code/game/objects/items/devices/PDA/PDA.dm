@@ -153,6 +153,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!
 
+/obj/item/device/pda/clear
+	icon_state = "pda-transp"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
+	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
 /obj/item/device/pda/chef
 	icon_state = "pda-chef"
@@ -547,7 +551,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (in_range(src, U) && loc == U)
 						n = copytext(adminscrub(n), 1, MAX_MESSAGE_LEN)
 						if (mode == 1)
-							note = dd_replacetext(n, "\n", "<BR>")
+							note = replacetext(n, "\n", "<BR>")
 							notehtml = n
 					else
 						U << browse(null, "window=pda")

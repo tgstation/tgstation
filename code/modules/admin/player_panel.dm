@@ -78,9 +78,9 @@
 					body += "<a href='?src=\ref[src];adminplayeropts="+ref+"'>PP</a> - "
 					body += "<a href='?src=\ref[src];notes=show;mob="+ref+"'>N</a> - "
 					body += "<a href='?src=\ref[src];adminplayervars="+ref+"'>VV</a> - "
-					body += "<a href='?src=\ref[src];traitor_panel_pp="+ref+"'>TP</a> - "
+					body += "<a href='?src=\ref[src];traitor="+ref+"'>TP</a> - "
 					body += "<a href='?src=\ref[usr];priv_msg=\ref"+ref+"'>PM</a> - "
-					body += "<a href='?src=\ref[src];adminplayersubtlemessage="+ref+"'>SM</a> - "
+					body += "<a href='?src=\ref[src];subtlemessage="+ref+"'>SM</a> - "
 					body += "<a href='?src=\ref[src];adminplayerobservejump="+ref+"'>JMP</a><br>"
 					if(antagonist > 0)
 						body += "<font size='2'><a href='?src=\ref[src];secretsadmin=check_antagonist'><font color='red'><b>Antagonist</b></font></a></font>";
@@ -266,23 +266,23 @@
 			else if(isobserver(M))
 				M_job = "Ghost"
 
-			M_job = dd_replacetext(M_job, "'", "")
-			M_job = dd_replacetext(M_job, "\"", "")
-			M_job = dd_replacetext(M_job, "\\", "")
+			M_job = replacetext(M_job, "'", "")
+			M_job = replacetext(M_job, "\"", "")
+			M_job = replacetext(M_job, "\\", "")
 
 			var/M_name = M.name
-			M_name = dd_replacetext(M_name, "'", "")
-			M_name = dd_replacetext(M_name, "\"", "")
-			M_name = dd_replacetext(M_name, "\\", "")
+			M_name = replacetext(M_name, "'", "")
+			M_name = replacetext(M_name, "\"", "")
+			M_name = replacetext(M_name, "\\", "")
 			var/M_rname = M.real_name
-			M_rname = dd_replacetext(M_rname, "'", "")
-			M_rname = dd_replacetext(M_rname, "\"", "")
-			M_rname = dd_replacetext(M_rname, "\\", "")
+			M_rname = replacetext(M_rname, "'", "")
+			M_rname = replacetext(M_rname, "\"", "")
+			M_rname = replacetext(M_rname, "\\", "")
 
 			var/M_key = M.key
-			M_key = dd_replacetext(M_key, "'", "")
-			M_key = dd_replacetext(M_key, "\"", "")
-			M_key = dd_replacetext(M_key, "\\", "")
+			M_key = replacetext(M_key, "'", "")
+			M_key = replacetext(M_key, "\"", "")
+			M_key = replacetext(M_key, "\\", "")
 
 			//output for each mob
 			dat += {"

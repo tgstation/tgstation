@@ -98,7 +98,7 @@
 
 	src.interact(usr)
 
-/obj/machinery/camera/proc/interact(mob/living/user as mob)
+/obj/machinery/camera/interact(mob/living/user as mob)
 	if(!panel_open)
 		return
 

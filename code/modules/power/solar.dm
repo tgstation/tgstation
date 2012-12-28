@@ -171,7 +171,6 @@
 		tracker_update(var/angle)
 		set_panels(var/cdir)
 		broken()
-		interact(mob/user)
 
 
 	New()

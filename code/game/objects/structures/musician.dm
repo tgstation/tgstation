@@ -330,7 +330,7 @@
 	proc/compilesong()
 		var/compilestring = ""
 
-		var/strippedsourcestring = dd_replacetext(currentsong.sourcestring, "\n", "")
+		var/strippedsourcestring = replacetext(currentsong.sourcestring, "\n", "")
 
 		strippedsourcestring = unbayify(strippedsourcestring)
 
@@ -601,7 +601,7 @@
 		updateUsrDialog()
 
 	else if(href_list["export"])
-		var/output = dd_replacetext(currentsong.sourcestring, "\n", "")
+		var/output = replacetext(currentsong.sourcestring, "\n", "")
 
 		var/list/sourcelist = text2list(output, ",")
 
@@ -728,8 +728,8 @@
 			var/input = html_encode(input(usr, "", "Edit", currentsong.sourcestring) as message|null)
 			if(isnull(input)) return
 
-			input = dd_replacetext(input, " ", "")
-			input = dd_replacetext(input, "\t", "")
+			input = replacetext(input, " ", "")
+			input = replacetext(input, "\t", "")
 
 			if(lentext(input)>4000)
 				statusmsg("Editor Error: Song too long, end was cutoff (max 4000)")

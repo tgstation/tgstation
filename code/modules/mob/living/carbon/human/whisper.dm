@@ -48,12 +48,12 @@
 				temp_message[H] = ninjaspeak(temp_message[H])
 				pick_list -= H
 			message = dd_list2text(temp_message, " ")
-			message = dd_replacetext(message, "o", "¤")
-			message = dd_replacetext(message, "p", "ş")
-			message = dd_replacetext(message, "l", "£")
-			message = dd_replacetext(message, "s", "§")
-			message = dd_replacetext(message, "u", "µ")
-			message = dd_replacetext(message, "b", "ß")
+			message = replacetext(message, "o", "¤")
+			message = replacetext(message, "p", "ş")
+			message = replacetext(message, "l", "£")
+			message = replacetext(message, "s", "§")
+			message = replacetext(message, "u", "µ")
+			message = replacetext(message, "b", "ß")
 
 	if (src.stuttering)
 		message = stutter(message)

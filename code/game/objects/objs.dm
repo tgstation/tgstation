@@ -80,12 +80,14 @@
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
 				is_in_use = 1
-				src.attack_hand(M)
+				src.interact(M)
 		var/ai_in_use = AutoUpdateAI(src)
 
 		if(!ai_in_use && !is_in_use)
 			in_use = 0
 
+/obj/proc/interact(mob/user)
+	return
 
 /obj/proc/update_icon()
 	return

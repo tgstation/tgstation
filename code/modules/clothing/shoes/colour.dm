@@ -77,7 +77,6 @@
 /obj/item/clothing/shoes/orange
 	name = "orange shoes"
 	icon_state = "orange"
-	var/chained = 0
 	color = "orange"
 
 /obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
@@ -92,6 +91,7 @@
 	..()
 	if ((istype(H, /obj/item/weapon/handcuffs) && !( src.chained )))
 		//H = null
+		if (src.icon_state != "orange") return
 		del(H)
 		src.chained = 1
 		src.slowdown = 15

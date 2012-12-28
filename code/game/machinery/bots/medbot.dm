@@ -112,7 +112,7 @@
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
-	if(!src.locked)
+	if(!src.locked || issilicon(user))
 		dat += "<TT>Healing Threshold: "
 		dat += "<a href='?src=\ref[src];adj_threshold=-10'>--</a> "
 		dat += "<a href='?src=\ref[src];adj_threshold=-5'>-</a> "
@@ -150,7 +150,7 @@
 		else
 			turn_on()
 
-	else if((href_list["adj_threshold"]) && (!src.locked))
+	else if((href_list["adj_threshold"]) && (!src.locked || issilicon(usr)))
 		var/adjust_num = text2num(href_list["adj_threshold"])
 		src.heal_threshold += adjust_num
 		if(src.heal_threshold < 5)
@@ -158,7 +158,7 @@
 		if(src.heal_threshold > 75)
 			src.heal_threshold = 75
 
-	else if((href_list["adj_inject"]) && (!src.locked))
+	else if((href_list["adj_inject"]) && (!src.locked || issilicon(usr)))
 		var/adjust_num = text2num(href_list["adj_inject"])
 		src.injection_amount += adjust_num
 		if(src.injection_amount < 5)
@@ -166,7 +166,7 @@
 		if(src.injection_amount > 15)
 			src.injection_amount = 15
 
-	else if((href_list["use_beaker"]) && (!src.locked))
+	else if((href_list["use_beaker"]) && (!src.locked || issilicon(usr)))
 		src.use_beaker = !src.use_beaker
 	else if((href_list["toggle_inject"]) && (!src.locked))
 		src.always_inject = !src.always_inject
@@ -175,7 +175,7 @@
 		src.reagent_glass.loc = get_turf(src)
 		src.reagent_glass = null
 
-	else if ((href_list["togglevoice"]) && (!src.locked))
+	else if ((href_list["togglevoice"]) && (!src.locked || issilicon(usr)))
 		src.shut_up = !src.shut_up
 
 	src.updateUsrDialog()
@@ -530,26 +530,8 @@
 
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if((istype(W, /obj/item/device/healthanalyzer)) && (!src.build_step))
-		src.build_step++
-		user << "You add the health sensor to [src]!"
-		src.name = "First aid/robot arm/health analyzer assembly"
-		src.overlays += image('aibots.dmi', "na_scanner")
-		del(W)
-
-	else if((isprox(W)) && (src.build_step == 1))
-		src.build_step++
-		user << "You complete the Medibot! Beep boop."
-		var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot
-		S.skin = src.skin
-		S.loc = get_turf(src)
-		S.name = src.created_name
-		del(W)
-		del(src)
-
-	else if(istype(W, /obj/item/weapon/pen))
-		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = copytext(sanitize(t), 1, MAX_NAME_LEN)
+	if(istype(W, /obj/item/weapon/pen))
+		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

@@ -149,10 +149,7 @@
 
 
 /obj/machinery/bot/attack_ai(mob/user as mob)
-	if (src.on)
-		turn_off()
-	else
-		turn_on()
+	src.attack_hand(user)
 
 /******************************************************************/
 // Navigation procs

@@ -25,13 +25,6 @@
 
 
 	proc/new_player_panel_proc()
-		//no db for now
-		/*var/user = sqlfdbklogin
-		var/pass = sqlfdbkpass
-		var/db = sqlfdbkdb
-		var/address = sqladdress
-		var/port = sqlport*/
-
 		var/output = "<B>New Player Options</B>"
 		output +="<hr>"
 		output += "<br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><br><br>"
@@ -49,9 +42,8 @@
 		output += "<a href='byond://?src=\ref[src];observe=1'>Observe</A><br><br>"
 		output += "<a href='byond://?src=\ref[src];pregame_music=1'>Lobby Music</A>"
 
-		/*if(!IsGuestKey(src.key))
-			var/DBConnection/dbcon = new()
-			dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+		if(!IsGuestKey(src.key))
+			establish_db_connection()
 
 			if(dbcon.IsConnected())
 				var/isadmin = 0
@@ -68,8 +60,6 @@
 					output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
 				else
 					output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
-			dbcon.Disconnect()*/
-
 		src << browse(output,"window=playersetup;size=250x258;can_close=0")
 		return
 
@@ -219,18 +209,7 @@
 			F["pregame_music"] << preferences.pregame_music
 
 		if(href_list["privacy_poll"])
-			usr << "\red DB usage has been disabled and that option should not have been available."
-			return
-
-			var/user = sqlfdbklogin
-			var/pass = sqlfdbkpass
-			var/db = sqlfdbkdb
-			var/address = sqladdress
-			var/port = sqlport
-
-			var/DBConnection/dbcon = new()
-
-			dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+			establish_db_connection()
 			if(!dbcon.IsConnected())
 				return
 			var/voted = 0
@@ -266,8 +245,6 @@
 				query_insert.Execute()
 				usr << "<b>Thank you for your vote!</b>"
 				usr << browse(null,"window=privacypoll")
-
-			dbcon.Disconnect()
 
 		if(!ready && href_list["preference"])
 			preferences.process_link(src, href_list)

@@ -1,4 +1,5 @@
-## When you commit an edit to this, ask a developer to update it on the server
+## Server name: This appears at the top of the screen in-game. In this case it will read "tgstation: station_name" where station_name is the randomly generated name of the station for the round. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice
+# SERVERNAME tgstation
 
 ## Alert levels
 ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
@@ -8,8 +9,11 @@ ALERT_RED_UPTO There is an immediate serious threat to the station. Security may
 ALERT_RED_DOWNTO The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
 ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
 
-## Add a # infront of this if you want to use the SQL based admin system, the legacy system uses admins.txt
+## Add a # infront of this if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
 ADMIN_LEGACY_SYSTEM
+
+## Add a # infront of this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
+BAN_LEGACY_SYSTEM
 
 ## log OOC channel
 LOG_OOC
@@ -85,9 +89,8 @@ TRAITOR_SCALING
 ## If security is prohibited from being most antagonists
 #PROTECT_ROLES_FROM_ANTAGONIST
 
-## If the TG auto-tensioner is active by default.  It creates more traitors/other antagonists if it consideers the round slowing down.
-## On BS12 we use Traitor-among-us. 
-#TENSIONER_ACTIVE
+## Comment this out to stop admins being able to choose their personal ooccolor
+ALLOW_ADMIN_OOCCOLOR
 
 ## If metadata is supported
 # ALLOW_METADATA
@@ -174,6 +177,12 @@ SOCKET_TALK 0
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
+
+## How long the delay is before the Away Mission gate opens. Default is half an hour.
+GATEWAY_DELAY 18000
+
+## Remove the # to give assistants maint access.
+#ASSISTANT_MAINT
 
 ## Uncomment to restrict non-admins from using humanoid alien races
 USEALIENWHITELIST

@@ -260,7 +260,7 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/proc/interact(mob/user)
+/obj/machinery/power/am_control_unit/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
 		if(!istype(user, /mob/living/silicon/ai))
 			user.unset_machine()

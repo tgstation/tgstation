@@ -18,6 +18,7 @@
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/sql_enabled = 1					// for sql switching
+	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/allow_vote_mode = 0				// allow votes to change mode
 	var/allow_admin_jump = 1			// allows admin jumping
@@ -102,7 +103,11 @@
 	var/metroid_delay = 0
 	var/animal_delay = 0
 
-	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system.
+	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
+	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
+
+	var/assistant_maint = 0 //Do assistants get maint access?
+	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -152,6 +157,9 @@
 				if ("admin_legacy_system")
 					config.admin_legacy_system = 1
 
+				if ("ban_legacy_system")
+					config.ban_legacy_system = 1
+
 				if ("log_ooc")
 					config.log_ooc = 1
 
@@ -193,6 +201,9 @@
 
 				if ("log_hrefs")
 					config.log_hrefs = 1
+
+				if("allow_admin_ooccolor")
+					config.allow_admin_ooccolor = 1
 
 				if ("allow_vote_restart")
 					config.allow_vote_restart = 1
@@ -353,6 +364,12 @@
 				if("alien_player_ratio")
 					limitalienplayers = 1
 					alien_to_human_ratio = text2num(value)
+
+				if("assistant_maint")
+					config.assistant_maint = 1
+
+				if("gateway_delay")
+					config.gateway_delay = text2num(value)
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

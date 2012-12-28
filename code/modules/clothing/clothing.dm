@@ -78,6 +78,7 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/shoes.dmi'
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
+	var/chained = 0
 
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
@@ -94,6 +95,7 @@ BLIND     // can't see anything
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
+	var/blood_overlay_type = "suit"
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
@@ -102,7 +104,7 @@ BLIND     // can't see anything
 	name = "Space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | STOPSPRESSUREDMAGE
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
@@ -118,7 +120,7 @@ BLIND     // can't see anything
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 3

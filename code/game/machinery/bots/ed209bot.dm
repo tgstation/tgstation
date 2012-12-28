@@ -124,7 +124,7 @@ Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 
 "<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
 
-	if(!src.locked)
+	if(!src.locked || issilicon(user))
 		if(!lasercolor)
 			dat += text({"<BR>
 Check for Weapon Authorization: []<BR>
@@ -889,7 +889,7 @@ Auto Patrol: []"},
 	..()
 
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
+		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
 		if(!t)	return
 		if(!in_range(src, usr) && src.loc != usr)	return
 		created_name = t

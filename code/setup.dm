@@ -37,6 +37,8 @@
 #define BODYTEMP_AUTORECOVERY_MINIMUM 10 //Minimum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 50.
 #define BODYTEMP_COLD_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
 #define BODYTEMP_HEAT_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
+#define BODYTEMP_COOLING_MAX 30 //The maximum number of degrees that your body can cool in 1 tick, when in a cold area.
+#define BODYTEMP_HEATING_MAX 30 //The maximum number of degrees that your body can heat up in 1 tick, when in a hot area.
 
 #define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
@@ -55,8 +57,9 @@
 #define SHOE_MAX_HEAT_PROTECITON_TEMPERATURE 1500		//For gloves
 
 
-#define PRESSURE_DAMAGE_COEFFICIENT 5 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
-#define MAX_PRESSURE_DAMAGE 7 //This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
+#define PRESSURE_DAMAGE_COEFFICIENT 4 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
+#define MAX_HIGH_PRESSURE_DAMAGE 4	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
+#define LOW_PRESSURE_DAMAGE 2 	//The amounb of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
 #define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
 #define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
@@ -196,11 +199,12 @@ var/MAX_EXPLOSION_RANGE = 14
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
-#define PLASMAGUARD 8192		//Does not get contaminated by plasma.
+#define ONESIZEFITSALL 8192
+#define PLASMAGUARD 16384			//Does not get contaminated by plasma.
 
-#define	NOREACT		16384 		//Reagents dont' react inside this container.
+#define	NOREACT		16384 			//Reagents dont' react inside this container.
 
-#define BLOCKHAIR	32768		// temporarily removes the user's hair icon
+#define BLOCKHAIR	32768			// temporarily removes the user's hair icon
 
 //flags for pass_flags
 #define PASSTABLE	1
@@ -418,11 +422,12 @@ var/MAX_EXPLOSION_RANGE = 14
 #define GAS_N2O	(1 << 4)
 
 
-var/list/accessable_z_levels = list("3" = 30, "4" = 70)
+var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" = 60)
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
 //(Exceptions: extended, sandbox and nuke) -Errorage
-//Was list("1" = 10, "3" = 15, "4" = 60, "5" = 15); changed it to list("3" = 30, "4" = 70).
+//Was list("3" = 30, "4" = 70).
 //Spacing should be a reliable method of getting rid of a body -- Urist.
+//Go away Urist, I'm restoring this to the longer list. ~Errorage
 
 #define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
 
@@ -597,6 +602,7 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define HOSTILE_STANCE_ATTACK 3
 #define HOSTILE_STANCE_ATTACKING 4
 #define HOSTILE_STANCE_TIRED 5
-
 #define LEFT 1
 #define RIGHT 2
+
+#define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.

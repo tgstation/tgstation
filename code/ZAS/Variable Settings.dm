@@ -281,7 +281,7 @@ pl_control
 				var/txt = vars["[V]_RANDOM"]
 				if(findtextEx(txt,"PROB"))
 					txt = text2list(txt,"/")
-					txt[1] = dd_replacetext(txt[1],"PROB","")
+					txt[1] = replacetext(txt[1],"PROB","")
 					var/p = text2num(txt[1])
 					var/r = txt[2]
 					if(prob(p))
@@ -289,7 +289,7 @@ pl_control
 					else
 						newvalue = vars[V]
 				else if(findtextEx(txt,"PICK"))
-					txt = dd_replacetext(txt,"PICK","")
+					txt = replacetext(txt,"PICK","")
 					txt = text2list(txt,",")
 					newvalue = pick(txt)
 				else

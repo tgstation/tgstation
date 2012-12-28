@@ -5,6 +5,9 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act,1,length(act))
+
 	switch(act)
 		if ("salute")
 			if (!src.buckled)
@@ -143,6 +146,7 @@
 			else
 				message = "<B>[src]</B> looks."
 			m_type = 1
+
 		if("beep")
 			var/M = null
 			if(param)
@@ -157,8 +161,8 @@
 				message = "<B>[src]</B> beeps at [param]."
 			else
 				message = "<B>[src]</B> beeps."
-			playsound(src.loc, 'twobeep.ogg', 50, 0)
-			m_type = 2
+			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
+			m_type = 1
 
 		if("ping")
 			var/M = null
@@ -174,8 +178,8 @@
 				message = "<B>[src]</B> pings at [param]."
 			else
 				message = "<B>[src]</B> pings."
-			playsound(src.loc, 'ping.ogg', 50, 0)
-			m_type = 2
+			playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+			m_type = 1
 
 		if("buzz")
 			var/M = null
@@ -191,8 +195,8 @@
 				message = "<B>[src]</B> buzzes at [param]."
 			else
 				message = "<B>[src]</B> buzzes."
-			playsound(src.loc, 'buzz-sigh.ogg', 50, 0)
-			m_type = 2
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			m_type = 1
 
 		if("law")
 			if (istype(module,/obj/item/weapon/robot_module/security))

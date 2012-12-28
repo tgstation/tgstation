@@ -7,7 +7,7 @@
 
 	var/list/Lines = list()
 
-	if(holder && holder.level >= 0)		//Everything above admin-observers get this.
+	if(holder)
 		for(var/client/C in clients)
 			var/entry = "\t[C.key]"
 			if(C.holder && C.holder.fakekey)

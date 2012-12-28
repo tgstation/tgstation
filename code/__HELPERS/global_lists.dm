@@ -20,7 +20,6 @@ var/global/list/landmarks_list = list()				//list of all landmarks created
 //////////////////////////
 /////Initial Building/////
 //////////////////////////
-//Realistically, these should never be run, but ideally, they should only be run once at round-start
 
 /proc/make_datum_references_lists()
 	var/list/paths

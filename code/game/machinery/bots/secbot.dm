@@ -102,7 +102,7 @@
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/secbot/proc/interact(mob/user as mob)
+/obj/machinery/bot/secbot/interact(mob/user as mob)
 	var/dat
 
 	dat += text({"
@@ -113,7 +113,7 @@ Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 
 "<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
 
-	if(!src.locked)
+	if(!src.locked || issilicon(user))
 		dat += text({"<BR>
 Check for Weapon Authorization: []<BR>
 Check Security Records: []<BR>
@@ -752,7 +752,7 @@ Auto Patrol: []"},
 		del(src)
 
 	else if(istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
+		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
 		if(!t)
 			return
 		if(!in_range(src, usr) && src.loc != usr)

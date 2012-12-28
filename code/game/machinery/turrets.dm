@@ -224,7 +224,7 @@
 				A = new /obj/item/projectile/beam/lastertag/blue( loc )
 			if(6)
 				A = new /obj/item/projectile/beam/lastertag/red( loc )
-		A.original = target.loc
+		A.original = target
 		use_power(500)
 	else
 		A = new /obj/item/projectile/energy/electrode( loc )

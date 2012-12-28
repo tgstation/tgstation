@@ -46,7 +46,7 @@
 	proc/holder_movement()							//Called when the holder is moved
 		return
 
-	proc/interact(mob/user as mob)					//Called when attack_self is called
+	interact(mob/user as mob)					//Called when attack_self is called
 		return
 
 

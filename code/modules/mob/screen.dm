@@ -644,6 +644,7 @@
 						for(var/mob/O in viewers(CM))
 							O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", CM), 1)
 						CM << "\green You successfully break your handcuffs."
+						CM.say(pick("RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						del(CM.handcuffed)
 						CM.handcuffed = null
 						CM.update_inv_handcuffed()
@@ -681,6 +682,7 @@
 						for(var/mob/O in viewers(CM))
 							O.show_message(text("\red <B>[] manages to break the legcuffs!</B>", CM), 1)
 						CM << "\green You successfully break your legcuffs."
+						CM.say(pick("RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						del(CM.legcuffed)
 						CM.legcuffed = null
 						CM.update_inv_legcuffed()

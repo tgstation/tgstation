@@ -129,6 +129,8 @@ proc/tg_list2text(list/list, glue=",")
 
 		if(last_i <= text_len)
 			. += copytext(text, last_i, 0)
+	else
+		. += text
 	return .
 
 //Converts a text string into a list by splitting the string at each seperator found in text (discarding the seperator)
@@ -141,7 +143,7 @@ proc/tg_list2text(list/list, glue=",")
 	var/text_len = length(text)					//length of the input text
 	var/seperator_len = length(seperator)		//length of the seperator text
 
-	if(text_len > seperator_len)
+	if(text_len >= seperator_len)
 		var/i
 		var/last_i = 1
 
@@ -153,6 +155,8 @@ proc/tg_list2text(list/list, glue=",")
 
 		if(last_i <= text_len)
 			. += copytext(text, last_i, 0)
+	else
+		. += text
 	return .
 
 //Splits the text of a file at seperator and returns them in a list.
@@ -208,14 +212,45 @@ proc/tg_list2text(list/list, glue=",")
 /proc/angle2dir(var/degree)
 	degree = ((degree+22.5)%365)
 	if(degree < 45)		return NORTH
-	if(degree < 90)		return NORTH|EAST
+	if(degree < 90)		return NORTHEAST
 	if(degree < 135)	return EAST
-	if(degree < 180)	return SOUTH|EAST
+	if(degree < 180)	return SOUTHEAST
 	if(degree < 225)	return SOUTH
-	if(degree < 270)	return SOUTH|WEST
+	if(degree < 270)	return SOUTHWEST
 	if(degree < 315)	return WEST
 	return NORTH|WEST
+
+//returns the north-zero clockwise angle in degrees, given a direction
+
+/proc/dir2angle(var/D)
+	switch(D)
+		if(NORTH)		return 0
+		if(SOUTH)		return 180
+		if(EAST)		return 90
+		if(WEST)		return 270
+		if(NORTHEAST)	return 45
+		if(SOUTHEAST)	return 135
+		if(NORTHWEST)	return 315
+		if(SOUTHWEST)	return 225
+		else			return null
 
 //Returns the angle in english
 /proc/angle2text(var/degree)
 	return dir2text(angle2dir(degree))
+
+//Converts a rights bitfield into a string
+/proc/rights2text(rights)
+	if(rights & R_BUILDMODE)	. += "+BUILDMODE"
+	if(rights & R_ADMIN)		. += "+ADMIN"
+	if(rights & R_BAN)			. += "+BAN"
+	if(rights & R_FUN)			. += "+FUN"
+	if(rights & R_SERVER)		. += "+SERVER"
+	if(rights & R_DEBUG)		. += "+DEBUG"
+	if(rights & R_POSSESS)		. += "+POSSESS"
+	if(rights & R_PERMISSIONS)	. += "+PERMISSIONS"
+	if(rights & R_STEALTH)		. += "+STEALTH"
+	if(rights & R_REJUVINATE)	. += "+REJUVINATE"
+	if(rights & R_VAREDIT)		. += "+VAREDIT"
+	if(rights & R_SOUNDS)		. += "+SOUND"
+	if(rights & R_SPAWN)		. += "+SPAWN"
+	return .

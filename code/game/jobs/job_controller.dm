@@ -344,6 +344,9 @@ var/global/datum/controller/occupations/job_master
 
 		H << "<B>You are the [rank].</B>"
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+		if(job.req_admin_notify)
+			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		spawnId(H,rank)
 
 		if(H.mind.assigned_role == rank && H.mind.role_alt_title)
 			spawnId(H, rank, H.mind.role_alt_title)

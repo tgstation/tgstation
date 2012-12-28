@@ -47,7 +47,7 @@
 // Called when a chunk has changed. I.E: A wall was deleted.
 
 /datum/camerachunk/proc/visibilityChanged(turf/loc)
-	if(!(loc in visibleTurfs))
+	if(!visibleTurfs[loc])
 		return
 	hasChanged()
 
@@ -86,7 +86,7 @@
 			continue
 
 		for(var/turf/t in c.can_see())
-			newVisibleTurfs += t
+			newVisibleTurfs[t] = t
 
 	// Removes turf that isn't in turfs.
 	newVisibleTurfs &= turfs
@@ -110,7 +110,7 @@
 
 	for(var/turf in visRemoved)
 		var/turf/t = turf
-		if(t in obscuredTurfs)
+		if(obscuredTurfs[t])
 			if(!t.obscured)
 				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
 
@@ -141,7 +141,7 @@
 
 	for(var/turf/t in range(10, locate(x + 8, y + 8, z)))
 		if(t.x >= x && t.y >= y && t.x < x + 16 && t.y < y + 16)
-			turfs += t
+			turfs[t] = t
 
 	for(var/camera in cameras)
 		var/obj/machinery/camera/c = camera
@@ -152,7 +152,7 @@
 			continue
 
 		for(var/turf/t in c.can_see())
-			visibleTurfs += t
+			visibleTurfs[t] = t
 
 	// Removes turf that isn't in turfs.
 	visibleTurfs &= turfs

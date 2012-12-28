@@ -68,21 +68,20 @@ var/const/max_assembly_amount = 300
 			F.loc = src.loc
 			return
 
-	proc
-		interact(mob/user)
-			/*if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-				if (!istype(user, /mob/living/silicon))
-					user.machine = null
-					user << browse(null, "window=fuelcomp")
-					return*/
-			var/t = "<B>Reactor Fuel Rod Compressor / Assembler</B><BR>"
-			t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-			t += "<A href='?src=\ref[src];activate=1'><b>Activate Fuel Synthesis</b></A><BR> (fuel assemblies require no more than [max_assembly_amount] rods).<br>"
-			t += "<hr>"
-			t += "- New fuel assembly constituents:- <br>"
-			for(var/reagent in new_assembly_quantities)
-				t += "	[reagent] rods: [new_assembly_quantities[reagent]] \[<A href='?src=\ref[src];reagent=1'>Modify</A>\]<br>"
-			t += "<hr>"
-			t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-			user << browse(t, "window=fuelcomp;size=500x800")
-			user.machine = src
+	interact(mob/user)
+		/*if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+			if (!istype(user, /mob/living/silicon))
+				user.machine = null
+				user << browse(null, "window=fuelcomp")
+				return*/
+		var/t = "<B>Reactor Fuel Rod Compressor / Assembler</B><BR>"
+		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+		t += "<A href='?src=\ref[src];activate=1'><b>Activate Fuel Synthesis</b></A><BR> (fuel assemblies require no more than [max_assembly_amount] rods).<br>"
+		t += "<hr>"
+		t += "- New fuel assembly constituents:- <br>"
+		for(var/reagent in new_assembly_quantities)
+			t += "	[reagent] rods: [new_assembly_quantities[reagent]] \[<A href='?src=\ref[src];reagent=1'>Modify</A>\]<br>"
+		t += "<hr>"
+		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+		user << browse(t, "window=fuelcomp;size=500x800")
+		user.machine = src

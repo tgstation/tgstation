@@ -33,7 +33,6 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/ammo_magazine/c38(), \
 		new /obj/item/device/taperecorder(), \
 		new /obj/item/device/assembly/igniter(), \
-		new /obj/item/device/infra_sensor(), \
 		new /obj/item/device/assembly/signaler(), \
 		new /obj/item/device/radio/headset(), \
 		new /obj/item/device/radio(), \
@@ -103,20 +102,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 			user << browse("<HTML><HEAD><TITLE>Autolathe Control Panel</TITLE></HEAD><BODY><TT>[dat]</TT></BODY></HTML>", "window=autolathe_regular")
 			onclose(user, "autolathe_regular")
 
-		interact(mob/user as mob)
-			if(..())
-				return
-			if (src.shocked)
-				src.shock(user,50)
-			if (src.opened)
-				wires_win(user,50)
-				return
-			if (src.disabled)
-				user << "\red You press the button, but nothing happens."
-				return
-			regular_win(user)
-			return
-
 		shock(mob/user, prb)
 			if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 				return 0
@@ -129,6 +114,20 @@ var/global/list/autolathe_recipes_hidden = list( \
 				return 1
 			else
 				return 0
+
+	interact(mob/user as mob)
+		if(..())
+			return
+		if (src.shocked)
+			src.shock(user,50)
+		if (src.opened)
+			wires_win(user,50)
+			return
+		if (src.disabled)
+			user << "\red You press the button, but nothing happens."
+			return
+		regular_win(user)
+		return
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if (stat)
