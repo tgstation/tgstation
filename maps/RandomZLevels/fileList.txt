@@ -8,4 +8,5 @@ maps/RandomZLevels/blackmarketpackers.dmm
 maps/RandomZLevels/stationCollision.dmm
 maps/RandomZLevels/spacebattle.dmm
 maps/RandomZLevels/beach.dmm
+maps/RandomZLevels/zresearchlabs.dmm
 #maps/RandomZLevels/Academy.dmm
