@@ -36,7 +36,7 @@
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
-	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
+	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
 	var/projectile_type = "/obj/item/projectile"
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
 		//Effects
@@ -80,7 +80,14 @@
 				forcedodge = 1
 			else
 				var/distance = get_dist(original,loc)
-				def_zone = ran_zone(def_zone, 100-(5*distance)) //Lower accurancy/longer range tradeoff.
+				//Lower accurancy/longer range tradeoff. Distance matters a lot here, so at
+				// close distance, actually RAISE the chance to hit.
+				def_zone = get_zone_with_miss_chance(def_zone, M, -30 + 8*distance)
+
+				if(!def_zone)
+					visible_message("\The [src] misses [M] narrowly.")
+					del(src)
+					return
 				if(silenced)
 					M << "\red You've been shot in the [parse_zone(def_zone)] by the [src.name]!"
 				else

@@ -18,6 +18,7 @@
 	unacidable = 1 //and no deleting hoomans inside
 	layer = MOB_LAYER //icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
+	var/initial_icon = "" //Mech type for resetting icon.
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -666,6 +667,7 @@
 
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
+
 	if(istype(W, /obj/item/device/mmi))
 		if(mmi_move_inside(W,user))
 			user << "[src]-MMI interface initialized successfuly"
@@ -1011,7 +1013,7 @@
 		src.add_fingerprint(H)
 		src.forceMove(src.loc)
 		src.log_append_to_last("[H] moved in as pilot.")
-		src.icon_state = initial(icon_state)
+		src.icon_state = src.reset_icon()
 		dir = dir_in
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!hasInternalDamage())
@@ -1070,7 +1072,7 @@
 		src.verbs -= /obj/mecha/verb/eject
 		src.Entered(mmi_as_oc)
 		src.Move(src.loc)
-		src.icon_state = initial(icon_state)
+		src.icon_state = src.reset_icon()
 		dir = dir_in
 		src.log_message("[mmi_as_oc] moved in as pilot.")
 		if(!hasInternalDamage())
@@ -1159,7 +1161,7 @@
 			src.occupant.canmove = 0
 			src.verbs += /obj/mecha/verb/eject
 		src.occupant = null
-		src.icon_state = initial(icon_state)+"-open"
+		src.icon_state = src.reset_icon()+"-open"
 		src.dir = dir_in
 	return
 
@@ -1669,6 +1671,9 @@
 		return 1
 	return 0
 
+/obj/mecha/proc/reset_icon()
+	icon_state = initial_icon
+	return icon_state
 
 //////////////////////////////////////////
 ////////  Mecha global iterators  ////////

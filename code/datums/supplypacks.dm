@@ -16,6 +16,7 @@
 	var/access = null
 	var/hidden = 0
 	var/contraband = 0
+	var/group
 
 /datum/supply_packs/New()
 	manifest += "<ul>"
@@ -100,7 +101,9 @@
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/beer)
+					/obj/item/weapon/reagent_containers/food/drinks/beer,
+					/obj/item/weapon/cigpacket/dromedaryco,
+					/obj/item/weapon/lipstick/random)
 	cost = 20
 	containertype = /obj/structure/closet/crate
 	containername = "Party equipment"
@@ -604,14 +607,85 @@
 	manifest += "Contains any [num_contained] of:"
 	..()
 
+/datum/supply_packs/artscrafts
+	name = "Arts and Crafts supplies"
+	contains = list("/obj/item/weapon/storage/crayonbox",
+	"/obj/item/weapon/camera_test",
+	"/obj/item/weapon/camera_film",
+	"/obj/item/weapon/camera_film",
+	"/obj/item/weapon/storage/photo_album",
+	"/obj/item/weapon/packageWrap",
+	"/obj/item/weapon/reagent_containers/glass/paint/red",
+	"/obj/item/weapon/reagent_containers/glass/paint/green",
+	"/obj/item/weapon/reagent_containers/glass/paint/blue",
+	"/obj/item/weapon/reagent_containers/glass/paint/yellow",
+	"/obj/item/weapon/reagent_containers/glass/paint/violet",
+	"/obj/item/weapon/reagent_containers/glass/paint/black",
+	"/obj/item/weapon/reagent_containers/glass/paint/white",
+	"/obj/item/weapon/reagent_containers/glass/paint/remover",
+	"/obj/item/weapon/wrapping_paper",
+	"/obj/item/weapon/wrapping_paper",
+	"/obj/item/weapon/wrapping_paper",
+	"/obj/item/weapon/contraband/poster")
+	cost = 5
+	containertype = "/obj/structure/closet/crate"
+	containername = "Arts and Crafts crate"
+
 
 /datum/supply_packs/randomised/contraband
 	num_contained = 5
-	contains = list(/obj/item/weapon/contraband/poster,
-					/obj/item/weapon/cigpacket/dromedaryco,
-					/obj/item/weapon/lipstick/random)
+	contains = list("/obj/item/seeds/bloodtomatoseed",
+	"/obj/item/weapon/storage/pill_bottle/zoom",
+	"/obj/item/weapon/storage/pill_bottle/happy",
+	"/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe")
 	name = "Contraband crate"
 	cost = 30
 	containertype = /obj/structure/closet/crate
-	containername = "Contraband crate"
+	containername = "Unlabeled crate"
 	contraband = 1
+
+/datum/supply_packs/boxes
+	name = "Empty Box supplies"
+	contains = list("/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",)
+	cost = 5
+	containertype = "/obj/structure/closet/crate"
+	containername = "Empty Box crate"
+
+/datum/supply_packs/surgery
+	name = "Surgery crate"
+	contains = list("/obj/item/weapon/cautery",
+					"/obj/item/weapon/surgicaldrill",
+					"/obj/item/clothing/mask/breath/medical",
+					"/obj/item/weapon/tank/anesthetic",
+					"/obj/item/weapon/FixOVein",
+					"/obj/item/weapon/hemostat",
+					"/obj/item/weapon/scalpel",
+					"/obj/item/weapon/surgical_tool/bonegel",
+					"/obj/item/weapon/retractor",
+					"/obj/item/weapon/surgical_tool/bonesetter",
+					"/obj/item/weapon/circular_saw")
+	cost = 25
+	containertype = "/obj/structure/closet/crate/secure"
+	containername = "Surgery crate"
+	access = access_medical
+	group = "Medical / Science"
+
+/datum/supply_packs/sterile
+	name = "Sterile equipment crate"
+	contains = list("/obj/item/clothing/under/rank/medical/green",
+					"/obj/item/clothing/under/rank/medical/green",
+					"/obj/item/weapon/storage/stma_kit",
+					"/obj/item/weapon/storage/lglo_kit")
+	cost = 10
+	containertype = "/obj/structure/closet/crate"
+	containername = "Sterile equipment crate"
+	group = "Medical / Science"

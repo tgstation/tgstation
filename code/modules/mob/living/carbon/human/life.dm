@@ -21,6 +21,11 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+var/const/BLOOD_VOLUME_SAFE = 501
+var/const/BLOOD_VOLUME_OKAY = 336
+var/const/BLOOD_VOLUME_BAD = 224
+var/const/BLOOD_VOLUME_SURVIVE = 122
+
 /mob/living/carbon/human
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
@@ -153,11 +158,11 @@
 
 
 			switch(blood_volume)
-				if(501 to 10000)
+				if(BLOOD_VOLUME_SAFE to 10000)
 					if(pale)
 						pale = 0
 						update_body()
-				if(336 to 500)
+				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 					if(!pale)
 						pale = 1
 						update_body()
@@ -169,7 +174,7 @@
 					if(oxyloss < 20)
 						// hint that they're getting close to suffocation
 						oxyloss += 3
-				if(224 to 335)
+				if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 					if(!pale)
 						pale = 1
 						update_body()
@@ -181,19 +186,25 @@
 						Paralyse(rand(1,3))
 						var/word = pick("dizzy","woosey","faint")
 						src << "\red You feel extremely [word]"
-				if(122 to 244)
+				if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 					oxyloss += 5
 					toxloss += 5
 					if(prob(15))
 						var/word = pick("dizzy","woosey","faint")
 						src << "\red You feel extremely [word]"
-				if(0 to 122)
+				if(0 to BLOOD_VOLUME_SURVIVE)
 					// There currently is a strange bug here. If the mob is not below -100 health
 					// when death() is called, apparently they will be just fine, and this way it'll
 					// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
 					toxloss += 300 // just to be safe!
 					death()
 
+			// Without enough blood you slowly go hungry.
+			if(blood_volume < BLOOD_VOLUME_SAFE)
+				if(nutrition >= 300)
+					nutrition -= 10
+				else if(nutrition >= 200)
+					nutrition -= 3
 
 			var/blood_max = 0
 			for(var/datum/organ/external/temp in organs)
@@ -814,6 +825,10 @@
 				else
 					pressure_alert = -1
 
+		else if(pressure <= 50)
+			var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+			if(adjusted_pressure < 50)
+				adjustBruteLoss( (50 - adjusted_pressure) / 50 )
 		return
 
 	/*

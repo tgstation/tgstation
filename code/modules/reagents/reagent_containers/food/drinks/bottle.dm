@@ -237,6 +237,14 @@
 		..()
 		reagents.add_reagent("wine", 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
+	name = "Jailbreaker Verte"
+	desc = "Twenty-fourth century Green Fairy, one sip of this and you just know you're gonna have a good time."
+	icon_state = "absinthebottle"
+	New()
+		..()
+		reagents.add_reagent("absinthe", 100)
+
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice

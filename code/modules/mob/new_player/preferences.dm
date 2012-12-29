@@ -12,6 +12,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI candidate" = 1, // -- TLE                       // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
+	"space ninja" = "true",							 // 10
 )
 
 var/global/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "Mankini", "Love-Hearts", "Black2", "Grey2", "Stripey", "Kinky", "None") //Curse whoever made male/female underwear diffrent colours
@@ -28,6 +29,7 @@ var/const/BE_ALIEN     =(1<<6)
 var/const/BE_PAI       =(1<<7)
 var/const/BE_CULTIST   =(1<<8)
 var/const/BE_MONKEY    =(1<<9)
+var/const/BE_SPACENINJA=(1<<10)
 
 
 var/const/MAX_SAVE_SLOTS = 10
@@ -236,8 +238,8 @@ datum/preferences
 		dat += "<a href=\"byond://?src=\ref[user];preference=slotname;task=input\">Rename slot</a> - "
 		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
 
-		//column 1
-		dat += "</center><hr><table><tr><td width='310px'>"
+		//COLUMN 1
+		dat += "</center><hr><table><tr><td width='285px'>"
 
 		dat += "<b>Name:</b> "
 		dat += "<a href=\"byond://?src=\ref[user];preference=name;task=input\"><b>[real_name]</b></a> "
@@ -263,41 +265,68 @@ datum/preferences
 			dat += "[(sound_adminhelp)?"On":"Off"] <a href='byond://?src=\ref[user];preference=hear_adminhelps'>toggle</a><br>"
 
 			if(config.allow_admin_ooccolor && check_rights(R_FUN,0))
-				dat += "<br><b>OOC</b><br>"
-				dat += "<a href='byond://?src=\ref[user];preference=ooccolor;task=input'>Change color</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font><br>"
+				dat += "<br><a href='byond://?src=\ref[user];preference=ooccolor;task=input'><b>OOC color</b></a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font><br>"
 
-		dat += "<br><b>Occupation Choices</b><br>"
-		dat += "\t<a href=\"byond://?src=\ref[user];preference=job;task=menu\"><b>Set Preferences</b></a><br><br>"
+		dat += "\t<a href=\"byond://?src=\ref[user];preference=job;task=menu\"><b>Occupation Preferences</b></a><br>"
 
 		if(jobban_isbanned(user, "Records"))
 			dat += "<b>You are banned from using character records.</b><br>"
 		else
-			dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br><br>"
+			dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br>"
 
-		dat += "<b>Flavor Text</b><br>"
-		dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'>Change</a><br>"
+		dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)][used_skillpoints > 0 ? " [used_skillpoints]" : "0"])</i></a><br>"
+
+		dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
 		if(lentext(flavor_text) <= 40)
-			dat += "[flavor_text]"
+			if(!lentext(flavor_text))
+				dat += "\[...\]"
+			else
+				dat += "[flavor_text]"
 		else
 			dat += "[copytext(flavor_text, 1, 37)]...<br>"
 		dat += "<br>"
 
-		dat += "<b>Skill Choices</b><br>"
-		dat += "\t<i>[GetSkillClass(used_skillpoints)]</i> ([used_skillpoints])<br>"
-		dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b></a><br><br>"
-
-		//column 2
-		dat += "</td><td width='310px'>"	//height='300px'
-
-		dat += "<table><tr><td width=100><b>Body</b> "
-		dat += "(<a href=\"byond://?src=\ref[user];preference=all;task=random\">&reg;</A>)"
+		//antag
 		dat += "<br>"
+		if(jobban_isbanned(user, "Syndicate"))
+			dat += "<b>You are banned from antagonist roles.</b>"
+			src.be_special = 0
+		else
+			var/n = 0
+			for (var/i in special_roles)
+				if(special_roles[i]) //if mode is available on the server
+					if(jobban_isbanned(user, i))
+						dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+					else if(i == "pai candidate")
+						if(jobban_isbanned(user, "pAI"))
+							dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+					else
+						dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preference=be_special;num=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
+				n++
+		dat += "</td>"
+
+		//COLUMN 2
+		dat += "<td>"
+		dat += "<table><tr>"
+
+		dat += "<td width='142px'>"
+		dat += "<b>Body</b> (<a href=\"byond://?src=\ref[user];preference=all;task=random\">&reg;</A>)<br>"
 		dat += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
-		dat += "Skin Tone: <a href='byond://?src=\ref[user];preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
+		dat += "Skin Tone: <a href='byond://?src=\ref[user];preference=s_tone;task=input'>[-s_tone + 35]/220</a><br>"
+		dat += "<a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust Skin</a><br>"
+		dat += "<a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust Limbs</a><br>"
+		dat += "</td>"
 
-		dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust Limbs</a><br>"
+		dat += "<td><b>Preview</b></br>"
+		dat += "<img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></br></td>"
+
+		dat += "</tr></table>"
+
+		//display limbs below
+		var/ind = 0
 		for(var/name in organ_data)
+			//world << "[ind] \ [organ_data.len]"
 			var/status = organ_data[name]
 			var/organ_name = null
 			switch(name)
@@ -319,11 +348,18 @@ datum/preferences
 					organ_name = "right hand"
 
 			if(status == "cyborg")
-				dat += "\tRobotical [organ_name] prothesis<br>"
-			if(status == "amputated")
-				dat += "\tAmputated [organ_name]<br>"
-		dat+="<br>"
-
+				++ind
+				if(ind > 1)
+					dat += ", "
+				dat += "\tMechanical [organ_name] prothesis"
+			else if(status == "amputated")
+				++ind
+				if(ind > 1)
+					dat += ", "
+				dat += "\tAmputated [organ_name]"
+		if(ind)
+			dat += "\[...\]"
+		dat += "<br><br>"
 
 		if(gender == MALE)
 			dat += "Underwear: <a href =\"byond://?src=\ref[user];preference=underwear;task=input\"><b>[underwear_m[underwear]]</b></a><br>"
@@ -331,8 +367,6 @@ datum/preferences
 			dat += "Underwear: <a href =\"byond://?src=\ref[user];preference=underwear;task=input\"><b>[underwear_f[underwear]]</b></a><br>"
 
 		dat += "Backpack Type:<br><a href =\"byond://?src=\ref[user];preference=bag;task=input\"><b>[backbaglist[backbag]]</b></a><br>"
-
-		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
 
 		dat += "<br><b>Hair</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preference=hair;task=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]\"><table style='display:inline;' bgcolor=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]\"><tr><td>__</td></tr></table></font><br>"
@@ -345,22 +379,7 @@ datum/preferences
 		dat += "<br><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preference=eyes;task=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
 
-		dat += "<br><br>"
-		if(jobban_isbanned(user, "Syndicate"))
-			dat += "<b>You are banned from antagonist roles.</b>"
-			src.be_special = 0
-		else
-			var/n = 0
-			for (var/i in special_roles)
-				if(special_roles[i]) //if mode is available on the server
-					if(jobban_isbanned(user, i))
-						dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
-					else if(i == "pai candidate")
-						if(jobban_isbanned(user, "pAI"))
-							dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
-					else
-						dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preference=be_special;num=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
-				n++
+		dat += "<br>"
 		dat += "</td></tr></table><center>"
 
 		dat += "<hr>"
@@ -1021,6 +1040,10 @@ datum/preferences
 								if(second_limb)
 									organ_data[second_limb] = "cyborg"
 
+					if("skin_style")
+						var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
+						if(!skin_style_name) return
+
 
 			else
 				switch(href_list["preference"])
@@ -1231,6 +1254,7 @@ datum/preferences
 			C.be_alien = be_special & BE_ALIEN
 			C.be_pai = be_special & BE_PAI
 			C.be_syndicate = be_special & BE_TRAITOR
+			C.be_spaceninja = be_special & BE_SPACENINJA
 			if(isnull(src.ghost_ears)) src.ghost_ears = 1 //There were problems where the default was null before someone saved their profile.
 			C.ghost_ears = src.ghost_ears
 			C.ghost_sight = src.ghost_sight

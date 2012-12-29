@@ -254,6 +254,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		client.be_pai = 1
 		src << "You will now be considered a viable candidate when a pAI device requests a new personality, effective until the end of this round."
 
+/mob/dead/observer/verb/toggle_spaceninja_candidate()
+	set name = "Toggle Be Space Ninja Candidate"
+	set category = "Ghost"
+	set desc = "Determines whether you will be a candidate for when a new space ninja spawns. (toggle)"
+	if(client.be_spaceninja)
+		client.be_spaceninja = 0
+		src << "You are now excluded from space ninja candidate lists until end of round."
+	else
+		client.be_spaceninja = 1
+		src << "You are now included in space ninja candidate lists until end of round."
+
 /mob/dead/observer/memory()
 	set hidden = 1
 	src << "\red You are dead! You have no mind to store memory!"

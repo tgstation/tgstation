@@ -259,6 +259,16 @@
 		reagents.add_reagent("sugar", 3)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/candy/donor
+	name = "Donor Candy"
+	desc = "A little treat for blood donors."
+	trash = /obj/item/trash/candy
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("sugar", 3)
+		bitesize = 5
+
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
 	desc = "It's a handful of candy corn. Can be stored in a detective's hat."

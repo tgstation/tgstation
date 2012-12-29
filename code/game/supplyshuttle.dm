@@ -322,6 +322,7 @@ var/list/mechtoys = list(
 			//manifest finalisation
 			slip.info += "</ul><br>"
 			slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
+			if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
 
 		while(0<mech_redeem)
 			if(!clear_turfs.len)	break

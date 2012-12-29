@@ -114,7 +114,7 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/alien/humanoid/proc/neurotoxin(mob/target as mob in oview())
 	set name = "Spit Neurotoxin (50)"
-	set desc = "Spits neurotoxin at someone, paralyzing them for a short time."
+	set desc = "Spits neurotoxin at someone, paralyzing them for a short time if they are not wearing protective gear."
 	set category = "Alien"
 
 	if(powerc(50))
@@ -137,12 +137,12 @@ Doesn't work on other aliens/AI.*/
 		if(!istype(T, /turf))
 			return
 		if (U == T)
-			usr.bullet_act(src, get_organ_target())
+			usr.bullet_act(new /obj/item/projectile/neurotoxin(usr.loc), get_organ_target())
 			return
 		if(!istype(U, /turf))
 			return
 
-		var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(usr.loc)
+		var/obj/item/projectile/neurotoxin/A = new /obj/item/projectile/neurotoxin(usr.loc)
 
 		A.current = U
 		A.yo = U.y - T.y

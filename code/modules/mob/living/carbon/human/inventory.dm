@@ -304,7 +304,7 @@
 /obj/effect/equip_e/human/process()
 	if (item)
 		item.add_fingerprint(source)
-	if (!item)
+	else
 		switch(place)
 			if("mask")
 				if (!( target.wear_mask ))
@@ -533,7 +533,7 @@ It can still be worn/put on as normal.
 			if (target.legcuffed)
 				strip_item = target.legcuffed
 		if("CPR")
-			if ((target.health >= -99.0 && target.health <= 0))
+			if ((target.health > config.health_threshold_dead && target.health < config.health_threshold_crit))
 				var/suff = min(target.getOxyLoss(), 7)
 				target.adjustOxyLoss(-suff)
 				target.updatehealth()

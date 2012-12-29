@@ -518,6 +518,7 @@
 	if ((!( L.stat ) && L.canmove && !( L.restrained() )))
 		var/resisting = 0
 		for(var/obj/O in L.requests)
+			L.requests.Remove(O)
 			del(O)
 			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
