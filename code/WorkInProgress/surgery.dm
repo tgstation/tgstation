@@ -122,7 +122,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/generic/clamp_bleeders
 	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/weapon/mousetrap)
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
 
 	min_duration = 40
 	max_duration = 60
@@ -558,7 +558,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/eye/mend_eyes
 	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/weapon/mousetrap)
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
 
 	min_duration = 80
 	max_duration = 100
@@ -651,7 +651,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/face/mend_vocal
 	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/weapon/mousetrap)
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
 
 	min_duration = 70
 	max_duration = 90

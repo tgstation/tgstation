@@ -21,9 +21,6 @@
 // Doesn't necessarily trigger an event, but might. Returns 1 if it did.
 /proc/event()
 	event = 1
-	if(!sent_ninja_to_station)
-		choose_space_ninja()
-		return
 
 	var/minutes_passed = world.time/600
 
@@ -91,7 +88,7 @@
 			mini_blob_event()
 		if("Space Ninja")
 			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
-			choose_space_ninja()
+			space_ninja_arrival()
 		if("Radiation")
 			high_radiation_event()
 		if("Virus")

@@ -824,11 +824,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					pressure_alert = -2
 				else
 					pressure_alert = -1
-
-		else if(pressure <= 50)
-			var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
-			if(adjusted_pressure < 50)
-				adjustBruteLoss( (50 - adjusted_pressure) / 50 )
 		return
 
 	/*

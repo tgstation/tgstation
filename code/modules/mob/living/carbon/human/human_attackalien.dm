@@ -42,7 +42,8 @@
 			updatehealth()
 
 		if("disarm")
-			if (prob(80))				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			if (prob(80))
+				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Weaken(rand(0.5,3))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))

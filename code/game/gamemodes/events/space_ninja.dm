@@ -93,34 +93,15 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 /var/global/toggle_space_ninja = 1//If ninjas can spawn or not.
 /var/global/sent_ninja_to_station = 0//If a ninja is already on the station.
 
-/proc/choose_space_ninja()
-	var/list/candidates = list()	//list of candidate keys
-	for(var/mob/dead/observer/G in player_list)
-		if(G.client && ((G.client.inactivity/10)/60) <= 5 && G.client.be_spaceninja)
-			if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-				candidates += G
-	if(!candidates.len)	return
-	candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
+var/ninja_selection_id = 1
+var/ninja_selection_active = 0
+var/ninja_confirmed_selection = 0
 
+/proc/space_ninja_arrival(var/assign_key = null, var/assign_mission = null)
 
-	//loop over all viable candidates, giving them a popup asking if they want to be space ninja
-	var/mob/dead/observer/accepted_ghost
-	while(candidates.len && !accepted_ghost)
-		//ask a different random candidate
-		var/mob/dead/observer/G = pick(candidates)
-		//give the popup a 30 second timeout in case the player is AFK
-		if(sd_Alert(G, "A space ninja is about to spawn. Would you like to play as the ninja?", "Space Ninja", list("Yes","No"), "Yes", 300, 1, "350x125") == "Yes")
-			accepted_ghost = G
-		else
-			candidates -= G
-
-	if(accepted_ghost)
-		//someone accepted
-		space_ninja_arrival(accepted_ghost)
-
-/proc/space_ninja_arrival(var/mob/dead/observer/G)
-	if(!G)
-		return choose_space_ninja()
+	if(ninja_selection_active)
+		usr << "\red Ninja selection already in progress. Please wait until it ends."
+		return
 
 	var/datum/game_mode/current_mode = ticker.mode
 	var/datum/mind/current_mind
@@ -161,25 +142,38 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 	//Here we pick a location and spawn the ninja.
 	var/list/spawn_list = list()
 	for(var/obj/effect/landmark/L in landmarks_list)
-		//todo:: add ninjaspawn landmarks to map
 		if(L.name == "ninjaspawn")
 			spawn_list.Add(L)
 
-	//The ninja will be created on the right spawn point or at late join.
-	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))
-	new_ninja.key = G.ckey
-	new_ninja.wear_suit:randomize_param()//Give them a random set of suit parameters.
-	new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
-	new_ninja.internals.icon_state = "internal1"
+	if(!spawn_list.len)
+		for(var/obj/effect/landmark/L in landmarks_list)
+			if(L.name == "carpspawn")
+				spawn_list.Add(L)
 
-		ninja_key = pick(candidates)
-
-
+	var/ninja_key = null
 	var/mob/candidate_mob
-	for(var/mob/M in player_list)
-		if((M.key == ninja_key || M.ckey == ninja_key) && M.client)
-			candidate_mob = M
-			break
+
+	if(assign_key)
+		ninja_key = assign_key
+	else
+
+		var/list/candidates = list()	//list of candidate keys
+		for(var/mob/dead/observer/G in player_list)
+			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.be_spaceninja)
+				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+					candidates += G
+		if(!candidates.len)	return
+		candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
+
+		candidate_mob = pick(candidates)
+		ninja_key = candidate_mob.ckey
+
+
+	if(!candidate_mob)
+		for(var/mob/M in player_list)
+			if((M.key == ninja_key || M.ckey == ninja_key) && M.client)
+				candidate_mob = M
+				break
 
 	if(!candidate_mob)
 		usr << "\red The randomly chosen mob was not found in the second check."
@@ -483,7 +477,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	space_ninja_arrival(input, mission)
 
-	message_admins("\blue [key] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]", 1)
+	message_admins("\blue [key_name_admin(key)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]")
 	log_admin("[key] used Spawn Space Ninja.")
 
 	return
