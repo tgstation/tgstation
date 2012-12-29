@@ -474,8 +474,8 @@ Alien plants should do something if theres a lot of poison
 		if(target == start)
 			return
 
-		var/obj/item/projectile/hivebotbullet/A = new /obj/item/projectile/hivebotbullet(user:loc)
-		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
+		var/obj/item/projectile/slimeglob/A = new /obj/item/projectile/slimeglob(user:loc)
+		playsound(user, 'sound/weapons/bite.ogg', 100, 1)
 
 		if(!A)	return
 
