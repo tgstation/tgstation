@@ -11,6 +11,7 @@
 	anchored = 1
 	density = 1
 	directwired = 1
+	use_power = 0
 
 	var/sun_angle = 0		// sun angle as set by sun datum
 
@@ -23,6 +24,14 @@
 		S.anchored = 1
 	S.loc = src
 	connect_to_network()
+
+/obj/machinery/power/tracker/disconnect_from_network()
+	..()
+	solars_list.Remove(src)
+
+/obj/machinery/power/tracker/connect_to_network()
+	..()
+	solars_list.Add(src)
 
 // called by datum/sun/calc_position() as sun's angle changes
 /obj/machinery/power/tracker/proc/set_angle(var/angle)
@@ -39,9 +48,10 @@
 	// currently, just update all controllers in world
 	// ***TODO: better communication system using network
 	if(powernet)
-		for(var/obj/machinery/power/solar_control/C in powernet.nodes)
-			if(get_dist(C, src) < SOLAR_MAX_DIST)
-				C.tracker_update(angle)
+		for(var/obj/machinery/power/solar_control/C in get_solars_powernet())
+			if(powernet.nodes[C])
+				if(get_dist(C, src) < SOLAR_MAX_DIST)
+					C.tracker_update(angle)
 
 
 /obj/machinery/power/tracker/attackby(var/obj/item/weapon/W, var/mob/user)
@@ -70,10 +80,6 @@
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
-
-// override power change to do nothing since we don't care about area power
-/obj/machinery/power/tracker/power_change()
-	return
 
 
 // Tracker Electronic

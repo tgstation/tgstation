@@ -976,7 +976,7 @@ ________________________________________________________________________________
 					flick("apc-spark", src)
 					A.emagged = 1
 					A.locked = 0
-					A.updateicon()
+					A.update_icon()
 			else
 				U << "\red This APC has run dry of power. You must find another source."
 

@@ -109,7 +109,7 @@
 		operating = 0
 		name = "[area.name] APC"
 		stat |= MAINT
-		src.updateicon()
+		src.update_icon()
 		spawn(5)
 			src.update()
 
@@ -137,7 +137,7 @@
 		src.area = A
 	else
 		src.area = get_area_name(areastring)
-	updateicon()
+	update_icon()
 
 	make_terminal()
 
@@ -173,7 +173,7 @@
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
-/obj/machinery/power/apc/proc/updateicon()
+/obj/machinery/power/apc/update_icon()
 	overlays.Cut()
 	if(opened)
 		var/basestate = "apc[ cell ? "2" : "1" ]"	// if opened, show cell if it's inserted
@@ -229,14 +229,14 @@
 					new /obj/item/weapon/module/power_control(loc)
 		else if (opened!=2) //cover isn't removed
 			opened = 0
-			updateicon()
+			update_icon()
 	else if (istype(W, /obj/item/weapon/crowbar) && !((stat & BROKEN) || malfhack) )
 		if(coverlocked && !(stat & MAINT))
 			user << "\red The cover is locked and cannot be opened."
 			return
 		else
 			opened = 1
-			updateicon()
+			update_icon()
 	else if	(istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
 		if(cell)
 			user << "There is a power cell already installed."
@@ -252,7 +252,7 @@
 				"\red [user.name] has inserted the power cell to [src.name]!",\
 				"You insert the power cell.")
 			chargecount = 0
-			updateicon()
+			update_icon()
 	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
 		if(opened)
 			if (cell)
@@ -272,13 +272,13 @@
 				else /* has_electronics==0 */
 					user << "\red There is nothing to secure."
 					return
-				updateicon()
+				update_icon()
 		else if(emagged)
 			user << "The interface is broken."
 		else
 			wiresexposed = !wiresexposed
 			user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
-			updateicon()
+			update_icon()
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)
@@ -293,7 +293,7 @@
 			if(src.allowed(usr))
 				locked = !locked
 				user << "You [ locked ? "lock" : "unlock"] the APC interface."
-				updateicon()
+				update_icon()
 			else
 				user << "\red Access denied."
 	else if (istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack))		// trying to unlock with an emag card
@@ -310,7 +310,7 @@
 					emagged = 1
 					locked = 0
 					user << "You emag the APC interface."
-					updateicon()
+					update_icon()
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
 	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
@@ -395,7 +395,7 @@
 			"\red [user.name] has replaced the damaged APC frontal panel with a new one.",\
 			"You replace the damaged APC frontal panel with a new one.")
 		del(W)
-		updateicon()
+		update_icon()
 	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
 			user << "You cannot repair this APC until you remove the electronics still inside."
@@ -411,7 +411,7 @@
 			malfhack = 0
 			if (opened==2)
 				opened = 1
-			updateicon()
+			update_icon()
 	else
 		if (	((stat & BROKEN) || malfhack) \
 				&& !opened \
@@ -422,7 +422,7 @@
 			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \
 				"\red You knock down the APC cover with your [W.name]!", \
 				"You hear bang")
-			updateicon()
+			update_icon()
 		else
 			if (istype(user, /mob/living/silicon))
 				return src.attack_hand(user)
@@ -452,7 +452,7 @@
 			user.visible_message("\red [user.name] removes the power cell from [src.name]!", "You remove the power cell.")
 			//user << "You remove the power cell."
 			charging = 0
-			src.updateicon()
+			src.update_icon()
 		return
 	if(stat & (BROKEN|MAINT))
 		return
@@ -477,13 +477,13 @@
 			break
 	if(beenhit >= pick(3, 4) && wiresexposed != 1)
 		wiresexposed = 1
-		src.updateicon()
+		src.update_icon()
 		src.visible_message("\red The [src.name]'s cover flies open, exposing the wires!")
 
 	else if(wiresexposed == 1 && allcut == 0)
 		for(var/wire in apcwirelist)
 			cut(apcwirelist[wire])
-		src.updateicon()
+		src.update_icon()
 		src.visible_message("\red The [src.name]'s wires are shredded!")
 	else
 		beenhit += 1
@@ -824,20 +824,20 @@
 					operating ? ticker.mode:apcs++ : ticker.mode:apcs--
 
 		src.update()
-		updateicon()
+		update_icon()
 
 	else if (href_list["cmode"])
 		chargemode = !chargemode
 		if(!chargemode)
 			charging = 0
-			updateicon()
+			update_icon()
 
 	else if (href_list["eqp"])
 		var/val = text2num(href_list["eqp"])
 
 		equipment = (val==1) ? 0 : val
 
-		updateicon()
+		update_icon()
 		update()
 
 	else if (href_list["lgt"])
@@ -845,14 +845,14 @@
 
 		lighting = (val==1) ? 0 : val
 
-		updateicon()
+		update_icon()
 		update()
 	else if (href_list["env"])
 		var/val = text2num(href_list["env"])
 
 		environ = (val==1) ? 0 :val
 
-		updateicon()
+		update_icon()
 		update()
 	else if( href_list["close"] )
 		usr << browse(null, "window=apc")
@@ -889,7 +889,7 @@
 					else
 						src.malfai = usr
 					malfai << "Hack complete. The APC is now under your exclusive control."
-					updateicon()
+					update_icon()
 
 	else if (href_list["occupyapc"])
 		malfoccupy(usr)
@@ -954,7 +954,7 @@
 				src.cell.charge = 0
 				cell.corrupt()
 				src.malfhack = 1
-				updateicon()
+				update_icon()
 				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
 				smoke.set_up(3, 0, src.loc)
 				smoke.attach(src)
@@ -1140,10 +1140,10 @@
 	// update icon & area power if anything changed
 
 	if(last_lt != lighting || last_eq != equipment || last_en != environ)
-		updateicon()
+		update_icon()
 		update()
 	else if (last_ch != charging)
-		updateicon()
+		update_icon()
 
 	//src.updateDialog()
 	src.updateDialog()
@@ -1225,7 +1225,7 @@
 	operating = 0
 	if(occupant)
 		malfvacate(1)
-	updateicon()
+	update_icon()
 	update()
 
 // overload all the lights in this APC area

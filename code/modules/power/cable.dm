@@ -41,7 +41,7 @@
 				powernets += NC.powernet
 				NC.powernet.cables += NC
 			powernet = NC.powernet
-			NC.powernet.nodes += src
+			NC.powernet.nodes[src] = src
 		NC.mergeConnectedNetworksOnTurf()
 
 		coil.use(1)
@@ -489,7 +489,7 @@
 				merge_powernets(powernet, N.terminal.powernet)
 			else
 				N.terminal.powernet = powernet
-				powernet.nodes += N.terminal
+				powernet.nodes[N.terminal] = N.terminal
 
 		else if(istype(AM,/obj/machinery/power))
 			var/obj/machinery/power/M = AM
@@ -498,7 +498,7 @@
 				merge_powernets(powernet, M.powernet)
 			else
 				M.powernet = powernet
-				powernet.nodes += M
+				powernet.nodes[M] = M
 
 
 obj/structure/cable/proc/cableColor(var/colorC)

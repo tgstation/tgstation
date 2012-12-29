@@ -4,8 +4,11 @@
 	var/dy
 	var/counter = 50		// to make the vars update during 1st call
 	var/rate
+	var/list/solars			// for debugging purposes, references solars_list at the constructor
 
 /datum/sun/New()
+
+	solars = solars_list
 	rate = rand(75,125)/100			// 75% - 125% of standard rotation
 	if(prob(50))
 		rate = -rate
@@ -41,7 +44,11 @@
 		dy = c / abs(s)
 
 
-	for(var/M in machines)
+	for(var/obj/machinery/power/M in solars_list)
+
+		if(!M.powernet)
+			solars_list.Remove(M)
+			continue
 
 		// Solar Tracker
 		if(istype(M, /obj/machinery/power/tracker))

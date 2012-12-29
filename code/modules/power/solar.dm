@@ -1,7 +1,20 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
-#define SOLAR_MAX_DIST 50
+#define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
+
+var/list/solars_list = list()
+
+// This will choose whether to get the solar list from the powernet or the powernet nodes,
+// depending on the size of the nodes.
+/obj/machinery/power/proc/get_solars_powernet()
+	if(!powernet)
+		return list()
+	if(solars_list.len < powernet.nodes)
+		return solars_list
+	else
+		return powernet.nodes
+
 /obj/machinery/power/solar
 	name = "solar panel"
 	desc = "A solar electrical generator."
@@ -22,15 +35,30 @@
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S)
+/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S, var/process = 1)
 	..(loc)
+	Make(S)
+	connect_to_network(process)
+
+
+/obj/machinery/power/solar/disconnect_from_network()
+	..()
+	solars_list.Remove(src)
+
+/obj/machinery/power/solar/connect_to_network(var/process)
+	..()
+	if(process)
+		solars_list.Add(src)
+
+
+/obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
 	if(!S)
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.anchored = 1
 	S.loc = src
 	update_icon()
-	connect_to_network()
+
 
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
@@ -98,18 +126,19 @@
 /obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
 	if(stat & BROKEN)	return
 	if(!control)	return
-	if(obscured)	return
-
-	var/sgen = SOLARGENRATE * sunfrac
-	add_avail(sgen)
-	if(powernet && control)
-		if(control in powernet.nodes) //this line right here...
-			control.gen += sgen
 
 	if(adir != ndir)
 		adir = (360+adir+dd_range(-10,10,ndir-adir))%360
 		update_icon()
 		update_solar_exposure()
+
+	if(obscured)	return
+
+	var/sgen = SOLARGENRATE * sunfrac
+	add_avail(sgen)
+	if(powernet && control)
+		if(powernet.nodes[control])
+			control.gen += sgen
 
 
 /obj/machinery/power/solar/proc/broken()
@@ -150,6 +179,9 @@
 		broken()
 		src.density = 0
 
+
+/obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
+	..(loc, S, 0)
 
 /obj/machinery/power/solar/fake/process()
 	. = PROCESS_KILL
@@ -257,16 +289,19 @@
 		initialize()
 	connect_to_network()
 
+/obj/machinery/power/solar_control/disconnect_from_network()
+	..()
+	solars_list.Remove(src)
+
+/obj/machinery/power/solar_control/connect_to_network()
+	..()
+	if(powernet)
+		solars_list.Add(src)
 
 /obj/machinery/power/solar_control/initialize()
 	..()
 	if(!powernet) return
-	for(var/obj/machinery/power/solar/S in powernet.nodes)
-		if(get_dist(S, src) < SOLAR_MAX_DIST)
-			cdir = S.adir//The hell is this even doing?
-			S.control = src
-			update_icon()
-
+	set_panels(cdir)
 
 /obj/machinery/power/solar_control/update_icon()
 	if(stat & BROKEN)
@@ -415,9 +450,10 @@
 		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 		track = text2num(href_list["track"])
 		if(powernet && (track == 2))
-			var/obj/machinery/power/tracker/T = locate() in powernet.nodes
-			if(T)
-				cdir = T.sun_angle
+			for(var/obj/machinery/power/tracker/T in get_solars_powernet())
+				if(powernet.nodes[T])
+					cdir = T.sun_angle
+					break
 
 	set_panels(cdir)
 	update_icon()
@@ -427,11 +463,12 @@
 
 /obj/machinery/power/solar_control/proc/set_panels(var/cdir)
 	if(!powernet) return
-	for(var/obj/machinery/power/solar/S in powernet.nodes)
-		if(get_dist(S, src) < SOLAR_MAX_DIST)
-			if(!S.control)
-				S.control = src
-			S.ndir = cdir
+	for(var/obj/machinery/power/solar/S in get_solars_powernet())
+		if(powernet.nodes[S])
+			if(get_dist(S, src) < SOLAR_MAX_DIST)
+				if(!S.control)
+					S.control = src
+				S.ndir = cdir
 
 
 /obj/machinery/power/solar_control/power_change()
