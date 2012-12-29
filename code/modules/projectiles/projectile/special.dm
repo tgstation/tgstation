@@ -125,3 +125,11 @@
 			M.show_message("\blue The radiation beam dissipates harmlessly through your body.")
 		else
 			return 1
+
+/obj/item/projectile/neurotoxin
+	name = "neurotoxin"
+	icon_state = "toxin"
+	damage = 5
+	damage_type = TOX
+	weaken = 5
+	flag = "bio"
