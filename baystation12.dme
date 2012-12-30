@@ -12,6 +12,7 @@
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Rust"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Supermatter"
+#define FILE_DIR "code/WorkInProgress/Susan"
 #define FILE_DIR "html"
 #define FILE_DIR "icons"
 #define FILE_DIR "icons/48x48"
