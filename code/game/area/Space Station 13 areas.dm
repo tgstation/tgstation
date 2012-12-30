@@ -684,7 +684,7 @@ proc/process_ghost_teleport_locs()
 	music = null
 
 /area/crew_quarters/captain
-	name = "\improper Captain's Quarters"
+	name = "\improper Captain's Office"
 	icon_state = "captain"
 
 /area/crew_quarters/courtroom
