@@ -1,6 +1,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector
 	icon = 'icons/obj/atmospherics/outlet_injector.dmi'
 	icon_state = "off"
+	use_power = 1
 
 	name = "Air Injector"
 	desc = "Has a valve and pump attached to it"
@@ -18,7 +19,7 @@
 
 	update_icon()
 		if(node)
-			if(on)
+			if(on && !(stat & NOPOWER))
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
 			else
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
@@ -28,11 +29,18 @@
 
 		return
 
+	power_change()
+		var/old_stat = stat
+		..()
+		if(old_stat != stat)
+			update_icon()
+
+
 	process()
 		..()
 		injecting = 0
 
-		if(!on)
+		if(!on || stat & NOPOWER)
 			return 0
 
 		if(air_contents.temperature > 0)

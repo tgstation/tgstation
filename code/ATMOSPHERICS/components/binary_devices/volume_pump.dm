@@ -31,7 +31,9 @@ obj/machinery/atmospherics/binary/volume_pump
 		icon_state = "intact_on"
 
 	update_icon()
-		if(node1&&node2)
+		if(stat & NOPOWER)
+			icon_state = "intact_off"
+		else if(node1 && node2)
 			icon_state = "intact_[on?("on"):("off")]"
 		else
 			if(node1)

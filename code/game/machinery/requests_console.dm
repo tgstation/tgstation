@@ -56,6 +56,18 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/priority = -1 ; //Priority of the message being sent
 	luminosity = 0
 
+/obj/machinery/requests_console/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/requests_console/update_icon()
+	if(stat & NOPOWER)
+		if(icon_state != "req_comp_off")
+			icon_state = "req_comp_off"
+	else
+		if(icon_state == "req_comp_off")
+			icon_state = "req_comp0"
+
 /obj/machinery/requests_console/New()
 	name = "[department] Requests Console"
 	allConsoles += src
@@ -95,6 +107,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 
 /obj/machinery/requests_console/attack_hand(user as mob)
+	if(..(user))
+		return
 	var/dat
 	dat = text("<HEAD><TITLE>Requests Console</TITLE></HEAD><H3>[department] Requests Console</H3>")
 	if(!open)

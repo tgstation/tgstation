@@ -15,7 +15,9 @@ obj/machinery/atmospherics/binary/passive_gate
 	var/datum/radio_frequency/radio_connection
 
 	update_icon()
-		if(node1&&node2)
+		if(stat & NOPOWER)
+			icon_state = "intact_off"
+		else if(node1 && node2)
 			icon_state = "intact_[on?("on"):("off")]"
 		else
 			if(node1)
@@ -24,8 +26,6 @@ obj/machinery/atmospherics/binary/passive_gate
 				icon_state = "exposed_2_off"
 			else
 				icon_state = "exposed_3_off"
-			on = 0
-
 		return
 
 	process()

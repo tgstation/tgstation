@@ -7,6 +7,7 @@ obj/machinery/atmospherics/pipe
 	force = 20
 
 	layer = 2.4 //under wires with their 2.44
+	use_power = 0
 
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
