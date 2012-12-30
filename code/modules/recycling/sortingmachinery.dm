@@ -250,15 +250,13 @@
 		if(deliveryCheck == 0)
 			H.destinationTag = 1
 
-
-		H.init(src)	// copy the contents of disposer to holder
-
 		air_contents = new()		// new empty gas resv.
 
 		sleep(10)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		sleep(5) // wait for animation to finish
 
+		H.init(src)	// copy the contents of disposer to holder
 
 		H.start(src) // start the holder processing movement
 		flushing = 0
