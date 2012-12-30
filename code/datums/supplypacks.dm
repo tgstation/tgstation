@@ -611,6 +611,17 @@
 	containertype = /obj/structure/closet/crate/secure/gear
 	containername = "Security Barriers crate"
 
+/datum/supply_packs/securitybarriers
+	name = "Shield Generators"
+	contains = list(/obj/machinery/shieldwallgen,
+					/obj/machinery/shieldwallgen,
+					/obj/machinery/shieldwallgen,
+					/obj/machinery/shieldwallgen)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Shield Generators crate"
+	access = access_teleporter
+
 /datum/supply_packs/randomised
 	var/num_contained = 3 //number of items picked to be contained in a randomised crate
 	contains = list(/obj/item/clothing/head/collectable/chef,

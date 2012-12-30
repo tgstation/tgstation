@@ -55,7 +55,7 @@
 /obj/machinery/power/emitter/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	if(state == 2)
-		if(!powernet && !connect_to_network())
+		if(!powernet)
 			user << "The emitter isn't connected to a wire."
 			return 1
 		if(!src.locked)
