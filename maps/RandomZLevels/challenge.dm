@@ -15,7 +15,7 @@
 	requires_power = 0
 
 
-/obj/machinery/emitter/energycannon
+/obj/machinery/power/emitter/energycannon
 	name = "Energy Cannon"
 	desc = "A heavy duty industrial laser"
 	icon = 'icons/obj/singularity.dmi'
@@ -29,3 +29,4 @@
 
 	active = 1
 	locked = 1
+	state = 2

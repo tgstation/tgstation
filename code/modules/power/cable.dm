@@ -17,38 +17,7 @@
 		if(!directwired)		// only for attaching to directwired machines
 			return
 
-		var/dirn = get_dir(user, src)
-
-		for(var/obj/structure/cable/LC in T)
-			if( (LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0) )
-				user << "There's already a cable at that position."
-				return
-
-		var/obj/structure/cable/NC = new(T)
-
-		NC.cableColor(coil.color)
-
-		NC.d1 = 0
-		NC.d2 = dirn
-		NC.add_fingerprint()
-		NC.updateicon()
-
-		NC.mergeConnectedNetworks(NC.d2)
-		NC.mergeConnectedNetworksOnTurf()
-		if(powernet == null)
-			if(NC.powernet == null)
-				NC.powernet = new()
-				powernets += NC.powernet
-				NC.powernet.cables += NC
-			powernet = NC.powernet
-			NC.powernet.nodes[src] = src
-		NC.mergeConnectedNetworksOnTurf()
-
-		coil.use(1)
-		if (NC.shock(user, 50))
-			if (prob(50)) //fail
-				new/obj/item/weapon/cable_coil(NC.loc, 1, NC.color)
-				del(NC)
+		coil.turf_place(T, user)
 		return
 	else
 		..()

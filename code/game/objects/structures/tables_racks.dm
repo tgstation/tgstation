@@ -279,7 +279,7 @@
 /obj/structure/table/attack_animal(mob/living/simple_animal/user as mob)
 	if(user.wall_smash)
 		usr << "\red You destroy the table."
-		visible_message("\red [user] smahes the table apart!")
+		visible_message("\red [user] smashes the table apart!")
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -296,7 +296,7 @@
 /obj/structure/table/attack_hand(mob/user as mob)
 	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 		usr << "\blue You destroy the table."
-		visible_message("\red [user] smahes the table apart!")
+		visible_message("\red [user] smashes the table apart!")
 		usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )

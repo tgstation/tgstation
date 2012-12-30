@@ -89,7 +89,6 @@ var/global/list/uneatable = list(
 
 	if(current_size >= 3)
 		move()
-	if(current_size <= 7)
 		pulse()
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()

@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
-/obj/machinery/emitter
+/obj/machinery/power/emitter
 	name = "Emitter"
 	desc = "A heavy duty industrial laser"
 	icon = 'icons/obj/singularity.dmi'
@@ -9,11 +9,12 @@
 	density = 1
 	req_access = list(access_engine_equip)
 
-	use_power = 1
+	use_power = 0
 	idle_power_usage = 10
 	active_power_usage = 300
 
 	var/active = 0
+	var/powered = 0
 	var/fire_delay = 100
 	var/last_shot = 0
 	var/shot_number = 0
@@ -21,7 +22,7 @@
 	var/locked = 0
 
 
-/obj/machinery/emitter/verb/rotate()
+/obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
 	set category = "Object"
 	set src in oview(1)
@@ -32,32 +33,35 @@
 	src.dir = turn(src.dir, 90)
 	return 1
 
-
-/obj/machinery/emitter/New()
+/obj/machinery/power/emitter/initialize()
 	..()
-	return
+	if(state == 2 && anchored)
+		connect_to_network()
+		src.directwired = 1
 
-/obj/machinery/emitter/Del()
+/obj/machinery/power/emitter/Del()
 	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	log_game("Emitter deleted at ([x],[y],[z])")
 	investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
 	..()
 
-/obj/machinery/emitter/update_icon()
-	if (active && !(stat & (NOPOWER|BROKEN)))
+/obj/machinery/power/emitter/update_icon()
+	if (active && powernet && avail(active_power_usage))
 		icon_state = "emitter_+a"
 	else
 		icon_state = "emitter"
 
 
-/obj/machinery/emitter/attack_hand(mob/user as mob)
+/obj/machinery/power/emitter/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	if(state == 2)
+		if(!powernet && !connect_to_network())
+			user << "The emitter isn't connected to a wire."
+			return 1
 		if(!src.locked)
 			if(src.active==1)
 				src.active = 0
 				user << "You turn off the [src]."
-				src.use_power = 1
 				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
@@ -66,7 +70,6 @@
 				user << "You turn on the [src]."
 				src.shot_number = 0
 				src.fire_delay = 100
-				src.use_power = 2
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 			update_icon()
 		else
@@ -76,8 +79,8 @@
 		return 1
 
 
-/obj/machinery/emitter/emp_act(var/severity)//Emitters are hardened but still might have issues
-	use_power(1000)
+/obj/machinery/power/emitter/emp_act(var/severity)//Emitters are hardened but still might have issues
+	add_load(1000)
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
 			src.active = 0
@@ -87,13 +90,28 @@
 /obj/machinery/containment_field/meteorhit()
 	return 0
 
-/obj/machinery/emitter/process()
-	if(stat & (NOPOWER|BROKEN))
+/obj/machinery/power/emitter/process()
+	if(stat & (BROKEN))
 		return
-	if(src.state != 2)
+	if(src.state != 2 || (!powernet && active_power_usage))
 		src.active = 0
+		update_icon()
 		return
 	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
+
+		if(!active_power_usage || avail(active_power_usage))
+			add_load(active_power_usage)
+			if(!powered)
+				powered = 1
+				update_icon()
+				investigate_log("regained power and turned <font color='green'>on</font>","singulo")
+		else
+			if(powered)
+				powered = 0
+				update_icon()
+				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+			return
+
 		src.last_shot = world.time
 		if(src.shot_number < 3)
 			src.fire_delay = 2
@@ -101,7 +119,6 @@
 		else
 			src.fire_delay = rand(20,100)
 			src.shot_number = 0
-		use_power(1000)
 		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
 		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
 		if(prob(35))
@@ -125,7 +142,7 @@
 		A.process()	//TODO: Carn: check this out
 
 
-/obj/machinery/emitter/attackby(obj/item/W, mob/user)
+/obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
 
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
@@ -168,6 +185,8 @@
 						if(!src || !WT.isOn()) return
 						state = 2
 						user << "You weld the [src] to the floor."
+						connect_to_network()
+						src.directwired = 1
 				else
 					user << "\red You need more welding fuel to complete this task."
 			if(2)
@@ -180,6 +199,8 @@
 						if(!src || !WT.isOn()) return
 						state = 1
 						user << "You cut the [src] free from the floor."
+						disconnect_from_network()
+						src.directwired = 0
 				else
 					user << "\red You need more welding fuel to complete this task."
 		return
@@ -207,10 +228,4 @@
 		return
 
 	..()
-	return
-
-
-/obj/machinery/emitter/power_change()
-	..()
-	update_icon()
 	return

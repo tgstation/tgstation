@@ -396,8 +396,8 @@
 
 /datum/supply_packs/engine
 	name = "Emitter crate"
-	contains = list(/obj/machinery/emitter,
-					/obj/machinery/emitter)
+	contains = list(/obj/machinery/power/emitter,
+					/obj/machinery/power/emitter)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Emitter crate"

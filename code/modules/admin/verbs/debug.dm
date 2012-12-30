@@ -882,7 +882,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
 		return
 
-	for(var/obj/machinery/emitter/E in world)
+	for(var/obj/machinery/power/emitter/E in world)
 		if(E.anchored)
 			E.active = 1
 
