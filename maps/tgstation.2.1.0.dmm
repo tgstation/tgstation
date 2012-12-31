@@ -4113,7 +4113,7 @@
 "bBe" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/janitor)
 "bBf" = (/obj/machinery/door/airlock{name = "Custodial Closet"; req_access_txt = "26"},/obj/structure/disposalpipe/segment,/turf/simulated/floor,/area/janitor)
 "bBg" = (/turf/simulated/wall,/area/maintenance/asmaint)
-"bBh" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor/plating,/area/maintenance/asmaint)
+"bBh" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/obj/structure/disposalpipe/segment,/turf/simulated/floor/plating,/area/maintenance/asmaint)
 "bBi" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall,/area/maintenance/asmaint)
 "bBj" = (/obj/machinery/vending/cigarette,/turf/simulated/floor{icon_state = "dark"},/area/hallway/primary/central)
 "bBk" = (/obj/structure/disposalpipe/segment,/obj/structure/table,/obj/item/weapon/hemostat,/turf/simulated/floor,/area/medical/sleeper)
