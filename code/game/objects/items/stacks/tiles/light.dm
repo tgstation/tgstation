@@ -14,7 +14,7 @@
 	var/on = 1
 	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 
-/obj/item/stack/tile/light/New()
+/obj/item/stack/tile/light/New(var/loc, var/amount=null)
 	..()
 	if(prob(5))
 		state = 3 //broken
