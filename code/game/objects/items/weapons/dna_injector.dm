@@ -53,7 +53,8 @@
 				uses--
 
 	spawn(0)//this prevents the collapse of space-time continuum
-		user.drop_from_inventory(src)
+		if (user)
+			user.drop_from_inventory(src)
 		del(src)
 	return uses
 
