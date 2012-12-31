@@ -58,9 +58,33 @@ var/global/list/autolathe_recipes_hidden = list( \
 	)
 
 /obj/machinery/autolathe
-	var/busy = 0
+	name = "\improper Autolathe"
+	desc = "It produces items using metal and glass."
+	icon_state = "autolathe"
+	density = 1
+
+	var/m_amount = 0.0
 	var/max_m_amount = 150000.0
+
+	var/g_amount = 0.0
 	var/max_g_amount = 75000.0
+
+	var/operating = 0.0
+	var/opened = 0.0
+	anchored = 1.0
+	var/list/L = list()
+	var/list/LL = list()
+	var/hacked = 0
+	var/disabled = 0
+	var/shocked = 0
+	var/list/wires = list()
+	var/hack_wire
+	var/disable_wire
+	var/shock_wire
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 100
+	var/busy = 0
 
 	proc
 		wires_win(mob/user as mob)

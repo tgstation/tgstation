@@ -619,6 +619,19 @@
 
 
 /////////////////////////// DNA MACHINES
+/obj/machinery/dna_scannernew
+	name = "\improper DNA modifier"
+	desc = "It scans DNA structures."
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "scanner_0"
+	density = 1
+	var/locked = 0.0
+	var/mob/occupant = null
+	anchored = 1.0
+	use_power = 1
+	idle_power_usage = 50
+	active_power_usage = 300
+
 /obj/machinery/dna_scannernew/New()
 	..()
 	component_parts = list()
@@ -776,6 +789,7 @@
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		del(src)
+
 
 /obj/machinery/computer/scan_consolenew/ex_act(severity)
 

@@ -1102,6 +1102,20 @@ Code shamelessly copied from apc_frame
 FIRE ALARM
 */
 /obj/machinery/firealarm
+	name = "fire alarm"
+	desc = "<i>\"Pull this in case of emergency\"<i>. Thus, keep pulling it forever."
+	icon = 'icons/obj/monitors.dmi'
+	icon_state = "fire0"
+	var/detecting = 1.0
+	var/working = 1.0
+	var/time = 10.0
+	var/timing = 0.0
+	var/lockdownbyai = 0
+	anchored = 1.0
+	use_power = 1
+	idle_power_usage = 2
+	active_power_usage = 6
+	power_channel = ENVIRON
 	var/last_process = 0
 	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
@@ -1354,6 +1368,12 @@ FIRE ALARM
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
+	if(z == 1)
+		if(security_level)
+			src.overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
+		else
+			src.overlays += image('icons/obj/monitors.dmi', "overlay_green")
+
 	update_icon()
 
 /*
@@ -1381,6 +1401,26 @@ Code shamelessly copied from apc_frame
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	flags = FPRINT | TABLEPASS| CONDUCT
+
+
+/*
+ * Party button
+ */
+
+/obj/machinery/partyalarm
+	name = "\improper PARTY BUTTON"
+	desc = "Cuban Pete is in the house!"
+	icon = 'icons/obj/monitors.dmi'
+	icon_state = "fire0"
+	var/detecting = 1.0
+	var/working = 1.0
+	var/time = 10.0
+	var/timing = 0.0
+	var/lockdownbyai = 0
+	anchored = 1.0
+	use_power = 1
+	idle_power_usage = 2
+	active_power_usage = 6
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))

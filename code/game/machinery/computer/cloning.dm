@@ -31,7 +31,7 @@
 	var/delete = 0
 	var/injectorready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
 	var/temphtml = null
-	var/obj/machinery/dna_scanner/connected = null
+	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/weapon/disk/data/diskette = null
 	anchored = 1.0
 	use_power = 1
