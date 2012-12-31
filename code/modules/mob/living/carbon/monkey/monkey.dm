@@ -410,57 +410,6 @@
 	return
 
 
-
-/mob/living/carbon/monkey/Move()
-	if ((!( buckled ) || buckled.loc != loc))
-		buckled = null
-	if (buckled)
-		return
-	if (restrained())
-		stop_pulling()
-	var/t7 = 1
-	if (restrained())
-		for(var/mob/M in range(src, 1))
-			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
-				t7 = null
-	if (t7 && (pulling && get_dist(src, pulling) <= 1))
-		if (pulling.anchored)
-			stop_pulling()
-		var/T = loc
-		. = ..()
-		if (!( isturf(pulling.loc) ))
-			stop_pulling()
-			return
-		if (!buckled)
-			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
-			else
-				diag = null
-			if ((ismob(pulling) && (get_dist(src, pulling) > 1 || diag)))
-				if (istype(pulling, type))
-					var/mob/M = pulling
-					var/atom/movable/t = M.pulling
-					M.stop_pulling()
-					step(pulling, get_dir(pulling.loc, T))
-					M.start_pulling(t)
-			else
-				if (pulling)
-					if (istype(pulling, /obj/structure/window))
-						if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-							for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
-								stop_pulling()
-				if (pulling)
-					step(pulling, get_dir(pulling.loc, T))
-	else
-		stop_pulling()
-		. = ..()
-	if ((s_active && !( contents.Find(s_active) )))
-		s_active.close(src)
-
-	for(var/mob/living/carbon/slime/M in view(1,src))
-		M.UpdateFeed(src)
-	return
-
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"
 	set category = "IC"

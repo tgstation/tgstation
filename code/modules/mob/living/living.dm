@@ -293,3 +293,86 @@
 		usr << "OOC Metadata is not supported by this server!"
 
 	return
+
+/mob/living/Move(a, b, flag)
+	if (buckled)
+		return
+
+	if (restrained())
+		stop_pulling()
+
+
+	var/t7 = 1
+	if (restrained())
+		for(var/mob/living/M in range(src, 1))
+			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
+				t7 = null
+	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
+		var/turf/T = loc
+		. = ..()
+
+		if (pulling && pulling.loc)
+			if(!( isturf(pulling.loc) ))
+				stop_pulling()
+				return
+			else
+				if(Debug)
+					diary <<"pulling disappeared? at [__LINE__] in mob.dm - pulling = [pulling]"
+					diary <<"REPORT THIS"
+
+		/////
+		if(pulling && pulling.anchored)
+			stop_pulling()
+			return
+
+		if (!restrained())
+			var/diag = get_dir(src, pulling)
+			if ((diag - 1) & diag)
+			else
+				diag = null
+			if ((get_dist(src, pulling) > 1 || diag))
+				if (isliving(pulling))
+					var/mob/living/M = pulling
+					var/ok = 1
+					if (locate(/obj/item/weapon/grab, M.grabbed_by))
+						if (prob(75))
+							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
+							if (istype(G, /obj/item/weapon/grab))
+								for(var/mob/O in viewers(M, null))
+									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
+								//G = null
+								del(G)
+						else
+							ok = 0
+						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
+							ok = 0
+					if (ok)
+						var/atom/movable/t = M.pulling
+						M.stop_pulling()
+
+						//this is the gay blood on floor shit -- Added back -- Skie
+						if (M.lying && (prob(M.getBruteLoss() / 6)))
+							var/turf/location = M.loc
+							if (istype(location, /turf/simulated))
+								location.add_blood(M)
+
+
+						step(pulling, get_dir(pulling.loc, T))
+						M.start_pulling(t)
+				else
+					if (pulling)
+						if (istype(pulling, /obj/structure/window))
+							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
+								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
+									stop_pulling()
+					if (pulling)
+						step(pulling, get_dir(pulling.loc, T))
+	else
+		stop_pulling()
+		. = ..()
+	if ((s_active && !( s_active in contents ) ))
+		s_active.close(src)
+
+	if(update_slimes)
+		for(var/mob/living/carbon/slime/M in view(1,src))
+			M.UpdateFeed(src)

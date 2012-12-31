@@ -36,3 +36,4 @@
 	var/cameraFollow = null
 
 	var/tod = null // Time of death
+	var/update_slimes = 1
