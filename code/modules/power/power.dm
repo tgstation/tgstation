@@ -396,11 +396,11 @@
 
 /obj/machinery/power/proc/disconnect_from_network()
 	if(!powernet)
-		world << " no powernet"
+		//world << " no powernet"
 		return 0
 	powernet.nodes -= src
 	powernet = null
-	world << "powernet null"
+	//world << "powernet null"
 	return 1
 
 /turf/proc/get_cable_node()
