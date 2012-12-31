@@ -397,7 +397,6 @@
 		if(wrapcheck == 1)
 			H.tomail = 1
 
-		H.init(src)	// copy the contents of disposer to holder
 
 		air_contents = new()		// new empty gas resv.
 
@@ -407,6 +406,8 @@
 			last_sound = world.time
 		sleep(5) // wait for animation to finish
 
+
+		H.init(src)	// copy the contents of disposer to holder
 
 		H.start(src) // start the holder processing movement
 		flushing = 0
