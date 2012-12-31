@@ -103,10 +103,10 @@ var/datum/cameranet/cameranet = new()
 
 	var/turf/T = get_turf(c)
 	if(T)
-		var/x1 = max(0, T.x - 16) & ~0xf
-		var/y1 = max(0, T.y - 16) & ~0xf
-		var/x2 = min(world.maxx, T.x + 16) & ~0xf
-		var/y2 = min(world.maxy, T.y + 16) & ~0xf
+		var/x1 = max(0, T.x - 8) & ~0xf
+		var/y1 = max(0, T.y - 8) & ~0xf
+		var/x2 = min(world.maxx, T.x + 8) & ~0xf
+		var/y2 = min(world.maxy, T.y + 8) & ~0xf
 
 		for(var/x = x1; x <= x2; x += 16)
 			for(var/y = y1; y <= y2; y += 16)
