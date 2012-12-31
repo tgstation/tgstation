@@ -3,6 +3,8 @@
 #define APC_WIRE_MAIN_POWER2 3
 #define APC_WIRE_AI_CONTROL 4
 
+#define APC_UPDATE_ICON_COOLDOWN 200 // 20 seconds
+
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire conection to power network
 
@@ -62,6 +64,7 @@
 		"Yellow" = 4,
 	)
 	var/longtermpower = 10
+	var/updating_icon = 0
 	//var/debug = 0
 
 /proc/RandomAPCWires()
@@ -174,7 +177,8 @@
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
-	overlays.Cut()
+
+	overlays = null
 	if(opened)
 		var/basestate = "apc[ cell ? "2" : "1" ]"	// if opened, show cell if it's inserted
 		if (opened==1)
@@ -200,6 +204,16 @@
 			overlays.Add("apcox-[locked]","apco3-[charging]")	// 0=blue 1=red // 0=red, 1=yellow/black 2=green
 			if(operating)
 				overlays.Add("apco0-[equipment]","apco1-[lighting]","apco2-[environ]")	// 0=red, 1=green, 2=blue
+
+// Used in process so it doesn't update the icon too much
+/obj/machinery/power/apc/proc/queue_icon_update()
+
+	if(!updating_icon)
+		updating_icon = 1
+		// Start the update
+		spawn(APC_UPDATE_ICON_COOLDOWN)
+			update_icon()
+			updating_icon = 0
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
@@ -1140,10 +1154,10 @@
 	// update icon & area power if anything changed
 
 	if(last_lt != lighting || last_eq != equipment || last_en != environ)
-		update_icon()
+		queue_icon_update()
 		update()
 	else if (last_ch != charging)
-		update_icon()
+		queue_icon_update()
 
 	//src.updateDialog()
 	src.updateDialog()
@@ -1267,3 +1281,5 @@
 		return 1
 	else
 		return 0
+
+#undef APC_UPDATE_ICON_COOLDOWN
