@@ -119,10 +119,6 @@
 			if(M == user)	continue
 			M.show_message("\red The [src.name] has been hit with the [W.name] by [user.name]!")
 
-/obj/machinery/shield_capacitor/attack_hand(mob/user as mob)
-	interact(user)
-	src.add_fingerprint(user)
-
 /obj/machinery/shield_capacitor/Topic(href, href_list[])
 	..()
 	if( href_list["close"] )
@@ -144,7 +140,7 @@
 	//
 	updateDialog()
 
-/obj/machinery/shield_capacitor/proc/interact(mob/user)
+/obj/machinery/shield_capacitor/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!istype(user, /mob/living/silicon))
 			user.machine = null

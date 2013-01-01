@@ -748,6 +748,15 @@ datum/design/mech_grenade_launcher
 	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang"
 	category = "Exosuit Equipment"
 
+datum/design/clusterbang_launcher
+	name = "Exosuit Module Design (SOP-6 Clusterbang Launcher)"
+	desc = "A weapon that violates the Geneva Convention at 6 rounds per minute"
+	id = "clusterbang_launcher"
+	build_type = MECHFAB
+	req_tech = list("combat"= 5, "materials" = 5, "syndicate" = 3)
+	build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited"
+	category = "Exosuit Equipment"
+
 datum/design/mech_wormhole_gen
 	name = "Exosuit Module Design (Localized Wormhole Generator)"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
@@ -807,7 +816,7 @@ datum/design/mech_energy_relay
 	desc = "Tesla Energy Relay"
 	id = "mech_energy_relay"
 	build_type = MECHFAB
-	req_tech = list("magnets" = 4, "syndicate" = 3)
+	req_tech = list("magnets" = 4, "powerstorage" = 3)
 	build_path = "/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay"
 	category = "Exosuit Equipment"
 
@@ -1571,3 +1580,14 @@ datum/design/security_hud
 	src.pixel_y = rand(-5.0, 5)
 
 
+/////////////////////////////////////////
+//////////////Borg Upgrades//////////////
+/////////////////////////////////////////
+datum/design/borg_syndicate_module
+	name = "Borg Illegal Weapons Upgrade"
+	desc = "Allows for the construction of illegal upgrades for cyborgs"
+	id = "borg_syndicate_module"
+	build_type = MECHFAB
+	req_tech = list("combat" = 4, "syndicate" = 3)
+	build_path = "/obj/item/borg/upgrade/syndicate"
+	category = "Cyborg Upgrade Modules"

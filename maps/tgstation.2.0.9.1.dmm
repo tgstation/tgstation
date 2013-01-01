@@ -7275,7 +7275,7 @@
 "cJU" = (/obj/item/weapon/ore/clown,/obj/item/weapon/ore/clown,/turf/unsimulated/floor{icon_state = "asteroid"; name = "dust"},/area/planet/clown)
 "cJV" = (/turf/unsimulated/floor{icon_state = "asteroid"; name = "dust"},/area/planet/clown)
 "cJW" = (/obj/item/weapon/bananapeel,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
-"cJX" = (/obj/item/weapon/mousetrap/armed,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
+"cJX" = (/obj/item/device/assembly/mousetrap/armed,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
 "cJY" = (/obj/item/weapon/ore/clown,/turf/unsimulated/floor{icon_state = "asteroid"; name = "dust"},/area/planet/clown)
 "cJZ" = (/obj/effect/decal/remains/human,/turf/unsimulated/floor{icon_state = "asteroid"; name = "dust"},/area/planet/clown)
 "cKa" = (/obj/item/weapon/pickaxe,/turf/unsimulated/floor{icon_state = "asteroid"; name = "dust"},/area/planet/clown)

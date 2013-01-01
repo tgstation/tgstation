@@ -89,3 +89,8 @@
 	icon_state = "dart"
 	projectile_type = "/obj/item/projectile/energy/dart"
 	m_amt = 12500
+
+/obj/item/ammo_casing/a762
+	desc = "A 7.62 bullet casing."
+	caliber = "a762"
+	projectile_type = "/obj/item/projectile/bullet"

@@ -145,9 +145,6 @@
 
 			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])</font>")
 
-			log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])")
-			msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] to wrap [H.name] ([H.ckey])") //BS12 EDIT ALG
-
 		else
 			user << "\blue You need more paper."
 	else

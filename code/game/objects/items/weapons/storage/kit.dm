@@ -41,8 +41,6 @@
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/grenade/empgrenade(src)
-	new /obj/item/weapon/grenade/empgrenade(src)
-	new /obj/item/weapon/grenade/empgrenade(src)
 	..()
 	return
 

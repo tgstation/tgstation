@@ -24,13 +24,9 @@
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
-		M.visible_message("\red [hit_atom] has been hit by [src].")
-		if(isobj(src))//Hate typecheckin for a child object but this is just fixing crap another guy broke so if someone wants to put the time in and make this proper feel free.
-			M.take_organ_damage(src:throwforce)
+		M.hitby(src)
 
-			log_attack("<font color='red'>[hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])</font>")
-			log_admin("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
-			msg_admin_attack("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
+		log_attack("<font color='red'>[hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])</font>")
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom
@@ -62,7 +58,7 @@
 		return null
 
 /atom/proc/check_eye(user as mob)
-	if (istype(user, /mob/living/silicon/ai))
+	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
 		return 1
 	return
 
@@ -513,7 +509,7 @@ its easier to just keep the beam vertical.
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M as mob)
-	if( istype(M, /mob/living/carbon/monkey) )
+	if( istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/human))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source1 = src
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
@@ -536,11 +532,7 @@ its easier to just keep the beam vertical.
 	else if( istype(M, /mob/living/silicon/robot ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
-			var/obj/effect/decal/cleanable/oil/this = new /obj/effect/decal/cleanable/oil(source2)
-			for(var/datum/disease/D in M.viruses)
-				var/datum/disease/newDisease = new D.type
-				this.viruses += newDisease
-				newDisease.holder = this
+			new /obj/effect/decal/cleanable/oil(source2)
 
 /atom/proc/clean_prints()
 	if(istype(fingerprints, /list))
@@ -1235,12 +1227,10 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			// ------- YOU ARE CLICKING ON AN OBJECT THAT'S INACCESSIBLE TO YOU AND IS NOT YOUR HUD -------
 			if((LASER in usr:mutations) && usr:a_intent == "hurt" && world.time >= usr.next_move)
 				// ------- YOU HAVE THE LASER MUTATION, YOUR INTENT SET TO HURT AND IT'S BEEN MORE THAN A DECISECOND SINCE YOU LAS TATTACKED -------
-				var/turf/oloc
+
 				var/turf/T = get_turf(usr)
 				var/turf/U = get_turf(src)
-				if(istype(src, /turf)) oloc = src
-				else
-					oloc = loc
+
 
 				if(istype(usr, /mob/living/carbon/human))
 					usr:nutrition -= rand(1,5)
@@ -1253,7 +1243,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 				A.firer = usr
 				A.def_zone = usr:get_organ_target()
-				A.original = oloc
+				A.original = src
 				A.current = T
 				A.yo = U.y - T.y
 				A.xo = U.x - T.x

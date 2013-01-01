@@ -6,6 +6,9 @@
 		var/t1 = findtext(act, "-", 1, null)
 		act = copytext(act, 1, t1)
 
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act,1,length(act))
+
 	if(src.stat == DEAD)
 		return
 	switch(act)

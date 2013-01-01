@@ -4,6 +4,7 @@
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
 	var/fire_alert = 0
+	var/pressure_alert = 0
 
 	var/temperature_alert = 0
 
@@ -64,7 +65,7 @@
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
-	if(!client && !stat)
+	if(!client && stat == CONSCIOUS)
 		if(prob(33) && canmove && isturf(loc))
 			step(src, pick(cardinal))
 		if(prob(1))
@@ -158,7 +159,8 @@
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
-
+		if(health < 0)
+			losebreath++
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
 			if (prob(75)) //High chance of gasping for air
@@ -334,13 +336,27 @@
 			bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
 
 		//Account for massive pressure differences
-		var/pressure = environment.return_pressure()
-		if(pressure > HAZARD_HIGH_PRESSURE)
-			var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
-			if(adjusted_pressure > HAZARD_HIGH_PRESSURE)
-				adjustBruteLoss( min( (adjusted_pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT , MAX_PRESSURE_DAMAGE) )
 
-		return //TODO: DEFERRED
+		var/pressure = environment.return_pressure()
+		var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+		switch(adjusted_pressure)
+			if(HAZARD_HIGH_PRESSURE to INFINITY)
+				adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+				pressure_alert = 2
+			if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+				pressure_alert = 1
+			if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
+				pressure_alert = 0
+			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+				pressure_alert = -1
+			else
+				if( !(COLD_RESISTANCE in mutations) )
+					adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+					pressure_alert = -2
+				else
+					pressure_alert = -1
+
+		return
 
 	proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
 		if(nodamage) return
@@ -483,21 +499,9 @@
 			else
 				healths.icon_state = "health7"
 
-		if (pressure)
-			var/datum/gas_mixture/environment = loc.return_air()
-			if(environment)
-				switch(environment.return_pressure())
 
-					if(HAZARD_HIGH_PRESSURE to INFINITY)
-						pressure.icon_state = "pressure2"
-					if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-						pressure.icon_state = "pressure1"
-					if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-						pressure.icon_state = "pressure0"
-					if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-						pressure.icon_state = "pressure-1"
-					else
-						pressure.icon_state = "pressure-2"
+		if(pressure)
+			pressure.icon_state = "pressure[pressure_alert]"
 
 		if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
 

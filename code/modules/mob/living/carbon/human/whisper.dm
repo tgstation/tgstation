@@ -38,7 +38,7 @@
 
 	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja)&&src.wear_mask:voice=="Unknown")
 		if(copytext(message, 1, 2) != "*")
-			var/list/temp_message = dd_text2list(message, " ")
+			var/list/temp_message = text2list(message, " ")
 			var/list/pick_list = list()
 			for(var/i = 1, i <= temp_message.len, i++)
 				pick_list += i
@@ -48,12 +48,12 @@
 				temp_message[H] = ninjaspeak(temp_message[H])
 				pick_list -= H
 			message = dd_list2text(temp_message, " ")
-			message = dd_replacetext(message, "o", "¤")
-			message = dd_replacetext(message, "p", "þ")
-			message = dd_replacetext(message, "l", "£")
-			message = dd_replacetext(message, "s", "§")
-			message = dd_replacetext(message, "u", "µ")
-			message = dd_replacetext(message, "b", "ß")
+			message = replacetext(message, "o", "¤")
+			message = replacetext(message, "p", "þ")
+			message = replacetext(message, "l", "£")
+			message = replacetext(message, "s", "§")
+			message = replacetext(message, "u", "µ")
+			message = replacetext(message, "b", "ß")
 
 	if (src.stuttering)
 		message = stutter(message)

@@ -75,29 +75,29 @@
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)	//Bomb assembly proc. This turns assembly+tank into a bomb
-	if(istype(W, /obj/item/device/assembly_holder))
-		var/obj/item/device/assembly_holder/S = W
-		if(!S.secured)										//Check if the assembly is secured
-			return
-		if(isigniter(S.a_left) == isigniter(S.a_right))		//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
-			return
-
-		var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
-
-		user.drop_item()			//Remove the assembly from your hands
-		user.remove_from_mob(src)	//Remove the tank from your character,in case you were holding it
-		user.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
-
-		R.bombassembly = S	//Tell the bomb about its assembly part
-		S.master = R		//Tell the assembly about its new owner
-		S.loc = R			//Move the assembly out of the fucking way
-
-		R.bombtank = src	//Same for tank
-		master = R
-		loc = R
-		R.update_icon()
+/obj/item/weapon/tank/proc/bomb_assemble(W,user)	//Bomb assembly proc. This turns assembly+tank into a bomb
+	var/obj/item/device/assembly_holder/S = W
+	var/mob/M = user
+	if(!S.secured)										//Check if the assembly is secured
 		return
+	if(isigniter(S.a_left) == isigniter(S.a_right))		//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
+		return
+
+	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
+
+	M.drop_item()			//Remove the assembly from your hands
+	M.remove_from_mob(src)	//Remove the tank from your character,in case you were holding it
+	M.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
+
+	R.bombassembly = S	//Tell the bomb about its assembly part
+	S.master = R		//Tell the assembly about its new owner
+	S.loc = R			//Move the assembly out of the fucking way
+
+	R.bombtank = src	//Same for tank
+	master = R
+	loc = R
+	R.update_icon()
+	return
 
 /obj/item/weapon/tank/proc/ignite()	//This happens when a bomb is told to explode
 	var/fuel_moles = air_contents.toxins + air_contents.oxygen/6

@@ -344,6 +344,9 @@ var/global/datum/controller/occupations/job_master
 
 		H << "<B>You are the [rank].</B>"
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+		if(job.req_admin_notify)
+			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		spawnId(H,rank)
 
 		if(H.mind.assigned_role == rank && H.mind.role_alt_title)
 			spawnId(H, rank, H.mind.role_alt_title)
@@ -395,13 +398,7 @@ var/global/datum/controller/occupations/job_master
 		if(!config.load_jobs_from_txt)
 			return 0
 
-		var/text = file2text(jobsfile)
-
-		if(!text)
-			world << "No jobs.txt found, using defaults."
-			return
-
-		var/list/jobEntries = dd_text2list(text, "\n")
+		var/list/jobEntries = file2list(jobsfile)
 
 		for(var/job in jobEntries)
 			if(!job)

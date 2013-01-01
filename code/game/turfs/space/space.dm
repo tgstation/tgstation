@@ -83,13 +83,25 @@
 			if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A
-					if(MM.client)
+					if(MM.client && !MM.stat)
 						MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
+					else
+						for(var/obj/item/weapon/disk/nuclear/N in A.search_contents_for(/obj/item/weapon/disk/nuclear))
+							del(N)//Make the disk respawn it is on a clientless mob or corpse
+				else
+					for(var/obj/item/weapon/disk/nuclear/N in A.search_contents_for(/obj/item/weapon/disk/nuclear))
+						del(N)//Make the disk respawn if it is floating on its own
 				return
 
-			var/move_to_z_str = pickweight(accessable_z_levels)
+			var/move_to_z = src.z
+			var/safety = 1
 
-			var/move_to_z = text2num(move_to_z_str)
+			while(move_to_z == src.z)
+				var/move_to_z_str = pickweight(accessable_z_levels)
+				move_to_z = text2num(move_to_z_str)
+				safety++
+				if(safety > 10)
+					break
 
 			if(!move_to_z)
 				return

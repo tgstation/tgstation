@@ -21,9 +21,6 @@
 // Doesn't necessarily trigger an event, but might. Returns 1 if it did.
 /proc/event()
 	event = 1
-	if(!sent_ninja_to_station)
-		choose_space_ninja()
-		return
 
 	var/minutes_passed = world.time/600
 
@@ -91,7 +88,7 @@
 			mini_blob_event()
 		if("Space Ninja")
 			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
-			choose_space_ninja()
+			space_ninja_arrival()
 		if("Radiation")
 			high_radiation_event()
 		if("Virus")
@@ -244,15 +241,7 @@
 			if(temp_vent.network.normal_members.len > 50) // Stops Aliens getting stuck in small networks. See: Security, Virology
 				vents += temp_vent
 
-	var/list/candidates = list() //List of candidate KEYs to control the new larvae. ~Carn
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client.be_alien)
-				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
-					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-						candidates += G.key
-		i++
+	var/list/candidates = get_alien_candidates()
 
 	if(prob(33)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)

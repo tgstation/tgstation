@@ -138,7 +138,7 @@
 /obj/machinery/mineral/mint/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(processing==1)
 		usr << "\blue The machine is processing."

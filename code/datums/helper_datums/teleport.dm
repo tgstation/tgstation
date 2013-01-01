@@ -161,6 +161,7 @@
 		if(istype(teleatom, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
 			teleatom.visible_message("\red <B>The [teleatom] bounces off of the portal!</B>")
 			return 0
+
 		if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/disk/nuclear)))
 			if(istype(teleatom, /mob/living))
 				var/mob/living/MM = teleatom
@@ -168,6 +169,17 @@
 			else
 				teleatom.visible_message("\red <B>The [teleatom] bounces off of the portal!</B>")
 			return 0
-		if(destination.z > 7)
+
+		if(destination.z == 2) //centcomm z-level
+			if(istype(teleatom, /obj/mecha))
+				var/obj/mecha/MM = teleatom
+				MM.occupant << "\red <B>The mech would not survive the jump to a location so far away!</B>"
+				return 0
+			if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)))
+				teleatom.visible_message("\red <B>The Bag of Holding bounces off of the portal!</B>")
+				return 0
+
+
+		if(destination.z > 7) //Away mission z-levels
 			return 0
 		return 1
