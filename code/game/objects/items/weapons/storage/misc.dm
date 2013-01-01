@@ -76,6 +76,16 @@
 /*
  * Crayon Box
  */
+/obj/item/weapon/storage/crayonbox
+	name = "box of crayons"
+	desc = "A box of crayons for all your rune drawing needs."
+	icon = 'icons/obj/crayons.dmi'
+	icon_state = "crayonbox"
+	w_class = 2.0
+	storage_slots = 6
+	can_hold = list(
+		"/obj/item/toy/crayon"
+	)
 
 /obj/item/weapon/storage/crayonbox/New()
 	..()

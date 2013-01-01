@@ -215,6 +215,23 @@ MASS SPECTROMETER
 	src.add_fingerprint(user)
 	return
 
+/obj/item/device/mass_spectrometer
+	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
+	name = "mass-spectrometer"
+	icon_state = "spectrometer"
+	item_state = "analyzer"
+	w_class = 2.0
+	flags = FPRINT | TABLEPASS| CONDUCT | OPENCONTAINER
+	slot_flags = SLOT_BELT
+	throwforce = 5
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 30
+	g_amt = 20
+	origin_tech = "magnets=2;biotech=2"
+	var/details = 0
+	var/recent_fail = 0
+
 /obj/item/device/mass_spectrometer/New()
 	..()
 	var/datum/reagents/R = new/datum/reagents(5)
@@ -265,3 +282,8 @@ MASS SPECTROMETER
 		reagents.clear_reagents()
 	return
 
+/obj/item/device/mass_spectrometer/adv
+	name = "advanced mass-spectrometer"
+	icon_state = "adv_spectrometer"
+	details = 1
+	origin_tech = "magnets=4;biotech=2"

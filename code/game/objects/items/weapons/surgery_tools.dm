@@ -3,7 +3,7 @@
  *		Retractor
  *		Hemostat
  *		Cautery
- *		Surgical Drill - MIA!
+ *		Surgical Drill
  *		Scalpel
  *		Circular Saw
  */
@@ -11,6 +11,17 @@
 /*
  * Retractor
  */
+/obj/item/weapon/retractor
+	name = "retractor"
+	desc = "Retracts stuff."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "retractor"
+	m_amt = 10000
+	g_amt = 5000
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
+
 /obj/item/weapon/retractor/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -84,6 +95,18 @@
 /*
  * Hemostat
  */
+/obj/item/weapon/hemostat
+	name = "hemostat"
+	desc = "You think you have seen this before."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "hemostat"
+	m_amt = 5000
+	g_amt = 2500
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("attacked", "pinched")
+
 /obj/item/weapon/hemostat/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -169,6 +192,18 @@
 /*
  * Cautery
  */
+/obj/item/weapon/cautery
+	name = "cautery"
+	desc = "This stops bleeding."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "cautery"
+	m_amt = 5000
+	g_amt = 2500
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("burnt")
+
 /obj/item/weapon/cautery/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -245,12 +280,40 @@
 /*
  * Surgical Drill
  */
-//obj/item/weapon/surgicaldrill
+/obj/item/weapon/surgicaldrill
+	name = "surgical drill"
+	desc = "You can drill using this item. You dig?"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "drill"
+	hitsound = 'sound/weapons/circsawhit.ogg'
+	m_amt = 15000
+	g_amt = 10000
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 15.0
+	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("drilled")
 
 
 /*
  * Scalpel
  */
+/obj/item/weapon/scalpel
+	name = "scalpel"
+	desc = "Cut, cut, and once more cut."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "scalpel"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 10.0
+	w_class = 1.0
+	throwforce = 5.0
+	throw_speed = 3
+	throw_range = 5
+	m_amt = 10000
+	g_amt = 5000
+	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
 /obj/item/weapon/scalpel/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
@@ -453,6 +516,23 @@
 /*
  * Circular Saw
  */
+/obj/item/weapon/circular_saw
+	name = "circular saw"
+	desc = "For heavy duty cutting."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "saw3"
+	hitsound = 'sound/weapons/circsawhit.ogg'
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 15.0
+	w_class = 1.0
+	throwforce = 9.0
+	throw_speed = 3
+	throw_range = 5
+	m_amt = 20000
+	g_amt = 10000
+	origin_tech = "materials=1;biotech=1"
+	attack_verb = list("attacked", "slashed", "sawed", "cut")
+
 /obj/item/weapon/circular_saw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()

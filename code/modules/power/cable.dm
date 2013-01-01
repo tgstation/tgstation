@@ -153,19 +153,31 @@
 
 // the cable coil object, used for laying cable
 
+#define MAXCOIL 30
+/obj/item/weapon/cable_coil
+	name = "cable coil"
+	icon = 'icons/obj/power.dmi'
+	icon_state = "coil_red"
+	var/amount = MAXCOIL
+	color = "red"
+	desc = "A coil of power cable."
+	throwforce = 10
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 5
+	m_amt = 50
+	g_amt = 20
+	flags = TABLEPASS | USEDELAY | FPRINT | CONDUCT
+	slot_flags = SLOT_BELT
+	item_state = "coil_red"
+	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
+
+
 /obj/item/weapon/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
 	..()
 	src.amount = length
 	if (param_color)
 		color = param_color
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
-	updateicon()
-
-
-/obj/item/weapon/cable_coil/cut/New(loc)
-	..()
-	src.amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	updateicon()
@@ -492,3 +504,46 @@ obj/structure/cable/proc/cableColor(var/colorC)
 			icon = 'icons/obj/power_cond_cyan.dmi'
 		if("white")
 			icon = 'icons/obj/power_cond_white.dmi'
+
+/obj/item/weapon/cable_coil/cut
+	item_state = "coil_red2"
+
+/obj/item/weapon/cable_coil/cut/New(loc)
+	..()
+	src.amount = rand(1,2)
+	pixel_x = rand(-2,2)
+	pixel_y = rand(-2,2)
+	updateicon()
+
+/obj/item/weapon/cable_coil/yellow
+	color = "yellow"
+	icon_state = "coil_yellow"
+
+/obj/item/weapon/cable_coil/blue
+	color = "blue"
+	icon_state = "coil_blue"
+
+/obj/item/weapon/cable_coil/green
+	color = "green"
+	icon_state = "coil_green"
+
+/obj/item/weapon/cable_coil/pink
+	color = "pink"
+	icon_state = "coil_pink"
+
+/obj/item/weapon/cable_coil/orange
+	color = "orange"
+	icon_state = "coil_orange"
+
+/obj/item/weapon/cable_coil/cyan
+	color = "cyan"
+	icon_state = "coil_cyan"
+
+/obj/item/weapon/cable_coil/white
+	color = "white"
+	icon_state = "coil_white"
+
+/obj/item/weapon/cable_coil/random/New()
+	color = pick("red","yellow","green","blue","pink")
+	icon_state = "coil_[color]"
+	..()

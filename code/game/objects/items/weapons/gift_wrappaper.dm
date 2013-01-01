@@ -7,11 +7,23 @@
 /*
  * Gifts
  */
-
+/obj/item/weapon/a_gift
+	name = "gift"
+	desc = "PRESENTS!!!! eek!"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "gift1"
+	item_state = "gift1"
+	pressure_resistance = 70
 
 /obj/item/weapon/a_gift/New()
 	..()
-	icon_state = "gift[pick("1", "2", "3")]"
+	pixel_x = rand(-10,10)
+	pixel_y = rand(-10,10)
+	if(w_class > 0 && w_class < 4)
+		icon_state = "gift[w_class]"
+	else
+		icon_state = "gift[pick(1, 2, 3)]"
+	return
 
 /obj/item/weapon/gift/attack_self(mob/user as mob)
 	user.drop_item()
@@ -107,6 +119,13 @@
 /*
  * Wrapping Paper
  */
+/obj/item/weapon/wrapping_paper
+	name = "wrapping paper"
+	desc = "You can use this to wrap items in."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "wrap_paper"
+	var/amount = 20.0
+
 /obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (!( locate(/obj/structure/table, src.loc) ))

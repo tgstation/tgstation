@@ -1,3 +1,17 @@
+/* Toys!
+ * ContainsL
+ *		Balloons
+ *		Fake telebeacon
+ *		Fake singularity
+ *		Toy gun
+ *		Toy crossbow
+ *		Toy swords
+ *		Crayons
+ *		Snap pops
+ *		Water flower
+ */
+
+
 /obj/item/toy
 	throwforce = 0
 	throw_speed = 4
@@ -5,83 +19,68 @@
 	force = 0
 
 
-/////////Toy Mechs/////////
-
-/obj/item/toy/prize
+/*
+ * Balloons
+ */
+/obj/item/toy/balloon
+	name = "water balloon"
+	desc = "A translucent balloon. There's nothing in it."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "ripleytoy"
-	var/cooldown = 0
+	icon_state = "waterballoon-e"
+	item_state = "balloon-empty"
 
-//all credit to skasi for toy mech fun ideas
-/obj/item/toy/prize/attack_self(mob/user as mob)
-	if(cooldown < world.time - 8)
-		user << "<span class='notice'>You play with [src].</span>"
-		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
-		cooldown = world.time
+/obj/item/toy/balloon/New()
+	var/datum/reagents/R = new/datum/reagents(10)
+	reagents = R
+	R.my_atom = src
 
-/obj/item/toy/prize/attack_hand(mob/user as mob)
-	if(loc == user)
-		if(cooldown < world.time - 8)
-			user << "<span class='notice'>You play with [src].</span>"
-			playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
-			cooldown = world.time
-			return
-	..()
+/obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	return
 
-/obj/item/toy/prize/ripley
-	name = "toy ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/11."
+/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob)
+	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
+		A.reagents.trans_to(src, 10)
+		user << "\blue You fill the balloon with the contents of [A]."
+		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
+		src.update_icon()
+	return
 
-/obj/item/toy/prize/fireripley
-	name = "toy firefighting ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/11."
-	icon_state = "fireripleytoy"
+/obj/item/toy/balloon/attackby(obj/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+		if(O.reagents)
+			if(O.reagents.total_volume < 1)
+				user << "The [O] is empty."
+			else if(O.reagents.total_volume >= 1)
+				if(O.reagents.has_reagent("pacid", 1))
+					user << "The acid chews through the balloon!"
+					O.reagents.reaction(user)
+					del(src)
+				else
+					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
+					user << "\blue You fill the balloon with the contents of [O]."
+					O.reagents.trans_to(src, 10)
+	src.update_icon()
+	return
 
-/obj/item/toy/prize/deathripley
-	name = "toy deathsquad ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/11."
-	icon_state = "deathripleytoy"
+/obj/item/toy/balloon/throw_impact(atom/hit_atom)
+	if(src.reagents.total_volume >= 1)
+		src.visible_message("\red The [src] bursts!","You hear a pop and a splash.")
+		src.reagents.reaction(get_turf(hit_atom))
+		for(var/atom/A in get_turf(hit_atom))
+			src.reagents.reaction(A)
+		src.icon_state = "burst"
+		spawn(5)
+			if(src)
+				del(src)
+	return
 
-/obj/item/toy/prize/gygax
-	name = "toy gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/11."
-	icon_state = "gygaxtoy"
-
-/obj/item/toy/prize/durand
-	name = "toy durand"
-	desc = "Mini-Mecha action figure! Collect them all! 5/11."
-	icon_state = "durandprize"
-
-/obj/item/toy/prize/honk
-	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/11."
-	icon_state = "honkprize"
-
-/obj/item/toy/prize/marauder
-	name = "toy marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/11."
-	icon_state = "marauderprize"
-
-/obj/item/toy/prize/seraph
-	name = "toy seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/11."
-	icon_state = "seraphprize"
-
-/obj/item/toy/prize/mauler
-	name = "toy mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/11."
-	icon_state = "maulerprize"
-
-/obj/item/toy/prize/odysseus
-	name = "toy odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/11."
-	icon_state = "odysseusprize"
-
-/obj/item/toy/prize/phazon
-	name = "toy phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/11."
-	icon_state = "phazonprize"
-
+/obj/item/toy/balloon/update_icon()
+	if(src.reagents.total_volume >= 1)
+		icon_state = "waterballoon"
+		item_state = "balloon"
+	else
+		icon_state = "waterballoon-e"
+		item_state = "balloon-empty"
 
 /obj/item/toy/syndicateballoon
 	name = "syndicate balloon"
@@ -95,6 +94,9 @@
 	item_state = "syndballoon"
 	w_class = 4.0
 
+/*
+ * Fake telebeacon
+ */
 /obj/item/toy/blink
 	name = "electronic blink toy game"
 	desc = "Blink.  Blink.  Blink. Ages 8 and up."
@@ -102,44 +104,18 @@
 	icon_state = "beacon"
 	item_state = "signaler"
 
+/*
+ * Fake singularity
+ */
 /obj/item/toy/spinningtoy
 	name = "Gravitational Singularity"
 	desc = "\"Singulo\" brand spinning toy."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
-/obj/item/toy/ammo/gun
-	name = "ammo-caps"
-	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "357-7"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 1.0
-	g_amt = 10
-	m_amt = 10
-	var/amount_left = 7.0
-
-	update_icon()
-		src.icon_state = text("357-[]", src.amount_left)
-		src.desc = text("There are [] caps\s left! Make sure to recycle the box in an autolathe when it gets empty.", src.amount_left)
-		return
-
-/obj/item/toy/ammo/crossbow
-	name = "foam dart"
-	desc = "Its nerf or nothing! Ages 8 and up."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "foamdart"
-	flags = FPRINT | TABLEPASS
-	w_class = 1.0
-
-/obj/effect/foam_dart_dummy
-	name = ""
-	desc = ""
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "null"
-	anchored = 1
-	density = 0
-
+/*
+ * Toy gun: Why isnt this an /obj/item/weapon/gun?
+ */
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
@@ -197,35 +173,27 @@
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red <B>[] fires a cap gun at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
 
-/obj/item/toy/sword
-	name = "toy sword"
-	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "sword0"
-	item_state = "sword0"
-	var/active = 0.0
-	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
-	attack_verb = list("attacked", "struck", "hit")
+/obj/item/toy/ammo/gun
+	name = "ammo-caps"
+	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "357-7"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	w_class = 1.0
+	g_amt = 10
+	m_amt = 10
+	var/amount_left = 7.0
 
-	attack_self(mob/user as mob)
-		src.active = !( src.active )
-		if (src.active)
-			user << "\blue You extend the plastic blade with a quick flick of your wrist."
-			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-			src.icon_state = "swordblue"
-			src.item_state = "swordblue"
-			src.w_class = 4
-		else
-			user << "\blue You push the plastic blade back down into the handle."
-			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-			src.icon_state = "sword0"
-			src.item_state = "sword0"
-			src.w_class = 2
-		src.add_fingerprint(user)
+	update_icon()
+		src.icon_state = text("357-[]", src.amount_left)
+		src.desc = text("There are [] caps\s left! Make sure to recycle the box in an autolathe when it gets empty.", src.amount_left)
 		return
 
-/obj/item/toy/crossbow
+/*
+ * Toy crossbow
+ */
+
+ /obj/item/toy/crossbow
 	name = "foam dart crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon = 'icons/obj/gun.dmi'
@@ -322,16 +290,70 @@
 			user.Weaken(5)
 		return
 
-/obj/item/weapon/storage/crayonbox
-	name = "box of crayons"
-	desc = "A box of crayons for all your rune drawing needs."
-	icon = 'icons/obj/crayons.dmi'
-	icon_state = "crayonbox"
+/obj/item/toy/ammo/crossbow
+	name = "foam dart"
+	desc = "Its nerf or nothing! Ages 8 and up."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamdart"
+	flags = FPRINT | TABLEPASS
+	w_class = 1.0
+
+/obj/effect/foam_dart_dummy
+	name = ""
+	desc = ""
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "null"
+	anchored = 1
+	density = 0
+
+
+/*
+ * Toy swords
+ */
+/obj/item/toy/sword
+	name = "toy sword"
+	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "sword0"
+	item_state = "sword0"
+	var/active = 0.0
 	w_class = 2.0
-	storage_slots = 6
-	can_hold = list(
-		"/obj/item/toy/crayon"
-	)
+	flags = FPRINT | TABLEPASS | NOSHIELD
+	attack_verb = list("attacked", "struck", "hit")
+
+	attack_self(mob/user as mob)
+		src.active = !( src.active )
+		if (src.active)
+			user << "\blue You extend the plastic blade with a quick flick of your wrist."
+			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+			src.icon_state = "swordblue"
+			src.item_state = "swordblue"
+			src.w_class = 4
+		else
+			user << "\blue You push the plastic blade back down into the handle."
+			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+			src.icon_state = "sword0"
+			src.item_state = "sword0"
+			src.w_class = 2
+		src.add_fingerprint(user)
+		return
+
+/obj/item/toy/katana
+	name = "replica katana"
+	desc = "Woefully underpowered in D20."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "katana"
+	item_state = "katana"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT | SLOT_BACK
+	force = 5
+	throwforce = 5
+	w_class = 3
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
+
+/*
+ * Crayons
+ */
 
 /obj/item/toy/crayon
 	name = "crayon"
@@ -346,6 +368,9 @@
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
 
+/*
+ * Snap pops
+ */
 /obj/item/toy/snappop
 	name = "snap pop"
 	desc = "Wow!"
@@ -377,6 +402,9 @@
 			playsound(src, 'sound/effects/snap.ogg', 50, 1)
 			del(src)
 
+/*
+ * Water flower
+ */
 /obj/item/toy/waterflower
 	name = "Water Flower"
 	desc = "A seemingly innocent sunflower...with a twist."
@@ -444,75 +472,81 @@
         ..()
         return
 
-/obj/item/toy/balloon
-	name = "water balloon"
-	desc = "A translucent balloon. There's nothing in it."
+
+/*
+ * Mech prizes
+ */
+/obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "waterballoon-e"
-	item_state = "balloon-empty"
+	icon_state = "ripleytoy"
+	var/cooldown = 0
 
-/obj/item/toy/balloon/New()
-	var/datum/reagents/R = new/datum/reagents(10)
-	reagents = R
-	R.my_atom = src
+//all credit to skasi for toy mech fun ideas
+/obj/item/toy/prize/attack_self(mob/user as mob)
+	if(cooldown < world.time - 8)
+		user << "<span class='notice'>You play with [src].</span>"
+		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
+		cooldown = world.time
 
-/obj/item/toy/balloon/attack(mob/living/carbon/human/M as mob, mob/user as mob)
-	return
+/obj/item/toy/prize/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(cooldown < world.time - 8)
+			user << "<span class='notice'>You play with [src].</span>"
+			playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
+			cooldown = world.time
+			return
+	..()
 
-/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
-		A.reagents.trans_to(src, 10)
-		user << "\blue You fill the balloon with the contents of [A]."
-		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-		src.update_icon()
-	return
+/obj/item/toy/prize/ripley
+	name = "toy ripley"
+	desc = "Mini-Mecha action figure! Collect them all! 1/11."
 
-/obj/item/toy/balloon/attackby(obj/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass))
-		if(O.reagents)
-			if(O.reagents.total_volume < 1)
-				user << "The [O] is empty."
-			else if(O.reagents.total_volume >= 1)
-				if(O.reagents.has_reagent("pacid", 1))
-					user << "The acid chews through the balloon!"
-					O.reagents.reaction(user)
-					del(src)
-				else
-					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-					user << "\blue You fill the balloon with the contents of [O]."
-					O.reagents.trans_to(src, 10)
-	src.update_icon()
-	return
+/obj/item/toy/prize/fireripley
+	name = "toy firefighting ripley"
+	desc = "Mini-Mecha action figure! Collect them all! 2/11."
+	icon_state = "fireripleytoy"
 
-/obj/item/toy/balloon/throw_impact(atom/hit_atom)
-	if(src.reagents.total_volume >= 1)
-		src.visible_message("\red The [src] bursts!","You hear a pop and a splash.")
-		src.reagents.reaction(get_turf(hit_atom))
-		for(var/atom/A in get_turf(hit_atom))
-			src.reagents.reaction(A)
-		src.icon_state = "burst"
-		spawn(5)
-			if(src)
-				del(src)
-	return
+/obj/item/toy/prize/deathripley
+	name = "toy deathsquad ripley"
+	desc = "Mini-Mecha action figure! Collect them all! 3/11."
+	icon_state = "deathripleytoy"
 
-/obj/item/toy/balloon/update_icon()
-	if(src.reagents.total_volume >= 1)
-		icon_state = "waterballoon"
-		item_state = "balloon"
-	else
-		icon_state = "waterballoon-e"
-		item_state = "balloon-empty"
+/obj/item/toy/prize/gygax
+	name = "toy gygax"
+	desc = "Mini-Mecha action figure! Collect them all! 4/11."
+	icon_state = "gygaxtoy"
 
-/obj/item/toy/katana
-	name = "replica katana"
-	desc = "Woefully underpowered in D20."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "katana"
-	item_state = "katana"
-	flags = FPRINT | TABLEPASS | CONDUCT
-	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 5
-	throwforce = 5
-	w_class = 3
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
+/obj/item/toy/prize/durand
+	name = "toy durand"
+	desc = "Mini-Mecha action figure! Collect them all! 5/11."
+	icon_state = "durandprize"
+
+/obj/item/toy/prize/honk
+	name = "toy H.O.N.K."
+	desc = "Mini-Mecha action figure! Collect them all! 6/11."
+	icon_state = "honkprize"
+
+/obj/item/toy/prize/marauder
+	name = "toy marauder"
+	desc = "Mini-Mecha action figure! Collect them all! 7/11."
+	icon_state = "marauderprize"
+
+/obj/item/toy/prize/seraph
+	name = "toy seraph"
+	desc = "Mini-Mecha action figure! Collect them all! 8/11."
+	icon_state = "seraphprize"
+
+/obj/item/toy/prize/mauler
+	name = "toy mauler"
+	desc = "Mini-Mecha action figure! Collect them all! 9/11."
+	icon_state = "maulerprize"
+
+/obj/item/toy/prize/odysseus
+	name = "toy odysseus"
+	desc = "Mini-Mecha action figure! Collect them all! 10/11."
+	icon_state = "odysseusprize"
+
+/obj/item/toy/prize/phazon
+	name = "toy phazon"
+	desc = "Mini-Mecha action figure! Collect them all! 11/11."
+	icon_state = "phazonprize"

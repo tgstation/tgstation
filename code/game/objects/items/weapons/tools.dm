@@ -4,10 +4,11 @@
  * Note: Multitools are /obj/item/device
  *
  * Contains:
- * Wrench
- * Screwdriver
- * Wirecutters
- * Welding Tool
+ * 		Wrench
+ * 		Screwdriver
+ * 		Wirecutters
+ * 		Welding Tool
+ * 		Crowbar
  */
 
 /*
@@ -31,6 +32,22 @@
 /*
  * Screwdriver
  */
+/obj/item/weapon/screwdriver
+	name = "screwdriver"
+	desc = "You can be totally screwwy with this."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "screwdriver"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
+	force = 5.0
+	w_class = 1.0
+	throwforce = 5.0
+	throw_speed = 3
+	throw_range = 5
+	g_amt = 0
+	m_amt = 75
+	attack_verb = list("stabbed")
+
 /obj/item/weapon/screwdriver/New()
 	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
 		if ("red")
@@ -394,3 +411,27 @@
 	reagents += (gen_amount)
 	if(reagents > max_fuel)
 		reagents = max_fuel
+
+/*
+ * Crowbar
+ */
+
+/obj/item/weapon/crowbar
+	name = "crowbar"
+	desc = "Used to hit floors"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "crowbar"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
+	force = 5.0
+	throwforce = 7.0
+	item_state = "crowbar"
+	w_class = 2.0
+	m_amt = 50
+	origin_tech = "engineering=1"
+	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+
+/obj/item/weapon/crowbar/red
+	icon = 'icons/obj/items.dmi'
+	icon_state = "red_crowbar"
+	item_state = "crowbar_red"

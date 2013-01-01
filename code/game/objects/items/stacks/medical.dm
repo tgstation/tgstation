@@ -1,5 +1,14 @@
-
-//What is this even used for?
+/obj/item/stack/medical
+	name = "medical pack"
+	singular_name = "medical pack"
+	icon = 'icons/obj/items.dmi'
+	amount = 5
+	max_amount = 5
+	w_class = 1
+	throw_speed = 4
+	throw_range = 20
+	var/heal_brute = 0
+	var/heal_burn = 0
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if (M.stat == 2)
@@ -57,3 +66,20 @@
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
 
 	use(1)
+
+/obj/item/stack/medical/bruise_pack
+	name = "bruise pack"
+	singular_name = "bruise pack"
+	desc = "A pack designed to treat blunt-force trauma."
+	icon_state = "brutepack"
+	heal_brute = 60
+	origin_tech = "biotech=1"
+
+/obj/item/stack/medical/ointment
+	name = "ointment"
+	desc = "Used to treat those nasty burns."
+	gender = PLURAL
+	singular_name = "ointment"
+	icon_state = "ointment"
+	heal_burn = 40
+	origin_tech = "biotech=1"
