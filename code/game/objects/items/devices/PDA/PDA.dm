@@ -184,16 +184,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	ttone = "data"
 	detonate = 0
 
-/obj/item/device/pda/pai
-	icon_state = "NONE"
-	ttone = "data"
-	detonate = 0
+/obj/item/device/pda/ai/can_use()
+	return 1
 
 /obj/item/device/pda/ai/attack_self(mob/user as mob)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 	return
+
+/obj/item/device/pda/ai/pai
+	ttone = "assist"
 
 /*
  *	The Actual PDA
@@ -217,8 +218,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/proc/can_use()
 
-	if(istype(src, /obj/item/device/pda/ai) || istype(src, /obj/item/device/pda/pai))
-		return 1
 	if(!ismob(loc))
 		return 0
 
@@ -766,16 +765,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(P.loc && isliving(P.loc))
 			L = P.loc
 		//Maybe they are a pAI!
-		else if(istype(P, /obj/item/device/pda/pai) && P.loc)
-			//Search through the location's contents
-			for(var/obj/item/device/paicard/Pcard in P.loc)
-				//If there's a Pcard there then get the mind inside
-				if(Pcard.pai)
-					var/mob/living/silicon/pai/pai = Pcard.pai
-					//Is it the pAI that is receiving the message?
-					if(pai.pda && pai.pda == P)
-						L = pai
-						break
+		else
+			L = get(P, /mob/living/silicon)
+
 		if(L)
 			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
 
