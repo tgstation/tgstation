@@ -835,7 +835,8 @@ About the new airlock wires panel:
 			sleep(10)
 			//bring up airlock dialog
 			src.aiHacking = 0
-			src.attack_ai(user)
+			if (user)
+				src.attack_ai(user)
 
 
 /obj/machinery/door/airlock/attack_paw(mob/user as mob)
