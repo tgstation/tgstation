@@ -71,7 +71,7 @@
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
-	new /obj/item/device/analyzer(src)
+	new /obj/item/device/t_scanner(src)
 
 
 

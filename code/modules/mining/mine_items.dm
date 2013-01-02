@@ -112,7 +112,7 @@ proc/move_mining_shuttle()
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["move"])
 		if(ticker.mode.name == "blob")
@@ -287,7 +287,3 @@ proc/move_mining_shuttle()
 	density = 1
 	icon_opened = "miningcaropen"
 	icon_closed = "miningcar"
-
-
-
-

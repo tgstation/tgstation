@@ -76,3 +76,12 @@
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
+
+/obj/item/clothing/mask/pig
+	name = "pig mask"
+	desc = "A rubber pig mask."
+	icon_state = "pig"
+	item_state = "pig"
+	flags = FPRINT|TABLEPASS|BLOCKHAIR
+	flags_inv = HIDEFACE
+	w_class = 2

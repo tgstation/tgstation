@@ -7,10 +7,8 @@
 	w_amt = 10
 	origin_tech = "magnets=1"
 
-	wires = WIRE_RECEIVE
-
 	secured = 1
-
+	wires = WIRE_RECEIVE
 
 	activate()
 		if(!..())	return 0//Cooldown check

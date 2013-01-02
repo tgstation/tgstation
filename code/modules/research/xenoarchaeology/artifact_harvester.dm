@@ -26,15 +26,6 @@
 	else
 		return..()
 
-/obj/machinery/artifact_harvester/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/artifact_harvester/attack_paw(var/mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/artifact_harvester/attack_hand(var/mob/user as mob)
-	interact(user)
-
 /obj/machinery/artifact_harvester/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -52,7 +43,7 @@
 			icon_state = "incubator"
 	return
 
-/obj/machinery/artifact_harvester/proc/interact(var/mob/user as mob)
+/obj/machinery/artifact_harvester/interact(var/mob/user as mob)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.machine = src

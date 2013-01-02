@@ -180,12 +180,12 @@ client
 				body += "<br><font size='1'><a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 				body += {"
 				<br><font size='1'>
-				BRUTE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["brute"]'>[M.getBruteLoss()]</a>
-				FIRE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["fire"]'>[M.getFireLoss()]</a>
-				TOXIN:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["toxin"]'>[M.getToxLoss()]</a>
-				OXY:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["oxygen"]'>[M.getOxyLoss()]</a>
-				CLONE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["clone"]'>[M.getCloneLoss()]</a>
-				BRAIN:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["brain"]'>[M.getBrainLoss()]</a>
+				BRUTE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=brute'>[M.getBruteLoss()]</a>
+				FIRE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=fire'>[M.getFireLoss()]</a>
+				TOXIN:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=toxin'>[M.getToxLoss()]</a>
+				OXY:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+				CLONE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
+				BRAIN:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
 				</font>
 
 
@@ -245,6 +245,7 @@ client
 
 		if(ismob(D))
 			body += "<option value='byond://?src=\ref[src];give_spell=\ref[D]'>Give Spell</option>"
+			body += "<option value='byond://?src=\ref[src];give_disease=\ref[D]'>Give Disease</option>"
 			body += "<option value='byond://?src=\ref[src];ninja=\ref[D]'>Make Space Ninja</option>"
 			body += "<option value='byond://?src=\ref[src];godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
@@ -401,14 +402,18 @@ client
 	//This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client == src) && src.holder )
 		. = 1	//default return
-		if (href_list["Vars"])
+		if(href_list["Vars"])
 			debug_variables(locate(href_list["Vars"]))
 
 		//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
-		else if (href_list["rename"])
+		else if(href_list["rename"])
+			if(!check_rights(0))	return
+
 			var/mob/M = locate(href_list["rename"])
-			if(!istype(M))	return
-			if(!admin_rank_check(src.holder.level, 3)) return
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+
 			var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null),1,MAX_NAME_LEN)
 			if( !new_name || !M )	return
 
@@ -416,418 +421,370 @@ client
 			M.fully_replace_character_name(M.real_name,new_name)
 			href_list["datumrefresh"] = href_list["rename"]
 
-		else if (href_list["varnameedit"])
-			if(!href_list["datumedit"] || !href_list["varnameedit"])
-				usr << "Varedit error: Not all information has been sent. Contact a coder."
-				return
-			var/DAT = locate(href_list["datumedit"])
-			if(!DAT)
-				usr << "Item not found"
-				return
-			if(!istype(DAT,/datum) && !istype(DAT,/client))
-				usr << "Can't edit an item of this type. Type must be /datum or /client, so anything except simple variables."
-				return
-			modify_variables(DAT, href_list["varnameedit"], 1)
-		else if (href_list["varnamechange"])
-			if(!href_list["datumchange"] || !href_list["varnamechange"])
-				usr << "Varedit error: Not all information has been sent. Contact a coder."
-				return
-			var/DAT = locate(href_list["datumchange"])
-			if(!DAT)
-				usr << "Item not found"
-				return
-			if(!istype(DAT,/datum) && !istype(DAT,/client))
-				usr << "Can't edit an item of this type. Type must be /datum or /client, so anything except simple variables."
-				return
-			modify_variables(DAT, href_list["varnamechange"], 0)
-		else if (href_list["varnamemass"])
-			if(!href_list["datummass"] || !href_list["varnamemass"])
-				usr << "Varedit error: Not all information has been sent. Contact a coder."
-				return
-			var/atom/A = locate(href_list["datummass"])
-			if(!A)
-				usr << "Item not found"
-				return
-			if(!istype(A,/atom))
-				usr << "Can't mass edit an item of this type. Type must be /atom, so an object, turf, mob or area. You cannot mass edit clients!"
-				return
-			cmd_mass_modify_object_variables(A, href_list["varnamemass"])
-		else if (href_list["mob_player_panel"])
-			if(!href_list["mob_player_panel"])
-				return
-			var/mob/MOB = locate(href_list["mob_player_panel"])
-			if(!MOB)
-				return
-			if(!ismob(MOB))
-				return
-			if(!src.holder)
-				return
-			src.holder.show_player_panel(MOB)
-			href_list["datumrefresh"] = href_list["mob_player_panel"]
-		else if (href_list["give_spell"])
-			if(!href_list["give_spell"])
-				return
-			var/mob/MOB = locate(href_list["give_spell"])
-			if(!MOB)
-				return
-			if(!ismob(MOB))
-				return
-			if(!src.holder)
-				return
-			if(!admin_rank_check(src.holder.level, 3)) return
-			src.give_spell(MOB)
-			href_list["datumrefresh"] = href_list["give_spell"]
-		else if (href_list["ninja"])
-			if(!href_list["ninja"])
-				return
-			var/mob/MOB = locate(href_list["ninja"])
-			if(!MOB)
-				return
-			if(!ismob(MOB))
-				return
-			if(!src.holder)
-				return
-			if(!admin_rank_check(src.holder.level, 3)) return
-			src.cmd_admin_ninjafy(MOB)
-			href_list["datumrefresh"] = href_list["ninja"]
-		else if (href_list["godmode"])
-			if(!href_list["godmode"])
-				return
-			var/mob/MOB = locate(href_list["godmode"])
-			if(!MOB)
-				return
-			if(!ismob(MOB))
-				return
-			if(!src.holder)
-				return
-			if(!admin_rank_check(src.holder.level, 3)) return
-			src.cmd_admin_godmode(MOB)
-			href_list["datumrefresh"] = href_list["godmode"]
-		else if (href_list["gib"])
-			if(!href_list["gib"])
-				return
-			var/mob/MOB = locate(href_list["gib"])
-			if(!MOB)
-				return
-			if(!ismob(MOB))
-				return
-			if(!src.holder)
-				return
-			if(!admin_rank_check(src.holder.level, 3)) return
-			src.cmd_admin_gib(MOB)
+		else if(href_list["varnameedit"] && href_list["datumedit"])
+			if(!check_rights(0))	return
 
-		else if (href_list["build_mode"])
-			if(!href_list["build_mode"])
+			var/D = locate(href_list["datumedit"])
+			if(!istype(D,/datum) && !istype(D,/client))
+				usr << "This can only be used on instances of types /client or /datum"
 				return
-			var/mob/MOB = locate(href_list["build_mode"])
-			if(!MOB)
+
+			modify_variables(D, href_list["varnameedit"], 1)
+
+		else if(href_list["varnamechange"] && href_list["datumchange"])
+			if(!check_rights(0))	return
+
+			var/D = locate(href_list["datumchange"])
+			if(!istype(D,/datum) && !istype(D,/client))
+				usr << "This can only be used on instances of types /client or /datum"
 				return
-			if(!ismob(MOB))
+
+			modify_variables(D, href_list["varnamechange"], 0)
+
+		else if(href_list["varnamemass"] && href_list["datummass"])
+			if(!check_rights(0))	return
+
+			var/atom/A = locate(href_list["datummass"])
+			if(!istype(A))
+				usr << "This can only be used on instances of type /atom"
 				return
-			if(!src.holder)
+
+			cmd_mass_modify_object_variables(A, href_list["varnamemass"])
+
+		else if(href_list["mob_player_panel"])
+			if(!check_rights(0))	return
+
+			var/mob/M = locate(href_list["mob_player_panel"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
 				return
-			if(!admin_rank_check(src.holder.level, 3)) return
-			togglebuildmode(MOB)
+
+			src.holder.show_player_panel(M)
+			href_list["datumrefresh"] = href_list["mob_player_panel"]
+
+		else if(href_list["give_spell"])
+			if(!check_rights(0))	return
+
+			var/mob/M = locate(href_list["give_spell"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+
+			src.give_spell(M)
+			href_list["datumrefresh"] = href_list["give_spell"]
+
+		else if(href_list["give_disease"])
+			if(!check_rights(0))	return
+
+			var/mob/M = locate(href_list["give_disease"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+
+			src.give_disease(M)
+			href_list["datumrefresh"] = href_list["give_spell"]
+
+		else if(href_list["ninja"])
+			if(!check_rights(0))	return
+
+			var/mob/M = locate(href_list["ninja"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+
+			src.cmd_admin_ninjafy(M)
+			href_list["datumrefresh"] = href_list["ninja"]
+
+		else if(href_list["godmode"])
+			if(!check_rights(R_REJUVINATE))	return
+
+			var/mob/M = locate(href_list["godmode"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+
+			src.cmd_admin_godmode(M)
+			href_list["datumrefresh"] = href_list["godmode"]
+
+		else if(href_list["gib"])
+			if(!check_rights(0))	return
+
+			var/mob/M = locate(href_list["gib"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+
+			src.cmd_admin_gib(M)
+
+		else if(href_list["build_mode"])
+			if(!check_rights(R_BUILDMODE))	return
+
+			var/mob/M = locate(href_list["build_mode"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+
+			togglebuildmode(M)
 			href_list["datumrefresh"] = href_list["build_mode"]
 
-		else if (href_list["drop_everything"])
-			if(!href_list["drop_everything"])
-				return
-			var/mob/MOB = locate(href_list["drop_everything"])
-			if(!MOB)
-				return
-			if(!ismob(MOB))
-				return
-			if(!src.holder)
+		else if(href_list["drop_everything"])
+			if(!check_rights(0))	return
+
+			var/mob/M = locate(href_list["drop_everything"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
 				return
 
 			if(usr.client)
-				if(!admin_rank_check(src.holder.level, 3)) return
-				usr.client.cmd_admin_drop_everything(MOB)
+				usr.client.cmd_admin_drop_everything(M)
 
-		else if (href_list["direct_control"])
-			if(!href_list["direct_control"])
-				return
-			var/mob/MOB = locate(href_list["direct_control"])
-			if(!MOB)
-				return
-			if(!ismob(MOB))
-				return
-			if(!src.holder)
+		else if(href_list["direct_control"])
+			if(!check_rights(0))	return
+
+			var/mob/M = locate(href_list["direct_control"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
 				return
 
 			if(usr.client)
-				if(!admin_rank_check(src.holder.level, 3)) return
-				usr.client.cmd_assume_direct_control(MOB)
+				usr.client.cmd_assume_direct_control(M)
 
-		else if (href_list["make_skeleton"])
-			if(!href_list["make_skeleton"])
-				return
-			var/mob/MOB = locate(href_list["make_skeleton"])
-			if(!MOB)
-				return
-			if(!ismob(MOB))
-				return
-			if(!src.holder)
+		else if(href_list["make_skeleton"])
+			if(!check_rights(0))	return
+
+			var/mob/living/carbon/human/H = locate(href_list["make_skeleton"])
+			if(!istype(H))
+				usr << "This can only be used on instances of type /mob/living/carbon/human"
 				return
 
-			if(ishuman(MOB))
-				if(!admin_rank_check(src.holder.level, 3)) return
-				var/mob/living/carbon/human/HUMANMOB = MOB
-				HUMANMOB.makeSkeleton()
+			H.makeSkeleton()
+			href_list["datumrefresh"] = href_list["make_skeleton"]
 
-		else if (href_list["delall"])
-			if(!href_list["delall"])
+		else if(href_list["delall"])
+			if(!check_rights(R_DEBUG|R_SERVER))	return
+
+			var/obj/O = locate(href_list["delall"])
+			if(!isobj(O))
+				usr << "This can only be used on instances of type /obj"
 				return
-			var/atom/A = locate(href_list["delall"])
-			if(!admin_rank_check(src.holder.level, 3)) return
-			if(!A)
+
+			var/action_type = alert("Strict type ([O.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
+			if(action_type == "Cancel" || !action_type)
 				return
-			if(!isobj(A))
-				usr << "This can only be used on objects (of type /obj)"
+
+			if(alert("Are you really sure you want to delete all objects of type [O.type]?",,"Yes","No") != "Yes")
 				return
-			if(!A.type)
-				return
-			var/action_type = alert("Strict type ([A.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
-			if(!action_type || action_type == "Cancel")
-				return
-			if(alert("Are you really sure you want to delete all objects of type [A.type]?",,"Yes","No") != "Yes")
-				return
+
 			if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
 				return
-			var/a_type = A.type
-			if(action_type == "Strict type")
-				var/i = 0
-				for(var/obj/O in world)
-					if(O.type == a_type)
-						i++
-						del(O)
-				if(!i)
-					usr << "No objects of this type exist"
-					return
-				log_admin("[key_name(usr)] deleted all objects of scrict type [a_type] ([i] objects deleted) ")
-				message_admins("\blue [key_name(usr)] deleted all objects of scrict type [a_type] ([i] objects deleted) ", 1)
-			else if(action_type == "Type and subtypes")
-				var/i = 0
-				for(var/obj/O in world)
-					if(istype(O,a_type))
-						i++
-						del(O)
-				if(!i)
-					usr << "No objects of this type exist"
-					return
-				log_admin("[key_name(usr)] deleted all objects of scrict type with subtypes [a_type] ([i] objects deleted) ")
-				message_admins("\blue [key_name(usr)] deleted all objects of type with subtypes [a_type] ([i] objects deleted) ", 1)
 
-		else if (href_list["explode"])
-			if(!href_list["explode"])
-				return
+			var/O_type = O.type
+			switch(action_type)
+				if("Strict type")
+					var/i = 0
+					for(var/obj/Obj in world)
+						if(Obj.type == O_type)
+							i++
+							del(Obj)
+					if(!i)
+						usr << "No objects of this type exist"
+						return
+					log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
+					message_admins("\blue [key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ", 1)
+				if("Type and subtypes")
+					var/i = 0
+					for(var/obj/Obj in world)
+						if(istype(Obj,O_type))
+							i++
+							del(Obj)
+					if(!i)
+						usr << "No objects of this type exist"
+						return
+					log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
+					message_admins("\blue [key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ", 1)
+
+		else if(href_list["explode"])
+			if(!check_rights(0))	return
+
 			var/atom/A = locate(href_list["explode"])
-			if(!A)
-				return
 			if(!isobj(A) && !ismob(A) && !isturf(A))
+				usr << "This can only be done to instances of type /obj, /mob and /turf"
 				return
-			if(!admin_rank_check(src.holder.level, 3)) return
+
 			src.cmd_admin_explosion(A)
 			href_list["datumrefresh"] = href_list["explode"]
-		else if (href_list["emp"])
-			if(!href_list["emp"])
-				return
+
+		else if(href_list["emp"])
+			if(!check_rights(0))	return
+
 			var/atom/A = locate(href_list["emp"])
-			if(!A)
-				return
 			if(!isobj(A) && !ismob(A) && !isturf(A))
+				usr << "This can only be done to instances of type /obj, /mob and /turf"
 				return
-			if(!admin_rank_check(src.holder.level, 3)) return
+
 			src.cmd_admin_emp(A)
 			href_list["datumrefresh"] = href_list["emp"]
-		else if (href_list["mark_object"])
-			if(!href_list["mark_object"])
-				return
+
+		else if(href_list["mark_object"])
+			if(!check_rights(0))	return
+
 			var/datum/D = locate(href_list["mark_object"])
-			if(!D)
+			if(!istype(D))
+				usr << "This can only be done to instances of type /datum"
 				return
-			if(!src.holder)
-				return
-			if(!admin_rank_check(src.holder.level, 3)) return
+
 			src.holder.marked_datum = D
 			href_list["datumrefresh"] = href_list["mark_object"]
-		else if (href_list["rotatedatum"])
-			if(!admin_rank_check(src.holder.level, 3)) return
-			if(!href_list["rotatedir"])
-				return
+
+		else if(href_list["rotatedatum"])
+			if(!check_rights(0))	return
+
 			var/atom/A = locate(href_list["rotatedatum"])
-			if(!A)
+			if(!istype(A))
+				usr << "This can only be done to instances of type /atom"
 				return
-			if(!istype(A,/atom))
-				usr << "This can only be done to objects of type /atom"
-				return
-			if(!src.holder)
-				return
+
 			switch(href_list["rotatedir"])
-				if("right")
-					A.dir = turn(A.dir, -45)
-				if("left")
-					A.dir = turn(A.dir, 45)
+				if("right")	A.dir = turn(A.dir, -45)
+				if("left")	A.dir = turn(A.dir, 45)
 			href_list["datumrefresh"] = href_list["rotatedatum"]
-		else if (href_list["makemonkey"])
-			var/mob/M = locate(href_list["makemonkey"])
-			if(!M)
+
+		else if(href_list["makemonkey"])
+			if(!check_rights(0))	return
+
+			var/mob/living/carbon/human/H = locate(href_list["makemonkey"])
+			if(!istype(H))
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
-			if(!admin_rank_check(src.holder.level, 3)) return
-			if(!ishuman(M))
-				usr << "This can only be done to objects of type /mob/living/carbon/human"
-				return
-			if(!src.holder)
-				usr << "You are not an administrator."
-				return
-			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
-			if(!action_type || action_type == "Cancel")
-				return
-			if(!M)
+
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("monkeyone"=href_list["makemonkey"]))
-		else if (href_list["makerobot"])
-			var/mob/M = locate(href_list["makerobot"])
-			if(!M)
+
+		else if(href_list["makerobot"])
+			if(!check_rights(0))	return
+
+			var/mob/living/carbon/human/H = locate(href_list["makerobot"])
+			if(!istype(H))
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
-			if(!admin_rank_check(src.holder.level, 3)) return
-			if(!ishuman(M))
-				usr << "This can only be done to objects of type /mob/living/carbon/human"
-				return
-			if(!src.holder)
-				usr << "You are not an administrator."
-				return
-			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
-			if(!action_type || action_type == "Cancel")
-				return
-			if(!M)
+
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makerobot"=href_list["makerobot"]))
-		else if (href_list["makealien"])
-			var/mob/M = locate(href_list["makealien"])
-			if(!M)
+
+		else if(href_list["makealien"])
+			if(!check_rights(0))	return
+
+			var/mob/living/carbon/human/H = locate(href_list["makealien"])
+			if(!istype(H))
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
-			if(!admin_rank_check(src.holder.level, 3)) return
-			if(!ishuman(M))
-				usr << "This can only be done to objects of type /mob/living/carbon/human"
-				return
-			if(!src.holder)
-				usr << "You are not an administrator."
-				return
-			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
-			if(!action_type || action_type == "Cancel")
-				return
-			if(!M)
+
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makealien"=href_list["makealien"]))
-		else if (href_list["makemetroid"])
-			var/mob/M = locate(href_list["makemetroid"])
-			if(!M)
+
+		else if(href_list["makemetroid"])
+			if(!check_rights(0))	return
+
+			var/mob/living/carbon/human/H = locate(href_list["makemetroid"])
+			if(!istype(H))
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
-			if(!admin_rank_check(src.holder.level, 3)) return
-			if(!ishuman(M))
-				usr << "This can only be done to objects of type /mob/living/carbon/human"
-				return
-			if(!src.holder)
-				usr << "You are not an administrator."
-				return
-			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
-			if(!action_type || action_type == "Cancel")
-				return
-			if(!M)
+
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makemetroid"=href_list["makemetroid"]))
-		else if (href_list["makeai"])
-			var/mob/M = locate(href_list["makeai"])
-			if(!M)
+
+		else if(href_list["makeai"])
+			if(!check_rights(0))	return
+
+			var/mob/living/carbon/human/H = locate(href_list["makeai"])
+			if(!istype(H))
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
-			if(!admin_rank_check(src.holder.level, 3)) return
-			if(!ishuman(M))
-				usr << "This can only be done to objects of type /mob/living/carbon/human"
-				return
-			if(!src.holder)
-				usr << "You are not an administrator."
-				return
-			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
-			if(!action_type || action_type == "Cancel")
-				return
-			if(!M)
+
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
-		else if (href_list["setmutantrace"])
+
+		else if(href_list["setmutantrace"])
+			if(!check_rights(0))	return
+
 			var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
-			if(!admin_rank_check(src.holder.level, 3)) return
 			if(!istype(H))
-				usr << "This can only be done to objects of type /mob/living/carbon/human"
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
-			if(!src.holder)
-				usr << "You are not an administrator."
-				return
+
 			var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","metroid","plant","tajaran","skrell") //BS12 EDIT TAJ EDIT SKR
 			switch(new_mutantrace)
 				if(null)		return
 				if("NONE")		new_mutantrace = ""
-			if(!H || !istype(H))
+			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			if(H.dna)
 				H.dna.mutantrace = new_mutantrace
 				H.update_mutantrace()
-		else if (href_list["regenerateicons"])
+
+		else if(href_list["regenerateicons"])
+			if(!check_rights(0))	return
+
 			var/mob/M = locate(href_list["regenerateicons"])
-			if(!admin_rank_check(src.holder.level, 3)) return
-			if(!istype(M))
-				usr << "This can only be done to objects of type /mob"
-				return
-			if(!src.holder)
-				usr << "You are not an administrator."
+			if(!ismob(M))
+				usr << "This can only be done to instances of type /mob"
 				return
 			M.regenerate_icons()
-		else if (href_list["adjustDamage"] && href_list["mobToDamage"])
-			var/mob/M = locate(href_list["mobToDamage"])
-			var/Text = locate(href_list["adjustDamage"])
 
-			if(!isliving(M)) return
-			var/mob/living/L = M
+		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
+			if(!check_rights(0))	return
 
-			if(!admin_rank_check(src.holder.level, 3)) return
+			var/mob/living/L = locate(href_list["mobToDamage"])
+			if(!istype(L)) return
+
+			var/Text = href_list["adjustDamage"]
 
 			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
-			if(Text == "brute")
-				L.adjustBruteLoss(amount)
-			else if(Text == "fire")
-				L.adjustFireLoss(amount)
-			else if(Text == "toxin")
-				L.adjustToxLoss(amount)
-			else if(Text == "oxygen")
-				L.adjustOxyLoss(amount)
-			else if(Text == "brain")
-				L.adjustBrainLoss(amount)
-			else if(Text == "clone")
-				L.adjustCloneLoss(amount)
-			else
-				usr << "You caused an error. DEBUG: Text:[Text] Mob:[M]"
+
+			if(!L)
+				usr << "Mob doesn't exist anymore"
 				return
 
+			switch(Text)
+				if("brute")	L.adjustBruteLoss(amount)
+				if("fire")	L.adjustFireLoss(amount)
+				if("toxin")	L.adjustToxLoss(amount)
+				if("oxygen")L.adjustOxyLoss(amount)
+				if("brain")	L.adjustBrainLoss(amount)
+				if("clone")	L.adjustCloneLoss(amount)
+				else
+					usr << "You caused an error. DEBUG: Text:[Text] Mob:[L]"
+					return
+
 			if(amount != 0)
-				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [M] ")
-				message_admins("\blue [key_name(usr)] dealt [amount] amount of [Text] damage to [M] ", 1)
+				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
+				message_admins("\blue [key_name(usr)] dealt [amount] amount of [Text] damage to [L] ", 1)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 		else
 			. = 0
-		if (href_list["datumrefresh"])
+
+		if(href_list["datumrefresh"])
 			var/datum/DAT = locate(href_list["datumrefresh"])
-			if(!DAT)
-				return
-			if(!istype(DAT,/datum))
+			if(!istype(DAT, /datum))
 				return
 			src.debug_variables(DAT)
 			. = 1
+
 		return
 

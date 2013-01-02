@@ -193,69 +193,37 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 	IonStorm(0)
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
- /*
- Stealth spawns xenos
- Changed to accomodate specific spawning. It was annoying before. /N
-  */
-/client/proc/spawn_xeno()
-	set category = "Fun"
-	set name = "Spawn Xeno"
-	set desc = "Spawns a xenomorph for all those boring rounds, without having you to do so manually."
-	set popup_menu = 0
-
-	if(!holder)
-		src << "Only administrators may use this command."
-		return
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes") return
-
-	if(create_xeno())
-		feedback_add_details("admin_verb","X") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		log_admin("[key_name(usr)] spawned a xeno.")
-		message_admins("\blue [key_name_admin(usr)] spawned a xeno.", 1)
-	return
-
-
 
 //I use this proc for respawn character too. /N
-/proc/create_xeno(mob/dead/observer/G)
-	var/alien_caste = alert(src, "Please choose which caste to spawn.",,"Hunter","Sentinel","Drone")
-
-	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
-
-	var/mob/living/carbon/alien/humanoid/new_xeno
-	switch(alien_caste)
-		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(spawn_here)
-		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(spawn_here)
-		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone(spawn_here)
-		else
-			return 0
-
-	var/selected_key
-	if(G && G.key)
-		selected_key = G.key
-	else
-		var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn
-		for(G in player_list)
-			if(G.client.be_alien)
-				if(((G.client.inactivity/10)/60) <= 5)
-					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-						candidates += G.key
+/proc/create_xeno(ckey)
+	if(!ckey)
+		var/list/candidates = list()
+		for(var/mob/M in player_list)
+			if(M.stat != DEAD)		continue	//we are not dead!
+			if(!M.client.be_alien)	continue	//we don't want to be an alium
+			if(M.client.is_afk())	continue	//we are afk
+			if(M.mind && M.mind.current && M.mind.current.stat != DEAD)	continue	//we have a live body we are tied to
+			candidates += M.ckey
 		if(candidates.len)
-			selected_key = input("Pick the client you want to respawn as a xeno.", "Suitable Candidates") as null|anything in candidates
+			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in candidates
+		else
+			usr << "<font color='red'>Error: create_xeno(): no suitable candidates.</font>"
+	if(!istext(ckey))	return 0
 
-	if(selected_key)
-		new_xeno.key = selected_key
-		message_admins("\blue [key_name_admin(usr)] has spawned [selected_key] as a filthy xeno.", 1)
-		return 1
-	else
-		//we couldn't find a candidate
-		usr << "<font color='red'>Error: create_xeno(): no suitable players.</font>"
-		del(new_xeno)
-		return 0
+	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Hunter","Sentinel","Drone","Larva")
+	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
+	var/mob/living/carbon/alien/new_xeno
+	switch(alien_caste)
+		if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(spawn_here)
+		if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(spawn_here)
+		if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(spawn_here)
+		if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(spawn_here)
+		if("Larva")		new_xeno = new /mob/living/carbon/alien/larva(spawn_here)
+		else			return 0
+
+	new_xeno.ckey = ckey
+	message_admins("\blue [key_name_admin(usr)] has spawned [ckey] as a filthy xeno [alien_caste].", 1)
+	return 1
 
 /*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
@@ -298,7 +266,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(T)
 					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(T)
 					else//If we don't know what special role they have, for whatever reason, or they're a larva.
-						create_xeno(G_found)
+						create_xeno(G_found.ckey)
 						return
 
 				//Now to give them their mind back.
@@ -673,7 +641,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
 			log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 			message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
-			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=[mins]&server=[dd_replacetext(config.server_name, "#", "")]")
+			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=[mins]&server=[replacetext(config.server_name, "#", "")]")
 			del(M.client)
 			del(M)
 		else
@@ -688,7 +656,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
 		log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 		message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
-		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=perma&server=[dd_replacetext(config.server_name, "#", "")]")
+		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=perma&server=[replacetext(config.server_name, "#", "")]")
 		del(M.client)
 		del(M)
 */
@@ -784,19 +752,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	return
 
 /client/proc/admin_cancel_shuttle()
-
 	set category = "Admin"
 	set name = "Cancel Shuttle"
+	if(!check_rights(0))	return
+	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes") return
 
-	if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
+	if(!ticker || emergency_shuttle.location || emergency_shuttle.direction == 0)
 		return
-
-	if (!holder)
-		src << "Only administrators may use this command."
-		return
-
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes") return
 
 	emergency_shuttle.recall()
 	feedback_add_details("admin_verb","CCSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -861,38 +823,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	ticker.random_players = 1
 	feedback_add_details("admin_verb","MER") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/toggle_gravity_on()
-	set category = "Debug"
-	set name = "Toggle station gravity on"
-	set desc = "Toggles all gravity to active on the station."
-
-	if (!(ticker && ticker.mode))
-		usr << "Please wait until the game starts!  Not sure how it will work otherwise."
-		return
-
-
-	for(var/area/A in world)
-		A.gravitychange(1,A)
-
-	command_alert("CentComm is now beaming gravitons to your station.  We appoligize for any inconvience.")
-	feedback_add_details("admin_verb","TSGON") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/toggle_gravity_off()
-	set category = "Debug"
-	set name = "Toggle station gravity off"
-	set desc = "Toggles all gravity to inactive on the station."
-
-	if (!(ticker && ticker.mode))
-		usr << "Please wait until the game starts!  Not sure how it will work otherwise."
-		return
-
-
-	for(var/area/A in world)
-		A.gravitychange(0,A)
-
-	command_alert("For budget reasons, Centcomm is no longer beaming gravitons to your station.  We appoligize for any inconvience.")
-	feedback_add_details("admin_verb","TSGOFF") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/toggle_random_events()

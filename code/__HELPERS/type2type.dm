@@ -82,47 +82,6 @@
 		hex = text("0[]", hex)
 	return hex
 
-//Text 'text' will be added as elements of a list when seperated by 'seperator'
-/proc/dd_text2list(text, separator, var/list/withinList)
-	var/textlength = length(text)
-	var/separatorlength = length(separator)
-	if(withinList && !withinList.len) withinList = null
-	var/list/textList = new()
-	var/searchPosition = 1
-	var/findPosition = 1
-	var/loops = 999
-	while(loops) //Byond will think 1000+ iterations of a loop is an infinite loop
-		findPosition = findtext(text, separator, searchPosition, 0)
-		var/buggyText = copytext(text, searchPosition, findPosition)
-		if(!withinList || (buggyText in withinList)) textList += "[buggyText]"
-		if(!findPosition) return textList
-		searchPosition = findPosition + separatorlength
-		if(searchPosition > textlength)
-			textList += ""
-			return textList
-		loops--
-	return
-
-//Text 'text' will be added as elements of a list when seperated by 'seperator'. The separator is case sensitive.
-/proc/dd_text2list_case(text, separator, var/list/withinList)
-	var/textlength = length(text)
-	var/separatorlength = length(separator)
-	if(withinList && !withinList.len) withinList = null
-	var/list/textList = new()
-	var/searchPosition = 1
-	var/findPosition = 1
-	var/loops = 999
-	while(loops) //Byond will think 1000+ iterations of a loop is an infinite loop
-		findPosition = findtextEx(text, separator, searchPosition, 0)
-		var/buggyText = copytext(text, searchPosition, findPosition)
-		if(!withinList || (buggyText in withinList)) textList += "[buggyText]"
-		if(!findPosition) return textList
-		searchPosition = findPosition + separatorlength
-		if(searchPosition > textlength)
-			textList += ""
-			return textList
-		loops--
-	return
 
 //Attaches each element of a list to a single string seperated by 'seperator'.
 /proc/dd_list2text(var/list/the_list, separator)
@@ -138,46 +97,6 @@
 		count++
 	return newText
 
-//tg_text2list is faster then dd_text2list
-//not case sensitive version
-proc/tg_text2list(string, separator=",")
-	if(!string)
-		return
-	var/list/output = new
-	var/seplength = length(separator)
-	var/strlength = length(string)
-	var/prev = 1
-	var/index
-	do
-		index = findtext(string, separator, prev, 0)
-		output += copytext(string, prev, index)
-		if(!index)
-			break
-		prev = index+seplength
-		if(prev>strlength)
-			break
-	while(index)
-	return output
-
-//case sensitive version
-proc/tg_text2list_case(string, separator=",")
-	if(!string)
-		return
-	var/list/output = new
-	var/seplength = length(separator)
-	var/strlength = length(string)
-	var/prev = 1
-	var/index
-	do
-		index = findtextEx(string, separator, prev, 0)
-		output += copytext(string, prev, index)
-		if(!index)
-			break
-		prev = index+seplength
-		if(prev>strlength)
-			break
-	while(index)
-	return output
 
 //slower then dd_list2text, but correctly processes associative lists.
 proc/tg_list2text(list/list, glue=",")
@@ -188,16 +107,62 @@ proc/tg_list2text(list/list, glue=",")
 		output += (i!=1? glue : null)+(!isnull(list["[list[i]]"])?"[list["[list[i]]"]]":"[list[i]]")
 	return output
 
-//Gets a file and adds its contents to a list.
-/proc/dd_file2list(file_path, separator)
-	var/file
-	if(separator == null)
-		separator = "\n"
-	if(isfile(file_path))
-		file = file_path
+
+//Converts a text string into a list by splitting the string at each seperator found in text (discarding the seperator)
+//Returns an empty list if the text cannot be split, or the split text in a list.
+//Not giving a "" seperator will cause the text to be broken into a list of single letters.
+/proc/text2list(text, seperator="\n")
+	. = list()
+
+	var/text_len = length(text)					//length of the input text
+	var/seperator_len = length(seperator)		//length of the seperator text
+
+	if(text_len >= seperator_len)
+		var/i
+		var/last_i = 1
+
+		for(i=1,i<=(text_len+1-seperator_len),i++)
+			if( cmptext(copytext(text,i,i+seperator_len), seperator) )
+				if(i != last_i)
+					. += copytext(text,last_i,i)
+				last_i = i + seperator_len
+
+		if(last_i <= text_len)
+			. += copytext(text, last_i, 0)
 	else
-		file = file(file_path)
-	return dd_text2list(file2text(file), separator)
+		. += text
+	return .
+
+//Converts a text string into a list by splitting the string at each seperator found in text (discarding the seperator)
+//Returns an empty list if the text cannot be split, or the split text in a list.
+//Not giving a "" seperator will cause the text to be broken into a list of single letters.
+//Case Sensitive!
+/proc/text2listEx(text, seperator="\n")
+	. = list()
+
+	var/text_len = length(text)					//length of the input text
+	var/seperator_len = length(seperator)		//length of the seperator text
+
+	if(text_len >= seperator_len)
+		var/i
+		var/last_i = 1
+
+		for(i=1,i<=(text_len+1-seperator_len),i++)
+			if( cmptextEx(copytext(text,i,i+seperator_len), seperator) )
+				if(i != last_i)
+					. += copytext(text,last_i,i)
+				last_i = i + seperator_len
+
+		if(last_i <= text_len)
+			. += copytext(text, last_i, 0)
+	else
+		. += text
+	return .
+
+//Splits the text of a file at seperator and returns them in a list.
+/proc/file2list(filename, seperator="\n")
+	return text2list(return_file_text(filename),seperator)
+
 
 //Turns a direction into text
 /proc/dir2text(direction)
@@ -247,20 +212,45 @@ proc/tg_list2text(list/list, glue=",")
 /proc/angle2dir(var/degree)
 	degree = ((degree+22.5)%365)
 	if(degree < 45)		return NORTH
-	if(degree < 90)		return NORTH|EAST
+	if(degree < 90)		return NORTHEAST
 	if(degree < 135)	return EAST
-	if(degree < 180)	return SOUTH|EAST
+	if(degree < 180)	return SOUTHEAST
 	if(degree < 225)	return SOUTH
-	if(degree < 270)	return SOUTH|WEST
+	if(degree < 270)	return SOUTHWEST
 	if(degree < 315)	return WEST
 	return NORTH|WEST
+
+//returns the north-zero clockwise angle in degrees, given a direction
+
+/proc/dir2angle(var/D)
+	switch(D)
+		if(NORTH)		return 0
+		if(SOUTH)		return 180
+		if(EAST)		return 90
+		if(WEST)		return 270
+		if(NORTHEAST)	return 45
+		if(SOUTHEAST)	return 135
+		if(NORTHWEST)	return 315
+		if(SOUTHWEST)	return 225
+		else			return null
 
 //Returns the angle in english
 /proc/angle2text(var/degree)
 	return dir2text(angle2dir(degree))
 
-//Returns the world time in english
-proc/worldtime2text(var/time = 0)
-	if(time == 0)
-		time = world.time
-	return "[round(time / 36000)+12]:[(time / 600 % 60) < 10 ? add_zero(time / 600 % 60, 1) : time / 600 % 60]"
+//Converts a rights bitfield into a string
+/proc/rights2text(rights)
+	if(rights & R_BUILDMODE)	. += "+BUILDMODE"
+	if(rights & R_ADMIN)		. += "+ADMIN"
+	if(rights & R_BAN)			. += "+BAN"
+	if(rights & R_FUN)			. += "+FUN"
+	if(rights & R_SERVER)		. += "+SERVER"
+	if(rights & R_DEBUG)		. += "+DEBUG"
+	if(rights & R_POSSESS)		. += "+POSSESS"
+	if(rights & R_PERMISSIONS)	. += "+PERMISSIONS"
+	if(rights & R_STEALTH)		. += "+STEALTH"
+	if(rights & R_REJUVINATE)	. += "+REJUVINATE"
+	if(rights & R_VAREDIT)		. += "+VAREDIT"
+	if(rights & R_SOUNDS)		. += "+SOUND"
+	if(rights & R_SPAWN)		. += "+SPAWN"
+	return .

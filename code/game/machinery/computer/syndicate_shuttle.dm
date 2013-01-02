@@ -153,7 +153,7 @@ var/bomb_set = 1
 
 	if(..())
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/dat
 	if (src.temp)
 		dat = src.temp
@@ -172,7 +172,7 @@ var/bomb_set = 1
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 
 	if (href_list["sendtospace"])
 		if(!syndicate_station_at_station|| syndicate_station_moving_to_station || syndicate_station_moving_to_space) return

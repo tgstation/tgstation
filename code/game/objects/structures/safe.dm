@@ -73,7 +73,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/attack_hand(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat = "<center>"
 	dat += "<a href='?src=\ref[src];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=\ref[src];decrement=1'>-</a> [dial * 5] <a href='?src=\ref[src];increment=1'>+</a>"
 	if(open)
@@ -135,10 +135,11 @@ FLOOR SAFES
 	if(href_list["retrieve"])
 		user << browse("", "window=safe") // Close the menu
 
-		var/obj/item/P = locate(href_list["retrieve"])
-		if(P && in_range(src, user))
-			user.put_in_hands(P)
-			updateUsrDialog()
+		var/obj/item/P = locate(href_list["retrieve"]) in src
+		if(open)
+			if(P && in_range(src, user))
+				user.put_in_hands(P)
+				updateUsrDialog()
 
 
 /obj/structure/safe/attackby(obj/item/I as obj, mob/user as mob)

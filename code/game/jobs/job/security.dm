@@ -8,6 +8,7 @@
 	supervisors = "the captain"
 	selection_color = "#ffdddd"
 	idtype = /obj/item/weapon/card/id/silver
+	req_admin_notify = 1
 
 
 	equip(var/mob/living/carbon/human/H)

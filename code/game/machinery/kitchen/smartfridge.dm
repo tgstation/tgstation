@@ -82,14 +82,14 @@
 	return 0
 
 /obj/machinery/smartfridge/attack_hand(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	interact(user)
 
 /*******************
 *   SmartFridge Menu
 ********************/
 
-/obj/machinery/smartfridge/proc/interact(mob/user as mob)
+/obj/machinery/smartfridge/interact(mob/user as mob)
 	if(!src.ispowered)
 		return
 
@@ -115,7 +115,7 @@
 	if(..())
 		return
 
-	usr.machine = src
+	usr.set_machine(src)
 
 	var/N = href_list["vend"]
 

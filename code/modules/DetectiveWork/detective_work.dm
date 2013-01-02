@@ -92,7 +92,7 @@ obj/machinery/computer/forensic_scanning
 	attack_hand(mob/user)
 		if(..())
 			return
-		user.machine = src
+		user.set_machine(src)
 		var/dat = ""
 		var/isai = 0
 		if(istype(usr,/mob/living/silicon))
