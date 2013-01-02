@@ -307,6 +307,14 @@
 					set_picture("ai_friend")
 				if("Tribunal")
 					set_picture("tribunal")
+				if("Beer mug")
+					set_picture("ai_beer")
+				if("Dwarf")
+					set_picture("ai_dwarf")
+				if("Fishtank")
+					set_picture("ai_fishtank")
+				if("Plump Helmet")
+					set_picture("ai_plump")
 
 			return
 
