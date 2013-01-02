@@ -422,9 +422,11 @@ var/global/list/uneatable = list(
 			continue
 
 		if(M.stat == CONSCIOUS)
-			if(istype(M:glasses,/obj/item/clothing/glasses/meson))
-				M << "\blue You look directly into The [src.name], good thing you had your protective eyewear on!"
-				return
+			if (istype(M,/mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
+					H << "\blue You look directly into The [src.name], good thing you had your protective eyewear on!"
+					return
 		M << "\red You look directly into The [src.name] and feel weak."
 		M.apply_effect(3, STUN)
 		for(var/mob/O in viewers(M, null))
