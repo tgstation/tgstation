@@ -273,52 +273,52 @@
 
 
 	proc/inject_inap(mob/living/user as mob)
-		if(src.occupant)
+		if(src.occupant && src.occupant.reagents)
 			if(src.occupant.reagents.get_reagent_amount("inaprovaline") + 30 <= 60)
 				src.occupant.reagents.add_reagent("inaprovaline", 30)
 			user << text("Occupant now has [] units of Inaprovaline in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("inaprovaline"))
 		else
-			user << "No occupant!"
+			user << "There's no occupant in the sleeper or the subject rejects the chemicals!"
 		return
 
 
 	proc/inject_stox(mob/living/user as mob)
-		if(src.occupant)
+		if(src.occupant && src.occupant.reagents)
 			if(src.occupant.reagents.get_reagent_amount("stoxin") + 20 <= 40)
 				src.occupant.reagents.add_reagent("stoxin", 20)
 			user << text("Occupant now has [] units of soporifics in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("stoxin"))
 		else
-			user << "No occupant!"
+			user << "There's no occupant in the sleeper or the subject rejects the chemicals!"
 		return
 
 
 	proc/inject_dermaline(mob/living/user as mob)
-		if (src.occupant)
+		if(src.occupant && src.occupant.reagents)
 			if(src.occupant.reagents.get_reagent_amount("dermaline") + 20 <= 40)
 				src.occupant.reagents.add_reagent("dermaline", 20)
 			user << text("Occupant now has [] units of Dermaline in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("dermaline"))
 		else
-			user << "No occupant!"
+			user << "There's no occupant in the sleeper or the subject rejects the chemicals!"
 		return
 
 
 	proc/inject_bicaridine(mob/living/user as mob)
-		if(src.occupant)
+		if(src.occupant && src.occupant.reagents)
 			if(src.occupant.reagents.get_reagent_amount("bicaridine") + 10 <= 20)
 				src.occupant.reagents.add_reagent("bicaridine", 10)
 			user << text("Occupant now has [] units of Bicaridine in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("bicaridine"))
 		else
-			user << "No occupant!"
+			user << "There's no occupant in the sleeper or the subject rejects the chemicals!"
 		return
 
 
 	proc/inject_dexalin(mob/living/user as mob)
-		if(src.occupant)
+		if(src.occupant && src.occupant.reagents)
 			if(src.occupant.reagents.get_reagent_amount("dexalin") + 20 <= 40)
 				src.occupant.reagents.add_reagent("dexalin", 20)
 			user << text("Occupant now has [] units of Dexalin in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("dexalin"))
 		else
-			user << "No occupant!"
+			user << "There's no occupant in the sleeper or the subject rejects the chemicals!"
 		return
 
 
