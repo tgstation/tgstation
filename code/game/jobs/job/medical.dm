@@ -59,6 +59,7 @@
 				if("Surgeon")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat(H), slot_wear_suit)
+					H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/blue(H), slot_head)
 				if("Virologist")
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/labcoat/virologist(H), slot_wear_suit)
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
