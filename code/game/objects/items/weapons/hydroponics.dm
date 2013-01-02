@@ -52,7 +52,7 @@
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
 	w_class = 1
-	var/item_quants = list()
+	var/list/item_quants = list()
 
 /obj/item/weapon/seedbag/attack_self(mob/user as mob)
 	user.machine = src
@@ -114,6 +114,7 @@
 				dat += "<a href='byond://?src=\ref[src];vend=[O]'>Vend</A>"
 				dat += "<br>"
 
+		dat += "<br><a href='byond://?src=\ref[src];unload=1'>Unload All</A>"
 		dat += "</TT>"
 	user << browse("<HEAD><TITLE>Seedbag Supplies</TITLE></HEAD><TT>[dat]</TT>", "window=seedbag")
 	onclose(user, "seedbag")
@@ -123,17 +124,24 @@
 		return
 
 	usr.machine = src
+	if ( href_list["vend"] )
+		var/N = href_list["vend"]
 
-	var/N = href_list["vend"]
+		if(item_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
+			return
 
-	if(item_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
-		return
+		item_quants[N] -= 1
+		for(var/obj/O in contents)
+			if(O.name == N)
+				O.loc = get_turf(src)
+				usr.put_in_hands(O)
+				break
 
-	item_quants[N] -= 1
-	for(var/obj/O in contents)
-		if(O.name == N)
+	else if ( href_list["unload"] )
+		item_quants.Cut()
+		for(var/obj/O in contents )
 			O.loc = get_turf(src)
-			break
+
 	src.updateUsrDialog()
 	return
 
