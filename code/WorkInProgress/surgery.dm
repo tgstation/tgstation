@@ -1,12 +1,3 @@
-
-//check if mob is lying down on something we can operate him on.
-/proc/can_operate(mob/living/carbon/M)
-	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
-	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || 	\
-	(locate(/obj/structure/table/, M.loc) && 	\
-	(M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))
-
 /datum/surgery_status/
 	var/eyes	=	0
 	var/face	=	0
@@ -49,7 +40,7 @@
 	var/can_infect = 0
 
 // Build this list by iterating over all typesof(/datum/surgery_step) and sorting the results by priority
-var/global/list/surgery_steps = null
+
 
 proc/build_surgery_steps_list()
 	surgery_steps = list()
