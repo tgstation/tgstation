@@ -226,7 +226,7 @@
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
-	if(!istype(W)) return
+	if(!istype(W)) return 0
 	if(usr)
 		usr.u_equip(W)
 		usr.update_icons()	//update our overlays
@@ -251,10 +251,11 @@
 		if(usr.s_active)
 			usr.s_active.show_to(usr)
 	update_icon()
+	return 1
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W as obj, atom/new_location)
-	if(!istype(W)) return
+	if(!istype(W)) return 0
 
 	if(istype(src, /obj/item/weapon/storage/fancy))
 		var/obj/item/weapon/storage/fancy/F = src
@@ -284,6 +285,7 @@
 		W.maptext = ""
 	W.on_exit_storage(src)
 	update_icon()
+	return 1
 
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)

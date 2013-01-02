@@ -87,12 +87,10 @@
 		if(!C) continue
 		var/perpname = "wot"
 		if(perp.wear_id)
-			C.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobName())]")
-			if(istype(perp.wear_id,/obj/item/weapon/card/id))
-				perpname = perp.wear_id:registered_name
-			else if(istype(perp.wear_id,/obj/item/device/pda))
-				var/obj/item/device/pda/tempPda = perp.wear_id
-				perpname = tempPda.owner
+			var/obj/item/weapon/card/id/I = perp.wear_id.GetID()
+			if(I)
+				C.images += image(tempHud,perp,"hud[ckey(I.GetJobName())]")
+				perpname = I.registered_name
 		else
 			perpname = perp.name
 			C.images += image(tempHud,perp,"hudunknown")

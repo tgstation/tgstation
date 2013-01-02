@@ -495,15 +495,26 @@
 		if(istype(usr, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = usr
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+
+				/* // Uncomment if you want sechuds to need security access
+				var/allowed_access = 0
+				if(H.wear_id)
+					var/list/access = H.wear_id.GetAccess()
+					if(access_security in access)
+						allowed_access = 1
+						return
+
+				if(!allowed_access)
+					H << "<span class='warning'>ERROR: Invalid Access</span>"
+					return
+				*/
+
 				var/perpname = "wot"
 				var/modified = 0
 
 				if(wear_id)
-					if(istype(wear_id,/obj/item/weapon/card/id))
-						perpname = wear_id:registered_name
-					else if(istype(wear_id,/obj/item/device/pda))
-						var/obj/item/device/pda/tempPda = wear_id
-						perpname = tempPda.owner
+					var/obj/item/weapon/card/id/I = wear_id.GetID()
+					perpname = I.registered_name
 				else
 					perpname = src.name
 

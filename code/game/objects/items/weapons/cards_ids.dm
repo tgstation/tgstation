@@ -79,13 +79,11 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/item/weapon/card/id/attack_hand(mob/user as mob)
-	var/obj/item/weapon/storage/wallet/WL
-	if( istype(loc, /obj/item/weapon/storage/wallet) )
-		WL = loc
-	..()
-	if(WL)
-		WL.update_icon()
+/obj/item/weapon/card/id/GetAccess()
+	return access
+
+/obj/item/weapon/card/id/GetID()
+	return src
 
 /obj/item/weapon/card/id/verb/read()
 	set name = "Read ID Card"

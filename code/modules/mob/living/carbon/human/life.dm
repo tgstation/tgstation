@@ -1105,15 +1105,10 @@
 						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 
 				else if(istype(glasses, /obj/item/clothing/glasses/hud))
-					var/obj/item/clothing/glasses/hud/health/O = glasses
-
-					if(istype(O, /obj/item/clothing/glasses/hud/health))
-						O.process_hud(src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-
-					else if(istype(O, /obj/item/clothing/glasses/hud/security))
-						O.process_hud(src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+					var/obj/item/clothing/glasses/hud/O = glasses
+					O.process_hud(src)
+					if(!druggy)
+						see_invisible = SEE_INVISIBLE_LIVING
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
 			else

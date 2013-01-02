@@ -229,6 +229,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		return 0
 
+/obj/item/device/pda/GetAccess()
+	if(id)
+		return id.GetAccess()
+	else
+		return ..()
+
+/obj/item/device/pda/GetID()
+	return id
+
 /obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && !M.restrained() && !M.stat && can_use())

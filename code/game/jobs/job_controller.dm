@@ -368,7 +368,7 @@ var/global/datum/controller/occupations/job_master
 		if(locate(/obj/item/device/pda,H))//I bet this could just use locate.  It can --SkyMarshal
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
-			pda.ownjob = H.wear_id.assignment
+			pda.ownjob = C.assignment
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 		return 1
 

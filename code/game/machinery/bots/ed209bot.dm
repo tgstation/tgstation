@@ -705,22 +705,17 @@ Auto Patrol: []"},
 		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag))
 			threatcount += 2
 
-	if (src.check_records)
+	if(src.check_records)
 		for (var/datum/data/record/E in data_core.general)
 			var/perpname = perp.name
-			if (perp:wear_id)
-				var/obj/item/weapon/card/id/id = perp:wear_id
-				if(istype(perp:wear_id, /obj/item/device/pda))
-					var/obj/item/device/pda/pda = perp:wear_id
-					id = pda.id
-				if (id)
+			if(perp.wear_id)
+				var/obj/item/weapon/card/id/id = perp.wear_id.GetID()
+				if(id)
 					perpname = id.registered_name
-				else
-					var/obj/item/device/pda/pda = perp:wear_id
-					perpname = pda.owner
-			if (E.fields["name"] == perpname)
+
+			if(E.fields["name"] == perpname)
 				for (var/datum/data/record/R in data_core.security)
-					if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
+					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 						threatcount = 4
 						break
 
