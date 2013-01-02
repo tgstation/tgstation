@@ -97,13 +97,13 @@
 
 	var/turf/simulated/floor/location = loc
 	if(!istype(location))
-		del(src)
+		Kill()
 
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
-		del(src)
+		Kill()
 
 	if(location.air.toxins < 0.5 || location.air.oxygen < 0.5)
-		del(src)
+		Kill()
 
 	perform_exposure()
 
@@ -137,18 +137,20 @@
 			return 0*/
 	return 1
 
+// Garbage collect itself by nulling reference to it
 
-/obj/effect/hotspot/New()
-	..()
-	dir = pick(cardinal)
-	return
-
-
-/obj/effect/hotspot/Del()
-	if (istype(loc, /turf/simulated))
+/obj/effect/hotspot/proc/Kill()
+	DestroyTurf()
+	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc
-		loc:active_hotspot = null
+		if(T.active_hotspot == src)
+			T.active_hotspot = null
+	loc = null
 
+/obj/effect/hotspot/proc/DestroyTurf()
+
+	if(istype(loc, /turf/simulated))
+		var/turf/simulated/T = loc
 		if(T.to_be_destroyed)
 			var/chance_of_deletion
 			if (T.heat_capacity) //beware of division by zero
@@ -161,6 +163,13 @@
 				T.to_be_destroyed = 0
 				T.max_fire_temperature_sustained = 0
 
-		loc = null
+/obj/effect/hotspot/New()
+	..()
+	dir = pick(cardinal)
+	return
+
+/obj/effect/hotspot/Del()
+	if (istype(loc, /turf/simulated))
+		DestroyTurf()
 	..()
 	return

@@ -66,7 +66,7 @@ This system could be expanded to migrate all of our current mutations to. Maybe.
 		required = 2
 
 		get_mutation(var/mob/living/carbon/M)
-			M << "\blue You a pleasant warmth pulse throughout your body..."
+			M << "\blue You feel a pleasant warmth pulse throughout your body..."
 			M.mutations.Add(HEAL)
 
 /* /datum/mutationreq :

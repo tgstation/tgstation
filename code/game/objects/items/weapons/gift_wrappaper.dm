@@ -191,4 +191,4 @@
 		else
 			user << "\blue You need more paper."
 	else
-		user << "Theyre moving around too much. a Straitjacket would help."
+		user << "They are moving around too much. A straightjacket would help."

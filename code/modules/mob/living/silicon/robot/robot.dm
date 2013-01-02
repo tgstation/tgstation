@@ -779,6 +779,9 @@
 		if(icon_state =="mopgearrex")
 			overlays = null
 			overlays += "eyes-mopgearrex"
+		if(icon_state =="Miner")
+			overlays = null
+			overlays += "eyes-Miner"
 	else
 		overlays -= "eyes"
 

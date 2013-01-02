@@ -582,7 +582,7 @@ datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
 	desc = "Allows for the construction of a pAI Card"
 	id = "paicard"
-	req_tech = list("programming" = 3)
+	req_tech = list("programming" = 2)
 	build_type = PROTOLATHE
 	materials = list("$glass" = 500, "$metal" = 500)
 	build_path = "/obj/item/device/paicard"
