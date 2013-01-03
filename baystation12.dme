@@ -1,9 +1,8 @@
-// DM Environment file for tgstation.dme.
-// All manual changes should be made outside the BEGIN_ and END_ blocks.
- // New source code should be placed in .dm files: choose File/New --> Code File.
+// DM Environment file for baystation12.dme.
+// All manual changes should be made outside the BEGIN_ and END_ blocks. 
+ // New source code should be placed in .dm files: choose File/New --> Code File. 
 // BEGIN_INTERNALS
 // END_INTERNALS
-
 // BEGIN_FILE_DIR
 #define FILE_DIR .
 #define FILE_DIR "code"
@@ -51,6 +50,7 @@
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/weapons"
 // END_FILE_DIR
+
 // BEGIN_PREFERENCES
 // END_PREFERENCES
 
@@ -295,6 +295,7 @@
 #include "code\game\machinery\floodlight.dm"
 #include "code\game\machinery\Freezer.dm"
 #include "code\game\machinery\hologram.dm"
+#include "code\game\machinery\holosign.dm"
 #include "code\game\machinery\hydroponics.dm"
 #include "code\game\machinery\igniter.dm"
 #include "code\game\machinery\iv_drip.dm"
@@ -317,7 +318,6 @@
 #include "code\game\machinery\spaceheater.dm"
 #include "code\game\machinery\status_display.dm"
 #include "code\game\machinery\suit_storage_unit.dm"
-#include "code\game\machinery\holosign.dm"
 #include "code\game\machinery\syndicatebeacon.dm"
 #include "code\game\machinery\teleporter.dm"
 #include "code\game\machinery\transformer.dm"
@@ -1154,6 +1154,7 @@
 #include "code\WorkInProgress\Chinsky\ashtray.dm"
 #include "code\WorkInProgress\Ported\policetape.dm"
 #include "code\WorkInProgress\SkyMarshal\Ultralight_procs.dm"
+#include "code\WorkInProgress\Susan\susan_desert_turfs.dm"
 #include "code\WorkInProgress\virus2\analyser.dm"
 #include "code\WorkInProgress\virus2\antibodies.dm"
 #include "code\WorkInProgress\virus2\base.dm"
@@ -1174,5 +1175,6 @@
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
 #include "maps\tgstation.2.0.9.1.dmm"
+#include "maps\RandomZLevels\Academy.dm"
 #include "maps\RandomZLevels\stationCollision.dm"
 // END_INCLUDE
