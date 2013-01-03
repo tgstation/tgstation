@@ -340,7 +340,7 @@
 		if(istype(src, /mob/living/carbon/slime/adult))
 			if(!client)
 				for(var/i=1,i<=4,i++)
-					if(prob(80))
+					if(prob(70))
 						var/mob/living/carbon/slime/M = new primarytype(loc)
 						M.powerlevel = round(powerlevel/4)
 						M.Friends = Friends
