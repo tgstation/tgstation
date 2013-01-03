@@ -721,7 +721,7 @@ obj/machinery/atmospherics/pipe
 
 				icon_state = "manifold_[connected]_[unconnected]"
 
-				if(!connected)
+				if(!connected) 
 					del(src)
 
 			return
@@ -832,7 +832,7 @@ obj/machinery/atmospherics/pipe
 		icon_state = "manifold-y-f"
 
 	manifold4w
-		icon = 'pipe_manifold.dmi'
+		icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
 		icon_state = "manifold4w-f"
 
 		name = "4-way pipe manifold"
@@ -841,7 +841,7 @@ obj/machinery/atmospherics/pipe
 		volume = 140
 
 		dir = SOUTH
-		initialize_directions = EAST|NORTH|WEST|SOUTH
+		initialize_directions = NORTH|SOUTH|EAST|WEST
 
 		var/obj/machinery/atmospherics/node1
 		var/obj/machinery/atmospherics/node2
@@ -849,6 +849,7 @@ obj/machinery/atmospherics/pipe
 		var/obj/machinery/atmospherics/node4
 
 		level = 1
+		layer = 2.4 //under wires with their 2.44
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
@@ -862,7 +863,7 @@ obj/machinery/atmospherics/pipe
 			if(!parent)
 				..()
 			else
-				machines.Remove(src)
+				. = PROCESS_KILL
 /*
 			if(!node1)
 				parent.mingle_with_turf(loc, 70)
@@ -913,14 +914,13 @@ obj/machinery/atmospherics/pipe
 			if(reference == node4)
 				if(istype(node4, /obj/machinery/atmospherics/pipe))
 					del(parent)
-				node3 = null
+				node4 = null
 
 			update_icon()
 
 			..()
 
 		update_icon()
-			overlays = new()
 			if(node1&&node2&&node3&&node4)
 				var/C = ""
 				switch(color)
@@ -950,23 +950,24 @@ obj/machinery/atmospherics/pipe
 			return
 
 		initialize()
+			
 			for(var/obj/machinery/atmospherics/target in get_step(src,1))
-				if(target.initialize_directions & get_dir(target,src))
+				if(target.initialize_directions & 2)
 					node1 = target
 					break
 
 			for(var/obj/machinery/atmospherics/target in get_step(src,2))
-				if(target.initialize_directions & get_dir(target,src))
+				if(target.initialize_directions & 1)
 					node2 = target
 					break
 
 			for(var/obj/machinery/atmospherics/target in get_step(src,4))
-				if(target.initialize_directions & get_dir(target,src))
+				if(target.initialize_directions & 8)
 					node3 = target
 					break
 
 			for(var/obj/machinery/atmospherics/target in get_step(src,8))
-				if(target.initialize_directions & get_dir(target,src))
+				if(target.initialize_directions & 4)
 					node4 = target
 					break
 
@@ -1026,6 +1027,88 @@ obj/machinery/atmospherics/pipe
 	manifold4w/general/hidden
 		level = 1
 		icon_state = "manifold4w-f"
+		
+	cap
+		name = "pipe endcap"
+		desc = "An endcap for pipes"
+		icon = 'pipes.dmi'
+		icon_state = "cap"
+		level = 2
+		layer = 2.4 //under wires with their 2.44
+
+		volume = 35
+
+		dir = SOUTH
+		initialize_directions = NORTH
+
+		var/obj/machinery/atmospherics/node
+
+		New()
+			..()
+			switch(dir)
+				if(SOUTH)
+				 initialize_directions = NORTH
+				if(NORTH)
+				 initialize_directions = SOUTH
+				if(WEST)
+				 initialize_directions = EAST
+				if(EAST)
+				 initialize_directions = WEST
+
+		hide(var/i)
+			if(level == 1 && istype(loc, /turf/simulated))
+				invisibility = i ? 101 : 0
+			update_icon()
+
+		pipeline_expansion()
+			return list(node)
+
+		process()
+			if(!parent)
+				..()
+			else
+				. = PROCESS_KILL
+		Del()
+			if(node)
+				node.disconnect(src)
+
+			..()
+
+		disconnect(obj/machinery/atmospherics/reference)
+			if(reference == node)
+				if(istype(node, /obj/machinery/atmospherics/pipe))
+					del(parent)
+				node = null
+
+			update_icon()
+
+			..()
+
+		update_icon()
+			overlays = new()
+
+			icon_state = "cap[invisibility ? "-f" : ""]"
+			return
+
+		initialize()
+			for(var/obj/machinery/atmospherics/target in get_step(src, dir))
+				if(target.initialize_directions & get_dir(target,src))
+					node = target
+					break
+
+			var/turf/T = src.loc			// hide if turf is not intact
+			hide(T.intact)
+			//update_icon()
+			update_icon()
+
+		visible
+			level = 2
+			icon_state = "cap"
+
+		hidden
+			level = 1
+			icon_state = "cap-f"
+
 
 obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
