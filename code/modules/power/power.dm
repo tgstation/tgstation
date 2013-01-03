@@ -176,7 +176,7 @@
 			C.powernet = PN
 			P = C.get_connections()
 
-		else if( istype(O,/obj/machinery/power) )
+		else if(O.anchored && istype(O,/obj/machinery/power))
 			var/obj/machinery/power/M = O
 			M.powernet = PN
 			P = M.get_connections()
