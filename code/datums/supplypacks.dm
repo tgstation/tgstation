@@ -669,9 +669,9 @@
 					"/obj/item/weapon/FixOVein",
 					"/obj/item/weapon/hemostat",
 					"/obj/item/weapon/scalpel",
-					"/obj/item/weapon/surgical_tool/bonegel",
+					"/obj/item/weapon/bonegel",
 					"/obj/item/weapon/retractor",
-					"/obj/item/weapon/surgical_tool/bonesetter",
+					"/obj/item/weapon/bonesetter",
 					"/obj/item/weapon/circular_saw")
 	cost = 25
 	containertype = "/obj/structure/closet/crate/secure"
