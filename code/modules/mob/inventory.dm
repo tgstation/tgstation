@@ -23,6 +23,7 @@
 //		l_hand.screen_loc = ui_lhand
 		W.equipped(src,slot_l_hand)
 		if(client)	client.screen |= W
+		if(pulling == W) stop_pulling()
 		update_inv_l_hand()
 		return 1
 	return 0
@@ -38,6 +39,7 @@
 //		r_hand.screen_loc = ui_rhand
 		W.equipped(src,slot_r_hand)
 		if(client)	client.screen |= W
+		if(pulling == W) stop_pulling()
 		update_inv_r_hand()
 		return 1
 	return 0
