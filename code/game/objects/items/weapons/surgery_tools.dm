@@ -609,10 +609,10 @@
 							M << "\red [user] begins to remove one of your cores with [src]! ([slime.cores] cores remaining)"
 							user << "\red You cut one of [M]'s cores out with [src]! ([slime.cores] cores remaining)"
 
-							new/obj/item/slime_core(M.loc)
+							new slime.coretype(M.loc)
 
 							if(slime.cores <= 0)
-								M.icon_state = "baby slime dead-nocore"
+								M.icon_state = "[slime.colour] baby slime dead-nocore"
 
 					return
 

@@ -335,6 +335,23 @@ datum
 				..()
 				return
 
+		slimetoxin
+			name = "Mutation Toxin"
+			id = "mutationtoxin"
+			description = "A corruptive toxin produced by slimes."
+			reagent_state = LIQUID
+			color = "#13BC5E" // rgb: 19, 188, 94
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(ishuman(M))
+					var/mob/living/carbon/human/human = M
+					if(human.dna.mutantrace == null)
+						M << "\red Your flesh rapidly mutates!"
+						human.dna.mutantrace = "slime"
+						human.update_mutantrace()
+				..()
+				return
 		stoxin
 			name = "Sleep Toxin"
 			id = "stoxin"
@@ -1104,10 +1121,10 @@ datum
 				return
 			reaction_obj(var/obj/O, var/volume)
 				src = null
-				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
+				/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
 					var/obj/item/weapon/reagent_containers/food/snacks/egg/slime/egg = O
 					if (egg.grown)
-						egg.Hatch()
+						egg.Hatch()*/
 				if((!O) || (!volume))	return 0
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new

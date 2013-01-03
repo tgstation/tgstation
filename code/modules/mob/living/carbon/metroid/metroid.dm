@@ -1,7 +1,7 @@
 /mob/living/carbon/slime
 	name = "baby slime"
 	icon = 'icons/mob/slimes.dmi'
-	icon_state = "baby slime"
+	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
 	voice_message = "skree!"
 	say_message = "hums"
@@ -22,7 +22,7 @@
 	// for the sake of cleanliness, though, here they are.
 	status_flags = CANPARALYSE|CANPUSH
 
-	var/cores = 3 // the number of /obj/item/slime_core's the slime has left inside
+	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
 
 	var/powerlevel = 0 	// 1-10 controls how much electricity they are generating
 	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows into an adult
@@ -41,10 +41,21 @@
 
 	// slimes pass on genetic data, so all their offspring have the same "Friends",
 
+	///////////TIME FOR SUBSPECIES
+
+	var/colour = "grey"
+	var/primarytype = /mob/living/carbon/slime
+	var/mutationone = /mob/living/carbon/slime/orange
+	var/mutationtwo = /mob/living/carbon/slime/metal
+	var/mutationthree = /mob/living/carbon/slime/blue
+	var/mutationfour = /mob/living/carbon/slime/purple
+	var/adulttype = /mob/living/carbon/slime/adult
+	var/coretype = /obj/item/slime_extract/grey
+
 /mob/living/carbon/slime/adult
 	name = "adult slime"
 	icon = 'icons/mob/slimes.dmi'
-	icon_state = "adult slime"
+	icon_state = "grey adult slime"
 
 	health = 200
 	gender = NEUTER
@@ -58,9 +69,9 @@
 	reagents = R
 	R.my_atom = src
 	if(name == "baby slime")
-		name = text("baby slime ([rand(1, 1000)])")
+		name = text("[colour] baby slime ([rand(1, 1000)])")
 	else
-		name = text("adult slime ([rand(1,1000)])")
+		name = text("[colour] adult slime ([rand(1,1000)])")
 	real_name = name
 	spawn (1)
 		regenerate_icons()
@@ -716,6 +727,100 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	return 1
 
 
+/obj/item/slime_extract
+	name = "slime extract"
+	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "grey slime extract"
+	flags = TABLEPASS
+	force = 1.0
+	w_class = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 6
+	origin_tech = "biotech=4"
+	var/Flush = 30
+	var/Uses = 1 // uses before it goes inert
+
+/obj/item/slime_extract/New()
+		..()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+
+/obj/item/slime_extract/grey
+	icon_state = "grey slime extract"
+
+/obj/item/slime_extract/gold
+	icon_state = "gold slime extract"
+
+/obj/item/slime_extract/silver
+	icon_state = "silver slime extract"
+
+/obj/item/slime_extract/metal
+	icon_state = "metal slime extract"
+
+/obj/item/slime_extract/purple
+	icon_state = "purple slime extract"
+
+/obj/item/slime_extract/darkpurple
+	icon_state = "dark purple slime extract"
+
+/obj/item/slime_extract/orange
+	icon_state = "orange slime extract"
+
+/obj/item/slime_extract/yellow
+	icon_state = "yellow slime extract"
+
+/obj/item/slime_extract/red
+	icon_state = "red slime extract"
+
+/obj/item/slime_extract/blue
+	icon_state = "blue slime extract"
+
+/obj/item/slime_extract/darkblue
+	icon_state = "dark blue slime extract"
+
+/obj/item/slime_extract/pink
+	icon_state = "pink slime extract"
+
+/obj/item/slime_extract/green
+	icon_state = "green slime extract"
+
+////Pet Slime Creation///
+
+/obj/item/weapon/slimepotion
+	name = "docility potion"
+	desc = "A potent chemical mix that will nullify a slime's powers, causing it to become docile and tame."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle19"
+
+	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+			user << "/red The potion only works on baby slimes!"
+			return ..()
+		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+			user << "/red Only baby slimes can be tamed!"
+			return..()
+		if(M.stat)
+			user << "\red The slime is dead!"
+			return..()
+		var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
+		pet.icon_state = "[M.colour] baby slime"
+		pet.icon_living = "[M.colour] baby slime"
+		pet.icon_dead = "[M.colour] baby slime dead"
+		user <<"You feed the slime the potion, removing it's powers and calming it."
+		del (M)
+		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+
+		if (!newname)
+			newname = "pet slime"
+		pet.name = newname
+		pet.real_name = newname
+		del (src)
+//////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
+
+/*
 // Basically this slime Core catalyzes reactions that normally wouldn't happen anywhere
 /obj/item/slime_core
 	name = "slime extract"
@@ -753,6 +858,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 				reagents.clear_reagents()
 				Flush = 30
 */
+
+
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime
 	name = "slime egg"
@@ -797,3 +904,4 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		return
 	else
 		..()
+*/

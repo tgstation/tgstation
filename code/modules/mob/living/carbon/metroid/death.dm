@@ -1,7 +1,7 @@
 /mob/living/carbon/slime/death(gibbed)
 	if(stat == DEAD)	return
 	stat = DEAD
-	icon_state = "baby slime dead"
+	icon_state = "[colour] baby slime dead"
 
 	if(!gibbed)
 		if(istype(src, /mob/living/carbon/slime/adult))

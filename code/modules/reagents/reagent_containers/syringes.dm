@@ -119,7 +119,7 @@
 						user << "\red [target] is empty."
 						return
 
-					if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_core))
+					if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))
 						user << "\red You cannot directly remove reagents from this object."
 						return
 
@@ -137,15 +137,15 @@
 				if(istype(target, /obj/item/weapon/implantcase/chem))
 					return
 
-				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_core) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/cigpacket))
+				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/cigpacket))
 					user << "\red You cannot directly fill this object."
 					return
 				if(target.reagents.total_volume >= target.reagents.maximum_volume)
 					user << "\red [target] is full."
 					return
 
-				if(istype(target, /obj/item/slime_core))
-					var/obj/item/slime_core/core = target
+				if(istype(target, /obj/item/slime_extract))
+					var/obj/item/slime_extract/core = target
 					core.Flush = 30 // reset flush counter
 
 				if(ismob(target) && target != user)
