@@ -259,29 +259,36 @@ Auto Patrol: []"},
 				mode = SECBOT_HUNT
 				return
 
-			if(!src.target.handcuffed && !src.arrest_type)
-				playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-				mode = SECBOT_ARREST
-				visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
+			if(istype(src.target,/mob/living/carbon))
+				if(!src.target.handcuffed && !src.arrest_type)
+					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+					mode = SECBOT_ARREST
+					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
-				spawn(60)
-					if(get_dist(src, src.target) <= 1)
-						if(src.target.handcuffed)
-							return
+					spawn(60)
+						if(get_dist(src, src.target) <= 1)
+							if(src.target.handcuffed)
+								return
 
-						if(istype(src.target,/mob/living/carbon))
-							target.handcuffed = new /obj/item/weapon/handcuffs(target)
-							target.update_inv_handcuffed()	//update the handcuffs overlay
+							if(istype(src.target,/mob/living/carbon))
+								target.handcuffed = new /obj/item/weapon/handcuffs(target)
+								target.update_inv_handcuffed()	//update the handcuffs overlay
 
-						mode = SECBOT_IDLE
-						src.target = null
-						src.anchored = 0
-						src.last_found = world.time
-						src.frustration = 0
+							mode = SECBOT_IDLE
+							src.target = null
+							src.anchored = 0
+							src.last_found = world.time
+							src.frustration = 0
 
-						playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-	//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
-	//					src.speak(arrest_message)
+							playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
+		//					src.speak(arrest_message)
+			else
+				mode = SECBOT_IDLE
+				src.target = null
+				src.anchored = 0
+				src.last_found = world.time
+				src.frustration = 0
 
 		if(SECBOT_ARREST)		// arresting
 
