@@ -4,7 +4,6 @@
 	var/icon/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
 	var/item_state = null
-	var/damtype = "brute"
 	var/r_speed = 1.0
 	var/health = null
 	var/burn_point = null
