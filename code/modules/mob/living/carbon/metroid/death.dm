@@ -6,7 +6,8 @@
 	if(!gibbed)
 		if(istype(src, /mob/living/carbon/slime/adult))
 			ghostize()
-			explosion(loc, -1,-1,3,12)
+			new primarytype(loc)
+			new primarytype(loc)
 			if(src)	del(src)
 		else
 			for(var/mob/O in viewers(src, null))
