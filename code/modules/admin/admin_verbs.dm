@@ -208,7 +208,22 @@ var/list/admin_verbs_hideable = list(
 	/proc/possess,
 	/proc/release
 	)
-
+var/list/admin_verbs_mod = list(
+	/client/proc/check_antagonists,		/*shows all antags*/
+	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
+	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
+	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game.*/
+	/client/proc/playernotes,
+	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
+	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
+	/client/proc/hide_verbs,			/*hides all our adminverbs*/
+	/client/proc/hide_verbs,
+	/client/proc/mod_panel,
+	/client/proc/cmd_mod_say,
+	/datum/admins/proc/show_player_info
+	//client/proc/Report,
+	//client/proc/display_admin_reports
+)
 /client/proc/add_admin_verbs()
 	if(holder)
 		verbs += admin_verbs_default
@@ -224,6 +239,7 @@ var/list/admin_verbs_hideable = list(
 		if(holder.rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
 		if(holder.rights & R_SOUNDS)		verbs += admin_verbs_sounds
 		if(holder.rights & R_SPAWN)			verbs += admin_verbs_spawn
+		if(holder.rights & R_MOD)			verbs -= admin_verbs_default; verbs += admin_verbs_mod
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
@@ -718,7 +734,6 @@ var/list/admin_verbs_hideable = list(
 	M.update_body()
 	M.check_dna(M)
 	*/
-
 /client/proc/playernotes()
 	set name = "Show Player Info"
 	set category = "Admin"

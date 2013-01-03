@@ -686,7 +686,7 @@
 			message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].", 1)
 			//M.client = null
 			del(M.client)
-
+/*
 	//Player Notes
 	else if(href_list["notes"])
 		var/ckey = href_list["ckey"]
@@ -704,7 +704,7 @@
 			if("remove")
 				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))
 				notes_show(ckey)
-
+*/
 	else if(href_list["removejobban"])
 		if(!check_rights(R_BAN))	return
 
@@ -2415,3 +2415,32 @@
 	else if(href_list["ac_set_signature"])
 		src.admincaster_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
 		src.access_news_network()
+
+	// player info stuff
+
+	if(href_list["add_player_info"])
+		var/key = href_list["add_player_info"]
+		var/add = input("Add Player Info") as null|text
+		if(!add) return
+
+		notes_add(key,add,usr)
+		show_player_info(key)
+
+	if(href_list["remove_player_info"])
+		var/key = href_list["remove_player_info"]
+		var/index = text2num(href_list["remove_index"])
+
+		notes_del(key, index)
+		show_player_info(key)
+
+	if(href_list["notes"])
+		var/ckey = href_list["ckey"]
+		if(!ckey)
+			var/mob/M = locate(href_list["mob"])
+			if(ismob(M))
+				ckey = M.ckey
+
+		switch(href_list["notes"])
+			if("show")
+				show_player_info(ckey)
+		return

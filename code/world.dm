@@ -84,6 +84,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 	href_logfile = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] hrefs.html")
 
+	load_mods()
 	jobban_loadbanfile()
 	jobban_updatelegacybans()
 	LoadBans()
@@ -207,6 +208,27 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 
+/world/proc/load_mods()
+	diary << "Loading mods. Legacy: [config.admin_legacy_system]"
+	if(config.admin_legacy_system)
+		var/text = file2text("config/moderators.txt")
+		if (!text)
+			diary << "Failed to load config/mods.txt\n"
+		else
+			var/list/lines = text2list(text, "\n")
+			for(var/line in lines)
+				diary << "Line: [line]"
+				if (!line)
+					continue
+
+				if (copytext(line, 1, 2) == ";")
+					continue
+
+				var/rights = admin_ranks["Moderator"]
+				var/ckey = copytext(line, 1, length(line)+1)
+				diary << "Here comes moderator [ckey], he has rights for [rights]"
+				var/datum/admins/D = new /datum/admins("Moderator", rights, ckey)
+				D.associate(directory[ckey])
 
 /world/proc/update_status()
 	var/s = ""
