@@ -16,7 +16,7 @@ var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessor
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 var/global/list/landmarks_list = list()				//list of all landmarks created
-
+var/global/list/surgery_steps = list()				//list of all surgery steps  |BS12
 //////////////////////////
 /////Initial Building/////
 //////////////////////////
@@ -33,4 +33,10 @@ var/global/list/landmarks_list = list()				//list of all landmarks created
 	for(var/path in paths)
 		var/datum/sprite_accessory/facial_hair/H = new path()
 		facial_hair_styles_list[H.name] = H
+	//Surgery Steps - Initialize all /datum/surgery_step into a list
+	paths = typesof(/datum/surgery_step)-/datum/surgery_step
+	for(var/T in paths)
+		var/datum/surgery_step/S = new T
+		surgery_steps += S
+
 
