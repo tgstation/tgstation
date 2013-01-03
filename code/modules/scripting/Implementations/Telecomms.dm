@@ -68,7 +68,6 @@
 		interpreter.SetVar("$medical",	1355)
 		interpreter.SetVar("$engineering",1357)
 		interpreter.SetVar("$security",	1359)
-		interpreter.SetVar("$mining",	1349)
 		interpreter.SetVar("$supply",	1347)
 
 		// Signal data
@@ -119,7 +118,7 @@
 					@param replacestring: 	the string to replace the substring with
 
 		*/
-		interpreter.SetProc("replace", /proc/replacetext)
+		interpreter.SetProc("replace", /proc/string_replacetext)
 
 		/*
 			-> Locates an element/substring inside of a list or string
@@ -268,6 +267,9 @@ datum/signal
 		newsign.data["vmessage"] = H.voice_message
 		newsign.data["vname"] = H.voice_name
 		newsign.data["vmask"] = 0
+		newsign.data["level"] = list()
 
-		S.relay_information(newsign, "/obj/machinery/telecomms/broadcaster") // send this simple message to broadcasters
-		S.relay_information(newsign, "/obj/machinery/telecomms/hub")
+		var/pass = S.relay_information(newsign, "/obj/machinery/telecomms/hub")
+		if(!pass)
+			S.relay_information(newsign, "/obj/machinery/telecomms/broadcaster") // send this simple message to broadcasters
+
