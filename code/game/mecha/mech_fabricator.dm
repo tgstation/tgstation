@@ -402,7 +402,10 @@
 	var/obj/item/part = listgetindex(src.queue, 1)
 	if(!part)
 		remove_from_queue(1)
-		return process_queue()
+		if(src.queue.len)
+			return process_queue()
+		else
+			return
 	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")))//If it shouldn't be printed
 		remove_from_queue(1)//Take it out of the quene
 		return process_queue()//Then reprocess it
