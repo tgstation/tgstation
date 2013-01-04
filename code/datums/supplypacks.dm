@@ -341,9 +341,9 @@
 	contains = list(/obj/item/weapon/storage/belt/utility/full,
 					/obj/item/weapon/storage/belt/utility/full,
 					/obj/item/weapon/storage/belt/utility/full,
-					/obj/item/clothing/suit/hazardvest,
-					/obj/item/clothing/suit/hazardvest,
-					/obj/item/clothing/suit/hazardvest,
+					/obj/item/clothing/suit/storage/hazardvest,
+					/obj/item/clothing/suit/storage/hazardvest,
+					/obj/item/clothing/suit/storage/hazardvest,
 					/obj/item/clothing/head/welding,
 					/obj/item/clothing/head/welding,
 					/obj/item/clothing/head/hardhat)

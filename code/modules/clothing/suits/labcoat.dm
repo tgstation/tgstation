@@ -1,4 +1,4 @@
-/obj/item/clothing/suit/labcoat
+/obj/item/clothing/suit/storage/labcoat
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills."
 	icon_state = "labcoat_open"
@@ -64,34 +64,34 @@
 				return
 		usr.update_inv_wear_suit()	//so our overlays update
 
-/obj/item/clothing/suit/labcoat/cmo
+/obj/item/clothing/suit/storage/labcoat/cmo
 	name = "chief medical officer's labcoat"
 	desc = "Bluer than the standard model."
 	icon_state = "labcoat_cmo_open"
 	item_state = "labcoat_cmo"
 
-/obj/item/clothing/suit/labcoat/mad
+/obj/item/clothing/suit/storage/labcoat/mad
 	name = "The Mad's labcoat"
 	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."
 	icon_state = "labgreen_open"
 	item_state = "labgreen"
 
-/obj/item/clothing/suit/labcoat/genetics
+/obj/item/clothing/suit/storage/labcoat/genetics
 	name = "Geneticist Labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a blue stripe on the shoulder."
 	icon_state = "labcoat_gen_open"
 
-/obj/item/clothing/suit/labcoat/chemist
+/obj/item/clothing/suit/storage/labcoat/chemist
 	name = "Chemist Labcoat"
 	desc = "A suit that protects against minor chemical spills. Has an orange stripe on the shoulder."
 	icon_state = "labcoat_chem_open"
 
-/obj/item/clothing/suit/labcoat/virologist
+/obj/item/clothing/suit/storage/labcoat/virologist
 	name = "Virologist Labcoat"
 	desc = "A suit that protects against minor chemical spills. Offers slightly more protection against biohazards than the standard model. Has a green stripe on the shoulder."
 	icon_state = "labcoat_vir_open"
 
-/obj/item/clothing/suit/labcoat/science
+/obj/item/clothing/suit/storage/labcoat/science
 	name = "Scientist Labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_tox_open"
