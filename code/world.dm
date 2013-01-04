@@ -209,7 +209,6 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	abandon_allowed = config.respawn
 
 /world/proc/load_mods()
-	diary << "Loading mods. Legacy: [config.admin_legacy_system]"
 	if(config.admin_legacy_system)
 		var/text = file2text("config/moderators.txt")
 		if (!text)
@@ -217,7 +216,6 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 		else
 			var/list/lines = text2list(text, "\n")
 			for(var/line in lines)
-				diary << "Line: [line]"
 				if (!line)
 					continue
 
@@ -226,7 +224,6 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 				var/rights = admin_ranks["Moderator"]
 				var/ckey = copytext(line, 1, length(line)+1)
-				diary << "Here comes moderator [ckey], he has rights for [rights]"
 				var/datum/admins/D = new /datum/admins("Moderator", rights, ckey)
 				D.associate(directory[ckey])
 
