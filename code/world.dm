@@ -7,21 +7,22 @@
 
 
 
-#define RECOMMENDED_VERSION 494
+#define RECOMMENDED_VERSION 495
 /world/New()
-	..()
+	//logs
+	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
+	log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM")].log")		//funtimelog
+	href_logfile = file("data/logs/[date_string] hrefs.htm")
+	diary = file("data/logs/[date_string].log")
+	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
+	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for TGstation code. Please update BYOND"
 
-	changelog_hash = md5('html/changelog.html')
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-
-	href_logfile = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] hrefs.html")
-	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
-	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	diaryofmeanpeople = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] Attack.log")
-	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
 
 	load_configuration()
 	load_mode()

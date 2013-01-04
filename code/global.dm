@@ -204,7 +204,7 @@ var/forum_authenticated_group = "10"
 
 	// For FTP requests. (i.e. downloading runtime logs.)
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.
-var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finished setting up and stuff.
+var/fileaccess_timer = 0
 
 //Database connections
 //A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).
