@@ -641,7 +641,7 @@ About the new airlock wires panel:
 			source.thermal_conductivity = initial(source.thermal_conductivity)
 
 /obj/machinery/door/airlock/update_icon()
-	if(overlays) overlays = null
+	if(overlays) overlays.Cut()
 	if(density)
 		if(locked && lights)
 			icon_state = "door_locked"
@@ -661,14 +661,14 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/animate(animation)
 	switch(animation)
 		if("opening")
-			if(overlays) overlays = null
+			if(overlays) overlays.Cut()
 			if(p_open)
 				spawn(2) // The only work around that works. Downside is that the door will be gone for a millisecond.
 					flick("o_door_opening", src)  //can not use flick due to BYOND bug updating overlays right before flicking
 			else
 				flick("door_opening", src)
 		if("closing")
-			if(overlays) overlays = null
+			if(overlays) overlays.Cut()
 			if(p_open)
 				flick("o_door_closing", src)
 			else

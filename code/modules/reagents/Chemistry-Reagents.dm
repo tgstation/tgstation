@@ -844,7 +844,7 @@ datum
 				if(volume >= 5)
 					if(istype(T, /turf/simulated/wall))
 						T:thermite = 1
-						T.overlays = null
+						T.overlays.Cut()
 						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
 				return
 
@@ -1034,7 +1034,7 @@ datum
 						O.clean_blood()
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 1)
-					T.overlays = null
+					T.overlays.Cut()
 					T.clean_blood()
 					for(var/obj/effect/decal/cleanable/C in src)
 						del(C)

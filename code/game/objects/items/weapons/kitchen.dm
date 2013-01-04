@@ -222,7 +222,7 @@
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	// Drop all the things. All of them.
-	overlays = null
+	overlays.Cut()
 	for(var/obj/item/I in carrying)
 		I.loc = M.loc
 		carrying.Remove(I)
@@ -391,7 +391,7 @@
 		foundtable = 1
 		break
 
-	overlays = null
+	overlays.Cut()
 
 	for(var/obj/item/I in carrying)
 		I.loc = loc

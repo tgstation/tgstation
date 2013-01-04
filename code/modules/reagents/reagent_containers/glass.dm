@@ -112,7 +112,7 @@
 		update_icon()
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 
 		if(reagents.total_volume)
 			var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")

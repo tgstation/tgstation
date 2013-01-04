@@ -114,11 +114,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(!ispowered || isbroken)
 		icon_state = "newscaster_off"
 		if(isbroken) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
-			src.overlays = null
+			src.overlays.Cut()
 			src.overlays += image(src.icon, "crack3")
 		return
 
-	src.overlays = null //reset overlays
+	src.overlays.Cut() //reset overlays
 
 	if(news_network.wanted_issue) //wanted icon state, there can be no overlays on it as it's a priority message
 		icon_state = "newscaster_wanted"

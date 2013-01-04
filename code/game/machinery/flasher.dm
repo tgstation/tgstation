@@ -112,7 +112,7 @@
 
 		if (!src.anchored)
 			user.show_message(text("\red [src] can now be moved."))
-			src.overlays = null
+			src.overlays.Cut()
 
 		else if (src.anchored)
 			user.show_message(text("\red [src] is now secured."))

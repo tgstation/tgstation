@@ -249,7 +249,7 @@ That prevents a few funky behaviors.
 							A.loc = T.loc//To replace the terminal.
 							C.icon_state = "aicard"
 							C.name = "inteliCard"
-							C.overlays = null
+							C.overlays.Cut()
 							A.cancel_camera()
 							A << "You have been uploaded to a stationary terminal. Remote device connection restored."
 							U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
@@ -276,7 +276,7 @@ That prevents a few funky behaviors.
 							else for(var/mob/living/silicon/ai/A in C)
 								C.icon_state = "aicard"
 								C.name = "inteliCard"
-								C.overlays = null
+								C.overlays.Cut()
 								A.loc = T
 								T.occupant = A
 								A.control_disabled = 1
@@ -372,7 +372,7 @@ That prevents a few funky behaviors.
 										A_T.loc = T//Throw them into suit.
 										C.icon_state = "aicard"
 										C.name = "inteliCard"
-										C.overlays = null
+										C.overlays.Cut()
 										T.AI = A_T
 										A_T.cancel_camera()
 										A_T << "You have been uploaded to a mobile storage device."

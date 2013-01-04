@@ -761,26 +761,26 @@
 
 /mob/living/silicon/robot/proc/updateicon()
 
-	overlays = null
+	overlays.Cut()
 	if(stat == 0)
 		overlays += "eyes"
 		if(icon_state == "robot")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-standard"
 		if(icon_state == "toiletbot")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-toiletbot"
 		if(icon_state == "bloodhound")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-bloodhound"
 		if(icon_state =="landmate")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-landmate"
 		if(icon_state =="mopgearrex")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-mopgearrex"
 		if(icon_state =="Miner")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-Miner"
 	else
 		overlays -= "eyes"

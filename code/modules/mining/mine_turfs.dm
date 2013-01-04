@@ -408,7 +408,7 @@ commented out in r5061, I left it because of the shroom thingies
 
 /turf/simulated/floor/plating/airless/asteroid/proc/updateMineralOverlays()
 
-	src.overlays = null
+	src.overlays.Cut()
 
 	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_n")

@@ -222,7 +222,7 @@
 		updateicon()
 
 /obj/machinery/pipefilter/proc/updateicon()
-	src.overlays = null
+	src.overlays.Cut()
 	if(stat & NOPOWER)
 		icon_state = "filter-off"
 	else

@@ -510,7 +510,7 @@
 		return
 
 	mode = 1
-	overlays = null
+	overlays.Cut()
 
 	load.loc = src.loc
 	load.pixel_y -= 9

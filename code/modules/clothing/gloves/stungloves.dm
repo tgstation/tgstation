@@ -47,7 +47,7 @@
 
 /obj/item/clothing/gloves/update_icon()
 	..()
-	overlays = null
+	overlays.Cut()
 	if(wired)
 		overlays += "gloves_wire"
 	if(cell)

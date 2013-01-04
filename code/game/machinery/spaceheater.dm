@@ -23,7 +23,7 @@
 		return
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 		icon_state = "sheater[on]"
 		if(open)
 			overlays  += "sheater-open"

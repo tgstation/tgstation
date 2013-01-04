@@ -71,7 +71,7 @@
 
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 		if(density)
 			icon_state = "door_closed"
 			if(blocked)

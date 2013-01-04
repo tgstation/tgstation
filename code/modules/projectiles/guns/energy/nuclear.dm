@@ -121,7 +121,7 @@
 
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 		update_charge()
 		update_reactor()
 		update_mode()

@@ -21,12 +21,12 @@
 
 				if(chargelevel != newlevel)
 
-					overlays = null
+					overlays.Cut()
 					overlays += "ccharger-o[newlevel]"
 
 					chargelevel = newlevel
 			else
-				overlays = null
+				overlays.Cut()
 	examine()
 		set src in oview(5)
 		..()

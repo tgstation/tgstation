@@ -682,7 +682,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //EXTRA FUNCTIONS===================================
 
 	if (mode == 2||mode == 21)//To clear message overlays.
-		overlays = null
+		overlays.Cut()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
@@ -781,7 +781,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			L << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		P.overlays = null
+		P.overlays.Cut()
 		P.overlays += image('icons/obj/pda.dmi', "pda-r")
 	else
 		U << "<span class='notice'>ERROR: Server isn't responding.</span>"

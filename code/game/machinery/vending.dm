@@ -143,7 +143,7 @@
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		src.panel_open = !src.panel_open
 		user << "You [src.panel_open ? "open" : "close"] the maintenance panel."
-		src.overlays = null
+		src.overlays.Cut()
 		if(src.panel_open)
 			src.overlays += image(src.icon, "[initial(icon_state)]-panel")
 		src.updateUsrDialog()

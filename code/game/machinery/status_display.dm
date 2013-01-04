@@ -47,7 +47,7 @@
 
 	process()
 		if(stat & NOPOWER)
-			overlays = null
+			overlays.Cut()
 			return
 
 		update()
@@ -68,7 +68,7 @@
 			return
 
 		if(mode==0)
-			overlays = null
+			overlays.Cut()
 			return
 
 		if(mode==3)	// alert picture, no change
@@ -89,7 +89,7 @@
 				update_display(displayloc, displaytime)
 				return
 			else
-				overlays = null
+				overlays.Cut()
 				return
 
 		if(mode==4)		// supply shuttle timer
@@ -160,7 +160,7 @@
 
 	proc/set_picture(var/state)
 		picture_state = state
-		overlays = null
+		overlays.Cut()
 		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 	proc/update_display(var/line1, var/line2)
@@ -172,11 +172,11 @@
 		lastdisplayline2 = line2
 
 		if(line2 == null)		// single line display
-			overlays = null
+			overlays.Cut()
 			overlays += texticon(line1, 23, -13)
 		else					// dual line display
 
-			overlays = null
+			overlays.Cut()
 			overlays += texticon(line1, 23, -9)
 			overlays += texticon(line2, 23, -17)
 
@@ -272,7 +272,7 @@
 
 	process()
 		if(stat & NOPOWER)
-			overlays = null
+			overlays.Cut()
 			return
 
 		update()
@@ -287,7 +287,7 @@
 	proc/update()
 
 		if(mode==0) //Blank
-			overlays = null
+			overlays.Cut()
 			return
 
 		if(mode==1)	// AI emoticon
@@ -328,5 +328,5 @@
 
 	proc/set_picture(var/state)
 		picture_state = state
-		overlays = null
+		overlays.Cut()
 		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)

@@ -146,7 +146,7 @@
 	..()
 	// Broken / Unpowered
 	if((stat & BROKEN) || (stat & NOPOWER))
-		overlays = null
+		overlays.Cut()
 
 	// Working / Powered
 	else

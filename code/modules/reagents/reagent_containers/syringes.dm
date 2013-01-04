@@ -168,7 +168,7 @@
 
 	update_icon()
 		var/rounded_vol = round(reagents.total_volume,5)
-		overlays = null
+		overlays.Cut()
 		if(ismob(loc))
 			var/injoverlay
 			switch(mode)

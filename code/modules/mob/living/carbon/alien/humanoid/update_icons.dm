@@ -13,7 +13,7 @@
 /mob/living/carbon/alien/humanoid/update_icons()
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this to be here
-	overlays = null
+	overlays.Cut()
 	if(lying)
 		if(resting)					icon_state = "alien[caste]_sleep"
 		else						icon_state = "alien[caste]_l"

@@ -218,7 +218,7 @@
 	else
 		return
 
-	overlays = null
+	overlays.Cut()
 	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
 
 	return

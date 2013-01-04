@@ -178,7 +178,7 @@
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
 
-	overlays = null
+	overlays.Cut()
 	if(opened)
 		var/basestate = "apc[ cell ? "2" : "1" ]"	// if opened, show cell if it's inserted
 		if (opened==1)

@@ -150,7 +150,7 @@
 	info = null
 	stamps = null
 	stamped = list()
-	overlays = null
+	overlays.Cut()
 	updateinfolinks()
 	update_icon()
 

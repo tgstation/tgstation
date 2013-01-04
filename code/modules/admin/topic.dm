@@ -2077,7 +2077,7 @@
 						if(F.z == 1)
 							F.name = initial(F.name)
 							F.desc = initial(F.desc)
-							F.overlays = null
+							F.overlays.Cut()
 							F.lava = 0
 							F.update_icon()
 					floorIsLava = 0
