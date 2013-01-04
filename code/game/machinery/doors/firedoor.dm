@@ -5,7 +5,7 @@
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
 	icon = 'DoorHazard.dmi'
 	icon_state = "door_open"
-	req_access = list(access_atmospherics, access_engine_equip)
+	req_one_access = list(access_atmospherics, access_engine_equip)
 	opacity = 0
 	density = 0
 
@@ -63,6 +63,10 @@
 		return
 
 
+	attack_hand(mob/user as mob)
+		return attackby(null, user)
+
+
 	attackby(obj/item/weapon/C as obj, mob/user as mob)
 		add_fingerprint(user)
 		if(operating)
@@ -76,6 +80,10 @@
 				"You hear something being welded.")
 				update_icon()
 				return
+
+		if(blocked)
+			user << "\red \The [src] is welded solid!"
+			return
 
 		var/area/A = get_area(src)
 		ASSERT(istype(A))
@@ -116,6 +124,16 @@
 				spawn(0)
 					close()
 
+		var/access_granted = 0
+		var/users_name
+		if(!istype(C, /obj)) //If someone hit it with their hand.  We need to see if they are allowed.
+			if(allowed(user))
+				access_granted = 1
+			if(ishuman(user))
+				users_name = FindNameFromID(user)
+			else
+				users_name = "Unknown"
+
 		if( !stat && ( istype(C, /obj/item/weapon/card/id) || istype(C, /obj/item/device/pda) ) )
 			var/obj/item/weapon/card/id/ID = C
 
@@ -125,35 +143,46 @@
 			if(!istype(ID))
 				ID = null
 
-			var/answer = alert(user, "Would you like to [density ? "open" : "close"] this [src.name]?[ alarmed && density && !check_access(ID) ? "\nNote that by doing this, you acknowledge any damages from opening this [src.name]\nas being your own fault, and you will be held accountable under the law." : ""]",\
-			"\The [src]", "Yes, [density ? "open" : "close"]", "No")
-			if(answer == "No")
-				return
-			if(user.stat || !user.canmove || user.stunned || user.weakened || user.paralysis || get_dist(src, user) > 1)
-				user << "Sorry, you must remain able bodied and close to \the [src] in order to use it."
-				return
+			if(ID)
+				users_name = ID.registered_name
 
-			if(alarmed && density && !check_access(ID) && ( ID && !( ID.registered_name in users_to_open ) ) )
-				user.visible_message("\red \The [src] opens for \the [user], but only after they acknowledged responsibility for the consequences.",\
-				"\The [src] opens after you acknowledge the consequences.",\
-				"You hear a beep, and a door opening.")
-				if(ID && ID.registered_name)
-					if(!users_to_open)
-						users_to_open = list()
-					users_to_open += ID.registered_name
-			else
-				user.visible_message("\blue \The [src] [density ? "open" : "close"]s for \the [user].",\
-				"\The [src] [density ? "open" : "close"]s.",\
-				"You hear a beep, and a door opening.")
+			if(check_access(ID))
+				access_granted = 1
 
-			if(density)
+		var/answer = alert(user, "Would you like to [density ? "open" : "close"] this [src.name]?[ alarmed && density && !access_granted ? "\nNote that by doing so, you acknowledge any damages from opening this\n[src.name] as being your own fault, and you will be held accountable under the law." : ""]",\
+		"\The [src]", "Yes, [density ? "open" : "close"]", "No")
+		if(answer == "No")
+			return
+		if(user.stat || !user.canmove || user.stunned || user.weakened || user.paralysis || get_dist(src, user) > 1)
+			user << "Sorry, you must remain able bodied and close to \the [src] in order to use it."
+			return
+
+		if(alarmed && density && !access_granted && !( users_name in users_to_open ) )
+			user.visible_message("\red \The [src] opens for \the [user], but only after they acknowledged responsibility for the consequences.",\
+			"\The [src] opens after you acknowledge the consequences.",\
+			"You hear a beep, and a door opening.")
+			if(!users_to_open)
+				users_to_open = list()
+			users_to_open += users_name
+		else
+			user.visible_message("\blue \The [src] [density ? "open" : "close"]s for \the [user].",\
+			"\The [src] [density ? "open" : "close"]s.",\
+			"You hear a beep, and a door opening.")
+
+		var/needs_to_close = 0
+		if(density)
+			if(alarmed)
+				needs_to_close = 1
+			spawn()
 				open()
-			else
+		else
+			spawn()
 				close()
 
-			if(alarmed && !density)
-				spawn(100)
-				nextstate = CLOSED
+		if(needs_to_close)
+			spawn(50)
+				if(alarmed)
+					nextstate = CLOSED
 
 
 	process()

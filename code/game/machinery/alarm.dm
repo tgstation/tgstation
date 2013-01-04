@@ -47,7 +47,6 @@
 #define RCON_YES	3
 
 //all air alarms in area are connected via magic
-//all air alarms in area are connected via magic
 /area
 	var/obj/machinery/alarm/master_air_alarm
 	var/list/air_vent_names
@@ -94,8 +93,8 @@
 		TLV["carbon dioxide"] = list(-1.0, -1.0,   5,  10) // Partial pressure, kpa
 		TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
 		TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
-		TLV["pressure"] =		list(ONE_ATMOSPHERE*0.50,ONE_ATMOSPHERE*0.70,ONE_ATMOSPHERE*1.40,ONE_ATMOSPHERE*1.60) /* kpa */
-		TLV["temperature"] =	list(40, 60, 100, 120) // K
+		TLV["pressure"] =		list(0,ONE_ATMOSPHERE*0.10,ONE_ATMOSPHERE*1.40,ONE_ATMOSPHERE*1.60) /* kpa */
+		TLV["temperature"] =	list(20, 40, 140, 160) // K
 
 	New()
 		..()
@@ -524,7 +523,7 @@
 		. = ..()
 		if (.)
 			return
-		user.machine = src
+		user.set_machine(src)
 
 		if ( (get_dist(src, user) > 1 ))
 			if (!istype(user, /mob/living/silicon))
@@ -646,8 +645,6 @@ Toxins: <span class='dl[plasma_dangerlevel]'>[plasma_percent]</span>%<br>
 					output += {"<span class='dl1'>Caution: Atmos alert in area</span>"}
 				else
 					output += {"<span class='dl0'>Optimal</span>"}
-
-		output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];atmos_unlock=[alarm_area.air_doors_activated]'>[alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
 
 		return output
 
