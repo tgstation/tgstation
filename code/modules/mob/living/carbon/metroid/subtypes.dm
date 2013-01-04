@@ -8,7 +8,7 @@
 	mutationone = /mob/living/carbon/slime/darkpurple
 	mutationtwo = /mob/living/carbon/slime/darkblue
 	mutationthree = /mob/living/carbon/slime/green
-	mutationfour = /mob/living/carbon/slime
+	mutationfour = /mob/living/carbon/slime/green
 	adulttype = /mob/living/carbon/slime/adult/purple
 	coretype = /obj/item/slime_extract/purple
 
@@ -19,7 +19,7 @@
 	mutationone = /mob/living/carbon/slime/darkpurple
 	mutationtwo = /mob/living/carbon/slime/darkblue
 	mutationthree = /mob/living/carbon/slime/green
-	mutationfour = /mob/living/carbon/slime
+	mutationfour = /mob/living/carbon/slime/green
 	adulttype = /mob/living/carbon/slime/adult/purple
 	coretype = /obj/item/slime_extract/purple
 
@@ -30,7 +30,7 @@
 	mutationone = /mob/living/carbon/slime/silver
 	mutationtwo = /mob/living/carbon/slime/yellow
 	mutationthree = /mob/living/carbon/slime/gold
-	mutationfour = /mob/living/carbon/slime
+	mutationfour = /mob/living/carbon/slime/gold
 	adulttype = /mob/living/carbon/slime/adult/metal
 	coretype = /obj/item/slime_extract/metal
 
@@ -41,7 +41,7 @@
 	mutationone = /mob/living/carbon/slime/silver
 	mutationtwo = /mob/living/carbon/slime/yellow
 	mutationthree = /mob/living/carbon/slime/gold
-	mutationfour = /mob/living/carbon/slime
+	mutationfour = /mob/living/carbon/slime/gold
 	adulttype = /mob/living/carbon/slime/adult/metal
 	coretype = /obj/item/slime_extract/metal
 
@@ -50,9 +50,9 @@
 	icon_state = "orange baby slime"
 	primarytype = /mob/living/carbon/slime/orange
 	mutationone = /mob/living/carbon/slime/red
-	mutationtwo = /mob/living/carbon/slime/yellow
+	mutationtwo = /mob/living/carbon/slime/red
 	mutationthree = /mob/living/carbon/slime/darkpurple
-	mutationfour = /mob/living/carbon/slime
+	mutationfour = /mob/living/carbon/slime/yellow
 	adulttype = /mob/living/carbon/slime/adult/orange
 	coretype = /obj/item/slime_extract/orange
 
@@ -61,9 +61,9 @@
 	icon_state = "orange adult slime"
 	primarytype = /mob/living/carbon/slime/orange
 	mutationone = /mob/living/carbon/slime/red
-	mutationtwo = /mob/living/carbon/slime/yellow
+	mutationtwo = /mob/living/carbon/slime/red
 	mutationthree = /mob/living/carbon/slime/darkpurple
-	mutationfour = /mob/living/carbon/slime
+	mutationfour = /mob/living/carbon/slime/yellow
 	adulttype = /mob/living/carbon/slime/adult/orange
 	coretype = /obj/item/slime_extract/orange
 
@@ -73,8 +73,8 @@
 	primarytype = /mob/living/carbon/slime/blue
 	mutationone = /mob/living/carbon/slime/darkblue
 	mutationtwo = /mob/living/carbon/slime/pink
-	mutationthree = /mob/living/carbon/slime/silver
-	mutationfour = /mob/living/carbon/slime
+	mutationthree = /mob/living/carbon/slime/pink
+	mutationfour = /mob/living/carbon/slime/silver
 	adulttype = /mob/living/carbon/slime/adult/blue
 	coretype = /obj/item/slime_extract/blue
 
@@ -85,7 +85,7 @@
 	mutationone = /mob/living/carbon/slime/darkblue
 	mutationtwo = /mob/living/carbon/slime/pink
 	mutationthree = /mob/living/carbon/slime/silver
-	mutationfour = /mob/living/carbon/slime
+	mutationfour = /mob/living/carbon/slime/pink
 	adulttype = /mob/living/carbon/slime/adult/blue
 	coretype = /obj/item/slime_extract/blue
 

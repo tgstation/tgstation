@@ -818,6 +818,29 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.name = newname
 		pet.real_name = newname
 		del (src)
+
+/obj/item/weapon/slimesteroid
+	name = "docility steroid"
+	desc = "A potent chemical mix that will cause a slime to create generate more extract."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle16"
+
+	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
+		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+			user << "/red The steroid only works on baby slimes!"
+			return ..()
+		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+			user << "/red Only baby slimes can use the steroid!"
+			return..()
+		if(M.stat)
+			user << "\red The slime is dead!"
+			return..()
+		if(M.cores == 1)
+			user <<"\red The slime already has the maximum amount of extract!"
+
+		user <<"You feed the slime the steroid. It now has triple the amount of extract."
+		M.cores = 1
+		del (src)
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*

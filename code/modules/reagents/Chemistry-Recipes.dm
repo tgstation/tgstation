@@ -901,7 +901,7 @@ datum
 */
 /////////////////////////////////////////////NEW SLIME CORE REACTIONS/////////////////////////////////////////////
 
-//Grey (Functional)
+//Grey
 		slimespawn
 			name = "Slime Spawn"
 			id = "m_spawn"
@@ -917,7 +917,19 @@ datum
 				S.loc = get_turf_loc(holder.my_atom)
 				del (holder.my_atom)
 
-//Green (Functional)
+		slimemonkey
+			name = "Slime Monkey"
+			id = "m_monkey"
+			result = null
+			required_reagents = list("blood" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/grey
+			required_other = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				for(var/i = 1, i <= 3, i++)
+				var /obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
+				M.loc = get_turf_loc(holder.my_atom)
+//Green
 		slimemutate
 			name = "Mutation Toxin"
 			id = "mutationtoxin"
@@ -927,7 +939,7 @@ datum
 			required_other = 1
 			required_container = /obj/item/slime_extract/green
 
-//Metal (Functional)
+//Metal
 		slimemetal
 			name = "Slime Metal"
 			id = "m_metal"
@@ -944,7 +956,7 @@ datum
 				P.amount = 5
 				P.loc = get_turf_loc(holder.my_atom)
 				del (holder.my_atom)
-//Gold (Functional)
+//Gold
 		slimecrit
 			name = "Slime Crit"
 			id = "m_tele"
@@ -984,7 +996,7 @@ datum
 						for(var/j = 1, j <= rand(1, 3), j++)
 							step(C, pick(NORTH,SOUTH,EAST,WEST))
 				del (holder.my_atom)
-//Silver (Functional)
+//Silver
 		slimebork
 			name = "Slime Bork"
 			id = "m_tele2"
@@ -1014,7 +1026,7 @@ datum
 								step(B, pick(NORTH,SOUTH,EAST,WEST))
 				del (holder.my_atom)
 
-//Blue (Functional)
+//Blue
 		slimefrost
 			name = "Slime Frost Oil"
 			id = "m_frostoil"
@@ -1041,7 +1053,7 @@ datum
 					M.bodytemperature -= 140
 					M << "\blue You feel a chill!"
 				del (holder.my_atom)
-//Orange (Functional)
+//Orange
 		slimecasp
 			name = "Slime Capsaicin Oil"
 			id = "m_capsaicinoil"
@@ -1051,7 +1063,7 @@ datum
 			required_container = /obj/item/slime_extract/orange
 			required_other = 1
 
-//Yellow (Functional?)
+//Yellow
 		slimeoverload
 			name = "Slime EMP"
 			id = "m_emp"
@@ -1063,18 +1075,34 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				empulse(get_turf_loc(holder.my_atom), 3, 7)
 				del (holder.my_atom)
-//Purple (Functional)
+//Purple
+
+		slimepsteroid
+			name = "Slime Steroid"
+			id = "m_steroid"
+			result = null
+			required_reagents = list("plasma" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/purple
+			required_other = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/obj/item/weapon/slimesteroid/P = new /obj/item/weapon/slimesteroid
+				P.loc = get_turf_loc(holder.my_atom)
+				del (holder.my_atom)
+
+
+
 		slimejam
 			name = "Slime Jam"
 			id = "m_jam"
 			result = "slimejelly"
-			required_reagents = list("plasma" = 5)
+			required_reagents = list("sugar" = 5)
 			result_amount = 10
 			required_container = /obj/item/slime_extract/purple
 			required_other = 1
 
 
-//Dark Purple (Functional)
+//Dark Purple
 		slimeplasma
 			name = "Slime Plasma"
 			id = "m_plasma"
@@ -1089,7 +1117,7 @@ datum
 				P.loc = get_turf_loc(holder.my_atom)
 				del (holder.my_atom)
 
-//Red (Non functional)
+//Red
 		slimefire
 			name = "Slime fire"
 			id = "m_fire"
@@ -1116,7 +1144,7 @@ datum
 					spawn (0) target_tile.hotspot_expose(700, 400)
 				del (holder.my_atom)
 
-//Pink (Functional)
+//Pink
 		slimeppotion
 			name = "Slime Potion"
 			id = "m_potion"
