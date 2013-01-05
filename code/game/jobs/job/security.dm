@@ -100,9 +100,9 @@
 		H.equip_to_slot_or_del(CIG, slot_wear_mask)	*/
 		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 		if(H.mind.role_alt_title && H.mind.role_alt_title == "Forensic Technician")
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/forensics/blue(H), slot_wear_suit)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/forensics/blue(H), slot_wear_suit)
 		else
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/det_suit(H), slot_wear_suit)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/det_suit(H), slot_wear_suit)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/det_hat(H), slot_head)
 		H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
 

@@ -667,7 +667,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 			var/t_state
 			if( istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat) )
 				t_state = "armor"
-			else if( istype(wear_suit, /obj/item/clothing/suit/det_suit || /obj/item/clothing/suit/labcoat) )
+			else if( istype(wear_suit, /obj/item/clothing/suit/storage/det_suit || /obj/item/clothing/suit/storage/labcoat) )
 				t_state = "coat"
 			else
 				t_state = "suit"
