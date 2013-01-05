@@ -101,3 +101,15 @@
 	m_amt = 0
 	g_amt = 0
 	minor_fault = 1
+
+
+/obj/item/weapon/cell/slime
+	name = "charged slime core"
+	desc = "A yellow slime core infused with plasma, it crackles with power."
+	origin_tech = "powerstorage=2;biotech=4"
+	icon = 'icons/mob/slimes.dmi' //'icons/obj/harvest.dmi'
+	icon_state = "yellow slime extract" //"potato_battery"
+	maxcharge = 10000
+	maxcharge = 10000
+	m_amt = 0
+	g_amt = 0

@@ -433,7 +433,7 @@
 		if(Victim) return // if it's eating someone already, continue eating!
 
 
-		if(prob(5))
+		if(prob(1))
 			emote(pick("bounce","sway","light","vibrate","jiggle"))
 
 		if(AIproc && SStun) return
