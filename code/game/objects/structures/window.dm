@@ -209,6 +209,30 @@
 
 /obj/structure/window/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!istype(W)) return//I really wish I did not need this
+
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+		var/obj/item/weapon/grab/G = W
+		if (istype(G.affecting, /mob/living))
+			var/mob/living/M = G.affecting
+			var/state = G.state
+			del(W)	//gotta delete it here because if window breaks, it won't get deleted
+			switch (state)
+				if(1)
+					M.apply_damage(10)
+					hit(10)
+					visible_message("\red [user] slams [M] against \the [src]!")
+				if(2)
+					M.Weaken(2)
+					M.apply_damage(15)
+					hit(25)
+					visible_message("\red <b>[user] bashes [M] against \the [src]!</b>")
+				if(3)
+					M.Weaken(10)
+					M.apply_damage(25)
+					hit(50)
+					visible_message("\red <big><b>[user] crushes [M] against \the [src]!</b></big>")
+			return
+
 	if (istype(W, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)
 			state = 3 - state

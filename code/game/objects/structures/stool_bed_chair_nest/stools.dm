@@ -33,3 +33,42 @@
 		new /obj/item/stack/sheet/metal(src.loc)
 		del(src)
 	return
+
+/obj/structure/stool/MouseDrop(atom/over_object)
+	if (istype(over_object, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = over_object
+		var/obj/item/weapon/stool/S = new/obj/item/weapon/stool()
+		S.origin = src
+		src.loc = S
+		H.put_in_hands(S)
+		H.visible_message("\red [H] grabs [src] from the floor!", "\red You grab [src] from the floor!")
+
+/obj/item/weapon/stool
+	name = "stool"
+	desc = "Uh-hoh, bar is heating up."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "stool"
+	force = 10
+	throwforce = 20
+	w_class = 5.0
+	var/obj/structure/stool/origin = null
+
+/obj/item/weapon/stool/attack_self(mob/user as mob)
+	..()
+	origin.loc = get_turf(src)
+	user.u_equip(src)
+	user.visible_message("\blue [user] puts [src] down.", "\blue You put [src] down.")
+	del src
+
+/obj/item/weapon/stool/attack(mob/M as mob, mob/user as mob)
+	if (prob(5) && istype(M,/mob/living))
+		user.visible_message("\red [user] breaks [src] over [M]'s back!.")
+		user.u_equip(src)
+		var/obj/item/stack/sheet/metal/m = new/obj/item/stack/sheet/metal
+		m.loc = get_turf(src)
+		del src
+		var/mob/living/T = M
+		T.Weaken(10)
+		T.apply_damage(20)
+		return
+	..()
