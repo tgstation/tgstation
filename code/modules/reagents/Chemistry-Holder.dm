@@ -267,6 +267,7 @@ datum
 								if(ME2.Uses <= 0) // give the notification that the slime core is dead
 									for(var/mob/M in viewers(4, get_turf(my_atom)) )
 										M << "\blue \icon[my_atom] The [my_atom]'s power is consumed in the reaction."
+										ME2.name = "used slime extract"
 										ME2.desc = "This extract has been used up."
 
 							playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
