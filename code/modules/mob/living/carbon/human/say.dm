@@ -23,7 +23,7 @@
 			if(copytext(message, 1, 2) != "*")
 				message = replacetext(message, "s", stutter("ss"))
 
-		if(src.dna.mutantrace == "slime" && prob(5))
+		/*if(src.dna.mutantrace == "slime" && prob(5))
 			if(copytext(message, 1, 2) != "*")
 				if(copytext(message, 1, 2) == ";")
 					message = ";"
@@ -32,7 +32,7 @@
 				message += "SKR"
 				var/imax = rand(5,20)
 				for(var/i = 0,i<imax,i++)
-					message += "E"
+					message += "E"*/
 
 	if(stat != DEAD)
 		for(var/datum/disease/pierrot_throat/D in viruses)
