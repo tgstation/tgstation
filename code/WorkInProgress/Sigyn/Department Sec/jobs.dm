@@ -30,7 +30,15 @@ proc/assign_sec_to_department(var/mob/living/carbon/human/H)
 		if(destination)
 			spawn(15)
 				if(H)
-					H.loc = pick(get_area_turfs(destination))
+					var/turf/T
+					var/safety = 0
+					while(safety < 25)
+						T = pick(get_area_turfs(destination))
+						if(!H.Move(T))
+							safety += 1
+							continue
+						else
+							break
 					H << "<b>You have been assigned to [department]!</b>"
 					if(locate(/obj/item/weapon/card/id, H))
 						var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)

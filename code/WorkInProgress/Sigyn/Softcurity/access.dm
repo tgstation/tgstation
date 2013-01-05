@@ -131,6 +131,12 @@
 			return 1
 	return 0
 
+/obj/item/proc/GetAccess()
+	return list()
+
+/obj/item/proc/GetID()
+	return null
+
 /obj/proc/check_access(obj/item/weapon/card/id/I)
 
 	if (istype(I, /obj/item/device/pda))
