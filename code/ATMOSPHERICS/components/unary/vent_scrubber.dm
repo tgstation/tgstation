@@ -7,34 +7,36 @@
 
 	level = 1
 
-	var/area/initial_loc
 	var/id_tag = null
-	var/frequency = 1439
-	var/datum/radio_frequency/radio_connection
 
 	var/on = 0
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
 	var/scrub_CO2 = 1
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
+	var/scrub_rate = 1
 
 	var/volume_rate = 120
 	var/panic = 0 //is this scrubber panicked?
 
 	var/area_uid
+
+	var/frequency = 1439
+	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
+
 	New()
-		initial_loc = get_area(loc)
-		if (initial_loc.master)
-			initial_loc = initial_loc.master
-		area_uid = initial_loc.uid
+		var/area/A = get_area(loc)
+		if (A.master)
+			A = A.master
+		area_uid = A.uid
 		if (!id_tag)
 			assign_uid()
 			id_tag = num2text(uid)
 		if(ticker && ticker.current_state == 3)//if the game is running
-			src.initialize()
-			src.broadcast_status()
+			initialize()
+			broadcast_status()
 		..()
 
 	update_icon()
@@ -86,20 +88,20 @@
 
 	process()
 		..()
+//		broadcast_status()
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if (!node)
 			on = 0
-		//broadcast_status()
+
 		if(!on)
 			return 0
-
 
 		var/datum/gas_mixture/environment = loc.return_air()
 
 		if(scrubbing)
 			if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases.len>0))
-				var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
+				var/transfer_moles = min(1, volume_rate*scrub_rate/environment.volume)*environment.total_moles
 
 				//Take a gas sample
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -118,15 +120,14 @@
 
 				if(removed.trace_gases.len>0)
 					for(var/datum/gas/trace_gas in removed.trace_gases)
-						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-							removed.trace_gases -= trace_gas
-							filtered_out.trace_gases += trace_gas
-						else if(istype(trace_gas, /datum/gas/sleeping_agent) && scrub_N2O)
+						if(istype(trace_gas, /datum/gas/sleeping_agent) && scrub_N2O)
 							removed.trace_gases -= trace_gas
 							filtered_out.trace_gases += trace_gas
 
 
 				//Remix the resulting gases
+				filtered_out.update_values()
+				removed.update_values()
 				air_contents.merge(filtered_out)
 
 				loc.assume_air(removed)
@@ -138,7 +139,7 @@
 			if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
 				return
 
-			var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
+			var/transfer_moles = environment.total_moles*(volume_rate*scrub_rate/environment.volume)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
@@ -220,6 +221,9 @@
 				broadcast_status()
 			return //do not update_icon
 
+		if("setting" in signal.data)
+			scrub_rate = text2num(signal.data["setting"])
+
 //			log_admin("DEBUG \[[world.timeofday]\]: vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 		spawn(2)
 			broadcast_status()
@@ -227,7 +231,7 @@
 		return
 
 	power_change()
-		if(powered(power_channel))
+		if(powered(ENVIRON))
 			stat &= ~NOPOWER
 		else
 			stat |= NOPOWER
@@ -258,9 +262,3 @@
 				"You hear ratchet.")
 			new /obj/item/pipe(loc, make_from=src)
 			del(src)
-
-	/obj/machinery/atmospherics/unary/vent_scrubber/Del()
-		if (initial_loc.air_scrub_info)
-			initial_loc.air_scrub_info -= id_tag
-		..()
-		return

@@ -4,7 +4,8 @@
 
 
 	Bumped(atom/AM)
-		if(src.locked)	return
+		if(src.locked)
+			return
 		..()
 		return
 
