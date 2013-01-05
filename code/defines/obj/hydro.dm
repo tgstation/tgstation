@@ -1217,6 +1217,10 @@
 			reagents.add_reagent("pacid", round(potency, 1))
 			force = round((5+potency/2.5), 1)
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is eating some of the [src]! It looks like \he's trying to commit suicide.</b>"
+		return (BRUTELOSS|TOXLOSS)
+
 // *************************************
 // Pestkiller defines for hydroponics
 // *************************************
@@ -1284,6 +1288,10 @@
 	var/toxicity = 4
 	var/WeedKillStr = 2
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is huffing the [src]! It looks like \he's trying to commit suicide.</b>"
+		return (TOXLOSS)
+
 /obj/item/weapon/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
 	icon = 'icons/obj/hydroponics.dmi'
@@ -1298,6 +1306,10 @@
 	throw_range = 10
 	var/toxicity = 4
 	var/PestKillStr = 2
+
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is huffing the [src]! It looks like \he's trying to commit suicide.</b>"
+		return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
 	name = "mini hoe"

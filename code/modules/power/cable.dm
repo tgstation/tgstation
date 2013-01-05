@@ -172,6 +172,10 @@
 	item_state = "coil_red"
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is strangling \himself with the [src]! It looks like \he's trying to commit suicide.</b>"
+		return(OXYLOSS)
+
 
 /obj/item/weapon/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
 	..()

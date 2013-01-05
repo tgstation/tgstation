@@ -61,6 +61,16 @@
 /obj/item/blob_act()
 	return
 
+//user: The mob that is suiciding
+//damagetype: The type of damage the item will inflict on the user
+//bruteloss = 1
+//fireloss = 2
+//toxloss = 4
+//oxyloss = 8
+//This proc will return an array. The first element of the list should always be the suicide message that players will see, next is the damagetype
+/obj/item/proc/suicide_act(mob/user)
+	return
+
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
 	set category = "Object"

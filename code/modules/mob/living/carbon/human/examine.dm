@@ -191,7 +191,7 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	if(suiciding)
-		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and [t_has] suffered major bloodloss!</span>\n"
+		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		if(brain_op_stage != 4)//Only perform these checks if there is no brain

@@ -10,6 +10,10 @@
 	var/mode = 1		//0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 25	//the amount of trash it can carry.
 
+	suicide_act(mob/user)
+		viewers(user) << "/red <b>[user] has put the [src] over \his head and is starting to hyperventilate! It looks like \he's trying to commit suicide.</b>"
+		return(OXYLOSS)
+
 /obj/item/weapon/trashbag/update_icon()
 	if(contents.len == 0)
 		icon_state = "trashbag0"

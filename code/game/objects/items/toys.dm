@@ -193,7 +193,7 @@
  * Toy crossbow
  */
 
- /obj/item/toy/crossbow
+/obj/item/toy/crossbow
 	name = "foam dart crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon = 'icons/obj/gun.dmi'
@@ -367,6 +367,10 @@
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
 	var/colourName = "red" //for updateIcon purposes
+
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is jaming the [src] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
+		return (BRUTELOSS|OXYLOSS)
 
 /*
  * Snap pops

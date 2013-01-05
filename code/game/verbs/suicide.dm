@@ -22,8 +22,53 @@
 			src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
 			return
 		suiciding = 1
-		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"
+		var/obj/item/held_item = get_active_hand()
+		if(held_item)
+			var/damagetype = held_item.suicide_act(src)
+			if(damagetype)
+				var/damage_mod = 1
+				switch(damagetype) //Sorry about the magic numbers.
+								   //brute = 1, burn = 2, tox = 4, oxy = 8
+					if(15) //4 damage types
+						damage_mod = 4
+
+					if(6, 11, 13, 14) //3 damage types
+						damage_mod = 3
+
+					if(3, 5, 7, 9, 10, 12) //2 damage types
+						damage_mod = 2
+
+					if(1, 2, 4, 8) //1 damage type
+						damage_mod = 1
+
+					else //This should not happen, but if it does, everything should still work
+						damage_mod = 1
+
+				//Do 175 damage divided by the number of damage types applied.
+				if(damagetype & BRUTELOSS)
+					adjustBruteLoss(175/damage_mod)
+
+				if(damagetype & FIRELOSS)
+					adjustFireLoss(175/damage_mod)
+
+				if(damagetype & TOXLOSS)
+					adjustToxLoss(175/damage_mod)
+
+				if(damagetype & OXYLOSS)
+					adjustOxyLoss(175/damage_mod)
+
+				//If something went wrong, just do normal oxyloss
+				if(!(damagetype | BRUTELOSS) && !(damagetype | FIRELOSS) && !(damagetype | TOXLOSS) && !(damagetype | OXYLOSS))
+					adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+
+				updatehealth()
+				return
+
+
+		viewers(src) << pick("\red <b>[src] is attempting to bite \his tongue off! It looks like \he's trying to commit suicide.</b>", \
+							"\red <b>[src] is jamming \his thumbs into \his eye sockets! It looks like \he's trying to commit suicide.</b>", \
+							"\red <b>[src] is twisting \his own neck! It looks like \he's trying to commit suicide.</b>", \
+							"\red <b>[src] is holding \his breath! It looks like \he's trying to commit suicide.</b>")
 		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 

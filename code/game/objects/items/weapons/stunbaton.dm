@@ -12,6 +12,9 @@
 	var/status = 0
 	origin_tech = "combat=2"
 
+	suicide_act(mob/user)
+		viewers(user) << "\red <b>[user] is putting the live [src] in \his mouth! It looks like \he's trying to commit suicide.</b>"
+		return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
