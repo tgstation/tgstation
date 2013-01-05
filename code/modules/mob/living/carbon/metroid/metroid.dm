@@ -749,27 +749,35 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		R.my_atom = src
 
 /obj/item/slime_extract/grey
+	name = "grey slime extract"
 	icon_state = "grey slime extract"
 
 /obj/item/slime_extract/gold
+	name = "gold slime extract"
 	icon_state = "gold slime extract"
 
 /obj/item/slime_extract/silver
+	name = "silver slime extract"
 	icon_state = "silver slime extract"
 
 /obj/item/slime_extract/metal
+	name = "metal slime extract"
 	icon_state = "metal slime extract"
 
 /obj/item/slime_extract/purple
+	name = "purple slime extract"
 	icon_state = "purple slime extract"
 
 /obj/item/slime_extract/darkpurple
+	name = "dark purple slime extract"
 	icon_state = "dark purple slime extract"
 
 /obj/item/slime_extract/orange
+	name = "orange slime extract"
 	icon_state = "orange slime extract"
 
 /obj/item/slime_extract/yellow
+	name = "yellow slime extract"
 	icon_state = "yellow slime extract"
 
 /obj/item/slime_extract/red
