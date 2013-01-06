@@ -183,4 +183,29 @@ client/verb/tcsrevert()
 		src << output("<font color = red>Failed to revert: Unable to locate machine.</font color>", "tcserror")
 
 
+client/verb/tcsclearmem()
+	set hidden = 1
+	if(mob.machine || issilicon(mob))
+		if((istype(mob.machine, /obj/machinery/computer/telecomms/traffic) && mob.machine in view(1, mob)) || (issilicon(mob) && istype(mob.machine, /obj/machinery/computer/telecomms/traffic) ))
+			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
+			if(Machine.editingcode != mob)
+				return
 
+			if(Machine.SelectedServer)
+				var/obj/machinery/telecomms/server/Server = Machine.SelectedServer
+				Server.memory = list() // clear the memory
+				// Show results
+				src << output(null, "tcserror")
+				src << output("<font color = blue>Server memory cleared!</font color>", "tcserror")
+				for(var/mob/M in Machine.viewingcode)
+					if(M.client)
+						M << output("<font color = blue>Server memory cleared!</font color>", "tcserror")
+			else
+				src << output(null, "tcserror")
+				src << output("<font color = red>Failed to clear memory: Unable to locate server machine.</font color>", "tcserror")
+		else
+			src << output(null, "tcserror")
+			src << output("<font color = red>Failed to clear memory: Unable to locate machine.</font color>", "tcserror")
+	else
+		src << output(null, "tcserror")
+		src << output("<font color = red>Failed to clear memory: Unable to locate machine.</font color>", "tcserror")

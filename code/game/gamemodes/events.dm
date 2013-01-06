@@ -236,6 +236,8 @@
 
 		var/foundAlready = 0 // don't infect someone that already has the virus
 		var/turf/T = get_turf(H)
+		if(!T)
+			continue
 		if(T.z != 1)
 			continue
 		for(var/datum/disease/D in H.viruses)
@@ -305,6 +307,8 @@
 */
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/turf/T = get_turf(H)
+		if(!T)
+			continue
 		if(T.z != 1)
 			continue
 		if(istype(H,/mob/living/carbon/human))
@@ -320,6 +324,8 @@
 					domutcheck(H,null,1)
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		var/turf/T = get_turf(M)
+		if(!T)
+			continue
 		if(T.z != 1)
 			continue
 		M.apply_effect((rand(15,75)),IRRADIATE,0)

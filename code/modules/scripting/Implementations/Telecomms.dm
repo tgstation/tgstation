@@ -222,10 +222,13 @@ datum/signal
 
 	proc/tcombroadcast(var/message, var/freq, var/source, var/job)
 
-		var/mob/living/carbon/human/H = new
 		var/datum/signal/newsign = new
 		var/obj/machinery/telecomms/server/S = data["server"]
-		var/obj/item/device/radio/hradio
+		var/obj/item/device/radio/hradio = S.server_radio
+
+		if(!hradio)
+			error("[src] has no radio.")
+			return
 
 		if((!message || message == "") && message != 0)
 			message = "*beep*"
@@ -240,8 +243,8 @@ datum/signal
 		if(!job)
 			job = "?"
 
-		newsign.data["mob"] = H
-		newsign.data["mobtype"] = H.type
+		newsign.data["mob"] = null
+		newsign.data["mobtype"] = /mob/living/carbon/human
 		if(source in S.stored_names)
 			newsign.data["name"] = source
 		else
@@ -258,14 +261,10 @@ datum/signal
 		var/datum/radio_frequency/connection = radio_controller.return_frequency(freq)
 		newsign.data["connection"] = connection
 
-		// The radio is a radio headset!
-
-		if(!hradio)
-			hradio = new /obj/item/device/radio/headset
 
 		newsign.data["radio"] = hradio
-		newsign.data["vmessage"] = H.voice_message
-		newsign.data["vname"] = H.voice_name
+		newsign.data["vmessage"] = message
+		newsign.data["vname"] = source
 		newsign.data["vmask"] = 0
 		newsign.data["level"] = list()
 

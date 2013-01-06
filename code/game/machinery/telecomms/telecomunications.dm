@@ -518,11 +518,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/salt = "null"		// encryption salt: ie "123comsat"
 							// would add up to md5("password123comsat")
 	var/language = "human"
+	var/obj/item/device/radio/headset/server_radio = null
 
 /obj/machinery/telecomms/server/New()
 	..()
 	Compiler = new()
 	Compiler.Holder = src
+	server_radio = new()
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
