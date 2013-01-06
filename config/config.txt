@@ -15,6 +15,9 @@ ADMIN_LEGACY_SYSTEM
 ## Add a # infront of this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
 BAN_LEGACY_SYSTEM
 
+## Add a # here if you wish to use the setup where jobs have more access. This is intended for servers with low populations - where there are not enough players to fill all roles, so players need to do more than just one job. Also for servers where they don't want people to hide in their own departments.
+JOBS_HAVE_MINIMAL_ACCESS
+
 ## log OOC channel
 LOG_OOC
 

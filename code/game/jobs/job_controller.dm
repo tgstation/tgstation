@@ -352,13 +352,13 @@ var/global/datum/controller/occupations/job_master
 				return
 			else
 				C = new job.idtype(H)
+				C.access = job.get_access()
 		else
 			C = new /obj/item/weapon/card/id(H)
 		if(C)
 			C.registered_name = H.real_name
 			C.assignment = rank
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
-			C.access = get_access(C.assignment)
 			H.equip_to_slot_or_del(C, slot_wear_id)
 	/*	if(prob(50))
 			H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_r_store)

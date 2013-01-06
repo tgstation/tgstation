@@ -16,13 +16,14 @@ var/jobban_keylist[0]		//to store the keys & ranks
 //returns a reason if M is banned from rank, returns 0 otherwise
 /proc/jobban_isbanned(mob/M, rank)
 	if(M && rank)
+		/*
 		if(_jobban_isbanned(M, rank)) return "Reason Unspecified"	//for old jobban
 		if (guest_jobbans(rank))
 			if(config.guest_jobban && IsGuestKey(M.key))
 				return "Guest Job-ban"
 			if(config.usewhitelist && !check_whitelist(M))
 				return "Whitelisted Job"
-
+		*/
 		for (var/s in jobban_keylist)
 			if( findtext(s,"[M.ckey] - [rank]") == 1 )
 				var/startpos = findtext(s, "## ")+3

@@ -155,7 +155,8 @@
 	registered_name = "Captain"
 	assignment = "Captain"
 	New()
-		access = get_access("Captain")
+		var/datum/job/captain/J = new/datum/job/captain
+		access = J.get_access()
 		..()
 
 /obj/item/weapon/card/id/centcom

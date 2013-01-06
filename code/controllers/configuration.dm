@@ -51,6 +51,7 @@
 	var/load_jobs_from_txt = 0
 	var/ToRban = 0
 	var/automute_on = 0					//enables automuting/spam prevention
+	var/jobs_have_minimal_access = 0	//determines whether jobs use minimal access or expanded access.
 
 	var/server
 	var/banappeals
@@ -146,6 +147,9 @@
 
 				if ("ban_legacy_system")
 					config.ban_legacy_system = 1
+
+				if ("jobs_have_minimal_access")
+					config.jobs_have_minimal_access = 1
 
 				if ("log_ooc")
 					config.log_ooc = 1

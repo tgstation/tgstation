@@ -235,7 +235,17 @@
 					if(temp_t)
 						t1 = temp_t
 				else
-					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : get_access(t1) )
+					var/datum/job/jobdatum
+					for(var/jobtype in typesof(/datum/job))
+						var/datum/job/J = new jobtype
+						if(ckey(J.title) == ckey(t1))
+							jobdatum = J
+							break
+					if(!jobdatum)
+						usr << "\red No log exists for this job."
+						return
+
+					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (modify)
 					modify.assignment = t1
 		if ("reg")

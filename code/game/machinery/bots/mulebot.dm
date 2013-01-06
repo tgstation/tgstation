@@ -73,7 +73,8 @@
 /obj/machinery/bot/mulebot/New()
 	..()
 	botcard = new(src)
-	botcard.access = get_access("Cargo Technician")
+	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
+	botcard.access = J.get_access()
 //	botcard.access += access_robotics //Why --Ikki
 	cell = new(src)
 	cell.charge = 2000
