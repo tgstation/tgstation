@@ -117,19 +117,19 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-	ReplaceWithPlating(explode)
+	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/examine()
 	set src in oview(1)
 
-	usr << "It looks like a regular wall."
+	usr << "[desc]"
 	return
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			src.ReplaceWithSpace()
+			src.ChangeTurf(/turf/space)
 			return
 		if(2.0)
 			if (prob(50))
@@ -155,6 +155,7 @@
 	if ((HULK in user.mutations))
 		if (prob(40))
 			usr << text("\blue You smash through the wall.")
+			usr.say(pick("RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
@@ -185,6 +186,7 @@
 	if ((HULK in user.mutations) || (SUPRSTR in user.augmentations))
 		if (prob(40))
 			usr << text("\blue You smash through the wall.")
+			usr.say(pick("RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
@@ -338,7 +340,7 @@
 	O.density = 1
 	O.layer = 5
 
-	var/turf/simulated/floor/F = ReplaceWithPlating()
+	var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
 	F.burn_tile()
 	F.icon_state = "wall_thermite"
 	user << "<span class='warning'>The thermite melts through the wall.</span>"
@@ -352,7 +354,7 @@
 	if (prob(15))
 		dismantle_wall()
 	else if(prob(70))
-		ReplaceWithPlating()
+		ChangeTurf(/turf/simulated/floor/plating)
 	else
 		ReplaceWithLattice()
 	return 0

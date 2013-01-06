@@ -10,24 +10,72 @@
 					dust_swarm("weak")*/
 			if (!event)
 				//CARN: checks to see if random events are enabled.
-				if(config.allow_random_events && prob(eventchance))
-					event()
-					hadevent = 1
+				if(config.allow_random_events)
+					hadevent = event()
 				else
 					Holiday_Random_Event()
 			else
 				event = 0
 			sleep(2400)
 
+// Doesn't necessarily trigger an event, but might. Returns 1 if it did.
 /proc/event()
 	event = 1
 
-	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13,14, 15) //so ninjas don't cause "empty" events.
+	var/minutes_passed = world.time/600
 
-	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
-		eventNumbersToPickFrom += 3
-	switch(pick(eventNumbersToPickFrom))
-		if(1)
+	var/engineer_count = number_active_with_role("Engineer")
+	var/security_count = number_active_with_role("Security")
+	var/medical_count = number_active_with_role("Medical")
+	var/AI_count = number_active_with_role("AI")
+
+	// Maps event names to event chances
+	// For each chance, 100 represents "normal likelihood", anything below 100 is "reduced likelihood", anything above 100 is "increased likelihood"
+	var/list/possibleEvents = list()
+
+	// Check for additional possible events
+	possibleEvents["Carp"] = 50 + 50 * engineer_count
+	possibleEvents["Lights"] = 100
+	possibleEvents["Communications"] = 50 + 50 * AI_count
+	possibleEvents["Alien"] = 10
+	if(AI_count >= 1)
+		possibleEvents["Ion Storm"] = AI_count * 50 + engineer_count * 10
+	if(engineer_count >= 1 && minutes_passed >= 30) // Give engineers time to set up engine
+		possibleEvents["Meteor"] = 80 * engineer_count
+		possibleEvents["Blob"] = 30 * engineer_count
+		possibleEvents["Spacevine"] = 30 * engineer_count
+	if(medical_count >= 1)
+		possibleEvents["Radiation"] = medical_count * 100
+		possibleEvents["Virus"] = medical_count * 50
+		possibleEvents["Appendicitis"] = medical_count * 50
+	if(security_count >= 1)
+		possibleEvents["Prison Break"] = security_count * 50
+		possibleEvents["Space Ninja"] = security_count * 10 // very low chance for space ninja event
+
+	var/picked_event = pick(possibleEvents)
+	var/chance = possibleEvents[picked_event]
+
+	var/base_chance = 0.4
+	switch(player_list.len)
+		if(5 to 10)
+			base_chance = 0.6
+		if(11 to 15)
+			base_chance = 0.7
+		if(16 to 20)
+			base_chance = 0.8
+		if(21 to 25)
+			base_chance = 0.9
+		if(26 to 30)
+			base_chance = 1.0
+		if(30 to 100000)
+			base_chance = 1.1
+
+	// Trigger the event based on how likely it currently is.
+	if(!prob(chance * eventchance * base_chance / 100)) // "normal" event chance at 20 players
+		return 0
+
+	switch(picked_event)
+		if("Meteor")
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			world << sound('sound/AI/meteors.ogg')
 			spawn(100)
@@ -36,32 +84,33 @@
 			spawn(700)
 				meteor_wave()
 				spawn_meteors()
-		if(4)
+		if("Blob")
 			mini_blob_event()
-
-		if(5)
+		if("Space Ninja")
+			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
+			space_ninja_arrival()
+		if("Radiation")
 			high_radiation_event()
-		if(6)
+		if("Virus")
 			viral_outbreak()
-		if(7)
-			if(prob(10))
-				alien_infestation()
-		if(8)
+		if("Alien")
+			alien_infestation()
+		if("Prison Break")
 			prison_break()
-		if(9)
+		if("Carp")
 			carp_migration()
-		/*if(10)
-			immovablerod()*/
-		if(11)
+		if("Lights")
 			lightsout(1,2)
-		if(12)
+		if("Appendicitis")
 			appendicitis()
-		if(13)
+		if("Ion Storm")
 			IonStorm()
-		if(14)
+		if("Spacevine")
 			spacevine_infestation()
-		if(15)
+		if("Communications")
 			communications_blackout()
+
+	return 1
 
 /proc/communications_blackout(var/silent = 1)
 
@@ -170,61 +219,16 @@
 		break
 
 /proc/viral_outbreak(var/virus = null)
-//	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-//	world << sound('sound/AI/outbreak7.ogg')
-	var/virus_type
-	if(!virus)
-		virus_type = pick(/datum/disease/dnaspread,/datum/disease/flu,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
-	else
-		switch(virus)
-			if("fake gbs")
-				virus_type = /datum/disease/fake_gbs
-			if("gbs")
-				virus_type = /datum/disease/gbs
-			if("magnitis")
-				virus_type = /datum/disease/magnitis
-			if("rhumba beat")
-				virus_type = /datum/disease/rhumba_beat
-			if("brain rot")
-				virus_type = /datum/disease/brainrot
-			if("cold")
-				virus_type = /datum/disease/cold
-			if("retrovirus")
-				virus_type = /datum/disease/dnaspread
-			if("flu")
-				virus_type = /datum/disease/flu
-//			if("t-virus")
-//				virus_type = /datum/disease/t_virus
-			if("pierrot's throat")
-				virus_type = /datum/disease/pierrot_throat
-	for(var/mob/living/carbon/human/H in living_mob_list)
-
-		var/foundAlready = 0 // don't infect someone that already has the virus
-		for(var/datum/disease/D in H.viruses)
-			foundAlready = 1
-		if(H.stat == 2 || foundAlready)
+	for(var/mob/living/carbon/human/H in world)
+		if((H.virus2) || (H.stat == 2) || prob(30))
 			continue
 
-		if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
-			if((!H.dna) || (H.sdisabilities & BLIND)) //A blindness disease would be the worst.
-				continue
-			var/datum/disease/dnaspread/D = new
-			D.strain_data["name"] = H.real_name
-			D.strain_data["UI"] = H.dna.uni_identity
-			D.strain_data["SE"] = H.dna.struc_enzymes
-			D.carrier = 1
-			D.holder = H
-			D.affected_mob = H
-			H.viruses += D
-			break
-		else
-			var/datum/disease/D = new virus_type
-			D.carrier = 1
-			D.holder = H
-			D.affected_mob = H
-			H.viruses += D
-			break
-	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
+		infect_mob_random_lesser(H)
+		break
+
+	command_alert("An unknown virus has been detected onboard the ship.", "Virus Alert")
+
+	spawn(rand(0, 3000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 		world << sound('sound/AI/outbreak7.ogg')
 
@@ -237,15 +241,7 @@
 			if(temp_vent.network.normal_members.len > 50) // Stops Aliens getting stuck in small networks. See: Security, Virology
 				vents += temp_vent
 
-	var/list/candidates = list() //List of candidate KEYs to control the new larvae. ~Carn
-	var/i = 0
-	while(candidates.len <= 0 && i < 5)
-		for(var/mob/dead/observer/G in player_list)
-			if(G.client.be_alien)
-				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
-					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-						candidates += G.key
-		i++
+	var/list/candidates = get_alien_candidates()
 
 	if(prob(33)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
@@ -491,3 +487,38 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 
 	world << "Ion Storm Main Done"
 	*/
+
+// Returns how many characters are currently active(not logged out, not AFK for more than 10 minutes)
+// with a specific role.
+// Note that this isn't sorted by department, because e.g. having a roboticist shouldn't make meteors spawn.
+proc/number_active_with_role(role)
+	var/count = 0
+	for(var/mob/M in player_list)
+		if(!M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive
+			continue
+		switch(role)
+			if("Engineer")
+				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "engineering robot module")
+					count++
+				if(M.mind.assigned_role in list("Chief Engineer", "Station Engineer"))
+					count++
+			if("Medical")
+				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "medical robot module")
+					count++
+				if(M.mind.assigned_role in list("Chief Medical Officer", "Medical Doctor"))
+					count++
+			if("Security")
+				if(istype(M, /mob/living/silicon/robot) && M:module && M:module.name == "security robot module")
+					count++
+				if(M.mind.assigned_role in security_positions)
+					count++
+			if("Scientist")
+				if(M.mind.assigned_role in list("Research Director", "Scientist"))
+					count++
+			if("AI")
+				if(M.mind.assigned_role == "AI")
+					count++
+			if("Cyborg")
+				if(M.mind.assigned_role == "Cyborg")
+					count++
+	return count

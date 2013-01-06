@@ -186,7 +186,7 @@ var/specops_shuttle_timeleft = 0
 	if(..())
 		return
 
-	user.machine = src
+	user.set_machine(src)
 	var/dat
 	if (temp)
 		dat = temp
@@ -205,7 +205,7 @@ var/specops_shuttle_timeleft = 0
 		return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 
 	if (href_list["sendtodock"])
 		if(!specops_shuttle_at_station|| specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return

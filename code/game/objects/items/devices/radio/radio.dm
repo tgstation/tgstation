@@ -71,10 +71,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 
 /obj/item/device/radio/attack_self(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	interact(user)
 
-/obj/item/device/radio/proc/interact(mob/user as mob)
+/obj/item/device/radio/interact(mob/user as mob)
 	if(!on)
 		return
 
@@ -129,7 +129,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if (!(issilicon(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
 		usr << browse(null, "window=radio")
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"])
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
@@ -663,7 +663,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	user.machine = src
+	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) ))
 		return
 	b_stat = !( b_stat )
@@ -695,7 +695,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
-	user.machine = src
+	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
 		return
 

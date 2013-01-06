@@ -102,7 +102,7 @@
 
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/stack/sheet/metal))
+	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 		B.loc = get_turf(src)
 		user << "You armed the robot frame"
@@ -161,14 +161,14 @@
 		else
 			user << "\blue You need to attach a flash to it first!"
 
-	if(istype(W, /obj/item/device/mmi))
+	if(istype(W, /obj/item/device/mmi) || istype(W, /obj/item/device/posibrain))
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
-				user << "\red You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise."
+				user << "\red You can't put the [W] in, the frame has to be standing on the ground to be perfectly precise."
 				return
 			if(!M.brainmob)
-				user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
+				user << "\red Sticking an empty [W] into the frame would sort of defeat the purpose."
 				return
 			if(!M.brainmob.key)
 				var/ghost_can_reenter = 0
@@ -178,19 +178,19 @@
 							ghost_can_reenter = 1
 							break
 				if(!ghost_can_reenter)
-					user << "<span class='notice'>The mmi indicates that their mind is completely unresponsive; there's no point.</span>"
+					user << "<span class='notice'>The [W] is completely unresponsive; there's no point.</span>"
 					return
 
 			if(M.brainmob.stat == DEAD)
-				user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
+				user << "\red Sticking a dead [W] into the frame would sort of defeat the purpose."
 				return
 
 			if(M.brainmob.mind in ticker.mode.head_revolutionaries)
-				user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI."
+				user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [W]."
 				return
 
 			if(jobban_isbanned(M.brainmob, "Cyborg"))
-				user << "\red This MMI does not seem to fit."
+				user << "\red This [W] does not seem to fit."
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))

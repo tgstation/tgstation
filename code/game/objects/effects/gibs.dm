@@ -47,7 +47,7 @@
 					if(viruses.len > 0)
 						for(var/datum/disease/D in viruses)
 							if(prob(virusProb))
-								var/datum/disease/viruus = new D.type
+								var/datum/disease/viruus = new D.type(0, D, 1)
 								gib.viruses += viruus
 								viruus.holder = gib
 								viruus.spread_type = CONTACT_FEET

@@ -1,4 +1,4 @@
-
+#define SAY_MINIMUM_PRESSURE 10
 var/list/department_radio_keys = list(
 	  ":r" = "right hand",
 	  ":l" = "left hand",
@@ -165,15 +165,15 @@ var/list/department_radio_keys = list(
 
 	// :downs:
 	if (getBrainLoss() >= 60)
-		message = dd_replacetext(message, " am ", " ")
-		message = dd_replacetext(message, " is ", " ")
-		message = dd_replacetext(message, " are ", " ")
-		message = dd_replacetext(message, "you", "u")
-		message = dd_replacetext(message, "help", "halp")
-		message = dd_replacetext(message, "grief", "grife")
-		message = dd_replacetext(message, "space", "spess")
-		message = dd_replacetext(message, "carp", "crap")
-		message = dd_replacetext(message, "reason", "raisin")
+		message = replacetext(message, " am ", " ")
+		message = replacetext(message, " is ", " ")
+		message = replacetext(message, " are ", " ")
+		message = replacetext(message, "you", "u")
+		message = replacetext(message, "help", "halp")
+		message = replacetext(message, "grief", "grife")
+		message = replacetext(message, "space", "spess")
+		message = replacetext(message, "carp", "crap")
+		message = replacetext(message, "reason", "raisin")
 		if(prob(50))
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"
@@ -294,6 +294,13 @@ var/list/department_radio_keys = list(
 				message_range = 1
 				italics = 1
 /////SPECIAL HEADSETS END
+
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment)
+		var/pressure = environment.return_pressure()
+		if (pressure < SAY_MINIMUM_PRESSURE)	//in space no one can hear you scream
+			italics = 1
+			message_range = 1
 
 	var/list/listening
 

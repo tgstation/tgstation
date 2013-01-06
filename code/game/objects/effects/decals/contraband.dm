@@ -12,7 +12,7 @@
 
 /obj/item/weapon/contraband/poster
 	name = "rolled-up poster"
-	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as Contraband aboard Nanotrasen© Space Facilities."
+	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface."
 	icon_state = "rolled_poster"
 	var/serial_number = 0
 	var/obj/effect/decal/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor

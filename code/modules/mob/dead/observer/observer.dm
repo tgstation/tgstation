@@ -25,10 +25,7 @@
 	verbs += /mob/dead/observer/proc/dead_tele
 	stat = DEAD
 
-	dead_mob_list += src
-	add_to_mob_list(src)
 	var/turf/T
-
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
@@ -53,7 +50,7 @@
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
-	return
+	..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
@@ -256,6 +253,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		client.be_pai = 1
 		src << "You will now be considered a viable candidate when a pAI device requests a new personality, effective until the end of this round."
+
+/mob/dead/observer/verb/toggle_spaceninja_candidate()
+	set name = "Toggle Be Space Ninja Candidate"
+	set category = "Ghost"
+	set desc = "Determines whether you will be a candidate for when a new space ninja spawns. (toggle)"
+	if(client.be_spaceninja)
+		client.be_spaceninja = 0
+		src << "You are now excluded from space ninja candidate lists until end of round."
+	else
+		client.be_spaceninja = 1
+		src << "You are now included in space ninja candidate lists until end of round."
 
 /mob/dead/observer/memory()
 	set hidden = 1

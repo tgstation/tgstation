@@ -141,6 +141,10 @@
 			if(new_shoe_icon_state && new_shoe_name)
 				for(var/obj/item/clothing/shoes/S in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
+					if (S.chained == 1)
+						S.chained = 0
+						S.slowdown = SHOES_SLOWDOWN
+						new /obj/item/weapon/handcuffs( src )
 					S.icon_state = new_shoe_icon_state
 					S.color = color
 					S.name = new_shoe_name

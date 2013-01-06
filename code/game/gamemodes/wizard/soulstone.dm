@@ -23,9 +23,6 @@
 
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
 
-		log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] to capture the soul of [M.name] ([M.ckey])")
-		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] to capture the soul of [M.name] ([M.ckey])") //BS12 EDIT ALG
-
 		transfer_soul("VICTIM", M, user)
 		return
 
@@ -41,7 +38,7 @@
 	attack_self(mob/user)
 		if (!in_range(src, user))
 			return
-		user.machine = src
+		user.set_machine(src)
 		var/dat = "<TT><B>Soul Stone</B><BR>"
 		for(var/mob/living/simple_animal/shade/A in src)
 			dat += "Captured Soul: [A.name]<br>"
@@ -59,16 +56,16 @@
 		var/mob/U = usr
 		if (!in_range(src, U)||U.machine!=src)
 			U << browse(null, "window=aicard")
-			U.machine = null
+			U.unset_machine()
 			return
 
 		add_fingerprint(U)
-		U.machine = src
+		U.set_machine(src)
 
 		switch(href_list["choice"])//Now we switch based on choice.
 			if ("Close")
 				U << browse(null, "window=aicard")
-				U.machine = null
+				U.unset_machine()
 				return
 
 			if ("Summon")

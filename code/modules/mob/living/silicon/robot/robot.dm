@@ -106,7 +106,6 @@
 //Improved /N
 /mob/living/silicon/robot/Del()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
-		add_to_mob_list(mmi.brainmob)
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
 		if(mind)	mind.transfer_to(mmi.brainmob)
@@ -621,7 +620,7 @@
 		if ("disarm")
 			if(!(lying))
 				if (rand(1,100) <= 85)
-					Stun(10)
+					Stun(7)
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
 					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
@@ -838,7 +837,7 @@
 	..()
 	if (href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 		return
 
@@ -971,7 +970,7 @@
 		s_active.close(src)
 
 	if(module)
-		if(module.type == /obj/item/weapon/robot_module/janitor)	//you'd think checking the module would work
+		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()

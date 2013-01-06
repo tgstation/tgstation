@@ -144,9 +144,9 @@
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
 			if(!mineral || mineral == "metal")
-				T.ReplaceWithWall()
+				T.ChangeTurf(/turf/simulated/wall)
 			else
-				T.ReplaceWithMineralWall(mineral)
+				T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 			del(src)
 
 		if( istype(W, /obj/item/weapon/weldingtool) )
@@ -154,9 +154,9 @@
 			if( WT:welding )
 				var/turf/T = get_turf(src)
 				if(!mineral)
-					T.ReplaceWithWall()
+					T.ChangeTurf(/turf/simulated/wall)
 				else
-					T.ReplaceWithMineralWall(mineral)
+					T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 				if(mineral != "plasma")//Stupid shit keeps me from pushing the attackby() to plasma walls -Sieve
 					T = get_turf(src)
 					T.attackby(W,user)
@@ -167,9 +167,9 @@
 	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
 		if(!mineral)
-			T.ReplaceWithWall()
+			T.ChangeTurf(/turf/simulated/wall)
 		else
-			T.ReplaceWithMineralWall(mineral)
+			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 		if(mineral != "plasma")
 			T = get_turf(src)
 			T.attackby(W,user)
@@ -179,9 +179,9 @@
 	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
 		var/turf/T = get_turf(src)
 		if(!mineral)
-			T.ReplaceWithWall()
+			T.ChangeTurf(/turf/simulated/wall)
 		else
-			T.ReplaceWithMineralWall(mineral)
+			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 		T = get_turf(src)
 		T.attackby(W,user)
 		del(src)
@@ -189,9 +189,9 @@
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/turf/T = get_turf(src)
 		if(!mineral)
-			T.ReplaceWithWall()
+			T.ChangeTurf(/turf/simulated/wall)
 		else
-			T.ReplaceWithMineralWall(mineral)
+			T.ChangeTurf(text2path("/turf/simulated/wall/mineral/[mineral]"))
 		if(mineral != "plasma")
 			T = get_turf(src)
 			T.attackby(W,user)
@@ -268,21 +268,21 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		var/turf/T = get_turf(src)
 		user.visible_message("[user] tightens some bolts on the r wall.", "You tighten the bolts on the wall.")
-		T.ReplaceWithWall() //Intentionally makes a regular wall instead of an r-wall (no cheap r-walls for you).
+		T.ChangeTurf(/turf/simulated/wall) //Intentionally makes a regular wall instead of an r-wall (no cheap r-walls for you).
 		del(src)
 
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
 			var/turf/T = get_turf(src)
-			T.ReplaceWithWall()
+			T.ChangeTurf(/turf/simulated/wall)
 			T = get_turf(src)
 			T.attackby(W,user)
 			del(src)
 
 	else if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
-		T.ReplaceWithWall()
+		T.ChangeTurf(/turf/simulated/wall)
 		T = get_turf(src)
 		T.attackby(W,user)
 		del(src)
@@ -290,14 +290,14 @@
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
 		var/turf/T = get_turf(src)
-		T.ReplaceWithWall()
+		T.ChangeTurf(/turf/simulated/wall)
 		T = get_turf(src)
 		T.attackby(W,user)
 		del(src)
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/turf/T = get_turf(src)
-		T.ReplaceWithWall()
+		T.ChangeTurf(/turf/simulated/wall)
 		T = get_turf(src)
 		T.attackby(W,user)
 		del(src)
@@ -308,9 +308,8 @@
 			active = 1
 			for(var/mob/living/L in range(3,src))
 				L.apply_effect(12,IRRADIATE,0)
-			for(var/turf/simulated/wall/mineral/T in range(3,src))
-				if(T.mineral == "uranium")
-					T.radiate()
+			for(var/turf/simulated/wall/mineral/uranium/T in range(3,src))
+				T.radiate()
 			last_event = world.time
 			active = null
 			return

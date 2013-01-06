@@ -18,6 +18,7 @@
 	unacidable = 1 //and no deleting hoomans inside
 	layer = MOB_LAYER //icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
+	var/initial_icon = "" //Mech type for resetting icon.
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -440,17 +441,13 @@
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 		user << "\red You slash at the armored suit!"
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("\red The [user] slashes at [src.name]'s armor!", 1)
+		visible_message("\red The [user] slashes at [src.name]'s armor!")
 	else
 		src.log_append_to_last("Armor saved.")
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 		user << "\green Your claws had no effect!"
 		src.occupant_message("\blue The [user]'s claws are stopped by the armor.")
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("\blue The [user] rebounds off [src.name]'s armor!", 1)
+		visible_message("\blue The [user] rebounds off [src.name]'s armor!")
 	return
 
 
@@ -463,17 +460,13 @@
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			src.take_damage(damage)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-			for (var/mob/V in viewers(src))
-				if(V.client && !(V.blinded))
-					V.show_message("\red <B>[user]</B> [user.attacktext] [src]!", 1)
+			visible_message("\red <B>[user]</B> [user.attacktext] [src]!")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 		else
 			src.log_append_to_last("Armor saved.")
 			playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 			src.occupant_message("\blue The [user]'s attack is stopped by the armor.")
-			for (var/mob/V in viewers(src))
-				if(V.client && !(V.blinded))
-					V.show_message("\blue The [user] rebounds off [src.name]'s armor!", 1)
+			visible_message("\blue The [user] rebounds off [src.name]'s armor!")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	return
 
@@ -486,15 +479,11 @@
 		src.take_damage(damage)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src.loc, "sparks", 50, 1)
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("\red <b>[C]</b> hits [src.name]'s armor!", 1)
+		visible_message("\red <b>[C]</b> hits [src.name]'s armor!")
 	else
 		src.log_append_to_last("Armor saved.")
 		src.occupant_message("\blue <b>[C]'s</b> attack is stopped by the armor.")
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("\blue <b>[C]</b> rebounds off [src.name]'s armor!", 1)
+		visible_message("\blue <b>[C]</b> rebounds off [src.name]'s armor!")
 	return
 
 
@@ -678,7 +667,8 @@
 
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if(istype(W, /obj/item/device/mmi))
+
+	if(istype(W, /obj/item/device/mmi) || istype(W, /obj/item/device/posibrain))
 		if(mmi_move_inside(W,user))
 			user << "[src]-MMI interface initialized successfuly"
 		else
@@ -999,9 +989,7 @@
 			return
 //	usr << "You start climbing into [src.name]"
 
-	for (var/mob/V in viewers(src))
-		if(V.client && !(V.blinded))
-			V.show_message("\blue [usr] starts to climb into [src.name]", 1)
+	visible_message("\blue [usr] starts to climb into [src.name]")
 
 	if(enter_after(40,usr))
 		if(!src.occupant)
@@ -1025,7 +1013,7 @@
 		src.add_fingerprint(H)
 		src.forceMove(src.loc)
 		src.log_append_to_last("[H] moved in as pilot.")
-		src.icon_state = initial(icon_state)
+		src.icon_state = src.reset_icon()
 		dir = dir_in
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!hasInternalDamage())
@@ -1050,9 +1038,7 @@
 	//Added a message here since people assume their first click failed or something./N
 //	user << "Installing MMI, please stand by."
 
-	for (var/mob/V in viewers(src))
-		if(V.client && !(V.blinded))
-			V.show_message("\blue [usr] starts to insert an MMI into [src.name]", 1)
+	visible_message("\blue [usr] starts to insert an MMI into [src.name]")
 
 	if(enter_after(40,user))
 		if(!occupant)
@@ -1086,7 +1072,7 @@
 		src.verbs -= /obj/mecha/verb/eject
 		src.Entered(mmi_as_oc)
 		src.Move(src.loc)
-		src.icon_state = initial(icon_state)
+		src.icon_state = src.reset_icon()
 		dir = dir_in
 		src.log_message("[mmi_as_oc] moved in as pilot.")
 		if(!hasInternalDamage())
@@ -1175,7 +1161,7 @@
 			src.occupant.canmove = 0
 			src.verbs += /obj/mecha/verb/eject
 		src.occupant = null
-		src.icon_state = initial(icon_state)+"-open"
+		src.icon_state = src.reset_icon()+"-open"
 		src.dir = dir_in
 	return
 
@@ -1452,14 +1438,16 @@
 /obj/mecha/Topic(href, href_list)
 	..()
 	if(href_list["update_content"])
+		if(usr != src.occupant)	return
 		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
 		return
 	if(href_list["close"])
 		return
-	if(usr.stat>0)
+	if(usr.stat > 0)
 		return
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 	if(href_list["select_equip"])
+		if(usr != src.occupant)	return
 		var/obj/item/mecha_parts/mecha_equipment/equip = filter.getObj("select_equip")
 		if(equip)
 			src.selected = equip
@@ -1467,24 +1455,30 @@
 			src.visible_message("[src] raises [equip]")
 			send_byjax(src.occupant,"exosuit.browser","eq_list",src.get_equipment_list())
 		return
-	if (href_list["eject"])
+	if(href_list["eject"])
+		if(usr != src.occupant)	return
 		src.eject()
 		return
 	if(href_list["toggle_lights"])
+		if(usr != src.occupant)	return
 		src.toggle_lights()
 		return
 	if(href_list["toggle_airtank"])
+		if(usr != src.occupant)	return
 		src.toggle_internal_tank()
 		return
 	if(href_list["rmictoggle"])
+		if(usr != src.occupant)	return
 		radio.broadcasting = !radio.broadcasting
 		send_byjax(src.occupant,"exosuit.browser","rmicstate",(radio.broadcasting?"Engaged":"Disengaged"))
 		return
 	if(href_list["rspktoggle"])
+		if(usr != src.occupant)	return
 		radio.listening = !radio.listening
 		send_byjax(src.occupant,"exosuit.browser","rspkstate",(radio.listening?"Engaged":"Disengaged"))
 		return
 	if(href_list["rfreq"])
+		if(usr != src.occupant)	return
 		var/new_frequency = (radio.frequency + filter.getNum("rfreq"))
 		if (!radio.freerange || (radio.frequency < 1200 || radio.frequency > 1600))
 			new_frequency = sanitize_frequency(new_frequency)
@@ -1492,16 +1486,20 @@
 		send_byjax(src.occupant,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
 		return
 	if(href_list["port_disconnect"])
+		if(usr != src.occupant)	return
 		src.disconnect_from_port()
 		return
 	if (href_list["port_connect"])
+		if(usr != src.occupant)	return
 		src.connect_to_port()
 		return
 	if (href_list["view_log"])
+		if(usr != src.occupant)	return
 		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
 		onclose(occupant, "exosuit_log")
 		return
 	if (href_list["change_name"])
+		if(usr != src.occupant)	return
 		var/newname = strip_html_simple(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)) as text)
 		if(newname && trim(newname))
 			name = newname
@@ -1509,10 +1507,12 @@
 			alert(occupant, "nope.avi")
 		return
 	if (href_list["toggle_id_upload"])
+		if(usr != src.occupant)	return
 		add_req_access = !add_req_access
 		send_byjax(src.occupant,"exosuit.browser","t_id_upload","[add_req_access?"L":"Unl"]ock ID upload panel")
 		return
 	if(href_list["toggle_maint_access"])
+		if(usr != src.occupant)	return
 		if(state)
 			occupant_message("<font color='red'>Maintenance protocols in effect</font>")
 			return
@@ -1520,9 +1520,11 @@
 		send_byjax(src.occupant,"exosuit.browser","t_maint_access","[maint_access?"Forbid":"Permit"] maintenance protocols")
 		return
 	if(href_list["req_access"] && add_req_access)
+		if(!in_range(src, usr))	return
 		output_access_dialog(filter.getObj("id_card"),filter.getMob("user"))
 		return
 	if(href_list["maint_access"] && maint_access)
+		if(!in_range(src, usr))	return
 		var/mob/user = filter.getMob("user")
 		if(user)
 			if(state==0)
@@ -1534,33 +1536,40 @@
 			output_maintenance_dialog(filter.getObj("id_card"),user)
 		return
 	if(href_list["set_internal_tank_valve"] && state >=1)
+		if(!in_range(src, usr))	return
 		var/mob/user = filter.getMob("user")
 		if(user)
 			var/new_pressure = input(user,"Input new output pressure","Pressure setting",internal_tank_valve) as num
 			if(new_pressure)
 				internal_tank_valve = new_pressure
 				user << "The internal pressure valve has been set to [internal_tank_valve]kPa."
-	if (href_list["add_req_access"] && add_req_access)
+	if(href_list["add_req_access"] && add_req_access && filter.getObj("id_card"))
+		if(!in_range(src, usr))	return
 		operation_req_access += filter.getNum("add_req_access")
 		output_access_dialog(filter.getObj("id_card"),filter.getMob("user"))
 		return
-	if (href_list["del_req_access"] && add_req_access)
+	if(href_list["del_req_access"] && add_req_access && filter.getObj("id_card"))
+		if(!in_range(src, usr))	return
 		operation_req_access -= filter.getNum("del_req_access")
 		output_access_dialog(filter.getObj("id_card"),filter.getMob("user"))
 		return
-	if (href_list["finish_req_access"])
+	if(href_list["finish_req_access"])
+		if(!in_range(src, usr))	return
 		add_req_access = 0
 		var/mob/user = filter.getMob("user")
 		user << browse(null,"window=exosuit_add_access")
 		return
 	if(href_list["dna_lock"])
+		if(usr != src.occupant)	return
 		if(src.occupant)
 			src.dna = src.occupant.dna.unique_enzymes
 			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
 		return
 	if(href_list["reset_dna"])
+		if(usr != src.occupant)	return
 		src.dna = null
 	if(href_list["repair_int_control_lost"])
+		if(usr != src.occupant)	return
 		src.occupant_message("Recalibrating coordination system.")
 		src.log_message("Recalibration of coordination system started.")
 		var/T = src.loc
@@ -1662,6 +1671,9 @@
 		return 1
 	return 0
 
+/obj/mecha/proc/reset_icon()
+	icon_state = initial_icon
+	return icon_state
 
 //////////////////////////////////////////
 ////////  Mecha global iterators  ////////

@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/item/weapon
 	name = "weapon"
 	icon = 'icons/obj/weapons.dmi'
@@ -37,14 +35,17 @@
 	m_amt = 1000
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
+	var/cooldown = 0	//shield bash cooldown. based on world.time
 
 	IsShield()
 		return 1
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/melee/baton))
-			user.visible_message("<span class='warning'>[user] bashes their [src] with [W]!</span>")
-			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			if(cooldown < world.time - 25)
+				user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
+				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+				cooldown = world.time
 		else
 			..()
 
@@ -82,9 +83,6 @@
 
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-
-	log_admin("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])")
-	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
@@ -306,7 +304,7 @@
 /obj/item/weapon/spacecash/attack_self(var/mob/user)
 	interact(user)
 
-/obj/item/weapon/spacecash/proc/interact(var/mob/user)
+/obj/item/weapon/spacecash/interact(var/mob/user)
 
 	user.machine = src
 
@@ -1490,6 +1488,7 @@
 	m_amt = 12000
 	origin_tech = "materials=1"
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	sharp = 1
 
 /obj/item/weapon/butch/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -1712,23 +1711,6 @@
 	throwforce = 2
 	var/cigarcount = 6
 	flags = ONBELT | TABLEPASS */
-
-
-/obj/item/weapon/mousetrap
-	name = "mousetrap"
-	desc = "A handy little spring-loaded trap for catching pesty rodents."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "mousetrap"
-	item_state = "mousetrap"
-	w_class = 1
-	force = null
-	throwforce = null
-	var/armed = 0
-	origin_tech = "combat=1"
-
-/obj/item/weapon/mousetrap/armed
-	icon_state = "mousetraparmed"
-	armed = 1
 
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."

@@ -41,7 +41,7 @@
 
 	attack_hand(mob/user)
 		user << browse(return_text(),"window=computer")
-		user.machine = src
+		user.set_machine(src)
 		onclose(user, "computer")
 
 	process()

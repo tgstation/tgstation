@@ -5,15 +5,12 @@
 /client/proc/admin_memo(task in list("write","show","delete"))
 	set name = "Memo"
 	set category = "Server"
-	if(!holder || !ENABLE_MEMOS)	return
+	if(!ENABLE_MEMOS)		return
+	if(!check_rights(0))	return
 	switch(task)
-		if("write")
-			admin_memo_write()
-		if("show")
-			admin_memo_show()
-		if("delete")
-			admin_memo_delete()
-
+		if("write")		admin_memo_write()
+		if("show")		admin_memo_show()
+		if("delete")	admin_memo_delete()
 
 //write a message
 /client/proc/admin_memo_write()
@@ -45,7 +42,7 @@
 	var/savefile/F = new(MEMOFILE)
 	if(F)
 		var/ckey
-		if( holder.rank == "Game Master" )
+		if(check_rights(R_SERVER,0))	//high ranking admins can delete other admin's memos
 			ckey = input(src,"Whose memo shall we remove?","Remove Memo",null) as null|anything in F.dir
 		else
 			ckey = src.ckey

@@ -95,28 +95,21 @@
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
-
 	if(IsGuestKey(key))
 		alert(src,"Baystation12 doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
 		del(src)
 		return
 
-	client_list += src
-	if ( (world.address == address || !address) && !host )
-		host = key
-		world.update_status()
+	clients += src
+	directory[ckey] = src
 
 	//Admin Authorisation
-	var/datum/admins/Admin_Obj = admins[ckey]
-	if(istype(Admin_Obj))
-		admin_list += src
-		holder = Admin_Obj
+	holder = admin_datums[ckey]
+	if(holder)
+		admins += src
 		holder.owner = src
-		holder.state = null
 
 	. = ..()	//calls mob.Login()
-
-	//makejson()
 
 	if(custom_event_msg && custom_event_msg != "")
 		src << "<h1 class='alert'>Custom Event</h1>"
@@ -124,9 +117,12 @@
 		src << "<span class='alert'>[html_encode(custom_event_msg)]</span>"
 		src << "<br>"
 
-	..()	//calls mob.Login()
+	if( (world.address == address || !address) && !host )
+		host = key
+		world.update_status()
 
 	if(holder)
+		add_admin_verbs()
 		admin_memo_show()
 
 	log_client_to_db()
@@ -137,9 +133,10 @@
 	//////////////
 /client/Del()
 	if(holder)
-		holder.state = null
-		admin_list -= src
-	client_list -= src
+		holder.owner = null
+		admins -= src
+	directory -= ckey
+	clients -= src
 	return ..()
 
 
@@ -149,15 +146,7 @@
 	if ( IsGuestKey(src.key) )
 		return
 
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
 
@@ -188,17 +177,19 @@
 
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
-
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
 	else
 		//New player!! Need to insert all the stuff
-
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
 		query_insert.Execute()
-
-	dbcon.Disconnect()
 
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
 #undef MIN_CLIENT_VERSION
+
+//checks if a client is afk
+//3000 frames = 5 minutes
+/client/proc/is_afk(duration=3000)
+	if(inactivity > duration)	return inactivity
+	return 0

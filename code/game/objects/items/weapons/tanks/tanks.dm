@@ -77,10 +77,11 @@
 /obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	var/obj/icon = src
+
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
-	if ((istype(W, /obj/item/device/analyzer) || (istype(W, /obj/item/device/pda))) && get_dist(user, src) <= 1)
 
+	if ((istype(W, /obj/item/device/analyzer) || (istype(W, /obj/item/device/pda))) && get_dist(user, src) <= 1)
 		for (var/mob/O in viewers(user, null))
 			O << "\red [user] has used [W] on \icon[icon] [src]"
 
@@ -112,13 +113,14 @@
 		var/obj/item/latexballon/LB = W
 		LB.blow(src)
 		src.add_fingerprint(user)
-	return
 
+	if(istype(W, /obj/item/device/assembly_holder))
+		bomb_assemble(W,user)
 
 /obj/item/weapon/tank/attack_self(mob/user as mob)
 	if (!(src.air_contents))
 		return
-	user.machine = src
+	user.set_machine(src)
 
 	var/using_internal
 	if(istype(loc,/mob/living/carbon))
@@ -142,7 +144,7 @@
 	if (usr.stat|| usr.restrained())
 		return
 	if (src.loc == usr)
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["dist_p"])
 			var/cp = text2num(href_list["dist_p"])
 			src.distribute_pressure += cp

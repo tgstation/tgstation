@@ -16,7 +16,7 @@
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 
-/obj/item/clothing/suit/det_suit/armor
+/obj/item/clothing/suit/storage/det_suit/armor
 	name = "detective's armor"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"

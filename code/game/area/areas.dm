@@ -10,7 +10,7 @@
 /area/New()
 	icon_state = ""
 	layer = 10
-	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references src.loc.loc.master ~Carn
+	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references loc.loc.master ~Carn
 	uid = ++global_uid
 	related = list(src)
 
@@ -62,44 +62,44 @@
 	return
 
 /area/proc/atmosalert(danger_level)
-//	if(src.type==/area) //No atmos alarms in space
+//	if(type==/area) //No atmos alarms in space
 //		return 0 //redudant
-	if(danger_level != src.atmosalm)
-		//src.updateicon()
-		//src.mouse_opacity = 0
+	if(danger_level != atmosalm)
+		//updateicon()
+		//mouse_opacity = 0
 		if (danger_level==2)
 			var/list/cameras = list()
-			for(var/area/RA in src.related)
-				//src.updateicon()
+			for(var/area/RA in related)
+				//updateicon()
 				for(var/obj/machinery/camera/C in RA)
 					cameras += C
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in world)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
-		else if (src.atmosalm == 2)
+		else if (atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in world)
 				a.cancelAlarm("Atmosphere", src, src)
-		src.atmosalm = danger_level
+		atmosalm = danger_level
 		return 1
 	return 0
 
 /area/proc/firealert()
-	if(src.name == "Space") //no fire alarms in space
+	if(name == "Space") //no fire alarms in space
 		return
-	if (!( src.fire ))
-		src.fire = 1
-		src.updateicon()
-		src.mouse_opacity = 0
-		for(var/obj/machinery/door/firedoor/D in src)
+	if( !fire )
+		fire = 1
+		updateicon()
+		mouse_opacity = 0
+		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
 				if(D.operating)
 					D.nextstate = CLOSED
 				else if(!D.density)
-					spawn(0)
-					D.close()
+					spawn()
+						D.close()
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
@@ -107,14 +107,13 @@
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 		for (var/obj/machinery/computer/station_alert/a in world)
 			a.triggerAlarm("Fire", src, cameras, src)
-	return
 
 /area/proc/firereset()
-	if (src.fire)
-		src.fire = 0
-		src.mouse_opacity = 0
-		src.updateicon()
-		for(var/obj/machinery/door/firedoor/D in src)
+	if (fire)
+		fire = 0
+		mouse_opacity = 0
+		updateicon()
+		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
 				if(D.operating)
 					D.nextstate = OPEN
@@ -125,7 +124,6 @@
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in world)
 			a.cancelAlarm("Fire", src, src)
-	return
 
 /area/proc/readyalert()
 	if(name == "Space")
@@ -142,19 +140,19 @@
 	return
 
 /area/proc/partyalert()
-	if(src.name == "Space") //no parties in space!!!
+	if(name == "Space") //no parties in space!!!
 		return
-	if (!( src.party ))
-		src.party = 1
-		src.updateicon()
-		src.mouse_opacity = 0
+	if (!( party ))
+		party = 1
+		updateicon()
+		mouse_opacity = 0
 	return
 
 /area/proc/partyreset()
-	if (src.party)
-		src.party = 0
-		src.mouse_opacity = 0
-		src.updateicon()
+	if (party)
+		party = 0
+		mouse_opacity = 0
+		updateicon()
 		for(var/obj/machinery/door/firedoor/D in src)
 			if(!D.blocked)
 				if(D.operating)
@@ -273,7 +271,7 @@
 			A:client:ambience_playing = 1
 			A << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
-		switch(src.name)
+		switch(name)
 			if ("Chapel") sound = pick('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
 			if ("Morgue") sound = pick('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/music/title2.ogg')
 			if ("Space") sound = pick('sound/ambience/ambispace.ogg','sound/music/title2.ogg',)

@@ -67,9 +67,6 @@
 
 				log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
-				log_admin("ATTACK: [user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])")
-				msg_admin_attack("ATTACK: [user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
-
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("\red [user] feeds [M] [src].", 1)
 
@@ -262,6 +259,16 @@
 		reagents.add_reagent("sugar", 3)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/candy/donor
+	name = "Donor Candy"
+	desc = "A little treat for blood donors."
+	trash = /obj/item/trash/candy
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("sugar", 3)
+		bitesize = 5
+
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
 	desc = "It's a handful of candy corn. Can be stored in a detective's hat."
@@ -425,6 +432,7 @@
 	throw_impact(atom/hit_atom)
 		..()
 		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
+		src.reagents.reaction(hit_atom, TOUCH)
 		src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
 		del(src)
 

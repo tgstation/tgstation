@@ -1,12 +1,3 @@
-
-//check if mob is lying down on something we can operate him on.
-/proc/can_operate(mob/living/carbon/M)
-	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
-	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || 	\
-	(locate(/obj/structure/table/, M.loc) && 	\
-	(M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))
-
 /datum/surgery_status/
 	var/eyes	=	0
 	var/face	=	0
@@ -49,7 +40,7 @@
 	var/can_infect = 0
 
 // Build this list by iterating over all typesof(/datum/surgery_step) and sorting the results by priority
-var/global/list/surgery_steps = null
+
 
 proc/build_surgery_steps_list()
 	surgery_steps = list()
@@ -88,6 +79,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/generic/cut_open
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 90
 	max_duration = 110
@@ -116,9 +108,12 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\red [user]'s hand slips, slicing open [target]'s [affected.display_name] in a wrong spot with \the [tool]!", \
 		"\red Your hand slips, slicing open [target]'s [affected.display_name] in a wrong spot with \the [tool]!")
 		affected.createwound(CUT, 10)
+		if (ishuman(user))
+			user:bloody_hands(target, 0)
 
 /datum/surgery_step/generic/clamp_bleeders
 	required_tool = /obj/item/weapon/hemostat
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
 
 	min_duration = 40
 	max_duration = 60
@@ -145,9 +140,12 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\red [user]'s hand slips, tearing blood vessals and causing massive bleeding in [target]'s [affected.display_name] with the \[tool]!",	\
 		"\red Your hand slips, tearing blood vessels and causing massive bleeding in [target]'s [affected.display_name] with \the [tool]!",)
 		affected.createwound(CUT, 10)
+		if (ishuman(user))
+			user:bloody_hands(target, 0)
 
 /datum/surgery_step/generic/retract_skin
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
 
 	min_duration = 30
 	max_duration = 40
@@ -181,6 +179,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message(msg, self_msg)
 		affected.open = 2
 		spread_germs_to_organ(affected, user)
+		if (prob(40)) user:bloody_hands(target, 0)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -197,6 +196,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/generic/cauterize
 	required_tool = /obj/item/weapon/cautery
+	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 
 	min_duration = 70
 	max_duration = 100
@@ -242,6 +242,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/appendectomy/cut_appendix
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 70
 	max_duration = 90
@@ -258,15 +259,19 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\blue [user] has separated [target]'s appendix with \the [tool]." , \
 		"\blue You have separated [target]'s appendix with \the [tool].")
 		target.op_stage.appendix = 1
+		if (ishuman(user) && prob(40)) user:bloody_hands(target, 0)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/groin = target.get_organ("groin")
 		user.visible_message("\red [user]'s hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!", \
 		"\red Your hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!")
-		groin.createwound(CUT, 50)
+		groin.createwound(CUT, 50, 1)
+		if (ishuman(user))
+			user:bloody_body(target)
 
 /datum/surgery_step/appendectomy/remove_appendix
 	required_tool = /obj/item/weapon/hemostat
+	allowed_tools = list(/obj/item/weapon/wirecutters)
 
 	min_duration = 60
 	max_duration = 80
@@ -292,6 +297,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		else
 			new /obj/item/weapon/reagent_containers/food/snacks/appendix(get_turf(target))
 		target.op_stage.appendix = 2
+		if (ishuman(user) && prob(40)) user:bloody_hands(target, 0)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -307,6 +313,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/fix_vein
 	required_tool = /obj/item/weapon/FixOVein
+	allowed_tools = list(/obj/item/weapon/cable_coil)
 
 	min_duration = 70
 	max_duration = 90
@@ -335,6 +342,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		for(var/datum/wound/W in affected.wounds) if(W.internal)
 			affected.wounds -= W
 			affected.update_damages()
+		if (ishuman(user) && prob(40)) user:bloody_hands(target, 0)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -349,6 +357,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/glue_bone
 	required_tool = /obj/item/weapon/bonegel
+	allowed_tools = list(/obj/item/weapon/screwdriver)
 
 	min_duration = 50
 	max_duration = 60
@@ -370,6 +379,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 			"\blue You apply some [tool] to [target]'s bone in [affected.display_name] with \the [tool].")
 		affected.stage = 1
 		spread_germs_to_organ(affected, user)
+		if (ishuman(user) && prob(80)) user:bloody_hands(target, 0)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -378,6 +388,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/set_bone
 	required_tool = /obj/item/weapon/bonesetter
+	allowed_tools = list(/obj/item/weapon/wrench)
 
 	min_duration = 60
 	max_duration = 70
@@ -413,6 +424,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/mend_skull
 	required_tool = /obj/item/weapon/bonesetter
+	allowed_tools = list(/obj/item/weapon/wrench)
 
 	min_duration = 60
 	max_duration = 70
@@ -442,6 +454,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/finish_bone
 	required_tool = /obj/item/weapon/bonegel
+	allowed_tools = list(/obj/item/weapon/screwdriver)
 
 	min_duration = 50
 	max_duration = 60
@@ -464,6 +477,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		affected.stage = 0
 		affected.perma_injury = 0
 		spread_germs_to_organ(affected, user)
+		if (ishuman(user) && prob(80)) user:bloody_hands(target, 0)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -485,6 +499,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/eye/cut_open
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 90
 	max_duration = 110
@@ -509,6 +524,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/eye/lift_eyes
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
 
 	min_duration = 30
 	max_duration = 40
@@ -533,6 +549,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/eye/mend_eyes
 	required_tool = /obj/item/weapon/hemostat
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
 
 	min_duration = 80
 	max_duration = 100
@@ -557,6 +574,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/eye/cauterize
 	required_tool = /obj/item/weapon/cautery
+	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 
 	min_duration = 70
 	max_duration = 100
@@ -598,6 +616,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/generic/cut_face
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 90
 	max_duration = 110
@@ -623,6 +642,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/face/mend_vocal
 	required_tool = /obj/item/weapon/hemostat
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
 
 	min_duration = 70
 	max_duration = 90
@@ -643,9 +663,13 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\red [user]'s hand slips, clamping [target]'s trachea shut for a moment with \the [tool]!", \
 		"\red Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!")
 		target.losebreath += 10
+		if (ishuman(user))
+			user:bloody_body(target)
+			user:bloody_hands(target, 0)
 
 /datum/surgery_step/face/fix_face
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
 
 	min_duration = 80
 	max_duration = 100
@@ -670,6 +694,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/face/cauterize
 	required_tool = /obj/item/weapon/cautery
+	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 
 	min_duration = 70
 	max_duration = 100
@@ -731,6 +756,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/brain/cut_brain
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 80
 	max_duration = 100
@@ -750,7 +776,10 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
 		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
-		target.apply_damage(50, BRUTE, "head")
+		target.apply_damage(50, BRUTE, "head", 1)
+		if (ishuman(user))
+			user:bloody_body(target)
+			user:bloody_hands(target, 0)
 
 /datum/surgery_step/brain/saw_spine
 	required_tool = /obj/item/weapon/circular_saw
@@ -785,7 +814,10 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!", \
 		"\red Your hand slips, cutting a vein in [target]'s brain with \the [tool]!")
-		target.apply_damage(30, BRUTE, "head")
+		target.apply_damage(30, BRUTE, "head", 1)
+		if (ishuman(user))
+			user:bloody_body(target)
+			user:bloody_hands(target, 0)
 
 
 //////////////////////////////////////////////////////////////////
@@ -798,6 +830,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/metroid/cut_flesh
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 30
 	max_duration = 50
@@ -820,6 +853,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/metroid/cut_innards
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 30
 	max_duration = 50
@@ -887,6 +921,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/limb/cut
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 80
 	max_duration = 100
@@ -913,6 +948,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/limb/mend
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/kitchen/utensil/fork)
 
 	min_duration = 80
 	max_duration = 100
@@ -943,6 +979,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/limb/prepare
 	required_tool = /obj/item/weapon/cautery
+	allowed_tools = list(/obj/item/weapon/weldingtool, /obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 
 	min_duration = 60
 	max_duration = 70
@@ -1045,6 +1082,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/ribcage/retract_ribcage
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/crowbar)
 
 	min_duration = 30
 	max_duration = 40
@@ -1069,6 +1107,9 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 			var/datum/organ/external/affected = target.get_organ(target_zone)
 			affected.fracture()
 
+		if (ishuman(user))
+			user:bloody_hands(target, 0)
+
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/msg = "\red [user]'s hand slips, breaking [target]'s ribcage!"
 		var/self_msg = "\red Your hand slips, breaking [target]'s ribcage!"
@@ -1078,6 +1119,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/ribcage/close_ribcage
 	required_tool = /obj/item/weapon/retractor
+	allowed_tools = list(/obj/item/weapon/crowbar)
 
 	min_duration = 20
 	max_duration = 40
@@ -1151,8 +1193,11 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		for(var/datum/disease/alien_embryo in target.viruses)
 			alien_embryo.cure()
 
+		if (ishuman(user)) user:bloody_hands(target, 0)
+
 /datum/surgery_step/ribcage/fix_lungs
 	required_tool = /obj/item/weapon/scalpel
+	allowed_tools = list(/obj/item/weapon/shard, /obj/item/weapon/kitchenknife)
 
 	min_duration = 70
 	max_duration = 90
@@ -1170,10 +1215,14 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\blue [user] mends the rupture in [target]'s lungs with \the [tool].", \
 		"\blue You mend the rupture in [target]'s lungs with \the [tool]." )
 		affected.ruptured_lungs = 0
+		if (ishuman(user) && prob(80)) user:bloody_hands(target, 0)
 
 	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/affected = target.get_organ("chest")
 		user.visible_message("\red [user]'s hand slips, slicing an artery inside [target]'s chest with \the [tool]!", \
 		"\red Your hand slips, slicing an artery inside [target]'s chest with \the [tool]!")
 		affected.createwound(CUT, 20)
+		if (ishuman(user))
+			user:bloody_hands(target, 0)
+			user:bloody_body(target)
 

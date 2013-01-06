@@ -186,6 +186,8 @@
 	spreadChance = 0
 	spread = 0
 
+/*
+commented out in r5061, I left it because of the shroom thingies
 
 /turf/simulated/mineral/ReplaceWithFloor()
 	if(!icon_old) icon_old = icon_state
@@ -212,7 +214,7 @@
 	W.fullUpdateMineralOverlays()
 	W.levelupdate()
 	return W
-
+*/
 
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -272,9 +274,11 @@
 			if (src.mineralName == "Clown")
 				new /obj/item/weapon/ore/clown(src)
 	if (prob(src.artifactChance))
-		//spawn a rare, xeno-archaelogical artifact here
+		//spawn a rare artifact here
 		new /obj/machinery/artifact(src)
-	ReplaceWithFloor()
+	var/turf/simulated/floor/plating/airless/asteroid/N = ChangeTurf(/turf/simulated/floor/plating/airless/asteroid)
+	N.fullUpdateMineralOverlays()
+
 	if(destroyed)  //Display message about being a terrible miner
 		usr << "\red You destroy some of the rocks!"
 	return

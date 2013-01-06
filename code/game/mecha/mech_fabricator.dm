@@ -113,6 +113,7 @@
 
 	"Cyborg Upgrade Modules" = list(
 						/obj/item/borg/upgrade/reset,
+						/obj/item/borg/upgrade/rename,
 						/obj/item/borg/upgrade/restart,
 						/obj/item/borg/upgrade/vtec,
 						/obj/item/borg/upgrade/tasercooler,
@@ -538,7 +539,7 @@
 		return
 	if(!operation_allowed(user))
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/turf/exit = get_step(src,SOUTH)
 	if(exit.density)
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Error! Part outlet is obstructed\".")

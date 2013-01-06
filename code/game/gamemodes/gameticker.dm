@@ -148,18 +148,6 @@ var/global/datum/controller/gameticker/ticker
 		spawn(3000)
 		statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
 
-	//setup vermin spawn areas
-	var/list/vermin_spawn_areas = list("/area/maintenance","/area/mine/maintenance","/area/crew_quarters/locker/locker_toilet","/area/crew_quarters/toilet")
-	vermin_spawn_turfs = new/list()
-	for(var/area_text in vermin_spawn_areas)
-		var/area_base_type = text2path(area_text)
-		for(var/area in typesof(area_base_type))
-			var/list/area_turfs = get_area_turfs(area)
-			for(var/turf/T in area_turfs)
-				if(T.density)
-					area_turfs -= T
-				vermin_spawn_turfs.Add(area_turfs)
-
 	return 1
 
 /datum/controller/gameticker
@@ -254,7 +242,9 @@ var/global/datum/controller/gameticker/ticker
 						flick("station_explode_fade_red", cinematic)
 						world << sound('sound/effects/explosionfar.ogg')
 						cinematic.icon_state = "summary_selfdes"
-
+				for(var/mob/living/M in living_mob_list)
+					if(M.loc.z == 1)
+						M.death()//No mercy
 		//If its actually the end of the round, wait for it to end.
 		//Otherwise if its a verb it will continue on afterwards.
 		sleep(300)

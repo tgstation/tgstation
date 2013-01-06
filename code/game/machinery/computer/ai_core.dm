@@ -117,16 +117,16 @@
 				laws.add_inherent_law(M.newFreeFormLaw)
 				usr << "Added a freeform law."
 
-			if(istype(P, /obj/item/device/mmi))
+			if(istype(P, /obj/item/device/mmi) || istype(P, /obj/item/device/posibrain))
 				if(!P:brainmob)
-					user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
+					user << "\red Sticking an empty [P] into the frame would sort of defeat the purpose."
 					return
 				if(P:brainmob.stat == 2)
-					user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
+					user << "\red Sticking a dead [P] into the frame would sort of defeat the purpose."
 					return
 
 				if(jobban_isbanned(P:brainmob, "AI"))
-					user << "\red This MMI does not seem to fit."
+					user << "\red This [P] does not seem to fit."
 					return
 
 				if(P:brainmob.mind)
@@ -136,7 +136,7 @@
 				user.drop_item()
 				P.loc = src
 				brain = P
-				usr << "Added a brain."
+				usr << "Added [P]."
 				icon_state = "3b"
 
 			if(istype(P, /obj/item/weapon/crowbar) && brain)

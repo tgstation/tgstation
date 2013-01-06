@@ -61,7 +61,7 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
 			new /obj/item/stack/rods(src, 2)
-			ReplaceWithFloor()
+			ChangeTurf(/turf/simulated/floor)
 			var/turf/simulated/floor/F = src
 			F.make_plating()
 			return

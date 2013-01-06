@@ -68,7 +68,7 @@
 				user << "\red <b>ERROR</b>: \black Remote access channel disabled."
 			return
 
-	user.machine = src
+	user.set_machine(src)
 	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
 
 	if (src.occupant)
