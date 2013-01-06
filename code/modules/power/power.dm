@@ -230,7 +230,8 @@
 	i=1
 	while(i<=nodes.len)
 		var/obj/machinery/power/Node = nodes[i]
-		if(Node)	Node.powernet = null
+		if(Node)
+			Node.powernet = null
 		i++
 
 	// remove the cut cable from the network
@@ -312,7 +313,7 @@
 
 	var/numapc = 0
 
-	if(nodes) // Added to fix a bad list bug -- TLE
+	if(nodes && nodes.len) // Added to fix a bad list bug -- TLE
 		for(var/obj/machinery/power/terminal/term in nodes)
 			if( istype( term.master, /obj/machinery/power/apc ) )
 				numapc++
@@ -323,8 +324,13 @@
 	netexcess = avail - load
 
 	if( netexcess > 100)		// if there was excess power last cycle
-		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
-			S.restore()				// and restore some of the power that was used
+		if(nodes && nodes.len)
+			for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
+				if(S.powernet == src)
+					S.restore()				// and restore some of the power that was used
+				else
+					error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).")
+					nodes.Remove(S)
 
 /datum/powernet/proc/get_electrocute_damage()
 	switch(avail)/*

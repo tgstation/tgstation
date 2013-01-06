@@ -119,10 +119,7 @@
 	if(last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
 		updateicon()
 
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.interact(M)
-	AutoUpdateAI(src)
+	updateDialog()
 	return
 
 // called after all power processes are finished
@@ -367,3 +364,4 @@
 	return rate
 
 
+#undef SMESRATE
