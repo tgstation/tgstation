@@ -668,7 +668,7 @@
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 
-	if(istype(W, /obj/item/device/mmi))
+	if(istype(W, /obj/item/device/mmi) || istype(W, /obj/item/device/posibrain))
 		if(mmi_move_inside(W,user))
 			user << "[src]-MMI interface initialized successfuly"
 		else

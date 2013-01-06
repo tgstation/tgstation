@@ -2,7 +2,7 @@
 	if (silent)
 		return
 
-	if(!(container && istype(container, /obj/item/device/mmi)))
+	if(!(container && (istype(container, /obj/item/device/mmi) || istype(container, /obj/item/device/posibrain))))
 		return //No MMI, can't speak, bucko./N
 	else
 		if(prob(emp_damage*4))
