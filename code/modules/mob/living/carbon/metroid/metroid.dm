@@ -843,11 +843,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		if(M.stat)
 			user << "\red The slime is dead!"
 			return..()
-		if(M.cores == 1)
+		if(M.cores == 3)
 			user <<"\red The slime already has the maximum amount of extract!"
+			return..()
 
 		user <<"You feed the slime the steroid. It now has triple the amount of extract."
-		M.cores = 1
+		M.cores = 3
 		del (src)
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 

@@ -928,8 +928,8 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				for(var/i = 1, i <= 3, i++)
-				var /obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
-				M.loc = get_turf_loc(holder.my_atom)
+					var /obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
+					M.loc = get_turf_loc(holder.my_atom)
 				holder.clear_reagents()
 				del (holder)
 //Green
