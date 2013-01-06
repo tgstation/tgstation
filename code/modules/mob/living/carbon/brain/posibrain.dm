@@ -23,6 +23,7 @@
 			icon_state = "posibrain-searching"
 			src.searching = 1
 			src.request_player()
+			spawn(600) reset_search()
 
 	proc/request_player()
 		for(var/mob/dead/observer/O in player_list)
@@ -99,8 +100,7 @@
 			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
 			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	else
-		msg += "[desc]\n"
-	msg += "*---------*</span>"
+	msg += "<span class='info'>*---------*</span>"
 	usr << msg
 	return
 

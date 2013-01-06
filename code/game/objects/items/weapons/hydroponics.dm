@@ -58,7 +58,6 @@
 	user.machine = src
 	interact(user)
 
-
 /obj/item/weapon/seedbag/verb/toggle_mode()
 	set name = "Switch Bagging Method"
 	set category = "Object"
@@ -99,7 +98,7 @@
 		S.updateUsrDialog()
 	return
 
-/obj/item/weapon/seedbag/proc/interact(mob/user as mob)
+/obj/item/weapon/seedbag/interact(mob/user as mob)
 
 	var/dat = "<TT><b>Select an item:</b><br>"
 
@@ -119,6 +118,7 @@
 	user << browse("<HEAD><TITLE>Seedbag Supplies</TITLE></HEAD><TT>[dat]</TT>", "window=seedbag")
 	onclose(user, "seedbag")
 	return
+
 /obj/item/weapon/seedbag/Topic(href, href_list)
 	if(..())
 		return
