@@ -158,6 +158,8 @@ datum/controller/vote
 			initiator = initiator_key
 			started_timeofday = world.timeofday
 			var/text = "[capitalize(mode)] vote started by [initiator]."
+			if(mode == "custom")
+				text += "\n[question]"
 			log_vote(text)
 			world << "<font color='purple'><b>[text]</b>\nType vote to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
 			time_remaining = round(config.vote_period/10)
