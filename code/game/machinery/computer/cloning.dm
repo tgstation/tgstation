@@ -383,7 +383,8 @@
 				temp = "Initiating cloning cycle..."
 				records.Remove(C)
 				del(C)
-				menu = 1			else
+				menu = 1
+			else
 				var/mob/selected = find_dead_player("[C.fields["ckey"]]")
 				selected << 'chime.ogg'	//probably not the best sound but I think it's reasonable
 				var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")

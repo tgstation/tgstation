@@ -47,7 +47,7 @@
 	bald
 		name = "Bald"
 		icon_state = "bald"
-		choose_female = 0
+		gender = MALE
 		species_allowed = list("Human","Soghun")
 
 	short
@@ -105,7 +105,7 @@
 	ponytail2
 		name = "Ponytail 2"
 		icon_state = "hair_pa"
-		choose_male = 0
+		gender = FEMALE
 
 	ponytail3
 		name = "Ponytail 3"
@@ -387,7 +387,7 @@
 		name = "Skrell Female Tentacles"
 		icon_state = "skrell_hair_f"
 		species_allowed = list("Skrell")
-		gender =FE MALE
+		gender = FEMALE
 
 	gold_m
 		name = "Gold plated Skrell Male Tentacles"
@@ -411,7 +411,7 @@
 		name = "Cloth draped Skrell Female Tentacles"
 		icon_state = "skrell_clothhair_f"
 		species_allowed = list("Skrell")
-		gender =FE MALE
+		gender = FEMALE
 
 	taj_ears
 		name = "Tajaran Ears"

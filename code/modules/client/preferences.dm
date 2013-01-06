@@ -14,14 +14,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI candidate" = 1, // -- TLE                       // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
 	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
-	"space ninja" = "true",							 // 10
+	"space ninja" = "true",								 // 10
 )
 
-var/global/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "Mankini", "Love-Hearts", "Black2", "Grey2", "Stripey", "Kinky", "None") //Curse whoever made male/female underwear diffrent colours
-var/global/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "Babydoll", "Baby-Blue", "Green", "Pink", "Kinky", "None")
-var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
 var/const/MAX_SAVE_SLOTS = 3
-var/const/MAX_SAVE_SLOTS = 10
 
 
 datum/preferences
@@ -38,8 +34,10 @@ datum/preferences
 
 
 	//game-preferences
-	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change	var/ooccolor = "#b82e00"
-	var/be_special = 0					//Special role selection	var/UI_style = "Midnight"
+	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
+	var/ooccolor = "#b82e00"
+	var/be_special = 0					//Special role selection
+	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
 
 	//character preferences
@@ -62,6 +60,7 @@ datum/preferences
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
+	var/species = "Human"
 
 		//Mob preview
 	var/icon/preview_icon_front = null
@@ -101,6 +100,7 @@ datum/preferences
 
 		// OOC Metadata:
 	var/metadata = ""
+	var/slot_name = ""
 
 /datum/preferences/New(client/C)
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
@@ -114,11 +114,6 @@ datum/preferences
 	real_name = random_name(gender)
 
 /datum/preferences
-
-	New()
-		randomize_name()
-		..()
-
 	proc/ZeroSkills(var/forced = 0)
 		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
 			if(!skills.Find(S.ID) || forced)
@@ -213,24 +208,11 @@ datum/preferences
 		user << browse_rsc(preview_icon_side, "previewicon2.png")
 		var/dat = "<html><body><center>"
 
-		dat += "Slot <b>[slot_name]</b> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=slotname;task=input\">Rename slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
-
 		if(path)
-			var/savefile/S = new /savefile(path)
-			if(S)
-				var/name
-				for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
-					S.cd = "/character[i]"
-					S["real_name"] >> name
-					if(!name)	name = "Character[i]"
-					if(i!=1) dat += " | "
-					if(i==default_slot)
-						name = "<b>[name]</b>"
-					dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a>"
+			dat += "Slot <b>[slot_name]</b> - "
+			dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
+			dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
+			dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reset slot to default</a>"
 		else
 			dat += "Please create an account to save your preferences."
 
@@ -307,7 +289,8 @@ datum/preferences
 		dat += "<br><b>Eyes</b><br>"
 		dat += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td>__</td></tr></table></font>"
 
-		dat += "<br><br>"		if(jobban_isbanned(user, "Syndicate"))
+		dat += "<br><br>"
+		if(jobban_isbanned(user, "Syndicate"))
 			dat += "<b>You are banned from antagonist roles.</b>"
 			src.be_special = 0
 		else
@@ -756,7 +739,8 @@ datum/preferences
 					if("name")
 						real_name = random_name(gender)
 					if("age")
-						age = rand(AGE_MIN, AGE_MAX)					if("hair")
+						age = rand(AGE_MIN, AGE_MAX)
+					if("hair")
 						r_hair = rand(0,255)
 						g_hair = rand(0,255)
 						b_hair = rand(0,255)
@@ -807,10 +791,8 @@ datum/preferences
 							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 					if("age")
-						var/new_age = input(user, "Choose your character's age:\n(17-85)", "Character Preference") as num|null
 						var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 						if(new_age)
-							age = max(min(round(text2num(new_age)), 85), 17)
 							age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 					if("species")
 						var/list/new_species = list("Human")
@@ -839,9 +821,9 @@ datum/preferences
 							var/list/valid_hairstyles = list()
 							for(var/hairstyle in hair_styles_list)
 								var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-								if(gender == MALE && !S.choose_male)
+								if(gender == MALE && !S.gender & MALE)
 									continue
-								if(gender == FEMALE && !S.choose_female)
+								if(gender == FEMALE && !S.gender & FEMALE)
 									continue
 								if( !(species in S.species_allowed))
 									continue
@@ -857,9 +839,9 @@ datum/preferences
 							var/list/valid_facialhairstyles = list()
 							for(var/facialhairstyle in facial_hair_styles_list)
 								var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-								if(gender == MALE && !S.choose_male)
+								if(gender == MALE && !S.gender & MALE)
 									continue
-								if(gender == FEMALE && !S.choose_female)
+								if(gender == FEMALE && !S.gender & FEMALE)
 									continue
 								if( !(species in S.species_allowed))
 									continue
@@ -916,9 +898,9 @@ datum/preferences
 						var/list/valid_facialhairstyles = list()
 						for(var/facialhairstyle in facial_hair_styles_list)
 							var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-							if(gender == MALE && !S.choose_male)
+							if(gender == MALE && !S.gender & MALE)
 								continue
-							if(gender == FEMALE && !S.choose_female)
+							if(gender == FEMALE && !S.gender & FEMALE)
 								continue
 							if( !(species in S.species_allowed))
 								continue
@@ -964,11 +946,6 @@ datum/preferences
 						if(new_backbag)
 							backbag = backbaglist.Find(new_backbag)
 
-					if("slotname")
-						var/new_slotname = input(user, "Please name this savefile:", "Save Slot Name")  as text|null
-						if(ckey(new_slotname))//Checks to make sure there is one letter
-							slot_name = strip_html_simple(new_slotname,20)
-							savefile_save(user)
 					if("flavor_text")
 						var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
 
@@ -1049,40 +1026,6 @@ datum/preferences
 							gender = FEMALE
 						else
 							gender = MALE
-						//grab one of the valid hair styles for the newly chosen species
-						var/list/valid_hairstyles = list()
-						for(var/hairstyle in hair_styles_list)
-							var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-							if(gender == MALE && !S.choose_male)
-								continue
-							if(gender == FEMALE && !S.choose_female)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-
-							valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-						if(valid_hairstyles.len)
-							h_style = pick(valid_hairstyles)
-						else
-							h_style = hair_styles_list["Bald"]
-
-						//grab one of the valid facial hair styles for the newly chosen species
-						var/list/valid_facialhairstyles = list()
-						for(var/facialhairstyle in facial_hair_styles_list)
-							var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-							if(gender == MALE && !S.choose_male)
-								continue
-							if(gender == FEMALE && !S.choose_female)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-
-							valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-						if(valid_hairstyles.len)
-							f_style = pick(valid_facialhairstyles)
-						else
-							f_style = facial_hair_styles_list["Shaved"]
-
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP
@@ -1138,12 +1081,6 @@ datum/preferences
 						load_character(text2num(href_list["num"]))
 						close_load_dialog(user)
 
-
-					if("newslot")
-						savefile_save(user)
-						var/slot_num = min(max(text2num(href_list["num"]), 1), MAX_SAVE_SLOTS)
-						savefile_createslot(user, slot_num)
-						close_load_dialog(user)
 		ShowChoices(user)
 		return 1
 
@@ -1218,3 +1155,26 @@ datum/preferences
 				message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 				character.gender = MALE
 
+	proc/open_load_dialog(mob/user)
+		var/dat = "<body>"
+		dat += "<tt><center>"
+
+		var/savefile/S = new /savefile(path)
+		if(S)
+			var/name
+			for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
+				S.cd = "/character[i]"
+				S["real_name"] >> name
+				if(!name)	name = "Character[i]"
+				if(i!=1) dat += " | "
+				if(i==default_slot)
+					name = "<b>[name]</b>"
+				dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a>"
+
+		dat += "<hr>"
+		dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
+		dat += "</center></tt>"
+		user << browse(dat, "window=saves;size=300x390")
+
+	proc/close_load_dialog(mob/user)
+		user << browse(null, "window=saves")

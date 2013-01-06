@@ -1346,7 +1346,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					if("lizard")
 						see_in_dark = 3
 					if("tajaran")
-						see_in_dark = 4					if("shadow")
+						see_in_dark = 4
+					if("shadow")
 						see_in_dark = 8
 					else
 						see_in_dark = 2

@@ -39,7 +39,7 @@ var/global/datum/controller/occupations/job_master
 		return null
 
 	proc/GetAltTitle(mob/new_player/player, rank)
-		return player.preferences.GetAltTitle(GetJob(rank))
+		return player.client.prefs.GetAltTitle(GetJob(rank))
 
 	proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
 		Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")

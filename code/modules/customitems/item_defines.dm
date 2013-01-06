@@ -187,7 +187,7 @@ hi
 	icon = 'custom_items.dmi'
 	icon_state = "special_cane"
 
-/obj/item/weapon/camera_test/fluff/orange //chinsky: Summer Springfield
+/obj/item/device/camera/fluff/orange //chinsky: Summer Springfield
 	name = "orange camera"
 	icon = 'custom_items.dmi'
 	desc = "A modified detective's camera, painted in bright orange. On the back you see \"Have fun\" written in small accurate letters with something black."

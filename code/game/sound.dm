@@ -23,7 +23,8 @@
 	for (var/A in range(world.view+extrarange, source))       // Plays for people in range.
 
 		if(ismob(A))
-			var/mob/M = A			var/mob/M2 = locate(/mob/, M)
+			var/mob/M = A
+			var/mob/M2 = locate(/mob/, M)
 			if (M2 && M2.client)
 				if(M2.ear_deaf <= 0 || !M.ear_deaf)
 					if(isturf(source))

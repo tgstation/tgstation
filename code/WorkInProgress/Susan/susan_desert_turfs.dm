@@ -358,6 +358,7 @@ Alien plants should do something if theres a lot of poison
 	desc = "A grotesque, shambling fleshy horror... was this once a... a person?"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "horror"
+/*
 	health = 120
 	max_health = 120
 	aggressive = 1
@@ -488,10 +489,11 @@ Alien plants should do something if theres a lot of poison
 		spawn( 0 )
 			A.process()
 		return
+*/
 
 obj/effect/critter/fleshmonster/fleshslime
 	name = "Flesh Slime"
 	icon = 'biocraps.dmi'
 	icon_state = "livingflesh"
 	desc = "A creature that appears to be made out of living tissue strewn together haphazardly. Some kind of liquid bubbles from its maw."
-	ranged = 1
+	//ranged = 1

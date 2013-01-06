@@ -36,16 +36,8 @@ var/global/datum/controller/gameticker/ticker
 
 	var/triai = 0//Global holder for Triumvirate
 
-	//automated spawning of mice and roaches
-	var/spawn_vermin = 1
-	var/vermin_min_spawntime = 3000		//between 5 (3000) and 15 (9000) minutes interval
-	var/vermin_max_spawntime = 9000
-	var/spawning_vermin = 0
-	var/max_vermin = 30
-	var/list/vermin_spawn_turfs
-
 /datum/controller/gameticker/proc/pregame()
-	login_music = pick('sound/music/title1.ogg','sound/music/title2.ogg') // choose title music!
+	login_music = pick('sound/ambience/title1.ogg','sound/ambience/title2.ogg') // choose title music!
 	for(var/mob/new_player/M in mob_list)
 		if(M.client)	M.client.playtitlemusic()
 

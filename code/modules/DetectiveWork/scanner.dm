@@ -3,124 +3,137 @@
 
 /obj/item/device/detective_scanner
 	name = "Scanner"
-	desc = "Used to scan objects for DNA and fingerprints. Can print a report of the findings."
+	desc = "Used to scan objects for DNA and fingerprints."
 	icon_state = "forensic1"
+	var/amount = 20.0
+	var/list/stored = list()
 	w_class = 3.0
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	slot_flags = SLOT_BELT
-	var/scanning = 0
-	var/list/log = list()
 
-/obj/item/device/detective_scanner/attack_self(var/mob/user)
-	if(log.len && !scanning)
-		scanning = 1
-		user << "<span class='notice'>Printing report, please wait...</span>"
-		spawn(100)
-			var/obj/item/weapon/paper/P = new(get_turf(src))
-			P.info = "<center><font size='4'>Scanner Report</font></center><HR><BR>"
-			P.info += dd_list2text(log, "<BR>")
-			P.info_links = P.info
-
-			user.put_in_hands(P)
-
-			log = list()
-			scanning = 0
-			if(user)
-				user << "<span class='notice'>Report printed. Log cleared.<span>"
-	else
-		user << "<span class='notice'>The scanner has no logs or is in use.</span>"
-
-/obj/item/device/detective_scanner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
-	if(!scanning)
-		scanning = 1
-		spawn(0)
-			add_log(user, "<font color='blue'>Scanning [M]...</font>")
-			if (!ishuman(M))
-				add_log(user, "<span class='warning'>[M] is not human and cannot have the fingerprints.</span>")
+	attackby(obj/item/weapon/f_card/W as obj, mob/user as mob)
+		..()
+		if (istype(W, /obj/item/weapon/f_card))
+			if (W.fingerprints)
+				return
+			if (src.amount == 20)
+				return
+			if (W.amount + src.amount > 20)
+				src.amount = 20
+				W.amount = W.amount + src.amount - 20
 			else
-				if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
-					add_log(user, "<span class='info'>No fingerprints found on [M]</span>")
-				else
-					add_log(user, "<span class='info'>Fingerprints found on [M]. Analysing...</span>")
-					sleep(30)
-					add_log(user, "<span class='info'>[M]'s Fingerprints: [md5(M.dna.uni_identity)]</span>")
+				src.amount += W.amount
+				//W = null
+				del(W)
+			add_fingerprint(user)
+			if (W)
+				W.add_fingerprint(user)
+		return
 
-			if ( !M.blood_DNA || !M.blood_DNA.len )
-				add_log(user, "<span class='info'>No blood found on [M]</span>")
-				if(M.blood_DNA)
-					del(M.blood_DNA)
+	attack(mob/living/carbon/human/M as mob, mob/user as mob)
+		if (!ishuman(M))
+			user << "\red [M] is not human and cannot have the fingerprints."
+			return 0
+		if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
+			user << "\blue No fingerprints found on [M]"
+			return 0
+		else
+			if (src.amount < 1)
+				user << text("\blue Fingerprints scanned on [M]. Need more cards to print.")
 			else
-				add_log(user, "<span class='info'>Blood found on [M]. Analysing...</span>")
-				sleep(30)
+				src.amount--
+				var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user.loc )
+				F.amount = 1
+				F.add_fingerprint(M)
+				F.icon_state = "fingerprint1"
+				F.name = text("FPrintC- '[M.name]'")
+
+				user << "\blue Done printing."
+			user << "\blue [M]'s Fingerprints: [md5(M.dna.uni_identity)]"
+		if ( !M.blood_DNA || !M.blood_DNA.len )
+			user << "\blue No blood found on [M]"
+			if(M.blood_DNA)
+				del(M.blood_DNA)
+		else
+			user << "\blue Blood found on [M]. Analysing..."
+			spawn(15)
 				for(var/blood in M.blood_DNA)
-					add_log(user, "<span class='info'>Blood type: [M.blood_DNA[blood]]\nDNA: [blood]</span>")
-			add_log(null, "<font color='blue'>Ending scan report.</font>")
-			scanning = 0
+					user << "\blue Blood type: [M.blood_DNA[blood]]\nDNA: [blood]"
+		return
+
+	afterattack(atom/A as obj|turf|area, mob/user as mob)
+		if(!in_range(A,user))
+			return
+		if(loc != user)
+			return
+		if(istype(A,/obj/machinery/computer/forensic_scanning)) //breaks shit.
+			return
+		if(istype(A,/obj/item/weapon/f_card))
+			user << "The scanner displays on the screen: \"ERROR 43: Object on Excluded Object List.\""
 			return
 
-/obj/item/device/detective_scanner/afterattack(atom/A as obj|turf|area, mob/user as mob)
-	if(!in_range(A,user))
-		return
-	if(!isturf(A) && !isobj(A))
-		return
-	if(loc != user)
-		return
-
-	if(!scanning)
-		scanning = 1
 		add_fingerprint(user)
 
-		spawn(0)
 
-			add_log(user, "<font color='blue'>Scanning [A]...</font>")
-			//PRINTS
-			if(!A.fingerprints || !A.fingerprints.len)
-				if(A.fingerprints)
-					del(A.fingerprints)
-			else
-				var/list/completed_prints = list()
-				// Bah this looks awful but basically it loop throught the last 15 entries.
-				for(var/i in A.fingerprints)
-					var/print = A.fingerprints[i]
-					completed_prints += print
-				if(completed_prints.len < 1)
-					add_log(user, "<span class='info'>No intact prints found</span>")
-				else
-					add_log(user, "<span class='info'>Found [completed_prints.len] intact print[completed_prints.len == 1 ? "" : "s"]. Analysing...</span>")
-					sleep(30)
-					for(var/i in completed_prints)
-						add_log(user, "&nbsp;&nbsp;&nbsp;&nbsp;[i]")
-
-			//FIBERS
-			if(A.suit_fibers && A.suit_fibers.len)
-				add_log(user, "<span class='info'>Fibers found. Analysing...</span>")
-				sleep(30)
-				for(var/fiber in A.suit_fibers)
-					add_log(user, "&nbsp;&nbsp;&nbsp;&nbsp;[fiber]")
-
-			//Blood
-			if (A.blood_DNA && A.blood_DNA.len)
-				add_log(user, "<span class='info'>Blood found. Analysing...</span>")
-				sleep(30)
+		//Special case for blood splaters.
+		if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune))
+			if(!isnull(A.blood_DNA))
 				for(var/blood in A.blood_DNA)
-					add_log(user, "&nbsp;&nbsp;&nbsp;&nbsp;Blood type: <font color='red'>[A.blood_DNA[blood]]</font> DNA: <font color='red'>[blood]</font>")
+					user << "\blue Blood type: [A.blood_DNA[blood]]\nDNA: [blood]"
+			return
 
-			//General
-			if ((!A.fingerprints || !A.fingerprints.len) && (!A.suit_fibers || !A.suit_fibers.len) && (!A.blood_DNA || !A.blood_DNA.len))
-				add_log(null, "Unable to locate any fingerprints, materials, fibers, or blood.")
-				user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-				"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [A]!</span>",\
-				"You hear a faint hum of electrical equipment.")
-			else
-				user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-				"You finish scanning \the [A].",\
-				"You hear a faint hum of electrical equipment.")
-
-			add_log(null, "<font color='blue'>Ending scan report.</font>")
-			scanning = 0
+		//General
+		if ((!A.fingerprints || !A.fingerprints.len) && !A.suit_fibers && !A.blood_DNA)
+			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
+			"\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!",\
+			"You hear a faint hum of electrical equipment.")
 			return 0
 
+		if(add_data(A))
+			user << "\blue Object already in internal memory. Consolidating data..."
+			return
+
+
+		//PRINTS
+		if(!A.fingerprints || !A.fingerprints.len)
+			if(A.fingerprints)
+				del(A.fingerprints)
+		else
+			user << "\blue Isolated [A.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
+			var/list/complete_prints = list()
+			for(var/i in A.fingerprints)
+				var/print = A.fingerprints[i]
+				if(stringpercent(print) <= FINGERPRINT_COMPLETE)
+					complete_prints += print
+			if(complete_prints.len < 1)
+				user << "\blue &nbsp;&nbsp;No intact prints found"
+			else
+				user << "\blue &nbsp;&nbsp;Found [complete_prints.len] intact prints"
+				for(var/i in complete_prints)
+					user << "\blue &nbsp;&nbsp;&nbsp;&nbsp;[i]"
+
+		//FIBERS
+		if(A.suit_fibers)
+			user << "\blue Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
+
+		//Blood
+		if (A.blood_DNA)
+			user << "\blue Blood found on [A]. Analysing..."
+			spawn(15)
+				for(var/blood in A.blood_DNA)
+					user << "Blood type: \red [A.blood_DNA[blood]] \t \black DNA: \red [blood]"
+		if(prob(80) || !A.fingerprints)
+			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
+			"You finish scanning \the [A].",\
+			"You hear a faint hum of electrical equipment.")
+			return 0
+		else
+			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]\n[user.gender == MALE ? "He" : "She"] seems to perk up slightly at the readout." ,\
+			"The results of the scan pique your interest.",\
+			"You hear a faint hum of electrical equipment, and someone making a thoughtful noise.")
+			return 0
+		return
 
 	proc/add_data(atom/A as mob|obj|turf|area)
 		//I love associative lists.
@@ -158,10 +171,3 @@
 		sum_list[4] = "\The [A] in \the [get_area(A)]"
 		stored["\ref [A]"] = sum_list
 		return 0
-/obj/item/device/detective_scanner/proc/add_log(var/mob/user, var/msg)
-	if(scanning)
-		if(user)
-			user << msg
-		log += "<span class='prefix'>[time2text(world.time + 432000, "hh:mm:ss")]</span>:&nbsp;&nbsp;[msg]"
-	else
-		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")

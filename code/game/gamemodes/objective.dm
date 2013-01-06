@@ -109,7 +109,8 @@ datum/objective/mutiny/rp
 	check_completion()
 		var/rval = 1
 		if(target && target.current)
-			if(target.current.stat == DEAD || target.current.handcuffed || !ishuman(target.current))
+			//assume that only carbon mobs can become rev heads for now
+			if(target.current.stat == DEAD || target.current:handcuffed || !ishuman(target.current))
 				return 1
 			// Check if they're converted
 			if(istype(ticker.mode, /datum/game_mode/revolution))

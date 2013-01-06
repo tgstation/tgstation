@@ -254,14 +254,29 @@
 			continue
 		for(var/datum/disease/D in H.viruses)
 			foundAlready = 1
-		if(H.stat == 2 || foundAlready)			continue
+		if(H.stat == 2 || foundAlready)
+			continue
 
-		infect_mob_random_lesser(H)
-		break
-
-	command_alert("An unknown virus has been detected onboard the ship.", "Virus Alert")
-
-	spawn(rand(0, 3000)) //Delayed announcements to keep the crew on their toes.
+		if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
+			if((!H.dna) || (H.sdisabilities & BLIND)) //A blindness disease would be the worst.
+				continue
+			var/datum/disease/dnaspread/D = new
+			D.strain_data["name"] = H.real_name
+			D.strain_data["UI"] = H.dna.uni_identity
+			D.strain_data["SE"] = H.dna.struc_enzymes
+			D.carrier = 1
+			D.holder = H
+			D.affected_mob = H
+			H.viruses += D
+			break
+		else
+			var/datum/disease/D = new virus_type
+			D.carrier = 1
+			D.holder = H
+			D.affected_mob = H
+			H.viruses += D
+			break
+	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 		world << sound('sound/AI/outbreak7.ogg')
 

@@ -19,7 +19,8 @@ datum/preferences
 		b_eyes = rand(0,255)
 		underwear = rand(1,underwear_m.len)
 		backbag = 2
-		age = rand(AGE_MIN,AGE_MAX)		copy_to(H,1)
+		age = rand(AGE_MIN,AGE_MAX)
+		copy_to(H,1)
 
 	proc/update_preview_icon()		//seriously. This is horrendous.		del(preview_icon_front)
 		del(preview_icon_side)

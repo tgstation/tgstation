@@ -201,8 +201,10 @@
 		if("Captain")
 			return get_all_accesses()
 		if("Security Officer")
-			return list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnel)		if("Warden")
-			return list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnel)		if("Scientist")
+			return list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
+		if("Warden")
+			return list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
+		if("Scientist")
 			return list(access_tox, access_tox_storage, access_research, access_xenobiology)
 		if("Head of Security")
 			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_genetics, access_court,
