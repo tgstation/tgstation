@@ -272,16 +272,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	if(!feedback) return
 
 	round_end_data_gathering() //round_end time logging and some other data processing
-
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(!dbcon.IsConnected()) return
 	var/round_id
 
@@ -299,13 +290,11 @@ var/obj/machinery/blackbox_recorder/blackbox
 		var/DBQuery/query_insert = dbcon.NewQuery(sql)
 		query_insert.Execute()
 
-	dbcon.Disconnect()
-
 // Sanitize inputs to avoid SQL injection attacks
 proc/sql_sanitize_text(var/text)
-	text = dd_replacetext(text, "'", "''")
-	text = dd_replacetext(text, ";", "")
-	text = dd_replacetext(text, "&", "")
+	text = replacetext(text, "'", "''")
+	text = replacetext(text, ";", "")
+	text = replacetext(text, "&", "")
 	return text
 
 proc/feedback_set(var/variable,var/value)

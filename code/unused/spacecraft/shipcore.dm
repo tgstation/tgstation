@@ -118,7 +118,7 @@
 			var/turf/Newloc = locate(_x, _y, _z)
 			//new T(Newloc)
 			new T.type(Newloc)
-			T.ReplaceWithSpace()
+			T.ChangeTurf(/turf/space)
 
 			if(Newloc)
 				Newloc.assume_air(T.return_air())

@@ -102,6 +102,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
 	if(message_delay)
 		message_delay = 0
+	..()
 
 
 /*
@@ -366,7 +367,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
-		if(!M) return
 		var/quotedmsg = M.say_quote(message)
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
@@ -495,7 +495,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
-
 
   /* ###### Prepare the radio connection ###### */
 

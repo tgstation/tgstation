@@ -22,8 +22,8 @@
 
 /obj/item/weapon/storage/monkeycube_box/New()
 	..()
-	new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
+	for(var/i = 1; i <= 5; i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
 	return
 
 /*

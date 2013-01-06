@@ -219,7 +219,7 @@
 			var/turf/T=locate(x,y,H.z)
 			if (!T) continue
 			var/icon/I=icon(T.icon,T.icon_state)
-			var/imgstring=dd_replacetext("[T.type]-[T.icon_state]","/","_")
+			var/imgstring=replacetext("[T.type]-[T.icon_state]","/","_")
 
 			//Movable atoms
 			for (var/atom/movable/A in T)
@@ -232,7 +232,7 @@
 				if (!allowed) continue
 
 				if (A.icon) I.Blend(icon(A.icon,A.icon_state,A.dir),ICON_OVERLAY)
-				imgstring+=dd_replacetext("__[A.type]_[A.icon_state]","/","_")
+				imgstring+=replacetext("__[A.type]_[A.icon_state]","/","_")
 
 			//Output it
 			src << browse_rsc(I,"[imgstring].dmi")

@@ -33,7 +33,7 @@
 	item_state = "bluesuit"
 	color = "bluesuit"
 
-/obj/item/clothing/suit/lawyer/bluejacket
+/obj/item/clothing/suit/storage/lawyer/bluejacket
 	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue_open"
@@ -47,7 +47,7 @@
 	item_state = "lawyer_purp"
 	color = "lawyer_purp"
 
-/obj/item/clothing/suit/lawyer/purpjacket
+/obj/item/clothing/suit/storage/lawyer/purpjacket
 	name = "purple suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_purp"

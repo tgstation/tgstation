@@ -35,7 +35,7 @@ var/global/announced_gateway_activation = 0
 /obj/machinery/gateway/centerstation/initialize()
 	update_icon()
 	returndestination = get_step(loc, SOUTH)
-	wait = world.time + 18000	//+ thirty minutes
+	wait = world.time + config.gateway_delay	//+ thirty minutes default
 	awaygate = locate(/obj/machinery/gateway/centeraway, world)
 
 /obj/machinery/gateway/centerstation/update_icon()

@@ -163,6 +163,53 @@ proc/hasorgans(A)
 	if(prob(probability * 0.75))	return zone
 	return "chest"
 
+// Emulates targetting a specific body part, and miss chances
+// May return null if missed
+// miss_chance_mod may be negative.
+/proc/get_zone_with_miss_chance(zone, var/mob/target, var/miss_chance_mod = 0)
+	zone = check_zone(zone)
+
+	// you can only miss if your target is standing and not restrained
+	if(!target.buckled && !target.lying) 
+		var/miss_chance = max(10 + miss_chance_mod, 0)
+		switch(zone)
+			if("head")
+				miss_chance = 40
+			if("l_leg")
+				miss_chance = 20
+			if("r_leg")
+				miss_chance = 20
+			if("l_arm")
+				miss_chance = 20
+			if("r_arm")
+				miss_chance = 20
+			if("l_hand")
+				miss_chance = 50
+			if("r_hand")
+				miss_chance = 50
+			if("l_foot")
+				miss_chance = 50
+			if("r_foot")
+				miss_chance = 50
+		if(prob(miss_chance))
+			if(prob(70))
+				return null
+			else
+				var/t = rand(1, 10)
+				switch(t)
+					if(1)	return "head"
+					if(2)	return "l_arm"
+					if(3)	return "r_arm"
+					if(4) 	return "chest"
+					if(5) 	return "l_foot"
+					if(6)	return "r_foot"
+					if(7)	return "l_hand"
+					if(8)	return "r_hand"
+					if(9)	return "l_leg"
+					if(10)	return "r_leg"
+
+	return zone
+
 
 /proc/stars(n, pr)
 	if (pr == null)

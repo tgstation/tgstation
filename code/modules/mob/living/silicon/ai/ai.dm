@@ -1,9 +1,15 @@
+var/list/ai_list = list()
+
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
+	var/is_in_use = 0
 	if (subject!=null)
-		for(var/mob/living/silicon/ai/M in player_list)
+		for(var/A in ai_list)
+			var/mob/living/silicon/ai/M = A
 			if ((M.client && M.machine == subject))
+				is_in_use = 1
 				subject.attack_ai(M)
+	return is_in_use
 
 
 /mob/living/silicon/ai
@@ -105,9 +111,13 @@
 				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 			job = "AI"
-
-	add_to_mob_list(src)
+	ai_list += src
+	..()
 	return
+
+/mob/living/silicon/ai/Del()
+	ai_list -= src
+	..()
 
 
 /mob/living/silicon/ai/verb/pick_icon()
@@ -118,20 +128,15 @@
 
 		//if(icon_state == initial(icon_state))
 	var/icontype = ""
-	var/list/icons = list("Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static")
-	if (src.name == "B.A.N.N.E.D." && src.ckey == "spaceman96")
-		icons += "B.A.N.N.E.D."
+	var/list/icons = list("Monochrome", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static")
 	if (src.name == "M00X-BC" && src.ckey == "searif")
 		icons += "M00X-BC"
-	if (src.name == "TRIBUNAL" && src.ckey == "serithi")
-		icons += "Tribunal"
-		icons += "Tribunal Malfunctioning"
 	if (src.name == "Skuld" && src.ckey == "ravensdale")
 		icons += "Skuld"
-/*	if(icontype == "Clown")
-		icon_state = "ai-clown2"*/
 	icontype = input("Please, select a display!", "AI", null/*, null*/) in icons
-	if(icontype == "Monochrome")
+	if(icontype == "Clown")
+		icon_state = "ai-clown2"
+	else if(icontype == "Monochrome")
 		icon_state = "ai-mono"
 	else if(icontype == "Blue")
 		icon_state = "ai"
@@ -145,12 +150,24 @@
 		icon_state = "ai-malf"
 	else if(icontype == "Static")
 		icon_state = "ai-static"
+	else if(icontype == "Text")
+		icon_state = "ai-text"
+	else if(icontype == "Smiley")
+		icon_state = "ai-smiley"
+	else if(icontype == "Matrix")
+		icon_state = "ai-matrix"
+	else if(icontype == "Angry")
+		icon_state = "ai-angryface"
+	else if(icontype == "Dorf")
+		icon_state = "ai-dorf"
+	else if(icontype == "Bliss")
+		icon_state = "ai-bliss"
 	else if(icontype == "M00X-BC")
 		icon_state = "ai-searif"
-	else if(icontype == "Tribunal")
-		icon_state = "ai-tribunal"
-	else if(icontype == "Tribunal Malfunctioning")
-		icon_state = "ai-tribunal-malf"
+	else if(icontype == "Triumvirate")
+		icon_state = "ai-triumvirate"
+	else if(icontype == "Triumvirate Static")
+		icon_state = "ai-triumvirate-malf"
 	else if(icontype == "Skuld")
 		icon_state = "ai-ravensdale"
 	//else
@@ -321,7 +338,7 @@
 		if (href_list["mach_close"] == "aialerts")
 			viewalerts = 0
 		var/t1 = text("window=[]", href_list["mach_close"])
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 	if (href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
@@ -550,7 +567,7 @@
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
 	set name = "Jump To Network"
-	machine = null
+	unset_machine()
 	src.cameraFollow = null
 	var/cameralist[0]
 

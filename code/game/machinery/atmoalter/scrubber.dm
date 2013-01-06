@@ -143,7 +143,7 @@
 
 /obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user as mob)
 
-	user.machine = src
+	user.set_machine(src)
 	var/holding_text
 
 	if(holding)
@@ -172,7 +172,7 @@ Power regulator: <A href='?src=\ref[src];volume_adj=-1000'>-</A> <A href='?src=\
 		return
 
 	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		usr.machine = src
+		usr.set_machine(src)
 
 		if(href_list["power"])
 			on = !on

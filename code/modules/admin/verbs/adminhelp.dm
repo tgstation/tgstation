@@ -26,11 +26,11 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 	var/original_msg = msg
 
 	//The symbol × (fancy multiplication sign) will be used to mark where to put replacements, so the original message must not contain it.
-	msg = dd_replacetext(msg, "×", "")
-	msg = dd_replacetext(msg, "HOLDERREF", "HOLDER-REF") //HOLDERREF is a key word which gets replaced with the admin's holder ref later on, so it mustn't be in the original message
-	msg = dd_replacetext(msg, "ADMINREF", "ADMIN-REF") //ADMINREF is a key word which gets replaced with the admin's client's ref. So it mustn't be in the original message.
+	msg = replacetext(msg, "×", "")
+	msg = replacetext(msg, "HOLDERREF", "HOLDER-REF") //HOLDERREF is a key word which gets replaced with the admin's holder ref later on, so it mustn't be in the original message
+	msg = replacetext(msg, "ADMINREF", "ADMIN-REF") //ADMINREF is a key word which gets replaced with the admin's client's ref. So it mustn't be in the original message.
 
-	var/list/msglist = dd_text2list(msg, " ")
+	var/list/msglist = text2list(msg, " ")
 
 	var/list/mob/mobs = list()
 
@@ -51,21 +51,21 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 	for(var/i = 1; i <= msglist.len; i++)
 		var/word = msglist[i]
 		var/original_word = word
-		word = dd_replacetext(word, ".", "")
-		word = dd_replacetext(word, ",", "")
-		word = dd_replacetext(word, "!", "")
-		word = dd_replacetext(word, "?", "")	//Strips some common punctuation characters so the actual word can be better compared.
-		word = dd_replacetext(word, ";", "")
-		word = dd_replacetext(word, ":", "")
-		word = dd_replacetext(word, "(", "")
-		word = dd_replacetext(word, ")", "")
+		word = replacetext(word, ".", "")
+		word = replacetext(word, ",", "")
+		word = replacetext(word, "!", "")
+		word = replacetext(word, "?", "")	//Strips some common punctuation characters so the actual word can be better compared.
+		word = replacetext(word, ";", "")
+		word = replacetext(word, ":", "")
+		word = replacetext(word, "(", "")
+		word = replacetext(word, ")", "")
 		if(lowertext(word) in adminhelp_ignored_words)
 			continue
 		if(lowertext(word) == "ai")
 			ai_found = 1
 			continue
 		for(var/mob/M in mobs)
-			var/list/namelist = dd_text2list("[M.name] [M.real_name] [(M.mind)?"[M.mind.name]":""] [M.ckey] [M.key]", " ")
+			var/list/namelist = text2list("[M.name] [M.real_name] [(M.mind)?"[M.mind.name]":""] [M.ckey] [M.key]", " ")
 			var/word_is_match = 0 //Used to break from this mob for loop if a match is found
 			for(var/namepart in namelist)
 				if( lowertext(word) == lowertext(namepart) )
@@ -88,43 +88,38 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 			j++
 
 	msg = dd_list2text(msglist, " ")
-	var/admin_number = 0
 	var/admin_number_afk = 0
 
 	if(mob)
 		var/ref_mob = "\ref[src.mob]"
-		for (var/client/X)
-			if (X.holder)
-				admin_number++
-				if( X.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
-					admin_number_afk++
-				if(X.holder.sound_adminhelp)
-					X << 'sound/effects/adminhelp.ogg'
-				var/check_laws_text = ""
-				if(ai_found)
-					check_laws_text = (" (<A HREF='?src=\ref[X.holder];adminchecklaws=[ref_mob]'>CL</A>)")
+		for(var/client/X in admins)
+			if( X.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
+				admin_number_afk++
+			if(X.holder.sound_adminhelp)
+				X << 'sound/effects/adminhelp.ogg'
+			var/check_laws_text = ""
+			if(ai_found)
+				check_laws_text = (" (<A HREF='?src=\ref[X.holder];adminchecklaws=[ref_mob]'>CL</A>)")
 
-				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>) [check_laws_text]:</b> [msg]"
-				msg_to_send = dd_replacetext(msg_to_send, "HOLDERREF", "\ref[X.holder]")
-				msg_to_send = dd_replacetext(msg_to_send, "ADMINREF", "\ref[X]")
-				X << msg_to_send
+			var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>) [check_laws_text]:</b> [msg]"
+			msg_to_send = replacetext(msg_to_send, "HOLDERREF", "\ref[X.holder]")
+			msg_to_send = replacetext(msg_to_send, "ADMINREF", "\ref[X]")
+			X << msg_to_send
 	else
 		var/ref_client = "\ref[src]"
-		for (var/client/X)
-			if (X.holder)
-				admin_number++
-				if( X.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
-					admin_number_afk++
-				if(X.holder.sound_adminhelp)
-					X << 'sound/effects/adminhelp.ogg'
-				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_client]'>VV</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
-				msg_to_send = dd_replacetext(msg_to_send, "HOLDERREF", "\ref[X.holder]")
-				msg_to_send = dd_replacetext(msg_to_send, "ADMINREF", "\ref[X]")
-				X << msg_to_send
-
+		for(var/client/X in admins)
+			if( X.inactivity > AFK_THRESHOLD ) //When I made this, the AFK_THRESHOLD was 3000ds = 300s = 5m, see setup.dm for the new one.
+				admin_number_afk++
+			if(X.holder.sound_adminhelp)
+				X << 'sound/effects/adminhelp.ogg'
+			var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_client]'>VV</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
+			msg_to_send = replacetext(msg_to_send, "HOLDERREF", "\ref[X.holder]")
+			msg_to_send = replacetext(msg_to_send, "ADMINREF", "\ref[X]")
+			X << msg_to_send
+	var/admin_number_present = admins.len - admin_number_afk
 	src << "<font color='blue'>PM to-<b>Admins</b>: [original_msg]</font>"
-	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number] non-AFK admins.")
-	if((admin_number - admin_number_afk) <= 0)
+	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
+	if(admin_number_present <= 0)
 		if(!admin_number_afk)
 			send2irc(ckey, "[original_msg] - No admins online")
 		else

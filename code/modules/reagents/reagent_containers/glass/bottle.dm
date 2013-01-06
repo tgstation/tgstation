@@ -104,7 +104,7 @@
 	icon_state = "bottle3"
 	New()
 		..()
-		var/datum/disease/F = new /datum/disease/flu(0)
+		var/datum/disease/F = new /datum/disease/advance/flu(0)
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
@@ -126,7 +126,18 @@
 	icon_state = "bottle3"
 	New()
 		..()
-		var/datum/disease/F = new /datum/disease/cold(0)
+		var/datum/disease/advance/F = new /datum/disease/advance/cold(0)
+		var/list/data = list("viruses"= list(F))
+		reagents.add_reagent("blood", 20, data)
+
+/obj/item/weapon/reagent_containers/glass/bottle/random
+	name = "Random culture bottle"
+	desc = "A small bottle. Contains a random disease."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle3"
+	New()
+		..()
+		var/datum/disease/advance/F = new(0)
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 

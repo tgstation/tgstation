@@ -80,21 +80,21 @@
 /obj/item/examine()
 	set src in view()
 
-	var/t
+	var/size
 	switch(src.w_class)
 		if(1.0)
-			t = "tiny"
+			size = "tiny"
 		if(2.0)
-			t = "small"
+			size = "small"
 		if(3.0)
-			t = "normal-sized"
+			size = "normal-sized"
 		if(4.0)
-			t = "bulky"
+			size = "bulky"
 		if(5.0)
-			t = "huge"
+			size = "huge"
 		else
-	if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
-	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
+	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
+	usr << "This is a [src.blood_DNA ? "bloody " : ""]\icon[src][src.name]. It is a [size] item."
 	if(src.desc)
 		usr << src.desc
 	return
@@ -122,9 +122,9 @@
 	else
 		if(isliving(src.loc))
 			return
-		src.pickup(user)
 		user.lastDblClick = world.time + 2
 		user.next_move = world.time + 2
+	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
 	return
@@ -189,17 +189,21 @@
 	if (can_operate(M))	//Checks if mob is lying down on table for surgery
 		if(istype(M,/mob/living/carbon))
 			if (user.a_intent != "harm")
-				if(surgery_steps == null) build_surgery_steps_list()
+				if(surgery_steps.len == 0) build_surgery_steps_list()
 				for(var/datum/surgery_step/S in surgery_steps)
 					//check if tool is right or close enough
-					if(istype(src, S.required_tool) || (S.allowed_tools && src.type in S.allowed_tools ))
-						if(S.can_use(user, M, user.zone_sel.selecting, src))	//is this step possible?
-							S.begin_step(user, M, user.zone_sel.selecting, src)
-							if(do_mob(user, M, rand(S.min_duration, S.max_duration)))
-								S.end_step(user, M, user.zone_sel.selecting, src)
-							else
-								S.fail_step(user, M, user.zone_sel.selecting, src)
-							return		  //don't want to do weapony things after surgery
+					var/right = istype(src, S.required_tool)
+					if (!right && S.allowed_tools)
+						for (var/T in S.allowed_tools)
+							if (istype(src, T))
+								right = 1
+					if(right && S.can_use(user, M, user.zone_sel.selecting, src))	//is this step possible?
+						S.begin_step(user, M, user.zone_sel.selecting, src)
+						if(do_mob(user, M, rand(S.min_duration, S.max_duration)))
+							S.end_step(user, M, user.zone_sel.selecting, src)
+						else
+							S.fail_step(user, M, user.zone_sel.selecting, src)
+						return		  //don't want to do weapony things after surgery
 		if (is_surgery_tool(src))
 			return
 
@@ -216,10 +220,6 @@
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>"
 	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])</font>" )
-
-	log_admin("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])")
-	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(src.damtype)])") //BS12 EDIT ALG
-
 
 	//spawn(1800)			// this wont work right
 	//	M.lastattacker = null
@@ -367,6 +367,10 @@
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S as obj)
+	return
+
+// called when "found" in pockets and storage items. Returns 1 if the search should end.
+/obj/item/proc/on_found(mob/finder as mob)
 	return
 
 // called after an item is placed in an equipment slot
@@ -632,9 +636,6 @@
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 
 	log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-	log_admin("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])")
-	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
 
 	src.add_fingerprint(user)
 	//if((CLUMSY in user.mutations) && prob(50))

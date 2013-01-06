@@ -46,7 +46,7 @@
 	proc/holder_movement()							//Called when the holder is moved
 		return
 
-	proc/interact(mob/user as mob)					//Called when attack_self is called
+	interact(mob/user as mob)					//Called when attack_self is called
 		return
 
 
@@ -132,7 +132,7 @@
 
 	attack_self(mob/user as mob)
 		if(!user)	return 0
-		user.machine = src
+		user.set_machine(src)
 		interact(user)
 		return 1
 

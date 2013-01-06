@@ -1,6 +1,7 @@
 
 
 /mob/proc/rightandwrong()
+	usr << "<B>You summoned guns!</B>"
 	message_admins("[key_name_admin(usr, 1)] summoned guns!")
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
@@ -16,7 +17,7 @@
 			for(var/datum/objective/OBJ in H.mind.objectives)
 				H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 				obj_count++
-		var/randomize = pick("taser","egun","laser","revolver","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","shotgun","mateba","uzi","crossbow")
+		var/randomize = pick("taser","egun","laser","revolver","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","shotgun","mateba","uzi","crossbow","saw")
 		switch (randomize)
 			if("taser")
 				new /obj/item/weapon/gun/energy/taser(get_turf(H))
@@ -48,3 +49,5 @@
 				new /obj/item/weapon/gun/projectile/automatic/mini_uzi(get_turf(H))
 			if("crossbow")
 				new /obj/item/weapon/gun/energy/crossbow(get_turf(H))
+			if("saw")
+				new /obj/item/weapon/gun/projectile/automatic/l6_saw(get_turf(H))

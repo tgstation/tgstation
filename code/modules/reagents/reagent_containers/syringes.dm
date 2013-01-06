@@ -94,7 +94,7 @@
 								B.data["viruses"] = list()
 
 
-							B.data["viruses"] += new D.type
+							B.data["viruses"] += new D.type(0, D, 1)
 
 						if(T.virus2)
 							B.data["virus2"] = T.virus2.getcopy()

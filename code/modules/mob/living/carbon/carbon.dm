@@ -192,7 +192,7 @@
 		swap_hand()
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if (src.health > 0)
+	if (src.health > config.health_threshold_crit)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
 			src.visible_message( \
@@ -329,6 +329,9 @@
 									target_vent = vent_found 	//travel back. No additional time required.
 									src << "\red The vent you were heading to appears to be welded."
 								loc = target_vent.loc
+								var/area/new_area = get_area(loc)
+								if(new_area)
+									new_area.Entered(src)
 
 					else
 						src << "You need to remain still while entering a vent."
@@ -416,8 +419,6 @@
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
 
 				log_attack("<font color='red'>[usr.name] ([usr.ckey]) Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
-				log_admin("ATTACK: [usr.name] ([usr.ckey]) Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]")
-				msg_admin_attack("ATTACK: [usr.name] ([usr.ckey]) Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]")
 
 	if(!item) return //Grab processing has a chance of returning null
 

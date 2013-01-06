@@ -25,3 +25,12 @@
 
 /obj/structure/largecrate/mule
 	icon_state = "mulecrate"
+
+/obj/structure/largecrate/lisa
+	icon_state = "lisacrate"
+
+/obj/structure/largecrate/lisa/attackby(obj/item/weapon/W as obj, mob/user as mob)	//ugly but oh well
+	if(istype(W, /obj/item/weapon/crowbar))
+		new /mob/living/simple_animal/corgi/Lisa(loc)
+
+	..()

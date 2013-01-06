@@ -6,7 +6,7 @@
 	health = 250
 	icon_state = "alienq_s"
 	nopush = 1
-	heal_rate = 10 // Let's regenerate more than our average underling.
+	heal_rate = 5
 	plasma_rate = 20
 
 
@@ -26,7 +26,7 @@
 	real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
 	verbs -= /mob/living/carbon/alien/verb/ventcrawl
-	add_to_mob_list(src)
+	..()
 
 /mob/living/carbon/alien/humanoid/queen
 
@@ -56,7 +56,7 @@
 //Queen verbs
 /mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
 
-	set name = "Lay Egg (50)"
+	set name = "Lay Egg (75)"
 	set desc = "Lay an egg to produce huggers to impregnate prey with."
 	set category = "Alien"
 
@@ -64,8 +64,8 @@
 		src << "There's already an egg here."
 		return
 
-	if(powerc(50,1))//Can't plant eggs on spess tiles. That's silly.
-		adjustToxLoss(-50)
+	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
+		adjustToxLoss(-75)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
 		new /obj/effect/alien/egg(loc)

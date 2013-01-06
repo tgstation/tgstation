@@ -124,7 +124,7 @@ Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 
 "<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
 
-	if(!src.locked)
+	if(!src.locked || issilicon(user))
 		if(!lasercolor)
 			dat += text({"<BR>
 Check for Weapon Authorization: []<BR>
@@ -150,7 +150,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/ed209/Topic(href, href_list)
 	if (..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(lasercolor && (istype(usr,/mob/living/carbon/human)))
 		var/mob/living/carbon/human/H = usr
@@ -889,7 +889,7 @@ Auto Patrol: []"},
 	..()
 
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
+		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
 		if(!t)	return
 		if(!in_range(src, usr) && src.loc != usr)	return
 		created_name = t

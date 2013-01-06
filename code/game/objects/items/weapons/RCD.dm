@@ -92,7 +92,7 @@ RCD
 					if(useResource(1, user))
 						user << "Building Floor..."
 						activate()
-						A:ReplaceWithPlating()
+						A:ChangeTurf(/turf/simulated/floor/plating)
 						return 1
 					return 0
 
@@ -103,7 +103,7 @@ RCD
 						if(do_after(user, 20))
 							if(!useResource(3, user)) return 0
 							activate()
-							A:ReplaceWithWall()
+							A:ChangeTurf(/turf/simulated/wall)
 							return 1
 					return 0
 
@@ -131,7 +131,7 @@ RCD
 						if(do_after(user, 40))
 							if(!useResource(5, user)) return 0
 							activate()
-							A:ReplaceWithPlating()
+							A:ChangeTurf(/turf/simulated/floor/plating)
 							return 1
 					return 0
 
@@ -142,7 +142,7 @@ RCD
 						if(do_after(user, 50))
 							if(!useResource(5, user)) return 0
 							activate()
-							A:ReplaceWithSpace()
+							A:ChangeTurf(/turf/space)
 							return 1
 					return 0
 

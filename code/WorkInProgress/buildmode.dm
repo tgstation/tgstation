@@ -149,13 +149,13 @@
 					if(objholder in removed_paths)
 						alert("That path is not allowed.")
 						objholder = "/obj/structure/closet"
-					else if (dd_hasprefix(objholder, "/mob") && !(usr.client.holder.rank in list("Game Master", "Game Admin", "Badmin")))
+					else if (dd_hasprefix(objholder, "/mob") && !check_rights(R_DEBUG,0))
 						objholder = "/obj/structure/closet"
 				if(3)
 					var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
 
 					master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
-					if(master.buildmode.varholder in locked && !(usr.client.holder.rank in list("Game Master", "Game Admin")))
+					if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
 						return
 					var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
 					if(!thetype) return
@@ -186,28 +186,28 @@
 			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
 				if(istype(object,/turf/space))
 					var/turf/T = object
-					T.ReplaceWithFloor()
+					T.ChangeTurf(/turf/simulated/floor)
 					return
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
-					T.ReplaceWithWall()
+					T.ChangeTurf(/turf/simulated/wall)
 					return
 				else if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
-					T.ReplaceWithRWall()
+					T.ChangeTurf(/turf/simulated/wall/r_wall)
 					return
 			else if(pa.Find("right"))
 				if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
-					T.ReplaceWithFloor()
+					T.ChangeTurf(/turf/simulated/floor)
 					return
 				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
-					T.ReplaceWithSpace()
+					T.ChangeTurf(/turf/space)
 					return
 				else if(istype(object,/turf/simulated/wall/r_wall))
 					var/turf/T = object
-					T.ReplaceWithWall()
+					T.ChangeTurf(/turf/simulated/wall)
 					return
 				else if(istype(object,/obj))
 					del(object)
@@ -235,7 +235,6 @@
 			if(pa.Find("left"))
 				var/obj/A = new holder.buildmode.objholder (get_turf(object))
 				A.dir = holder.builddir.dir
-				blink(A)
 			else if(pa.Find("right"))
 				if(isobj(object)) del(object)
 
@@ -244,14 +243,12 @@
 				if(object.vars.Find(holder.buildmode.varholder))
 					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = holder.buildmode.valueholder
-					blink(object)
 				else
 					usr << "\red [initial(object.name)] does not have a var called '[holder.buildmode.varholder]'"
 			if(pa.Find("right"))
 				if(object.vars.Find(holder.buildmode.varholder))
 					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = initial(object.vars[holder.buildmode.varholder])
-					blink(object)
 				else
 					usr << "\red [initial(object.name)] does not have a var called '[holder.buildmode.varholder]'"
 
@@ -262,8 +259,3 @@
 				if(holder.throw_atom)
 					holder.throw_atom.throw_at(object, 10, 1)
 
-/proc/blink(atom/A)
-	A.icon += rgb(0,75,75)
-	spawn(5)
-		if(A)
-			A.icon = initial(A.icon)
