@@ -63,6 +63,8 @@
 				src.MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
 			else
 				user << "<span class='notice'>The locker is too small to stuff [W] into!</span>"
+		if(isrobot(user))
+			return
 		user.drop_item()
 		if(W)
 			W.loc = src.loc

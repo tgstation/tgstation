@@ -78,6 +78,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		user << "\red The protolathe is busy right now."
 		return
 	if (istype(O, /obj/item) && !loaded_item)
+		if(isrobot(user)) //Don't put your module items in there!
+			return
 		if(!O.origin_tech)
 			user << "\red This doesn't seem to have a tech origin!"
 			return
