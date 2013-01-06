@@ -99,7 +99,6 @@
 				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk
 			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
 			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
-	else
 	msg += "<span class='info'>*---------*</span>"
 	usr << msg
 	return
