@@ -42,7 +42,7 @@
 <A href='?src=\ref[src];make=12;dir=5'>Bent Pipe</A><BR>
 
 "}
-
+//What number the make points to is in the define # at the top of construction.dm in same folder
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	onclose(user, "pipedispenser")

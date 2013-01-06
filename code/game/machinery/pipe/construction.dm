@@ -629,7 +629,7 @@ Buildable meters
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user << "\blue You have fastened the meter to the pipe"
 	del(src)
-
+//not sure why these are necessary
 #undef PIPE_SIMPLE_STRAIGHT
 #undef PIPE_SIMPLE_BENT
 #undef PIPE_HE_STRAIGHT

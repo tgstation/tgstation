@@ -934,7 +934,7 @@ obj/machinery/atmospherics/pipe
 
 			else
 				icon_state = "manifold4w_ex"
-				var/icon/con = new/icon('pipe_manifold.dmi',"manifold4w_con")
+				var/icon/con = new/icon('pipe_manifold.dmi',"manifold4w_con") //Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
 
 				if(node1)
 					overlays += new/image(con,dir=1)
