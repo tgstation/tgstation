@@ -596,15 +596,6 @@
 	throw_speed = 4
 	throw_range = 5
 
-/obj/item/weapon/camera
-	name = "camera"
-	desc = "Use this to take pictures."
-	icon_state = "camera"
-	var/last_pic = 1.0
-	item_state = "wrench"
-	w_class = 2.0
-	origin_tech = "magnets=1"
-
 /obj/item/weapon/card
 	name = "card"
 	desc = "Does card things."
@@ -819,25 +810,6 @@
 /obj/item/weapon/dummy/blob_act()
 	return
 
-/obj/item/weapon/f_card
-	name = "finger print card"
-	desc = "Used to take fingerprints."
-	icon = 'icons/obj/card.dmi'
-	icon_state = "fingerprint0"
-	var/amount = 10.0
-	item_state = "paper"
-	throwforce = 1
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 5
-
-
-/obj/item/weapon/fcardholder
-	name = "fingerprint card case"
-	desc = "Apply finger print card."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "fcardholder0"
-	item_state = "clipboard"
 
 /*
 /obj/item/weapon/game_kit
@@ -935,23 +907,23 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 0
 	w_class = 3.0
-	throw_speed = 2
-	throw_range = 0 //cannot be thrown
 	origin_tech = "materials=1"
-	var/breakouttime = 300 //Deciseconds = 30s = 0.5 minute
+	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
-	icon_state = "beartrap"
+	throw_speed = 2
+	throw_range = 1
+	icon_state = "beartrap0"
 	desc = "A trap used to catch bears and other legged creatures."
-	breakouttime = 300 //Deciseconds = 30s = 0.5 minute
 	var/armed = 0
 
-/obj/item/weapon/legcuffs/beartrap/attack_self()
+/obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
 	..()
-	if(ishuman(usr) && !usr.stat && !usr.restrained())
+	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
-		usr << "\blue \the [src] is now [(armed)?"armed":"disarmed"]"
+		icon_state = "beartrap[armed]"
+		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
 
 /obj/item/weapon/legcuffs/beartrap/HasEntered(AM as mob|obj)
 	if(armed)
@@ -960,16 +932,16 @@
 				var/mob/living/carbon/H = AM
 				if(H.m_intent == "run")
 					armed = 0
-					usr.legcuffed = src
-					src.loc = usr
-					usr.update_inv_legcuffed()
+					H.legcuffed = src
+					src.loc = H
+					H.update_inv_legcuffed()
 					H << "\red <B>You step on \the [src]!</B>"
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 					for(var/mob/O in viewers(H, null))
 						if(O == H)
 							continue
 						O.show_message("\red <B>[H] steps on \the [src].</B>", 1)
-		if(isanimal(AM))
+		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
 			SA.health = 0
@@ -1204,6 +1176,12 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
+/obj/item/weapon/staff/broom
+	name = "broom"
+	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "broom"
+
 /obj/item/weapon/staff/stick
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."
@@ -1428,7 +1406,7 @@
 	pressure_resistance = 70
 
 
-/obj/item/weapon/camera_bug
+/obj/item/device/camera_bug
 	name = "camera bug"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "flash"

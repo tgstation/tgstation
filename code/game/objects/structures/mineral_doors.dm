@@ -56,8 +56,13 @@
 		if(ismob(user))
 			var/mob/M = user
 			if(world.time - user.last_bumped <= 60) return //NOTE do we really need that?
-			if(M.client && !M:handcuffed)
-				SwitchState()
+			if(M.client)
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					if(!C.handcuffed)
+						SwitchState()
+				else
+					SwitchState()
 		else if(istype(user, /obj/mecha))
 			SwitchState()
 
@@ -116,13 +121,23 @@
 
 	proc/Dismantle(devastated = 0)
 		if(!devastated)
-			var/ore = text2path("/obj/item/stack/sheet/[mineralType]")
-			for(var/i = 1, i <= oreAmount, i++)
-				new ore(get_turf(src))
+			if (mineralType == "metal")
+				var/ore = /obj/item/stack/sheet/metal
+				for(var/i = 1, i <= oreAmount, i++)
+					new ore(get_turf(src))
+			else
+				var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+				for(var/i = 1, i <= oreAmount, i++)
+					new ore(get_turf(src))
 		else
-			var/ore = text2path("/obj/item/stack/sheet/[mineralType]")
-			for(var/i = 3, i <= oreAmount, i++)
-				new ore(get_turf(src))
+			if (mineralType == "metal")
+				var/ore = /obj/item/stack/sheet/metal
+				for(var/i = 3, i <= oreAmount, i++)
+					new ore(get_turf(src))
+			else
+				var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+				for(var/i = 3, i <= oreAmount, i++)
+					new ore(get_turf(src))
 		del(src)
 
 	ex_act(severity = 1)

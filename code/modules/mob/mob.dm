@@ -129,8 +129,6 @@
 
 
 /mob/proc/restrained()
-	if (handcuffed)
-		return 1
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.
@@ -227,7 +225,6 @@ var/list/slot_equipment_priority = list( \
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
 	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
@@ -418,56 +415,35 @@ var/list/slot_equipment_priority = list( \
 //	M.Login()	//wat
 	return
 
-/mob/verb/changes()
+/client/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"
-	if (client)
-		src.getFiles('html/postcardsmall.jpg',
-							 'html/somerights20.png',
-							 'html/88x31.png',
-							 'html/bug-minus.png',
-							 'html/cross-circle.png',
-							 'html/hard-hat-exclamation.png',
-							 'html/image-minus.png',
-							 'html/image-plus.png',
-							 'html/music-minus.png',
-							 'html/music-plus.png',
-							 'html/tick-circle.png',
-							 'html/wrench-screwdriver.png',
-							 'html/spell-check.png',
-							 'html/burn-exclamation.png',
-							 'html/tg-notif.png',
-							 'html/chevron.png',
-							 'html/chevron-expand.png',
-							 'html/changelog.css',
-							 'html/changelog.js'
-							 )
-		src << browse('html/changelog.html', "window=changes;size=675x650")
-		client.changes = 1
-
-/client/var/ghost_ears = 0
-/client/verb/toggle_ghost_ears()
-	set name = "Ghost ears"
-	set category = "OOC"
-	set desc = "Hear talks from everywhere"
-	ghost_ears = !ghost_ears
-	if (ghost_ears)
-		usr << "\blue Now you hear all speech in the world"
-	else
-		usr << "\blue Now you hear speech only from nearest creatures."
-
-/client/var/ghost_sight = 0
-/client/verb/toggle_ghost_sight()
-	set name = "Ghost sight"
-	set category = "OOC"
-	set desc = "Hear emotes from everywhere"
-	ghost_sight = !ghost_sight
-	if (ghost_sight)
-		usr << "\blue Now you hear all emotes in the world"
-	else
-		usr << "\blue Now you hear emotes only from nearest creatures."
-
-
+	getFiles(
+		'html/postcardsmall.jpg',
+		'html/somerights20.png',
+		'html/88x31.png',
+		'html/bug-minus.png',
+		'html/cross-circle.png',
+		'html/hard-hat-exclamation.png',
+		'html/image-minus.png',
+		'html/image-plus.png',
+		'html/music-minus.png',
+		'html/music-plus.png',
+		'html/tick-circle.png',
+		'html/wrench-screwdriver.png',
+		'html/spell-check.png',
+		'html/burn-exclamation.png',
+		'html/chevron.png',
+		'html/chevron-expand.png',
+		'html/changelog.css',
+		'html/changelog.js',
+		'html/changelog.html'
+		)
+	src << browse('html/changelog.html', "window=changes;size=675x650")
+	if(prefs.lastchangelog != changelog_hash)
+		prefs.lastchangelog = changelog_hash
+		prefs.save_preferences()
+		winset(src, "rpane.changelog", "background-color=none;font-style=;")
 
 /mob/verb/observe()
 	set name = "Observe"
@@ -621,11 +597,7 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/can_use_hands()
-	if(handcuffed)
-		return 0
-	if(buckled && ! istype(buckled, /obj/structure/stool/bed/chair)) // buckling does not restrict hands
-		return 0
-	return ..()
+	return
 
 /mob/proc/is_active()
 	return (0 >= usr.stat)

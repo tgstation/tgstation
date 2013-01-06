@@ -503,9 +503,7 @@ Code:
 
 					else
 						for(var/obj/machinery/bot/mulebot/B in QC.botlist)
-							if(B && B.loc)
-								menu += "<A href='byond://?src=\ref[QC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
-
+							menu += "<A href='byond://?src=\ref[QC];op=control;bot=\ref[B]'>[B] at [get_area(B)]</A><BR>"
 					menu += "<BR><A href='byond://?src=\ref[QC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
 
 				else	// bot selected, control it
@@ -609,42 +607,6 @@ Code:
 					menu += "ERROR: Unable to determine current location."
 				menu += "<br><br><A href='byond://?src=\ref[src];choice=49'>Refresh GPS Locator</a>"
 
-	proc/add_data(atom/A as mob|obj|turf|area)
-		//I love hashtables.
-		var/list/data_entry = stored_data["\ref [A]"]
-		if(islist(data_entry)) //Yay, it was already stored!
-			//Merge the fingerprints.
-			var/list/data_prints = data_entry[1]
-			for(var/print in A.fingerprints)
-				var/merged_print = data_prints[print]
-				if(!merged_print)
-					data_prints[print] = A.fingerprints[print]
-				else
-					data_prints[print] = stringmerge(data_prints[print],A.fingerprints[print])
-
-			//Now the fibers
-			var/list/fibers = data_entry[2]
-			if(!fibers)
-				fibers = list()
-			if(A.suit_fibers && A.suit_fibers.len)
-				for(var/j = 1, j <= A.suit_fibers.len, j++)	//Fibers~~~
-					if(!fibers.Find(A.suit_fibers[j]))	//It isn't!  Add!
-						fibers += A.suit_fibers[j]
-			var/list/blood = data_entry[3]
-			if(!blood)
-				blood = list()
-			if(A.blood_DNA && A.blood_DNA.len)
-				for(var/main_blood in A.blood_DNA)
-					if(!blood[main_blood])
-						blood[main_blood] = A.blood_DNA[blood]
-			return 1
-		var/list/sum_list[4]	//Pack it back up!
-		sum_list[1] = A.fingerprints
-		sum_list[2] = A.suit_fibers
-		sum_list[3] = A.blood_DNA
-		sum_list[4] = "\The [A] in \the [get_area(A)]"
-		stored_data["\ref [A]"] = sum_list
-		return 0
 
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()

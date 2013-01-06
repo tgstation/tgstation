@@ -89,11 +89,11 @@
 
 
 	afterattack(var/obj/target as obj, mob/user as mob)
-		if(!(istype(target, /obj)))	//this really shouldn't be necessary (but it is).	-Pete
+		if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
 			return
 		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) \
 		|| istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
-		|| istype(target, /obj/item/weapon/gift))
+		|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/evidencebag))
 			return
 		if(target.anchored)
 			return

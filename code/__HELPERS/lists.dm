@@ -10,7 +10,7 @@
  */
 
 //Returns a list in plain english as a string
-/proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
+/proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
 	if (!total)
 		return "[nothing_text]"
@@ -305,3 +305,12 @@ proc/listclearnulls(list/list)
 				r += bit
 
 	return r
+
+// Returns the key based on the index
+/proc/get_key_by_index(var/list/L, var/index)
+	var/i = 1
+	for(var/key in L)
+		if(index == i)
+			return key
+		i++
+	return null

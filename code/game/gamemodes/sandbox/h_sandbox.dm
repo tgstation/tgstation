@@ -136,7 +136,7 @@ datum/hSB
 							continue
 						if(istype(O, /obj/item/assembly))
 							continue
-						if(istype(O, /obj/item/weapon/camera))
+						if(istype(O, /obj/item/device/camera))
 							continue
 						if(istype(O, /obj/item/weapon/cloaking_device))
 							continue

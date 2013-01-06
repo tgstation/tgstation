@@ -387,42 +387,6 @@
 
 	smoke.start()
 
-/mob/proc/teleportscroll()
-	if(usr.stat)
-		usr << "Not when you are incapacitated."
-		return
-	var/A
-
-	A = input("Area to jump to", "BOOYEA", A) in teleportlocs
-	var/area/thearea = teleportlocs[A]
-
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
-	smoke.set_up(5, 0, usr.loc)
-	smoke.attach(usr)
-	smoke.start()
-	var/list/L = list()
-	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density)
-			var/clear = 1
-			for(var/obj/O in T)
-				if(O.density)
-					clear = 0
-					break
-			if(clear)
-				L+=T
-
-	if(!L.len)
-		usr <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
-		return
-
-	var/attempt = 0
-	var/success = 0
-	while(!success)
-		success = Move(pick(L))
-		if(attempt > 20) break	//Failsafe
-	if(!success)
-		usr.loc = pick(L)
-	smoke.start()
 
 //JAUNT
 

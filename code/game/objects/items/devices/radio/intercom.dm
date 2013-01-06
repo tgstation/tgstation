@@ -33,9 +33,9 @@
 		return -1
 	if (!(src.wires & WIRE_RECEIVE))
 		return -1
-	if(level != 0)
+	if(!(0 in level))
 		var/turf/position = get_turf(src)
-		if(isnull(position) || position.z != level)
+		if(isnull(position) || !(position.z in level))
 			return -1
 	if (!src.listening)
 		return -1

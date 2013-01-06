@@ -25,7 +25,14 @@ var/global/const/SYMPTOM_ACTIVATION_PROB = 3
 			return
 	CRASH("We couldn't assign an ID!")
 
+// Called when processing of the advance disease, which holds this symptom, starts.
+/datum/symptom/proc/Start(var/datum/disease/advance/A)
+	return
 
-/datum/symptom/proc/Activate(var/mob/living/M, var/stage)
+// Called when the advance disease is going to be deleted or when the advance disease stops processing.
+/datum/symptom/proc/End(var/datum/disease/advance/A)
+	return
+
+/datum/symptom/proc/Activate(var/datum/disease/advance/A)
 	return
 

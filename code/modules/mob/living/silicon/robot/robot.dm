@@ -157,7 +157,7 @@
 			hands.icon_state = "medical"
 			icon_state = "surgeon"
 			modtype = "Med"
-			nopush = 1
+			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_medical",1)
 			channels = list("Medical" = 1)
 
@@ -168,7 +168,7 @@
 			icon_state = "bloodhound"
 			modtype = "Sec"
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
-			nopush = 1
+			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
 			channels = list("Security" = 1)
 
@@ -325,7 +325,7 @@
 					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
-			if(tmob.nopush)
+			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return
 		now_pushing = 0
@@ -1032,3 +1032,15 @@
 		R.UnlinkSelf()
 		R << "Buffers flushed and reset. Camera system shutdown.  All systems operational."
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
+
+/mob/living/silicon/robot/mode()
+	set name = "Activate Held Object"
+	set category = "IC"
+	set src = usr
+
+	if(module_active)
+
+		var/obj/item/W = module_active
+		if (W)
+			W.attack_self(src)
+	return

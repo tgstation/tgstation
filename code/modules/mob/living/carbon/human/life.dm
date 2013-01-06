@@ -50,7 +50,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(prev_gender != gender)
 		prev_gender = gender
 		if(gender in list(PLURAL, NEUTER))
-			message_admins("[src] ([ckey]) gender has been changed to plural or neuter. Please record what has happened recently to the person and then notify coders. (<A HREF='?src=%holder_ref%;adminmoreinfo=\ref[src]'>?</A>)  (<A HREF='?src=%holder_ref%;adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=%admin_ref%;priv_msg=\ref[src]'>PM</A>) (<A HREF='?src=%holder_ref%;adminplayerobservejump=\ref[src]'>JMP</A>)",1,1) //The 1,1 at the end is there to make '%holder_ref%' get replaced with the actual ref object
+			message_admins("[src] ([ckey]) gender has been changed to plural or neuter. Please record what has happened recently to the person and then notify coders. (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>)  (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?priv_msg=\ref[src]'>PM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>)")
 	*/
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -73,9 +73,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
-
-		//Disease Check
-		handle_virus_updates()
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
@@ -609,8 +606,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if(nodamage || (REBREATHER in augmentations) || (mNobreath in mutations))
-			return
+		if((status_flags & GODMODE) || REBREATHER in augmentations)			return
 
 		if(!breath || (breath.total_moles() == 0) || suiciding)
 			if(reagents.has_reagent("inaprovaline"))
@@ -775,7 +771,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				bodytemperature += min((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 		// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-		if(bodytemperature > 360.15)
+		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 			//Body temperature is too hot.
 			fire_alert = max(fire_alert, 1)
 			switch(bodytemperature)
@@ -789,7 +785,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
 					fire_alert = max(fire_alert, 2)
 
-		else if(bodytemperature < 260.15)
+		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			fire_alert = max(fire_alert, 1)
 			if(!istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				switch(bodytemperature)
@@ -1054,6 +1050,18 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				heal_overall_damage(1,1)
 				adjustToxLoss(-1)
 				adjustOxyLoss(-1)
+		if(dna && dna.mutantrace == "shadow")
+			var/light_amount = 0
+			if(isturf(loc))
+				var/turf/T = loc
+				var/area/A = T.loc
+				if(A)
+					if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
+					else						light_amount =  10
+			if(light_amount > 2) //if there's enough light, start dying
+				take_overall_damage(1,1)
+			else if (light_amount < 2) //heal in the dark
+				heal_overall_damage(1,1)
 
 /*		//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 		if(FAT in mutations)
@@ -1304,7 +1312,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				damageoverlay.overlays += I
 
 			//Fire and Brute damage overlay (BSSR)
-			var/hurtdamage = src.getBruteLoss() + src.getFireLoss()
+			var/hurtdamage = src.getBruteLoss() + src.getFireLoss() + damageoverlaytemp
+			damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
 			if(hurtdamage)
 				var/image/I
 				switch(hurtdamage)
@@ -1337,6 +1346,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					if("lizard")
 						see_in_dark = 3
 					if("tajaran")
+						see_in_dark = 4					if("shadow")
 						see_in_dark = 8
 					else
 						see_in_dark = 2
@@ -1525,7 +1535,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		if(bodytemperature > 406)
 			for(var/datum/disease/D in viruses)
 				D.cure()
-
 		if(!virus2)
 			for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
 				if(B.virus2 && get_infection_chance())
@@ -1561,7 +1570,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						del(M)
 						continue
 					if(air_master.current_cycle%3==1)
-						if(!M.nodamage)
+						if(!(M.status_flags & GODMODE))
 							M.adjustBruteLoss(5)
 						nutrition += 10
 

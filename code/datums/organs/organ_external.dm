@@ -701,6 +701,18 @@
 obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
 
+/*
+//Damage will not exceed max_damage using this proc
+//Cannot apply negative damage
+/datum/organ/external/proc/take_damage(brute, burn)
+	if(owner && (owner.status_flags & GODMODE))	return 0	//godmode
+	brute	= max(brute,0)
+	burn	= max(burn,0)
+
+	var/can_inflict = max_damage - (brute_dam + burn_dam)
+	if(!can_inflict)	return 0
+*/
+
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)
 	if(!istype(H))

@@ -10,7 +10,6 @@
 	//Not in use yet
 	var/obj/effect/organstructure/organStructure = null
 
-//	var/uses_hud = 0
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
@@ -37,7 +36,7 @@
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
 
-	var/emote_allowed = 1
+	var/damageoverlaytemp = 0
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null
@@ -62,14 +61,12 @@
 	var/stuttering = null	//Carbon
 	var/slurring = null		//Carbon
 	var/real_name = null
-//	var/original_name = null //Original name is only used in ghost chat! Depracated, now used bb
 	var/flavor_text = ""
 	var/med_record = ""
 	var/sec_record = ""
 	var/blinded = null
 	var/bhunger = 0			//Carbon
 	var/ajourn = 0
-//	var/rejuv = null
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/antitoxs = null
@@ -111,8 +108,6 @@
 	var/lastDblClick = 0
 	var/lastKnownIP = null
 	var/obj/structure/stool/bed/buckled = null//Living
-	var/obj/item/handcuffed = null//Living
-	var/obj/item/legcuffed = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
 	var/obj/item/weapon/back = null//Human/Monkey
@@ -124,7 +119,6 @@
 
 	var/datum/hud/hud_used = null
 
-	//var/list/organs = list(  ) //moved to human.
 	var/list/grabbed_by = list(  )
 	var/list/requests = list(  )
 
@@ -135,16 +129,11 @@
 	var/coughedtime = null
 
 	var/inertia_dir = 0
-	var/footstep = 1
 
 	var/music_lastplayed = "null"
 
 	var/job = null//Living
 
-	var/nodamage = 0
-
-	var/be_syndicate = 0//This really should be a client variable.
-	var/be_random_name = 0
 	var/const/blindness = 1//Carbon
 	var/const/deafness = 2//Carbon
 	var/const/muteness = 4//Carbon
@@ -162,6 +151,9 @@
 	var/voice_name = "unidentifiable voice"
 	var/voice_message = null // When you are not understood by others (replaced with just screeches, hisses, chimpers etc.)
 	var/say_message = null // When you are understood by others. Currently only used by aliens and monkeys in their say_quote procs
+
+	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
+
 
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
 	var/proc_holder_list[] = list()//Right now unused.
@@ -183,7 +175,7 @@
 	var/obj/effect/proc_holder/spell/list/spell_list = list()
 
 //Changlings, but can be used in other modes
-	var/obj/effect/proc_holder/changpower/list/power_list = list()
+//	var/obj/effect/proc_holder/changpower/list/power_list = list()
 
 //List of active diseases
 
@@ -197,17 +189,11 @@
 
 	var/update_icon = 1 //Set to 1 to trigger update_icons() at the next life() call
 
-	var/UI = 'icons/mob/screen1_Midnight.dmi' // For changing the UI from preferences
-
-	var/status_flags = 255	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
-	var/nopush = 0 //Can they be shoved?
+	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
 	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
-
-	var/datum/preferences/storedpreferences = null
-
 
 	var/list/radar_blips = list() // list of screen objects, radar blips
 	var/radar_open = 0 	// nonzero is radar is open
@@ -218,7 +204,6 @@
 	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
 	var/robot_talk_understand = 0
-	var/alien_talk_understand = 0
 	var/tajaran_talk_understand = 0
 	var/soghun_talk_understand = 0
 	var/skrell_talk_understand = 0

@@ -107,14 +107,11 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
 
 		if(H.backbag == 1)//Why cant some of these things spawn in his office?
-			var/obj/item/weapon/storage/box/survival/Evipack = new /obj/item/weapon/storage/box/survival(H)
-			H.equip_to_slot_or_del(Evipack, slot_r_hand)
-			new /obj/item/weapon/fcardholder(Evipack)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_l_hand)
 			H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_r_store)
 		else
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-			H.equip_to_slot_or_del(new /obj/item/weapon/fcardholder(H), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_in_backpack)
 

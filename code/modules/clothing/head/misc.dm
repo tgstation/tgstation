@@ -203,3 +203,10 @@
 	icon_state = "witch"
 	item_state = "witch"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
+
+/obj/item/clothing/head/bearpelt
+	name = "bear pelt hat"
+	desc = "Fuzzy."
+	icon_state = "bearpelt"
+	item_state = "bearpelt"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR

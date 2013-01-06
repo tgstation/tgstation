@@ -10,9 +10,6 @@
 		//Chemicals in the body
 		handle_chemicals_in_body()
 
-		//Disease Check
-		//handle_virus_updates() There is no disease that affects brains
-
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(loc)
 		environment = loc.return_air()
@@ -91,7 +88,7 @@
 		return //TODO: DEFERRED
 
 	proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-		if(nodamage) return
+		if(status_flags & GODMODE) return
 
 		if(exposed_temperature > bodytemperature)
 			var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
@@ -270,11 +267,6 @@
 
 		return 1
 
-	proc/handle_virus_updates()
-		if(bodytemperature > 409)
-			for(var/datum/disease/D in viruses)
-				D.cure()
-		return
 
 /*/mob/living/carbon/brain/emp_act(severity)
 	if(!(container && istype(container, /obj/item/device/mmi)))

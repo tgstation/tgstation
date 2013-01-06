@@ -112,7 +112,7 @@ Bonus
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
-			if(5)
+			if(4, 5)
 				M.overeatduration = 0
 				M.nutrition = 400
 

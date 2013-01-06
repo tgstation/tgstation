@@ -283,19 +283,21 @@
 				usr.clearmap()
 
 		if("mov_intent")
-			if(usr.legcuffed)
-				usr << "\red You are legcuffed! You cannot run until you get your cuffs removed!"
-				usr.m_intent = "walk"	//Just incase
-				usr.hud_used.move_intent.icon_state = "walking"
-				return
-			switch(usr.m_intent)
-				if("run")
-					usr.m_intent = "walk"
-					usr.hud_used.move_intent.icon_state = "walking"
-				if("walk")
-					usr.m_intent = "run"
-					usr.hud_used.move_intent.icon_state = "running"
-			if(istype(usr,/mob/living/carbon/alien/humanoid))	usr.update_icons()
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				if(C.legcuffed)
+					C << "\red You are legcuffed! You cannot run until you get your cuffs removed!"
+					C.m_intent = "walk"	//Just incase
+					C.hud_used.move_intent.icon_state = "walking"
+					return
+				switch(usr.m_intent)
+					if("run")
+						usr.m_intent = "walk"
+						usr.hud_used.move_intent.icon_state = "walking"
+					if("walk")
+						usr.m_intent = "run"
+						usr.hud_used.move_intent.icon_state = "running"
+				if(istype(usr,/mob/living/carbon/alien/humanoid))	usr.update_icons()
 		if("m_intent")
 			if (!( usr.m_int ))
 				switch(usr.m_intent)
@@ -544,20 +546,22 @@
 
 	//unbuckling yourself
 	if(L.buckled && (L.last_special <= world.time) )
-		if( L.handcuffed )
-			L.next_move = world.time + 100
-			L.last_special = world.time + 100
-			L << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
-			for(var/mob/O in viewers(L))
-				O.show_message("\red <B>[usr] attempts to unbuckle themself!</B>", 1)
-			spawn(0)
-				if(do_after(usr, 1200))
-					if(!L.buckled)
-						return
-					for(var/mob/O in viewers(L))
-						O.show_message("\red <B>[usr] manages to unbuckle themself!</B>", 1)
-					L << "\blue You successfully unbuckle yourself."
-					L.buckled.manual_unbuckle(L)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			if( C.handcuffed )
+				C.next_move = world.time + 100
+				C.last_special = world.time + 100
+				C << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
+				for(var/mob/O in viewers(L))
+					O.show_message("\red <B>[usr] attempts to unbuckle themself!</B>", 1)
+				spawn(0)
+					if(do_after(usr, 1200))
+						if(!C.buckled)
+							return
+						for(var/mob/O in viewers(C))
+							O.show_message("\red <B>[usr] manages to unbuckle themself!</B>", 1)
+						C << "\blue You successfully unbuckle yourself."
+						C.buckled.manual_unbuckle(C)
 		else
 			L.buckled.manual_unbuckle(L)
 
@@ -635,7 +639,7 @@
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isalienadult(CM) || (HULK in usr.mutations) || (SUPRSTR in CM.augmentations))//Don't want to do a lot of logic gating here.
-				usr << "\green You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
+				usr << "\red You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
 				for(var/mob/O in viewers(CM))
 					O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", CM), 1)
 				spawn(0)
@@ -644,8 +648,8 @@
 							return
 						for(var/mob/O in viewers(CM))
 							O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", CM), 1)
-						CM << "\green You successfully break your handcuffs."
-						CM.say(pick("RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+						CM << "\red You successfully break your handcuffs."
+						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						del(CM.handcuffed)
 						CM.handcuffed = null
 						CM.update_inv_handcuffed()
@@ -673,7 +677,7 @@
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isalienadult(CM) || (HULK in usr.mutations) || (SUPRSTR in CM.augmentations))//Don't want to do a lot of logic gating here.
-				usr << "\green You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)"
+				usr << "\red You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)"
 				for(var/mob/O in viewers(CM))
 					O.show_message(text("\red <B>[] is trying to break the legcuffs!</B>", CM), 1)
 				spawn(0)
@@ -682,8 +686,8 @@
 							return
 						for(var/mob/O in viewers(CM))
 							O.show_message(text("\red <B>[] manages to break the legcuffs!</B>", CM), 1)
-						CM << "\green You successfully break your legcuffs."
-						CM.say(pick("RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+						CM << "\red You successfully break your legcuffs."
+						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						del(CM.legcuffed)
 						CM.legcuffed = null
 						CM.update_inv_legcuffed()

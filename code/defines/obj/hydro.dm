@@ -33,6 +33,16 @@
 	var/growthstages = 0
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 
+/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "*** <B>[plantname]</B> ***"
+		user << "-Plant Endurance: \blue [endurance]"
+		user << "-Plant Lifespan: \blue [lifespan]"
+		if(yield != -1)
+			user << "-Plant Yield: \blue [yield]"
+		user << "-Plant Production: \blue [production]"
+		if(potency != -1)
+			user << "-Plant Potency: \blue [potency]"
 
 /obj/item/seeds/chiliseed
 	name = "pack of chili seeds"
@@ -706,6 +716,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/poisonedappleseed
+	name = "pack of apple seeds"
+	desc = "These seeds grow into apple trees."
+	icon_state = "seed-apple"
+	mypath = "/obj/item/seeds/poisonedappleseed"
+	species = "apple"
+	plantname = "Apple Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned"
+	lifespan = 55
+	endurance = 35
+	maturation = 6
+	production = 6
+	yield = 5
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/goldappleseed
 	name = "pack of golden apple seeds"
 	desc = "These seeds grow into golden apple trees. Good thing there are no firebirds in space."
@@ -978,6 +1005,32 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 5
+
+/obj/item/seeds/kudzuseed
+	name = "pack of kudzu seeds"
+	desc = "These seeds grow into a weed that grows incredibly fast."
+	icon_state = "seed-kudzu"
+	mypath = "/obj/item/seeds/kudzuseed"
+	species = "kudzu"
+	plantname = "Kudzu"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod"
+	lifespan = 20
+	endurance = 10
+	maturation = 6
+	production = 6
+	yield = 4
+	potency = 10
+	growthstages = 4
+	plant_type = 1
+
+/obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
+	if(istype(user.loc,/turf/space))
+		return
+	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
+	new /obj/effect/spacevine_controller(user.loc)
+	del(src)
+
+
 
 /*  // Maybe one day when I get it to work like a grenade which exlodes gibs.
 /obj/item/seeds/gibtomatoseed

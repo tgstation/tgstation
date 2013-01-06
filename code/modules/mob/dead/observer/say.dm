@@ -10,7 +10,7 @@
 	log_say("Ghost/[src.key] : [message]")
 
 	if (src.client)
-		if(src.client.muted & MUTE_DEADCHAT)
+		if(src.client.prefs.muted & MUTE_DEADCHAT)
 			src << "\red You cannot talk in deadchat (muted)."
 			return
 

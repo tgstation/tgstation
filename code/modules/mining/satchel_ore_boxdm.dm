@@ -120,37 +120,37 @@
 		S.amount = stacksize
 		glass -= stacksize
 	while(gold)
-		var/obj/item/stack/sheet/gold/S = new (location)
+		var/obj/item/stack/sheet/mineral/gold/S = new (location)
 		var/stacksize = min(gold,50)
 		S.amount = stacksize
 		gold -= stacksize
 	while(silver)
-		var/obj/item/stack/sheet/silver/S = new (location)
+		var/obj/item/stack/sheet/mineral/silver/S = new (location)
 		var/stacksize = min(silver,50)
 		S.amount = stacksize
 		silver -= stacksize
 	while(diamond)
-		var/obj/item/stack/sheet/diamond/S = new (location)
+		var/obj/item/stack/sheet/mineral/diamond/S = new (location)
 		var/stacksize = min(diamond,50)
 		S.amount = stacksize
 		diamond -= stacksize
 	while(plasma)
-		var/obj/item/stack/sheet/plasma/S = new (location)
+		var/obj/item/stack/sheet/mineral/plasma/S = new (location)
 		var/stacksize = min(plasma,50)
 		S.amount = stacksize
 		plasma -= stacksize
 	while(uranium)
-		var/obj/item/stack/sheet/uranium/S = new (location)
+		var/obj/item/stack/sheet/mineral/uranium/S = new (location)
 		var/stacksize = min(uranium,50)
 		S.amount = stacksize
 		uranium -= stacksize
 	while(clown)
-		var/obj/item/stack/sheet/clown/S = new (location)
+		var/obj/item/stack/sheet/mineral/clown/S = new (location)
 		var/stacksize = min(clown,50)
 		S.amount = stacksize
 		clown -= stacksize
 	while(euranium)
-		var/obj/item/stack/sheet/enruranium/S = new (location)
+		var/obj/item/stack/sheet/mineral/enruranium/S = new (location)
 		var/stacksize = min(euranium,50)
 		S.amount = stacksize
 		euranium -= stacksize

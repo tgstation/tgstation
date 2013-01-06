@@ -26,7 +26,7 @@
 			if (i > 0)
 				var/obj/effect/decal/cleanable/xenoblood/b = new /obj/effect/decal/cleanable/xenoblood/xsplatter(src.loc)
 				for(var/datum/disease/D in src.viruses)
-					b.viruses += new D.type(0, D, 1)
+					b.viruses += D.Copy()
 			if (step_to(src, get_step(src, direction), 0))
 				break
 
