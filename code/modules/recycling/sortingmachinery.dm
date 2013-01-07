@@ -214,6 +214,7 @@
 		return
 
 	Bumped(var/atom/movable/AM) //Go straight into the chute
+		if(istype(AM, /obj/item/projectile) || istype(AM, /obj/item/weapon/dummy))	return
 		switch(dir)
 			if(NORTH)
 				if(AM.loc.y != src.loc.y+1) return
@@ -223,7 +224,6 @@
 				if(AM.loc.y != src.loc.y-1) return
 			if(WEST)
 				if(AM.loc.x != src.loc.x-1) return
-		if(istype(AM, /obj/item/projectile) || istype(AM, /obj/item/weapon/dummy))	return
 
 		if(istype(AM, /obj))
 			var/obj/O = AM
