@@ -34,6 +34,7 @@
 	var/open = 0
 	var/stage = 0
 
+	var/list/implants = list()
 	// INTERNAL germs inside the organ, this is BAD if it's greater 0
 	var/germ_level = 0
 

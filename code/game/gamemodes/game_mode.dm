@@ -62,6 +62,8 @@ Devices and Tools;
 Whitespace:Seperator;
 Implants;
 /obj/item/weapon/storage/syndie_kit/imp_freedom:3:Freedom Implant;
+/obj/item/weapon/implant/explosive:6:Explosive Implant (DANGER!);
+/obj/item/weapon/implant/compressed:4:Compressed Matter Implant;
 /obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
 Whitespace:Seperator;
 (Pointless) Badassery;

@@ -53,7 +53,7 @@
 	var/lockcharge //Used when locking down a borg to preserve cell charge
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
-
+	var/braintype = "Cyborg"
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -195,11 +195,16 @@
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
 
+	if(istype(mmi, /obj/item/device/posibrain))
+		braintype = "Android"
+	else
+		braintype = "Cyborg"
+
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
 	else
-		changed_name = "[(prefix ? "[prefix] " : "")]Cyborg-[num2text(ident)]"
+		changed_name = "[(prefix ? "[prefix] " : "")][braintype]-[num2text(ident)]"
 	real_name = changed_name
 	name = real_name
 

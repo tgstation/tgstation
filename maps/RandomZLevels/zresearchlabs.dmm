@@ -907,7 +907,7 @@
 "rw" = (/obj/machinery/washing_machine,/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/labs/civilian)
 "rx" = (/obj/effect/decal/cleanable/blood,/obj/machinery/light{dir = 1},/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/labs/civilian)
 "ry" = (/obj/structure/table,/obj/structure/bedsheetbin{pixel_x = -2; pixel_y = 1},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/labs/civilian)
-"rz" = (/obj/structure/table,/obj/item/clothing/suit/labcoat{pixel_y = 3},/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/labs/civilian)
+"rz" = (/obj/structure/table,/obj/item/clothing/suit/storage/labcoat{pixel_y = 3},/turf/simulated/floor{dir = 8; icon_state = "barber"},/area/awaymission/labs/civilian)
 "rA" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor,/area/awaymission/labs/civilian)
 "rB" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor,/area/awaymission/labs/civilian)
 "rC" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor,/area/awaymission/labs/civilian)

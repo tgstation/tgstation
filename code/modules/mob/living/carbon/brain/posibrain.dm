@@ -58,13 +58,18 @@
 		src.brainmob.real_name = "PBU-[rand(100, 999)]"
 		src.brainmob.loc = src
 		src.brainmob.container = src
+		src.brainmob.robot_talk_understand = 1
 		src.brainmob.stat = 0
 		src.brainmob.silent = 0
 		src.brainmob.brain_op_stage = 4.0
 		src.brainmob.key = candidate.key
-
 		dead_mob_list -= src.brainmob
 		living_mob_list += src.brainmob
+
+		src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
+		src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
+		src.brainmob << "Use say :b to speak to other artificial intelligences on the station."
+		src.brainmob.mind.assigned_role = "Positronic Brain"
 
 		var/turf/T = get_turf_or_move(src.loc)
 		for (var/mob/M in viewers(T))
