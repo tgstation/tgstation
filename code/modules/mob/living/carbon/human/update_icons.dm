@@ -323,7 +323,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(dna)
 		switch(dna.mutantrace)
-			if("lizard","golem","slime","shadow")
+			if("lizard","golem","slime","shadow","adamantine")
 				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_l")
 				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s")
 			if("plant")

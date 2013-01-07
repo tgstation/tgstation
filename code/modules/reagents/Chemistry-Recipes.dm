@@ -1222,6 +1222,65 @@ datum
 				P.loc = get_turf_loc(holder.my_atom)
 
 
+//Black
+		slimemutate2
+			name = "Advanced Mutation Toxin"
+			id = "mutationtoxin2"
+			result = "amutationtoxin"
+			required_reagents = list("plasma" = 5)
+			result_amount = 1
+			required_other = 1
+			required_container = /obj/item/slime_extract/black
+
+//Oil
+		slimeexplosion
+			name = "Slime Explosion"
+			id = "m_explosion"
+			result = null
+			required_reagents = list("plasma" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/oil
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
+					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
+				sleep(50)
+				holder.clear_reagents()
+				explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
+				del (holder)
+//Light Pink
+		slimepotion2
+			name = "Slime Potion 2"
+			id = "m_potion2"
+			result = null
+			result_amount = 1
+			required_container = /obj/item/slime_extract/lightpink
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/weapon/slimepotion2/P = new /obj/item/weapon/slimepotion2
+				P.loc = get_turf_loc(holder.my_atom)
+//Adamantine
+		slimegolem
+			name = "Slime Golem"
+			id = "m_golem"
+			result = null
+			result_amount = 1
+			required_container = /obj/item/slime_extract/adamantine
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/mob/living/carbon/human/G = new /mob/living/carbon/human
+				G.dna.mutantrace = "adamantine"
+				G.name = text("Adamantine Golem ([rand(1, 1000)])")
+				G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
+				G.equip_to_slot_or_del(new /obj/item/clothing/suit/golem(G), slot_wear_suit)
+				G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
+				G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
+				G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
+				G.loc = get_turf_loc(holder.my_atom)
+				var/list/candidates = get_alien_candidates()
+				var/candidate = pick(candidates)
+				G.key = candidate
+				G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve the one created you, and assist them in completing their goals at any cost."
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 

@@ -317,6 +317,7 @@
 			if("mask")
 				if(target.wear_mask && !target.wear_mask.canremove)
 					message = "\red <B>[source] fails to take off \a [target.wear_mask] from [target]'s head!</B>"
+					return
 				else
 					message = "\red <B>[source] is trying to take off \a [source.wear_mask] from [target]'s head!</B>"
 			if("l_hand")
@@ -326,26 +327,31 @@
 			if("gloves")
 				if(target.gloves && !target.gloves.canremove)
 					message = "\red <B>[source] fails to take off \a [target.gloves] from [target]'s hands!</B>"
+					return
 				else
 					message = "\red <B>[source] is trying to take off the [target.gloves] from [target]'s hands!</B>"
 			if("eyes")
 				if(target.glasses && !target.glasses.canremove)
 					message = "\red <B>[source] fails to take off \a [target.glasses] from [target]'s eyes!</B>"
+					return
 				else
 					message = "\red <B>[source] is trying to take off the [target.glasses] from [target]'s eyes!</B>"
 			if("ears")
 				if(target.ears && !target.ears.canremove)
 					message = "\red <B>[source] fails to take off \a [target.ears] from [target]'s ears!</B>"
+					return
 				else
 					message = "\red <B>[source] is trying to take off the [target.ears] from [target]'s ears!</B>"
 			if("head")
 				if(target.head && !target.head.canremove)
 					message = "\red <B>[source] fails to take off \a [target.head] from [target]'s head!</B>"
+					return
 				else
 					message = "\red <B>[source] is trying to take off the [target.head] from [target]'s head!</B>"
 			if("shoes")
 				if(target.shoes && !target.shoes.canremove)
 					message = "\red <B>[source] fails to take off \a [target.shoes] from [target]'s feet!</B>"
+					return
 				else
 					message = "\red <B>[source] is trying to take off the [target.shoes] from [target]'s feet!</B>"
 			if("belt")
@@ -353,6 +359,7 @@
 			if("suit")
 				if(target.wear_suit && !target.wear_suit.canremove)
 					message = "\red <B>[source] fails to take off \a [target.wear_suit] from [target]'s body!</B>"
+					return
 				else
 					message = "\red <B>[source] is trying to take off \a [target.wear_suit] from [target]'s body!</B>"
 			if("back")
@@ -367,6 +374,7 @@
 						return
 				if(target.w_uniform && !target.w_uniform.canremove)
 					message = "\red <B>[source] fails to take off \a [target.w_uniform] from [target]'s body!</B>"
+					return
 				else
 					message = "\red <B>[source] is trying to take off \a [target.w_uniform] from [target]'s body!</B>"
 			if("s_store")

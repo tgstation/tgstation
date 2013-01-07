@@ -144,10 +144,6 @@
 					user << "\red [target] is full."
 					return
 
-				if(istype(target, /obj/item/slime_extract))
-					var/obj/item/slime_extract/core = target
-					core.Flush = 30 // reset flush counter
-
 				if(ismob(target) && target != user)
 					for(var/mob/O in viewers(world.view, user))
 						O.show_message(text("\red <B>[] is trying to inject []!</B>", user, target), 1)

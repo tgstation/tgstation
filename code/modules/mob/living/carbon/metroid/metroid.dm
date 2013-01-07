@@ -739,7 +739,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=4"
-	var/Flush = 30
 	var/Uses = 1 // uses before it goes inert
 
 /obj/item/slime_extract/New()
@@ -781,19 +780,40 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "yellow slime extract"
 
 /obj/item/slime_extract/red
+	name = "red slime extract"
 	icon_state = "red slime extract"
 
 /obj/item/slime_extract/blue
+	name = "blue slime extract"
 	icon_state = "blue slime extract"
 
 /obj/item/slime_extract/darkblue
+	name = "dark blue slime extract"
 	icon_state = "dark blue slime extract"
 
 /obj/item/slime_extract/pink
+	name = "pink slime extract"
 	icon_state = "pink slime extract"
 
 /obj/item/slime_extract/green
+	name = "green slime extract"
 	icon_state = "green slime extract"
+
+/obj/item/slime_extract/lightpink
+	name = "light pink slime extract"
+	icon_state = "light pink slime extract"
+
+/obj/item/slime_extract/black
+	name = "black slime extract"
+	icon_state = "black slime extract"
+
+/obj/item/slime_extract/oil
+	name = "oil slime extract"
+	icon_state = "oil slime extract"
+
+/obj/item/slime_extract/adamantine
+	name = "adamantine slime extract"
+	icon_state = "adamantine slime extract"
 
 ////Pet Slime Creation///
 
@@ -805,10 +825,10 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "/red The potion only works on baby slimes!"
+			user << "\red The potion only works on baby slimes!"
 			return ..()
 		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
-			user << "/red Only baby slimes can be tamed!"
+			user << "\red Only baby slimes can be tamed!"
 			return..()
 		if(M.stat)
 			user << "\red The slime is dead!"
@@ -817,6 +837,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.icon_state = "[M.colour] baby slime"
 		pet.icon_living = "[M.colour] baby slime"
 		pet.icon_dead = "[M.colour] baby slime dead"
+		pet.colour = "[M.colour]"
 		user <<"You feed the slime the potion, removing it's powers and calming it."
 		del (M)
 		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
@@ -827,18 +848,47 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.real_name = newname
 		del (src)
 
+/obj/item/weapon/slimepotion2
+	name = "advanced docility potion"
+	desc = "A potent chemical mix that will nullify a slime's powers, causing it to become docile and tame. This one is meant for adult slimes"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle19"
+
+	attack(mob/living/carbon/slime/adult/M as mob, mob/user as mob)
+		if(!istype(M, /mob/living/carbon/slime/adult))//If target is not a slime.
+			user << "\red The potion only works on adult slimes!"
+			return ..()
+		if(M.stat)
+			user << "\red The slime is dead!"
+			return..()
+		var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
+		pet.icon_state = "[M.colour] adult slime"
+		pet.icon_living = "[M.colour] adult slime"
+		pet.icon_dead = "[M.colour] baby slime dead"
+		pet.colour = "[M.colour]"
+		user <<"You feed the slime the potion, removing it's powers and calming it."
+		del (M)
+		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+
+		if (!newname)
+			newname = "pet slime"
+		pet.name = newname
+		pet.real_name = newname
+		del (src)
+
+
 /obj/item/weapon/slimesteroid
-	name = "docility steroid"
-	desc = "A potent chemical mix that will cause a slime to create generate more extract."
+	name = "slime steroid"
+	desc = "A potent chemical mix that will cause a slime to generate more extract."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
 	attack(mob/living/carbon/slime/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
-			user << "/red The steroid only works on baby slimes!"
+			user << "\red The steroid only works on baby slimes!"
 			return ..()
 		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
-			user << "/red Only baby slimes can use the steroid!"
+			user << "\red Only baby slimes can use the steroid!"
 			return..()
 		if(M.stat)
 			user << "\red The slime is dead!"
@@ -850,6 +900,69 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		user <<"You feed the slime the steroid. It now has triple the amount of extract."
 		M.cores = 3
 		del (src)
+
+
+////////Adamantine Golem stuff I dunno where else to put it
+
+/obj/item/clothing/under/golem
+	name = "adamantine skin"
+	desc = "a golem's skin"
+	icon_state = "golem"
+	item_state = "golem"
+	color = "golem"
+	has_sensor = 0
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	canremove = 0
+
+/obj/item/clothing/suit/golem
+	name = "adamantine shell"
+	desc = "a golem's thick outter shell"
+	icon_state = "golem"
+	item_state = "golem"
+	w_class = 4//bulky item
+	gas_transfer_coefficient = 0.90
+	permeability_coefficient = 0.50
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	slowdown = 3.0
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | STOPSPRESSUREDMAGE
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE
+	canremove = 0
+	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/shoes/golem
+	name = "golem's feet"
+	desc = "sturdy adamantine feet"
+	icon_state = "golem"
+	item_state = null
+	canremove = 0
+	flags = NOSLIP
+	slowdown = SHOES_SLOWDOWN+1
+
+
+/obj/item/clothing/mask/gas/golem
+	name = "golem's face"
+	desc = "the imposing face of an adamantine golem"
+	icon_state = "golem"
+	item_state = "golem"
+	canremove = 0
+	siemens_coefficient = 0
+	unacidable = 1
+
+/obj/item/clothing/gloves/golem
+	name = "golem's hands"
+	desc = "strong adamantine hands"
+	icon_state = "golem"
+	item_state = null
+	siemens_coefficient = 0
+	canremove = 0
+
+
+
+
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 
 /*
