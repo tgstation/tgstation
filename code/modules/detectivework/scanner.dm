@@ -3,7 +3,7 @@
 // TODO: Split everything into easy to manage procs.
 
 /obj/item/device/detective_scanner
-	name = "Scanner"
+	name = "scanner"
 	desc = "Used to scan objects for DNA and fingerprints. Can print a report of the findings."
 	icon_state = "forensic1"
 	w_class = 3.0
@@ -17,7 +17,10 @@
 	if(log.len && !scanning)
 		scanning = 1
 		user << "<span class='notice'>Printing report, please wait...</span>"
+
 		spawn(100)
+
+			// Create our paper
 			var/obj/item/weapon/paper/P = new(get_turf(src))
 			P.name = "paper- 'Scanner Report'"
 			P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
@@ -25,143 +28,139 @@
 			P.info += "<HR><B>Notes:</B><BR>"
 			P.info_links = P.info
 
-			user.put_in_hands(P)
+			if(ismob(loc))
+				var/mob/M = loc
+				M.put_in_hands(P)
+				M << "<span class='notice'>Report printed. Log cleared.<span>"
 
+			// Clear the logs
 			log = list()
 			scanning = 0
-			if(user)
-				user << "<span class='notice'>Report printed. Log cleared.<span>"
 	else
 		user << "<span class='notice'>The scanner has no logs or is in use.</span>"
 
-/obj/item/device/detective_scanner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
-	if(!scanning)
-		scanning = 1
-		spawn(0)
+/obj/item/device/detective_scanner/attack(mob/living/M as mob, mob/user as mob)
+	scan(M, user)
 
-			var/found_something = 0
-			user << "<span class='notice'>You scan [M]. The scanner is analysing the results...</span>"
-			add_log(null, "<B>[time2text(world.time + 432000, "hh:mm:ss")] - [M]</B>")
-			// Fingerprints
-			if(ishuman(M))
-				if (istype(M.dna, /datum/dna) && !M.gloves)
-					sleep(30)
-					add_log(user, "<span class='info'><B>Prints:</B></span>")
-					add_log(user, "[md5(M.dna.uni_identity)]")
-					found_something = 1
-
-			// Blood
-			if ( !M.blood_DNA || !M.blood_DNA.len )
-				if(M.blood_DNA)
-					del(M.blood_DNA)
-			else
-				sleep(30)
-				add_log(user, "<span class='info'><B>Blood:</B></span>")
-				found_something = 1
-				for(var/blood in M.blood_DNA)
-					add_log(user, "Type: <font color='red'>[M.blood_DNA[blood]]</font> DNA: <font color='red'>[blood]</font>")
-
-			//Reagents
-			if(M.reagents && M.reagents.reagent_list.len)
-				sleep(30)
-				add_log(user, "<span class='info'><B>Reagents:</B></span>")
-				for(var/datum/reagent/R in M.reagents.reagent_list)
-					add_log(user, "Reagent: <font color='red'>[R.name]</font> Volume: <font color='red'>[R.volume]</font>")
-				found_something = 1
-
-			if(!found_something)
-				add_log(null, "<I># No forensic traces found #</I>")
-				user.visible_message("\The [user] scans \the [M] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-				"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [M]!</span>",\
-				"You hear a faint hum of electrical equipment.")
-			else
-				user.visible_message("\The [user] scans \the [M] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-				"<span class='notice'>You finish scanning \the [M].</span>",\
-				"You hear a faint hum of electrical equipment.")
-			add_log(null, "---------------------------------------------------------")
-			scanning = 0
-			return
 
 /obj/item/device/detective_scanner/afterattack(atom/A as obj|turf|area, mob/user as mob)
-	// Note, don't add formating, such as <span class>, as it won't show up in the logs.
+
 	if(!in_range(A,user))
 		return
 	if(!isturf(A) && !isobj(A))
 		return
 	if(loc != user)
 		return
+	scan(A, user)
+
+/obj/item/device/detective_scanner/proc/scan(var/atom/A, var/mob/user)
 
 	if(!scanning)
 		scanning = 1
-		add_fingerprint(user)
+
+		user.visible_message("\The [user] scans \the [A] with \the [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]")
+		user << "<span class='notice'>You scan [A]. The scanner is analysing the results...</span>"
+
+
+		// GATHER INFORMATION
+
+		//Make our lists
+		var/list/fingerprints = list()
+		var/list/blood = list()
+		var/list/fibers = list()
+		var/list/reagents = list()
+
+		var/target_name = A.name
+
+		// Start gathering
+
+		if(ishuman(A))
+
+			var/mob/living/carbon/human/H = A
+			if (istype(H.dna, /datum/dna) && !H.gloves)
+				fingerprints += md5(H.dna.uni_identity)
+
+			if(H.blood_DNA && H.blood_DNA.len)
+				blood = H.blood_DNA.Copy()
+		else
+
+			if(A.fingerprints && A.fingerprints.len)
+				fingerprints = A.fingerprints.Copy()
+
+			if(A.blood_DNA && A.blood_DNA.len)
+				blood = A.blood_DNA.Copy()
+
+		if(A.reagents && A.reagents.reagent_list.len)
+			for(var/datum/reagent/R in A.reagents.reagent_list)
+				reagents[R.name] = R.volume
+
+		if(A.suit_fibers && A.suit_fibers.len)
+			fibers = A.suit_fibers.Copy()
+
+		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
 		spawn(0)
 
 			var/found_something = 0
-			user << "<span class='notice'>You scan [A]. The scanner is analysing the results...</span>"
-			add_log(null, "<B>[time2text(world.time + 432000, "hh:mm:ss")] - [capitalize(A.name)]</B>")
-			//PRINTS
-			if(!A.fingerprints || !A.fingerprints.len)
-				if(A.fingerprints)
-					del(A.fingerprints)
-			else
-				var/list/completed_prints = list()
-				// Bah this looks awful but basically it loop throught the last 15 entries.
-				for(var/i in A.fingerprints)
-					var/print = A.fingerprints[i]
-					completed_prints += print
+			add_log("<B>[get_timestamp()] - [target_name]</B>", 0)
 
-				if(completed_prints.len)
-
-					sleep(30)
-					add_log(user, "<span class='info'><B>Prints:</B></span>")
-					for(var/i in completed_prints)
-						add_log(user, "[i]")
-					found_something = 1
-
-			//FIBERS
-			if(A.suit_fibers && A.suit_fibers.len)
+			// Fingerprints
+			if(fingerprints && fingerprints.len)
 				sleep(30)
-				add_log(user, "<span class='info'><B>Fibers:</B></span>")
-				for(var/fiber in A.suit_fibers)
-					add_log(user, "[fiber]")
+				add_log("<span class='info'><B>Prints:</B></span>")
+				for(var/finger in fingerprints)
+					add_log("[finger]")
 				found_something = 1
 
-			//Blood
-			if (A.blood_DNA && A.blood_DNA.len)
+			// Blood
+			if (blood && blood.len)
 				sleep(30)
-				add_log(user, "<span class='info'><B>Blood:</B></span>")
-				for(var/blood in A.blood_DNA)
-					add_log(user, "Type: <font color='red'>[A.blood_DNA[blood]]</font> DNA: <font color='red'>[blood]</font>")
+				add_log("<span class='info'><B>Blood:</B></span>")
+				found_something = 1
+				for(var/B in blood)
+					add_log("Type: <font color='red'>[blood[B]]</font> DNA: <font color='red'>[B]</font>")
+
+			//Fibers
+			if(fibers && fibers.len)
+				sleep(30)
+				add_log("<span class='info'><B>Fibers:</B></span>")
+				for(var/fiber in fibers)
+					add_log("[fiber]")
 				found_something = 1
 
 			//Reagents
-			if(A.reagents && A.reagents.reagent_list.len)
+			if(reagents && reagents.len)
 				sleep(30)
-				add_log(user, "<span class='info'><B>Reagents:</B></span>")
-				for(var/datum/reagent/R in A.reagents.reagent_list)
-					add_log(user, "Reagent: <font color='red'>[R.name]</font> Volume: <font color='red'>[R.volume]</font>")
+				add_log("<span class='info'><B>Reagents:</B></span>")
+				for(var/R in reagents)
+					add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
 				found_something = 1
 
-			//General
-			if (!found_something)
-				add_log(null, "<I># No forensic traces found #</I>")
-				user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-				"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [A]!</span>",\
-				"You hear a faint hum of electrical equipment.")
+			// Get a new user
+			var/mob/holder = null
+			if(ismob(src.loc))
+				holder = src.loc
+
+			if(!found_something)
+				add_log("<I># No forensic traces found #</I>", 0) // Don't display this to the holder user
+				if(holder)
+					holder << "<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [target_name]!</span>"
 			else
-				user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-				"<span class='notice'>You finish analysing \the [A].</span>",\
-				"You hear a faint hum of electrical equipment.")
+				if(holder)
+					holder << "<span class='notice'>You finish scanning \the [target_name].</span>"
 
-			add_log(null, "---------------------------------------------------------")
+			add_log("---------------------------------------------------------", 0)
 			scanning = 0
-			return 0
+			return
 
-/obj/item/device/detective_scanner/proc/add_log(var/mob/user, var/msg)
+/obj/item/device/detective_scanner/proc/add_log(var/msg, var/broadcast = 1)
 	if(scanning)
-		if(user)
-			user << msg
+		if(broadcast && ismob(loc))
+			var/mob/M = loc
+			M << msg
 		log += "&nbsp;&nbsp;[msg]"
 	else
 		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")
+
+/obj/item/device/detective_scanner/proc/get_timestamp()
+	return time2text(world.time + 432000, "hh:mm:ss")

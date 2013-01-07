@@ -20,18 +20,22 @@ datum/shuttle_controller
 	var/timelimit //important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
 	var/fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
+	var/always_fake_recall = 0
 
 
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall(coeff = 1)
+
 		if(endtime)
 			if(direction == -1)
 				setdirection(1)
 		else
 			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
+			if(always_fake_recall)
+				fake_recall = rand(300,500)
 
 	proc/recall()
 		if(direction == 1)
@@ -216,7 +220,7 @@ datum/shuttle_controller
 
 					else if((fake_recall != 0) && (timeleft <= fake_recall))
 						recall()
-
+						fake_recall = 0
 						return 0
 
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */

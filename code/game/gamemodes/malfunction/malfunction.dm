@@ -65,6 +65,8 @@
 			if(alert(AI_mind.current,"Do you want to use an alternative sprite for your real core?",,"Yes","No")=="Yes")
 				AI_mind.current.icon_state = "ai-malf2"
 */
+	if(emergency_shuttle)
+		emergency_shuttle.always_fake_recall = 1
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
 	..()
@@ -131,7 +133,11 @@
 	if (station_captured && !to_nuke_or_not_to_nuke)
 		return 1
 	if (is_malf_ai_dead())
-		return 1
+		if(config.continous_rounds)
+			if(emergency_shuttle)
+				emergency_shuttle.always_fake_recall = 0
+		else
+			return 1
 	return ..() //check for shuttle and nuke
 
 

@@ -186,3 +186,7 @@ GATEWAY_DELAY 18000
 
 ## Remove the # to give assistants maint access.
 #ASSISTANT_MAINT
+
+## Remove the # to make rounds which end instantly (Rev, Wizard, Malf) to continue until the shuttle is called or the station is nuked.
+## Malf and Rev will let the shuttle be called when the antags/protags are dead.
+#CONTINUOUS_ROUNDS

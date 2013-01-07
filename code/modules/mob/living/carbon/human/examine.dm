@@ -270,15 +270,11 @@
 			var/criminal = "None"
 
 			if(wear_id)
-				if (istype(wear_id, /obj/item/weapon/card/id))
-					var/obj/item/weapon/card/id/I = wear_id
+				var/obj/item/weapon/card/id/I = wear_id.GetID()
+				if(I)
 					perpname = I.registered_name
-				else if (istype(wear_id, /obj/item/device/pda))
-					var/obj/item/device/pda/P = wear_id
-					perpname = P.owner
-				else if (istype(wear_id, /obj/item/weapon/storage/wallet))
-					var/obj/item/weapon/storage/wallet/W = wear_id
-					perpname = W.front_id
+				else
+					perpname = name
 			else
 				perpname = name
 
