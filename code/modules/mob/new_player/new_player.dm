@@ -24,21 +24,19 @@
 
 
 	proc/new_player_panel_proc()
-		var/output = "<B>New Player Options</B>"
+		var/output = "<div align='center'><B>New Player Options</B>"
 		output +="<hr>"
-		output += "<br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><br><br>"
+		output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-			if(!ready)
-				output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><br><br>"
-			else
-				output += "<b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)<br><br>"
+			if(!ready)	output += "<p><a href='byond://?src=\ref[src];ready=1'>Declare Ready</A></p>"
+			else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
 
 		else
 			output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
-			output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><br><br>"
+			output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
 
-		output += "<a href='byond://?src=\ref[src];observe=1'>Observe</A><br><br>"
+		output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
 		if(!IsGuestKey(src.key))
 			establish_db_connection()
@@ -58,7 +56,10 @@
 					output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
 				else
 					output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
-		src << browse(output,"window=playersetup;size=250x258;can_close=0")
+
+		output += "</div>"
+
+		src << browse(output,"window=playersetup;size=210x240;can_close=0")
 		return
 
 	Stat()

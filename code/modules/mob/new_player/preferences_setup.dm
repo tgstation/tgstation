@@ -22,7 +22,8 @@ datum/preferences
 		age = rand(AGE_MIN,AGE_MAX)
 		copy_to(H,1)
 
-	proc/update_preview_icon()		//seriously. This is horrendous.		del(preview_icon_front)
+	proc/update_preview_icon()		//seriously. This is horrendous.
+		del(preview_icon_front)
 		del(preview_icon_side)
 		var/icon/preview_icon = null
 
@@ -59,7 +60,6 @@ datum/preferences
 				preview_icon.Blend(temp, ICON_OVERLAY)
 
 			preview_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
-
 
 		// Skin tone
 		if(species == "Human")

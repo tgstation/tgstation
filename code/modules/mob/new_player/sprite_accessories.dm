@@ -119,6 +119,7 @@
 		name = "Pompadour"
 		icon_state = "hair_pompadour"
 		gender = MALE
+		species_allowed = list("Human","Soghun")
 
 	quiff
 		name = "Quiff"
@@ -141,16 +142,19 @@
 		name = "Beehive"
 		icon_state = "hair_beehive"
 		gender = FEMALE
+		species_allowed = list("Human","Soghun")
 
 	bobcurl
 		name = "Bobcurl"
 		icon_state = "hair_bobcurl"
 		gender = FEMALE
+		species_allowed = list("Human","Soghun")
 
 	bob
 		name = "Bob"
 		icon_state = "hair_bobcut"
 		gender = FEMALE
+		species_allowed = list("Human","Soghun")
 
 	bowl
 		name = "Bowl"
@@ -161,6 +165,7 @@
 		name = "Buzzcut"
 		icon_state = "hair_buzzcut"
 		gender = MALE
+		species_allowed = list("Human","Soghun")
 
 	crew
 		name = "Crewcut"
@@ -179,7 +184,6 @@
 	dreadlocks
 		name = "Dreadlocks"
 		icon_state = "hair_dreads"
-		gender = MALE // okay.jpg
 
 	curls
 		name = "Curls"
@@ -343,6 +347,7 @@
 	elvis
 		name = "Elvis Sideburns"
 		icon_state = "facial_elvis"
+		species_allowed = list("Human","Soghun")
 
 	abe
 		name = "Abraham Lincoln Beard"
@@ -418,28 +423,37 @@
 		icon_state = "tajears"
 		species_allowed = list("Tajaran")
 
-//skin styles - WIP
 
+//skin styles - WIP
+//going to have to re-integrate this with surgery
+//let the icon_state hold an icon preview for now
 /datum/sprite_accessory/skin
+	icon = 'icons/mob/human_races/r_human.dmi'
+
 	human
 		name = "Default human skin"
-		icon = "human"
+		icon_state = "default"
+		species_allowed = list("Human")
 
 	human_tatt01
 		name = "Tatt01 human skin"
-		icon = "human_tattoo1"
+		icon_state = "tatt1"
+		species_allowed = list("Human")
 
 	tajaran
 		name = "Default tajaran skin"
-		icon = "tajaran"
+		icon_state = "default"
+		icon = 'icons/mob/human_races/r_tajaran.dmi'
 		species_allowed = list("Tajaran")
 
 	soghun
 		name = "Default soghun skin"
-		icon = "soghun"
+		icon_state = "default"
+		icon = 'icons/mob/human_races/r_lizard.dmi'
 		species_allowed = list("Soghun")
 
 	skrell
 		name = "Default skrell skin"
-		icon = "skrell"
+		icon_state = "default"
+		icon = 'icons/mob/human_races/r_skrell.dmi'
 		species_allowed = list("Skrell")

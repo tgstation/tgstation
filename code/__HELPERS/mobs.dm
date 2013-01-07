@@ -1,16 +1,16 @@
-proc/random_hair_style(gender)
+proc/random_hair_style(gender, species = "Human")
 	switch(gender)
 		if(MALE)	return pick(hair_styles_male_list)
 		if(FEMALE)	return pick(hair_styles_female_list)
 		else		return pick(hair_styles_list)
 
-proc/random_facial_hair_style(gender)
+proc/random_facial_hair_style(gender, species = "Human")
 	switch(gender)
 		if(MALE)	return pick(facial_hair_styles_male_list)
 		if(FEMALE)	return pick(facial_hair_styles_female_list)
 		else		return pick(facial_hair_styles_list)
 
-proc/random_name(gender)
+proc/random_name(gender, species = "Human")
 	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 

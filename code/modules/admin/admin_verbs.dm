@@ -622,8 +622,8 @@ var/list/admin_verbs_mod = list(
 /client/proc/mod_panel()
 	set name = "Moderator Panel"
 	set category = "Admin"
-	if(holder)
-		holder.mod_panel()
+	/*if(holder)
+		holder.mod_panel()*/
 //	feedback_add_details("admin_verb","MP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 

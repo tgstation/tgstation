@@ -17,7 +17,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"space ninja" = "true",								 // 10
 )
 
-var/const/MAX_SAVE_SLOTS = 3
+var/const/MAX_SAVE_SLOTS = 10
 
 
 datum/preferences
@@ -209,14 +209,18 @@ datum/preferences
 		var/dat = "<html><body><center>"
 
 		if(path)
+			dat += "<center>"
 			dat += "Slot <b>[slot_name]</b> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-			dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reset slot to default</a>"
+			dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
+			dat += "</center>"
+
 		else
 			dat += "Please create an account to save your preferences."
 
 		dat += "</center><hr><table><tr><td width='340px' height='320px'>"
+
 		dat += "<b>Name:</b> "
 		dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>"
 		dat += "(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>) "
@@ -236,94 +240,17 @@ datum/preferences
 		if(config.allow_Metadata)
 			dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'> Edit </a><br>"
 
-		if(user.client && user.client.holder)
-			dat += "<b>Adminhelp sound</b>: "
-			dat += "[(toggles & SOUND_ADMINHELP)?"On":"Off"] <a href='?_src_=prefs;preference=hear_adminhelps'>toggle</a><br>"
-
-			if(config.allow_admin_ooccolor && check_rights(R_ADMIN,0))
-				dat += "<br><b>OOC</b><br>"
-				dat += "<a href='?_src_=prefs;preference=ooccolor;task=input'>Change color</a> <font face='fixedsys' size='3' color='[ooccolor]'><table style='display:inline;'  bgcolor='[ooccolor]'><tr><td>__</td></tr></table></font><br>"
-
 		dat += "<br><b>Occupation Choices</b><br>"
 		dat += "\t<a href='?_src_=prefs;preference=job;task=menu'><b>Set Preferences</b></a><br>"
 
-		if(jobban_isbanned(user, "Records"))
-			dat += "<b>You are banned from using character records.</b><br>"
-		else
-			dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br>"
 		dat += "<br><table><tr><td><b>Body</b> "
 		dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
 		dat += "<br>"
+		dat += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
 		dat += "Blood Type: [b_type]<br>"
 		dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
-
-		if(gender == MALE)
-			dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_m[underwear]]</b></a><br>"
-		else
-			dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_f[underwear]]</b></a><br>"
-		dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
-		dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
-		if(lentext(flavor_text) <= 40)
-			if(!lentext(flavor_text))
-				dat += "\[...\]"
-			else
-				dat += "[flavor_text]"
-		else
-			dat += "[copytext(flavor_text, 1, 37)]...<br>"
-		dat += "<br>"
-
-		dat += "</td><td width='300px' height='300px'>"
-
-		dat += "<br><b>Hair</b><br>"
-
-		dat += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td>__</td></tr></table></font> "
-
-		dat += "Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
-
-		dat += "<br><b>Facial</b><br>"
-
-		dat += "<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td>__</td></tr></table></font> "
-
-		dat += "Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
-
-		dat += "<br><b>Eyes</b><br>"
-		dat += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td>__</td></tr></table></font>"
-
-		dat += "<br><br>"
-		if(jobban_isbanned(user, "Syndicate"))
-			dat += "<b>You are banned from antagonist roles.</b>"
-			src.be_special = 0
-		else
-			var/n = 0
-			for (var/i in special_roles)
-				if(special_roles[i]) //if mode is available on the server
-					if(jobban_isbanned(user, i))
-						dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
-					else if(i == "pai candidate")
-						if(jobban_isbanned(user, "pAI"))
-							dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
-					else
-						dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
-				n++
-		dat += "</td>"
-
-		//COLUMN 2
-		dat += "<td>"
-		dat += "<table><tr>"
-
-		dat += "<td width='142px'>"
-		dat += "<b>Body</b> (<a href=\"byond://?src=\ref[user];preference=all;task=random\">&reg;</A>)<br>"
-		dat += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
-		dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
-		dat += "Skin Tone: <a href='byond://?src=\ref[user];preference=s_tone;task=input'>[-s_tone + 35]/220</a><br>"
-		dat += "<a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust Skin</a><br>"
-		dat += "<a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust Limbs</a><br>"
-		dat += "</td>"
-
-		dat += "<td><b>Preview</b></br>"
-		dat += "<img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></br></td>"
-
-		dat += "</tr></table>"
+		//dat += "Skin pattern: <a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust</a><br>"
+		dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a><br>"
 
 		//display limbs below
 		var/ind = 0
@@ -359,104 +286,78 @@ datum/preferences
 				if(ind > 1)
 					dat += ", "
 				dat += "\tAmputated [organ_name]"
-		if(ind)
-			dat += "\[...\]"
-		dat += "<br><br>"
+		if(!ind)
+			dat += "\[...\]<br><br>"
+		else
+			dat += "<br><br>"
 
 		if(gender == MALE)
-			dat += "Underwear: <a href =\"byond://?src=\ref[user];preference=underwear;task=input\"><b>[underwear_m[underwear]]</b></a><br>"
+			dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_m[underwear]]</b></a><br>"
 		else
-			dat += "Underwear: <a href =\"byond://?src=\ref[user];preference=underwear;task=input\"><b>[underwear_f[underwear]]</b></a><br>"
+			dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear_f[underwear]]</b></a><br>"
 
-		dat += "Backpack Type:<br><a href =\"byond://?src=\ref[user];preference=bag;task=input\"><b>[backbaglist[backbag]]</b></a><br>"
+		dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
+
+		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
+
+		dat += "</td><td width='300px' height='300px'>"
+
+		if(jobban_isbanned(user, "Records"))
+			dat += "<b>You are banned from using character records.</b><br>"
+		else
+			dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br>"
+
+		dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)][used_skillpoints > 0 ? " [used_skillpoints]" : "0"])</i></a><br>"
+
+		dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
+		if(lentext(flavor_text) <= 40)
+			if(!lentext(flavor_text))
+				dat += "\[...\]"
+			else
+				dat += "[flavor_text]"
+		else
+			dat += "[copytext(flavor_text, 1, 37)]...<br>"
+		dat += "<br>"
 
 		dat += "<br><b>Hair</b><br>"
-		dat += "<a href='byond://?src=\ref[user];preference=hair;task=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]\"><table style='display:inline;' bgcolor=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]\"><tr><td>__</td></tr></table></font><br>"
-		dat += "Style: <a href='byond://?src=\ref[user];preference=h_style;task=input'>[h_style]</a><br>"
+		dat += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td>__</td></tr></table></font> "
+		dat += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
 
 		dat += "<br><b>Facial</b><br>"
-		dat += "<a href='byond://?src=\ref[user];preference=facial;task=input'> Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]\"><tr><td>__</td></tr></table></font><br>"
-		dat += "Style: <a href='byond://?src=\ref[user];preference=f_style;task=input'>[f_style]</a><br>"
+		dat += "<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td>__</td></tr></table></font> "
+		dat += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 
 		dat += "<br><b>Eyes</b><br>"
-		dat += "<a href='byond://?src=\ref[user];preference=eyes;task=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
+		dat += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td>__</td></tr></table></font>"
 
-		dat += "<br>"
-		dat += "</td></tr></table><center>"
+		dat += "<br><br>"
+		if(jobban_isbanned(user, "Syndicate"))
+			dat += "<b>You are banned from antagonist roles.</b>"
+			src.be_special = 0
+		else
+			var/n = 0
+			for (var/i in special_roles)
+				if(special_roles[i]) //if mode is available on the server
+					if(jobban_isbanned(user, i))
+						dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+					else if(i == "pai candidate")
+						if(jobban_isbanned(user, "pAI"))
+							dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+					else
+						dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
+				n++
+		dat += "</td></tr></table><hr><center>"
 
-		dat += "<hr>"
-
-		/*
 		if(!IsGuestKey(user.key))
 			dat += "<a href='?_src_=prefs;preference=load'>Undo</a> - "
 			dat += "<a href='?_src_=prefs;preference=save'>Save Setup</a> - "
 
 		dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
-		*/
 		dat += "</center></body></html>"
 
-		user << browse(dat, "window=preferences;size=560x560")
-	proc/SetDisabilities(mob/user)
-		var/HTML = "<body>"
-		HTML += "<tt><center>"
-		HTML += "<b>Choose disabilities</b><br>"
+		user << browse(dat, "window=preferences;size=560x580")
 
-		HTML += "Need Glasses? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
-		HTML += "Seizures? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
-		HTML += "Coughing? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
-		HTML += "Tourettes/Twitching? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
-		HTML += "Nervousness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
-		HTML += "Deafness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
-
-		HTML += "<br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;disabilities=-2\">\[Done\]</a>"
-		HTML += "</center></tt>"
-
-		user << browse(null, "window=preferences")
-		user << browse(HTML, "window=disabil;size=350x300")
-		return
-
-	proc/SetRecords(mob/user)
-		var/HTML = "<body>"
-		HTML += "<tt><center>"
-		HTML += "<b>Set Character Records</b><br>"
-
-		HTML += "<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"
-
-		if(lentext(med_record) <= 40)
-			HTML += "[med_record]"
-		else
-			HTML += "[copytext(med_record, 1, 37)]..."
-
-		HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
-
-		if(lentext(sec_record) <= 40)
-			HTML += "[sec_record]<br>"
-		else
-			HTML += "[copytext(sec_record, 1, 37)]...<br>"
-
-		HTML += "<br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
-		HTML += "</center></tt>"
-
-		user << browse(null, "window=preferences")
-		user << browse(HTML, "window=records;size=350x300")
-		return
-
-	proc/GetAltTitle(datum/job/job)
-		return job_alt_titles.Find(job.title) > 0 \
-			? job_alt_titles[job.title] \
-			: job.title
-
-	proc/SetAltTitle(datum/job/job, new_title)
-		// remove existing entry
-		if(job_alt_titles.Find(job.title))
-			job_alt_titles -= job.title
-		// add one if it's not default
-		if(job.title != new_title)
-			job_alt_titles[job.title] = new_title
-
-	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 550, height = 500)
+	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 600, height = 550)
 		if(!job_master)	return
 
 		//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
@@ -538,6 +439,65 @@ datum/preferences
 		user << browse(HTML, "window=mob_occupation;size=[width]x[height]")
 		return
 
+	proc/SetDisabilities(mob/user)
+		var/HTML = "<body>"
+		HTML += "<tt><center>"
+		HTML += "<b>Choose disabilities</b><br>"
+
+		HTML += "Need Glasses? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
+		HTML += "Seizures? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
+		HTML += "Coughing? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
+		HTML += "Tourettes/Twitching? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
+		HTML += "Nervousness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
+		HTML += "Deafness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
+
+		HTML += "<br>"
+		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;disabilities=-2\">\[Done\]</a>"
+		HTML += "</center></tt>"
+
+		user << browse(null, "window=preferences")
+		user << browse(HTML, "window=disabil;size=350x300")
+		return
+
+	proc/SetRecords(mob/user)
+		var/HTML = "<body>"
+		HTML += "<tt><center>"
+		HTML += "<b>Set Character Records</b><br>"
+
+		HTML += "<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"
+
+		if(lentext(med_record) <= 40)
+			HTML += "[med_record]"
+		else
+			HTML += "[copytext(med_record, 1, 37)]..."
+
+		HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
+
+		if(lentext(sec_record) <= 40)
+			HTML += "[sec_record]<br>"
+		else
+			HTML += "[copytext(sec_record, 1, 37)]...<br>"
+
+		HTML += "<br>"
+		HTML += "<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
+		HTML += "</center></tt>"
+
+		user << browse(null, "window=preferences")
+		user << browse(HTML, "window=records;size=350x300")
+		return
+
+	proc/GetAltTitle(datum/job/job)
+		return job_alt_titles.Find(job.title) > 0 \
+			? job_alt_titles[job.title] \
+			: job.title
+
+	proc/SetAltTitle(datum/job/job, new_title)
+		// remove existing entry
+		if(job_alt_titles.Find(job.title))
+			job_alt_titles -= job.title
+		// add one if it's not default
+		if(job.title != new_title)
+			job_alt_titles[job.title] = new_title
 
 	proc/SetJob(mob/user, role)
 		var/datum/job/job = job_master.GetJob(role)
@@ -565,7 +525,6 @@ datum/preferences
 
 		SetChoices(user)
 		return 1
-
 
 	proc/GetJobDepartment(var/datum/job/job, var/level)
 		if(!job || !level)	return 0
@@ -595,7 +554,6 @@ datum/preferences
 					if(3)
 						return job_engsec_low
 		return 0
-
 
 	proc/SetJobDepartment(var/datum/job/job, var/level)
 		if(!job || !level)	return 0
@@ -645,7 +603,6 @@ datum/preferences
 					else
 						job_engsec_low |= job.flag
 		return 1
-
 
 	proc/process_link(mob/user, list/href_list)
 		if(!user)	return
@@ -754,6 +711,7 @@ datum/preferences
 						f_style = random_facial_hair_style(gender)
 					if("underwear")
 						underwear = rand(1,underwear_m.len)
+						ShowChoices(user)
 					if("eyes")
 						r_eyes = rand(0,255)
 						g_eyes = rand(0,255)
@@ -762,6 +720,8 @@ datum/preferences
 						s_tone = random_skin_tone()
 					if("bag")
 						backbag = rand(1,4)
+					/*if("skin_style")
+						h_style = random_skin_style(gender)*/
 					if("all")
 						gender = pick(MALE,FEMALE)
 						real_name = random_name(gender)
@@ -816,19 +776,20 @@ datum/preferences
 							new_species += "Soghun"
 							new_species += "Skrell"
 						species = input("Please select a species", "Character Generation", null) in new_species
+
 						if(prev_species != species)
 							//grab one of the valid hair styles for the newly chosen species
 							var/list/valid_hairstyles = list()
 							for(var/hairstyle in hair_styles_list)
 								var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-								if(gender == MALE && !S.gender & MALE)
+								if(gender == MALE && S.gender == FEMALE)
 									continue
-								if(gender == FEMALE && !S.gender & FEMALE)
+								if(gender == FEMALE && S.gender == MALE)
 									continue
 								if( !(species in S.species_allowed))
 									continue
-
 								valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+
 							if(valid_hairstyles.len)
 								h_style = pick(valid_hairstyles)
 							else
@@ -839,15 +800,16 @@ datum/preferences
 							var/list/valid_facialhairstyles = list()
 							for(var/facialhairstyle in facial_hair_styles_list)
 								var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-								if(gender == MALE && !S.gender & MALE)
+								if(gender == MALE && S.gender == FEMALE)
 									continue
-								if(gender == FEMALE && !S.gender & FEMALE)
+								if(gender == FEMALE && S.gender == MALE)
 									continue
 								if( !(species in S.species_allowed))
 									continue
 
 								valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-							if(valid_hairstyles.len)
+
+							if(valid_facialhairstyles.len)
 								f_style = pick(valid_facialhairstyles)
 							else
 								//this shouldn't happen
@@ -898,9 +860,9 @@ datum/preferences
 						var/list/valid_facialhairstyles = list()
 						for(var/facialhairstyle in facial_hair_styles_list)
 							var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-							if(gender == MALE && !S.gender & MALE)
+							if(gender == MALE && S.gender == FEMALE)
 								continue
-							if(gender == FEMALE && !S.gender & FEMALE)
+							if(gender == FEMALE && S.gender == MALE)
 								continue
 							if( !(species in S.species_allowed))
 								continue
@@ -921,6 +883,7 @@ datum/preferences
 						var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
 						if(new_underwear)
 							underwear = underwear_options.Find(new_underwear)
+						ShowChoices(user)
 
 					if("eyes")
 						var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
@@ -1017,7 +980,6 @@ datum/preferences
 					if("skin_style")
 						var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
 						if(!skin_style_name) return
-
 
 			else
 				switch(href_list["preference"])
@@ -1161,15 +1123,15 @@ datum/preferences
 
 		var/savefile/S = new /savefile(path)
 		if(S)
+			dat += "<b>Select a character slot to load</b><hr>"
 			var/name
 			for(var/i=1, i<=MAX_SAVE_SLOTS, i++)
 				S.cd = "/character[i]"
 				S["real_name"] >> name
 				if(!name)	name = "Character[i]"
-				if(i!=1) dat += " | "
 				if(i==default_slot)
 					name = "<b>[name]</b>"
-				dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a>"
+				dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
 
 		dat += "<hr>"
 		dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"

@@ -102,6 +102,8 @@
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]				>> gender
 	S["age"]				>> age
+	S["species"]			>> species
+
 	//colors to be consolidated into hex strings (requires some work with dna code)
 	S["hair_red"]			>> r_hair
 	S["hair_green"]			>> g_hair
@@ -130,10 +132,24 @@
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
 
+	//Miscellaneous
+	S["flavor_text"]		>> flavor_text
+	S["med_record"]			>> med_record
+	S["sec_record"]			>> sec_record
+	S["be_special"]			>> be_special
+	S["disabilities"]		>> disabilities
+	S["job_alt_titles"]		>> job_alt_titles
+	S["used_skillpoints"]	>> used_skillpoints
+	S["skills"]				>> skills
+	S["skill_specialization"] >> skill_specialization
+	S["organ_data"]			>> organ_data
+	//S["skin_style"]			>> skin_style
+
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
-	if(!real_name)	real_name = random_name()
+	if(isnull(species)) species = "Human"
+	if(!real_name) real_name = random_name()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
@@ -163,6 +179,13 @@
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
+	if(!skills) skills = list()
+	if(!used_skillpoints) used_skillpoints= 0
+	if(isnull(disabilities)) disabilities = 0
+	if(!job_alt_titles) job_alt_titles = new()
+	if(!organ_data) src.organ_data = list()
+	//if(!skin_style) skin_style = "Default"
+
 	return 1
 
 /datum/preferences/proc/save_character()
@@ -177,6 +200,7 @@
 	S["name_is_always_random"] << be_random_name
 	S["gender"]				<< gender
 	S["age"]				<< age
+	S["species"]			<< species
 	S["hair_red"]			<< r_hair
 	S["hair_green"]			<< g_hair
 	S["hair_blue"]			<< b_hair
@@ -203,6 +227,18 @@
 	S["job_engsec_high"]	<< job_engsec_high
 	S["job_engsec_med"]		<< job_engsec_med
 	S["job_engsec_low"]		<< job_engsec_low
+
+	//Miscellaneous
+	S["flavor_text"]		<< flavor_text
+	S["med_record"]			<< med_record
+	S["sec_record"]			<< sec_record
+	S["job_alt_titles"]		<< job_alt_titles
+	S["be_special"]			<< be_special
+	S["used_skillpoints"]	<< used_skillpoints
+	S["skills"]				<< skills
+	S["skill_specialization"] << skill_specialization
+	S["organ_data"]			<< organ_data
+	//S["skin_style"]			<< skin_style
 
 	return 1
 
