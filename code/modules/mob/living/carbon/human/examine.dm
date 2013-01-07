@@ -270,20 +270,28 @@
 			var/criminal = "None"
 
 			if(wear_id)
-				var/obj/item/weapon/card/id/I = wear_id.GetID()
-				perpname = I.registered_name
+				if (istype(wear_id, /obj/item/weapon/card/id))
+					var/obj/item/weapon/card/id/I = wear_id
+					perpname = I.registered_name
+				else if (istype(wear_id, /obj/item/device/pda))
+					var/obj/item/device/pda/P = wear_id
+					perpname = P.owner
+				else if (istype(wear_id, /obj/item/weapon/storage/wallet))
+					var/obj/item/weapon/storage/wallet/W = wear_id
+					perpname = W.front_id
 			else
 				perpname = name
 
-			for (var/datum/data/record/E in data_core.general)
-				if(E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.security)
-						if(R.fields["id"] == E.fields["id"])
-							criminal = R.fields["criminal"]
+			if(perpname)
+				for (var/datum/data/record/E in data_core.general)
+					if(E.fields["name"] == perpname)
+						for (var/datum/data/record/R in data_core.security)
+							if(R.fields["id"] == E.fields["id"])
+								criminal = R.fields["criminal"]
 
 
-			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
-			//msg += "\[Set Hostile Identification\]\n"
+				msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
+				//msg += "\[Set Hostile Identification\]\n"
 
 	msg += "*---------*</span>"
 
