@@ -53,7 +53,7 @@
 					if(holder.rights & R_ADMIN)
 						C << "<font color=[config.allow_admin_ooccolor ? holder.ooccolor :"#b82e00" ]><b><span class='prefix'>OOC:</span> <EM>[key][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
 						//todo: other adminranks OOC
-					if(holder.rights & R_MOD)
+					else if(holder.rights & R_MOD)
 						C << "<font color=#184880><b><span class='prefix'>OOC:</span> <EM>[key][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
 
 				else

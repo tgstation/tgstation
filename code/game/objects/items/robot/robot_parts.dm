@@ -198,6 +198,7 @@
 
 			user.drop_item()
 
+			O.mmi = W
 			O.invisibility = 0
 			O.custom_name = created_name
 			O.updatename("Default")
@@ -212,7 +213,6 @@
 			O.cell = chest.cell
 			O.cell.loc = O
 			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
-			O.mmi = W
 
 			feedback_inc("cyborg_birth",1)
 

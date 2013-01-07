@@ -1153,7 +1153,7 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
 		src.occupant << browse(null, "window=exosuit")
-		if(istype(mob_container, /obj/item/device/mmi))
+		if(istype(mob_container, /obj/item/device/mmi) || istype(mob_container, /obj/item/device/posibrain))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi
