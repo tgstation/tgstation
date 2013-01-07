@@ -45,7 +45,7 @@ var/global/datum/controller/gameticker/ticker
 	var/list/vermin_spawn_turfs
 
 /datum/controller/gameticker/proc/pregame()
-	login_music = pick('sound/music/title1.ogg','sound/music/title2.ogg') // choose title music!
+	login_music = pick('sound/music/title1.ogg','sound/music/title2.ogg','sound/ambience/b12_combined_start.ogg') // choose title music!
 
 	do
 		pregame_timeleft = 180
