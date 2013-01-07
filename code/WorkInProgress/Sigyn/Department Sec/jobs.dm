@@ -8,37 +8,46 @@ proc/assign_sec_to_department(var/mob/living/carbon/human/H)
 		var/destination = null
 		switch(department)
 			if("supply")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security/cargo(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/supply(H), slot_ears)
 				access = list(access_mailsorting, access_mining)
 				destination = /area/security/checkpoint/supply
 			if("engineering")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security/engine(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/engi(H), slot_ears)
 				access = list(access_construction, access_engine)
 				destination = /area/security/checkpoint/engineering
 			if("medical")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security/med(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/med(H), slot_ears)
 				access = list(access_medical)
 				destination = /area/security/checkpoint/medical
 			if("science")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security/science(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/sci(H), slot_ears)
 				access = list(access_research)
 				destination = /area/security/checkpoint/science
 			else
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_ears)
 
 
 		if(destination)
+			var/teleport = 0
+			if(!ticker || ticker.current_state <= GAME_STATE_SETTING_UP)
+				teleport = 1
 			spawn(15)
 				if(H)
-					var/turf/T
-					var/safety = 0
-					while(safety < 25)
-						T = pick(get_area_turfs(destination))
-						if(!H.Move(T))
-							safety += 1
-							continue
-						else
-							break
+					if(teleport)
+						var/turf/T
+						var/safety = 0
+						while(safety < 25)
+							T = pick(get_area_turfs(destination))
+							if(!H.Move(T))
+								safety += 1
+								continue
+							else
+								break
 					H << "<b>You have been assigned to [department]!</b>"
 					if(locate(/obj/item/weapon/card/id, H))
 						var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)
@@ -61,7 +70,7 @@ proc/assign_sec_to_department(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		if(H.backbag == 2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
 		if(H.backbag == 3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
+		assign_sec_to_department(H)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/security(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
@@ -77,7 +86,6 @@ proc/assign_sec_to_department(var/mob/living/carbon/human/H)
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 		L.imp_in = H
 		L.implanted = 1
-		assign_sec_to_department(H)
 		return 1
 
 /obj/item/device/radio/headset/headset_sec/department/New()
@@ -100,3 +108,19 @@ proc/assign_sec_to_department(var/mob/living/carbon/human/H)
 /obj/item/device/radio/headset/headset_sec/department/sci
 	keyslot1 = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
+
+/obj/item/clothing/under/rank/security/cargo/New()
+	var/obj/item/clothing/tie/armband/cargo/A	= new /obj/item/clothing/tie/armband/cargo
+	hastie = A
+
+/obj/item/clothing/under/rank/security/engine/New()
+	var/obj/item/clothing/tie/armband/engine/A	= new /obj/item/clothing/tie/armband/engine
+	hastie = A
+
+/obj/item/clothing/under/rank/security/science/New()
+	var/obj/item/clothing/tie/armband/science/A	= new /obj/item/clothing/tie/armband/science
+	hastie = A
+
+/obj/item/clothing/under/rank/security/med/New()
+	var/obj/item/clothing/tie/armband/med/A		= new /obj/item/clothing/tie/armband/med
+	hastie = A
