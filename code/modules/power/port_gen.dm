@@ -63,6 +63,9 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/proc/UseFuel() //Placeholder for fuel use.
 	return
 
+/obj/machinery/power/port_gen/proc/DropFuel()
+	return
+
 /obj/machinery/power/port_gen/proc/handleInactive()
 	return
 
@@ -119,6 +122,10 @@ display round(lastgen) and plasmatank amount
 	sheet_name = sheet.name
 	RefreshParts()
 
+/obj/machinery/power/port_gen/pacman/Del()
+	DropFuel()
+	..()
+
 /obj/machinery/power/port_gen/pacman/RefreshParts()
 	var/temp_rating = 0
 	var/temp_reliability = 0
@@ -141,6 +148,16 @@ display round(lastgen) and plasmatank amount
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
 		return 1
 	return 0
+
+/obj/machinery/power/port_gen/pacman/DropFuel()
+	if(sheets)
+		var/fail_safe = 0
+		while(sheets > 0 && fail_safe < 100)
+			fail_safe += 1
+			var/obj/item/stack/sheet/S = new sheet_path(loc)
+			var/amount = min(sheets, S.max_amount)
+			S.amount = amount
+			sheets -= amount
 
 /obj/machinery/power/port_gen/pacman/UseFuel()
 	var/needed_sheets = 1 / (time_per_sheet / power_output)
@@ -192,6 +209,7 @@ display round(lastgen) and plasmatank amount
 		user << "\blue You add [amount] sheets to the [src.name]."
 		sheets += amount
 		addstack.use(amount)
+		updateUsrDialog()
 		return
 	else if (istype(O, /obj/item/weapon/card/emag))
 		emagged = 1
@@ -254,9 +272,9 @@ display round(lastgen) and plasmatank amount
 		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
 	else
 		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
-	dat += text("[capitalize(sheet_name)]: [sheets]<br>")
+	dat += text("[capitalize(sheet_name)]: [sheets] - <A href='?src=\ref[src];action=eject'>Eject</A><br>")
 	var/stack_percent = round(sheet_left * 100, 1)
-	dat += text("Current stack: [stack_percent]%<br>")
+	dat += text("Current stack: [stack_percent]% <br>")
 	dat += text("Power output: <A href='?src=\ref[src];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=\ref[src];action=higher_power'>+</A><br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[avail()]")]<br>")
 	dat += text("Heat: [heat]<br>")
@@ -279,6 +297,10 @@ display round(lastgen) and plasmatank amount
 			if (active)
 				active = 0
 				icon_state = "portgen0"
+				src.updateUsrDialog()
+		if(href_list["action"] == "eject")
+			if(!active)
+				DropFuel()
 				src.updateUsrDialog()
 		if(href_list["action"] == "lower_power")
 			if (power_output > 1)
