@@ -167,7 +167,7 @@
 			if (state < 2)
 				if (!( allow_upgrade ))
 					return
-				visible_message("\red [assailant] has grabbed [affecting] aggressively (now hands)!")
+				assailant.visible_message("\red [assailant] has grabbed [affecting] aggressively (now hands)!")
 				state = 2
 				icon_state = "grabbed1"
 				/*if (prob(75))
@@ -204,7 +204,7 @@
 						assailant << "\blue You squeeze [affecting], but nothing interesting happens."
 						return
 
-					visible_message("\red [assailant] has reinforced \his grip on [affecting] (now neck)!")
+					assailant.visible_message("\red [assailant] has reinforced \his grip on [affecting] (now neck)!")
 					state = 3
 					icon_state = "grabbed+1"
 					if (!( affecting.buckled ))
