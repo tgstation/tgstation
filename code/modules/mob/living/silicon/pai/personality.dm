@@ -11,7 +11,7 @@
 	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/pai.sav"
 
 /datum/paiCandidate/proc/savefile_save(mob/user)
-	if (IsGuestKey(user.key))
+	if(IsGuestKey(user.key))
 		return 0
 
 	var/savefile/F = new /savefile(src.savefile_path(user))

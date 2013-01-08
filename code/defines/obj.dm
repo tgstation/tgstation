@@ -61,7 +61,6 @@
 		var/list/bot = new()
 		var/list/misc = new()
 		var/list/isactive = new()
-
 		var/dat = {"
 		<head><style>
 			.manifest {border-collapse:collapse;}
@@ -168,21 +167,6 @@
 		dat = replacetext(dat, "\t", "")
 		return dat
 
-/obj/item/device/infra_sensor
-	name = "Infrared Sensor"
-	desc = "Scans for infrared beams in the vicinity."
-	icon_state = "infra_sensor"
-	var/passive = 1.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
-	m_amt = 150
-	origin_tech = "magnets=2"
-/*
- *
- */
-
-
-
 /obj/effect/laser
 	name = "laser"
 	desc = "IT BURNS!!!"
@@ -262,13 +246,6 @@
 	density = 1
 	anchored = 1
 	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
-
-/obj/effect/deskclutter
-	name = "desk clutter"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "deskclutter"
-	desc = "Some clutter the detective has accumalated over the years..."
-	anchored = 1
 
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 

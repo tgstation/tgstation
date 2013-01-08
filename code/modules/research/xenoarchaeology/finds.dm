@@ -261,8 +261,8 @@
 			continue //skip monkeys and leavers
 		if (istype(M, /mob/new_player))
 			continue
-		if(M.stat == 2 && M.client.ghost_ears)
-			listening|=M
+		if(M.stat == 2 && M.client.prefs.toggles & CHAT_GHOSTEARS)
+			listening |= M
 
 	for(var/mob/M in listening)
 		M << "<b>The crystal</b> reverberates, \blue\"[msg]\""

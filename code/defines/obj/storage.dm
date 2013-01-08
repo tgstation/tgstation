@@ -14,15 +14,6 @@
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "cultpack"
 
-/obj/item/weapon/storage/trashbag
-	name = "trash bag"
-	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
-	icon_state = "trashbag"
-	item_state = "trashbag"
-	w_class = 4.0
-	storage_slots = 20
-	max_w_class = 1
-	max_combined_w_class = 20
 /*
 /obj/item/weapon/storage/lbe
 	name = "Load Bearing Equipment"
@@ -31,6 +22,7 @@
 	w_class = 2.0
 	max_combined_w_class = 17
 */
+
 /obj/item/weapon/storage/pill_bottle
 	name = "pill bottle"
 	desc = "It's an airtight container for storing medication."
@@ -519,23 +511,23 @@
 
 	//Plasma (rare ore)
 	if(pickednum >= 15)
-		new /obj/item/stack/sheet/plasma(src, rand(rare_min, rare_max))
+		new /obj/item/stack/sheet/mineral/plasma(src, rand(rare_min, rare_max))
 
 	//Silver (rare ore)
 	if(pickednum >= 20)
-		new /obj/item/stack/sheet/silver(src, rand(rare_min, rare_max))
+		new /obj/item/stack/sheet/mineral/silver(src, rand(rare_min, rare_max))
 
 	//Gold (rare ore)
 	if(pickednum >= 30)
-		new /obj/item/stack/sheet/gold(src, rand(rare_min, rare_max))
+		new /obj/item/stack/sheet/mineral/gold(src, rand(rare_min, rare_max))
 
 	//Uranium (rare ore)
 	if(pickednum >= 40)
-		new /obj/item/stack/sheet/uranium(src, rand(rare_min, rare_max))
+		new /obj/item/stack/sheet/mineral/uranium(src, rand(rare_min, rare_max))
 
 	//Diamond (rare HONK)
 	if(pickednum >= 45)
-		new /obj/item/stack/sheet/diamond(src, rand(rare_min, rare_max))
+		new /obj/item/stack/sheet/mineral/diamond(src, rand(rare_min, rare_max))
 
 	//Jetpack (You hit the jackpot!)
 	if(pickednum == 50)
@@ -553,12 +545,12 @@
 
 	/obj/item/stack/sheet/metal,
 	/obj/item/stack/sheet/glass,
-	/obj/item/stack/sheet/gold,
-	/obj/item/stack/sheet/silver,
-	/obj/item/stack/sheet/plasma,
-	/obj/item/stack/sheet/uranium,
-	/obj/item/stack/sheet/diamond,
-	/obj/item/stack/sheet/clown,
+	/obj/item/stack/sheet/mineral/gold,
+	/obj/item/stack/sheet/mineral/silver,
+	/obj/item/stack/sheet/mineral/plasma,
+	/obj/item/stack/sheet/mineral/uranium,
+	/obj/item/stack/sheet/mineral/diamond,
+	/obj/item/stack/sheet/mineral/clown,
 	/obj/item/stack/sheet/plasteel,
 	/obj/item/stack/rods
 

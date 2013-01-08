@@ -71,6 +71,7 @@ var/diaryofmeanpeople = null
 var/href_logfile = null
 var/station_name = "NSV Exodus"
 var/game_version = "Baystation12"
+var/changelog_hash = ""
 
 var/datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 var/going = 1.0
@@ -192,8 +193,6 @@ var/list/AAlarmWireColorToIndex
 
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
-var/returndestination				//the location immediately south of the station gateway
-var/calibrateddestination //If you actually arrive at the away gate
 
 	// MySQL configuration
 
@@ -217,9 +216,6 @@ var/sqllogging = 0 // Should we log deaths, population stats, etc?
 	// These are all default values that will load should the forumdbconfig.txt
 	// file fail to read for whatever reason.
 
-	//cael - i think i disabled all the db stuff, but some might have slipped through
-	//todo: we should look at using this functionality, one major use here is ingame player polling
-
 var/forumsqladdress = "localhost"
 var/forumsqlport = "3306"
 var/forumsqldb = "tgstation"
@@ -232,28 +228,6 @@ var/forum_authenticated_group = "10"
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.
 var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finished setting up and stuff.
 var/custom_event_msg = null
-
-//Please don't edit these values without speaking to Errorage first	~Carn
-//Admin Permissions
-#define R_BUILDMODE		1
-#define R_ADMIN			2
-#define R_BAN			4
-#define R_FUN			8
-#define R_SERVER		16
-#define R_DEBUG			32
-#define R_POSSESS		64
-#define R_PERMISSIONS	128
-#define R_STEALTH		256
-#define R_REJUVINATE	512
-#define R_VAREDIT		1024
-#define R_SOUNDS		2048
-#define R_SPAWN			4096
-#define R_MOD			8192
-
-#define R_MAXPERMISSION 8192 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
-
-#define R_HOST			65535
-
 
 //Database connections
 //A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).

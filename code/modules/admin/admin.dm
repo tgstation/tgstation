@@ -4,16 +4,10 @@ var/global/floorIsLava = 0
 
 
 ////////////////////////////////
-/proc/message_admins(var/text, var/admin_ref = 0, var/admin_holder_ref = 0)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
-	log_adminwarn(rendered)
-	for(var/client/C in admins)
-		var/msg = rendered
-		if(admin_ref)
-			msg = replacetext(msg, "%admin_ref%", "\ref[C]")
-		if(admin_holder_ref && C.holder)
-			msg = replacetext(msg, "%holder_ref%", "\ref[C.holder]")
-		C << msg
+/proc/message_admins(var/msg)
+	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+	log_adminwarn(msg)
+	admins << msg
 
 /*
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
@@ -46,10 +40,7 @@ var/global/floorIsLava = 0
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
-		if(M.client.holder)
-			body += "\[<A href='?src=\ref[src];prom_demot=\ref[M.client]'>[M.client.holder.rank]</A>\]"
-		else
-			body += "\[<A href='?src=\ref[src];prom_demot=\ref[M.client]'>Player</A>\]"
+		body += "\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 
 	if(istype(M, /mob/new_player))
 		body += " <B>Hasn't Entered Game</B> "
@@ -57,7 +48,7 @@ var/global/floorIsLava = 0
 		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
 
 	body += "<br><br>\[ "
-	body += "<a href='?src=\ref[src];adminplayervars=\ref[M]'>VV</a> - "
+	body += "<a href='?_src_=vars;Vars=\ref[M]'>VV</a> - "
 	body += "<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> - "
 	body += "<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> - "
 	body += "<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> - "
@@ -66,19 +57,21 @@ var/global/floorIsLava = 0
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
 	body += "<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> | "
+	body += "<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> | "
 	body += "<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A> "
 
 	if(M.client)
 		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | "
+		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
-		body += "\[<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'><font color='[(M.client.muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'><font color='[(M.client.muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'><font color='[(M.client.muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'><font color='[(M.client.muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'><font color='[(M.client.muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
-		body += "(<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'><font color='[(M.client.muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
+		body += "\[<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
+		body += "(<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
 
 	body += "<br><br>"
 	body += "<A href='?src=\ref[src];jumpto=\ref[M]'><b>Jump to</b></A> | "
@@ -557,6 +550,7 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=prisonwarp'>Warp all Players to Prison</A><BR>
 			<A href='?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
+			<A href='?src=\ref[src];secretsfun=onlyone'>There can only be one!</A><BR>
 			<A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
 			<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
@@ -802,30 +796,6 @@ var/global/floorIsLava = 0
 
 	world.Reboot()
 
-/client/proc/deadchat()
-	set category = "Admin"
-	set desc="Toggles Deadchat Visibility"
-	set name="Deadchat Visibility"
-	if(deadchat == 0)
-		deadchat = 1
-		usr << "Deadchat turned on"
-	else
-		deadchat = 0
-		usr << "Deadchat turned off"
-	feedback_add_details("admin_verb","TDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/toggleprayers()
-	set category = "Admin"
-	set desc="Toggles Prayer Visibility"
-	set name="Prayer Visibility"
-	if(seeprayers == 0)
-		seeprayers = 1
-		usr << "Prayer visibility turned on"
-	else
-		seeprayers = 0
-		usr << "Prayer visibility turned off"
-	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
@@ -909,7 +879,7 @@ var/global/floorIsLava = 0
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
-	if(!check_rights(R_DEBUG))	return
+	if(!check_rights(R_SPAWN))	return
 
 	var/list/types = typesof(/atom)
 	var/list/matches = new()

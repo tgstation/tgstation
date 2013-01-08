@@ -3,7 +3,7 @@
 
 Dizziness
 
-	Little bit hidden.
+	Hidden.
 	Lowers resistance considerably.
 	Decreases stage speed.
 	Reduced transmittability
@@ -18,7 +18,7 @@ Bonus
 /datum/symptom/dizzy // Not the egg
 
 	name = "Dizziness"
-	stealth = 1
+	stealth = 2
 	resistance = -2
 	stage_speed = -3
 	transmittable = -1

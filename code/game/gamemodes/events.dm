@@ -219,16 +219,64 @@
 		break
 
 /proc/viral_outbreak(var/virus = null)
-	for(var/mob/living/carbon/human/H in world)
-		if((H.virus2) || (H.stat == 2) || prob(30))
+//	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+//	world << sound('sound/AI/outbreak7.ogg')
+	var/virus_type
+	if(!virus)
+		virus_type = pick(/datum/disease/dnaspread,/datum/disease/advance/flu,/datum/disease/advance/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
+	else
+		switch(virus)
+			if("fake gbs")
+				virus_type = /datum/disease/fake_gbs
+			if("gbs")
+				virus_type = /datum/disease/gbs
+			if("magnitis")
+				virus_type = /datum/disease/magnitis
+			if("rhumba beat")
+				virus_type = /datum/disease/rhumba_beat
+			if("brain rot")
+				virus_type = /datum/disease/brainrot
+			if("cold")
+				virus_type = /datum/disease/advance/cold
+			if("retrovirus")
+				virus_type = /datum/disease/dnaspread
+			if("flu")
+				virus_type = /datum/disease/advance/flu
+//			if("t-virus")
+//				virus_type = /datum/disease/t_virus
+			if("pierrot's throat")
+				virus_type = /datum/disease/pierrot_throat
+	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
+
+		var/foundAlready = 0 // don't infect someone that already has the virus
+		var/turf/T = get_turf(H)
+		if(T.z != 1)
+			continue
+		for(var/datum/disease/D in H.viruses)
+			foundAlready = 1
+		if(H.stat == 2 || foundAlready)
 			continue
 
-		infect_mob_random_lesser(H)
-		break
-
-	command_alert("An unknown virus has been detected onboard the ship.", "Virus Alert")
-
-	spawn(rand(0, 3000)) //Delayed announcements to keep the crew on their toes.
+		if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
+			if((!H.dna) || (H.sdisabilities & BLIND)) //A blindness disease would be the worst.
+				continue
+			var/datum/disease/dnaspread/D = new
+			D.strain_data["name"] = H.real_name
+			D.strain_data["UI"] = H.dna.uni_identity
+			D.strain_data["SE"] = H.dna.struc_enzymes
+			D.carrier = 1
+			D.holder = H
+			D.affected_mob = H
+			H.viruses += D
+			break
+		else
+			var/datum/disease/D = new virus_type
+			D.carrier = 1
+			D.holder = H
+			D.affected_mob = H
+			H.viruses += D
+			break
+	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 		world << sound('sound/AI/outbreak7.ogg')
 
@@ -272,11 +320,17 @@
 	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
 	sleep(600)
 	for(var/mob/living/carbon/human/H in living_mob_list)
+		var/turf/T = get_turf(H)
+		if(T.z != 1)
+			continue
 		if(istype(H,/mob/living/carbon/human))
 			H.apply_effect((rand(15,75)),IRRADIATE,0)
 			if (prob(5))
 				H.apply_effect((rand(90,150)),IRRADIATE,0)
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
+		var/turf/T = get_turf(M)
+		if(T.z != 1)
+			continue
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
 	command_alert("Radiation levels are within standard parameters again.", "Anomaly Alert")

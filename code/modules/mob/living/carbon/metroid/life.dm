@@ -11,9 +11,6 @@
 		//Chemicals in the body
 		handle_chemicals_in_body()
 
-		//Disease Check
-		//handle_virus_updates() There is no disease that affects metroids
-
 		handle_nutrition()
 
 		handle_targets()
@@ -360,12 +357,6 @@
 				A.tame = tame
 				A.rabid = rabid
 				del(src)
-
-/mob/living/carbon/metroid/proc/handle_virus_updates()
-	if(bodytemperature > 406)
-		for(var/datum/disease/D in viruses)
-			D.cure()
-	return
 
 /mob/living/carbon/metroid/proc/handle_targets()
 	if(Tempstun)

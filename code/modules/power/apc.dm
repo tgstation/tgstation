@@ -905,6 +905,9 @@
 /obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
+	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
+		malf << "<span class='warning'>You must evacuate your current apc first.</span>"
+		return
 	if(src.z != 1)
 		return
 	src.occupant = new /mob/living/silicon/ai(src,malf.laws,null,1)
@@ -916,9 +919,11 @@
 	else
 		src.occupant.parent = malf
 	malf.mind.transfer_to(src.occupant)
+	src.occupant.eyeobj.name = "[src.occupant.name] (AI Eye)"
 	if(malf.parent)
 		del(malf)
 	src.occupant.verbs += /mob/living/silicon/ai/proc/corereturn
+	src.occupant.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupant.cancel_camera()
 
 /obj/machinery/power/apc/proc/malfvacate(var/forced)

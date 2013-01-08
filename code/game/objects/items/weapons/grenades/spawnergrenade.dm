@@ -27,21 +27,13 @@
 						step(x, pick(NORTH,SOUTH,EAST,WEST))
 
 				// Spawn some hostile syndicate critters
-				if(istype(x, /obj/effect/critter))
-					var/obj/effect/critter/C = x
-
-					C.atkcarbon = 1
-					C.atksilicon = 1
-					C.atkmech = 0
-					C.atksynd = 0
-					C.aggressive = 1
 
 		del(src)
 		return
 
 /obj/item/weapon/grenade/spawnergrenade/manhacks
 	name = "manhack delivery grenade"
-	spawner_type = /obj/effect/critter/manhack
+	spawner_type = /mob/living/simple_animal/hostile/viscerator
 	deliveryamt = 5
 	origin_tech = "materials=3;magnets=4;syndicate=4"
 

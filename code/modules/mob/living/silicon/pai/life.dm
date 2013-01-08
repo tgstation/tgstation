@@ -19,8 +19,9 @@
 			src << "<font color=green>Communication circuit reinitialized. Speech and messaging functionality restored.</font>"
 
 /mob/living/silicon/pai/updatehealth()
-	if(src.nodamage)
-		src.health = 100
-		src.stat = 0
+	if(status_flags & GODMODE)
+		health = 100
+		stat = CONSCIOUS
 	else
-		src.health = 100 - src.getBruteLoss() - src.getFireLoss()
+		health = 100 - getBruteLoss() - getFireLoss()
+

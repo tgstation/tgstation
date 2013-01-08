@@ -35,6 +35,11 @@
 		return 1
 	return 0
 
+/proc/ismetroidadult(A)
+	if(istype(A, /mob/living/carbon/metroid/adult))
+		return 1
+	return 0
+
 /proc/isrobot(A)
 	if(istype(A, /mob/living/silicon/robot))
 		return 1
@@ -72,11 +77,6 @@
 
 /proc/iscarp(A)
 	if(istype(A, /mob/living/simple_animal/hostile/carp))
-		return 1
-	return 0
-
-/proc/isSyndicate(A)
-	if(istype(A, /mob/living/simple_animal/syndicate))
 		return 1
 	return 0
 
@@ -428,7 +428,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(src) || istype(src,/mob/living/carbon/alien/humanoid))
+	if(ishuman(src) || isalienadult(src) || isbrain(src))
 		switch(input)
 			if("help","disarm","grab","hurt")
 				a_intent = input

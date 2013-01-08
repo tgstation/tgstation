@@ -202,7 +202,7 @@
 	if(C)
 		if(electrocute_mob(user, C, src))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(5, 1, src)
+			s.set_up(3, 1, src)
 			s.start()
 			return 1
 		else

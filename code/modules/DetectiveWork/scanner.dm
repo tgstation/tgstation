@@ -1,5 +1,6 @@
 //CONTAINS: Detective's Scanner
 
+
 /obj/item/device/detective_scanner
 	name = "Scanner"
 	desc = "Used to scan objects for DNA and fingerprints."

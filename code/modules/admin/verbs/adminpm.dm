@@ -36,7 +36,7 @@
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_admin_pm(var/client/C, var/msg)
-	if(src.muted & MUTE_ADMINHELP)
+	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
 
@@ -77,7 +77,7 @@
 			src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
 
 		//play the recieving admin the adminhelp sound (if they have them enabled)
-		if(C.holder.sound_adminhelp)
+		if(C.prefs.toggles & SOUND_ADMINHELP)
 			C << 'sound/effects/adminhelp.ogg'
 
 	else

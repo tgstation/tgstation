@@ -11,6 +11,13 @@
 
 var/list/archive_diseases = list()
 
+// The order goes from easy to cure to hard to cure.
+var/list/advance_cures = 	list(
+									"nutriment", "sugar", "orangejuice",
+									"spaceacillin", "kelotane", "ethanol",
+									"leporazine", "synaptizine", "lipozine",
+									"silver", "gold", "plasma"
+								)
 
 /*
 
@@ -31,6 +38,8 @@ var/list/archive_diseases = list()
 	// NEW VARS
 
 	var/list/symptoms = list() // The symptoms of the disease.
+	var/id = ""
+	var/processing = 0
 
 /*
 
@@ -38,7 +47,7 @@ var/list/archive_diseases = list()
 
  */
 
-/datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+/datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D)
 
 	// Setup our dictionary if it hasn't already.
 	if(!dictionary_symptoms.len)
@@ -57,16 +66,27 @@ var/list/archive_diseases = list()
 		else
 			for(var/datum/symptom/S in D.symptoms)
 				symptoms += new S.type
-			name = D.name
 
-	Refresh(!copy)
+	Refresh()
 	..(process, D)
 	return
+
+/datum/disease/advance/Del()
+	if(processing)
+		for(var/datum/symptom/S in symptoms)
+			S.End(src)
+	..()
 
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
 	..()
 	if(symptoms && symptoms.len)
+
+		if(!processing)
+			processing = 1
+			for(var/datum/symptom/S in symptoms)
+				S.Start(src)
+
 		for(var/datum/symptom/S in symptoms)
 			S.Activate(src)
 	else
@@ -96,8 +116,8 @@ var/list/archive_diseases = list()
 	return
 
 // Returns the advance disease with a different reference memory.
-/datum/disease/advance/Copy()
-	return new /datum/disease/advance(0, src, 1)
+/datum/disease/advance/Copy(var/process = 0)
+	return new /datum/disease/advance(process, src, 1)
 
 /*
 
@@ -149,12 +169,19 @@ var/list/archive_diseases = list()
 
 	return generated
 
-/datum/disease/advance/proc/Refresh(var/save = 1)
+/datum/disease/advance/proc/Refresh(var/new_name = 0)
 	//world << "[src.name] \ref[src] - REFRESH!"
 	var/list/properties = GenerateProperties()
 	AssignProperties(properties)
-	if(save)
+
+	if(!archive_diseases[GetDiseaseID()])
+		if(new_name)
+			AssignName()
+		archive_diseases[GetDiseaseID()] = src // So we don't infinite loop
 		archive_diseases[GetDiseaseID()] = new /datum/disease/advance(0, src, 1)
+
+	var/datum/disease/advance/A = archive_diseases[GetDiseaseID()]
+	AssignName(A.name)
 
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
@@ -182,9 +209,10 @@ var/list/archive_diseases = list()
 
 		hidden = list( (properties["stealth"] > 2), (properties["stealth"] > 3) )
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
-		SetSpread(max(BLOOD, min(properties["transmittable"] - symptoms.len, AIRBORNE)))
-		permeability_mod = max(round(0.5 * properties["transmittable"]), 1)
-		stage_prob = max(properties["stage_rate"], 1)
+		SetSpread(Clamp(properties["transmittable"] - symptoms.len, BLOOD, AIRBORNE))
+		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
+		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
+		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
 	else
@@ -213,7 +241,7 @@ var/list/archive_diseases = list()
 
 	switch(level_sev)
 
-		if(0)
+		if(-INFINITY to 0)
 			severity = "Non-Threat"
 		if(1)
 			severity = "Minor"
@@ -223,7 +251,7 @@ var/list/archive_diseases = list()
 			severity = "Harmful"
 		if(4)
 			severity = "Dangerous!"
-		if(5)
+		if(5 to INFINITY)
 			severity = "BIOHAZARD THREAT!"
 		else
 			severity = "Unknown"
@@ -232,42 +260,9 @@ var/list/archive_diseases = list()
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure(var/list/properties = list())
 	if(properties && properties.len)
-		var/res = max(properties["resistance"] - (symptoms.len / 2), 0)
+		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		//world << "Res = [res]"
-		switch(round(res))
-			// Due to complications, I cannot randomly generate cures or randomly give cures.
-			if(0)
-				cure_id = "nutriment"
-
-			if(1)
-				cure_id = "sodiumchloride"
-
-			if(2)
-				cure_id = "orangejuice"
-
-			if(3)
-				cure_id = "spaceacillin"
-
-			if(4)
-				cure_id = "ethanol"
-
-			if(5)
-				cure_id = "ethylredoxrazine"
-
-			if(6)
-				cure_id = "synaptizine"
-
-			if(7)
-				cure_id = "silver"
-
-			if(8)
-				cure_id = "gold"
-
-			if(9)
-				cure_id = "mindbreaker"
-
-			else
-				cure_id = "plasma"
+		cure_id = advance_cures[res]
 
 		// Get the cure name from the cure_id
 		var/datum/reagent/D = chemical_reagents_list[cure_id]
@@ -281,7 +276,7 @@ var/list/archive_diseases = list()
 	var/s = safepick(GenerateSymptoms(level, 1))
 	if(s)
 		AddSymptom(s)
-		Refresh()
+		Refresh(1)
 	return
 
 // Randomly remove a symptom.
@@ -290,7 +285,7 @@ var/list/archive_diseases = list()
 		var/s = safepick(symptoms)
 		if(s)
 			RemoveSymptom(s)
-			Refresh()
+			Refresh(1)
 	return
 
 // Name the disease.
@@ -300,11 +295,15 @@ var/list/archive_diseases = list()
 
 // Return a unique ID of the disease.
 /datum/disease/advance/proc/GetDiseaseID()
+
 	var/list/L = list()
 	for(var/datum/symptom/S in symptoms)
 		L += S.id
 	L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
-	return dd_list2text(L, ":")
+	var/result = dd_list2text(L, ":")
+	id = result
+	return result
+
 
 // Add a symptom, if it is over the limit (with a small chance to be able to go over)
 // we take a random symptom away and add the new one.
@@ -313,7 +312,7 @@ var/list/archive_diseases = list()
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < 3 + rand(-1, 1))
+	if(symptoms.len < 5 + rand(-1, 1))
 		symptoms += S
 	else
 		RemoveSymptom(pick(symptoms))
@@ -338,7 +337,7 @@ var/list/archive_diseases = list()
 
 	var/list/diseases = list()
 
-	for(var/datum/disease/advance/A in D_list.Copy())
+	for(var/datum/disease/advance/A in D_list)
 		diseases += A.Copy()
 
 	if(!diseases.len)
@@ -361,7 +360,7 @@ var/list/archive_diseases = list()
 	 // Should be only 1 entry left, but if not let's only return a single entry
 	//world << "END MIXING!!!!!"
 	var/datum/disease/advance/to_return = pick(diseases)
-	to_return.Refresh()
+	to_return.Refresh(1)
 	return to_return
 
 /proc/SetViruses(var/datum/reagent/R, var/list/data)
@@ -375,5 +374,46 @@ var/list/archive_diseases = list()
 			R.data = data
 		if(preserve.len)
 			R.data["viruses"] = preserve
+
+/proc/AdminCreateVirus(var/mob/user)
+	var/i = 5
+
+	var/datum/disease/advance/D = new(0, null)
+	D.symptoms = list()
+
+	var/list/symptoms = list()
+	symptoms += "Done"
+	symptoms += list_symptoms.Copy()
+	do
+		var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
+		if(istext(symptom))
+			i = 0
+		else if(ispath(symptom))
+			var/datum/symptom/S = new symptom
+			if(!D.HasSymptom(S))
+				D.symptoms += S
+				i -= 1
+	while(i > 0)
+
+	if(D.symptoms.len > 0)
+
+		var/new_name = input(user, "Name your new disease.", "New Name")
+		D.AssignName(new_name)
+		D.Refresh()
+
+		for(var/datum/disease/advance/AD in active_diseases)
+			AD.Refresh()
+
+		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
+			if(H.z != 1)
+				continue
+			if(!H.has_disease(D))
+				H.contract_disease(D, 1)
+				break
+
+		var/list/name_symptoms = list()
+		for(var/datum/symptom/S in D.symptoms)
+			name_symptoms += S.name
+		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
 
 #undef RANDOM_STARTING_LEVEL

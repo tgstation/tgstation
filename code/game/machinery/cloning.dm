@@ -113,7 +113,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI)
+/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/mrace)
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(mindref)
@@ -133,8 +133,7 @@
 					return 0
 
 
-	src.heal_level = rand(0,40) //Randomizes what health the clone is when ejected
-
+	src.heal_level = rand(60,100) //Randomizes what health the clone is when ejected
 	src.attempting = 1 //One at a time!!
 	src.locked = 1
 
@@ -144,7 +143,6 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 	occupant = H
-	H.UI = UI // set interface preference
 
 	if(!clonename)	//to prevent null names
 		clonename = "clone ([rand(0,999)])"
@@ -152,7 +150,7 @@
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(190) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
+	H.adjustCloneLoss(src.heal_level + 100) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
 	H.adjustBrainLoss(heal_level)
 	H.Paralyse(4)
 

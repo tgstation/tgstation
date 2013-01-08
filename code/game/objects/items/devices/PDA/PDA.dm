@@ -305,7 +305,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=Forensic Scan'><img src=pda_scanner.png> [scanmode == 2 ? "Disable" : "Enable"] Forensic Scanner</a></li>"
 					if(istype(cartridge.radio, /obj/item/radio/integrated/beepsky))
 						dat += "<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>"
 						dat += "</ul>"
@@ -524,11 +523,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						scanmode = 0
 					else if((!isnull(cartridge)) && (cartridge.access_medical))
 						scanmode = 1
-				if("Forensic Scan")
-					if(scanmode == 2)
-						scanmode = 0
-					else if((!isnull(cartridge)) && (cartridge.access_security))
-						scanmode = 2
 				if("Reagent Scan")
 					if(scanmode == 3)
 						scanmode = 0
@@ -720,6 +714,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if (last_text && world.time < last_text + 5)
 		return
 
+	if(!can_use())
+		return
+
 	last_text = world.time
 	// check if telecomms I/O route 1459 is stable
 	//var/telecomms_intact = telecomms_process(P.owner, owner, t)
@@ -798,6 +795,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Remove id"
 	set src in usr
 
+	if(issilicon(usr))
+		return
+
 	if ( !(usr.stat || usr.restrained()) )
 		if(id)
 			remove_id()
@@ -811,6 +811,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "Object"
 	set name = "Remove pen"
 	set src in usr
+
+	if(issilicon(usr))
+		return
 
 	if ( !(usr.stat || usr.restrained()) )
 		var/obj/item/weapon/pen/O = locate() in src
@@ -851,13 +854,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		user.drop_item()
-		C.loc = src
-		user << "<span class='notice'>You insert [C] into [src].</span>"
 		cartridge = C
+		user.drop_item()
+		cartridge.loc = src
+		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
-
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
 		if(!idcard.registered_name)
@@ -952,27 +954,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 	switch(scanmode)
-		if(2)
-			if(!istype(A, /obj/item/weapon/f_card))
-				if (!A.fingerprints)
-					user << "\blue Unable to locate any fingerprints on [A]!"
-				else
-					user << "\blue Isolated [A:fingerprints.len] fingerprints."
-					var/list/prints = A:fingerprints
-					var/list/complete_prints = list()
-					for(var/i in prints)
-						var/print = prints[i]
-						if(stringpercent(print) <= FINGERPRINT_COMPLETE)
-							complete_prints += print
-					if(complete_prints.len < 1)
-						user << "\blue No intact prints found"
-					else
-						user << "\blue Found [complete_prints.len] intact prints"
-						for(var/i in complete_prints)
-							user << "\blue [i]"
-				if(cartridge && cartridge.access_security)
-					cartridge.add_data(A)
-					user << "Data added to internal storage.  Scan with a High-Resolution Scanner to retreive."
 
 		if(3)
 			if(!isnull(A.reagents))

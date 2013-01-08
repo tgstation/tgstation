@@ -157,6 +157,7 @@
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
+	icon_action_button = null	//just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500

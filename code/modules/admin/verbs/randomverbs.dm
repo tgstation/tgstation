@@ -112,15 +112,11 @@
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	if (M.nodamage == 1)
-		M.nodamage = 0
-		usr << "\blue Toggled OFF"
-	else
-		M.nodamage = 1
-		usr << "\blue Toggled ON"
+	M.status_flags ^= GODMODE
+	usr << "\blue Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]"
 
-	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]")
-	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]", 1)
+	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
+	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]", 1)
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -154,19 +150,19 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 
 	if(automute)
 		muteunmute = "auto-muted"
-		M.client.muted |= mute_type
+		M.client.prefs.muted |= mute_type
 		log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]")
 		message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(M)] from [mute_string].", 1)
 		M << "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin."
 		feedback_add_details("admin_verb","AUTOMUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 
-	if(M.client.muted & mute_type)
+	if(M.client.prefs.muted & mute_type)
 		muteunmute = "unmuted"
-		M.client.muted &= ~mute_type
+		M.client.prefs.muted &= ~mute_type
 	else
 		muteunmute = "muted"
-		M.client.muted |= mute_type
+		M.client.prefs.muted |= mute_type
 
 	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].", 1)
@@ -200,7 +196,7 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 		var/list/candidates = list()
 		for(var/mob/M in player_list)
 			if(M.stat != DEAD)		continue	//we are not dead!
-			if(!M.client.be_alien)	continue	//we don't want to be an alium
+			if(!M.client.prefs.be_special & BE_ALIEN)	continue	//we don't want to be an alium
 			if(M.client.is_afk())	continue	//we are afk
 			if(M.mind && M.mind.current && M.mind.current.stat != DEAD)	continue	//we have a live body we are tied to
 			candidates += M.ckey
