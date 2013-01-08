@@ -445,7 +445,7 @@
 "iC" = (/obj/item/clothing/gloves/fyellow,/turf/simulated/floor/plating/airless/asteroid,/area/awaymission)
 "iD" = (/turf/simulated/shuttle/wall{tag = "icon-swall4"; icon_state = "swall4"},/area/awaymission)
 "iE" = (/turf/simulated/shuttle/wall{tag = "icon-swall12"; icon_state = "swall12"},/area/awaymission)
-"iF" = (/obj/item/weapon/storage/matchbox,/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,/turf/simulated/floor/plating,/area/awaymission/BMPship3)
+"iF" = (/obj/item/weapon/storage/box/matches,/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,/turf/simulated/floor/plating,/area/awaymission/BMPship3)
 "iG" = (/obj/item/weapon/contraband/poster,/turf/simulated/floor/plating,/area/awaymission/BMPship3)
 "iH" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s9"; icon_state = "swall_s9"; dir = 2},/area/awaymission/BMPship3)
 "iI" = (/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/simulated/floor/plating,/area/awaymission/BMPship3)
