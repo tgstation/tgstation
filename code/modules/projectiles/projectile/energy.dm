@@ -46,6 +46,12 @@
 	damage = 20
 
 
+/obj/item/projectile/energy/neurotoxin
+	name = "neuro"
+	icon_state = "neurotoxin"
+	damage = 5
+	damage_type = TOX
+	weaken = 5
 
 
 

@@ -87,6 +87,45 @@
 
 				M:eye_op_stage = 2.0
 
+	else if(user.zone_sel.selecting == "chest")
+		switch(M:alien_op_stage)
+			if(3.0)
+				var/mob/living/carbon/human/H = M
+				if(!istype(H))
+					return ..()
+
+				if(H.wear_suit || H.w_uniform)
+					user << "\red You're going to need to remove that suit/jumpsuit first."
+					return
+
+				var/obj/item/alien_embryo/A = locate() in M.contents
+				if(!A)
+					return ..()
+				user.visible_message("\red [user] begins to pull something out of [M]'s chest.", "\red You begin to pull the alien organism out of [M]'s chest.")
+
+				spawn(20 + rand(0,50))
+					if(!A || A.loc != M)
+						return
+
+					if(M == user && prob(25))
+						user << "\red You mess up!"
+						if(istype(M, /mob/living/carbon/human))
+							var/datum/organ/external/affecting = M:get_organ("chest")
+							if(affecting.take_damage(30))
+								M:UpdateDamageIcon()
+						else
+							M.take_organ_damage(30)
+
+					if(A.stage > 3)
+						var/chance = 15 + max(0, A.stage - 3) * 10
+						if(prob(chance))
+							A.AttemptGrow(0)
+						M:alien_op_stage = 4.0
+
+					if(M)
+						user.visible_message("\red [user] pulls an alien organism out of [M]'s chest.", "\red You pull the alien organism out of [M]'s chest.")
+						A.loc = M.loc	//alien embryo handles cleanup
+
 	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()
 
@@ -183,6 +222,42 @@
 					else
 						M.take_organ_damage(15)
 				M:eye_op_stage = 3.0
+
+	else if(user.zone_sel.selecting == "chest")
+		if(M:alien_op_stage == 2.0 || M:alien_op_stage == 3.0)
+			var/mob/living/carbon/human/H = M
+			if(!istype(H))
+				return ..()
+
+			if(H.wear_suit || H.w_uniform)
+				user << "\red You're going to need to remove that suit/jumpsuit first."
+				return
+
+			user.visible_message("\red [user] begins to dig around in [M]'s chest.", "\red You begin to dig around in [M]'s chest.")
+
+			spawn(20 + (M:alien_op_stage == 3 ? 0 : rand(0,50)))
+				if(M == user && prob(25))
+					user << "\red You mess up!"
+					if(istype(M, /mob/living/carbon/human))
+						var/datum/organ/external/affecting = M:get_organ("chest")
+						if(affecting.take_damage(30))
+							M:UpdateDamageIcon()
+					else
+						M.take_organ_damage(30)
+
+				var/obj/item/alien_embryo/A = locate() in M.contents
+				if(A)
+					var/dat = "\blue You found an unknown alien organism in [M]'s chest!"
+					if(A.stage < 4)
+						dat += " It's small and weak, barely the size of a foetus."
+					if(A.stage > 3)
+						dat += " It's grown quite large, and writhes slightly as you look at it."
+						if(prob(10))
+							A.AttemptGrow()
+					user << dat
+					M:alien_op_stage = 3.0
+				else
+					user << "\blue You find nothing of interest."
 
 	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()
@@ -513,6 +588,33 @@
 				M.updatehealth()
 				M:eye_op_stage = 1.0
 				user << "\blue So far so good after."
+
+	else if(user.zone_sel.selecting == "chest")
+		switch(M:alien_op_stage)
+			if(0.0)
+				var/mob/living/carbon/human/H = M
+				if(!istype(H))
+					return ..()
+
+				if(H.wear_suit || H.w_uniform)
+					user << "\red You're going to need to remove that suit/jumpsuit first."
+					return
+
+				user.visible_message("\red [user] begins to slice open [M]'s chest.", "\red You begin to slice open [M]'s chest.")
+
+				spawn(rand(20,50))
+					if(M == user && prob(25))
+						user << "\red You mess up!"
+						if(istype(M, /mob/living/carbon/human))
+							var/datum/organ/external/affecting = M:get_organ("chest")
+							if(affecting.take_damage(15))
+								M:UpdateDamageIcon()
+						else
+							M.take_organ_damage(15)
+
+					M:alien_op_stage = 1.0
+					user << "\blue So far so good."
+
 	else
 		return ..()
 /* wat
@@ -656,6 +758,32 @@
 			else
 				..()
 		return
+
+	else if(user.zone_sel.selecting == "chest")
+		switch(M:alien_op_stage)
+			if(1.0)
+				var/mob/living/carbon/human/H = M
+				if(!istype(H))
+					return ..()
+
+				if(H.wear_suit || H.w_uniform)
+					user << "\red You're going to need to remove that suit/jumpsuit first."
+					return
+
+				user.visible_message("\red [user] begins to slice through the bone of [M]'s chest.", "\red You begin to slice through the bone of [M]'s chest.")
+
+				spawn(20 + rand(0,50))
+					if(M == user && prob(25))
+						user << "\red You mess up!"
+						if(istype(M, /mob/living/carbon/human))
+							var/datum/organ/external/affecting = M:get_organ("chest")
+							if(affecting.take_damage(15))
+								M:UpdateDamageIcon()
+						else
+							M.take_organ_damage(15)
+
+					M:alien_op_stage = 2.0
+					user << "\blue So far so good."
 
 	else
 		return ..()

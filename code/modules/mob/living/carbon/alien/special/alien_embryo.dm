@@ -1,50 +1,44 @@
-//affected_mob.contract_disease(new /datum/disease/alien_embryo)
+// This is to replace the previous datum/disease/alien_embryo for slightly improved handling and maintainability
+// It functions almost identically (see code/datums/diseases/alien_embryo.dm)
 
-//cael - retained this file for legacy reference, see code\modules\mob\living\carbon\alien\special\alien_embryo.dm for replacement
+/obj/item/alien_embryo
+	name = "alien embryo"
+	desc = "All slimy and yuck."
+	icon = 'icons/mob/alien.dmi'
+	icon_state = "larva0_dead"
+	var/mob/living/affected_mob
+	var/stage = 0
 
-//Our own special process so that dead hosts still chestburst
-/datum/disease/alien_embryo/process()
-	if(!holder) return
-	if(holder == affected_mob)
-		stage_act()
-	if(affected_mob)
-		if(affected_mob.stat == DEAD)
-			if(prob(50))
-				if(--longevity<=0)
-					cure(0)
-	else //the virus is in inanimate obj
-		cure(0)
-	return
-
-/datum/disease/alien_embryo/New()
-	..()
-	/* Special Hud for xenos */
-	spawn(0)
-		if (affected_mob)
+/obj/item/alien_embryo/New()
+	if(istype(loc, /mob/living))
+		affected_mob = loc
+		processing_objects.Add(src)
+		spawn(0)
 			AddInfectionImages(affected_mob)
+	else
+		del(src)
 
-/datum/disease/alien_embryo/cure(var/resistance=1)
-	..()
-	spawn(0)
-		if (affected_mob)
+/obj/item/alien_embryo/Del()
+	if(affected_mob)
+		affected_mob.status_flags &= ~(XENO_HOST)
+		spawn(0)
 			RemoveInfectionImages(affected_mob)
-
-/datum/disease/alien_embryo
-	name = "Unidentified Foreign Body"
-	max_stages = 5
-	spread = "None"
-	spread_type = SPECIAL
-	cure = "Unknown"
-	cure_id = list("lexorin","toxin","gargleblaster")
-	cure_chance = 50
-	affected_species = list("Human", "Monkey")
-	permeability_mod = 15//likely to infect
-	can_carry = 0
-	stage_prob = 3
-	var/gibbed = 0
-
-/datum/disease/alien_embryo/stage_act()
 	..()
+
+/obj/item/alien_embryo/process()
+	if(loc != affected_mob)
+		affected_mob.status_flags &= ~(XENO_HOST)
+		processing_objects.Remove(src)
+		affected_mob = null
+		spawn(0)
+			RemoveInfectionImages(affected_mob)
+		return
+
+	if(stage < 5 && prob(3))
+		stage++
+		spawn(0)
+			RefreshInfectionImage(affected_mob)
+
 	switch(stage)
 		if(2, 3)
 			if(prob(1))
@@ -74,39 +68,42 @@
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(50))
-				if(gibbed != 0) return 0
-				var/list/candidates = get_alien_candidates()
-				var/picked = null
+				AttemptGrow()
 
-				// To stop clientless larva, we will check that our host has a client
-				// if we find no ghosts to become the alien. If the host has a client
-				// he will become the alien but if he doesn't then we will set the stage
-				// to 2, so we don't do a process heavy check everytime.
+/obj/item/alien_embryo/proc/AttemptGrow(var/gib_on_success = 1)
+	var/list/candidates = get_alien_candidates()
+	var/picked = null
 
-				if(candidates.len)
-					picked = pick(candidates)
-				else if(affected_mob.client)
-					picked = affected_mob.key
-				else
-					stage = 2 // Let's try again later.
-					return
+	// To stop clientless larva, we will check that our host has a client
+	// if we find no ghosts to become the alien. If the host has a client
+	// he will become the alien but if he doesn't then we will set the stage
+	// to 2, so we don't do a process heavy check everytime.
 
-				var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
-				new_xeno.key = picked
-				new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
-				affected_mob.gib()
-				src.cure(0)
-				gibbed = 1
-				return
+	if(candidates.len)
+		picked = pick(candidates)
+	else if(affected_mob.client)
+		picked = affected_mob.key
+	else
+		stage = 4 // Let's try again later.
+		return
 
-/datum/disease/alien_embryo/stage_change(var/old_stage)
-	RefreshInfectionImage()
+	if(affected_mob.lying)
+		affected_mob.overlays += image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "burst_lie")
+	else
+		affected_mob.overlays += image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "burst_stand")
+	spawn(6)
+		var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
+		new_xeno.key = picked
+		new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
+		if(gib_on_success)
+			affected_mob.gib()
+		del(src)
 
 /*----------------------------------------
 Proc: RefreshInfectionImage()
 Des: Removes all infection images from aliens and places an infection image on all infected mobs for aliens.
 ----------------------------------------*/
-/datum/disease/alien_embryo/proc/RefreshInfectionImage()
+/obj/item/alien_embryo/proc/RefreshInfectionImage()
 	spawn(0)
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
@@ -121,13 +118,18 @@ Des: Removes all infection images from aliens and places an infection image on a
 						if (C.status_flags & XENO_HOST)
 							var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
 							alien.client.images += I
+				for (var/mob/living/simple_animal/corgi/C in mob_list)
+					if(C)
+						if (C.status_flags & XENO_HOST)
+							var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
+							alien.client.images += I
 		return
 
 /*----------------------------------------
 Proc: AddInfectionImages(C)
 Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
 ----------------------------------------*/
-/datum/disease/alien_embryo/proc/AddInfectionImages(var/mob/living/carbon/C)
+/obj/item/alien_embryo/proc/AddInfectionImages(var/mob/living/C)
 	if (C)
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)
@@ -141,7 +143,7 @@ Proc: RemoveInfectionImage(C)
 Des: Removes the alien infection image from all aliens in the world located in passed mob (C).
 ----------------------------------------*/
 
-/datum/disease/alien_embryo/proc/RemoveInfectionImages(var/mob/living/carbon/C)
+/obj/item/alien_embryo/proc/RemoveInfectionImages(var/mob/living/C)
 	if (C)
 		for (var/mob/living/carbon/alien/alien in player_list)
 			if (alien.client)

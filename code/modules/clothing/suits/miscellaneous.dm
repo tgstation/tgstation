@@ -212,3 +212,11 @@
 		usr << "You button-up some imaginary buttons on your [src]."
 		return
 	usr.update_inv_wear_suit()
+
+/obj/item/clothing/suit/xenos
+	name = "xenos suit"
+	desc = "A suit made out of chitinous alien hide."
+	icon_state = "xenos"
+	item_state = "xenos_helm"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT

@@ -174,8 +174,8 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		if(resistance && !(type in affected_mob.resistances))
 			var/saved_type = "[type]"
 			affected_mob.resistances += text2path(saved_type)
-		if(istype(src, /datum/disease/alien_embryo))	//Get rid of the infection flag if it's a xeno embryo.
-			affected_mob.status_flags &= ~(XENO_HOST)
+		/*if(istype(src, /datum/disease/alien_embryo))	//Get rid of the infection flag if it's a xeno embryo.
+			affected_mob.status_flags &= ~(XENO_HOST)*/
 		affected_mob.viruses -= src		//remove the datum from the list
 	del(src)	//delete the datum to stop it processing
 	return

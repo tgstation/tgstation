@@ -142,7 +142,7 @@ Doesn't work on other aliens/AI.*/
 		if(!istype(U, /turf))
 			return
 
-		var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(usr.loc)
+		var/obj/item/projectile/energy/neurotoxin/A = new /obj/item/projectile/energy/neurotoxin(usr.loc)
 
 		A.current = U
 		A.yo = U.y - T.y

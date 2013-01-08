@@ -94,12 +94,22 @@ var/const/MAX_ACTIVE_TIME = 400
 	if(CanHug(AM))
 		Attach(AM)
 
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed)
+	..()
+	if(stat == CONSCIOUS)
+		icon_state = "[initial(icon_state)]_thrown"
+		spawn(15)
+			if(icon_state == "[initial(icon_state)]_thrown")
+				icon_state = "[initial(icon_state)]"
+
 /obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom)
-	Attach(hit_atom)
-	return
+	..()
+	if(stat == CONSCIOUS)
+		icon_state = "[initial(icon_state)]"
+		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/Attach(M as mob)
-	if(!iscarbon(M) || isalien(M))
+	if( (!iscorgi(M) && !iscarbon(M)) || isalien(M))
 		return
 	if(attached)
 		return
@@ -114,49 +124,61 @@ var/const/MAX_ACTIVE_TIME = 400
 	if(stat != CONSCIOUS)	return
 	if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 
-	var/mob/living/carbon/target = L
+	L.visible_message("\red \b [src] leaps at [L]'s face!")
 
-	target.visible_message("\red \b [src] leaps at [target]'s face!")
-
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
 		if(H.head && H.head.flags & HEADCOVERSMOUTH)
 			H.visible_message("\red \b [src] smashes against [H]'s [H.head]!")
 			Die()
 			return
 
-	if(target.wear_mask)
-		if(prob(20))	return
-		var/obj/item/clothing/W = target.wear_mask
-		if(!W.canremove)	return
-		target.drop_from_inventory(W)
+	if(iscarbon(M))
+		var/mob/living/carbon/target = L
 
-		target.visible_message("\red \b [src] tears [W] off of [target]'s face!")
+		if(target.wear_mask)
+			if(prob(20))	return
+			var/obj/item/clothing/W = target.wear_mask
+			if(!W.canremove)	return
+			target.drop_from_inventory(W)
 
-	target.equip_to_slot(src, slot_wear_mask)
+			target.visible_message("\red \b [src] tears [W] off of [target]'s face!")
+
+		target.equip_to_slot(src, slot_wear_mask)
+
+		if(!sterile) L.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
+	else if (iscorgi(M))
+		var/mob/living/simple_animal/corgi/C = M
+		src.loc = C
+		C.facehugger = src
+		C.wear_mask = src
+		//C.regenerate_icons()
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
-	if(!sterile) target.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
-
 	spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
-		Impregnate(target)
+		Impregnate(L)
 
 	return
 
-/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/carbon/target as mob)
+/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target as mob)
 	if(!target || target.wear_mask != src || target.stat == DEAD) //was taken off or something
 		return
 
 	if(!sterile)
-		target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
-		for(var/datum/disease/alien_embryo/A in target.viruses)
-			target.status_flags |= XENO_HOST
-			break
+		//target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
+		new /obj/item/alien_embryo(target)
+		target.status_flags |= XENO_HOST
 
 		target.visible_message("\red \b [src] falls limp after violating [target]'s face!")
 
 		Die()
+		icon_state = "[initial(icon_state)]_impregnated"
+
+		if(iscorgi(target))
+			var/mob/living/simple_animal/corgi/C = target
+			src.loc = get_turf(C)
+			C.facehugger = null
 	else
 		target.visible_message("\red \b [src] violates [target]'s face!")
 	return
@@ -203,6 +225,9 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /proc/CanHug(var/mob/M)
+
+	if(iscorgi(M))
+		return 1
 
 	if(!iscarbon(M) || isalien(M))
 		return 0

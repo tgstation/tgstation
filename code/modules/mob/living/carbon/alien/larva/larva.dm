@@ -1,7 +1,7 @@
 /mob/living/carbon/alien/larva
 	name = "alien larva"
 	real_name = "alien larva"
-	icon_state = "larva"
+	icon_state = "larva0"
 	pass_flags = PASSTABLE
 
 	maxHealth = 25
@@ -11,6 +11,7 @@
 
 	var/amount_grown = 0
 	var/max_grown = 200
+	var/time_of_birth
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/New()
