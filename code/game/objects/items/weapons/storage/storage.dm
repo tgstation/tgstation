@@ -269,9 +269,9 @@
 		F.update_icon(1)
 
 	for(var/mob/M in range(1, src.loc))
-		if (M.s_active == src.loc)
+		if (M.s_active == src)
 			if (M.client)
-				M.client.screen -= src
+				M.client.screen -= W
 
 	if(new_location)
 		if(ismob(loc))

@@ -84,24 +84,25 @@
 								 "<span class='notice'>You add \the [O] to \the [src].")
 
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
+		var/obj/item/weapon/storage/bag/plants/P = O
 		var/plants_loaded = 0
-		for(var/obj/G in O.contents)
+		for(var/obj/G in P.contents)
 			if(accept_check(G))
 				if(contents.len >= max_n_of_items)
 					user << "<span class='notice'>\The [src] is full.</span>"
 					return 1
 				else
-					O.contents -= G
-					G.loc = src
+					P.remove_from_storage(G,src)
 					if(item_quants[G.name])
 						item_quants[G.name]++
 					else
 						item_quants[G.name] = 1
 					plants_loaded++
 		if(plants_loaded)
-			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
-								 "<span class='notice'>You load \the [src] with \the [O].</span>")
-			if(O.contents.len > 0)
+
+			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [P].</span>", \
+								 "<span class='notice'>You load \the [src] with \the [P].</span>")
+			if(P.contents.len > 0)
 				user << "<span class='notice'>Some items are refused.</span>"
 
 	else
