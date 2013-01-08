@@ -912,11 +912,10 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
-					O.show_message(text("\red Infused with plasma, the core begins to quiver and grow, turning into a new baby slime!"), 1)
+					O.show_message(text("\red Infused with plasma, the core begins to quiver and grow, and soon a new baby slime emerges from it!"), 1)
 				var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
 				S.loc = get_turf_loc(holder.my_atom)
-				holder.clear_reagents()
-				del (holder)
+
 
 		slimemonkey
 			name = "Slime Monkey"
@@ -930,8 +929,7 @@ datum
 				for(var/i = 1, i <= 3, i++)
 					var /obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 					M.loc = get_turf_loc(holder.my_atom)
-				holder.clear_reagents()
-				del (holder)
+
 //Green
 		slimemutate
 			name = "Mutation Toxin"
@@ -958,8 +956,7 @@ datum
 				var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
 				P.amount = 5
 				P.loc = get_turf_loc(holder.my_atom)
-				holder.clear_reagents()
-				del (holder)
+
 //Gold
 		slimecrit
 			name = "Slime Crit"
@@ -995,12 +992,12 @@ datum
 				for(var/i = 1, i <= 5, i++)
 					var/chosen = pick(critters)
 					var/mob/living/simple_animal/hostile/C = new chosen
+					C.faction = "slimesummon"
 					C.loc = get_turf_loc(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)
 							step(C, pick(NORTH,SOUTH,EAST,WEST))
-				holder.clear_reagents()
-				del (holder)
+
 //Silver
 		slimebork
 			name = "Slime Bork"
@@ -1029,8 +1026,7 @@ datum
 						if(prob(50))
 							for(var/j = 1, j <= rand(1, 3), j++)
 								step(B, pick(NORTH,SOUTH,EAST,WEST))
-				holder.clear_reagents()
-				del (holder)
+
 
 //Blue
 		slimefrost
@@ -1058,8 +1054,7 @@ datum
 				for(var/mob/living/M in range (get_turf_loc(holder.my_atom), 7))
 					M.bodytemperature -= 140
 					M << "\blue You feel a chill!"
-				holder.clear_reagents()
-				del (holder)
+
 //Orange
 		slimecasp
 			name = "Slime Capsaicin Oil"
@@ -1094,8 +1089,6 @@ datum
 
 					target_tile.assume_air(napalm)
 					spawn (0) target_tile.hotspot_expose(700, 400)
-				holder.clear_reagents()
-				del (holder)
 
 //Yellow
 		slimeoverload
@@ -1108,8 +1101,7 @@ datum
 			required_other = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				empulse(get_turf_loc(holder.my_atom), 3, 7)
-				holder.clear_reagents()
-				del (holder)
+
 
 		slimecell
 			name = "Slime Powercell"
@@ -1122,8 +1114,6 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/obj/item/weapon/cell/slime/P = new /obj/item/weapon/cell/slime
 				P.loc = get_turf_loc(holder.my_atom)
-				holder.clear_reagents()
-				del (holder)
 
 		slimeglow
 			name = "Slime Glow"
@@ -1151,8 +1141,6 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/obj/item/weapon/slimesteroid/P = new /obj/item/weapon/slimesteroid
 				P.loc = get_turf_loc(holder.my_atom)
-				holder.clear_reagents()
-				del (holder)
 
 
 
@@ -1179,8 +1167,6 @@ datum
 				var/obj/item/stack/sheet/mineral/plasma/P = new /obj/item/stack/sheet/mineral/plasma
 				P.amount = 10
 				P.loc = get_turf_loc(holder.my_atom)
-				holder.clear_reagents()
-				del (holder)
 
 //Red
 		slimeglycerol
@@ -1245,9 +1231,7 @@ datum
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
-				holder.clear_reagents()
 				explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
-				del (holder)
 //Light Pink
 		slimepotion2
 			name = "Slime Potion 2"
@@ -1255,6 +1239,7 @@ datum
 			result = null
 			result_amount = 1
 			required_container = /obj/item/slime_extract/lightpink
+			required_reagents = list("plasma" = 5)
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				var/obj/item/weapon/slimepotion2/P = new /obj/item/weapon/slimepotion2
@@ -1264,13 +1249,14 @@ datum
 			name = "Slime Golem"
 			id = "m_golem"
 			result = null
+			required_reagents = list("plasma" = 5)
 			result_amount = 1
 			required_container = /obj/item/slime_extract/adamantine
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
 				var/mob/living/carbon/human/G = new /mob/living/carbon/human
 				G.dna.mutantrace = "adamantine"
-				G.name = text("Adamantine Golem ([rand(1, 1000)])")
+				G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 				G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
 				G.equip_to_slot_or_del(new /obj/item/clothing/suit/golem(G), slot_wear_suit)
 				G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
