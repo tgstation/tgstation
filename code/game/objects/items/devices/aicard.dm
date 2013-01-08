@@ -19,9 +19,6 @@
 
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])</font>")
 
-		log_admin("ATTACK: [user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])")
-		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [src.name] to card [M.name] ([M.ckey])") //BS12 EDIT ALG
-
 		transfer_ai("AICORE", "AICARD", M, user)
 		return
 
@@ -35,7 +32,7 @@
 	attack_self(mob/user)
 		if (!in_range(src, user))
 			return
-		user.machine = src
+		user.set_machine(src)
 		var/dat = "<TT><B>Intelicard</B><BR>"
 		var/laws
 		for(var/mob/living/silicon/ai/A in src)
@@ -84,16 +81,16 @@
 		var/mob/U = usr
 		if (!in_range(src, U)||U.machine!=src)//If they are not in range of 1 or less or their machine is not the card (ie, clicked on something else).
 			U << browse(null, "window=aicard")
-			U.machine = null
+			U.unset_machine()
 			return
 
 		add_fingerprint(U)
-		U.machine = src
+		U.set_machine(src)
 
 		switch(href_list["choice"])//Now we switch based on choice.
 			if ("Close")
 				U << browse(null, "window=aicard")
-				U.machine = null
+				U.unset_machine()
 				return
 
 			if ("Wipe")
@@ -101,7 +98,7 @@
 				if(confirm == "Yes")
 					if(isnull(src)||!in_range(src, U)||U.machine!=src)
 						U << browse(null, "window=aicard")
-						U.machine = null
+						U.unset_machine()
 						return
 					else
 						flush = 1

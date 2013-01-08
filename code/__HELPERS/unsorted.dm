@@ -615,7 +615,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	// so just reset the user mob's machine var
 	if(src && src.mob)
 		//world << "[src] was [src.mob.machine], setting to null"
-		src.mob.machine = null
+		src.mob.unset_machine()
 	return
 
 //Will return the location of the turf an atom is ultimatly sitting on
@@ -945,7 +945,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 						corner.density = 1
 						corner.anchored = 1
 						corner.icon = X.icon
-						corner.icon_state = dd_replacetext(X.icon_state, "_s", "_f")
+						corner.icon_state = replacetext(X.icon_state, "_s", "_f")
 						corner.tag = "delete me"
 						corner.name = "wall"
 
@@ -965,7 +965,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 						// Reset the shuttle corners
 						if(O.tag == "delete me")
 							X.icon = 'icons/turf/shuttle.dmi'
-							X.icon_state = dd_replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
+							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
 							X.name = "wall"
 							del(O) // prevents multiple shuttle corners from stacking
 							continue
@@ -995,7 +995,7 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 						fromupdate += ttl
 
 					else
-						T.ReplaceWithSpace()
+						T.ChangeTurf(/turf/space)
 
 					refined_src -= T
 					refined_trg -= B
@@ -1362,6 +1362,14 @@ proc/is_hot(obj/item/W as obj)
 	istype(W, /obj/item/weapon/bonegel)			||	\
 	istype(W, /obj/item/weapon/bonesetter)
 	)
+
+//check if mob is lying down on something we can operate him on.
+/proc/can_operate(mob/living/carbon/M)
+	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
+	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
+	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || 	\
+	(locate(/obj/structure/table/, M.loc) && 	\
+	(M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))
 
 /proc/reverse_direction(var/dir)
 	switch(dir)

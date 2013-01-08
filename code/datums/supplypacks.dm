@@ -205,6 +205,13 @@
 	containertype = /obj/structure/largecrate/mule
 	containername = "MULEbot Crate"
 
+/datum/supply_packs/lisa
+	name = "Corgi Crate"
+	contains = list()
+	cost = 50
+	containertype = /obj/structure/largecrate/lisa
+	containername = "Corgi Crate"
+
 /datum/supply_packs/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"
 	contains = list(/obj/item/weapon/reagent_containers/spray/plantbgone,
@@ -334,9 +341,9 @@
 	contains = list(/obj/item/weapon/storage/belt/utility/full,
 					/obj/item/weapon/storage/belt/utility/full,
 					/obj/item/weapon/storage/belt/utility/full,
-					/obj/item/clothing/suit/hazardvest,
-					/obj/item/clothing/suit/hazardvest,
-					/obj/item/clothing/suit/hazardvest,
+					/obj/item/clothing/suit/storage/hazardvest,
+					/obj/item/clothing/suit/storage/hazardvest,
+					/obj/item/clothing/suit/storage/hazardvest,
 					/obj/item/clothing/head/welding,
 					/obj/item/clothing/head/welding,
 					/obj/item/clothing/head/hardhat)
@@ -662,9 +669,9 @@
 					"/obj/item/weapon/FixOVein",
 					"/obj/item/weapon/hemostat",
 					"/obj/item/weapon/scalpel",
-					"/obj/item/weapon/surgical_tool/bonegel",
+					"/obj/item/weapon/bonegel",
 					"/obj/item/weapon/retractor",
-					"/obj/item/weapon/surgical_tool/bonesetter",
+					"/obj/item/weapon/bonesetter",
 					"/obj/item/weapon/circular_saw")
 	cost = 25
 	containertype = "/obj/structure/closet/crate/secure"

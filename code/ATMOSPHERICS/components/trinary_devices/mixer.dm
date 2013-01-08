@@ -112,7 +112,7 @@ obj/machinery/atmospherics/trinary/mixer
 		if(!src.allowed(user))
 			user << "\red Access denied."
 			return
-		usr.machine = src
+		usr.set_machine(src)
 		var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 					<b>Desirable output pressure: </b>
 					[target_pressure]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>

@@ -39,6 +39,10 @@
 	anchored = 1.0
 	unacidable = 1
 
+/*
+ * This item is completely unused, but removing it will break something in R&D and Radio code causing PDA and Ninja code to fail on compile
+ */
+
 /obj/effect/datacore
 	name = "datacore"
 	var/medical[] = list()
@@ -160,8 +164,8 @@
 
 
 		dat += "</table>"
-		dat = dd_replacetext(dat, "\n", "") // so it can be placed on paper correctly
-		dat = dd_replacetext(dat, "\t", "")
+		dat = replacetext(dat, "\n", "") // so it can be placed on paper correctly
+		dat = replacetext(dat, "\t", "")
 		return dat
 
 /obj/item/device/infra_sensor
@@ -173,6 +177,10 @@
 	item_state = "electronic"
 	m_amt = 150
 	origin_tech = "magnets=2"
+/*
+ *
+ */
+
 
 
 /obj/effect/laser

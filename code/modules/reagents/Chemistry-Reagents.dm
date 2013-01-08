@@ -13,7 +13,7 @@ datum
 		var/description = ""
 		var/datum/reagents/holder = null
 		var/reagent_state = SOLID
-		var/data = null
+		var/list/data = null
 		var/volume = 0
 		var/nutriment_factor = 0
 		//var/list/viruses = list()
@@ -100,13 +100,16 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				var/datum/reagent/blood/self = src
 				src = null
-				for(var/datum/disease/D in self.data["viruses"])
-					var/datum/disease/virus = new D.type
-					if(method == TOUCH)
-						M.contract_disease(virus)
+				if(self.data && self.data["viruses"])
+					for(var/datum/disease/D in self.data["viruses"])
+						//var/datum/disease/virus = new D.type(0, D, 1)
+						// We don't spread.
+						if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS) continue
 
-					else //injected
-						M.contract_disease(virus, 1, 0)
+						if(method == TOUCH)
+							M.contract_disease(D)
+						else //injected
+							M.contract_disease(D, 1, 0)
 
 				if(self.data["virus2"])
 					if(method == TOUCH)
@@ -122,17 +125,6 @@ datum
 					if (M:virus2) if((self.data["antibodies"] & M:virus2.antigen) && prob(10))
 						M:virus2.dead = 1
 
-				/*
-				if(self.data["virus"])
-					var/datum/disease/V = self.data["virus"]
-					if(M.resistances.Find(V.type)) return
-					if(method == TOUCH)//respect all protective clothing...
-						M.contract_disease(V)
-					else //injected
-						M.contract_disease(V, 1, 0)
-				return
-				*/
-
 
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
 				if(!istype(T)) return
@@ -147,7 +139,7 @@ datum
 						blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 
 					for(var/datum/disease/D in self.data["viruses"])
-						var/datum/disease/newVirus = new D.type
+						var/datum/disease/newVirus = new D.type(D)
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
 
@@ -158,7 +150,7 @@ datum
 						blood_prop = new(T)
 						blood_prop.blood_DNA["Non-Human DNA"] = "A+"
 					for(var/datum/disease/D in self.data["viruses"])
-						var/datum/disease/newVirus = new D.type
+						var/datum/disease/newVirus = new D.type(D)
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
 
@@ -175,7 +167,7 @@ datum
 						blood_prop = new(T)
 						blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
 					for(var/datum/disease/D in self.data["viruses"])
-						var/datum/disease/newVirus = new D.type
+						var/datum/disease/newVirus = new D.type(D)
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
 						/*
@@ -206,8 +198,13 @@ datum
 				src = null
 				if(self.data&&method == INGEST)
 					for(var/datum/disease/D in M.viruses)
-						if(D.type == self.data)
-							D.cure()
+						if(istype(D, /datum/disease/advance))
+							var/datum/disease/advance/A = D
+							if(A.GetDiseaseID() == self.data)
+								D.cure()
+						else
+							if(D.type == self.data)
+								D.cure()
 
 					M.resistances += self.data
 				return
@@ -1166,8 +1163,8 @@ datum
 				return
 			reaction_obj(var/obj/O, var/volume)
 				src = null
-				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/roro_egg))
-					var/obj/item/weapon/reagent_containers/food/snacks/roro_egg/egg = O
+				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/roro))
+					var/obj/item/weapon/reagent_containers/food/snacks/egg/roro/egg = O
 					if (egg.grown)
 						egg.Hatch()
 				if((!O) || (!volume))	return 0

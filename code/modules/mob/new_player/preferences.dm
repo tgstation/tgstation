@@ -260,11 +260,11 @@ datum/preferences
 		if(config.allow_Metadata)
 			dat += "<b>OOC Notes:</b> <a href='byond://?src=\ref[user];preference=metadata;task=input'> Edit </a><br>"
 
-		if((user.client) && (user.client.holder) && (user.client.holder.rank))
+		if(user.client && user.client.holder)
 			dat += "<b>Adminhelp sound</b>: "
 			dat += "[(sound_adminhelp)?"On":"Off"] <a href='byond://?src=\ref[user];preference=hear_adminhelps'>toggle</a><br>"
 
-			if(user.client.holder.level >= 5)
+			if(config.allow_admin_ooccolor && check_rights(R_FUN,0))
 				dat += "<br><a href='byond://?src=\ref[user];preference=ooccolor;task=input'><b>OOC color</b></a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font><br>"
 
 		dat += "\t<a href=\"byond://?src=\ref[user];preference=job;task=menu\"><b>Occupation Preferences</b></a><br>"
@@ -767,7 +767,7 @@ datum/preferences
 					if("all")
 						gender = pick(MALE,FEMALE)
 						randomize_name()
-						age = rand(17,45)
+						age = rand(17,85)
 						underwear = rand(1,12)
 						backbag = rand(1,4)
 						randomize_hair_color("hair")

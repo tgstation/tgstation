@@ -107,17 +107,16 @@
 			affecting.loc = assailant.loc
 	if ((killing == 2 && state == 3))
 		if(assailant.loc != kill_loc)
-			for(var/mob/O in viewers(assailant, null))
-				O.show_message(text("\red [] lost \his tightened grip on []'s neck!", assailant, affecting), 1)
+			visible_message("\red [assailant] lost \his tightened grip on [affecting]'s neck!")
 			killing = 0
 			hud1.icon_state = "disarm/kill"
 			return
-            
+
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/H = affecting
 			var/datum/organ/external/head = H.get_organ("head")
 			head.add_autopsy_data("Strangulation", 0)
-            
+
 		affecting.Weaken(5) // Should keep you down unless you get help.
 		affecting.Stun(5) // It will hamper your voice, being choked and all.
 		affecting.losebreath = min(affecting.losebreath + 2, 3)
@@ -139,8 +138,7 @@
 		if(1.0)
 			if (state >= 3)
 				if (!( killing ))
-					for(var/mob/O in viewers(assailant, null))
-						O.show_message(text("\red [] has temporarily tightened \his grip on []!", assailant, affecting), 1)
+					visible_message("\red [assailant] has temporarily tightened \his grip on [affecting]!")
 						//Foreach goto(97)
 					assailant.next_move = world.time + 10
 					//affecting.stunned = max(2, affecting.stunned)
@@ -169,7 +167,10 @@
 			if (state < 2)
 				if (!( allow_upgrade ))
 					return
-				if (prob(75))
+				visible_message("\red [assailant] has grabbed [affecting] aggressively (now hands)!")
+				state = 2
+				icon_state = "grabbed1"
+				/*if (prob(75))
 					for(var/mob/O in viewers(assailant, null))
 						O.show_message(text("\red [] has grabbed [] aggressively (now hands)!", assailant, affecting), 1)
 					state = 2
@@ -178,7 +179,7 @@
 					for(var/mob/O in viewers(assailant, null))
 						O.show_message(text("\red [] has failed to grab [] aggressively!", assailant, affecting), 1)
 					del(src)
-					return
+					return*/
 			else
 				if (state < 3)
 					if(istype(affecting, /mob/living/carbon/human))
@@ -203,9 +204,7 @@
 						assailant << "\blue You squeeze [affecting], but nothing interesting happens."
 						return
 
-					for(var/mob/O in viewers(assailant, null))
-						O.show_message(text("\red [] has reinforced \his grip on [] (now neck)!", assailant, affecting), 1)
-
+					visible_message("\red [assailant] has reinforced \his grip on [affecting] (now neck)!")
 					state = 3
 					icon_state = "grabbed+1"
 					if (!( affecting.buckled ))
@@ -217,8 +216,7 @@
 					hud1.name = "disarm/kill"
 				else
 					if (state >= 3 && !killing)
-						for(var/mob/O in viewers(assailant, null))
-							O.show_message(text("\red [] starts to tighten \his grip on []'s neck!", assailant, affecting), 1)
+						visible_message("\red [assailant] starts to tighten \his grip on [affecting]'s neck!")
 						hud1.icon_state = "disarm/kill1"
 						killing = 1
 						if(do_after(assailant, 50))
@@ -232,20 +230,15 @@
 								return
 							killing = 2
 							kill_loc = assailant.loc
-							for(var/mob/O in viewers(assailant, null))
-								O.show_message(text("\red [] has tightened \his grip on []'s neck!", assailant, affecting), 1)
+							visible_message("\red [assailant] has tightened \his grip on [affecting]'s neck!")
 							affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>")
 							assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
 							log_attack("<font color='red'>[assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
 
-							log_admin("ATTACK: [assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])")
-							msg_admin_attack("ATTACK: [assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])")
-
 							assailant.next_move = world.time + 10
 							affecting.losebreath += 1
 						else
-							for(var/mob/O in viewers(assailant, null))
-								O.show_message(text("\red [] was unable to tighten \his grip on []'s neck!", assailant, affecting), 1)
+							visible_message("\red [assailant] was unable to tighten \his grip on [affecting]'s neck!")
 							killing = 0
 							hud1.icon_state = "disarm/kill"
 	return
@@ -276,16 +269,12 @@
 	if(M == assailant && state >= 2)
 		if( ( ishuman(user) && (FAT in user.mutations) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
-			for(var/mob/N in viewers(user, null))
-				if(N.client)
-					N.show_message(text("\red <B>[user] is attempting to devour [affecting]!</B>"), 1)
+			visible_message("\red <B>[user] is attempting to devour [affecting]!</B>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
 				if(!do_mob(user, affecting)||!do_after(user, 30)) return
 			else
 				if(!do_mob(user, affecting)||!do_after(user, 100)) return
-			for(var/mob/N in viewers(user, null))
-				if(N.client)
-					N.show_message(text("\red <B>[user] devours [affecting]!</B>"), 1)
+			visible_message("\red <B>[user] devours [affecting]!</B>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)
 			del(src)

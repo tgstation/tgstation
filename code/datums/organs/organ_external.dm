@@ -34,6 +34,7 @@
 	var/open = 0
 	var/stage = 0
 
+	var/list/implants = list()
 	// INTERNAL germs inside the organ, this is BAD if it's greater 0
 	var/germ_level = 0
 
@@ -441,7 +442,7 @@
 			if(H)
 				var/lol = pick(cardinal)
 				step(H,lol)
-				
+
 			destspawn = 1
 			if(status & ORGAN_ROBOT)
 				owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
@@ -606,6 +607,25 @@
 	min_broken_damage = 40
 	body_part = HEAD
 	var/disfigured = 0
+
+	take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
+		..(brute, burn, sharp, used_weapon, forbidden_limbs)
+		if (brute_dam > 40)
+			if (prob(50))
+				disfigure("brute")
+		if (burn_dam > 40)
+			disfigure("burn")
+
+	proc/disfigure(var/type = "brute")
+		if(type == "brute")
+			owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
+			"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
+			"You hear a sickening crack.")
+		else
+			owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
+			"\red <b>Your face melts off!</b>",	\
+			"You hear a sickening sizzle.")
+		disfigured = 1
 
 /datum/organ/external/l_arm
 	name = "l_arm"

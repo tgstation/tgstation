@@ -81,9 +81,6 @@
 		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [src.name]</font>"
 		log_attack("<font color='red'>[user.name] ([user.ckey]) stunned [H.name] ([H.ckey]) with [src.name]</font>" )
 
-		log_admin("ATTACK: [user.name] ([user.ckey]) stunned [H.name] ([H.ckey]) with [src.name]")
-		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) stunned [H.name] ([H.ckey]) with [src.name]") //BS12 EDIT ALG
-
 		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 		if(charges < 1)
 			status = 0
@@ -110,8 +107,6 @@
 				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src.name] (([src.fingerprintslast]))</font>"
 				log_attack("<font color='red'>Flying [src.name], thrown by ([src.fingerprintslast]) stunned [H.name] ([H.ckey])</font>" )
 
-				log_admin("ATTACK: Flying [src.name], thrown by ([src.fingerprintslast]) stunned [H.name] ([H.ckey])")
-				msg_admin_attack("ATTACK: Flying [src.name], thrown by ([src.fingerprintslast]) stunned [H.name] ([H.ckey]).") //BS12 EDIT ALG
 				return
 	return ..()
 

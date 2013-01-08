@@ -71,7 +71,7 @@
 			if (i > 0)
 				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 				for(var/datum/disease/D in src.viruses)
-					b.viruses += D
+					b.viruses += new D.type(0, D, 1)
 			if (step_to(src, get_step(src, direction), 0))
 				break
 

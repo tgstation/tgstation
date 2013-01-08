@@ -1,12 +1,3 @@
-
-//check if mob is lying down on something we can operate him on.
-/proc/can_operate(mob/living/carbon/M)
-	return (locate(/obj/machinery/optable, M.loc) && M.resting) || \
-	(locate(/obj/structure/stool/bed/roller, M.loc) && 	\
-	(M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || 	\
-	(locate(/obj/structure/table/, M.loc) && 	\
-	(M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))
-
 /datum/surgery_status/
 	var/eyes	=	0
 	var/face	=	0
@@ -48,8 +39,18 @@
 	// evil infection stuff that will make everyone hate me
 	var/can_infect = 0
 
+	proc/isright(obj/item/tool)			//is it is a required surgical tool for this step
+		return (istype(tool,required_tool))
+
+	proc/isacceptable(obj/item/tool)	//is it is an accepted replacement tool for this step
+		if (allowed_tools)
+			for (var/T in allowed_tools)
+				if (istype(tool,T))
+					return 1
+		return 0
+
 // Build this list by iterating over all typesof(/datum/surgery_step) and sorting the results by priority
-var/global/list/surgery_steps = null
+
 
 proc/build_surgery_steps_list()
 	surgery_steps = list()
@@ -122,7 +123,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/generic/clamp_bleeders
 	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/weapon/mousetrap)
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
 
 	min_duration = 40
 	max_duration = 60
@@ -558,7 +559,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/eye/mend_eyes
 	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/weapon/mousetrap)
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
 
 	min_duration = 80
 	max_duration = 100
@@ -651,7 +652,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 /datum/surgery_step/face/mend_vocal
 	required_tool = /obj/item/weapon/hemostat
-	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/weapon/mousetrap)
+	allowed_tools = list(/obj/item/weapon/cable_coil, /obj/item/device/assembly/mousetrap)
 
 	min_duration = 70
 	max_duration = 90
@@ -1235,3 +1236,68 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 			user:bloody_hands(target, 0)
 			user:bloody_body(target)
 
+//////////////////////////////////////////////////////////////////
+//					IMPLANT REMOVAL SURGERY						//
+//////////////////////////////////////////////////////////////////
+
+/datum/surgery_step/implant_removal
+	required_tool = /obj/item/weapon/hemostat
+	allowed_tools = list(/obj/item/weapon/wirecutters, /obj/item/weapon/kitchen/utensil/fork)
+
+	min_duration = 80
+	max_duration = 100
+
+	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		return affected.open == 2 && !(affected.status & ORGAN_BLEEDING)
+
+	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		user.visible_message("[user] starts poking around inside the incision on [target]'s [affected.display_name] with \the [tool].", \
+		"You start poking around inside the incision on [target]'s [affected.display_name] with \the [tool]" )
+		target.custom_pain("The pain in your chest is living hell!",1)
+
+	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/chest/affected = target.get_organ("chest")
+
+		var/find_prob = 0
+		if (affected.implants.len)
+			var/obj/item/weapon/implant/imp = affected.implants[1]
+			if (imp.islegal())
+				find_prob +=60
+			else
+				find_prob +=40
+			if (isright(tool))
+				find_prob +=20
+
+		if (prob(find_prob))
+			user.visible_message("\blue [user] takes something out of incision on [target]'s [affected.display_name] with \the [tool].", \
+			"\blue You take something out of incision on [target]'s [affected.display_name]s with \the [tool]." )
+			var/obj/item/weapon/implant/imp = affected.implants[1]
+			affected.implants -= imp
+			imp.loc = get_turf(target)
+			imp.imp_in = null
+			imp.implanted = 0
+		else
+			user.visible_message("\blue [user] could not find anything inside [target]'s [affected.display_name], and pulls \the [tool] out.", \
+			"\blue You could not find anything inside [target]'s [affected.display_name]." )
+		if (ishuman(user) && prob(80)) user:bloody_hands(target, 0)
+
+	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/chest/affected = target.get_organ(target_zone)
+		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [affected.display_name] with \the [tool]!", \
+		"\red Your hand slips, scraping tissue inside [target]'s [affected.display_name] with \the [tool]!")
+		affected.createwound(CUT, 20)
+		if (affected.implants.len)
+			var/fail_prob = 10
+			if (!isright(tool))
+				fail_prob += 30
+			if (prob(fail_prob))
+				var/obj/item/weapon/implant/imp = affected.implants[1]
+				user.visible_message("\red Something beeps inside [target]'s [affected.display_name]!")
+				playsound(imp.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+				spawn(15)
+					imp.activate()
+		if (ishuman(user))
+			user:bloody_hands(target, 0)
+			user:bloody_body(target)

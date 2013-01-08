@@ -243,6 +243,7 @@
 /obj/structure/table/attack_paw(mob/user as mob)
 	if ((HULK in usr.mutations))
 		usr << "\blue You destroy the table."
+		usr.say(pick("RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("\red [user] smashes the table apart!")
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
@@ -296,6 +297,7 @@
 	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 		usr << "\blue You destroy the table."
 		visible_message("\red [user] smahes the table apart!")
+		usr.say(pick("RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -331,14 +333,23 @@
 /obj/structure/table/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if(G.state<2)
-			user << "\red You need a better grip to do that!"
+		if (istype(G.affecting, /mob/living))
+			var/mob/living/M = G.affecting
+			if (G.state < 2)
+				if(user.a_intent == "hurt")
+					if (prob(5))	M.Weaken(3)
+					M.apply_damage(10)
+					visible_message("\red [G.assailant] slams [G.affecting] against \the [src]!")
+					playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				else
+					user << "\red You need a better grip to do that!"
+					return
+			else
+				G.affecting.loc = src.loc
+				G.affecting.Weaken(5)
+				visible_message("\red [G.assailant] puts [G.affecting] on \the [src].")
+			del(W)
 			return
-		G.affecting.loc = src.loc
-		G.affecting.Weaken(5)
-		visible_message("\red [G.assailant] puts [G.affecting] on the table.")
-		del(W)
-		return
 
 	if (istype(W, /obj/item/weapon/wrench))
 		user << "\blue Now disassembling table"

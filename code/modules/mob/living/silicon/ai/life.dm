@@ -8,7 +8,7 @@
 		if (src.stat!=0)
 			src.cameraFollow = null
 			src.reset_view(null)
-			src.machine = null
+			src.unset_machine()
 
 		src.updatehealth()
 

@@ -73,6 +73,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -81,7 +82,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithWall()
+							Tsrc.ChangeTurf(/turf/simulated/wall)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/X in Tsrc.loc)
@@ -95,6 +96,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falserwall (src.loc)
+						del(src)
 					else
 						if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
 							if(S.amount < 1) return ..()
@@ -104,7 +106,7 @@
 								S.use(1)
 								user << "\blue Wall fully reinforced!"
 								var/turf/Tsrc = get_turf(src)
-								Tsrc.ReplaceWithRWall()
+								Tsrc.ChangeTurf(/turf/simulated/wall)
 								for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 									P.layer = 1
 								for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
@@ -128,6 +130,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/gold (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -136,7 +139,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("gold")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/gold)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -150,6 +153,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/silver (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -158,7 +162,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("silver")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/silver)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -172,6 +176,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/diamond (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -180,7 +185,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("diamond")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/diamond)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -194,6 +199,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/uranium (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -202,7 +208,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("uranium")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/uranium)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -216,6 +222,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/plasma (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -224,7 +231,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("plasma")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/plasma)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -238,14 +245,16 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/clown (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
 						if (do_after(user,40))
 							if(!src || !S || S.amount < 2) return
+							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("clown")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/clown)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -259,6 +268,7 @@
 						S.use(2)
 						user << "\blue You create a false wall! Push on it to open or close the passage."
 						new /obj/structure/falsewall/sandstone (src.loc)
+						del(src)
 					else
 						if(S.amount < 2) return ..()
 						user << "\blue Now adding plating..."
@@ -267,7 +277,7 @@
 							S.use(2)
 							user << "\blue You added the plating!"
 							var/turf/Tsrc = get_turf(src)
-							Tsrc.ReplaceWithMineralWall("sandstone")
+							Tsrc.ChangeTurf(/turf/simulated/wall/mineral/sandstone)
 							for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 								P.layer = 1
 							for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
@@ -276,7 +286,6 @@
 						return
 
 			add_hiddenprint(usr)
-			del(src)
 
 		else if(istype(W, /obj/item/pipe))
 			var/obj/item/pipe/P = W

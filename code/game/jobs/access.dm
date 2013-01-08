@@ -90,7 +90,7 @@
 	..()
 	//NOTE: If a room requires more than one access (IE: Morgue + medbay) set the req_acesss_txt to "5;6" if it requires 5 and 6
 	if(src.req_access_txt)
-		var/list/req_access_str = dd_text2list(req_access_txt,";")
+		var/list/req_access_str = text2list(req_access_txt,";")
 		if(!req_access)
 			req_access = list()
 		for(var/x in req_access_str)
@@ -99,7 +99,7 @@
 				req_access += n
 
 	if(src.req_one_access_txt)
-		var/list/req_one_access_str = dd_text2list(req_one_access_txt,";")
+		var/list/req_one_access_str = text2list(req_one_access_txt,";")
 		if(!req_one_access)
 			req_one_access = list()
 		for(var/x in req_one_access_str)
@@ -180,7 +180,10 @@
 		if("Station Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
 		if("Assistant")
-			return list()
+			if(config.assistant_maint)
+				return list(access_maint_tunnels)
+			else
+				return list()
 		if("Chaplain")
 			return list(access_morgue, access_chapel_office, access_crematorium)
 		if("Detective")
@@ -514,3 +517,32 @@
 		return jobName
 
 	return "Unknown"
+
+proc/FindNameFromID(var/mob/living/carbon/human/H)
+	ASSERT(istype(H))
+	var/obj/item/weapon/card/id/C = H.get_active_hand()
+	if( istype(C) || istype(C, /obj/item/device/pda) )
+		var/obj/item/weapon/card/id/ID = C
+
+		if( istype(C, /obj/item/device/pda) )
+			var/obj/item/device/pda/pda = C
+			ID = pda.id
+		if(!istype(ID))
+			ID = null
+
+		if(ID)
+			return ID.registered_name
+
+	C = H.wear_id
+
+	if( istype(C) || istype(C, /obj/item/device/pda) )
+		var/obj/item/weapon/card/id/ID = C
+
+		if( istype(C, /obj/item/device/pda) )
+			var/obj/item/device/pda/pda = C
+			ID = pda.id
+		if(!istype(ID))
+			ID = null
+
+		if(ID)
+			return ID.registered_name

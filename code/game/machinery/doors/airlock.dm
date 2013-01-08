@@ -294,16 +294,15 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		napalm.temperature = 400+T0C
 		target_tile.assume_air(napalm)
 		spawn (0) target_tile.hotspot_expose(temperature, 400)
-		new/obj/structure/door_assembly/door_assembly_0( src.loc )
 	for(var/obj/structure/falsewall/plasma/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
-		T.ReplaceWithMineralWall("plasma")
+		T.ChangeTurf(/turf/simulated/wall/mineral/plasma/)
 		del (F)
-	for(var/turf/simulated/wall/mineral/W in range(3,src))
-		if(mineral == "plasma")
-			W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame
+	for(var/turf/simulated/wall/mineral/plasma/W in range(3,src))
+		W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame
 	for(var/obj/machinery/door/airlock/plasma/D in range(3,src))
 		D.ignite(temperature/4)
+	new/obj/structure/door_assembly/door_assembly_0( src.loc )
 	del (src)
 
 /obj/machinery/door/airlock/clown
@@ -679,7 +678,7 @@ About the new airlock wires panel:
 			user << "Airlock AI control has been blocked with a firewall. Unable to hack."
 
 	//Separate interface for the AI.
-	user.machine = src
+	user.set_machine(src)
 	var/t1 = text("<B>Airlock Control</B><br>\n")
 	if(src.secondsMainPowerLost > 0)
 		if((!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)))
@@ -851,20 +850,18 @@ About the new airlock wires panel:
 		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				for(var/mob/M in viewers(src, null))
-					M << "\red [user] headbutts the airlock."
+				visible_message("\red [user] headbutts the airlock.")
 				var/datum/organ/external/affecting = H.get_organ("head")
 				H.Stun(8)
 				H.Weaken(5)
 				if(affecting.take_damage(10, 0))
 					H.UpdateDamageIcon()
 			else
-				for(var/mob/M in viewers(src, null))
-					M << "\red [user] headbutts the airlock. Good thing they're wearing a helmet."
+				visible_message("\red [user] headbutts the airlock. Good thing they're wearing a helmet.")
 			return
 
 	if(src.p_open)
-		user.machine = src
+		user.set_machine(src)
 		var/t1 = text("<B>Access Panel</B><br>\n")
 
 		//t1 += text("[]: ", airlockFeatureNames[airlockWireColorToIndex[9]])
@@ -917,11 +914,11 @@ About the new airlock wires panel:
 	if(href_list["close"])
 		usr << browse(null, "window=airlock")
 		if(usr.machine==src)
-			usr.machine = null
+			usr.unset_machine()
 			return
 
 	if((in_range(src, usr) && istype(src.loc, /turf)) && src.p_open)
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["wires"])
 			var/t1 = text2num(href_list["wires"])
 			if(!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))

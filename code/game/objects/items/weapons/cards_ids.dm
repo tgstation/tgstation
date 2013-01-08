@@ -69,7 +69,7 @@
 	if(!src.registered_name)
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
 		var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)),1,26)
-		if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
+		if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall" || t == "") //Same as mob/new_player/prefrences.dm
 			alert("Invalid name.")
 			return
 		src.registered_name = t
@@ -102,7 +102,7 @@
 	if ((usr.stat || usr.restrained()))
 		return
 	if (usr.contents.Find(src))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
 			if ((P && P.loc == src))

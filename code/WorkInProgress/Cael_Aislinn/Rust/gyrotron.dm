@@ -163,36 +163,26 @@
 		pixel_x = -pixel_x
 		pixel_y = -pixel_y
 
-	attack_ai(mob/user)
-		attack_hand(user)
-
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		/*if(stat & (BROKEN|NOPOWER))
-			return*/
-		interact(user)
-
-	proc
-		interact(mob/user)
-			if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-				if (!istype(user, /mob/living/silicon))
-					user.machine = null
-					user << browse(null, "window=gyro_monitor")
-					return
-			var/t = "<B>Free electron MASER (Gyrotron) Control Panel</B><BR>"
-			if(owned_gyrotron && owned_gyrotron.on)
-				t += "<font color=green>Gyrotron operational</font><br>"
-				t += "Operational mode: <font color=blue>"
-				if(owned_gyrotron.emitting)
-					t += "Emitting</font> <a href='?src=\ref[owned_gyrotron];deactivate=1'>\[Deactivate\]</a><br>"
-				else
-					t += "Not emitting</font> <a href='?src=\ref[owned_gyrotron];activate=1'>\[Activate\]</a><br>"
-				t += "Emission rate: [owned_gyrotron.rate] <a href='?src=\ref[owned_gyrotron];modifyrate=1'>\[Modify\]</a><br>"
-				t += "Beam frequency: [owned_gyrotron.frequency] <a href='?src=\ref[owned_gyrotron];modifyfreq=1'>\[Modify\]</a><br>"
-				t += "Beam power: [owned_gyrotron.mega_energy] <a href='?src=\ref[owned_gyrotron];modifypower=1'>\[Modify\]</a><br>"
+	interact(mob/user)
+		if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+			if (!istype(user, /mob/living/silicon))
+				user.machine = null
+				user << browse(null, "window=gyro_monitor")
+				return
+		var/t = "<B>Free electron MASER (Gyrotron) Control Panel</B><BR>"
+		if(owned_gyrotron && owned_gyrotron.on)
+			t += "<font color=green>Gyrotron operational</font><br>"
+			t += "Operational mode: <font color=blue>"
+			if(owned_gyrotron.emitting)
+				t += "Emitting</font> <a href='?src=\ref[owned_gyrotron];deactivate=1'>\[Deactivate\]</a><br>"
 			else
-				t += "<b><font color=red>Gyrotron unresponsive</font></b>"
-			t += "<hr>"
-			t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-			user << browse(t, "window=gyro_monitor;size=500x800")
-			user.machine = src
+				t += "Not emitting</font> <a href='?src=\ref[owned_gyrotron];activate=1'>\[Activate\]</a><br>"
+			t += "Emission rate: [owned_gyrotron.rate] <a href='?src=\ref[owned_gyrotron];modifyrate=1'>\[Modify\]</a><br>"
+			t += "Beam frequency: [owned_gyrotron.frequency] <a href='?src=\ref[owned_gyrotron];modifyfreq=1'>\[Modify\]</a><br>"
+			t += "Beam power: [owned_gyrotron.mega_energy] <a href='?src=\ref[owned_gyrotron];modifypower=1'>\[Modify\]</a><br>"
+		else
+			t += "<b><font color=red>Gyrotron unresponsive</font></b>"
+		t += "<hr>"
+		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+		user << browse(t, "window=gyro_monitor;size=500x800")
+		user.machine = src

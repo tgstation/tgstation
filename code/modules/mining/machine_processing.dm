@@ -120,7 +120,7 @@
 /obj/machinery/mineral/processing_unit_console/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["sel_iron"])
 		if (href_list["sel_iron"] == "yes")

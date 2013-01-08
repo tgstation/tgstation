@@ -121,53 +121,52 @@
 		..()
 		src.updateDialog()
 
-	proc
-		interact(mob/user)
-			if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-				if (!istype(user, /mob/living/silicon))
-					user.machine = null
-					user << browse(null, "window=fuel_monitor")
-					return
-			var/t = "<B>Reactor Core Fuel Control</B><BR>"
-			var/cooling = 0
-			for(var/stage in stage_status)
-				if(stage_status[stage])
-					t += "Fuel injection: <font color=blue>Active</font><br>"
-					t += "<a href='?src=\ref[src];cooldown=1;'>Enter cooldown phase</a><br>"
-					cooling = 1
-					break
-			if(!cooling)
-				t += "Fuel injection: <font color=blue>Cooling</font><br>"
-				t += "----<br>"
-			//
-			t += "Fuel depletion announcement: "
-			t += "[announce_fueldepletion ? 		"<a href='?src=\ref[src];disable_fueldepletion=1'>Disable</a>" : "<b>Disabled</b>"] "
-			t += "[announce_fueldepletion == 1 ? 	"<b>Announcing</b>" : "<a href='?src=\ref[src];announce_fueldepletion=1'>Announce</a>"] "
-			t += "[announce_fueldepletion == 2 ? 	"<b>Broadcasting</b>" : "<a href='?src=\ref[src];broadcast_fueldepletion=1'>Broadcast</a>"]<br>"
-			t += "Stage progression announcement: "
-			t += "[announce_stageprogression ? 		"<a href='?src=\ref[src];disable_stageprogression=1'>Disable</a>" : "<b>Disabled</b>"] "
-			t += "[announce_stageprogression == 1 ? 	"<b>Announcing</b>" : "<a href='?src=\ref[src];announce_stageprogression=1'>Announce</a>"] "
-			t += "[announce_stageprogression == 2 ? 	"<b>Broadcasting</b>" : "<a href='?src=\ref[src];broadcast_stageprogression=1'>Broadcast</a>"] "
-			t += "<hr>"
-			t += "<table border=1><tr>"
-			t += "<td><b>Injector Status</b></td>"
-			t += "<td><b>Injection interval (sec)</b></td>"
-			t += "<td><b>Assembly consumption per injection</b></td>"
-			t += "<td><b>Fuel Assembly Port</b></td>"
-			t += "<td><b>Assembly depletion percentage</b></td>"
-			t += "</tr>"
-			for(var/stage_name in fuel_injectors)
-				var/list/cur_stage = fuel_injectors[stage_name]
-				t += "<tr><td colspan=5><b>Fuel Injection Stage:</b> [stage_name]</font>, [stage_status[stage_name] ? "<font color=green>Active</font>  <a href='?src=\ref[src];begincool=[stage_name]'>\[Enter cooldown\]</a>" : "Cooling <a href='?src=\ref[src];beginstage=[stage_name]'>\[Begin injection\]</a>"]</td></tr>"
-				for(var/obj/machinery/rust/fuel_injector/Injector in cur_stage)
-					t += "<tr>"
-					t += "<td>[Injector.on && Injector.remote_enabled ? "<font color=green>Operational</font>" : "<font color=red>Unresponsive</font>"]</td>"
-					t += "<td>[Injector.rate/10] <a href='?src=\ref[Injector];cyclerate=1'>Modify</a></td>"
-					t += "<td>[Injector.fuel_usage*100]% <a href='?src=\ref[Injector];fuel_usage=1'>Modify</a></td>"
-					t += "<td>[Injector.owned_assembly_port ? "[Injector.owned_assembly_port.cur_assembly ? "<font color=green>Loaded</font>": "<font color=blue>Empty</font>"]" : "<font color=red>Disconnected</font>" ]</td>"
-					t += "<td>[Injector.owned_assembly_port && Injector.owned_assembly_port.cur_assembly ? "[Injector.owned_assembly_port.cur_assembly.percent_depleted]%" : ""]</td>"
-					t += "</tr>"
-			t += "</table>"
-			t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-			user << browse(t, "window=fuel_monitor;size=500x600")
-			user.machine = src
+	interact(mob/user)
+		if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+			if (!istype(user, /mob/living/silicon))
+				user.machine = null
+				user << browse(null, "window=fuel_monitor")
+				return
+		var/t = "<B>Reactor Core Fuel Control</B><BR>"
+		var/cooling = 0
+		for(var/stage in stage_status)
+			if(stage_status[stage])
+				t += "Fuel injection: <font color=blue>Active</font><br>"
+				t += "<a href='?src=\ref[src];cooldown=1;'>Enter cooldown phase</a><br>"
+				cooling = 1
+				break
+		if(!cooling)
+			t += "Fuel injection: <font color=blue>Cooling</font><br>"
+			t += "----<br>"
+		//
+		t += "Fuel depletion announcement: "
+		t += "[announce_fueldepletion ? 		"<a href='?src=\ref[src];disable_fueldepletion=1'>Disable</a>" : "<b>Disabled</b>"] "
+		t += "[announce_fueldepletion == 1 ? 	"<b>Announcing</b>" : "<a href='?src=\ref[src];announce_fueldepletion=1'>Announce</a>"] "
+		t += "[announce_fueldepletion == 2 ? 	"<b>Broadcasting</b>" : "<a href='?src=\ref[src];broadcast_fueldepletion=1'>Broadcast</a>"]<br>"
+		t += "Stage progression announcement: "
+		t += "[announce_stageprogression ? 		"<a href='?src=\ref[src];disable_stageprogression=1'>Disable</a>" : "<b>Disabled</b>"] "
+		t += "[announce_stageprogression == 1 ? 	"<b>Announcing</b>" : "<a href='?src=\ref[src];announce_stageprogression=1'>Announce</a>"] "
+		t += "[announce_stageprogression == 2 ? 	"<b>Broadcasting</b>" : "<a href='?src=\ref[src];broadcast_stageprogression=1'>Broadcast</a>"] "
+		t += "<hr>"
+		t += "<table border=1><tr>"
+		t += "<td><b>Injector Status</b></td>"
+		t += "<td><b>Injection interval (sec)</b></td>"
+		t += "<td><b>Assembly consumption per injection</b></td>"
+		t += "<td><b>Fuel Assembly Port</b></td>"
+		t += "<td><b>Assembly depletion percentage</b></td>"
+		t += "</tr>"
+		for(var/stage_name in fuel_injectors)
+			var/list/cur_stage = fuel_injectors[stage_name]
+			t += "<tr><td colspan=5><b>Fuel Injection Stage:</b> [stage_name]</font>, [stage_status[stage_name] ? "<font color=green>Active</font>  <a href='?src=\ref[src];begincool=[stage_name]'>\[Enter cooldown\]</a>" : "Cooling <a href='?src=\ref[src];beginstage=[stage_name]'>\[Begin injection\]</a>"]</td></tr>"
+			for(var/obj/machinery/rust/fuel_injector/Injector in cur_stage)
+				t += "<tr>"
+				t += "<td>[Injector.on && Injector.remote_enabled ? "<font color=green>Operational</font>" : "<font color=red>Unresponsive</font>"]</td>"
+				t += "<td>[Injector.rate/10] <a href='?src=\ref[Injector];cyclerate=1'>Modify</a></td>"
+				t += "<td>[Injector.fuel_usage*100]% <a href='?src=\ref[Injector];fuel_usage=1'>Modify</a></td>"
+				t += "<td>[Injector.owned_assembly_port ? "[Injector.owned_assembly_port.cur_assembly ? "<font color=green>Loaded</font>": "<font color=blue>Empty</font>"]" : "<font color=red>Disconnected</font>" ]</td>"
+				t += "<td>[Injector.owned_assembly_port && Injector.owned_assembly_port.cur_assembly ? "[Injector.owned_assembly_port.cur_assembly.percent_depleted]%" : ""]</td>"
+				t += "</tr>"
+		t += "</table>"
+		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+		user << browse(t, "window=fuel_monitor;size=500x600")
+		user.machine = src

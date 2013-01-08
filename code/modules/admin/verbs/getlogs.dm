@@ -35,10 +35,6 @@
 		src << "<font color='red'>Only Game Masters may use this command.</font>"
 		return
 
-	var/list/clients = list()
-	for(var/client/C)
-		clients += C
-
 	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in clients
 	if( !target || !istype(target,/client) )
 		src << "<font color='red'>Error: giveruntimelog(): Client not found.</font>"

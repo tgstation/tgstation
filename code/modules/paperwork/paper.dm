@@ -155,40 +155,40 @@
 /obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
-	t = dd_replacetext(t, "\[center\]", "<center>")
-	t = dd_replacetext(t, "\[/center\]", "</center>")
-	t = dd_replacetext(t, "\[br\]", "<BR>")
-	t = dd_replacetext(t, "\[b\]", "<B>")
-	t = dd_replacetext(t, "\[/b\]", "</B>")
-	t = dd_replacetext(t, "\[i\]", "<I>")
-	t = dd_replacetext(t, "\[/i\]", "</I>")
-	t = dd_replacetext(t, "\[u\]", "<U>")
-	t = dd_replacetext(t, "\[/u\]", "</U>")
-	t = dd_replacetext(t, "\[large\]", "<font size=\"4\">")
-	t = dd_replacetext(t, "\[/large\]", "</font>")
-	t = dd_replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
-	t = dd_replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+	t = replacetext(t, "\[center\]", "<center>")
+	t = replacetext(t, "\[/center\]", "</center>")
+	t = replacetext(t, "\[br\]", "<BR>")
+	t = replacetext(t, "\[b\]", "<B>")
+	t = replacetext(t, "\[/b\]", "</B>")
+	t = replacetext(t, "\[i\]", "<I>")
+	t = replacetext(t, "\[/i\]", "</I>")
+	t = replacetext(t, "\[u\]", "<U>")
+	t = replacetext(t, "\[/u\]", "</U>")
+	t = replacetext(t, "\[large\]", "<font size=\"4\">")
+	t = replacetext(t, "\[/large\]", "</font>")
+	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
+	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 
 	if(!iscrayon)
-		t = dd_replacetext(t, "\[*\]", "<li>")
-		t = dd_replacetext(t, "\[hr\]", "<HR>")
-		t = dd_replacetext(t, "\[small\]", "<font size = \"1\">")
-		t = dd_replacetext(t, "\[/small\]", "</font>")
-		t = dd_replacetext(t, "\[list\]", "<ul>")
-		t = dd_replacetext(t, "\[/list\]", "</ul>")
+		t = replacetext(t, "\[*\]", "<li>")
+		t = replacetext(t, "\[hr\]", "<HR>")
+		t = replacetext(t, "\[small\]", "<font size = \"1\">")
+		t = replacetext(t, "\[/small\]", "</font>")
+		t = replacetext(t, "\[list\]", "<ul>")
+		t = replacetext(t, "\[/list\]", "</ul>")
 
 		t = "<font face=\"[deffont]\" color=[P.colour]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
-		t = dd_replacetext(t, "\[*\]", "")
-		t = dd_replacetext(t, "\[hr\]", "")
-		t = dd_replacetext(t, "\[small\]", "")
-		t = dd_replacetext(t, "\[/small\]", "")
-		t = dd_replacetext(t, "\[list\]", "")
-		t = dd_replacetext(t, "\[/list\]", "")
+		t = replacetext(t, "\[*\]", "")
+		t = replacetext(t, "\[hr\]", "")
+		t = replacetext(t, "\[small\]", "")
+		t = replacetext(t, "\[/small\]", "")
+		t = replacetext(t, "\[list\]", "")
+		t = replacetext(t, "\[/list\]", "")
 
 		t = "<font face=\"[crayonfont]\" color=[P.colour]><b>[t]</b></font>"
 
-//	t = dd_replacetext(t, "#", "") // Junk converted to nothing!
+//	t = replacetext(t, "#", "") // Junk converted to nothing!
 
 //Count the fields
 	var/laststart = 1

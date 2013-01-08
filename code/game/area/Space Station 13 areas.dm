@@ -49,6 +49,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
 //	var/list/lights				// list of all lights on this area
+	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
+	var/air_doors_activated = 0
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -967,6 +969,17 @@ proc/process_ghost_teleport_locs()
 	icon_state = "medbay"
 	music = 'sound/ambience/signal.ogg'
 
+//Medbay is a large area, these additional areas help level out APC load.
+/area/medical/medbay2
+	name = "Medbay"
+	icon_state = "medbay2"
+	music = 'sound/ambience/signal.ogg'
+
+/area/medical/medbay3
+	name = "Medbay"
+	icon_state = "medbay3"
+	music = 'sound/ambience/signal.ogg'
+
 /area/medical/patients_rooms
 	name = "\improper Patient's Rooms"
 	icon_state = "patients"
@@ -1008,8 +1021,12 @@ proc/process_ghost_teleport_locs()
 	icon_state = "exam_room"
 
 /area/medical/genetics
-	name = "Genetics"
+	name = "Genetics Lab"
 	icon_state = "genetics"
+
+/area/medical/genetics_cloning
+	name = "Cloning Lab"
+	icon_state = "cloning"
 
 /area/medical/sleeper
 	name = "\improper Medical Sleeper Room"

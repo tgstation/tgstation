@@ -10,7 +10,7 @@
 "j" = (/obj/item/ammo_magazine,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "k" = (/obj/effect/rune,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "l" = (/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor{icon_state = "white"},/area/awaymission)
-"m" = (/obj/item/weapon/mousetrap/armed,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"m" = (/obj/item/device/assembly/mousetrap/armed,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "n" = (/obj/item/weapon/nullrod,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "o" = (/obj/item/weapon/card/id/captains_spare,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "p" = (/obj/item/weapon/gun/energy/pulse_rifle/M1911,/turf/simulated/floor{icon_state = "white"},/area/awaymission)

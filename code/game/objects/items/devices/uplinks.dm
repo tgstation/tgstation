@@ -18,10 +18,10 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/uplink/New()
 	welcome = ticker.mode.uplink_welcome
 	if(!item_data)
-		items = dd_replacetext(ticker.mode.uplink_items, "\n", "")	// Getting the text string of items
+		items = replacetext(ticker.mode.uplink_items, "\n", "")	// Getting the text string of items
 	else
-		items = dd_replacetext(item_data)
-	ItemList = dd_text2list(src.items, ";")	// Parsing the items text string
+		items = replacetext(item_data)
+	ItemList = text2list(src.items, ";")	// Parsing the items text string
 	uses = ticker.mode.uplink_uses
 
 //Let's build a menu!
@@ -294,7 +294,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	return 0
 
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
-/obj/item/device/uplink/hidden/proc/interact(mob/user as mob)
+/obj/item/device/uplink/hidden/interact(mob/user as mob)
 
 	var/dat = "<body link='yellow' alink='white' bgcolor='#601414'><font color='white'>"
 	dat += src.generate_menu()
@@ -314,7 +314,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		return 0
 
 	if ((usr.contents.Find(src.loc) || (in_range(src.loc, usr) && istype(src.loc.loc, /turf))))
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["lock"])
 			toggle()
 			usr << browse(null, "window=hidden")
@@ -370,3 +370,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	..()
 	hidden_uplink = new(src)
 	hidden_uplink.uses = 10
+
+
+

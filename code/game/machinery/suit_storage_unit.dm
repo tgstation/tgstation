@@ -155,7 +155,7 @@
 	if(..())
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["toggleUV"])
 			src.toggleUV(usr)
 			src.updateUsrDialog()

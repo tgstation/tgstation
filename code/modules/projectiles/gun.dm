@@ -44,7 +44,7 @@
 			O.emp_act(severity)
 
 
-	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)//TODO: go over this
+	afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)//TODO: go over this
 		if(flag)	return //we're placing gun on a table or in backpack
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 
@@ -104,7 +104,7 @@
 			playsound(user, fire_sound, 50, 1)
 			user.visible_message("\red [user.name] fires the [src.name]!", "\red You fire the [src.name]!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
-		in_chamber.original = targloc
+		in_chamber.original = target
 		in_chamber.loc = get_turf(user)
 		in_chamber.starting = get_turf(user)
 		user.next_move = world.time + 4

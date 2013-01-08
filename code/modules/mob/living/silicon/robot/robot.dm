@@ -53,7 +53,7 @@
 	var/lockcharge //Used when locking down a borg to preserve cell charge
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
-
+	var/braintype = "Cyborg"
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -106,7 +106,6 @@
 //Improved /N
 /mob/living/silicon/robot/Del()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
-		add_to_mob_list(mmi.brainmob)
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
 		if(mind)	mind.transfer_to(mmi.brainmob)
@@ -196,11 +195,16 @@
 
 /mob/living/silicon/robot/proc/updatename(var/prefix as text)
 
+	if(istype(mmi, /obj/item/device/posibrain))
+		braintype = "Android"
+	else
+		braintype = "Cyborg"
+
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
 	else
-		changed_name = "[(prefix ? "[prefix] " : "")]Cyborg-[num2text(ident)]"
+		changed_name = "[(prefix ? "[prefix] " : "")][braintype]-[num2text(ident)]"
 	real_name = changed_name
 	name = real_name
 
@@ -621,7 +625,7 @@
 		if ("disarm")
 			if(!(lying))
 				if (rand(1,100) <= 85)
-					Stun(10)
+					Stun(7)
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
 					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
@@ -838,7 +842,7 @@
 	..()
 	if (href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 		return
 
@@ -971,7 +975,7 @@
 		s_active.close(src)
 
 	if(module)
-		if(module.type == /obj/item/weapon/robot_module/janitor)	//you'd think checking the module would work
+		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()
