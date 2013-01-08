@@ -19,7 +19,7 @@
 
 	// canstun and canweaken don't affect metroids because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
-	status_flags = CANPARALYSE
+	status_flags = CANPARALYSE|CANPUSH
 
 	var/cores = 3 // the number of /obj/item/metroid_core's the metroid has left inside
 
@@ -674,18 +674,18 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 	return
 
 /mob/living/carbon/metroid/updatehealth()
-	if (nodamage == 0)
+	if(status_flags & GODMODE)
+		if(istype(src, /mob/living/carbon/metroid/adult))
+			health = 200
+		else
+			health = 150
+		stat = CONSCIOUS
+	else
 		// metroids can't suffocate unless they suicide. They are also not harmed by fire
 		if(istype(src, /mob/living/carbon/metroid/adult))
 			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 		else
 			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-	else
-		if(istype(src, /mob/living/carbon/metroid/adult))
-			health = 200
-		else
-			health = 150
-		stat = 0
 
 
 /mob/living/carbon/metroid/proc/get_obstacle_ok(atom/A)

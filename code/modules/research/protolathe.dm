@@ -88,25 +88,25 @@ Note: Must be placed west/left of and R&D console to function.
 				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
 				G.amount = round(g_amount / G.perunit)
 			if(plasma_amount >= 2000)
-				var/obj/item/stack/sheet/plasma/G = new /obj/item/stack/sheet/plasma(src.loc)
+				var/obj/item/stack/sheet/mineral/plasma/G = new /obj/item/stack/sheet/mineral/plasma(src.loc)
 				G.amount = round(plasma_amount / G.perunit)
 			if(silver_amount >= 2000)
-				var/obj/item/stack/sheet/silver/G = new /obj/item/stack/sheet/silver(src.loc)
+				var/obj/item/stack/sheet/mineral/silver/G = new /obj/item/stack/sheet/mineral/silver(src.loc)
 				G.amount = round(silver_amount / G.perunit)
 			if(gold_amount >= 2000)
-				var/obj/item/stack/sheet/gold/G = new /obj/item/stack/sheet/gold(src.loc)
+				var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold(src.loc)
 				G.amount = round(gold_amount / G.perunit)
 			if(uranium_amount >= 2000)
-				var/obj/item/stack/sheet/uranium/G = new /obj/item/stack/sheet/uranium(src.loc)
+				var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium(src.loc)
 				G.amount = round(uranium_amount / G.perunit)
 			if(diamond_amount >= 2000)
-				var/obj/item/stack/sheet/diamond/G = new /obj/item/stack/sheet/diamond(src.loc)
+				var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
 				G.amount = round(diamond_amount / G.perunit)
 			if(clown_amount >= 2000)
-				var/obj/item/stack/sheet/clown/G = new /obj/item/stack/sheet/clown(src.loc)
+				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
 				G.amount = round(clown_amount / G.perunit)
 			if(adamantine_amount >= 2000)
-				var/obj/item/stack/sheet/adamantine/G = new /obj/item/stack/sheet/adamantine(src.loc)
+				var/obj/item/stack/sheet/mineral/adamantine/G = new /obj/item/stack/sheet/mineral/adamantine(src.loc)
 				G.amount = round(adamantine_amount / G.perunit)
 			del(src)
 			return 1
@@ -157,19 +157,19 @@ Note: Must be placed west/left of and R&D console to function.
 			m_amount += amount * 3750
 		else if(istype(stack, /obj/item/stack/sheet/glass))
 			g_amount += amount * 3750
-		else if(istype(stack, /obj/item/stack/sheet/gold))
+		else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
 			gold_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/silver))
+		else if(istype(stack, /obj/item/stack/sheet/mineral/silver))
 			silver_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/plasma))
+		else if(istype(stack, /obj/item/stack/sheet/mineral/plasma))
 			plasma_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/uranium))
+		else if(istype(stack, /obj/item/stack/sheet/mineral/uranium))
 			uranium_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/diamond))
+		else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
 			diamond_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/clown))
+		else if(istype(stack, /obj/item/stack/sheet/mineral/clown))
 			clown_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/adamantine))
+		else if(istype(stack, /obj/item/stack/sheet/mineral/adamantine))
 			adamantine_amount += amount * 2000
 		stack.use(amount)
 		busy = 0

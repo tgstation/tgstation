@@ -331,7 +331,7 @@ datum/mind
 		else
 			var/obj_count = 1
 			for(var/datum/objective/objective in objectives)
-				out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a><br>"
+				out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'><font color=[objective.completed ? "green" : "red"]>Toggle Completion</font></a><br>"
 				obj_count++
 		out += "<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>"
 
@@ -471,8 +471,13 @@ datum/mind
 
 		else if (href_list["obj_delete"])
 			var/datum/objective/objective = locate(href_list["obj_delete"])
-			if (!objective) return
+			if(!istype(objective))	return
 			objectives -= objective
+
+		else if(href_list["obj_completed"])
+			var/datum/objective/objective = locate(href_list["obj_completed"])
+			if(!istype(objective))	return
+			objective.completed = !objective.completed
 
 		else if (href_list["revolution"])
 			switch(href_list["revolution"])
@@ -757,7 +762,7 @@ datum/mind
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
 							log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
-							message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]", 1)
+							message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]")
 							src = null
 							M = H.monkeyize()
 							src = M.mind
@@ -787,7 +792,7 @@ datum/mind
 								D.cure(0)
 								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
-						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]", 1)
+						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
 						var/obj/item/weapon/dnainjector/m2h/m2h = new
 						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
 						src = null

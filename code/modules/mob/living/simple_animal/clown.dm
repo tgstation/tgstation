@@ -50,7 +50,7 @@
 /mob/living/simple_animal/clown/Life()
 	..()
 	if(stat == 2)
-		new /obj/effect/landmark/corpse/clown (src.loc)
+		new /obj/effect/landmark/mobcorpse/clown (src.loc)
 		del src
 		return
 
@@ -185,7 +185,7 @@
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
-			if(tmob.nopush)
+			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return
 

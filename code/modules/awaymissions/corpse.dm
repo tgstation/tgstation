@@ -1,10 +1,12 @@
+//These are meant for spawning on maps, namely Away Missions.
+
 //If someone can do this in a neater way, be my guest-Kor
 
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 
 /obj/effect/landmark/corpse
 	name = "Unknown"
-	var/mobname = "Unknown"  //Unused now
+	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -22,11 +24,13 @@
 	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
 	var/corpseidicon = null //For setting it to be a gold, silver, centcomm etc ID
 
+/obj/effect/landmark/corpse/initialize()
+	createCorpse()
 
-/obj/effect/landmark/corpse/New() //Creates a mob and checks for gear in each slot before attempting to equip it.
+/obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
 	M.real_name = src.name
-	M.stat = 2 //Kills the new mob
+	M.death(1) //Kills the new mob
 	if(src.corpseuniform)
 		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
 	if(src.corpsesuit)
@@ -172,6 +176,21 @@
 	corpseid = 1
 	corpseidjob = "Scientist"
 	corpseidaccess = "Scientist"
+
+/obj/effect/landmark/corpse/miner
+	corpseradio = /obj/item/device/radio/headset/headset_mine
+	corpseuniform = /obj/item/clothing/under/rank/miner
+	corpsegloves = /obj/item/clothing/gloves/black
+	corpseback = /obj/item/weapon/storage/backpack/industrial
+	corpseshoes = /obj/item/clothing/shoes/black
+	corpseid = 1
+	corpseidjob = "Shaft Miner"
+	corpseidaccess = "Shaft Miner"
+
+/obj/effect/landmark/corpse/miner/rig
+	corpsesuit = /obj/item/clothing/suit/space/rig/mining
+	corpsemask = /obj/item/clothing/mask/breath
+	corpsehelmet = /obj/item/clothing/head/helmet/space/rig/mining
 
 
 /////////////////Officers//////////////////////

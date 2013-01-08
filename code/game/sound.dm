@@ -19,10 +19,13 @@
 
 	if (vary)
 		S.frequency = rand(32000, 55000)
-	for (var/mob/M in range(world.view+extrarange, source))	   // Plays for people in range.
-		if(locate(/mob/, M))
+
+	for (var/A in range(world.view+extrarange, source))       // Plays for people in range.
+
+		if(ismob(A))
+			var/mob/M = A
 			var/mob/M2 = locate(/mob/, M)
-			if (M2.client)
+			if (M2 && M2.client)
 				if(M2.ear_deaf <= 0 || !M.ear_deaf)
 					if(isturf(source))
 						var/dx = source.x - M2.x
@@ -30,17 +33,17 @@
 
 					M2 << S
 
-		if (M.client)
-			if(M.ear_deaf <= 0 || !M.ear_deaf)
-				if(isturf(source))
-					var/dx = source.x - M.x
-					S.pan = max(-100, min(100, dx/8.0 * 100))
+			if (M.client)
+				if(M.ear_deaf <= 0 || !M.ear_deaf)
+					if(isturf(source))
+						var/dx = source.x - M.x
+						S.pan = max(-100, min(100, dx/8.0 * 100))
 
-				M << S
+					M << S
 
-	for(var/obj/structure/closet/L in range(world.view+extrarange, source))
-		if(locate(/mob/, L))
-			for(var/mob/M in L)
+		if(istype(A, /obj/structure/closet))
+			var/obj/O = A
+			for(var/mob/M in O)
 				if (M.client)
 					if(M.ear_deaf <= 0 || !M.ear_deaf)
 						if(isturf(source))
@@ -85,17 +88,7 @@
 
 	src << S
 
-client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful
-	set category = "Special Verbs"
-	set name = "Toggle Ambience"
-
-	usr:client:no_ambi = !usr:client:no_ambi
-
-	if(usr:client:no_ambi)
-		usr << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
-		usr << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
-
-	usr << "Toggled ambient sound [usr:client:no_ambi?"off":"on"]."
-	return
-
-
+/client/proc/playtitlemusic()
+	if(!ticker || !ticker.login_music)	return
+	if(prefs.toggles & SOUND_LOBBY)
+		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS

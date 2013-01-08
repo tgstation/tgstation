@@ -20,3 +20,5 @@
 					  // life should decrease this by 1 every tick
 	// total amount of wounds on mob, used to spread out healing and the like over all wounds
 	var/number_wounds = 0
+	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
+	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.

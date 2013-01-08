@@ -9,6 +9,7 @@
 	throw_range = 3
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	var/perunit = 3750
+	var/sheettype = null //this is used for girders in the creation of walls/false walls
 
 /obj/item/stack/sheet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/sheetsnatcher))

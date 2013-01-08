@@ -996,6 +996,64 @@ table tr:first-child th:first-child { border: none;}
 	spawn(rand(0,15))
 		update_icon()
 
+/*
+AIR ALARM CIRCUIT
+Just a object used in constructing air alarms
+*/
+/obj/item/weapon/airalarm_electronics
+	name = "air alarm electronics"
+	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon_state = "door_electronics"
+	desc = "Looks like a circuit. Probably is."
+	w_class = 2.0
+	m_amt = 50
+	g_amt = 50
+
+
+/*
+AIR ALARM ITEM
+Handheld air alarm frame, for placing on walls
+Code shamelessly copied from apc_frame
+*/
+/obj/item/alarm_frame
+	name = "air alarm frame"
+	desc = "Used for building Air Alarms"
+	icon = 'icons/obj/monitors.dmi'
+	icon_state = "alarm_bitem"
+	flags = FPRINT | TABLEPASS| CONDUCT
+
+/obj/item/alarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
+		del(src)
+		return
+	..()
+
+/obj/item/alarm_frame/proc/try_build(turf/on_wall)
+	if (get_dist(on_wall,usr)>1)
+		return
+
+	var/ndir = get_dir(on_wall,usr)
+	if (!(ndir in cardinal))
+		return
+
+	var/turf/loc = get_turf_loc(usr)
+	var/area/A = loc.loc
+	if (!istype(loc, /turf/simulated/floor))
+		usr << "\red Air Alarm cannot be placed on this spot."
+		return
+	if (A.requires_power == 0 || A.name == "Space")
+		usr << "\red Air Alarm cannot be placed in this area."
+		return
+
+	if(gotwallitem(loc, ndir))
+		usr << "\red There's already an item on this wall!"
+		return
+
+	new /obj/machinery/alarm(loc, ndir, 1)
+
+	del(src)
+
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(detecting)
 		if(temperature > T0C+200)
@@ -1149,6 +1207,64 @@ table tr:first-child th:first-child { border: none;}
 		RA.firealert()
 	//playsound(loc, 'signal.ogg', 75, 0)
 	return
+
+/*
+FIRE ALARM CIRCUIT
+Just a object used in constructing fire alarms
+*/
+/obj/item/weapon/firealarm_electronics
+	name = "fire alarm electronics"
+	icon = 'icons/obj/doors/door_assembly.dmi'
+	icon_state = "door_electronics"
+	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
+	w_class = 2.0
+	m_amt = 50
+	g_amt = 50
+
+
+/*
+FIRE ALARM ITEM
+Handheld fire alarm frame, for placing on walls
+Code shamelessly copied from apc_frame
+*/
+/obj/item/firealarm_frame
+	name = "fire alarm frame"
+	desc = "Used for building Fire Alarms"
+	icon = 'icons/obj/monitors.dmi'
+	icon_state = "fire_bitem"
+	flags = FPRINT | TABLEPASS| CONDUCT
+
+/obj/item/firealarm_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
+		del(src)
+		return
+	..()
+
+/obj/item/firealarm_frame/proc/try_build(turf/on_wall)
+	if (get_dist(on_wall,usr)>1)
+		return
+
+	var/ndir = get_dir(on_wall,usr)
+	if (!(ndir in cardinal))
+		return
+
+	var/turf/loc = get_turf_loc(usr)
+	var/area/A = loc.loc
+	if (!istype(loc, /turf/simulated/floor))
+		usr << "\red Fire Alarm cannot be placed on this spot."
+		return
+	if (A.requires_power == 0 || A.name == "Space")
+		usr << "\red Fire Alarm cannot be placed in this area."
+		return
+
+	if(gotwallitem(loc, ndir))
+		usr << "\red There's already an item on this wall!"
+		return
+
+	new /obj/machinery/firealarm(loc, ndir, 1)
+
+	del(src)
 
 /obj/machinery/partyalarm/attack_paw(mob/user as mob)
 	return attack_hand(user)

@@ -1,5 +1,6 @@
 /datum/admins/Topic(href, href_list)
 	..()
+
 	if(usr.client != src.owner || !check_rights(0))
 		world << "\blue [usr.key] has attempted to override the admin panel!"
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
@@ -100,52 +101,93 @@
 
 		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey)
 
-	else if(href_list["editadminpermissions"])
-		var/adm_ckey = href_list["editadminckey"]
-		if(!adm_ckey)
-			usr << "\red no valid ckey"
-			return
-
+	else if(href_list["editrights"])
 		if(!check_rights(R_PERMISSIONS))
-			message_admins("[key_name_admin(usr)] attempted to edit the admin permissions of [adm_ckey] without sufficient rights.")
-			log_admin("[key_name(usr)] attempted to edit the admin permissions of [adm_ckey] without sufficient rights.")
+			message_admins("[key_name_admin(usr)] attempted to edit the admin permissions without sufficient rights.")
+			log_admin("[key_name(usr)] attempted to edit the admin permissions without sufficient rights.")
 			return
 
-		switch(href_list["editadminpermissions"])
-			if("permissions")
-				var/list/permissionlist = list()
-				for(var/i=1, i<=R_MAXPERMISSION, i<<=1)		//that <<= is shorthand for i = i << 1. Which is a left bitshift
-					permissionlist[rights2text(i)] = i
-				var/new_permission
-				spawn(0)	//Safety
-					new_permission = input("Select a permission to turn on/off", "Permission toggle", null, null) as null|anything in permissionlist
-					if(!new_permission)	return
+		var/adm_ckey
 
-					message_admins("[key_name_admin(usr)] toggled the [new_permission] permission of [adm_ckey]")
-					log_admin("[key_name(usr)] toggled the [new_permission] permission of [adm_ckey]")
-					log_admin_permission_modification(adm_ckey, permissionlist[new_permission])
-			if("rank")
-				var/new_rank = input("Please, select a rank", "New rank for player", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer")
-				if(!new_rank)	return
+		var/task = href_list["editrights"]
+		if(task == "add")
+			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null) as text|null)
+			if(!new_ckey)	return
+			if(new_ckey in admin_datums)
+				usr << "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>"
+				return
+			adm_ckey = new_ckey
+			task = "rank"
+		else if(task != "show")
+			adm_ckey = ckey(href_list["ckey"])
+			if(!adm_ckey)
+				usr << "<font color='red'>Error: Topic 'editrights': No valid ckey</font>"
+				return
 
-				message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
-				log_admin("[key_name(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
-				log_admin_rank_modification(adm_ckey, new_rank)
-			if("remove")
-				if(alert("Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
-					message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
-					log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
-					log_admin_rank_modification(adm_ckey, "Removed")
-			if("add")
-				var/new_ckey = input(usr,"New admin's ckey","Admin ckey", null) as text|null
-				if(!new_ckey)	return
-				var/new_rank = input("Please, select a rank", "New rank for player", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer")
-				if(!new_rank)	return
+		var/datum/admins/D = admin_datums[adm_ckey]
 
-				message_admins("[key_name_admin(usr)] added [new_ckey] as a new admin to the rank [new_rank]")
-				log_admin("[key_name(usr)] added [new_ckey] as a new admin to the rank [new_rank]")
-				log_admin_rank_modification(new_ckey, new_rank)
+		if(task == "remove")
+			if(alert("Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
+				if(!D)	return
+				admin_datums -= adm_ckey
+				D.disassociate()
 
+				message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
+				log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
+				log_admin_rank_modification(adm_ckey, "Removed")
+
+		else if(task == "rank")
+			var/new_rank
+			if(admin_ranks.len)
+				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in (admin_ranks|"*New Rank*")
+			else
+				new_rank = input("Please select a rank", "New rank", null, null) as null|anything in list("Game Master","Game Admin", "Trial Admin", "Admin Observer","*New Rank*")
+
+			var/rights = 0
+			switch(new_rank)
+				if(null,"") return
+				if("*New Rank*")
+					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null) as null|text)
+					if(!new_rank)
+						usr << "<font color='red'>Error: Topic 'editrights': Invalid rank</font>"
+						return
+					if(admin_ranks.len)
+						if(new_rank in admin_ranks)
+							rights |= admin_ranks[new_rank]			//we typed a rank which already exists, use its rights
+						else
+							admin_ranks[new_rank] = 0				//add the new rank to admin_ranks
+				else
+					new_rank = ckeyEx(new_rank)
+					rights |= admin_ranks[new_rank]					//we input an existing rank, use its rights
+
+			if(D)
+				D.disassociate()									//remove adminverbs and unlink from client
+				D.rank = new_rank									//update the rank
+				D.rights = rights									//update the rights based on admin_ranks (default: 0)
+			else
+				D = new /datum/admins(new_rank, rights, adm_ckey)
+
+			var/client/C = directory[adm_ckey]						//find the client with the specified ckey (if they are logged in)
+			D.associate(C)											//link up with the client and add verbs
+
+			message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
+			log_admin("[key_name(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
+			log_admin_rank_modification(adm_ckey, new_rank)
+
+		else if(task == "permissions")
+			if(!D)	return
+			var/list/permissionlist = list()
+			for(var/i=1, i<=R_MAXPERMISSION, i<<=1)		//that <<= is shorthand for i = i << 1. Which is a left bitshift
+				permissionlist[rights2text(i)] = i
+			var/new_permission = input("Select a permission to turn on/off", "Permission toggle", null, null) as null|anything in permissionlist
+			if(!new_permission)	return
+			D.rights ^= permissionlist[new_permission]
+
+			message_admins("[key_name_admin(usr)] toggled the [new_permission] permission of [adm_ckey]")
+			log_admin("[key_name(usr)] toggled the [new_permission] permission of [adm_ckey]")
+			log_admin_permission_modification(adm_ckey, permissionlist[new_permission])
+
+		edit_admin_permissions()
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))	return
@@ -251,6 +293,9 @@
 			else
 				alert(usr, "This ban has already been lifted / does not exist.", "Error", "Ok")
 				unbanpanel()
+
+	else if(href_list["warn"])
+		usr.client.warn(href_list["warn"])
 
 	else if(href_list["unbane"])
 		if(!check_rights(R_BAN))	return
@@ -1164,10 +1209,6 @@
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
 
-	else if(href_list["adminplayervars"])
-		var/mob/M = locate(href_list["adminplayervars"])
-		usr.client.debug_variables(M)
-
 	else if(href_list["adminplayerobservejump"])
 		if(!check_rights(R_ADMIN))	return
 
@@ -1241,7 +1282,7 @@
 		src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;"
 		src.owner << "Location = [location_description];"
 		src.owner << "[special_role_description]"
-		src.owner << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
+		src.owner << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
 
 	else if(href_list["adminspawncookie"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
@@ -1402,29 +1443,6 @@
 	else if(href_list["create_mob"])
 		if(!check_rights(R_SPAWN))	return
 		return create_mob(usr)
-
-	//Promote or Demote a client.
-	else if(href_list["prom_demot"])
-		if(!check_rights(R_PERMISSIONS))	return
-
-		var/client/C = locate(href_list["prom_demot"])
-		if(!istype(C))
-			usr << "This can only be used on instances of type /client"
-			return
-
-		var/dat = "[C] is a "
-		if(C.holder)
-			dat += "[C.holder.rank]"
-		else
-			dat += "non-admin"
-		dat += "<br><br>Change [C]'s rank?<br>"
-
-		for(var/rank in admin_ranks)
-			dat += "<A href='?src=\ref[src];chgadlvl=[rank];client4ad=\ref[C]'>[rank]</A><br>"
-		dat += "<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Deadmin</A>"
-
-		dat += "<br>NOTE: this screen currently does nothing<br>"
-		usr << browse(dat, "window=prom_demot;size=480x300")
 
 	else if(href_list["object_list"])			//this is the laggiest thing ever
 		if(!check_rights(R_SPAWN))	return
@@ -2023,7 +2041,7 @@
 			if("virus")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","V")
-				var/answer = alert("Do you want this to be a random disease or do you have something in mind?",,"Virus2","Random","Choose")
+				var/answer = alert("Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose")
 				if(answer=="Random")
 					viral_outbreak()
 					message_admins("[key_name_admin(usr)] has triggered a virus outbreak", 1)
@@ -2033,17 +2051,7 @@
 					viral_outbreak(V)
 					message_admins("[key_name_admin(usr)] has triggered a virus outbreak of [V]", 1)
 				else
-					usr << "Nope"
-					/*
-					var/lesser = (alert("Do you want to infect the mob with a major or minor disease?",,"Major","Minor") == "Minor")
-					var/mob/living/carbon/victim = input("Select a mob to infect", "Virus2") as null|mob in world
-					if(!istype(victim)) return
-					if(lesser)
-						infect_mob_random_lesser(victim)
-					else
-						infect_mob_random_greater(victim)
-					message_admins("[key_name_admin(usr)] has infected [victim] with a [lesser ? "minor" : "major"] virus2.", 1)
-					*/
+					AdminCreateVirus(usr)
 			if("retardify")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","RET")
@@ -2091,6 +2099,11 @@
 				feedback_add_details("admin_secrets_fun_used","K")
 				spacevine_infestation()
 				message_admins("[key_name_admin(usr)] has spawned spacevines", 1)
+			if("onlyone")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","OO")
+				usr.client.only_one()
+//				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if (ok)

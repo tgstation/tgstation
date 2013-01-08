@@ -87,7 +87,7 @@ var/list/department_radio_keys = list(
 		return say_dead(message)
 
 	if (src.client)
-		if(client.muted & MUTE_IC)
+		if(client.prefs.muted & MUTE_IC)
 			src << "\red You cannot speak in IC (muted)."
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
@@ -310,7 +310,7 @@ var/list/department_radio_keys = list(
 			continue //skip monkeys and leavers
 		if (istype(M, /mob/new_player))
 			continue
-		if(M.stat == 2 && M.client.ghost_ears)
+		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && src.client) // src.client is so that ghosts don't have to listen to mice
 			listening|=M
 
 	var/turf/T = get_turf(src)
@@ -388,7 +388,14 @@ var/list/department_radio_keys = list(
 
 		for (var/M in heard_a)
 			if(hascall(M,"show_message"))
-				M:show_message(rendered, 2)
+				var/deaf_message = ""
+				var/deaf_type = 1
+				if(M != src)
+					deaf_message = "<span class='name'>[name][alt_name]</span> talks but you cannot hear them."
+				else
+					deaf_message = "<span class='notice'>You cannot hear yourself!</span>"
+					deaf_type = 2 // Since you should be able to hear yourself without looking
+				M:show_message(rendered, 2, deaf_message, deaf_type)
 				M << speech_bubble
 
 	if (length(heard_b))
