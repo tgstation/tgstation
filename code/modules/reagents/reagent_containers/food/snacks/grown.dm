@@ -49,7 +49,7 @@
 		usr << msg
 		return
 
-	if (istype(O, /obj/item/weapon/plantbag))
+	/*if (istype(O, /obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/plantbag/S = O
 		if (S.mode == 1)
 			for(var/obj/item/G in get_turf(src))
@@ -64,11 +64,11 @@
 			if (S.contents.len < S.capacity)
 				S.contents += src;
 			else
-				user << "\blue The plant bag is full."
+				user << "\blue The plant bag is full."*/
 	return
 
-/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (istype(O, /obj/item/weapon/plantbag))
+/*/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (istype(O, /obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/plantbag/S = O
 		if (S.mode == 1)
 			for(var/obj/item/G in get_turf(src))
@@ -84,7 +84,7 @@
 				S.contents += src;
 			else
 				user << "\blue The plant bag is full."
-	return
+	return*/
 
 /obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	..()

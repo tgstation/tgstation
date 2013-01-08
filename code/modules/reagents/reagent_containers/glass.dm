@@ -25,7 +25,7 @@
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
-		/obj/item/weapon/secstorage/ssafe,
+		/obj/item/weapon/storage/secure/safe,
 		/obj/machinery/disposal
 	)
 

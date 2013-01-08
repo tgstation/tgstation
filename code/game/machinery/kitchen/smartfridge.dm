@@ -83,7 +83,7 @@
 			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
 								 "<span class='notice'>You add \the [O] to \the [src].")
 
-	else if(istype(O, /obj/item/weapon/plantbag))
+	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		var/plants_loaded = 0
 		for(var/obj/G in O.contents)
 			if(accept_check(G))

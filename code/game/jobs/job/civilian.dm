@@ -164,11 +164,11 @@
 		if(H.backbag == 1)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
 			H.equip_to_slot_or_del(new /obj/item/weapon/crowbar(H), slot_l_hand)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/satchel(H), slot_l_store)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/ore(H), slot_l_store)
 		else
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 			H.equip_to_slot_or_del(new /obj/item/weapon/crowbar(H), slot_in_backpack)
-			H.equip_to_slot_or_del(new /obj/item/weapon/storage/satchel(H), slot_in_backpack)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/ore(H), slot_in_backpack)
 		return 1
 
 
@@ -199,7 +199,7 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/rainbow(H), slot_in_backpack)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/crayonbox(H), slot_in_backpack)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/crayons(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/toy/waterflower(H), slot_in_backpack)
 		H.mutations.Add(CLUMSY)
 		return 1

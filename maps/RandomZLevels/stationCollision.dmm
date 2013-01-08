@@ -317,7 +317,7 @@
 "ge" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/awaymission/arrivalblock)
 "gf" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/awaymission/arrivalblock)
 "gg" = (/obj/structure/stool/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor{icon_state = "grimy"},/area/awaymission/northblock)
-"gh" = (/obj/item/weapon/secstorage/ssafe/sc_ssafe{pixel_x = 4; pixel_y = -26},/turf/simulated/floor{icon_state = "grimy"},/area/awaymission/northblock)
+"gh" = (/obj/item/weapon/storage/secure/safe/sc_ssafe{pixel_x = 4; pixel_y = -26},/turf/simulated/floor{icon_state = "grimy"},/area/awaymission/northblock)
 "gi" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/captain,/obj/item/clothing/under/rank/captain,/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/splatter,/obj/item/weapon/gun/energy/laser/retro/sc_retro,/turf/simulated/floor{icon_state = "grimy"},/area/awaymission/northblock)
 "gj" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor/airless{icon_state = "floorscorched2"},/area/awaymission/midblock)
 "gk" = (/obj/structure/closet/wardrobe,/turf/simulated/floor,/area/awaymission/midblock)

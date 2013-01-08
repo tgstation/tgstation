@@ -1151,41 +1151,27 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		usr << "You do not have a PDA. You should make an issue report about this."
 
-
-
-
 //Some spare PDAs in a box
-
-/obj/item/weapon/storage/PDAbox
+/obj/item/weapon/storage/box/PDAs
 	name = "spare PDAs"
 	desc = "A box of spare PDA microcomputers."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdabox"
-	item_state = "syringe_kit"
-	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
-/obj/item/weapon/storage/PDAbox/New()
-	..()
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
+	New()
+		..()
+		new /obj/item/device/pda(src)
+		new /obj/item/device/pda(src)
+		new /obj/item/device/pda(src)
+		new /obj/item/device/pda(src)
+		new /obj/item/weapon/cartridge/head(src)
 
-	var/newcart = pick(1,2,3,4,5)
-	switch(newcart)
-		if(1)
-			new /obj/item/weapon/cartridge/engineering(src)
-		if(2)
-			new /obj/item/weapon/cartridge/security(src)
-		if(3)
-			new /obj/item/weapon/cartridge/medical(src)
-		if(4)
-			new /obj/item/weapon/cartridge/signal/toxins(src)
-		if(5)
-			new /obj/item/weapon/cartridge/quartermaster(src)
-
-	new /obj/item/weapon/cartridge/head(src)
-
+		var/newcart = pick(	/obj/item/weapon/cartridge/engineering,
+							/obj/item/weapon/cartridge/security,
+							/obj/item/weapon/cartridge/medical,
+							/obj/item/weapon/cartridge/signal/toxins,
+							/obj/item/weapon/cartridge/quartermaster)
+		new newcart(src)
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/device/pda/emp_act(severity)

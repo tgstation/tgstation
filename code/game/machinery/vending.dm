@@ -600,7 +600,7 @@
 	name = "Cigarette machine" //OCD had to be uppercase to look nice with the new formating
 	desc = "If you want to get cancer, might as well do it in style"
 	icon_state = "cigs"
-	product_paths = "/obj/item/weapon/cigpacket;/obj/item/weapon/storage/matchbox;/obj/item/weapon/lighter/random"
+	product_paths = "/obj/item/weapon/storage/fancy/cigarettes;/obj/item/weapon/storage/box/matches;/obj/item/weapon/lighter/random"
 	product_amounts = "10;10;4"
 	product_slogans = "Space cigs taste good like a cigarette should.;I'd rather toolbox than switch.;Smoke!;Don't believe the reports - smoke today!"
 	vend_delay = 34
@@ -675,7 +675,7 @@
 	desc = "A plant nutrients vendor"
 	icon_state = "nutri"
 	icon_deny = "nutri-deny"
-	product_paths = "/obj/item/nutrient/ez;/obj/item/nutrient/l4z;/obj/item/nutrient/rh;/obj/item/weapon/pestspray;/obj/item/weapon/reagent_containers/syringe;/obj/item/weapon/plantbag"
+	product_paths = "/obj/item/nutrient/ez;/obj/item/nutrient/l4z;/obj/item/nutrient/rh;/obj/item/weapon/pestspray;/obj/item/weapon/reagent_containers/syringe;/obj/item/weapon/storage/bag/plants"
 	product_amounts = "35;25;15;20;5;5"
 	product_slogans = "Aren't you glad you don't have to fertilize the natural way?;Now with 50% less stink!;Plants are people too!"
 	product_hidden = "/obj/item/weapon/reagent_containers/glass/bottle/ammonia;/obj/item/weapon/reagent_containers/glass/bottle/diethylamine"

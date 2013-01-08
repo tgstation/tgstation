@@ -7,7 +7,7 @@
 	flags = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
-	var/obj/item/weapon/trashbag/mybag	= null
+	var/obj/item/weapon/storage/bag/trash/mybag	= null
 
 /obj/structure/stool/bed/chair/janicart/New()
 	handle_rotation()
@@ -33,7 +33,7 @@
 			user << "<span class='notice'>This pimpin' ride is out of water!</span>"
 	else if(istype(W, /obj/item/key))
 		user << "Hold [W] in one of your hands while you drive this pimpin' ride."
-	else if(istype(W, /obj/item/weapon/trashbag))
+	else if(istype(W, /obj/item/weapon/storage/bag/trash))
 		user << "<span class='notice'>You hook the trashbag onto the pimpin' ride.</span>"
 		user.drop_item()
 		W.loc = src

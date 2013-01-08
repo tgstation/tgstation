@@ -28,7 +28,7 @@
 
 /datum/supply_packs/specialops
 	name = "Special Ops supplies"
-	contains = list(/obj/item/weapon/storage/emp_kit,
+	contains = list(/obj/item/weapon/storage/box/emps,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
@@ -55,7 +55,7 @@
 
 /datum/supply_packs/monkey
 	name = "Monkey crate"
-	contains = list (/obj/item/weapon/storage/monkeycube_box)
+	contains = list (/obj/item/weapon/storage/box/monkeycubes)
 	cost = 20
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Monkey crate"
@@ -91,7 +91,7 @@
 
 /datum/supply_packs/party
 	name = "Party equipment"
-	contains = list(/obj/item/weapon/storage/drinkingglasses,
+	contains = list(/obj/item/weapon/storage/box/drinkingglasses,
 					/obj/item/weapon/reagent_containers/food/drinks/shaker,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/patron,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager,
@@ -158,9 +158,9 @@
 
 /datum/supply_packs/lightbulbs
 	name = "Replacement lights"
-	contains = list(/obj/item/weapon/storage/lightbox/mixed,
-					/obj/item/weapon/storage/lightbox/mixed,
-					/obj/item/weapon/storage/lightbox/mixed)
+	contains = list(/obj/item/weapon/storage/box/lights/mixed,
+					/obj/item/weapon/storage/box/lights/mixed,
+					/obj/item/weapon/storage/box/lights/mixed)
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "Replacement lights"
@@ -280,7 +280,7 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
 					/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-					/obj/item/weapon/storage/syringes)
+					/obj/item/weapon/storage/box/syringes)
 	cost = 10
 	containertype = /obj/structure/closet/crate/medical
 	containername = "Medical crate"
@@ -297,8 +297,8 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/weapon/reagent_containers/glass/bottle/brainrot,
 					/obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion,
-					/obj/item/weapon/storage/syringes,
-					/obj/item/weapon/storage/beakerbox,
+					/obj/item/weapon/storage/box/syringes,
+					/obj/item/weapon/storage/box/beakers,
 					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure/weapon
@@ -503,8 +503,8 @@
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/taser,
 					/obj/item/weapon/gun/energy/taser,
-					/obj/item/weapon/storage/flashbang_kit,
-					/obj/item/weapon/storage/flashbang_kit)
+					/obj/item/weapon/storage/box/flashbangs,
+					/obj/item/weapon/storage/box/flashbangs)
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "Weapons crate"
@@ -543,9 +543,9 @@
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
-					/obj/item/weapon/storage/flashbang_kit,
-					/obj/item/weapon/storage/flashbang_kit,
-					/obj/item/weapon/storage/flashbang_kit,
+					/obj/item/weapon/storage/box/flashbangs,
+					/obj/item/weapon/storage/box/flashbangs,
+					/obj/item/weapon/storage/box/flashbangs,
 					/obj/item/weapon/handcuffs,
 					/obj/item/weapon/handcuffs,
 					/obj/item/weapon/handcuffs,
@@ -657,7 +657,7 @@
 /datum/supply_packs/randomised/contraband
 	num_contained = 5
 	contains = list(/obj/item/weapon/contraband/poster,
-					/obj/item/weapon/cigpacket/dromedaryco,
+					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 					/obj/item/weapon/lipstick/random)
 	name = "Contraband crate"
 	cost = 30

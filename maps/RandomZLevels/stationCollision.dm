@@ -149,10 +149,10 @@ var/sc_safecode5 = "[rand(0,9)]"
 /*
  * Captain's safe
  */
-/obj/item/weapon/secstorage/ssafe/sc_ssafe
+/obj/item/weapon/storage/secure/safe/sc_ssafe
 	name = "Captain's secure safe"
 
-/obj/item/weapon/secstorage/ssafe/sc_ssafe/New()
+/obj/item/weapon/storage/secure/safe/sc_ssafe/New()
 	..()
 	l_code = "[sc_safecode1][sc_safecode2][sc_safecode3][sc_safecode4][sc_safecode5]"
 	l_set = 1

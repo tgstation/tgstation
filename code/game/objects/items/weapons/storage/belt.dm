@@ -90,7 +90,7 @@
 		"/obj/item/weapon/reagent_containers/syringe",
 		"/obj/item/weapon/reagent_containers/glass/dispenser",
 		"/obj/item/weapon/lighter/zippo",
-		"/obj/item/weapon/cigpacket",
+		"/obj/item/weapon/storage/fancy/cigarettes",
 		"/obj/item/weapon/storage/pill_bottle",
 		"/obj/item/stack/medical",
 		"/obj/item/device/flashlight/pen"

@@ -118,6 +118,10 @@
 		usr << "\blue \The [src] was bitten multiple times!"
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/storage))
+		..() // -> item/attackby()
+	if(istype(W,/obj/item/weapon/storage))
+		..() // -> item/attackby()
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return 1
 	var/inaccurate = 0

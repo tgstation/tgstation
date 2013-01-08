@@ -6,9 +6,10 @@ MATCHES
 CIGARETTES
 CIGARS
 SMOKING PIPES
-CIG PACKET
 CHEAP LIGHTERS
 ZIPPO
+
+CIGARETTE PACKETS ARE IN FANCY.DM
 */
 
 ///////////
@@ -307,70 +308,7 @@ ZIPPO
 	icon_off = "cobpipeoff"
 	smoketime = 400
 
-////////////
-//CIG PACK//
-////////////
-/obj/item/weapon/cigpacket
-	name = "cigarette packet"
-	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
-	icon = 'icons/obj/cigarettes.dmi'
-	icon_state = "cigpacket"
-	item_state = "cigpacket"
-	w_class = 1
-	throwforce = 2
-	flags = TABLEPASS
-	slot_flags = SLOT_BELT
-	var/cigcount = 6
 
-/obj/item/weapon/cigpacket/New()
-	..()
-	flags |= NOREACT
-	create_reagents(15 * cigcount)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
-
-/obj/item/weapon/cigpacket/Del()
-	..()
-	del(reagents)
-
-/obj/item/weapon/cigpacket/update_icon()
-	icon_state = "[initial(icon_state)][cigcount]"
-	desc = "There are [cigcount] cig\s left!"
-	return
-
-/obj/item/weapon/cigpacket/attack_hand(mob/user as mob)
-	if(user.r_hand == src || user.l_hand == src)
-		if(cigcount == 0)
-			user << "<span class='notice'>You're out of cigs, shit! How you gonna get through the rest of the day...</span>"
-			return
-		else
-			var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
-			reagents.trans_to(W, (reagents.total_volume/cigcount))
-			user.put_in_active_hand(W)
-			reagents.maximum_volume = 15 * cigcount
-			cigcount--
-			update_icon()
-	else
-		return ..()
-
-/obj/item/weapon/cigpacket/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M, /mob))
-		return
-
-	if(M == user && user.zone_sel.selecting == "mouth" && cigcount > 0 && !user.wear_mask)
-		var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
-		reagents.trans_to(W, (reagents.total_volume/cigcount))
-		user.equip_to_slot_if_possible(W, slot_wear_mask)
-		reagents.maximum_volume = 15 * cigcount
-		cigcount--
-		user << "<span class='notice'>You take a cigarette out of the pack.</span>"
-		update_icon()
-	else
-		..()
-
-/obj/item/weapon/cigpacket/dromedaryco
-	name = "DromedaryCo packet"
-	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
-	icon_state = "Dpacket"
-	item_state = "Dpacket"
 
 /////////
 //ZIPPO//

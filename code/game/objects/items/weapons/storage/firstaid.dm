@@ -1,8 +1,8 @@
 /* First aid storage
  * Contains:
  *		First Aid Kits
- *		Syringe Kit
  * 		Pill Bottles
+ *		Dice Pack (in a pill bottle)
  */
 
 /*
@@ -94,27 +94,6 @@
 		return
 
 /*
- * Syringe Kit
- */
-/obj/item/weapon/storage/syringes
-	name = "syringes"
-	desc = "A box full of syringes."
-	desc = "A biohazard alert warning is printed on the box"
-	icon_state = "syringe"
-	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
-
-	New()
-		..()
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		return
-
-/*
  * Pill Bottles
  */
 /obj/item/weapon/storage/pill_bottle
@@ -124,8 +103,9 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
 	w_class = 2.0
-	can_hold = list("/obj/item/weapon/reagent_containers/pill")
-	var/mode = 1 // pickup mode
+	can_hold = list("/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/dice")
+	allow_quick_gather = 1
+	use_to_pickup = 1
 
 /obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
 
@@ -149,18 +129,6 @@
 			src.show_to(usr)
 			return
 	return
-
-
-/obj/item/weapon/storage/pill_bottle/verb/toggle_mode()
-	set name = "Switch Pill Bottle Method"
-	set category = "Object"
-
-	mode = !mode
-	switch (mode)
-		if(1)
-			usr << "The pill bottle now picks up all pills in a tile at once."
-		if(0)
-			usr << "The pill bottle now picks up one pill at a time."
 
 /obj/item/weapon/storage/pill_bottle/kelotane
 	name = "Pill bottle (kelotane)"
@@ -203,4 +171,14 @@
 		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
 		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
 		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
+
+
+/obj/item/weapon/storage/pill_bottle/dice
+	name = "pack of dice"
+	desc = "It's a small container with dice inside."
+
+	New()
+		..()
+		new /obj/item/weapon/dice( src )
+		new /obj/item/weapon/dice/d20( src )
 

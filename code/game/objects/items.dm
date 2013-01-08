@@ -164,22 +164,36 @@
 	user.put_in_active_hand(src)
 	return
 
+// Due to storage type consolidation this should get used more now.
+// I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if(istype(W,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
-			if(!S.can_be_inserted(src))
-				return
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
 				if(isturf(src.loc))
-					for(var/obj/item/I in src.loc)
-						if(I != src) //We'll do the one we clicked on last.
-							if(!S.can_be_inserted(I))
-								continue
-							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-			S.handle_item_insertion(src)
+					var/list/rejections = list()
+					var/success = 0
+					var/failure = 0
 
+					for(var/obj/item/I in src.loc)
+						if(I.type in rejections) // To limit bag spamming: any given type only complains once
+							continue
+						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
+							rejections += I.type	// therefore full bags are still a little spammy
+							failure = 1
+							continue
+						success = 1
+						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+					if(success && !failure)
+						user << "<span class='notice'>You put everything in [S].</span>"
+					else if(success)
+						user << "<span class='notice'>You put some things in [S].</span>"
+					else
+						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
+
+			else if(S.can_be_inserted(src))
+				S.handle_item_insertion(src)
 
 	return
 

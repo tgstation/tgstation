@@ -45,7 +45,7 @@
 		if(stat & BROKEN || !I || !user)
 			return
 
-		if(isrobot(user) && !istype(I, /obj/item/weapon/trashbag))
+		if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
 			return
 		src.add_fingerprint(user)
 		if(mode<=0) // It's off
@@ -91,7 +91,7 @@
 			user << "You can't place that item inside the disposal unit."
 			return
 
-		if(istype(I, /obj/item/weapon/trashbag))
+		if(istype(I, /obj/item/weapon/storage/bag/trash))
 			user << "\blue You empty the bag."
 			for(var/obj/item/O in I.contents)
 				O.loc = src

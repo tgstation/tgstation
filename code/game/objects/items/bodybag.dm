@@ -12,24 +12,19 @@
 		del(src)
 
 
-/obj/item/weapon/storage/body_bag_box
+/obj/item/weapon/storage/box/bodybags
 	name = "body bags"
 	desc = "This box contains body bags."
 	icon_state = "bodybags"
-	item_state = "syringe_kit"
-	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
-
-
 	New()
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
 		..()
-		return
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
 
 
 /obj/structure/closet/body_bag

@@ -43,6 +43,8 @@
 		user << "-Plant Production: \blue [production]"
 		if(potency != -1)
 			user << "-Plant Potency: \blue [potency]"
+		return
+	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
 /obj/item/seeds/chiliseed
 	name = "pack of chili seeds"

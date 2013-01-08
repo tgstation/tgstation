@@ -104,39 +104,28 @@ Proc: RefreshInfectionImage()
 Des: Removes all infection images from aliens and places an infection image on all infected mobs for aliens.
 ----------------------------------------*/
 /obj/item/alien_embryo/proc/RefreshInfectionImage()
-	spawn(0)
-		for (var/mob/living/carbon/alien/alien in player_list)
-			if (alien.client)
-				for(var/image/I in alien.client.images)
-					if(dd_hasprefix_case(I.icon_state, "infected"))
-						del(I)
-
-		for (var/mob/living/carbon/alien/alien in player_list)
-			if (alien.client)
-				for (var/mob/living/carbon/C in mob_list)
-					if(C)
-						if (C.status_flags & XENO_HOST)
-							var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
-							alien.client.images += I
-				for (var/mob/living/simple_animal/corgi/C in mob_list)
-					if(C)
-						if (C.status_flags & XENO_HOST)
-							var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
-							alien.client.images += I
-		return
+	for(var/mob/living/carbon/alien/alien in player_list)
+		if(alien.client)
+			for(var/image/I in alien.client.images)
+				if(dd_hasprefix_case(I.icon_state, "infected"))
+					del(I)
+			for(var/mob/living/L in mob_list)
+				if(iscorgi(L) || iscarbon(L))
+					if(L.status_flags & XENO_HOST)
+						var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[stage]")
+						alien.client.images += I
 
 /*----------------------------------------
 Proc: AddInfectionImages(C)
 Des: Checks if the passed mob (C) is infected with the alien egg, then gives each alien client an infected image at C.
 ----------------------------------------*/
 /obj/item/alien_embryo/proc/AddInfectionImages(var/mob/living/C)
-	if (C)
-		for (var/mob/living/carbon/alien/alien in player_list)
-			if (alien.client)
-				if (C.status_flags & XENO_HOST)
+	if(C)
+		for(var/mob/living/carbon/alien/alien in player_list)
+			if(alien.client)
+				if(C.status_flags & XENO_HOST)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[stage]")
 					alien.client.images += I
-	return
 
 /*----------------------------------------
 Proc: RemoveInfectionImage(C)
@@ -144,11 +133,10 @@ Des: Removes the alien infection image from all aliens in the world located in p
 ----------------------------------------*/
 
 /obj/item/alien_embryo/proc/RemoveInfectionImages(var/mob/living/C)
-	if (C)
-		for (var/mob/living/carbon/alien/alien in player_list)
-			if (alien.client)
+	if(C)
+		for(var/mob/living/carbon/alien/alien in player_list)
+			if(alien.client)
 				for(var/image/I in alien.client.images)
 					if(I.loc == C)
 						if(dd_hasprefix_case(I.icon_state, "infected"))
 							del(I)
-	return

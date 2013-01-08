@@ -1,6 +1,14 @@
+// To clarify:
+// For use_to_pickup and allow_quick_gather functionality,
+// see item/attackby() (/game/objects/items.dm)
+// Do not remove this functionality without good reason, cough reagent_containers cough.
+// -Sayu
+
+
 /obj/item/weapon/storage
-	icon = 'icons/obj/storage.dmi'
 	name = "storage"
+	icon = 'icons/obj/storage.dmi'
+	w_class = 3.0
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
@@ -13,7 +21,6 @@
 	var/allow_quick_empty	//Set this variable to allow the object to have the 'empty' verb, which dumps all the contents on the floor.
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile
-	w_class = 3.0
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
@@ -172,7 +179,7 @@
 	return
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
-//Set the stop_messages to stop it from printing emssages
+//Set the stop_messages to stop it from printing messages
 /obj/item/weapon/storage/proc/can_be_inserted(obj/item/W as obj, stop_messages = 0)
 	if(!istype(W)) return //Not an item
 
@@ -180,7 +187,7 @@
 		return 0 //Means the item is already in the storage item
 	if(contents.len >= storage_slots)
 		if(!stop_messages)
-			usr << "\red The [src] is full, make some space."
+			usr << "<span class='notice'>[src] is full, make some space.</span>"
 		return 0 //Storage item is full
 
 	if(can_hold.len)
@@ -191,18 +198,18 @@
 				break
 		if(!ok)
 			if(!stop_messages)
-				usr << "\red This [src] cannot hold [W]."
+				usr << "<span class='notice'>[src] cannot hold [W].</span>"
 			return 0
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
 		if(istype(W, text2path(A) ))
 			if(!stop_messages)
-				usr << "\red This [src] cannot hold [W]."
+				usr << "<span class='notice'>[src] cannot hold [W].</span>"
 			return 0
 
 	if (W.w_class > max_w_class)
 		if(!stop_messages)
-			usr << "\red This [W] is too big for this [src]"
+			usr << "<span class='notice'>[W] is too big for this [src].</span>"
 		return 0
 
 	var/sum_w_class = W.w_class
@@ -211,13 +218,13 @@
 
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			usr << "\red The [src] is full, make some space."
+			usr << "<span class='notice'>[src] is full, make some space.</span>"
 		return 0
 
 	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
-				usr << "\red The [src] cannot hold [W] as it's a storage item of the same size."
+				usr << "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>"
 			return 0 //To prevent the stacking of same sized storage items.
 
 	return 1
@@ -241,11 +248,11 @@
 		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
 			for(var/mob/M in viewers(usr, null))
 				if (M == usr)
-					usr << "\blue You put the [W] into [src]."
+					usr << "<span class='notice'>You put the [W] into [src].</span>"
 				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("\blue [usr] puts [W] into [src].")
+					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
 				else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("\blue [usr] puts [W] into [src].")
+					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
 
 		src.orient2hud(usr)
 		if(usr.s_active)
@@ -360,9 +367,9 @@
 	collection_mode = !collection_mode
 	switch (collection_mode)
 		if(1)
-			usr << "The [src] now picks up all ore in a tile at once."
+			usr << "[src] now picks up all items in a tile at once."
 		if(0)
-			usr << "The [src] now picks up one ore at a time."
+			usr << "[src] now picks up one item at a time."
 
 
 /obj/item/weapon/storage/verb/quick_empty()
@@ -433,7 +440,7 @@
 	if ( !found )	// User is too far away
 		return
 	// Now make the cardboard
-	user << "\blue You fold [src] flat."
+	user << "<span class='notice'>You fold [src] flat.</span>"
 	new src.foldable(get_turf(src))
 	del(src)
 //BubbleWrap END

@@ -102,7 +102,8 @@
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
 
-		if (istype(target, /obj/item) && !(istype(target, /obj/item/weapon/storage)))
+
+		if (istype(target, /obj/item) && !(istype(target, /obj/item/weapon/storage) && !istype(target,/obj/item/weapon/storage/box)))
 			var/obj/item/O = target
 			if (src.amount > 1)
 				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
@@ -111,6 +112,9 @@
 						user.client.screen -= O
 				P.wrapped = O
 				O.loc = P
+				var/i = round(O.w_class)
+				if(i in list(1,2,3,4,5))
+					P.icon_state = "deliverycrate[i]"
 				P.add_fingerprint(usr)
 				O.add_fingerprint(usr)
 				src.add_fingerprint(usr)

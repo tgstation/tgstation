@@ -181,7 +181,7 @@ RSF
 		if (istype(A, /obj/structure/table) && matter >= 1)
 			user << "Dispensing Dice Pack..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
-			new /obj/item/weapon/storage/dice( A.loc )
+			new /obj/item/weapon/storage/pill_bottle/dice( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
 				engy.cell.charge -= 200
@@ -195,7 +195,7 @@ RSF
 		if (istype(A, /turf/simulated/floor) && matter >= 1)
 			user << "Dispensing Dice Pack..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
-			new /obj/item/weapon/storage/dice( A )
+			new /obj/item/weapon/storage/pill_bottle/dice( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
 				engy.cell.charge -= 200
