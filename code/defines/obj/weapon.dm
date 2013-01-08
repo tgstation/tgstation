@@ -276,18 +276,6 @@
 	name = "warning cone"
 	icon_state = "cone"
 
-/obj/item/weapon/directions
-	name = "crumpled paper"
-	gender = PLURAL
-	desc = "This is a crumpled piece of paper."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "crumpled"
-	throwforce = 0
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 15
-	//layer = 4
-
 /obj/item/weapon/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."

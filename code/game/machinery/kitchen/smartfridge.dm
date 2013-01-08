@@ -139,9 +139,14 @@
 				dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
 				dat += " [N] </font>"
 				dat += "<a href='byond://?src=\ref[src];vend=[O];amount=1'>Vend</A> "
-				dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=5'>x5</A>)"
-				dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=10'>x10</A>)"
-				dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=25'>x25</A>)"
+				if(N > 5)
+					dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=5'>x5</A>)"
+					if(N > 10)
+						dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=10'>x10</A>)"
+						if(N > 25)
+							dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=25'>x25</A>)"
+				if(N > 1)
+					dat += "(<a href='?src=\ref[src];vend=[O];amount=[N]'>All</A>)"
 				dat += "<br>"
 
 		dat += "</TT>"
