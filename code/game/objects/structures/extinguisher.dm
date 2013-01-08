@@ -9,16 +9,15 @@
 	var/opened = 0
 
 
-
-/obj/structure/extinguisher_cabinet/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (isrobot(usr))
+/obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user)
+	if(isrobot(user) || isalien(user))
 		return
-	if (istype(O, /obj/item/weapon/extinguisher))
+	if(istype(O, /obj/item/weapon/extinguisher))
 		if(!has_extinguisher && opened)
 			user.drop_item(O)
-			src.contents += O
+			contents += O
 			has_extinguisher = O
-			user << "\blue You place the extinguisher in the [src.name]."
+			user << "<span class='notice'>You place [O] in [src].</span>"
 		else
 			opened = !opened
 	else
@@ -26,23 +25,22 @@
 	update_icon()
 
 
-
-/obj/structure/extinguisher_cabinet/attack_hand(mob/user as mob)
+/obj/structure/extinguisher_cabinet/attack_hand(mob/user)
+	if(isrobot(user) || isalien(user))
+		return
 	if(has_extinguisher)
 		user.put_in_hands(has_extinguisher)
+		user << "<span class='notice'>You take [has_extinguisher] from [src].</span>"
 		has_extinguisher = null
-		user << "\blue You take the extinguisher from the [name]."
 		opened = 1
 	else
 		opened = !opened
 	update_icon()
 
 
-
-/obj/structure/extinguisher_cabinet/attack_paw(mob/user as mob)
+/obj/structure/extinguisher_cabinet/attack_paw(mob/user)
 	attack_hand(user)
 	return
-
 
 
 /obj/structure/extinguisher_cabinet/update_icon()
