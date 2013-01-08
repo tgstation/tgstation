@@ -37,10 +37,9 @@ var/global/datum/controller/gameticker/ticker
 	var/triai = 0//Global holder for Triumvirate
 
 /datum/controller/gameticker/proc/pregame()
-	login_music = pick('sound/ambience/title1.ogg','sound/ambience/title2.ogg') // choose title music!
-	for(var/mob/new_player/M in mob_list)
-		if(M.client)	M.client.playtitlemusic()
-
+	login_music = pick('sound/ambience/title1.ogg','sound/ambience/title2.ogg','sound/ambience/b12_combined_start.ogg') // choose title music!
+/*	for(var/mob/new_player/M in mob_list)
+		if(M.client)	M.client.playtitlemusic()*/
 	do
 		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
