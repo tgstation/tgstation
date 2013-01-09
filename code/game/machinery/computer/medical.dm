@@ -298,7 +298,7 @@
 						if("watch")
 							src.active1.fields["m_stat"] = "*Watch*"
 						if("stable")
-							src.active2.fields["m_stat"] = "Stable"
+							src.active1.fields["m_stat"] = "Stable"
 
 
 			if (href_list["b_type"])
