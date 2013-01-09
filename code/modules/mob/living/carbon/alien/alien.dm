@@ -21,7 +21,7 @@
 
 	var/move_delay_add = 0 // movement delay to add
 
-	status_flags = CANPARALYSE
+	status_flags = CANPARALYSE|CANPUSH
 	var/heal_rate = 1
 	var/plasma_rate = 5
 
@@ -49,7 +49,7 @@
 	return 2
 
 /mob/living/carbon/alien/updatehealth()
-	if(nodamage)
+	if(status_flags & GODMODE)
 		health = maxHealth
 		stat = CONSCIOUS
 	else

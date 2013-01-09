@@ -187,28 +187,23 @@
 	return hear
 
 
-/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios, var/level = 0)
+/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 	. = list()
 
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
 	for(var/obj/item/device/radio/R in radios)
-		// This is usually for headsets, which only the wearer can hear.
-		if(R.canhear_range == 0)
-			if(ismob(R.loc))
-				. |= R.loc
-			continue
 
 		var/turf/speaker = get_turf(R)
 		if(speaker)
 			for(var/turf/T in hear(R.canhear_range,speaker))
-				speaker_coverage += T
+				speaker_coverage[T] = T
 
 	// Try to find all the players who can hear the message
 	for(var/mob/M in player_list)
 		var/turf/ear = get_turf(M)
-		if(ear && (level == 0 || level == ear.z))
-			if(ear in speaker_coverage)
+		if(ear)
+			if(speaker_coverage[ear])
 				. |= M
 
 	return .
@@ -342,7 +337,7 @@ var/list/DummyCache = list()
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client.be_alien)
+			if(G.client.prefs.be_special & BE_ALIEN)
 				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
 					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 						candidates += G.key

@@ -16,7 +16,6 @@ var/list/admin_verbs_default = list(
 	/client/proc/deadchat,				/*toggles deadchat on/off*/
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
-	/client/proc/toggle_hear_deadcast,	/*toggles whether we hear deadchat*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/secrets
@@ -33,7 +32,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
 	/datum/admins/proc/view_txt_log,	/*shows the server log (diary) for today*/
-//	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
+	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
@@ -76,7 +75,6 @@ var/list/admin_verbs_fun = list(
 	/client/proc/one_click_antag,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
-	/client/proc/only_one,
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
@@ -103,6 +101,8 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
+	/datum/admins/proc/toggle_aliens,
+	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/toggle_random_events
 	)
 var/list/admin_verbs_debug = list(
@@ -139,7 +139,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/deadmin_self,
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
-	/client/proc/toggle_hear_deadcast,
 	/client/proc/toggle_hear_radio,
 	/datum/admins/proc/show_traitor_panel,
 	/datum/admins/proc/toggleenter,
@@ -149,7 +148,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/admin_ghost,
 	/client/proc/toggle_view_range,
 	/datum/admins/proc/view_txt_log,
-//	/datum/admins/proc/view_atk_log,
+	/datum/admins/proc/view_atk_log,
 	/client/proc/cmd_admin_subtle_message,
 	/client/proc/cmd_admin_check_contents,
 	/datum/admins/proc/access_news_network,
@@ -169,7 +168,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cinematic,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
-	/client/proc/only_one,
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
@@ -418,9 +416,11 @@ var/list/admin_verbs_mod = list(
 /client/proc/colorooc()
 	set category = "Fun"
 	set name = "OOC Text Color"
-	if(holder)
-		var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-		if(new_ooccolor)	holder.ooccolor = new_ooccolor
+	if(!holder)	return
+	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+	if(new_ooccolor)
+		prefs.ooccolor = new_ooccolor
+		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -440,30 +440,47 @@ var/list/admin_verbs_mod = list(
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", 1)
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+#define MAX_WARNS 3
+#define AUTOBANTIME 10
 
-#define AUTOBATIME 10
-/client/proc/warn(var/mob/M in player_list)
-	/*set category = "Special Verbs"
-	set name = "Warn"
-	set desc = "Warn a player"*/ //Based on the information I gathered via stat logging this verb was not used. Use the show player panel alternative. --erro
-
+/client/proc/warn(warned_ckey)
 	if(!check_rights(R_ADMIN))	return
-	if(!M.client.warned)
-		M << "\red <B>You have been warned by an administrator. This is the only warning you will recieve.</B>"
-		M.client.warned = 1
-		message_admins("\blue [ckey] warned [M.ckey].")
-	else
-		AddBan(M.ckey, M.computer_id, "Autobanning due to previous warn", ckey, 1, AUTOBATIME)
-		M << "\red<BIG><B>You have been autobanned by [ckey]. This is what we in the biz like to call a \"second warning\".</B></BIG>"
-		M << "\red This is a temporary ban; it will automatically be removed in [AUTOBATIME] minutes."
-		log_admin("[ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
-		ban_unban_log_save("[ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
-		message_admins("\blue [ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
-		feedback_inc("ban_warn",1)
 
-		del(M.client)
+	if(!warned_ckey || !istext(warned_ckey))	return
+	if(warned_ckey in admin_datums)
+		usr << "<font color='red'>Error: warn(): You can't warn admins.</font>"
+		return
+
+	var/datum/preferences/D
+	var/client/C = directory[warned_ckey]
+	if(C)	D = C.prefs
+	else	D = preferences_datums[warned_ckey]
+
+	if(!D)
+		src << "<font color='red'>Error: warn(): No such ckey found.</font>"
+		return
+
+	if(++D.warns >= MAX_WARNS)					//uh ohhhh...you'reee iiiiin trouuuubble O:)
+		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [AUTOBANTIME] minute autoban.")
+		if(C)
+			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [AUTOBANTIME] minute ban.")
+			C << "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [AUTOBANTIME] minutes."
+			del(C)
+		else
+			message_admins("[key_name_admin(src)] has warned [warned_ckey] resulting in a [AUTOBANTIME] minute ban.")
+		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings", ckey, 1, AUTOBANTIME)
+		feedback_inc("ban_warn",1)
+	else
+		if(C)
+			C << "<font color='red'><BIG><B>You have been formally warned by an administrator.</B></BIG><br>Further warnings will result in an autoban.</font>"
+			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)]. They have [MAX_WARNS-D.warns] strikes remaining.")
+		else
+			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC). They have [MAX_WARNS-D.warns] strikes remaining.")
+
 	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+#undef MAX_WARNS
+#undef AUTOBANTIME
 
 /client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
 	set category = "Special Verbs"
@@ -535,18 +552,6 @@ var/list/admin_verbs_mod = list(
 		togglebuildmode(src.mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/client/proc/toggleadminhelpsound()
-	set name = "Toggle Adminhelp Sound"
-	set category = "Admin"
-	if(!holder)	return
-	holder.sound_adminhelp = !holder.sound_adminhelp
-	if(holder.sound_adminhelp)
-		usr << "You will now hear a sound when adminhelps arrive"
-	else
-		usr << "You will no longer hear a sound when adminhelps arrive"
-	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/object_talk(var/msg as text) // -- TLE
 	set category = "Special Verbs"
 	set name = "oSay"
@@ -580,24 +585,6 @@ var/list/admin_verbs_mod = list(
 	using_new_click_proc = !using_new_click_proc
 	world << "Testing of new click proc [using_new_click_proc ? "enabled" : "disabled"]"
 	feedback_add_details("admin_verb","TNCP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/toggle_hear_deadcast()
-	set name = "Toggle Hear Deadcast"
-	set category = "Admin"
-
-	if(!holder) return
-	STFU_ghosts = !STFU_ghosts
-	usr << "You will now [STFU_ghosts ? "not hear" : "hear"] ghosts"
-	feedback_add_details("admin_verb","THDC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/toggle_hear_radio()
-	set name = "Toggle Hear Radio"
-	set category = "Admin"
-
-	if(!holder) return
-	STFU_radio = !STFU_radio
-	usr << "You will now [STFU_radio ? "not hear" : "hear"] radio chatter from nearby radios or speakers"
-	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/deadmin_self()
 	set name = "De-admin self"
@@ -635,8 +622,8 @@ var/list/admin_verbs_mod = list(
 /client/proc/mod_panel()
 	set name = "Moderator Panel"
 	set category = "Admin"
-	if(holder)
-		holder.mod_panel()
+	/*if(holder)
+		holder.mod_panel()*/
 //	feedback_add_details("admin_verb","MP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 

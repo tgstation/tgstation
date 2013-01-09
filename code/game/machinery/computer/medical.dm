@@ -4,7 +4,7 @@
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
-	req_access = list(access_medical)
+	req_one_access = list(access_medical, access_forensics_lockers)
 	circuit = "/obj/item/weapon/circuitboard/med_data"
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
@@ -85,6 +85,8 @@
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					for(var/Dt in typesof(/datum/disease/))
 						var/datum/disease/Dis = new Dt(0)
+						if(istype(Dis, /datum/disease/advance))
+							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
 						if(!Dis.desc)
 							continue
 						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"
@@ -95,16 +97,15 @@
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
 					for(var/obj/machinery/bot/medbot/M in world)
-						if(!M)
-							continue
+
+						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
-						if(bl)
+						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
 							if((!isnull(M.reagent_glass)) && M.use_beaker)
 								bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
 							else
 								bdat += "Using Internal Synthesizer.<br>"
-
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
 					else

@@ -262,7 +262,7 @@
 		if("grab")
 			if (M == src)
 				return
-			if (nopush)
+			if (!(status_flags & CANPUSH))
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 
@@ -301,7 +301,7 @@
 		if ("grab")
 			if(M == src)
 				return
-			if (nopush)
+			if(!(status_flags & CANPUSH))
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
 

@@ -44,7 +44,6 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
 			if("Drone")
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
-		new_xeno.UI = UI
 		if(mind)	mind.transfer_to(new_xeno)
 		del(src)
 		return

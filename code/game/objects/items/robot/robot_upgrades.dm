@@ -34,7 +34,7 @@
 	R.module = null
 	R.modtype = "robot"
 	R.updatename("Default")
-	R.nopush = 0
+	R.status_flags |= CANPUSH
 	R.updateicon()
 
 	return 1

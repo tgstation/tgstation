@@ -40,6 +40,9 @@
 #define BODYTEMP_COOLING_MAX 30 //The maximum number of degrees that your body can cool in 1 tick, when in a cold area.
 #define BODYTEMP_HEATING_MAX 30 //The maximum number of degrees that your body can heat up in 1 tick, when in a hot area.
 
+#define BODYTEMP_HEAT_DAMAGE_LIMIT 360.15 // The limit the human body can take before it starts taking damage from heat.
+#define BODYTEMP_COLD_DAMAGE_LIMIT 260.15 // The limit the human body can take before it starts taking damage from coldness.
+
 #define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
 #define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE 30000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
@@ -460,6 +463,8 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define CANSTUN		1
 #define CANWEAKEN	2
 #define CANPARALYSE	4
+#define CANPUSH		8
+#define GODMODE		4096
 #define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
 #define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
 #define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
@@ -516,11 +521,6 @@ var/list/liftable_structures = list(\
 #define BANTYPE_JOB_PERMA	3
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
-
-//The number of deciseconds which someone needs to be inactive to be classified as AFK:
-#define AFK_THRESHOLD 3000
-
-
 
 #define SEE_INVISIBLE_MINIMUM 5
 
@@ -609,3 +609,79 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define RIGHT 2
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
+
+
+
+//Please don't edit these values without speaking to Errorage first	~Carn
+//Admin Permissions
+#define R_BUILDMODE		1
+#define R_ADMIN			2
+#define R_BAN			4
+#define R_FUN			8
+#define R_SERVER		16
+#define R_DEBUG			32
+#define R_POSSESS		64
+#define R_PERMISSIONS	128
+#define R_STEALTH		256
+#define R_REJUVINATE	512
+#define R_VAREDIT		1024
+#define R_SOUNDS		2048
+#define R_SPAWN			4096
+#define R_MOD			8192
+
+#define R_MAXPERMISSION 8192 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
+
+#define R_HOST			65535
+
+//Preference toggles
+#define SOUND_ADMINHELP	1
+#define SOUND_MIDI		2
+#define SOUND_AMBIENCE	4
+#define SOUND_LOBBY		8
+#define CHAT_OOC		16
+#define CHAT_DEAD		32
+#define CHAT_GHOSTEARS	64
+#define CHAT_GHOSTSIGHT	128
+#define CHAT_PRAYER		256
+#define CHAT_RADIO		512
+
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO)
+
+#define BE_TRAITOR		1
+#define BE_OPERATIVE	2
+#define BE_CHANGELING	4
+#define BE_WIZARD		8
+#define BE_MALF			16
+#define BE_REV			32
+#define BE_ALIEN		64
+#define BE_PAI			128
+#define BE_CULTIST		256
+#define BE_MONKEY		512
+#define BE_NINJA		1024
+
+var/list/be_special_flags = list(
+	"Traitor" = BE_TRAITOR,
+	"Operative" = BE_OPERATIVE,
+	"Changeling" = BE_CHANGELING,
+	"Wizard" = BE_WIZARD,
+	"Malf AI" = BE_MALF,
+	"Revolutionary" = BE_REV,
+	"Xenomorph" = BE_ALIEN,
+	"pAI" = BE_PAI,
+	"Cultist" = BE_CULTIST,
+	"Monkey" = BE_MONKEY,
+	"Ninja" = BE_NINJA
+	)
+
+#define AGE_MIN 17			//youngest a character can be
+#define AGE_MAX 85			//oldest a character can be
+
+//Languages!
+#define LANGUAGE_HUMAN		1
+#define LANGUAGE_ALIEN		2
+#define LANGUAGE_DOG		4
+#define LANGUAGE_CAT		8
+#define LANGUAGE_BINARY		16
+#define LANGUAGE_OTHER		32768
+
+#define LANGUAGE_UNIVERSAL	65535

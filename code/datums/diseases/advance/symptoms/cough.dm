@@ -4,13 +4,13 @@
 Coughing
 
 	Noticable.
-	No Resistance.
-	Doesn't increase stage speed.
+	Little Resistance.
+	Doesn't increase stage speed much.
 	Transmittable.
 	Low Level.
 
 BONUS
-	Will force the affected mob to drop items!
+	Will force the affected mob to drop small items!
 
 //////////////////////////////////////
 */
@@ -19,8 +19,8 @@ BONUS
 
 	name = "Cough"
 	stealth = -1
-	resistance = 0
-	stage_speed = 0
+	resistance = 3
+	stage_speed = 1
 	transmittable = 2
 	level = 1
 
@@ -33,5 +33,7 @@ BONUS
 				M << "<span notice='notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>"
 			else
 				M.emote("cough")
-				M.drop_item()
+				var/obj/item/I = M.get_active_hand()
+				if(I && I.w_class < 3)
+					M.drop_item()
 	return

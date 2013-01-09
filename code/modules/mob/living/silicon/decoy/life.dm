@@ -8,8 +8,8 @@
 
 
 /mob/living/silicon/decoy/updatehealth()
-	if (src.nodamage == 0)
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
+	if(status_flags & GODMODE)
+		health = 100
+		stat = CONSCIOUS
 	else
-		src.health = 100
-		src.stat = 0
+		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()

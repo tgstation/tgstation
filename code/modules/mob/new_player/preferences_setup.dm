@@ -5,207 +5,30 @@ datum/preferences
 			gender = MALE
 		else
 			gender = FEMALE
-		randomize_skin_tone()
-		randomize_hair(gender)
-		randomize_hair_color("hair")
-		if(gender == MALE)//only for dudes.
-			randomize_facial()
-			randomize_hair_color("facial")
-		randomize_eyes_color()
-		underwear = 1
+		s_tone = random_skin_tone()
+		h_style = random_hair_style(gender)
+		f_style = random_facial_hair_style(gender)
+		r_hair = rand(0,255)
+		g_hair = rand(0,255)
+		b_hair = rand(0,255)
+		r_facial = r_hair
+		g_facial = g_hair
+		b_facial = b_hair
+		r_eyes = rand(0,255)
+		g_eyes = rand(0,255)
+		b_eyes = rand(0,255)
+		underwear = rand(1,underwear_m.len)
 		backbag = 2
-		b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
-		age = rand(MIN_PLAYER_AGE,MAX_PLAYER_AGE)
+		age = rand(AGE_MIN,AGE_MAX)
 		copy_to(H,1)
 
-	proc/randomize_name()
-		if(gender == MALE)
-			real_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
-		else
-			real_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
-		return
-
-	proc/randomize_hair(var/gender)
-		var/list/valid_hairstyles = list()
-		for(var/hairstyle in hair_styles_list)
-			var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-			if(gender == MALE && !S.choose_male)
-				continue
-			if(gender == FEMALE && !S.choose_female)
-				continue
-			if( !(species in S.species_allowed))
-				continue
-
-			valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
-		if(valid_hairstyles.len)
-			h_style = pick(valid_hairstyles)
-		else
-			h_style  = hair_styles_list["Bald"]
-
-
-	proc/randomize_facial() // uncommented, see randomize_hair() for commentation
-		var/list/valid_facialhairstyles = list()
-		for(var/facialhairstyle in facial_hair_styles_list)
-			var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-			if(gender == MALE && !S.choose_male)
-				continue
-			if(gender == FEMALE && !S.choose_female)
-				continue
-			if( !(species in S.species_allowed))
-				continue
-
-			valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-		if(valid_facialhairstyles.len)
-			f_style = pick(valid_facialhairstyles)
-		else
-			f_style  = facial_hair_styles_list["Shaved"]
-
-	proc/randomize_skin_tone()
-		if(species == "Human")
-			var/tone
-			var/tmp = pickweight ( list ("caucasian" = 55, "afroamerican" = 15, "african" = 10, "latino" = 10, "albino" = 5, "weird" = 5))
-			switch (tmp)
-				if ("caucasian")
-					tone = -45 + 35
-				if ("afroamerican")
-					tone = -150 + 35
-				if ("african")
-					tone = -200 + 35
-				if ("latino")
-					tone = -90 + 35
-				if ("albino")
-					tone = -1 + 35
-				if ("weird")
-					tone = -(rand (1, 220)) + 35
-
-			s_tone = min(max(tone + rand (-25, 25), -185), 34)
-
-	proc/randomize_hair_color(var/target = "hair")
-		if(target == "hair" && species == "Skrell")
-			return
-
-		if (prob (75) && target == "facial") // Chance to inherit hair color
-			r_facial = r_hair
-			g_facial = g_hair
-			b_facial = b_hair
-			return
-
-		var/red
-		var/green
-		var/blue
-
-		var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
-		switch (col)
-			if ("blonde")
-				red = 255
-				green = 255
-				blue = 0
-			if ("black")
-				red = 0
-				green = 0
-				blue = 0
-			if ("chestnut")
-				red = 153
-				green = 102
-				blue = 51
-			if ("copper")
-				red = 255
-				green = 153
-				blue = 0
-			if ("brown")
-				red = 102
-				green = 51
-				blue = 0
-			if ("wheat")
-				red = 255
-				green = 255
-				blue = 153
-			if ("old")
-				red = rand (100, 255)
-				green = red
-				blue = red
-			if ("punk")
-				red = rand (0, 255)
-				green = rand (0, 255)
-				blue = rand (0, 255)
-
-		red = max(min(red + rand (-25, 25), 255), 0)
-		green = max(min(green + rand (-25, 25), 255), 0)
-		blue = max(min(blue + rand (-25, 25), 255), 0)
-
-		switch(target)
-			if ("hair")
-				r_hair = red
-				g_hair = green
-				b_hair = blue
-			if ("facial")
-				r_facial = red
-				g_facial = green
-				b_facial = blue
-
-	proc/randomize_eyes_color()
-		var/red
-		var/green
-		var/blue
-
-		var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino", "weird")
-		switch (col)
-			if ("black")
-				red = 0
-				green = 0
-				blue = 0
-			if ("grey")
-				red = rand (100, 200)
-				green = red
-				blue = red
-			if ("brown")
-				red = 102
-				green = 51
-				blue = 0
-			if ("chestnut")
-				red = 153
-				green = 102
-				blue = 0
-			if ("blue")
-				red = 51
-				green = 102
-				blue = 204
-			if ("lightblue")
-				red = 102
-				green = 204
-				blue = 255
-			if ("green")
-				red = 0
-				green = 102
-				blue = 0
-			if ("albino")
-				red = rand (200, 255)
-				green = rand (0, 150)
-				blue = rand (0, 150)
-			if ("weird")
-				red = rand (0, 255)
-				green = rand (0, 255)
-				blue = rand (0, 255)
-
-		red = max(min(red + rand (-25, 25), 255), 0)
-		green = max(min(green + rand (-25, 25), 255), 0)
-		blue = max(min(blue + rand (-25, 25), 255), 0)
-
-		r_eyes = red
-		g_eyes = green
-		b_eyes = blue
-
-	proc/update_preview_icon()
+	proc/update_preview_icon()		//seriously. This is horrendous.
 		del(preview_icon_front)
 		del(preview_icon_side)
 		var/icon/preview_icon = null
 
 		var/g = "m"
-		if (gender == FEMALE)
-			g = "f"
-
+		if(gender == FEMALE)	g = "f"
 		if(species == "Tajaran")
 			preview_icon = new /icon('icons/effects/species.dmi', "tajaran_[g]_s")
 			preview_icon.Blend(new /icon('icons/effects/species.dmi', "tajtail_s"), ICON_OVERLAY)
@@ -237,7 +60,6 @@ datum/preferences
 				preview_icon.Blend(temp, ICON_OVERLAY)
 
 			preview_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
-
 
 		// Skin tone
 		if(species == "Human")
@@ -642,46 +464,3 @@ datum/preferences
 		del(preview_icon)
 		del(eyes_s)
 		del(clothes_s)
-
-
-proc/skintone2racedescription(var/tone)
-	switch (tone)
-		if(30 to INFINITY)
-			return "albino"
-		if(20 to 30)
-			return "pale"
-		if(5 to 15)
-			return "light skinned"
-		if(-10 to 5)
-			return "white"
-		if(-25 to -10)
-			return "tan"
-		if(-45 to -25)
-			return "darker skinned"
-		if(-65 to -45)
-			return "brown"
-		if(-INFINITY to -65)
-			return "black"
-
-
-proc/age2agedescription(var/age)
-	switch (age)
-		if(0 to 1)
-			return "infant"
-		if(1 to 3)
-			return "toddler"
-		if(3 to 13)
-			return "child"
-		if(13 to 19)
-			return "teenager"
-		if(19 to 30)
-			return "young adult"
-		if(30 to 45)
-			return "adult"
-		if(45 to 60)
-			return "middle-aged"
-		if(60 to 70)
-			return "aging"
-		if(70 to INFINITY)
-			return "elderly"
-

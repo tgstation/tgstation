@@ -402,11 +402,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		sleep(rand(10,25)) // wait a little...
 
-		if(signal.data["done"])
+		if(signal.data["done"] && position.z in signal.data["level"])
 			// we're done here.
 			return
 
-	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet.
+	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
 	  	// Send a mundane broadcast with limited targets:
 
 		//THIS IS TEMPORARY.
@@ -414,7 +414,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		Broadcast_Message(connection, M, voicemask, M.voice_message,
 						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type, signal.data["compression"], position.z)
+		                  filter_type, signal.data["compression"], list(position.z), connection.frequency)
 
 
 
@@ -467,7 +467,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/list/heard_garbled = list() // garbled message
 
 		for (var/mob/R in receive)
-			if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+			if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 				continue
 			if (R.say_understands(M))
 				if (ishuman(M) && M.GetVoice() != M.real_name)
@@ -618,9 +618,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		return -1
 	if(!listening)
 		return -1
-	if(level != 0)
+	if(!(0 in level))
 		var/turf/position = get_turf(src)
-		if(isnull(position) || position.z != level)
+		if(!position || !(position.z in level))
 			return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
@@ -640,7 +640,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					break
 		if (!accept)
 			return -1
-
 	return canhear_range
 
 /obj/item/device/radio/proc/send_hear(freq, level)

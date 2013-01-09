@@ -168,7 +168,7 @@
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(power && istype(power,/obj/item/powerarmor/power/plasma))
 			switch(W.type)
-				if(/obj/item/stack/sheet/plasma)
+				if(/obj/item/stack/sheet/mineral/plasma)
 					if(fuel < 50)
 						user << "\blue You feed some refined plasma into the armor's generator."
 						power:fuel += 25

@@ -41,7 +41,7 @@
 	proc/create_fragments(var/wave_size = 1)
 		var/list/candidates = list()
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client.be_alien)
+			if(G.client.prefs.be_special & BE_ALIEN)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 					candidates += G.key
 

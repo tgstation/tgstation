@@ -265,7 +265,7 @@ Whitespace:Seperator;
 
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
-			if(player.preferences.be_special & role)
+			if(player.client.prefs.be_special & role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
 
@@ -277,8 +277,8 @@ Whitespace:Seperator;
 
 	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
-			if (player.client && player.ready)
-				if(!(player.preferences.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+			if(player.client && player.ready)
+				if(!(player.client.prefs.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
@@ -330,14 +330,14 @@ Whitespace:Seperator;
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
-
+/*
 /datum/game_mode/proc/latespawn(var/mob)
 
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
 	if(player.preferences.be_special & role)
 		return 1
 	return 0
-
+*/
 
 /datum/game_mode/proc/num_players()
 	. = 0

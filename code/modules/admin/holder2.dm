@@ -3,12 +3,8 @@ var/list/admin_datums = list()
 /datum/admins
 	var/rank			= "Temporary Admin"
 	var/client/owner	= null
-
 	var/rights = 0
-
 	var/fakekey			= null
-	var/ooccolor		= "#b82e00"
-	var/sound_adminhelp = 0 	//If set to 1 this will play a sound when adminhelps are received.
 
 	var/datum/marked_datum
 
@@ -62,7 +58,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 					return 1
 				else
 					if(show_msg)
-						usr << "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags: [rights2text(rights_required)].</font>"
+						usr << "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>"
 		else
 			if(usr.client.holder)
 				return 1

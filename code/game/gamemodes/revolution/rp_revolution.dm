@@ -103,7 +103,8 @@
 			// TODO: add a similar check that also checks whether they're without ID in the brig..
 			//       probably wanna export this stuff into a separate function for use by both
 			//       revs and heads
-			if(!rev_mind.current.handcuffed && T && T.z == 1)
+			//assume that only carbon mobs can become rev heads for now
+			if(!rev_mind.current:handcuffed && T && T.z == 1)
 				return 0
 	return 1
 

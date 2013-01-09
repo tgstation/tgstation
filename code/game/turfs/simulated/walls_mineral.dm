@@ -19,6 +19,7 @@
 	desc = "A wall with silver plating. Shiny!"
 	icon_state = "silver0"
 	walltype = "silver"
+	mineral = "silver"
 	//var/electro = 0.75
 	//var/shocked = null
 
