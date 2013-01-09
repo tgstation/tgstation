@@ -131,23 +131,26 @@
 	canmove = 1
 	anchored = 0
 
-	if(M.health <= -70)
-		M.canmove = 0
-		if(!client)
-			if(Victim && !rabid && !attacked)
-				if(Victim.LAssailant && Victim.LAssailant != Victim)
-					if(prob(50))
-						if(!(Victim.LAssailant in Friends))
-							Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
+	if(M)
+		if(M.health <= -70)
+			M.canmove = 0
+			if(!client)
+				if(Victim && !rabid && !attacked)
+					if(Victim.LAssailant && Victim.LAssailant != Victim)
+						if(prob(50))
+							if(!(Victim.LAssailant in Friends))
+								Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
 
-		if(M.client && istype(src, /mob/living/carbon/human))
-			if(prob(85))
-				rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
+			if(M.client && istype(src, /mob/living/carbon/human))
+				if(prob(85))
+					rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
 
-		if(client) src << "<i>This subject does not have a strong enough life energy anymore...</i>"
+			if(client) src << "<i>This subject does not have a strong enough life energy anymore...</i>"
+		else
+			M.canmove = 1
+
+			if(client) src << "<i>I have stopped feeding...</i>"
 	else
-		M.canmove = 1
-
 		if(client) src << "<i>I have stopped feeding...</i>"
 
 	Victim = null
