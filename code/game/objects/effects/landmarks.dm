@@ -173,7 +173,7 @@
 
 /obj/effect/landmark/costume/nightowl/New()
 	new /obj/item/clothing/under/owl(src.loc)
-	new /obj/item/clothing/mask/owl_mask(src.loc)
+	new /obj/item/clothing/mask/gas/owl_mask(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/waiter/New()

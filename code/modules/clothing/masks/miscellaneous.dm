@@ -34,11 +34,6 @@
 	flags = FPRINT|TABLEPASS
 	flags_inv = HIDEFACE
 
-/obj/item/clothing/mask/owl_mask
-	name = "owl mask"
-	desc = "Twoooo!"
-	icon_state = "owl"
-
 /obj/item/clothing/mask/pig
 	name = "pig mask"
 	desc = "A rubber pig mask."
