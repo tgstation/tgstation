@@ -155,7 +155,8 @@
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
 				var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
-				A.rename_self("ai", 1)
+				if(A) //if there's no brain, the mob is deleted and a structure/AIcore is created
+					A.rename_self("ai", 1)
 				feedback_inc("cyborg_ais_created",1)
 				del(src)
 
