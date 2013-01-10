@@ -271,7 +271,9 @@ var/global/datum/controller/gameticker/ticker
 				if(player.mind.assigned_role != "MODE")
 					job_master.EquipRank(player, player.mind.assigned_role, 0)
 		if(captainless)
-			world << "Captainship not forced on anyone."
+			for(var/mob/M in player_list)
+				if(!istype(M,/mob/new_player))
+					M << "Captainship not forced on anyone."
 
 
 	proc/process()

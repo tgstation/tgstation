@@ -171,7 +171,9 @@
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
-	world << sound('sound/AI/aimalf.ogg')
+	for(var/mob/M in player_list)
+		if(!istype(M,/mob/new_player))
+			M << sound('sound/AI/aimalf.ogg')
 
 
 /datum/game_mode/malfunction/proc/ai_win()

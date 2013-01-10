@@ -245,7 +245,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)	return
-		world << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
+		for(var/mob/M in player_list)
+			if(!istype(M,/mob/new_player))
+				M << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
 		announceAuth = 0
 		message = ""
 		screen = 0

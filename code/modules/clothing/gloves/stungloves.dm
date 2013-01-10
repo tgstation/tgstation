@@ -7,7 +7,7 @@
 		var/obj/item/weapon/cable_coil/C = W
 		if(!wired)
 			if(C.amount >= 2)
-				C.amount -= 2
+				C.use(2)
 				wired = 1
 				siemens_coefficient = 1
 				user << "<span class='notice'>You wrap some wires around [src].</span>"

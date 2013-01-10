@@ -46,7 +46,16 @@
 				return
 
 		if(ismob(target) && target.reagents && reagents.total_volume)
+			var/mob/M = target
 			user << "\blue You splash the solution onto [target]."
+			var/R
+			if(src.reagents)
+				for(var/datum/reagent/A in src.reagents.reagent_list)
+					R += A.id + " ("
+					R += num2text(A.volume) + "),"
+			user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])"
+			M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])"
+			log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])")
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message(text("\red [] has been splashed with something by []!", target, user), 1)
 			src.reagents.reaction(target, TOUCH)

@@ -59,7 +59,7 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health > 0)
+			if(health >= 0)
 				help_shake_act(M)
 				return 1
 			if(M.health < -75)	return 0

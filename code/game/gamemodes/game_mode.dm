@@ -230,7 +230,9 @@ Whitespace:Seperator;
 			comm.messagetext.Add(intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-	world << sound('sound/AI/intercept.ogg')
+	for(var/mob/M in player_list)
+		if(!istype(M,/mob/new_player))
+			M << sound('sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 

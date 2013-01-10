@@ -48,7 +48,7 @@
 
 	var/obj/item/device/radio/radio = null
 
-	var/max_temperature = 2500
+	var/max_temperature = 25000
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
 	var/internal_damage = 0 //contains bitflags
 

@@ -88,8 +88,11 @@
 		return
 
 	if(density)
+		var/turf/T = get_turf(src)
+		if(T.density)
+			user << "\red The wall is blocked!"
+			return
 		if(istype(W, /obj/item/weapon/screwdriver))
-			var/turf/T = get_turf(src)
 			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
 			if(!mineral || mineral == "metal")
 				T.ChangeTurf(/turf/simulated/wall)
@@ -100,7 +103,6 @@
 		if( istype(W, /obj/item/weapon/weldingtool) )
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT:welding )
-				var/turf/T = get_turf(src)
 				if(!mineral)
 					T.ChangeTurf(/turf/simulated/wall)
 				else
