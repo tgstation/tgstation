@@ -97,18 +97,13 @@
 	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
 		nums += G
 		iconL.Remove(G.icon_state)
-		if(nums.len >= 3)
-			var/obj/effect/decal/cleanable/blood/drip/D = pick(nums)
-			D.blood_DNA[dna.unique_enzymes] = dna.b_type
-			return
 
-	var/obj/effect/decal/cleanable/blood/drip/this = new(T)
-	this.icon_state = pick(iconL)
-	this.blood_DNA = list()
-	this.blood_DNA[dna.unique_enzymes] = dna.b_type
-
-	// replace many drips with something larger
-	if(nums.len > 3)
+	if (nums.len < 5)
+		var/obj/effect/decal/cleanable/blood/drip/this = new(T)
+		this.icon_state = pick(iconL)
+		this.blood_DNA = list()
+		this.blood_DNA[dna.unique_enzymes] = dna.b_type
+	else
 		for(var/obj/effect/decal/cleanable/blood/drip/G in nums)
 			del G
 		T.add_blood(src)
