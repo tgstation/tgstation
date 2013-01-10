@@ -26,6 +26,15 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = FPRINT | TABLEPASS
 
+/obj/item/clothing/under/rank/security2
+	name = "security officer's uniform"
+	desc = "It's made of a slightly sturdier material, to allow for robust protection."
+	icon_state = "redshirt2"
+	item_state = "r_suit"
+	color = "redshirt2"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags = FPRINT | TABLEPASS
+
 /*
  * Detective
  */
