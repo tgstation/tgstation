@@ -24,7 +24,7 @@
 		if("Supply Shuttle")
 			supply_shuttle.process()
 			feedback_add_details("admin_verb","RSupply")
-	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.", 1)
+	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
 	return
 
 
@@ -74,5 +74,5 @@
 		if("Cameras")
 			debug_variables(cameranet)
 			feedback_add_details("admin_verb","DCameras")
-	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.", 1)
+	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")
 	return

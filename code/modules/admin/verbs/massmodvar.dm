@@ -5,7 +5,7 @@
 
 	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
 
-	if(!admin_rank_check(src.holder.level, 3)) return
+	if(!check_rights(R_VAREDIT))	return
 
 	if(A && A.type)
 		if(typesof(A.type))
@@ -24,11 +24,9 @@
 
 
 /client/proc/massmodify_variables(var/atom/O, var/var_name = "", var/method = 0)
-	var/list/locked = list("vars", "key", "ckey", "client")
+	if(!check_rights(R_VAREDIT))	return
 
-	if(!src.holder)
-		src << "Only administrators may use this command."
-		return
+	var/list/locked = list("vars", "key", "ckey", "client")
 
 	for(var/p in forbidden_varedit_object_types)
 		if( istype(O,p) )
@@ -48,17 +46,13 @@
 	else
 		variable = var_name
 
-	if(!variable)
-		return
+	if(!variable)	return
 	var/default
 	var/var_value = O.vars[variable]
 	var/dir
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Game Master", "Game Admin")))
-		return
-
-	if (variable == "holder" && holder.rank != "Game Master") //Hotfix, a bit ugly but that exploit has been there for ages and now somebody just had to go and tell everyone of it bluh bluh - U
-		return
+	if(variable == "holder" || (variable in locked))
+		if(!check_rights(R_DEBUG))	return
 
 	if(isnull(var_value))
 		usr << "Unable to determine variable type."

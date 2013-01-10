@@ -71,10 +71,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 
 /obj/item/device/radio/attack_self(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	interact(user)
 
-/obj/item/device/radio/proc/interact(mob/user as mob)
+/obj/item/device/radio/interact(mob/user as mob)
 	if(!on)
 		return
 
@@ -129,7 +129,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if (!(issilicon(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
 		usr << browse(null, "window=radio")
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"])
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
@@ -402,11 +402,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		sleep(rand(10,25)) // wait a little...
 
-		if(signal.data["done"])
+		if(signal.data["done"] && position.z in signal.data["level"])
 			// we're done here.
 			return
 
-	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet.
+	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
 	  	// Send a mundane broadcast with limited targets:
 
 		//THIS IS TEMPORARY.
@@ -414,7 +414,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		Broadcast_Message(connection, M, voicemask, M.voice_message,
 						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type, signal.data["compression"], position.z)
+		                  filter_type, signal.data["compression"], list(position.z), connection.frequency)
 
 
 
@@ -467,7 +467,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/list/heard_garbled = list() // garbled message
 
 		for (var/mob/R in receive)
-			if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+			if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 				continue
 			if (R.say_understands(M))
 				if (ishuman(M) && M.GetVoice() != M.real_name)
@@ -618,9 +618,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		return -1
 	if(!listening)
 		return -1
-	if(level != 0)
+	if(!(0 in level))
 		var/turf/position = get_turf(src)
-		if(isnull(position) || position.z != level)
+		if(!position || !(position.z in level))
 			return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
@@ -640,7 +640,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					break
 		if (!accept)
 			return -1
-
 	return canhear_range
 
 /obj/item/device/radio/proc/send_hear(freq, level)
@@ -663,7 +662,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	user.machine = src
+	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) ))
 		return
 	b_stat = !( b_stat )
@@ -695,7 +694,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	..()
-	user.machine = src
+	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
 		return
 

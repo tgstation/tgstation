@@ -32,6 +32,16 @@
 	multiple_sprites = 1
 
 
+/obj/item/ammo_magazine/mc9mm
+	name = "magazine (9mm)"
+	icon_state = "9x19p"
+	origin_tech = "combat=2"
+	ammo_type = "/obj/item/ammo_casing/c9mm"
+	max_ammo = 8
+	multiple_sprites = 1
+
+/obj/item/ammo_magazine/mc9mm/empty
+	max_ammo = 0
 
 /obj/item/ammo_magazine/c9mm
 	name = "Ammunition Box (9mm)"
@@ -92,3 +102,18 @@
 	icon_state = "75"
 	ammo_type = "/obj/item/ammo_casing/a75"
 	max_ammo = 0
+
+/obj/item/ammo_magazine/a762
+	name = "magazine (a762)"
+	icon_state = "a762"
+	origin_tech = "combat=2"
+	ammo_type = "/obj/item/ammo_casing/a762"
+	max_ammo = 50
+	multiple_sprites = 1
+
+/obj/item/ammo_magazine/a762/empty
+	name = "magazine (a762)"
+	icon_state = "a762"
+	ammo_type = "/obj/item/ammo_casing/a762"
+	max_ammo = 0
+	multiple_sprites = 1

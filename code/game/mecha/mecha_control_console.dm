@@ -17,7 +17,7 @@
 	attack_hand(var/mob/user as mob)
 		if(..())
 			return
-		user.machine = src
+		user.set_machine(src)
 		var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 		if(screen == 0)
 			dat += "<h3>Tracking beacons data</h3>"

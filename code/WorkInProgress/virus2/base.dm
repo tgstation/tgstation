@@ -235,7 +235,6 @@ proc/airborne_can_reach(turf/source, turf/target)
 			if(prob(1))
 				majormutate()
 		if(mob.reagents.has_reagent("spaceacillin"))
-			mob.reagents.remove_reagent("spaceacillin",0.3)
 			return
 		if(mob.reagents.has_reagent("virusfood"))
 			mob.reagents.remove_reagent("virusfood",0.1)

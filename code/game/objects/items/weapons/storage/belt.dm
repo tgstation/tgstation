@@ -71,7 +71,7 @@
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
-	new /obj/item/device/analyzer(src)
+	new /obj/item/device/t_scanner(src)
 
 
 
@@ -95,7 +95,8 @@
 		"/obj/item/stack/medical",
 		"/obj/item/device/flashlight/pen",
 		"/obj/item/clothing/mask/surgical",
-		"/obj/item/clothing/gloves/latex"
+		"/obj/item/clothing/gloves/latex",
+        "/obj/item/weapon/reagent_containers/hypospray/autoinjector"
 	)
 
 

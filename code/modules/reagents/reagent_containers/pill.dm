@@ -63,12 +63,7 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
 
-
 			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-			log_admin("ATTACK: [user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])")
-			msg_admin_attack("ATTACK: [user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])") //BS12 EDIT ALG
-
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
@@ -181,3 +176,22 @@
 	New()
 		..()
 		reagents.add_reagent("bicaridine", 30)
+
+/obj/item/weapon/reagent_containers/pill/happy
+	name = "Happy pill"
+	desc = "Happy happy joy joy!"
+	icon_state = "pill18"
+	New()
+		..()
+		reagents.add_reagent("space_drugs", 15)
+		reagents.add_reagent("sugar", 15)
+
+/obj/item/weapon/reagent_containers/pill/zoom
+	name = "Zoom pill"
+	desc = "Zoooom!"
+	icon_state = "pill18"
+	New()
+		..()
+		reagents.add_reagent("impedrezene", 10)
+		reagents.add_reagent("synaptizine", 5)
+		reagents.add_reagent("hyperzine", 5)

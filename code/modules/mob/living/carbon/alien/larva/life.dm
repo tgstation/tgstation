@@ -41,9 +41,6 @@
 	//to find it.
 	blinded = null
 
-	//Disease Check
-	//handle_virus_updates() There is no disease that affects larva
-
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(enviroment)
 
@@ -139,7 +136,7 @@
 		return null
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if(nodamage)
+		if(status_flags & GODMODE)
 			return
 
 		if(!breath || (breath.total_moles == 0))
@@ -363,11 +360,6 @@ FUCK YOU MORE FAT CODE -Hawk*/
 	proc/handle_random_events()
 		return
 
-	proc/handle_virus_updates()
-		if(bodytemperature > 406)
-			for(var/datum/disease/D in viruses)
-				D.cure()
-		return
 
 	proc/handle_stomach()
 		spawn(0)
@@ -382,6 +374,6 @@ FUCK YOU MORE FAT CODE -Hawk*/
 						del(M)
 						continue
 					if(air_master.current_cycle%3==1)
-						if(!M.nodamage)
+						if(!(M.status_flags & GODMODE))
 							M.adjustBruteLoss(5)
 						nutrition += 10

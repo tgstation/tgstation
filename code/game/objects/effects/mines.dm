@@ -91,9 +91,6 @@
 	spawn(0)
 		del(src)
 
-
-
-
 /obj/effect/mine/dnascramble
 	name = "Radiation Mine"
 	icon_state = "uglymine"

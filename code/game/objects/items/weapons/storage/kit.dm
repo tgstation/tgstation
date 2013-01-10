@@ -41,8 +41,6 @@
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/grenade/empgrenade(src)
-	new /obj/item/weapon/grenade/empgrenade(src)
-	new /obj/item/weapon/grenade/empgrenade(src)
 	..()
 	return
 
@@ -103,18 +101,6 @@
 	new /obj/item/weapon/dnainjector/m2h(src)
 	new /obj/item/weapon/dnainjector/m2h(src)
 
-	..()
-	return
-
-/obj/item/weapon/storage/fcard_kit/New()
-
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
-	new /obj/item/weapon/f_card(src)
 	..()
 	return
 

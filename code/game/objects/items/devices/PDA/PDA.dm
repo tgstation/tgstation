@@ -153,6 +153,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!
 
+/obj/item/device/pda/clear
+	icon_state = "pda-transp"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
+	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
 /obj/item/device/pda/chef
 	icon_state = "pda-chef"
@@ -240,7 +244,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //NOTE: graphic resources are loaded on client login
 /obj/item/device/pda/attack_self(mob/user as mob)
 
-	user.machine = src
+	user.set_machine(src)
 
 	if(active_uplink_check(user))
 		return
@@ -301,7 +305,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=Forensic Scan'><img src=pda_scanner.png> [scanmode == 2 ? "Disable" : "Enable"] Forensic Scanner</a></li>"
 					if(istype(cartridge.radio, /obj/item/radio/integrated/beepsky))
 						dat += "<li><a href='byond://?src=\ref[src];choice=46'><img src=pda_cuffs.png> Security Bot Access</a></li>"
 						dat += "</ul>"
@@ -445,14 +448,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if ( !(U.stat || U.restrained()) )
 
 			add_fingerprint(U)
-			U.machine = src
+			U.set_machine(src)
 
 			switch(href_list["choice"])
 
 //BASIC FUNCTIONS===================================
 
 				if("Close")//Self explanatory
-					U.machine = null
+					U.unset_machine()
 					U << browse(null, "window=pda")
 					return
 				if("Refresh")//Refresh, goes to the end of the proc.
@@ -520,11 +523,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						scanmode = 0
 					else if((!isnull(cartridge)) && (cartridge.access_medical))
 						scanmode = 1
-				if("Forensic Scan")
-					if(scanmode == 2)
-						scanmode = 0
-					else if((!isnull(cartridge)) && (cartridge.access_security))
-						scanmode = 2
 				if("Reagent Scan")
 					if(scanmode == 3)
 						scanmode = 0
@@ -547,7 +545,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (in_range(src, U) && loc == U)
 						n = copytext(adminscrub(n), 1, MAX_MESSAGE_LEN)
 						if (mode == 1)
-							note = dd_replacetext(n, "\n", "<BR>")
+							note = replacetext(n, "\n", "<BR>")
 							notehtml = n
 					else
 						U << browse(null, "window=pda")
@@ -646,7 +644,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						else
 							U << "PDA not found."
 					else
-						U.machine = null
+						U.unset_machine()
 						U << browse(null, "window=pda")
 						return
 
@@ -667,11 +665,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					cartridge.mode = mode
 					cartridge.unlock()
 		else//If can't interact.
-			U.machine = null
+			U.unset_machine()
 			U << browse(null, "window=pda")
 			return
 	else//If not in range or not using the pda.
-		U.machine = null
+		U.unset_machine()
 		U << browse(null, "window=pda")
 		return
 
@@ -687,7 +685,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(U.machine == src && href_list["skiprefresh"]!="1")//Final safety.
 		attack_self(U)//It auto-closes the menu prior if the user is not in range and so on.
 	else
-		U.machine = null
+		U.unset_machine()
 		U << browse(null, "window=pda")
 	return
 
@@ -714,6 +712,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 
 	if (last_text && world.time < last_text + 5)
+		return
+
+	if(!can_use())
 		return
 
 	last_text = world.time
@@ -794,6 +795,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Remove id"
 	set src in usr
 
+	if(issilicon(usr))
+		return
+
 	if ( !(usr.stat || usr.restrained()) )
 		if(id)
 			remove_id()
@@ -807,6 +811,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "Object"
 	set name = "Remove pen"
 	set src in usr
+
+	if(issilicon(usr))
+		return
 
 	if ( !(usr.stat || usr.restrained()) )
 		var/obj/item/weapon/pen/O = locate() in src
@@ -847,13 +854,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		user.drop_item()
-		C.loc = src
-		user << "<span class='notice'>You insert [C] into [src].</span>"
 		cartridge = C
+		user.drop_item()
+		cartridge.loc = src
+		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
-
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
 		if(!idcard.registered_name)
@@ -948,27 +954,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 	switch(scanmode)
-		if(2)
-			if(!istype(A, /obj/item/weapon/f_card))
-				if (!A.fingerprints)
-					user << "\blue Unable to locate any fingerprints on [A]!"
-				else
-					user << "\blue Isolated [A:fingerprints.len] fingerprints."
-					var/list/prints = A:fingerprints
-					var/list/complete_prints = list()
-					for(var/i in prints)
-						var/print = prints[i]
-						if(stringpercent(print) <= FINGERPRINT_COMPLETE)
-							complete_prints += print
-					if(complete_prints.len < 1)
-						user << "\blue No intact prints found"
-					else
-						user << "\blue Found [complete_prints.len] intact prints"
-						for(var/i in complete_prints)
-							user << "\blue [i]"
-				if(cartridge && cartridge.access_security)
-					cartridge.add_data(A)
-					user << "Data added to internal storage.  Scan with a High-Resolution Scanner to retreive."
 
 		if(3)
 			if(!isnull(A.reagents))

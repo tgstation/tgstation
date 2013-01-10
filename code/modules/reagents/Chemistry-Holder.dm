@@ -340,12 +340,13 @@ datum
 									else R.reaction_obj(A, R.volume+volume_modifier)
 				return
 
-			add_reagent(var/reagent, var/amount, var/data=null)
+			add_reagent(var/reagent, var/amount, var/list/data=null)
 				if(!isnum(amount)) return 1
 				update_total()
 				if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
 				for(var/A in reagent_list)
+
 					var/datum/reagent/R = A
 					if (R.id == reagent)
 						R.volume += amount
@@ -355,28 +356,40 @@ datum
 						// mix dem viruses
 						if(R.id == "blood" && reagent == "blood")
 							if(R.data && data)
-								if(R.data && R.data["viruses"] || data && data["viruses"])
-									var/list/this = R.data["viruses"]
-									var/list/that = data["viruses"]
-									this += that // combine the two
 
-									/* -- Turns out this code was buggy and unnecessary ---- Doohl
-									for(var/datum/disease/D in this) // makes sure no two viruses are in the reagent at the same time
-										for(var/datum/disease/d in this)//Something in here can cause an inf loop and I am tired so someone else will have to fix it.
-											if(d != D)
-												D.cure(0)
-									*/
+								if(R.data["viruses"] || data["viruses"])
+
+									var/list/mix1 = R.data["viruses"]
+									var/list/mix2 = data["viruses"]
+
+									// Stop issues with the list changing during mixing.
+									var/list/to_mix = list()
+
+									for(var/datum/disease/advance/AD in mix1)
+										to_mix += AD
+									for(var/datum/disease/advance/AD in mix2)
+										to_mix += AD
+
+									var/datum/disease/advance/AD = Advance_Mix(to_mix)
+									if(AD)
+										var/list/preserve = list(AD)
+										for(var/D in R.data["viruses"])
+											if(!istype(D, /datum/disease/advance))
+												preserve += D
+										R.data["viruses"] = preserve
 
 						handle_reactions()
 						return 0
 
 				var/datum/reagent/D = chemical_reagents_list[reagent]
 				if(D)
+
 					var/datum/reagent/R = new D.type()
 					reagent_list += R
 					R.holder = src
 					R.volume = amount
-					R.data = data
+					SetViruses(R, data) // Includes setting data
+
 					//debug
 					//world << "Adding data"
 					//for(var/D in R.data)

@@ -1,10 +1,16 @@
 /mob/Del()//This makes sure that mobs with clients/keys are not just deleted from the game.
+	mob_list -= src
+	dead_mob_list -= src
+	living_mob_list -= src
 	ghostize()
-	remove_from_mob_list(src)
 	..()
 
 /mob/New()
-	add_to_mob_list(src)
+	mob_list += src
+	if(stat == DEAD)
+		dead_mob_list += src
+	else
+		living_mob_list += src
 	..()
 
 /mob/proc/Cell()
@@ -123,8 +129,6 @@
 
 
 /mob/proc/restrained()
-	if (handcuffed)
-		return 1
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.
@@ -213,7 +217,7 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/show_inv(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
@@ -221,7 +225,6 @@ var/list/slot_equipment_priority = list( \
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
 	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
@@ -346,7 +349,7 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/print_flavor_text()
 	if (flavor_text && flavor_text != "")
-		var/msg = dd_replacetext(flavor_text, "\n", " ")
+		var/msg = replacetext(flavor_text, "\n", " ")
 		if(lentext(msg) <= 40)
 			return "\blue [msg]"
 		else
@@ -412,76 +415,55 @@ var/list/slot_equipment_priority = list( \
 //	M.Login()	//wat
 	return
 
-/mob/verb/changes()
+/client/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"
-	if (client)
-		src.getFiles('html/postcardsmall.jpg',
-							 'html/somerights20.png',
-							 'html/88x31.png',
-							 'html/bug-minus.png',
-							 'html/cross-circle.png',
-							 'html/hard-hat-exclamation.png',
-							 'html/image-minus.png',
-							 'html/image-plus.png',
-							 'html/music-minus.png',
-							 'html/music-plus.png',
-							 'html/tick-circle.png',
-							 'html/wrench-screwdriver.png',
-							 'html/spell-check.png',
-							 'html/burn-exclamation.png',
-							 'html/tg-notif.png',
-							 'html/chevron.png',
-							 'html/chevron-expand.png',
-							 'html/changelog.css',
-							 'html/changelog.js'
-							 )
-		src << browse('html/changelog.html', "window=changes;size=675x650")
-		client.changes = 1
-
-/client/var/ghost_ears = 0
-/client/verb/toggle_ghost_ears()
-	set name = "Ghost ears"
-	set category = "OOC"
-	set desc = "Hear talks from everywhere"
-	ghost_ears = !ghost_ears
-	if (ghost_ears)
-		usr << "\blue Now you hear all speech in the world"
-	else
-		usr << "\blue Now you hear speech only from nearest creatures."
-
-/client/var/ghost_sight = 0
-/client/verb/toggle_ghost_sight()
-	set name = "Ghost sight"
-	set category = "OOC"
-	set desc = "Hear emotes from everywhere"
-	ghost_sight = !ghost_sight
-	if (ghost_sight)
-		usr << "\blue Now you hear all emotes in the world"
-	else
-		usr << "\blue Now you hear emotes only from nearest creatures."
-
-
+	getFiles(
+		'html/postcardsmall.jpg',
+		'html/somerights20.png',
+		'html/88x31.png',
+		'html/bug-minus.png',
+		'html/cross-circle.png',
+		'html/hard-hat-exclamation.png',
+		'html/image-minus.png',
+		'html/image-plus.png',
+		'html/music-minus.png',
+		'html/music-plus.png',
+		'html/tick-circle.png',
+		'html/wrench-screwdriver.png',
+		'html/spell-check.png',
+		'html/burn-exclamation.png',
+		'html/chevron.png',
+		'html/chevron-expand.png',
+		'html/changelog.css',
+		'html/changelog.js',
+		'html/changelog.html'
+		)
+	src << browse('html/changelog.html', "window=changes;size=675x650")
+	if(prefs.lastchangelog != changelog_hash)
+		prefs.lastchangelog = changelog_hash
+		prefs.save_preferences()
+		winset(src, "rpane.changelog", "background-color=none;font-style=;")
 
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
 	var/is_admin = 0
 
-	if (client.holder && client.holder.level >= 1 && ( client.holder.state == 2 || client.holder.level > 3 ))
+	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = 1
-	else if (istype(src, /mob/new_player) || stat != 2)
+	else if(stat != DEAD || istype(src, /mob/new_player))
 		usr << "\blue You must be observing to use this!"
 		return
 
-	if (is_admin && stat == 2)
+	if(is_admin && stat == DEAD)
 		is_admin = 0
 
 	var/list/names = list()
 	var/list/namecounts = list()
 	var/list/creatures = list()
 
-	for(var/obj/O in world)
+	for(var/obj/O in world)				//EWWWWWWWWWWWWWWWWWWWWWWWW ~needs to be optimised
 		if(!O.loc)
 			continue
 		if(istype(O, /obj/item/weapon/disk/nuclear))
@@ -550,7 +532,7 @@ var/list/slot_equipment_priority = list( \
 	set name = "Cancel Camera View"
 	set category = "OOC"
 	reset_view(null)
-	machine = null
+	unset_machine()
 	if(istype(src, /mob/living))
 		if(src:cameraFollow)
 			src:cameraFollow = null
@@ -558,11 +540,11 @@ var/list/slot_equipment_priority = list( \
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
-		machine = null
+		unset_machine()
 		src << browse(null, t1)
 
 	if(href_list["flavor_more"])
-		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, dd_replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
+		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
 		onclose(usr, "[name]")
 	if(href_list["flavor_change"])
 		update_flavor_text()
@@ -615,11 +597,7 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/can_use_hands()
-	if(handcuffed)
-		return 0
-	if(buckled && ! istype(buckled, /obj/structure/stool/bed/chair)) // buckling does not restrict hands
-		return 0
-	return ..()
+	return
 
 /mob/proc/is_active()
 	return (0 >= usr.stat)
@@ -713,18 +691,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(statpanel("Status"))	//not looking at that panel
 
 		if(client && client.holder)
-			stat(null,"Location: \t ([x], [y], [z])")
-			stat(null,"CPU: \t [world.cpu]")
+			stat(null,"Location:\t([x], [y], [z])")
+			stat(null,"CPU:\t[world.cpu]")
+			stat(null,"Instances:\t[world.contents.len]")
 
 			if(master_controller)
 				stat(null,"MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[controller_iteration])")
-				stat(null,"Air-[master_controller.air_cost]\t Sun-[master_controller.sun_cost]")
-				stat(null,"Mob-[master_controller.mobs_cost]\t #[mob_list.len]")
-				stat(null,"Dis-[master_controller.diseases_cost]\t #[active_diseases.len]")
-				stat(null,"Mch-[master_controller.machines_cost]\t #[machines.len]")
-				stat(null,"Obj-[master_controller.objects_cost]\t #[processing_objects.len]")
-				stat(null,"Net-[master_controller.networks_cost]\t Pnet-[master_controller.powernets_cost]")
-				stat(null,"Tick-[master_controller.ticker_cost]\t ALL-[master_controller.total_cost]")
+				stat(null,"Air-[master_controller.air_cost]\tSun-[master_controller.sun_cost]")
+				stat(null,"Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
+				stat(null,"Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
+				stat(null,"Mch-[master_controller.machines_cost]\t#[machines.len]")
+				stat(null,"Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
+				stat(null,"Net-[master_controller.networks_cost]\tPnet-[master_controller.powernets_cost]")
+				stat(null,"Tick-[master_controller.ticker_cost]\tALL-[master_controller.total_cost]")
 			else
 				stat(null,"MasterController-ERROR")
 
@@ -897,16 +876,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
 	return
-
-/*
- * Sends resource files to client cache
- */
-/mob/proc/getFiles()
-	if(!isemptylist(args))
-		for(var/file in args)
-			src << browse_rsc(file)
-		return 1
-	return 0
 
 /mob/proc/get_species()
 	return ""

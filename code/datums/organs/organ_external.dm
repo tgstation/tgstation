@@ -34,6 +34,7 @@
 	var/open = 0
 	var/stage = 0
 
+	var/list/implants = list()
 	// INTERNAL germs inside the organ, this is BAD if it's greater 0
 	var/germ_level = 0
 
@@ -426,8 +427,22 @@
 				else
 					H.icon_state = initial(H.icon_state)+"_l"
 
-			var/lol = pick(cardinal)
-			step(H,lol)
+			if(status & ORGAN_ROBOT)
+				del H
+				switch(body_part)
+					if(LEG_RIGHT)
+						H = new /obj/item/robot_parts/r_leg(owner.loc)
+					if(LEG_LEFT)
+						H = new /obj/item/robot_parts/l_leg(owner.loc)
+					if(ARM_RIGHT)
+						H = new /obj/item/robot_parts/r_arm(owner.loc)
+					if(ARM_LEFT)
+						H = new /obj/item/robot_parts/l_arm(owner.loc)
+
+			if(H)
+				var/lol = pick(cardinal)
+				step(H,lol)
+
 			destspawn = 1
 			if(status & ORGAN_ROBOT)
 				owner.visible_message("\red \The [owner]'s [display_name] explodes violently!",\
@@ -514,10 +529,15 @@
 	proc/emp_act(severity)
 		if(!(status & ORGAN_ROBOT))
 			return
-		if(prob(30*severity))
+		var/probability = 30
+		var/damage = 15
+		if(severity == 2)
+			probability = 1
+			damage = 3
+		if(prob(probability))
 			droplimb(1)
 		else
-			take_damage(4(4-severity), 0, 1, used_weapon = "EMP")
+			take_damage(damage, 0, 1, used_weapon = "EMP")
 
 	proc/getDisplayName()
 		switch(name)
@@ -587,6 +607,25 @@
 	min_broken_damage = 40
 	body_part = HEAD
 	var/disfigured = 0
+
+	take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
+		..(brute, burn, sharp, used_weapon, forbidden_limbs)
+		if (brute_dam > 40)
+			if (prob(50))
+				disfigure("brute")
+		if (burn_dam > 40)
+			disfigure("burn")
+
+	proc/disfigure(var/type = "brute")
+		if(type == "brute")
+			owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
+			"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
+			"You hear a sickening crack.")
+		else
+			owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
+			"\red <b>Your face melts off!</b>",	\
+			"You hear a sickening sizzle.")
+		disfigured = 1
 
 /datum/organ/external/l_arm
 	name = "l_arm"
@@ -662,6 +701,18 @@
 
 obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
+
+/*
+//Damage will not exceed max_damage using this proc
+//Cannot apply negative damage
+/datum/organ/external/proc/take_damage(brute, burn)
+	if(owner && (owner.status_flags & GODMODE))	return 0	//godmode
+	brute	= max(brute,0)
+	burn	= max(burn,0)
+
+	var/can_inflict = max_damage - (brute_dam + burn_dam)
+	if(!can_inflict)	return 0
+*/
 
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)

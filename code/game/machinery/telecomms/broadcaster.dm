@@ -29,12 +29,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	if(signal.data["reject"])
 		return
 
-	//Is it a test signal?
-	if(signal.data["type"] == 4)
-		signal.data["done"] = 1
-		signal.data["level"] += listening_level
-		return
-
 	if(signal.data["message"])
 
 		// Prevents massive radio spam
@@ -43,15 +37,18 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		var/datum/signal/original = signal.data["original"]
 		if(original)
 			original.data["done"] = 1
+			original.data["compression"] = signal.data["compression"]
+			original.data["level"] = signal.data["level"]
 
-		var/datum/radio_frequency/connection = signal.data["connection"]
-		var/signal_message = "[connection.frequency]:[signal.data["message"]]:[signal.data["realname"]]:[listening_level]"
+		var/signal_message = "[signal.frequency]:[signal.data["message"]]:[signal.data["realname"]]"
 		if(signal_message in recentmessages)
 			return
 		recentmessages.Add(signal_message)
 
 		if(signal.data["slow"] > 0)
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
+
+		signal.data["level"] |= listening_level
 
 	   /** #### - Normal Broadcast - #### **/
 
@@ -62,7 +59,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], listening_level)
+							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], signal.data["level"], signal.frequency)
 
 
 	   /** #### - Simple Broadcast - #### **/
@@ -87,7 +84,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], listening_level)
+							  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], signal.data["level"], signal.frequency)
 
 		if(!message_delay)
 			message_delay = 1
@@ -102,6 +99,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.
 	if(message_delay)
 		message_delay = 0
+	..()
 
 
 /*
@@ -149,14 +147,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], 0)
+							  signal.data["realname"], signal.data["vname"],, signal.data["compression"], list(0), connection.frequency)
 		else
 			if(intercept)
 				Broadcast_Message(signal.data["connection"], signal.data["mob"],
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"], 0)
+							  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"], list(0), connection.frequency)
 
 
 
@@ -210,24 +208,28 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		If nonzero, the signal may be partially inaudible or just complete gibberish.
 
 	@param level:
-		The Z level that the sending radio is on. 0 = Broadcast on all levels
+		The list of Z levels that the sending radio is broadcasting to. Having 0 in the list broadcasts on all levels
+
+	@param freq
+		The frequency of the signal
 
 **/
 
 /proc/Broadcast_Message(var/datum/radio_frequency/connection, var/mob/M,
 						var/vmask, var/vmessage, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname, var/vname,
-						var/data, var/compression, var/level)
+						var/data, var/compression, var/list/level, var/freq)
 
   /* ###### Prepare the radio connection ###### */
 
-	var/display_freq = connection.frequency
+	var/display_freq = freq
 
 	var/list/obj/item/device/radio/radios = list()
 
 	// --- Broadcast only to intercom devices ---
 
 	if(data == 1)
+
 		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
 			if(R.receive_range(display_freq, level) > -1)
 				radios += R
@@ -235,6 +237,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// --- Broadcast only to intercoms and station-bounced radios ---
 
 	else if(data == 2)
+
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
 
 			if(istype(R, /obj/item/device/radio/headset))
@@ -246,6 +249,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// --- Broadcast to syndicate radio! ---
 
 	else if(data == 3)
+
 		var/datum/radio_frequency/syndicateconnection = radio_controller.return_frequency(SYND_FREQ)
 
 		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
@@ -256,12 +260,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	// --- Broadcast to ALL radio devices ---
 
 	else
+
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
 			if(R.receive_range(display_freq, level) > -1)
 				radios += R
 
 	// Get a list of mobs who can hear from the radios we collected.
-	var/list/receive = get_mobs_in_radio_ranges(radios, level)
+	var/list/receive = get_mobs_in_radio_ranges(radios)
 
   /* ###### Organize the receivers into categories for displaying the message ###### */
 
@@ -278,7 +283,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 		if(istype(M, /mob/new_player)) // we don't want new players to hear messages. rare but generates runtimes.
@@ -336,10 +341,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Engineering"
 			if(1359)
 				freq_text = "Security"
-			if(1349)
-				freq_text = "Mining"
+//			if(1349)
+//				freq_text = "Mining"
 			if(1347)
-				freq_text = "Cargo"
+				freq_text = "Supply"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 
@@ -366,7 +371,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
-		if(!M) return
 		var/quotedmsg = M.say_quote(message)
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
@@ -394,8 +398,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
-				if(1349)
-					blackbox.msg_mining += blackbox_msg
+//				if(1349)
+//					blackbox.msg_mining += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else
@@ -496,7 +500,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
 
-
   /* ###### Prepare the radio connection ###### */
 
 	if(!M)
@@ -564,7 +567,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 
@@ -610,10 +613,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Engineering"
 			if(1359)
 				freq_text = "Security"
-			if(1349)
-				freq_text = "Mining"
+//			if(1349)
+//				freq_text = "Mining"
 			if(1347)
-				freq_text = "Cargo"
+				freq_text = "Supply"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 
@@ -666,8 +669,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
-				if(1349)
-					blackbox.msg_mining += blackbox_msg
+//				if(1349)
+//					blackbox.msg_mining += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else

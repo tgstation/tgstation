@@ -58,7 +58,7 @@
 /obj/structure/closet/emcloset/legacy/New()
 	new /obj/item/weapon/tank/oxygen(src)
 	new /obj/item/clothing/mask/gas(src)
-	
+
 /*
  * Fire Closet
  */
@@ -109,7 +109,7 @@
 
 /obj/structure/closet/toolcloset/New()
 	if(prob(40))
-		new /obj/item/clothing/suit/hazardvest(src)
+		new /obj/item/clothing/suit/storage/hazardvest(src)
 	if(prob(70))
 		new /obj/item/device/flashlight(src)
 	if(prob(70))

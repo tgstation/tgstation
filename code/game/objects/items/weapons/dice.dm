@@ -1,9 +1,10 @@
 /obj/item/weapon/dice
 	name = "d6"
 	desc = "A dice with six sides."
-	var/sides = 6
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d66"
+	w_class = 1
+	var/sides = 6
 
 /obj/item/weapon/dice/New()
 	icon_state = "[name][rand(sides)]"
@@ -11,8 +12,8 @@
 /obj/item/weapon/dice/d20
 	name = "d20"
 	desc = "A dice with twenty sides."
-	sides = 20
 	icon_state = "d2020"
+	sides = 20
 
 /obj/item/weapon/dice/attack_self(mob/user as mob)
 	var/result = rand(1, sides)

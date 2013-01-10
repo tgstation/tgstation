@@ -2,16 +2,15 @@
 
 /area/mine
 	icon_state = "mining"
+	music = 'sound/ambience/song_game.ogg'
 
 /area/mine/explored
 	name = "Mine"
 	icon_state = "explored"
-	music = null
 
 /area/mine/unexplored
 	name = "Mine"
 	icon_state = "unexplored"
-	music = null
 
 /area/mine/lobby
 	name = "Mining station"

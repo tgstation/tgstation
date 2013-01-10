@@ -37,6 +37,11 @@
 #define BODYTEMP_AUTORECOVERY_MINIMUM 10 //Minimum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 50.
 #define BODYTEMP_COLD_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
 #define BODYTEMP_HEAT_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
+#define BODYTEMP_COOLING_MAX 30 //The maximum number of degrees that your body can cool in 1 tick, when in a cold area.
+#define BODYTEMP_HEATING_MAX 30 //The maximum number of degrees that your body can heat up in 1 tick, when in a hot area.
+
+#define BODYTEMP_HEAT_DAMAGE_LIMIT 360.15 // The limit the human body can take before it starts taking damage from heat.
+#define BODYTEMP_COLD_DAMAGE_LIMIT 260.15 // The limit the human body can take before it starts taking damage from coldness.
 
 #define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
@@ -55,8 +60,9 @@
 #define SHOE_MAX_HEAT_PROTECITON_TEMPERATURE 1500		//For gloves
 
 
-#define PRESSURE_DAMAGE_COEFFICIENT 5 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
-#define MAX_PRESSURE_DAMAGE 7 //This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
+#define PRESSURE_DAMAGE_COEFFICIENT 4 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
+#define MAX_HIGH_PRESSURE_DAMAGE 4	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
+#define LOW_PRESSURE_DAMAGE 2 	//The amounb of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
 #define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
 #define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
@@ -66,7 +72,10 @@
 
 // Factor of how fast mob nutrition decreases
 #define	HUNGER_FACTOR 0.05
-#define	REAGENTS_METABOLISM 0.4
+#define	REAGENTS_METABOLISM 0.02
+// By defining the effect multiplier this way, it'll exactly adjust
+// all effects according to how they originally were with the 0.4 metabolism
+#define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
 
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
 	//Minimum ratio of air that must move to/from a tile to suspend group processing
@@ -196,11 +205,12 @@ var/MAX_EXPLOSION_RANGE = 14
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
-#define PLASMAGUARD 8192		//Does not get contaminated by plasma.
+#define ONESIZEFITSALL 8192
+#define PLASMAGUARD 16384			//Does not get contaminated by plasma.
 
-#define	NOREACT		16384 		//Reagents dont' react inside this container.
+#define	NOREACT		16384 			//Reagents dont' react inside this container.
 
-#define BLOCKHAIR	32768		// temporarily removes the user's hair icon
+#define BLOCKHAIR	32768			// temporarily removes the user's hair icon
 
 //flags for pass_flags
 #define PASSTABLE	1
@@ -418,11 +428,12 @@ var/MAX_EXPLOSION_RANGE = 14
 #define GAS_N2O	(1 << 4)
 
 
-var/list/accessable_z_levels = list("3" = 30, "4" = 70)
+var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" = 60)
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
 //(Exceptions: extended, sandbox and nuke) -Errorage
-//Was list("1" = 10, "3" = 15, "4" = 60, "5" = 15); changed it to list("3" = 30, "4" = 70).
+//Was list("3" = 30, "4" = 70).
 //Spacing should be a reliable method of getting rid of a body -- Urist.
+//Go away Urist, I'm restoring this to the longer list. ~Errorage
 
 #define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
 
@@ -452,6 +463,8 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define CANSTUN		1
 #define CANWEAKEN	2
 #define CANPARALYSE	4
+#define CANPUSH		8
+#define GODMODE		4096
 #define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
 #define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
 #define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
@@ -508,11 +521,6 @@ var/list/liftable_structures = list(\
 #define BANTYPE_JOB_PERMA	3
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
-
-//The number of deciseconds which someone needs to be inactive to be classified as AFK:
-#define AFK_THRESHOLD 3000
-
-
 
 #define SEE_INVISIBLE_MINIMUM 5
 
@@ -597,6 +605,83 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define HOSTILE_STANCE_ATTACK 3
 #define HOSTILE_STANCE_ATTACKING 4
 #define HOSTILE_STANCE_TIRED 5
-
 #define LEFT 1
 #define RIGHT 2
+
+#define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
+
+
+
+//Please don't edit these values without speaking to Errorage first	~Carn
+//Admin Permissions
+#define R_BUILDMODE		1
+#define R_ADMIN			2
+#define R_BAN			4
+#define R_FUN			8
+#define R_SERVER		16
+#define R_DEBUG			32
+#define R_POSSESS		64
+#define R_PERMISSIONS	128
+#define R_STEALTH		256
+#define R_REJUVINATE	512
+#define R_VAREDIT		1024
+#define R_SOUNDS		2048
+#define R_SPAWN			4096
+#define R_MOD			8192
+
+#define R_MAXPERMISSION 8192 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
+
+#define R_HOST			65535
+
+//Preference toggles
+#define SOUND_ADMINHELP	1
+#define SOUND_MIDI		2
+#define SOUND_AMBIENCE	4
+#define SOUND_LOBBY		8
+#define CHAT_OOC		16
+#define CHAT_DEAD		32
+#define CHAT_GHOSTEARS	64
+#define CHAT_GHOSTSIGHT	128
+#define CHAT_PRAYER		256
+#define CHAT_RADIO		512
+
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO)
+
+#define BE_TRAITOR		1
+#define BE_OPERATIVE	2
+#define BE_CHANGELING	4
+#define BE_WIZARD		8
+#define BE_MALF			16
+#define BE_REV			32
+#define BE_ALIEN		64
+#define BE_PAI			128
+#define BE_CULTIST		256
+#define BE_MONKEY		512
+#define BE_NINJA		1024
+
+var/list/be_special_flags = list(
+	"Traitor" = BE_TRAITOR,
+	"Operative" = BE_OPERATIVE,
+	"Changeling" = BE_CHANGELING,
+	"Wizard" = BE_WIZARD,
+	"Malf AI" = BE_MALF,
+	"Revolutionary" = BE_REV,
+	"Xenomorph" = BE_ALIEN,
+	"pAI" = BE_PAI,
+	"Cultist" = BE_CULTIST,
+	"Monkey" = BE_MONKEY,
+	"Ninja" = BE_NINJA
+	)
+
+#define AGE_MIN 17			//youngest a character can be
+#define AGE_MAX 85			//oldest a character can be
+
+//Languages!
+#define LANGUAGE_HUMAN		1
+#define LANGUAGE_ALIEN		2
+#define LANGUAGE_DOG		4
+#define LANGUAGE_CAT		8
+#define LANGUAGE_BINARY		16
+#define LANGUAGE_OTHER		32768
+
+#define LANGUAGE_UNIVERSAL	65535

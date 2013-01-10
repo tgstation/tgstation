@@ -94,11 +94,21 @@
 
 	else
 		switch(rand(1,100))
-			if(1 to 50)
+			if(1 to 33)
 				var/datum/objective/assassinate/kill_objective = new
 				kill_objective.owner = traitor
 				kill_objective.find_target()
 				traitor.objectives += kill_objective
+			if(34 to 50)
+				var/datum/objective/brig/brig_objective = new
+				brig_objective.owner = traitor
+				brig_objective.find_target()
+				traitor.objectives += brig_objective
+			if(51 to 66)
+				var/datum/objective/harm/harm_objective = new
+				harm_objective.owner = traitor
+				harm_objective.find_target()
+				traitor.objectives += harm_objective
 			else
 				var/datum/objective/steal/steal_objective = new
 				steal_objective.owner = traitor
@@ -140,6 +150,13 @@
 	..()
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
 
+/datum/game_mode/traitor/process()
+	// Make sure all objectives are processed regularly, so that objectives
+	// which can be checked mid-round are checked mid-round.
+	for(var/datum/mind/traitor_mind in traitors)
+		for(var/datum/objective/objective in traitor_mind.objectives)
+			objective.check_completion()
+	return 0
 
 /datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."

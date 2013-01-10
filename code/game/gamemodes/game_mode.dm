@@ -62,6 +62,8 @@ Devices and Tools;
 Whitespace:Seperator;
 Implants;
 /obj/item/weapon/storage/syndie_kit/imp_freedom:3:Freedom Implant;
+/obj/item/weapon/implant/explosive:6:Explosive Implant (DANGER!);
+/obj/item/weapon/implant/compressed:4:Compressed Matter Implant;
 /obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
 Whitespace:Seperator;
 (Pointless) Badassery;
@@ -97,6 +99,9 @@ Whitespace:Seperator;
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
+	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
+		display_roundstart_logout_report()
+
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(ticker && ticker.mode)
 		feedback_set_details("game_mode","[ticker.mode]")
@@ -260,7 +265,7 @@ Whitespace:Seperator;
 
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
-			if(player.preferences.be_special & role)
+			if(player.client.prefs.be_special & role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
 
@@ -272,8 +277,8 @@ Whitespace:Seperator;
 
 	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
-			if (player.client && player.ready)
-				if(!(player.preferences.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+			if(player.client && player.ready)
+				if(!(player.client.prefs.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
@@ -315,6 +320,8 @@ Whitespace:Seperator;
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
+				log_admin("[applicant.key] drafted into antagonist role against their preferences.")
+				message_admins("[applicant.key] drafted into antagonist role against their preferences.")
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
@@ -323,14 +330,14 @@ Whitespace:Seperator;
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
-
+/*
 /datum/game_mode/proc/latespawn(var/mob)
 
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
 	if(player.preferences.be_special & role)
 		return 1
 	return 0
-
+*/
 
 /datum/game_mode/proc/num_players()
 	. = 0
@@ -359,3 +366,59 @@ Whitespace:Seperator;
 		if(player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads
+
+//////////////////////////
+//Reports player logouts//
+//////////////////////////
+proc/display_roundstart_logout_report()
+	var/msg = "\blue <b>Roundstart logout report\n\n"
+	for(var/mob/living/L in mob_list)
+
+		if(L.ckey)
+			var/found = 0
+			for(var/client/C in clients)
+				if(C.ckey == L.ckey)
+					found = 1
+					break
+			if(!found)
+				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
+
+
+		if(L.ckey && L.client)
+			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	//Connected, but inactive (alt+tabbed or something)
+				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
+				continue //AFK client
+			if(L.stat)
+				if(L.suiciding)	//Suicider
+					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='red'><b>Suicide</b></font>)\n"
+					continue //Disconnected client
+				if(L.stat == UNCONSCIOUS)
+					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (Dying)\n"
+					continue //Unconscious
+				if(L.stat == DEAD)
+					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (Dead)\n"
+					continue //Dead
+
+			continue //Happy connected client
+		for(var/mob/dead/observer/D in mob_list)
+			if(D.mind && (D.mind.original == L || D.mind.current == L))
+				if(L.stat == DEAD)
+					if(L.suiciding)	//Suicider
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>Suicide</b></font>)\n"
+						continue //Disconnected client
+					else
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (Dead)\n"
+						continue //Dead mob, ghost abandoned
+				else
+					if(D.can_reenter_corpse)
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>This shouldn't appear.</b></font>)\n"
+						continue //Lolwhat
+					else
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>Ghosted</b></font>)\n"
+						continue //Ghosted while alive
+
+
+
+	for(var/mob/M in mob_list)
+		if(M.client && M.client.holder)
+			M << msg

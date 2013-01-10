@@ -1,7 +1,10 @@
 /obj/item/weapon/implant
 	name = "implant"
+	icon = 'device.dmi'
+	icon_state = "implant"
 	var/implanted = null
 	var/mob/imp_in = null
+	var/datum/organ/external/part = null
 	color = "b"
 	var/allow_reagents = 0
 
@@ -23,8 +26,8 @@
 	proc/hear(message, source as mob)
 		return
 
-
-
+	proc/islegal()
+		return 0
 
 /obj/item/weapon/implant/tracking
 	name = "tracking"
@@ -82,6 +85,8 @@ Implant Specifics:<BR>"}
 		if(src.imp_in)
 			src.imp_in.gib()
 
+	islegal()
+		return 0
 //BS12 Explosive
 /obj/item/weapon/implant/explosive
 	name = "explosive implant"
@@ -110,14 +115,17 @@ Implant Specifics:<BR>"}
 		var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 		msg = sanitize_simple(msg, replacechars)
 		if(findtext(msg,phrase))
-			if(istype(imp_in, /mob/))
-				var/mob/T = imp_in
-				T.gib()
-			explosion(get_turf(imp_in), 1, 3, 4, 6, 3)
-			var/turf/t = get_turf(imp_in)
-			if(t)
-				t.hotspot_expose(3500,125)
+			activate()
 			del(src)
+
+	activate()
+		if(istype(imp_in, /mob/))
+			var/mob/T = imp_in
+			T.gib()
+		explosion(get_turf(imp_in), 1, 3, 4, 6, 3)
+		var/turf/t = get_turf(imp_in)
+		if(t)
+			t.hotspot_expose(3500,125)
 
 	implanted(mob/source as mob)
 		phrase = input("Choose activation phrase:") as text
@@ -127,6 +135,8 @@ Implant Specifics:<BR>"}
 		usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
 		return 1
 
+	islegal()
+		return 0
 
 /obj/item/weapon/implant/chem
 	name = "chem"
@@ -145,7 +155,7 @@ will suffer from an increased appetite.</B><BR>
 <b>Function:</b> Contains a small capsule that can contain various chemicals. Upon receiving a specially encoded signal<BR>
 the implant releases the chemicals directly into the blood stream.<BR>
 <b>Special Features:</b>
-<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 15 units.<BR>
+<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 50 units.<BR>
 Can only be loaded while still in its original case.<BR>
 <b>Integrity:</b> Implant will last so long as the subject is alive. However, if the subject suffers from malnutrition,<BR>
 the implant may become unstable and either pre-maturely inject the subject or simply break."}
@@ -154,14 +164,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(10)
+		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
 		R.my_atom = src
 
 
 	trigger(emote, source as mob)
 		if(emote == "deathgasp")
-			src.activate(10)
+			src.activate(src.reagents.total_volume)
 		return
 
 
@@ -266,14 +276,16 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	process()
 		if (!implanted) return
 		var/mob/M = imp_in
-		var/area/t = get_area(M)
 
 		if(isnull(M)) // If the mob got gibbed
-			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
-			del(a)
-			processing_objects.Remove(src)
+			activate()
 		else if(M.stat == 2)
+			activate("death")
+
+	activate(var/cause)
+		var/mob/M = imp_in
+		var/area/t = get_area(M)
+		if(cause == "death")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
 				//give the syndies a bit of stealth
@@ -282,7 +294,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
 			del(a)
 			processing_objects.Remove(src)
-
+		else
+			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
+			a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
+			del(a)
+			processing_objects.Remove(src)
 
 	implanted(mob/source as mob)
 		mobname = source.real_name
@@ -314,13 +330,20 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 		if (emote == src.activation_emote)
 			source << "The air glows as \the [src.scanned.name] uncompresses."
-			var/turf/t = get_turf(source)
-			src.scanned.loc = t
-			del src
+			activate()
+
+	activate()
+		var/turf/t = get_turf(src)
+		src.scanned.loc = t
+		if (part) part.implants -= src
+		del src
 
 	implanted(mob/source as mob)
 		src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
-		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		if (source.mind)
+			source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
 		return 1
 
+	islegal()
+		return 0

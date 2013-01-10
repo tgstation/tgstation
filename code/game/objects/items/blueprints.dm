@@ -44,7 +44,7 @@
 				return
 			edit_area()
 
-/obj/item/blueprints/proc/interact()
+/obj/item/blueprints/interact()
 	var/area/A = get_area()
 	var/text = {"<HTML><head><title>[src]</title></head><BODY>
 <h2>[station_name()] blueprints</h2>
@@ -64,7 +64,7 @@ move an amendment</a> to the drawing.</p>
 "}
 		if (AREA_SPECIAL)
 			text += {"
-<p>This place doesn't noted on this blueprints.</p>
+<p>This place doesn't noted on these blueprints.</p>
 "}
 		else
 			return
@@ -163,19 +163,19 @@ move an amendment</a> to the drawing.</p>
 
 
 /obj/item/blueprints/proc/set_area_machinery_title(var/area/A,var/title,var/oldtitle)
-	if (!oldtitle) // or dd_replacetext goes to infinite loop
+	if (!oldtitle) // or replacetext goes to infinite loop
 		return
 	for(var/area/RA in A.related)
 		for(var/obj/machinery/alarm/M in RA)
-			M.name = dd_replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/power/apc/M in RA)
-			M.name = dd_replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)
-			M.name = dd_replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/atmospherics/unary/vent_pump/M in RA)
-			M.name = dd_replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/door/M in RA)
-			M.name = dd_replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name,oldtitle,title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 /obj/item/blueprints/proc/check_tile_is_border(var/turf/T2,var/dir)

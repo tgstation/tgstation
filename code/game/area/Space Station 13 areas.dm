@@ -49,6 +49,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
 //	var/list/lights				// list of all lights on this area
+	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
+	var/air_doors_activated = 0
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -436,38 +438,51 @@ proc/process_ghost_teleport_locs()
 
 //ENEMY
 
+//names are used
 /area/syndicate_station
 	name = "\improper Syndicate Station"
 	icon_state = "yellow"
 	requires_power = 0
 
 /area/syndicate_station/start
-	name = "\improper Syndicate Station Start"
+	name = "\improper Syndicate Forward Operating Base"
 	icon_state = "yellow"
 
-/area/syndicate_station/one
-	name = "\improper Syndicate Station Location 1"
-	icon_state = "green"
+/area/syndicate_station/southwest
+	name = "\improper south-west of SS13"
+	icon_state = "southwest"
 
-/area/syndicate_station/two
-	name = "\improper Syndicate Station Location 2"
-	icon_state = "green"
+/area/syndicate_station/northwest
+	name = "\improper north-west of SS13"
+	icon_state = "northwest"
 
-/area/syndicate_station/three
-	name = "\improper Syndicate Station Location 3"
-	icon_state = "green"
+/area/syndicate_station/northeast
+	name = "\improper north-east of SS13"
+	icon_state = "northeast"
 
-/area/syndicate_station/four
-	name = "\improper Syndicate Station Location 4"
-	icon_state = "green"
+/area/syndicate_station/southeast
+	name = "\improper south-east of SS13"
+	icon_state = "southeast"
 
-/area/syndicate_station/five
-	name = "\improper Syndicate Station Location 5"
-	icon_state = "green"
+/area/syndicate_station/north
+	name = "\improper north of SS13"
+	icon_state = "north"
 
-/area/syndicate_station/six
-	name = "\improper Syndicate Station Location 6"
-	icon_state = "green"
+/area/syndicate_station/south
+	name = "\improper south of SS13"
+	icon_state = "south"
+
+/area/syndicate_station/commssat
+	name = "\improper south of the communication satellite"
+	icon_state = "south"
+
+/area/syndicate_station/mining
+	name = "\improper north east of the mining asteroid"
+	icon_state = "north"
+
+/area/syndicate_station/transit
+	name = "\improper hyperspace"
+	icon_state = "shuttle"
 
 /area/wizard_station
 	name = "\improper Wizard's Den"
@@ -951,7 +966,7 @@ proc/process_ghost_teleport_locs()
 	music = "signal"
 
 /area/teleporter/gateway
-	name = "\improper Secure Construction Area"
+	name = "\improper Gateway"
 	icon_state = "teleporter"
 	music = "signal"
 
@@ -965,6 +980,17 @@ proc/process_ghost_teleport_locs()
 /area/medical/medbay
 	name = "Medbay"
 	icon_state = "medbay"
+	music = 'sound/ambience/signal.ogg'
+
+//Medbay is a large area, these additional areas help level out APC load.
+/area/medical/medbay2
+	name = "Medbay"
+	icon_state = "medbay2"
+	music = 'sound/ambience/signal.ogg'
+
+/area/medical/medbay3
+	name = "Medbay"
+	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 
 /area/medical/patients_rooms
@@ -1008,8 +1034,12 @@ proc/process_ghost_teleport_locs()
 	icon_state = "exam_room"
 
 /area/medical/genetics
-	name = "Genetics"
+	name = "Genetics Lab"
 	icon_state = "genetics"
+
+/area/medical/genetics_cloning
+	name = "Cloning Lab"
+	icon_state = "cloning"
 
 /area/medical/sleeper
 	name = "\improper Medical Sleeper Room"
@@ -1486,6 +1516,35 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Strange Station"
 	icon_state = "away"
 
+/area/awaymission/wwmines
+	name = "\improper Wild West Mines"
+	icon_state = "away1"
+	luminosity = 1
+	requires_power = 0
+
+/area/awaymission/wwgov
+	name = "\improper Wild West Mansion"
+	icon_state = "away2"
+	luminosity = 1
+	requires_power = 0
+
+/area/awaymission/wwrefine
+	name = "\improper Wild West Refinery"
+	icon_state = "away3"
+	luminosity = 1
+	requires_power = 0
+
+/area/awaymission/wwvault
+	name = "\improper Wild West Vault"
+	icon_state = "away3"
+	luminosity = 0
+
+/area/awaymission/wwvaultdoors
+	name = "\improper Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
+	icon_state = "away2"
+	requires_power = 0
+	luminosity = 0
+
 /area/awaymission/desert
 	name = "Mars"
 	icon_state = "away"
@@ -1503,9 +1562,12 @@ proc/process_ghost_teleport_locs()
 	icon_state = "away3"
 
 /area/awaymission/spacebattle
-	name = "\improper Nanotrasen Cruiser"
+	name = "\improper Space Battle"
 	icon_state = "away"
 	requires_power = 0
+
+/area/awaymission/spacebattle/cruiser
+	name = "\improper Nanotrasen Cruiser"
 
 /area/awaymission/spacebattle/syndicate1
 	name = "\improper Syndicate Assault Ship 1"
@@ -1531,6 +1593,10 @@ proc/process_ghost_teleport_locs()
 /area/awaymission/spacebattle/secret
 	name = "\improper Hidden Chamber"
 
+/area/awaymission/listeningpost
+	name = "\improper Listening Post"
+	icon_state = "away"
+	requires_power = 0
 
 /area/awaymission/beach
 	name = "Beach"

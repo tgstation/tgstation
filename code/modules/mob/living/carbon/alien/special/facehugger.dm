@@ -16,6 +16,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH|MASKCOVERSEYES
+	throw_range = 5
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
@@ -83,13 +84,18 @@ var/const/MAX_ACTIVE_TIME = 400
 	HasProximity(target)
 	return
 
+/obj/item/clothing/mask/facehugger/on_found(mob/finder as mob)
+	HasProximity(finder)
+	return 1
+
 /obj/item/clothing/mask/facehugger/dropped()
 	..()
 	GoActive()
 	return
 
 /obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom)
-	Attach(hit_atom)
+	if(prob(25))
+		Attach(hit_atom)
 	return
 
 /obj/item/clothing/mask/facehugger/proc/Attach(M as mob)
@@ -129,17 +135,21 @@ var/const/MAX_ACTIVE_TIME = 400
 		for(var/mob/O in viewers(target, null))
 			O.show_message("\red \b [src] tears [W] off of [target]'s face!", 1)
 
-	loc = target
-	layer = 20
-	target.wear_mask = src
-	target.update_inv_wear_mask()
+	if(prob(75))
+		loc = target
+		layer = 20
+		target.wear_mask = src
+		target.update_inv_wear_mask()
 
-	GoIdle() //so it doesn't jump the people that tear it off
+		GoIdle() //so it doesn't jump the people that tear it off
 
-	if(!sterile) target.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
+		if(!sterile) target.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 
-	spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
-		Impregnate(target)
+		spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
+			Impregnate(target)
+	else
+		for(var/mob/O in viewers(target, null))
+			O.show_message("\red \b [src] misses [target]'s face!", 1)
 
 	return
 

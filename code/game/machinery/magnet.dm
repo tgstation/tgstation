@@ -249,7 +249,7 @@
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))
 			return
-		user.machine = src
+		user.set_machine(src)
 		var/dat = "<B>Magnetic Control Console</B><BR><BR>"
 		if(!autolink)
 			dat += {"
@@ -277,7 +277,7 @@
 	Topic(href, href_list)
 		if(stat & (BROKEN|NOPOWER))
 			return
-		usr.machine = src
+		usr.set_machine(src)
 		src.add_fingerprint(usr)
 
 		if(href_list["radio-op"])

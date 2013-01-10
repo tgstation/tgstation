@@ -25,10 +25,7 @@
 	verbs += /mob/dead/observer/proc/dead_tele
 	stat = DEAD
 
-	dead_mob_list += src
-	add_to_mob_list(src)
 	var/turf/T
-
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
@@ -53,7 +50,7 @@
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
-	return
+	..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
@@ -235,27 +232,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//Maybe in the future we can add more <i>spooky</i> code here!
 	return
 */
-/mob/dead/observer/verb/toggle_alien_candidate()
-	set name = "Toggle Be Alien Candidate"
-	set category = "Ghost"
-	set desc = "Determines whether you will or will not be an alien candidate when someone bursts."
-	if(client.be_alien)
-		client.be_alien = 0
-		src << "You are now excluded from alien candidate lists until end of round."
-	else if(!client.be_alien)
-		client.be_alien = 1
-		src << "You are now included in alien candidate lists until end of round."
-
-/mob/dead/observer/verb/toggle_pai_candidate()
-	set name = "Toggle Be pAI Candidate"
-	set category = "Ghost"
-	set desc = "Receive a pop-up request when a pAI device requests a new personality. (toggle)"
-	if(client.be_pai)
-		client.be_pai = 0
-		src << "You will no longer receive pAI recruitment pop-ups this round."
-	else
-		client.be_pai = 1
-		src << "You will now be considered a viable candidate when a pAI device requests a new personality, effective until the end of this round."
 
 /mob/dead/observer/memory()
 	set hidden = 1

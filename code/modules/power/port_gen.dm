@@ -100,7 +100,7 @@ display round(lastgen) and plasmatank amount
 	name = "P.A.C.M.A.N.-type Portable Generator"
 	var/sheets = 0
 	var/max_sheets = 100
-	var/sheet_path = /obj/item/stack/sheet/plasma
+	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
 	var/board_path = "/obj/item/weapon/circuitboard/pacman"
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 10
@@ -213,12 +213,22 @@ display round(lastgen) and plasmatank amount
 				user << "\blue You open the access panel."
 			else
 				user << "\blue You close the access panel."
-		else if(istype(O, /obj/item/weapon/crowbar) && !open)
+		else if(istype(O, /obj/item/weapon/crowbar) && open)
 			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
 			for(var/obj/item/I in component_parts)
 				if(I.reliability < 100)
 					I.crit_fail = 1
 				I.loc = src.loc
+			while ( sheets > 0 )
+				var/obj/item/stack/sheet/G = new sheet_path(src.loc)
+
+				if ( sheets > 50 )
+					G.amount = 50
+				else
+					G.amount = sheets
+
+				sheets -= G.amount
+
 			new_frame.state = 2
 			new_frame.icon_state = "box_1"
 			del(src)
@@ -236,14 +246,14 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/attack_paw(mob/user as mob)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/proc/interact(mob/user)
+/obj/machinery/power/port_gen/pacman/interact(mob/user)
 	if (get_dist(src, user) > 1 )
 		if (!istype(user, /mob/living/silicon/ai))
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=port_gen")
 			return
 
-	user.machine = src
+	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
 	if (active)
@@ -284,12 +294,12 @@ display round(lastgen) and plasmatank amount
 				src.updateUsrDialog()
 		if (href_list["action"] == "close")
 			usr << browse(null, "window=port_gen")
-			usr.machine = null
+			usr.unset_machine()
 
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen1"
-	sheet_path = /obj/item/stack/sheet/uranium
+	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 25
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
@@ -299,7 +309,7 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen2"
-	sheet_path = /obj/item/stack/sheet/diamond
+	sheet_path = /obj/item/stack/sheet/mineral/diamond
 	power_gen = 40000
 	time_per_sheet = 30
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"

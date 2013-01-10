@@ -1,14 +1,8 @@
 /client/proc/only_one()
-	set category = "Fun"
-	set name = "THERE CAN BE ONLY ONE"
-	set desc = "Makes everyone into a traitor and has them fight for the nuke auth. disk."
 	if(!ticker)
 		alert("The game hasn't started yet!")
 		return
-	if(alert("BEGIN THE TOURNAMENT?",,"Yes","No")=="No")
-		return
 
-	feedback_add_details("admin_verb","TCBOO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(is_special_character(H)) continue

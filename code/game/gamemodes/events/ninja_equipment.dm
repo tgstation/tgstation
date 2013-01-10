@@ -593,7 +593,7 @@ ________________________________________________________________________________
 									grant_kamikaze(U)//Give them verbs and change variables as necessary.
 									U.regenerate_icons()//Update their clothing.
 									ninjablade()//Summon two energy blades.
-									message_admins("\blue [U.key] used KAMIKAZE mode.", 1)//Let the admins know.
+									message_admins("\blue [key_name_admin(U)] used KAMIKAZE mode.")//Let the admins know.
 									s_busy = 0
 									return
 							sleep(s_delay)
@@ -844,16 +844,16 @@ ________________________________________________________________________________
 					U << "\red Procedure interrupted. Protocol terminated."
 			return
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
-			var/obj/item/weapon/disk/tech_disk/tdisk = I
-			if(tdisk.stored)//If it has something on it.
+			var/obj/item/weapon/disk/tech_disk/TD = I
+			if(TD.stored)//If it has something on it.
 				U << "Research information detected, processing..."
 				if(do_after(U,s_delay))
 					for(var/datum/tech/current_data in stored_research)
-						if(current_data.id==tdisk.stored.id)
-							if(current_data.level<tdisk.stored.level)
-								current_data.level=tdisk.stored.level
+						if(current_data.id==TD.stored.id)
+							if(current_data.level<TD.stored.level)
+								current_data.level=TD.stored.level
 							break
-					tdisk.stored = null
+					TD.stored = null
 					U << "\blue Data analyzed and updated. Disk erased."
 				else
 					U << "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated."

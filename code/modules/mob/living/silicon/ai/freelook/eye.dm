@@ -9,7 +9,7 @@
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	density = 0
-	nodamage = 1 // You can't damage it.
+	status_flags = GODMODE  // You can't damage it.
 	mouse_opacity = 0
 
 // Movement code. Returns 0 to stop air movement from moving it.
@@ -36,10 +36,13 @@
 // It will also stream the chunk that the new loc is in.
 
 /mob/aiEye/proc/setLoc(var/T)
-	T = get_turf(T)
-	loc = T
-	cameranet.visibility(src)
+
 	if(ai)
+		if(!isturf(ai.loc))
+			return
+		T = get_turf(T)
+		loc = T
+		cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
 		//Holopad
@@ -114,10 +117,9 @@
 		user.sprint = initial
 
 	user.cameraFollow = null
-	src.eye = user.eyeobj
 
-	//user.machine = null //Uncomment this if it causes problems.
-	user.lightNearbyCamera()
+	//user.unset_machine() //Uncomment this if it causes problems.
+	//user.lightNearbyCamera()
 
 
 // Return to the Core.
@@ -133,7 +135,7 @@
 
 	current = null
 	cameraFollow = null
-	machine = null
+	unset_machine()
 
 	if(src.eyeobj && src.loc)
 		src.eyeobj.loc = src.loc

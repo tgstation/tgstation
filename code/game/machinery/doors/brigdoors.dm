@@ -132,7 +132,7 @@
 			return
 		var/second = round(timeleft() % 60)
 		var/minute = round((timeleft() - second) / 60)
-		user.machine = src
+		user.set_machine(src)
 		var/dat = "<HTML><BODY><TT>"
 		dat += "<HR>Timer System:</hr>"
 		dat += "<b>Door [src.id] controls</b><br/>"
@@ -169,7 +169,7 @@
 		if(!src.allowed(usr))
 			return
 
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["timing"])
 			src.timing = text2num(href_list["timing"])
 		else

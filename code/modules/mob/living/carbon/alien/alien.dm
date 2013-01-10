@@ -9,6 +9,7 @@
 	say_message = "hisses"
 	icon = 'icons/mob/alien.dmi'
 	gender = NEUTER
+	dna = null
 
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -20,8 +21,8 @@
 
 	var/move_delay_add = 0 // movement delay to add
 
-	status_flags = CANPARALYSE
-	var/heal_rate = 5
+	status_flags = CANPARALYSE|CANPUSH
+	var/heal_rate = 1
 	var/plasma_rate = 5
 
 	var/oxygen_alert = 0
@@ -36,7 +37,7 @@
 
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)
-		..(amount * 1.5)
+		..(amount * 2)
 	else
 		..(amount)
 	return
@@ -48,7 +49,7 @@
 	return 2
 
 /mob/living/carbon/alien/updatehealth()
-	if(nodamage)
+	if(status_flags & GODMODE)
 		health = maxHealth
 		stat = CONSCIOUS
 	else
@@ -172,6 +173,11 @@
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
 
+/mob/living/carbon/alien/getDNA()
+	return null
+
+/mob/living/carbon/alien/setDNA()
+	return
 
 /*----------------------------------------
 Proc: AddInfectionImages()
@@ -196,6 +202,7 @@ Des: Removes all infected images from the alien.
 			if(I.icon_state == "infected")
 				del(I)
 	return
+
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

@@ -11,7 +11,7 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	flags = NOREACT
-	var/global/max_n_of_items = 200
+	var/global/max_n_of_items = 999 // Sorry but the BYOND infinite loop detector doesn't look things over 1000.
 	var/item_quants = list()
 	var/ispowered = 1 //starts powered
 	var/isbroken = 0
@@ -82,14 +82,14 @@
 	return 0
 
 /obj/machinery/smartfridge/attack_hand(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	interact(user)
 
 /*******************
 *   SmartFridge Menu
 ********************/
 
-/obj/machinery/smartfridge/proc/interact(mob/user as mob)
+/obj/machinery/smartfridge/interact(mob/user as mob)
 	if(!src.ispowered)
 		return
 
@@ -103,7 +103,10 @@
 				var/N = item_quants[O]
 				dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
 				dat += " [N] </font>"
-				dat += "<a href='byond://?src=\ref[src];vend=[O]'>Vend</A>"
+				dat += "<a href='byond://?src=\ref[src];vend=[O];amount=1'>Vend</A> "
+				dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=5'>x5</A>)"
+				dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=10'>x10</A>)"
+				dat += "(<a href='byond://?src=\ref[src];vend=[O];amount=25'>x25</A>)"
 				dat += "<br>"
 
 		dat += "</TT>"
@@ -114,18 +117,23 @@
 /obj/machinery/smartfridge/Topic(href, href_list)
 	if(..())
 		return
-
-	usr.machine = src
+	usr.set_machine(src)
 
 	var/N = href_list["vend"]
+	var/amount = text2num(href_list["amount"])
 
 	if(item_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
 		return
 
-	item_quants[N] -= 1
+	item_quants[N] = max(item_quants[N] - amount, 0)
+
+	var/i = amount
 	for(var/obj/O in contents)
 		if(O.name == N)
 			O.loc = src.loc
-			break
+			i--
+			if(i <= 0)
+				break
+
 	src.updateUsrDialog()
 	return

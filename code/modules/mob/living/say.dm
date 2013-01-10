@@ -1,4 +1,4 @@
-
+#define SAY_MINIMUM_PRESSURE 10
 var/list/department_radio_keys = list(
 	  ":r" = "right hand",
 	  ":l" = "left hand",
@@ -87,7 +87,7 @@ var/list/department_radio_keys = list(
 		return say_dead(message)
 
 	if (src.client)
-		if(client.muted & MUTE_IC)
+		if(client.prefs.muted & MUTE_IC)
 			src << "\red You cannot speak in IC (muted)."
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
@@ -165,15 +165,15 @@ var/list/department_radio_keys = list(
 
 	// :downs:
 	if (getBrainLoss() >= 60)
-		message = dd_replacetext(message, " am ", " ")
-		message = dd_replacetext(message, " is ", " ")
-		message = dd_replacetext(message, " are ", " ")
-		message = dd_replacetext(message, "you", "u")
-		message = dd_replacetext(message, "help", "halp")
-		message = dd_replacetext(message, "grief", "grife")
-		message = dd_replacetext(message, "space", "spess")
-		message = dd_replacetext(message, "carp", "crap")
-		message = dd_replacetext(message, "reason", "raisin")
+		message = replacetext(message, " am ", " ")
+		message = replacetext(message, " is ", " ")
+		message = replacetext(message, " are ", " ")
+		message = replacetext(message, "you", "u")
+		message = replacetext(message, "help", "halp")
+		message = replacetext(message, "grief", "grife")
+		message = replacetext(message, "space", "spess")
+		message = replacetext(message, "carp", "crap")
+		message = replacetext(message, "reason", "raisin")
 		if(prob(50))
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"
@@ -295,6 +295,13 @@ var/list/department_radio_keys = list(
 				italics = 1
 /////SPECIAL HEADSETS END
 
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment)
+		var/pressure = environment.return_pressure()
+		if (pressure < SAY_MINIMUM_PRESSURE)	//in space no one can hear you scream
+			italics = 1
+			message_range = 1
+
 	var/list/listening
 
 	listening = get_mobs_in_view(message_range, src)
@@ -303,7 +310,7 @@ var/list/department_radio_keys = list(
 			continue //skip monkeys and leavers
 		if (istype(M, /mob/new_player))
 			continue
-		if(M.stat == 2 && M.client.ghost_ears)
+		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && src.client) // src.client is so that ghosts don't have to listen to mice
 			listening|=M
 
 	var/turf/T = get_turf(src)
@@ -381,7 +388,14 @@ var/list/department_radio_keys = list(
 
 		for (var/M in heard_a)
 			if(hascall(M,"show_message"))
-				M:show_message(rendered, 2)
+				var/deaf_message = ""
+				var/deaf_type = 1
+				if(M != src)
+					deaf_message = "<span class='name'>[name][alt_name]</span> talks but you cannot hear them."
+				else
+					deaf_message = "<span class='notice'>You cannot hear yourself!</span>"
+					deaf_type = 2 // Since you should be able to hear yourself without looking
+				M:show_message(rendered, 2, deaf_message, deaf_type)
 				M << speech_bubble
 
 	if (length(heard_b))

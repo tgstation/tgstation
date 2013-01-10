@@ -351,6 +351,8 @@
 	if(!changeling)	return
 
 	var/mob/living/carbon/C = usr
+	if(!C.stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")//Confirmation for living changelings if they want to fake their death
+		return
 	C << "<span class='notice'>We will attempt to regenerate our form.</span>"
 
 	C.status_flags |= FAKEDEATH		//play dead
@@ -526,10 +528,10 @@ var/list/datum/dna/hivemind_bank = list()
 
 /mob/proc/changeling_hivedownload()
 	set category = "Changeling"
-	set name = "Hive Absorb (40)"
+	set name = "Hive Absorb (20)"
 	set desc = "Allows you to absorb DNA that is being channeled in the airwaves."
 
-	var/datum/changeling/changeling = changeling_power(40,1)
+	var/datum/changeling/changeling = changeling_power(20,1)
 	if(!changeling)	return
 
 	var/list/names = list()
@@ -547,7 +549,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!chosen_dna)
 		return
 
-	changeling.chem_charges -= 40
+	changeling.chem_charges -= 20
 	changeling.absorbed_dna += chosen_dna
 	usr << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
 	feedback_add_details("changeling_powers","HD")

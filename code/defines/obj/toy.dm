@@ -10,6 +10,23 @@
 /obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
+	var/cooldown = 0
+
+//all credit to skasi for toy mech fun ideas
+/obj/item/toy/prize/attack_self(mob/user as mob)
+	if(cooldown < world.time - 8)
+		user << "<span class='notice'>You play with [src].</span>"
+		playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
+		cooldown = world.time
+
+/obj/item/toy/prize/attack_hand(mob/user as mob)
+	if(loc == user)
+		if(cooldown < world.time - 8)
+			user << "<span class='notice'>You play with [src].</span>"
+			playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
+			cooldown = world.time
+			return
+	..()
 
 /obj/item/toy/prize/ripley
 	name = "toy ripley"
@@ -486,3 +503,16 @@
 	else
 		icon_state = "waterballoon-e"
 		item_state = "balloon-empty"
+
+/obj/item/toy/katana
+	name = "replica katana"
+	desc = "Woefully underpowered in D20."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "katana"
+	item_state = "katana"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT | SLOT_BACK
+	force = 5
+	throwforce = 5
+	w_class = 3
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced")

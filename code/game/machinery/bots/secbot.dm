@@ -99,10 +99,10 @@
 	. = ..()
 	if(.)
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/secbot/proc/interact(mob/user as mob)
+/obj/machinery/bot/secbot/interact(mob/user as mob)
 	var/dat
 
 	dat += text({"
@@ -113,7 +113,7 @@ Maintenance panel panel is [src.open ? "opened" : "closed"]"},
 
 "<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
 
-	if(!src.locked)
+	if(!src.locked || issilicon(user))
 		dat += text({"<BR>
 Check for Weapon Authorization: []<BR>
 Check Security Records: []<BR>
@@ -131,7 +131,7 @@ Auto Patrol: []"},
 	return
 
 /obj/machinery/bot/secbot/Topic(href, href_list)
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if((href_list["power"]) && (src.allowed(usr)))
 		if(src.on)
@@ -236,8 +236,7 @@ Auto Patrol: []"},
 					maxstuns--
 					if(maxstuns <= 0)
 						target = null
-					for(var/mob/O in viewers(src, null))
-						O.show_message("\red <B>[src.target] has been stunned by [src]!</B>", 1, "\red You hear someone fall", 2)
+					visible_message("\red <B>[src.target] has been stunned by [src]!</B>")
 
 					mode = SECBOT_PREP_ARREST
 					src.anchored = 1
@@ -263,8 +262,7 @@ Auto Patrol: []"},
 			if(!src.target.handcuffed && !src.arrest_type)
 				playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 				mode = SECBOT_ARREST
-				for(var/mob/O in viewers(src, null))
-					O.show_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>", 1)
+				visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
 				spawn(60)
 					if(get_dist(src, src.target) <= 1)
@@ -754,7 +752,7 @@ Auto Patrol: []"},
 		del(src)
 
 	else if(istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
+		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
 		if(!t)
 			return
 		if(!in_range(src, usr) && src.loc != usr)

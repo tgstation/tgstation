@@ -2,7 +2,7 @@
 //SPELL BOOK PROCS
 
 /obj/item/weapon/spellbook/attack_self(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat
 	if (src.temp)
 		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
@@ -44,7 +44,6 @@
 	onclose(user, "radio")
 	return
 
-
 /obj/item/weapon/spellbook/Topic(href, href_list)
 	..()
 	if (usr.stat || usr.restrained())
@@ -52,8 +51,8 @@
 	var/mob/living/carbon/human/H = usr
 	if (!( istype(H, /mob/living/carbon/human)))
 		return 1
-	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
-		usr.machine = src
+	if ( src.loc == usr || (in_range(src,usr) && istype(src.loc, /turf)))
+		usr.set_machine(src)
 		if(href_list["spell_choice"])
 			if(src.uses >= 1 && src.max_uses >=1 && text2num(href_list["spell_choice"]) < 18)
 				src.uses--
@@ -156,10 +155,6 @@
 		else
 			if (href_list["temp"])
 				src.temp = null
-		if (istype(src.loc, /mob))
-			attack_self(src.loc)
-		else
-			for(var/mob/M in viewers(1, src))
-				if (M.client)
-					src.attack_self(M)
+		attack_self(H)
+
 	return

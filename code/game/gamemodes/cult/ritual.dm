@@ -463,9 +463,6 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 		log_attack("<font color='red'>[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])</font>")
 
-		log_admin("ATTACK: [user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])")
-		msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])") //BS12 EDIT ALG
-
 		if(istype(M,/mob/dead))
 			M.invisibility = 0
 			user.visible_message( \
@@ -565,7 +562,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			for (var/mob/V in viewers(src))
 				V.show_message("\red [user] slices open a finger and begins to chant and paint symbols on the floor.", 3, "\red You hear chanting.", 2)
 			user << "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world."
-			user.take_overall_damage(1)
+			user.take_overall_damage((rand(9)+1)/10) // 0.1 to 1.0 damage
 			if(do_after(user, 50))
 				if(usr.get_active_hand() != src)
 					return

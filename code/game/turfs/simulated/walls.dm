@@ -34,102 +34,38 @@
 	else
 		if(!devastated)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-			switch(mineral)
-				if("metal")
-					new /obj/structure/girder(src)
-					new /obj/item/stack/sheet/metal( src )
-					new /obj/item/stack/sheet/metal( src )
-				if("gold")
-					new /obj/structure/girder(src)
-					new /obj/item/stack/sheet/gold( src )
-					new /obj/item/stack/sheet/gold( src )
-				if("silver")
-					new /obj/structure/girder(src)
-					new /obj/item/stack/sheet/silver( src )
-					new /obj/item/stack/sheet/silver( src )
-				if("diamond")
-					new /obj/structure/girder(src)
-					new /obj/item/stack/sheet/diamond( src )
-					new /obj/item/stack/sheet/diamond( src )
-				if("uranium")
-					new /obj/structure/girder(src)
-					new /obj/item/stack/sheet/uranium( src )
-					new /obj/item/stack/sheet/uranium( src )
-				if("plasma")
-					new /obj/structure/girder(src)
-					new /obj/item/stack/sheet/plasma( src )
-					new /obj/item/stack/sheet/plasma( src )
-				if("clown")
-					new /obj/structure/girder(src)
-					new /obj/item/stack/sheet/clown( src )
-					new /obj/item/stack/sheet/clown( src )
-				if("sandstone")
-					new /obj/structure/girder(src)
-					new /obj/item/stack/sheet/sandstone( src )
-					new /obj/item/stack/sheet/sandstone( src )
-				if("wood")
-					new /obj/structure/girder(src)
-					new /obj/item/stack/sheet/wood( src )
-					new /obj/item/stack/sheet/wood( src )
-
+			new /obj/structure/girder(src)
+			if (mineral == "metal")
+				new /obj/item/stack/sheet/metal( src )
+				new /obj/item/stack/sheet/metal( src )
+			else
+				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+				new M( src )
+				new M( src )
 		else
-			switch(mineral)
-				if("metal")
-					new /obj/item/stack/sheet/metal( src )
-					new /obj/item/stack/sheet/metal( src )
-					new /obj/item/stack/sheet/metal( src )
-				if("gold")
-					new /obj/item/stack/sheet/gold( src )
-					new /obj/item/stack/sheet/gold( src )
-					new /obj/item/stack/sheet/metal( src )
-				if("silver")
-					new /obj/item/stack/sheet/silver( src )
-					new /obj/item/stack/sheet/silver( src )
-					new /obj/item/stack/sheet/metal( src )
-				if("diamond")
-					new /obj/item/stack/sheet/diamond( src )
-					new /obj/item/stack/sheet/diamond( src )
-					new /obj/item/stack/sheet/metal( src )
-				if("uranium")
-					new /obj/item/stack/sheet/uranium( src )
-					new /obj/item/stack/sheet/uranium( src )
-					new /obj/item/stack/sheet/metal( src )
-				if("plasma")
-					new /obj/item/stack/sheet/plasma( src )
-					new /obj/item/stack/sheet/plasma( src )
-					new /obj/item/stack/sheet/metal( src )
-				if("clown")
-					new /obj/item/stack/sheet/clown( src )
-					new /obj/item/stack/sheet/clown( src )
-					new /obj/item/stack/sheet/metal( src )
-				if("sandstone")
-					new /obj/item/stack/sheet/sandstone( src )
-					new /obj/item/stack/sheet/sandstone( src )
-					new /obj/item/stack/sheet/metal( src )
-				if("wood")
-					new /obj/item/stack/sheet/wood( src )
-					new /obj/item/stack/sheet/wood( src )
-					new /obj/item/stack/sheet/metal( src )
+			if (mineral == "metal")
+				new /obj/item/stack/sheet/metal( src )
+				new /obj/item/stack/sheet/metal( src )
+				new /obj/item/stack/sheet/metal( src )
+			else
+				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+				new M( src )
+				new M( src )
+				new /obj/item/stack/sheet/metal( src )
 
 	for(var/obj/O in src.contents) //Eject contents!
-		if(istype(O,/obj/effect/decal/poster))
-			var/obj/effect/decal/poster/P = O
+		if(istype(O,/obj/structure/sign/poster))
+			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-	ReplaceWithPlating(explode)
-
-/turf/simulated/wall/examine()
-	set src in oview(1)
-
-	usr << "It looks like a regular wall."
-	return
+	ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			src.ReplaceWithSpace()
+			src.ChangeTurf(/turf/space)
 			return
 		if(2.0)
 			if (prob(50))
@@ -155,6 +91,7 @@
 	if ((HULK in user.mutations))
 		if (prob(40))
 			usr << text("\blue You smash through the wall.")
+			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
@@ -185,6 +122,7 @@
 	if ((HULK in user.mutations) || (SUPRSTR in user.augmentations))
 		if (prob(40))
 			usr << text("\blue You smash through the wall.")
+			usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			dismantle_wall(1)
 			return
 		else
@@ -307,6 +245,16 @@
 		AH.try_build(src)
 		return
 
+	else if(istype(W,/obj/item/alarm_frame))
+		var/obj/item/alarm_frame/AH = W
+		AH.try_build(src)
+		return
+
+	else if(istype(W,/obj/item/firealarm_frame))
+		var/obj/item/firealarm_frame/AH = W
+		AH.try_build(src)
+		return
+
 	else if(istype(W,/obj/item/light_fixture_frame))
 		var/obj/item/light_fixture_frame/AH = W
 		AH.try_build(src)
@@ -338,7 +286,7 @@
 	O.density = 1
 	O.layer = 5
 
-	var/turf/simulated/floor/F = ReplaceWithPlating()
+	var/turf/simulated/floor/F = ChangeTurf(/turf/simulated/floor/plating)
 	F.burn_tile()
 	F.icon_state = "wall_thermite"
 	user << "<span class='warning'>The thermite melts through the wall.</span>"
@@ -352,7 +300,7 @@
 	if (prob(15))
 		dismantle_wall()
 	else if(prob(70))
-		ReplaceWithPlating()
+		ChangeTurf(/turf/simulated/floor/plating)
 	else
 		ReplaceWithLattice()
 	return 0

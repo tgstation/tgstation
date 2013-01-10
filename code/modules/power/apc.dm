@@ -86,11 +86,7 @@
 /obj/machinery/power/apc/updateDialog()
 	if (stat & (BROKEN|MAINT))
 		return
-	var/list/nearby = viewers(1, src)
-	for(var/mob/M in nearby)
-		if (M.client && M.machine == src)
-			src.interact(M)
-	AutoUpdateAI(src)
+	..()
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	..()
@@ -442,10 +438,12 @@
 /obj/machinery/power/apc/attack_hand(mob/user)
 //	if (!can_use(user)) This already gets called in interact() and in topic()
 //		return
+	if(!user)
+		return
 	src.add_fingerprint(user)
-	if(opened && (!issilicon(user)))
+	if(usr == user && opened && (!issilicon(user)))
 		if(cell)
-			usr.put_in_hands(cell)
+			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
 			cell.updateicon()
 
@@ -454,7 +452,7 @@
 			//user << "You remove the power cell."
 			charging = 0
 			src.updateicon()
-			return
+		return
 	if(stat & (BROKEN|MAINT))
 		return
 
@@ -463,7 +461,7 @@
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
 			return
 	// do APC interaction
-	user.machine = src
+	user.set_machine(src)
 	src.interact(user)
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
@@ -492,7 +490,7 @@
 
 
 
-/obj/machinery/power/apc/proc/interact(mob/user)
+/obj/machinery/power/apc/interact(mob/user)
 	if(!user)
 		return
 
@@ -513,24 +511,24 @@
 		user << browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
 
-	user.machine = src
+	user.set_machine(src)
 	var/t = "<html><head><title>[area.name] APC</title></head><body><TT><B>Area Power Controller</B> ([area.name])<HR>"
 
 	//This goes after the wire stuff. They should be able to fix a physical problem when a wire is cut
 	if ( (get_dist(src, user) > 1 ))
 		if (!istype(user, /mob/living/silicon))
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=apc")
 			return
 		else if (istype(user, /mob/living/silicon) && src.aidisabled && !src.malfhack)
 			user << "AI control for this APC interface has been disabled."
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=apc")
 			return
 		else if (src.malfai)
 			if ((src.malfai != user && src.malfai != user:parent) && !islinked(user, malfai))
 				user << "AI control for this APC interface has been disabled."
-				user.machine = null
+				user.unset_machine()
 				user << browse(null, "window=apc")
 				return
 
@@ -748,7 +746,7 @@
 			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
 		user << "\red You don't have the dexterity to use this [src]!"
 		user << browse(null, "window=apc")
-		user.machine = null
+		user.unset_machine()
 		return 0
 	if(user.restrained())
 		user << "\red You must have free hands to use this [src]"
@@ -770,12 +768,12 @@
 			if(!loud)
 				user << "\red \The [src] have AI control disabled!"
 				user << browse(null, "window=apc")
-				user.machine = null
+				user.unset_machine()
 			return 0
 	else
 		if ((!in_range(src, user) || !istype(src.loc, /turf)))
 			user << browse(null, "window=apc")
-			user.machine = null
+			user.unset_machine()
 			return 0
 
 	var/mob/living/carbon/human/H = user
@@ -794,7 +792,7 @@
 		if(!can_use(usr, 1))
 			return
 	src.add_fingerprint(usr)
-	usr.machine = src
+	usr.set_machine(src)
 	if (href_list["apcwires"])
 		var/t1 = text2num(href_list["apcwires"])
 		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
@@ -857,11 +855,11 @@
 		update()
 	else if( href_list["close"] )
 		usr << browse(null, "window=apc")
-		usr.machine = null
+		usr.unset_machine()
 		return
 	else if (href_list["close2"])
 		usr << browse(null, "window=apcwires")
-		usr.machine = null
+		usr.unset_machine()
 		return
 
 	else if (href_list["overload"])
@@ -907,6 +905,9 @@
 /obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
+	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
+		malf << "<span class='warning'>You must evacuate your current apc first.</span>"
+		return
 	if(src.z != 1)
 		return
 	src.occupant = new /mob/living/silicon/ai(src,malf.laws,null,1)
@@ -918,9 +919,11 @@
 	else
 		src.occupant.parent = malf
 	malf.mind.transfer_to(src.occupant)
+	src.occupant.eyeobj.name = "[src.occupant.name] (AI Eye)"
 	if(malf.parent)
 		del(malf)
 	src.occupant.verbs += /mob/living/silicon/ai/proc/corereturn
+	src.occupant.verbs += /datum/game_mode/malfunction/proc/takeover
 	src.occupant.cancel_camera()
 
 /obj/machinery/power/apc/proc/malfvacate(var/forced)

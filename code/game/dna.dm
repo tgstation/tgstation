@@ -188,7 +188,9 @@
 	return result
 
 /proc/setblock(istring, blocknumber, replacement, blocksize)
-	if(!istring || !blocknumber || !replacement || !blocksize)	return 0
+	if(!blocknumber)
+		return istring
+	if(!istring || !replacement || !blocksize)	return 0
 	var/result = getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 	return result
 
@@ -981,7 +983,7 @@
 	if(!src || !src.connected)
 		return
 	if ((usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["locked"])
 			if ((src.connected && src.connected.occupant))
 				src.connected.locked = !( src.connected.locked )

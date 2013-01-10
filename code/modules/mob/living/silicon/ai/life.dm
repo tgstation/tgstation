@@ -8,7 +8,7 @@
 		if (src.stat!=0)
 			src.cameraFollow = null
 			src.reset_view(null)
-			src.machine = null
+			src.unset_machine()
 
 		src.updatehealth()
 
@@ -171,11 +171,11 @@
 									theAPC = null
 
 /mob/living/silicon/ai/updatehealth()
-	if (src.nodamage == 0)
-		if(src.fire_res_on_core)
-			src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getBruteLoss()
-		else
-			src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
+	if(status_flags & GODMODE)
+		health = 100
+		stat = CONSCIOUS
 	else
-		src.health = 100
-		src.stat = 0
+		if(fire_res_on_core)
+			health = 100 - getOxyLoss() - getToxLoss() - getBruteLoss()
+		else
+			health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()

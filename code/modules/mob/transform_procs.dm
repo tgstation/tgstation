@@ -24,12 +24,11 @@
 	del(animation)
 
 	O.name = "monkey"
-	O.UI = UI
 	O.dna = dna
 	dna = null
 	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
 	//O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
-	O.dna.struc_enzymes = "[copytext(O.dna.struc_enzymes,1,1+3*13)]BB8"
+	O.dna.struc_enzymes = "[copytext(O.dna.struc_enzymes,1,1+3*(STRUCDNASIZE-1))]BB8"
 	O.loc = loc
 	O.viruses = viruses
 	viruses = list()
@@ -124,7 +123,6 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_roster
 
 	O.job = "AI"
-	O.UI = UI
 
 	O.rename_self("ai",1)
 	. = O
@@ -156,7 +154,6 @@
 	O.gender = gender
 	O.invisibility = 0
 
-	O.UI = UI
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
@@ -203,7 +200,6 @@
 			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 
 	new_xeno.a_intent = "hurt"
-	new_xeno.UI = UI
 	new_xeno.key = key
 
 	new_xeno << "<B>You are now an alien.</B>"
@@ -240,7 +236,6 @@
 		else
 			new_metroid = new /mob/living/carbon/metroid(loc)
 	new_metroid.a_intent = "hurt"
-	new_metroid.UI = UI
 	new_metroid.key = key
 
 	new_metroid << "<B>You are now a Metroid. Skreee!</B>"
@@ -263,7 +258,6 @@
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
 	new_corgi.a_intent = "hurt"
-	new_corgi.UI = UI
 	new_corgi.key = key
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
@@ -298,7 +292,6 @@
 
 	new_mob.key = key
 	new_mob.a_intent = "hurt"
-	new_mob.UI = UI
 
 
 	new_mob << "You suddenly feel more... animalistic."
@@ -319,7 +312,6 @@
 
 	new_mob.key = key
 	new_mob.a_intent = "hurt"
-	new_mob.UI = UI
 	new_mob << "You feel more... animalistic"
 
 	del(src)

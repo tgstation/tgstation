@@ -10,24 +10,38 @@
 /world/New()
 	..()
 
-	src.load_configuration()
+	if(byond_version < RECOMMENDED_VERSION)
+		world.log << "Your server's byond version does not meet the recommended requirements for TGstation code. Please update BYOND"
 
-	if (config && config.server_name != null && config.server_suffix && world.port > 0)
+	changelog_hash = md5('html/changelog.html')
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+
+	href_logfile = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] hrefs.html")
+	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
+	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+	diaryofmeanpeople = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] Attack.log")
+	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+
+	load_configuration()
+	load_mode()
+	load_motd()
+	load_admins()
+	LoadBansjob()
+	if(config.usewhitelist)
+		load_whitelist()
+	jobban_loadbanfile()
+	jobban_updatelegacybans()
+	LoadBans()
+
+	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
 
-	src.load_mode()
-	src.load_motd()
-	src.load_admins()
-	src.load_mods()
 	investigate_reset()
-	if (config.usewhitelist)
-		load_whitelist()
-	if (config.usealienwhitelist)
-		load_alienwhitelist()
-	LoadBansjob()
 	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
+
 	src.update_status()
+
 	makepowernets()
 
 	sun = new /datum/sun()
@@ -35,17 +49,23 @@
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
 
-	..()
+	if(!setup_database_connection())
+		world.log << "Your server failed to establish a connection with the feedback database."
+	else
+		world.log << "Feedback database connection established."
 
-	sleep(50)
+	if(!setup_old_database_connection())
+		world.log << "Your server failed to establish a connection with the tgstation database."
+	else
+		world.log << "Tgstation database connection established."
 
-	plmaster = new /obj/effect/overlay(  )
+	plmaster = new /obj/effect/overlay()
 	plmaster.icon = 'icons/effects/tile_effects.dmi'
 	plmaster.icon_state = "plasma"
 	plmaster.layer = FLY_LAYER
 	plmaster.mouse_opacity = 0
 
-	slmaster = new /obj/effect/overlay(  )
+	slmaster = new /obj/effect/overlay()
 	slmaster.icon = 'icons/effects/tile_effects.dmi'
 	slmaster.icon_state = "sleeping_agent"
 	slmaster.layer = FLY_LAYER
@@ -58,29 +78,6 @@
 		master_controller.setup()
 		lighting_controller.Initialize()
 
-	if(byond_version < RECOMMENDED_VERSION)
-		world.log << "Your server's byond version does not meet the recommended requirements for TGstation code. Please update BYOND"
-
-	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
-	diary << {"
-
-Starting up. [time2text(world.timeofday, "hh:mm.ss")]
----------------------
-"}
-
-	diaryofmeanpeople = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] Attack.log")
-	diaryofmeanpeople << {"
-
-Starting up. [time2text(world.timeofday, "hh:mm.ss")]
----------------------
-"}
-
-	href_logfile = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] hrefs.html")
-
-	jobban_loadbanfile()
-	jobban_updatelegacybans()
-	LoadBans()
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 	sleep_offline = 1
@@ -135,7 +132,7 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 		var/n = 0
 		var/admins = 0
 
-		for(var/client/C in client_list)
+		for(var/client/C in clients)
 			if(C.holder)
 				if(C.holder.fakekey)
 					continue	//so stealthmins aren't revealed by the hub
@@ -147,17 +144,15 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 		if(revdata)	s["revision"] = revdata.revision
 		s["admins"] = admins
 
-		s["end"] = "end"
-
 		return list2params(s)
 
 
 /world/Reboot(var/reason)
-//	spawn(0) // Yeah there we go end round sounds removed, mission accomplished
-//		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
+	spawn(0)
+		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
 
-	for(var/client/C)
-		if (config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+	for(var/client/C in clients)
+		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
 		else
 			C << link("byond://[world.address]:[world.port]")
@@ -167,23 +162,24 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 #define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
-	for(var/client/C)
-		if( !C.holder && (C.inactivity >= INACTIVITY_KICK) )
-			if(C.mob)
-				if(!istype(C.mob, /mob/dead/))
-					log_access("AFK: [key_name(C)]")
-					C << "\red You have been inactive for more than 10 minutes and have been disconnected."
-			del(C)
-	spawn(3000) KickInactiveClients()//more or less five minutes
+	spawn(-1)
+		set background = 1
+		while(1)
+			sleep(INACTIVITY_KICK)
+			for(var/client/C in clients)
+				if(C.is_afk(INACTIVITY_KICK))
+					if(!istype(C.mob, /mob/dead))
+						log_access("AFK: [key_name(C)]")
+						C << "\red You have been inactive for more than 10 minutes and have been disconnected."
+						del(C)
 #undef INACTIVITY_KICK
 
 
 /world/proc/load_mode()
-	var/text = file2text("data/mode.txt")
-	if (text)
-		var/list/lines = dd_text2list(text, "\n")
-		if (lines[1])
-			master_mode = lines[1]
+	var/list/Lines = file2list("data/mode.txt")
+	if(Lines.len)
+		if(Lines[1])
+			master_mode = Lines[1]
 			diary << "Saved mode is '[master_mode]'"
 
 /world/proc/save_mode(var/the_mode)
@@ -194,109 +190,6 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
 
-/world/proc/load_admins()
-	if(config.admin_legacy_system)
-		//Legacy admin system uses admins.txt
-		var/text = file2text("config/admins.txt")
-		if (!text)
-			diary << "Failed to load config/admins.txt\n"
-		else
-			var/list/lines = dd_text2list(text, "\n")
-			for(var/line in lines)
-				if (!line)
-					continue
-
-				if (copytext(line, 1, 2) == ";")
-					continue
-
-				var/pos = findtext(line, " - ", 1, null)
-				if (pos)
-					var/m_key = copytext(line, 1, pos)
-					var/a_lev = copytext(line, pos + 3, length(line) + 1)
-					admins[m_key] = new /datum/admins(a_lev)
-					diary << ("ADMIN: [m_key] = [a_lev]")
-	else
-		//The current admin system uses SQL
-		var/user = sqlfdbklogin
-		var/pass = sqlfdbkpass
-		var/db = sqlfdbkdb
-		var/address = sqladdress
-		var/port = sqlport
-
-		var/DBConnection/dbcon = new()
-
-		dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
-		if(!dbcon.IsConnected())
-			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
-			config.admin_legacy_system = 1
-			load_admins()
-			return
-
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin")
-		query.Execute()
-		while(query.NextRow())
-			var/adminckey = query.item[1]
-			var/adminrank = query.item[2]
-			var/adminlevel = query.item[3]
-			if(istext(adminlevel))
-				adminlevel = text2num(adminlevel)
-			var/permissions = query.item[4]
-			if(istext(permissions))
-				permissions = text2num(permissions)
-
-			//This list of stuff translates the permission defines the database uses to the permission structure that the game uses.
-			var/permissions_actual = 0
-			if(permissions & SQL_BUILDMODE)
-				permissions_actual |= BUILDMODE
-			if(permissions & SQL_ADMIN)
-				permissions_actual |= ADMIN
-			if(permissions & SQL_BAN)
-				permissions_actual |= BAN
-			if(permissions & SQL_FUN)
-				permissions_actual |= FUN
-			if(permissions & SQL_SERVER)
-				permissions_actual |= SERVER
-			if(permissions & SQL_DEBUG)
-				permissions_actual |= ADMDEBUG
-			if(permissions & SQL_POSSESS)
-				permissions_actual |= POSSESS
-			if(permissions & SQL_PERMISSIONS)
-				permissions_actual |= PERMISSIONS
-
-			if(adminrank == "Removed")
-				return	//This person was de-adminned. They are only in the admin list for archive purposes.
-
-			var/datum/admins/AD = new /datum/admins(adminrank)
-			AD.level = adminlevel //Legacy support for old verbs
-			AD.sql_permissions = permissions_actual
-			admins[adminckey] = AD
-
-		if(!admins)
-			diary << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
-			config.admin_legacy_system = 1
-			load_admins()
-			return
-
-//copy paste of above - load_admins() will take care of loading mods if it's enabled
-/world/proc/load_mods()
-	if(config.admin_legacy_system)
-		//Legacy admin system uses admins.txt
-		var/text = file2text("config/moderators.txt")
-		if (!text)
-			diary << "Failed to load config/mods.txt\n"
-		else
-			var/list/lines = dd_text2list(text, "\n")
-			for(var/line in lines)
-				if (!line)
-					continue
-
-				if (copytext(line, 1, 2) == ";")
-					continue
-
-				var/m_key = copytext(line, 1, length(line)+1)
-				admins[m_key] = new /datum/admins("Moderator")
-				diary << ("MOD: [m_key]")
-
 /world/proc/load_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
@@ -306,6 +199,24 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 
+/world/proc/load_mods()
+	if(config.admin_legacy_system)
+		var/text = file2text("config/moderators.txt")
+		if (!text)
+			diary << "Failed to load config/mods.txt\n"
+		else
+			var/list/lines = text2list(text, "\n")
+			for(var/line in lines)
+				if (!line)
+					continue
+
+				if (copytext(line, 1, 2) == ";")
+					continue
+
+				var/rights = admin_ranks["Moderator"]
+				var/ckey = copytext(line, 1, length(line)+1)
+				var/datum/admins/D = new /datum/admins("Moderator", rights, ckey)
+				D.associate(directory[ckey])
 
 /world/proc/update_status()
 	var/s = ""
@@ -323,17 +234,16 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 	var/list/features = list()
 
-	if (!ticker)
+	if(ticker)
+		if(master_mode)
+			features += master_mode
+	else
 		features += "<b>STARTING</b>"
-
-	if (ticker && master_mode)
-		features += master_mode
 
 	if (!enter_allowed)
 		features += "closed"
 
-	if (abandon_allowed)
-		features += abandon_allowed ? "respawn" : "no respawn"
+	features += abandon_allowed ? "respawn" : "no respawn"
 
 	if (config && config.allow_vote_mode)
 		features += "vote"
@@ -366,3 +276,79 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 	/* does this help? I do not know */
 	if (src.status != s)
 		src.status = s
+
+#define FAILED_DB_CONNECTION_CUTOFF 5
+var/failed_db_connections = 0
+var/failed_old_db_connections = 0
+
+proc/setup_database_connection()
+
+	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
+		return 0
+
+	if(!dbcon)
+		dbcon = new()
+
+	var/user = sqlfdbklogin
+	var/pass = sqlfdbkpass
+	var/db = sqlfdbkdb
+	var/address = sqladdress
+	var/port = sqlport
+
+	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	. = dbcon.IsConnected()
+	if ( . )
+		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
+	else
+		failed_db_connections++		//If it failed, increase the failed connections counter.
+
+	return .
+
+//This proc ensures that the connection to the feedback database (global variable dbcon) is established
+proc/establish_db_connection()
+	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
+		return 0
+
+	if(!dbcon || !dbcon.IsConnected())
+		return setup_database_connection()
+	else
+		return 1
+
+
+
+
+//These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
+proc/setup_old_database_connection()
+
+	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
+		return 0
+
+	if(!dbcon_old)
+		dbcon_old = new()
+
+	var/user = sqllogin
+	var/pass = sqlpass
+	var/db = sqldb
+	var/address = sqladdress
+	var/port = sqlport
+
+	dbcon_old.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	. = dbcon_old.IsConnected()
+	if ( . )
+		failed_old_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
+	else
+		failed_old_db_connections++		//If it failed, increase the failed connections counter.
+
+	return .
+
+//This proc ensures that the connection to the feedback database (global variable dbcon) is established
+proc/establish_old_db_connection()
+	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)
+		return 0
+
+	if(!dbcon_old || !dbcon_old.IsConnected())
+		return setup_old_database_connection()
+	else
+		return 1
+
+#undef FAILED_DB_CONNECTION_CUTOFF

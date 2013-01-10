@@ -152,7 +152,7 @@
 				else
 					chance_of_deletion = 100
 				if(prob(chance_of_deletion))
-					T.ReplaceWithSpace()
+					T.ChangeTurf(/turf/space)
 				else
 					T.to_be_destroyed = 0
 					T.max_fire_temperature_sustained = 0

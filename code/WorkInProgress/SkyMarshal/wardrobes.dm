@@ -116,7 +116,7 @@
 		new /obj/item/clothing/head/helmet/welding(src)
 		new /obj/item/weapon/storage/belt/utility/full(src)
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
-		new /obj/item/clothing/suit/hazardvest(src)
+		new /obj/item/clothing/suit/storage/hazardvest(src)
 		new /obj/item/clothing/gloves/yellow(src)
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/clothing/glasses/meson(src)
@@ -135,7 +135,7 @@
 		new /obj/item/weapon/pen(src)
 		new /obj/item/device/pda/engineering(src)
 		new /obj/item/device/t_scanner(src)
-		new /obj/item/clothing/suit/hazardvest(src)
+		new /obj/item/clothing/suit/storage/hazardvest(src)
 		new /obj/item/weapon/storage/belt/utility/full(src)
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
 		new /obj/item/clothing/mask/gas(src)
@@ -426,7 +426,7 @@
 		new /obj/item/taperoll/police(src)
 		new /obj/item/weapon/storage/box/evidence(src)
 		new /obj/item/device/pda/detective(src)
-		new /obj/item/clothing/suit/det_suit/armor(src)
+		new /obj/item/clothing/suit/storage/det_suit/armor(src)
 		new /obj/item/clothing/suit/storage/det_suit(src)
 		new /obj/item/clothing/gloves/detective(src)
 		new /obj/item/clothing/head/det_hat(src)
@@ -606,9 +606,9 @@
 		new /obj/item/clothing/shoes/brown(src)
 		if(prob(50))
 			new /obj/item/clothing/under/lawyer/bluesuit(src)
-			new /obj/item/clothing/suit/lawyer/bluejacket(src)
+			new /obj/item/clothing/suit/storage/lawyer/bluejacket(src)
 		else
 			new /obj/item/clothing/under/lawyer/purpsuit(src)
-			new /obj/item/clothing/suit/lawyer/purpjacket(src)
+			new /obj/item/clothing/suit/storage/lawyer/purpjacket(src)
 
 

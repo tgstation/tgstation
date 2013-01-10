@@ -16,6 +16,7 @@
 	var/access = null
 	var/hidden = 0
 	var/contraband = 0
+	var/group
 
 /datum/supply_packs/New()
 	manifest += "<ul>"
@@ -100,7 +101,9 @@
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/beer)
+					/obj/item/weapon/reagent_containers/food/drinks/beer,
+					/obj/item/weapon/cigpacket/dromedaryco,
+					/obj/item/weapon/lipstick/random)
 	cost = 20
 	containertype = /obj/structure/closet/crate
 	containername = "Party equipment"
@@ -202,6 +205,13 @@
 	containertype = /obj/structure/largecrate/mule
 	containername = "MULEbot Crate"
 
+/datum/supply_packs/lisa
+	name = "Corgi Crate"
+	contains = list()
+	cost = 50
+	containertype = /obj/structure/largecrate/lisa
+	containername = "Corgi Crate"
+
 /datum/supply_packs/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"
 	contains = list(/obj/item/weapon/reagent_containers/spray/plantbgone,
@@ -272,27 +282,18 @@
 
 /datum/supply_packs/virus
 	name = "Virus crate"
-	contains = list(/obj/item/weapon/virusdish/random,
-					/obj/item/weapon/virusdish/random,
-					/obj/item/weapon/virusdish/random,
-					/obj/item/weapon/virusdish/random,
-					/obj/item/weapon/virusdish/random,
-					/obj/item/weapon/virusdish/random
-/*	VIRUS2 4LIFE
-					/obj/item/weapon/reagent_containers/glass/bottle/flu_virion,
+	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/flu_virion,
 					/obj/item/weapon/reagent_containers/glass/bottle/cold,
+					/obj/item/weapon/reagent_containers/glass/bottle/epiglottis_virion,
+					/obj/item/weapon/reagent_containers/glass/bottle/liver_enhance_virion,
 					/obj/item/weapon/reagent_containers/glass/bottle/fake_gbs,
 					/obj/item/weapon/reagent_containers/glass/bottle/magnitis,
-					/obj/item/weapon/reagent_containers/glass/bottle/wizarditis, worse than GBS if anything
-					/obj/item/weapon/reagent_containers/glass/bottle/gbs, No. Just no.
 					/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/weapon/reagent_containers/glass/bottle/brainrot,
+					/obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion,
 					/obj/item/weapon/storage/syringes,
-					/obj/item/weapon/storage/beakerbox
-*/
-					)
-	cost = 20
-	containertype = /obj/structure/closet/crate/secure/weapon
+					/obj/item/weapon/storage/beakerbox,
+					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
 	containername = "Virus crate"
 	access = access_cmo
 
@@ -331,9 +332,9 @@
 	contains = list(/obj/item/weapon/storage/belt/utility/full,
 					/obj/item/weapon/storage/belt/utility/full,
 					/obj/item/weapon/storage/belt/utility/full,
-					/obj/item/clothing/suit/hazardvest,
-					/obj/item/clothing/suit/hazardvest,
-					/obj/item/clothing/suit/hazardvest,
+					/obj/item/clothing/suit/storage/hazardvest,
+					/obj/item/clothing/suit/storage/hazardvest,
+					/obj/item/clothing/suit/storage/hazardvest,
 					/obj/item/clothing/head/welding,
 					/obj/item/clothing/head/welding,
 					/obj/item/clothing/head/hardhat)
@@ -597,14 +598,85 @@
 	manifest += "Contains any [num_contained] of:"
 	..()
 
+/datum/supply_packs/artscrafts
+	name = "Arts and Crafts supplies"
+	contains = list(/obj/item/weapon/storage/crayonbox,
+	/obj/item/device/camera,
+	/obj/item/device/camera_film,
+	/obj/item/device/camera_film,
+	/obj/item/weapon/storage/photo_album,
+	/obj/item/weapon/packageWrap,
+	/obj/item/weapon/reagent_containers/glass/paint/red,
+	/obj/item/weapon/reagent_containers/glass/paint/green,
+	/obj/item/weapon/reagent_containers/glass/paint/blue,
+	/obj/item/weapon/reagent_containers/glass/paint/yellow,
+	/obj/item/weapon/reagent_containers/glass/paint/violet,
+	/obj/item/weapon/reagent_containers/glass/paint/black,
+	/obj/item/weapon/reagent_containers/glass/paint/white,
+	/obj/item/weapon/reagent_containers/glass/paint/remover,
+	/obj/item/weapon/wrapping_paper,
+	/obj/item/weapon/wrapping_paper,
+	/obj/item/weapon/wrapping_paper,
+	/obj/item/weapon/contraband/poster)
+	cost = 5
+	containertype = "/obj/structure/closet/crate"
+	containername = "Arts and Crafts crate"
+
 
 /datum/supply_packs/randomised/contraband
 	num_contained = 5
-	contains = list(/obj/item/weapon/contraband/poster,
-					/obj/item/weapon/cigpacket/dromedaryco,
-					/obj/item/weapon/lipstick/random)
+	contains = list(/obj/item/seeds/bloodtomatoseed,
+	/obj/item/weapon/storage/pill_bottle/zoom,
+	/obj/item/weapon/storage/pill_bottle/happy,
+	/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe)
 	name = "Contraband crate"
 	cost = 30
 	containertype = /obj/structure/closet/crate
-	containername = "Contraband crate"
+	containername = "Unlabeled crate"
 	contraband = 1
+
+/datum/supply_packs/boxes
+	name = "Empty Box supplies"
+	contains = list(/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box)
+	cost = 5
+	containertype = "/obj/structure/closet/crate"
+	containername = "Empty Box crate"
+
+/datum/supply_packs/surgery
+	name = "Surgery crate"
+	contains = list(/obj/item/weapon/cautery,
+					/obj/item/weapon/surgicaldrill,
+					/obj/item/clothing/mask/breath/medical,
+					/obj/item/weapon/tank/anesthetic,
+					/obj/item/weapon/FixOVein,
+					/obj/item/weapon/hemostat,
+					/obj/item/weapon/scalpel,
+					/obj/item/weapon/bonegel,
+					/obj/item/weapon/retractor,
+					/obj/item/weapon/bonesetter,
+					/obj/item/weapon/circular_saw)
+	cost = 25
+	containertype = "/obj/structure/closet/crate/secure"
+	containername = "Surgery crate"
+	access = access_medical
+	group = "Medical / Science"
+
+/datum/supply_packs/sterile
+	name = "Sterile equipment crate"
+	contains = list(/obj/item/clothing/under/rank/medical/green,
+					/obj/item/clothing/under/rank/medical/green,
+					/obj/item/weapon/storage/stma_kit,
+					/obj/item/weapon/storage/lglo_kit)
+	cost = 10
+	containertype = "/obj/structure/closet/crate"
+	containername = "Sterile equipment crate"
+	group = "Medical / Science"

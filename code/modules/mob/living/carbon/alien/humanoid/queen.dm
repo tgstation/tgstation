@@ -1,12 +1,11 @@
-
 /mob/living/carbon/alien/humanoid/queen
 	name = "alien queen"
 	caste = "q"
 	maxHealth = 250
 	health = 250
 	icon_state = "alienq_s"
-	nopush = 1
-	heal_rate = 10 // Let's regenerate more than our average underling.
+	status_flags = CANPARALYSE
+	heal_rate = 5
 	plasma_rate = 20
 
 
@@ -26,7 +25,8 @@
 	real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
 	verbs -= /mob/living/carbon/alien/verb/ventcrawl
-	add_to_mob_list(src)
+	..()
+
 
 /mob/living/carbon/alien/humanoid/queen
 
@@ -56,7 +56,7 @@
 //Queen verbs
 /mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
 
-	set name = "Lay Egg (50)"
+	set name = "Lay Egg (75)"
 	set desc = "Lay an egg to produce huggers to impregnate prey with."
 	set category = "Alien"
 
@@ -64,9 +64,29 @@
 		src << "There's already an egg here."
 		return
 
-	if(powerc(50,1))//Can't plant eggs on spess tiles. That's silly.
-		adjustToxLoss(-50)
+	if(powerc(75,1))//Can't plant eggs on spess tiles. That's silly.
+		adjustToxLoss(-75)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
 		new /obj/effect/alien/egg(loc)
 	return
+
+
+/mob/living/carbon/alien/humanoid/queen/large
+	icon = 'icons/mob/alienqueen.dmi'
+	icon_state = "queen_s"
+	pixel_x = -16
+
+/mob/living/carbon/alien/humanoid/queen/large/update_icons()
+	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
+	update_hud()		//TODO: remove the need for this to be here
+	overlays = null
+	if(lying)
+		if(resting)					icon_state = "queen_sleep"
+		else						icon_state = "queen_l"
+		for(var/image/I in overlays_lying)
+			overlays += I
+	else
+		icon_state = "queen_s"
+		for(var/image/I in overlays_standing)
+			overlays += I

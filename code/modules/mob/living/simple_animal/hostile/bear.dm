@@ -33,6 +33,9 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	var/stance_step = 0
+
+	faction = "russian"
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson

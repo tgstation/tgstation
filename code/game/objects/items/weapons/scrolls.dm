@@ -12,7 +12,7 @@
 	origin_tech = "bluespace=4"
 
 /obj/item/weapon/teleportation_scroll/attack_self(mob/user as mob)
-	user.machine = src
+	user.set_machine(src)
 	var/dat = "<B>Teleportation Scroll:</B><BR>"
 	dat += "Number of uses: [src.uses]<BR>"
 	dat += "<HR>"
@@ -30,16 +30,51 @@
 	var/mob/living/carbon/human/H = usr
 	if (!( istype(H, /mob/living/carbon/human)))
 		return 1
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+	if ((usr == src.loc || (in_range(src, usr) && istype(src.loc, /turf))))
+		usr.set_machine(src)
 		if (href_list["spell_teleport"])
 			if (src.uses >= 1)
-				src.uses -= 1
-				usr.teleportscroll()
-		if (istype(src.loc, /mob))
-			attack_self(src.loc)
-		else
-			for(var/mob/M in viewers(1, src))
-				if (M.client)
-					src.attack_self(M)
+				teleportscroll(H)
+	attack_self(H)
 	return
+
+/obj/item/weapon/teleportation_scroll/proc/teleportscroll(var/mob/user)
+
+	var/A
+
+	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
+	var/area/thearea = teleportlocs[A]
+
+	if (user.stat || user.restrained())
+		return
+	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
+		return
+
+	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+	smoke.set_up(5, 0, user.loc)
+	smoke.attach(user)
+	smoke.start()
+	var/list/L = list()
+	for(var/turf/T in get_area_turfs(thearea.type))
+		if(!T.density)
+			var/clear = 1
+			for(var/obj/O in T)
+				if(O.density)
+					clear = 0
+					break
+			if(clear)
+				L+=T
+
+	if(!L.len)
+		user <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
+		return
+
+	var/attempt = 0
+	var/success = 0
+	while(!success)
+		success = user.Move(pick(L))
+		if(attempt > 20) break	//Failsafe
+	if(!success)
+		user.loc = pick(L)
+	smoke.start()
+	src.uses -= 1

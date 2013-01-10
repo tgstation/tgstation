@@ -9,12 +9,6 @@ var/global/datum/controller/occupations/job_master
 	var/list/job_debug = list()
 
 
-	New()
-		spawn(1)
-			SetupOccupations()
-		return
-
-
 	proc/SetupOccupations(var/faction = "Station")
 		occupations = list()
 		var/list/all_jobs = typesof(/datum/job)
@@ -45,7 +39,7 @@ var/global/datum/controller/occupations/job_master
 		return null
 
 	proc/GetAltTitle(mob/new_player/player, rank)
-		return player.preferences.GetAltTitle(GetJob(rank))
+		return player.client.prefs.GetAltTitle(GetJob(rank))
 
 	proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
 		Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
@@ -74,10 +68,10 @@ var/global/datum/controller/occupations/job_master
 			if(jobban_isbanned(player, job.title))
 				Debug("FOC isbanned failed, Player: [player]")
 				continue
-			if(flag && (!player.preferences.be_special & flag))
+			if(flag && (!player.client.prefs.be_special & flag))
 				Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 				continue
-			if(player.preferences.GetJobDepartment(job, level) & job.flag)
+			if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 				Debug("FOC pass, Player: [player], Level:[level]")
 				candidates += player
 		return candidates
@@ -187,7 +181,7 @@ var/global/datum/controller/occupations/job_master
 
 		//Get the players who are ready
 		for(var/mob/new_player/player in player_list)
-			if((player) && (player.client) && (player.ready) && (player.mind) && (!player.mind.assigned_role))
+			if(player.ready && player.mind && !player.mind.assigned_role)
 				unassigned += player
 
 		Debug("DO, Len: [unassigned.len]")
@@ -246,7 +240,7 @@ var/global/datum/controller/occupations/job_master
 						continue
 
 					// If the player wants that job on this level, then try give it to him.
-					if(player.preferences.GetJobDepartment(job, level) & job.flag)
+					if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 
 						// If the job isn't filled
 						if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
@@ -258,7 +252,7 @@ var/global/datum/controller/occupations/job_master
 		// Hand out random jobs to the people who didn't get any in the last check
 		// Also makes sure that they got their preference correct
 		for(var/mob/new_player/player in unassigned)
-			if(player.preferences.userandomjob)
+			if(player.client.prefs.userandomjob)
 				GiveRandomJob(player)
 
 		/*
@@ -344,6 +338,9 @@ var/global/datum/controller/occupations/job_master
 
 		H << "<B>You are the [rank].</B>"
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+		if(job.req_admin_notify)
+			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+		spawnId(H,rank)
 
 		if(H.mind.assigned_role == rank && H.mind.role_alt_title)
 			spawnId(H, rank, H.mind.role_alt_title)
@@ -395,13 +392,7 @@ var/global/datum/controller/occupations/job_master
 		if(!config.load_jobs_from_txt)
 			return 0
 
-		var/text = file2text(jobsfile)
-
-		if(!text)
-			world << "No jobs.txt found, using defaults."
-			return
-
-		var/list/jobEntries = dd_text2list(text, "\n")
+		var/list/jobEntries = file2list(jobsfile)
 
 		for(var/job in jobEntries)
 			if(!job)
@@ -442,16 +433,16 @@ var/global/datum/controller/occupations/job_master
 			var/level4 = 0 //never
 			var/level5 = 0 //banned
 			for(var/mob/new_player/player in player_list)
-				if(!((player) && (player.client) && (player.ready) && (player.mind) && (!player.mind.assigned_role)))
+				if(!(player.ready && player.mind && !player.mind.assigned_role))
 					continue //This player is not ready
 				if(jobban_isbanned(player, job.title))
 					level5++
 					continue
-				if(player.preferences.GetJobDepartment(job, 1) & job.flag)
+				if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
 					level1++
-				else if(player.preferences.GetJobDepartment(job, 2) & job.flag)
+				else if(player.client.prefs.GetJobDepartment(job, 2) & job.flag)
 					level2++
-				else if(player.preferences.GetJobDepartment(job, 3) & job.flag)
+				else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
 					level3++
 				else level4++ //not selected
 
