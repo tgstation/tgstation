@@ -9,6 +9,7 @@ var/global/obj/effect/overlay/slmaster = null
 var/global/list/machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
+var/global/list/events = list()
 		//items that ask to be called every cycle
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
