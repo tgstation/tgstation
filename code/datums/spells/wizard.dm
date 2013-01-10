@@ -138,8 +138,8 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
-	name = "Summon Bigger Carp"
-	desc = "This spell conjures an elite carp."
+	name = "Summon Carp"
+	desc = "This spell conjures a simple carp."
 
 	school = "conjuration"
 	charge_max = 1200
@@ -148,7 +148,7 @@
 	invocation_type = "shout"
 	range = 1
 
-	summon_type = list("/obj/effect/critter/spesscarp/elite")
+	summon_type = list("/mob/living/simple_animal/hostile/carp")
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
@@ -177,7 +177,7 @@
 	summon_amt = 10
 	range = 3
 
-	summon_type = list("/obj/effect/critter/creature")
+	summon_type = list("/mob/living/simple_animal/hostile/creature")
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
