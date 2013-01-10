@@ -12,7 +12,7 @@ var/list/sacrificed = list()
 			for(var/obj/effect/rune/R in world)
 				if(R == src)
 					continue
-				if(R.word1 == wordtravel && R.word2 == wordself && R.word3 == key && R.z != 2)
+				if(R.word1 == cultwords["travel"] && R.word2 == cultwords["self"] && R.word3 == key && R.z != 2)
 					index++
 					allrunesloc.len = index
 					allrunesloc[index] = R.loc
@@ -50,7 +50,7 @@ var/list/sacrificed = list()
 			for(var/obj/effect/rune/R in world)
 				if(R == src)
 					continue
-				if(R.word1 == wordtravel && R.word2 == wordother && R.word3 == key)
+				if(R.word1 == cultwords["travel"] && R.word2 == cultwords["other"] && R.word3 == key)
 					IP = R
 					runecount++
 			if(runecount >= 2)
@@ -159,7 +159,7 @@ var/list/sacrificed = list()
 		drain()
 			var/drain = 0
 			for(var/obj/effect/rune/R in world)
-				if(R.word1==wordtravel && R.word2==wordblood && R.word3==wordself)
+				if(R.word1==cultwords["travel"] && R.word2==cultwords["blood"] && R.word3==cultwords["self"])
 					for(var/mob/living/carbon/D in R.loc)
 						if(D.stat!=2)
 							var/bdrain = rand(1,25)
@@ -237,7 +237,7 @@ var/list/sacrificed = list()
 			is_sacrifice_target = 0
 			find_sacrifice:
 				for(var/obj/effect/rune/R in world)
-					if(R.word1==wordblood && R.word2==wordjoin && R.word3==wordhell)
+					if(R.word1==cultwords["blood"] && R.word2==cultwords["join"] && R.word3==cultwords["hell"])
 						for(var/mob/living/carbon/human/N in R.loc)
 							if(ticker.mode.name == "cult" && N.mind && N.mind == ticker.mode:sacrifice_target)
 								is_sacrifice_target = 1
@@ -431,53 +431,53 @@ var/list/sacrificed = list()
 			for(var/obj/effect/rune/R in orange(1,src))
 				if(R==src)
 					continue
-				if(R.word1==wordtravel && R.word2==wordself)  //teleport
+				if(R.word1==cultwords["travel"] && R.word2==cultwords["self"])  //teleport
 					T = new(src.loc)
 					T.imbue = "[R.word3]"
 					T.info = "[R.word3]"
 					imbued_from = R
 					break
-				if(R.word1==wordsee && R.word2==wordblood && R.word3==wordhell) //tome
+				if(R.word1==cultwords["see"] && R.word2==cultwords["blood"] && R.word3==cultwords["hell"]) //tome
 					T = new(src.loc)
 					T.imbue = "newtome"
 					imbued_from = R
 					break
-				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordtech) //emp
+				if(R.word1==cultwords["destroy"] && R.word2==cultwords["see"] && R.word3==cultwords["technology"]) //emp
 					T = new(src.loc)
 					T.imbue = "emp"
 					imbued_from = R
 					break
-				if(R.word1==wordblood && R.word2==wordsee && R.word3==worddestr) //conceal
+				if(R.word1==cultwords["blood"] && R.word2==cultwords["see"] && R.word3==cultwords["destroy"]) //conceal
 					T = new(src.loc)
 					T.imbue = "conceal"
 					imbued_from = R
 					break
-				if(R.word1==wordhell && R.word2==worddestr && R.word3==wordother) //armor
+				if(R.word1==cultwords["hell"] && R.word2==cultwords["destroy"] && R.word3==cultwords["other"]) //armor
 					T = new(src.loc)
 					T.imbue = "armor"
 					imbued_from = R
 					break
-				if(R.word1==wordblood && R.word2==wordsee && R.word3==wordhide) //reveal
+				if(R.word1==cultwords["blood"] && R.word2==cultwords["see"] && R.word3==cultwords["hide"]) //reveal
 					T = new(src.loc)
 					T.imbue = "revealrunes"
 					imbued_from = R
 					break
-				if(R.word1==wordhide && R.word2==wordother && R.word3==wordsee) //deafen
+				if(R.word1==cultwords["hide"] && R.word2==cultwords["other"] && R.word3==cultwords["see"]) //deafen
 					T = new(src.loc)
 					T.imbue = "deafen"
 					imbued_from = R
 					break
-				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordother) //blind
+				if(R.word1==cultwords["destroy"] && R.word2==cultwords["see"] && R.word3==cultwords["other"]) //blind
 					T = new(src.loc)
 					T.imbue = "blind"
 					imbued_from = R
 					break
-				if(R.word1==wordself && R.word2==wordother && R.word3==wordtech) //communicat
+				if(R.word1==cultwords["self"] && R.word2==cultwords["other"] && R.word3==cultwords["technology"]) //communicat
 					T = new(src.loc)
 					T.imbue = "communicate"
 					imbued_from = R
 					break
-				if(R.word1==wordjoin && R.word2==wordhide && R.word3==wordtech) //communicat
+				if(R.word1==cultwords["join"] && R.word2==cultwords["hide"] && R.word3==cultwords["technology"]) //communicat
 					T = new(src.loc)
 					T.imbue = "runestun"
 					imbued_from = R

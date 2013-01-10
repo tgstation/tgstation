@@ -1359,7 +1359,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 			if(seer)
 				var/obj/effect/rune/R = locate() in loc
-				if(R && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
+				if(R && R.word1 == cultwords["see"] && R.word2 == cultwords["hell"] && R.word3 == cultwords["join"])
 					see_invisible = SEE_INVISIBLE_OBSERVER
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
