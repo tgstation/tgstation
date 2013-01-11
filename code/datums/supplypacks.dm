@@ -29,7 +29,7 @@
 
 /datum/supply_packs/specialops
 	name = "Special Ops supplies"
-	contains = list(/obj/item/weapon/storage/emp_kit,
+	contains = list(/obj/item/weapon/storage/box/emps,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
@@ -56,7 +56,7 @@
 
 /datum/supply_packs/monkey
 	name = "Monkey crate"
-	contains = list (/obj/item/weapon/storage/monkeycube_box)
+	contains = list (/obj/item/weapon/storage/box/monkeycubes)
 	cost = 20
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Monkey crate"
@@ -92,7 +92,7 @@
 
 /datum/supply_packs/party
 	name = "Party equipment"
-	contains = list(/obj/item/weapon/storage/drinkingglasses,
+	contains = list(/obj/item/weapon/storage/box/drinkingglasses,
 					/obj/item/weapon/reagent_containers/food/drinks/shaker,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/patron,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager,
@@ -161,9 +161,9 @@
 
 /datum/supply_packs/lightbulbs
 	name = "Replacement lights"
-	contains = list(/obj/item/weapon/storage/lightbox/mixed,
-					/obj/item/weapon/storage/lightbox/mixed,
-					/obj/item/weapon/storage/lightbox/mixed)
+	contains = list(/obj/item/weapon/storage/box/lights/mixed,
+					/obj/item/weapon/storage/box/lights/mixed,
+					/obj/item/weapon/storage/box/lights/mixed)
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "Replacement lights"
@@ -247,6 +247,16 @@
 	containername = "Seeds crate"
 	access = access_hydroponics
 
+/datum/supply_packs/weedcontrol
+	name = "Weed Control Crate"
+	contains = list(/obj/item/weapon/scythe,
+					/obj/item/clothing/mask/gas,
+					/obj/item/weapon/grenade/chem_grenade/antiweed,
+					/obj/item/weapon/grenade/chem_grenade/antiweed)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure/hydrosec
+	containername = "Weed control crate"
+	access = access_hydroponics
 
 /datum/supply_packs/exoticseeds
 	name = "Exotic Seeds Crate"
@@ -274,7 +284,7 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
 					/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
 					/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-					/obj/item/weapon/storage/syringes)
+					/obj/item/weapon/storage/box/syringes)
 	cost = 10
 	containertype = /obj/structure/closet/crate/medical
 	containername = "Medical crate"
@@ -291,8 +301,8 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/weapon/reagent_containers/glass/bottle/brainrot,
 					/obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion,
-					/obj/item/weapon/storage/syringes,
-					/obj/item/weapon/storage/beakerbox,
+					/obj/item/weapon/storage/box/syringes,
+					/obj/item/weapon/storage/box/beakers,
 					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
 	containername = "Virus crate"
 	access = access_cmo
@@ -356,25 +366,59 @@
 	containertype = /obj/structure/largecrate
 	containername = "fuel tank crate"
 
+/datum/supply_packs/solar
+	name = "Solar Pack crate"
+	contains  = list(/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly,
+					/obj/item/solar_assembly, // 21 Solar Assemblies. 1 Extra for the controller
+					/obj/item/weapon/circuitboard/solar_control,
+					/obj/item/weapon/tracker_electronics,
+					/obj/item/weapon/paper/solar)
+	cost = 20
+	containertype = /obj/structure/closet/crate
+	containername = "solar pack crate"
+
 /datum/supply_packs/engine
 	name = "Emitter crate"
-	contains = list(/obj/machinery/emitter,
-					/obj/machinery/emitter)
+	contains = list(/obj/machinery/power/emitter,
+					/obj/machinery/power/emitter)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Emitter crate"
-	access = access_heads
+	access = access_ce
 
 /datum/supply_packs/engine/field_gen
 	name = "Field Generator crate"
 	contains = list(/obj/machinery/field_generator,
 					/obj/machinery/field_generator)
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Field Generator crate"
+	access = access_ce
 
 /datum/supply_packs/engine/sing_gen
 	name = "Singularity Generator crate"
 	contains = list(/obj/machinery/the_singularitygen)
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Singularity Generator crate"
+	access = access_ce
 
 /datum/supply_packs/engine/collector
 	name = "Collector crate"
@@ -393,7 +437,9 @@
 					/obj/structure/particle_accelerator/particle_emitter/right,
 					/obj/structure/particle_accelerator/power_box,
 					/obj/structure/particle_accelerator/end_cap)
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Particle Accelerator crate"
+	access = access_ce
 
 /datum/supply_packs/mecha_ripley
 	name = "Circuit Crate (\"Ripley\" APLU)"
@@ -449,7 +495,7 @@
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "Plasma assembly crate"
-	access = access_tox
+	access = access_tox_storage
 
 /datum/supply_packs/weapons
 	name = "Weapons crate"
@@ -459,8 +505,8 @@
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/taser,
 					/obj/item/weapon/gun/energy/taser,
-					/obj/item/weapon/storage/flashbang_kit,
-					/obj/item/weapon/storage/flashbang_kit)
+					/obj/item/weapon/storage/box/flashbangs,
+					/obj/item/weapon/storage/box/flashbangs)
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
 	containername = "Weapons crate"
@@ -499,9 +545,9 @@
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
-					/obj/item/weapon/storage/flashbang_kit,
-					/obj/item/weapon/storage/flashbang_kit,
-					/obj/item/weapon/storage/flashbang_kit,
+					/obj/item/weapon/storage/box/flashbangs,
+					/obj/item/weapon/storage/box/flashbangs,
+					/obj/item/weapon/storage/box/flashbangs,
 					/obj/item/weapon/handcuffs,
 					/obj/item/weapon/handcuffs,
 					/obj/item/weapon/handcuffs,
@@ -567,6 +613,17 @@
 	containertype = /obj/structure/closet/crate/secure/gear
 	containername = "Security Barriers crate"
 
+/datum/supply_packs/securitybarriers
+	name = "Shield Generators"
+	contains = list(/obj/machinery/shieldwallgen,
+					/obj/machinery/shieldwallgen,
+					/obj/machinery/shieldwallgen,
+					/obj/machinery/shieldwallgen)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Shield Generators crate"
+	access = access_teleporter
+
 /datum/supply_packs/randomised
 	var/num_contained = 3 //number of items picked to be contained in a randomised crate
 	contains = list(/obj/item/clothing/head/collectable/chef,
@@ -584,7 +641,7 @@
 					/obj/item/clothing/head/collectable/HoS,
 					/obj/item/clothing/head/collectable/thunderdome,
 					/obj/item/clothing/head/collectable/swat,
-					/obj/item/clothing/head/collectable/metroid,
+					/obj/item/clothing/head/collectable/slime,
 					/obj/item/clothing/head/collectable/police,
 					/obj/item/clothing/head/collectable/slime,
 					/obj/item/clothing/head/collectable/xenom,
@@ -625,10 +682,14 @@
 
 /datum/supply_packs/randomised/contraband
 	num_contained = 5
-	contains = list(/obj/item/seeds/bloodtomatoseed,
-	/obj/item/weapon/storage/pill_bottle/zoom,
-	/obj/item/weapon/storage/pill_bottle/happy,
-	/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe)
+	contains = list(/obj/item/weapon/contraband/poster,
+					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
+					/obj/item/weapon/lipstick/random,
+					/obj/item/seeds/bloodtomatoseed,
+					/obj/item/weapon/storage/pill_bottle/zoom,
+					/obj/item/weapon/storage/pill_bottle/happy,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe)
+
 	name = "Contraband crate"
 	cost = 30
 	containertype = /obj/structure/closet/crate

@@ -230,20 +230,20 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
-/client/proc/cmd_admin_metroidize(var/mob/M in mob_list)
+/client/proc/cmd_admin_slimeize(var/mob/M in mob_list)
 	set category = "Fun"
-	set name = "Make Metroid"
+	set name = "Make slime"
 
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has metroidized [M.key].")
+		log_admin("[key_name(src)] has slimeized [M.key].")
 		spawn(10)
-			M:Metroidize()
+			M:slimeize()
 			feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		log_admin("[key_name(usr)] made [key_name(M)] into a metroid.")
-		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a metroid.", 1)
+		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
+		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a slime.", 1)
 	else
 		alert("Invalid mob")
 
@@ -709,7 +709,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/cloaking_device(M), slot_r_store)
 
-			var/obj/item/weapon/secstorage/sbriefcase/sec_briefcase = new(M)
+			var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = new(M)
 			for(var/obj/item/briefcase_item in sec_briefcase)
 				del(briefcase_item)
 			for(var/i=3, i>0, i--)
@@ -880,7 +880,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
 		return
 
-	for(var/obj/machinery/emitter/E in world)
+	for(var/obj/machinery/power/emitter/E in world)
 		if(E.anchored)
 			E.active = 1
 

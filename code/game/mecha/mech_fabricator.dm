@@ -84,7 +84,7 @@
 						/obj/item/mecha_parts/part/durand_right_leg,
 						/obj/item/mecha_parts/part/durand_armour
 					),
-/*	"H.O.N.K"=list(
+	"H.O.N.K"=list(
 						/obj/item/mecha_parts/chassis/honker,
 						/obj/item/mecha_parts/part/honker_torso,
 						/obj/item/mecha_parts/part/honker_head,
@@ -92,7 +92,7 @@
 						/obj/item/mecha_parts/part/honker_right_arm,
 						/obj/item/mecha_parts/part/honker_left_leg,
 						/obj/item/mecha_parts/part/honker_right_leg
-						),												*/
+						),
 	"Exosuit Equipment"=list(
 						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 						/obj/item/mecha_parts/mecha_equipment/tool/drill,
@@ -106,9 +106,9 @@
 						///obj/item/mecha_parts/mecha_equipment/jetpack, //TODO MECHA JETPACK SPRITE MISSING
 						/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
-			/*			/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
+						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
-						/obj/item/mecha_parts/mecha_equipment/weapon/honker*/
+						/obj/item/mecha_parts/mecha_equipment/weapon/honker
 						),
 
 	"Cyborg Upgrade Modules" = list(
@@ -401,17 +401,14 @@
 /obj/machinery/mecha_part_fabricator/proc/process_queue()
 	var/obj/item/part = listgetindex(src.queue, 1)
 	if(!part)
-		if(remove_from_queue(1))
+		remove_from_queue(1)
+		if(src.queue.len)
 			return process_queue()
 		else
-			// Most likely means we have an empty queue, so stop processing
-			return 0
+			return
 	if(!(part.vars.Find("construction_time")) || !(part.vars.Find("construction_cost")))//If it shouldn't be printed
-		if(remove_from_queue(1))//Take it out of the quene
-			return process_queue()//Then reprocess it
-		else
-			// Most likely means we have an empty queue, so stop processing
-			return 0
+		remove_from_queue(1)//Take it out of the quene
+		return process_queue()//Then reprocess it
 	temp = null
 	while(part)
 		if(stat&(NOPOWER|BROKEN))

@@ -260,7 +260,7 @@ client
 				body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 				body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
 				body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
-				body += "<option value='?_src_=vars;makemetroid=\ref[D]'>Make metroid</option>"
+				body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
 			body += "<option value>---</option>"
 			body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
 		if(isobj(D))
@@ -691,10 +691,10 @@ client
 			return
 		holder.Topic(href, list("makealien"=href_list["makealien"]))
 
-	else if(href_list["makemetroid"])
+	else if(href_list["makeslime"])
 		if(!check_rights(0))	return
 
-		var/mob/living/carbon/human/H = locate(href_list["makemetroid"])
+		var/mob/living/carbon/human/H = locate(href_list["makeslime"])
 		if(!istype(H))
 			usr << "This can only be done to instances of type /mob/living/carbon/human"
 			return
@@ -703,7 +703,7 @@ client
 		if(!H)
 			usr << "Mob doesn't exist anymore"
 			return
-		holder.Topic(href, list("makemetroid"=href_list["makemetroid"]))
+		holder.Topic(href, list("makeslime"=href_list["makeslime"]))
 
 	else if(href_list["makeai"])
 		if(!check_rights(0))	return
@@ -727,10 +727,12 @@ client
 			usr << "This can only be done to instances of type /mob/living/carbon/human"
 			return
 
-		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","metroid","plant","shadow","tajaran","skrell")
+		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","slime","plant","shadow","tajaran","skrell")
 		switch(new_mutantrace)
-			if(null)		return
-			if("NONE")		new_mutantrace = ""
+			if(null)
+				return
+			if("NONE")
+				new_mutantrace = ""
 		if(!H)
 			usr << "Mob doesn't exist anymore"
 			return

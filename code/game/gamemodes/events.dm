@@ -8,13 +8,14 @@
 			/*if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
 				spawn(1)
 					dust_swarm("weak")*/
-			if (!event)
+			if(!event)
 				//CARN: checks to see if random events are enabled.
 				if(config.allow_random_events)
-					hadevent = event()
-				else
-					Holiday_Random_Event()
-			else
+					if(prob(eventchance))
+						event()
+						hadevent = 1
+					else
+						Holiday_Random_Event()			else
 				event = 0
 			sleep(2400)
 
@@ -77,15 +78,52 @@
 	switch(picked_event)
 		if("Meteor")
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
-			world << sound('sound/AI/meteors.ogg')
+			for(var/mob/M in player_list)
+				if(!istype(M,/mob/new_player))
+					M << sound('sound/AI/meteors.ogg')
 			spawn(100)
 				meteor_wave()
 				spawn_meteors()
 			spawn(700)
 				meteor_wave()
 				spawn_meteors()
-		if("Blob")
-			mini_blob_event()
+
+		if(2)
+			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
+			for(var/mob/M in player_list)
+				if(!istype(M,/mob/new_player))
+					M << sound('sound/AI/granomalies.ogg')
+			var/turf/T = pick(blobstart)
+			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
+			spawn(rand(50, 300))
+				del(bh)
+		/*
+		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
+			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
+			world << sound('sound/AI/spanomalies.ogg')
+			var/list/turfs = new
+			var/turf/picked
+			for(var/turf/simulated/floor/T in world)
+				if(T.z == 1)
+					turfs += T
+			for(var/turf/simulated/floor/T in turfs)
+				if(prob(20))
+					spawn(50+rand(0,3000))
+						picked = pick(turfs)
+						var/obj/effect/portal/P = new /obj/effect/portal( T )
+						P.target = picked
+						P.creator = null
+						P.icon = 'icons/obj/objects.dmi'
+						P.failchance = 0
+						P.icon_state = "anom"
+						P.name = "wormhole"
+						spawn(rand(300,600))
+							del(P)
+		*/
+		if(3)
+			if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
+				space_ninja_arrival()//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
+		if(4)			mini_blob_event()
 		if("Space Ninja")
 			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
 			space_ninja_arrival()
@@ -118,13 +156,16 @@
 		command_alert("Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you-BZZT")
 	else // AIs will always know if there's a comm blackout, rogue AIs could then lie about comm blackouts in the future while they shutdown comms
 		for(var/mob/living/silicon/ai/A in player_list)
-			A << "<span class='warning'>Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you-BZZT</span>"
+			A << "<br>"
+			A << "<span class='warning'><b>Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you-BZZT<b></span>"
+			A << "<br>"
 	for(var/obj/machinery/telecomms/T in telecomms_list)
 		T.emp_act(1)
 
 /proc/power_failure()
 	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure")
-	world << sound('sound/AI/poweroff.ogg')
+	for(var/mob/M in player_list)
+		M << sound('sound/AI/poweroff.ogg')
 	for(var/obj/machinery/power/smes/S in world)
 		if(istype(get_area(S), /area/turret_protected) || S.z != 1)
 			continue
@@ -172,7 +213,8 @@
 /proc/power_restore()
 
 	command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal")
-	world << sound('sound/AI/poweron.ogg')
+	for(var/mob/M in player_list)
+		M << sound('sound/AI/poweron.ogg')
 	for(var/obj/machinery/power/apc/C in world)
 		if(C.cell && C.z == 1)
 			C.cell.charge = C.cell.maxcharge
@@ -194,7 +236,8 @@
 /proc/power_restore_quick()
 
 	command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal")
-	world << sound('sound/AI/poweron.ogg')
+	for(var/mob/M in player_list)
+		M << sound('sound/AI/poweron.ogg')
 	for(var/obj/machinery/power/smes/S in world)
 		if(S.z != 1)
 			continue
@@ -250,6 +293,8 @@
 
 		var/foundAlready = 0 // don't infect someone that already has the virus
 		var/turf/T = get_turf(H)
+		if(!T)
+			continue
 		if(T.z != 1)
 			continue
 		for(var/datum/disease/D in H.viruses)
@@ -278,7 +323,8 @@
 			break
 	spawn(rand(1500, 3000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-		world << sound('sound/AI/outbreak7.ogg')
+		for(var/mob/M in player_list)
+			M << sound('sound/AI/outbreak7.ogg')
 
 /proc/alien_infestation(var/spawncount = 1) // -- TLE
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
@@ -306,7 +352,8 @@
 
 	spawn(rand(5000, 6000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-		world << sound('sound/AI/aliens.ogg')
+		for(var/mob/M in player_list)
+			M << sound('sound/AI/aliens.ogg')
 
 /proc/high_radiation_event()
 
@@ -321,6 +368,8 @@
 	sleep(600)
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/turf/T = get_turf(H)
+		if(!T)
+			continue
 		if(T.z != 1)
 			continue
 		if(istype(H,/mob/living/carbon/human))
@@ -329,12 +378,15 @@
 				H.apply_effect((rand(90,150)),IRRADIATE,0)
 	for(var/mob/living/carbon/monkey/M in living_mob_list)
 		var/turf/T = get_turf(M)
+		if(!T)
+			continue
 		if(T.z != 1)
 			continue
 		M.apply_effect((rand(15,75)),IRRADIATE,0)
 	sleep(100)
 	command_alert("Radiation levels are within standard parameters again.", "Anomaly Alert")
-	world << sound('sound/AI/radiation.ogg')
+	for(var/mob/M in player_list)
+		M << sound('sound/AI/radiation.ogg')
 
 
 
@@ -384,7 +436,8 @@
 	//sleep(100)
 	spawn(rand(300, 600)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
-		world << sound('sound/AI/commandreport.ogg')
+		for(var/mob/M in player_list)
+			M << sound('sound/AI/commandreport.ogg')
 
 /proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) //leave lightsoutAmount as 0 to break ALL lights
 	if(isEvent)
@@ -451,46 +504,74 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 				crew = "Any Human"
 			switch(rand(1,14))
 				if(1)
+					M << "<br>"
 					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("THERE ARE [amount] [who2] ON THE STATION")
 				if(2)
+					M << "<br>"
 					M << "\red [what2] ARE DANGEROUS TO HUMANS...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("[what2] ARE DANGEROUS TO HUMANS")
 				if(3)
+					M << "<br>"
 					M << "\red THE ESCAPE-SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("THE ESCAPE SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION")
 				if(4)
+					M << "<br>"
 					M << "\red HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE")
 				if(5)
+					M << "<br>"
 					M << "\red THE CAPTAIN, HOP AND HOS ARE [who2]...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("THE CAPTAIN, HOP AND HOS ARE [who2]")
 				if(6)
+					M << "<br>"
 					M << "\red THE STATION IS BUILT FOR [who2]...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("THE STATION IS BUILT FOR [who2]")
 				if(7)
+					M << "<br>"
 					M << "\red YOU ARE [amount] [who2]...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("YOU ARE [amount] [who2]")
 				if(8)
+					M << "<br>"
 					M << "\red YOU MUST ALWAYS [aimust]...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("YOU MUST ALWAYS [aimust]")
 				if(9)
+					M << "<br>"
 					M << "\red [area] [area2] [amount] [what2]...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("[area] [area2] [amount] [what2]")
 				if(10)
+					M << "<br>"
 					M << "\red [crew] is [target]...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("[crew] is [target]")
 				if(11)
+					M << "<br>"
 					M << "\red [define] IS A FORM OF HARM...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("[define] IS A FORM OF HARM")
 				if(12)
+					M << "<br>"
 					M << "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
 				if(13)
+					M << "<br>"
 					M << "\red [crew] is [allergysev] to [allergy]...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("[crew] is [allergysev] to [allergy]")
 				if(14)
+					M << "<br>"
 					M << "\red THE STATION IS [who2pref] [who2]...LAWS UPDATED"
+					M << "<br>"
 					M.add_ion_law("THE STATION IS [who2pref] [who2]")
 
 	if(botEmagChance)

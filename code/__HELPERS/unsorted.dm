@@ -474,7 +474,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/carbon/monkey/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/metroid/M in sortmob)
+	for(var/mob/living/carbon/slime/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
@@ -1227,6 +1227,13 @@ proc/get_mob_with_client_list()
 		location = location.loc
 	return null
 
+/proc/get(atom/loc, type)
+	while(loc)
+		if(istype(loc, type))
+			return loc
+		loc = loc.loc
+	return null
+
 /proc/get_turf_or_move(turf/location)
 	return get_turf(location)
 
@@ -1278,6 +1285,11 @@ var/global/list/common_tools = list(
 
 /proc/iscrowbar(O)
 	if(istype(O, /obj/item/weapon/crowbar))
+		return 1
+	return 0
+
+/proc/iswire(O)
+	if(istype(O, /obj/item/weapon/cable_coil))
 		return 1
 	return 0
 
@@ -1384,7 +1396,7 @@ var/list/WALLITEMS = list(
 	"/obj/machinery/status_display", "/obj/machinery/requests_console", "/obj/machinery/light_switch", "/obj/effect/sign",
 	"/obj/machinery/newscaster", "/obj/machinery/firealarm", "/obj/structure/noticeboard", "/obj/machinery/door_control",
 	"/obj/machinery/computer/security/telescreen", "/obj/machinery/embedded_controller/radio/simple_vent_controller",
-	"/obj/item/weapon/secstorage/ssafe", "/obj/machinery/door_timer", "/obj/machinery/flasher", "/obj/machinery/keycard_auth",
+	"/obj/item/weapon/storage/secure/safe", "/obj/machinery/door_timer", "/obj/machinery/flasher", "/obj/machinery/keycard_auth",
 	"/obj/structure/mirror", "/obj/structure/closet/fireaxecabinet", "/obj/machinery/computer/security/telescreen/entertainment"
 	)
 /proc/gotwallitem(loc, dir)

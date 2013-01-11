@@ -9,6 +9,7 @@ var/global/obj/effect/overlay/slmaster = null
 var/global/list/machines = list()
 var/global/list/processing_objects = list()
 var/global/list/active_diseases = list()
+var/global/list/events = list()
 		//items that ask to be called every cycle
 
 var/global/defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
@@ -226,7 +227,7 @@ var/forum_authenticated_group = "10"
 
 	// For FTP requests. (i.e. downloading runtime logs.)
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.
-var/fileaccess_timer = 1800 //Cannot access files by ftp until the game is finished setting up and stuff.
+var/fileaccess_timer = 0
 var/custom_event_msg = null
 
 //Database connections

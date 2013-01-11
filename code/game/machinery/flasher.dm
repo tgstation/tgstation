@@ -88,6 +88,14 @@
 				O.eye_stat += rand(0, 2)
 
 
+/obj/machinery/flasher/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+	if(prob(75/severity))
+		flash()
+	..(severity)
+
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
 	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
 		return
@@ -104,7 +112,7 @@
 
 		if (!src.anchored)
 			user.show_message(text("\red [src] can now be moved."))
-			src.overlays = null
+			src.overlays.Cut()
 
 		else if (src.anchored)
 			user.show_message(text("\red [src] is now secured."))

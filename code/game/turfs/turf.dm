@@ -74,7 +74,7 @@
 
 	//First, check objects to block exit that are not on the border
 	for(var/obj/obstacle in mover.loc)
-		if((obstacle.flags & ~ON_BORDER) && (mover != obstacle) && (forget != obstacle))
+		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
 			if(!obstacle.CheckExit(mover, src))
 				mover.Bump(obstacle, 1)
 				return 0
@@ -283,9 +283,6 @@
 	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
 		spawn(0)
 			M.take_damage(100, "brute")
-	for(var/obj/effect/critter/M in src)
-		spawn(0)
-			M.Die()
 
 /turf/proc/Bless()
 	if(flags & NOJAUNT)

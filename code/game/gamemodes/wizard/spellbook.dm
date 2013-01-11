@@ -38,8 +38,10 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=17'>Mastercrafted Armor Set</A><BR>"
 		dat += "<HR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=18'>Staff of Animation</A><BR>"
+		dat += "<HR>"
 		if(op)
-			dat += "<A href='byond://?src=\ref[src];spell_choice=18'>Re-memorize Spells</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];spell_choice=19'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -54,9 +56,9 @@
 	if ( src.loc == usr || (in_range(src,usr) && istype(src.loc, /turf)))
 		usr.set_machine(src)
 		if(href_list["spell_choice"])
-			if(src.uses >= 1 && src.max_uses >=1 && text2num(href_list["spell_choice"]) < 18)
+			if(src.uses >= 1 && src.max_uses >=1 && text2num(href_list["spell_choice"]) < 19)
 				src.uses--
-				var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock","Summon Guns","Staff of Change","Six Soul Stone Shards and the spell Artificer","Mastercrafted Armor Set")
+				var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock","Summon Guns","Staff of Change","Six Soul Stone Shards and the spell Artificer","Mastercrafted Armor Set", "Staff of Animation")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in usr.spell_list)
 					if(available_spells[text2num(href_list["spell_choice"])] == aspell.name)
@@ -72,7 +74,7 @@
 							src.temp = "This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage."
 						if ("2")
 							feedback_add_details("wizard_spell_learned","FB") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							usr.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/fireball(usr)
+							usr.spell_list += new /obj/effect/proc_holder/spell/dumbfire/fireball(usr)
 							src.temp = "This spell fires a fireball in the direction you're facing and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
 						if ("3")
 							feedback_add_details("wizard_spell_learned","DG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
@@ -142,8 +144,13 @@
 							new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(usr))
 							src.temp = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
 							src.max_uses--
+						if("18")
+							feedback_add_details("wizard_spell_learned","SA") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							new /obj/item/weapon/gun/energy/staff/animate(get_turf(usr))
+							src.temp = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
+							src.max_uses--
 
-			if (href_list["spell_choice"] == "18")
+			if (href_list["spell_choice"] == "19")
 				var/area/wizard_station/A = locate()
 				if(usr in A.contents)
 					src.uses = src.max_uses

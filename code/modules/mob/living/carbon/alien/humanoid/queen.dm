@@ -80,7 +80,7 @@
 /mob/living/carbon/alien/humanoid/queen/large/update_icons()
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this to be here
-	overlays = null
+	overlays.Cut()
 	if(lying)
 		if(resting)					icon_state = "queen_sleep"
 		else						icon_state = "queen_l"

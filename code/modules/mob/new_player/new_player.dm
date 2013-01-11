@@ -231,7 +231,7 @@
 						usr << "The option ID difference is too big. Please contact administration or the database admin."
 						return
 
-					for(var/optionid = id_min; optionid<= id_max; optionid++)
+					for(var/optionid = id_min; optionid <= id_max; optionid++)
 						if(!isnull(href_list["o[optionid]"]))	//Test if this optionid was replied to
 							var/rating
 							if(href_list["o[optionid]"] == "abstain")
@@ -242,6 +242,17 @@
 									return
 
 							vote_on_numval_poll(pollid, optionid, rating)
+				if("MULTICHOICE")
+					var/id_min = text2num(href_list["minoptionid"])
+					var/id_max = text2num(href_list["maxoptionid"])
+
+					if( (id_max - id_min) > 100 )	//Basic exploit prevention
+						usr << "The option ID difference is too big. Please contact administration or the database admin."
+						return
+
+					for(var/optionid = id_min; optionid <= id_max; optionid++)
+						if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
+							vote_on_poll(pollid, optionid, 1)
 
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)

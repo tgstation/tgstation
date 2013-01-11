@@ -61,10 +61,19 @@
 	if(src.corpseid == 1)
 		var/obj/item/weapon/card/id/W = new(M)
 		W.name = "[M.real_name]'s ID Card"
+		var/datum/job/jobdatum
+		for(var/jobtype in typesof(/datum/job))
+			var/datum/job/J = new jobtype
+			if(J.title == corpseidaccess)
+				jobdatum = J
+				break
 		if(src.corpseidicon)
 			W.icon_state = corpseidicon
 		if(src.corpseidaccess)
-			W.access = get_access(corpseidaccess)
+			if(jobdatum)
+				W.access = jobdatum.get_access()
+			else
+				W.access = list()
 		if(corpseidjob)
 			W.assignment = corpseidjob
 		W.registered_name = M.real_name

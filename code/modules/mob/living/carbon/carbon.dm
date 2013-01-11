@@ -59,15 +59,15 @@
 			return
 
 	for(var/datum/disease/D in viruses)
-		world << "1 [D.spread]"
+
 		if(D.spread_by_touch())
-			world << "1 contract"
+
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-		world << "2 [D.spread]"
+
 		if(D.spread_by_touch())
-			world << "2 contract"
+
 			contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	return
@@ -151,8 +151,7 @@
 		swap_hand()
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if (src.health > config.health_threshold_crit)
-		if(src == M && istype(src, /mob/living/carbon/human))
+	if (src.health >= config.health_threshold_crit)		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
 			src.visible_message( \
 				text("\blue [src] examines [].",src.gender==MALE?"himself":"herself"), \
@@ -412,10 +411,9 @@
 
 		item.throw_at(target, item.throw_range, item.throw_speed)
 
-/mob/living/carbon/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > CARBON_LIFEFORM_FIRE_RESISTANCE)
-		adjustFireLoss(CARBON_LIFEFORM_FIRE_DAMAGE)
+/mob/living/carbon/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
+	bodytemperature = max(bodytemperature, BODYTEMP_HEAT_DAMAGE_LIMIT+10)
 
 /mob/living/carbon/can_use_hands()
 	if(handcuffed)

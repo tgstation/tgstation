@@ -124,7 +124,7 @@ turf
 			super_conduct()
 
 			update_visuals(datum/gas_mixture/model)
-				overlays = null
+				overlays.Cut()
 
 				var/siding_icon_state = return_siding_icon_state()
 				if(siding_icon_state)

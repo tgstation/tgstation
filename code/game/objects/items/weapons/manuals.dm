@@ -18,7 +18,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://nanotrasen.com/wiki/index.php?title=Guide_to_construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Guide_to_construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
@@ -81,7 +81,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://nanotrasen.com/wiki/index.php?title=Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>
@@ -589,8 +589,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://baystation12.net/wiki/index.php?title=Space_law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-		</body>
+		<iframe width='100%' height='97%' src="http://baystation12.net/wiki/index.php?title=Space_law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>		</body>
 
 		</html>
 
@@ -607,8 +606,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://baystation12.net/wiki/index.php?title=Guide_to_engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-		</body>
+		<iframe width='100%' height='97%' src="http://wiki.nanotrasen.com/index.php?title=Guide_to_engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>		</body>
 
 		</html>
 

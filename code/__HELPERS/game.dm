@@ -275,6 +275,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
+/*
 proc/check_can_reach(atom/user, atom/target)
 	if(!in_range(user,target))
 		return 0
@@ -314,7 +315,7 @@ var/list/DummyCache = list()
 	D.loc = null
 	DummyCache.Add(D)
 	return 1
-
+*/
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 
 /proc/get_active_candidates(var/buffer = 1)
@@ -344,3 +345,20 @@ var/list/DummyCache = list()
 		i++
 	return candidates
 
+/proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
+	if(!isobj(O))	O = new /obj/screen/text()
+	O.maptext = maptext
+	O.maptext_height = maptext_height
+	O.maptext_width = maptext_width
+	O.screen_loc = screen_loc
+	return O
+
+/proc/Show2Group4Delay(obj/O, list/group, delay=0)
+	if(!isobj(O))	return
+	if(!group)	group = clients
+	for(var/client/C in group)
+		C.screen += O
+	if(delay)
+		spawn(delay)
+			for(var/client/C in group)
+				C.screen -= O

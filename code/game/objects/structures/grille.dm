@@ -57,8 +57,8 @@
 		healthcheck()
 		return
 
-/obj/structure/grille/attack_metroid(mob/user as mob)
-	if(!istype(user, /mob/living/carbon/metroid/adult))	return
+/obj/structure/grille/attack_slime(mob/user as mob)
+	if(!istype(user, /mob/living/carbon/slime/adult))	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \

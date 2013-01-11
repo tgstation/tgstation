@@ -63,10 +63,8 @@
 
 
 	process()
-		if(stat & (NOPOWER|BROKEN))
-			return
-		use_power(500)
-		src.updateDialog()
+		if(!..())
+			src.updateDialog()
 		return
 
 

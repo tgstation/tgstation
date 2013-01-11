@@ -25,7 +25,7 @@
 	name = "photo"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
-	item_state = "clipboard"
+	item_state = "paper"
 	w_class = 1.0
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.

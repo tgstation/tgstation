@@ -48,9 +48,9 @@
 		if(occupant)
 			occupant_message("The sleeper is already occupied")
 			return
-		for(var/mob/living/carbon/metroid/M in range(1,target))
+		for(var/mob/living/carbon/slime/M in range(1,target))
 			if(M.Victim == target)
-				occupant_message("[target] will not fit into the sleeper because they have a Metroid latched onto their head.")
+				occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
 				return
 		occupant_message("You start putting [target] into [src].")
 		chassis.visible_message("[chassis] starts putting [target] into the [src].")

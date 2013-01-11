@@ -64,7 +64,7 @@
 
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 		if(a_left)
 			overlays += "[a_left.icon_state]_left"
 			for(var/O in a_left.attached_overlays)

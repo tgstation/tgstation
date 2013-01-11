@@ -45,7 +45,7 @@
 		if(stat & BROKEN || !I || !user)
 			return
 
-		if(isrobot(user) && !istype(I, /obj/item/weapon/trashbag))
+		if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
 			return
 		src.add_fingerprint(user)
 		if(mode<=0) // It's off
@@ -91,12 +91,12 @@
 			user << "You can't place that item inside the disposal unit."
 			return
 
-		if(istype(I, /obj/item/weapon/trashbag))
+		if(istype(I, /obj/item/weapon/storage/bag/trash))
+			var/obj/item/weapon/storage/bag/trash/T = I
 			user << "\blue You empty the bag."
-			for(var/obj/item/O in I.contents)
-				O.loc = src
-				I.contents -= O
-			I.update_icon()
+			for(var/obj/item/O in T.contents)
+				T.remove_from_storage(O,src)
+			T.update_icon()
 			update()
 			return
 
@@ -306,7 +306,7 @@
 
 	// update the icon & overlays to reflect mode & status
 	proc/update()
-		overlays = null
+		overlays.Cut()
 		if(stat & BROKEN)
 			icon_state = "disposal-broken"
 			mode = 0
@@ -399,7 +399,6 @@
 		if(wrapcheck == 1)
 			H.tomail = 1
 
-		H.init(src)	// copy the contents of disposer to holder
 
 		air_contents = new()		// new empty gas resv.
 
@@ -409,6 +408,8 @@
 			last_sound = world.time
 		sleep(5) // wait for animation to finish
 
+
+		H.init(src)	// copy the contents of disposer to holder
 
 		H.start(src) // start the holder processing movement
 		flushing = 0

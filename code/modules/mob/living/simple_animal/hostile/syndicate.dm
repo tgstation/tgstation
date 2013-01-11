@@ -136,8 +136,9 @@
 /mob/living/simple_animal/hostile/viscerator
 	name = "viscerator"
 	desc = "A small, twin-bladed machine capable of inflicting very deadly lacerations."
-	icon_state = "viscerator"
-	icon_living = "viscerator"
+	icon = 'icons/mob/critter.dmi'
+	icon_state = "viscerator_attack"
+	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
 	health = 15
 	maxHealth = 15

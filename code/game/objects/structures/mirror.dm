@@ -86,8 +86,8 @@
 	shatter()
 
 
-/obj/structure/mirror/attack_metroid(mob/user as mob)
-	if(!ismetroidadult(user)) return
+/obj/structure/mirror/attack_slime(mob/user as mob)
+	if(!isslimeadult(user)) return
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return

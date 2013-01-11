@@ -24,7 +24,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
-	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/
+//	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
 	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
 	/datum/admins/proc/toggleguests,	/*toggles whether guests can join the current game*/
 	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
@@ -40,11 +40,12 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
 	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
+	/client/proc/getruntimelog,			/*allows us to access runtime logs to somebody*/
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
-	/client/proc/sendmob,				/*sends a mob somewhere*/
+//	/client/proc/sendmob,				/*sends a mob somewhere*/ -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage
 	/client/proc/Jump,
 	/client/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
 	/client/proc/jumptomob,				/*allows us to jump to a specific mob*/
@@ -79,7 +80,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/make_sound,
-	/client/proc/toggle_random_events
+	/client/proc/toggle_random_events,
+	/client/proc/set_ooc
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -130,12 +132,12 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/edit_admin_permissions
 	)
 var/list/admin_verbs_rejuv = list(
-	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/respawn_character
 	)
 
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
+	/client/proc/set_ooc,
 	/client/proc/deadmin_self,
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -152,8 +154,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_subtle_message,
 	/client/proc/cmd_admin_check_contents,
 	/datum/admins/proc/access_news_network,
-	/client/proc/giveruntimelog,
-	/client/proc/getserverlog,
 	/client/proc/admin_call_shuttle,
 	/client/proc/admin_cancel_shuttle,
 	/client/proc/cmd_admin_direct_narrate,

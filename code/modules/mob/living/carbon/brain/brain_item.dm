@@ -23,7 +23,7 @@
 				brainmob.client.screen.len = null //clear the hud
 
 	proc
-		transfer_identity(var/mob/living/carbon/human/H)
+		transfer_identity(var/mob/living/carbon/H)
 			name = "[H]'s brain"
 			brainmob = new(src)
 			brainmob.name = H.real_name
@@ -32,7 +32,7 @@
 			brainmob.timeofhostdeath = H.timeofdeath
 			if(H.mind)
 				H.mind.transfer_to(brainmob)
-			brainmob << "\blue You might feel slightly disoriented. That's normal when your brain gets cut out."
+			brainmob << "\blue You feel slightly disoriented. That's normal when you're just a brain."
 			return
 
 /obj/item/brain/examine() // -- TLE
@@ -41,10 +41,10 @@
 		return
 	usr << "This is \icon[src] \an [name]."
 
-	if(brainmob)//if thar be a brain inside... the brain.
+	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
 		usr << "You can feel the small spark of life still left in this one."
 	else
-		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later. Probably not."
+		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later.."
 
 /obj/item/brain/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))

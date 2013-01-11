@@ -52,6 +52,7 @@
 							src.reagents.reaction(safe_thing, TOUCH)
 
 
+
 						user << "\blue You transfer [trans] units of the solution."
 						if (src.reagents.total_volume<=0)
 							filled = 0
@@ -62,6 +63,15 @@
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message(text("\red <B>[] squirts something into []'s eyes!</B>", user, target), 1)
 				src.reagents.reaction(target, TOUCH)
+				var/mob/M = target
+				var/R
+				if(src.reagents)
+					for(var/datum/reagent/A in src.reagents.reagent_list)
+						R += A.id + " ("
+						R += num2text(A.volume) + "),"
+				user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> squirted <b>[M]/[M.ckey]</b> with ([R])"
+				M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> squirted <b>[M]/[M.ckey]</b> with ([R])"
+				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> squirted <b>[M]/[M.ckey]</b> with ([R])")
 
 			trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user << "\blue You transfer [trans] units of the solution."

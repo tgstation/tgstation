@@ -91,6 +91,24 @@ Class Procs:
 	Compiled by Aygar
 */
 
+/obj/machinery
+	name = "machinery"
+	icon = 'icons/obj/stationobjs.dmi'
+	var/stat = 0
+	var/emagged = 0
+	var/use_power = 1
+		//0 = dont run the auto
+		//1 = run auto, use idle
+		//2 = run auto, use active
+	var/idle_power_usage = 0
+	var/active_power_usage = 0
+	var/power_channel = EQUIP
+		//EQUIP,ENVIRON or LIGHT
+	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
+	var/uid
+	var/manual = 0
+	var/global/gl_uid = 1
+
 /obj/machinery/New()
 	..()
 	machines += src

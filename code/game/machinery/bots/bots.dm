@@ -4,6 +4,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
 	luminosity = 3
+	use_power = 0
 	var/obj/item/weapon/card/id/botcard			// the ID card that the bot "holds"
 	var/on = 1
 	var/health = 0 //do not forget to set health for your bot!
@@ -88,13 +89,16 @@
 	else if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
 		Emag(user)
 	else
-		switch(W.damtype)
-			if("fire")
-				src.health -= W.force * fire_dam_coeff
-			if("brute")
-				src.health -= W.force * brute_dam_coeff
-		..()
-		healthcheck()
+		if(hasvar(W,"force") && hasvar(W,"damtype"))
+			switch(W.damtype)
+				if("fire")
+					src.health -= W.force * fire_dam_coeff
+				if("brute")
+					src.health -= W.force * brute_dam_coeff
+			..()
+			healthcheck()
+		else
+			..()
 
 /obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage

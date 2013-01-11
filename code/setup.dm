@@ -46,7 +46,7 @@
 #define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
 #define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE 30000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
-#define FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 15000 //for fire helmet quality items (red and white hardhats)
+#define FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 30000 //for fire helmet quality items (red and white hardhats)
 #define HELMET_MIN_COLD_PROTECITON_TEMPERATURE 160	//For normal helmets
 #define HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For normal helmets
 #define ARMOR_MIN_COLD_PROTECITON_TEMPERATURE 160	//For armor
@@ -444,6 +444,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 
 //Damage things	//TODO: merge these down to reduce on defines
+//Way to waste perfectly good damagetype names (BRUTE) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
 #define BRUTE		"brute"
 #define BURN		"fire"
 #define TOX			"tox"
@@ -458,6 +459,12 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define STUTTER		"stutter"
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
+
+//I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
+#define BRUTELOSS 1
+#define FIRELOSS 2
+#define TOXLOSS 4
+#define OXYLOSS 8
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1

@@ -209,7 +209,7 @@
 
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 		if(density)
 			icon_state = "door_closed"
 			if(blocked)
@@ -221,4 +221,50 @@
 		return
 
 
+
 /obj/machinery/door/firedoor/border_only
+	icon = 'icons/obj/doors/edge_Doorfire.dmi'
+	glass = 1 //There is a glass window so you can see through the door
+			  //This is needed due to BYOND limitations in controlling visibility
+
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if(istype(mover) && mover.checkpass(PASSGLASS))
+			return 1
+		if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
+			if(air_group) return 0
+			return !density
+		else
+			return 1
+
+	CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+		if(istype(mover) && mover.checkpass(PASSGLASS))
+			return 1
+		if(get_dir(loc, target) == dir)
+			return !density
+		else
+			return 1
+
+
+	update_nearby_tiles(need_rebuild)
+		if(!air_master) return 0
+
+		var/turf/simulated/source = loc
+		var/turf/simulated/destination = get_step(source,dir)
+
+		update_heat_protection(loc)
+
+		if(need_rebuild)
+			if(istype(source)) //Rebuild/update nearby group geometry
+				if(source.parent)
+					air_master.groups_to_rebuild += source.parent
+				else
+					air_master.tiles_to_update += source
+			if(istype(destination))
+				if(destination.parent)
+					air_master.groups_to_rebuild += destination.parent
+				else
+					air_master.tiles_to_update += destination
+		else
+			if(istype(source)) air_master.tiles_to_update += source
+			if(istype(destination)) air_master.tiles_to_update += destination
+		return 1

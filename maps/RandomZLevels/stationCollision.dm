@@ -149,17 +149,17 @@ var/sc_safecode5 = "[rand(0,9)]"
 /*
  * Captain's safe
  */
-/obj/item/weapon/secstorage/ssafe/sc_ssafe
+/obj/item/weapon/storage/secure/safe/sc_ssafe
 	name = "Captain's secure safe"
 
-/obj/item/weapon/secstorage/ssafe/sc_ssafe/New()
+/obj/item/weapon/storage/secure/safe/sc_ssafe/New()
 	..()
 	l_code = "[sc_safecode1][sc_safecode2][sc_safecode3][sc_safecode4][sc_safecode5]"
 	l_set = 1
-	new /obj/item/weapon/gun/energy/pulse_rifle(src)
+	new /obj/item/weapon/gun/energy/mindflayer(src)
 	new /obj/item/device/soulstone(src)
-	new /obj/item/clothing/head/helmet/space/cult
-	new /obj/item/clothing/suit/space/cult
+	new /obj/item/clothing/head/helmet/space/cult(src)
+	new /obj/item/clothing/suit/space/cult(src)
 	//new /obj/item/weapon/teleportation_scroll(src)
 	new /obj/item/weapon/ore/diamond(src)
 

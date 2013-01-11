@@ -367,13 +367,13 @@ var/global/datum/controller/occupations/job_master
 				return
 			else
 				C = new job.idtype(H)
+				C.access = job.get_access()
 		else
 			C = new /obj/item/weapon/card/id(H)
 		if(C)
 			C.registered_name = H.real_name
 			C.assignment = title
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
-			C.access = get_access(rank)
 			H.equip_to_slot_or_del(C, slot_wear_id)
 	/*	if(prob(50))
 			H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_r_store)
@@ -383,7 +383,7 @@ var/global/datum/controller/occupations/job_master
 		if(locate(/obj/item/device/pda,H))//I bet this could just use locate.  It can --SkyMarshal
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
-			pda.ownjob = H.wear_id.assignment
+			pda.ownjob = C.assignment
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 		return 1
 

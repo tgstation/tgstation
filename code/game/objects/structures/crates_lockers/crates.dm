@@ -145,6 +145,15 @@
 	icon_opened = "secgearcrateopen"
 	icon_closed = "secgearcrate"
 
+/obj/structure/closet/crate/secure/hydrosec
+	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
+	name = "secure hydroponics crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "hydrosecurecrate"
+	density = 1
+	icon_opened = "hydrosecurecrateopen"
+	icon_closed = "hydrosecurecrate"
+
 /obj/structure/closet/crate/secure/bin
 	desc = "A secure bin."
 	name = "Secure bin"
@@ -202,10 +211,10 @@
 /obj/structure/closet/crate/secure/New()
 	..()
 	if(locked)
-		overlays = null
+		overlays.Cut()
 		overlays += redlight
 	else
-		overlays = null
+		overlays.Cut()
 		overlays += greenlight
 
 /obj/structure/closet/crate/rcd/New()
@@ -243,7 +252,15 @@
 	for(var/obj/O in get_turf(src))
 		if(itemcount >= storage_capacity)
 			break
-		if(O.density || O.anchored || O == src) continue
+
+		if(O.density || O.anchored || istype(O,/obj/structure/closet))
+			continue
+
+		if(istype(O, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+			var/obj/structure/stool/bed/B = O
+			if(B.buckled_mob)
+				continue
+
 		O.loc = src
 		itemcount++
 
@@ -270,7 +287,7 @@
 		if (allowed(user))
 			user << "<span class='notice'>You unlock [src].</span>"
 			src.locked = 0
-			overlays = null
+			overlays.Cut()
 			overlays += greenlight
 			return
 		else
@@ -283,11 +300,11 @@
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
 		user << "<span class='notice'>You lock \the [src].</span>"
 		src.locked = 1
-		overlays = null
+		overlays.Cut()
 		overlays += redlight
 		return
 	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
-		overlays = null
+		overlays.Cut()
 		overlays += emag
 		overlays += sparks
 		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
@@ -340,10 +357,10 @@
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1
-			overlays = null
+			overlays.Cut()
 			overlays += redlight
 		else
-			overlays = null
+			overlays.Cut()
 			overlays += emag
 			overlays += sparks
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*

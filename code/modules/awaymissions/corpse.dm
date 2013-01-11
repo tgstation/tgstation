@@ -58,10 +58,19 @@
 	if(src.corpseid == 1)
 		var/obj/item/weapon/card/id/W = new(M)
 		W.name = "[M.real_name]'s ID Card"
+		var/datum/job/jobdatum
+		for(var/jobtype in typesof(/datum/job))
+			var/datum/job/J = new jobtype
+			if(J.title == corpseidaccess)
+				jobdatum = J
+				break
 		if(src.corpseidicon)
 			W.icon_state = corpseidicon
 		if(src.corpseidaccess)
-			W.access = get_access(corpseidaccess)
+			if(jobdatum)
+				W.access = jobdatum.get_access()
+			else
+				W.access = list()
 		if(corpseidjob)
 			W.assignment = corpseidjob
 		W.registered_name = M.real_name
@@ -178,7 +187,7 @@
 	corpseidaccess = "Scientist"
 
 /obj/effect/landmark/corpse/miner
-	corpseradio = /obj/item/device/radio/headset/headset_mine
+	corpseradio = /obj/item/device/radio/headset/headset_cargo
 	corpseuniform = /obj/item/clothing/under/rank/miner
 	corpsegloves = /obj/item/clothing/gloves/black
 	corpseback = /obj/item/weapon/storage/backpack/industrial

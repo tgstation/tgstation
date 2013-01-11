@@ -34,7 +34,7 @@
 /obj/item/weapon/gun/energy/crossbow:5:Energy Crossbow;
 /obj/item/weapon/melee/energy/sword:4:Energy Sword;
 /obj/item/weapon/storage/box/syndicate:10:Syndicate Bundle;
-/obj/item/weapon/storage/emp_kit:3:5 EMP Grenades;
+/obj/item/weapon/storage/box/emps:3:5 EMP Grenades;
 Whitespace:Seperator;
 Stealthy and Inconspicuous Weapons;
 /obj/item/weapon/pen/paralysis:3:Paralysis Pen;
@@ -51,7 +51,7 @@ Whitespace:Seperator;
 Devices and Tools;
 /obj/item/weapon/card/emag:3:Cryptographic Sequencer;
 /obj/item/weapon/storage/toolbox/syndicate:1:Fully Loaded Toolbox;
-/obj/item/weapon/storage/syndie_kit/space:3:Space Suit;
+/obj/item/weapon/storage/box/syndie_kit/space:3:Space Suit;
 /obj/item/clothing/glasses/thermal/syndi:3:Thermal Imaging Glasses;
 /obj/item/device/encryptionkey/binary:3:Binary Translator Key;
 /obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
@@ -61,11 +61,10 @@ Devices and Tools;
 /obj/item/weapon/circuitboard/teleporter:20:Teleporter Circuit Board;
 Whitespace:Seperator;
 Implants;
-/obj/item/weapon/storage/syndie_kit/imp_freedom:3:Freedom Implant;
+/obj/item/weapon/storage/box/syndie_kit/imp_freedom:3:Freedom Implant;
+/obj/item/weapon/storage/box/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
 /obj/item/weapon/implant/explosive:6:Explosive Implant (DANGER!);
-/obj/item/weapon/implant/compressed:4:Compressed Matter Implant;
-/obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
-Whitespace:Seperator;
+/obj/item/weapon/implant/compressed:4:Compressed Matter Implant;Whitespace:Seperator;
 (Pointless) Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
@@ -233,7 +232,9 @@ Whitespace:Seperator;
 	world << sound('commandreport.ogg')
 
 /*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-	world << sound('sound/AI/intercept.ogg')
+	for(var/mob/M in player_list)
+		if(!istype(M,/mob/new_player))
+			M << sound('sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
 
@@ -320,7 +321,6 @@ Whitespace:Seperator;
 			if(applicant)
 				candidates += applicant
 				drafted.Remove(applicant)
-				log_admin("[applicant.key] drafted into antagonist role against their preferences.")
 				message_admins("[applicant.key] drafted into antagonist role against their preferences.")
 
 		else												// Not enough scrubs, ABORT ABORT ABORT

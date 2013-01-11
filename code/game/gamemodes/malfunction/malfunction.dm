@@ -65,6 +65,8 @@
 			if(alert(AI_mind.current,"Do you want to use an alternative sprite for your real core?",,"Yes","No")=="Yes")
 				AI_mind.current.icon_state = "ai-malf2"
 */
+	if(emergency_shuttle)
+		emergency_shuttle.always_fake_recall = 1
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
 	..()
@@ -131,7 +133,11 @@
 	if (station_captured && !to_nuke_or_not_to_nuke)
 		return 1
 	if (is_malf_ai_dead())
-		return 1
+		if(config.continous_rounds)
+			if(emergency_shuttle)
+				emergency_shuttle.always_fake_recall = 0
+		else
+			return 1
 	return ..() //check for shuttle and nuke
 
 
@@ -165,7 +171,9 @@
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
-	world << sound('sound/AI/aimalf.ogg')
+	for(var/mob/M in player_list)
+		if(!istype(M,/mob/new_player))
+			M << sound('sound/AI/aimalf.ogg')
 
 
 /datum/game_mode/malfunction/proc/ai_win()
