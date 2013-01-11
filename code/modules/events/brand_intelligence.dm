@@ -1,5 +1,5 @@
 /datum/event/brand_intelligence
-	announceWhen	= 5
+	announceWhen	= 21
 	endWhen			= 1000	//Ends when all vending machines are subverted anyway.
 	oneShot			= 1
 
@@ -34,6 +34,7 @@
 	if(IsMultiple(activeFor, 3))
 		var/obj/machinery/vending/infectedMachine = pick(vendingMachines)
 		vendingMachines.Remove(infectedMachine)
+		infectedMachine.shut_up = 0
 		infectedMachine.shoot_inventory = 1
 
 		if(IsMultiple(activeFor, 12))
@@ -43,4 +44,4 @@
 									 "Your money can buy happiness!", \
 									 "Engage direct marketing!", \
 									 "Advertising is legalized lying! But don't let that put you off our great deals!", \
-									 ""))
+									 "You don't want to buy anything? Yeah, well I didn't want to buy your mom either."))
