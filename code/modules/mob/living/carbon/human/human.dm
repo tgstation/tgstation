@@ -509,29 +509,32 @@
 					return
 				*/
 
-				var/perpname = "wot"
 				var/modified = 0
-
+				var/perpname = "wot"
 				if(wear_id)
 					var/obj/item/weapon/card/id/I = wear_id.GetID()
-					perpname = I.registered_name
+					if(I)
+						perpname = I.registered_name
+					else
+						perpname = name
 				else
-					perpname = src.name
+					perpname = name
 
-				for (var/datum/data/record/E in data_core.general)
-					if (E.fields["name"] == perpname)
-						for (var/datum/data/record/R in data_core.security)
-							if (R.fields["id"] == E.fields["id"])
+				if(perpname)
+					for (var/datum/data/record/E in data_core.general)
+						if (E.fields["name"] == perpname)
+							for (var/datum/data/record/R in data_core.security)
+								if (R.fields["id"] == E.fields["id"])
 
-								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
+									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
 
-								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-									if(setcriminal != "Cancel")
-										R.fields["criminal"] = setcriminal
-										modified = 1
+									if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+										if(setcriminal != "Cancel")
+											R.fields["criminal"] = setcriminal
+											modified = 1
 
-										spawn()
-											H.handle_regular_hud_updates()
+											spawn()
+												H.handle_regular_hud_updates()
 
 				if(!modified)
 					usr << "\red Unable to locate a data core entry for this person."
