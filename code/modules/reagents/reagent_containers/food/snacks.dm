@@ -1480,7 +1480,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast
 	name = "Jellied Toast"
 	desc = "A slice of bread covered with delicious jam."
-	icon_state = "slimetoast"
+	icon_state = "jellytoast"
 	trash = /obj/item/trash/plate
 	New()
 		..()
@@ -1500,7 +1500,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/jellyburger
 	name = "Jelly Burger"
 	desc = "Culinary delight..?"
-	icon_state = "slimeburger"
+	icon_state = "jellyburger"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 5)
@@ -1646,7 +1646,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich
 	name = "Jelly Sandwich"
 	desc = "You wish you had some peanut butter to go with this..."
-	icon_state = "slimesandwich"
+	icon_state = "jellysandwich"
 	trash = /obj/item/trash/plate
 	New()
 		..()
