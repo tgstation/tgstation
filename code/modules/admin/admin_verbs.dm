@@ -54,7 +54,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/check_words			/*displays cult-words*/
+	/client/proc/check_words,			/*displays cult-words*/
+	/client/proc/free_slot			/*frees slot for chosen job*/
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -726,4 +727,20 @@ var/list/admin_verbs_mod = list(
 	set category = "Admin"
 	if(holder)
 		holder.PlayerNotes()
+	return
+
+/client/proc/free_slot()
+	set name = "Free Job Slot"
+	set category = "Admin"
+	if(holder)
+		var/list/jobs = list()
+		for (var/datum/job/J in job_master.occupations)
+			if (J.current_positions >= J.total_positions && J.total_positions != -1)
+				jobs += J.title
+		if (!jobs.len)
+			usr << "There are no fully staffed jobs."
+			return
+		var/job = input("Please select job slot to free", "Free job slot")  as null|anything in jobs
+		if (job)
+			job_master.FreeRole(job)
 	return

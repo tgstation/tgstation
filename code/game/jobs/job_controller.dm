@@ -60,6 +60,12 @@ var/global/datum/controller/occupations/job_master
 		Debug("AR has failed, Player: [player], Rank: [rank]")
 		return 0
 
+	proc/FreeRole(var/rank)	//making additional slot on the fly
+		var/datum/job/job = GetJob(rank)
+		if(job && job.current_positions >= job.total_positions)
+			job.total_positions++
+			return 1
+		return 0
 
 	proc/FindOccupationCandidates(datum/job/job, level, flag)
 		Debug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
