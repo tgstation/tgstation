@@ -852,7 +852,8 @@
 
 	if (href_list["mod"])
 		var/obj/item/O = locate(href_list["mod"])
-		O.attack_self(src)
+		if (O)
+			O.attack_self(src)
 
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
