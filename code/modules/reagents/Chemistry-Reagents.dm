@@ -5,6 +5,7 @@
 //The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
 //so that it can continue working when the reagent is deleted while the proc is still active.
 
+
 datum
 	reagent
 		var/name = "Reagent"
@@ -1152,7 +1153,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(holder.has_reagent("inaprovaline"))
 					holder.remove_reagent("inaprovaline", 2)
-				M.adjustToxLoss(1)
+				M.adjustToxLoss(3)
 				..()
 				return
 			reaction_obj(var/obj/O, var/volume)

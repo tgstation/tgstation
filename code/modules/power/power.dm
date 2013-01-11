@@ -143,9 +143,12 @@
 
 
 /obj/machinery/power/proc/get_connections()
-	if(!directwired)	return get_indirect_connections()
 
 	. = list()
+
+	if(!directwired)
+		return get_indirect_connections()
+
 	var/cdir
 
 	for(var/card in cardinal)

@@ -10,13 +10,13 @@
 
 
 //Called when the tick is equal to the startWhen variable.
-//Allows you to announce before starting or vice versa.
+//Allows you to start before announcing or vice versa.
 //Only called once.
 /datum/event/proc/start()
 	return
 
 //Called when the tick is equal to the announceWhen variable.
-//Allows you to start before announcing or vice versa.
+//Allows you to announce before starting or vice versa.
 //Only called once.
 /datum/event/proc/announce()
 	return

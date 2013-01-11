@@ -17,6 +17,7 @@
 	var/autoclose = 0
 	var/glass = 0
 	var/normalspeed = 1
+	var/heat_proof = 0 // For glass airlocks/opacity firedoors
 
 /obj/machinery/door/New()
 	..()
@@ -280,7 +281,7 @@
 
 /obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
 	if(istype(source))
-		if(src.density && src.opacity)
+		if(src.density && (src.opacity || src.heat_proof))
 			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
 		else
 			source.thermal_conductivity = initial(source.thermal_conductivity)
