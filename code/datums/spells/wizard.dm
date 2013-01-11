@@ -148,7 +148,7 @@
 	invocation_type = "shout"
 	range = 1
 
-	summon_type = list("/mob/living/simple_animal/hostile/carp")
+	summon_type = list(/mob/living/simple_animal/hostile/carp)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
@@ -162,7 +162,7 @@
 	invocation_type = "none"
 	range = 0
 
-	summon_type = list("/obj/structure/constructshell")
+	summon_type = list(/obj/structure/constructshell)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
@@ -177,7 +177,7 @@
 	summon_amt = 10
 	range = 3
 
-	summon_type = list("/mob/living/simple_animal/hostile/creature")
+	summon_type = list(/mob/living/simple_animal/hostile/creature)
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
@@ -252,7 +252,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list("/turf/simulated/floor/engine/cult")
+	summon_type = list(/turf/simulated/floor/engine/cult)
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
@@ -265,7 +265,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list("/turf/simulated/wall/cult")
+	summon_type = list(/turf/simulated/wall/cult)
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
@@ -281,7 +281,7 @@
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 	delay = 50
 
-	summon_type = list("/turf/simulated/wall/r_wall")
+	summon_type = list(/turf/simulated/wall/r_wall)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Summon Soulstone"
@@ -294,7 +294,7 @@
 	invocation_type = "none"
 	range = 0
 
-	summon_type = list("/obj/item/device/soulstone")
+	summon_type = list(/obj/item/device/soulstone)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
@@ -307,7 +307,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list("/obj/effect/forcefield")
+	summon_type = list(/obj/effect/forcefield)
 	summon_lifespan = 50
 
 

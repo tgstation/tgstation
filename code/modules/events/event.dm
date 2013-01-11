@@ -72,11 +72,3 @@
 
 	if(oneShot)
 		potentialRandomEvents.Remove(type)
-
-
-//This shouldn't be called, but it ensures that the event doesn't persist in
-//the events list if it'd deleted instead of garbage collected with kill().
-//The master controller will also remove it from the events list if it
-//doesn't exist, so there's redundancy here.
-/datum/event/Del()
-    events.Remove(src)
