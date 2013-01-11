@@ -12,7 +12,9 @@
 
 /datum/event/blob/start()
 	var/turf/T = pick(blobstart)
-	if(!T)	kill()
+	if(!T)
+		kill()
+		return
 	Blob = new /obj/effect/blob/core(T, 200)
 	Blob.Life()
 	Blob.Life()
@@ -20,6 +22,8 @@
 
 
 /datum/event/blob/tick()
-	if(!Blob)	kill()
+	if(!Blob)
+		kill()
+		return
 	if(IsMultiple(activeFor, 3))
 		Blob.Life()
