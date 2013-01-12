@@ -3,6 +3,7 @@
 	oneShot			= 1
 
 	var/spawncount = 1
+	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
 
 
 /datum/event/alien_infestation/setup()
@@ -10,8 +11,9 @@
 	spawncount = rand(1, 2)
 
 /datum/event/alien_infestation/announce()
-	command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-	world << sound('sound/AI/aliens.ogg')
+	if(successSpawn)
+		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
+		world << sound('sound/AI/aliens.ogg')
 
 
 /datum/event/alien_infestation/start()
@@ -23,7 +25,7 @@
 
 	var/list/candidates = get_alien_candidates()
 
-	while((spawncount >= 1) && vents.len && candidates.len)
+	while(spawncount > 0 && vents.len >= spawncount && candidates.len >= spawncount)
 		var/obj/vent = pick(vents)
 		var/candidate = pick(candidates)
 
@@ -33,3 +35,4 @@
 		candidates -= candidate
 		vents -= vent
 		spawncount--
+		successSpawn = 1
