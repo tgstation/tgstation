@@ -1,6 +1,5 @@
 /datum/event/radiation_storm
 	announceWhen	= 5
-	endWhen			= 5
 	oneShot			= 1
 
 

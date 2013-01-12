@@ -7,8 +7,8 @@
 
 
 /datum/event/communications_blackout/start()
-	if(prob(25))
-		silent = 0
+	//if(prob(25))
+	//	silent = 0
 	for(var/mob/living/silicon/ai/A in player_list)	//AIs are always aware of communication blackouts.
 		A << "<br>"
 		A << "<span class='warning'><b>Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you-BZZT<b></span>"

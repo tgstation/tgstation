@@ -1,10 +1,14 @@
 /datum/event/prison_break
 	announceWhen	= 50
-	endWhen			= 50
 	oneShot			= 1
 
 	var/releaseWhen = 25
 	var/list/area/prisonAreas = list()
+
+
+/datum/event/prison_break/setup()
+	announceWhen = rand(50, 60)
+	releaseWhen = rand(20, 30)
 
 
 /datum/event/prison_break/announce()
@@ -24,6 +28,13 @@
 		for(var/area/A in prisonAreas)
 			for(var/obj/machinery/light/L in A)
 				L.flicker(10)
+
+
+/datum/event/prison_break/announce()
+	if(prisonAreas && prisonAreas.len > 0)
+		command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
+	else
+		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."
 
 
 /datum/event/prison_break/tick()

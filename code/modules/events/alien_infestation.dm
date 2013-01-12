@@ -1,9 +1,13 @@
 /datum/event/alien_infestation
 	announceWhen	= 75
-	endWhen			= 75
 	oneShot			= 1
 
 	var/spawncount = 1
+
+
+/datum/event/alien_infestation/setup()
+	announceWhen = rand(140, 180)
+	spawncount = rand(1, 2)
 
 /datum/event/alien_infestation/announce()
 	command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
@@ -19,7 +23,6 @@
 
 	var/list/candidates = get_alien_candidates()
 
-	if(prob(50)) spawncount++	//sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
 		var/obj/vent = pick(vents)
 		var/candidate = pick(candidates)

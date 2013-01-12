@@ -16,9 +16,8 @@
 		kill()
 		return
 	Blob = new /obj/effect/blob/core(T, 200)
-	Blob.Life()
-	Blob.Life()
-	Blob.Life()
+	for(var/i = 1; i < rand(3, 6), i++)
+		Blob.process()
 
 
 /datum/event/blob/tick()
@@ -26,4 +25,4 @@
 		kill()
 		return
 	if(IsMultiple(activeFor, 3))
-		Blob.Life()
+		Blob.process()

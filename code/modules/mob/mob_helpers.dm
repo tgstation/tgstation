@@ -81,7 +81,7 @@
 	return 0
 
 /proc/isclown(A)
-	if(istype(A, /mob/living/simple_animal/clown))
+	if(istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 		return 1
 	return 0
 

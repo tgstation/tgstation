@@ -201,13 +201,6 @@
 	containertype = /obj/structure/largecrate/mule
 	containername = "MULEbot Crate"
 
-/datum/supply_packs/lisa
-	name = "Corgi Crate"
-	contains = list()
-	cost = 50
-	containertype = /obj/structure/largecrate/lisa
-	containername = "Corgi Crate"
-
 /datum/supply_packs/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"
 	contains = list(/obj/item/weapon/reagent_containers/spray/plantbgone,
@@ -223,6 +216,35 @@
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "Hydroponics crate"
 	access = access_hydroponics
+
+//farm animals - useless and annoying, but potentially a good source of food
+/datum/supply_packs/cow
+	name = "Cow Crate"
+	cost = 30
+	containertype = /obj/structure/largecrate/cow
+	containername = "Cow Crate"
+	access = access_hydroponics
+
+/datum/supply_packs/goat
+	name = "Goat Crate"
+	cost = 25
+	containertype = /obj/structure/largecrate/goat
+	containername = "Goat Crate"
+	access = access_hydroponics
+
+/datum/supply_packs/chicken
+	name = "Chicken Crate"
+	cost = 20
+	containertype = /obj/structure/largecrate/chick
+	containername = "Chicken Crate"
+	access = access_hydroponics
+
+/datum/supply_packs/lisa
+	name = "Corgi Crate"
+	contains = list()
+	cost = 50
+	containertype = /obj/structure/largecrate/lisa
+	containername = "Corgi Crate"
 
 /datum/supply_packs/seeds
 	name = "Seeds Crate"
