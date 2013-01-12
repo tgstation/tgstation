@@ -15,6 +15,7 @@
 	desc = "Used to keep bodies in untill someone fetches them."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
+	dir = EAST
 	density = 1
 	var/obj/structure/m_tray/connected = null
 	anchored = 1.0
@@ -70,15 +71,16 @@
 	else
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/m_tray( src.loc )
-		step(src.connected, EAST)
+		step(src.connected, src.dir)
 		src.connected.layer = OBJ_LAYER
-		var/turf/T = get_step(src, EAST)
+		var/turf/T = get_step(src, src.dir)
 		if (T.contents.Find(src.connected))
 			src.connected.connected = src
 			src.icon_state = "morgue0"
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.connected.loc
 			src.connected.icon_state = "morguet"
+			src.connected.dir = src.dir
 		else
 			//src.connected = null
 			del(src.connected)
