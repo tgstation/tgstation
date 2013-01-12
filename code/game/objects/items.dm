@@ -188,19 +188,8 @@
 		return
 
 	if (can_operate(M))	//Checks if mob is lying down on table for surgery
-		if(istype(M,/mob/living/carbon))
-			if (user.a_intent != "harm")	//check for Hippocratic Oath
-				if(surgery_steps.len == 0) build_surgery_steps_list()
-				for(var/datum/surgery_step/S in surgery_steps)
-					if( S.isright(src) || S.isacceptable(src) )	 						//check if tool is right or close enough
-						if(S.can_use(user, M, user.zone_sel.selecting, src))			//and if this step is possible
-							S.begin_step(user, M, user.zone_sel.selecting, src)			//start on it
-							if(do_mob(user, M, rand(S.min_duration, S.max_duration)))	//if user did nto move or changed hands
-								S.end_step(user, M, user.zone_sel.selecting, src)		//finish successfully
-							else														//or
-								S.fail_step(user, M, user.zone_sel.selecting, src)		//malpractice~
-							return		  												//don't want to do weapony things after surgery
-
+		if (do_surgery(M,user,src))
+			return
 
 	var/messagesource = M
 
