@@ -23,29 +23,29 @@ var/list/word_to_uristrune_table = null
 /proc/get_uristrune_cult(word1, word2, word3)
 	var/animated
 
-	if((word1 == wordtravel && word2 == wordself)						\
-	|| (word1 == wordjoin && word2 == wordblood && word3 == wordself)	\
-	|| (word1 == wordhell && word2 == wordjoin && word3 == wordself)	\
-	|| (word1 == wordsee && word2 == wordblood && word3 == wordhell)	\
-	|| (word1 == worddestr && word2 == wordsee && word3 == wordtech)	\
-	|| (word1 == wordtravel && word2 == wordblood && word3 == wordself)	\
-	|| (word1 == wordsee && word2 == wordhell && word3 == wordjoin)		\
-	|| (word1 == wordblood && word2 == wordjoin && word3 == wordhell)	\
-	|| (word1 == wordhide && word2 == wordsee && word3 == wordblood)	\
-	|| (word1 == wordhell && word2 == wordtravel && word3 == wordself)	\
-	|| (word1 == wordblood && word2 == wordsee && word3 == wordtravel)	\
-	|| (word1 == wordhell && word2 == wordtech && word3 == wordjoin)	\
-	|| (word1 == wordhell && word2 == wordblood && word3 == wordjoin)	\
-	|| (word1 == wordblood && word2 == wordsee && word3 == wordhide)	\
-	|| (word1 == worddestr && word2 == wordtravel && word3 == wordself)	\
-	|| (word1 == wordtravel && word2 == wordtech && word3 == wordother)	\
-	|| (word1 == wordjoin && word2 == wordother && word3 == wordself)	\
-	|| (word1 == wordhide && word2 == wordother && word3 == wordsee)	\
-	|| (word1 == worddestr && word2 == wordsee && word3 == wordother)	\
-	|| (word1 == worddestr && word2 == wordsee && word3 == wordblood)	\
-	|| (word1 == wordself && word2 == wordother && word3 == wordtech)	\
-	|| (word1 == wordtravel && word2 == wordother)						\
-	|| (word1 == wordjoin && word2 == wordhide && word3 == wordtech)	)
+	if((word1 == cultwords["travel"] && word2 == cultwords["self"])						\
+	|| (word1 == cultwords["join"] && word2 == cultwords["blood"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["hell"] && word2 == cultwords["join"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["see"] && word2 == cultwords["blood"] && word3 == cultwords["hell"])	\
+	|| (word1 == cultwords["destroy"] && word2 == cultwords["see"] && word3 == cultwords["technology"])	\
+	|| (word1 == cultwords["travel"] && word2 == cultwords["blood"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["see"] && word2 == cultwords["hell"] && word3 == cultwords["join"])		\
+	|| (word1 == cultwords["blood"] && word2 == cultwords["join"] && word3 == cultwords["hell"])	\
+	|| (word1 == cultwords["hide"] && word2 == cultwords["see"] && word3 == cultwords["blood"])	\
+	|| (word1 == cultwords["hell"] && word2 == cultwords["travel"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["blood"] && word2 == cultwords["see"] && word3 == cultwords["travel"])	\
+	|| (word1 == cultwords["hell"] && word2 == cultwords["technology"] && word3 == cultwords["join"])	\
+	|| (word1 == cultwords["hell"] && word2 == cultwords["blood"] && word3 == cultwords["join"])	\
+	|| (word1 == cultwords["blood"] && word2 == cultwords["see"] && word3 == cultwords["hide"])	\
+	|| (word1 == cultwords["destroy"] && word2 == cultwords["travel"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["travel"] && word2 == cultwords["technology"] && word3 == cultwords["other"])	\
+	|| (word1 == cultwords["join"] && word2 == cultwords["other"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["hide"] && word2 == cultwords["other"] && word3 == cultwords["see"])	\
+	|| (word1 == cultwords["destroy"] && word2 == cultwords["see"] && word3 == cultwords["other"])	\
+	|| (word1 == cultwords["destroy"] && word2 == cultwords["see"] && word3 == cultwords["blood"])	\
+	|| (word1 == cultwords["self"] && word2 == cultwords["other"] && word3 == cultwords["technology"])	\
+	|| (word1 == cultwords["travel"] && word2 == cultwords["other"])						\
+	|| (word1 == cultwords["join"] && word2 == cultwords["hide"] && word3 == cultwords["technology"])	)
 		animated = 1
 	else
 		animated = 0

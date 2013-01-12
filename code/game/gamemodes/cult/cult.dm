@@ -159,36 +159,11 @@
 
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
-	if(!wordtravel)
+	if(!cultwords["travel"])
 		runerandom()
 	if (!word)
 		word=pick(allwords)
-	var/wordexp
-	switch(word)
-		if("travel")
-			wordexp = "[wordtravel] is travel..."
-		if("blood")
-			wordexp = "[wordblood] is blood..."
-		if("join")
-			wordexp = "[wordjoin] is join..."
-		if("hell")
-			wordexp = "[wordhell] is Hell..."
-		if("self")
-			wordexp = "[wordself] is self..."
-		if("see")
-			wordexp = "[wordsee] is see..."
-		if("tech")
-			wordexp = "[wordtech] is technology..."
-		if("destroy")
-			wordexp = "[worddestr] is destroy..."
-		if("other")
-			wordexp = "[wordother] is other..."
-//		if("hear")
-//			wordexp = "[wordhear] is hear..."
-//		if("free")
-//			wordexp = "[wordfree] is free..."
-		if("hide")
-			wordexp = "[wordhide] is hide..."
+	var/wordexp = "[cultwords[word]] is [word]..."
 	cult_mob << "\red You remember one thing from the dark teachings of your master... [wordexp]"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
