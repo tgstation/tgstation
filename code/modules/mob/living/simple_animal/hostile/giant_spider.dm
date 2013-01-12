@@ -138,39 +138,16 @@
 						//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
 						for(var/obj/O in can_see)
 
-							if(istype(O, /obj/item))
-								var/obj/item/I = O
-								cocoon_target = I
-								busy = MOVING_TO_TARGET
-								stop_automated_movement = 1
-								walk_to(src, I, 1, move_to_delay)
-								//give up if we can't reach them after 10 seconds
-								GiveUp(I)
-								return
+							if(O.anchored)
+								continue
 
-							if(istype(O, /obj/structure))
-								var/obj/structure/S = O
-								if(S.anchored)
-									continue
-								cocoon_target = S
+							if(istype(O, /obj/item) || istype(O, /obj/structure) || istype(O, /obj/machinery))
+								cocoon_target = O
 								busy = MOVING_TO_TARGET
 								stop_automated_movement = 1
-								walk_to(src, S, 1, move_to_delay)
+								walk_to(src, O, 1, move_to_delay)
 								//give up if we can't reach them after 10 seconds
-								GiveUp(S)
-								return
-
-							if(istype(O, /obj/machinery))
-								var/obj/machinery/M = O
-								if(M.anchored)
-									continue
-								cocoon_target = M
-								busy = MOVING_TO_TARGET
-								stop_automated_movement = 1
-								walk_to(src, M, 1, move_to_delay)
-								//give up if we can't reach them after 10 seconds
-								GiveUp(M)
-								return
+								GiveUp(O)
 
 			else if(busy == MOVING_TO_TARGET && cocoon_target)
 				if(get_dist(src, cocoon_target) <= 1)

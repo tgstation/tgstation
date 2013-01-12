@@ -733,6 +733,7 @@
 #include "code\modules\events\prison_break.dm"
 #include "code\modules\events\radiation_storm.dm"
 #include "code\modules\events\spacevine.dm"
+#include "code\modules\events\spider_infestation.dm"
 #include "code\modules\events\spontaneous_appendicitis.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
