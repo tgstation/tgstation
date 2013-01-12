@@ -24,7 +24,6 @@
 			adjustCloneLoss(damage/(blocked+1))
 		if(HALLOSS)
 			adjustHalLoss(damage/(blocked+1))
-	UpdateDamageIcon()
 	updatehealth()
 	return 1
 
