@@ -79,7 +79,7 @@
 	..()
 
 /mob/living/carbon/slime/adult/New()
-	verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
+	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
 	..()
 
 /mob/living/carbon/slime/movement_delay()
@@ -952,6 +952,16 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	siemens_coefficient = 0
 	unacidable = 1
 
+/obj/item/clothing/mask/gas/golem
+	name = "golem's face"
+	desc = "the imposing face of an adamantine golem"
+	icon_state = "golem"
+	item_state = "golem"
+	canremove = 0
+	siemens_coefficient = 0
+	unacidable = 1
+
+
 /obj/item/clothing/gloves/golem
 	name = "golem's hands"
 	desc = "strong adamantine hands"
@@ -961,7 +971,16 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 
 
-
+/obj/item/clothing/head/space/golem
+	icon_state = "golem"
+	item_state = "dermal"
+	color = "dermal"
+	name = "golem's head"
+	desc = "a golem's head"
+	flags = FPRINT | TABLEPASS | STOPSPRESSUREDMAGE
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE
+	armor = list(melee = 80, bullet = 20, laser = 20, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 //////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
 

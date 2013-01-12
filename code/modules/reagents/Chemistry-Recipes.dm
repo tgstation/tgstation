@@ -1262,6 +1262,7 @@ datum
 				G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
 				G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
 				G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
+				G.equip_to_slot_or_del(new /obj/item/clothing/head/space/golem(G), slot_head)
 				G.loc = get_turf_loc(holder.my_atom)
 				var/list/candidates = get_alien_candidates()
 				var/candidate = pick(candidates)
