@@ -26,7 +26,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	var/poison_per_bite = 5
-	var/poison_type = "mindbreaker"
+	var/poison_type = "toxin"
 	faction = "spiders"
 	var/busy = 0
 	pass_flags = PASSTABLE
@@ -43,7 +43,7 @@
 	melee_damage_upper = 10
 	poison_per_bite = 10
 	var/atom/cocoon_target
-	poison_type = "zombiepowder"
+	poison_type = "stoxin"
 	var/fed = 0
 
 //hunters have the most poison and move the fastest, so they can find prey
@@ -56,7 +56,7 @@
 	health = 120
 	melee_damage_lower = 10
 	melee_damage_upper = 20
-	poison_per_bite = 20
+	poison_per_bite = 5
 
 /mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
 	..()
@@ -72,8 +72,8 @@
 	..()
 	if(!stat)
 		if(stance == HOSTILE_STANCE_IDLE)
-			//10% chance to skitter madly away
-			if(!busy && prob(10))
+			//1% chance to skitter madly away
+			if(!busy && prob(1))
 				/*var/list/move_targets = list()
 				for(var/turf/T in orange(20, src))
 					move_targets.Add(T)*/

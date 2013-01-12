@@ -22,26 +22,37 @@
 	health = 40
 	melee_damage_lower = 1
 	melee_damage_upper = 5
+	var/datum/reagents/udder = null
+
+/mob/living/simple_animal/hostile/retaliate/goat/New()
+	udder = new(50)
+	udder.my_atom = src
+	..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
-	..()
-	//chance to go crazy and start wacking stuff
-	if(prob(1))
-		src.visible_message("\red [src] gets an evil-looking gleam in their eye.")
-		faction = "hostile"
-	if(faction == "hostile" && prob(10))
-		faction = "neutral"
-		enemies = list()
-		stance = HOSTILE_STANCE_IDLE
-		target_mob = null
+	. = ..()
+	if(.)//chance to go crazy and start wacking stuff
+		if(prob(1))
+			src.visible_message("\red [src] gets an evil-looking gleam in their eye.")
+			faction = "hostile"
+		if(faction == "hostile" && prob(10))
+			faction = "neutral"
+			enemies = list()
+			stance = HOSTILE_STANCE_IDLE
+			target_mob = null
+		if(stat == CONSCIOUS)
+			if(udder && prob(5))
+				udder.add_reagent("milk", rand(5, 10))
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass))
-		user.visible_message("[user] milks [src] into the [O].")
+	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+		user.visible_message("<span class='notice'>[user] milks [src] using the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
-		G.reagents.add_reagent("milk",rand(7,12))
+		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
 			user << "\red The [O] is full."
+		if(!transfered)
+			user << "\red The udder is dry. Wait a bit longer..."
 	else
 		..()
 //cow
@@ -66,16 +77,30 @@
 	response_harm   = "kicks the"
 	attacktext = "kicks"
 	health = 50
+	var/datum/reagents/udder = null
+
+/mob/living/simple_animal/cow/New()
+	udder = new(50)
+	udder.my_atom = src
+	..()
 
 /mob/living/simple_animal/cow/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass))
-		user.visible_message("[user] milks [src] into the [O].")
+	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+		user.visible_message("<span class='notice'>[user] milks [src] using the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
-		G.reagents.add_reagent("milk",rand(5,10))
+		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
 			user << "\red The [O] is full."
+		if(!transfered)
+			user << "\red The udder is dry. Wait a bit longer..."
 	else
 		..()
+
+/mob/living/simple_animal/cow/Life()
+	. = ..()
+	if(stat == CONSCIOUS)
+		if(udder && prob(5))
+			udder.add_reagent("milk", rand(5, 10))
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
 	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
@@ -83,7 +108,7 @@
 		Weaken(30)
 		icon_state = icon_dead
 		spawn(rand(20,50))
-			if(!stat)
+			if(!stat && M)
 				icon_state = icon_living
 				var/list/responses = list(	"[src] looks at you imploringly.",
 											"[src] looks at you pleadingly",
@@ -104,7 +129,7 @@
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps")
 	emote_see = list("pecks at the ground","flaps it's tiny wings")
-	speak_chance = 10
+	speak_chance = 5
 	turns_per_move = 1
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	meat_amount = 1
@@ -116,18 +141,23 @@
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 
-	New()
-		..()
-		pixel_x = rand(-6, 6)
-		pixel_y = rand(0, 10)
+/mob/living/simple_animal/chick/New()
+	..()
+	pixel_x = rand(-6, 6)
+	pixel_y = rand(0, 10)
 
 /mob/living/simple_animal/chick/Life()
-	..()
+	. =..()
+	if(!.)
+		return
 	if(!stat)
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			del(src)
+
+var/const/MAX_CHICKENS = 50
+var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken
 	name = "chicken"
@@ -139,7 +169,7 @@
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks")
 	emote_see = list("pecks at the ground","flaps it's wings viciously")
-	speak_chance = 10
+	speak_chance = 5
 	turns_per_move = 1
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	meat_amount = 2
@@ -150,26 +180,36 @@
 	health = 10
 	pass_flags = PASSTABLE
 
-	New()
-		..()
-		pixel_x = rand(-6, 6)
-		pixel_y = rand(0, 10)
+/mob/living/simple_animal/chicken/New()
+	..()
+	pixel_x = rand(-6, 6)
+	pixel_y = rand(0, 10)
+	chicken_count += 1
+
+/mob/living/simple_animal/chicken/Die()
+	..()
+	chicken_count -= 1
 
 /mob/living/simple_animal/chicken/Life()
-	..()
+	. =..()
+	if(!.)
+		return
 	if(!stat && prob(1))
 		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
-		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(src.loc)
+		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
-		processing_objects.Add(E)
+		if(chicken_count < MAX_CHICKENS && prob(10))
+			processing_objects.Add(E)
 
-obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
+/obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
-	amount_grown += rand(1,2)
-	if(amount_grown >= 100)
-		if(prob(50))
+	if(isturf(loc))
+		amount_grown += rand(1,2)
+		if(amount_grown >= 100)
 			visible_message("[src] hatches with a quiet cracking sound.")
-		new /mob/living/simple_animal/chick(src.loc)
+			new /mob/living/simple_animal/chick(get_turf(src))
+			processing_objects.Remove(src)
+			del(src)
+	else
 		processing_objects.Remove(src)
-		del(src)
