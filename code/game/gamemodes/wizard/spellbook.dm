@@ -25,23 +25,24 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=11'>Mutate</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=12'>Ethereal Jaunt</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=13'>Knock</A> (10)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=14'>Curse of the Horseman</A> (15)<BR>"
 		if(op)
-			dat += "<A href='byond://?src=\ref[src];spell_choice=14'>Summon Guns</A> (One time use, global spell)<BR>"
+			dat += "<A href='byond://?src=\ref[src];spell_choice=15'>Summon Guns</A> (One time use, global spell)<BR>"
 		dat += "<HR>"
 		dat += "<B>Artefacts:</B><BR>"
 		dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of spells.<BR>"
 		dat += "It is recommended that only experienced wizards attempt to wield such artefacts.<BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=15'>Staff of Change</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=16'>Staff of Change</A><BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=16'>Six Soul Stone Shards and the spell Artificer</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=17'>Six Soul Stone Shards and the spell Artificer</A><BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=17'>Mastercrafted Armor Set</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=18'>Mastercrafted Armor Set</A><BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=18'>Staff of Animation</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=19'>Staff of Animation</A><BR>"
 		dat += "<HR>"
 		if(op)
-			dat += "<A href='byond://?src=\ref[src];spell_choice=19'>Re-memorize Spells</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];spell_choice=20'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -58,7 +59,7 @@
 		if(href_list["spell_choice"])
 			if(src.uses >= 1 && src.max_uses >=1 && text2num(href_list["spell_choice"]) < 19)
 				src.uses--
-				var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock","Summon Guns","Staff of Change","Six Soul Stone Shards and the spell Artificer","Mastercrafted Armor Set", "Staff of Animation")
+				var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock","Curse of the Horseman","Summon Guns","Staff of Change","Six Soul Stone Shards and the spell Artificer","Mastercrafted Armor Set", "Staff of Animation")
 				var/already_knows = 0
 				for(var/obj/effect/proc_holder/spell/aspell in usr.spell_list)
 					if(available_spells[text2num(href_list["spell_choice"])] == aspell.name)
@@ -121,22 +122,26 @@
 							usr.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/knock(usr)
 							src.temp = "This spell opens nearby doors and does not require wizard garb."
 						if ("14")
+							feedback_add_details("wizard_spell_learned","HH") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+							usr.spell_list += new /obj/effect/proc_holder/spell/targeted/horsemask(usr)
+							src.temp = "This spell will curse a person to wear an unremovable horse mask (it has glue on the inside) and speak like a horse. It does not require a wizard garb. Do note the curse will disintegrate the target's current mask if they are wearing one."
+						if ("15")
 							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							usr.rightandwrong()
 							src.max_uses--
 							src.temp = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!"
-						if ("15")
+						if ("16")
 							feedback_add_details("wizard_spell_learned","ST") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/gun/energy/staff(get_turf(usr))
 							src.temp = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
 							src.max_uses--
-						if ("16")
+						if ("17")
 							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(usr))
 							usr.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(usr)
 							src.temp = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
 							src.max_uses--
-						if ("17")
+						if ("18")
 							feedback_add_details("wizard_spell_learned","HS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/clothing/shoes/sandal(get_turf(usr)) //In case they've lost them.
 							new /obj/item/clothing/gloves/purple(get_turf(usr))//To complete the outfit
@@ -144,13 +149,13 @@
 							new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(usr))
 							src.temp = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
 							src.max_uses--
-						if("18")
+						if("19")
 							feedback_add_details("wizard_spell_learned","SA") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							new /obj/item/weapon/gun/energy/staff/animate(get_turf(usr))
 							src.temp = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
 							src.max_uses--
 
-			if (href_list["spell_choice"] == "19")
+			if (href_list["spell_choice"] == "20")
 				var/area/wizard_station/A = locate()
 				if(usr in A.contents)
 					src.uses = src.max_uses

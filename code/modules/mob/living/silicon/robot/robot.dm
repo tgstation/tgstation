@@ -779,7 +779,7 @@
 		if(icon_state =="mopgearrex")
 			overlays.Cut()
 			overlays += "eyes-mopgearrex"
-		if(icon_state =="Miner")
+		if(icon_state =="Miner" || icon_state =="Miner+j")
 			overlays.Cut()
 			overlays += "eyes-Miner"
 	else
