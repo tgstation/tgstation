@@ -25,7 +25,7 @@
 
 	var/list/candidates = get_alien_candidates()
 
-	while(spawncount > 0 && vents.len >= spawncount && candidates.len >= spawncount)
+	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick(vents)
 		var/candidate = pick(candidates)
 
