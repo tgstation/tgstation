@@ -516,3 +516,11 @@
 	throwforce = 5
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
+
+/obj/item/weapon/toddler
+	icon_state = "toddler"
+	name = "toddler"
+	desc = "This baby looks almost real. Wait, did it just burp?"
+	force = 5
+	w_class = 4.0
+	slot_flags = SLOT_BACK
