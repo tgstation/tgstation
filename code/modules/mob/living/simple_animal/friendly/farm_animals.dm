@@ -78,17 +78,17 @@
 		..()
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
-	if(!stat && M.a_intent == "help")
-		M.visible_message("\red [M] tips over [src].","\red You tip over [src].")
-		src.Weaken(30)
-		icon_state = "cow_dead"
+	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
+		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
+		Weaken(30)
+		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat)
-				icon_state = "cow"
-				var/list/responses = list(	"\red [src] looks at you imploringly.",
-											"\red [src] looks at you pleadingly",
-											"\red [src] looks at you with a resigned expression.",
-											"\red [src] seems resigned to it's fate.")
+				icon_state = icon_living
+				var/list/responses = list(	"[src] looks at you imploringly.",
+											"[src] looks at you pleadingly",
+											"[src] looks at you with a resigned expression.",
+											"[src] seems resigned to it's fate.")
 				M << pick(responses)
 	else
 		..()
@@ -118,8 +118,8 @@
 
 	New()
 		..()
-		pixel_x = rand(-6,6)
-		pixel_y = rand(-6,6)
+		pixel_x = rand(-6, 6)
+		pixel_y = rand(0, 10)
 
 /mob/living/simple_animal/chick/Life()
 	..()
@@ -152,13 +152,13 @@
 
 	New()
 		..()
-		pixel_x = rand(-6,6)
-		pixel_y = rand(-6,6)
+		pixel_x = rand(-6, 6)
+		pixel_y = rand(0, 10)
 
 /mob/living/simple_animal/chicken/Life()
 	..()
 	if(!stat && prob(1))
-		src.visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
+		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(src.loc)
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
@@ -169,7 +169,7 @@ obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 	amount_grown += rand(1,2)
 	if(amount_grown >= 100)
 		if(prob(50))
-			src.visible_message("[src] hatches with a quiet cracking sound.")
+			visible_message("[src] hatches with a quiet cracking sound.")
 		new /mob/living/simple_animal/chick(src.loc)
 		processing_objects.Remove(src)
 		del(src)
