@@ -414,23 +414,21 @@ Alien plants should do something if theres a lot of poison
 		return
 
 	proc/Burst(var/kill = 1) //drops and kills the hugger if any is remaining
-		var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
-
-		icon_state = "egg_hatched"
-		flick("egg_opening", src)
-		status = BURSTING
-		spawn(15)
-			status = BURST
-			loc.contents += child//need to write the code for giving it to the alien later
-			if(kill && istype(child))
-				child.Die()
-			else
-				for(var/mob/M in range(1,src))
-					if(CanHug(M))
-						child.Attach(M)
-						break
-
-		return
+		if(status == GROWN || status == GROWING)
+			var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
+			icon_state = "egg_hatched"
+			flick("egg_opening", src)
+			status = BURSTING
+			spawn(15)
+				status = BURST
+				loc.contents += child//need to write the code for giving it to the alien later
+				if(kill && istype(child))
+					child.Die()
+				else
+					for(var/mob/M in range(1,src))
+						if(CanHug(M))
+							child.Attach(M)
+							break
 
 
 /obj/effect/alien/egg/bullet_act(var/obj/item/projectile/Proj)
