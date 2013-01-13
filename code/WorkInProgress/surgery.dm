@@ -1258,7 +1258,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		target.custom_pain("The pain in your chest is living hell!",1)
 
 	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/datum/organ/external/chest/affected = target.get_organ("chest")
+		var/datum/organ/external/chest/affected = target.get_organ(target_zone)
 
 		var/find_prob = 0
 		if (affected.implants.len)
@@ -1295,8 +1295,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 			if (prob(fail_prob))
 				var/obj/item/weapon/implant/imp = affected.implants[1]
 				user.visible_message("\red Something beeps inside [target]'s [affected.display_name]!")
-				playsound(imp.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-				spawn(15)
+				playsound(imp.loc, 'sound/items/countdown.ogg', 75, 1, -3)
+				spawn(25)
 					imp.activate()
 		if (ishuman(user))
 			user:bloody_hands(target, 0)

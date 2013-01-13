@@ -1,3 +1,5 @@
+#define MALFUNCTION_TEMPORARY 1
+#define MALFUNCTION_PERMANENT 2
 /obj/item/weapon/implant
 	name = "implant"
 	icon = 'device.dmi'
@@ -7,6 +9,7 @@
 	var/datum/organ/external/part = null
 	color = "b"
 	var/allow_reagents = 0
+	var/malfunction = 0
 
 	proc/trigger(emote, source as mob)
 		return
@@ -28,6 +31,23 @@
 
 	proc/islegal()
 		return 0
+
+	proc/meltdown()	//breaks it down, making implant unrecongizible
+		imp_in << "\red You feel something melting inside [part ? "your [part.display_name]" : "you"]!"
+		if (part)
+			part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
+		else
+			var/mob/living/M = imp_in
+			M.apply_damage(15,BURN)
+		name = "melted implant"
+		desc = "Charred circuit in melted plastic case. Wonder what that used to be..."
+		icon_state = "implant_melted"
+		malfunction = MALFUNCTION_PERMANENT
+
+	Del()
+		if(part)
+			part.implants.Remove(src)
+		..()
 
 /obj/item/weapon/implant/tracking
 	name = "tracking"
@@ -52,12 +72,27 @@ circuitry. As a result neurotoxins can cause massive damage.<HR>
 Implant Specifics:<BR>"}
 		return dat
 
+	emp_act(severity)
+		if (malfunction)	//no, dawg, you can't malfunction while you are malfunctioning
+			return
+		malfunction = MALFUNCTION_TEMPORARY
+
+		var/delay = 20
+		switch(severity)
+			if(1)
+				if(prob(60))
+					meltdown()
+			if(2)
+				delay = rand(5*60*10,15*60*10)	//from 5 to 15 minutes of free time
+
+		spawn(delay)
+			malfunction--
 
 
 /obj/item/weapon/implant/dexplosive
 	name = "explosive"
 	desc = "And boom goes the weasel."
-
+	icon_state = "implant_evil"
 
 	get_data()
 		var/dat = {"
@@ -87,12 +122,13 @@ Implant Specifics:<BR>"}
 
 	islegal()
 		return 0
+
 //BS12 Explosive
 /obj/item/weapon/implant/explosive
 	name = "explosive implant"
 	desc = "A military grade micro bio-explosive. Highly dangerous."
 	var/phrase = "supercalifragilisticexpialidocious"
-
+	icon_state = "implant_evil"
 
 	get_data()
 		var/dat = {"
@@ -119,6 +155,8 @@ Implant Specifics:<BR>"}
 			del(src)
 
 	activate()
+		if (malfunction == MALFUNCTION_PERMANENT)
+			return
 		if(istype(imp_in, /mob/))
 			var/mob/T = imp_in
 			T.gib()
@@ -134,6 +172,37 @@ Implant Specifics:<BR>"}
 		usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
 		usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
 		return 1
+
+	emp_act(severity)
+		if (malfunction)
+			return
+		malfunction = MALFUNCTION_TEMPORARY
+		switch (severity)
+			if (2.0)	//Weak EMP will make implant tear limbs off.
+				if (prob(50))
+					if (ishuman(imp_in) && part)
+						imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!")
+						playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
+						spawn(25)
+							if (ishuman(imp_in) && part)
+								//No tearing off these parts since it's pretty much killing
+								//and you can't replace groins
+								if (istype(part,/datum/organ/external/chest) ||	\
+									istype(part,/datum/organ/external/groin) ||	\
+									istype(part,/datum/organ/external/head))
+									part.createwound(BRUISE, 60)	//mangle them instead
+								else
+									part.droplimb(1)
+							explosion(get_turf(imp_in), -1, -1, 2, 3, 3)
+							del(src)
+
+			if (1.0)	//strong EMP will melt implant either making it go off, or disarming it
+				if (prob(50))
+					activate()		//50% chance of bye bye
+				else
+					meltdown()		//50% chance of implant disarming
+		spawn (20)
+			malfunction--
 
 	islegal()
 		return 0
@@ -186,7 +255,21 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				del(src)
 		return
 
+	emp_act(severity)
+		if (malfunction)
+			return
+		malfunction = MALFUNCTION_TEMPORARY
 
+		switch(severity)
+			if(1)
+				if(prob(60))
+					activate(20)
+			if(2)
+				if(prob(30))
+					activate(5)
+
+		spawn(20)
+			malfunction--
 
 /obj/item/weapon/implant/loyalty
 	name = "loyalty"
@@ -285,20 +368,42 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	activate(var/cause)
 		var/mob/M = imp_in
 		var/area/t = get_area(M)
-		if(cause == "death")
-			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
-				//give the syndies a bit of stealth
-				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
+		switch (cause)
+			if("death")
+				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
+				if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
+					//give the syndies a bit of stealth
+					a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
+				else
+					a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
+				del(a)
+				processing_objects.Remove(src)
+			if ("emp")
+				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
+				var/name = prob(50) ? t.name : pick(teleportlocs)
+				a.autosay("[mobname] has died in [name]!", "[mobname]'s Death Alarm")
+				del(a)
 			else
-				a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
-			del(a)
+				var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
+				a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
+				del(a)
+				processing_objects.Remove(src)
+
+	emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this
+		if (malfunction)		//so I'm just going to add a meltdown chance here
+			return
+		malfunction = MALFUNCTION_TEMPORARY
+
+		activate("emp")	//let's shout that this dude is dead
+		if(severity == 1)
+			if(prob(40))	//small chance of obvious meltdown
+				meltdown()
+			else if (prob(60))	//but more likely it will just quietly die
+				malfunction = MALFUNCTION_PERMANENT
 			processing_objects.Remove(src)
-		else
-			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
-			del(a)
-			processing_objects.Remove(src)
+
+		spawn(20)
+			malfunction--
 
 	implanted(mob/source as mob)
 		mobname = source.real_name
@@ -308,6 +413,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 /obj/item/weapon/implant/compressed
 	name = "compressed matter implant"
 	desc = "Based on compressed matter technology, can store a single item."
+	icon_state = "implant_evil"
 	var/activation_emote = "sigh"
 	var/obj/item/scanned = null
 
@@ -335,7 +441,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	activate()
 		var/turf/t = get_turf(src)
 		src.scanned.loc = t
-		if (part) part.implants -= src
 		del src
 
 	implanted(mob/source as mob)

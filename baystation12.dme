@@ -405,6 +405,7 @@
 #include "code\game\machinery\telecomms\telecomunications.dm"
 #include "code\game\machinery\telecomms\telemonitor.dm"
 #include "code\game\machinery\telecomms\traffic_control.dm"
+#include "code\game\magic\Uristrunes.dm"
 #include "code\game\mecha\mech_bay.dm"
 #include "code\game\mecha\mech_fabricator.dm"
 #include "code\game\mecha\mecha.dm"

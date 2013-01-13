@@ -617,14 +617,16 @@
 			disfigure("burn")
 
 	proc/disfigure(var/type = "brute")
+		if (disfigured)
+			return
 		if(type == "brute")
 			owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s face.",	\
 			"\red <b>Your face becomes unrecognizible mangled mess!</b>",	\
-			"You hear a sickening crack.")
+			"\red You hear a sickening crack.")
 		else
 			owner.visible_message("\red [owner]'s face melts away, turning into mangled mess!",	\
 			"\red <b>Your face melts off!</b>",	\
-			"You hear a sickening sizzle.")
+			"\red You hear a sickening sizzle.")
 		disfigured = 1
 
 /datum/organ/external/l_arm
