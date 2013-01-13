@@ -7,40 +7,51 @@
 	// type path referencing tools that can be used as substitude for this step
 	var/list/allowed_tools = null
 
-	// When multiple steps can be applied with the current tool etc., choose the one with higher priority
-
-	// checks whether this step can be applied with the given user and target
-	proc/can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return 0
-
-	// does stuff to begin the step, usually just printing messages
-	proc/begin_step(user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return
-
-	// does stuff to end the step, which is normally print a message + do whatever this step changes
-	proc/end_step(user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return
-
-	// stuff that happens when the step fails
-	proc/fail_step(user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return null
-
 	// duration of the step
 	var/min_duration = 0
 	var/max_duration = 0
 
 	// evil infection stuff that will make everyone hate me
 	var/can_infect = 0
+	//How much blood this step can get on surgeon. 1 - hands, 2 - full body.
+	var/blood_level = 0
 
-	proc/isright(obj/item/tool)			//is it is a required surgical tool for this step
+	//is it is a required surgical tool for this step
+	proc/isright(obj/item/tool)
 		return (istype(tool,required_tool))
 
-	proc/isacceptable(obj/item/tool)	//is it is an accepted replacement tool for this step
+	//is it is an accepted replacement tool for this step
+	proc/isacceptable(obj/item/tool)
 		if (allowed_tools)
 			for (var/T in allowed_tools)
 				if (istype(tool,T))
 					return 1
 		return 0
+
+	// checks whether this step can be applied with the given user and target
+	proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		return 0
+
+	// does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
+	proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/datum/organ/external/affected = target.get_organ(target_zone)
+		if (can_infect && affected)
+			spread_germs_to_organ(affected, user)
+		if (ishuman(user) && prob(60))
+			var/mob/living/carbon/human/H = user
+			if (blood_level)
+				H.bloody_hands(target,0)
+			if (blood_level > 1)
+				H.bloody_body(target,0)
+		return
+
+	// does stuff to end the step, which is normally print a message + do whatever this step changes
+	proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		return
+
+	// stuff that happens when the step fails
+	proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		return null
 
 proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	if(!istype(user) || !istype(E)) return

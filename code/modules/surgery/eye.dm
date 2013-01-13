@@ -4,7 +4,8 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/eye
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_infect = 1
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!hasorgans(target))
 			return 0
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -19,19 +20,20 @@
 	min_duration = 90
 	max_duration = 110
 
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		return ..()
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts to separate the corneas on [target]'s eyes with \the [tool].", \
 		"You start to separate the corneas on [target]'s eyes with \the [tool].")
+		..()
 
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] has separated the corneas on [target]'s eyes with \the [tool]." , \
 		"\blue You have separated the corneas on [target]'s eyes with \the [tool].",)
 		target.op_stage.eyes = 1
 
-	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, slicing [target]'s eyes wth \the [tool]!" , \
 		"\red Your hand slips, slicing [target]'s eyes wth \the [tool]!" )
@@ -44,19 +46,20 @@
 	min_duration = 30
 	max_duration = 40
 
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		return ..() && target.op_stage.eyes == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts lifting corneas from [target]'s eyes with \the [tool].", \
 		"You start lifting corneas from [target]'s eyes with \the [tool].")
+		..()
 
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] has lifted the corneas from [target]'s eyes from with \the [tool]." , \
 		"\blue You has lifted the corneas from [target]'s eyes from with \the [tool]." )
 		target.op_stage.eyes = 2
 
-	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, damaging [target]'s eyes with \the [tool]!", \
 		"\red Your hand slips, damaging [target]'s eyes with \the [tool]!")
@@ -69,19 +72,20 @@
 	min_duration = 80
 	max_duration = 100
 
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		return ..() && target.op_stage.eyes == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts mending the nerves and lenses in [target]'s eyes with \the [tool].", \
 		"You start mending the nerves and lenses in [target]'s eyes with the [tool].")
+		..()
 
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] mends the nerves and lenses in [target]'s with \the [tool]." ,	\
 		"\blue You mend the nerves and lenses in [target]'s with \the [tool].")
 		target.op_stage.eyes = 3
 
-	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, stabbing \the [tool] into [target]'s eye!", \
 		"\red Your hand slips, stabbing \the [tool] into [target]'s eye!")
@@ -94,14 +98,14 @@
 	min_duration = 70
 	max_duration = 100
 
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		return ..()
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] is beginning to cauterize the incision around [target]'s eyes with \the [tool]." , \
 		"You are beginning to cauterize the incision around [target]'s eyes with \the [tool].")
 
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] cauterizes the incision around [target]'s eyes with \the [tool].", \
 		"\blue You cauterize the incision around [target]'s eyes with \the [tool].")
 		if (target.op_stage.eyes == 3)
@@ -109,7 +113,7 @@
 			target.eye_stat = 0
 		target.op_stage.eyes = 0
 
-	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips,  searing [target]'s eyes with \the [tool]!", \
 		"\red Your hand slips, searing [target]'s eyes with \the [tool]!")

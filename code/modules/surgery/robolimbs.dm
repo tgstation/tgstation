@@ -4,7 +4,8 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/limb/
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_infect = 1
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!hasorgans(target))
 			return 0
 		var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -29,14 +30,15 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] starts cutting away flesh where [target]'s [affected.display_name] used to be with \the [tool].", \
 		"You start cutting away flesh where [target]'s [affected.display_name] used to be with \the [tool].")
+		..()
 
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] cuts away flesh where [target]'s [affected.display_name] used to be with \the [tool].",	\
 		"\blue You cut away flesh where [target]'s [affected.display_name] used to be with \the [tool].")
 		affected.status |= ORGAN_CUT_AWAY
 
-	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		if (affected.parent)
 			affected = affected.parent
@@ -52,7 +54,7 @@
 	min_duration = 80
 	max_duration = 100
 
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		return ..() && affected.status & ORGAN_CUT_AWAY
 
@@ -60,14 +62,15 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] is beginning reposition flesh and nerve endings where where [target]'s [affected.display_name] used to be with [tool].", \
 		"You start repositioning flesh and nerve endings where where [target]'s [affected.display_name] used to be with [tool].")
+		..()
 
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] has finished repositioning flesh and nerve endings where [target]'s [affected.display_name] used to be with [tool].",	\
 		"\blue You have finished repositioning flesh and nerve endings where [target]'s [affected.display_name] used to be with [tool].")
 		affected.open = 3
 
-	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		if (affected.parent)
 			affected = affected.parent
@@ -83,7 +86,7 @@
 	min_duration = 60
 	max_duration = 70
 
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		return ..() && affected.open == 3
 
@@ -91,8 +94,9 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("[user] starts adjusting area around [target]'s [affected.display_name] with \the [tool].", \
 		"You start adjusting area around [target]'s [affected.display_name] with \the [tool]..")
+		..()
 
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] has finished adjusting the area around [target]'s [affected.display_name] with \the [tool].",	\
 		"\blue You have finished adjusting the area around [target]'s [affected.display_name] with \the [tool].")
@@ -101,7 +105,7 @@
 		affected.setAmputatedTree()
 		affected.open = 0
 
-	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		if (affected.parent)
 			affected = affected.parent
@@ -112,11 +116,12 @@
 
 /datum/surgery_step/limb/attach
 	required_tool = /obj/item/robot_parts
+	can_infect = 0
 
 	min_duration = 80
 	max_duration = 100
 
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/robot_parts/p = tool
 		if (p.part)
 			if (!(target_zone in p.part))
@@ -129,7 +134,7 @@
 		user.visible_message("[user] starts attaching [tool] where [target]'s [affected.display_name] used to be.", \
 		"You start attaching [tool] where [target]'s [affected.display_name] used to be.")
 
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] has attached [tool] where [target]'s [affected.display_name] used to be.",	\
 		"\blue You have attached [tool] where [target]'s [affected.display_name] used to be.")
@@ -139,7 +144,7 @@
 		target.UpdateDamageIcon()
 		del(tool)
 
-	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s [affected.display_name]!", \
 		"\red Your hand slips, damaging connectors on [target]'s [affected.display_name]!")

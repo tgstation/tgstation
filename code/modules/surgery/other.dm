@@ -7,11 +7,13 @@
 /datum/surgery_step/fix_vein
 	required_tool = /obj/item/weapon/FixOVein
 	allowed_tools = list(/obj/item/weapon/cable_coil)
+	can_infect = 1
+	blood_level = 1
 
 	min_duration = 70
 	max_duration = 90
 
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 
 		var/internal_bleeding = 0
@@ -26,8 +28,9 @@
 		user.visible_message("[user] starts patching the damaged vein in [target]'s [affected.display_name] with \the [tool]." , \
 		"You start patching the damaged vein in [target]'s [affected.display_name] with \the [tool].")
 		target.custom_pain("The pain in [affected.display_name] is unbearable!",1)
+		..()
 
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] has patched the damaged vein in [target]'s [affected.display_name] with \the [tool].", \
 			"\blue You have patched the damaged vein in [target]'s [affected.display_name] with \the [tool].")
@@ -37,7 +40,7 @@
 			affected.update_damages()
 		if (ishuman(user) && prob(40)) user:bloody_hands(target, 0)
 
-	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, smearing [tool] in the incision in [target]'s [affected.display_name]!" , \
 		"\red Your hand slips, smearing [tool] in the incision in [target]'s [affected.display_name]!")
@@ -54,7 +57,7 @@
 	min_duration = 80
 	max_duration = 100
 
-	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		return affected.open == 2 && !(affected.status & ORGAN_BLEEDING)
 
@@ -63,8 +66,9 @@
 		user.visible_message("[user] starts poking around inside the incision on [target]'s [affected.display_name] with \the [tool].", \
 		"You start poking around inside the incision on [target]'s [affected.display_name] with \the [tool]" )
 		target.custom_pain("The pain in your chest is living hell!",1)
+		..()
 
-	end_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/affected = target.get_organ(target_zone)
 
 		var/find_prob = 0
@@ -88,9 +92,8 @@
 		else
 			user.visible_message("\blue [user] could not find anything inside [target]'s [affected.display_name], and pulls \the [tool] out.", \
 			"\blue You could not find anything inside [target]'s [affected.display_name]." )
-		if (ishuman(user) && prob(80)) user:bloody_hands(target, 0)
 
-	fail_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/chest/affected = target.get_organ(target_zone)
 		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [affected.display_name] with \the [tool]!", \
 		"\red Your hand slips, scraping tissue inside [target]'s [affected.display_name] with \the [tool]!")
@@ -105,6 +108,3 @@
 				playsound(imp.loc, 'sound/items/countdown.ogg', 75, 1, -3)
 				spawn(25)
 					imp.activate()
-		if (ishuman(user))
-			user:bloody_hands(target, 0)
-			user:bloody_body(target)
