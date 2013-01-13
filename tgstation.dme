@@ -164,6 +164,7 @@
 #include "code\datums\spells\ethereal_jaunt.dm"
 #include "code\datums\spells\explosion.dm"
 #include "code\datums\spells\genetic.dm"
+#include "code\datums\spells\horsemask.dm"
 #include "code\datums\spells\inflict_handler.dm"
 #include "code\datums\spells\knock.dm"
 #include "code\datums\spells\mind_transfer.dm"
