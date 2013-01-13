@@ -1,5 +1,5 @@
 /datum/event/alien_infestation
-	announceWhen	= 75
+	announceWhen	= 400
 	oneShot			= 1
 
 	var/spawncount = 1
@@ -7,7 +7,7 @@
 
 
 /datum/event/alien_infestation/setup()
-	announceWhen = rand(140, 180)
+	announceWhen = rand(announceWhen, announceWhen + 50)
 	spawncount = rand(1, 2)
 
 /datum/event/alien_infestation/announce()
