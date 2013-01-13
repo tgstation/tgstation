@@ -149,3 +149,9 @@
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
 	icon_state = "med"
 	color = "med"
+
+/obj/item/clothing/tie/armband/medgreen
+	name = "medical guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and green."
+	icon_state = "medgreen"
+	color = "medgreen"
