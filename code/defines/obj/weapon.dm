@@ -344,20 +344,6 @@
 	m_amt = 100
 	origin_tech = "magnets=1"
 
-/obj/item/weapon/spellbook
-	name = "spell book"
-	desc = "The legendary book of spells of the wizard."
-	icon = 'icons/obj/library.dmi'
-	icon_state ="book"
-	throw_speed = 1
-	throw_range = 5
-	w_class = 1.0
-	flags = FPRINT | TABLEPASS
-	var/uses = 5.0
-	var/temp = null
-	var/max_uses = 5
-	var/op = 1
-
 /obj/item/weapon/staff
 	name = "wizards staff"
 	desc = "Apparently a staff used by the wizard."
