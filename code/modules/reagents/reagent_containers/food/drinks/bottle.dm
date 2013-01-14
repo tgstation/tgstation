@@ -238,7 +238,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "Jailbreaker Verte"
-	desc = "Twenty-fourth century Green Fairy, one sip of this and you just know you're gonna have a good time."
+	desc = "One sip of this and you just know you're gonna have a good time."
 	icon_state = "absinthebottle"
 	New()
 		..()

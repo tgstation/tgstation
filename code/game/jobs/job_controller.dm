@@ -340,7 +340,6 @@ var/global/datum/controller/occupations/job_master
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
 		if(job.req_admin_notify)
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
-		spawnId(H,rank)
 
 		if(H.mind.assigned_role == rank && H.mind.role_alt_title)
 			spawnId(H, rank, H.mind.role_alt_title)
@@ -375,12 +374,8 @@ var/global/datum/controller/occupations/job_master
 			C.assignment = title
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 			H.equip_to_slot_or_del(C, slot_wear_id)
-	/*	if(prob(50))
-			H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_r_store)
-		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/pen/blue(H), slot_r_store)*/
 		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
-		if(locate(/obj/item/device/pda,H))//I bet this could just use locate.  It can --SkyMarshal
+		if(locate(/obj/item/device/pda,H))
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
 			pda.ownjob = C.assignment

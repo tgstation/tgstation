@@ -2810,6 +2810,28 @@ datum
 				..()
 				return
 
+		absinthe
+			name = "Absinthe"
+			id = "absinthe"
+			description = "An anise flavoured spirit famed for it's hallucinogenic properties."
+			reagent_state = LIQUID
+			color = "#7E4043" // rgb: 126, 64, 67
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				if(data >= 65 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 145 && prob(33))
+					M.confused = max(M.confused+2,0)
+
+				if(data >= 65)
+					if (!M.hallucination) M.hallucination = 1
+					M.hallucination += 3
+				..()
+				return
+
 		tonic
 			name = "Tonic Water"
 			id = "tonic"
