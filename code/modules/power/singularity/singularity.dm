@@ -49,11 +49,6 @@ var/global/list/uneatable = list(
 	return
 
 
-/obj/machinery/singularity/Del()
-	//Could have it do something bad when this happens, explode/implode or something
-	..()
-
-
 /obj/machinery/singularity/attack_hand(mob/user as mob)
 	consume(user)
 	return 1
@@ -91,13 +86,12 @@ var/global/list/uneatable = list(
 	eat()
 	dissipate()
 	check_energy()
+
 	if(current_size >= 3)
 		move()
-		if(current_size <= 7)
-			pulse()
-			if(current_size >= 5)
-				if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
-					event()
+		pulse()
+		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+			event()
 	return
 
 
@@ -295,19 +289,17 @@ var/global/list/uneatable = list(
 	return
 
 
-/obj/machinery/singularity/proc/move(var/movement_dir = 0)
+/obj/machinery/singularity/proc/move(var/force_move = 0)
 	if(!move_self)
 		return 0
 
+	var/movement_dir = pick(alldirs - last_failed_movement)
+
+	if(force_move)
+		movement_dir = force_move
+
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
-	else if(!(movement_dir in cardinal))
-		movement_dir = pick(NORTH, EAST, WEST, SOUTH)
-
-	if(movement_dir == last_failed_movement)
-		var/list/L = new/list(NORTH, EAST, WEST, SOUTH)
-		L.Remove(last_failed_movement)
-		movement_dir = pick(L)
 
 	if(current_size >= 9)//The superlarge one does not care about things in its way
 		spawn(0)
@@ -418,19 +410,23 @@ var/global/list/uneatable = list(
 		radiation = round(((src.energy-150)/50)*5,1)
 		radiationmin = round((radiation/5),1)//
 	for(var/mob/living/M in view(toxrange, src.loc))
-		if(istype(M,/mob/living/))
-			M.apply_effect(rand(radiationmin,radiation), IRRADIATE)
-			toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
-			M.apply_effect(toxdamage, TOX)
+		M.apply_effect(rand(radiationmin,radiation), IRRADIATE)
+		toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
+		M.apply_effect(toxdamage, TOX)
 	return
 
 
 /obj/machinery/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M,/mob/living/carbon/human) && M.stat == CONSCIOUS)
-			if(istype(M:glasses,/obj/item/clothing/glasses/meson))
-				M << "\blue You look directly into The [src.name], good thing you had your protective eyewear on!"
-				return
+		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
+			continue
+
+		if(M.stat == CONSCIOUS)
+			if (istype(M,/mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.glasses,/obj/item/clothing/glasses/meson))
+					H << "\blue You look directly into The [src.name], good thing you had your protective eyewear on!"
+					return
 		M << "\red You look directly into The [src.name] and feel weak."
 		M.apply_effect(3, STUN)
 		for(var/mob/O in viewers(M, null))

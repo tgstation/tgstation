@@ -26,6 +26,7 @@
 	var/yo = null
 	var/xo = null
 	var/current = null
+	var/obj/shot_from = null // the object which shot us
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
@@ -61,9 +62,9 @@
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)
 			loc = A.loc
-			return //cannot shoot yourself
+			return 0 //cannot shoot yourself
 
-		if(bumped)	return
+		if(bumped)	return 0
 		var/forcedodge = 0 // force the projectile to pass
 
 		bumped = 1
@@ -71,7 +72,7 @@
 			var/mob/M = A
 			if(!istype(A, /mob/living))
 				loc = A.loc
-				return // nope.avi
+				return 0// nope.avi
 
 			// check for dodge (i can't place in bullet_act because then things get wonky)
 			if(!M.stat && !M.lying && (REFLEXES in M.augmentations) && prob(85))
@@ -112,7 +113,7 @@
 					else
 						loc = A.loc
 					permutated.Add(A)
-					return
+					return 0
 
 				if(istype(A,/turf))
 					for(var/obj/O in A)
@@ -123,7 +124,7 @@
 				density = 0
 				invisibility = 101
 				del(src)
-		return
+		return 1
 
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

@@ -35,29 +35,29 @@
 
 //Helper proc. Does all the checks and stuff for us to avoid copypasta
 /mob/proc/changeling_power(var/required_chems=0, var/required_dna=0, var/max_genetic_damage=100, var/max_stat=0)
-	if(!usr)			return
-	if(!usr.mind)		return
-	if(!iscarbon(usr))	return
 
-	var/datum/changeling/changeling = usr.mind.changeling
+	if(!src.mind)		return
+	if(!iscarbon(src))	return
+
+	var/datum/changeling/changeling = src.mind.changeling
 	if(!changeling)
-		world.log << "[usr] has the changeling_transform() verb but is not a changeling."
+		world.log << "[src] has the changeling_transform() verb but is not a changeling."
 		return
 
-	if(usr.stat > max_stat)
-		usr << "<span class='warning'>We are incapacitated.</span>"
+	if(src.stat > max_stat)
+		src << "<span class='warning'>We are incapacitated.</span>"
 		return
 
 	if(changeling.absorbed_dna.len < required_dna)
-		usr << "<span class='warning'>We require at least [required_dna] samples of compatible DNA.</span>"
+		src << "<span class='warning'>We require at least [required_dna] samples of compatible DNA.</span>"
 		return
 
 	if(changeling.chem_charges < required_chems)
-		usr << "<span class='warning'>We require at least [required_chems] units of chemicals to do that!</span>"
+		src << "<span class='warning'>We require at least [required_chems] units of chemicals to do that!</span>"
 		return
 
 	if(changeling.geneticdamage > max_genetic_damage)
-		usr << "<span class='warning'>Our geneomes are still reassembling. We need time to recover first.</span>"
+		src << "<span class='warning'>Our geneomes are still reassembling. We need time to recover first.</span>"
 		return
 
 	return changeling
@@ -72,55 +72,55 @@
 	var/datum/changeling/changeling = changeling_power(0,0,100)
 	if(!changeling)	return
 
-	var/obj/item/weapon/grab/G = usr.get_active_hand()
+	var/obj/item/weapon/grab/G = src.get_active_hand()
 	if(!istype(G))
-		usr << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>"
+		src << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>"
 		return
 
 	var/mob/living/carbon/human/T = G.affecting
 	if(!istype(T))
-		usr << "<span class='warning'>[T] is not compatible with our biology.</span>"
+		src << "<span class='warning'>[T] is not compatible with our biology.</span>"
 		return
 
 	if(NOCLONE in T.mutations)
-		usr << "<span class='warning'>This creature's DNA is ruined beyond useability!</span>"
+		src << "<span class='warning'>This creature's DNA is ruined beyond useability!</span>"
 		return
 
 	if(!G.killing)
-		usr << "<span class='warning'>We must have a tighter grip to absorb this creature.</span>"
+		src << "<span class='warning'>We must have a tighter grip to absorb this creature.</span>"
 		return
 
 	if(changeling.isabsorbing)
-		usr << "<span class='warning'>We are already absorbing!</span>"
+		src << "<span class='warning'>We are already absorbing!</span>"
 		return
 
 	changeling.isabsorbing = 1
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
 			if(1)
-				usr << "<span class='notice'>This creature is compatible. We must hold still...</span>"
+				src << "<span class='notice'>This creature is compatible. We must hold still...</span>"
 			if(2)
-				usr << "<span class='notice'>We extend a proboscis.</span>"
-				usr.visible_message("<span class='warning'>[usr] extends a proboscis!</span>")
+				src << "<span class='notice'>We extend a proboscis.</span>"
+				src.visible_message("<span class='warning'>[src] extends a proboscis!</span>")
 			if(3)
-				usr << "<span class='notice'>We stab [T] with the proboscis.</span>"
-				usr.visible_message("<span class='danger'>[usr] stabs [T] with the proboscis!</span>")
+				src << "<span class='notice'>We stab [T] with the proboscis.</span>"
+				src.visible_message("<span class='danger'>[src] stabs [T] with the proboscis!</span>")
 				T << "<span class='danger'>You feel a sharp stabbing pain!</span>"
 				T.take_overall_damage(40)
 
 		feedback_add_details("changeling_powers","A[stage]")
-		if(!do_mob(usr, T, 150))
-			usr << "<span class='warning'>Our absorption of [T] has been interrupted!</span>"
+		if(!do_mob(src, T, 150))
+			src << "<span class='warning'>Our absorption of [T] has been interrupted!</span>"
 			changeling.isabsorbing = 0
 			return
 
-	usr << "<span class='notice'>We have absorbed [T]!</span>"
-	usr.visible_message("<span class='danger'>[usr] sucks the fluids from [T]!</span>")
+	src << "<span class='notice'>We have absorbed [T]!</span>"
+	src.visible_message("<span class='danger'>[src] sucks the fluids from [T]!</span>")
 	T << "<span class='danger'>You have been absorbed by the changeling!</span>"
 
 	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
 	changeling.absorbed_dna |= T.dna
-	if(usr.nutrition < 400) usr.nutrition = min((usr.nutrition + T.nutrition), 400)
+	if(src.nutrition < 400) src.nutrition = min((src.nutrition + T.nutrition), 400)
 	changeling.chem_charges += 10
 	changeling.geneticpoints += 2
 
@@ -143,7 +143,7 @@
 					if(!Tp.isVerb)
 						call(Tp.verbpath)()
 					else
-						usr.make_changeling()
+						src.make_changeling()
 
 		changeling.chem_charges += T.mind.changeling.chem_charges
 		changeling.geneticpoints += T.mind.changeling.geneticpoints
@@ -179,15 +179,15 @@
 		return
 
 	changeling.chem_charges -= 5
-	usr.visible_message("<span class='warning'>[usr] transforms!</span>")
+	src.visible_message("<span class='warning'>[src] transforms!</span>")
 	changeling.geneticdamage = 30
-	usr.dna = chosen_dna
-	usr.real_name = chosen_dna.real_name
-	updateappearance(usr, usr.dna.uni_identity)
-	domutcheck(usr, null)
+	src.dna = chosen_dna
+	src.real_name = chosen_dna.real_name
+	updateappearance(src, src.dna.uni_identity)
+	domutcheck(src, null)
 
-	usr.verbs -= /mob/proc/changeling_transform
-	spawn(10)	usr.verbs += /mob/proc/changeling_transform
+	src.verbs -= /mob/proc/changeling_transform
+	spawn(10)	src.verbs += /mob/proc/changeling_transform
 
 	feedback_add_details("changeling_powers","TR")
 	return 1
@@ -201,7 +201,7 @@
 	var/datum/changeling/changeling = changeling_power(1,0,0)
 	if(!changeling)	return
 
-	var/mob/living/carbon/C = usr
+	var/mob/living/carbon/C = src
 	changeling.chem_charges--
 	C.remove_changeling_powers()
 	C.visible_message("<span class='warning'>[C] transforms!</span>")
@@ -216,7 +216,7 @@
 	C.monkeyizing = 1
 	C.canmove = 0
 	C.icon = null
-	C.overlays = null
+	C.overlays.Cut()
 	C.invisibility = 101
 
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( C.loc )
@@ -276,7 +276,7 @@
 	if(!chosen_dna)
 		return
 
-	var/mob/living/carbon/C = usr
+	var/mob/living/carbon/C = src
 
 	changeling.chem_charges--
 	C.remove_changeling_powers()
@@ -290,7 +290,7 @@
 	C.monkeyizing = 1
 	C.canmove = 0
 	C.icon = null
-	C.overlays = null
+	C.overlays.Cut()
 	C.invisibility = 101
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( C.loc )
 	animation.icon_state = "blank"
@@ -300,7 +300,7 @@
 	sleep(48)
 	del(animation)
 
-	for(var/obj/item/W in usr)
+	for(var/obj/item/W in src)
 		C.u_equip(W)
 		if (C.client)
 			C.client.screen -= W
@@ -350,7 +350,7 @@
 	var/datum/changeling/changeling = changeling_power(20,1,100,DEAD)
 	if(!changeling)	return
 
-	var/mob/living/carbon/C = usr
+	var/mob/living/carbon/C = src
 	if(!C.stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")//Confirmation for living changelings if they want to fake their death
 		return
 	C << "<span class='notice'>We will attempt to regenerate our form.</span>"
@@ -380,7 +380,7 @@
 			C.heal_overall_damage(C.getBruteLoss(), C.getFireLoss())
 			C.reagents.clear_reagents()
 			C << "<span class='notice'>We have regenerated.</span>"
-			C.visible_message("<span class='warning'>[usr] appears to wake from the dead, having healed all wounds.</span>")
+			C.visible_message("<span class='warning'>[src] appears to wake from the dead, having healed all wounds.</span>")
 
 			C.status_flags &= ~(FAKEDEATH)
 			C.update_canmove()
@@ -398,10 +398,10 @@
 	var/datum/changeling/changeling = changeling_power(10,0,100)
 	if(!changeling)	return 0
 	changeling.chem_charges -= 10
-	usr << "<span class='notice'>Your throat adjusts to launch the sting.</span>"
+	src << "<span class='notice'>Your throat adjusts to launch the sting.</span>"
 	changeling.sting_range = 2
-	usr.verbs -= /mob/proc/changeling_boost_range
-	spawn(5)	usr.verbs += /mob/proc/changeling_boost_range
+	src.verbs -= /mob/proc/changeling_boost_range
+	spawn(5)	src.verbs += /mob/proc/changeling_boost_range
 	feedback_add_details("changeling_powers","RS")
 	return 1
 
@@ -416,7 +416,7 @@
 	if(!changeling)	return 0
 	changeling.chem_charges -= 45
 
-	var/mob/living/carbon/human/C = usr
+	var/mob/living/carbon/human/C = src
 	C.stat = 0
 	C.SetParalysis(0)
 	C.SetStunned(0)
@@ -424,45 +424,44 @@
 	C.lying = 0
 	C.update_canmove()
 
-	usr.verbs -= /mob/proc/changeling_unstun
-	spawn(5)	usr.verbs += /mob/proc/changeling_unstun
+	src.verbs -= /mob/proc/changeling_unstun
+	spawn(5)	src.verbs += /mob/proc/changeling_unstun
 	feedback_add_details("changeling_powers","UNS")
 	return 1
 
 
 //Speeds up chemical regeneration
 /mob/proc/changeling_fastchemical()
-	usr.mind.changeling.chem_recharge_rate *= 2
+	src.mind.changeling.chem_recharge_rate *= 2
 	return 1
 
 //Increases macimum chemical storage
 /mob/proc/changeling_engorgedglands()
-	usr.mind.changeling.chem_storage += 25
+	src.mind.changeling.chem_storage += 25
 	return 1
 
 
 //Prevents AIs tracking you but makes you easily detectable to the human-eye.
 /mob/proc/changeling_digitalcamo()
 	set category = "Changeling"
-	set name = "Toggle Digital Camoflague (10)"
+	set name = "Toggle Digital Camoflague"
 	set desc = "The AI can no longer track us, but we will look different if examined.  Has a constant cost while active."
 
-	var/datum/changeling/changeling = changeling_power(10)
+	var/datum/changeling/changeling = changeling_power()
 	if(!changeling)	return 0
-	usr.mind.changeling.chem_charges -= 10
 
-	var/mob/living/carbon/human/C = usr
+	var/mob/living/carbon/human/C = src
 	if(C.digitalcamo)	C << "<span class='notice'>We return to normal.</span>"
 	else				C << "<span class='notice'>We distort our form to prevent AI-tracking.</span>"
 	C.digitalcamo = !C.digitalcamo
 
 	spawn(0)
-		while(C && C.digitalcamo)
-			C.mind.changeling.chem_charges -= 1
+		while(C && C.digitalcamo && C.mind && C.mind.changeling)
+			C.mind.changeling.chem_charges = max(C.mind.changeling.chem_charges - 1, 0)
 			sleep(40)
 
-	usr.verbs -= /mob/proc/changeling_digitalcamo
-	spawn(5)	usr.verbs += /mob/proc/changeling_digitalcamo
+	src.verbs -= /mob/proc/changeling_digitalcamo
+	spawn(5)	src.verbs += /mob/proc/changeling_digitalcamo
 	feedback_add_details("changeling_powers","CAM")
 	return 1
 
@@ -475,9 +474,9 @@
 
 	var/datum/changeling/changeling = changeling_power(30,0,100,UNCONSCIOUS)
 	if(!changeling)	return 0
-	usr.mind.changeling.chem_charges -= 30
+	src.mind.changeling.chem_charges -= 30
 
-	var/mob/living/carbon/human/C = usr
+	var/mob/living/carbon/human/C = src
 	spawn(0)
 		for(var/i = 0, i<10,i++)
 			if(C)
@@ -487,8 +486,8 @@
 				C.adjustFireLoss(-10)
 				sleep(10)
 
-	usr.verbs -= /mob/proc/changeling_rapidregen
-	spawn(5)	usr.verbs += /mob/proc/changeling_rapidregen
+	src.verbs -= /mob/proc/changeling_rapidregen
+	spawn(5)	src.verbs += /mob/proc/changeling_rapidregen
 	feedback_add_details("changeling_powers","RR")
 	return 1
 
@@ -510,7 +509,7 @@ var/list/datum/dna/hivemind_bank = list()
 			names += DNA.real_name
 
 	if(names.len <= 0)
-		usr << "<span class='notice'>The airwaves already have all of our DNA.</span>"
+		src << "<span class='notice'>The airwaves already have all of our DNA.</span>"
 		return
 
 	var/S = input("Select a DNA to channel: ", "Channel DNA", null) as null|anything in names
@@ -522,7 +521,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 	changeling.chem_charges -= 10
 	hivemind_bank += chosen_dna
-	usr << "<span class='notice'>We channel the DNA of [S] to the air.</span>"
+	src << "<span class='notice'>We channel the DNA of [S] to the air.</span>"
 	feedback_add_details("changeling_powers","HU")
 	return 1
 
@@ -540,7 +539,7 @@ var/list/datum/dna/hivemind_bank = list()
 			names[DNA.real_name] = DNA
 
 	if(names.len <= 0)
-		usr << "<span class='notice'>There's no new DNA to absorb from the air.</span>"
+		src << "<span class='notice'>There's no new DNA to absorb from the air.</span>"
 		return
 
 	var/S = input("Select a DNA absorb from the air: ", "Absorb DNA", null) as null|anything in names
@@ -551,7 +550,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 	changeling.chem_charges -= 20
 	changeling.absorbed_dna += chosen_dna
-	usr << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
+	src << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
 	feedback_add_details("changeling_powers","HD")
 	return 1
 
@@ -559,32 +558,32 @@ var/list/datum/dna/hivemind_bank = list()
 
 /mob/proc/changeling_mimicvoice()
 	set category = "Changeling"
-	set name = "Mimic Voice (10)"
-	set desc = "Shape our vocal glands to form a voice of someone we choose."
+	set name = "Mimic Voice"
+	set desc = "Shape our vocal glands to form a voice of someone we choose. We cannot regenerate chemicals when mimicing."
 
-	var/datum/changeling/changeling = changeling_power(10,1)
+
+	var/datum/changeling/changeling = changeling_power()
 	if(!changeling)	return
 
 	if(changeling.mimicing)
 		changeling.mimicing = ""
-		usr << "<span class='notice'>We return our vocal glands to their original location.</span>"
+		src << "<span class='notice'>We return our vocal glands to their original location.</span>"
 		return
 
 	var/mimic_voice = input("Enter a name to mimic.", "Mimic Voice", null) as text
 	if(!mimic_voice)
 		return
 
-	changeling.chem_charges -= 10
 	changeling.mimicing = mimic_voice
 
-	usr << "<span class='notice'>We shape our glands to take the voice of <b>[mimic_voice]</b>, this will stop us from regenerating chemicals while active.</span>"
-	usr << "<span class='notice'>Use this power again to return to our original voice and reproduce chemicals again.</span>"
+	src << "<span class='notice'>We shape our glands to take the voice of <b>[mimic_voice]</b>, this will stop us from regenerating chemicals while active.</span>"
+	src << "<span class='notice'>Use this power again to return to our original voice and reproduce chemicals again.</span>"
 
 	feedback_add_details("changeling_powers","MV")
 
 	spawn(0)
 		while(src && src.mind && src.mind.changeling && src.mind.changeling.mimicing)
-			src.mind.changeling.chem_charges -= 1
+			src.mind.changeling.chem_charges = max(src.mind.changeling.chem_charges - 1, 0)
 			sleep(40)
 		if(src && src.mind && src.mind.changeling)
 			src.mind.changeling.mimicing = ""
@@ -607,7 +606,7 @@ var/list/datum/dna/hivemind_bank = list()
 	var/list/victims = list()
 	for(var/mob/living/carbon/C in oview(changeling.sting_range))
 		victims += C
-	var/mob/living/carbon/T = input(usr, "Who will we sting?") as null|anything in victims
+	var/mob/living/carbon/T = input(src, "Who will we sting?") as null|anything in victims
 
 	if(!T) return
 	if(!(T in view(changeling.sting_range))) return
@@ -616,10 +615,10 @@ var/list/datum/dna/hivemind_bank = list()
 
 	changeling.chem_charges -= required_chems
 	changeling.sting_range = 1
-	usr.verbs -= verb_path
-	spawn(10)	usr.verbs += verb_path
+	src.verbs -= verb_path
+	spawn(10)	src.verbs += verb_path
 
-	usr << "<span class='notice'>We stealthily sting [T].</span>"
+	src << "<span class='notice'>We stealthily sting [T].</span>"
 	if(!T.mind || !T.mind.changeling)	return T	//T will be affected by the sting
 	T << "<span class='warning'>You feel a tiny prick.</span>"
 	return
@@ -712,7 +711,7 @@ var/list/datum/dna/hivemind_bank = list()
 	var/mob/living/carbon/T = changeling_sting(40,/mob/proc/changeling_transformation_sting)
 	if(!T)	return 0
 	if((HUSK in T.mutations) || (!ishuman(T) && !ismonkey(T)))
-		usr << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
+		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	T.visible_message("<span class='warning'>[T] transforms!</span>")
 	T.dna = chosen_dna
@@ -756,8 +755,8 @@ var/list/datum/dna/hivemind_bank = list()
 	set desc="Stealthily sting a target to extract their DNA."
 
 	var/datum/changeling/changeling = null
-	if(usr.mind && usr.mind.changeling)
-		changeling = usr.mind.changeling
+	if(src.mind && src.mind.changeling)
+		changeling = src.mind.changeling
 	if(!changeling)
 		return 0
 

@@ -231,10 +231,15 @@ datum
 							matching_other = 1
 
 						else
-							if(istype(my_atom, /obj/item/metroid_core))
-								var/obj/item/metroid_core/M = my_atom
+							/*if(istype(my_atom, /obj/item/slime_core))
+								var/obj/item/slime_core/M = my_atom
 
-								if(M.POWERFLAG == C.required_other && M.Uses > 0) // added a limit to metroid cores -- Muskets requested this
+								if(M.POWERFLAG == C.required_other && M.Uses > 0) // added a limit to slime cores -- Muskets requested this
+									matching_other = 1*/
+							if(istype(my_atom, /obj/item/slime_extract))
+								var/obj/item/slime_extract/M = my_atom
+
+								if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 									matching_other = 1
 
 
@@ -255,12 +260,21 @@ datum
 								for(var/mob/M in viewers(4, get_turf(my_atom)) )
 									M << "\blue \icon[my_atom] The solution begins to bubble."
 
-							if(istype(my_atom, /obj/item/metroid_core))
-								var/obj/item/metroid_core/ME = my_atom
+						/*	if(istype(my_atom, /obj/item/slime_core))
+								var/obj/item/slime_core/ME = my_atom
 								ME.Uses--
-								if(ME.Uses <= 0) // give the notification that the metroid core is dead
+								if(ME.Uses <= 0) // give the notification that the slime core is dead
 									for(var/mob/M in viewers(4, get_turf(my_atom)) )
 										M << "\blue \icon[my_atom] The innards begin to boil!"
+							*/
+							if(istype(my_atom, /obj/item/slime_extract))
+								var/obj/item/slime_extract/ME2 = my_atom
+								ME2.Uses--
+								if(ME2.Uses <= 0) // give the notification that the slime core is dead
+									for(var/mob/M in viewers(4, get_turf(my_atom)) )
+										M << "\blue \icon[my_atom] The [my_atom]'s power is consumed in the reaction."
+										ME2.name = "used slime extract"
+										ME2.desc = "This extract has been used up."
 
 							playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 
@@ -399,6 +413,8 @@ datum
 					my_atom.on_reagent_change()
 					handle_reactions()
 					return 0
+				else
+					warning("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 
 				handle_reactions()
 

@@ -65,7 +65,7 @@
 /obj/item/clothing/shoes/white
 	name = "white shoes"
 	icon_state = "white"
-	permeability_coefficient = 0.25
+	permeability_coefficient = 0.01
 	color = "white"
 
 /obj/item/clothing/shoes/rainbow

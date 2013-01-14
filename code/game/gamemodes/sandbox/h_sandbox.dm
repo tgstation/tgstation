@@ -144,8 +144,6 @@ datum/hSB
 							continue
 						if(istype(O, /obj/item/weapon/melee/energy/sword))
 							continue
-						if(istype(O, /obj/effect/critter))
-							continue
 						if(istype(O, /obj/structure))
 							continue
 						selectable += O

@@ -50,7 +50,7 @@
 				M << "\red You cannot force any more of [src] to go down your throat."
 				return 0
 		else
-			if(!istype(M, /mob/living/carbon/metroid))		//If you're feeding it to someone else.
+			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
 					for(var/mob/O in viewers(world.view, user))
@@ -118,6 +118,10 @@
 		usr << "\blue \The [src] was bitten multiple times!"
 
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/storage))
+		..() // -> item/attackby()
+	if(istype(W,/obj/item/weapon/storage))
+		..() // -> item/attackby()
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return 1
 	var/inaccurate = 0
@@ -345,7 +349,7 @@
 	desc = "Like life, it never quite tastes the same."
 	icon_state = "donut1"
 	New()
-
+		..()
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("sprinkles", 1)
 		bitesize = 10
@@ -364,7 +368,7 @@
 			if(6)
 				reagents.add_reagent("coco", 3)
 			if(7)
-				reagents.add_reagent("rorojelly", 3)
+				reagents.add_reagent("slimejelly", 3)
 			if(8)
 				reagents.add_reagent("banana", 3)
 			if(9)
@@ -392,7 +396,7 @@
 			src.name = "Frosted Jelly Donut"
 			reagents.add_reagent("sprinkles", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/rorojelly
+/obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
 	name = "Jelly Donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
@@ -400,7 +404,7 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("sprinkles", 1)
-		reagents.add_reagent("rorojelly", 5)
+		reagents.add_reagent("slimejelly", 5)
 		bitesize = 5
 		if(prob(30))
 			src.icon_state = "jdonut2"
@@ -1032,7 +1036,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
-		reagents.add_reagent("doctor_delight", 2)
+		reagents.add_reagent("doctorsdelight", 5)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
@@ -1159,13 +1163,13 @@
 		reagents.add_reagent("water", 5)
 		bitesize = 5
 
-/obj/item/weapon/reagent_containers/food/snacks/rorosoup
-	name = "Roro soup"
+/obj/item/weapon/reagent_containers/food/snacks/slimesoup
+	name = "slime soup"
 	desc = "If no water is available, you may substitute tears."
-	icon_state = "rorosoup"
+	icon_state = "slimesoup"
 	New()
 		..()
-		reagents.add_reagent("rorojelly", 5)
+		reagents.add_reagent("slimejelly", 5)
 		reagents.add_reagent("water", 10)
 		bitesize = 5
 
@@ -1245,7 +1249,7 @@
 				reagents.add_reagent("nutriment", 6)
 				reagents.add_reagent("blood", 10)
 			if(7)
-				reagents.add_reagent("rorojelly", 10)
+				reagents.add_reagent("slimejelly", 10)
 				reagents.add_reagent("water", 10)
 			if(8)
 				reagents.add_reagent("carbon", 10)
@@ -1486,7 +1490,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast
 	name = "Jellied Toast"
 	desc = "A slice of bread covered with delicious jam."
-	icon_state = "rorotoast"
+	icon_state = "jellytoast"
 	trash = /obj/item/trash/plate
 	New()
 		..()
@@ -1498,24 +1502,24 @@
 		..()
 		reagents.add_reagent("cherryjelly", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/roro
+/obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/slime
 	New()
 		..()
-		reagents.add_reagent("rorojelly", 5)
+		reagents.add_reagent("slimejelly", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/jellyburger
 	name = "Jelly Burger"
 	desc = "Culinary delight..?"
-	icon_state = "roroburger"
+	icon_state = "jellyburger"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 5)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/jellyburger/roro
+/obj/item/weapon/reagent_containers/food/snacks/jellyburger/slime
 	New()
 		..()
-		reagents.add_reagent("rorojelly", 5)
+		reagents.add_reagent("slimejelly", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/jellyburger/cherry
 	New()
@@ -1652,32 +1656,32 @@
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich
 	name = "Jelly Sandwich"
 	desc = "You wish you had some peanut butter to go with this..."
-	icon_state = "rorosandwich"
+	icon_state = "jellysandwich"
 	trash = /obj/item/trash/plate
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/jellysandwich/roro
+/obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime
 	New()
 		..()
-		reagents.add_reagent("rorojelly", 5)
+		reagents.add_reagent("slimejelly", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/cherry
 	New()
 		..()
 		reagents.add_reagent("cherryjelly", 5)
-
-/obj/item/weapon/reagent_containers/food/snacks/boiledrorocore
-	name = "Boiled Roro Core"
+/*
+/obj/item/weapon/reagent_containers/food/snacks/boiledslimecore
+	name = "Boiled slime Core"
 	desc = "A boiled red thing."
-	icon_state = "boiledrorocore"
+	icon_state = "boiledslimecore"
 	New()
 		..()
-		reagents.add_reagent("rorojelly", 5)
+		reagents.add_reagent("slimejelly", 5)
 		bitesize = 3
-
+*/
 /obj/item/weapon/reagent_containers/food/snacks/mint
 	name = "mint"
 	desc = "it is only wafer thin."
@@ -1764,7 +1768,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
-		reagents.add_reagent("doctor_delight", 5)
+		reagents.add_reagent("doctorsdelight", 5)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart

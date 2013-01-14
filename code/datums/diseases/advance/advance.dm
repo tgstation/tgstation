@@ -94,15 +94,12 @@ var/list/advance_cures = 	list(
 
 // Compares type then ID.
 /datum/disease/advance/IsSame(var/datum/disease/advance/D)
-	if(!(istype(D, /datum/disease/advance)))
-		//error("Returning 0 because not same type.")
 
+	if(!(istype(D, /datum/disease/advance)))
 		return 0
-	//error("Comparing [src.GetDiseaseID()] [D.GetDiseaseID()]")
+
 	if(src.GetDiseaseID() != D.GetDiseaseID())
-		//error("Returing 0")
 		return 0
-	//error("Returning 1")
 	return 1
 
 // To add special resistances.
@@ -415,5 +412,12 @@ var/list/advance_cures = 	list(
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
 		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
+
+/*
+/mob/verb/test()
+
+	for(var/datum/disease/D in active_diseases)
+		src << "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>"
+*/
 
 #undef RANDOM_STARTING_LEVEL

@@ -547,7 +547,7 @@ datum/design/telecomms_processor
 	build_path = "/obj/item/weapon/circuitboard/telecomms/processor"
 
 datum/design/telecomms_server
-	name = "Circuit Design (Telecommunication Server)"
+	name = "Circuit Design (Server Mainframe)"
 	desc = "Allows for the construction of Telecommunications Servers."
 	id = "s-server"
 	req_tech = list("programming" = 4, "engineering" = 4)
@@ -582,7 +582,7 @@ datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
 	desc = "Allows for the construction of a pAI Card"
 	id = "paicard"
-	req_tech = list("programming" = 3)
+	req_tech = list("programming" = 2)
 	build_type = PROTOLATHE
 	materials = list("$glass" = 500, "$metal" = 500)
 	build_path = "/obj/item/device/paicard"

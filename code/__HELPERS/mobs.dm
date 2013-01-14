@@ -15,7 +15,7 @@ proc/random_name(gender, species = "Human")
 	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 
 proc/random_skin_tone()
-	switch(pick(55;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino", 5;"weird"))
+	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
 		if("caucasian")		. = -10
 		if("afroamerican")	. = -115
 		if("african")		. = -165

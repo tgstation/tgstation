@@ -151,7 +151,7 @@ obj/machinery/hydroponics/process()
 
 obj/machinery/hydroponics/proc/updateicon()
 	//Refreshes the icon and sets the luminosity
-	overlays = null
+	overlays.Cut()
 	if(planted)
 		if(dead)
 			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-dead")
@@ -729,15 +729,13 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		del(O)
 		updateicon()
 
-	else if (istype(O, /obj/item/weapon/plantbag))
+	else if (istype(O, /obj/item/weapon/storage/bag/plants))
 		attack_hand(user)
-		var/obj/item/weapon/plantbag/S = O
+		var/obj/item/weapon/storage/bag/plants/S = O
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
-			if (S.contents.len < S.capacity)
-				S.contents += G;
-			else
-				user << "\blue The plant bag is full."
+			if(!S.can_be_inserted(G))
 				return
+			S.handle_item_insertion(G, 1)
 
 	else if ( istype(O, /obj/item/weapon/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
@@ -809,6 +807,16 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		t_prod.potency = potency
 		t_prod.plant_type = plant_type
 		t_amount++
+
+	parent.update_tray()
+
+/obj/item/seeds/grassseed/harvest(mob/user = usr)
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/t_yield = round(yield*parent.yieldmod)
+
+	if(t_yield > 0)
+		var/obj/item/stack/tile/grass/new_grass = new/obj/item/stack/tile/grass(user.loc)
+		new_grass.amount = t_yield
 
 	parent.update_tray()
 
@@ -1005,10 +1013,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "soil"
 	density = 0
-	New()
-		..()
+	use_power = 0
+
 	updateicon() // Same as normal but with the overlays removed - Cheridan.
-		overlays = null
+		overlays.Cut()
 		if(planted)
 			if(dead)
 				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-dead")

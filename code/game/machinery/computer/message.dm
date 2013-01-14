@@ -65,7 +65,7 @@
 	..()
 	return
 
-/obj/machinery/computer/message_monitor/power_change()
+/obj/machinery/computer/message_monitor/update_icon()
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -74,7 +74,7 @@
 	else
 		icon_state = normal_icon
 
-/obj/machinery/computer/message_monitor/process()
+/obj/machinery/computer/message_monitor/initialize()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		if(message_servers && message_servers.len > 0)
@@ -405,7 +405,7 @@
 						//Get out list of viable PDAs
 						var/list/obj/item/device/pda/sendPDAs = list()
 						for(var/obj/item/device/pda/P in PDAs)
-							if(!P.owner || P.toff) continue
+							if(!P.owner || P.toff || P.hidden) continue
 							sendPDAs += P
 						if(PDAs && PDAs.len > 0)
 							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortAtom(sendPDAs)
@@ -437,7 +437,7 @@
 
 						var/obj/item/device/pda/PDARec = null
 						for (var/obj/item/device/pda/P in PDAs)
-							if (!P.owner||P.toff)	continue
+							if (!P.owner || P.toff || P.hidden)	continue
 							if(P.owner == customsender)
 								PDARec = P
 						//Sender isn't faking as someone who exists
@@ -452,7 +452,7 @@
 									var/mob/living/carbon/human/H = customrecepient.loc
 									H << "\icon[customrecepient] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
 								log_pda("[usr] (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
-								customrecepient.overlays = null
+								customrecepient.overlays.Cut()
 								customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
 						//Sender is faking as someone who exists
 						else
@@ -466,7 +466,7 @@
 									var/mob/living/carbon/human/H = customrecepient.loc
 									H << "\icon[customrecepient] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)"
 								log_pda("[usr] (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
-								customrecepient.overlays = null
+								customrecepient.overlays.Cut()
 								customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
 						//Finally..
 						ResetMessage()
@@ -499,7 +499,7 @@
 			for(var/obj/machinery/message_server/server in message_servers)
 				if(!isnull(server))
 					if(!isnull(server.decryptkey))
-						info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret.<br>If necessary, change the password to a more secure one."
+						info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
 						info_links = info
 						overlays += "paper_words"
 						break

@@ -1,3 +1,10 @@
+/* Holograms!
+ * Contains:
+ *		Holopad
+ *		Hologram
+ *		Other stuff
+ */
+
 /*
 Revised. Original based on space ninja hologram code. Which is also mine. /N
 How it works:
@@ -12,11 +19,23 @@ Possible to do for anyone motivated enough:
 	Itegrate EMP effect to disable the unit.
 */
 
+
+/*
+ * Holopad
+ */
+
 // HOLOPAD MODE
 // 0 = RANGE BASED
 // 1 = AREA BASED
 var/const/HOLOPAD_MODE = 0
 
+/obj/machinery/hologram/holopad
+	name = "\improper AI holopad"
+	desc = "It's a floor-mounted device for projecting holographic images. It is activated remotely."
+	icon_state = "holopad0"
+	var/mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
+	var/last_request = 0 //to prevent request spam. ~Carn
+	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 
 /obj/machinery/hologram/holopad/attack_hand(var/mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
@@ -120,6 +139,17 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 	return 1
 
+/*
+ * Hologram
+ */
+
+/obj/machinery/hologram
+	anchored = 1
+	use_power = 1
+	idle_power_usage = 5
+	active_power_usage = 100
+	var/obj/effect/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
+
 /obj/machinery/hologram/power_change()
 	if (powered())
 		stat &= ~NOPOWER
@@ -172,3 +202,12 @@ Holographic project of everything else.
 		world << "Your icon should appear now."
 	return
 */
+
+/*
+ * Other Stuff: Is this even used?
+ */
+/obj/machinery/hologram/projector
+	name = "hologram projector"
+	desc = "It makes a hologram appear...with magnets or something..."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "hologram0"

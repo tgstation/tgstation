@@ -30,9 +30,13 @@
 /obj/item/weapon/reagent_containers/attack(mob/M as mob, mob/user as mob, def_zone)
 	return
 
+// this prevented pills, food, and other things from being picked up by bags.
+// possibly intentional, but removing it allows us to not duplicate functionality.
+// -Sayu (storage conslidation)
+/*
 /obj/item/weapon/reagent_containers/attackby(obj/item/I as obj, mob/user as mob)
 	return
-
+*/
 /obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return
 

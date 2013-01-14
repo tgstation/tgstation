@@ -63,6 +63,12 @@ obj/item/weapon/gun/energy/staff
 
 	update_icon()
 		return
+/obj/item/weapon/gun/energy/staff/animate
+	name = "staff of animation"
+	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
+	projectile_type = "/obj/item/projectile/animate"
+	charge_cost = 100
+
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
@@ -152,3 +158,11 @@ obj/item/weapon/gun/energy/staff
 	icon_state = "pen"
 	item_state = "pen"
 	w_class = 1
+
+
+/obj/item/weapon/gun/energy/mindflayer
+	name = "mind flayer"
+	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
+	icon_state = "xray"
+	projectile_type = "/obj/item/projectile/beam/mindflayer"
+	fire_sound = 'sound/weapons/Laser.ogg'

@@ -204,9 +204,24 @@
 	item_state = "witch"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 
+/obj/item/clothing/head/chicken
+	name = "chicken suit head"
+	desc = "Bkaw!"
+	icon_state = "chickenhead"
+	item_state = "chickensuit"
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
 	desc = "Fuzzy."
 	icon_state = "bearpelt"
 	item_state = "bearpelt"
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
+
+/obj/item/clothing/head/xenos
+	name = "xenos helmet"
+	icon_state = "xenos"
+	item_state = "xenos_helm"
+	desc = "A helmet made out of chitinous alien hide."
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE

@@ -3,9 +3,7 @@
 	icon = 'icons/obj/items.dmi'
 	var/icon/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
-	var/force = 0
 	var/item_state = null
-	var/damtype = "brute"
 	var/r_speed = 1.0
 	var/health = null
 	var/burn_point = null
@@ -61,6 +59,16 @@
 	return
 
 /obj/item/blob_act()
+	return
+
+//user: The mob that is suiciding
+//damagetype: The type of damage the item will inflict on the user
+//bruteloss = 1
+//fireloss = 2
+//toxloss = 4
+//oxyloss = 8
+//This proc will return an array. The first element of the list should always be the suicide message that players will see, next is the damagetype
+/obj/item/proc/suicide_act(mob/user)
 	return
 
 /obj/item/verb/move_to_top()
@@ -163,22 +171,36 @@
 	user.put_in_active_hand(src)
 	return
 
+// Due to storage type consolidation this should get used more now.
+// I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if(istype(W,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
-			if(!S.can_be_inserted(src))
-				return
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
 				if(isturf(src.loc))
-					for(var/obj/item/I in src.loc)
-						if(I != src) //We'll do the one we clicked on last.
-							if(!S.can_be_inserted(I))
-								continue
-							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-			S.handle_item_insertion(src)
+					var/list/rejections = list()
+					var/success = 0
+					var/failure = 0
 
+					for(var/obj/item/I in src.loc)
+						if(I.type in rejections) // To limit bag spamming: any given type only complains once
+							continue
+						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
+							rejections += I.type	// therefore full bags are still a little spammy
+							failure = 1
+							continue
+						success = 1
+						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+					if(success && !failure)
+						user << "<span class='notice'>You put everything in [S].</span>"
+					else if(success)
+						user << "<span class='notice'>You put some things in [S].</span>"
+					else
+						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
+
+			else if(S.can_be_inserted(src))
+				S.handle_item_insertion(src)
 
 	return
 
@@ -225,75 +247,75 @@
 		power *= 2
 
 	if(!istype(M, /mob/living/carbon/human))
-		if(istype(M, /mob/living/carbon/metroid))
-			var/mob/living/carbon/metroid/Metroid = M
+		if(istype(M, /mob/living/carbon/slime))
+			var/mob/living/carbon/slime/slime = M
 			if(prob(25))
 				user << "\red [src] passes right through [M]!"
 				return
 
 			if(power > 0)
-				Metroid.attacked += 10
+				slime.attacked += 10
 
-			if(Metroid.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
-				Metroid.Discipline = 0
+			if(slime.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
+				slime.Discipline = 0
 
 			if(power >= 3)
-				if(istype(Metroid, /mob/living/carbon/metroid/adult))
+				if(istype(slime, /mob/living/carbon/slime/adult))
 					if(prob(5 + round(power/2)))
 
-						if(Metroid.Victim)
-							if(prob(80) && !Metroid.client)
-								Metroid.Discipline++
-						Metroid.Victim = null
-						Metroid.anchored = 0
+						if(slime.Victim)
+							if(prob(80) && !slime.client)
+								slime.Discipline++
+						slime.Victim = null
+						slime.anchored = 0
 
 						spawn()
-							if(Metroid)
-								Metroid.SStun = 1
+							if(slime)
+								slime.SStun = 1
 								sleep(rand(5,20))
-								if(Metroid)
-									Metroid.SStun = 0
+								if(slime)
+									slime.SStun = 0
 
 						spawn(0)
-							if(Metroid)
-								Metroid.canmove = 0
-								step_away(Metroid, user)
+							if(slime)
+								slime.canmove = 0
+								step_away(slime, user)
 								if(prob(25 + power))
 									sleep(2)
-									if(Metroid && user)
-										step_away(Metroid, user)
-								Metroid.canmove = 1
+									if(slime && user)
+										step_away(slime, user)
+								slime.canmove = 1
 
 				else
 					if(prob(10 + power*2))
-						if(Metroid)
-							if(Metroid.Victim)
-								if(prob(80) && !Metroid.client)
-									Metroid.Discipline++
+						if(slime)
+							if(slime.Victim)
+								if(prob(80) && !slime.client)
+									slime.Discipline++
 
-									if(Metroid.Discipline == 1)
-										Metroid.attacked = 0
+									if(slime.Discipline == 1)
+										slime.attacked = 0
 
 								spawn()
-									if(Metroid)
-										Metroid.SStun = 1
+									if(slime)
+										slime.SStun = 1
 										sleep(rand(5,20))
-										if(Metroid)
-											Metroid.SStun = 0
+										if(slime)
+											slime.SStun = 0
 
-							Metroid.Victim = null
-							Metroid.anchored = 0
+							slime.Victim = null
+							slime.anchored = 0
 
 
 						spawn(0)
-							if(Metroid && user)
-								step_away(Metroid, user)
-								Metroid.canmove = 0
+							if(slime && user)
+								step_away(slime, user)
+								slime.canmove = 0
 								if(prob(25 + power*4))
 									sleep(2)
-									if(Metroid && user)
-										step_away(Metroid, user)
-								Metroid.canmove = 1
+									if(slime && user)
+										step_away(slime, user)
+								slime.canmove = 1
 
 
 		var/showname = "."
@@ -319,7 +341,7 @@
 	else
 		switch(src.damtype)
 			if("brute")
-				if(istype(src, /mob/living/carbon/metroid))
+				if(istype(src, /mob/living/carbon/slime))
 					M.adjustBrainLoss(power)
 
 				else
@@ -504,6 +526,10 @@
 					if(!disable_warning)
 						usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
 					return 0
+				if(src.w_class > 3)
+					if(!disable_warning)
+						usr << "The [name] is too big to attach."
+					return 0
 				if( istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed) )
 					return 1
 				return 0
@@ -623,7 +649,7 @@
 		user << "\red You're going to need to remove that mask/helmet/glasses first."
 		return
 
-	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N	 Metroids also don't have eyes!
+	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
 		user << "\red You cannot locate any eyes on this creature!"
 		return
 

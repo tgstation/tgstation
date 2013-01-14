@@ -358,8 +358,9 @@ Alien plants should do something if theres a lot of poison
  */
 /var/const //for the status var
 	BURST = 0
-	GROWING = 1
-	GROWN = 2
+	BURSTING = 1
+	GROWING = 2
+	GROWN = 3
 
 	MIN_GROWTH_TIME = 1800 //time it takes to grow a hugger
 	MAX_GROWTH_TIME = 3000
@@ -394,8 +395,7 @@ Alien plants should do something if theres a lot of poison
 					return
 				if(GROWN)
 					user << "\red You retrieve the child."
-					loc.contents += GetFacehugger()//need to write the code for giving it to the alien later
-					Burst()
+					Burst(0)
 					return
 		else
 			return attack_hand(user)
@@ -416,12 +416,20 @@ Alien plants should do something if theres a lot of poison
 	proc/Burst(var/kill = 1) //drops and kills the hugger if any is remaining
 		var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
 
-		if(kill && istype(child))
-			loc.contents += child
-			child.Die()
-
 		icon_state = "egg_hatched"
-		status = BURST
+		flick("egg_opening", src)
+		status = BURSTING
+		spawn(15)
+			status = BURST
+			loc.contents += child//need to write the code for giving it to the alien later
+			if(kill && istype(child))
+				child.Die()
+			else
+				for(var/mob/M in range(1,src))
+					if(CanHug(M))
+						child.Attach(M)
+						break
+
 		return
 
 
@@ -462,23 +470,12 @@ Alien plants should do something if theres a lot of poison
 		healthcheck()
 
 /obj/effect/alien/egg/HasProximity(atom/movable/AM as mob|obj)
-	if(!CanHug(AM))
-		return
-	if(status == GROWN && iscarbon(AM) && !isalien(AM))
-
-		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.has_disease(/datum/disease/alien_embryo))
+	if(status == GROWN)
+		if(!CanHug(AM))
 			return
 
-		status = BURST
-		flick("egg_opening", src) //Play animation
-		var/turf/pos = get_turf(src)
-		spawn(18) // Wait until the animation finishes
-			Burst(0)
-			var/obj/item/clothing/mask/facehugger/child = GetFacehugger()
-			child.loc = pos
-			if(!CanHug(AM))
-				return
-			if(AM && in_range(AM, pos))
-				child.Attach(AM)
+		var/mob/living/carbon/C = AM
+		if(C.stat == CONSCIOUS && C.status_flags & XENO_HOST)
+			return
 
+		Burst(0)

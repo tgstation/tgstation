@@ -25,7 +25,7 @@
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
-		/obj/item/weapon/secstorage/ssafe,
+		/obj/item/weapon/storage/secure/safe,
 		/obj/machinery/disposal,
 		/obj/machinery/iv_drip,
 		/obj/machinery/disease2/incubator
@@ -48,7 +48,16 @@
 				return
 
 		if(ismob(target) && target.reagents && reagents.total_volume)
+			var/mob/M = target
 			user << "\blue You splash the solution onto [target]."
+			var/R
+			if(src.reagents)
+				for(var/datum/reagent/A in src.reagents.reagent_list)
+					R += A.id + " ("
+					R += num2text(A.volume) + "),"
+			user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])"
+			M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])"
+			log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> splashed <b>[M]/[M.ckey]</b> with ([R])")
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message(text("\red [] has been splashed with something by []!", target, user), 1)
 			src.reagents.reaction(target, TOUCH)
@@ -114,7 +123,7 @@
 		update_icon()
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 
 		if(reagents.total_volume)
 			var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
@@ -148,10 +157,16 @@
 		reagents.add_reagent("cryoxadone", 30)
 		update_icon()
 
-/obj/item/weapon/reagent_containers/glass/beaker/roro
+/obj/item/weapon/reagent_containers/glass/beaker/sulphuric
 	New()
 		..()
-		reagents.add_reagent("rorojelly", 50)
+		reagents.add_reagent("sacid", 50)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/slime
+	New()
+		..()
+		reagents.add_reagent("slimejelly", 50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bucket

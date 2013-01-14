@@ -34,3 +34,9 @@
 					O.throw_at(target, drive_range * power, power)
 		flick("mass_driver1", src)
 		return
+
+	emp_act(severity)
+		if(stat & (BROKEN|NOPOWER))
+			return
+		drive()
+		..(severity)

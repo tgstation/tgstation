@@ -80,7 +80,7 @@
 		M.show_message( message, 1, blind_message, 2)
 
 
-//This is aweful
+//This is awful
 /mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	//Holding a balloon will shield you from an item that is_sharp() ... cause that makes sense
@@ -108,7 +108,7 @@
 	//If the mob is not wearing a shield or otherwise is not shielded
 	if ((!( shielded ) || !( W.flags ) & NOSHIELD))
 		spawn( 0 )
-			if (W)
+			if (W && istype(W, /obj/item)) //The istype is necessary for things like bodybags which are structures that do not have an attack() proc.
 				W.attack(src, user)
 				return
 	return
@@ -573,7 +573,11 @@ var/list/slot_equipment_priority = list( \
 	show_inv(usr)
 
 
-/mob/proc/stop_pulling()
+/mob/verb/stop_pulling()
+
+	set name = "Stop Pulling"
+	set category = "IC"
+
 	if(pulling)
 		pulling.pulledby = null
 		pulling = null
@@ -581,11 +585,13 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/start_pulling(var/atom/movable/AM)
 	if ( !AM || !usr || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
-
 	if (!( AM.anchored ))
 		if(pulling)
+			var/pulling_old = pulling
 			stop_pulling()
-
+			// Are we pulling the same thing twice? Just stop pulling.
+			if(pulling_old == AM)
+				return
 		src.pulling = AM
 		AM.pulledby = src
 		if(ismob(AM))

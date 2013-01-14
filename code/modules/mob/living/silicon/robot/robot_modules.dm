@@ -151,7 +151,7 @@
 	New()
 		..()
 		src.modules += new /obj/item/weapon/soap/nanotrasen(src)
-		src.modules += new /obj/item/weapon/trashbag(src)
+		src.modules += new /obj/item/weapon/storage/bag/trash(src)
 		src.modules += new /obj/item/weapon/mop(src)
 		src.modules += new /obj/item/device/lightreplacer(src)
 		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
@@ -179,7 +179,7 @@
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 
 		var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
-		L.light_on = 1
+		L.lit = 1
 		src.modules += L
 
 		src.modules += new /obj/item/weapon/tray/robotray(src)
@@ -203,9 +203,9 @@
 		..()
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.emag = new /obj/item/borg/stun(src)
-		src.modules += new /obj/item/weapon/storage/satchel(src)
+		src.modules += new /obj/item/weapon/storage/bag/ore(src)
 		src.modules += new /obj/item/weapon/pickaxe/borgdrill(src)
-		src.modules += new /obj/item/weapon/sheetsnatcher/borg(src)
+		src.modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 //		src.modules += new /obj/item/weapon/shovel(src) Uneeded due to buffed drill
 		return
 

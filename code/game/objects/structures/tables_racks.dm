@@ -240,73 +240,59 @@
 	return
 
 
-/obj/structure/table/attack_paw(mob/user as mob)
-	if ((HULK in usr.mutations))
-		usr << "\blue You destroy the table."
-		usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		visible_message("\red [user] smashes the table apart!")
+/obj/structure/table/attack_paw(mob/user)
+	if(HULK in user.mutations)
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		visible_message("<span class='danger'>[user] smashes the table apart!</span>")
 		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced( src.loc )
+			new /obj/item/weapon/table_parts/reinforced(loc)
 		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood( src.loc )
+			new/obj/item/weapon/table_parts/wood(loc)
 		else
-			new /obj/item/weapon/table_parts( src.loc )
-		src.density = 0
+			new /obj/item/weapon/table_parts(loc)
+		density = 0
 		del(src)
-	if (!( locate(/obj/structure/table, user.loc) ))
-		step(user, get_dir(user, src))
-		if (user.loc == src.loc)
-			user.layer = TURF_LAYER
-			visible_message("[user] hides under the table!")
-				//Foreach goto(69)
-	return
 
 
-/obj/structure/table/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
-	usr << "\green You destroy the table."
-	visible_message("\red [user] slices the table apart!")
+/obj/structure/table/attack_alien(mob/user)
+	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	if(istype(src, /obj/structure/table/reinforced))
-		new /obj/item/weapon/table_parts/reinforced( src.loc )
+		new /obj/item/weapon/table_parts/reinforced(loc)
 	else if(istype(src, /obj/structure/table/woodentable))
-		new/obj/item/weapon/table_parts/wood( src.loc )
+		new/obj/item/weapon/table_parts/wood(loc)
 	else
-		new /obj/item/weapon/table_parts( src.loc )
-	src.density = 0
+		new /obj/item/weapon/table_parts(loc)
+	density = 0
 	del(src)
-	return
 
 
-/obj/structure/table/attack_animal(mob/living/simple_animal/user as mob)
+/obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.wall_smash)
-		usr << "\red You destroy the table."
-		visible_message("\red [user] smahes the table apart!")
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced( src.loc )
+			new /obj/item/weapon/table_parts/reinforced(loc)
 		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood( src.loc )
+			new/obj/item/weapon/table_parts/wood(loc)
 		else
-			new /obj/item/weapon/table_parts( src.loc )
-		src.density = 0
+			new /obj/item/weapon/table_parts(loc)
+		density = 0
 		del(src)
-	return
 
 
 
 
-/obj/structure/table/attack_hand(mob/user as mob)
-	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
-		usr << "\blue You destroy the table."
-		visible_message("\red [user] smahes the table apart!")
-		usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+/obj/structure/table/attack_hand(mob/user)
+	if(HULK in user.mutations || SUPRSTR in user.augmentations)
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		if(istype(src, /obj/structure/table/reinforced))
-			new /obj/item/weapon/table_parts/reinforced( src.loc )
+			new /obj/item/weapon/table_parts/reinforced(loc)
 		else if(istype(src, /obj/structure/table/woodentable))
-			new/obj/item/weapon/table_parts/wood( src.loc )
+			new/obj/item/weapon/table_parts/wood(loc)
 		else
-			new /obj/item/weapon/table_parts( src.loc )
-		src.density = 0
+			new /obj/item/weapon/table_parts(loc)
+		density = 0
 		del(src)
-	return
 
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -563,7 +549,6 @@
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		//SN src = null
 		del(src)
 		return
 	if(isrobot(user))
@@ -574,3 +559,36 @@
 
 /obj/structure/rack/meteorhit(obj/O as obj)
 	del(src)
+
+
+/obj/structure/table/attack_hand(mob/user)
+	if(HULK in user.mutations || SUPRSTR in user.augmentations)
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		new /obj/item/weapon/rack_parts(loc)
+		density = 0
+		del(src)
+
+
+/obj/structure/rack/attack_paw(mob/user)
+	if(HULK in user.mutations)
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		new /obj/item/weapon/rack_parts(loc)
+		density = 0
+		del(src)
+
+
+/obj/structure/rack/attack_alien(mob/user)
+	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
+	new /obj/item/weapon/rack_parts(loc)
+	density = 0
+	del(src)
+
+
+/obj/structure/rack/attack_animal(mob/living/simple_animal/user)
+	if(user.wall_smash)
+		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		new /obj/item/weapon/rack_parts(loc)
+		density = 0
+		del(src)

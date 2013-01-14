@@ -55,6 +55,9 @@
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
+	//some kind of bug in canmove() isn't properly calling update_icons, so this is here as a placeholder
+	update_icons()
+
 	if(client)
 		handle_regular_hud_updates()
 
@@ -226,7 +229,7 @@ FUCK YOU MORE FAT CODE -Hawk*/
 				return 1
 
 			//UNCONSCIOUS. NO-ONE IS HOME
-			if( (getOxyLoss() > 50) || (0 > health) )
+			if( (getOxyLoss() > 25) || (0 > health) )
 				//if( health <= 20 && prob(1) )
 				//	spawn(0)
 				//		emote("gasp")
@@ -244,7 +247,7 @@ FUCK YOU MORE FAT CODE -Hawk*/
 				stat = UNCONSCIOUS
 				if( prob(10) && health )
 					spawn(0)
-						emote("hiss")
+						emote("hiss_")
 			//CONSCIOUS
 			else
 				stat = CONSCIOUS

@@ -265,7 +265,7 @@ var/syndicate_code_response//Code response for traitors.
 		if(4)
 			syndicate_code_phrase += pick("I wish I was","My dad was","His mom was","Where do I find","The hero this station needs is","I'd fuck","I wouldn't trust","Someone caught","HoS caught","Someone found","I'd wrestle","I wanna kill")
 			syndicate_code_phrase += " [pick("a","the")] "
-			syndicate_code_phrase += pick("wizard","ninja","xeno","lizard","metroid","monkey","syndicate","cyborg","clown","space carp","singularity","singulo","mime")
+			syndicate_code_phrase += pick("wizard","ninja","xeno","lizard","slime","monkey","syndicate","cyborg","clown","space carp","singularity","singulo","mime")
 			syndicate_code_phrase += "."
 		if(5)
 			syndicate_code_phrase += pick("Do we have","Is there","Where is","Where's","Who's")

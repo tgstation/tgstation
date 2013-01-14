@@ -144,9 +144,9 @@
 			loc = tmob.loc
 			tmob.loc = oldloc
 			now_pushing = 0
-			for(var/mob/living/carbon/metroid/Metroid in view(1,tmob))
-				if(Metroid.Victim == tmob)
-					Metroid.UpdateFeed()
+			for(var/mob/living/carbon/slime/slime in view(1,tmob))
+				if(slime.Victim == tmob)
+					slime.UpdateFeed()
 			return
 
 		if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
@@ -324,110 +324,6 @@
 		updatehealth()
 	return
 
-/mob/living/carbon/human/Move(a, b, flag)
-
-	if (buckled)
-		return
-
-	if (restrained())
-		stop_pulling()
-
-
-	var/t7 = 1
-	if (restrained())
-		for(var/mob/living/M in range(src, 1))
-			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
-				t7 = null
-	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
-		var/turf/T = loc
-		. = ..()
-
-		if (pulling && pulling.loc)
-			if(!( isturf(pulling.loc) ))
-				stop_pulling()
-				return
-			else
-				if(Debug)
-					diary <<"pulling disappeared? at [__LINE__] in mob.dm - pulling = [pulling]"
-					diary <<"REPORT THIS"
-
-		/////
-		if(pulling && pulling.anchored)
-			stop_pulling()
-			return
-
-		if (!restrained())
-			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
-			else
-				diag = null
-			if ((get_dist(src, pulling) > 1 || diag))
-				if (isliving(pulling))
-					var/mob/living/M = pulling
-					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
-						if (prob(75))
-							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
-								for(var/mob/O in viewers(M, null))
-									O.show_message(text("\red [] has been pulled from []'s grip by []", G.affecting, G.assailant, src), 1)
-								//G = null
-								del(G)
-						else
-							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
-							ok = 0
-					if (ok)
-						var/atom/movable/t = M.pulling
-						M.stop_pulling()
-
-						//this is the gay blood on floor shit -- Added back -- Skie
-						if (M.lying && (prob(M.getBruteLoss() / 6)))
-							var/turf/location = M.loc
-							if (istype(location, /turf/simulated))
-								location.add_blood(M)
-								if(ishuman(M))
-									var/mob/living/carbon/H = M
-									var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
-									if(blood_volume > 0)
-										H:vessel.remove_reagent("blood",1)
-							if(prob(5))
-								M.adjustBruteLoss(1)
-								visible_message("\red \The [M]'s wounds open more from being dragged!")
-						if(M.pull_damage())
-							if(prob(25))
-								M.adjustBruteLoss(2)
-								visible_message("\red \The [M]'s wounds worsen terribly from being dragged!")
-								var/turf/location = M.loc
-								if (istype(location, /turf/simulated))
-									location.add_blood(M)
-									if(ishuman(M))
-										var/mob/living/carbon/H = M
-										var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
-										if(blood_volume > 0)
-											H:vessel.remove_reagent("blood",1)
-
-
-						step(pulling, get_dir(pulling.loc, T))
-						M.start_pulling(t)
-				else
-					if (pulling)
-						if (istype(pulling, /obj/structure/window))
-							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
-									stop_pulling()
-					if (pulling)
-						step(pulling, get_dir(pulling.loc, T))
-	else
-		stop_pulling()
-		. = ..()
-	if ((s_active && !( s_active in contents ) ))
-		s_active.close(src)
-
-	for(var/mob/living/carbon/metroid/M in view(1,src))
-		M.UpdateFeed(src)
-	return
-
 
 /mob/living/carbon/human/hand_p(mob/M as mob)
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
@@ -464,7 +360,7 @@
 		if(armor >= 2)	return
 
 
-/mob/living/carbon/human/attack_metroid(mob/living/carbon/metroid/M as mob)
+/mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M as mob)
 	if(M.Victim) return // can't attack while eating!
 
 	if (health > -100)
@@ -475,7 +371,7 @@
 
 		var/damage = rand(1, 3)
 
-		if(istype(M, /mob/living/carbon/metroid/adult))
+		if(istype(M, /mob/living/carbon/slime/adult))
 			damage = rand(10, 35)
 		else
 			damage = rand(5, 25)
@@ -686,15 +582,26 @@
 		if(istype(usr, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = usr
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+
+				/* // Uncomment if you want sechuds to need security access
+				var/allowed_access = 0
+				if(H.wear_id)
+					var/list/access = H.wear_id.GetAccess()
+					if(access_security in access)
+						allowed_access = 1
+						return
+
+				if(!allowed_access)
+					H << "<span class='warning'>ERROR: Invalid Access</span>"
+					return
+				*/
+
 				var/perpname = "wot"
 				var/modified = 0
 
 				if(wear_id)
-					if(istype(wear_id,/obj/item/weapon/card/id))
-						perpname = wear_id:registered_name
-					else if(istype(wear_id,/obj/item/device/pda))
-						var/obj/item/device/pda/tempPda = wear_id
-						perpname = tempPda.owner
+					var/obj/item/weapon/card/id/I = wear_id.GetID()
+					perpname = I.registered_name
 				else
 					perpname = src.name
 

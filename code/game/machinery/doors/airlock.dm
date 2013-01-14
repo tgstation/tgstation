@@ -92,6 +92,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	normalspeed = 1
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
+	var/heat_proof = 0 // For glass airlocks
 
 /obj/machinery/door/airlock/command
 	name = "Airlock"
@@ -216,6 +217,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	opacity = 0
 	doortype = 21
 	glass = 1
+	heat_proof = 1
 
 /obj/machinery/door/airlock/glass_mining
 	name = "Maintenance Hatch"
@@ -630,8 +632,15 @@ About the new airlock wires panel:
 		return 0
 
 
+/obj/machinery/door/airlock/update_heat_protection(var/turf/simulated/source)
+	if(istype(source))
+		if(src.density && (src.opacity || src.heat_proof))
+			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
+		else
+			source.thermal_conductivity = initial(source.thermal_conductivity)
+
 /obj/machinery/door/airlock/update_icon()
-	if(overlays) overlays = null
+	if(overlays) overlays.Cut()
 	if(density)
 		if(locked && lights)
 			icon_state = "door_locked"
@@ -651,14 +660,14 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/animate(animation)
 	switch(animation)
 		if("opening")
-			if(overlays) overlays = null
+			if(overlays) overlays.Cut()
 			if(p_open)
 				spawn(2) // The only work around that works. Downside is that the door will be gone for a millisecond.
 					flick("o_door_opening", src)  //can not use flick due to BYOND bug updating overlays right before flicking
 			else
 				flick("door_opening", src)
 		if("closing")
-			if(overlays) overlays = null
+			if(overlays) overlays.Cut()
 			if(p_open)
 				flick("o_door_closing", src)
 			else
@@ -825,7 +834,8 @@ About the new airlock wires panel:
 			sleep(10)
 			//bring up airlock dialog
 			src.aiHacking = 0
-			src.attack_ai(user)
+			if (user)
+				src.attack_ai(user)
 
 /obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (src.isElectrified())

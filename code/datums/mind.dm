@@ -368,7 +368,7 @@ datum/mind
 				if(!def_value)//If it's a custom objective, it will be an empty string.
 					def_value = "custom"
 
-			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "protect", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "protect", "prevent", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
 			if (!new_obj_type) return
 
 			var/datum/objective/new_objective = null
@@ -405,6 +405,10 @@ datum/mind
 						new_objective:target = new_target:mind
 						//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
 						new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
+
+				if ("prevent")
+					new_objective = new /datum/objective/block
+					new_objective.owner = src
 
 				if ("hijack")
 					new_objective = new /datum/objective/hijack
@@ -647,6 +651,7 @@ datum/mind
 						ticker.mode.changelings -= src
 						special_role = null
 						current.remove_changeling_powers()
+						current.verbs -= /datum/changeling/proc/EvolutionMenu
 						if(changeling)	del(changeling)
 						current << "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>"
 						log_admin("[key_name_admin(usr)] has de-changeling'ed [current].")
@@ -1139,10 +1144,10 @@ datum/mind
 /mob/living/carbon/monkey/mind_initialize()
 	..()
 
-//METROID
-/mob/living/carbon/metroid/mind_initialize()
+//slime
+/mob/living/carbon/slime/mind_initialize()
 	..()
-	mind.assigned_role = "Metroid"
+	mind.assigned_role = "slime"
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()

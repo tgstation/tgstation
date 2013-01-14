@@ -92,7 +92,7 @@
 
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 		attached_overlays = list()
 		if(timing)
 			overlays += "prox_timing"

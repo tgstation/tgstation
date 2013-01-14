@@ -229,6 +229,13 @@ for reference:
 				if (src.health <= 0)
 					src.explode()
 				return
+	emp_act(severity)
+		if(stat & (BROKEN|NOPOWER))
+			return
+		if(prob(50/severity))
+			locked = !locked
+			anchored = !anchored
+			icon_state = "barrier[src.locked]"
 
 	meteorhit()
 		src.explode()

@@ -101,6 +101,8 @@
 //SUBCLASSES.  Spawn a bunch of items and disappear likewise
 /obj/effect/landmark/costume/chicken/New()
 	new /obj/item/clothing/suit/chickensuit(src.loc)
+	new /obj/item/clothing/head/chicken(src.loc)
+	new /obj/item/weapon/reagent_containers/food/snacks/egg(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/gladiator/New()
@@ -171,7 +173,7 @@
 
 /obj/effect/landmark/costume/nightowl/New()
 	new /obj/item/clothing/under/owl(src.loc)
-	new /obj/item/clothing/mask/owl_mask(src.loc)
+	new /obj/item/clothing/mask/gas/owl_mask(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/waiter/New()
@@ -218,6 +220,7 @@
 /obj/effect/landmark/costume/fakewizard/New()
 	new /obj/item/clothing/suit/wizrobe/fake(src.loc)
 	new /obj/item/clothing/head/wizard/fake(src.loc)
+	new /obj/item/weapon/staff/(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/sexyclown/New()

@@ -884,6 +884,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\red [user]'s hand slips, tearing [target]'s innards with \the [tool]!", \
 		"\red Your hand slips, tearing [target]'s innards with \the [tool]!")
 
+//see slimes
+/*
 /datum/surgery_step/metroid/saw_core
 	required_tool = /obj/item/weapon/circular_saw
 
@@ -909,6 +911,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 	fail_step(mob/user, mob/living/carbon/metroid/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, failing to cut core out!", \
 		"\red Your hand slips, failing to cut core out!")
+*/
 
 //////////////////////////////////////////////////////////////////
 //						LIMB SURGERY							//
@@ -1182,7 +1185,7 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 
 	can_use(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/embryo = 0
-		for(var/datum/disease/alien_embryo/A in target.viruses)
+		for(var/obj/item/alien_embryo/A in target)
 			embryo = 1
 			break
 		return ..() && embryo && target.ribcage_op_stage == 2
@@ -1197,11 +1200,8 @@ proc/spread_germs_to_organ(datum/organ/external/E, mob/living/carbon/human/user)
 		user.visible_message("\red [user] rips the larva out of [target]'s ribcage!",
 							 "You rip the larva out of [target]'s ribcage!")
 
-		var/mob/living/carbon/alien/larva/stupid = new(target.loc)
-		stupid.death(0)
-
-		for(var/datum/disease/alien_embryo in target.viruses)
-			alien_embryo.cure()
+		for(var/obj/item/alien_embryo/A in target)
+			A.loc = A.loc.loc
 
 		if (ishuman(user)) user:bloody_hands(target, 0)
 

@@ -35,7 +35,7 @@
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "Electrical Supplies"
-	req_access = list(access_engine)
+	req_access = list(access_engine_equip)
 	icon_state = "secureengelec1"
 	icon_closed = "secureengelec"
 	icon_locked = "secureengelec1"
@@ -64,7 +64,7 @@
 
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "Welding Supplies"
-	req_access = list(access_engine)
+	req_access = list(access_engine_equip)
 	icon_state = "secureengweld1"
 	icon_closed = "secureengweld"
 	icon_locked = "secureengweld1"
@@ -88,7 +88,7 @@
 
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "Engineer's Locker"
-	req_access = list(access_engine)
+	req_access = list(access_engine_equip)
 	icon_state = "secureeng1"
 	icon_closed = "secureeng"
 	icon_locked = "secureeng1"

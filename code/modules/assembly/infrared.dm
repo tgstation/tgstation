@@ -41,7 +41,7 @@
 
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 		attached_overlays = list()
 		if(on)
 			overlays += "infrared_on"

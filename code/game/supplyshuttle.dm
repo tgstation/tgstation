@@ -56,7 +56,7 @@ var/list/mechtoys = list(
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/metroid))	//If your not laying down, or a small creature, no pass.
+		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime))	//If your not laying down, or a small creature, no pass.
 			return 0
 	return ..()
 
@@ -132,7 +132,7 @@ var/list/mechtoys = list(
 	var/points_per_process = 1
 	var/points_per_slip = 2
 	var/points_per_crate = 5
-	var/mech_redeem = 0
+	var/plasma_per_point = 2 // 2 plasma for 1 point
 	//control
 	var/ordernum
 	var/list/shoppinglist = list()
@@ -232,15 +232,18 @@ var/list/mechtoys = list(
 		var/area/shuttle = locate(shuttle_at)
 		if(!shuttle)	return
 
-		var/list/mechtoys_found = list()
+		var/plasma_count = 0
 
 		for(var/atom/movable/MA in shuttle)
 			if(MA.anchored)	continue
+
+			// Must be in a crate!
 			if(istype(MA,/obj/structure/closet/crate))
 				points += points_per_crate
 				var/find_slip = 1
 
 				for(var/atom in MA)
+					// Sell manifests
 					var/atom/A = atom
 					if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
 						var/obj/item/weapon/paper/slip = A
@@ -248,17 +251,15 @@ var/list/mechtoys = list(
 							points += points_per_slip
 							find_slip = 0
 						continue
-					if(A.type in mechtoys)
-						mechtoys_found["[A.type]"]++
+
+					// Sell plasma
+					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
+						var/obj/item/stack/sheet/mineral/plasma/P = A
+						plasma_count += P.amount
 			del(MA)
 
-		if(mechtoys && mechtoys.len && mechtoys_found.len >= mechtoys.len)
-			var/complete_sets = 10
-			for(var/index in mechtoys_found)
-				complete_sets = min(complete_sets, mechtoys_found[index])
-
-			if(complete_sets)
-				mech_redeem += complete_sets
+		if(plasma_count)
+			points += Floor(plasma_count / plasma_per_point)
 
 	//Buyin
 	proc/buy()
@@ -323,17 +324,6 @@ var/list/mechtoys = list(
 			slip.info += "</ul><br>"
 			slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
 			if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
-
-		while(0<mech_redeem)
-			if(!clear_turfs.len)	break
-			mech_redeem--
-			var/i = rand(1,clear_turfs.len)
-			var/turf/pickedloc = clear_turfs[i]
-			clear_turfs.Cut(i,i+1)
-
-			var/obj/mecha/combat/marauder/M = new(pickedloc)	//Redeeming the mech toy collection gives you your very own life-sized combat mech!
-			M.operation_req_access = list()
-			M.internals_req_access = list()
 
 		supply_shuttle.shoppinglist.Cut()
 		return
@@ -422,6 +412,7 @@ var/list/mechtoys = list(
 		reqform.info += "RANK: [idrank]<br>"
 		reqform.info += "REASON: [reason]<br>"
 		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
+		reqform.info += "ACCESS RESTRICTION: [replacetext(get_access_desc(P.access))]<br>"
 		reqform.info += "CONTENTS:<br>"
 		reqform.info += P.manifest
 		reqform.info += "<hr>"
@@ -595,6 +586,7 @@ var/list/mechtoys = list(
 		reqform.info += "RANK: [idrank]<br>"
 		reqform.info += "REASON: [reason]<br>"
 		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
+		reqform.info += "ACCESS RESTRICTION: [replacetext(get_access_desc(P.access))]<br>"
 		reqform.info += "CONTENTS:<br>"
 		reqform.info += P.manifest
 		reqform.info += "<hr>"

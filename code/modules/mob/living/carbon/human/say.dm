@@ -22,7 +22,7 @@
 		/*if(src.dna.mutantrace == "lizard") //Soghun stutterss-s-ss-sss.
 			if(copytext(message, 1, 2) != "*")
 				message = replacetext(message, "s", stutter("ss"))*/
-		if(src.dna.mutantrace == "metroid" && prob(5))
+		if(src.dna.mutantrace == "slime" && prob(5))
 			if(copytext(message, 1, 2) != "*")
 				if(copytext(message, 1, 2) == ";")
 					message = ";"
@@ -69,7 +69,7 @@
 			if(prob(25))
 				message += " OLE!"
 
-	if ((HULK in mutations) && health >= 25)
+	if ((HULK in mutations) && health >= 25 && length(message))
 		if(copytext(message, 1, 2) != "*")
 			message = "[uppertext(message)]!!" //because I don't know how to code properly in getting vars from other files -Bro
 
@@ -135,7 +135,7 @@
 		return 1
 	if (istype(other, /mob/living/carbon/brain))
 		return 1
-	if (istype(other, /mob/living/carbon/metroid))
+	if (istype(other, /mob/living/carbon/slime))
 		return 1
 	return ..()
 
