@@ -101,9 +101,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
-					/obj/item/weapon/reagent_containers/food/drinks/beer,
-					/obj/item/weapon/cigpacket/dromedaryco,
-					/obj/item/weapon/lipstick/random)
+					/obj/item/weapon/reagent_containers/food/drinks/beer)
 	cost = 20
 	containertype = /obj/structure/closet/crate
 	containername = "Party equipment"
@@ -657,7 +655,7 @@
 
 /datum/supply_packs/artscrafts
 	name = "Arts and Crafts supplies"
-	contains = list(/obj/item/weapon/storage/crayonbox,
+	contains = list(/obj/item/weapon/storage/fancy/crayons,
 	/obj/item/device/camera,
 	/obj/item/device/camera_film,
 	/obj/item/device/camera_film,
@@ -735,8 +733,8 @@
 	name = "Sterile equipment crate"
 	contains = list(/obj/item/clothing/under/rank/medical/green,
 					/obj/item/clothing/under/rank/medical/green,
-					/obj/item/weapon/storage/stma_kit,
-					/obj/item/weapon/storage/lglo_kit)
+					/obj/item/weapon/storage/box/masks,
+					/obj/item/weapon/storage/box/gloves)
 	cost = 10
 	containertype = "/obj/structure/closet/crate"
 	containername = "Sterile equipment crate"

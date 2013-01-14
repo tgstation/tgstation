@@ -6,7 +6,6 @@ turf/unsimulated/desert
 	icon_state = "desert"
 	temperature = 393.15
 	luminosity = 5
-	brightness_on = 1
 	lighting_lumcount = 8
 
 turf/unsimulated/desert/New()
@@ -54,47 +53,8 @@ turf/unsimulated/desert/New()
 
 //corpses and possibly other decorative items
 
-/obj/effect/landmark/corpse/alien/New() //Creates a mob and checks for gear in each slot before attempting to equip it.
-	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
-	M.dna.mutantrace = "lizard"
-	M.real_name = src.name
-	M.stat = 2 //Kills the new mob
-	if(src.corpseuniform)
-		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
-	if(src.corpsesuit)
-		M.equip_to_slot_or_del(new src.corpsesuit(M), slot_wear_suit)
-	if(src.corpseshoes)
-		M.equip_to_slot_or_del(new src.corpseshoes(M), slot_shoes)
-	if(src.corpsegloves)
-		M.equip_to_slot_or_del(new src.corpsegloves(M), slot_gloves)
-	if(src.corpseradio)
-		M.equip_to_slot_or_del(new src.corpseradio(M), slot_ears)
-	if(src.corpseglasses)
-		M.equip_to_slot_or_del(new src.corpseglasses(M), slot_glasses)
-	if(src.corpsemask)
-		M.equip_to_slot_or_del(new src.corpsemask(M), slot_wear_mask)
-	if(src.corpsehelmet)
-		M.equip_to_slot_or_del(new src.corpsehelmet(M), slot_head)
-	if(src.corpsebelt)
-		M.equip_to_slot_or_del(new src.corpsebelt(M), slot_belt)
-	if(src.corpsepocket1)
-		M.equip_to_slot_or_del(new src.corpsepocket1(M), slot_r_store)
-	if(src.corpsepocket2)
-		M.equip_to_slot_or_del(new src.corpsepocket2(M), slot_l_store)
-	if(src.corpseback)
-		M.equip_to_slot_or_del(new src.corpseback(M), slot_back)
-	if(src.corpseid == 1)
-		var/obj/item/weapon/card/id/W = new(M)
-		W.name = "[M.real_name]'s ID Card"
-		if(src.corpseidicon)
-			W.icon_state = corpseidicon
-		if(src.corpseidaccess)
-			W.access = get_access(corpseidaccess)
-		if(corpseidjob)
-			W.assignment = corpseidjob
-		W.registered_name = M.real_name
-		M.equip_to_slot_or_del(W, slot_wear_id)
-	del(src)
+/obj/effect/landmark/corpse/alien
+	mutantrace = "lizard"
 
 /obj/effect/landmark/corpse/alien/cargo
 	name = "Cargo Technician"

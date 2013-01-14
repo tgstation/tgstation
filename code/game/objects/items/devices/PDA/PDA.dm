@@ -13,8 +13,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_ID | SLOT_BELT
-	light_on = 0 //Is the flashlight function on?
-	brightness_on = 4 //Luminosity for the flashlight function
 
 	//Main variables
 	var/owner = null
@@ -24,6 +22,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
+	var/fon = 0 //Is the flashlight function on?
+	var/f_lum = 4 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
@@ -113,6 +113,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/captain
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	icon_state = "pda-c"
+	toff = 1
 
 /obj/item/device/pda/cargo
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
@@ -199,22 +200,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
  *	The Actual PDA
  */
 /obj/item/device/pda/pickup(mob/user)
-	if(light_on)
-		if(user.luminosity < brightness_on)
-			user.SetLuminosity(brightness_on)
+	if(fon)
 		SetLuminosity(0)
+		user.SetLuminosity(user.luminosity + f_lum)
 
 /obj/item/device/pda/dropped(mob/user)
-	if(light_on)
-		if ((layer <= 3) || (loc != user.loc))
-			user.SetLuminosity(search_light(user, src))
-			SetLuminosity(brightness_on)
-
-/obj/item/device/pda/equipped(mob/user, slot)
-	if(light_on)
-		if(user.luminosity < brightness_on)
-			user.SetLuminosity(brightness_on)
-		SetLuminosity(0)
+	if(fon)
+		user.SetLuminosity(user.luminosity - f_lum)
+		SetLuminosity(f_lum)
 
 /obj/item/device/pda/New()
 	..()
@@ -343,7 +336,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (cartridge.access_remote_door)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [light_on ? "Disable" : "Enable"] Flashlight</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
 					if(pai.loc != src)
 						pai = null
@@ -518,18 +511,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //MAIN FUNCTIONS===================================
 
 				if("Light")
-					if(light_on)
-						light_on = 0
-						if(src in U.contents)
-							U.SetLuminosity(search_light(U, src))
-						else
-							SetLuminosity(0)
+					if(fon)
+						fon = 0
+						if(src in U.contents)	U.SetLuminosity(U.luminosity - f_lum)
+						else					SetLuminosity(0)
 					else
-						light_on = 1
-						if((src in U.contents) && (U.luminosity < brightness_on))
-							U.SetLuminosity(brightness_on)
-						else
-							SetLuminosity(brightness_on)
+						fon = 1
+						if(src in U.contents)	U.SetLuminosity(U.luminosity + f_lum)
+						else					SetLuminosity(f_lum)
 				if("Medical Scan")
 					if(scanmode == 1)
 						scanmode = 0
@@ -769,14 +758,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		if (prob(15)) //Give the AI a chance of intercepting the message
 			var/who = src.owner
-			var/sp_word = "from"
 			if(prob(50))
 				who = P:owner
-				sp_word = "to"
 			for(var/mob/living/silicon/ai/ai in mob_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.aiPDA != P && ai.aiPDA != src)
-					ai.show_message("<i>Intercepted message [sp_word] <b>[who]</b>: [t]</i>")
+					ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
 
 		if (!P.silent)
 			playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
@@ -870,6 +857,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
+
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
 		if(!idcard.registered_name)
@@ -1011,15 +999,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				for (var/mob/O in viewers(user, null))
 					O << "\red [user] has used [src] on \icon[icon] [A]"
 
-				var/pressure = A:parent.air.return_pressure()
-				var/total_moles = A:parent.air.total_moles()
+				var/obj/machinery/atmospherics/pipe/tank/T = A
+				var/pressure = T.parent.air.return_pressure()
+				var/total_moles = T.parent.air.total_moles()
 
 				user << "\blue Results of analysis of \icon[icon]"
 				if (total_moles>0)
-					var/o2_concentration = A:parent.air.oxygen/total_moles
-					var/n2_concentration = A:parent.air.nitrogen/total_moles
-					var/co2_concentration = A:parent.air.carbon_dioxide/total_moles
-					var/plasma_concentration = A:parent.air.toxins/total_moles
+					var/o2_concentration = T.parent.air.oxygen/total_moles
+					var/n2_concentration = T.parent.air.nitrogen/total_moles
+					var/co2_concentration = T.parent.air.carbon_dioxide/total_moles
+					var/plasma_concentration = T.parent.air.toxins/total_moles
 
 					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+plasma_concentration)
 
@@ -1030,7 +1019,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					user << "\blue Plasma: [round(plasma_concentration*100)]%"
 					if(unknown_concentration>0.01)
 						user << "\red Unknown: [round(unknown_concentration*100)]%"
-					user << "\blue Temperature: [round(A:parent.air.temperature-T0C)]&deg;C"
+					user << "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C"
 				else
 					user << "\blue Tank is empty!"
 

@@ -57,7 +57,8 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health >= config.health_threshold_crit)				help_shake_act(M)
+			if(health >= config.health_threshold_crit)
+				help_shake_act(M)
 				return 1
 //			if(M.health < -75)	return 0
 

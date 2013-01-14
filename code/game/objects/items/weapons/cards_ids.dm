@@ -59,6 +59,7 @@
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
+	var/uses = 10
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -69,8 +70,14 @@
 	var/registered_name = null // The name registered_name on the card
 	slot_flags = SLOT_ID
 
+	var/blood_type = "\[UNSET\]"
+	var/dna_hash = "\[UNSET\]"
+	var/fingerprint_hash = "\[UNSET\]"
+
 	var/assignment = null
+	var/assignment_real_title = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
+
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)

@@ -23,7 +23,6 @@
 	set desc = "Give somebody access to any session logfiles saved to the /log/runtime/ folder."
 	set category = null
 
-	if( !src.holder )
 	if(!src.holder)
 		src << "<font color='red'>Only Admins may use this command.</font>"
 		return

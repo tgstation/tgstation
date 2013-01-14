@@ -45,7 +45,8 @@
 								if(!C.amount) del(C)
 								user << "\blue You add cables to the frame."
 								state = 2
-								icon_state = "box_1"				else
+								icon_state = "box_1"
+				else
 					if(istype(P, /obj/item/weapon/wrench))
 						playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 						user << "\blue You dismantle the frame"

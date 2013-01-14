@@ -22,15 +22,16 @@
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 
-/obj/item/weapon/retractor/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M))
-		return
-
 /*HAHA, SUCK IT, 2000 LINES OF SPAGHETTI CODE!
 
 NOW YOUR JOB IOS DONE BY ONLY 500 LINES OF SPAGHETTI CODE!
 
 LOOK FOR SURGERY.DM*/
+
+/*
+/obj/item/weapon/retractor/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M))
+		return
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
@@ -119,6 +120,7 @@ LOOK FOR SURGERY.DM*/
 		return ..()
 
 	return
+*/
 
 /*
  * Hemostat
@@ -135,6 +137,7 @@ LOOK FOR SURGERY.DM*/
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 
+/*
 /obj/item/weapon/hemostat/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -252,6 +255,7 @@ LOOK FOR SURGERY.DM*/
 		return ..()
 
 	return
+*/
 
 /*
  * Cautery
@@ -268,6 +272,7 @@ LOOK FOR SURGERY.DM*/
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 
+/*
 /obj/item/weapon/cautery/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return
@@ -340,6 +345,7 @@ LOOK FOR SURGERY.DM*/
 		return ..()
 
 	return
+*/
 
 /*
  * Surgical Drill
@@ -362,6 +368,7 @@ LOOK FOR SURGERY.DM*/
 		viewers(user) << pick("/red <b>[user] is pressing the [src] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
 							"/red <b>[user] is pressing [src] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>")
 		return (BRUTELOSS)
+
 /*
  * Scalpel
  */
@@ -387,6 +394,7 @@ LOOK FOR SURGERY.DM*/
 							"\red <b>[user] is slitting \his stomach open with the [src]! It looks like \he's trying to commit seppuku.</b>")
 		return (BRUTELOSS)
 
+/*
 /obj/item/weapon/scalpel/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
@@ -610,7 +618,7 @@ LOOK FOR SURGERY.DM*/
 	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()*/
 	return
-
+*/
 
 /*
  * Circular Saw
@@ -632,6 +640,7 @@ LOOK FOR SURGERY.DM*/
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 
+/*
 /obj/item/weapon/circular_saw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
@@ -780,6 +789,7 @@ LOOK FOR SURGERY.DM*/
 		return ..()
 */
 	return
+*/
 
 //misc, formerly from code/defines/weapons.dm
 /obj/item/weapon/bonegel

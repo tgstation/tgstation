@@ -822,7 +822,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if ( !alien.restrained() )
 				attack_larva(alien)
 
-	else if(ismetroid(usr))
 	else if(isslime(usr))
 		var/mob/living/carbon/slime/slime = usr
 		//-slime stuff-

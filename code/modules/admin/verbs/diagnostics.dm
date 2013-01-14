@@ -182,6 +182,7 @@
 	else
 		usr << "Local airgroup is unsimulated!"
 	feedback_add_details("admin_verb","KLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	*/
 
 /client/proc/print_jobban_old()
 	set name = "Print Jobban Log"

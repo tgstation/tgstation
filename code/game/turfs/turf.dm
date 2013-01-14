@@ -243,6 +243,7 @@
 
 //////Assimilate Air//////
 /turf/simulated/proc/Assimilate_Air()
+	/*
 	var/aoxy = 0//Holders to assimilate air from nearby turfs
 	var/anitro = 0
 	var/aco = 0
@@ -269,6 +270,7 @@
 	air.carbon_dioxide = (aco/max(turf_count,1))
 	air.toxins = (atox/max(turf_count,1))
 	air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+	*/
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)

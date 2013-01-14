@@ -151,7 +151,8 @@
 		swap_hand()
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if (src.health >= config.health_threshold_crit)		if(src == M && istype(src, /mob/living/carbon/human))
+	if (src.health >= config.health_threshold_crit)
+		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
 			src.visible_message( \
 				text("\blue [src] examines [].",src.gender==MALE?"himself":"herself"), \

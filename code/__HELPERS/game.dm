@@ -275,7 +275,8 @@ proc/isInSight(var/atom/A, var/atom/B)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
-/*
+
+//i think this is used soley by verb/give(), cael
 proc/check_can_reach(atom/user, atom/target)
 	if(!in_range(user,target))
 		return 0
@@ -315,9 +316,8 @@ var/list/DummyCache = list()
 	D.loc = null
 	DummyCache.Add(D)
 	return 1
-*/
-// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 
+// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 /proc/get_active_candidates(var/buffer = 1)
 
 	var/list/candidates = list() //List of candidate KEYS to assume control of the new larva ~Carn

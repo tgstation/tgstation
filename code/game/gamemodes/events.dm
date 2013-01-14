@@ -15,7 +15,8 @@
 						event()
 						hadevent = 1
 					else
-						Holiday_Random_Event()			else
+						Holiday_Random_Event()
+			else
 				event = 0
 			sleep(2400)
 

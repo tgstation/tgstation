@@ -58,7 +58,7 @@
 			trace_gas.moles = 30
 			payload += trace_gas
 
-			target.air.merge(payload)
+			target.zone.air.merge(payload)
 
 	spawn(0)
 		del(src)
@@ -71,7 +71,7 @@
 
 			payload.toxins = 30
 
-			target.air.merge(payload)
+			target.zone.air.merge(payload)
 
 			target.hotspot_expose(1000, CELL_VOLUME)
 

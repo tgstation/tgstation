@@ -22,7 +22,7 @@
 		/*if(src.dna.mutantrace == "lizard") //Soghun stutterss-s-ss-sss.
 			if(copytext(message, 1, 2) != "*")
 				message = replacetext(message, "s", stutter("ss"))*/
-		/*if(src.dna.mutantrace == "slime" && prob(5))
+		if(src.dna.mutantrace == "slime" && prob(5))
 			if(copytext(message, 1, 2) != "*")
 				if(copytext(message, 1, 2) == ";")
 					message = ";"
@@ -31,7 +31,7 @@
 				message += "SKR"
 				var/imax = rand(5,20)
 				for(var/i = 0,i<imax,i++)
-					message += "E"*/
+					message += "E"
 
 	if(stat != DEAD)
 		for(var/datum/disease/pierrot_throat/D in viruses)
@@ -69,7 +69,6 @@
 			if(prob(25))
 				message += " OLE!"
 
-	if ((HULK in mutations) && health >= 25)
 	if ((HULK in mutations) && health >= 25 && length(message))
 		if(copytext(message, 1, 2) != "*")
 			message = "[uppertext(message)]!!" //because I don't know how to code properly in getting vars from other files -Bro

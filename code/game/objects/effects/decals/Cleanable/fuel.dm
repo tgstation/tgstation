@@ -25,17 +25,12 @@ obj/effect/decal/cleanable/liquid_fuel
 		var/turf/simulated/S = loc
 		if(!istype(S)) return
 		for(var/d in cardinal)
-			if(S.air_check_directions & d)
-				if(rand(25))
-					var/turf/simulated/O = get_step(src,d)
-					var/can_pass = 1
-					for (var/obj/machinery/door/airlock/door in O)
-						if (door.density)
-							can_pass = 0
-					if (can_pass)
-						if(!locate(/obj/effect/decal/cleanable/liquid_fuel) in O)
-							new/obj/effect/decal/cleanable/liquid_fuel(O,amount*0.25)
-							amount *= 0.75
+			if(rand(25))
+				var/turf/simulated/O = get_step(src,d)
+				if(O.CanPass(target = get_turf(src), air_group = 1))
+					if(!locate(/obj/effect/decal/cleanable/liquid_fuel) in O)
+						new/obj/effect/decal/cleanable/liquid_fuel(O,amount*0.25)
+						amount *= 0.75
 
 	flamethrower_fuel
 		icon_state = "mustard"
@@ -50,8 +45,10 @@ obj/effect/decal/cleanable/liquid_fuel
 			if(!istype(S)) return
 
 			for(var/d in list(turn(dir,90),turn(dir,-90)))
-				if(S.air_check_directions & d)
-					var/turf/simulated/O = get_step(S,d)
+				var/turf/simulated/O = get_step(S,d)
+				if(locate(/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel) in O)
+					continue
+				if(O.CanPass(target = get_turf(src), air_group = 1))
 					new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(O,amount*0.25,d)
 					O.hotspot_expose((T20C*2) + 380,500) //Light flamethrower fuel on fire immediately.
 

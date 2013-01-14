@@ -547,7 +547,8 @@ datum/design/telecomms_processor
 	build_path = "/obj/item/weapon/circuitboard/telecomms/processor"
 
 datum/design/telecomms_server
-	name = "Circuit Design (Server Mainframe)"	desc = "Allows for the construction of Telecommunications Servers."
+	name = "Circuit Design (Server Mainframe)"
+	desc = "Allows for the construction of Telecommunications Servers."
 	id = "s-server"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER

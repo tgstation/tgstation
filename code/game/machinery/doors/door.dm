@@ -244,38 +244,11 @@
 
 	update_heat_protection(loc)
 
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild += source.parent
-			else
-				air_master.tiles_to_update += source
-		if(istype(north))
-			if(north.parent)
-				air_master.groups_to_rebuild += north.parent
-			else
-				air_master.tiles_to_update += north
-		if(istype(south))
-			if(south.parent)
-				air_master.groups_to_rebuild += south.parent
-			else
-				air_master.tiles_to_update += south
-		if(istype(east))
-			if(east.parent)
-				air_master.groups_to_rebuild += east.parent
-			else
-				air_master.tiles_to_update += east
-		if(istype(west))
-			if(west.parent)
-				air_master.groups_to_rebuild += west.parent
-			else
-				air_master.tiles_to_update += west
-	else
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(north)) air_master.tiles_to_update += north
-		if(istype(south)) air_master.tiles_to_update += south
-		if(istype(east)) air_master.tiles_to_update += east
-		if(istype(west)) air_master.tiles_to_update += west
+	if(istype(source)) air_master.tiles_to_update += source
+	if(istype(north)) air_master.tiles_to_update += north
+	if(istype(south)) air_master.tiles_to_update += south
+	if(istype(east)) air_master.tiles_to_update += east
+	if(istype(west)) air_master.tiles_to_update += west
 	return 1
 
 /obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
@@ -284,43 +257,6 @@
 			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
 		else
 			source.thermal_conductivity = initial(source.thermal_conductivity)
-
-
-		//skytodo
-		/*if(need_rebuild)
-			if(istype(source)) //Rebuild/update nearby group geometry
-				if(source.parent)
-					air_master.groups_to_rebuild += source.parent
-				else
-					air_master.tiles_to_update += source
-			if(istype(north))
-				if(north.parent)
-					air_master.groups_to_rebuild += north.parent
-				else
-					air_master.tiles_to_update += north
-			if(istype(south))
-				if(south.parent)
-					air_master.groups_to_rebuild += south.parent
-				else
-					air_master.tiles_to_update += south
-			if(istype(east))
-				if(east.parent)
-					air_master.groups_to_rebuild += east.parent
-				else
-					air_master.tiles_to_update += east
-			if(istype(west))
-				if(west.parent)
-					air_master.groups_to_rebuild += west.parent
-				else
-					air_master.tiles_to_update += west
-		else*/
-		if(istype(source)) air_master.tiles_to_update |= source
-		if(istype(north)) air_master.tiles_to_update |= north
-		if(istype(south)) air_master.tiles_to_update |= south
-		if(istype(east)) air_master.tiles_to_update |= east
-		if(istype(west)) air_master.tiles_to_update |= west
-
-		return 1
 
 /obj/machinery/door/proc/autoclose()
 	var/obj/machinery/door/airlock/A = src

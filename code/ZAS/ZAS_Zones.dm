@@ -151,8 +151,10 @@ zone/proc/process()
 	//Sometimes explosions will cause the air to be deleted for some reason.
 	if(!air)
 		air = new()
-		air.adjust(MOLES_O2STANDARD, 0, MOLES_N2STANDARD, 0, list())
+		air.oxygen = MOLES_O2STANDARD
+		air.nitrogen = MOLES_N2STANDARD
 		air.temperature = T0C
+		air.total_moles()
 		world.log << "Air object lost in zone. Regenerating."
 
 	progress = "problem with: ShareSpace()"
