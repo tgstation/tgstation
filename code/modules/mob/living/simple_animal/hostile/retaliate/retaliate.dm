@@ -17,11 +17,13 @@
 	var/list/mobs_around = viewers(src, 7)
 
 	for(var/mob/living/M in mobs_around)
-		if(!attack_same && istype(M, type))
+		if(M == src)
+			continue
+		if(!attack_same && M.faction != faction)
 			enemies += M
 
 	for(var/mob/living/simple_animal/hostile/retaliate/H in mobs_around)
-		if(istype(H, src.type))
+		if(!attack_same && !H.attack_same && H.faction == faction)
 			H.enemies += enemies
 	return 0
 

@@ -38,6 +38,11 @@
 	health -= damage
 	healthcheck()
 
+/obj/effect/spider/bullet_act(var/obj/item/projectile/Proj)
+	..()
+	health -= Proj.damage
+	healthcheck()
+
 /obj/effect/spider/proc/healthcheck()
 	if(health <= 0)
 		del(src)
@@ -89,6 +94,7 @@
 	icon_state = "spiderling"
 	anchored = 0
 	layer = 2.7
+	health = 3
 	var/amount_grown = 0
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
@@ -102,6 +108,14 @@
 		src.loc = user.loc
 	else
 		..()
+
+/obj/effect/spider/spiderling/proc/die()
+	visible_message("<span class='alert'>[src] dies!</span>")
+	del(src)
+
+/obj/effect/spider/spiderling/healthcheck()
+	if(health <= 0)
+		die()
 
 /obj/effect/spider/spiderling/process()
 	if(travelling_in_vent)
@@ -162,12 +176,12 @@
 				entry_vent = v
 				walk_to(src, entry_vent, 1)
 				break
-
-	amount_grown += rand(0,2)
-	if(amount_grown >= 100)
-		var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-		new spawn_type(src.loc)
-		del(src)
+	if(isturf(loc))
+		amount_grown += rand(0,2)
+		if(amount_grown >= 100)
+			var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
+			new spawn_type(src.loc)
+			del(src)
 
 /obj/effect/spider/cocoon
 	name = "cocoon"
