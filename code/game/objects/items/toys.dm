@@ -520,6 +520,7 @@
 	desc = "Mini-Mecha action figure! Collect them all! 4/11."
 	icon_state = "gygaxtoy"
 
+
 /obj/item/toy/prize/durand
 	name = "toy durand"
 	desc = "Mini-Mecha action figure! Collect them all! 5/11."
@@ -554,3 +555,23 @@
 	name = "toy phazon"
 	desc = "Mini-Mecha action figure! Collect them all! 11/11."
 	icon_state = "phazonprize"
+/obj/item/toy/katana
+	name = "replica katana"
+	desc = "Woefully underpowered in D20."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "katana"
+	item_state = "katana"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT | SLOT_BACK
+	force = 5
+	throwforce = 5
+	w_class = 3
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
+
+/obj/item/weapon/toddler
+	icon_state = "toddler"
+	name = "toddler"
+	desc = "This baby looks almost real. Wait, did it just burp?"
+	force = 5
+	w_class = 4.0
+	slot_flags = SLOT_BACK

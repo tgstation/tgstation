@@ -172,7 +172,7 @@ proc/Airflow(zone/A, zone/B)
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
 		if(ismob(M) && abs(n) > vsc.airflow_medium_pressure)
-			if(M:nodamage) continue
+			if(M:status_flags & GODMODE) continue
 			M:airflow_stun()
 
 		if(M.check_airflow_movable(abs(n)))
