@@ -85,7 +85,7 @@
 	slowdown = 1
 	w_class = 3
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 60)
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
@@ -107,7 +107,6 @@
 	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/emergency_oxygen)
 
 
-
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical
 	name = "medical hardsuit helmet"
@@ -119,4 +118,40 @@
 	icon_state = "rig-medical"
 	name = "medical hardsuit"
 	item_state = "medical_hardsuit"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
+
+
+//Security Rig (BS12)
+/obj/item/clothing/head/helmet/space/rig/security
+	name = "security hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has additional layers of armour and ablative shielding in lieu of radiation shielding."
+	icon_state = "rig0-security"
+	item_state = "security_helm"
+	color = "security"
+	armor = list(melee = 45, bullet = 10, laser = 25,energy = 10, bomb = 40, bio = 100, rad = 5)
+
+/obj/item/clothing/suit/space/rig/security
+	desc = "A special suit that protects against hazardous, low pressure environments. Has additional layers of armour and ablative shielding in lieu of radiation shielding."
+	icon_state = "rig-security"
+	name = "atmos hardsuit"
+	item_state = "atmos_hardsuit"
+	armor = list(melee = 45, bullet = 10, laser = 25,energy = 10, bomb = 40, bio = 100, rad = 5)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/gun/energy)
+
+
+//Atmospherics Rig (BS12)
+/obj/item/clothing/head/helmet/space/rig/atmos
+	desc = "A special helmet designed for work in a hazardou, low pressure environments. Has reduced radiation shielding and protective plating to allow for greater mobility."
+	name = "atmospherics hardsuit helmet"
+	icon_state = "rig0-atmos"
+	item_state = "atmos_helm"
+	color = "atmos"
+	armor = list(melee = 35, bullet = 5, laser = 15,energy = 5, bomb = 30, bio = 100, rad = 5)
+
+/obj/item/clothing/suit/space/rig/atmos
+	desc = "A special suit that protects against hazardous, low pressure environments. Has reduced radiation shielding to allow for greater mobility."
+	icon_state = "rig-atmos"
+	name = "atmos hardsuit"
+	item_state = "atmos_hardsuit"
+	armor = list(melee = 35, bullet = 5, laser = 15,energy = 5, bomb = 30, bio = 100, rad = 5)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
