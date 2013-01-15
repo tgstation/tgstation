@@ -7,7 +7,7 @@
 	density = 1
 	anchored = 0
 //	weight = 1.0E7
-	req_access = list(access_security)
+	req_one_access = list(access_security, access_forensics_lockers)
 	health = 100
 	maxhealth = 100
 	fire_dam_coeff = 0.7
@@ -78,7 +78,8 @@
 	src.icon_state = "[lasercolor]ed209[src.on]"
 	spawn(3)
 		src.botcard = new /obj/item/weapon/card/id(src)
-		src.botcard.access = get_access("Detective")
+		var/datum/job/detective/J = new/datum/job/detective
+		src.botcard.access = J.get_access()
 
 		if(radio_controller)
 			radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
@@ -194,11 +195,12 @@ Auto Patrol: []"},
 				user << "<span class='notice'>Access denied.</span>"
 	else
 		..()
-		if (!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
-			src.target = user
-			if(lasercolor)//To make up for the fact that lasertag bots don't hunt
-				src.shootAt(user)
-			src.mode = SECBOT_HUNT
+		if (!istype(W, /obj/item/weapon/screwdriver) && (!src.target))
+			if(hasvar(W,"force") && W.force)//If force is defined and non-zero
+				src.target = user
+				if(lasercolor)//To make up for the fact that lasertag bots don't hunt
+					src.shootAt(user)
+				src.mode = SECBOT_HUNT
 
 /obj/machinery/bot/ed209/Emag(mob/user as mob)
 	..()
@@ -317,29 +319,36 @@ Auto Patrol: []"},
 				mode = SECBOT_HUNT
 				return
 
-			if (!src.target.handcuffed && !src.arrest_type)
-				playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-				mode = SECBOT_ARREST
-				visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
+			if(istype(src.target,/mob/living/carbon))
+				if (!src.target.handcuffed && !src.arrest_type)
+					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+					mode = SECBOT_ARREST
+					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
-				spawn(60)
-					if (get_dist(src, src.target) <= 1)
-						if (src.target.handcuffed)
-							return
+					spawn(60)
+						if (get_dist(src, src.target) <= 1)
+							if (src.target.handcuffed)
+								return
 
-						if(istype(src.target,/mob/living/carbon))
-							src.target.handcuffed = new /obj/item/weapon/handcuffs(src.target)
-							target.update_inv_handcuffed()	//update handcuff overlays
+							if(istype(src.target,/mob/living/carbon))
+								src.target.handcuffed = new /obj/item/weapon/handcuffs(src.target)
+								target.update_inv_handcuffed()	//update handcuff overlays
 
-						mode = SECBOT_IDLE
-						src.target = null
-						src.anchored = 0
-						src.last_found = world.time
-						src.frustration = 0
+							mode = SECBOT_IDLE
+							src.target = null
+							src.anchored = 0
+							src.last_found = world.time
+							src.frustration = 0
 
-	//					playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-	//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
-	//					src.speak(arrest_message)
+		//					playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
+		//					src.speak(arrest_message)
+			else
+				mode = SECBOT_IDLE
+				src.target = null
+				src.anchored = 0
+				src.last_found = world.time
+				src.frustration = 0
 
 		if(SECBOT_ARREST)		// arresting
 			if(src.lasercolor)
@@ -704,22 +713,17 @@ Auto Patrol: []"},
 		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag))
 			threatcount += 2
 
-	if (src.check_records)
+	if(src.check_records)
 		for (var/datum/data/record/E in data_core.general)
 			var/perpname = perp.name
-			if (perp:wear_id)
-				var/obj/item/weapon/card/id/id = perp:wear_id
-				if(istype(perp:wear_id, /obj/item/device/pda))
-					var/obj/item/device/pda/pda = perp:wear_id
-					id = pda.id
-				if (id)
+			if(perp.wear_id)
+				var/obj/item/weapon/card/id/id = perp.wear_id.GetID()
+				if(id)
 					perpname = id.registered_name
-				else
-					var/obj/item/device/pda/pda = perp:wear_id
-					perpname = pda.owner
-			if (E.fields["name"] == perpname)
+
+			if(E.fields["name"] == perpname)
 				for (var/datum/data/record/R in data_core.security)
-					if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
+					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 						threatcount = 4
 						break
 

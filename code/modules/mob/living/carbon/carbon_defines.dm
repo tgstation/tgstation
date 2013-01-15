@@ -1,9 +1,9 @@
 /mob/living/carbon/
 	gender = MALE
 	var/list/stomach_contents = list()
+	var/brain_op_stage = 0.0
 	var/datum/disease2/disease/virus2 = null
 	var/list/datum/disease2/disease/resistances2 = list()
-
 	var/antibodies = 0
 
 	var/silent = null 		//Can't talk. Value goes down every life proc.
@@ -17,5 +17,4 @@
 	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
 	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
 	//Surgery info
-	var/brain_op_stage = 0.0
 	var/datum/surgery_status/op_stage = new/datum/surgery_status

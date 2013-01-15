@@ -286,7 +286,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if (R.client && !(R.client.prefs.toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
-		if(istype(M, /mob/new_player)) // we don't want new players to hear messages. rare but generates runtimes.
+		if(istype(R, /mob/new_player)) // we don't want new players to hear messages. rare but generates runtimes.
 			continue
 
 
@@ -297,10 +297,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Can understand the speech ---
 
-		if (R.say_understands(M))
+		if (!M || R.say_understands(M))
 
 			// - Not human or wearing a voice mask -
-			if (!ishuman(M) || vmask)
+			if (!M || !ishuman(M) || vmask)
 				heard_masked += R
 
 			// - Human and not wearing voice mask -
@@ -371,7 +371,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
-		var/quotedmsg = M.say_quote(message)
+		var/quotedmsg = null
+		if(M)
+			quotedmsg = M.say_quote(message)
+		else
+			quotedmsg = "says, \"[message]\""
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
@@ -447,7 +451,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			// Does not display message; displayes the mob's voice_message (ie "chimpers")
 
 		if (length(heard_voice))
-			var/rendered = "[part_a][vname][part_b][M.voice_message][part_c]"
+			var/rendered = "[part_a][vname][part_b][vmessage][part_c]"
 
 			for (var/mob/R in heard_voice)
 				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"
@@ -464,7 +468,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			// Displays garbled message (ie "f*c* **u, **i*er!")
 
 		if (length(heard_garbled))
-			quotedmsg = M.say_quote(stars(message))
+			if(M)
+				quotedmsg = M.say_quote(stars(message))
+			else
+				quotedmsg = stars(quotedmsg)
+
 			var/rendered = "[part_a][vname][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_garbled)
@@ -482,8 +490,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		/* --- Complete gibberish. Usually happens when there's a compressed message --- */
 
 		if (length(heard_gibberish))
-			quotedmsg = M.say_quote(Gibberish(message, compression + 50))
-			var/rendered = "[part_a][Gibberish(M.real_name, compression + 50)][part_b][quotedmsg][part_c]"
+			if(M)
+				quotedmsg = M.say_quote(Gibberish(message, compression + 50))
+			else
+				quotedmsg = Gibberish(quotedmsg, compression + 50)
+
+			var/rendered = "[part_a][Gibberish(name, compression + 50)][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_gibberish)
 				aitrack = "<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>"

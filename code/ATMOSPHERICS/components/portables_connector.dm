@@ -15,7 +15,7 @@
 	var/datum/pipe_network/network
 
 	var/on = 0
-
+	use_power = 0
 	level = 0
 
 

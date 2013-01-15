@@ -97,7 +97,7 @@
 
 
 	update_icon()
-		overlays = null
+		overlays.Cut()
 		if(focus && focus.icon && focus.icon_state)
 			overlays += icon(focus.icon,focus.icon_state)
 		return

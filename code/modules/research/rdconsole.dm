@@ -266,7 +266,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				usr << "\red The destructive analyzer is busy at the moment."
 			else
 				var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
-				if(choice == "Cancel") return
+				if(choice == "Cancel" || !linked_destroy) return
 				linked_destroy.busy = 1
 				screen = 0.1
 				updateUsrDialog()

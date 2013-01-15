@@ -314,3 +314,10 @@ proc/listclearnulls(list/list)
 			return key
 		i++
 	return null
+
+/proc/count_by_type(var/list/L, type)
+	var/i = 0
+	for(var/T in L)
+		if(istype(T, type))
+			i++
+	return i

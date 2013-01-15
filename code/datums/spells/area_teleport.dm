@@ -42,6 +42,10 @@
 				if(clear)
 					L+=T
 
+		if(!L.len)
+			usr <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
+			return
+
 		var/attempt = 0
 		var/success = 0
 		while(!success)

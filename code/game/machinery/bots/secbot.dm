@@ -11,7 +11,7 @@
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
 //	weight = 1.0E7
-	req_access = list(access_security)
+	req_one_access = list(access_security, access_forensics_lockers)
 	var/mob/living/carbon/target
 	var/oldtarget_name
 	var/threatlevel = 0
@@ -74,7 +74,8 @@
 		src.icon_state = "secbot[src.on]"
 		spawn(3)
 			src.botcard = new /obj/item/weapon/card/id(src)
-			src.botcard.access = get_access("Detective")
+			var/datum/job/detective/J = new/datum/job/detective
+			src.botcard.access = J.get_access()
 			if(radio_controller)
 				radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 				radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
@@ -259,29 +260,36 @@ Auto Patrol: []"},
 				mode = SECBOT_HUNT
 				return
 
-			if(!src.target.handcuffed && !src.arrest_type)
-				playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-				mode = SECBOT_ARREST
-				visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
+			if(istype(src.target,/mob/living/carbon))
+				if(!src.target.handcuffed && !src.arrest_type)
+					playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+					mode = SECBOT_ARREST
+					visible_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>")
 
-				spawn(60)
-					if(get_dist(src, src.target) <= 1)
-						if(src.target.handcuffed)
-							return
+					spawn(60)
+						if(get_dist(src, src.target) <= 1)
+							if(src.target.handcuffed)
+								return
 
-						if(istype(src.target,/mob/living/carbon))
-							target.handcuffed = new /obj/item/weapon/handcuffs(target)
-							target.update_inv_handcuffed()	//update the handcuffs overlay
+							if(istype(src.target,/mob/living/carbon))
+								target.handcuffed = new /obj/item/weapon/handcuffs(target)
+								target.update_inv_handcuffed()	//update the handcuffs overlay
 
-						mode = SECBOT_IDLE
-						src.target = null
-						src.anchored = 0
-						src.last_found = world.time
-						src.frustration = 0
+							mode = SECBOT_IDLE
+							src.target = null
+							src.anchored = 0
+							src.last_found = world.time
+							src.frustration = 0
 
-						playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-	//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
-	//					src.speak(arrest_message)
+							playsound(src.loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+		//					var/arrest_message = pick("Have a secure day!","I AM THE LAW.", "God made tomorrow for the crooks we don't catch today.","You can't outrun a radio.")
+		//					src.speak(arrest_message)
+			else
+				mode = SECBOT_IDLE
+				src.target = null
+				src.anchored = 0
+				src.last_found = world.time
+				src.frustration = 0
 
 		if(SECBOT_ARREST)		// arresting
 
@@ -621,16 +629,11 @@ Auto Patrol: []"},
 	if(src.check_records)
 		for (var/datum/data/record/E in data_core.general)
 			var/perpname = perp.name
-			if(perp:wear_id)
-				var/obj/item/weapon/card/id/id = perp:wear_id
-				if(istype(perp:wear_id, /obj/item/device/pda))
-					var/obj/item/device/pda/pda = perp:wear_id
-					id = pda.id
+			if(perp.wear_id)
+				var/obj/item/weapon/card/id/id = perp.wear_id.GetID()
 				if(id)
 					perpname = id.registered_name
-				else
-					var/obj/item/device/pda/pda = perp:wear_id
-					perpname = pda.owner
+
 			if(E.fields["name"] == perpname)
 				for (var/datum/data/record/R in data_core.security)
 					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))

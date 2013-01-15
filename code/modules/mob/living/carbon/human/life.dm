@@ -1340,11 +1340,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 			if(dna)
 				switch(dna.mutantrace)
-					if("metroid")
+					if("lizard","slime")
 						see_in_dark = 3
 						see_invisible = SEE_INVISIBLE_LEVEL_ONE
-					if("lizard")
-						see_in_dark = 3
 					if("tajaran")
 						see_in_dark = 4
 					if("shadow")
@@ -1415,15 +1413,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
 
 				else if(istype(glasses, /obj/item/clothing/glasses/hud))
-					var/obj/item/clothing/glasses/hud/health/O = glasses
-
-					if(istype(O, /obj/item/clothing/glasses/hud/health))
-						O.process_hud(src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
-
-					else if(istype(O, /obj/item/clothing/glasses/hud/security))
-						O.process_hud(src)
-						if(!druggy)		see_invisible = SEE_INVISIBLE_LIVING
+					var/obj/item/clothing/glasses/hud/O = glasses
+					O.process_hud(src)
+					if(!druggy)
+						see_invisible = SEE_INVISIBLE_LIVING
 				else
 					see_invisible = SEE_INVISIBLE_LIVING
 			else

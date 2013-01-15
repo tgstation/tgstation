@@ -15,13 +15,13 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags = (FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH)
 	item_state = "welding"
 	m_amt = 3000
 	g_amt = 1000
 	var/up = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	icon_action_button = "action_welding"
 
 /obj/item/clothing/head/welding/attack_self()
@@ -36,13 +36,13 @@
 	if(usr.canmove && !usr.stat && !usr.restrained())
 		if(src.up)
 			src.up = !src.up
-			src.flags |= HEADCOVERSEYES | HEADCOVERSMOUTH
-			flags_inv |= HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
+			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = initial(icon_state)
 			usr << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
-			src.flags &= ~HEADCOVERSEYES | HEADCOVERSMOUTH
+			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push the [src] up out of your face."
@@ -122,42 +122,32 @@
 	color = "pumpkin"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	brightness_on = 2 //luminosity when on
-	light_on = 0
+	var/brightness_on = 2 //luminosity when on
+	var/on = 0
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))
 			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
 			return
-		light_on = !light_on
-		icon_state = "hardhat[light_on]_[color]"
-		item_state = "hardhat[light_on]_[color]"
+		on = !on
+		icon_state = "hardhat[on]_[color]"
+		item_state = "hardhat[on]_[color]"
 
-		if((light_on) && (user.luminosity < brightness_on))
-			user.SetLuminosity(brightness_on)
-		else
-			user.SetLuminosity(search_light(user, src))
+		if(on)	user.SetLuminosity(user.luminosity + brightness_on)
+		else	user.SetLuminosity(user.luminosity - brightness_on)
 
 	pickup(mob/user)
-		if(light_on)
-			if (user.luminosity < brightness_on)
-				user.SetLuminosity(brightness_on)
-//			user.UpdateLuminosity()	//TODO: Carn
+		if(on)
+			user.SetLuminosity(user.luminosity + brightness_on)
+//			user.UpdateLuminosity()
 			SetLuminosity(0)
 
 	dropped(mob/user)
-		if(light_on)
-			if ((layer <= 3) || (loc != user.loc))
-				user.SetLuminosity(search_light(user, src))
-				SetLuminosity(brightness_on)
-	//			user.UpdateLuminosity()
+		if(on)
+			user.SetLuminosity(user.luminosity - brightness_on)
+//			user.UpdateLuminosity()
+			SetLuminosity(brightness_on)
 
-	equipped(mob/user, slot)
-		if(light_on)
-			if (user.luminosity < brightness_on)
-				user.SetLuminosity(brightness_on)
-//			user.UpdateLuminosity()	//TODO: Carn
-			SetLuminosity(0)
 /*
  * Kitty ears
  */

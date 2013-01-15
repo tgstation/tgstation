@@ -103,10 +103,12 @@ var/datum/cameranet/cameranet = new()
 
 	var/turf/T = get_turf(c)
 	if(T)
-		var/x1 = max(0, T.x - 16) & ~0xf
-		var/y1 = max(0, T.y - 16) & ~0xf
-		var/x2 = min(world.maxx, T.x + 16) & ~0xf
-		var/y2 = min(world.maxy, T.y + 16) & ~0xf
+		var/x1 = max(0, T.x - 8) & ~0xf
+		var/y1 = max(0, T.y - 8) & ~0xf
+		var/x2 = min(world.maxx, T.x + 8) & ~0xf
+		var/y2 = min(world.maxy, T.y + 8) & ~0xf
+
+		//world << "X1: [x1] - Y1: [y1] - X2: [x2] - Y2: [y2]"
 
 		for(var/x = x1; x <= x2; x += 16)
 			for(var/y = y1; y <= y2; y += 16)
@@ -133,3 +135,14 @@ var/datum/cameranet/cameranet = new()
 		if(chunk.visibleTurfs[position])
 			return 1
 	return 0
+
+
+// Debug verb for VVing the chunk that the turf is in.
+/*
+/turf/verb/view_chunk()
+	set src in world
+
+	if(cameranet.chunkGenerated(x, y, z))
+		var/datum/camerachunk/chunk = cameranet.getCameraChunk(x, y, z)
+		usr.client.debug_variables(chunk)
+*/

@@ -1,3 +1,12 @@
+
+//moved these here from code/defines/obj/weapon.dm
+//please preference put stuff where it's easy to find - C
+
+/obj/item/weapon/autopsy_scanner/var/list/datum/autopsy_data_scanner/wdata = list()
+/obj/item/weapon/autopsy_scanner/var/list/datum/autopsy_data_scanner/chemtraces = list()
+/obj/item/weapon/autopsy_scanner/var/target_name = null
+/obj/item/weapon/autopsy_scanner/var/timeofdeath = null
+
 /datum/autopsy_data_scanner
 	var/weapon = null // this is the DEFINITE weapon type that was used
 	var/list/organs_scanned = list() // this maps a number of scanned organs to

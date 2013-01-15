@@ -12,6 +12,7 @@
 		..()
 		sleep(2)
 		new /obj/item/clothing/under/rank/scientist(src)
+		//new /obj/item/clothing/suit/labcoat/science(src)
 		new /obj/item/clothing/suit/storage/labcoat(src)
 		new /obj/item/clothing/shoes/white(src)
 //		new /obj/item/weapon/cartridge/signal/toxins(src)

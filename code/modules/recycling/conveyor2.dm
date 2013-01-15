@@ -85,7 +85,7 @@
 		var/items_moved = 0
 		for(var/atom/movable/A in affecting)
 			if(!A.anchored)
-				if(isturf(A.loc)) // this is to prevent an ugly bug that forces a player to drop what they're holding if they recently pick it up from the conveyer belt
+				if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
 					step(A,movedir)
 					items_moved++
 			if(items_moved >= 10)

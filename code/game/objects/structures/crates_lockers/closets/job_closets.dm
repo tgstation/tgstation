@@ -50,8 +50,9 @@
 	new /obj/item/weapon/caution(src)
 	new /obj/item/weapon/caution(src)
 	new /obj/item/weapon/caution(src)
-	new /obj/item/weapon/trashbag(src)
+	new /obj/item/weapon/storage/bag/trash(src)
 	new /obj/item/device/lightreplacer(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
 
 /*

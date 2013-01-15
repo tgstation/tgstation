@@ -449,9 +449,6 @@ Status: []<BR>"},
 	var/list/secondarytargets = list() // targets that are least important
 
 	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "crittersssss"(And simple_animals)
-		for (var/obj/effect/critter/L in view(7,src))
-			if(L.alive)
-				targets += L
 		for(var/mob/living/simple_animal/C in view(7,src))
 			if(!C.stat)
 				targets += C
@@ -506,15 +503,6 @@ Status: []<BR>"},
 				spawn() popUp() // pop the turret up if it's not already up.
 				dir=get_dir(src,M) // even if you can't shoot, follow the target
 				spawn() shootAt(M) // shoot the target, finally
-		else
-
-			if (istype(t, /obj/effect/critter)) // shoot other things, same process as above
-				var/obj/effect/critter/L = t
-				if (L.alive==1)
-					spawn() popUp()
-					dir=get_dir(src,L)
-					spawn() shootAt(L)
-
 
 	else
 		if(secondarytargets.len>0) // if there are no primary targets, go for secondary targets

@@ -12,6 +12,7 @@
 	icon_state = "teg"
 	anchored = 1
 	density = 1
+	use_power = 0
 
 	var/obj/machinery/atmospherics/binary/circulator/circ1
 	var/obj/machinery/atmospherics/binary/circulator/circ2
@@ -42,9 +43,9 @@
 /obj/machinery/power/generator/proc/updateicon()
 
 	if(stat & (NOPOWER|BROKEN))
-		overlays = null
+		overlays.Cut()
 	else
-		overlays = null
+		overlays.Cut()
 
 		if(lastgenlev != 0)
 			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")

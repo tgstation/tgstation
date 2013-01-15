@@ -22,16 +22,14 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 		if(A.GetDiseaseID() in resistances)
 			//world << "It resisted us!"
 			return
-		var/count = 0
-		for(var/datum/disease/advance/AD in viruses)
-			count++
-		if(count >= 3)
+		if(count_by_type(viruses, /datum/disease/advance) >= 3)
 			return
 
 	else
 		if(src.resistances.Find(virus.type))
 			//world << "Normal virus and resisted"
 			return
+
 
 	if(has_disease(virus))
 		return
@@ -117,41 +115,33 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 			if(1)
 				if(isobj(H.head) && !istype(H.head, /obj/item/weapon/paper))
 					Cl = H.head
-					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-//					world << "Head pass [passed]"
+					passed = prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(H.wear_mask))
 					Cl = H.wear_mask
-					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-//					world << "Mask pass [passed]"
+					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(2)//arms and legs included
 				if(isobj(H.wear_suit))
 					Cl = H.wear_suit
-					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-//					world << "Suit pass [passed]"
+					passed = prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(slot_w_uniform))
 					Cl = slot_w_uniform
-					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-//					world << "Uniform pass [passed]"
+					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(3)
 				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
 					Cl = H.wear_suit
-					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-//					world << "Suit pass [passed]"
+					passed = prob((Cl.permeability_coefficient*100) - 1)
 
 				if(passed && isobj(H.gloves))
 					Cl = H.gloves
-					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-//					world << "Gloves pass [passed]"
+					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(4)
 				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
 					Cl = H.wear_suit
-					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-//					world << "Suit pass [passed]"
+					passed = prob((Cl.permeability_coefficient*100) - 1)
 
 				if(passed && isobj(H.shoes))
 					Cl = H.shoes
-					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-//					world << "Shoes pass [passed]"
+					passed = prob((Cl.permeability_coefficient*100) - 1)
 			else
 				src << "Something strange's going on, something's wrong."
 
@@ -168,11 +158,11 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 			if(1)
 				if(M.wear_mask && isobj(M.wear_mask))
 					Cl = M.wear_mask
-					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
+					passed = prob((Cl.permeability_coefficient*100) - 1)
 					//world << "Mask pass [passed]"
 
-	if(passed && spread_type == AIRBORNE && internals)
-		passed = (prob(50*virus.permeability_mod))
+	if(!passed && spread_type == AIRBORNE && !internals)
+		passed = (prob((50*virus.permeability_mod) - 1))
 
 	if(passed)
 		//world << "Infection in the mob [src]. YAY"

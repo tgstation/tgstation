@@ -184,3 +184,16 @@ RCD
 	..()
 	desc = "A device used to rapidly build walls/floor."
 	canRwall = 1
+
+/obj/item/weapon/rcd_ammo
+	name = "compressed matter cartridge"
+	desc = "Highly compressed matter for the RCD."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "rcd"
+	item_state = "rcdammo"
+	opacity = 0
+	density = 0
+	anchored = 0.0
+	origin_tech = "materials=2"
+	m_amt = 30000
+	g_amt = 15000

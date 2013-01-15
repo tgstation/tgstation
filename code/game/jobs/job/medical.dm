@@ -9,6 +9,12 @@
 	selection_color = "#ffddf0"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
+	access = list(access_medical, access_morgue, access_genetics, access_heads,
+			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
+			access_keycard_auth, access_sec_doors)
+	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads,
+			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
+			access_keycard_auth, access_sec_doors)
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -41,8 +47,10 @@
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
-	alt_titles = list("Surgeon", "Emergency Physician", "Virologist")
 
+	access = list(access_medical, access_morgue, access_surgery)
+	minimal_access = list(access_medical, access_morgue, access_surgery)
+	alt_titles = list("Surgeon", "Emergency Physician", "Virologist")
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -82,7 +90,7 @@
 
 
 
-//Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete
+//Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
 /datum/job/chemist
 	title = "Chemist"
 	flag = CHEMIST
@@ -92,6 +100,8 @@
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	access = list(access_medical, access_chemistry)
+	minimal_access = list(access_medical, access_chemistry)
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -118,6 +128,8 @@
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
+	access = list(access_medical, access_morgue, access_genetics, access_research)
+	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -145,6 +157,8 @@
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	access = list(access_medical, access_virology)
+	minimal_access = list(access_medical, access_virology)
 
 
 	equip(var/mob/living/carbon/human/H)

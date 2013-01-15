@@ -84,7 +84,7 @@
 	establish_db_connection()
 	if(dbcon.IsConnected())
 
-		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype FROM erro_poll_question WHERE id = [pollid]")
+		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM erro_poll_question WHERE id = [pollid]")
 		select_query.Execute()
 
 		var/pollstarttime = ""
@@ -92,6 +92,7 @@
 		var/pollquestion = ""
 		var/polltype = ""
 		var/found = 0
+		var/multiplechoiceoptions = 0
 
 		while(select_query.NextRow())
 			pollstarttime = select_query.item[1]
@@ -271,9 +272,71 @@
 					output += "</form>"
 
 				src << browse(output,"window=playerpoll;size=500x500")
+			if("MULTICHOICE")
+				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+				voted_query.Execute()
+
+				var/list/votedfor = list()
+				var/voted = 0
+				while(voted_query.NextRow())
+					votedfor.Add(text2num(voted_query.item[1]))
+					voted = 1
+
+				var/list/datum/polloption/options = list()
+				var/maxoptionid = 0
+				var/minoptionid = 0
+
+				var/DBQuery/options_query = dbcon.NewQuery("SELECT id, text FROM erro_poll_option WHERE pollid = [pollid]")
+				options_query.Execute()
+				while(options_query.NextRow())
+					var/datum/polloption/PO = new()
+					PO.optionid = text2num(options_query.item[1])
+					PO.optiontext = options_query.item[2]
+					if(PO.optionid > maxoptionid)
+						maxoptionid = PO.optionid
+					if(PO.optionid < minoptionid || !minoptionid)
+						minoptionid = PO.optionid
+					options += PO
+
+
+				if(select_query.item[5])
+					multiplechoiceoptions = text2num(select_query.item[5])
+
+				var/output = "<div align='center'><B>Player poll</B>"
+				output +="<hr>"
+				output += "<b>Question: [pollquestion]</b><br>You can select up to [multiplechoiceoptions] options. If you select more, the first [multiplechoiceoptions] will be saved.<br>"
+				output += "<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
+
+				if(!voted)	//Only make this a form if we have not voted yet
+					output += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
+					output += "<input type='hidden' name='src' value='\ref[src]'>"
+					output += "<input type='hidden' name='votepollid' value='[pollid]'>"
+					output += "<input type='hidden' name='votetype' value='MULTICHOICE'>"
+					output += "<input type='hidden' name='maxoptionid' value='[maxoptionid]'>"
+					output += "<input type='hidden' name='minoptionid' value='[minoptionid]'>"
+
+				output += "<table><tr><td>"
+				for(var/datum/polloption/O in options)
+					if(O.optionid && O.optiontext)
+						if(voted)
+							if(O.optionid in votedfor)
+								output += "<b>[O.optiontext]</b><br>"
+							else
+								output += "[O.optiontext]<br>"
+						else
+							output += "<input type='checkbox' name='option_[O.optionid]' value='[O.optionid]'> [O.optiontext]<br>"
+				output += "</td></tr></table>"
+
+				if(!voted)	//Only make this a form if we have not voted yet
+					output += "<p><input type='submit' value='Vote'>"
+					output += "</form>"
+
+				output += "</div>"
+
+				src << browse(output,"window=playerpoll;size=500x250")
 		return
 
-/mob/new_player/proc/vote_on_poll(var/pollid = -1, var/optionid = -1)
+/mob/new_player/proc/vote_on_poll(var/pollid = -1, var/optionid = -1, var/multichoice = 0)
 	if(pollid == -1 || optionid == -1)
 		return
 
@@ -282,15 +345,18 @@
 	establish_db_connection()
 	if(dbcon.IsConnected())
 
-		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype FROM erro_poll_question WHERE id = [pollid] AND Now() BETWEEN starttime AND endtime")
+		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM erro_poll_question WHERE id = [pollid] AND Now() BETWEEN starttime AND endtime")
 		select_query.Execute()
 
 		var/validpoll = 0
+		var/multiplechoiceoptions = 0
 
 		while(select_query.NextRow())
-			if(select_query.item[4] != "OPTION")
+			if(select_query.item[4] != "OPTION" && select_query.item[4] != "MULTICHOICE")
 				return
 			validpoll = 1
+			if(select_query.item[5])
+				multiplechoiceoptions = text2num(select_query.item[5])
 			break
 
 		if(!validpoll)
@@ -316,11 +382,16 @@
 		voted_query.Execute()
 
 		while(voted_query.NextRow())
-			alreadyvoted = 1
-			break
+			alreadyvoted += 1
+			if(!multichoice)
+				break
 
-		if(alreadyvoted)
+		if(!multichoice && alreadyvoted)
 			usr << "\red You already voted in this poll."
+			return
+
+		if(multichoice && (alreadyvoted >= multiplechoiceoptions))
+			usr << "\red You already have more than [multiplechoiceoptions] logged votes on this poll. Enough is enough. Contact the database admin if this is an error."
 			return
 
 		var/adminrank = "Player"

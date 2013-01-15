@@ -10,7 +10,7 @@
  */
 /obj/item/stack/sheet/glass
 	name = "glass"
-	desc = "HOLY HELL! That is a lot of glass."
+	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	g_amt = 3750

@@ -357,8 +357,9 @@ datum/preferences
 
 		user << browse(dat, "window=preferences;size=560x580")
 
-	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 600, height = 550)
-		if(!job_master)	return
+	proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), width = 550, height = 550)
+		if(!job_master)
+			return
 
 		//limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
 		//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
@@ -369,7 +370,7 @@ datum/preferences
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
 		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br><br>"
-		HTML += "<a align='center' href='?_src_=prefs;preference=job;task=close'>\[Done\]</a><br><br>" // Easier to press up here.
+		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 		var/index = -1
@@ -431,8 +432,8 @@ datum/preferences
 
 		HTML += "</center></table>"
 
-		HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=[userandomjob ? "green>Get random job if preferences unavailable" : "red>Be assistant if preference unavailable"]</font></a></u></center>"
-
+		HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=[userandomjob ? "green>Get random job if preferences unavailable" : "red>Be assistant if preference unavailable"]</font></a></u></center><br>"
+		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
 		HTML += "</tt>"
 
 		user << browse(null, "window=preferences")
@@ -526,6 +527,20 @@ datum/preferences
 		SetChoices(user)
 		return 1
 
+	proc/ResetJobs()
+		job_civilian_high = 0
+		job_civilian_med = 0
+		job_civilian_low = 0
+
+		job_medsci_high = 0
+		job_medsci_med = 0
+		job_medsci_low = 0
+
+		job_engsec_high = 0
+		job_engsec_med = 0
+		job_engsec_low = 0
+
+
 	proc/GetJobDepartment(var/datum/job/job, var/level)
 		if(!job || !level)	return 0
 		switch(job.department_flag)
@@ -613,6 +628,9 @@ datum/preferences
 				if("close")
 					user << browse(null, "window=mob_occupation")
 					ShowChoices(user)
+				if("reset")
+					ResetJobs()
+					SetChoices(user)
 				if("random")
 					userandomjob = !userandomjob
 					SetChoices(user)
@@ -723,24 +741,7 @@ datum/preferences
 					/*if("skin_style")
 						h_style = random_skin_style(gender)*/
 					if("all")
-						gender = pick(MALE,FEMALE)
-						real_name = random_name(gender)
-						age = rand(AGE_MIN,AGE_MAX)
-						underwear = rand(1,12)
-						backbag = rand(1,4)
-						r_hair = rand(0,255)
-						g_hair = rand(0,255)
-						b_hair = rand(0,255)
-						r_facial = r_hair
-						g_facial = g_hair
-						b_facial = b_hair
-						r_eyes = rand(0,255)
-						g_eyes = rand(0,255)
-						b_eyes = rand(0,255)
-						h_style = random_hair_style(gender)
-						f_style = random_facial_hair_style(gender)
-						s_tone = random_skin_tone()
-
+						randomize_appearance_for()	//no params needed
 			if("input")
 				switch(href_list["preference"])
 					if("name")

@@ -10,7 +10,7 @@
 		updateicon()
 
 /obj/item/weapon/cell/proc/updateicon()
-	overlays = null
+	overlays.Cut()
 
 	if(charge < 0.01)
 		return

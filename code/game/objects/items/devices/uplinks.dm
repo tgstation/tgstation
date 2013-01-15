@@ -59,12 +59,18 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			continue
 
 		path_obj = text2path(path_text)
-		item = new path_obj()
-		name = O[3]
-		del item
 
-		dat += "<A href='byond://?src=\ref[src];buy_item=[path_text];cost=[cost]'>[name]</A> ([cost])<BR>"
-		category_items++
+		// Because we're using strings, this comes up if item paths change.
+		// Failure to handle this error borks uplinks entirely.  -Sayu
+		if(!path_obj)
+			error("Syndicate item is not a valid path: [path_text]")
+		else
+			item = new path_obj()
+			name = O[3]
+			del item
+
+			dat += "<A href='byond://?src=\ref[src];buy_item=[path_text];cost=[cost]'>[name]</A> ([cost])<BR>"
+			category_items++
 
 	dat += "<A href='byond://?src=\ref[src];buy_item=random'>Random Item (??)</A><br>"
 	dat += "<HR>"
@@ -81,7 +87,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 	if(uses > 9)
 		randomItems.Add("/obj/item/toy/syndicateballoon")//Syndicate Balloon
-		randomItems.Add("/obj/item/weapon/storage/syndie_kit/imp_uplink") //Uplink Implanter
+		randomItems.Add("/obj/item/weapon/storage/box/syndie_kit/imp_uplink") //Uplink Implanter
 		randomItems.Add("/obj/item/weapon/storage/box/syndicate") //Syndicate bundle
 
 	//if(uses > 8)	//Nothing... yet.
@@ -104,15 +110,15 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		randomItems.Add("/obj/item/device/chameleon") //Chameleon Projector
 
 	if(uses > 2)
-		randomItems.Add("/obj/item/weapon/storage/emp_kit") //EMP Grenades
+		randomItems.Add("/obj/item/weapon/storage/box/emps") //EMP Grenades
 		randomItems.Add("/obj/item/weapon/pen/paralysis") //Paralysis Pen
 		randomItems.Add("/obj/item/weapon/cartridge/syndicate") //Detomatix Cartridge
 		randomItems.Add("/obj/item/clothing/under/chameleon") //Chameleon Jumpsuit
 		randomItems.Add("/obj/item/weapon/card/id/syndicate") //Agent ID Card
 		randomItems.Add("/obj/item/weapon/card/emag") //Cryptographic Sequencer
-		randomItems.Add("/obj/item/weapon/storage/syndie_kit/space") //Syndicate Space Suit
+		randomItems.Add("/obj/item/weapon/storage/box/syndie_kit/space") //Syndicate Space Suit
 		randomItems.Add("/obj/item/device/encryptionkey/binary") //Binary Translator Key
-		randomItems.Add("/obj/item/weapon/storage/syndie_kit/imp_freedom") //Freedom Implant
+		randomItems.Add("/obj/item/weapon/storage/box/syndie_kit/imp_freedom") //Freedom Implant
 		randomItems.Add("/obj/item/clothing/glasses/thermal/syndi") //Thermal Imaging Goggles
 
 	if(uses > 1)
@@ -142,7 +148,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		switch(buyItem) //Ok, this gets a little messy, sorry.
 			if("/obj/item/weapon/circuitboard/teleporter")
 				uses -= 20
-			if("/obj/item/toy/syndicateballoon" , "/obj/item/weapon/storage/syndie_kit/imp_uplink" , "/obj/item/weapon/storage/box/syndicate")
+			if("/obj/item/toy/syndicateballoon" , "/obj/item/weapon/storage/box/syndie_kit/imp_uplink" , "/obj/item/weapon/storage/box/syndicate")
 				uses -= 10
 			if("/obj/item/weapon/aiModule/syndicate" , "/obj/item/device/radio/beacon/syndicate")
 				uses -= 7
@@ -152,9 +158,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				uses -= 5
 			if("/obj/item/weapon/melee/energy/sword" , "/obj/item/clothing/mask/gas/voice" , "/obj/item/device/chameleon")
 				uses -= 4
-			if("/obj/item/weapon/storage/emp_kit" , "/obj/item/weapon/pen/paralysis" , "/obj/item/weapon/cartridge/syndicate" , "/obj/item/clothing/under/chameleon" , \
-			"/obj/item/weapon/card/emag" , "/obj/item/weapon/storage/syndie_kit/space" , "/obj/item/device/encryptionkey/binary" , \
-			"/obj/item/weapon/storage/syndie_kit/imp_freedom" , "/obj/item/clothing/glasses/thermal/syndi")
+			if("/obj/item/weapon/storage/box/emps" , "/obj/item/weapon/pen/paralysis" , "/obj/item/weapon/cartridge/syndicate" , "/obj/item/clothing/under/chameleon" , \
+			"/obj/item/weapon/card/emag" , "/obj/item/weapon/storage/box/syndie_kit/space" , "/obj/item/device/encryptionkey/binary" , \
+			"/obj/item/weapon/storage/box/syndie_kit/imp_freedom" , "/obj/item/clothing/glasses/thermal/syndi")
 				uses -= 3
 			if("/obj/item/ammo_magazine/a357" , "/obj/item/clothing/shoes/syndigaloshes" , "/obj/item/weapon/plastique", "/obj/item/weapon/card/id/syndicate")
 				uses -= 2
@@ -172,7 +178,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			feedback_add_details("traitor_uplink_items_bought","TP")
 		if("/obj/item/toy/syndicateballoon")
 			feedback_add_details("traitor_uplink_items_bought","BS")
-		if("/obj/item/weapon/storage/syndie_kit/imp_uplink")
+		if("/obj/item/weapon/storage/box/syndie_kit/imp_uplink")
 			feedback_add_details("traitor_uplink_items_bought","UI")
 		if("/obj/item/weapon/storage/box/syndicate")
 			feedback_add_details("traitor_uplink_items_bought","BU")
@@ -192,7 +198,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			feedback_add_details("traitor_uplink_items_bought","VC")
 		if("/obj/item/device/chameleon")
 			feedback_add_details("traitor_uplink_items_bought","CP")
-		if("/obj/item/weapon/storage/emp_kit")
+		if("/obj/item/weapon/storage/box/emps")
 			feedback_add_details("traitor_uplink_items_bought","EM")
 		if("/obj/item/weapon/pen/paralysis")
 			feedback_add_details("traitor_uplink_items_bought","PP")
@@ -204,11 +210,11 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			feedback_add_details("traitor_uplink_items_bought","AC")
 		if("/obj/item/weapon/card/emag")
 			feedback_add_details("traitor_uplink_items_bought","EC")
-		if("/obj/item/weapon/storage/syndie_kit/space")
+		if("/obj/item/weapon/storage/box/syndie_kit/space")
 			feedback_add_details("traitor_uplink_items_bought","SS")
 		if("/obj/item/device/encryptionkey/binary")
 			feedback_add_details("traitor_uplink_items_bought","BT")
-		if("/obj/item/weapon/storage/syndie_kit/imp_freedom")
+		if("/obj/item/weapon/storage/box/syndie_kit/imp_freedom")
 			feedback_add_details("traitor_uplink_items_bought","FI")
 		if("/obj/item/clothing/glasses/thermal/syndi")
 			feedback_add_details("traitor_uplink_items_bought","TM")

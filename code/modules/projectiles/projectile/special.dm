@@ -126,10 +126,12 @@
 		else
 			return 1
 
-/obj/item/projectile/neurotoxin
-	name = "neurotoxin"
-	icon_state = "toxin"
-	damage = 5
-	damage_type = TOX
-	weaken = 5
-	flag = "bio"
+
+/obj/item/projectile/beam/mindflayer
+	name = "flayer ray"
+
+	on_hit(var/atom/target, var/blocked = 0)
+		if(ishuman(target))
+			var/mob/living/carbon/human/M = target
+			M.adjustBrainLoss(20)
+			M.hallucination += 20

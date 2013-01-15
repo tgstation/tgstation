@@ -540,7 +540,7 @@ ________________________________________________________________________________
 				playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, P.loc))
 					O.show_message(text("\icon[P] *[P.ttone]*"))
-			P.overlays = null
+			P.overlays.Cut()
 			P.overlays += image('icons/obj/pda.dmi', "pda-r")
 
 		if("Inject")
@@ -976,7 +976,7 @@ ________________________________________________________________________________
 					flick("apc-spark", src)
 					A.emagged = 1
 					A.locked = 0
-					A.updateicon()
+					A.update_icon()
 			else
 				U << "\red This APC has run dry of power. You must find another source."
 
