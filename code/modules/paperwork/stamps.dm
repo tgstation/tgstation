@@ -11,7 +11,7 @@
 	throw_range = 15
 	m_amt = 60
 	color = "cargo"
-	pressure_resistance = 5
+	pressure_resistance = 2
 	attack_verb = list("stamped")
 
 /obj/item/weapon/stamp/captain

@@ -8,6 +8,9 @@ var/global/controller_iteration = 0
 var/global/last_tick_timeofday = world.timeofday
 var/global/last_tick_duration = 0
 
+var/global/air_processing_killed = 0
+var/global/pipe_processing_killed = 0
+
 datum/controller/game_controller
 	var/processing = 0
 	var/breather_ticks = 2		//a somewhat crude attempt to iron over the 'bumps' caused by high-cpu use by letting the MC have a breather for this many ticks after every loop
@@ -111,10 +114,11 @@ datum/controller/game_controller/proc/process()
 				vote.process()
 
 				//AIR
-				timer = world.timeofday
-				last_thing_processed = air_master.type
-				air_master.process()
-				air_cost = (world.timeofday - timer) / 10
+				if(!air_processing_killed)
+					timer = world.timeofday
+					last_thing_processed = air_master.type
+					air_master.process()
+					air_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
@@ -190,17 +194,18 @@ datum/controller/game_controller/proc/process()
 				sleep(breather_ticks)
 
 				//PIPENETS
-				timer = world.timeofday
-				last_thing_processed = /datum/pipe_network
-				i = 1
-				while(i<=pipe_networks.len)
-					var/datum/pipe_network/Network = pipe_networks[i]
-					if(Network)
-						Network.process()
-						i++
-						continue
-					pipe_networks.Cut(i,i+1)
-				networks_cost = (world.timeofday - timer) / 10
+				if(!pipe_processing_killed)
+					timer = world.timeofday
+					last_thing_processed = /datum/pipe_network
+					i = 1
+					while(i<=pipe_networks.len)
+						var/datum/pipe_network/Network = pipe_networks[i]
+						if(Network)
+							Network.process()
+							i++
+							continue
+						pipe_networks.Cut(i,i+1)
+					networks_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 
