@@ -118,15 +118,14 @@
 		return M.get_log_html()
 
 
-/obj/item/weapon/storage/mechatrackingbox
-
+/obj/item/weapon/storage/box/mechabeacons
+	name = "Exosuit Tracking Beacons"
 	New()
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
 		..()
-		return
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)

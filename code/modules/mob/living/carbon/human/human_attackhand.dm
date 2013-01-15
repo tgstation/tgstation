@@ -57,8 +57,7 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health > config.health_threshold_crit)
-				diary << "\[[time2text(world.timeofday, "hh:mm.ss")]\] CPR BUGHINTING: [M] shakes [src]: health - [health], threshold - [config.health_threshold_crit]. Health details: OX [getOxyLoss()] TX [getToxLoss()] BU [getFireLoss()] BR [getBruteLoss()]  Blood: [round(vessel.get_reagent_amount("blood"))] out of 560"
+			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
 				return 1
 //			if(M.health < -75)	return 0

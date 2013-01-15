@@ -459,11 +459,12 @@ obj/machinery/computer/forensic_scanning
 
 	proc/add_data_scanner(var/obj/item/device/W)
 		if(istype(W, /obj/item/device/detective_scanner))
-			if(W:stored)
-				for(var/atom in W:stored)
-					var/list/data = W:stored[atom]
+			var/obj/item/device/detective_scanner/D = W
+			if(D.stored)
+				for(var/atom in D.stored)
+					var/list/data = D.stored[atom]
 					add_data_master(atom,data[1],data[2],data[3],data[4])
-			W:stored = list()
+			D.stored = list()
 		else if(istype(W, /obj/item/device/pda) && W:cartridge && W:cartridge.access_security)
 			if(W:cartridge.stored_data)
 				for(var/atom in W:cartridge.stored_data)

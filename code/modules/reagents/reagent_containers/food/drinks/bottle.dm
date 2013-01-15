@@ -124,7 +124,6 @@
 	throw_speed = 3
 	throw_range = 5
 	item_state = "beer"
-	//item_state - Need to find a bottle sprite
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 
@@ -239,7 +238,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "Jailbreaker Verte"
-	desc = "Twenty-fourth century Green Fairy, one sip of this and you just know you're gonna have a good time."
+	desc = "One sip of this and you just know you're gonna have a good time."
 	icon_state = "absinthebottle"
 	New()
 		..()

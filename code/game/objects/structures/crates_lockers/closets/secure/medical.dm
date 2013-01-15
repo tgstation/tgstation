@@ -13,7 +13,7 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/storage/syringes(src)
+		new /obj/item/weapon/storage/box/syringes(src)
 		new /obj/item/weapon/reagent_containers/dropper(src)
 		new /obj/item/weapon/reagent_containers/dropper(src)
 		new /obj/item/weapon/reagent_containers/glass/beaker(src)
@@ -127,6 +127,7 @@
 		new /obj/item/device/radio/headset/heads/cmo(src)
 		new /obj/item/weapon/storage/belt/medical(src)
 		new /obj/item/device/flash(src)
+		new /obj/item/weapon/reagent_containers/hypospray(src)
 		return
 
 
@@ -162,8 +163,8 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/storage/pillbottlebox(src)
-		new /obj/item/weapon/storage/pillbottlebox(src)
+		new /obj/item/weapon/storage/box/pillbottles(src)
+		new /obj/item/weapon/storage/box/pillbottles(src)
 		return
 
 /obj/structure/closet/secure_closet/medical_wall

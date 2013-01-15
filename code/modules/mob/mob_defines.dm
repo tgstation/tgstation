@@ -168,7 +168,7 @@
 			statpanel("[P.panel]","",P)
 	*/
 
-//The last mob/living/carbon to push/drag/grab this mob (mostly used by Metroids friend recognition)
+//The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
 	var/mob/living/carbon/LAssailant = null
 
 //Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button

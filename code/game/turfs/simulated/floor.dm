@@ -113,7 +113,7 @@ turf/simulated/floor/proc/update_icon()
 				icon_state = "grass[pick("1","2","3","4")]"
 	else if(is_carpet_floor())
 		if(!broken && !burnt)
-			if(icon_state != "carpetsymbol")
+			if(icon_state == "carpet")
 				var/connectdir = 0
 				for(var/direction in cardinal)
 					if(istype(get_step(src,direction),/turf/simulated/floor))
@@ -159,10 +159,10 @@ turf/simulated/floor/proc/update_icon()
 			if( !(icon_state in wood_icons) )
 				icon_state = "wood"
 				//world << "[icon_state]y's got [icon_state]"
-	spawn(1)
+	/*spawn(1)
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
-				update_visuals(air)
+				update_visuals(air)*/
 
 /turf/simulated/floor/return_siding_icon_state()
 	..()

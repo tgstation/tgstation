@@ -2,6 +2,7 @@
 	name = "pulse rifle"
 	desc = "A heavy-duty, pulse-based energy weapon, preferred by front-line combat personnel."
 	icon_state = "pulse"
+	item_state = null	//so the human update icon uses the icon_state instead.
 	force = 10
 	fire_sound = 'sound/weapons/pulse.ogg'
 	charge_cost = 200

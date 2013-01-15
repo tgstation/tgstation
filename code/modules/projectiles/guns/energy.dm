@@ -39,9 +39,6 @@
 		var/ratio = power_supply.charge / power_supply.maxcharge
 		ratio = round(ratio, 0.25) * 100
 		if(modifystate)
-			icon_state = text("[][]", modifystate, ratio)
+			icon_state = "[modifystate][ratio]"
 		else
-			icon_state = text("[][]", initial(icon_state), ratio)
-
-
-
+			icon_state = "[initial(icon_state)][ratio]"

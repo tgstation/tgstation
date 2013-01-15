@@ -8,6 +8,8 @@
 	var/projectiletype
 	var/projectilesound
 	var/casingtype
+	var/move_to_delay = 2 //delay for the automated movement.
+	var/list/friends = list()
 	stop_automated_movement_when_pulled = 0
 
 /mob/living/simple_animal/hostile/proc/FindTarget()
@@ -19,6 +21,8 @@
 		if(isliving(A))
 			var/mob/living/L = A
 			if(L.faction == src.faction && !attack_same)
+				continue
+			else if(L in friends)
 				continue
 			else
 				if(!L.stat)
@@ -33,7 +37,7 @@
 				break
 	return T
 
-/mob/living/simple_animal/hostile/proc/MoveToTarget(var/step = 5)
+/mob/living/simple_animal/hostile/proc/MoveToTarget()
 	stop_automated_movement = 1
 	if(!target_mob || SA_attackable(target_mob))
 		stance = HOSTILE_STANCE_IDLE
@@ -41,21 +45,24 @@
 		if(ranged)
 			if(get_dist(src, target_mob) <= 6)
 				OpenFire(target_mob)
+			else
+				walk_to(src, target_mob, 1, move_to_delay)
 		else
 			stance = HOSTILE_STANCE_ATTACKING
-		walk_to(src, target_mob, 1, 2)
+			walk_to(src, target_mob, 1, move_to_delay)
 
 /mob/living/simple_animal/hostile/proc/AttackTarget()
 
 	stop_automated_movement = 1
 	if(!target_mob || SA_attackable(target_mob))
 		LoseTarget()
-		return
+		return 0
 	if(!(target_mob in ListTargets()))
 		LostTarget()
-		return
+		return 0
 	if(get_dist(src, target_mob) <= 1)	//Attacking
 		AttackingTarget()
+		return 1
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	if(isliving(target_mob))
@@ -105,8 +112,6 @@
 			if(HOSTILE_STANCE_ATTACKING)
 				DestroySurroundings()
 				AttackTarget()
-
-
 
 /mob/living/simple_animal/hostile/proc/OpenFire(target_mob)
 	var/target = target_mob

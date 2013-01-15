@@ -71,7 +71,10 @@
 			if (i > 0)
 				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 				for(var/datum/disease/D in src.viruses)
-					b.viruses += D.Copy()
+					var/datum/disease/ND = D.Copy(1)
+					b.viruses += ND
+					ND.holder = b
+
 			if (step_to(src, get_step(src, direction), 0))
 				break
 

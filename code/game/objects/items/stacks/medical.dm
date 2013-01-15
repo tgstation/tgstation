@@ -1,5 +1,14 @@
-
-//What is this even used for?
+/obj/item/stack/medical
+	name = "medical pack"
+	singular_name = "medical pack"
+	icon = 'icons/obj/items.dmi'
+	amount = 5
+	max_amount = 5
+	w_class = 1
+	throw_speed = 4
+	throw_range = 20
+	var/heal_brute = 0
+	var/heal_burn = 0
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if (M.stat == 2)
@@ -53,4 +62,63 @@
 		)
 
 	use(1)
+
 	M.updatehealth()
+/obj/item/stack/medical/bruise_pack
+	name = "bruise pack"
+	singular_name = "bruise pack"
+	desc = "A pack designed to treat blunt-force trauma."
+	icon_state = "brutepack"
+	heal_brute = 60
+	origin_tech = "biotech=1"
+
+/obj/item/stack/medical/ointment
+	name = "ointment"
+	desc = "Used to treat those nasty burns."
+	gender = PLURAL
+	singular_name = "ointment"
+	icon_state = "ointment"
+	heal_burn = 40
+	origin_tech = "biotech=1"
+
+/obj/item/stack/medical/bruise_pack/tajaran
+	name = "\improper S'rendarr's Hand leaf"
+	singular_name = "S'rendarr's Hand leaf"
+	desc = "A soft leaf that is rubbed on bruises."
+	icon = 'harvest.dmi'
+	icon_state = "cabbage"
+	heal_brute = 7
+
+/obj/item/stack/medical/ointment/tajaran
+	name = "\improper Messa's Tear leaf"
+	singular_name = "Messa's Tear leaf"
+	desc = "A cold leaf that is rubbed on burns."
+	icon = 'harvest.dmi'
+	icon_state = "ambrosiavulgaris"
+	heal_burn = 7
+
+/obj/item/stack/medical/advanced/bruise_pack
+	name = "advanced trauma kit"
+	singular_name = "advanced trauma kit"
+	desc = "An advanced trauma kit for severe injuries."
+	icon_state = "traumakit"
+	heal_brute = 12
+	origin_tech = "biotech=1"
+
+/obj/item/stack/medical/advanced/ointment
+	name = "advanced burn kit"
+	singular_name = "advanced burn kit"
+	desc = "An advanced treatment kit for severe burns."
+	icon_state = "burnkit"
+	heal_burn = 12
+	origin_tech = "biotech=1"
+
+/obj/item/stack/medical/splint
+	name = "medical splint"
+	singular_name = "medical splint"
+	icon_state = "splint"
+	amount = 5
+	max_amount = 5
+
+/obj/item/stack/medical/splint/single
+	amount = 1

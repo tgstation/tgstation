@@ -24,7 +24,7 @@
 	w_class = 1
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.90
-	permeability_coefficient = 0.05
+	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
 
 /obj/item/clothing/mask/fakemoustache
@@ -33,11 +33,6 @@
 	icon_state = "fake-moustache"
 	flags = FPRINT|TABLEPASS
 	flags_inv = HIDEFACE
-
-/obj/item/clothing/mask/owl_mask
-	name = "owl mask"
-	desc = "Twoooo!"
-	icon_state = "owl"
 
 //scarves (fit in in mask slot)
 
@@ -85,3 +80,4 @@
 	flags = FPRINT|TABLEPASS|BLOCKHAIR
 	flags_inv = HIDEFACE
 	w_class = 2
+

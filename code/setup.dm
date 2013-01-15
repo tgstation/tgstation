@@ -46,13 +46,11 @@
 #define SPACE_HELMET_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_SUIT_MIN_COLD_PROTECITON_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
 #define FIRESUIT_MAX_HEAT_PROTECITON_TEMPERATURE 30000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
-#define FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 15000 //for fire helmet quality items (red and white hardhats)
+#define FIRE_HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 30000 //for fire helmet quality items (red and white hardhats)
 #define HELMET_MIN_COLD_PROTECITON_TEMPERATURE 160	//For normal helmets
 #define HELMET_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For normal helmets
 #define ARMOR_MIN_COLD_PROTECITON_TEMPERATURE 160	//For armor
 #define ARMOR_MAX_HEAT_PROTECITON_TEMPERATURE 600	//For armor
-#define FIRESUIT_MIN_COLD_PROTECITON_TEMPERATURE 50	//These need better cold protect
-#define SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE 5000	//These need better heat protect
 
 #define GLOVES_MIN_COLD_PROTECITON_TEMPERATURE 2.0	//For some gloves (black and)
 #define GLOVES_MAX_HEAT_PROTECITON_TEMPERATURE 1500		//For some gloves
@@ -71,11 +69,8 @@
 #define DOOR_CRUSH_DAMAGE 10
 
 // Factor of how fast mob nutrition decreases
-#define	HUNGER_FACTOR 0.05
-#define	REAGENTS_METABOLISM 0.02
-// By defining the effect multiplier this way, it'll exactly adjust
-// all effects according to how they originally were with the 0.4 metabolism
-#define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
+#define	HUNGER_FACTOR 0.1
+#define	REAGENTS_METABOLISM 0.4
 
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
 	//Minimum ratio of air that must move to/from a tile to suspend group processing
@@ -110,7 +105,7 @@
 #define FIRE_PLASMA_ENERGY_RELEASED	 3000000 //Amount of heat released per mole of burnt plasma into the tile
 #define FIRE_GROWTH_RATE			40000 //For small fires
 
-#define WATER_BOIL_TEMP 393
+//#define WATER_BOIL_TEMP 393
 
 // Fire Damage
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 200+T0C
@@ -126,16 +121,6 @@
 #define T0C 273.15					// 0degC
 #define T20C 293.15					// 20degC
 #define TCMB 2.7					// -270.3degC
-
-#define SPECIFIC_HEAT_TOXIN		200
-#define SPECIFIC_HEAT_AIR		20
-#define SPECIFIC_HEAT_CDO		30
-#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
-	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
-
-#define MINIMUM_HEAT_CAPACITY	0.0003
-#define QUANTIZE(variable)		(round(variable,0.0001))
-#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
 
 var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
 
@@ -444,6 +429,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 
 //Damage things	//TODO: merge these down to reduce on defines
+//Way to waste perfectly good damagetype names (BRUTE) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
 #define BRUTE		"brute"
 #define BURN		"fire"
 #define TOX			"tox"
@@ -458,6 +444,12 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define STUTTER		"stutter"
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
+
+//I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
+#define BRUTELOSS 1
+#define FIRELOSS 2
+#define TOXLOSS 4
+#define OXYLOSS 8
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1
@@ -542,7 +534,7 @@ var/list/liftable_structures = list(\
 #define INVISIBILITY_MAXIMUM 100
 
 //Object specific defines
-//#define CANDLE_LUM 3 //For how bright candles are //Why is this here? Moved to candle.dm (brightness_on) -SweeperM
+#define CANDLE_LUM 3 //For how bright candles are
 
 
 //Some mob defines below
@@ -565,8 +557,13 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
 
-#define MIN_PLAYER_AGE 19
-#define MAX_PLAYER_AGE 60
+#define HOSTILE_STANCE_IDLE 1
+#define HOSTILE_STANCE_ALERT 2
+#define HOSTILE_STANCE_ATTACK 3
+#define HOSTILE_STANCE_ATTACKING 4
+#define HOSTILE_STANCE_TIRED 5
+
+#define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
 //Damage things
 
@@ -599,14 +596,6 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 #define ORGAN_ROBOT 128
 #define ORGAN_SPLINTED 256
 #define SALVED 512
-
-#define HOSTILE_STANCE_IDLE 1
-#define HOSTILE_STANCE_ALERT 2
-#define HOSTILE_STANCE_ATTACK 3
-#define HOSTILE_STANCE_ATTACKING 4
-#define HOSTILE_STANCE_TIRED 5
-#define LEFT 1
-#define RIGHT 2
 
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
@@ -685,3 +674,6 @@ var/list/be_special_flags = list(
 #define LANGUAGE_OTHER		32768
 
 #define LANGUAGE_UNIVERSAL	65535
+
+#define LEFT 1
+#define RIGHT 2

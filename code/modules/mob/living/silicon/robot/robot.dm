@@ -641,7 +641,7 @@
 
 
 
-/mob/living/silicon/robot/attack_metroid(mob/living/carbon/metroid/M as mob)
+/mob/living/silicon/robot/attack_slime(mob/living/carbon/slime/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
@@ -656,7 +656,7 @@
 
 		var/damage = rand(1, 3)
 
-		if(istype(src, /mob/living/carbon/metroid/adult))
+		if(istype(src, /mob/living/carbon/slime/adult))
 			damage = rand(20, 40)
 		else
 			damage = rand(5, 35)
@@ -764,24 +764,27 @@
 
 /mob/living/silicon/robot/proc/updateicon()
 
-	overlays = null
+	overlays.Cut()
 	if(stat == 0)
 		overlays += "eyes"
 		if(icon_state == "robot")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-standard"
 		if(icon_state == "toiletbot")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-toiletbot"
 		if(icon_state == "bloodhound")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-bloodhound"
 		if(icon_state =="landmate")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-landmate"
 		if(icon_state =="mopgearrex")
-			overlays = null
+			overlays.Cut()
 			overlays += "eyes-mopgearrex"
+		if(icon_state =="Miner")
+			overlays.Cut()
+			overlays += "eyes-Miner"
 	else
 		overlays -= "eyes"
 
@@ -906,73 +909,7 @@
 
 /mob/living/silicon/robot/Move(a, b, flag)
 
-	if (buckled)
-		return
-
-	if (restrained())
-		stop_pulling()
-
-	var/t7 = 1
-	if (restrained())
-		for(var/mob/M in range(src, 1))
-			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
-				t7 = null
-	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
-		var/turf/T = loc
-		. = ..()
-
-		if (pulling && pulling.loc)
-			if(!( isturf(pulling.loc) ))
-				stop_pulling()
-				return
-			else
-				if(Debug)
-					diary <<"pulling disappeared? at [__LINE__] in mob.dm - pulling = [pulling]"
-					diary <<"REPORT THIS"
-
-		/////
-		if(pulling && pulling.anchored)
-			stop_pulling()
-			return
-
-		if (!restrained())
-			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
-			else
-				diag = null
-			if ((get_dist(src, pulling) > 1 || diag))
-				if (ismob(pulling))
-					var/mob/M = pulling
-					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
-						if (prob(75))
-							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							if (istype(G, /obj/item/weapon/grab))
-								for(var/mob/O in viewers(M, null))
-									O.show_message(text("\red [G.affecting] has been pulled from [G.assailant]'s grip by [src]"), 1)
-								del(G)
-						else
-							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
-							ok = 0
-					if (ok)
-						var/atom/movable/t = M.pulling
-						M.stop_pulling()
-						step(pulling, get_dir(pulling.loc, T))
-						M.start_pulling(t)
-				else
-					if (pulling)
-						if (istype(pulling, /obj/structure/window))
-							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
-									stop_pulling()
-					if (pulling)
-						step(pulling, get_dir(pulling.loc, T))
-	else
-		stop_pulling()
-		. = ..()
-	if ((s_active && !( s_active in contents ) ))
-		s_active.close(src)
+	. = ..()
 
 	if(module)
 		if(module.type == /obj/item/weapon/robot_module/janitor)
@@ -1031,7 +968,7 @@
 	set name = "Reset Identity Codes"
 	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you and but permenantly severs you from your AI and the robotics console and will deactivate your camera system."
 
-	var/mob/living/silicon/robot/R = usr
+	var/mob/living/silicon/robot/R = src
 
 	if(R)
 		R.UnlinkSelf()
@@ -1043,9 +980,9 @@
 	set category = "IC"
 	set src = usr
 
-	if(module_active)
+	var/obj/item/W = get_active_hand()
+	if (W)
+		W.attack_self(src)
 
-		var/obj/item/W = module_active
-		if (W)
-			W.attack_self(src)
 	return
+

@@ -60,6 +60,12 @@ var/global/datum/controller/occupations/job_master
 		Debug("AR has failed, Player: [player], Rank: [rank]")
 		return 0
 
+	proc/FreeRole(var/rank)	//making additional slot on the fly
+		var/datum/job/job = GetJob(rank)
+		if(job && job.current_positions >= job.total_positions)
+			job.total_positions++
+			return 1
+		return 0
 
 	proc/FindOccupationCandidates(datum/job/job, level, flag)
 		Debug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
@@ -340,7 +346,6 @@ var/global/datum/controller/occupations/job_master
 		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
 		if(job.req_admin_notify)
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
-		spawnId(H,rank)
 
 		if(H.mind.assigned_role == rank && H.mind.role_alt_title)
 			spawnId(H, rank, H.mind.role_alt_title)
@@ -367,23 +372,19 @@ var/global/datum/controller/occupations/job_master
 				return
 			else
 				C = new job.idtype(H)
+				C.access = job.get_access()
 		else
 			C = new /obj/item/weapon/card/id(H)
 		if(C)
 			C.registered_name = H.real_name
 			C.assignment = title
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
-			C.access = get_access(rank)
 			H.equip_to_slot_or_del(C, slot_wear_id)
-	/*	if(prob(50))
-			H.equip_to_slot_or_del(new /obj/item/weapon/pen(H), slot_r_store)
-		else
-			H.equip_to_slot_or_del(new /obj/item/weapon/pen/blue(H), slot_r_store)*/
 		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
-		if(locate(/obj/item/device/pda,H))//I bet this could just use locate.  It can --SkyMarshal
+		if(locate(/obj/item/device/pda,H))
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
-			pda.ownjob = H.wear_id.assignment
+			pda.ownjob = C.assignment
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 		return 1
 

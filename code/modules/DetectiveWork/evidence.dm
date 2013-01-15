@@ -69,7 +69,7 @@
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] takes [I] out of [src]", "You take [I] out of [src].",\
 		"You hear someone rustle around in a plastic bag, and remove something.")
-		overlays = null	//remove the overlays
+		overlays.Cut()	//remove the overlays
 		user.put_in_hands(I)
 		w_class = 1
 		icon_state = "evidenceobj"

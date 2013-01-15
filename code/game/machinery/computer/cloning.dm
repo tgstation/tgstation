@@ -31,7 +31,7 @@
 	var/delete = 0
 	var/injectorready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
 	var/temphtml = null
-	var/obj/machinery/dna_scanner/connected = null
+	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/weapon/disk/data/diskette = null
 	anchored = 1.0
 	use_power = 1
@@ -464,15 +464,14 @@
 			break
 	return selected_record
 
-/obj/machinery/computer/cloning/power_change()
+/obj/machinery/computer/cloning/update_icon()
 
 	if(stat & BROKEN)
 		icon_state = "commb"
 	else
-		if( powered() )
+		if(stat & NOPOWER)
+			src.icon_state = "c_unpowered"
+			stat |= NOPOWER
+		else
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				stat |= NOPOWER

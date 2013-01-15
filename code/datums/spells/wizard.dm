@@ -54,7 +54,7 @@
 	invocation_type = "shout"
 	range = 1
 
-	destroys = "gib"
+	destroys = "gib_brain"
 
 	sparks_spread = 1
 	sparks_amt = 4
@@ -138,8 +138,8 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
-	name = "Summon Bigger Carp"
-	desc = "This spell conjures an elite carp."
+	name = "Summon Carp"
+	desc = "This spell conjures a simple carp."
 
 	school = "conjuration"
 	charge_max = 1200
@@ -148,7 +148,7 @@
 	invocation_type = "shout"
 	range = 1
 
-	summon_type = list("/obj/effect/critter/spesscarp/elite")
+	summon_type = list(/mob/living/simple_animal/hostile/carp)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
@@ -162,7 +162,7 @@
 	invocation_type = "none"
 	range = 0
 
-	summon_type = list("/obj/structure/constructshell")
+	summon_type = list(/obj/structure/constructshell)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
@@ -177,7 +177,7 @@
 	summon_amt = 10
 	range = 3
 
-	summon_type = list("/obj/effect/critter/creature")
+	summon_type = list(/mob/living/simple_animal/hostile/creature)
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
@@ -200,26 +200,27 @@
 	disabilities = 1
 	duration = 300
 
-/obj/effect/proc_holder/spell/targeted/projectile/fireball
+/obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 
 	school = "evocation"
-	charge_max = 200
+	charge_max = 100
 	clothes_req = 0
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
+	range = 20
 
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"
-	proj_lingering = 1
-	proj_type = "/obj/effect/proc_holder/spell/targeted/trigger/fireball"
+	proj_type = "/obj/effect/proc_holder/spell/turf/fireball"
 
 	proj_lifespan = 200
 	proj_step_delay = 1
 
-/obj/effect/proc_holder/spell/targeted/trigger/fireball
-	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/fireball","/obj/effect/proc_holder/spell/targeted/explosion/fireball")
+/obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
+	explosion(T, -1, 1, 2, 3)
+
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/fireball
 	amt_dam_brute = 20
@@ -251,7 +252,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list("/turf/simulated/floor/engine/cult")
+	summon_type = list(/turf/simulated/floor/engine/cult)
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
@@ -264,7 +265,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list("/turf/simulated/wall/cult")
+	summon_type = list(/turf/simulated/wall/cult)
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
@@ -280,7 +281,7 @@
 	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 	delay = 50
 
-	summon_type = list("/turf/simulated/wall/r_wall")
+	summon_type = list(/turf/simulated/wall/r_wall)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Summon Soulstone"
@@ -293,7 +294,7 @@
 	invocation_type = "none"
 	range = 0
 
-	summon_type = list("/obj/item/device/soulstone")
+	summon_type = list(/obj/item/device/soulstone)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
@@ -306,7 +307,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list("/obj/effect/forcefield")
+	summon_type = list(/obj/effect/forcefield)
 	summon_lifespan = 50
 
 

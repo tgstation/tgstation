@@ -3,6 +3,19 @@ CONTAINS:
 RSF
 
 */
+/obj/item/weapon/rsf
+	name = "\improper Rapid-Service-Fabricator"
+	desc = "A device used to rapidly deploy service items."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "rcd"
+	opacity = 0
+	density = 0
+	anchored = 0.0
+	var/matter = 0
+	var/mode = 1
+	flags = TABLEPASS
+	w_class = 3.0
+
 /obj/item/weapon/rsf/New()
 	desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 	return
@@ -168,7 +181,7 @@ RSF
 		if (istype(A, /obj/structure/table) && matter >= 1)
 			user << "Dispensing Dice Pack..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
-			new /obj/item/weapon/storage/dice( A.loc )
+			new /obj/item/weapon/storage/pill_bottle/dice( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
 				engy.cell.charge -= 200
@@ -182,7 +195,7 @@ RSF
 		if (istype(A, /turf/simulated/floor) && matter >= 1)
 			user << "Dispensing Dice Pack..."
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
-			new /obj/item/weapon/storage/dice( A )
+			new /obj/item/weapon/storage/pill_bottle/dice( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
 				engy.cell.charge -= 200

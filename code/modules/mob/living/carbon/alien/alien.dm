@@ -185,9 +185,10 @@ Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
-		for (var/mob/living/carbon/C in mob_list)
+		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected")
+				var/obj/item/alien_embryo/A = locate() in C
+				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 				client.images += I
 	return
 
@@ -199,10 +200,9 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/RemoveInfectionImages()
 	if (client)
 		for(var/image/I in client.images)
-			if(I.icon_state == "infected")
+			if(dd_hasprefix_case(I.icon_state, "infected"))
 				del(I)
 	return
-
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

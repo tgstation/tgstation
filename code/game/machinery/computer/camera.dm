@@ -88,6 +88,12 @@
 	density = 0
 	circuit = null
 
+/obj/machinery/computer/security/telescreen/update_icon()
+	icon_state = initial(icon_state)
+	if(stat & BROKEN)
+		icon_state += "b"
+	return
+
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
 	desc = "Damn, they better have /tg/thechannel on these things."

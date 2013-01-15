@@ -90,7 +90,7 @@
 		"/obj/item/weapon/reagent_containers/syringe",
 		"/obj/item/weapon/reagent_containers/glass/dispenser",
 		"/obj/item/weapon/lighter/zippo",
-		"/obj/item/weapon/cigpacket",
+		"/obj/item/weapon/storage/fancy/cigarettes",
 		"/obj/item/weapon/storage/pill_bottle",
 		"/obj/item/stack/medical",
 		"/obj/item/device/flashlight/pen",
@@ -123,7 +123,10 @@
 		"/obj/item/clothing/glasses/hud/security",
 		"/obj/item/device/flashlight",
 		"/obj/item/device/pda",
-		"/obj/item/device/radio/headset"
+		"/obj/item/device/radio/headset",
+		"/obj/item/weapon/melee/baton",
+		"/obj/item/taperoll/police",
+		"/obj/item/weapon/gun/energy/taser"
 		)
 
 /obj/item/weapon/storage/belt/soulstone

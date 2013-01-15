@@ -17,7 +17,7 @@
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	universal_speak = 1
-
+	var/atom/movable/following = null
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
@@ -142,7 +142,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	if(mind.current.ajourn && mind.current.stat != DEAD) 	//check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
 		var/obj/effect/rune/R = locate() in mind.current.loc	//whilst corpse is alive, we can only reenter the body if it's on the rune
-		if(!(R && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself))	//astral journeying rune
+		if(!(R && R.word1 == cultwords["hell"] && R.word2 == cultwords["travel"] && R.word3 == cultwords["self"]))	//astral journeying rune
 			usr << "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>"
 			return
 	mind.current.ajourn=0
@@ -167,6 +167,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
 		L+=T
+
+	if(!L || !L.len)
+		usr << "No area available."
+
 	usr.loc = pick(L)
 
 /mob/dead/observer/verb/follow()
@@ -179,17 +183,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 		var/mob/target = mobs[input]
 		if(target && target != usr)
+			following = target
 			spawn(0)
 				var/turf/pos = get_turf(src)
 				while(src.loc == pos)
+
 					var/turf/T = get_turf(target)
 					if(!T)
+						break
+					if(following != target)
 						break
 					if(!client)
 						break
 					src.loc = T
 					pos = src.loc
 					sleep(15)
+				following = null
 
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak

@@ -9,11 +9,13 @@
 	blobevent = 1
 	spawn(0)
 		dotheblobbaby()
-	spawn(12000) // blob event can last up to 20 minutes
+	spawn(3000)
 		blobevent = 0
 	spawn(rand(1000, 2000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-		world << sound('sound/AI/outbreak5.ogg')
+		for(var/mob/M in player_list)
+			if(!istype(M,/mob/new_player))
+				M << sound('sound/AI/outbreak5.ogg')
 
 /proc/dotheblobbaby()
 	if (blobevent)
@@ -25,5 +27,5 @@
 				if(B.z != 1)
 					continue
 				B.Life()
-		spawn(280) // advance 1 tile every 30 seconds
+		spawn(30)
 			dotheblobbaby()

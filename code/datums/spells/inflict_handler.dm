@@ -23,6 +23,11 @@
 		switch(destroys)
 			if("gib")
 				target.gib()
+			if("gib_brain")
+				if(ishuman(target) || ismonkey(target))
+					var/obj/item/brain/B = new(target.loc)
+					B.transfer_identity(target)
+				target.gib()
 			if("disintegrate")
 				target.dust()
 

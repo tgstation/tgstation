@@ -1,30 +1,18 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 var/list/admin_verbs_default = list(
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
-	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
-	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
-	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/deadmin_self,			/*destroys our own admin datum so we can play as a regular player*/
-	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
-	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/client/proc/check_antagonists,		/*shows all antags*/
-	/client/proc/admin_memo,			/*admin memo system. show/delete/write. +SERVER needed to delete admin memos of others*/
-	/client/proc/deadchat,				/*toggles deadchat on/off*/
-	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
-	/client/proc/toggleprayers,			/*toggles prayers on/off*/
-	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
-	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
-	/client/proc/secrets
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel,			/*shows an interface for all players, with links to various panels (old style)*/
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
-	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/
+//	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
 	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
 	/datum/admins/proc/toggleguests,	/*toggles whether guests can join the current game*/
 	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
@@ -40,11 +28,12 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
 	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
+	/client/proc/getruntimelog,			/*allows us to access runtime logs to somebody*/
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
-	/client/proc/sendmob,				/*sends a mob somewhere*/
+//	/client/proc/sendmob,				/*sends a mob somewhere*/ -Removed due to it needing two sorting procs to work, which were executed every time an admin right-clicked. ~Errorage
 	/client/proc/Jump,
 	/client/proc/jumptokey,				/*allows us to jump to the location of a mob with a certain ckey*/
 	/client/proc/jumptomob,				/*allows us to jump to a specific mob*/
@@ -54,8 +43,22 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/check_words			/*displays cult-words*/
-	)
+	/client/proc/check_words,			/*displays cult-words*/
+	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
+	/client/proc/admin_memo,			/*admin memo system. show/delete/write. +SERVER needed to delete admin memos of others*/
+	/client/proc/deadchat,				/*toggles deadchat on/off*/
+	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
+	/client/proc/toggleprayers,			/*toggles prayers on/off*/
+//	/client/proc/toggle_hear_deadcast,	/*toggles whether we hear deadchat*/
+	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
+	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
+	/client/proc/secrets,
+	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
+	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
+	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
+	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
+	/client/proc/free_slot			/*frees slot for chosen job*/
+)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
 	/client/proc/jobbans,
@@ -79,7 +82,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/make_sound,
-	/client/proc/toggle_random_events
+	/client/proc/toggle_random_events,
+	/client/proc/set_ooc
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -130,12 +134,12 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/edit_admin_permissions
 	)
 var/list/admin_verbs_rejuv = list(
-	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/respawn_character
 	)
 
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
+	/client/proc/set_ooc,
 	/client/proc/deadmin_self,
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -152,8 +156,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_subtle_message,
 	/client/proc/cmd_admin_check_contents,
 	/datum/admins/proc/access_news_network,
-	/client/proc/giveruntimelog,
-	/client/proc/getserverlog,
 	/client/proc/admin_call_shuttle,
 	/client/proc/admin_cancel_shuttle,
 	/client/proc/cmd_admin_direct_narrate,
@@ -207,20 +209,14 @@ var/list/admin_verbs_hideable = list(
 	/proc/release
 	)
 var/list/admin_verbs_mod = list(
-	/client/proc/check_antagonists,		/*shows all antags*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game.*/
 	/client/proc/playernotes,
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
-	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
-	/client/proc/hide_verbs,			/*hides all our adminverbs*/
-	/client/proc/hide_verbs,
 	/client/proc/mod_panel,
 	/client/proc/cmd_mod_say,
 	/datum/admins/proc/show_player_info
-	//client/proc/Report,
-	//client/proc/display_admin_reports
 )
 /client/proc/add_admin_verbs()
 	if(holder)
@@ -237,7 +233,7 @@ var/list/admin_verbs_mod = list(
 		if(holder.rights & R_REJUVINATE)	verbs += admin_verbs_rejuv
 		if(holder.rights & R_SOUNDS)		verbs += admin_verbs_sounds
 		if(holder.rights & R_SPAWN)			verbs += admin_verbs_spawn
-		if(holder.rights & R_MOD)			verbs -= admin_verbs_default; verbs += admin_verbs_mod
+		if(holder.rights & R_MOD)			verbs += admin_verbs_mod
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
@@ -726,4 +722,20 @@ var/list/admin_verbs_mod = list(
 	set category = "Admin"
 	if(holder)
 		holder.PlayerNotes()
+	return
+
+/client/proc/free_slot()
+	set name = "Free Job Slot"
+	set category = "Admin"
+	if(holder)
+		var/list/jobs = list()
+		for (var/datum/job/J in job_master.occupations)
+			if (J.current_positions >= J.total_positions && J.total_positions != -1)
+				jobs += J.title
+		if (!jobs.len)
+			usr << "There are no fully staffed jobs."
+			return
+		var/job = input("Please select job slot to free", "Free job slot")  as null|anything in jobs
+		if (job)
+			job_master.FreeRole(job)
 	return

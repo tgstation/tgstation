@@ -87,6 +87,7 @@
 							M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
 
 							del(D)
+							break
 					if(D)
 						for(var/atom/A in D.loc)
 							if(A == user) continue

@@ -86,6 +86,7 @@
 			keys += M.client
 		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 		if(!selection)
+			src << "No keys found."
 			return
 		var/mob/M = selection:mob
 		log_admin("[key_name(usr)] jumped to [key_name(M)]")
@@ -95,7 +96,7 @@
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/Getmob(var/mob/M in sortmobs())
+/client/proc/Getmob(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
@@ -138,17 +139,19 @@
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/sendmob(var/mob/M in sortmobs(), var/area/A in return_sorted_areas())
+/client/proc/sendmob(var/mob/M in sortmobs())
 	set category = "Admin"
 	set name = "Send Mob"
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
-	if(config.allow_admin_jump)
-		M.loc = pick(get_area_turfs(A))
-		feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/area/A = input(usr, "Pick an area.", "Pick an area") in return_sorted_areas()
+	if(A)
+		if(config.allow_admin_jump)
+			M.loc = pick(get_area_turfs(A))
+			feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-		log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
-		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]", 1)
-	else
-		alert("Admin jumping disabled")
+			log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
+			message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]", 1)
+		else
+			alert("Admin jumping disabled")

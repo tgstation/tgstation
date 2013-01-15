@@ -30,7 +30,7 @@
 	id = "Hub"
 	network = "tcommsat"
 	autolinkers = list("hub", "relay", "s_relay", "m_relay", "r_relay", "science", "medical",
-	"cargo", "mining", "common", "command", "engineering", "security",
+	"supply", "common", "command", "engineering", "security",
 	"receiverA", "receiverB", "broadcasterA", "broadcasterB")
 
 //Receivers
@@ -41,7 +41,7 @@
 	id = "Receiver A"
 	network = "tcommsat"
 	autolinkers = list("receiverA") // link to relay
-	freq_listening = list(1351, 1355, 1347, 1349) // science, medical, cargo, mining
+	freq_listening = list(1351, 1355, 1347) // science, medical, supply
 
 
 //--PRESET RIGHT--//
@@ -64,23 +64,31 @@
 /obj/machinery/telecomms/bus/preset_one
 	id = "Bus 1"
 	network = "tcommsat"
+	freq_listening = list(1351, 1355)
 	autolinkers = list("processor1", "science", "medical")
 
 /obj/machinery/telecomms/bus/preset_two
 	id = "Bus 2"
 	network = "tcommsat"
-	autolinkers = list("processor2", "cargo", "mining")
+	freq_listening = list(1347)
+	autolinkers = list("processor2", "supply")
 
 /obj/machinery/telecomms/bus/preset_three
 	id = "Bus 3"
 	network = "tcommsat"
+	freq_listening = list(1359, 1353)
 	autolinkers = list("processor3", "security", "command")
 
 /obj/machinery/telecomms/bus/preset_four
 	id = "Bus 4"
 	network = "tcommsat"
+	freq_listening = list(1357)
 	autolinkers = list("processor4", "engineering", "common")
 
+/obj/machinery/telecomms/bus/preset_four/New()
+	for(var/i = 1441, i < 1489, i += 2)
+		freq_listening |= i
+	..()
 
 //Processors
 
@@ -120,16 +128,16 @@
 	freq_listening = list(1355)
 	autolinkers = list("medical")
 
-/obj/machinery/telecomms/server/presets/cargo
-	id = "Cargo Server"
+/obj/machinery/telecomms/server/presets/supply
+	id = "Supply Server"
 	freq_listening = list(1347)
-	autolinkers = list("cargo")
-
+	autolinkers = list("supply")
+/*
 /obj/machinery/telecomms/server/presets/mining
 	id = "Mining Server"
 	freq_listening = list(1349)
 	autolinkers = list("mining")
-
+*/
 /obj/machinery/telecomms/server/presets/common
 	id = "Common Server"
 	freq_listening = list()

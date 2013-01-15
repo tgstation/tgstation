@@ -101,6 +101,7 @@ var/global/Holiday = null
 			switch(DD)
 				if(10)							Holiday = "Human-Rights Day"
 				if(14)							Holiday = "Monkey Day"
+				if(21)							if(YY==12)	Holiday = "End of the World"
 				if(22)							Holiday = "Orgasming Day"		//lol. These all actually exist
 				if(24)							Holiday = "Christmas Eve"
 				if(25)							Holiday = "Christmas"
@@ -120,14 +121,13 @@ var/global/Holiday = null
 	set desc = "Force-set the Holiday variable to make the game think it's a certain day."
 	if(!check_rights(R_SERVER))	return
 
-	if(!T)	return
 	Holiday = T
 	//get a new station name
 	station_name = null
 	station_name()
 	//update our hub status
 	world.update_status()
-//	Holiday_Game_Start()
+	Holiday_Game_Start()
 
 	message_admins("\blue ADMIN: Event: [key_name(src)] force-set Holiday to \"[Holiday]\"")
 	log_admin("[key_name(src)] force-set Holiday to \"[Holiday]\"")
@@ -141,10 +141,9 @@ var/global/Holiday = null
 		switch(Holiday)			//special holidays
 			if("Easter")
 				//do easter stuff
-			if("Christmas ")
-				//do christmas stuff
-			else
-				//etc. you get what I'm getting at
+			if("Christmas Eve","Christmas")
+				Christmas_Game_Start()
+
 	return
 
 //Nested in the random events loop. Will be triggered every 2 minutes
@@ -172,3 +171,8 @@ var/global/Holiday = null
 				containers += S
 
 			message_admins("\blue DEBUG: Event: Egg spawned at [Egg.loc] ([Egg.x],[Egg.y],[Egg.z])")*/
+		if("End of the World")
+			if(prob(eventchance))	GameOver()
+
+		if("Christmas","Christmas Eve")
+			if(prob(eventchance))	ChristmasEvent()

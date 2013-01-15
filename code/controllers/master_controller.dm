@@ -21,6 +21,7 @@ datum/controller/game_controller
 	var/objects_cost	= 0
 	var/networks_cost	= 0
 	var/powernets_cost	= 0
+	var/events_cost		= 0
 	var/ticker_cost		= 0
 	var/total_cost		= 0
 
@@ -35,6 +36,8 @@ datum/controller/game_controller/New()
 		master_controller = src
 
 	createRandomZlevel()
+
+	setup_economy()
 
 	if(!air_master)
 		air_master = new /datum/controller/air_system()
@@ -69,7 +72,7 @@ datum/controller/game_controller/proc/setup()
 datum/controller/game_controller/proc/setup_objects()
 	world << "\red \b Initializing objects"
 	sleep(-1)
-	for(var/obj/object in world)
+	for(var/atom/movable/object in world)
 		object.initialize()
 
 	world << "\red \b Initializing pipe networks"
@@ -238,6 +241,20 @@ datum/controller/game_controller/proc/process()
 
 				sleep(breather_ticks)
 
+				//EVENTS
+				timer = world.timeofday
+				last_thing_processed = /datum/event
+				i = 1
+				while(i<=events.len)
+					var/datum/event/Event = events[i]
+					if(Event)
+						Event.process()
+						i++
+						continue
+					events.Cut(i,i+1)
+				checkEvent()
+				events_cost = (world.timeofday - timer) / 10
+
 				//TICKER
 				timer = world.timeofday
 				last_thing_processed = ticker.type
@@ -245,7 +262,7 @@ datum/controller/game_controller/proc/process()
 				ticker_cost = (world.timeofday - timer) / 10
 
 				//TIMING
-				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + ticker_cost
+				total_cost = air_cost + sun_cost + mobs_cost + diseases_cost + machines_cost + objects_cost + networks_cost + powernets_cost + events_cost + ticker_cost
 
 				var/end_time = world.timeofday
 				if(end_time < start_time)

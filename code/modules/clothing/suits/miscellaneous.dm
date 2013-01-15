@@ -88,7 +88,7 @@
 	item_state = "judge"
 	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	allowed = list(/obj/item/weapon/cigpacket,/obj/item/weapon/spacecash)
+	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/spacecash)
 	flags_inv = HIDEJUMPSUIT
 
 
@@ -143,7 +143,7 @@
 	desc = "A suit made long ago by the ancient empire KFC."
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
-	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HEAD
+	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 
@@ -287,3 +287,10 @@
 	desc = "A rather skimpy green dress."
 	icon_state = "stripper_g_over"
 	item_state = "stripper_g"
+/obj/item/clothing/suit/xenos
+	name = "xenos suit"
+	desc = "A suit made out of chitinous alien hide."
+	icon_state = "xenos"
+	item_state = "xenos_helm"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT

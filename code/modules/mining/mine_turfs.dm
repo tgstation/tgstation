@@ -411,8 +411,8 @@ commented out in r5061, I left it because of the shroom thingies
 			user << "\blue You dug a hole."
 			gets_dug()
 
-	if(istype(W,/obj/item/weapon/storage/satchel))
-		var/obj/item/weapon/storage/satchel/S = W
+	if(istype(W,/obj/item/weapon/storage/bag/ore))
+		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/ore/O in src.contents)
 				O.attackby(W,user)
@@ -437,7 +437,7 @@ commented out in r5061, I left it because of the shroom thingies
 
 /turf/simulated/floor/plating/airless/asteroid/proc/updateMineralOverlays()
 
-	src.overlays = null
+	src.overlays.Cut()
 
 	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
 		src.overlays += image('icons/turf/walls.dmi', "rock_side_n")
@@ -482,11 +482,11 @@ commented out in r5061, I left it because of the shroom thingies
 	if(istype(M,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = M
 		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/satchel))
+			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
 				src.attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/satchel))
+			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
 				src.attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/satchel))
+			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
 				src.attackby(R.module_state_3,R)
 			else
 				return

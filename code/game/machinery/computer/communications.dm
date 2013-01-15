@@ -36,9 +36,9 @@
 
 
 /obj/machinery/computer/communications/process()
-	..()
-	if(state != STATE_STATUSDISPLAY)
-		src.updateDialog()
+	if(..())
+		if(state != STATE_STATUSDISPLAY)
+			src.updateDialog()
 
 
 /obj/machinery/computer/communications/Topic(href, href_list)
@@ -454,10 +454,6 @@
 	if(emergency_shuttle.online)
 		user << "The emergency shuttle is already on its way."
 		return
-
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
-		//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
-		emergency_shuttle.fake_recall = rand(300,500)
 
 	if(ticker.mode.name == "blob")
 		user << "Under directive 7-10, [station_name()] is quarantined until further notice."

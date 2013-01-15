@@ -13,6 +13,7 @@ obj/structure/door_assembly
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/glass = null
+	var/created_name = null
 
 	New()
 		base_icon_state = copytext(icon_state,1,lentext(icon_state))
@@ -279,6 +280,13 @@ obj/structure/door_assembly
 		glass = 0
 
 /obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/pen))
+		var/t = copytext(stripped_input(user, "Enter the name for the door.", src.name, src.created_name),1,MAX_NAME_LEN)
+		if(!t)	return
+		if(!in_range(src, usr) && src.loc != usr)	return
+		created_name = t
+		return
+
 	if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
@@ -414,6 +422,8 @@ obj/structure/door_assembly
 			//door.req_access = src.req_access
 			door.electronics = src.electronics
 			door.req_access = src.electronics.conf_access
+			if(created_name)
+				door.name = created_name
 			src.electronics.loc = door
 			del(src)
 	else

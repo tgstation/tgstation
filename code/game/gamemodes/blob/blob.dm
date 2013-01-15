@@ -109,7 +109,9 @@ var/list/blob_nodes = list()
 
 			if (1)
 				command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-				world << sound('sound/AI/outbreak5.ogg')
+				for(var/mob/M in player_list)
+					if(!istype(M,/mob/new_player))
+						M << sound('sound/AI/outbreak5.ogg')
 				autoexpand = 0//No more extra pulses
 				stage = -1
 				//next stage in 4-5 minutes

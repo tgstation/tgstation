@@ -54,7 +54,7 @@ There are several things that need to be remembered:
 
 	All of these are named after the variable they update from. They are defined at the mob/ level like
 	update_clothing was, so you won't cause undefined proc runtimes with usr.update_inv_wear_id() if the usr is a
-	metroid etc. Instead, it'll just return without doing any work. So no harm in calling it for metroids and such.
+	slime etc. Instead, it'll just return without doing any work. So no harm in calling it for slimes and such.
 
 
 >	There are also these special cases:
@@ -133,7 +133,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
-	overlays = null
+	overlays.Cut()
 
 	if(lying)		//can't be cloaked when lying. (for now)
 		icon = lying_icon
@@ -448,7 +448,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 //BS12 EDIT
 	if(dna)
 		switch(dna.mutantrace)
-			if("golem","metroid","shadow")
+			if("lizard","golem","slime","shadow","adamantine")
 				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_l")
 				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[dna.mutantrace][fat]_[gender]_s")
 			if("lizard","tajaran","skrell")

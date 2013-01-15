@@ -1,3 +1,36 @@
+/obj/machinery/door_control
+	name = "remote door-control"
+	desc = "It controls doors, remotely."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "doorctrl0"
+	desc = "A remote control-switch for a door."
+	power_channel = ENVIRON
+	var/id = null
+	var/range = 10
+	var/normaldoorcontrol = 0
+	var/desiredstate = 0 // Zero is closed, 1 is open.
+	var/specialfunctions = 1
+	/*
+	Bitflag, 	1= open
+				2= idscan,
+				4= bolts
+				8= shock
+				16= door safties
+
+	*/
+
+	var/exposedwires = 0
+	var/wires = 3
+	/*
+	Bitflag,	1=checkID
+				2=Network Access
+	*/
+
+	anchored = 1.0
+	use_power = 1
+	idle_power_usage = 2
+	active_power_usage = 4
+
 /obj/machinery/door_control/attack_ai(mob/user as mob)
 	if(wires & 2)
 		return src.attack_hand(user)
@@ -24,6 +57,10 @@
 	*/
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
+	if(istype(W, /obj/item/weapon/card/emag))
+		req_access = list()
+		req_one_access = list()
+		playsound(src.loc, "sparks", 100, 1)
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)

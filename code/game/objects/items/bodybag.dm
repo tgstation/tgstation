@@ -2,7 +2,7 @@
 
 /obj/item/bodybag
 	name = "body bag"
-	desc = "A folded bag designed to contain dead things."
+	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
 
@@ -12,29 +12,24 @@
 		del(src)
 
 
-/obj/item/weapon/storage/body_bag_box
+/obj/item/weapon/storage/box/bodybags
 	name = "body bags"
 	desc = "This box contains body bags."
 	icon_state = "bodybags"
-	item_state = "syringe_kit"
-	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
-
-
 	New()
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
-		new /obj/item/bodybag(src)
 		..()
-		return
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
+		new /obj/item/bodybag(src)
 
 
 /obj/structure/closet/body_bag
 	name = "body bag"
-	desc = "A bag designed to contain dead things."
+	desc = "A plastic bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_closed"
 	icon_closed = "bodybag_closed"
@@ -61,7 +56,7 @@
 		else if(istype(W, /obj/item/weapon/wirecutters))
 			user << "You cut the tag off the bodybag"
 			src.name = "body bag"
-			src.overlays = null
+			src.overlays.Cut()
 			return
 
 

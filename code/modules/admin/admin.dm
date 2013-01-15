@@ -75,7 +75,8 @@ var/global/floorIsLava = 0
 
 	body += "<br><br>"
 	body += "<A href='?src=\ref[src];jumpto=\ref[M]'><b>Jump to</b></A> | "
-	body += "<A href='?src=\ref[src];getmob=\ref[M]'>Get</A>"
+	body += "<A href='?src=\ref[src];getmob=\ref[M]'>Get</A> | "
+	body += "<A href='?src=\ref[src];sendmob=\ref[M]'>Send To</A>"
 
 	body += "<br><br>"
 	body += "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | "
@@ -107,7 +108,7 @@ var/global/floorIsLava = 0
 				body += "<A href='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | "
 				body += "<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | "
 				body += "<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | "
-				body += "<A href='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> "
+				body += "<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A> "
 
 			//Simple Animals
 			if(isanimal(M))
@@ -124,8 +125,8 @@ var/global/floorIsLava = 0
 			body += "<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>, "
 			body += "<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A> \] "
 			body += "<A href='?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A> "
-			body += "\[ Metroid: <A href='?src=\ref[src];simplemake=metroid;mob=\ref[M]'>Baby</A>, "
-			body += "<A href='?src=\ref[src];simplemake=adultmetroid;mob=\ref[M]'>Adult</A> \] "
+			body += "\[ slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>, "
+			body += "<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A> \] "
 			body += "<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> | "
 			body += "<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> | "
 			body += "<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> | "
@@ -354,8 +355,14 @@ var/global/floorIsLava = 0
 				if( isemptylist(src.admincaster_feed_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
+					var/i = 0
 					for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
-						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
+						i++
+						dat+="-[MESSAGE.body] <BR>"
+						if(MESSAGE.img)
+							usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
+							dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
+						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 			dat+="<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[1]'>Back</A>"
 		if(10)
@@ -443,6 +450,12 @@ var/global/floorIsLava = 0
 			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
 			dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
 			dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
+			dat+="<B>Photo:</B>: "
+			if(news_network.wanted_issue.img)
+				usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
+				dat+="<BR><img src='tmp_photow.png' width = '180'>"
+			else
+				dat+="None"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A><BR>"
 		if(19)
 			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] successfully edited.</FONT><BR><BR>"
@@ -555,6 +568,7 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
 			<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
+			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
 			<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
@@ -905,7 +919,7 @@ var/global/floorIsLava = 0
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/datum/admins/proc/show_traitor_panel(var/mob/M in sortmobs())
+/datum/admins/proc/show_traitor_panel(var/mob/M in mob_list)
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"

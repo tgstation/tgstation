@@ -26,6 +26,15 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = FPRINT | TABLEPASS
 
+/obj/item/clothing/under/rank/security2
+	name = "security officer's uniform"
+	desc = "It's made of a slightly sturdier material, to allow for robust protection."
+	icon_state = "redshirt2"
+	item_state = "r_suit"
+	color = "redshirt2"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags = FPRINT | TABLEPASS
+
 /*
  * Detective
  */
@@ -86,13 +95,12 @@
 	item_state = "dermal"
 
 //Jensen cosplay gear
-/obj/item/clothing/under/jensen
+/obj/item/clothing/under/rank/head_of_security/jensen
 	desc = "You never asked for anything that stylish."
 	name = "head of security's jumpsuit"
 	icon_state = "jensen"
 	item_state = "jensen"
 	color = "jensen"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/hos/jensen
 	name = "armored trenchcoat"

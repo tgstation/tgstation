@@ -1,4 +1,4 @@
-/mob/living/carbon/metroid/Login()
+/mob/living/carbon/slime/Login()
 	..()
 	update_hud()
 	return

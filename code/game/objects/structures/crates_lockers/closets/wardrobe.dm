@@ -23,6 +23,9 @@
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/under/rank/security2(src)
+	new /obj/item/clothing/under/rank/security2(src)
+	new /obj/item/clothing/under/rank/security2(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/shoes/jackboots(src)
@@ -229,6 +232,8 @@
 	new /obj/item/clothing/suit/storage/labcoat(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/clothing/gloves/black(src)
+	new /obj/item/clothing/gloves/black(src)
 	return
 
 

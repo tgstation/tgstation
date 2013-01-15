@@ -47,8 +47,9 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 	if(query.NextRow())
 		validckey = 1
 	if(!validckey)
-		message_admins("<font color='red'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
-		return
+		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
+			message_admins("<font color='red'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
+			return
 
 	var/a_ckey
 	var/a_computerid
@@ -286,12 +287,17 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 	output += "<option value='[BANTYPE_PERMA]'>PERMABAN</option>"
 	output += "<option value='[BANTYPE_TEMP]'>TEMPBAN</option>"
 	output += "<option value='[BANTYPE_JOB_PERMA]'>JOB PERMABAN</option>"
+	output += "<option value='[BANTYPE_JOB_TEMP]'>JOB TEMPBAN</option>"
 	output += "</select></td>"
 	output += "<td><b>Ckey:</b> <input type='text' name='dbbanaddckey'></td></tr>"
 	output += "<tr><td><b>Duration:</b> <input type='text' name='dbbaddduration'></td>"
 	output += "<td><b>Job:</b><select name='dbbanaddjob'>"
 	output += "<option value=''>--</option>"
 	for(var/j in get_all_jobs())
+		output += "<option value='[j]'>[j]</option>"
+	for(var/j in nonhuman_positions)
+		output += "<option value='[j]'>[j]</option>"
+	for(var/j in list("traitor","changeling","operative","revolutionary","cultist","wizard"))
 		output += "<option value='[j]'>[j]</option>"
 	output += "</select></td></tr></table>"
 	output += "<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>"
@@ -367,6 +373,8 @@ datum/admins/proc/DB_ban_unban_by_id(var/id)
 					typedesc = "<b>TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
 				if("JOB_PERMABAN")
 					typedesc = "<b>JOBBAN</b><br><font size='2'>([job])"
+				if("JOB_TEMPBAN")
+					typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]"
 
 			output += "<tr bgcolor='[dcolor]'>"
 			output += "<td align='center'>[typedesc]</td>"

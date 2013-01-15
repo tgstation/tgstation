@@ -377,13 +377,12 @@
 /*
  *	Diskette Box
  */
-/obj/item/weapon/storage/diskbox
+
+/obj/item/weapon/storage/box/disks
 	name = "Diskette Box"
 	icon_state = "disk_kit"
-	item_state = "syringe_kit"
-	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
-/obj/item/weapon/storage/diskbox/New()
+/obj/item/weapon/storage/box/disks/New()
 	..()
 	new /obj/item/weapon/disk/data(src)
 	new /obj/item/weapon/disk/data(src)
