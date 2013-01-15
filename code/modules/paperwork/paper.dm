@@ -231,7 +231,8 @@
 	if(href_list["write"])
 		var/id = href_list["write"]
 		//var/t = strip_html_simple(input(usr, "What text do you wish to add to " + (id=="end" ? "the end of the paper" : "field "+id) + "?", "[name]", null),8192) as message
-		var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
+		//var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
+		var/t =  input("Enter what you want to write:", "Write", null, null)  as message
 		var/obj/item/i = usr.get_active_hand() // Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
 		if(!istype(i, /obj/item/weapon/pen))
@@ -243,6 +244,31 @@
 		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
 			return
 
+		t = sanitize_simple(t, list("&#"="."))
+		var/p = findtext(t,"<",1)
+		while (p)	//going through all the tags
+			var/start = p++
+			tag = copytext(t,p, p+1)
+			world << "2 [copytext(t,p, p+1)]"
+			if (tag != "/")
+				while (reject_bad_text(copytext(t, p, p+1), 1))
+					tag = copytext(t,start, p)
+					p++
+				tag = copytext(t,start+1, p)
+				world << "Tag is [tag] at [start]"
+				if (!(tag in paper_tag_whitelist))	//if it's unkown tag, disarming it
+					t = copytext(t,1,start-1) + "&lt;" + copytext(t,start+1)
+			p = findtext(t,"<",p)
+
+		// check for exploits
+		for(var/bad in paper_blacklist)
+			if(findtext(t,bad))
+				usr << "\blue You think to yourself, \"Hm.. this is only paper...\""
+				log_admin("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
+				message_admins("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
+				return
+
+		t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
 		if(id!="end")

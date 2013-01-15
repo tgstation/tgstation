@@ -26,6 +26,12 @@ var/global/list/global_map = null
 
 
 	//////////////
+var/list/paper_tag_whitelist = list("center","p","div","span","h1","h2","h3","h4","h5","h6","hr","pre",	\
+	"big","small","font","i","u","b","s","sub","sup","tt","br","hr","img","ol","ul","li","caption","col",	\
+	"table","td","th","tr")
+var/list/paper_blacklist = list("java","onblur","onchange","onclick","ondblclick","onfocus","onkeydown",	\
+	"onkeypress","onkeyup","onload","onmousedown","onmousemove","onmouseout","onmouseover",	\
+	"onmouseup","onreset","onselect","onsubmit","onunload")
 
 var/BLINDBLOCK = 0
 var/DEAFBLOCK = 0
