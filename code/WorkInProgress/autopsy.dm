@@ -74,10 +74,6 @@
 		usr << "No."
 		return
 
-	if(wdata.len == 0 && chemtraces.len == 0)
-		usr << "<b>* There is no data about any wounds in the scanner's database. You may have to scan more bodyparts, or otherwise this wound type may not be in the scanner's database."
-		return
-
 	var/scan_data = ""
 
 	if(timeofdeath)
@@ -179,6 +175,8 @@
 	if(target_name != M.name)
 		target_name = M.name
 		src.wdata = list()
+		src.chemtraces = list()
+		src.timeofdeath = null
 		user << "\red A new patient has been registered.. Purging data for previous patient."
 
 	src.timeofdeath = M.timeofdeath
