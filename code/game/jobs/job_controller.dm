@@ -45,6 +45,7 @@ var/global/datum/controller/occupations/job_master
 			var/datum/job/job = GetJob(rank)
 			if(!job)	return 0
 			if(jobban_isbanned(player, rank))	return 0
+			if(!job.player_old_enough(player.client)) return 0
 			var/position_limit = job.total_positions
 			if(!latejoin)
 				position_limit = job.spawn_positions
@@ -65,6 +66,9 @@ var/global/datum/controller/occupations/job_master
 			if(jobban_isbanned(player, job.title))
 				Debug("FOC isbanned failed, Player: [player]")
 				continue
+			if(!job.player_old_enough(player.client))
+				Debug("FOC player not old enough, Player: [player]")
+				continue
 			if(flag && (!player.client.prefs.be_special & flag))
 				Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 				continue
@@ -74,7 +78,7 @@ var/global/datum/controller/occupations/job_master
 		return candidates
 
 	proc/GiveRandomJob(var/mob/new_player/player)
-		Debug("FOC Giving random job, Player: [player]")
+		Debug("GRJ Giving random job, Player: [player]")
 		for(var/datum/job/job in shuffle(occupations))
 			if(!job)
 				continue
@@ -86,11 +90,15 @@ var/global/datum/controller/occupations/job_master
 				continue
 
 			if(jobban_isbanned(player, job.title))
-				Debug("FOC isbanned failed, Player: [player], Job: [job.title]")
+				Debug("GRJ isbanned failed, Player: [player], Job: [job.title]")
+				continue
+
+			if(!job.player_old_enough(player.client))
+				Debug("GRJ player not old enough, Player: [player]")
 				continue
 
 			if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
-				Debug("FOC Random job given, Player: [player], Job: [job]")
+				Debug("GRJ Random job given, Player: [player], Job: [job]")
 				AssignRole(player, job.title)
 				unassigned -= player
 				break
@@ -233,7 +241,11 @@ var/global/datum/controller/occupations/job_master
 						continue
 
 					if(jobban_isbanned(player, job.title))
-						Debug("FOC isbanned failed, Player: [player], Job:[job.title]")
+						Debug("DO isbanned failed, Player: [player], Job:[job.title]")
+						continue
+
+					if(!job.player_old_enough(player.client))
+						Debug("DO player not old enough, Player: [player], Job:[job.title]")
 						continue
 
 					// If the player wants that job on this level, then try give it to him.
@@ -241,7 +253,7 @@ var/global/datum/controller/occupations/job_master
 
 						// If the job isn't filled
 						if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
-							Debug("FOC pass, Player: [player], Level:[level], Job:[job.title]")
+							Debug("DO pass, Player: [player], Level:[level], Job:[job.title]")
 							AssignRole(player, job.title)
 							unassigned -= player
 							break
@@ -417,11 +429,15 @@ var/global/datum/controller/occupations/job_master
 			var/level3 = 0 //low
 			var/level4 = 0 //never
 			var/level5 = 0 //banned
+			var/level6 = 0 //account too young
 			for(var/mob/new_player/player in player_list)
 				if(!(player.ready && player.mind && !player.mind.assigned_role))
 					continue //This player is not ready
 				if(jobban_isbanned(player, job.title))
 					level5++
+					continue
+				if(!job.player_old_enough(player.client))
+					level6++
 					continue
 				if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
 					level1++
@@ -431,5 +447,5 @@ var/global/datum/controller/occupations/job_master
 					level3++
 				else level4++ //not selected
 
-			tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|-"
+			tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|-|YOUNG=[level6]|-"
 			feedback_add_details("job_preferences",tmp_str)

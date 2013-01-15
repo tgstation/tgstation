@@ -17,7 +17,7 @@
 			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway)
-
+	minimal_player_age = 7
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

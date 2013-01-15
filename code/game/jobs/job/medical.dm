@@ -15,7 +15,7 @@
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors)
-
+	minimal_player_age = 7
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

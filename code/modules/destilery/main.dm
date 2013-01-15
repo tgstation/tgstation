@@ -288,6 +288,3 @@
 		enzymes -= 50
 		new/obj/item/weapon/reagent_containers/food/condiment/enzyme(src.loc)
 
-	// /obj/item/weapon/reagent_containers/food/condiment/enzyme
-
-
