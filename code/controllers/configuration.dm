@@ -97,6 +97,8 @@
 
 	var/assistant_maint = 0 //Do assistants get maint access?
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
+	var/ghost_interaction = 0
+
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -352,6 +354,9 @@
 
 				if("continuous_rounds")
 					config.continous_rounds = 1
+
+				if("ghost_interaction")
+					config.ghost_interaction = 1
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
