@@ -68,6 +68,7 @@ thebreadbocks: Steve Johnson: /obj/item/fluff/steve_johnson_1
 themij: Taryn Keppel: /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
 thejesster14: Rosa Wolff: /obj/item/device/flashlight/fluff/thejesster14_1
 tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
+vinceluk: Ashley Rifler: /obj/item/clothing/gloves/fluff/ashley_rifler_1
 vinceluk: Seth Sealis: /obj/item/clothing/suit/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
 whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1
