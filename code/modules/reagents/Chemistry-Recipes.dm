@@ -1763,8 +1763,8 @@ datum
 			name = "Changeling Sting"
 			id = "changelingsting"
 			result = "changelingsting"
-			required_reagents = list("orangejuice" = 1, "limejuice" = 1, "lemonjuice" = 1, "vodka" = 1)
-			result_amount = 4
+			required_reagents = list("screwdrivercocktail" = 1, "limejuice" = 1, "lemonjuice" = 1)
+			result_amount = 5
 
 		aloe
 			name = "Aloe"

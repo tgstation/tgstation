@@ -558,7 +558,7 @@ Status: []<BR>"},
 			return 10
 
 	if(auth_weapons) // check for weapon authorization
-		if((isnull(perp:wear_id)) || (istype(perp:wear_id.GetID(), /obj/item/weapon/card/id/syndicate)))
+		if((isnull(perp.wear_id)) || (istype(perp.wear_id.GetID(), /obj/item/weapon/card/id/syndicate)))
 
 			if((src.allowed(perp)) && !(src.lasercolor)) // if the perp has security access, return 0
 				return 0
@@ -569,40 +569,36 @@ Status: []<BR>"},
 			if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.r_hand, /obj/item/weapon/melee/baton))
 				threatcount += 4
 
-			if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee/baton))
+			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee/baton))
 				threatcount += 2
 
 	if((src.lasercolor) == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
 		threatcount = 0//But does not target anyone else
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			threatcount += 4
-		if((istype(perp:r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(perp:l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+		if((istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
 			threatcount += 4
-		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag))
+		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/redtag))
 			threatcount += 2
 
 	if((src.lasercolor) == "r")
 		threatcount = 0
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
 			threatcount += 4
-		if((istype(perp:r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(perp:l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+		if((istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
 			threatcount += 4
-		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag))
+		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/bluetag))
 			threatcount += 2
 
 	if (src.check_records) // if the turret can check the records, check if they are set to *Arrest* on records
 		for (var/datum/data/record/E in data_core.general)
+
 			var/perpname = perp.name
-			if (perp:wear_id)
-				var/obj/item/weapon/card/id/id = perp:wear_id
-				if(istype(perp:wear_id, /obj/item/device/pda))
-					var/obj/item/device/pda/pda = perp:wear_id
-					id = pda.id
+			if (perp.wear_id)
+				var/obj/item/weapon/card/id/id = perp.wear_id.GetID()
 				if (id)
 					perpname = id.registered_name
-				else
-					var/obj/item/device/pda/pda = perp:wear_id
-					perpname = pda.owner
+
 			if (E.fields["name"] == perpname)
 				for (var/datum/data/record/R in data_core.security)
 					if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))

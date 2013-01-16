@@ -575,7 +575,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/hear_talk(mob/M as mob, msg)
 
 	if (broadcasting)
-		talk_into(M, msg)
+		if(get_dist(src, M) <= canhear_range)
+			talk_into(M, msg)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 
