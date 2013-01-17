@@ -69,12 +69,22 @@
 		user <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
 		return
 
-	var/attempt = 0
+	if(user && user.buckled)
+		user.buckled.unbuckle()
+
+	var/list/tempL = L
+	var/attempt = null
 	var/success = 0
-	while(!success)
-		success = user.Move(pick(L))
-		if(attempt > 20) break	//Failsafe
+	while(tempL.len)
+		attempt = pick(tempL)
+		success = user.Move(attempt)
+		if(!success)
+			tempL.Remove(attempt)
+		else
+			break
+
 	if(!success)
 		user.loc = pick(L)
+
 	smoke.start()
 	src.uses -= 1
