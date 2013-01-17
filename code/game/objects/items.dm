@@ -63,11 +63,11 @@
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
-//bruteloss = 1
-//fireloss = 2
-//toxloss = 4
-//oxyloss = 8
-//This proc will return an array. The first element of the list should always be the suicide message that players will see, next is the damagetype
+//BRUTELOSS = 1
+//FIRELOSS = 2
+//TOXLOSS = 4
+//OXYLOSS = 8
+//Output a creative message and then return the damagetype done
 /obj/item/proc/suicide_act(mob/user)
 	return
 
