@@ -97,12 +97,15 @@
 	var/turf/simulated/floor/location = loc
 	if(!istype(location))
 		Kill()
+		return
 
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
 		Kill()
+		return
 
 	if(location.air.toxins < 0.5 || location.air.oxygen < 0.5)
 		Kill()
+		return
 
 	perform_exposure()
 

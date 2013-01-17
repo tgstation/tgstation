@@ -192,29 +192,25 @@
 	set background = 1
 
 	. = list()
-
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	var/list/speaker_coverage = list()
-
 	for(var/i = 1; i <= radios.len; i++)
-
 		var/obj/item/device/radio/R = radios[i]
-		var/turf/speaker = get_turf(R)
+		if(R)
+			var/turf/speaker = get_turf(R)
+			if(speaker)
+				for(var/turf/T in hear(R.canhear_range,speaker))
+					speaker_coverage[T] = T
 
-		if(speaker)
-			for(var/turf/T in hear(R.canhear_range,speaker))
-				speaker_coverage[T] = T
 
 	// Try to find all the players who can hear the message
 	for(var/i = 1; i <= player_list.len; i++)
-
 		var/mob/M = player_list[i]
-		var/turf/ear = get_turf(M)
-
-		if(ear)
-			if(speaker_coverage[ear])
-				. |= M
-
+		if(M)
+			var/turf/ear = get_turf(M)
+			if(ear)
+				if(speaker_coverage[ear])
+					. |= M
 	return .
 
 #define SIGN(X) ((X<0)?-1:1)
