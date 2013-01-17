@@ -148,7 +148,7 @@ proc/Airflow(zone/A, zone/B)
 
 		//Check for knocking people over
 		if(ismob(M) && n > vsc.airflow_stun_pressure)
-			if(M:nodamage) continue
+			if(M:status_flags & GODMODE) continue
 			M:airflow_stun()
 
 		if(M.check_airflow_movable(n))
@@ -242,7 +242,7 @@ atom/movable
 		if(airflow_dest == loc)
 			step_away(src,loc)
 		if(ismob(src))
-			if(src:nodamage)
+			if(src:status_flags & GODMODE)
 				return
 			if(istype(src, /mob/living/carbon/human))
 				if(src:buckled)
@@ -307,7 +307,7 @@ atom/movable
 		if(airflow_dest == loc)
 			step_away(src,loc)
 		if(ismob(src))
-			if(src:nodamage)
+			if(src:status_flags & GODMODE)
 				return
 			if(istype(src, /mob/living/carbon/human))
 				if(src:buckled)
