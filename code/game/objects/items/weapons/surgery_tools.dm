@@ -495,7 +495,7 @@
 				if(istype(M, /mob/living/carbon/slime))
 					if(M.stat == 2)
 						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M.name] is having its silky inndards cut apart with [src] by [user].", 1)
+							O.show_message("\red [M.name] is having its silky innards cut apart with [src] by [user].", 1)
 						M << "\red [user] begins to cut apart your innards with [src]!"
 						user << "\red You cut [M]'s silky innards apart with [src]!"
 						M:brain_op_stage = 2.0
