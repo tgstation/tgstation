@@ -24,12 +24,29 @@ datum
 					var/datum/reagent/D = new path()
 					chemical_reagents_list[D.id] = D
 			if(!chemical_reactions_list)
-				//Chemical Reactions - Initialises all /datum/chemical_reaction into a list (without an index)
+				//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
+				// It is filtered into multiple lists within a list.
+				// For example:
+				// chemical_reaction_list["plasma"] is a list of all reactions relating to plasma
+
 				var/paths = typesof(/datum/chemical_reaction) - /datum/chemical_reaction
 				chemical_reactions_list = list()
+
 				for(var/path in paths)
+
 					var/datum/chemical_reaction/D = new path()
-					chemical_reactions_list += D
+					var/list/reaction_ids = list()
+
+					if(D.required_reagents && D.required_reagents.len)
+						for(var/reaction in D.required_reagents)
+							reaction_ids += reaction
+
+					// Create filters based on each reagent id in the required reagents list
+					for(var/id in reaction_ids)
+						if(!chemical_reactions_list[id])
+							chemical_reactions_list[id] = list()
+						chemical_reactions_list[id] += D
+						break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
 		proc
 
@@ -198,83 +215,90 @@ datum
 				var/reaction_occured = 0
 				do
 					reaction_occured = 0
-					for(var/datum/chemical_reaction/C in chemical_reactions_list)
-						var/total_required_reagents = C.required_reagents.len
-						var/total_matching_reagents = 0
-						var/total_required_catalysts = C.required_catalysts.len
-						var/total_matching_catalysts= 0
-						var/matching_container = 0
-						var/matching_other = 0
-						var/list/multipliers = new/list()
+					for(var/datum/reagent/R in reagent_list) // Usually a small list
+						for(var/reaction in chemical_reactions_list[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
 
-						for(var/B in C.required_reagents)
-							if(!has_reagent(B, C.required_reagents[B]))	break
-							total_matching_reagents++
-							multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
-						for(var/B in C.required_catalysts)
-							if(!has_reagent(B, C.required_catalysts[B]))	break
-							total_matching_catalysts++
+							if(!reaction)
+								continue
 
-						if(!C.required_container)
-							matching_container = 1
+							var/datum/chemical_reaction/C = reaction
+							var/total_required_reagents = C.required_reagents.len
+							var/total_matching_reagents = 0
+							var/total_required_catalysts = C.required_catalysts.len
+							var/total_matching_catalysts= 0
+							var/matching_container = 0
+							var/matching_other = 0
+							var/list/multipliers = new/list()
 
-						else
-							if(my_atom.type == C.required_container)
+							for(var/B in C.required_reagents)
+								if(!has_reagent(B, C.required_reagents[B]))	break
+								total_matching_reagents++
+								multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
+							for(var/B in C.required_catalysts)
+								if(!has_reagent(B, C.required_catalysts[B]))	break
+								total_matching_catalysts++
+
+							if(!C.required_container)
 								matching_container = 1
 
-						if(!C.required_other)
-							matching_other = 1
+							else
+								if(my_atom.type == C.required_container)
+									matching_container = 1
 
-						else
-							/*if(istype(my_atom, /obj/item/slime_core))
-								var/obj/item/slime_core/M = my_atom
+							if(!C.required_other)
+								matching_other = 1
 
-								if(M.POWERFLAG == C.required_other && M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-									matching_other = 1*/
-							if(istype(my_atom, /obj/item/slime_extract))
-								var/obj/item/slime_extract/M = my_atom
+							else
+								/*if(istype(my_atom, /obj/item/slime_core))
+									var/obj/item/slime_core/M = my_atom
 
-								if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-									matching_other = 1
+									if(M.POWERFLAG == C.required_other && M.Uses > 0) // added a limit to slime cores -- Muskets requested this
+										matching_other = 1*/
+								if(istype(my_atom, /obj/item/slime_extract))
+									var/obj/item/slime_extract/M = my_atom
+
+									if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
+										matching_other = 1
 
 
 
 
-						if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
-							var/multiplier = min(multipliers)
-							for(var/B in C.required_reagents)
-								remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
+							if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
+								var/multiplier = min(multipliers)
+								for(var/B in C.required_reagents)
+									remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
 
-							var/created_volume = C.result_amount*multiplier
-							if(C.result)
-								feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
-								multiplier = max(multiplier, 1) //this shouldnt happen ...
-								add_reagent(C.result, C.result_amount*multiplier)
+								var/created_volume = C.result_amount*multiplier
+								if(C.result)
+									feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
+									multiplier = max(multiplier, 1) //this shouldnt happen ...
+									add_reagent(C.result, C.result_amount*multiplier)
 
-							for(var/mob/M in viewers(4, get_turf(my_atom)) )
-								M << "\blue \icon[my_atom] The solution begins to bubble."
+								var/list/seen = viewers(4, get_turf(my_atom))
+								for(var/mob/M in seen)
+									M << "\blue \icon[my_atom] The solution begins to bubble."
 
-						/*	if(istype(my_atom, /obj/item/slime_core))
-								var/obj/item/slime_core/ME = my_atom
-								ME.Uses--
-								if(ME.Uses <= 0) // give the notification that the slime core is dead
-									for(var/mob/M in viewers(4, get_turf(my_atom)) )
-										M << "\blue \icon[my_atom] The innards begin to boil!"
-							*/
-							if(istype(my_atom, /obj/item/slime_extract))
-								var/obj/item/slime_extract/ME2 = my_atom
-								ME2.Uses--
-								if(ME2.Uses <= 0) // give the notification that the slime core is dead
-									for(var/mob/M in viewers(4, get_turf(my_atom)) )
-										M << "\blue \icon[my_atom] The [my_atom]'s power is consumed in the reaction."
-										ME2.name = "used slime extract"
-										ME2.desc = "This extract has been used up."
+							/*	if(istype(my_atom, /obj/item/slime_core))
+									var/obj/item/slime_core/ME = my_atom
+									ME.Uses--
+									if(ME.Uses <= 0) // give the notification that the slime core is dead
+										for(var/mob/M in viewers(4, get_turf(my_atom)) )
+											M << "\blue \icon[my_atom] The innards begin to boil!"
+								*/
+								if(istype(my_atom, /obj/item/slime_extract))
+									var/obj/item/slime_extract/ME2 = my_atom
+									ME2.Uses--
+									if(ME2.Uses <= 0) // give the notification that the slime core is dead
+										for(var/mob/M in seen)
+											M << "\blue \icon[my_atom] The [my_atom]'s power is consumed in the reaction."
+											ME2.name = "used slime extract"
+											ME2.desc = "This extract has been used up."
 
-							playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
+								playsound(get_turf(my_atom), 'sound/effects/bubbles.ogg', 80, 1)
 
-							C.on_reaction(src, created_volume)
-							reaction_occured = 1
-							break
+								C.on_reaction(src, created_volume)
+								reaction_occured = 1
+								break
 
 				while(reaction_occured)
 				update_total()

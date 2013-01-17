@@ -58,3 +58,14 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 				facial_hair_styles_male_list += H.name
 				facial_hair_styles_female_list += H.name
 
+/* // Uncomment to debug chemical reaction list.
+/client/verb/debug_chemical_list()
+
+	for (var/reaction in chemical_reactions_list)
+		. += "chemical_reactions_list\[\"[reaction]\"\] = \"[chemical_reactions_list[reaction]]\"\n"
+		if(islist(chemical_reactions_list[reaction]))
+			var/list/L = chemical_reactions_list[reaction]
+			for(var/t in L)
+				. += "    has: [t]\n"
+	world << .
+*/
