@@ -296,6 +296,7 @@
 			else
 				src.menu = 3
 		else
+			src.active_record = null
 			src.temp = "Record missing."
 
 	else if (href_list["del_rec"])
