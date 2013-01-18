@@ -58,7 +58,7 @@
 
 /obj/structure/largecrate/chick/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/crowbar))
-		var/num = rand(4,12)
-		for(var/i=0,i<num,i++)
+		var/num = rand(4, 6)
+		for(var/i = 0, i < num, i++)
 			new /mob/living/simple_animal/chick(loc)
 	..()

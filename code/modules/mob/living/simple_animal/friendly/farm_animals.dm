@@ -17,7 +17,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
-	faction = "neutral"
+	faction = "goat"
 	attacktext = "kicks"
 	health = 40
 	melee_damage_lower = 1
@@ -31,29 +31,36 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
 	. = ..()
-	if(.)//chance to go crazy and start wacking stuff
-		if(prob(1))
-			src.visible_message("\red [src] gets an evil-looking gleam in their eye.")
-			faction = "hostile"
-		if(faction == "hostile" && prob(10))
-			faction = "neutral"
+	if(.)
+		//chance to go crazy and start wacking stuff
+		if(!enemies.len && prob(1))
+			Retaliate()
+
+		if(enemies.len && prob(10))
 			enemies = list()
-			stance = HOSTILE_STANCE_IDLE
-			target_mob = null
+			LoseTarget()
+			src.visible_message("\blue [src] calms down.")
+
 		if(stat == CONSCIOUS)
 			if(udder && prob(5))
 				udder.add_reagent("milk", rand(5, 10))
+
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
 			del(SV)
 			if(prob(10))
 				say("Nom")
+
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
 				var/step = get_step(src, direction)
 				if(step)
 					if(locate(/obj/effect/spacevine) in step)
 						Move(step)
+
+/mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
+	..()
+	src.visible_message("\red [src] gets an evil-looking gleam in their eye.")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()

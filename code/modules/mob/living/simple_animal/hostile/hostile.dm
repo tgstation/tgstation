@@ -18,8 +18,9 @@
 	stop_automated_movement = 0
 	for(var/atom/A in ListTargets())
 
-		T = Found(A)
-		if(T)
+		var/atom/F = Found(A)
+		if(F)
+			T = F
 			break
 
 		if(isliving(A))
