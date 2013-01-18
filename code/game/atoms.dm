@@ -453,19 +453,19 @@ its easier to just keep the beam vertical.
 		for(var/obj/effect/decal/cleanable/blood/B in T.contents)
 			if(!B.blood_DNA[M.dna.unique_enzymes])
 				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			for(var/datum/disease/D in M.viruses)
+			/*for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = D.Copy(1)
 				B.viruses += newDisease
-				newDisease.holder = B
+				newDisease.holder = B*/
 			return 1 //we bloodied the floor
 
 		//if there isn't a blood decal already, make one.
 		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
 		newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		for(var/datum/disease/D in M.viruses)
+		/*for(var/datum/disease/D in M.viruses)
 			var/datum/disease/newDisease = D.Copy(1)
 			newblood.viruses += newDisease
-			newDisease.holder = newblood
+			newDisease.holder = newblood*/
 		return 1 //we bloodied the floor
 
 	//adding blood to humans
@@ -487,10 +487,10 @@ its easier to just keep the beam vertical.
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"
 
-		for(var/datum/disease/D in M.viruses)
+		/*for(var/datum/disease/D in M.viruses)
 			var/datum/disease/newDisease = D.Copy(1)
 			this.viruses += newDisease
-			newDisease.holder = this
+			newDisease.holder = this*/
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M as mob)
@@ -499,20 +499,20 @@ its easier to just keep the beam vertical.
 			var/turf/simulated/source1 = src
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
 			this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			for(var/datum/disease/D in M.viruses)
+			/*for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = D.Copy(1)
 				this.viruses += newDisease
-				newDisease.holder = this
+				newDisease.holder = this*/
 
 	else if( istype(M, /mob/living/carbon/alien ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
 			var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(source2)
 			this.blood_DNA["UNKNOWN BLOOD"] = "X*"
-			for(var/datum/disease/D in M.viruses)
+			/*for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = D.Copy(1)
 				this.viruses += newDisease
-				newDisease.holder = this
+				newDisease.holder = this*/
 
 	else if( istype(M, /mob/living/silicon/robot ))
 		if( istype(src, /turf/simulated) )
