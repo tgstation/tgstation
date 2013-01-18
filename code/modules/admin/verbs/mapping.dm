@@ -288,6 +288,7 @@ var/global/say_disabled = 0
 
 //This proc is intended to detect lag problems relating to movement
 var/global/movement_disabled = 0
+var/global/movement_disabled_exception //This is the client that calls the proc, so he can continue to run around to gauge any change to lag.
 /client/proc/disable_movement()
 	set category = "Mapping"
 	set name = "Disable all movement"
@@ -295,5 +296,6 @@ var/global/movement_disabled = 0
 	movement_disabled = !movement_disabled
 	if(movement_disabled)
 		message_admins("[src.ckey] used 'Disable all movement', killing all movement.")
+		movement_disabled_exception = usr.ckey
 	else
 		message_admins("[src.ckey] used 'Disable all movement', restoring all movement.")
