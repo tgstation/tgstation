@@ -14,6 +14,10 @@
 	levelupdate()
 
 /turf/simulated/Entered(atom/A, atom/OL)
+	if(movement_disabled)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
+
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying)	return
