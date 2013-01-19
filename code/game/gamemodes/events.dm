@@ -53,7 +53,7 @@
 		possibleEvents["Appendicitis"] = medical_count * 50
 	if(security_count >= 1)
 		possibleEvents["Prison Break"] = security_count * 50
-		possibleEvents["Space Ninja"] = security_count * 10 // very low chance for space ninja event
+		//possibleEvents["Space Ninja"] = security_count * 10 // very low chance for space ninja event
 
 	var/picked_event = pick(possibleEvents)
 	var/chance = possibleEvents[picked_event]
