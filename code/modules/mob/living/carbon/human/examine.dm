@@ -60,6 +60,8 @@
 				t_him = "her"
 
 	msg += "<EM>[src.name]</EM>!\n"
+	if (pose)
+		msg += "[t_He] is [pose].\n"
 
 	//uniform
 	if(w_uniform && !skipjumpsuit)
