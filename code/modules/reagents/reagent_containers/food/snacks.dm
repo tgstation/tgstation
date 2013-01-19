@@ -1164,9 +1164,9 @@
 		bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
-	name = "Meatball soup"
+	name = "Tomato soup"
 	desc = "Smells like copper"
-	icon_state = "meatballsoup"
+	icon_state = "tomatosoup"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
