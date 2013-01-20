@@ -47,6 +47,7 @@
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/elite
 	name = "advanced hardsuit helmet"
+	desc = "A special suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	icon_state = "rig0-white"
 	item_state = "ce_helm"
 	color = "white"
@@ -120,3 +121,16 @@
 	name = "medical hardsuit"
 	item_state = "medical_hardsuit"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
+
+	//Security
+/obj/item/clothing/head/helmet/space/rig/security
+	name = "security hardsuit helmet"
+	icon_state = "rig0-sec"
+	item_state = "sec_helm"
+	color = "sec"
+
+/obj/item/clothing/suit/space/rig/security
+	icon_state = "rig-sec"
+	name = "security hardsuit"
+	item_state = "sec_hardsuit"
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
