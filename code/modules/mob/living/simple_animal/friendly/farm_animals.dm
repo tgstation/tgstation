@@ -146,17 +146,17 @@
 		..()
 
 /mob/living/simple_animal/chick
-	name = "chick"
-	desc = "Adorable! They make such a racket though"
+	name = "\improper chick"
+	desc = "Adorable! They make such a racket though."
 	icon_state = "chick"
 	icon_living = "chick"
 	icon_dead = "chick_dead"
 	icon_gib = "chick_gib"
-	speak = list("cherp","cherp?","chirrup","cheep")
+	speak = list("Cherp.","Cherp?","Chirrup.","Cheep!")
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps")
 	emote_see = list("pecks at the ground","flaps it's tiny wings")
-	speak_chance = 5
+	speak_chance = 2
 	turns_per_move = 1
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	meat_amount = 1
@@ -187,16 +187,16 @@ var/const/MAX_CHICKENS = 50
 var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken
-	name = "chicken"
+	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
 	icon_state = "chicken"
 	icon_living = "chicken"
 	icon_dead = "chicken_dead"
-	speak = list("cluck","BWAAAAARK BWAK BWAK BWAK","bwaak bwak")
+	speak = list("Cluck!","BWAAAAARK BWAK BWAK BWAK!","Bwaak bwak.")
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks")
 	emote_see = list("pecks at the ground","flaps it's wings viciously")
-	speak_chance = 5
+	speak_chance = 2
 	turns_per_move = 1
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	meat_amount = 2
@@ -205,6 +205,7 @@ var/global/chicken_count = 0
 	response_harm   = "kicks the"
 	attacktext = "kicks"
 	health = 10
+	var/eggsleft = 0
 	pass_flags = PASSTABLE
 
 /mob/living/simple_animal/chicken/New()
@@ -217,12 +218,25 @@ var/global/chicken_count = 0
 	..()
 	chicken_count -= 1
 
+/mob/living/simple_animal/chicken/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
+		if(!stat && eggsleft < 10)
+			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","You feed [O] to [name]! It clucks happily.")
+			del(O)
+			eggsleft += rand(1, 4)
+			//world << eggsleft
+		else
+			user << "\blue [name] doesn't seem hungry!"
+	else
+		..()
+
 /mob/living/simple_animal/chicken/Life()
 	. =..()
 	if(!.)
 		return
-	if(!stat && prob(1))
+	if(!stat && prob(5) && eggsleft > 0)
 		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
+		eggsleft--
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
