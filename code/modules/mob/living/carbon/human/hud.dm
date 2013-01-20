@@ -629,7 +629,7 @@ Radar-related things
 			var/mob/living/M = A
 			if(ishuman(M))
 				if(M:wear_id)
-					var/job = M:wear_id:GetJobName()
+					var/job = M:wear_id:GetJobRealName()
 					if(job == "Security Officer")
 						blip.icon_state = "secblip"
 						blip.name = "Security Officer"
