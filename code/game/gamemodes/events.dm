@@ -21,9 +21,6 @@
 // Doesn't necessarily trigger an event, but might. Returns 1 if it did.
 /proc/event()
 	event = 1
-	if(!sent_ninja_to_station)
-		choose_space_ninja()
-		return
 
 	var/minutes_passed = world.time/600
 
