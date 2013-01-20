@@ -172,32 +172,6 @@
 			if((COLD_RESISTANCE in mutations) || (prob(1)))
 				heal_organ_damage(0,1)
 
-		// Make nanoregen heal youu, -3 all damage types
-		if(NANOREGEN in augmentations)
-			var/healed = 0
-			if(getToxLoss())
-				adjustToxLoss(-3)
-				healed = 1
-			if(getOxyLoss())
-				adjustOxyLoss(-3)
-				healed = 1
-			if(getCloneLoss())
-				adjustCloneLoss(-3)
-				healed = 1
-			if(getBruteLoss())
-				heal_organ_damage(3,0)
-				healed = 1
-			if(getFireLoss())
-				heal_organ_damage(0,3)
-				healed = 1
-			if(halloss > 0)
-				halloss -= 3
-				if(halloss < 0) halloss = 0
-				healed = 1
-			if(healed)
-				if(prob(5))
-					src << "\blue You feel your wounds mending..."
-
 		if ((HULK in mutations) && health <= 25)
 			mutations.Remove(HULK)
 			update_mutations()		//update our mutation overlays
@@ -329,7 +303,7 @@
 
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if((status_flags & GODMODE) || REBREATHER in augmentations)
+		if((status_flags & GODMODE))
 			return
 
 		if(!breath || (breath.total_moles() == 0) || suiciding)

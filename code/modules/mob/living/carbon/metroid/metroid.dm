@@ -472,21 +472,12 @@
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
 		else
-			if(ELECTRICHANDS in M.augmentations)
-				var/gendertxt = "their"
-				if(M.gender == MALE)
-					gendertxt = "his"
-				if(M.gender == FEMALE)
-					gendertxt = "her"
-
-				visible_message("\red <B>[M] has shocked [src] with [gendertxt] bare hands!</B>")
-				return
 
 			var/damage = rand(1, 9)
 
 			attacked += 10
 			if (prob(90))
-				if ((HULK in M.mutations) || (SUPRSTR in M.augmentations))
+				if (HULK in M.mutations)
 					damage += 5
 					if(Victim)
 						Victim = null

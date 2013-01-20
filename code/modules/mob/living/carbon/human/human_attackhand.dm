@@ -43,7 +43,6 @@
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(HULK in M.mutations)			damage += 5
-			if(SUPRSTR in M.augmentations)	damage += 5
 
 			playsound(loc, "punch", 25, 1, -1)
 
@@ -99,25 +98,6 @@
 
 		if("hurt")
 
-			if(ELECTRICHANDS in M.augmentations)
-				var/gendertxt = "their"
-				if(M.gender == MALE)
-					gendertxt = "his"
-				if(M.gender == FEMALE)
-					gendertxt = "her"
-
-				visible_message("\red <B>[M] has shocked [src] with [gendertxt] bare hands!</B>")
-				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Used Electric Hands nanoaug power on [src.name] ([src.ckey])</font>")
-				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been shocked by [M.name] with the Electric Hands nanoaug ([M.ckey])</font>")
-
-				log_attack("<font color='red'>[M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name], shocking them ([src.ckey])</font>")
-
-
-				var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
-				apply_effects(5,5,0,0,5,0,0,armorblock)
-
-				return
-
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
 
@@ -151,7 +131,6 @@
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(HULK in M.mutations)			damage += 5
-			if(SUPRSTR in M.augmentations) 	damage += 5
 
 			switch(attack_verb)
 				if("slash")

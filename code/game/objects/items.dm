@@ -220,7 +220,7 @@
 	/////////////////////////
 
 	var/power = src.force
-	if((HULK in user.mutations) || (SUPRSTR in user.augmentations))
+	if(HULK in user.mutations)
 		power *= 2
 
 	if(!istype(M, /mob/living/carbon/human))

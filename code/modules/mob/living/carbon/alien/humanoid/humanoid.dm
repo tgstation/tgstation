@@ -333,7 +333,7 @@
 		if ("hurt")
 			var/damage = rand(1, 9)
 			if (prob(90))
-				if ((HULK in M.mutations) || (SUPRSTR in M.augmentations))//HULK SMASH
+				if (HULK in M.mutations)//HULK SMASH
 					damage += 14
 					spawn(0)
 						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.

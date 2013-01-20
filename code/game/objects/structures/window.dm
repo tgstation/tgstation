@@ -98,7 +98,7 @@
 
 
 /obj/structure/window/attack_hand(mob/user as mob)
-	if((HULK in user.mutations) || (SUPRSTR in user.augmentations))
+	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		new /obj/item/weapon/shard(loc)

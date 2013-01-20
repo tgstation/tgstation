@@ -140,9 +140,6 @@
 	var/list/mutations = list() //Carbon -- Doohl
 	//see: setup.dm for list of mutations
 
-	var/list/augmentations = list() //Carbon -- Doohl
-	//see: setup.dm for list of augmentations
-
 	var/voice_name = "unidentifiable voice"
 	var/voice_message = null // When you are not understood by others (replaced with just screeches, hisses, chimpers etc.)
 	var/say_message = null // When you are understood by others. Currently only used by aliens and monkeys in their say_quote procs
