@@ -224,6 +224,7 @@
 
 	proc/clamp()
 		var/rval = 0
+		src.status &= ~ORGAN_BLEEDING
 		for(var/datum/wound/W in wounds)
 			if(W.internal) continue
 			rval |= !W.clamped
@@ -610,11 +611,12 @@
 
 	take_damage(brute, burn, sharp, used_weapon = null, list/forbidden_limbs = list())
 		..(brute, burn, sharp, used_weapon, forbidden_limbs)
-		if (brute_dam > 40)
-			if (prob(50))
-				disfigure("brute")
-		if (burn_dam > 40)
-			disfigure("burn")
+		if (!disfigured)
+			if (brute_dam > 40)
+				if (prob(50))
+					disfigure("brute")
+			if (burn_dam > 40)
+				disfigure("burn")
 
 	proc/disfigure(var/type = "brute")
 		if (disfigured)
