@@ -4,7 +4,7 @@
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY
 	force = 3.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -60,6 +60,13 @@
 		item_state = "flamethrower_0"
 	return
 
+/obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, flag)
+	// Make sure our user is still holding us
+	if(user && user.get_active_hand() == src)
+		var/turf/target_turf = get_turf(target)
+		if(target_turf)
+			var/turflist = getline(user, target_turf)
+			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)	return

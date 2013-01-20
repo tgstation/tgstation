@@ -991,7 +991,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 //	world << "according to dblclick(), t5 is [t5]"
 
 	// ------- ACTUALLY DETERMINING STUFF -------
-	if (((t5 || (W && (W.flags & 16))) && !( istype(src, /obj/screen) )))
+	if (((t5 || (W && (W.flags & USEDELAY))) && !( istype(src, /obj/screen) )))
 
 		// ------- ( CAN USE ITEM OR HAS 1 SECOND USE DELAY ) AND NOT CLICKING ON SCREEN -------
 
