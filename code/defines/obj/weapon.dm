@@ -147,7 +147,7 @@
 	desc = "A cane used by a true gentlemen. Or a clown."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
-	item_state = "cane"
+	item_state = "stick"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	throwforce = 7.0

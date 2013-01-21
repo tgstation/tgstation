@@ -155,9 +155,9 @@
 	speak = list("Cherp.","Cherp?","Chirrup.","Cheep!")
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps")
-	emote_see = list("pecks at the ground","flaps it's tiny wings")
+	emote_see = list("pecks at the ground","flaps its tiny wings")
 	speak_chance = 2
-	turns_per_move = 1
+	turns_per_move = 2
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	meat_amount = 1
 	response_help  = "pets the"
@@ -195,9 +195,9 @@ var/global/chicken_count = 0
 	speak = list("Cluck!","BWAAAAARK BWAK BWAK BWAK!","Bwaak bwak.")
 	speak_emote = list("clucks","croons")
 	emote_hear = list("clucks")
-	emote_see = list("pecks at the ground","flaps it's wings viciously")
+	emote_see = list("pecks at the ground","flaps its wings viciously")
 	speak_chance = 2
-	turns_per_move = 1
+	turns_per_move = 3
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	meat_amount = 2
 	response_help  = "pets the"
@@ -206,10 +206,16 @@ var/global/chicken_count = 0
 	attacktext = "kicks"
 	health = 10
 	var/eggsleft = 0
+	var/color
 	pass_flags = PASSTABLE
 
 /mob/living/simple_animal/chicken/New()
 	..()
+	if(!color)
+		color = pick( list("brown","black","white") )
+	icon_state = "chicken_[color]"
+	icon_living = "chicken_[color]"
+	icon_dead = "chicken_[color]_dead"
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	chicken_count += 1
@@ -220,8 +226,9 @@ var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
-		if(!stat && eggsleft < 10)
-			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","You feed [O] to [name]! It clucks happily.")
+		if(!stat && eggsleft < 8)
+			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
+			user.drop_item()
 			del(O)
 			eggsleft += rand(1, 4)
 			//world << eggsleft
@@ -234,7 +241,7 @@ var/global/chicken_count = 0
 	. =..()
 	if(!.)
 		return
-	if(!stat && prob(5) && eggsleft > 0)
+	if(!stat && prob(3) && eggsleft > 0)
 		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
 		eggsleft--
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
