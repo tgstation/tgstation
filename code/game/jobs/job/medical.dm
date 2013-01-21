@@ -131,7 +131,6 @@
 	selection_color = "#ffeef0"
 	access = list(access_medical, access_morgue, access_genetics, access_research)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
-	alt_titles = list("Sequencer")
 
 
 	equip(var/mob/living/carbon/human/H)
