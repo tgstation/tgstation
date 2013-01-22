@@ -140,7 +140,7 @@
 				var/list/responses = list(	"[src] looks at you imploringly.",
 											"[src] looks at you pleadingly",
 											"[src] looks at you with a resigned expression.",
-											"[src] seems resigned to it's fate.")
+											"[src] seems resigned to its fate.")
 				M << pick(responses)
 	else
 		..()
