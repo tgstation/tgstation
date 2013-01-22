@@ -1025,3 +1025,32 @@ That is why you attached them to objects.
 						sleep(5)
 			if(safety<=0)	break
 	return */
+
+//Alternate ninja speech replacement.
+/*This text is hilarious but also absolutely retarded.
+message = replacetext(message, "l", "r")
+message = replacetext(message, "rr", "ru")
+message = replacetext(message, "v", "b")
+message = replacetext(message, "f", "hu")
+message = replacetext(message, "'t", "")
+message = replacetext(message, "t ", "to ")
+message = replacetext(message, " I ", " ai ")
+message = replacetext(message, "th", "z")
+message = replacetext(message, "ish", "isu")
+message = replacetext(message, "is", "izu")
+message = replacetext(message, "ziz", "zis")
+message = replacetext(message, "se", "su")
+message = replacetext(message, "br", "bur")
+message = replacetext(message, "ry", "ri")
+message = replacetext(message, "you", "yuu")
+message = replacetext(message, "ck", "cku")
+message = replacetext(message, "eu", "uu")
+message = replacetext(message, "ow", "au")
+message = replacetext(message, "are", "aa")
+message = replacetext(message, "ay", "ayu")
+message = replacetext(message, "ea", "ii")
+message = replacetext(message, "ch", "chi")
+message = replacetext(message, "than", "sen")
+message = replacetext(message, ".", "")
+message = lowertext(message)
+*/

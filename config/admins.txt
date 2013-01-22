@@ -6,7 +6,6 @@
 ######################################################################
 
 chinsky - Game Master
-phaux - Game Master
 asanadas - Game Admin
 bobbehluvspropane - Game Admin
 cacophony - Game Admin

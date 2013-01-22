@@ -100,8 +100,10 @@
 			on = !on
 			update_icon()
 		if(href_list["eject"])
-			beaker:loc = loc
-			beaker = null
+			if (beaker)
+				var/obj/item/weapon/reagent_containers/glass/B = beaker
+				B.loc = get_step(loc, SOUTH)
+				beaker = null
 
 		updateUsrDialog()
 		add_fingerprint(usr)

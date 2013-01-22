@@ -1,3 +1,5 @@
+//the old style proc spells. not sure why these were removed in favour of obj style spells, in all honesty.
+
 //BLIND
 
 /client/proc/blind()

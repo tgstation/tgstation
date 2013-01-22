@@ -40,6 +40,7 @@
 /obj/item/weapon/circuitboard/aicore
 	name = "Circuit board (AI core)"
 	origin_tech = "programming=4;biotech=2"
+	board_type = "other"
 /obj/item/weapon/circuitboard/aiupload
 	name = "Circuit board (AI Upload)"
 	build_path = "/obj/machinery/computer/aiupload"

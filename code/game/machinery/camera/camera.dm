@@ -8,7 +8,8 @@
 	active_power_usage = 10
 	layer = 5
 
-	var/network = "SS13"
+	var/list/network = list("SS13")
+	var/network_multi = "" //This is for when you want to place a camera on the map. Input them as a string seperated by commas "SS13,RD,SomeOtherNetwork"
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = 1.0
@@ -40,17 +41,22 @@
 	assembly.state = 4
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
-		if(C != src && C.c_tag == src.c_tag && C.network == src.network)
+		var/list/tempnetwork = C.network&src.network
+		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
 	..()
 
+/obj/machinery/camera/initialize() //Lists dont work in the map editor so we have to translate a string into a list when the map initializes
+	if(network_multi)
+		network = text2list(network_multi,",")
 
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
 		if(prob(100/severity))
 			icon_state = "[initial(icon_state)]emp"
-			network = null                   //Not the best way but it will do. I think.
+			for(var/i in network)
+				network.Remove(i)                  //Not the best way but it will do. I think.
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)

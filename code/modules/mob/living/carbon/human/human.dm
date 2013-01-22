@@ -245,17 +245,19 @@
 
 			f_loss += 60
 
-			if (!prob(getarmor(null, "bomb")))
+			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 30
 				ear_deaf += 120
+			if (prob(70) && !shielded)
+				Paralyse(10)
 
 		if(3.0)
 			b_loss += 30
-			if (!prob(getarmor(null, "bomb")))
+			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
@@ -367,7 +369,7 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] has [pick("bit","slashed")] []!</B>", src), 1)
+				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
 
 		var/damage = rand(1, 3)
 
@@ -596,29 +598,32 @@
 					return
 				*/
 
-				var/perpname = "wot"
 				var/modified = 0
-
+				var/perpname = "wot"
 				if(wear_id)
 					var/obj/item/weapon/card/id/I = wear_id.GetID()
-					perpname = I.registered_name
+					if(I)
+						perpname = I.registered_name
+					else
+						perpname = name
 				else
-					perpname = src.name
+					perpname = name
 
-				for (var/datum/data/record/E in data_core.general)
-					if (E.fields["name"] == perpname)
-						for (var/datum/data/record/R in data_core.security)
-							if (R.fields["id"] == E.fields["id"])
+				if(perpname)
+					for (var/datum/data/record/E in data_core.general)
+						if (E.fields["name"] == perpname)
+							for (var/datum/data/record/R in data_core.security)
+								if (R.fields["id"] == E.fields["id"])
 
-								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
+									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
 
-								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-									if(setcriminal != "Cancel")
-										R.fields["criminal"] = setcriminal
-										modified = 1
+									if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+										if(setcriminal != "Cancel")
+											R.fields["criminal"] = setcriminal
+											modified = 1
 
-										spawn()
-											H.handle_regular_hud_updates()
+											spawn()
+												H.handle_regular_hud_updates()
 
 				if(!modified)
 					usr << "\red Unable to locate a data core entry for this person."

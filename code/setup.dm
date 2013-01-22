@@ -17,7 +17,8 @@
 #define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD	// N2 standard value (79%)
 
 #define MOLES_PLASMA_VISIBLE	0.7 //Moles in a standard cell after which plasma is visible
-#define MIN_PLASMA_DAMAGE 20
+#define MIN_PLASMA_DAMAGE 1
+#define MAX_PLASMA_DAMAGE 10
 
 #define BREATH_VOLUME 0.5	//liters in a normal breath
 #define BREATH_MOLES (ONE_ATMOSPHERE * BREATH_VOLUME /(T20C*R_IDEAL_GAS_EQUATION))
@@ -70,10 +71,14 @@
 
 // Factor of how fast mob nutrition decreases
 #define	HUNGER_FACTOR 0.1
-#define	REAGENTS_METABOLISM 0.4
+
+// How many units of reagent are consumed per tick, by default.
+#define  REAGENTS_METABOLISM 0.4
+
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
 #define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
+
 
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
 	//Minimum ratio of air that must move to/from a tile to suspend group processing
@@ -124,7 +129,6 @@
 #define T0C 273.15					// 0degC
 #define T20C 293.15					// 20degC
 #define TCMB 2.7					// -270.3degC
-#define WATER_BOIL_TEMP 393
 
 var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
 
@@ -278,7 +282,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
-/*
+
 //bitflags for mutations
 	// Extra powers:
 #define SHADOW			(1<<10)	// shadow teleportation (create in/out portals anywhere) (25%)
@@ -292,17 +296,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define SHOCKWAVE		(1<<18)	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
 #define ELECTRICITY		(1<<19)	// ability to shoot electric attacks (15%)
 
-
-	// Nanoaugmentations:
-#define SUPRSTR			(1<<20)	// super strength
-#define RADAR			(1<<21)	// on-screen mob radar
-#define ELECTRICHANDS	(1<<22)	// electric hands
-#define ESWORDSYNTH		(1<<23)	// esword synthesizer
-#define REBREATHER		(1<<24)	// removes the need to breathe
-#define DERMALARMOR		(1<<25)	// 35% damage decrease
-#define REFLEXES		(1<<26)	// dodge 50% of projectiles, dodge 25% of melee attacks
-#define NANOREGEN		(1<<27)	// regenerative nanobots, -3 all damage types per second
-*/
 
 // String identifiers for associative list lookup
 
@@ -334,20 +327,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define SHIELD			18 	// shielding from all projectile attacks (30%)
 #define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
 #define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
-
-
-// mob/var/list/augmentations
-
-	// Nanoaugmentations:
-#define SUPRSTR			21 	// super strength (hulk powers)
-#define RADAR			22 	// on-screen mob radar
-#define ELECTRICHANDS	23 	// electric hands
-#define ESWORDSYNTH		24 	// esword synthesizer
-#define REBREATHER		25 	// removes the need to breathe
-#define DERMALARMOR		26 	// 35% damage decrease
-#define REFLEXES		27 	// dodge 50% of projectiles
-#define NANOREGEN		28 	// regenerative nanobots, -3 all damage types per second
-
 
 	//2spooky
 #define SKELETON 29

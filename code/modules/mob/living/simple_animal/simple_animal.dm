@@ -339,6 +339,28 @@
 				L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 
 
+/mob/living/simple_animal/attack_slime(mob/living/carbon/slime/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
+
+	if(M.Victim) return // can't attack while eating!
+
+	visible_message("\red <B>The [M.name] glomps [src]!</B>")
+
+	var/damage = rand(1, 3)
+
+	if(istype(src, /mob/living/carbon/slime/adult))
+		damage = rand(20, 40)
+	else
+		damage = rand(5, 35)
+
+	adjustBruteLoss(damage)
+
+
+	return
+
+
 /mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/stack/medical))
 

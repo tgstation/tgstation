@@ -62,6 +62,9 @@ datum/air_group
 	proc/check_regroup()
 		//Purpose: Checks to see if group processing should be turned back on
 		//Returns: group_processing
+		if(prevent_airgroup_regroup)
+			return 0
+
 		if(group_processing) return 1
 
 		var/turf/simulated/sample = pick(members)
