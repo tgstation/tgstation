@@ -94,7 +94,7 @@
 	if(!scrambledcodes && !camera)
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
-		camera.network = "SS13"
+		camera.network = list("SS13")
 		if(isWireCut(5)) // 5 = BORG CAMERA
 			camera.status = 0
 	..()

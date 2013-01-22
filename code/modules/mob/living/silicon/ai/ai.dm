@@ -19,7 +19,7 @@ var/list/ai_list = list()
 	anchored = 1 // -- TLE
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE
-	var/network = "SS13"
+	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
@@ -554,15 +554,12 @@ var/list/ai_list = list()
 	for (var/obj/machinery/camera/C in cameranet.cameras)
 		if(!C.can_use())
 			continue
-		if(C.network == "AI Satellite")
-			if (ticker.mode.name == "AI malfunction")
-				var/datum/game_mode/malfunction/malf = ticker.mode
-				for (var/datum/mind/M in malf.malf_ai)
-					if (mind == M)
-						cameralist[C.network] = C.network
-		else
-			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison")
-				cameralist[C.network] = C.network
+
+		var/list/tempnetwork = C.network
+		tempnetwork.Remove("CREED", "thunder", "RD", "toxins", "Prison")
+		if(tempnetwork.len)
+			for(var/i in C.network)
+				cameralist[i] = i
 	var/old_network = network
 	network = input(U, "Which network would you like to view?") as null|anything in cameralist
 
@@ -576,7 +573,7 @@ var/list/ai_list = list()
 		for(var/obj/machinery/camera/C in cameranet.cameras)
 			if(!C.can_use())
 				continue
-			if(C.network == network)
+			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
 				break
 	src << "\blue Switched to [network] camera network."
