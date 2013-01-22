@@ -2207,7 +2207,7 @@
 "aQw" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/meter,/turf/simulated/floor/plating,/area/maintenance/port)
 "aQx" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 9},/turf/simulated/floor/plating,/area/maintenance/port)
 "aQy" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor/plating,/area/maintenance/port)
-"aQz" = (/obj/item/clothing/gloves/rainbow,/obj/item/clothing/shoes/rainbow,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plating,/area/maintenance/port)
+"aQz" = (/obj/item/clothing/gloves/rainbow,/obj/item/clothing/shoes/rainbow,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/item/clothing/under/rainbow,/obj/item/clothing/head/soft/rainbow,/turf/simulated/floor/plating,/area/maintenance/port)
 "aQA" = (/obj/structure/reagent_dispensers/watertank,/obj/machinery/atmospherics/unary/vent_pump{on = 1},/turf/simulated/floor,/area/storage/tools)
 "aQB" = (/obj/structure/reagent_dispensers/fueltank,/turf/simulated/floor,/area/storage/tools)
 "aQC" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = -29},/obj/structure/rack{dir = 8; layer = 2.9},/obj/machinery/light,/obj/item/device/multitool,/turf/simulated/floor,/area/storage/tools)
