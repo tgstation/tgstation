@@ -71,6 +71,9 @@
 // Factor of how fast mob nutrition decreases
 #define	HUNGER_FACTOR 0.1
 #define	REAGENTS_METABOLISM 0.4
+// By defining the effect multiplier this way, it'll exactly adjust
+// all effects according to how they originally were with the 0.4 metabolism
+#define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
 
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
 	//Minimum ratio of air that must move to/from a tile to suspend group processing
@@ -121,6 +124,7 @@
 #define T0C 273.15					// 0degC
 #define T20C 293.15					// 20degC
 #define TCMB 2.7					// -270.3degC
+#define WATER_BOIL_TEMP 393
 
 var/turf/space/Space_Tile = locate(/turf/space) // A space tile to reference when atmos wants to remove excess heat.
 
