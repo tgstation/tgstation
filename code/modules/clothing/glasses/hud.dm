@@ -83,14 +83,13 @@
 	var/icon/tempHud = 'icons/mob/hud.dmi'
 	for(var/mob/living/carbon/human/perp in view(M))
 		if(!C) continue
-		var/perpname = "wot"
+		var/perpname = perp.name
 		if(perp.wear_id)
 			var/obj/item/weapon/card/id/I = perp.wear_id.GetID()
 			if(I)
-				C.images += image(tempHud, perp, "hud[ckey(I.GetJobName())]")
+				C.images += image(tempHud, perp, "hud[ckey(I.GetJobRealName())]")
 				perpname = I.registered_name
 		else
-			perpname = perp.name
 			C.images += image(tempHud, perp, "hudunknown")
 
 		for(var/datum/data/record/E in data_core.general)

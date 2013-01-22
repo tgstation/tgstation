@@ -10,7 +10,7 @@
 		var/turf/T = get_turf_or_move(src.loc)
 		for(var/mob/living/carbon/human/perp in view(T))
 			if(perp.wear_id)
-				client.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobName())]")
+				client.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobRealName())]")
 				var/perpname = "wot"
 				if(istype(perp.wear_id,/obj/item/weapon/card/id))
 					perpname = perp.wear_id:registered_name

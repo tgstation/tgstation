@@ -232,8 +232,9 @@
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
 					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_MESSAGE_LEN)
-					if(temp_t)
-						t1 = temp_t
+					//let custom jobs function as an impromptu alt title, mainly for sechuds
+					if(temp_t && modify)
+						modify.assignment = temp_t
 				else
 					var/datum/job/jobdatum
 					for(var/jobtype in typesof(/datum/job))
@@ -246,8 +247,9 @@
 						return
 
 					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
-				if (modify)
-					modify.assignment = t1
+					if (modify)
+						modify.assignment = t1
+						modify.rank = t1
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify

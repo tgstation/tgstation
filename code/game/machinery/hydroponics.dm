@@ -1,3 +1,5 @@
+#define SPEED_MULTIPLIER 0.5
+
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics.dmi'
@@ -45,42 +47,42 @@ obj/machinery/hydroponics/process()
 		lastcycle = world.time
 		if(planted && !dead)
 			// Advance age
-			age++
+			age += 1 * SPEED_MULTIPLIER
 
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
 			if(nutrilevel > 0)
 				if(prob(50))
-					nutrilevel -= 1
+					nutrilevel -= 1 * SPEED_MULTIPLIER
 
 			// Lack of nutrients hurts non-weeds
 			if(nutrilevel <= 0 && myseed.plant_type != 1)
-				health -= rand(1,3)
+				health -= rand(1,3) * SPEED_MULTIPLIER
 
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
-			waterlevel = max(waterlevel - rand(1,6), 0)
+			waterlevel = max(waterlevel - rand(1,6) * SPEED_MULTIPLIER, 0)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
 			if(waterlevel <= 10 && myseed.plant_type != 2)
-				health -= rand(0,1)
+				health -= rand(0,1) * SPEED_MULTIPLIER
 				if(waterlevel <= 0)
-					health -= rand(0,2)
+					health -= rand(0,2) * SPEED_MULTIPLIER
 
 			// Sufficient water level and nutrient level = plant healthy
 			else if(waterlevel > 10 && nutrilevel > 0)
-				health += rand(1,2)
+				health += rand(1,2) * SPEED_MULTIPLIER
 				if(prob(5))  //5 percent chance the weed population will increase
-					weedlevel += 1
+					weedlevel += 1 * SPEED_MULTIPLIER
 //Toxins/////////////////////////////////////////////////////////////////
 
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
 			if(toxic >= 40 && toxic < 80)
-				health -= 1
-				toxic -= rand(1,10)
+				health -= 1 * SPEED_MULTIPLIER
+				toxic -= rand(1,10) * SPEED_MULTIPLIER
 			else if(toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
-				health -= 3
-				toxic -= rand(1,10)
+				health -= 3 * SPEED_MULTIPLIER
+				toxic -= rand(1,10) * SPEED_MULTIPLIER
 			else if(toxic < 0) // Make sure it won't go overoboard
 				toxic = 0
 
@@ -91,11 +93,11 @@ obj/machinery/hydroponics/process()
 				pestlevel = 10
 
 			else if(pestlevel >= 5)
-				health -= 1
+				health -= 1 * SPEED_MULTIPLIER
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && myseed.plant_type != 1 )
-				health -= 1
+				health -= 1 * SPEED_MULTIPLIER
 
 
 //Health & Age///////////////////////////////////////////////////////////
@@ -107,12 +109,12 @@ obj/machinery/hydroponics/process()
 			else if(health <= 0)
 				dead = 1
 				harvest = 0
-				weedlevel += 1 // Weeds flourish
+				weedlevel += 1 * SPEED_MULTIPLIER // Weeds flourish
 				pestlevel = 0 // Pests die
 
 			// If the plant is too old, lose health fast
 			if(age > myseed.lifespan)
-				health -= rand(1,5)
+				health -= rand(1,5) * SPEED_MULTIPLIER
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
@@ -129,10 +131,10 @@ obj/machinery/hydroponics/process()
 				else
 					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
-				pestlevel += 1
+				pestlevel += 1 * SPEED_MULTIPLIER
 		else
 			if(waterlevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
-				weedlevel += 1
+				weedlevel += 1 * SPEED_MULTIPLIER
 				if(weedlevel > 10)
 					weedlevel = 10
 
@@ -712,6 +714,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user.visible_message("\red [user] starts uprooting the weeds.", "\red You remove the weeds from the [src].")
 			weedlevel = 0
 			updateicon()
+			src.updateicon()
 		else
 			user << "\red This plot is completely devoid of weeds. It doesn't need uprooting."
 
@@ -1038,3 +1041,5 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			SetLuminosity(0)
 		return
+
+#undef SPEED_MULTIPLIER

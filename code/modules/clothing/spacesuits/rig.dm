@@ -133,7 +133,7 @@
 /obj/item/clothing/suit/space/rig/security
 	desc = "A special suit that protects against hazardous, low pressure environments. Has additional layers of armour and ablative shielding in lieu of radiation shielding."
 	icon_state = "rig-security"
-	name = "atmos hardsuit"
+	name = "security hardsuit"
 	item_state = "atmos_hardsuit"
 	armor = list(melee = 45, bullet = 10, laser = 25,energy = 10, bomb = 40, bio = 100, rad = 5)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/gun/energy)

@@ -52,7 +52,7 @@
 					world << text("\blue <B>Alert: [] authorizations needed until shuttle is launched early</B>", src.auth_need - src.authorized.len)
 
 				if("Abort")
-					world << "\blue <B>All authorizations to shorting time for shuttle launch have been revoked!</B>"
+					world << "\blue <B>All authorizations to shortening time for shuttle launch have been revoked!</B>"
 					src.authorized.len = 0
 					src.authorized = list(  )
 
