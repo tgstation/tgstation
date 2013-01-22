@@ -1257,6 +1257,7 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 				Z.loc = get_turf_loc(holder.my_atom)
+				Z.announce_to_ghosts()
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
 		tofu
