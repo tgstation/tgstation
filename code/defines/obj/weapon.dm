@@ -147,7 +147,7 @@
 	desc = "A cane used by a true gentlemen. Or a clown."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
-	item_state = "cane"
+	item_state = "stick"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	throwforce = 7.0
@@ -224,7 +224,7 @@
 	var/armed = 0
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the [src] on \his head! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "\red <b>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
@@ -344,20 +344,6 @@
 	m_amt = 100
 	origin_tech = "magnets=1"
 
-/obj/item/weapon/spellbook
-	name = "spell book"
-	desc = "The legendary book of spells of the wizard."
-	icon = 'icons/obj/library.dmi'
-	icon_state ="book"
-	throw_speed = 1
-	throw_range = 5
-	w_class = 1.0
-	flags = FPRINT | TABLEPASS
-	var/uses = 5.0
-	var/temp = null
-	var/max_uses = 5
-	var/op = 1
-
 /obj/item/weapon/staff
 	name = "wizards staff"
 	desc = "Apparently a staff used by the wizard."
@@ -426,7 +412,7 @@
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (OXYLOSS)
 
 /obj/item/weapon/module

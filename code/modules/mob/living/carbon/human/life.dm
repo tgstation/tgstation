@@ -432,7 +432,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(healed)
 				if(prob(5))
 					src << "\blue You feel your wounds mending..."
-
 		if(!(/mob/living/carbon/human/proc/morph in src.verbs))
 			if(mMorph in mutations)
 				src.verbs += /mob/living/carbon/human/proc/morph
@@ -606,8 +605,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if((status_flags & GODMODE) || REBREATHER in augmentations)			return
-
+		if((status_flags & GODMODE) || REBREATHER in augmentations)
+			return
 		if(!breath || (breath.total_moles() == 0) || suiciding)
 			if(reagents.has_reagent("inaprovaline"))
 				return
@@ -687,8 +686,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			co2overloadtime = 0
 
 		if(Toxins_pp > safe_toxins_max) // Too much toxins
-			var/ratio = breath.toxins/safe_toxins_max
-			adjustToxLoss(min(ratio, MIN_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+			var/ratio = (breath.toxins/safe_toxins_max) * 10
+			//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+			if(reagents)
+				reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 			toxins_alert = max(toxins_alert, 1)
 		else
 			toxins_alert = 0

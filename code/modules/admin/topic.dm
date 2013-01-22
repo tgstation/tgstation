@@ -1924,10 +1924,8 @@
 			if("wave")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","MW")
-				meteor_wave()
-				message_admins("[key_name_admin(usr)] has spawned meteors", 1)
-				command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
-				world << sound('sound/AI/meteors.ogg')
+				new /datum/event/meteor_wave
+
 			if("gravanomalies")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","GA")
@@ -1954,13 +1952,18 @@
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","AL")
 				if(aliens_allowed)
-					alien_infestation()
+					new /datum/event/alien_infestation
 					message_admins("[key_name_admin(usr)] has spawned aliens", 1)
 			if("alien_silent")								//replaces the spawn_xeno verb
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ALS")
 				if(aliens_allowed)
 					create_xeno()
+			if("spiders")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","SL")
+				new /datum/event/spider_infestation
+				message_admins("[key_name_admin(usr)] has spawned spiders", 1)
 			if("comms_blackout")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","CB")
@@ -1982,12 +1985,12 @@
 				var/choice = input("You sure you want to spawn carp?") in list("Badmin", "Cancel")
 				if(choice == "Badmin")
 					message_admins("[key_name_admin(usr)] has spawned carp.", 1)
-					carp_migration()
+					new /datum/event/carp_migration
 			if("radiation")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","R")
 				message_admins("[key_name_admin(usr)] has has irradiated the station", 1)
-				high_radiation_event()
+				new /datum/event/radiation_storm
 			if("immovable")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","IR")
@@ -2150,7 +2153,7 @@
 			if("spacevines")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","K")
-				spacevine_infestation()
+				new /datum/event/spacevine
 				message_admins("[key_name_admin(usr)] has spawned spacevines", 1)
 			if("onlyone")
 				feedback_inc("admin_secrets_fun_used",1)

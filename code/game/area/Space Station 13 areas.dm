@@ -598,7 +598,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "fpmaint"
 
 /area/maintenance/fsmaint
-	name = "Security Maintenance"
+	name = "Dormitory Maintenance"
 	icon_state = "fsmaint"
 
 /area/maintenance/fsmaint2

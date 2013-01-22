@@ -94,7 +94,7 @@
 	if(!scrambledcodes && !camera)
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
-		camera.network = "SS13"
+		camera.network = list("SS13")
 		if(isWireCut(5)) // 5 = BORG CAMERA
 			camera.status = 0
 	..()
@@ -652,7 +652,7 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] has [pick("bit","slashed")] []!</B>", src), 1)
+				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
 
 		var/damage = rand(1, 3)
 
@@ -782,7 +782,7 @@
 		if(icon_state =="mopgearrex")
 			overlays.Cut()
 			overlays += "eyes-mopgearrex"
-		if(icon_state =="Miner")
+		if(icon_state =="Miner" || icon_state =="Miner+j")
 			overlays.Cut()
 			overlays += "eyes-Miner"
 	else
@@ -855,7 +855,8 @@
 
 	if (href_list["mod"])
 		var/obj/item/O = locate(href_list["mod"])
-		O.attack_self(src)
+		if (O)
+			O.attack_self(src)
 
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])

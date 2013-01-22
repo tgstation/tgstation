@@ -1,8 +1,8 @@
 var/list/allEvents = typesof(/datum/event) - /datum/event
 var/list/potentialRandomEvents = typesof(/datum/event) - /datum/event
 
-var/eventTimeLower = 5000
-var/eventTimeUpper = 10000
+var/eventTimeLower = 15000	//15 minutes
+var/eventTimeUpper = 30000	//30 minutes
 
 var/scheduledEvent = null
 
@@ -37,3 +37,14 @@ var/scheduledEvent = null
 	//The event will add itself to the MC's event list
 	//and start working via the constructor.
 	new Type
+
+/client/proc/forceEvent(var/type in allEvents)
+	set name = "Trigger Event (Debug Only)"
+	set category = "Debug"
+
+	if(!holder)
+		return
+
+	if(ispath(type))
+		new type
+		message_admins("[key_name_admin(usr)] has triggered an event. ([type])", 1)

@@ -365,8 +365,8 @@ LOOK FOR SURGERY.DM*/
 	attack_verb = list("drilled")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("/red <b>[user] is pressing the [src] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
-							"/red <b>[user] is pressing [src] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << pick("/red <b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b>", \
+							"/red <b>[user] is pressing [src.name] to \his chest and activating it! It looks like \he's trying to commit suicide.</b>")
 		return (BRUTELOSS)
 
 /*
@@ -389,9 +389,9 @@ LOOK FOR SURGERY.DM*/
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src]! It looks like \he's trying to commit seppuku.</b>")
+		viewers(user) << pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
+							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
 		return (BRUTELOSS)
 
 /*
@@ -492,7 +492,7 @@ LOOK FOR SURGERY.DM*/
 				if(istype(M, /mob/living/carbon/slime))
 					if(M.stat == 2)
 						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M.name] is having its silky inndards cut apart with [src] by [user].", 1)
+							O.show_message("\red [M.name] is having its silky innards cut apart with [src] by [user].", 1)
 						M << "\red [user] begins to cut apart your innards with [src]!"
 						user << "\red You cut [M]'s silky innards apart with [src]!"
 						M:brain_op_stage = 2.0

@@ -160,6 +160,38 @@
 		return
 
 
+/obj/structure/closet/secure_closet/security/cargo
+
+	New()
+		..()
+		new /obj/item/clothing/tie/armband/cargo(src)
+		new /obj/item/device/encryptionkey/headset_cargo(src)
+		return
+
+/obj/structure/closet/secure_closet/security/engine
+
+	New()
+		..()
+		new /obj/item/clothing/tie/armband/engine(src)
+		new /obj/item/device/encryptionkey/headset_eng(src)
+		return
+
+/obj/structure/closet/secure_closet/security/science
+
+	New()
+		..()
+		new /obj/item/clothing/tie/armband/science(src)
+		new /obj/item/device/encryptionkey/headset_sci(src)
+		return
+
+/obj/structure/closet/secure_closet/security/med
+
+	New()
+		..()
+		new /obj/item/clothing/tie/armband/medgreen(src)
+		new /obj/item/device/encryptionkey/headset_med(src)
+		return
+
 
 /obj/structure/closet/secure_closet/detective
 	name = "Detective's Cabinet"
@@ -205,7 +237,7 @@
 
 /obj/structure/closet/secure_closet/injection
 	name = "Lethal Injections"
-	req_access = list(access_hos)
+	req_access = list(access_captain)
 
 
 	New()

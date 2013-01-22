@@ -369,7 +369,7 @@
 	var/colourName = "red" //for updateIcon purposes
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is jaming the [src] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "\red <b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS|OXYLOSS)
 
 /*

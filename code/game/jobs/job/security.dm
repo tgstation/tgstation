@@ -17,7 +17,7 @@
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
-
+	minimal_player_age = 14
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -55,9 +55,9 @@
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court)
+	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court)
-
+	minimal_player_age = 7
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -95,8 +95,8 @@
 
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
-	alt_titles = list("Forensic Technician")
 
+	minimal_player_age = 7	alt_titles = list("Forensic Technician")
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_ears)
@@ -140,8 +140,9 @@
 	spawn_positions = 5
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	access = list(access_security, access_sec_doors, access_brig, access_court)
+	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court)
+	minimal_player_age = 7
 
 
 	equip(var/mob/living/carbon/human/H)

@@ -89,6 +89,9 @@
 			if(I)
 				C.images += image(tempHud, perp, "hud[ckey(I.GetJobName())]")
 				perpname = I.registered_name
+			else
+				perpname = perp.name
+				C.images += image(tempHud, perp, "hudunknown")
 		else
 			perpname = perp.name
 			C.images += image(tempHud, perp, "hudunknown")

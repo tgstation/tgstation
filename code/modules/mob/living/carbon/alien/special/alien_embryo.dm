@@ -26,12 +26,13 @@
 	..()
 
 /obj/item/alien_embryo/process()
+	if(!affected_mob)	return
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		processing_objects.Remove(src)
-		affected_mob = null
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
+			affected_mob = null
 		return
 
 	if(stage < 5 && prob(3))

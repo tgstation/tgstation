@@ -228,7 +228,7 @@ datum/radio_frequency
 //			log_admin("DEBUG: post_signal(source=[source] ([source.x], [source.y], [source.z]),filter=[filter]) frequency=[frequency], N_f=[N_f], N_nf=[N_nf]")
 
 
-			del(signal)
+//			del(signal)
 
 		add_listener(obj/device as obj, var/filter as text|null)
 			if (!filter)

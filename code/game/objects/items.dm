@@ -13,7 +13,7 @@
 	flags = FPRINT | TABLEPASS
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 50
+	pressure_resistance = 5
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
@@ -63,11 +63,11 @@
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
-//bruteloss = 1
-//fireloss = 2
-//toxloss = 4
-//oxyloss = 8
-//This proc will return an array. The first element of the list should always be the suicide message that players will see, next is the damagetype
+//BRUTELOSS = 1
+//FIRELOSS = 2
+//TOXLOSS = 4
+//OXYLOSS = 8
+//Output a creative message and then return the damagetype done
 /obj/item/proc/suicide_act(mob/user)
 	return
 
@@ -243,7 +243,7 @@
 	/////////////////////////
 
 	var/power = src.force
-	if((HULK in user.mutations) || (SUPRSTR in user.augmentations))
+	if(HULK in user.mutations)
 		power *= 2
 
 	if(!istype(M, /mob/living/carbon/human))
