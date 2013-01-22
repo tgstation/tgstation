@@ -2117,6 +2117,15 @@
 	trash = /obj/item/trash/plate
 	bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/cracker
+	name = "Cracker"
+	desc = "It's a salted cracker."
+	icon_state = "cracker"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+
 
 
 /////////////////////////////////////////////////PIZZA////////////////////////////////////////
@@ -2356,11 +2365,18 @@
 		return
 	..()
 
-/obj/item/weapon/reagent_containers/food/snacks/cracker
-	name = "Cracker"
-	desc = "It's a salted cracker."
-	icon_state = "cracker"
+/obj/item/pizzabox/margherita/New()
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita(src)
+	boxtag = "Margherita Deluxe"
 
-	New()
-		..()
-		reagents.add_reagent("nutriment", 1)
+/obj/item/pizzabox/vegetable/New()
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza(src)
+	boxtag = "Gourmet Vegatable"
+
+/obj/item/pizzabox/mushroom/New()
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroompizza(src)
+	boxtag = "Mushroom Special"
+
+/obj/item/pizzabox/meat/New()
+	pizza = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meatpizza(src)
+	boxtag = "Meatlover's Supreme"

@@ -123,7 +123,7 @@
 			else
 				spawn(0)
 					close()
-
+			return
 		var/access_granted = 0
 		var/users_name
 		if(!istype(C, /obj)) //If someone hit it with their hand.  We need to see if they are allowed.

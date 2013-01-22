@@ -40,6 +40,8 @@ datum/controller/game_controller/New()
 
 	createRandomZlevel()
 
+	setup_economy()
+
 	if(!air_master)
 		air_master = new /datum/controller/air_system()
 		air_master.setup()

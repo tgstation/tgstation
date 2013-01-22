@@ -418,5 +418,7 @@
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span>"
+	if (pose)
+		msg += "\n[t_He] is [pose]."
 
 	usr << msg

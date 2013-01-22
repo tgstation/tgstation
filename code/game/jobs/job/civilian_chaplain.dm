@@ -10,6 +10,7 @@
 	selection_color = "#dddddd"
 	access = list(access_morgue, access_chapel_office, access_crematorium, access_maint_tunnels)
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
+	alt_titles = list("Counselor","Psychiatrist","Crew services adviser","Morale Officer")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -26,7 +27,7 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		spawn(0)
 			var/religion_name = "Christianity"
-			var/new_religion = copytext(sanitize(input(H, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
+			var/new_religion = copytext(sanitize(input(H, "You are the crew services officer. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
 
 			if (!new_religion)
 				new_religion = religion_name

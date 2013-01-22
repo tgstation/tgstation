@@ -253,7 +253,11 @@
 				var/t2 = modify
 				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
-					modify.registered_name = href_list["reg"]
+					var/temp_name = reject_bad_name(href_list["reg"])
+					if(temp_name)
+						modify.registered_name = temp_name
+					else
+						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 		if ("print")

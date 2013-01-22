@@ -589,3 +589,10 @@
 			for (var/mob/O in (hearers(src.loc, null) | get_mobs_in_view(world.view,src)))
 				O.show_message(message, m_type)
 
+
+/mob/living/carbon/human/verb/pose()
+	set name = "Set pose"
+	set desc = "Sets description which will be shown when someone examines you"
+	set category = "IC"
+
+	pose =  copytext(sanitize(input(usr, "This is [src]. \He is...", "Pose", null)  as text), 1, MAX_MESSAGE_LEN)
