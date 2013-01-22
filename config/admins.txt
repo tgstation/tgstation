@@ -5,8 +5,8 @@
 # Ranks can be anything defined in admin_ranks.txt           ~Carn   #
 ######################################################################
 
-abi79 - Game Master
-arcalane - Game Admin
+chinsky - Game Master
+phaux - Game Master
 asanadas - Game Admin
 bobbehluvspropane - Game Admin
 cacophony - Game Admin
