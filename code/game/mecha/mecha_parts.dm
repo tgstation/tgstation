@@ -402,6 +402,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	item_state = "electronic"
+	board_type = "other"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 5.0
 	w_class = 2.0

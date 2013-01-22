@@ -137,6 +137,7 @@
 		if(config.continous_rounds)
 			if(emergency_shuttle)
 				emergency_shuttle.always_fake_recall = 0
+			malf_mode_declared = 0
 		else
 			return 1
 	return ..() //check for shuttle and nuke

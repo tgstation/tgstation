@@ -11,7 +11,6 @@
 	var/obj/item/weapon/toppaper	//The topmost piece of paper.
 	flags = FPRINT | TABLEPASS
 	slot_flags = SLOT_BELT
-	pressure_resistance = 10
 
 /obj/item/weapon/clipboard/New()
 	update_icon()

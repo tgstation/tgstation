@@ -107,9 +107,14 @@
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
+	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
+
+	var/use_recursive_explosions //Defines whether the server uses recursive or circular explosions.
 
 	var/assistant_maint = 0 //Do assistants get maint access?
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
+	var/ghost_interaction = 0
+
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -162,8 +167,14 @@
 				if ("ban_legacy_system")
 					config.ban_legacy_system = 1
 
+				if ("use_age_restriction_for_jobs")
+					config.use_age_restriction_for_jobs = 1
+
 				if ("jobs_have_minimal_access")
 					config.jobs_have_minimal_access = 1
+
+				if ("use_recursive_explosions")
+					use_recursive_explosions = 1
 
 				if ("log_ooc")
 					config.log_ooc = 1
@@ -378,6 +389,9 @@
 
 				if("continuous_rounds")
 					config.continous_rounds = 1
+
+				if("ghost_interaction")
+					config.ghost_interaction = 1
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

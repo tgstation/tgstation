@@ -5,7 +5,7 @@
 	icon_state = "stool"
 	anchored = 1.0
 	flags = FPRINT
-	pressure_resistance = 3*ONE_ATMOSPHERE
+	pressure_resistance = 15
 
 /obj/structure/stool/ex_act(severity)
 	switch(severity)

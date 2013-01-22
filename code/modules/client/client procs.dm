@@ -168,11 +168,26 @@
 
 	var/sql_ckey = sql_sanitize_text(src.ckey)
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_player WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM erro_player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
 	var/sql_id = 0
 	while(query.NextRow())
 		sql_id = query.item[1]
+		player_age = text2num(query.item[2])
+		break
+
+	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[address]'")
+	query_ip.Execute()
+	related_accounts_ip = ""
+	while(query_ip.NextRow())
+		related_accounts_ip += "[query_ip.item[1]], "
+		break
+
+	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
+	query_cid.Execute()
+	related_accounts_cid = ""
+	while(query_cid.NextRow())
+		related_accounts_cid += "[query_cid.item[1]], "
 		break
 
 	//Just the standard check to see if it's actually a number
@@ -199,6 +214,12 @@
 		//New player!! Need to insert all the stuff
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
 		query_insert.Execute()
+
+	//Logging player access
+	var/serverip = "[world.internet_address]:[world.port]"
+	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	query_accesslog.Execute()
+
 
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT

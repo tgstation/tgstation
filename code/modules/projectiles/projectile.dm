@@ -74,17 +74,15 @@
 				loc = A.loc
 				return 0// nope.avi
 
-			// check for dodge (i can't place in bullet_act because then things get wonky)
-			if(!M.stat && !M.lying && (REFLEXES in M.augmentations) && prob(85))
-				var/message = pick("[M] skillfully dodges the [name]!", "[M] ducks, dodging the [name]!", "[M] effortlessly jumps out of the way of the [name]!", "[M] dodges the [name] in one graceful movement!", "[M] leans back, dodging the [name] narrowly!", "[M] sidesteps, avoiding the [name] narrowly.", "[M] barely weaves out of the way of the [name].")
-				M.visible_message("\red <B>[message]</B>")
-				forcedodge = 1
-			else
-				var/distance = get_dist(original,loc)
-				//Lower accurancy/longer range tradeoff. Distance matters a lot here, so at
-				// close distance, actually RAISE the chance to hit.
-				def_zone = get_zone_with_miss_chance(def_zone, M, -30 + 8*distance)
+			var/distance = get_dist(original,loc)
+			//Lower accurancy/longer range tradeoff. Distance matters a lot here, so at
+			// close distance, actually RAISE the chance to hit.
+			def_zone = get_zone_with_miss_chance(def_zone, M, -30 + 8*distance)
 
+			if(silenced)
+				if(def_zone)
+					M << "\red You've been shot in the [parse_zone(def_zone)] by the [src.name]!"
+			else
 				if(!def_zone)
 					visible_message("\The [src] misses [M] narrowly.")
 					del(src)
@@ -93,7 +91,6 @@
 					M << "\red You've been shot in the [parse_zone(def_zone)] by the [src.name]!"
 				else
 					visible_message("\red [A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-
 			if(istype(firer, /mob))
 				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"

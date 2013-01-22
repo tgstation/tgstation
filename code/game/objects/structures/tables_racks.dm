@@ -282,7 +282,7 @@
 
 
 /obj/structure/table/attack_hand(mob/user)
-	if(HULK in user.mutations || SUPRSTR in user.augmentations)
+	if(HULK in user.mutations)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		if(istype(src, /obj/structure/table/reinforced))
@@ -562,7 +562,7 @@
 
 
 /obj/structure/table/attack_hand(mob/user)
-	if(HULK in user.mutations || SUPRSTR in user.augmentations)
+	if(HULK in user.mutations)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		new /obj/item/weapon/rack_parts(loc)

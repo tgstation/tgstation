@@ -45,7 +45,6 @@
 
 	return igniting
 
-
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
 	anchored = 1
@@ -98,12 +97,15 @@
 	var/turf/simulated/floor/location = loc
 	if(!istype(location))
 		Kill()
+		return
 
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
 		Kill()
+		return
 
 	if(location.air.toxins < 0.5 || location.air.oxygen < 0.5)
 		Kill()
+		return
 
 	perform_exposure()
 
@@ -130,7 +132,7 @@
 	if(temperature > location.max_fire_temperature_sustained)
 		location.max_fire_temperature_sustained = temperature
 
-	if(temperature > location.heat_capacity)
+	if(location.heat_capacity && temperature > location.heat_capacity)
 		location.to_be_destroyed = 1
 		/*if(prob(25))
 			location.ReplaceWithSpace()
@@ -168,8 +170,9 @@
 	dir = pick(cardinal)
 	return
 
+/*
 /obj/effect/hotspot/Del()
 	if (istype(loc, /turf/simulated))
 		DestroyTurf()
 	..()
-	return
+*/

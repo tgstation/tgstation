@@ -3,8 +3,8 @@
 	max_stages = 4
 	spread = "On contact"
 	spread_type = CONTACT_GENERAL
-	cure = "Spaceacillin & Alkysine"
-	cure_id = list("alkysine","spaceacillin")
+	cure = "Alkysine"
+	cure_id = list("alkysine")
 	agent = "Cryptococcus Cosmosis"
 	affected_species = list("Human")
 	curable = 0

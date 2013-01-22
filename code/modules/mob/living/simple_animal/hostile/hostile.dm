@@ -18,6 +18,11 @@
 	stop_automated_movement = 0
 	for(var/atom/A in ListTargets())
 
+		var/atom/F = Found(A)
+		if(F)
+			T = F
+			break
+
 		if(isliving(A))
 			var/mob/living/L = A
 			if(L.faction == src.faction && !attack_same)
@@ -29,6 +34,7 @@
 					stance = HOSTILE_STANCE_ATTACK
 					T = L
 					break
+
 		if(istype(A, /obj/mecha))
 			var/obj/mecha/M = A
 			if (M.occupant)
@@ -36,6 +42,10 @@
 				T = M
 				break
 	return T
+
+
+/mob/living/simple_animal/hostile/proc/Found(var/atom/A)
+	return
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget()
 	stop_automated_movement = 1
