@@ -155,3 +155,22 @@
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and green."
 	icon_state = "medgreen"
 	color = "medgreen"
+
+/obj/item/clothing/tie/holster
+	name = "shoulder holster"
+	desc = "A handgun holster."
+	icon_state = "holster"
+	color = "holster"
+	var/obj/item/weapon/gun/holstered = null
+
+/obj/item/clothing/tie/holster/armpit
+	name = "shoulder holster"
+	desc = "A worn-out handgun holster. Perfect for concealed carry"
+	icon_state = "holster"
+	color = "holster"
+
+/obj/item/clothing/tie/holster/waist
+	name = "shoulder holster"
+	desc = "A handgun holster. Made of expensive leather."
+	icon_state = "holster"
+	color = "holster_low"

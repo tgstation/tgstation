@@ -366,93 +366,6 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if((COLD_RESISTANCE in mutations) || (prob(1)))
 				heal_organ_damage(0,1)
 
-		if(mHallucination in mutations)
-			hallucination = 100
-			halloss = 0
-
-		if(mSmallsize in mutations)
-			if(!(pass_flags & PASSTABLE))
-				pass_flags |= PASSTABLE
-		else
-			if(pass_flags & PASSTABLE)
-				pass_flags &= ~PASSTABLE
-
-		// Make nanoregen heal youu, -3 all damage types
-		if((NANOREGEN in augmentations) || (mRegen in mutations))
-			var/healed = 0
-			var/hptoreg = 0
-			if(NANOREGEN in augmentations)
-				hptoreg += 3
-			if(mRegen in mutations)
-				hptoreg += 2
-			if(stat==UNCONSCIOUS) hptoreg/=2
-			if(stat==DEAD) hptoreg=0
-
-			for(var/i=0, i<hptoreg, i++)
-				var/list/damages = new/list()
-				if(getToxLoss())
-					damages+="tox"
-				if(getOxyLoss())
-					damages+="oxy"
-				if(getCloneLoss())
-					damages+="clone"
-				if(getBruteLoss())
-					damages+="brute"
-				if(getFireLoss())
-					damages+="burn"
-				if(halloss != 0)
-					damages+="hal"
-
-				if(damages.len)
-					switch(pick(damages))
-						if("tox")
-							adjustToxLoss(-1)
-							healed = 1
-						if("oxy")
-							adjustOxyLoss(-1)
-							healed = 1
-						if("clone")
-							adjustCloneLoss(-1)
-							healed = 1
-						if("brute")
-							heal_organ_damage(1,0)
-							healed = 1
-						if("burn")
-							heal_organ_damage(0,1)
-							healed = 1
-						if("hal")
-							if(halloss > 0)
-								halloss -= 1
-							if(halloss < 0)
-								halloss = 0
-							healed = 1
-				else
-					break
-
-			if(healed)
-				if(prob(5))
-					src << "\blue You feel your wounds mending..."
-		if(!(/mob/living/carbon/human/proc/morph in src.verbs))
-			if(mMorph in mutations)
-				src.verbs += /mob/living/carbon/human/proc/morph
-		else
-			if(!(mMorph in mutations))
-				src.verbs -= /mob/living/carbon/human/proc/morph
-
-		if(!(/mob/living/carbon/human/proc/remoteobserve in src.verbs))
-			if(mRemote in mutations)
-				src.verbs += /mob/living/carbon/human/proc/remoteobserve
-		else
-			if(!(mRemote in mutations))
-				src.verbs -= /mob/living/carbon/human/proc/remoteobserve
-
-		if(!(/mob/living/carbon/human/proc/remotesay in src.verbs))
-			if(mRemotetalk in mutations)
-				src.verbs += /mob/living/carbon/human/proc/remotesay
-		else
-			if(!(mRemotetalk in mutations))
-				src.verbs -= /mob/living/carbon/human/proc/remotesay
-
 		if ((HULK in mutations) && health <= 25)
 			mutations.Remove(HULK)
 			update_mutations()		//update our mutation overlays
@@ -605,8 +518,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		if((status_flags & GODMODE) || REBREATHER in augmentations)
+		if(status_flags & GODMODE)
 			return
+
 		if(!breath || (breath.total_moles() == 0) || suiciding)
 			if(reagents.has_reagent("inaprovaline"))
 				return

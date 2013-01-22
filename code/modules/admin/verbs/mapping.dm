@@ -240,39 +240,45 @@ var/global/prevent_airgroup_regroup = 0
 	set category = "Mapping"
 	set name = "Break All Airgroups"
 
-	prevent_airgroup_regroup = 1
+	/*prevent_airgroup_regroup = 1
 	for(var/datum/air_group/AG in air_master.air_groups)
 		AG.suspend_group_processing()
-	message_admins("[src.ckey] used 'Break All Airgroups'")
+	message_admins("[src.ckey] used 'Break All Airgroups'")*/
 
 /client/proc/regroup_all_air_groups()
 	set category = "Mapping"
 	set name = "Regroup All Airgroups Attempt"
 
-	prevent_airgroup_regroup = 0
+	usr << "\red Proc disabled."
+
+	/*prevent_airgroup_regroup = 0
 	for(var/datum/air_group/AG in air_master.air_groups)
 		AG.check_regroup()
-	message_admins("[src.ckey] used 'Regroup All Airgroups Attempt'")
+	message_admins("[src.ckey] used 'Regroup All Airgroups Attempt'")*/
 
 /client/proc/kill_pipe_processing()
 	set category = "Mapping"
 	set name = "Kill pipe processing"
 
-	pipe_processing_killed = !pipe_processing_killed
+	usr << "\red Proc disabled."
+
+	/*pipe_processing_killed = !pipe_processing_killed
 	if(pipe_processing_killed)
 		message_admins("[src.ckey] used 'kill pipe processing', stopping all pipe processing.")
 	else
-		message_admins("[src.ckey] used 'kill pipe processing', restoring all pipe processing.")
+		message_admins("[src.ckey] used 'kill pipe processing', restoring all pipe processing.")*/
 
 /client/proc/kill_air_processing()
 	set category = "Mapping"
 	set name = "Kill air processing"
 
-	air_processing_killed = !air_processing_killed
+	usr << "\red Proc disabled."
+
+	/*air_processing_killed = !air_processing_killed
 	if(air_processing_killed)
 		message_admins("[src.ckey] used 'kill air processing', stopping all air processing.")
 	else
-		message_admins("[src.ckey] used 'kill air processing', restoring all air processing.")
+		message_admins("[src.ckey] used 'kill air processing', restoring all air processing.")*/
 
 //This proc is intended to detect lag problems relating to communication procs
 var/global/say_disabled = 0
@@ -280,11 +286,13 @@ var/global/say_disabled = 0
 	set category = "Mapping"
 	set name = "Disable all communication verbs"
 
-	say_disabled = !say_disabled
+	usr << "\red Proc disabled."
+
+	/*say_disabled = !say_disabled
 	if(say_disabled)
 		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
 	else
-		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
+		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")*/
 
 //This proc is intended to detect lag problems relating to movement
 var/global/movement_disabled = 0
@@ -293,9 +301,11 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 	set category = "Mapping"
 	set name = "Disable all movement"
 
-	movement_disabled = !movement_disabled
+	usr << "\red Proc disabled."
+
+	/*movement_disabled = !movement_disabled
 	if(movement_disabled)
 		message_admins("[src.ckey] used 'Disable all movement', killing all movement.")
 		movement_disabled_exception = usr.ckey
 	else
-		message_admins("[src.ckey] used 'Disable all movement', restoring all movement.")
+		message_admins("[src.ckey] used 'Disable all movement', restoring all movement.")*/

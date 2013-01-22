@@ -18,12 +18,12 @@
 			if (copytext(message, 1, 2) != "*")
 				return
 
-	if(dna)
-		/*if(dna.mutantrace == "lizard")
+	/*if(dna)
+		if(dna.mutantrace == "lizard")
 			if(copytext(message, 1, 2) != "*")
-				message = replacetext(message, "s", stutter("ss"))*/
+				message = replacetext(message, "s", stutter("ss"))
 
-		/*if(dna.mutantrace == "slime" && prob(5))
+		if(dna.mutantrace == "slime" && prob(5))
 			if(copytext(message, 1, 2) != "*")
 				if(copytext(message, 1, 2) == ";")
 					message = ";"
@@ -33,17 +33,8 @@
 				var/imax = rand(5,20)
 				for(var/i = 0,i<imax,i++)
 					message += "E"*/
-			if(copytext(message, 1, 2) != "*")
-				if(copytext(message, 1, 2) == ";")
-					message = ";"
-				else
-					message = ""
-				message += "SKR"
-				var/imax = rand(5,20)
-				for(var/i = 0,i<imax,i++)
-					message += "E"
 
-	if(stat != DEAD)
+	if(stat != DEAD)jump
 		for(var/datum/disease/pierrot_throat/D in viruses)
 			var/list/temp_message = text2list(message, " ") //List each word in the message
 			var/list/pick_list = list()

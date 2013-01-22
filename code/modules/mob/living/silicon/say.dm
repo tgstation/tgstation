@@ -28,7 +28,8 @@
 			robot_talk(message)
 		else if ((copytext(message, 1, 3) == ":h") || (copytext(message, 1, 3) == ":H") || \
 				(copytext(message, 1, 3) == "#h") || (copytext(message, 1, 3) == "#H") || \
-				(copytext(message, 1, 3) == ".h") || (copytext(message, 1, 3) == ".H"))			if(isAI(src)&&client)//For patching directly into AI holopads.
+				(copytext(message, 1, 3) == ".h") || (copytext(message, 1, 3) == ".H"))
+			if(isAI(src)&&client)//For patching directly into AI holopads.
 				var/mob/living/silicon/ai/U = src
 				message = copytext(message, 3)
 				message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
