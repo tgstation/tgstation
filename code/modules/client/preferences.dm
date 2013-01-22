@@ -91,7 +91,7 @@ datum/preferences
 	// will probably not be able to do this for head and torso ;)
 	var/list/organ_data = list()
 
-	var/list/job_alt_titles = new()		// the default name of a job like "Medical Doctor"
+	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
 	var/flavor_text = ""
 	var/med_record = ""
@@ -429,7 +429,7 @@ datum/preferences
 			else
 				HTML += " <font color=red>\[NEVER]</font>"
 			if(job.alt_titles)
-				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetAltTitle(job)]\]</a></td></tr>"
+				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 			HTML += "</a></td></tr>"
 
 		HTML += "</td'></tr></table>"
@@ -491,18 +491,18 @@ datum/preferences
 		user << browse(HTML, "window=records;size=350x300")
 		return
 
-	proc/GetAltTitle(datum/job/job)
-		return job_alt_titles.Find(job.title) > 0 \
-			? job_alt_titles[job.title] \
+	proc/GetPlayerAltTitle(datum/job/job)
+		return player_alt_titles.Find(job.title) > 0 \
+			? player_alt_titles[job.title] \
 			: job.title
 
-	proc/SetAltTitle(datum/job/job, new_title)
+	proc/SetPlayerAltTitle(datum/job/job, new_title)
 		// remove existing entry
-		if(job_alt_titles.Find(job.title))
-			job_alt_titles -= job.title
+		if(player_alt_titles.Find(job.title))
+			player_alt_titles -= job.title
 		// add one if it's not default
 		if(job.title != new_title)
-			job_alt_titles[job.title] = new_title
+			player_alt_titles[job.title] = new_title
 
 	proc/SetJob(mob/user, role)
 		var/datum/job/job = job_master.GetJob(role)
@@ -642,9 +642,9 @@ datum/preferences
 					var/datum/job/job = locate(href_list["job"])
 					if (job)
 						var/choices = list(job.title) + job.alt_titles
-						var/choice = input("Pick a title for [job.title].", "Character Generation", GetAltTitle(job)) as anything in choices | null
+						var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
 						if(choice)
-							SetAltTitle(job, choice)
+							SetPlayerAltTitle(job, choice)
 							SetChoices(user)
 				if("input")
 					SetJob(user, href_list["text"])

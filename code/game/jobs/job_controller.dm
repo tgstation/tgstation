@@ -38,8 +38,8 @@ var/global/datum/controller/occupations/job_master
 			if(J.title == rank)	return J
 		return null
 
-	proc/GetAltTitle(mob/new_player/player, rank)
-		return player.client.prefs.GetAltTitle(GetJob(rank))
+	proc/GetPlayerAltTitle(mob/new_player/player, rank)
+		return player.client.prefs.GetPlayerAltTitle(GetJob(rank))
 
 	proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
 		Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
@@ -54,7 +54,7 @@ var/global/datum/controller/occupations/job_master
 			if((job.current_positions < position_limit) || position_limit == -1)
 				Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
 				player.mind.assigned_role = rank
-				player.mind.role_alt_title = GetAltTitle(player, rank)
+				player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 				unassigned -= player
 				job.current_positions++
 				return 1
@@ -311,9 +311,6 @@ var/global/datum/controller/occupations/job_master
 			H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
 
 		H.job = rank
-		if(H.mind && H.mind.assigned_role != rank)
-			H.mind.assigned_role = rank
-			H.mind.role_alt_title = null
 
 		if(!joined_late)
 			var/obj/S = null
@@ -331,6 +328,7 @@ var/global/datum/controller/occupations/job_master
 
 		if(H.mind)
 			H.mind.assigned_role = rank
+			H.mind.role_alt_title = null
 
 			switch(rank)
 				if("Cyborg")
@@ -359,10 +357,7 @@ var/global/datum/controller/occupations/job_master
 		if(job.req_admin_notify)
 			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 
-		if(H.mind.assigned_role == rank && H.mind.role_alt_title)
-			spawnId(H, rank, H.mind.role_alt_title)
-		else
-			spawnId(H,rank)
+		spawnId(H, rank, H.mind.role_alt_title)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
 //		H.update_icons()
 		return 1
@@ -370,7 +365,6 @@ var/global/datum/controller/occupations/job_master
 
 	proc/spawnId(var/mob/living/carbon/human/H, rank, title)
 		if(!H)	return 0
-		if(!title) title = rank
 		var/obj/item/weapon/card/id/C = null
 
 		var/datum/job/job = null
@@ -389,7 +383,8 @@ var/global/datum/controller/occupations/job_master
 			C = new /obj/item/weapon/card/id(H)
 		if(C)
 			C.registered_name = H.real_name
-			C.assignment = title
+			C.rank = rank
+			C.assignment = title ? title : rank
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 			H.equip_to_slot_or_del(C, slot_wear_id)
 		H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)

@@ -10,7 +10,7 @@
 	selection_color = "#dddddd"
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
 	minimal_access = list(access_bar)
-	alt_titles = list("Waiter","Waitress")
+
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -52,7 +52,7 @@
 	selection_color = "#dddddd"
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
 	minimal_access = list(access_kitchen, access_morgue)
-	alt_titles = list("Gourmet chef","Cook")
+	alt_titles = list("Cook")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -83,6 +83,7 @@
 	minimal_access = list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	alt_titles = list("Hydroponicist")
 
+
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/hydroponics(H), slot_w_uniform)
@@ -111,7 +112,6 @@
 	selection_color = "#dddddd"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
-	alt_titles = list("Supplies Officer","Logistics Officer")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -142,7 +142,6 @@
 	selection_color = "#dddddd"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
-	alt_titles = list("Supplies worker","Courier","Logistics worker")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -171,7 +170,7 @@
 	selection_color = "#dddddd"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 	minimal_access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
-	alt_titles = list("Deep space miner","NTCA Affiliate","Prospector")
+	alt_titles = list("Deep space miner")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -283,7 +282,7 @@
 	selection_color = "#dddddd"
 	access = list(access_janitor, access_maint_tunnels)
 	minimal_access = list(access_janitor, access_maint_tunnels)
-	alt_titles = list("Custodial officer","Hygiene supervisor","OHS assistant","Health and Safety worker")
+	alt_titles = list("Custodial officer")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -312,7 +311,7 @@
 	selection_color = "#dddddd"
 	access = list(access_library, access_maint_tunnels)
 	minimal_access = list(access_library)
-	alt_titles = list("Journalist","Clerk","Record keeper")
+	alt_titles = list("Journalist")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -341,7 +340,7 @@ var/global/lawyer = 0//Checks for another lawyer
 	selection_color = "#dddddd"
 	access = list(access_lawyer, access_court, access_sec_doors, access_maint_tunnels)
 	minimal_access = list(access_lawyer, access_court, access_sec_doors)
-	alt_titles = list("Attourney","Barrister","Solicitor","Queen's Counsel","Paralegal")
+	alt_titles = list("Attourney", "IA Consultant")
 
 
 	equip(var/mob/living/carbon/human/H)
