@@ -46,13 +46,15 @@
 		possibleEvents["Meteor"] = 80 * engineer_count
 		possibleEvents["Blob"] = 30 * engineer_count
 		possibleEvents["Spacevine"] = 30 * engineer_count
+		possibleEvents["Grid Check"] = 10 * engineer_count
 	if(medical_count >= 1)
 		possibleEvents["Radiation"] = medical_count * 100
 		possibleEvents["Virus"] = medical_count * 50
 		possibleEvents["Appendicitis"] = medical_count * 50
 	if(security_count >= 1)
 		possibleEvents["Prison Break"] = security_count * 50
-		//possibleEvents["Space Ninja"] = security_count * 10 // very low chance for space ninja event
+		/*if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)
+			possibleEvents["Space Ninja"] = security_count * 10*/
 
 	var/picked_event = pick(possibleEvents)
 	var/chance = possibleEvents[picked_event]
@@ -77,54 +79,6 @@
 		return 0
 
 	switch(picked_event)
-		if("Meteor")
-			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
-			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
-					M << sound('sound/AI/meteors.ogg')
-			spawn(100)
-				meteor_wave()
-				spawn_meteors()
-			spawn(700)
-				meteor_wave()
-				spawn_meteors()
-
-		if(2)
-			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
-					M << sound('sound/AI/granomalies.ogg')
-			var/turf/T = pick(blobstart)
-			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
-			spawn(rand(50, 300))
-				del(bh)
-		/*
-		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
-			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-			world << sound('sound/AI/spanomalies.ogg')
-			var/list/turfs = new
-			var/turf/picked
-			for(var/turf/simulated/floor/T in world)
-				if(T.z == 1)
-					turfs += T
-			for(var/turf/simulated/floor/T in turfs)
-				if(prob(20))
-					spawn(50+rand(0,3000))
-						picked = pick(turfs)
-						var/obj/effect/portal/P = new /obj/effect/portal( T )
-						P.target = picked
-						P.creator = null
-						P.icon = 'icons/obj/objects.dmi'
-						P.failchance = 0
-						P.icon_state = "anom"
-						P.name = "wormhole"
-						spawn(rand(300,600))
-							del(P)
-		*/
-		if(3)
-			if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
-				space_ninja_arrival()//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
-		if(4)			mini_blob_event()
 		if("Space Ninja")
 			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
 			space_ninja_arrival()
@@ -148,6 +102,10 @@
 			spacevine_infestation()
 		if("Communications")
 			communications_blackout()
+		if("Grid Check")
+			grid_check()
+		if("Meteor")
+			meteor_shower()
 
 	return 1
 
@@ -163,8 +121,9 @@
 	for(var/obj/machinery/telecomms/T in telecomms_list)
 		T.emp_act(1)
 
-/proc/power_failure()
-	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure")
+/proc/power_failure(var/is_grid_check = 0)
+	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", is_grid_check ? "Automated Grid Check" : "Critical Power Failure")
+
 	for(var/mob/M in player_list)
 		M << sound('sound/AI/poweroff.ogg')
 	for(var/obj/machinery/power/smes/S in world)
@@ -624,10 +583,28 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 	world << "Ion Storm Main Done"
 	*/
 
+/proc/meteor_shower()
+	command_alert("The station is now in a meteor shower", "Meteor Alert")
+
+	spawn(0)
+		var/waves = rand(1,4)
+		while(waves > 0)
+			sleep(rand(20,100))
+			spawn_meteors(rand(1,3))
+			waves--
+
+		command_alert("The station has cleared the meteor shower", "Meteor Alert")
+
+/proc/grid_check()
+	spawn(0)
+		power_failure(1)
+		sleep(rand(100,600))
+		power_restore()
+
 // Returns how many characters are currently active(not logged out, not AFK for more than 10 minutes)
 // with a specific role.
 // Note that this isn't sorted by department, because e.g. having a roboticist shouldn't make meteors spawn.
-proc/number_active_with_role(role)
+/proc/number_active_with_role(role)
 	var/count = 0
 	for(var/mob/M in player_list)
 		if(!M.client || M.client.inactivity > 10 * 10 * 60) // longer than 10 minutes AFK counts them as inactive

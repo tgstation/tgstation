@@ -4,7 +4,7 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1.0
-	layer = 5
+	layer = 2.8
 
 	var/on = 0
 	var/temperature_archived

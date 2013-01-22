@@ -9,7 +9,6 @@
 	selection_color = "#ffeeaa"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
-	alt_titles = list("Engineering supervisor")
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors,
@@ -55,7 +54,6 @@
 	alt_titles = list("Technician","Maintenance technician","Engine technician","EVA technician","Electrician","Construction specialist")
 
 
-
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), slot_ears)
@@ -88,7 +86,6 @@
 	selection_color = "#fff5cc"
 	access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 	minimal_access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
-	alt_titles = list("Pipeworker","Gas supervisor","Firefighter")
 
 
 	equip(var/mob/living/carbon/human/H)

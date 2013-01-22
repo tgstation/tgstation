@@ -167,6 +167,7 @@
 		src.add_fingerprint(user)
 		if (src.bullets < 1)
 			user.show_message("\red *click* *click*", 2)
+			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 			return
 		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 		src.bullets--

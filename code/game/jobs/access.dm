@@ -414,29 +414,45 @@
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")
 
-/obj/proc/GetJobName()
+//gets the actual job rank (ignoring alt titles)
+//this is used solely for sechuds
+/obj/proc/GetJobRealName()
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
 		return
 
-	var/jobName
-	var/realJobName
-
-	// hack for alt titles
-	if(istype(loc, /mob))
-		var/mob/M = loc
-		if(M.mind && M.mind.role_alt_title == jobName && M.mind.assigned_role in get_all_jobs())
-			return M.mind.assigned_role
-
+	var/rank
+	var/assignment
 	if(istype(src, /obj/item/device/pda))
 		if(src:id)
-			jobName = src:id:assignment
-			realJobName = src:id:assignment_real_title
-	if(istype(src, /obj/item/weapon/card/id))
-		jobName = src:assignment
-		realJobName = src:assignment_real_title
+			rank = src:id:rank
+			assignment = src:id:assignment
+	else if(istype(src, /obj/item/weapon/card/id))
+		rank = src:rank
+		assignment = src:assignment
 
-	if( (realJobName in get_all_jobs()) || (jobName in get_all_jobs()) )
-		return jobName
+	if( rank in get_all_jobs() )
+		return rank
+
+	if( assignment in get_all_jobs() )
+		return assignment
+
+	return "Unknown"
+
+//gets the alt title, failing that the actual job rank
+//this is unused
+/obj/proc/sdsdsd()	//GetJobDisplayName
+	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
+		return
+
+	var/assignment
+	if(istype(src, /obj/item/device/pda))
+		if(src:id)
+			assignment = src:id:assignment
+	else if(istype(src, /obj/item/weapon/card/id))
+		assignment = src:assignment
+
+	if(assignment)
+		return assignment
 
 	return "Unknown"
 

@@ -16,6 +16,7 @@
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
 	w_class = 1.0
+	var/associated_account_number = 0
 
 	var/list/files = list(  )
 
@@ -74,8 +75,9 @@
 	var/dna_hash = "\[UNSET\]"
 	var/fingerprint_hash = "\[UNSET\]"
 
-	var/assignment = null
-	var/assignment_real_title = null
+	//alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
+	var/assignment = null	//can be alt title or the actual job
+	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)

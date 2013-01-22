@@ -1,8 +1,11 @@
 #define SOLID 1
 #define LIQUID 2
 #define GAS 3
+<<<<<<< HEAD
 #define REAGENTS_OVERDOSE 30
 #define FOOD_METABOLISM 0.4
+=======
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 
 //The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
 //so that it can continue working when the reagent is deleted while the proc is still active.
@@ -311,6 +314,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.drowsyness = max(M.drowsyness-2*REAGENTS_EFFECT_MULTIPLIER, 0)
 				if(holder.has_reagent("toxin"))
+<<<<<<< HEAD
 					holder.remove_reagent("toxin", 10*REAGENTS_METABOLISM)
 				if(holder.has_reagent("stoxin"))
 					holder.remove_reagent("stoxin", 10*REAGENTS_METABOLISM)
@@ -332,6 +336,29 @@ datum
 					holder.remove_reagent("mindbreaker", 10*REAGENTS_METABOLISM)
 				M.hallucination = max(0, M.hallucination - 5*REAGENTS_EFFECT_MULTIPLIER)
 				M.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER)
+=======
+					holder.remove_reagent("toxin", 2)
+				if(holder.has_reagent("stoxin"))
+					holder.remove_reagent("stoxin", 2)
+				if(holder.has_reagent("plasma"))
+					holder.remove_reagent("plasma", 1)
+				if(holder.has_reagent("sacid"))
+					holder.remove_reagent("sacid", 1)
+				if(holder.has_reagent("cyanide"))
+					holder.remove_reagent("cyanide", 1)
+				if(holder.has_reagent("amatoxin"))
+					holder.remove_reagent("amatoxin", 2)
+				if(holder.has_reagent("chloralhydrate"))
+					holder.remove_reagent("chloralhydrate", 5)
+				if(holder.has_reagent("carpotoxin"))
+					holder.remove_reagent("carpotoxin", 1)
+				if(holder.has_reagent("zombiepowder"))
+					holder.remove_reagent("zombiepowder", 0.5)
+				if(holder.has_reagent("mindbreaker"))
+					holder.remove_reagent("mindbreaker", 2)
+				M.hallucination = max(0, M.hallucination - 5)
+				M.adjustToxLoss(-2)
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 				..()
 				return
 
@@ -360,8 +387,6 @@ datum
 				M.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER)
 				M.adjustOxyLoss(3*REAGENTS_EFFECT_MULTIPLIER)
 				M.sleeping += 1
-				// Sleep toxins should always be consumed pretty fast
-				holder.remove_reagent(src.id, 0.1)
 				..()
 				return
 
@@ -431,8 +456,6 @@ datum
 						M.stuttering = 0
 						M.confused = 0
 						M.jitteriness = 0
-				// Sleep toxins should always be consumed pretty fast
-				holder.remove_reagent(src.id, 0.1)
 				..()
 				return
 
@@ -938,13 +961,17 @@ datum
 			id = "virusfood"
 			description = "A mixture of water, milk, and oxygen. Virus cells can use this mixture to reproduce."
 			reagent_state = LIQUID
-			nutriment_factor = 2 * FOOD_METABOLISM
+			nutriment_factor = 2 * REAGENTS_METABOLISM
 			color = "#899613" // rgb: 137, 150, 19
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
+<<<<<<< HEAD
 				M.nutrition += nutriment_factor*REAGENTS_EFFECT_MULTIPLIER
 				holder.remove_reagent(src.id, FOOD_METABOLISM)
+=======
+				M.nutrition += nutriment_factor
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 				..()
 				return
 
@@ -1166,8 +1193,13 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(holder.has_reagent("inaprovaline"))
+<<<<<<< HEAD
 					holder.remove_reagent("inaprovaline", 10*REAGENTS_METABOLISM)
 				M.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER)
+=======
+					holder.remove_reagent("inaprovaline", 2)
+				M.adjustToxLoss(1)
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 				..()
 				return
 			reaction_obj(var/obj/O, var/volume)
@@ -1285,7 +1317,11 @@ datum
 				if(!M) M = holder.my_atom
 				M.adjustOxyLoss(-2*REAGENTS_EFFECT_MULTIPLIER)
 				if(holder.has_reagent("lexorin"))
+<<<<<<< HEAD
 					holder.remove_reagent("lexorin", 10*REAGENTS_METABOLISM)
+=======
+					holder.remove_reagent("lexorin", 2)
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 				..()
 				return
 
@@ -1302,7 +1338,11 @@ datum
 				if(!M) M = holder.my_atom
 				M.adjustOxyLoss(-M.getOxyLoss())
 				if(holder.has_reagent("lexorin"))
+<<<<<<< HEAD
 					holder.remove_reagent("lexorin", 10*REAGENTS_METABOLISM)
+=======
+					holder.remove_reagent("lexorin", 2)
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 				..()
 				return
 
@@ -1402,8 +1442,13 @@ datum
 				M.AdjustStunned(-1)
 				M.AdjustWeakened(-1)
 				if(holder.has_reagent("mindbreaker"))
+<<<<<<< HEAD
 					holder.remove_reagent("mindbreaker", 10*REAGENTS_METABOLISM)
 				M.hallucination = max(0, M.hallucination - 10*REAGENTS_EFFECT_MULTIPLIER)
+=======
+					holder.remove_reagent("mindbreaker", 5)
+				M.hallucination = max(0, M.hallucination - 10)
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 				if(prob(60))	M.adjustToxLoss(1)
 				..()
 				return
@@ -1718,10 +1763,14 @@ datum
 						M.sleeping += 1
 					if(61 to INFINITY)
 						M.sleeping += 1
+<<<<<<< HEAD
 						M.adjustToxLoss((data - 50) * REAGENTS_EFFECT_MULTIPLIER)
 						
 				// Sleep toxins should always be consumed pretty fast
 				holder.remove_reagent(src.id, 0.1)
+=======
+						M.adjustToxLoss(data - 50)
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 				..()
 				return
 
@@ -1745,8 +1794,6 @@ datum
 						M.sleeping += 1
 						M.adjustToxLoss(data - 50)
 				data++
-				// Sleep toxins should always be consumed pretty fast
-				holder.remove_reagent(src.id, 0.1)
 				..()
 				return
 
@@ -1759,12 +1806,13 @@ datum
 			id = "nutriment"
 			description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 			reagent_state = SOLID
-			nutriment_factor = 15 * FOOD_METABOLISM
+			nutriment_factor = 15 * REAGENTS_METABOLISM
 			color = "#664330" // rgb: 102, 67, 48
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.nutrition += nutriment_factor	// For hunger and fatness
+<<<<<<< HEAD
 				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
@@ -1921,6 +1969,21 @@ datum
 						if(prob(30)) M.emote(pick("twitch","giggle"))
 				holder.remove_reagent(src.id, 0.2)
 				data++
+=======
+/*
+				// If overeaten - vomit and fall down
+				// Makes you feel bad but removes reagents and some effect
+				// from your body
+				if (M.nutrition > 650)
+					M.nutrition = rand (250, 400)
+					M.weakened += rand(2, 10)
+					M.jitteriness += rand(0, 5)
+					M.dizziness = max (0, (M.dizziness - rand(0, 15)))
+					M.druggy = max (0, (M.druggy - rand(0, 15)))
+					M.adjustToxLoss(rand(-15, -5)))
+					M.updatehealth()
+*/
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 				..()
 				return
 
@@ -1929,7 +1992,7 @@ datum
 			id = "lipozine"
 			description = "A chemical compound that causes a powerful fat-burning reaction."
 			reagent_state = LIQUID
-			nutriment_factor = 10 * FOOD_METABOLISM
+			nutriment_factor = 10 * REAGENTS_METABOLISM
 			color = "#BBEDA4" // rgb: 187, 237, 164
 
 			on_mob_life(var/mob/living/M as mob)
@@ -1946,7 +2009,7 @@ datum
 			id = "soysauce"
 			description = "A salty sauce made from the soy plant."
 			reagent_state = LIQUID
-			nutriment_factor = 2 * FOOD_METABOLISM
+			nutriment_factor = 2 * REAGENTS_METABOLISM
 			color = "#792300" // rgb: 121, 35, 0
 
 		ketchup
@@ -1954,7 +2017,7 @@ datum
 			id = "ketchup"
 			description = "Ketchup, catsup, whatever. It's tomato paste."
 			reagent_state = LIQUID
-			nutriment_factor = 5 * FOOD_METABOLISM
+			nutriment_factor = 5 * REAGENTS_METABOLISM
 			color = "#731008" // rgb: 115, 16, 8
 
 		sodiumchloride
@@ -1993,8 +2056,13 @@ datum
 					if(1 to 15)
 						M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(holder.has_reagent("frostoil"))
+<<<<<<< HEAD
 							holder.remove_reagent("frostoil", 10*REAGENTS_METABOLISM)
 						if(istype(M, /mob/living/carbon/metroid))
+=======
+							holder.remove_reagent("frostoil", 5)
+						if(istype(M, /mob/living/carbon/slime))
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 							M.bodytemperature += rand(5,20)
 					if(15 to 25)
 						M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
@@ -2079,8 +2147,13 @@ datum
 					if(1 to 15)
 						M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(holder.has_reagent("capsaicin"))
+<<<<<<< HEAD
 							holder.remove_reagent("capsaicin", 10*REAGENTS_METABOLISM)
 						if(istype(M, /mob/living/carbon/metroid))
+=======
+							holder.remove_reagent("capsaicin", 5)
+						if(istype(M, /mob/living/carbon/slime))
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 							M.bodytemperature -= rand(5,20)
 					if(15 to 25)
 						M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
@@ -2113,12 +2186,11 @@ datum
 			id = "coco"
 			description = "A fatty, bitter paste made from coco beans."
 			reagent_state = SOLID
-			nutriment_factor = 5 * FOOD_METABOLISM
+			nutriment_factor = 5 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
@@ -2127,14 +2199,13 @@ datum
 			id = "hot_coco"
 			description = "Made with love! And coco beans."
 			reagent_state = LIQUID
-			nutriment_factor = 2 * FOOD_METABOLISM
+			nutriment_factor = 2 * REAGENTS_METABOLISM
 			color = "#403010" // rgb: 64, 48, 16
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
@@ -2187,17 +2258,15 @@ datum
 			name = "Sprinkles"
 			id = "sprinkles"
 			description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
-			nutriment_factor = 1 * FOOD_METABOLISM
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
 					if(!M) M = holder.my_atom
 					M.heal_organ_damage(1,1)
 					M.nutrition += nutriment_factor
-					holder.remove_reagent(src.id, FOOD_METABOLISM)
 					..()
 					return
 				..()
@@ -2206,18 +2275,16 @@ datum
 			name = "Cream filling"
 			id = "syndicream"
 			description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
-			nutriment_factor = 1 * FOOD_METABOLISM
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#AB7878" // rgb: 171, 120, 120
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				if(istype(M, /mob/living/carbon/human) && M.mind)
 					if(M.mind.special_role)
 						if(!M) M = holder.my_atom
 						M.heal_organ_damage(1,1)
 						M.nutrition += nutriment_factor
-						holder.remove_reagent(src.id, FOOD_METABOLISM)
 						..()
 						return
 				..()
@@ -2227,12 +2294,11 @@ datum
 			id = "cornoil"
 			description = "An oil derived from various types of corn."
 			reagent_state = LIQUID
-			nutriment_factor = 20 * FOOD_METABOLISM
+			nutriment_factor = 20 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 			reaction_turf(var/turf/simulated/T, var/volume)
@@ -2274,12 +2340,11 @@ datum
 			id = "dry_ramen"
 			description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
 			reagent_state = SOLID
-			nutriment_factor = 1 * FOOD_METABOLISM
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
@@ -2288,12 +2353,11 @@ datum
 			id = "hot_ramen"
 			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 			reagent_state = LIQUID
-			nutriment_factor = 5 * FOOD_METABOLISM
+			nutriment_factor = 5 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				..()
@@ -2304,12 +2368,11 @@ datum
 			id = "hell_ramen"
 			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 			reagent_state = LIQUID
-			nutriment_factor = 5 * FOOD_METABOLISM
+			nutriment_factor = 5 * REAGENTS_METABOLISM
 			color = "#302000" // rgb: 48, 32, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 				..()
 				return
@@ -2319,12 +2382,11 @@ datum
 			id = "flour"
 			description = "This is what you rub all over yourself to pretend to be a ghost."
 			reagent_state = SOLID
-			nutriment_factor = 1 * FOOD_METABOLISM
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#FFFFFF" // rgb: 0, 0, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
@@ -2338,12 +2400,11 @@ datum
 			id = "cherryjelly"
 			description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 			reagent_state = LIQUID
-			nutriment_factor = 1 * FOOD_METABOLISM
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#801E28" // rgb: 128, 30, 40
 
 			on_mob_life(var/mob/living/M as mob)
 				M.nutrition += nutriment_factor
-				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
@@ -2356,7 +2417,7 @@ datum
 			id = "drink"
 			description = "Uh, some kind of drink."
 			reagent_state = LIQUID
-			nutriment_factor = 1 * FOOD_METABOLISM
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#E78108" // rgb: 231, 129, 8
 			var/adj_dizzy = 0
 			var/adj_drowsy = 0
@@ -2364,6 +2425,7 @@ datum
 			var/adj_temp = 0
 
 			on_mob_life(var/mob/living/M as mob)
+<<<<<<< HEAD
 				if(!M) M = holder.my_atom
 				M.nutrition += nutriment_factor
 				holder.remove_reagent(src.id, FOOD_METABOLISM)
@@ -2375,6 +2437,12 @@ datum
 						M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				// Drinks should be used up faster than other reagents.
 				holder.remove_reagent(src.id, FOOD_METABOLISM)
+=======
+				M.nutrition += nutriment_factor
+				if(!M) M = holder.my_atom
+				if(M.getOxyLoss() && prob(30)) M.adjustOxyLoss(-1)
+				M.nutrition++
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 				..()
 				return
 
@@ -2406,10 +2474,20 @@ datum
 				description = "The sweet-sour juice of limes."
 				color = "#365E30" // rgb: 54, 94, 48
 
+<<<<<<< HEAD
 				on_mob_life(var/mob/living/M as mob)
 					..()
 					if(M.getToxLoss() && prob(20)) M.adjustToxLoss(-1)
 					return
+=======
+		watermelonjuice
+			name = "Watermelon Juice"
+			id = "watermelonjuice"
+			description = "Delicious juice made from watermelon."
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#863333" // rgb: 134, 51, 51
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 
 			carrotjuice
 				name = "Carrot juice"
@@ -2448,6 +2526,7 @@ datum
 					M.adjustToxLoss(1)
 					return
 
+<<<<<<< HEAD
 			watermelonjuice
 				name = "Watermelon Juice"
 				id = "watermelonjuice"
@@ -2528,6 +2607,19 @@ datum
 						holder.remove_reagent("frostoil", 10*REAGENTS_METABOLISM)
 						
 					holder.remove_reagent(src.id, 0.1)
+=======
+		nothing
+			name = "Nothing"
+			id = "nothing"
+			description = "Absolutely nothing."
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M.nutrition += nutriment_factor
+				if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
+					if(!M) M = holder.my_atom
+					M.heal_organ_damage(1,1)
+					..()
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 					return
 
 				icecoffee
@@ -2732,6 +2824,7 @@ datum
 			var/pass_out = 325	//amount absorbed after which mob starts passing out
 
 			on_mob_life(var/mob/living/M as mob)
+<<<<<<< HEAD
 				M:nutrition += nutriment_factor
 				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				if(!src.data) data = 1
@@ -2782,6 +2875,20 @@ datum
 				nutriment_factor = 2 * FOOD_METABOLISM
 				color = "#664300" // rgb: 102, 67, 0
 				on_mob_life(var/mob/living/M as mob)
+=======
+				M.nutrition += nutriment_factor
+				if(!data) data = 1
+				data++
+				if(istype(M, /mob/living/carbon/human) && M.job in list("Clown"))
+					if(!M) M = holder.my_atom
+					M.heal_organ_damage(1,1)
+					M.dizziness +=5
+					if(data >= 55 && data <165)
+						if (!M.stuttering) M.stuttering = 1
+						M.stuttering += 5
+					else if(data >= 165 && prob(33))
+						M.confused = max(M.confused+5,0)
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 					..()
 					M:jitteriness = max(M:jitteriness-3,0)
 					return
@@ -2841,9 +2948,12 @@ datum
 
 				on_mob_life(var/mob/living/M as mob)
 					..()
+<<<<<<< HEAD
 					M.dizziness +=5
 					if(volume > REAGENTS_OVERDOSE)
 						M:adjustToxLoss(1)
+=======
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 					return
 
 			vodka
@@ -2858,6 +2968,7 @@ datum
 				description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 				color = "#A8B0B7" // rgb: 168, 176, 183
 
+<<<<<<< HEAD
 			vermouth
 				name = "Vermouth"
 				id = "vermouth"
@@ -3072,6 +3183,14 @@ datum
 					if(M.confused !=0) M.confused = max(0,M.confused - 5)
 					..()
 					return
+=======
+		changelingsting
+			name = "Changeling Sting"
+			id = "changelingsting"
+			description = "You take a tiny sip and feel a burning sensation..."
+			reagent_state = LIQUID
+			color = "#2E6671" // rgb: 46, 102, 113
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 
 			irish_cream
 				name = "Irish Cream"
@@ -3324,6 +3443,7 @@ datum
 					M:silent = max(M:silent, 15)
 					return
 
+<<<<<<< HEAD
 			bananahonk
 				name = "Banana Mama"
 				id = "bananahonk"
@@ -3349,6 +3469,14 @@ datum
 					..()
 					M.dizziness +=5
 					return
+=======
+		erikasurprise
+			name = "Erika Surprise"
+			id = "erikasurprise"
+			description = "The surprise is, it's green!"
+			reagent_state = LIQUID
+			color = "#2E6671" // rgb: 46, 102, 113
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
 
 			irishcarbomb
 				name = "Irish Car Bomb"
@@ -3362,6 +3490,7 @@ datum
 					M.dizziness +=5
 					return
 
+<<<<<<< HEAD
 			syndicatebomb
 				name = "Syndicate Bomb"
 				id = "syndicatebomb"
@@ -3382,3 +3511,16 @@ datum
 				description = "Only for the experienced. You think you see sand floating in the glass."
 				nutriment_factor = 1 * FOOD_METABOLISM
 				color = "#2E6671" // rgb: 46, 102, 113
+=======
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=10
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 10
+				else if(data >= 115 && prob(33))
+					M.confused = max(M.confused+15,15)
+				..()
+				return
+>>>>>>> 090495f3865a1283beacfa5cb62cd42c4c76b3ce
