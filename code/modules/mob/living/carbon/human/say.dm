@@ -34,7 +34,7 @@
 				for(var/i = 0,i<imax,i++)
 					message += "E"*/
 
-	if(stat != DEAD)jump
+	if(stat != DEAD)
 		for(var/datum/disease/pierrot_throat/D in viruses)
 			var/list/temp_message = text2list(message, " ") //List each word in the message
 			var/list/pick_list = list()
