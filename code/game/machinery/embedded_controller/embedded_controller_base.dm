@@ -75,7 +75,7 @@ obj/machinery/embedded_controller
 			if(radio_connection)
 				return radio_connection.post_signal(src, signal)
 			else
-				del(signal)
+				signal = null
 
 		proc
 			set_frequency(new_frequency)

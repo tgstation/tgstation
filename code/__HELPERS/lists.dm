@@ -146,11 +146,11 @@ proc/listclearnulls(list/list)
  * Sorting
  */
 
-//Reverses the order of items in the list (Turning a stack into a queue)
+//Reverses the order of items in the list
 /proc/reverselist(var/list/input)
-	var/list/output = new/list()
-	for(var/A in input)
-		output += A
+	var/list/output = list()
+	for(var/i = input.len; i >= 1; i--)
+		output += input[i]
 	return output
 
 //Randomize: Return the list in a random order

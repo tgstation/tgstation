@@ -96,6 +96,7 @@
 	layer = 2.7
 	health = 3
 	var/amount_grown = 0
+	var/grow_as = null
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	New()
@@ -179,8 +180,9 @@
 	if(isturf(loc))
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
-			var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-			new spawn_type(src.loc)
+			if(!grow_as)
+				grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
+			new grow_as(src.loc)
 			del(src)
 
 /obj/effect/spider/cocoon

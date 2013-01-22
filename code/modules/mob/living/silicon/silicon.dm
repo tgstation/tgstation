@@ -52,7 +52,7 @@
 					msg += "POWER: [alarm_types_show["Power"]] alarms detected. - "
 
 				if(alarm_types_show["Camera"])
-					msg += "CAMERA: [alarm_types_show["Power"]] alarms detected. - "
+					msg += "CAMERA: [alarm_types_show["Camera"]] alarms detected. - "
 
 				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
 				src << msg
@@ -77,7 +77,7 @@
 					msg += "POWER: [alarm_types_clear["Power"]] alarms cleared. - "
 
 				if(alarm_types_show["Camera"])
-					msg += "CAMERA: [alarm_types_show["Power"]] alarms detected. - "
+					msg += "CAMERA: [alarm_types_clear["Camera"]] alarms cleared. - "
 
 				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
 				src << msg
@@ -85,10 +85,10 @@
 
 			alarms_to_show = list()
 			alarms_to_clear = list()
-			for(var/i = 1; i < alarm_types_show.len; i++)
-				alarm_types_show[i] = 0
-			for(var/i = 1; i < alarm_types_clear.len; i++)
-				alarm_types_clear[i] = 0
+			for(var/key in alarm_types_show)
+				alarm_types_show[key] = 0
+			for(var/key in alarm_types_clear)
+				alarm_types_clear[key] = 0
 
 /mob/living/silicon/drop_item()
 	return

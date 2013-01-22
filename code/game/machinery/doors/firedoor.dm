@@ -90,6 +90,8 @@
 			  //This is needed due to BYOND limitations in controlling visibility
 	heat_proof = 1
 
+	flags = ON_BORDER
+
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if(istype(mover) && mover.checkpass(PASSGLASS))
 			return 1

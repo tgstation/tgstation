@@ -182,7 +182,7 @@ datum/radio_frequency
 			if(range)
 				start_point = get_turf(source)
 				if(!start_point)
-					del(signal)
+//					del(signal)
 					return 0
 			if (filter) //here goes some copypasta. It is for optimisation. -rastaf0
 				for(var/obj/device in devices[filter])
@@ -255,11 +255,26 @@ datum/radio_frequency
 					del(devices_line)
 
 
-obj/proc
-	receive_signal(datum/signal/signal, receive_method, receive_param)
-		return null
+var/list/pointers = list()
 
-datum/signal
+/client/proc/print_pointers()
+	set name = "Debug Signals"
+	set category = "Debug"
+
+	if(!holder)
+		return
+
+	src << "There are [pointers.len] pointers:"
+	for(var/p in pointers)
+		src << p
+		var/datum/signal/S = locate(p)
+		if(istype(S))
+			src << S.debug_print()
+
+/obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
+	return null
+
+/datum/signal
 	var/obj/source
 
 	var/transmission_method = 0
@@ -272,21 +287,29 @@ datum/signal
 
 	var/frequency = 0
 
-	proc/copy_from(datum/signal/model)
-		source = model.source
-		transmission_method = model.transmission_method
-		data = model.data
-		encryption = model.encryption
-		frequency = model.frequency
+/datum/signal/New()
+	..()
+	pointers += "\ref[src]"
 
-	proc/debug_print()
-		if (source)
-			. = "signal = {source = '[source]' ([source:x],[source:y],[source:z])\n"
-		else
-			. = "signal = {source = '[source]' ()\n"
-		for (var/i in data)
-			. += "data\[\"[i]\"\] = \"[data[i]]\"\n"
-			if(islist(data[i]))
-				var/list/L = data[i]
-				for(var/t in L)
-					. += "data\[\"[i]\"\] list has: [t]"
+/datum/signal/Del()
+	pointers -= "\ref[src]"
+	..()
+
+/datum/signal/proc/copy_from(datum/signal/model)
+	source = model.source
+	transmission_method = model.transmission_method
+	data = model.data
+	encryption = model.encryption
+	frequency = model.frequency
+
+/datum/signal/proc/debug_print()
+	if (source)
+		. = "signal = {source = '[source]' ([source:x],[source:y],[source:z])\n"
+	else
+		. = "signal = {source = '[source]' ()\n"
+	for (var/i in data)
+		. += "data\[\"[i]\"\] = \"[data[i]]\"\n"
+		if(islist(data[i]))
+			var/list/L = data[i]
+			for(var/t in L)
+				. += "data\[\"[i]\"\] list has: [t]"

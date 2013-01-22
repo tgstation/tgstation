@@ -70,23 +70,28 @@
 						var/race			   // The actual race of the mob
 						var/language = "Human" // MMIs, pAIs, Cyborgs and humans all speak Human
 						var/mobtype = C.parameters["mobtype"]
-						var/mob/M = new mobtype
 
-						if(ishuman(M) || isbrain(M))
+						var/list/humans = typesof(/mob/living/carbon/human, /mob/living/carbon/brain)
+						var/list/monkeys = typesof(/mob/living/carbon/monkey)
+						var/list/silicons = typesof(/mob/living/silicon)
+						var/list/slimes = typesof(/mob/living/carbon/slime)
+						var/list/animals = typesof(/mob/living/simple_animal)
+
+						if(mobtype in humans)
 							race = "Human"
 
-						else if(ismonkey(M))
+						else if(mobtype in monkeys)
 							race = "Monkey"
 							language = race
 
-						else if(issilicon(M) || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
+						else if(mobtype in silicons || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
 							race = "Artificial Life"
 
-						else if(isslime(M)) // NT knows a lot about slimes, but not aliens. Can identify slimes
+						else if(mobtype in slimes) // NT knows a lot about slimes, but not aliens. Can identify slimes
 							race = "slime"
 							language = race
 
-						else if(isanimal(M))
+						else if(mobtype in animals)
 							race = "Domestic Animal"
 							language = race
 
@@ -94,7 +99,6 @@
 							race = "<i>Unidentifiable</i>"
 							language = race
 
-						del(M)
 
 						// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
 

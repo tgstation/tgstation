@@ -5,7 +5,7 @@ var/global/list/uneatable = list(
 	/obj/effect/overlay
 	)
 
-/obj/machinery/singularity/
+/obj/machinery/singularity
 	name = "Gravitational Singularity"
 	desc = "A Gravitational Singularity."
 	icon = 'icons/obj/singularity.dmi'
@@ -212,7 +212,7 @@ var/global/list/uneatable = list(
 	for(var/atom/X in orange(grav_pull,src))
 		var/dist = get_dist(X, src)
 		// Movable atoms only
-		if(dist > consume_range && istype(X, /atom/movable))
+		if(!contained && dist > consume_range && istype(X, /atom/movable))
 			if(is_type_in_list(X, uneatable))	continue
 			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 				step_towards(X,src)
