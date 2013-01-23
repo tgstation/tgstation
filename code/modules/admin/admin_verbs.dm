@@ -212,11 +212,11 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game.*/
-	/client/proc/playernotes,
+	/datum/admins/proc/PlayerNotes,
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
-	/client/proc/mod_panel,
 	/client/proc/cmd_mod_say,
-	/datum/admins/proc/show_player_info
+	/datum/admins/proc/show_player_info,
+	/client/proc/player_panel_new,
 )
 /client/proc/add_admin_verbs()
 	if(holder)
@@ -618,7 +618,7 @@ var/list/admin_verbs_mod = list(
 /client/proc/mod_panel()
 	set name = "Moderator Panel"
 	set category = "Admin"
-	/*if(holder)
+/*	if(holder)
 		holder.mod_panel()*/
 //	feedback_add_details("admin_verb","MP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

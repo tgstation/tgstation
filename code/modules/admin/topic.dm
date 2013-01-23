@@ -1460,7 +1460,7 @@
 		usr.client.cmd_admin_subtle_message(M)
 
 	else if(href_list["traitor"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN|R_MOD))	return
 
 		if(!ticker || !ticker.mode)
 			alert("The game hasn't started yet!")
