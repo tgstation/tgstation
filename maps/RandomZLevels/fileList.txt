@@ -12,6 +12,6 @@ maps/RandomZLevels/beach.dmm
 #maps/RandomZLevels/wildwest.dmm
 #maps/RandomZLevels/challenge.dmm
 maps/RandomZLevels/listeningpost.dmm
-maps/RandomZLevels/zresearchlabs.dmm
+#maps/RandomZLevels/zresearchlabs.dmm
 maps/RandomZLevels/jungle.dmm
 maps/RandomZLevels/arcticwaste.dmm
