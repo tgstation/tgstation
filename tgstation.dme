@@ -126,6 +126,7 @@
 #include "code\datums\organs\organ_internal.dm"
 #include "code\datums\spells\area_teleport.dm"
 #include "code\datums\spells\conjure.dm"
+#include "code\datums\spells\construct_spells.dm"
 #include "code\datums\spells\dumbfire.dm"
 #include "code\datums\spells\emplosion.dm"
 #include "code\datums\spells\ethereal_jaunt.dm"
