@@ -15,7 +15,7 @@
 	maxhealth = 20
 	req_access =list(access_medical)
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
-//var/emagged = 0
+//	var/emagged = 0
 	var/list/botcard_access = list(access_medical)
 	var/obj/item/weapon/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
@@ -30,6 +30,7 @@
 	var/injection_amount = 15 //How much reagent do we inject at a time?
 	var/heal_threshold = 10 //Start healing when they have this much damage in a category
 	var/use_beaker = 0 //Use reagents in beaker instead of default treatment agents.
+
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute = "tricordrazine"
 	var/treatment_oxy = "tricordrazine"
@@ -299,6 +300,8 @@
 	if(src.patient && src.path.len == 0 && (get_dist(src,src.patient) > 1))
 		spawn(0)
 			src.path = AStar(src.loc, get_turf(src.patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30,id=botcard)
+			if(!src.path)
+				src.path = list()
 			if(src.path.len == 0)
 				src.oldpatient = src.patient
 				src.patient = null

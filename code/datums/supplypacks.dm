@@ -1,7 +1,7 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
 //NOTE: hidden packs only show up when the computer has been hacked.
-//ANOTER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
+//ANOTHER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
@@ -36,7 +36,7 @@
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
 	cost = 20
 	containertype = /obj/structure/closet/crate
-	containername = "Special Ops crate"
+	containername = "special ops crate"
 	hidden = 1
 
 /datum/supply_packs/food
@@ -51,14 +51,14 @@
 					/obj/item/weapon/reagent_containers/food/snacks/grown/banana)
 	cost = 10
 	containertype = /obj/structure/closet/crate/freezer
-	containername = "Food crate"
+	containername = "food crate"
 
 /datum/supply_packs/monkey
 	name = "Monkey crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes)
 	cost = 20
 	containertype = /obj/structure/closet/crate/freezer
-	containername = "Monkey crate"
+	containername = "monkey crate"
 
 
 /datum/supply_packs/beanbagammo
@@ -75,7 +75,7 @@
 					/obj/item/ammo_casing/shotgun/beanbag)
 	cost = 10
 	containertype = /obj/structure/closet/crate
-	containername = "Beanbag shells"
+	containername = "beanbag shells"
 
 /datum/supply_packs/toner
 	name = "Toner Cartridges"
@@ -87,7 +87,7 @@
 					/obj/item/device/toner)
 	cost = 10
 	containertype = /obj/structure/closet/crate
-	containername = "Toner Cartridges"
+	containername = "toner cartridges"
 
 /datum/supply_packs/party
 	name = "Party equipment"
@@ -103,7 +103,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/beer)
 	cost = 20
 	containertype = /obj/structure/closet/crate
-	containername = "Party equipment"
+	containername = "party equipment"
 
 /datum/supply_packs/internals
 	name = "Internals crate"
@@ -115,7 +115,7 @@
 					/obj/item/weapon/tank/air)
 	cost = 10
 	containertype = /obj/structure/closet/crate/internals
-	containername = "Internals crate"
+	containername = "internals crate"
 
 /datum/supply_packs/evacuation
 	name = "Emergency equipment"
@@ -135,7 +135,7 @@
 					/obj/item/clothing/mask/gas)
 	cost = 35
 	containertype = /obj/structure/closet/crate/internals
-	containername = "Emergency Crate"
+	containername = "emergency crate"
 
 /datum/supply_packs/janitor
 	name = "Janitorial supplies"
@@ -155,7 +155,7 @@
 					/obj/structure/mopbucket)
 	cost = 10
 	containertype = /obj/structure/closet/crate
-	containername = "Janitorial supplies"
+	containername = "janitorial supplies"
 
 /datum/supply_packs/lightbulbs
 	name = "Replacement lights"
@@ -164,7 +164,7 @@
 					/obj/item/weapon/storage/box/lights/mixed)
 	cost = 10
 	containertype = /obj/structure/closet/crate
-	containername = "Replacement lights"
+	containername = "replacement lights"
 
 /datum/supply_packs/costume
 	name = "Standard Costume crate"
@@ -182,7 +182,7 @@
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Standard Costumes"
+	containername = "standard costumes"
 	access = access_theatre
 
 /datum/supply_packs/wizard
@@ -193,14 +193,14 @@
 					/obj/item/clothing/head/wizard/fake)
 	cost = 20
 	containertype = /obj/structure/closet/crate
-	containername = "Wizard costume crate"
+	containername = "wizard costume crate"
 
 /datum/supply_packs/mule
 	name = "MULEbot Crate"
 	contains = list(/obj/machinery/bot/mulebot)
 	cost = 20
 	containertype = /obj/structure/largecrate/mule
-	containername = "MULEbot Crate"
+	containername = "\improper MULEbot Crate"
 
 /datum/supply_packs/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"
@@ -215,7 +215,7 @@
 					/obj/item/clothing/suit/apron) // Updated with new things
 	cost = 15
 	containertype = /obj/structure/closet/crate/hydroponics
-	containername = "Hydroponics crate"
+	containername = "hydroponics crate"
 	access = access_hydroponics
 
 //farm animals - useless and annoying, but potentially a good source of food
@@ -223,21 +223,21 @@
 	name = "Cow Crate"
 	cost = 30
 	containertype = /obj/structure/largecrate/cow
-	containername = "Cow Crate"
+	containername = "cow crate"
 	access = access_hydroponics
 
 /datum/supply_packs/goat
 	name = "Goat Crate"
 	cost = 25
 	containertype = /obj/structure/largecrate/goat
-	containername = "Goat Crate"
+	containername = "goat crate"
 	access = access_hydroponics
 
 /datum/supply_packs/chicken
 	name = "Chicken Crate"
 	cost = 20
 	containertype = /obj/structure/largecrate/chick
-	containername = "Chicken Crate"
+	containername = "chicken crate"
 	access = access_hydroponics
 
 /datum/supply_packs/lisa
@@ -245,7 +245,7 @@
 	contains = list()
 	cost = 50
 	containertype = /obj/structure/largecrate/lisa
-	containername = "Corgi Crate"
+	containername = "corgi crate"
 
 /datum/supply_packs/seeds
 	name = "Seeds Crate"
@@ -263,7 +263,7 @@
 					/obj/item/seeds/sugarcaneseed)
 	cost = 10
 	containertype = /obj/structure/closet/crate/hydroponics
-	containername = "Seeds crate"
+	containername = "seeds crate"
 	access = access_hydroponics
 
 /datum/supply_packs/weedcontrol
@@ -274,7 +274,7 @@
 					/obj/item/weapon/grenade/chem_grenade/antiweed)
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure/hydrosec
-	containername = "Weed control crate"
+	containername = "weed control crate"
 	access = access_hydroponics
 
 /datum/supply_packs/exoticseeds
@@ -291,7 +291,7 @@
 					/obj/item/seeds/eggyseed)
 	cost = 15
 	containertype = /obj/structure/closet/crate/hydroponics
-	containername = "Exotic Seeds crate"
+	containername = "exotic seeds crate"
 	access = access_hydroponics
 
 /datum/supply_packs/medical
@@ -306,7 +306,7 @@
 					/obj/item/weapon/storage/box/syringes)
 	cost = 10
 	containertype = /obj/structure/closet/crate/medical
-	containername = "Medical crate"
+	containername = "medical crate"
 
 
 /datum/supply_packs/virus
@@ -325,7 +325,7 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "Virus crate"
+	containername = "virus crate"
 	access = access_cmo
 
 /datum/supply_packs/metal50
@@ -334,7 +334,7 @@
 	amount = 50
 	cost = 10
 	containertype = /obj/structure/closet/crate
-	containername = "Metal sheets crate"
+	containername = "metal sheets crate"
 
 /datum/supply_packs/glass50
 	name = "50 Glass Sheets"
@@ -342,7 +342,7 @@
 	amount = 50
 	cost = 10
 	containertype = /obj/structure/closet/crate
-	containername = "Glass sheets crate"
+	containername = "glass sheets crate"
 
 /datum/supply_packs/electrical
 	name = "Electrical maintenance crate"
@@ -356,7 +356,7 @@
 					/obj/item/weapon/cell/high)
 	cost = 15
 	containertype = /obj/structure/closet/crate
-	containername = "Electrical maintenance crate"
+	containername = "electrical maintenance crate"
 
 /datum/supply_packs/mechanical
 	name = "Mechanical maintenance crate"
@@ -371,7 +371,7 @@
 					/obj/item/clothing/head/hardhat)
 	cost = 10
 	containertype = /obj/structure/closet/crate
-	containername = "Mechanical maintenance crate"
+	containername = "mechanical maintenance crate"
 
 /datum/supply_packs/watertank
 	name = "Water tank crate"
@@ -423,7 +423,7 @@
 					/obj/machinery/power/emitter)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Emitter crate"
+	containername = "emitter crate"
 	access = access_ce
 
 /datum/supply_packs/engine/field_gen
@@ -431,14 +431,14 @@
 	contains = list(/obj/machinery/field_generator,
 					/obj/machinery/field_generator)
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Field Generator crate"
+	containername = "field generator crate"
 	access = access_ce
 
 /datum/supply_packs/engine/sing_gen
 	name = "Singularity Generator crate"
 	contains = list(/obj/machinery/the_singularitygen)
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Singularity Generator crate"
+	containername = "singularity generator crate"
 	access = access_ce
 
 /datum/supply_packs/engine/collector
@@ -446,7 +446,7 @@
 	contains = list(/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector)
-	containername = "Collector crate"
+	containername = "collector crate"
 
 /datum/supply_packs/engine/PA
 	name = "Particle Accelerator crate"
@@ -459,7 +459,7 @@
 					/obj/structure/particle_accelerator/power_box,
 					/obj/structure/particle_accelerator/end_cap)
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Particle Accelerator crate"
+	containername = "particle accelerator crate"
 	access = access_ce
 
 /datum/supply_packs/mecha_ripley
@@ -469,7 +469,7 @@
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals) //TEMPORARY due to lack of circuitboard printer
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure
-	containername = "APLU \"Ripley\" Circuit Crate"
+	containername = "\improper APLU \"Ripley\" circuit crate"
 	access = access_robotics
 
 /datum/supply_packs/mecha_odysseus
@@ -478,7 +478,7 @@
 					/obj/item/weapon/circuitboard/mecha/odysseus/main) //TEMPORARY due to lack of circuitboard printer
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure
-	containername = "\"Odysseus\" Circuit Crate"
+	containername = "\improper \"Odysseus\" circuit crate"
 	access = access_robotics
 
 
@@ -496,7 +496,7 @@
 					/obj/item/weapon/cell/high)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure/gear
-	containername = "Robotics Assembly"
+	containername = "robotics assembly crate"
 	access = access_robotics
 
 /datum/supply_packs/plasma
@@ -515,7 +515,7 @@
 					/obj/item/device/assembly/timer)
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure/plasma
-	containername = "Plasma assembly crate"
+	containername = "plasma assembly crate"
 	access = access_tox_storage
 
 /datum/supply_packs/weapons
@@ -530,7 +530,7 @@
 					/obj/item/weapon/storage/box/flashbangs)
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "Weapons crate"
+	containername = "weapons crate"
 	access = access_security
 
 /datum/supply_packs/eweapons
@@ -544,7 +544,7 @@
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "Experimental weapons crate"
+	containername = "experimental weapons crate"
 	access = access_heads
 
 /datum/supply_packs/armor
@@ -555,7 +555,7 @@
 					/obj/item/clothing/suit/armor/vest)
 	cost = 15
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Armor crate"
+	containername = "armor crate"
 	access = access_security
 
 /datum/supply_packs/riot
@@ -580,7 +580,7 @@
 					/obj/item/clothing/suit/armor/riot)
 	cost = 60
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Riot gear crate"
+	containername = "riot gear crate"
 	access = access_armory
 
 /datum/supply_packs/loyalty
@@ -588,7 +588,7 @@
 	contains = list (/obj/item/weapon/storage/lockbox/loyalty)
 	cost = 60
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Loyalty implant crate"
+	containername = "loyalty implant crate"
 	access = access_armory
 
 /datum/supply_packs/ballistic
@@ -599,7 +599,7 @@
 					/obj/item/weapon/gun/projectile/shotgun/pump/combat)
 	cost = 50
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Ballistic gear crate"
+	containername = "ballistic gear crate"
 	access = access_armory
 
 /datum/supply_packs/expenergy
@@ -610,7 +610,7 @@
 					/obj/item/weapon/gun/energy/gun)
 	cost = 50
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Experimental energy gear crate"
+	containername = "experimental energy gear crate"
 	access = access_armory
 
 /datum/supply_packs/exparmor
@@ -621,7 +621,7 @@
 					/obj/item/clothing/suit/armor/riot)
 	cost = 35
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Experimental armor crate"
+	containername = "experimental armor crate"
 	access = access_armory
 
 /datum/supply_packs/securitybarriers
@@ -632,7 +632,7 @@
 					/obj/machinery/deployable/barrier)
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure/gear
-	containername = "Security Barriers crate"
+	containername = "security barriers crate"
 
 /datum/supply_packs/securitybarriers
 	name = "Shield Generators"
@@ -642,7 +642,7 @@
 					/obj/machinery/shieldwallgen)
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure
-	containername = "Shield Generators crate"
+	containername = "shield generators crate"
 	access = access_teleporter
 
 /datum/supply_packs/randomised
@@ -685,5 +685,5 @@
 	name = "Contraband crate"
 	cost = 30
 	containertype = /obj/structure/closet/crate
-	containername = "Contraband crate"
+	containername = "crate"	//let's keep it subtle, eh?
 	contraband = 1

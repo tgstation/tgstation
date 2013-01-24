@@ -9,28 +9,24 @@
 
 
 /datum/event/radiation_storm/start()
-	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/turf/T = get_turf(H)
-		if(!T)
-			continue
-		if(T.z != 1)
-			continue
-		if(istype(H,/mob/living/carbon/human))
-			H.apply_effect((rand(15,75)),IRRADIATE,0)
+	for(var/mob/living/carbon/C in living_mob_list)
+		var/turf/T = get_turf(C)
+		if(!T)			continue
+		if(T.z != 1)	continue
+
+		if(istype(C, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = C
+			H.apply_effect((rand(15, 75)), IRRADIATE, 0)
 			if(prob(5))
-				H.apply_effect((rand(90,150)),IRRADIATE,0)
+				H.apply_effect((rand(90, 150)), IRRADIATE, 0)
 			if(prob(25))
-				if (prob(75))
+				if(prob(75))
 					randmutb(H)
-					domutcheck(H,null,1)
+					domutcheck(H, null, 1)
 				else
 					randmutg(H)
-					domutcheck(H,null,1)
+					domutcheck(H, null, 1)
 
-	for(var/mob/living/carbon/monkey/M in living_mob_list)
-		var/turf/T = get_turf(M)
-		if(!T)
-			continue
-		if(T.z != 1)
-			continue
-		M.apply_effect((rand(15,75)),IRRADIATE,0)
+		else if(istype(C, /mob/living/carbon/monkey))
+			var/mob/living/carbon/monkey/M = C
+			M.apply_effect((rand(15, 75)), IRRADIATE, 0)
