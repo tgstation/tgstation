@@ -7,11 +7,23 @@
 	else		return dy + (0.5*dx)
 
 
-proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
+proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0)
 	src = null	//so we don't abort once src is deleted
+
+	if(!ignorecap)
+		// Clamp all values to MAX_EXPLOSION_RANGE
+		devastation_range = min (MAX_EX_DEVESTATION_RANGE, devastation_range)
+		heavy_impact_range = min (MAX_EX_HEAVY_RANGE, heavy_impact_range)
+		light_impact_range = min (MAX_EX_LIGHT_RANGE, light_impact_range)
+		flash_range = min (MAX_EX_FLASH_RANGE, flash_range)
+
 	spawn(0)
 		if(config.use_recursive_explosions)
-			var/power = devastation_range * 2 + heavy_impact_range + light_impact_range //The ranges add up, ie light 14 includes both heavy 7 and devestation 3. So this calculation means devestation counts for 4, heavy for 2 and light for 1 power, giving us a cap of 27 power.
+			devastation_range += 1	//Original code uses -1 as no explosion, this code uses 0 as no explosion and -1 would ruin everything
+			heavy_impact_range += 1
+			light_impact_range += 1
+			var/power = devastation_range * 3 + heavy_impact_range * 1.5 + light_impact_range * 0.75
+			//So max power is (3 * 4) + (1.5 * 8) + (0.75 * 15) = 36,25
 			explosion_rec(epicenter, power)
 			return
 

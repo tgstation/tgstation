@@ -1835,18 +1835,33 @@
 			if("togglebombcap")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","BC")
-				switch(MAX_EXPLOSION_RANGE)
-					if(14)	MAX_EXPLOSION_RANGE = 16
-					if(16)	MAX_EXPLOSION_RANGE = 20
-					if(20)	MAX_EXPLOSION_RANGE = 28
-					if(28)	MAX_EXPLOSION_RANGE = 56
-					if(56)	MAX_EXPLOSION_RANGE = 128
-					if(128)	MAX_EXPLOSION_RANGE = 14
-				var/range_dev = MAX_EXPLOSION_RANGE *0.25
-				var/range_high = MAX_EXPLOSION_RANGE *0.5
-				var/range_low = MAX_EXPLOSION_RANGE
-				message_admins("\red <b> [key_name_admin(usr)] changed the bomb cap to [range_dev], [range_high], [range_low]</b>", 1)
-				log_admin("[key_name_admin(usr)] changed the bomb cap to [MAX_EXPLOSION_RANGE]")
+				switch(MAX_EX_LIGHT_RANGE)
+					if(14)
+						MAX_EX_LIGHT_RANGE = 16
+						MAX_EX_HEAVY_RANGE = 8
+						MAX_EX_DEVESTATION_RANGE = 4
+					if(16)
+						MAX_EX_LIGHT_RANGE = 20
+						MAX_EX_HEAVY_RANGE = 10
+						MAX_EX_DEVESTATION_RANGE = 5
+					if(20)
+						MAX_EX_LIGHT_RANGE = 28
+						MAX_EX_HEAVY_RANGE = 14
+						MAX_EX_DEVESTATION_RANGE = 7
+					if(28)
+						MAX_EX_LIGHT_RANGE = 56
+						MAX_EX_HEAVY_RANGE = 28
+						MAX_EX_DEVESTATION_RANGE = 14
+					if(56)
+						MAX_EX_LIGHT_RANGE = 128
+						MAX_EX_HEAVY_RANGE = 64
+						MAX_EX_DEVESTATION_RANGE = 32
+					if(128)
+						MAX_EX_LIGHT_RANGE = 14
+						MAX_EX_HEAVY_RANGE = 7
+						MAX_EX_DEVESTATION_RANGE = 3
+				message_admins("\red <b> [key_name_admin(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]</b>", 1)
+				log_admin("[key_name_admin(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]")
 
 			if("flicklights")
 				feedback_inc("admin_secrets_fun_used",1)

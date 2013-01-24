@@ -59,6 +59,10 @@
 	var/wikiurl
 	var/forumurl
 
+	var/fast_atmos_1 = 0
+	var/fast_atmos_2 = 0
+	var/fast_atmos_3 = 0
+
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
@@ -97,6 +101,7 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 
 	var/use_recursive_explosions //Defines whether the server uses recursive or circular explosions.
+	var/roundstart_station_randomization = 1	//Enable this to have some randomization happen on the station.
 
 	var/assistant_maint = 0 //Do assistants get maint access?
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
