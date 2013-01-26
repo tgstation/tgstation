@@ -1,7 +1,10 @@
 var/list/sec_departments = list("engineering", "supply", "medical", "science")
 
-proc/assign_sec_to_department(var/mob/living/carbon/human/H)
-	if(sec_departments.len)
+/datum/job/officer/proc/assign_sec_to_department(var/mob/living/carbon/human/H)
+	if(!sec_departments.len)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_ears)
+	else
 		var/department = pick(sec_departments)
 		sec_departments -= department
 		var/access = null
@@ -27,16 +30,12 @@ proc/assign_sec_to_department(var/mob/living/carbon/human/H)
 				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec/department/sci(H), slot_ears)
 				access = list(access_research)
 				destination = /area/security/checkpoint/science
-			else
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_ears)
-
 
 		if(destination)
 			var/teleport = 0
 			if(!ticker || ticker.current_state <= GAME_STATE_SETTING_UP)
 				teleport = 1
-			spawn(15)
+			spawn(10)
 				if(H)
 					if(teleport)
 						var/turf/T
@@ -49,10 +48,10 @@ proc/assign_sec_to_department(var/mob/living/carbon/human/H)
 							else
 								break
 					H << "<b>You have been assigned to [department]!</b>"
-					if(locate(/obj/item/weapon/card/id, H))
-						var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)
-						if(I)
-							I.access |= access
+					var/obj/item/weapon/card/id/I = locate(/obj/item/weapon/card/id, H)
+					if(I)
+						I.access |= access
+
 
 
 /datum/job/officer
