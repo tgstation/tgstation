@@ -102,11 +102,19 @@ datum
 				var/part = amount / src.total_volume
 				var/trans_data = null
 				for (var/datum/reagent/current_reagent in src.reagent_list)
+					if (!current_reagent)
+						continue
 					var/current_reagent_transfer = current_reagent.volume * part
 					if(preserve_data)
 						trans_data = current_reagent.data
-					R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
-					src.remove_reagent(current_reagent.id, current_reagent_transfer)
+					if(current_reagent.id == "blood" && ishuman(target)) // can never be sure
+						var/mob/living/carbon/human/H = target
+						H.vessel.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+						src.remove_reagent(current_reagent.id, current_reagent_transfer)
+						H.vessel.update_total()
+					else
+						R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+						src.remove_reagent(current_reagent.id, current_reagent_transfer)
 
 				src.update_total()
 				R.update_total()
