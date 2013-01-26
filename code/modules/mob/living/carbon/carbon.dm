@@ -137,13 +137,12 @@
 		swap_hand()
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if (src.health >= 0)
+	if(health >= 0)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
-			src.visible_message( \
-				text("\blue [src] examines [].",src.gender==MALE?"himself":"herself"), \
-				"\blue You check yourself for injuries." \
-				)
+			visible_message( \
+				"<span class='notice'>[src] examines \himself.", \
+				"<span class='notice'>You check yourself for injuries.</span>")
 
 			for(var/datum/organ/external/org in H.organs)
 				var/status = ""
@@ -172,29 +171,32 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.getDisplayName(),status),1)
-			if((SKELETON in H.mutations) && (!H.w_uniform) && (!H.wear_suit))
+				src << "\t [status == "OK" ? "\blue" : "\red"] My [org.getDisplayName()] is [status]."
+			if(SKELETON in H.mutations && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
-			var/t_him = "it"
-			if (src.gender == MALE)
-				t_him = "him"
-			else if (src.gender == FEMALE)
-				t_him = "her"
-			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+			if(istype(src, /mob/living/carbon/human) && src:w_uniform)
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
-			src.sleeping = max(0,src.sleeping-5)
-			if(src.sleeping == 0)
-				src.resting = 0
+
+			if(lying)
+				sleeping = max(0, sleeping - 5)
+				if(sleeping == 0)
+					resting = 0
+				M.visible_message( \
+					"<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
+					"<span class='notice'>You shake [src] trying to get \him up!</span>")
+			else
+				M.visible_message( \
+					"<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
+					"<span class='notice'>You hug [src] to make \him feel better!</span>")
+
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
-			playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			M.visible_message( \
-				"\blue [M] shakes [src] trying to wake [t_him] up!", \
-				"\blue You shake [src] trying to wake [t_him] up!", \
-				)
+
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+
 
 /mob/living/carbon/proc/eyecheck()
 	return 0

@@ -107,7 +107,7 @@
 			affecting.loc = assailant.loc
 	if ((killing == 2 && state == 3))
 		if(assailant.loc != kill_loc)
-			assailant.visible_message("\red [assailant] lost \his tightened grip on [affecting]'s neck!")
+			assailant.visible_message("<span class='warning'>[assailant] lost \his tightened grip on [affecting]'s neck!</span>")
 			killing = 0
 			hud1.icon_state = "disarm/kill"
 			return
@@ -161,7 +161,7 @@
 			if (state < 2)
 				if (!( allow_upgrade ))
 					return
-				assailant.visible_message("\red [assailant] has grabbed [affecting] aggressively (now hands)!")
+				assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>")
 				state = 2
 				icon_state = "grabbed1"
 				/*if (prob(75))
@@ -179,7 +179,7 @@
 					if(istype(affecting, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = affecting
 						if(FAT in H.mutations)
-							assailant << "\blue You can't strangle [affecting] through all that fat!"
+							assailant << "<span class='notice'>You can't strangle [affecting] through all that fat!</span>"
 							return
 
 						/*Hrm might want to add this back in
@@ -195,10 +195,10 @@
 						*/
 
 					if(istype(affecting, /mob/living/carbon/slime))
-						assailant << "\blue You squeeze [affecting], but nothing interesting happens."
+						assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
 						return
 
-					assailant.visible_message("\red [assailant] has reinforced \his grip on [affecting] (now neck)!")
+					assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 					state = 3
 					icon_state = "grabbed+1"
 					if (!( affecting.buckled ))
@@ -210,7 +210,7 @@
 					hud1.name = "disarm/kill"
 				else
 					if (state >= 3 && !killing)
-						assailant.visible_message("\red [assailant] starts to tighten \his grip on [affecting]'s neck!")
+						assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
 						hud1.icon_state = "disarm/kill1"
 						killing = 1
 						if(do_after(assailant, 40))
@@ -224,7 +224,7 @@
 								return
 							killing = 2
 							kill_loc = assailant.loc
-							assailant.visible_message("\red [assailant] has tightened \his grip on [affecting]'s neck!")
+							assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 							affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>")
 							assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
 							log_attack("<font color='red'>[assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
@@ -232,7 +232,7 @@
 							assailant.next_move = world.time + 10
 							affecting.losebreath += 1
 						else
-							assailant.visible_message("\red [assailant] was unable to tighten \his grip on [affecting]'s neck!")
+							assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
 							killing = 0
 							hud1.icon_state = "disarm/kill"
 	return
@@ -263,12 +263,12 @@
 	if(M == assailant && state >= 2)
 		if( ( ishuman(user) && (FAT in user.mutations) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
-			user.visible_message("\red <B>[user] is attempting to devour [affecting]!</B>")
+			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
 				if(!do_mob(user, affecting)||!do_after(user, 30)) return
 			else
 				if(!do_mob(user, affecting)||!do_after(user, 100)) return
-			user.visible_message("\red <B>[user] devours [affecting]!</B>")
+			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)
 			del(src)
