@@ -60,7 +60,9 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/PlayerNotes,
 	/client/proc/cmd_mod_say,
 	/datum/admins/proc/show_player_info,
-	/client/proc/free_slot			/*frees slot for chosen job*/
+	/client/proc/free_slot,			/*frees slot for chosen job*/
+	/client/proc/cmd_admin_change_custom_event,
+	/client/proc/cmd_admin_rejuvenate
 )
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
