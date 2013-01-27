@@ -339,7 +339,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Medical"
 			if(1357)
 				freq_text = "Engineering"
-			if(1359)
+			if(SEC_FREQ)
 				freq_text = "Security"
 //			if(1349)
 //				freq_text = "Mining"
@@ -365,6 +365,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='syndradio'><span class='name'>"
 		else if (display_freq==COMM_FREQ)
 			part_a = "<span class='comradio'><span class='name'>"
+		else if (display_freq==SEC_FREQ)
+			part_a = "<span class='secradio'><span class='name'>"
 		else if (display_freq in DEPT_FREQS)
 			part_a = "<span class='deptradio'><span class='name'>"
 
@@ -623,7 +625,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 				freq_text = "Medical"
 			if(1357)
 				freq_text = "Engineering"
-			if(1359)
+			if(SEC_FREQ)
 				freq_text = "Security"
 //			if(1349)
 //				freq_text = "Mining"
@@ -653,6 +655,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			part_a = "<span class='syndradio'><span class='name'>"
 		else if (display_freq==COMM_FREQ)
 			part_a = "<span class='comradio'><span class='name'>"
+		else if (display_freq==SEC_FREQ)
+			part_a = "<span class='secradio'><span class='name'>"
 		else if (display_freq in DEPT_FREQS)
 			part_a = "<span class='deptradio'><span class='name'>"
 
