@@ -14,9 +14,9 @@
 	var/broken = 0     //Is the flash burnt out?
 	var/last_used = 0 //last world.time it was used.
 
-/obj/item/device/flash/proc/clown_check(var/mob/user)
+/obj/item/device/flash/proc/clown_check(mob/user)
 	if(user && (CLUMSY in user.mutations) && prob(50))
-		user << "\red \The [src] slips out of your hand."
+		user << "\red [src] slips out of your hand."
 		user.drop_item()
 		return 0
 	return 1
@@ -32,7 +32,7 @@
 	times_used = max(0,round(times_used)) //sanity
 
 
-/obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(!user || !M)	return	//sanity
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [M.name] ([M.ckey])</font>")
@@ -42,7 +42,7 @@
 
 	if(!clown_check(user))	return
 	if(broken)
-		user << "<span class='warning'>\The [src] is broken.</span>"
+		user << "<span class='warning'>[src] is broken.</span>"
 		return
 
 	flash_recharge()
@@ -70,24 +70,29 @@
 			M.Weaken(10)
 			flick("e_flash", M.flash)
 
-			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
+			if(ishuman(M) && ishuman(user) && M.stat != DEAD)
 				if(user.mind && user.mind in ticker.mode.head_revolutionaries)
-					var/revsafe = 0
-					for(var/obj/item/weapon/implant/loyalty/L in M)
-						if(L && L.implanted)
-							revsafe = 1
-							break
-					M.mind_initialize()		//give them a mind datum if they don't have one.
-					if(M.mind.has_been_rev)
-						revsafe = 2
-					if(!revsafe)
-						M.mind.has_been_rev = 1
-						ticker.mode.add_revolutionary(M.mind)
-					else if(revsafe == 1)
-						user << "<span class='warning'>Something seems to be blocking the flash!</span>"
+					if(M.client)
+						if(M.stat == CONSCIOUS)
+							var/revsafe = 0
+							for(var/obj/item/weapon/implant/loyalty/L in M)
+								if(L && L.implanted)
+									revsafe = 1
+									break
+							M.mind_initialize()		//give them a mind datum if they don't have one.
+							if(M.mind.has_been_rev)
+								revsafe = 2
+							if(!revsafe)
+								M.mind.has_been_rev = 1
+								ticker.mode.add_revolutionary(M.mind)
+							else if(revsafe == 1)
+								user << "<span class='warning'>Something seems to be blocking the flash!</span>"
+							else
+								user << "<span class='warning'>This mind seems resistant to the flash!</span>"
+						else
+							user << "<span class='warning'>They must be conscious before you can convert them!</span>"
 					else
-						user << "<span class='warning'>This mind seems resistant to the flash!</span>"
-					user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
+						user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
 		else
 			flashfail = 1
 
@@ -119,15 +124,13 @@
 
 		user.visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
 
-	return
 
 
 
-
-/obj/item/device/flash/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
+/obj/item/device/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!user || !clown_check(user)) 	return
 	if(broken)
-		user.show_message("<span class='warning'>The [src.name] is broken</span>", 2)
+		user.show_message("<span class='warning'>[src] is broken!</span>", 2)
 		return
 
 	flash_recharge()
@@ -196,19 +199,19 @@
 	desc = "When a problem arises, SCIENCE is the solution."
 	icon_state = "sflash"
 	origin_tech = "magnets=2;combat=1"
-	var/construction_cost = list("metal"=750,"glass"=750)
+	var/construction_cost = list("metal"=750, "glass"=750)
 	var/construction_time=100
 
-/obj/item/device/flash/synthetic/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/device/flash/synthetic/attack(mob/living/M, mob/user)
 	..()
 	if(!broken)
 		broken = 1
-		user << "\red The bulb has burnt out!"
+		user << "<span class='warning'>The bulb has burnt out!</span>"
 		icon_state = "flashburnt"
 
-/obj/item/device/flash/synthetic/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
+/obj/item/device/flash/synthetic/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	..()
 	if(!broken)
 		broken = 1
-		user << "\red The bulb has burnt out!"
+		user << "<span class='warning'>The bulb has burnt out!</span>"
 		icon_state = "flashburnt"

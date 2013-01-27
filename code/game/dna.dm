@@ -675,16 +675,16 @@
 	set category = "Object"
 	set name = "Enter DNA Scanner"
 
-	if (usr.stat != 0)
+	if(usr.stat != 0)
 		return
-	if (!ishuman(usr) && !ismonkey(usr)) //Make sure they're a mob that has dna
-		usr << "\blue Try as you might, you can not climb up into the scanner."
+	if(!ishuman(usr) && !ismonkey(usr)) //Make sure they're a mob that has dna
+		usr << "<span class='notice'>Try as you might, you can not climb up into the scanner.</span>"
 		return
-	if (src.occupant)
-		usr << "\blue <B>The scanner is already occupied!</B>"
+	if(occupant)
+		usr << "<span class='notice'>The scanner is already occupied!</span>"
 		return
-	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
+	if(usr.abiotic())
+		usr << "<span class='notice'>Subject cannot have abiotic items on.</span>"
 		return
 	usr.stop_pulling()
 	usr.client.perspective = EYE_PERSPECTIVE
@@ -701,24 +701,25 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/machinery/dna_scannernew/attackby(obj/item/weapon/grab/G as obj, user as mob)
-	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
+/obj/machinery/dna_scannernew/attackby(obj/item/weapon/grab/G, mob/user)
+	if(!istype(G, /obj/item/weapon/grab) || !ismob(G.affecting))
 		return
-	if (src.occupant)
-		user << "\blue <B>The scanner is already occupied!</B>"
+	if(occupant)
+		user << "<span class='notice'>The scanner is already occupied!</span>"
 		return
-	if (G.affecting.abiotic())
-		user << "\blue <B>Subject cannot have abiotic items on.</B>"
+	if(G.affecting.abiotic())
+		user << "<span class='notice'>Subject cannot have abiotic items on.</span>"
 		return
 	var/mob/M = G.affecting
 	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
 	M.loc = src
-	src.occupant = M
-	src.icon_state = "scanner_1"
+	occupant = M
+	user.stop_pulling()
+	icon_state = "scanner_1"
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 	if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \

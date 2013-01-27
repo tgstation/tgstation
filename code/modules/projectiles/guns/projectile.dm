@@ -67,7 +67,7 @@
 			loaded += AC
 			num_loaded++
 	if(num_loaded)
-		user << "\blue You load [num_loaded] shell\s into the gun!"
+		user << "<span class='notice'>You load [num_loaded] shell\s into the gun!</span>"
 	A.update_icon()
 	update_icon()
 	return

@@ -43,6 +43,8 @@
 
 /obj/item/weapon/photo/examine()
 	set src in oview(1)
+	if(is_blind(usr))
+		return
 	if(in_range(usr, src))
 		show(usr)
 		usr << desc

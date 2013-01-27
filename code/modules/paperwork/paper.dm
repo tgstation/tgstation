@@ -39,7 +39,7 @@
 	spawn(2)
 		update_icon()
 		updateinfolinks()
-		return
+
 
 /obj/item/weapon/paper/update_icon()
 	if(info)
@@ -50,11 +50,10 @@
 /obj/item/weapon/paper/examine()
 	set src in oview(1)
 
-//	..()	//We don't want them to see the dumb "this is a paper" thing every time.
-// I didn't like the idea that people can read tiny pieces of paper from across the room.
-// Now you need to be next to the paper in order to read it.
+	if(is_blind(usr))
+		return
 	if(in_range(usr, src))
-		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
+		if( !(ishuman(usr) || isobserver(usr) || issilicon(usr)) )
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
 			onclose(usr, "[name]")
 		else
@@ -62,7 +61,7 @@
 			onclose(usr, "[name]")
 	else
 		usr << "<span class='notice'>It is too far away.</span>"
-	return
+
 
 /obj/item/weapon/paper/verb/rename()
 	set name = "Rename paper"
@@ -76,7 +75,7 @@
 	if((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
-	return
+
 
 /obj/item/weapon/paper/attack_self(mob/living/user as mob)
 	examine()
@@ -86,7 +85,7 @@
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 			spawn(20)
 				spam_flag = 0
-	return
+
 
 /obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
 	var/dist
@@ -100,7 +99,7 @@
 	else
 		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
-	return
+
 
 /obj/item/weapon/paper/proc/addtofield(var/id, var/text, var/links = 0)
 	var/locid = 0
@@ -138,6 +137,7 @@
 		var/after = copytext(info, textindex)
 		info = before + text + after
 		updateinfolinks()
+
 
 /obj/item/weapon/paper/proc/updateinfolinks()
 	info_links = info
@@ -263,6 +263,10 @@
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
 	..()
+
+	if(is_blind(user))
+		return
+
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1

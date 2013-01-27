@@ -436,6 +436,9 @@
 	if(restrained())
 		return 0
 
+	if(!isturf(loc))	//if they're in a disposal unit, for example
+		return 1
+
 	/*
 	if(istype(src,/mob/living/carbon))
 		if(src.l_hand && src.r_hand)

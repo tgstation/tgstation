@@ -142,7 +142,11 @@
 		else
 			user << "<span class='notice'>The pages of [title] have been cut out!</span>"
 			return
-	if(src.dat)
+
+	if(is_blind(user))
+		return
+
+	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 		onclose(user, "book")
@@ -165,6 +169,8 @@
 			user << "<span class='notice'>There's already something in [title]!</span>"
 			return
 	if(istype(W, /obj/item/weapon/pen))
+		if(is_blind(user))
+			return
 		if(unique)
 			user << "These pages don't seem to take the ink well. Looks like you can't modify it."
 			return
