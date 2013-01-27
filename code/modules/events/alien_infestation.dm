@@ -1,13 +1,19 @@
 /datum/event/alien_infestation
-	announceWhen	= 75
-	endWhen			= 75
+	announceWhen	= 400
 	oneShot			= 1
 
 	var/spawncount = 1
+	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
+
+
+/datum/event/alien_infestation/setup()
+	announceWhen = rand(announceWhen, announceWhen + 50)
+	spawncount = rand(1, 2)
 
 /datum/event/alien_infestation/announce()
-	command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-	world << sound('sound/AI/aliens.ogg')
+	if(successSpawn)
+		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
+		world << sound('sound/AI/aliens.ogg')
 
 
 /datum/event/alien_infestation/start()
@@ -19,8 +25,7 @@
 
 	var/list/candidates = get_alien_candidates()
 
-	if(prob(50)) spawncount++	//sometimes, have two larvae spawn instead of one
-	while((spawncount >= 1) && vents.len && candidates.len)
+	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick(vents)
 		var/candidate = pick(candidates)
 
@@ -30,3 +35,4 @@
 		candidates -= candidate
 		vents -= vent
 		spawncount--
+		successSpawn = 1

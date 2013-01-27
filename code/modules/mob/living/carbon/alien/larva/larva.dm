@@ -216,7 +216,7 @@
 
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>The [M.name] has [pick("bit","slashed")] []!</B>", src), 1)
+				O.show_message(text("\red <B>The [M.name] glomps []!</B>", src), 1)
 
 		var/damage = rand(1, 3)
 
@@ -304,7 +304,7 @@
 		else
 			var/damage = rand(1, 9)
 			if (prob(90))
-				if ((HULK in M.mutations) || (SUPRSTR in M.augmentations))
+				if (HULK in M.mutations)
 					damage += 5
 					spawn(0)
 						Paralyse(1)

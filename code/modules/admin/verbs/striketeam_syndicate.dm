@@ -128,9 +128,6 @@ var/global/sent_syndicate_strike_team = 0
 	return new_syndicate_commando
 
 /mob/living/carbon/human/proc/equip_syndicate_commando(syndicate_leader_selected = 0)
-	var/obj/machinery/camera/camera = new /obj/machinery/camera(src) //Gives all the commandos internals cameras.
-	camera.network = "Syndicate"
-	camera.c_tag = real_name
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.

@@ -4,7 +4,8 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
-	required_players = 20
+	required_players = 2
+	required_players_secret = 15
 	required_enemies = 1
 	recommended_enemies = 1
 
@@ -136,6 +137,7 @@
 		if(config.continous_rounds)
 			if(emergency_shuttle)
 				emergency_shuttle.always_fake_recall = 0
+			malf_mode_declared = 0
 		else
 			return 1
 	return ..() //check for shuttle and nuke

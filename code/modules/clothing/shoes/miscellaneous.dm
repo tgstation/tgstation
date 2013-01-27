@@ -96,13 +96,6 @@
 	desc = "Shoes for a cyborg costume"
 	icon_state = "boots"
 
-/obj/item/clothing/shoes/laceups
-	name = "laceup shoes"
-	desc = "Stylish black leather."
-	icon_state = "laceups"
-	item_state = "laceups"
-	color = "black"
-
 /obj/item/clothing/shoes/slippers
 	name = "bunny slippers"
 	desc = "Fluffy!"
@@ -114,3 +107,8 @@
 	desc = "Fluffy..."
 	icon_state = "slippers_worn"
 	item_state = "slippers_worn"
+
+/obj/item/clothing/shoes/laceup
+	name = "laceup shoes"
+	desc = "The height of fashion, and they're pre-polished!"
+	icon_state = "laceups"

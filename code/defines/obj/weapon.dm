@@ -27,7 +27,7 @@
 
 
 /obj/item/weapon/spacecash
-	name = "space cash"
+	name = "1 credit chip"
 	desc = "It's worth 1 credit."
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
@@ -42,35 +42,57 @@
 	w_class = 1.0
 	var/access = list()
 	access = access_crate_cash
+	var/worth = 1
 
 /obj/item/weapon/spacecash/c10
+	name = "10 credit chip"
 	icon_state = "spacecash10"
 	access = access_crate_cash
 	desc = "It's worth 10 credits."
+	worth = 10
+
 /obj/item/weapon/spacecash/c20
+	name = "20 credit chip"
 	icon_state = "spacecash20"
 	access = access_crate_cash
 	desc = "It's worth 20 credits."
+	worth = 20
+
 /obj/item/weapon/spacecash/c50
+	name = "50 credit chip"
 	icon_state = "spacecash50"
 	access = access_crate_cash
 	desc = "It's worth 50 credits."
+	worth = 50
+
 /obj/item/weapon/spacecash/c100
+	name = "100 credit chip"
 	icon_state = "spacecash100"
 	access = access_crate_cash
 	desc = "It's worth 100 credits."
+	worth = 100
+
 /obj/item/weapon/spacecash/c200
+	name = "200 credit chip"
 	icon_state = "spacecash200"
 	access = access_crate_cash
 	desc = "It's worth 200 credits."
+	worth = 200
+
 /obj/item/weapon/spacecash/c500
+	name = "500 credit chip"
 	icon_state = "spacecash500"
 	access = access_crate_cash
 	desc = "It's worth 500 credits."
+	worth = 500
+
 /obj/item/weapon/spacecash/c1000
+	name = "1000 credit chip"
 	icon_state = "spacecash1000"
 	access = access_crate_cash
 	desc = "It's worth 1000 credits."
+	worth = 1000
+
 
 /obj/item/weapon/bananapeel
 	name = "banana peel"
@@ -147,7 +169,7 @@
 	desc = "A cane used by a true gentlemen. Or a clown."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
-	item_state = "cane"
+	item_state = "stick"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	throwforce = 7.0
@@ -224,7 +246,7 @@
 	var/armed = 0
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the [src] on \his head! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "\red <b>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
@@ -344,20 +366,6 @@
 	m_amt = 100
 	origin_tech = "magnets=1"
 
-/obj/item/weapon/spellbook
-	name = "spell book"
-	desc = "The legendary book of spells of the wizard."
-	icon = 'icons/obj/library.dmi'
-	icon_state ="book"
-	throw_speed = 1
-	throw_range = 5
-	w_class = 1.0
-	flags = FPRINT | TABLEPASS
-	var/uses = 5.0
-	var/temp = null
-	var/max_uses = 5
-	var/op = 1
-
 /obj/item/weapon/staff
 	name = "wizards staff"
 	desc = "Apparently a staff used by the wizard."
@@ -426,7 +434,7 @@
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is strangling \himself with the [src]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (OXYLOSS)
 
 /obj/item/weapon/module

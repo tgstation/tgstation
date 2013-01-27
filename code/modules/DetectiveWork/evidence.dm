@@ -8,7 +8,6 @@
 	item_state = ""
 	w_class = 1
 
-/obj/item/weapon/evidencebag/afterattack(obj/item/O, mob/user as mob)
 /obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user as mob)
 	if(!in_range(I, user))
 		return

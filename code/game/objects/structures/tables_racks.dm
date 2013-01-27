@@ -282,7 +282,7 @@
 
 
 /obj/structure/table/attack_hand(mob/user)
-	if(HULK in user.mutations || SUPRSTR in user.augmentations)
+	if(HULK in user.mutations)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		if(istype(src, /obj/structure/table/reinforced))
@@ -323,8 +323,8 @@
 			var/mob/living/M = G.affecting
 			if (G.state < 2)
 				if(user.a_intent == "hurt")
-					if (prob(5))	M.Weaken(3)
-					M.apply_damage(10)
+					if (prob(5))	M.Weaken(5)
+					M.apply_damage(6)
 					visible_message("\red [G.assailant] slams [G.affecting] against \the [src]!")
 					playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 				else
@@ -562,7 +562,7 @@
 
 
 /obj/structure/table/attack_hand(mob/user)
-	if(HULK in user.mutations || SUPRSTR in user.augmentations)
+	if(HULK in user.mutations)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		new /obj/item/weapon/rack_parts(loc)

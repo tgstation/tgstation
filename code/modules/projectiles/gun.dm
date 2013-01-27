@@ -75,6 +75,7 @@
 			return
 		if(!load_into_chamber())
 			user << "\red *click*";
+			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 			return
 
 		if(!in_chamber)

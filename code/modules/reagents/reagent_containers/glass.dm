@@ -26,10 +26,11 @@
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/storage/secure/safe,
-		/obj/machinery/disposal,
 		/obj/machinery/iv_drip,
-		/obj/machinery/disease2/incubator
-	)
+		/obj/machinery/disease2/incubator,
+		/obj/machinery/disposal,
+		/mob/living/simple_animal/cow,
+		/mob/living/simple_animal/hostile/retaliate/goat	)
 
 	examine()
 		set src in view()

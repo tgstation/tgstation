@@ -22,7 +22,8 @@
 	config_tag = "cult"
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	protected_jobs = list()
-	required_players = 15
+	required_players = 5
+	required_players_secret = 15
 	required_enemies = 3
 	recommended_enemies = 4
 
@@ -255,7 +256,7 @@
 	if(objectives.Find("eldergod"))
 		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
 	if(objectives.Find("sacrifice"))
-		if(!sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
+		if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
 			cult_fail++
 
 	return cult_fail //if any objectives aren't met, failure

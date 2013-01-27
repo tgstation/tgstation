@@ -175,7 +175,7 @@
 			else if(W.damage_type == BURN)
 				burn_dam += W.damage
 
-			if(W.bleeding())
+			if(!(status & ORGAN_ROBOT) && W.bleeding())
 				status |= ORGAN_BLEEDING
 
 			number_wounds += W.amount
@@ -490,7 +490,8 @@
 
 			switch(type)
 				if(CUT)
-					src.status |= ORGAN_BLEEDING
+					if(!(status & ORGAN_ROBOT))
+						src.status |= ORGAN_BLEEDING
 					var/list/size_names = list(/datum/wound/cut, /datum/wound/deep_cut, /datum/wound/flesh_wound, /datum/wound/gaping_wound, /datum/wound/big_gaping_wound, /datum/wound/massive_wound)
 					wound_type = size_names[size]
 
@@ -509,7 +510,7 @@
 
 			// Possibly trigger an internal wound, too.
 			var/local_damage = brute_dam + burn_dam + damage
-			if(damage > 10 && type != BURN && local_damage > 20 && prob(damage))
+			if(damage > 10 && type != BURN && local_damage > 20 && prob(damage) && !(status & ORGAN_ROBOT))
 				var/datum/wound/internal_bleeding/I = new (15)
 				wounds += I
 				owner.custom_pain("You feel something rip in your [display_name]!", 1)
