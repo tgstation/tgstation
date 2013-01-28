@@ -255,7 +255,6 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/ticklag,
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/kaboom,
-		/client/proc/splash,
 		/client/proc/cmd_admin_areatest
 		)
 
