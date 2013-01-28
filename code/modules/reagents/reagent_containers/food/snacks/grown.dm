@@ -648,6 +648,22 @@
 			reagents.add_reagent("nutriment", 1+round((potency / 25), 1))
 			bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/grass
+	seed = "/obj/item/seeds/grassseed"
+	name = "grass"
+	desc = "Green and lush."
+	icon_state = "grassclump"
+	New()
+		..()
+		spawn(5)	//So potency can be set in the proc that creates these crops
+			reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
+			bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/grass/attack_self(mob/user as mob)
+	user << "<span class='notice'>You prepare the astroturf.</span>"
+	new/obj/item/stack/tile/grass(user.loc)
+	del(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
 	seed = "/obj/item/seeds/kudzuseed"
 	name = "kudzu pod"
@@ -871,20 +887,6 @@
 // Complex Grown Object Defines -
 // Putting these at the bottom so they don't clutter the list up. -Cheridan
 // *************************************
-
-/*
-//This object is just a transition object. All it does is make a grass tile and delete itself.
-/obj/item/weapon/reagent_containers/food/snacks/grown/grass
-	seed = "/obj/item/seeds/grassseed"
-	name = "grass"
-	desc = "Green and lush."
-	icon_state = "spawner"
-	potency = 20
-	New()
-		new/obj/item/stack/tile/grass(src.loc)
-		spawn(5) //Workaround to keep harvesting from working weirdly.
-			del(src)
-*/
 
 //This object is just a transition object. All it does is make dosh and delete itself. -Cheridan
 /obj/item/weapon/reagent_containers/food/snacks/grown/money

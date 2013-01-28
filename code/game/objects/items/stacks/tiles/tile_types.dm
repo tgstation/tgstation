@@ -37,7 +37,7 @@
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
 	max_amount = 60
-
+	origin_tech = "biotech=1"
 /*
  * Carpets
  */

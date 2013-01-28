@@ -33,6 +33,11 @@
 	var/growthstages = 0
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 
+/obj/item/seeds/New()
+	..()
+	pixel_x = rand(-8, 8)
+	pixel_y = rand(-8, 8)
+
 /obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "*** <B>[plantname]</B> ***"
@@ -966,11 +971,12 @@
 	species = "grass"
 	plantname = "Grass"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/grass"
-	lifespan = 60
-	endurance = 50
+	lifespan = 40
+	endurance = 40
 	maturation = 2
 	production = 5
 	yield = 5
+	potency = 10
 	plant_type = 0
 	growthstages = 2
 
@@ -1031,8 +1037,6 @@
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 	new /obj/effect/spacevine_controller(user.loc)
 	del(src)
-
-
 
 /*  // Maybe one day when I get it to work like a grenade which exlodes gibs.
 /obj/item/seeds/gibtomatoseed

@@ -79,6 +79,23 @@
 	w_class = 1
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown")
 
+////////
+
+/obj/item/weapon/storage/bag/plants/portaseeder
+	name = "portable seed extractor"
+	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
+	icon_state = "portaseeder"
+
+	verb/dissolve_contents()
+		set name = "Activate Seed Extraction"
+		set category = "Object"
+		set desc = "Activate to convert your plants into plantable seeds."
+		for(var/obj/item/O in contents)
+			seedify(O, 1)
+		for(var/mob/M in range(1))
+			if (M.s_active == src)
+				src.close(M)
+
 
 // -----------------------------
 //        Sheet Snatcher
