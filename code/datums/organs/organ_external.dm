@@ -273,6 +273,7 @@
 		if(germ_level > 0)
 			for(var/datum/wound/W in wounds) if(!W.bandaged && !W.salved)
 				W.germ_level = max(W.germ_level, germ_level)
+		update_icon()
 		return
 
 	proc/fracture()
