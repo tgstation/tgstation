@@ -305,71 +305,10 @@ obj/machinery/hydroponics/proc/hardmutate() // Strongly mutates the current seed
 
 obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
-	if ( istype(myseed, /obj/item/seeds/nettleseed ))
+	if(myseed.mutatelist.len > 0)
+		var/mutantseed = pick(myseed.mutatelist)
 		del(myseed)
-		myseed = new /obj/item/seeds/deathnettleseed
-
-	else if ( istype(myseed, /obj/item/seeds/amanitamycelium ))
-		del(myseed)
-		myseed = new /obj/item/seeds/angelmycelium
-
-	else if ( istype(myseed, /obj/item/seeds/lemonseed ))
-		del(myseed)
-		myseed = new /obj/item/seeds/cashseed
-
-	else if ( istype(myseed, /obj/item/seeds/ambrosiavulgarisseed ))
-		del(myseed)
-		myseed = new /obj/item/seeds/ambrosiadeusseed
-
-	else if ( istype(myseed, /obj/item/seeds/plumpmycelium ))
-		del(myseed)
-		myseed = new /obj/item/seeds/walkingmushroommycelium
-
-	else if ( istype(myseed, /obj/item/seeds/chiliseed ))
-		del(myseed)
-		myseed = new /obj/item/seeds/icepepperseed
-
-	else if ( istype(myseed, /obj/item/seeds/appleseed ))
-		del(myseed)
-		myseed = new /obj/item/seeds/goldappleseed
-
-	else if ( istype(myseed, /obj/item/seeds/berryseed ))
-		del(myseed)
-		switch(rand(1,100))
-			if(1 to 50)
-				myseed = new /obj/item/seeds/poisonberryseed
-			if(51 to 100)
-				myseed = new /obj/item/seeds/glowberryseed
-
-	else if ( istype(myseed, /obj/item/seeds/poisonberryseed ))
-		del(myseed)
-		myseed = new /obj/item/seeds/deathberryseed
-
-	else if ( istype(myseed, /obj/item/seeds/tomatoseed ))
-		del(myseed)
-		switch(rand(1,100))
-			if(1 to 35)
-				myseed = new /obj/item/seeds/bluetomatoseed
-			if(36 to 70)
-				myseed = new /obj/item/seeds/bloodtomatoseed
-			if(71 to 100)
-				myseed = new /obj/item/seeds/killertomatoseed
-
-	else if ( istype(myseed, /obj/item/seeds/bluetomatoseed ))
-		del(myseed)
-		myseed = new /obj/item/seeds/bluespacetomatoseed
-
-	else if ( istype(myseed, /obj/item/seeds/grapeseed ))
-		del(myseed)
-		myseed = new /obj/item/seeds/greengrapeseed
-/*
-	else if ( istype(myseed, /obj/item/seeds/tomatoseed ))
-		del(myseed)
-		myseed = new /obj/item/seeds/gibtomatoseed
-*/
-	else if ( istype(myseed, /obj/item/seeds/eggplantseed ))
-		del(myseed)
-		myseed = new /obj/item/seeds/eggyseed
+		myseed = new mutantseed
 
 	else
 		return

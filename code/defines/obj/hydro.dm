@@ -32,6 +32,7 @@
 	var/potency = -1
 	var/growthstages = 0
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
+	var/list/mutatelist = list()
 
 /obj/item/seeds/New()
 	..()
@@ -67,6 +68,8 @@
 	potency = 20
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/icepepperseed)
+
 
 /obj/item/seeds/replicapod
 	name = "pack of replica pod seeds"
@@ -108,6 +111,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 2
+	mutatelist = list(/obj/item/seeds/greengrapeseed)
 
 /obj/item/seeds/greengrapeseed
 	name = "pack of green grape seeds"
@@ -159,6 +163,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/glowberryseed,/obj/item/seeds/poisonberryseed)
 
 /obj/item/seeds/glowberryseed
 	name = "pack of glow-berry seeds"
@@ -209,6 +214,7 @@
 	potency = 20
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/eggyseed)
 
 /obj/item/seeds/eggyseed
 	name = "pack of eggplant seeds"
@@ -259,6 +265,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/bluetomatoseed, /obj/item/seeds/bloodtomatoseed, /obj/item/seeds/killertomatoseed)
 
 /obj/item/seeds/killertomatoseed
 	name = "pack of killer-tomato seeds"
@@ -294,6 +301,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/bluespacetomatoseed)
 
 /obj/item/seeds/bluespacetomatoseed
 	name = "pack of blue-space tomato seeds"
@@ -471,6 +479,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
+	mutatelist = list(/obj/item/seeds/angelmycelium)
 
 /obj/item/seeds/angelmycelium
 	name = "pack of destroying angel mycelium"
@@ -579,6 +588,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
+	mutatelist = list(/obj/item/seeds/walkingmushroommycelium)
 
 /obj/item/seeds/walkingmushroommycelium
 	name = "pack of walking mushroom mycelium"
@@ -615,6 +625,7 @@
 	oneharvest = 0
 	growthstages = 5
 	plant_type = 1
+	mutatelist = list(/obj/item/seeds/deathnettleseed)
 
 /obj/item/seeds/deathnettleseed
 	name = "pack of death-nettle seeds"
@@ -722,6 +733,8 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/goldappleseed)
+
 
 /obj/item/seeds/poisonedappleseed
 	name = "pack of apple seeds"
@@ -773,6 +786,7 @@
 	potency = 5
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/ambrosiadeusseed)
 
 /obj/item/seeds/ambrosiadeusseed
 	name = "pack of ambrosia deus seeds"
@@ -894,6 +908,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/cashseed)
 
 /obj/item/seeds/cashseed
 	name = "pack of money seeds"
@@ -945,6 +960,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/deathberryseed)
 
 /obj/item/seeds/deathberryseed
 	name = "pack of death-berry seeds"
