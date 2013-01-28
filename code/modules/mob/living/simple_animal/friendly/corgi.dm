@@ -23,9 +23,7 @@
 
 /mob/living/simple_animal/corgi/Life()
 	..()
-	//regenerate_icons() //Don't call this every life tick.
-	//I'm serious. If you're going to enable dressing up Ian,
-	//Find a GOOD place to call regenerate_icons().
+	regenerate_icons()
 
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	/* If you're turning this back on, scroll down and uncomment target_updated

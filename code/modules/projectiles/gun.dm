@@ -178,7 +178,6 @@
 //						return FindTarget(M,user,params)
 			var/mob/M = GunTrace(usr.x,usr.y,A.x,A.y,usr.z,usr)  //Find dat mob.
 			if(M && ismob(M) && isliving(M) && M in view(user))
-				//if(!(M.client && M.client.admin_invis)) TODO: Look into admin invisibility in post-merge code
 				Aim(M) //Aha!  Aim at them!
 				return
 			else if(!ismob(M) || (ismob(M) && !(M in view(user)))) //Nope!  They weren't there!
@@ -186,9 +185,6 @@
 				Fire(A,user,params)  //Fire like normal, then.
 		if(ismob(A) && isliving(A) && !(A in target))
 			Aim(A) //Clicked a mob, aim at them.
-		else if(lock_time < world.time + 10)
-			world << "\red LOCK TIME IS > WORLD TIME, FIRED"
-			Fire(A,user,params)  //Bang!
 		else if(!target)
 			world << "\red DIDN'T HAVE A TARGET, FIRED"
 			Fire(A,user,params)  //Boom!
@@ -560,7 +556,6 @@ client/verb
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
 	AllowTargetMove()
 		set hidden=1
-		target_can_move = !target_can_move
 		if (move_dir == 2)
 			move_dir = 1
 		else
@@ -590,13 +585,15 @@ client/verb
 						if(!target_can_run)
 							M << "\red Your move intent is now set to walk, as your targeter permits it."
 							M.m_intent = "walk"
-							if(M.hud_used.move_intent)
-								M.hud_used.move_intent.icon_state = "walking"
+							if(M.hud_used)
+								if (M.hud_used.move_intent)
+									M.hud_used.move_intent.icon_state = "walking"
 					else
 						M << "\red <b>Your character will now be shot if they move.</b>"
+		target_can_move = !target_can_move
+
 	AllowTargetRun()
 		set hidden=1
-		target_can_run = !target_can_run
 		if (run_dir == 2)
 			run_dir = 1
 		else
@@ -605,7 +602,7 @@ client/verb
 //			winset(usr,"default.target_can_move","is-flat=true;border=sunken")
 			usr << "Target may now run."
 			if(usr.gun_run_icon)
-				usr.gun_run_con.dir = run_dir
+				usr.gun_run_icon.dir = run_dir
 				usr.gun_run_icon.name = "Disallow Running"
 		else
 //			winset(usr,"default.target_can_move","is-flat=false;border=none")
@@ -621,9 +618,10 @@ client/verb
 						M << "Your character may now <b>run</b> at the discretion of their targeter."
 					else
 						M << "\red <b>Your character will now be shot if they run.</b>"
+		target_can_run = !target_can_run
+
 	AllowTargetClick()
 		set hidden=1
-		target_can_click = !target_can_click
 		if (click_dir == 2)
 			click_dir = 1
 		else
@@ -648,12 +646,9 @@ client/verb
 						M << "Your character may now <b>use items</b> at the discretion of their targeter."
 					else
 						M << "\red <b>Your character will now be shot if they use items.</b>"
+		target_can_click = !target_can_click
 
 	ToggleGunMode()
-		world << "\red [usr] called ToggleGuMode BEFORE:"
-		world << "gun_mode = [gun_mode]"
-		world << "mode_dir = [mode_dir]"
-		world << "[usr].gun_setting_icon.dir = [usr.gun_setting_icon.dir]"
 		set hidden = 1
 		gun_mode = !gun_mode
 		if (mode_dir == 1)
@@ -668,10 +663,6 @@ client/verb
 			usr << "You will now shoot where you target."
 		if(usr.gun_setting_icon)
 			usr.gun_setting_icon.dir = mode_dir
-		world << "\red AFTER:"
-		world << "gun_mode = [gun_mode]"
-		world << "mode_dir = [mode_dir]"
-		world << "[usr].gun_setting_icon.dir = [usr.gun_setting_icon.dir]"
 
 /obj/item/weapon/gun/proc/isHandgun()
 	return 1
