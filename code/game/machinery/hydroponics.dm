@@ -190,7 +190,6 @@ obj/machinery/hydroponics/proc/updateicon()
 	return
 
 
-
 obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
 	dead = 0
 	if(myseed) // In case there's nothing in the tray beforehand
@@ -225,28 +224,28 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	return
 
 
-obj/machinery/hydroponics/proc/mutate() // Mutates the current seed
+obj/machinery/hydroponics/proc/mutate(var/lifemut=2, var/endmut=5, var/productmut=1, var/yieldmut=2, var/potmut=25) // Mutates the current seed
 
-	myseed.lifespan += rand(-2,2)
+	myseed.lifespan += rand(-lifemut,lifemut)
 	if(myseed.lifespan < 10)
 		myseed.lifespan = 10
 	else if(myseed.lifespan > 30)
 		myseed.lifespan = 30
 
-	myseed.endurance += rand(-5,5)
+	myseed.endurance += rand(-endmut,endmut)
 	if(myseed.endurance < 10)
 		myseed.endurance = 10
 	else if(myseed.endurance > 100)
 		myseed.endurance = 100
 
-	myseed.production += rand(-1,1)
+	myseed.production += rand(-productmut,productmut)
 	if(myseed.production < 2)
 		myseed.production = 2
 	else if(myseed.production > 10)
 		myseed.production = 10
 
 	if(myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		myseed.yield += rand(-2,2)
+		myseed.yield += rand(-yieldmut,yieldmut)
 		if(myseed.yield < 0)
 			myseed.yield = 0
 		else if(myseed.yield > 10)
@@ -255,53 +254,15 @@ obj/machinery/hydroponics/proc/mutate() // Mutates the current seed
 			myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
 
 	if(myseed.potency != -1) //Not all plants have a potency
-		myseed.potency += rand(-25,25)
+		myseed.potency += rand(-potmut,potmut)
 		if(myseed.potency < 0)
 			myseed.potency = 0
 		else if(myseed.potency > 100)
 			myseed.potency = 100
 	return
 
-
-
-obj/machinery/hydroponics/proc/hardmutate() // Strongly mutates the current seed.
-
-	myseed.lifespan += rand(-4,4)
-	if(myseed.lifespan < 10)
-		myseed.lifespan = 10
-	else if(myseed.lifespan > 30 && !istype(myseed,/obj/item/seeds/glowshroom)) //hack to prevent glowshrooms from always resetting to 30 sec delay
-		myseed.lifespan = 30
-
-	myseed.endurance += rand(-10,10)
-	if(myseed.endurance < 10)
-		myseed.endurance = 10
-	else if(myseed.endurance > 100)
-		myseed.endurance = 100
-
-	myseed.production += rand(-2,2)
-	if(myseed.production < 2)
-		myseed.production = 2
-	else if(myseed.production > 10)
-		myseed.production = 10
-
-	if(myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		myseed.yield += rand(-4,4)
-		if(myseed.yield < 0)
-			myseed.yield = 0
-		else if(myseed.yield > 10)
-			myseed.yield = 10
-		if(myseed.yield == 0 && myseed.plant_type == 2)
-			myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
-
-	if(myseed.potency != -1) //Not all plants have a potency
-		myseed.potency += rand(-50,50)
-		if(myseed.potency < 0)
-			myseed.potency = 0
-		else if(myseed.potency > 100)
-			myseed.potency = 100
-	return
-
-
+obj/machinery/hydroponics/proc/hardmutate()
+	mutate(4, 10, 2, 4, 50)
 
 obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
@@ -363,13 +324,14 @@ obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one
 
 
 
-obj/machinery/hydroponics/proc/mutatepest()  // Until someone makes a spaceworm, this is commented out
+obj/machinery/hydroponics/proc/mutatepest()
 	if ( pestlevel > 5 )
- 	visible_message("The pests seem to behave oddly...")
-//		spawn(10)
-//		new /obj/effect/alien/spaceworm(loc)
+		visible_message("The pests seem to behave oddly...")
+		for(var/i=0, i<3, i++)
+			var/obj/effect/spider/spiderling/S = new(src.loc)
+			S.grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
 	else
-		usr << "The pests seem to behave oddly, but quickly settle down..." //Modified to give a better idea of what's happening when you inject mutagen. There's still nothing proper to spawn here though. -Cheridan
+		usr << "The pests seem to behave oddly, but quickly settle down..."
 	return
 
 
@@ -659,9 +621,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		user.u_equip(O)
 		toxic += myWKiller.toxicity
 		weedlevel -= myWKiller.WeedKillStr
-		if (weedlevel < 0 ) // Make sure it won't go overoboard
+		if (weedlevel < 0 ) // Make sure it won't go overboard
 			weedlevel = 0
-		if (toxic > 100 ) // Make sure it won't go overoboard
+		if (toxic > 100 ) // Make sure it won't go overboard
 			toxic = 100
 		user << "You apply the weedkiller solution into the [src]."
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
@@ -681,9 +643,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		user.u_equip(O)
 		toxic += myPKiller.toxicity
 		pestlevel -= myPKiller.PestKillStr
-		if (pestlevel < 0 ) // Make sure it won't go overoboard
+		if (pestlevel < 0 ) // Make sure it won't go overboard
 			pestlevel = 0
-		if (toxic > 100 ) // Make sure it won't go overoboard
+		if (toxic > 100 ) // Make sure it won't go overboard
 			toxic = 100
 		user << "You apply the pestkiller solution into the [src]."
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
