@@ -9,6 +9,8 @@
 	var/log_game = 0					// log game events
 	var/log_vote = 0					// log voting
 	var/log_whisper = 0					// log client whisper
+	var/log_prayer = 0					// log prayers
+	var/log_law = 0						// log lawchanges
 	var/log_emote = 0					// log emotes
 	var/log_attack = 0					// log attack messages
 	var/log_adminchat = 0				// log admin chat messages
@@ -178,6 +180,12 @@
 
 				if ("log_admin")
 					config.log_admin = 1
+
+				if ("log_prayer")
+					config.log_prayer = 1
+
+				if ("log_law")
+					config.log_law = 1
 
 				if ("log_game")
 					config.log_game = 1

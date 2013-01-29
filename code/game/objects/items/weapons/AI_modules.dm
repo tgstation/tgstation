@@ -52,7 +52,6 @@ AI MODULES
 					R.show_laws()
 			usr << "Upload complete. The AI's laws have been modified."
 
-
 	else if (istype(C, /obj/machinery/computer/borgupload))
 		var/obj/machinery/computer/borgupload/comp = C
 		if(comp.stat & NOPOWER)
@@ -80,7 +79,9 @@ AI MODULES
 	target << "[sender] has uploaded a change to the laws you must follow, using a [name]. From now on: "
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
-
+	if(!istype(src, /obj/item/weapon/aiModule/freeform))
+		log_law("[sender.key]/[sender.name] uploaded [src.name] to [target.key]/([target.name])")
+		message_admins("[key_name_admin(sender)] used [src.name] on [key_name_admin(target)]")
 
 /******************** Modules ********************/
 
@@ -274,6 +275,8 @@ AI MODULES
 		lawpos = 15
 	target.add_supplied_law(lawpos, law)
 	lawchanges.Add("The law was '[newFreeFormLaw]'")
+	message_admins("[key_name_admin(sender)] used freeform module on [key_name_admin(target)]. The law was '[newFreeFormLaw].'")
+	log_law("[sender.key]/([sender.name]) used freeform module on [sender.key]/([sender.name]): '[newFreeFormLaw].'")
 
 /obj/item/weapon/aiModule/freeform/install(var/obj/machinery/computer/C)
 	if(!newFreeFormLaw)

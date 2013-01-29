@@ -31,6 +31,14 @@
 	if (config.log_say)
 		diary << "\[[time_stamp()]]SAY: [text]"
 
+/proc/log_prayer(text)
+	if (config.log_prayer)
+		diary << "\[[time_stamp()]]PRAY: [text]"
+
+/proc/log_law(text)
+	if (config.log_law)
+		diary << "\[[time_stamp()]]LAW: [text]"
+
 /proc/log_ooc(text)
 	if (config.log_ooc)
 		diary << "\[[time_stamp()]]OOC: [text]"
