@@ -247,7 +247,7 @@ datum/preferences
 		dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
 		dat += "<br>"
 		dat += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
-		dat += "Blood Type: [b_type]<br>"
+		dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
 		//dat += "Skin pattern: <a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust</a><br>"
 		dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a><br>"
@@ -832,6 +832,11 @@ datum/preferences
 						var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
 						if(new_metadata)
 							metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
+
+					if("b_type")
+						var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+						if(new_b_type)
+							b_type = new_b_type
 
 					if("hair")
 						if(species == "Human" || species == "Soghun")
