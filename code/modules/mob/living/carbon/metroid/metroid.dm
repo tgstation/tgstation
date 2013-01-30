@@ -806,6 +806,12 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "adamantine slime extract"
 	icon_state = "adamantine slime extract"
 
+/obj/item/slime_extract/bluespace
+	name = "bluespace slime extract"
+	icon_state = "bluespace slime extract"
+
+
+
 ////Pet Slime Creation///
 
 /obj/item/weapon/slimepotion

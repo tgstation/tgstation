@@ -167,9 +167,9 @@
 	icon_state = "silver baby slime"
 	primarytype = /mob/living/carbon/slime/silver
 	mutationone = /mob/living/carbon/slime/metal
-	mutationtwo = /mob/living/carbon/slime/metal
+	mutationtwo = /mob/living/carbon/slime/bluespace
 	mutationthree = /mob/living/carbon/slime/blue
-	mutationfour = /mob/living/carbon/slime/blue
+	mutationfour = /mob/living/carbon/slime/bluespace
 	adulttype = /mob/living/carbon/slime/adult/silver
 	coretype = /obj/item/slime_extract/silver
 
@@ -370,3 +370,28 @@
 	mutationfour = /mob/living/carbon/slime/adamantine
 	adulttype = /mob/living/carbon/slime/adult/adamantine
 	coretype = /obj/item/slime_extract/adamantine
+
+
+////////// ??? Tier //////////////
+
+/mob/living/carbon/slime/bluespace
+	icon_state = "bluespace baby slime"
+	colour = "bluespace"
+	primarytype = /mob/living/carbon/slime/bluespace
+	mutationone = /mob/living/carbon/slime/bluespace
+	mutationtwo = /mob/living/carbon/slime/bluespace
+	mutationthree = /mob/living/carbon/slime/bluespace
+	mutationfour = /mob/living/carbon/slime/bluespace
+	adulttype = /mob/living/carbon/slime/adult/bluespace
+	coretype = /obj/item/slime_extract/bluespace
+
+/mob/living/carbon/slime/adult/bluespace
+	icon_state = "bluespace adult slime"
+	colour = "bluespace"
+	primarytype = /mob/living/carbon/slime/bluespace
+	mutationone = /mob/living/carbon/slime/bluespace
+	mutationtwo = /mob/living/carbon/slime/bluespace
+	mutationthree = /mob/living/carbon/slime/bluespace
+	mutationfour = /mob/living/carbon/slime/bluespace
+	adulttype = /mob/living/carbon/slime/adult/bluespace
+	coretype = /obj/item/slime_extract/bluespace

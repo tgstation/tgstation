@@ -1369,6 +1369,70 @@ datum
 				var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 				Z.loc = get_turf_loc(holder.my_atom)
 				Z.announce_to_ghosts()
+
+
+//Bluespace
+		slimeteleport
+			name = "Slime Teleport"
+			id = "m_tele"
+			result = null
+			required_reagents = list("plasma" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/bluespace
+			required_other = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+
+				// Calculate new position (searches through beacons in world)
+				var/obj/item/device/radio/beacon/chosen
+				var/list/possible = list()
+				for(var/obj/item/device/radio/beacon/W in world)
+					possible += W
+
+				if(possible.len > 0)
+					chosen = pick(possible)
+
+				if(chosen)
+				// Calculate previous position for transition
+
+					var/turf/FROM = get_turf_loc(holder.my_atom) // the turf of origin we're travelling FROM
+					var/turf/TO = get_turf_loc(chosen)			 // the turf of origin we're travelling TO
+
+					playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
+
+					var/list/flashers = list()
+					for(var/mob/living/carbon/human/M in viewers(TO, null))
+						if(M:eyecheck() <= 0)
+							flick("e_flash", M.flash) // flash dose faggots
+							flashers += M
+
+					var/y_distance = TO.y - FROM.y
+					var/x_distance = TO.x - FROM.x
+					for (var/atom/movable/A in range(7, FROM )) // iterate thru list of mobs in the area
+						if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
+						if( A.anchored && istype(A, /obj/machinery)) continue
+						if(istype(A, /obj/structure/cable )) continue
+						//if(istype(A, /ob/item/device/radio/intercomm))
+
+						var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
+						if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
+							A.loc = locate(A.x + x_distance, A.y + y_distance, TO.z)
+
+						spawn()
+							if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
+								var/mob/M = A
+								if(M.client)
+									var/obj/blueeffect = new /obj(src)
+									blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+									blueeffect.icon = 'icons/effects/effects.dmi'
+									blueeffect.icon_state = "shieldsparkles"
+									blueeffect.layer = 17
+									blueeffect.mouse_opacity = 0
+									M.client.screen += blueeffect
+									sleep(20)
+									M.client.screen -= blueeffect
+									del(blueeffect)
+
+
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
 		tofu
