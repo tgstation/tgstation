@@ -756,10 +756,16 @@ var/global/floorIsLava = 0
 
 /datum/admins/proc/delay()
 	set category = "Server"
-	set desc="Delay the game start"
+	set desc="Delay the game start/end"
 	set name="Delay"
 	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!", null, null, null, null, null)
+		if (src.rank in list("Badmin", "Game Admin", "Game Master"))
+			ticker.delay_end = !ticker.delay_end
+			log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+			message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
+		else
+			usr << "\red You are not a high enough rank."
+		return //alert("Round end delayed", null, null, null, null, null)
 	going = !( going )
 	if (!( going ))
 		world << "<b>The game start has been delayed.</b>"

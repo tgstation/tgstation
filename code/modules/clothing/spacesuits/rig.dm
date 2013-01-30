@@ -42,6 +42,7 @@
 	slowdown = 2
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
+	slowdown = 1.0
 
 
 //Chief Engineer's rig
@@ -56,6 +57,7 @@
 	icon_state = "rig-white"
 	name = "advanced hardsuit"
 	item_state = "ce_hardsuit"
+	slowdown = 1.0
 
 
 //Mining rig
@@ -69,6 +71,7 @@
 	icon_state = "rig-mining"
 	name = "mining hardsuit"
 	item_state = "mining_hardsuit"
+	slowdown = 1.0
 
 
 //Syndicate rig
@@ -78,6 +81,7 @@
 	item_state = "syndie_helm"
 	color = "syndi"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
+	slowdown = 1.0
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndi"
@@ -87,6 +91,25 @@
 	w_class = 3
 	armor = list(melee = 60, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
+
+
+//Security rig
+/obj/item/clothing/head/helmet/space/rig/security
+	name = "security hardsuit helmet"
+	icon_state = "rig0-security"
+	color = "security"
+	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
+
+/obj/item/clothing/suit/space/rig/security
+	name = "security hardsuit"
+	desc = "A suit specially designed for security to offer minor protection from environmental hazards, and greater protection from human hazards"
+	icon_state = "rig-security"
+	item_state = "rig-security"
+	slowdown = 1
+	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
+	allowed = list(/obj/item/weapon/gun/energy/laser, /obj/item/weapon/gun/energy/pulse_rifle, /obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/gun/energy/taser, /obj/item/weapon/melee/baton)
+	slowdown = 1.0
+
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
@@ -106,6 +129,7 @@
 	unacidable = 1
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = 1.0
 
 
 //Medical Rig
@@ -139,12 +163,12 @@
 	icon_state = "rig0-atmos"
 	item_state = "atmos_helm"
 	color = "atmos"
-	armor = list(melee = 35, bullet = 5, laser = 15,energy = 5, bomb = 30, bio = 100, rad = 5)
+	armor = list(melee = 40, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 0)
 
 /obj/item/clothing/suit/space/rig/atmos
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reduced radiation shielding to allow for greater mobility."
 	icon_state = "rig-atmos"
 	name = "atmos hardsuit"
 	item_state = "atmos_hardsuit"
-	armor = list(melee = 35, bullet = 5, laser = 15,energy = 5, bomb = 30, bio = 100, rad = 5)
+	armor = list(melee = 40, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
