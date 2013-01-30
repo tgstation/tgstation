@@ -1719,7 +1719,7 @@ datum
 					if(61 to INFINITY)
 						M.sleeping += 1
 						M.adjustToxLoss((data - 50) * REAGENTS_EFFECT_MULTIPLIER)
-						
+
 				// Sleep toxins should always be consumed pretty fast
 				holder.remove_reagent(src.id, 0.1)
 				..()
@@ -2047,21 +2047,21 @@ datum
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
 							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
-							victim.eye_blurry = max(M.eye_blurry, 3)
-							victim.eye_blind = max(M.eye_blind, 1)
+							victim.eye_blurry = max(M.eye_blurry, 15)
+							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Paralyse(1)
 							victim.drop_item()
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
 							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
 							victim.emote("scream")
-							victim.eye_blurry = max(M.eye_blurry, 1)
+							victim.eye_blurry = max(M.eye_blurry, 5)
 							return
 						else // Oh dear :D
 							victim.emote("scream")
 							victim << "\red You're sprayed directly in the eyes with pepperspray!"
-							victim.eye_blurry = max(M.eye_blurry, 5)
-							victim.eye_blind = max(M.eye_blind, 2)
+							victim.eye_blurry = max(M.eye_blurry, 25)
+							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Paralyse(1)
 							victim.drop_item()
 
@@ -2526,7 +2526,7 @@ datum
 					M.make_jittery(5)
 					if(adj_temp > 0 && holder.has_reagent("frostoil"))
 						holder.remove_reagent("frostoil", 10*REAGENTS_METABOLISM)
-						
+
 					holder.remove_reagent(src.id, 0.1)
 					return
 
