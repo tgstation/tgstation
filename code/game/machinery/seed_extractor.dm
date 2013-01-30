@@ -5,9 +5,8 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
-		var/seed = text2path(F.seed)
 		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = new seed(O.loc)
+			var/obj/item/seeds/t_prod = new F.seed(O.loc)
 			t_prod.species = F.species
 			t_prod.lifespan = F.lifespan
 			t_prod.endurance = F.endurance
@@ -21,9 +20,8 @@
 
 	else if(istype(O, /obj/item/weapon/grown/))
 		var/obj/item/weapon/grown/F = O
-		var/seed = text2path(F.seed)
 		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = new seed(O.loc)
+			var/obj/item/seeds/t_prod = new F.seed(O.loc)
 			t_prod.species = F.species
 			t_prod.lifespan = F.lifespan
 			t_prod.endurance = F.endurance
