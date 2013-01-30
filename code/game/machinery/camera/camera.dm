@@ -57,14 +57,14 @@
 	if(!isEmpProof())
 		if(prob(100/severity))
 			icon_state = "[initial(icon_state)]emp"
-			for(var/i in network)
-				network.Remove(i)                  //Not the best way but it will do. I think.
+			var/list/previous_network = network
+			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
 			triggerCameraAlarm()
 			spawn(900)
-				network = initial(network)
+				network = previous_network
 				icon_state = initial(icon_state)
 				stat &= ~EMPED
 				cancelCameraAlarm()
