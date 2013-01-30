@@ -193,3 +193,20 @@
 		src.force = on_damage
 		src.damtype = "fire"
 		processing_objects += src
+
+
+
+
+/obj/item/device/flashlight/slime
+	name = "glowing slime extract"
+	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "slime"
+	item_state = "slime"
+	w_class = 2
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
+	m_amt = 0
+	g_amt = 0
+	icon_action_button = "action_flashlight"
+	brightness_on = 6 //luminosity when on

@@ -10,8 +10,8 @@
 	icon_state = "dispenser"
 	use_power = 0
 	idle_power_usage = 40
-	var/energy = 100
-	var/max_energy = 100
+	var/energy = 50
+	var/max_energy = 50
 	var/amount = 30
 	var/beaker = null
 	var/recharged = 0
