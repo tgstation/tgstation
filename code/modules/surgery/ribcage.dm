@@ -15,6 +15,8 @@
 	max_duration = 70
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		if (!istype(target))
+			return
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		return ..() && target.op_stage.ribcage == 0 && affected.open >= 2
 
