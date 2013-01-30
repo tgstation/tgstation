@@ -27,10 +27,10 @@
 			mutate()
 	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
 		if(planted && myseed.yield == 0)//Oh god don't divide by zero you'll doom us all.
-			myseed.yield += 1
+			adjustSYield(1)
 			//world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
 		else if (planted && (prob(1/(myseed.yield * myseed.yield) *100)))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
-			myseed.yield += 1
+			adjustSYield(1)
 			//world << "Yield increased by 1, to a total of [myseed.yield]"
 	else
 		..()
@@ -49,70 +49,60 @@ obj/machinery/hydroponics/process()
 
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
-			if(nutrilevel > 0)
-				if(prob(50))
-					nutrilevel -= 1
+			if(prob(50))
+				adjustNutri(-1)
 
 			// Lack of nutrients hurts non-weeds
 			if(nutrilevel <= 0 && myseed.plant_type != 1)
-				health -= rand(1,3)
+				adjustHealth(-rand(1,3))
 
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
-			waterlevel = max(waterlevel - rand(1,6), 0)
+			adjustWater(-rand(1,6))
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
 			if(waterlevel <= 10 && myseed.plant_type != 2)
-				health -= rand(0,1)
+				adjustHealth(-rand(0,1))
 				if(waterlevel <= 0)
-					health -= rand(0,2)
+					adjustHealth(-rand(0,2))
 
 			// Sufficient water level and nutrient level = plant healthy
 			else if(waterlevel > 10 && nutrilevel > 0)
-				health += rand(1,2)
+				adjustHealth(rand(1,2))
 				if(prob(5))  //5 percent chance the weed population will increase
-					weedlevel += 1
+					adjustWeeds(1)
+
 //Toxins/////////////////////////////////////////////////////////////////
 
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
 			if(toxic >= 40 && toxic < 80)
-				health -= 1
-				toxic -= rand(1,10)
+				adjustHealth(-1)
+				adjustToxic(-rand(1,10))
 			else if(toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
-				health -= 3
-				toxic -= rand(1,10)
-			else if(toxic < 0) // Make sure it won't go overoboard
-				toxic = 0
+				adjustHealth(-3)
+				adjustToxic(-rand(1,10))
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
-			// Too many pests cause the plant to be sick
-			if (pestlevel > 10 ) // Make sure it won't go overoboard
-				pestlevel = 10
-
 			else if(pestlevel >= 5)
-				health -= 1
+				adjustHealth(-1)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && myseed.plant_type != 1 )
-				health -= 1
-
+				adjustHealth(-1)
 
 //Health & Age///////////////////////////////////////////////////////////
-			// Don't go overboard with the health
-			if(health > myseed.endurance)
-				health = myseed.endurance
 
 			// Plant dies if health <= 0
-			else if(health <= 0)
+			if(health <= 0)
 				dead = 1
 				harvest = 0
-				weedlevel += 1 // Weeds flourish
+				adjustWeeds(1) // Weeds flourish
 				pestlevel = 0 // Pests die
 
 			// If the plant is too old, lose health fast
 			if(age > myseed.lifespan)
-				health -= rand(1,5)
+				adjustHealth(-rand(1,5))
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
@@ -129,12 +119,10 @@ obj/machinery/hydroponics/process()
 				else
 					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
-				pestlevel += 1
+				adjustPests(1)
 		else
 			if(waterlevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
-				weedlevel += 1
-				if(weedlevel > 10)
-					weedlevel = 10
+				adjustWeeds(1)
 
 		// Weeeeeeeeeeeeeeedddssss
 
@@ -205,7 +193,7 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 			myseed = new /obj/item/seeds/amanitamycelium
 		if(8 to 9)
 			myseed = new /obj/item/seeds/chantermycelium
-		if(6 to 7) // implementation for tower caps still kinda missing ~ Not Anymore! -Cheridan
+		if(6 to 7)
 			myseed = new /obj/item/seeds/towermycelium
 		if(4 to 5)
 			myseed = new /obj/item/seeds/plumpmycelium
@@ -225,40 +213,11 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 
 
 obj/machinery/hydroponics/proc/mutate(var/lifemut=2, var/endmut=5, var/productmut=1, var/yieldmut=2, var/potmut=25) // Mutates the current seed
-
-	myseed.lifespan += rand(-lifemut,lifemut)
-	if(myseed.lifespan < 10)
-		myseed.lifespan = 10
-	else if(myseed.lifespan > 30)
-		myseed.lifespan = 30
-
-	myseed.endurance += rand(-endmut,endmut)
-	if(myseed.endurance < 10)
-		myseed.endurance = 10
-	else if(myseed.endurance > 100)
-		myseed.endurance = 100
-
-	myseed.production += rand(-productmut,productmut)
-	if(myseed.production < 2)
-		myseed.production = 2
-	else if(myseed.production > 10)
-		myseed.production = 10
-
-	if(myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		myseed.yield += rand(-yieldmut,yieldmut)
-		if(myseed.yield < 0)
-			myseed.yield = 0
-		else if(myseed.yield > 10)
-			myseed.yield = 10
-		if(myseed.yield == 0 && myseed.plant_type == 2)
-			myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
-
-	if(myseed.potency != -1) //Not all plants have a potency
-		myseed.potency += rand(-potmut,potmut)
-		if(myseed.potency < 0)
-			myseed.potency = 0
-		else if(myseed.potency > 100)
-			myseed.potency = 100
+	adjustSLife(rand(-lifemut,lifemut))
+	adjustSEnd(rand(-endmut,endmut))
+	adjustSProduct(rand(-productmut,productmut))
+	adjustSYield(rand(-yieldmut,yieldmut))
+	adjustSPot(rand(-potmut,potmut))
 	return
 
 obj/machinery/hydroponics/proc/hardmutate()
@@ -342,17 +301,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/weapon/reagent_containers/glass/bucket))
 		var/b_amount = O.reagents.get_reagent_amount("water")
 		if(b_amount > 0 && waterlevel < 100)
-			if(b_amount + waterlevel > 100)
-				b_amount = 100 - waterlevel
 			O.reagents.remove_reagent("water", b_amount)
-			waterlevel += b_amount
+			adjustWater(b_amount)
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 			user << "You fill the [src] with [b_amount] units of water."
-
-	//		Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
-			toxic -= round(b_amount/4)
-			if (toxic < 0 ) // Make sure it won't go overoboard
-				toxic = 0
+			adjustToxic(-round(b_amount/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 
 		else if(waterlevel >= 100)
 			user << "\red The [src] is already full."
@@ -363,7 +316,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if ( istype(O, /obj/item/nutrient) )
 		var/obj/item/nutrient/myNut = O
 		user.u_equip(O)
-		nutrilevel = 10
+		adjustNutri(10)
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
 		user << "You replace the nutrient solution in the [src]."
@@ -380,7 +333,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				user << "\red You inject the [myseed.plantname] with a chemical solution."
 
 				// There needs to be a good amount of mutagen to actually work
-
 				if(S.reagents.has_reagent("mutagen", 5))
 					switch(rand(100))
 						if (91  to 100)	plantdies()
@@ -394,108 +346,108 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 				// Antitoxin binds shit pretty well. So the tox goes significantly down
 				if(S.reagents.has_reagent("anti_toxin", 1))
-					toxic -= round(S.reagents.get_reagent_amount("anti_toxin")*2)
+					adjustToxic(-round(S.reagents.get_reagent_amount("anti_toxin")*2))
 
 				// NIGGA, YOU JUST WENT ON FULL RETARD.
 				if(S.reagents.has_reagent("toxin", 1))
-					toxic += round(S.reagents.get_reagent_amount("toxin")*2)
+					adjustToxic(round(S.reagents.get_reagent_amount("toxin")*2))
 
 				// Milk is good for humans, but bad for plants. The sugars canot be used by plants, and the milk fat fucks up growth. Not shrooms though. I can't deal with this now...
 				if(S.reagents.has_reagent("milk", 1))
-					nutrilevel += round(S.reagents.get_reagent_amount("milk")*0.1)
-					waterlevel += round(S.reagents.get_reagent_amount("milk")*0.9)
+					adjustNutri(round(S.reagents.get_reagent_amount("milk")*0.1))
+					adjustWater(round(S.reagents.get_reagent_amount("milk")*0.9))
 
 				// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
 				if(S.reagents.has_reagent("beer", 1))
-					health -= round(S.reagents.get_reagent_amount("beer")*0.05)
-					nutrilevel += round(S.reagents.get_reagent_amount("beer")*0.25)
-					waterlevel += round(S.reagents.get_reagent_amount("beer")*0.7)
+					adjustHealth(-round(S.reagents.get_reagent_amount("beer")*0.05))
+					adjustNutri(round(S.reagents.get_reagent_amount("beer")*0.25))
+					adjustWater(round(S.reagents.get_reagent_amount("beer")*0.7))
 
-				// You're an idiot of thinking that one of the most corrosive and deadly gasses would be beneficial
+				// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 				if(S.reagents.has_reagent("fluorine", 1))
-					health -= round(S.reagents.get_reagent_amount("fluorine")*2)
-					toxic += round(S.reagents.get_reagent_amount("flourine")*2.5)
-					waterlevel -= round(S.reagents.get_reagent_amount("flourine")*0.5)
-					weedlevel -= rand(1,4)
+					adjustHealth(-round(S.reagents.get_reagent_amount("fluorine")*2))
+					adjustToxic(round(S.reagents.get_reagent_amount("flourine")*2.5))
+					adjustWater(-round(S.reagents.get_reagent_amount("flourine")*0.5))
+					adjustWeeds(-rand(1,4))
 
-				// You're an idiot of thinking that one of the most corrosive and deadly gasses would be beneficial
+				// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 				if(S.reagents.has_reagent("chlorine", 1))
-					health -= round(S.reagents.get_reagent_amount("chlorine")*1)
-					toxic += round(S.reagents.get_reagent_amount("chlorine")*1.5)
-					waterlevel -= round(S.reagents.get_reagent_amount("chlorine")*0.5)
-					weedlevel -= rand(1,3)
+					adjustHealth(-round(S.reagents.get_reagent_amount("chlorine")*1))
+					adjustToxic(round(S.reagents.get_reagent_amount("chlorine")*1.5))
+					adjustWater(-round(S.reagents.get_reagent_amount("chlorine")*0.5))
+					adjustWeeds(-rand(1,3))
 
 				// White Phosphorous + water -> phosphoric acid. That's not a good thing really. Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
 				if(S.reagents.has_reagent("phosphorus", 1))
-					health -= round(S.reagents.get_reagent_amount("phosphorus")*0.75)
-					nutrilevel += round(S.reagents.get_reagent_amount("phosphorus")*0.1)
-					waterlevel -= round(S.reagents.get_reagent_amount("phosphorus")*0.5)
-					weedlevel -= rand(1,2)
+					adjustHealth(-round(S.reagents.get_reagent_amount("phosphorus")*0.75))
+					adjustNutri(round(S.reagents.get_reagent_amount("phosphorus")*0.1))
+					adjustWater(-round(S.reagents.get_reagent_amount("phosphorus")*0.5))
+					adjustWeeds(-rand(1,2))
 
 				// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 				if(S.reagents.has_reagent("sugar", 1))
-					weedlevel += rand(1,2)
-					pestlevel += rand(1,2)
-					nutrilevel+= round(S.reagents.get_reagent_amount("sugar")*0.1)
+					adjustWeeds(rand(1,2))
+					adjustPests(rand(1,2))
+					adjustNutri(round(S.reagents.get_reagent_amount("sugar")*0.1))
 
 				// It is water!
 				if(S.reagents.has_reagent("water", 1))
-					waterlevel += round(S.reagents.get_reagent_amount("water")*1)
+					adjustWater(round(S.reagents.get_reagent_amount("water")*1))
 
 				// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits~
 				if(S.reagents.has_reagent("holywater", 1))
-					waterlevel += round(S.reagents.get_reagent_amount("holywater")*1)
-					health += round(S.reagents.get_reagent_amount("holywater")*0.1)
+					adjustWater(round(S.reagents.get_reagent_amount("holywater")*1))
+					adjustHealth(round(S.reagents.get_reagent_amount("holywater")*0.1))
 
 				// A variety of nutrients are dissolved in club soda, without sugar. These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
 				if(S.reagents.has_reagent("sodawater", 1))
-					waterlevel += round(S.reagents.get_reagent_amount("sodawater")*1)
-					health += round(S.reagents.get_reagent_amount("sodawater")*0.1)
-					nutrilevel += round(S.reagents.get_reagent_amount("sodawater")*0.1)
+					adjustWater(round(S.reagents.get_reagent_amount("sodawater")*1))
+					adjustHealth(round(S.reagents.get_reagent_amount("sodawater")*0.1))
+					adjustNutri(round(S.reagents.get_reagent_amount("sodawater")*0.1))
 
 				// Man, you guys are retards
 				if(S.reagents.has_reagent("sacid", 1))
-					health -= round(S.reagents.get_reagent_amount("sacid")*1)
-					toxic += round(S.reagents.get_reagent_amount("sacid")*1.5)
-					weedlevel -= rand(1,2)
+					adjustHealth(-round(S.reagents.get_reagent_amount("sacid")*1))
+					adjustToxic(round(S.reagents.get_reagent_amount("sacid")*1.5))
+					adjustWeeds(-rand(1,2))
 
 				// SERIOUSLY
 				if(S.reagents.has_reagent("pacid", 1))
-					health -= round(S.reagents.get_reagent_amount("pacid")*2)
-					toxic += round(S.reagents.get_reagent_amount("pacid")*3)
-					weedlevel -= rand(1,4)
+					adjustHealth(-round(S.reagents.get_reagent_amount("pacid")*2))
+					adjustToxic(round(S.reagents.get_reagent_amount("pacid")*3))
+					adjustWeeds(-rand(1,4))
 
 				// Plant-B-Gone is just as bad
 				if(S.reagents.has_reagent("plantbgone", 1))
-					health -= round(S.reagents.get_reagent_amount("plantbgone")*2)
-					toxic -= round(S.reagents.get_reagent_amount("plantbgone")*3)
-					weedlevel -= rand(4,8)
+					adjustHealth(-round(S.reagents.get_reagent_amount("plantbgone")*2))
+					adjustToxic(-round(S.reagents.get_reagent_amount("plantbgone")*3))
+					adjustWeeds(-rand(4,8))
 
 				// Healing
 				if(S.reagents.has_reagent("cryoxadone", 1))
-					health += round(S.reagents.get_reagent_amount("cryoxadone")*3)
-					toxic -= round(S.reagents.get_reagent_amount("cryoxadone")*3)
+					adjustHealth(round(S.reagents.get_reagent_amount("cryoxadone")*3))
+					adjustToxic(-round(S.reagents.get_reagent_amount("cryoxadone")*3))
 
-				// FINALLY IMPLEMENTED, Ammonia is bad ass.
+				// Ammonia is bad ass.
 				if(S.reagents.has_reagent("ammonia", 1))
-					health += round(S.reagents.get_reagent_amount("ammonia")*0.5)
-					nutrilevel += round(S.reagents.get_reagent_amount("ammonia")*1)
+					adjustHealth(round(S.reagents.get_reagent_amount("ammonia")*0.5))
+					adjustNutri(round(S.reagents.get_reagent_amount("ammonia")*1))
 
-				// FINALLY IMPLEMENTED, This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
+				// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
 				if(S.reagents.has_reagent("diethylamine", 1))
-					health += round(S.reagents.get_reagent_amount("diethylamine")*1)
-					nutrilevel += round(S.reagents.get_reagent_amount("diethylamine")*2)
-					pestlevel -= rand(1,2)
+					adjustHealth(round(S.reagents.get_reagent_amount("diethylamine")*1))
+					adjustNutri(round(S.reagents.get_reagent_amount("diethylamine")*2))
+					adjustPests(-rand(1,2))
 
 				// Compost, effectively
 				if(S.reagents.has_reagent("nutriment", 1))
-					health += round(S.reagents.get_reagent_amount("nutriment")*0.5)
-					nutrilevel += round(S.reagents.get_reagent_amount("nutriment")*1)
+					adjustHealth(round(S.reagents.get_reagent_amount("nutriment")*0.5))
+					adjustNutri(round(S.reagents.get_reagent_amount("nutriment")*1))
 
 				// Poor man's mutagen.
 				if(S.reagents.has_reagent("radium", 1))
-					health -= round(S.reagents.get_reagent_amount("radium")*1.5)
-					toxic += round(S.reagents.get_reagent_amount("radium")*2)
+					adjustHealth(-round(S.reagents.get_reagent_amount("radium")*1.5))
+					adjustToxic(round(S.reagents.get_reagent_amount("radium")*2))
 				if(S.reagents.has_reagent("radium", 10))
 					switch(rand(100))
 						if (91  to 100)	plantdies()
@@ -509,11 +461,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 				// The best stuff there is. For testing/debugging.
 				if(S.reagents.has_reagent("adminordrazine", 1))
-					waterlevel += round(S.reagents.get_reagent_amount("adminordrazine")*1)
-					health += round(S.reagents.get_reagent_amount("adminordrazine")*1)
-					nutrilevel += round(S.reagents.get_reagent_amount("adminordrazine")*1)
-					pestlevel -= rand(1,5)
-					weedlevel -= rand(1,5)
+					adjustWater(round(S.reagents.get_reagent_amount("adminordrazine")*1))
+					adjustHealth(round(S.reagents.get_reagent_amount("adminordrazine")*1))
+					adjustNutri(round(S.reagents.get_reagent_amount("adminordrazine")*1))
+					adjustPests(-rand(1,5))
+					adjustWeeds(-rand(1,5))
 				if(S.reagents.has_reagent("adminordrazine", 5))
 					switch(rand(100))
 						if (66  to 100)  mutatespecie()
@@ -522,22 +474,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						else 			user << "Nothing happens..."
 
 				S.reagents.clear_reagents()
-				if (weedlevel < 0 ) // The following checks are to prevent the stats from going out of bounds.
-					weedlevel = 0
-				if (health < 0 )
-					health = 0
-				if (waterlevel > 100 )
-					waterlevel = 100
-				if (waterlevel < 0 )
-					waterlevel = 0
-				if (toxic < 0 )
-					toxic = 0
-				if (toxic > 100 )
-					toxic = 100
-				if (pestlevel < 0 )
-					pestlevel = 0
-				if (nutrilevel > 10 )
-					nutrilevel = 10
 			else
 				user << "You can't get any extract out of this plant."
 		else
@@ -591,24 +527,15 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	else if (istype(O, /obj/item/weapon/reagent_containers/spray/plantbgone))
 		if(planted && myseed)
-			health -= rand(5,20)
-
-			if(pestlevel > 0)
-				pestlevel -= 2 // Kill kill kill
-			else
-				pestlevel = 0
-
-			if(weedlevel > 0)
-				weedlevel -= 3 // Kill kill kill
-			else
-				weedlevel = 0
-			toxic += 4 // Oops
+			adjustHealth(-rand(5,20))
+			adjustPests(-2)
+			adjustWeeds(-3)
+			adjustToxic(4)//Oops
 			visible_message("\red <B>\The [src] has been sprayed with \the [O][(user ? " by [user]." : ".")]")
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			updateicon()
 
-	else if (istype(O, /obj/item/weapon/minihoe))  // The minihoe
-		//var/deweeding
+	else if (istype(O, /obj/item/weapon/minihoe))
 		if(weedlevel > 0)
 			user.visible_message("\red [user] starts uprooting the weeds.", "\red You remove the weeds from the [src].")
 			weedlevel = 0
@@ -619,12 +546,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if ( istype(O, /obj/item/weapon/weedspray) )
 		var/obj/item/weedkiller/myWKiller = O
 		user.u_equip(O)
-		toxic += myWKiller.toxicity
-		weedlevel -= myWKiller.WeedKillStr
-		if (weedlevel < 0 ) // Make sure it won't go overboard
-			weedlevel = 0
-		if (toxic > 100 ) // Make sure it won't go overboard
-			toxic = 100
+		adjustToxic(myWKiller.toxicity)
+		adjustWeeds(-myWKiller.WeedKillStr)
 		user << "You apply the weedkiller solution into the [src]."
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
@@ -641,12 +564,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if ( istype(O, /obj/item/weapon/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
 		user.u_equip(O)
-		toxic += myPKiller.toxicity
-		pestlevel -= myPKiller.PestKillStr
-		if (pestlevel < 0 ) // Make sure it won't go overboard
-			pestlevel = 0
-		if (toxic > 100 ) // Make sure it won't go overboard
-			toxic = 100
+		adjustToxic(myPKiller.toxicity)
+		adjustPests(-myPKiller.PestKillStr)
 		user << "You apply the pestkiller solution into the [src]."
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		del(O)
@@ -906,6 +825,67 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		planted = 0
 		dead = 0
 	updateicon()
+
+/// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
+/obj/machinery/hydroponics/proc/adjustNutri(var/adjustamt)
+	nutrilevel += adjustamt
+	nutrilevel = max(nutrilevel, 0)
+	nutrilevel = min(nutrilevel, 10)
+
+/obj/machinery/hydroponics/proc/adjustWater(var/adjustamt)
+	waterlevel += adjustamt
+	waterlevel = max(waterlevel, 0)
+	waterlevel = min(waterlevel, 100)
+
+/obj/machinery/hydroponics/proc/adjustHealth(var/adjustamt)
+	health += adjustamt
+	health = max(health, 0)
+	health = min(health, myseed.endurance)
+
+/obj/machinery/hydroponics/proc/adjustToxic(var/adjustamt)
+	toxic += adjustamt
+	toxic = max(toxic, 0)
+	toxic = min(toxic, 100)
+
+/obj/machinery/hydroponics/proc/adjustPests(var/adjustamt)
+	pestlevel += adjustamt
+	pestlevel = max(pestlevel, 0)
+	pestlevel = min(pestlevel, 10)
+
+/obj/machinery/hydroponics/proc/adjustWeeds(var/adjustamt)
+	weedlevel += adjustamt
+	weedlevel = max(weedlevel, 0)
+	pestlevel = min(pestlevel, 10)
+
+/// Seed Setters ///
+/obj/machinery/hydroponics/proc/adjustSYield(var/adjustamt)//0,10
+	if(myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
+		myseed.yield += adjustamt
+		myseed.yield = max(myseed.yield, 0)
+		myseed.yield = min(myseed.yield, 10)
+		if(myseed.yield <= 0 && myseed.plant_type == 2)
+			myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
+
+/obj/machinery/hydroponics/proc/adjustSLife(var/adjustamt)//10,100
+	myseed.lifespan += adjustamt
+	myseed.lifespan = max(myseed.lifespan, 10)
+	myseed.lifespan = min(myseed.lifespan, 100)
+
+/obj/machinery/hydroponics/proc/adjustSEnd(var/adjustamt)//10,100
+	myseed.endurance += adjustamt
+	myseed.endurance = max(myseed.endurance, 10)
+	myseed.endurance = min(myseed.endurance, 100)
+
+/obj/machinery/hydroponics/proc/adjustSProduct(var/adjustamt)//2,10
+	myseed.production += adjustamt
+	myseed.production = max(myseed.endurance, 2)
+	myseed.production = min(myseed.endurance, 10)
+
+/obj/machinery/hydroponics/proc/adjustSPot(var/adjustamt)//0,100
+	if(myseed.potency != -1) //Not all plants have a potency
+		myseed.potency += adjustamt
+		myseed.potency = max(myseed.potency, 0)
+		myseed.potency = min(myseed.potency, 100)
 
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
