@@ -331,7 +331,51 @@
 		name = "Tajaran Ears"
 		icon_state = "tajears"
 		species_allowed = list("Tajaran")
+		
+	taj_ears_clean
+		name = "Clean"
+		icon_state = "hair_clean"
+		species_allowed = list("Tajaran")
 
+	taj_ears_shaggy
+		name = "Shaggy"
+		icon_state = "hair_shaggy"
+		species_allowed = list("Tajaran")
+
+	taj_ears_mohawk
+		name = "Tajaran Mohawk"
+		icon_state = "hair_mohawk"
+		species_allowed = list("Tajaran")
+
+	taj_ears_plait
+		name = "Plait"
+		icon_state = "hair_plait"
+		species_allowed = list("Tajaran")
+
+	taj_ears_straight
+		name = "Straight"
+		icon_state = "hair_straight"
+		species_allowed = list("Tajaran")
+
+	taj_ears_long
+		name = "Long"
+		icon_state = "hair_long"
+		species_allowed = list("Tajaran")
+
+	taj_ears_rattail
+		name = "Rat Tail"
+		icon_state = "hair_rattail"
+		species_allowed = list("Tajaran")
+
+	taj_ears_spiky
+		name = "Spiky"
+		icon_state = "hair_spiky"
+		species_allowed = list("Tajaran")
+
+	taj_ears_messy
+		name = "Messy"
+		icon_state = "hair_messy"
+		species_allowed = list("Tajaran")
 //skin styles - WIP
 
 /datum/sprite_accessory/skin
