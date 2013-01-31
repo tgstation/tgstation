@@ -524,7 +524,7 @@
 
 		if ("hurt")
 
-			if ((prob(95) && health > 0))
+			if (prob(95))
 				attacked += 10
 				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
