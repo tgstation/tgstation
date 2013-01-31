@@ -244,6 +244,8 @@
 				src.path = AStar(src.loc, src.target.loc, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30)
 			else
 				src.path = AStar(src.loc, src.target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30)
+			if(!src.path)
+				src.path = list()
 			if(src.path.len == 0)
 				src.oldtarget = src.target
 				src.target = null
