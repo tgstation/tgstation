@@ -1721,7 +1721,7 @@ datum
 						M.adjustToxLoss((data - 50) * REAGENTS_EFFECT_MULTIPLIER)
 
 				// Sleep toxins should always be consumed pretty fast
-				holder.remove_reagent(src.id, 0.1)
+				holder.remove_reagent(src.id, 0.4)
 				..()
 				return
 
@@ -1746,7 +1746,7 @@ datum
 						M.adjustToxLoss(data - 50)
 				data++
 				// Sleep toxins should always be consumed pretty fast
-				holder.remove_reagent(src.id, 0.1)
+				holder.remove_reagent(src.id, 0.4)
 				..()
 				return
 
@@ -2004,6 +2004,7 @@ datum
 						M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/metroid))
 							M.bodytemperature += rand(15,20)
+				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				data++
 				..()
 				return
@@ -2092,6 +2093,7 @@ datum
 						if(istype(M, /mob/living/carbon/metroid))
 							M.bodytemperature -= rand(15,20)
 				data++
+				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
