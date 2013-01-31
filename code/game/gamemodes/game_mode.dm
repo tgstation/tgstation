@@ -24,6 +24,7 @@
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be tratiors because
 	var/required_players = 0
+	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/uplink_welcome = "Syndicate Uplink Console:"
@@ -84,8 +85,13 @@ Implants;
 	for(var/mob/new_player/player in player_list)
 		if((player.client)&&(player.ready))
 			playerC++
-	if(playerC >= required_players)
-		return 1
+
+	if(master_mode=="secret")
+		if(playerC >= required_players_secret)
+			return 1
+	else
+		if(playerC >= required_players)
+			return 1
 	return 0
 
 

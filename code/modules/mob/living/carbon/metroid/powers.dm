@@ -180,7 +180,7 @@
 			new_slime.powerlevel = max(0, powerlevel-1)
 			new_slime.a_intent = "hurt"
 			new_slime.key = key
-
+			new_slime.universal_speak = universal_speak
 			new_slime << "<B>You are now an adult slime.</B>"
 			del(src)
 		else
@@ -243,6 +243,7 @@
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
 			new_slime.a_intent = "hurt"
+			new_slime.universal_speak = universal_speak
 			new_slime.key = key
 
 			new_slime << "<B>You are now a slime!</B>"

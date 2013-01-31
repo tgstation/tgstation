@@ -13,7 +13,7 @@
 	flags = FPRINT | TABLEPASS
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 50
+	pressure_resistance = 5
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
@@ -63,11 +63,11 @@
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
-//bruteloss = 1
-//fireloss = 2
-//toxloss = 4
-//oxyloss = 8
-//This proc will return an array. The first element of the list should always be the suicide message that players will see, next is the damagetype
+//BRUTELOSS = 1
+//FIRELOSS = 2
+//TOXLOSS = 4
+//OXYLOSS = 8
+//Output a creative message and then return the damagetype done
 /obj/item/proc/suicide_act(mob/user)
 	return
 
@@ -210,19 +210,8 @@
 		return
 
 	if (can_operate(M))	//Checks if mob is lying down on table for surgery
-		if(istype(M,/mob/living/carbon))
-			if (user.a_intent != "harm")	//check for Hippocratic Oath
-				if(surgery_steps.len == 0) build_surgery_steps_list()
-				for(var/datum/surgery_step/S in surgery_steps)
-					if( S.isright(src) || S.isacceptable(src) )	 						//check if tool is right or close enough
-						if(S.can_use(user, M, user.zone_sel.selecting, src))			//and if this step is possible
-							S.begin_step(user, M, user.zone_sel.selecting, src)			//start on it
-							if(do_mob(user, M, rand(S.min_duration, S.max_duration)))	//if user did nto move or changed hands
-								S.end_step(user, M, user.zone_sel.selecting, src)		//finish successfully
-							else														//or
-								S.fail_step(user, M, user.zone_sel.selecting, src)		//malpractice~
-							return		  												//don't want to do weapony things after surgery
-
+		if (do_surgery(M,user,src))
+			return
 
 	var/messagesource = M
 
@@ -243,7 +232,7 @@
 	/////////////////////////
 
 	var/power = src.force
-	if((HULK in user.mutations) || (SUPRSTR in user.augmentations))
+	if(HULK in user.mutations)
 		power *= 2
 
 	if(!istype(M, /mob/living/carbon/human))

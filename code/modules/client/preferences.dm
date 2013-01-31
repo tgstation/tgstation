@@ -91,7 +91,7 @@ datum/preferences
 	// will probably not be able to do this for head and torso ;)
 	var/list/organ_data = list()
 
-	var/list/job_alt_titles = new()		// the default name of a job like "Medical Doctor"
+	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
 	var/flavor_text = ""
 	var/med_record = ""
@@ -247,7 +247,7 @@ datum/preferences
 		dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
 		dat += "<br>"
 		dat += "Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a><br>"
-		dat += "Blood Type: [b_type]<br>"
+		dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
 		//dat += "Skin pattern: <a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust</a><br>"
 		dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=input'>Adjust</a><br>"
@@ -396,6 +396,10 @@ datum/preferences
 			if(jobban_isbanned(user, rank))
 				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[BANNED]</b></font></td></tr>"
 				continue
+			if(!job.player_old_enough(user.client))
+				var/available_in_days = job.available_in_days(user.client)
+				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS]</font></td></tr>"
+				continue
 			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
@@ -425,7 +429,7 @@ datum/preferences
 			else
 				HTML += " <font color=red>\[NEVER]</font>"
 			if(job.alt_titles)
-				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetAltTitle(job)]\]</a></td></tr>"
+				HTML += "</a><br> <a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 			HTML += "</a></td></tr>"
 
 		HTML += "</td'></tr></table>"
@@ -487,18 +491,18 @@ datum/preferences
 		user << browse(HTML, "window=records;size=350x300")
 		return
 
-	proc/GetAltTitle(datum/job/job)
-		return job_alt_titles.Find(job.title) > 0 \
-			? job_alt_titles[job.title] \
+	proc/GetPlayerAltTitle(datum/job/job)
+		return player_alt_titles.Find(job.title) > 0 \
+			? player_alt_titles[job.title] \
 			: job.title
 
-	proc/SetAltTitle(datum/job/job, new_title)
+	proc/SetPlayerAltTitle(datum/job/job, new_title)
 		// remove existing entry
-		if(job_alt_titles.Find(job.title))
-			job_alt_titles -= job.title
+		if(player_alt_titles.Find(job.title))
+			player_alt_titles -= job.title
 		// add one if it's not default
 		if(job.title != new_title)
-			job_alt_titles[job.title] = new_title
+			player_alt_titles[job.title] = new_title
 
 	proc/SetJob(mob/user, role)
 		var/datum/job/job = job_master.GetJob(role)
@@ -638,9 +642,9 @@ datum/preferences
 					var/datum/job/job = locate(href_list["job"])
 					if (job)
 						var/choices = list(job.title) + job.alt_titles
-						var/choice = input("Pick a title for [job.title].", "Character Generation", GetAltTitle(job)) as anything in choices | null
+						var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
 						if(choice)
-							SetAltTitle(job, choice)
+							SetPlayerAltTitle(job, choice)
 							SetChoices(user)
 				if("input")
 					SetJob(user, href_list["text"])
@@ -828,6 +832,11 @@ datum/preferences
 						var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
 						if(new_metadata)
 							metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
+
+					if("b_type")
+						var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+						if(new_b_type)
+							b_type = new_b_type
 
 					if("hair")
 						if(species == "Human" || species == "Soghun")

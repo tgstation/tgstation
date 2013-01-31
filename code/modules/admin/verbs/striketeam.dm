@@ -121,9 +121,6 @@ var/global/sent_strike_team = 0
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)
-	var/obj/machinery/camera/camera = new /obj/machinery/camera(src) //Gives all the commandos internals cameras.
-	camera.network = "CREED"
-	camera.c_tag = real_name
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
 	R.set_frequency(1441)

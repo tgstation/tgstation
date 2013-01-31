@@ -34,12 +34,7 @@
 			src.add_fingerprint(user)
 			update()
 		else
-			if (user.contents.Find(src))
-				spawn( 0 )
-					src.attack_self(user)
-					return
-			else
-				return ..()
+			return ..()
 		return
 
 

@@ -133,13 +133,13 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 	health = 100
 	maxHealth = 100
-	var/obj/item/staff = null // the staff that changed they, never attack the bearer of this staff
+	var/mob/living/creator = null // the creator
 	var/destroy_objects = 0
 	var/knockdown_people = 0
 
-/mob/living/simple_animal/hostile/mimic/copy/New(loc, var/obj/copy, var/obj/item/staff)
+/mob/living/simple_animal/hostile/mimic/copy/New(loc, var/obj/copy, var/mob/living/creator)
 	..(loc)
-	CopyObject(copy, staff)
+	CopyObject(copy, creator)
 
 /mob/living/simple_animal/hostile/mimic/copy/Die()
 
@@ -148,10 +148,10 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	..()
 
 /mob/living/simple_animal/hostile/mimic/copy/ListTargets()
-	// Return a list of targets that isn't the holder of our staff
-	return view(src, 7) - get(staff, /mob)
+	// Return a list of targets that isn't the creator
+	return view(src, 7) - creator
 
-/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(var/obj/O, var/obj/item/staff)
+/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(var/obj/O, var/mob/living/creator)
 
 	if((istype(O, /obj/item) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
 
@@ -177,9 +177,9 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			move_to_delay = 2 * I.w_class
 
 		maxHealth = health
-		if(staff)
-			src.staff = staff
-			faction = "\ref[staff]" // very unique
+		if(creator)
+			src.creator = creator
+			faction = "\ref[creator]" // very unique
 		return 1
 	return
 

@@ -171,9 +171,6 @@
 	if(blocked)
 		damage = (damage/(blocked+1))
 
-	if(DERMALARMOR in augmentations)
-		damage = damage - (round(damage*0.35)) // reduce damage by 35%
-
 	switch(damagetype)
 		if(BRUTE)
 			damageoverlaytemp = 20

@@ -15,7 +15,7 @@
 	origin_tech = "combat=2"
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is putting the live [src] in \his mouth! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>"
 		return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/update_icon()
@@ -60,7 +60,7 @@
 
 	if(user.a_intent == "hurt")
 		if(!..()) return
-		H.apply_effect(5, WEAKEN, 0)
+		//H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 		playsound(src.loc, "swing_hit", 50, 1, -1)
 	else if(!status)

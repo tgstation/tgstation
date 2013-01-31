@@ -65,7 +65,7 @@
 	src.throwing = 1
 
 	if(usr)
-		if((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
+		if(HULK in usr.mutations)
 			src.throwing = 2 // really strong throw!
 
 	var/dist_x = abs(target.x - src.x)

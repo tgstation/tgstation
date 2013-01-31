@@ -1,4 +1,4 @@
-// SPACE VINES
+// SPACE VINES (Note that this code is very similar to Biomass code)
 /obj/effect/spacevine
 	name = "space vines"
 	desc = "An extremely expansionistic species of vine."
@@ -6,6 +6,7 @@
 	icon_state = "Light1"
 	anchored = 1
 	density = 0
+	layer = 5
 	pass_flags = PASSTABLE | PASSGRILLE
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null

@@ -103,6 +103,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/reagent_containers/food/drinks/shaker,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/patron,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager,
+					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
+					/obj/item/weapon/lipstick/random,
 					/obj/item/weapon/reagent_containers/food/drinks/ale,
 					/obj/item/weapon/reagent_containers/food/drinks/ale,
 					/obj/item/weapon/reagent_containers/food/drinks/beer,
@@ -157,6 +159,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/weapon/caution,
 					/obj/item/weapon/caution,
 					/obj/item/weapon/caution,
+					/obj/item/weapon/storage/bag/trash,
 					/obj/item/weapon/reagent_containers/spray/cleaner,
 					/obj/item/weapon/reagent_containers/glass/rag,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
@@ -224,7 +227,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containertype = /obj/structure/largecrate/lisa
 	containername = "Corgi Crate"
 	group = "Hydroponics"
-
 /datum/supply_packs/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"
 	contains = list(/obj/item/weapon/reagent_containers/spray/plantbgone,
@@ -241,6 +243,35 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Hydroponics crate"
 	access = access_hydroponics
 	group = "Hydroponics"
+
+//farm animals - useless and annoying, but potentially a good source of food
+/datum/supply_packs/cow
+	name = "Cow Crate"
+	cost = 30
+	containertype = /obj/structure/largecrate/cow
+	containername = "Cow Crate"
+	access = access_hydroponics
+
+/datum/supply_packs/goat
+	name = "Goat Crate"
+	cost = 25
+	containertype = /obj/structure/largecrate/goat
+	containername = "Goat Crate"
+	access = access_hydroponics
+
+/datum/supply_packs/chicken
+	name = "Chicken Crate"
+	cost = 20
+	containertype = /obj/structure/largecrate/chick
+	containername = "Chicken Crate"
+	access = access_hydroponics
+
+/datum/supply_packs/lisa
+	name = "Corgi Crate"
+	contains = list()
+	cost = 50
+	containertype = /obj/structure/largecrate/lisa
+	containername = "Corgi Crate"
 
 /datum/supply_packs/seeds
 	name = "Seeds Crate"
@@ -717,6 +748,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	/obj/item/weapon/reagent_containers/glass/paint/black,
 	/obj/item/weapon/reagent_containers/glass/paint/white,
 	/obj/item/weapon/reagent_containers/glass/paint/remover,
+	/obj/item/weapon/contraband/poster,
 	/obj/item/weapon/wrapping_paper,
 	/obj/item/weapon/wrapping_paper,
 	/obj/item/weapon/wrapping_paper)
@@ -727,10 +759,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 
 /datum/supply_packs/randomised/contraband
 	num_contained = 5
-	contains = list(/obj/item/weapon/contraband/poster,
-					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
-					/obj/item/weapon/lipstick/random,
-					/obj/item/seeds/bloodtomatoseed,
+	contains = list(/obj/item/seeds/bloodtomatoseed,
 					/obj/item/weapon/storage/pill_bottle/zoom,
 					/obj/item/weapon/storage/pill_bottle/happy,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe)

@@ -5,7 +5,7 @@
 	icon_state = "stool"
 	anchored = 1.0
 	flags = FPRINT
-	pressure_resistance = 3*ONE_ATMOSPHERE
+	pressure_resistance = 15
 
 /obj/structure/stool/ex_act(severity)
 	switch(severity)
@@ -49,7 +49,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
 	force = 10
-	throwforce = 20
+	throwforce = 10
 	w_class = 5.0
 	var/obj/structure/stool/origin = null
 

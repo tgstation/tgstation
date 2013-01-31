@@ -143,6 +143,7 @@
 
 	if(!loaded.len)
 		user.visible_message("\red *click*", "\red *click*")
+		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
 
 	if(isliving(target) && isliving(user))
@@ -153,6 +154,7 @@
 				var/obj/item/ammo_casing/AC = loaded[1]
 				if(!load_into_chamber())
 					user.visible_message("\red *click*", "\red *click*")
+					playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 					return
 				if(!in_chamber)
 					return

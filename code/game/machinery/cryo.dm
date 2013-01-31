@@ -4,7 +4,7 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1.0
-	layer = 5
+	layer = 2.8
 
 	var/on = 0
 	var/temperature_archived
@@ -100,8 +100,10 @@
 			on = !on
 			update_icon()
 		if(href_list["eject"])
-			beaker:loc = loc
-			beaker = null
+			if (beaker)
+				var/obj/item/weapon/reagent_containers/glass/B = beaker
+				B.loc = get_step(loc, SOUTH)
+				beaker = null
 
 		updateUsrDialog()
 		add_fingerprint(usr)
