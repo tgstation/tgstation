@@ -240,7 +240,7 @@
 
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
-	mymob.zone_sel.overlays = null
+	mymob.zone_sel.overlays.Cut()
 	mymob.zone_sel.overlays += image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
 
 	mymob.client.screen = null

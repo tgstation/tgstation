@@ -4,29 +4,21 @@ var/global/floorIsLava = 0
 
 
 ////////////////////////////////
-/proc/message_admins(var/text, var/admin_ref = 0, var/admin_holder_ref = 0)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
-	log_adminwarn(rendered)
-	for (var/client/C in admin_list)
-		if (C)
-			if (C.holder.level >= 1)
-				var/msg = rendered
-				if (admin_ref)
-					msg = dd_replacetext(msg, "%admin_ref%", "\ref[C]")
-				if (admin_holder_ref && C.holder)
-					msg = dd_replacetext(msg, "%holder_ref%", "\ref[C.holder]")
-				C << msg
+/proc/message_admins(var/msg)
+	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+	log_adminwarn(msg)
+	admins << msg
 
-
+/*
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
 	log_adminwarn(rendered)
-	for (var/client/C in admin_list)
-		if (C)
-			if (C.holder.level >= 1)
-				if(!C.STFU_atklog)
-					var/msg = rendered
-					C << msg
+	for(var/client/C in admins)
+		if (C.holder.level >= 1)
+			if(!C.STFU_atklog)
+				var/msg = rendered
+				C << msg
+*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
@@ -48,10 +40,7 @@ var/global/floorIsLava = 0
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
-		if(M.client.holder)
-			body += "\[<A href='?src=\ref[src];prom_demot=\ref[M.client]'>[M.client.holder.rank]</A>\]"
-		else
-			body += "\[<A href='?src=\ref[src];prom_demot=\ref[M.client]'>Player</A>\]"
+		body += "\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 
 	if(istype(M, /mob/new_player))
 		body += " <B>Hasn't Entered Game</B> "
@@ -59,32 +48,35 @@ var/global/floorIsLava = 0
 		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
 
 	body += "<br><br>\[ "
-	body += "<a href='?src=\ref[src];adminplayervars=\ref[M]'>VV</a> - "
-	body += "<a href='?src=\ref[src];traitor_panel_pp=\ref[M]'>TP</a> - "
+	body += "<a href='?_src_=vars;Vars=\ref[M]'>VV</a> - "
+	body += "<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> - "
 	body += "<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> - "
-	body += "<a href='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</a> - "
+	body += "<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> - "
 	body += "<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
 	body += "<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> | "
+	body += "<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> | "
 	body += "<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A> "
 
 	if(M.client)
 		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | "
+		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
-		body += "\[<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'><font color='[(M.client.muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'><font color='[(M.client.muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'><font color='[(M.client.muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'><font color='[(M.client.muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
-		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'><font color='[(M.client.muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
-		body += "(<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'><font color='[(M.client.muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
+		body += "\[<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
+		body += "(<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
 
 	body += "<br><br>"
 	body += "<A href='?src=\ref[src];jumpto=\ref[M]'><b>Jump to</b></A> | "
-	body += "<A href='?src=\ref[src];getmob=\ref[M]'>Get</A>"
+	body += "<A href='?src=\ref[src];getmob=\ref[M]'>Get</A> | "
+	body += "<A href='?src=\ref[src];sendmob=\ref[M]'>Send To</A>"
 
 	body += "<br><br>"
 	body += "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | "
@@ -116,7 +108,7 @@ var/global/floorIsLava = 0
 				body += "<A href='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | "
 				body += "<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | "
 				body += "<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | "
-				body += "<A href='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> "
+				body += "<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A> "
 
 			//Simple Animals
 			if(isanimal(M))
@@ -133,8 +125,8 @@ var/global/floorIsLava = 0
 			body += "<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>, "
 			body += "<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A> \] "
 			body += "<A href='?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A> "
-			body += "\[ Metroid: <A href='?src=\ref[src];simplemake=metroid;mob=\ref[M]'>Baby</A>, "
-			body += "<A href='?src=\ref[src];simplemake=adultmetroid;mob=\ref[M]'>Adult</A> \] "
+			body += "\[ slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>, "
+			body += "<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A> \] "
 			body += "<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> | "
 			body += "<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> | "
 			body += "<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> | "
@@ -173,26 +165,54 @@ var/global/floorIsLava = 0
 /datum/player_info/var/content // text content of the information
 /datum/player_info/var/timestamp // Because this is bloody annoying
 
+#define PLAYER_NOTES_ENTRIES_PER_PAGE 50
 /datum/admins/proc/PlayerNotes()
 	set category = "Admin"
 	set name = "Player Notes"
-	var/dat = "<B>Player notes</B><HR><table>"
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
 	if (!istype(src,/datum/admins))
 		usr << "Error: you are not an admin!"
 		return
+	PlayerNotesPage(1)
 
+/datum/admins/proc/PlayerNotesPage(page)
+	var/dat = "<B>Player notes</B><HR>"
 	var/savefile/S=new("data/player_notes.sav")
 	var/list/note_keys
 	S >> note_keys
 	if(!note_keys)
 		dat += "No notes found."
 	else
+		dat += "<table>"
 		sortList(note_keys)
-		for(var/t in note_keys)
+
+		// Display the notes on the current page
+		var/number_pages = note_keys.len / PLAYER_NOTES_ENTRIES_PER_PAGE
+		// Emulate ceil(why does BYOND not have ceil)
+		if(number_pages != round(number_pages))
+			number_pages = round(number_pages) + 1
+		var/page_index = page - 1
+		if(page_index < 0 || page_index >= number_pages)
+			return
+
+		var/lower_bound = page_index * PLAYER_NOTES_ENTRIES_PER_PAGE + 1
+		var/upper_bound = (page_index + 1) * PLAYER_NOTES_ENTRIES_PER_PAGE
+		upper_bound = min(upper_bound, note_keys.len)
+		for(var/index = lower_bound, index <= upper_bound, index++)
+			var/t = note_keys[index]
 			dat += "<tr><td><a href='?src=\ref[src];notes=show;ckey=[t]'>[t]</a></td></tr>"
-	dat += "</table>"
+
+		dat += "</table><br>"
+
+		// Display a footer to select different pages
+		for(var/index = 1, index <= number_pages, index++)
+			if(index == page)
+				dat += "<b>"
+			dat += "<a href='?src=\ref[src];notes=list;index='[index]'>[index]</a> "
+			if(index == page)
+				dat += "</b>"
+
 	usr << browse(dat, "window=player_notes;size=400x400")
 
 
@@ -335,8 +355,14 @@ var/global/floorIsLava = 0
 				if( isemptylist(src.admincaster_feed_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
+					var/i = 0
 					for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
-						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
+						i++
+						dat+="-[MESSAGE.body] <BR>"
+						if(MESSAGE.img)
+							usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
+							dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
+						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 			dat+="<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[1]'>Back</A>"
 		if(10)
@@ -424,6 +450,12 @@ var/global/floorIsLava = 0
 			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
 			dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
 			dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
+			dat+="<B>Photo:</B>: "
+			if(news_network.wanted_issue.img)
+				usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
+				dat+="<BR><img src='tmp_photow.png' width = '180'>"
+			else
+				dat+="None"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A><BR>"
 		if(19)
 			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] successfully edited.</FONT><BR><BR>"
@@ -439,183 +471,135 @@ var/global/floorIsLava = 0
 
 
 /datum/admins/proc/Jobbans()
+	if(!check_rights(R_BAN))	return
 
-	if ((src.rank in list( "Game Admin", "Game Master"  )))
-		var/dat = "<B>Job Bans!</B><HR><table>"
-		for(var/t in jobban_keylist)
-			var/r = t
-			if( findtext(r,"##") )
-				r = copytext( r, 1, findtext(r,"##") )//removes the description
-			dat += text("<tr><td>[t] (<A href='?src=\ref[src];removejobban=[r]'>unban</A>)</td></tr>")
-		dat += "</table>"
-		usr << browse(dat, "window=ban;size=400x400")
+	var/dat = "<B>Job Bans!</B><HR><table>"
+	for(var/t in jobban_keylist)
+		var/r = t
+		if( findtext(r,"##") )
+			r = copytext( r, 1, findtext(r,"##") )//removes the description
+		dat += text("<tr><td>[t] (<A href='?src=\ref[src];removejobban=[r]'>unban</A>)</td></tr>")
+	dat += "</table>"
+	usr << browse(dat, "window=ban;size=400x400")
 
 /datum/admins/proc/Game()
-
-	var/dat
-	var/lvl = 0
-	switch(src.rank)
-		if("Moderator")
-			lvl = 1
-		if("Temporary Admin")
-			lvl = 2
-		if("Admin Candidate")
-			lvl = 3
-		if("Trial Admin")
-			lvl = 4
-		if("Badmin")
-			lvl = 5
-		if("Game Admin")
-			lvl = 6
-		if("Game Master")
-			lvl = 7
-
-	dat += "<center><B>Game Panel</B></center><hr>\n"
-
-	if(lvl > 0)
-
-//			if(lvl >= 2 )
-		dat += "<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>"
-
-	if(lvl > 0 && master_mode == "secret")
-		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
-
-	dat += "<BR>"
-
-	if(lvl >= 3 )
-		dat += "<A href='?src=\ref[src];create_object=1'>Create Object</A><br>"
-		dat += "<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>"
-		dat += "<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>"
-	if(lvl >= 5)
-		dat += "<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>"
-	if(lvl >= 3 )
-		dat += "<br><A href='?src=\ref[src];vsc=airflow'>Edit Airflow Settings</A><br>"
-		dat += "<A href='?src=\ref[src];vsc=plasma'>Edit Plasma Settings</A><br>"
-		dat += "<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>"
-//			if(lvl == 6 )
-	usr << browse(dat, "window=admin2;size=210x180")
-	return
-/*
-/datum/admins/proc/goons()
-	var/dat = "<HR><B>GOOOOOOONS</B><HR><table cellspacing=5><tr><th>Key</th><th>SA Username</th></tr>"
-	for(var/t in goon_keylist)
-		dat += text("<tr><td><A href='?src=\ref[src];remove=[ckey(t)]'><B>[t]</B></A></td><td>[goon_keylist[ckey(t)]]</td></tr>")
-	dat += "</table>"
-	usr << browse(dat, "window=ban;size=300x400")
-
-/datum/admins/proc/beta_testers()
-	var/dat = "<HR><B>Beta testers</B><HR><table cellspacing=5><tr><th>Key</th></tr>"
-	for(var/t in beta_tester_keylist)
-		dat += text("<tr><td>[t]</td></tr>")
-	dat += "</table>"
-	usr << browse(dat, "window=ban;size=300x400")
-*/
-/datum/admins/proc/Secrets()
-	if (!usr.client.holder)
-		return
-
-	var/lvl = 0
-	switch(src.rank)
-		if("Moderator")
-			lvl = 1
-		if("Temporary Admin")
-			lvl = 2
-		if("Admin Candidate")
-			lvl = 3
-		if("Trial Admin")
-			lvl = 4
-		if("Badmin")
-			lvl = 5
-		if("Game Admin")
-			lvl = 6
-		if("Game Master")
-			lvl = 7
+	if(!check_rights(0))	return
 
 	var/dat = {"
-<B>Choose a secret, any secret at all.</B><HR>
-<B>Admin Secrets</B><BR>
-<BR>
-<A href='?src=\ref[src];secretsadmin=clear_bombs'>Remove all bombs currently in existence</A><BR>
-<A href='?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
-<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
-<A href='?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
-<A href='?src=\ref[src];secretsadmin=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
-<A href='?src=\ref[src];secretsadmin=showailaws'>Show AI Laws</A><BR>
-<A href='?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
-<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
-<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
-<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR><BR>
-<BR>"}
-	if(lvl > 2)
-		dat += {"
-<B>'Random' Events</B><BR>
-<BR>
-<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors</A><BR>
-<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (Untested)</A><BR>
-<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes (Untested)</A><BR>
-<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob(Untested)</A><BR>
-<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
-<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
-<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
-<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
-<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
-<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
-<A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
-<A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
-<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
-<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
-<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
-<BR>
-<B>Fun Secrets</B><BR>
-<BR>
-<A href='?src=\ref[src];secretsfun=sec_clothes'>Remove 'internal' clothing</A><BR>
-<A href='?src=\ref[src];secretsfun=sec_all_clothes'>Remove ALL clothing</A><BR>
-<A href='?src=\ref[src];secretsfun=toxic'>Toxic Air (WARNING: dangerous)</A><BR>
-<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
-<A href='?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
-<A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
-<A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
-<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
-<A href='?src=\ref[src];secretsfun=toggleprisonstatus'>Toggle Prison Shuttle Status(Use with S/R)</A><BR>
-<A href='?src=\ref[src];secretsfun=activateprison'>Send Prison Shuttle</A><BR>
-<A href='?src=\ref[src];secretsfun=deactivateprison'>Return Prison Shuttle</A><BR>
-<A href='?src=\ref[src];secretsfun=prisonwarp'>Warp all Players to Prison</A><BR>
-<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
-<A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
-<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
-<A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
-<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
-<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
-<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
-<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
-<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
-<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
-<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
-<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
-<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS)</A><BR>"}
-//<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
-
-	if(lvl >= 6)
-		dat += {"
-<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>
+		<center><B>Game Panel</B></center><hr>\n
+		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
+	if(master_mode == "secret")
+		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
+
+	dat += {"
+		<BR>
+		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
+		<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
+		<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>
+		<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>
+		"}
+
+	usr << browse(dat, "window=admin2;size=210x180")
+	return
+
+/datum/admins/proc/Secrets()
+	if(!check_rights(0))	return
+
+	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
+
+	if(check_rights(R_ADMIN,0))
+		dat += {"
+			<B>Admin Secrets</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsadmin=clear_bombs'>Remove all bombs currently in existence</A><BR>
+			<A href='?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
+			<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
+			<A href='?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
+			<A href='?src=\ref[src];secretsadmin=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
+			<A href='?src=\ref[src];secretsadmin=showailaws'>Show AI Laws</A><BR>
+			<A href='?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
+			<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
+			<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
+			<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR><BR>
+			<BR>
+			"}
+
+	if(check_rights(R_FUN,0))
+		dat += {"
+			<B>'Random' Events</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsfun=gravity'>Toggle station artificial gravity</A><BR>
+			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors (aka lagocolyptic shower)</A><BR>
+			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (aka lagitational anomolag)</A><BR>
+			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes</A><BR>
+			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob</A><BR>
+			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
+			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
+			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>
+			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
+			<A href='?src=\ref[src];secretsfun=striketeam'>Send in a strike team</A><BR>
+			<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
+			<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
+			<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
+			<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
+			<A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
+			<A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
+			<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
+			<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
+			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
+			<BR>
+			<B>Fun Secrets</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsfun=sec_clothes'>Remove 'internal' clothing</A><BR>
+			<A href='?src=\ref[src];secretsfun=sec_all_clothes'>Remove ALL clothing</A><BR>
+			<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
+			<A href='?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
+			<A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
+			<A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
+			<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
+			<A href='?src=\ref[src];secretsfun=toggleprisonstatus'>Toggle Prison Shuttle Status(Use with S/R)</A><BR>
+			<A href='?src=\ref[src];secretsfun=activateprison'>Send Prison Shuttle</A><BR>
+			<A href='?src=\ref[src];secretsfun=deactivateprison'>Return Prison Shuttle</A><BR>
+			<A href='?src=\ref[src];secretsfun=prisonwarp'>Warp all Players to Prison</A><BR>
+			<A href='?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
+			<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
+			<A href='?src=\ref[src];secretsfun=onlyone'>There can only be one!</A><BR>
+			<A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
+			<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
+			<A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
+			<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
+			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
+			<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
+			<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
+			<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
+			<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
+			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
+			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
+			<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
+			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			"}
+
+	if(check_rights(R_SERVER,0))
+		dat += "<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"
 
 	dat += "<BR>"
 
-	if(lvl >= 5)
+	if(check_rights(R_DEBUG,0))
 		dat += {"
-<B>Security Level Elevated</B><BR>
-<BR>
-<A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
-<A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
-<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
-<BR>
-<B>Coder Secrets</B><BR>
-<BR>
-<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
-<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
-<BR>
-"}
+			<B>Security Level Elevated</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
+			<A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
+			<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
+			<BR>
+			<B>Coder Secrets</B><BR>
+			<BR>
+			<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
+			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+			<BR>
+			"}
+
 	usr << browse(dat, "window=secrets")
 	return
 
@@ -652,10 +636,11 @@ var/global/floorIsLava = 0
 	set category = "Special Verbs"
 	set name = "Announce"
 	set desc="Announce your desires to the world"
-	if(!usr.client.holder)	return
+	if(!check_rights(0))	return
+
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
-	if (message)
-		if(usr.client.holder.rank != "Game Admin" && usr.client.holder.rank != "Game Master")
+	if(message)
+		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
 		world << "\blue <b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n \t [message]"
 		log_admin("Announce: [key_name(usr)] : [message]")
@@ -826,30 +811,6 @@ var/global/floorIsLava = 0
 
 	world.Reboot()
 
-/client/proc/deadchat()
-	set category = "Admin"
-	set desc="Toggles Deadchat Visibility"
-	set name="Deadchat Visibility"
-	if(deadchat == 0)
-		deadchat = 1
-		usr << "Deadchat turned on"
-	else
-		deadchat = 0
-		usr << "Deadchat turned off"
-	feedback_add_details("admin_verb","TDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/toggleprayers()
-	set category = "Admin"
-	set desc="Toggles Prayer Visibility"
-	set name="Prayer Visibility"
-	if(seeprayers == 0)
-		seeprayers = 1
-		usr << "Prayer visibility turned on"
-	else
-		seeprayers = 0
-		usr << "Prayer visibility turned off"
-	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
@@ -930,47 +891,47 @@ var/global/floorIsLava = 0
 */
 /datum/admins/proc/spawn_atom(var/object as text)
 	set category = "Debug"
-	set desc= "(atom path) Spawn an atom"
-	set name= "Spawn"
+	set desc = "(atom path) Spawn an atom"
+	set name = "Spawn"
 
-	if(usr.client.holder.level >= 5)
-		var/list/types = typesof(/atom)
+	if(!check_rights(R_SPAWN))	return
 
-		var/list/matches = new()
+	var/list/types = typesof(/atom)
+	var/list/matches = new()
 
-		for(var/path in types)
-			if(findtext("[path]", object))
-				matches += path
+	for(var/path in types)
+		if(findtext("[path]", object))
+			matches += path
 
-		if(matches.len==0)
+	if(matches.len==0)
+		return
+
+	var/chosen
+	if(matches.len==1)
+		chosen = matches[1]
+	else
+		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+		if(!chosen)
 			return
 
-		var/chosen
-		if(matches.len==1)
-			chosen = matches[1]
-		else
-			chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
-			if(!chosen)
-				return
+	new chosen(usr.loc)
 
-		new chosen(usr.loc)
-
-		log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
-
-	else
-		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
-		return
+	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/datum/admins/proc/show_traitor_panel(var/mob/M in sortmobs())
+/datum/admins/proc/show_traitor_panel(var/mob/M in mob_list)
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
 
-	if (!M.mind)
-		usr << "Sorry, this mob has no mind!"
+	if(!istype(M))
+		usr << "This can only be used on instances of type /mob"
 		return
+	if(!M.mind)
+		usr << "This mob has no mind!"
+		return
+
 	M.mind.edit_memory()
 	feedback_add_details("admin_verb","STP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

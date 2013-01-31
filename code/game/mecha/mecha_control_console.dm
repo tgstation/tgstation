@@ -17,7 +17,7 @@
 	attack_hand(var/mob/user as mob)
 		if(..())
 			return
-		user.machine = src
+		user.set_machine(src)
 		var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 		if(screen == 0)
 			dat += "<h3>Tracking beacons data</h3>"
@@ -118,15 +118,14 @@
 		return M.get_log_html()
 
 
-/obj/item/weapon/storage/mechatrackingbox
-
+/obj/item/weapon/storage/box/mechabeacons
+	name = "Exosuit Tracking Beacons"
 	New()
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
-		new /obj/item/mecha_parts/mecha_tracking(src)
 		..()
-		return
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)

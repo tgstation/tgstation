@@ -36,7 +36,7 @@
 */
 
 /obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
-	S.ReplaceWithPlating()
+	S.ChangeTurf(/turf/simulated/floor/plating)
 //	var/turf/simulated/floor/W = S.ReplaceWithFloor()
 //	W.make_plating()
 	return

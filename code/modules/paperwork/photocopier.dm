@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/machinery/photocopier
 	name = "photocopier"
 	icon = 'icons/obj/library.dmi'
@@ -23,7 +21,7 @@
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		user.set_machine(src)
 
 		var/dat = "Photocopier<BR><BR>"
 		if(copy || photocopy)
@@ -53,8 +51,8 @@
 						else			//no toner? shitty copies for you!
 							c.info = "<font color = #808080>"
 						var/copied = html_decode(copy.info)
-						copied = dd_replacetext(copied, "<font face=\"[c.deffont]\" color=", "<font face=\"[c.deffont]\" nocolor=")	//state of the art techniques in action
-						copied = dd_replacetext(copied, "<font face=\"[c.crayonfont]\" color=", "<font face=\"[c.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+						copied = replacetext(copied, "<font face=\"[c.deffont]\" color=", "<font face=\"[c.deffont]\" nocolor=")	//state of the art techniques in action
+						copied = replacetext(copied, "<font face=\"[c.crayonfont]\" color=", "<font face=\"[c.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
 						c.info += copied
 						c.info += "</font>"
 						c.name = copy.name // -- Doohl
@@ -70,13 +68,18 @@
 					if(toner > 0)
 						var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 						var/icon/I = icon(photocopy.icon, photocopy.icon_state)
+						var/icon/img = icon(photocopy.img)
 						if(toner > 10)	//plenty of toner, go straight greyscale
 							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))		//I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.
+							img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 						else			//not much toner left, lighten the photo
 							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
+							img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
 						p.icon = I
+						p.img = img
 						p.name = photocopy.name
 						p.desc = photocopy.desc
+						p.scribble = photocopy.scribble
 						toner -= 5	//photos use a lot of ink!
 						sleep(15)
 					else

@@ -5,13 +5,14 @@ datum/objective
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
+	var/completed = 0					//currently only used for custom objectives.
 
 	New(var/text)
 		if(text)
 			explanation_text = text
 
 	proc/check_completion()
-		return 1
+		return completed
 
 	proc/find_target()
 		var/list/possible_targets = list()
@@ -51,7 +52,7 @@ datum/objective/assassinate
 
 	check_completion()
 		if(target && target.current)
-			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
+			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 				return 1
 			return 0
 		return 1
@@ -78,7 +79,7 @@ datum/objective/mutiny
 
 	check_completion()
 		if(target && target.current)
-			if(target.current.stat == DEAD || !ishuman(target.current))
+			if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
 				return 1
 			var/turf/T = get_turf(target.current)
 			if(T && (T.z != 1))			//If they leave the station they count as dead for this
@@ -106,8 +107,10 @@ datum/objective/mutiny/rp
 
 	// less violent rev objectives
 	check_completion()
+		var/rval = 1
 		if(target && target.current)
-			if(target.current.stat == DEAD || target.current.handcuffed || !ishuman(target.current))
+			//assume that only carbon mobs can become rev heads for now
+			if(target.current.stat == DEAD || target.current:handcuffed || !ishuman(target.current))
 				return 1
 			// Check if they're converted
 			if(istype(ticker.mode, /datum/game_mode/revolution))
@@ -115,9 +118,9 @@ datum/objective/mutiny/rp
 					return 1
 			var/turf/T = get_turf(target.current)
 			if(T && (T.z != 1))			//If they leave the station they count as dead for this
-				return 2
+				rval = 2
 			return 0
-		return 1
+		return rval
 
 datum/objective/anti_revolution/execute
 	find_target()
@@ -292,7 +295,7 @@ datum/objective/hijack
 
 
 datum/objective/block
-	explanation_text = "Do not allow any humans to escape on the shuttle alive."
+	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 
 
 	check_completion()
@@ -378,6 +381,84 @@ datum/objective/survive
 			return 0
 		return 1
 
+// Similar to the anti-rev objective, but for traitors
+datum/objective/brig
+	var/already_completed = 0
+
+	find_target()
+		..()
+		if(target && target.current)
+			explanation_text = "Have [target.current.real_name], the [target.assigned_role] brigged for 10 minutes."
+		else
+			explanation_text = "Free Objective"
+		return target
+
+
+	find_target_by_role(role, role_type=0)
+		..(role, role_type)
+		if(target && target.current)
+			explanation_text = "Have [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] brigged for 10 minutes."
+		else
+			explanation_text = "Free Objective"
+		return target
+
+	check_completion()
+		if(already_completed)
+			return 1
+
+		if(target && target.current)
+			if(target.current.stat == DEAD)
+				return 0
+			// Make the actual required time a bit shorter than the official time
+			if(target.is_brigged(10 * 60 * 5))
+				already_completed = 1
+				return 1
+			return 0
+		return 0
+
+// Harm a crew member, making an example of them
+datum/objective/harm
+	var/already_completed = 0
+
+	find_target()
+		..()
+		if(target && target.current)
+			explanation_text = "Make an example of [target.current.real_name], the [target.assigned_role]. Break one of their bones, detach one of their limbs or disfigure their face. Make sure they're alive when you do it."
+		else
+			explanation_text = "Free Objective"
+		return target
+
+
+	find_target_by_role(role, role_type=0)
+		..(role, role_type)
+		if(target && target.current)
+			explanation_text = "Make an example of [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]. Break one of their bones, detach one of their limbs or disfigure their face. Make sure they're alive when you do it."
+		else
+			explanation_text = "Free Objective"
+		return target
+
+	check_completion()
+		if(already_completed)
+			return 1
+
+		if(target && target.current && istype(target.current, /mob/living/carbon/human))
+			if(target.current.stat == DEAD)
+				return 0
+
+			var/mob/living/carbon/human/H = target.current
+			for(var/datum/organ/external/E in H.organs)
+				if(E.status & ORGAN_BROKEN)
+					already_completed = 1
+					return 1
+				if(E.status & ORGAN_DESTROYED && !E.amputated)
+					already_completed = 1
+					return 1
+
+			var/datum/organ/external/head/head = H.get_organ("head")
+			if(head.disfigured)
+				return 1
+		return 0
+
 
 datum/objective/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
@@ -393,23 +474,33 @@ datum/objective/steal
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
 		"an RCD" = /obj/item/weapon/rcd,
 		"a jetpack" = /obj/item/weapon/tank/jetpack,
-		"a captains jumpsuit" = /obj/item/clothing/under/rank/captain,
+		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a functional AI" = /obj/item/device/aicard,
 		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 		"the station blueprints" = /obj/item/blueprints,
 		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 		"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
+		"a sample of slime extract" = /obj/item/slime_extract,
+		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		"a research director's jumpsuit" = /obj/item/clothing/under/rank/research_director,
+		"a chief engineer's jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
+		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
+		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
+		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
+		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
+		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
+		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 	)
 
 	var/global/possible_items_special[] = list(
-		"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
+		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
 		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
 		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
 		"hyper-capacity cell" = /obj/item/weapon/cell/hyper,
-		"10 diamonds" = /obj/item/stack/sheet/diamond,
-		"50 gold bars" = /obj/item/stack/sheet/gold,
-		"25 refined uranium bars" = /obj/item/stack/sheet/uranium,
+		"10 diamonds" = /obj/item/stack/sheet/mineral/diamond,
+		"50 gold bars" = /obj/item/stack/sheet/mineral/gold,
+		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
 	)
 
 

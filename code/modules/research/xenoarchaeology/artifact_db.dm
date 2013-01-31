@@ -15,15 +15,6 @@
 	..()
 	catalogued_artifacts = new/list
 
-/obj/machinery/computer/artifact_database/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/artifact_database/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	interact(user)
-
 /obj/machinery/computer/artifact_database/Topic(href, href_list)
 	..()
 	if( href_list["close"] )
@@ -35,7 +26,7 @@
 	..()
 	updateDialog()
 
-/obj/machinery/computer/artifact_database/proc/interact(mob/user)
+/obj/machinery/computer/artifact_database/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!istype(user, /mob/living/silicon))
 			user.machine = null

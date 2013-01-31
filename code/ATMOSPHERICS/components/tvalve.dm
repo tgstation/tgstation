@@ -395,7 +395,7 @@ obj/machinery/atmospherics/tvalve/mirrored
 				return
 			..()
 
-		//Radio remote control
+		//Radio remote control -eh?
 
 		proc
 			set_frequency(new_frequency)

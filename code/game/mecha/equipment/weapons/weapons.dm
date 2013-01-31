@@ -27,7 +27,7 @@
 		set_ready_state(0)
 		playsound(chassis, fire_sound, 50, 1)
 		var/obj/item/projectile/A = new projectile(curloc)
-		A.original = targloc
+		A.original = target
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -209,7 +209,7 @@
 			playsound(chassis, fire_sound, 80, 1)
 			var/obj/item/projectile/A = new projectile(curloc)
 			src.projectiles--
-			A.original = targloc
+			A.original = target
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
@@ -251,7 +251,7 @@
 			playsound(chassis, fire_sound, 50, 1)
 			var/obj/item/projectile/A = new projectile(curloc)
 			src.projectiles--
-			A.original = targloc
+			A.original = target
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
@@ -288,7 +288,7 @@
 
 /obj/item/missile
 	icon = 'icons/obj/grenade.dmi'
-	icon_state = "flashbang"
+	icon_state = "missile"
 	var/primed = null
 	throwforce = 15
 
@@ -327,6 +327,13 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang//Because I am a heartless bastard -Sieve
 	name = "SOP-6 Grenade Launcher"
 	projectile = /obj/item/weapon/grenade/flashbang/clusterbang
+	construction_cost = list("metal"=20000,"gold"=6000,"uranium"=6000)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited/get_equip_info()//Limited version of the clusterbang launcher that can't reload
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[chassis.selected==src?"<b>":"<a href='?src=\ref[chassis];select_equip=\ref[src]'>"][src.name][chassis.selected==src?"</b>":"</a>"]\[[src.projectiles]\]"
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang/limited/rearm()
+	return//Extra bit of security
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "Banana Mortar"
@@ -361,7 +368,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar
 	name = "Mousetrap Mortar"
 	icon_state = "mecha_mousetrapmrtr"
-	projectile = /obj/item/weapon/mousetrap
+	projectile = /obj/item/device/assembly/mousetrap
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
@@ -379,8 +386,8 @@
 	action(target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		var/obj/item/weapon/mousetrap/M = new projectile(chassis.loc)
-		M.armed = 1
+		var/obj/item/device/assembly/mousetrap/M = new projectile(chassis.loc)
+		M.secured = 1
 		playsound(chassis, fire_sound, 60, 1)
 		M.throw_at(target, missile_range, missile_speed)
 		projectiles--

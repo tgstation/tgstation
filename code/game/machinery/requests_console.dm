@@ -56,6 +56,18 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/priority = -1 ; //Priority of the message being sent
 	luminosity = 0
 
+/obj/machinery/requests_console/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/requests_console/update_icon()
+	if(stat & NOPOWER)
+		if(icon_state != "req_comp_off")
+			icon_state = "req_comp_off"
+	else
+		if(icon_state == "req_comp_off")
+			icon_state = "req_comp0"
+
 /obj/machinery/requests_console/New()
 	name = "[department] Requests Console"
 	allConsoles += src
@@ -95,6 +107,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 
 /obj/machinery/requests_console/attack_hand(user as mob)
+	if(..(user))
+		return
 	var/dat
 	dat = text("<HEAD><TITLE>Requests Console</TITLE></HEAD><H3>[department] Requests Console</H3>")
 	if(!open)
@@ -197,7 +211,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 /obj/machinery/requests_console/Topic(href, href_list)
 	if(..())	return
-	usr.machine = src
+	usr.set_machine(src)
 	add_fingerprint(usr)
 
 	if(reject_bad_text(href_list["write"]))
@@ -231,7 +245,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)	return
-		world << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
+		for(var/mob/M in player_list)
+			if(!istype(M,/mob/new_player))
+				M << "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>"
 		announceAuth = 0
 		message = ""
 		screen = 0
@@ -370,7 +386,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			updateUsrDialog()
 		if(screen == 10)
 			var/obj/item/weapon/card/id/ID = O
-			if (access_RC_announce in ID.access)
+			if (access_RC_announce in ID.GetAccess())
 				announceAuth = 1
 			else
 				announceAuth = 0

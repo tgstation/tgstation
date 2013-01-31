@@ -8,7 +8,7 @@
 	circuit = "/obj/item/weapon/circuitboard/security"
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
-	var/network = "SS13"
+	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
 
 
@@ -34,7 +34,7 @@
 		if(stat & (NOPOWER|BROKEN))	return
 
 		if(!isAI(user))
-			user.machine = src
+			user.set_machine(src)
 
 		var/list/L = list()
 		for (var/obj/machinery/camera/C in cameranet.cameras)
@@ -45,18 +45,19 @@
 		var/list/D = list()
 		D["Cancel"] = "Cancel"
 		for(var/obj/machinery/camera/C in L)
-			if(C.network == network)
+			var/list/tempnetwork = C.network&network
+			if(tempnetwork.len)
 				D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
 
 		var/t = input(user, "Which camera should you change to?") as null|anything in D
 		if(!t)
-			user.machine = null
+			user.unset_machine()
 			return 0
 
 		var/obj/machinery/camera/C = D[t]
 
 		if(t == "Cancel")
-			user.machine = null
+			user.unset_machine()
 			return 0
 
 		if(C)
@@ -84,16 +85,22 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
-	network = "thunder"
+	network = list("thunder")
 	density = 0
 	circuit = null
+
+/obj/machinery/computer/security/telescreen/update_icon()
+	icon_state = initial(icon_state)
+	if(stat & BROKEN)
+		icon_state += "b"
+	return
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
 	desc = "Damn, they better have /tg/thechannel on these things."
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
-	network = "thunder"
+	network = list("thunder")
 	density = 0
 	circuit = null
 
@@ -108,5 +115,5 @@
 	name = "Outpost Cameras"
 	desc = "Used to access the various cameras on the outpost."
 	icon_state = "miningcameras"
-	network = "MINE"
+	network = list("MINE")
 	circuit = "/obj/item/weapon/circuitboard/mining"

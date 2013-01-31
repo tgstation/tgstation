@@ -10,17 +10,28 @@
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
 	src = null	//so we don't abort once src is deleted
 	spawn(0)
+		if(config.use_recursive_explosions)
+			var/power = devastation_range * 2 + heavy_impact_range + light_impact_range //The ranges add up, ie light 14 includes both heavy 7 and devestation 3. So this calculation means devestation counts for 4, heavy for 2 and light for 1 power, giving us a cap of 27 power.
+			explosion_rec(epicenter, power)
+			return
+
 		var/start = world.timeofday
 		epicenter = get_turf(epicenter)
 		if(!epicenter) return
 
+		
+		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
+		playsound(epicenter, "explosion", 100, 1, round(devastation_range,1) )
+		
+		var/close = range(world.view+round(devastation_range,1), epicenter)
+		// to all distanced mobs play a different sound
+		for(var/mob/M in world) if(M.z == epicenter.z) if(!(M in close))
+			// check if the mob can hear
+			if(M.ear_deaf <= 0 || !M.ear_deaf) if(!istype(M.loc,/turf/space))
+				M << 'explosionfar.ogg'
 		if(adminlog)
 			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
 			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
-
-		playsound(epicenter, 'sound/effects/explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
-		playsound(epicenter, "explosion", 100, 1, round(devastation_range,1) )
-
 
 		var/lighting_controller_was_processing = lighting_controller.processing	//Pause the lighting updates for a bit
 		lighting_controller.processing = 0

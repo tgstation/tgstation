@@ -50,7 +50,7 @@
 	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
 
 /obj/machinery/gibber/update_icon()
-	overlays = null
+	overlays.Cut()
 	if (dirty)
 		src.overlays += image('icons/obj/kitchen.dmi', "grbloody")
 	if(stat & (NOPOWER|BROKEN))
@@ -131,12 +131,10 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		for(var/mob/M in viewers(src, null))
-			M.show_message("\red You hear a loud metallic grinding sound.", 1)
+		visible_message("\red You hear a loud metallic grinding sound.")
 		return
 	use_power(1000)
-	for(var/mob/M in viewers(src, null))
-		M.show_message("\red You hear a loud squelchy grinding sound.", 1)
+	visible_message("\red You hear a loud squelchy grinding sound.")
 	src.operating = 1
 	update_icon()
 	var/sourcename = src.occupant.real_name
@@ -158,9 +156,6 @@
 	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
 	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 	log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]</b>")
-
-	log_admin("ATTACK: [user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]")
-	msg_admin_attack("ATTACK: [user]/[user.ckey]</b> gibbed <b>[src.occupant]/[src.occupant.ckey]") //BS12 EDIT ALG
 
 	src.occupant.death(1)
 	src.occupant.ghostize()

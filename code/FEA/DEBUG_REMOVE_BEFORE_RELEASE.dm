@@ -368,7 +368,7 @@ mob
 				network.marker = rand(1,4)
 
 			for(var/obj/machinery/atmospherics/pipe/P in world)
-				P.overlays = null
+				P.overlays.Cut()
 
 				var/datum/pipe_network/master = P.return_network()
 				if(master)
@@ -378,7 +378,7 @@ mob
 					P.overlays += icon('icons/Testing/atmos_testing.dmi',"marker0")
 
 			for(var/obj/machinery/atmospherics/valve/V in world)
-				V.overlays = null
+				V.overlays.Cut()
 
 				if(V.network_node1)
 					V.overlays += icon('icons/Testing/atmos_testing.dmi',"marker[V.network_node1.marker]")
@@ -396,7 +396,7 @@ turf/simulated
 	verb
 		mark_direction()
 			set src in world
-			overlays = null
+			overlays.Cut()
 			for(var/direction in list(NORTH,SOUTH,EAST,WEST))
 				if(group_border&direction)
 					overlays += icon('icons/Testing/turf_analysis.dmi',"red_arrow",direction)

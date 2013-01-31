@@ -26,7 +26,8 @@
 	var/yo = null
 	var/xo = null
 	var/current = null
-	var/turf/original = null // the original turf clicked
+	var/obj/shot_from = null // the object which shot us
+	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
 
@@ -36,7 +37,7 @@
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
-	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
+	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
 	var/projectile_type = "/obj/item/projectile"
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
 		//Effects
@@ -72,9 +73,9 @@
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)
 			loc = A.loc
-			return //cannot shoot yourself
+			return 0 //cannot shoot yourself
 
-		if(bumped)	return
+		if(bumped)	return 0
 		var/forcedodge = 0 // force the projectile to pass
 
 		bumped = 1
@@ -82,35 +83,33 @@
 			var/mob/M = A
 			if(!istype(A, /mob/living))
 				loc = A.loc
-				return // nope.avi
+				return 0// nope.avi
 
-			// check for dodge (i can't place in bullet_act because then things get wonky)
-			if(!M.stat && !M.lying && (REFLEXES in M.augmentations) && prob(85))
-				var/message = pick("[M] skillfully dodges the [name]!", "[M] ducks, dodging the [name]!", "[M] effortlessly jumps out of the way of the [name]!", "[M] dodges the [name] in one graceful movement!", "[M] leans back, dodging the [name] narrowly!", "[M] sidesteps, avoiding the [name] narrowly.", "[M] barely weaves out of the way of the [name].")
-				M.visible_message("\red <B>[message]</B>")
-				forcedodge = 1
+			var/distance = get_dist(original,loc)
+			//Lower accurancy/longer range tradeoff. Distance matters a lot here, so at
+			// close distance, actually RAISE the chance to hit.
+			def_zone = get_zone_with_miss_chance(def_zone, M, -30 + 8*distance)
+
+			if(silenced)
+				if(def_zone)
+					M << "\red You've been shot in the [parse_zone(def_zone)] by the [src.name]!"
 			else
-				var/distance = get_dist(original,loc)
-				def_zone = ran_zone(def_zone, 100-(5*distance)) //Lower accurancy/longer range tradeoff.
+				if(!def_zone)
+					visible_message("\The [src] misses [M] narrowly.")
+					del(src)
+					return
 				if(silenced)
-					M << "\red You've been shot in the [def_zone] by the [src.name]!"
+					M << "\red You've been shot in the [parse_zone(def_zone)] by the [src.name]!"
 				else
-					visible_message("\red [A.name] is hit by the [src.name] in the [def_zone]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-
+					visible_message("\red [A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			if(istype(firer, /mob))
-				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]</font>")
-
-				log_admin("ATTACK: [firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]")
-				msg_admin_attack("ATTACK: [firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src]") //BS12 EDIT ALG
+				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+				log_attack("<font color='red'>[firer] ([firer.ckey]) shot [M] ([M.ckey]) with a [src.type]</font>")
 
 			else
 				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src]</font>")
-
-				log_admin("ATTACK: UNKNOWN shot [M] ([M.ckey]) with a [src]")
-				msg_admin_attack("ATTACK: UNKNOWN shot [M] ([M.ckey]) with a [src]") //BS12 EDIT ALG
+				log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a [src.type]</font>")
 
 		spawn(0)
 			if(A)
@@ -122,7 +121,7 @@
 					else
 						loc = A.loc
 					permutated.Add(A)
-					return
+					return 0
 
 				if(istype(A,/turf))
 					for(var/obj/O in A)
@@ -133,7 +132,7 @@
 				density = 0
 				invisibility = 101
 				del(src)
-		return
+		return 1
 
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -157,12 +156,11 @@
 				return
 			step_towards(src, current)
 			sleep(1)
-			if(!bumped)
-				if(loc == original)
-					for(var/mob/living/M in original)
-						if(!(M in permutated))
-							Bump(M)
-							sleep(1)
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						Bump(original)
+						sleep(1)
 		return
 
 	proc/fired()

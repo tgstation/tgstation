@@ -22,28 +22,28 @@ datum/shuttle_controller
 	var/timelimit //important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
 	var/fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
+
+	var/always_fake_recall = 0
 	var/deny_shuttle = 0 //for admins not allowing it to be called.
 	var/departed = 0
-
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall(coeff = 1)
 		if(deny_shuttle && alert == 1) //crew transfer shuttle does not gets recalled by gamemode
 			return
-
 		if(endtime)
 			if(direction == -1)
 				setdirection(1)
 		else
 			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
-		//turning on the red lights in hallways
+			if(always_fake_recall)
+				fake_recall = rand(300,500)		//turning on the red lights in hallways
 		if(alert == 0)
 			for(var/area/A in world)
 				if(istype(A, /area/hallway))
 					A.readyalert()
-
 
 	proc/shuttlealert(var/X)
 		alert = X
@@ -241,7 +241,7 @@ datum/shuttle_controller
 
 					else if((fake_recall != 0) && (timeleft <= fake_recall))
 						recall()
-
+						fake_recall = 0
 						return 0
 
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */
@@ -287,6 +287,13 @@ datum/shuttle_controller
 						return 1
 
 				if(1)
+
+					// Just before it leaves, close the damn doors!
+					if(timeleft == 2 || timeleft == 1)
+						var/area/start_location = locate(/area/shuttle/escape/station)
+						for(var/obj/machinery/door/D in start_location)
+							spawn(0)
+								D.close()
 
 					if(timeleft>0)
 						return 0

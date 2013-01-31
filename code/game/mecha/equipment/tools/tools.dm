@@ -279,18 +279,18 @@
 					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
-						target:ReplaceWithPlating()
+						target:ChangeTurf(/turf/simulated/floor/plating)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
-						chassis.give_power(energy_drain)
+						chassis.use_power(energy_drain)
 				else if (istype(target, /turf/simulated/floor))
 					occupant_message("Deconstructing [target]...")
 					set_ready_state(0)
 					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
-						target:ReplaceWithSpace()
+						target:ChangeTurf(/turf/space)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
-						chassis.give_power(energy_drain)
+						chassis.use_power(energy_drain)
 				else if (istype(target, /obj/machinery/door/airlock))
 					occupant_message("Deconstructing [target]...")
 					set_ready_state(0)
@@ -299,14 +299,14 @@
 						chassis.spark_system.start()
 						del(target)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
-						chassis.give_power(energy_drain)
+						chassis.use_power(energy_drain)
 			if(1)
 				if(istype(target, /turf/space))
 					occupant_message("Building Floor...")
 					set_ready_state(0)
 					if(do_after_cooldown(target))
 						if(disabled) return
-						target:ReplaceWithPlating()
+						target:ChangeTurf(/turf/simulated/floor/plating)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
 						chassis.use_power(energy_drain*2)
@@ -315,7 +315,7 @@
 					set_ready_state(0)
 					if(do_after_cooldown(target))
 						if(disabled) return
-						target:ReplaceWithWall()
+						target:ChangeTurf(/turf/simulated/wall)
 						playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
 						chassis.use_power(energy_drain*2)
@@ -722,7 +722,7 @@
 
 	detach()
 		pr_energy_relay.stop()
-		chassis.proc_res["dynusepower"] = null
+//		chassis.proc_res["dynusepower"] = null
 		chassis.proc_res["dyngetcharge"] = null
 		..()
 		return
@@ -730,12 +730,12 @@
 	attach(obj/mecha/M)
 		..()
 		chassis.proc_res["dyngetcharge"] = src
-		chassis.proc_res["dynusepower"] = src
+//		chassis.proc_res["dynusepower"] = src
 		return
 
 	can_attach(obj/mecha/M)
 		if(..())
-			if(!M.proc_res["dynusepower"] && !M.proc_res["dyngetcharge"])
+			if(!M.proc_res["dyngetcharge"])// && !M.proc_res["dynusepower"])
 				return 1
 		return 0
 
@@ -775,14 +775,14 @@
 		if(!chassis) return
 		return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[pr_energy_relay.active()?"Dea":"A"]ctivate</a>"
 
-	proc/dynusepower(amount)
+/*	proc/dynusepower(amount)
 		if(!equip_ready) //enabled
 			var/area/A = get_area(chassis)
 			var/pow_chan = get_power_channel(A)
 			if(pow_chan)
 				A.master.use_power(amount*coeff, pow_chan)
 				return 1
-		return chassis.dynusepower(amount)
+		return chassis.dynusepower(amount)*/
 
 /datum/global_iterator/mecha_energy_relay
 
@@ -792,7 +792,7 @@
 			ER.set_ready_state(1)
 			return
 		var/cur_charge = ER.chassis.get_charge()
-		if(isnull(cur_charge))
+		if(isnull(cur_charge) || !ER.chassis.cell)
 			stop()
 			ER.set_ready_state(1)
 			ER.occupant_message("No powercell detected.")
@@ -806,7 +806,7 @@
 						pow_chan = c
 						break
 				if(pow_chan)
-					var/delta = min(2, ER.chassis.cell.maxcharge-cur_charge)
+					var/delta = min(12, ER.chassis.cell.maxcharge-cur_charge)
 					ER.chassis.give_power(delta)
 					A.master.use_power(delta*ER.coeff, pow_chan)
 		return
@@ -837,7 +837,7 @@
 		return
 
 	proc/init()
-		fuel = new /obj/item/stack/sheet/plasma(src)
+		fuel = new /obj/item/stack/sheet/mineral/plasma(src)
 		fuel.amount = 0
 		pr_mech_generator = new /datum/global_iterator/mecha_generator(list(src),0)
 		pr_mech_generator.set_delay(equip_cooldown)
@@ -967,7 +967,7 @@
 	reliability = 1000
 
 	init()
-		fuel = new /obj/item/stack/sheet/uranium(src)
+		fuel = new /obj/item/stack/sheet/mineral/uranium(src)
 		fuel.amount = 0
 		pr_mech_generator = new /datum/global_iterator/mecha_generator/nuclear(list(src),0)
 		pr_mech_generator.set_delay(equip_cooldown)

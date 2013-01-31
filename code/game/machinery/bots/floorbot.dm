@@ -45,7 +45,7 @@
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
-	req_access = list(access_atmospherics)
+	req_access = list(access_construction)
 	var/path[] = new()
 	var/targetdirection
 
@@ -72,17 +72,17 @@
 	. = ..()
 	if (.)
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/floorbot/proc/interact(mob/user as mob)
+/obj/machinery/bot/floorbot/interact(mob/user as mob)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [src.open ? "opened" : "closed"]<BR>"
 	dat += "Tiles left: [src.amount]<BR>"
 	dat += "Behvaiour controls are [src.locked ? "locked" : "unlocked"]<BR>"
-	if(!src.locked)
+	if(!src.locked || issilicon(user))
 		dat += "Improves floors: <A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A><BR>"
 		dat += "Finds tiles: <A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A><BR>"
 		dat += "Make singles pieces of metal into tiles when empty: <A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A><BR>"
@@ -131,7 +131,7 @@
 /obj/machinery/bot/floorbot/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
@@ -419,7 +419,7 @@
 		del(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
+		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

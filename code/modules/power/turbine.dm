@@ -58,7 +58,7 @@
 /obj/machinery/compressor/process()
 	if(!starter)
 		return
-	overlays = null
+	overlays.Cut()
 	if(stat & BROKEN)
 		return
 	if(!turbine)
@@ -113,7 +113,7 @@
 /obj/machinery/power/turbine/process()
 	if(!compressor.starter)
 		return
-	overlays = null
+	overlays.Cut()
 	if(stat & BROKEN)
 		return
 	if(!compressor)
@@ -142,24 +142,7 @@
 			src.interact(M)
 	AutoUpdateAI(src)
 
-
-/obj/machinery/power/turbine/attack_ai(mob/user)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	interact(user)
-
-/obj/machinery/power/turbine/attack_hand(mob/user)
-
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	interact(user)
-
-/obj/machinery/power/turbine/proc/interact(mob/user)
+/obj/machinery/power/turbine/interact(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
 		user.machine = null

@@ -47,12 +47,15 @@
 
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [href]<br>"
+		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
-	if(view_var_Topic(href,href_list,hsrc))	//Until viewvars can be rewritten as datum/admins/Topic()
-		return
+	switch(href_list["_src_"])
+		if("holder")	hsrc = holder
+		if("usr")		hsrc = mob
+		if("prefs")		return prefs.process_link(usr,href_list)
+		if("vars")		return view_var_Topic(href,href_list,hsrc)
 
-	..()	//redirect to [locate(hsrc)]/Topic()
+	..()	//redirect to hsrc.Topic()
 
 /client/proc/handle_spam_prevention(var/message, var/mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
@@ -95,28 +98,29 @@
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
 
-
 	if(IsGuestKey(key))
 		alert(src,"Baystation12 doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
 		del(src)
 		return
 
-	client_list += src
-	if ( (world.address == address || !address) && !host )
-		host = key
-		world.update_status()
+	clients += src
+	directory[ckey] = src
 
 	//Admin Authorisation
-	var/datum/admins/Admin_Obj = admins[ckey]
-	if(istype(Admin_Obj))
-		admin_list += src
-		holder = Admin_Obj
+	holder = admin_datums[ckey]
+	if(holder)
+		admins += src
 		holder.owner = src
-		holder.state = null
+
+	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
+	prefs = preferences_datums[ckey]
+	if(!prefs)
+		prefs = new /datum/preferences(src)
+		preferences_datums[ckey] = prefs
+	prefs.last_ip = address				//these are gonna be used for banning
+	prefs.last_id = computer_id			//these are gonna be used for banning
 
 	. = ..()	//calls mob.Login()
-
-	//makejson()
 
 	if(custom_event_msg && custom_event_msg != "")
 		src << "<h1 class='alert'>Custom Event</h1>"
@@ -124,12 +128,20 @@
 		src << "<span class='alert'>[html_encode(custom_event_msg)]</span>"
 		src << "<br>"
 
-	..()	//calls mob.Login()
+	if( (world.address == address || !address) && !host )
+		host = key
+		world.update_status()
 
 	if(holder)
+		add_admin_verbs()
 		admin_memo_show()
 
 	log_client_to_db()
+
+	send_resources()
+
+	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
+		winset(src, "rpane.changelog", "background-color=#eaeaea;font-style=bold")
 
 
 	//////////////
@@ -137,9 +149,10 @@
 	//////////////
 /client/Del()
 	if(holder)
-		holder.state = null
-		admin_list -= src
-	client_list -= src
+		holder.owner = null
+		admins -= src
+	directory -= ckey
+	clients -= src
 	return ..()
 
 
@@ -149,25 +162,32 @@
 	if ( IsGuestKey(src.key) )
 		return
 
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
-	var/address = sqladdress
-	var/port = sqlport
-
-	var/DBConnection/dbcon = new()
-
-	dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
 
 	var/sql_ckey = sql_sanitize_text(src.ckey)
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_player WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM erro_player WHERE ckey = '[sql_ckey]'")
 	query.Execute()
 	var/sql_id = 0
 	while(query.NextRow())
 		sql_id = query.item[1]
+		player_age = text2num(query.item[2])
+		break
+
+	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[address]'")
+	query_ip.Execute()
+	related_accounts_ip = ""
+	while(query_ip.NextRow())
+		related_accounts_ip += "[query_ip.item[1]], "
+		break
+
+	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
+	query_cid.Execute()
+	related_accounts_cid = ""
+	while(query_cid.NextRow())
+		related_accounts_cid += "[query_cid.item[1]], "
 		break
 
 	//Just the standard check to see if it's actually a number
@@ -188,17 +208,70 @@
 
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
-
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
 	else
 		//New player!! Need to insert all the stuff
-
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
 		query_insert.Execute()
 
-	dbcon.Disconnect()
+	//Logging player access
+	var/serverip = "[world.internet_address]:[world.port]"
+	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	query_accesslog.Execute()
+
 
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
 #undef MIN_CLIENT_VERSION
+
+//checks if a client is afk
+//3000 frames = 5 minutes
+/client/proc/is_afk(duration=3000)
+	if(inactivity > duration)	return inactivity
+	return 0
+
+//send resources to the client. It's here in its own proc so we can move it around easiliy if need be
+/client/proc/send_resources()
+	getFiles(
+		'html/search.js',
+		'html/panels.css',
+		'icons/pda_icons/pda_atmos.png',
+		'icons/pda_icons/pda_back.png',
+		'icons/pda_icons/pda_bell.png',
+		'icons/pda_icons/pda_blank.png',
+		'icons/pda_icons/pda_boom.png',
+		'icons/pda_icons/pda_bucket.png',
+		'icons/pda_icons/pda_crate.png',
+		'icons/pda_icons/pda_cuffs.png',
+		'icons/pda_icons/pda_eject.png',
+		'icons/pda_icons/pda_exit.png',
+		'icons/pda_icons/pda_flashlight.png',
+		'icons/pda_icons/pda_honk.png',
+		'icons/pda_icons/pda_mail.png',
+		'icons/pda_icons/pda_medical.png',
+		'icons/pda_icons/pda_menu.png',
+		'icons/pda_icons/pda_mule.png',
+		'icons/pda_icons/pda_notes.png',
+		'icons/pda_icons/pda_power.png',
+		'icons/pda_icons/pda_rdoor.png',
+		'icons/pda_icons/pda_reagent.png',
+		'icons/pda_icons/pda_refresh.png',
+		'icons/pda_icons/pda_scanner.png',
+		'icons/pda_icons/pda_signaler.png',
+		'icons/pda_icons/pda_status.png',
+		'icons/spideros_icons/sos_1.png',
+		'icons/spideros_icons/sos_2.png',
+		'icons/spideros_icons/sos_3.png',
+		'icons/spideros_icons/sos_4.png',
+		'icons/spideros_icons/sos_5.png',
+		'icons/spideros_icons/sos_6.png',
+		'icons/spideros_icons/sos_7.png',
+		'icons/spideros_icons/sos_8.png',
+		'icons/spideros_icons/sos_9.png',
+		'icons/spideros_icons/sos_10.png',
+		'icons/spideros_icons/sos_11.png',
+		'icons/spideros_icons/sos_12.png',
+		'icons/spideros_icons/sos_13.png',
+		'icons/spideros_icons/sos_14.png'
+		)

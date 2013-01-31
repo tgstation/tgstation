@@ -12,14 +12,14 @@
 	var/enemy_mp = 20
 	var/gameover = 0
 	var/blocked = 0 //Player cannot attack/heal while set
-	var/list/prizes = list(	/obj/item/weapon/storage/snappopbox				= 2,
+	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
 							/obj/item/toy/blink								= 2,
 							/obj/item/clothing/under/syndicate/tacticool	= 2,
 							/obj/item/toy/sword								= 2,
 							/obj/item/toy/gun								= 2,
 							/obj/item/toy/crossbow							= 2,
 							/obj/item/clothing/suit/syndicatefake			= 2,
-							/obj/item/weapon/storage/crayonbox				= 2,
+							/obj/item/weapon/storage/fancy/crayons			= 2,
 							/obj/item/toy/spinningtoy						= 2,
 							/obj/item/toy/prize/ripley						= 1,
 							/obj/item/toy/prize/fireripley					= 1,
@@ -46,9 +46,9 @@
 	name_action = pick("Defeat ", "Annihilate ", "Save ", "Strike ", "Stop ", "Destroy ", "Robust ", "Romance ", "Pwn ", "Own ")
 
 	name_part1 = pick("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Cuban ", "the Evil ", "the Dread King ", "the Space ", "Lord ", "the Great ", "Duke ", "General ")
-	name_part2 = pick("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid", "Vhakoid", "Peteoid", "Metroid", "Griefer", "ERPer", "Lizard Man", "Unicorn")
+	name_part2 = pick("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid", "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn")
 
-	src.enemy_name = dd_replacetext((name_part1 + name_part2), "the ", "")
+	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
 
 
@@ -61,7 +61,7 @@
 /obj/machinery/computer/arcade/attack_hand(mob/user as mob)
 	if(..())
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
@@ -126,7 +126,7 @@
 			src.arcade_action()
 
 	if (href_list["close"])
-		usr.machine = null
+		usr.unset_machine()
 		usr << browse(null, "window=arcade")
 
 	else if (href_list["newgame"]) //Reset everything
@@ -219,18 +219,6 @@
 	src.blocked = 0
 	return
 
-/obj/machinery/computer/arcade/power_change()
-
-	if(stat & BROKEN)
-		icon_state = "arcadeb"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				src.icon_state = "arcade0"
-				stat |= NOPOWER
 
 /obj/machinery/computer/arcade/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
@@ -270,3 +258,19 @@
 				A.icon_state = "4"
 
 			del(src)
+/obj/machinery/computer/arcade/emp_act(severity)
+	if(stat & (NOPOWER|BROKEN))
+		..(severity)
+		return
+	var/empprize = null
+	var/num_of_prizes = 0
+	switch(severity)
+		if(1)
+			num_of_prizes = rand(1,4)
+		if(2)
+			num_of_prizes = rand(0,2)
+	for(num_of_prizes; num_of_prizes > 0; num_of_prizes--)
+		empprize = pickweight(prizes)
+		new empprize(src.loc)
+
+	..(severity)

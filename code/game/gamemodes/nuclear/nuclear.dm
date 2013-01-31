@@ -5,7 +5,8 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
+	required_players = 6
+	required_players_secret = 15 // 15 players - 5 players to be the nuke ops = 10 players remaining
 	required_enemies = 5
 	recommended_enemies = 5
 
@@ -32,8 +33,6 @@
 
 	var/list/possible_syndicates = get_players_for_role(BE_OPERATIVE)
 	var/agent_number = 0
-
-	syndicate_begin()
 
 	if(possible_syndicates.len < 1)
 		return 0
@@ -112,23 +111,13 @@
 	var/list/turf/synd_spawn = list()
 
 	for(var/obj/effect/landmark/A in landmarks_list)
-		if (A.name == "Syndicate-Gear-Closet")
-			new /obj/structure/closet/syndicate/personal(A.loc)
-			del(A)
-			continue
-
-		if (A.name == "Syndicate-Bomb")
-			new /obj/effect/spawner/newbomb/timer/syndicate(A.loc)
-			del(A)
-			continue
-
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
 			del(A)
 			continue
 
+	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
 	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-	var/obj/effect/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
 
 	var/nuke_code = "[rand(10000, 99999)]"
 	var/leader_selected = 0
@@ -155,12 +144,11 @@
 
 	update_all_synd_icons()
 
+	if(uplinklocker)
+		new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
 	if(nuke_spawn && synd_spawn.len > 0)
 		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
 		the_bomb.r_code = nuke_code
-
-	if(closet_spawn)
-		new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -189,7 +177,6 @@
 
 	else
 		nuke_code = "code will be provided later"
-	synd_mind.current << "Nuclear Explosives 101:\n\tHello and thank you for choosing the Syndicate for your nuclear information needs.\nToday's crash course will deal with the operation of a Fusion Class Nanotrasen made Nuclear Device.\nFirst and foremost, DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.\nPressing any button on the compacted bomb will cause it to extend and bolt itself into place.\nIf this is done to unbolt it one must compeltely log in which at this time may not be possible.\nTo make the device functional:\n1. Place bomb in designated detonation zone\n2. Extend and anchor bomb (attack with hand).\n3. Insert Nuclear Auth. Disk into slot.\n4. Type numeric code into keypad ([nuke_code]).\n\tNote: If you make a mistake press R to reset the device.\n5. Press the E button to log onto the device\nYou now have activated the device. To deactivate the buttons at anytime for example when\nyou've already prepped the bomb for detonation remove the auth disk OR press the R ont he keypad.\nNow the bomb CAN ONLY be detonated using the timer. A manual det. is not an option.\n\tNote: Nanotrasen is a pain in the neck.\nToggle off the SAFETY.\n\tNote: You wouldn't believe how many Syndicate Operatives with doctorates have forgotten this step\nSo use the - - and + + to set a det time between 5 seconds and 10 minutes.\nThen press the timer toggle button to start the countdown.\nNow remove the auth. disk so that the buttons deactivate.\n\tNote: THE BOMB IS STILL SET AND WILL DETONATE\nNow before you remove the disk if you need to move the bomb you can:\nToggle off the anchor, move it, and re-anchor.\n\nGood luck. Remember the order:\nDisk, Code, Safety, Timer, Disk, RUN!\nIntelligence Analysts believe that they are hiding the disk in the bridge. Your space ship will not leave until the bomb is armed and timing.\nGood luck!"
 	return
 
 

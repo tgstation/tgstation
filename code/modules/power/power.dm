@@ -9,6 +9,10 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
+/obj/machinery/power/Del()
+	disconnect_from_network()
+	..()
+
 // common helper procs for all power machines
 /obj/machinery/power/proc/add_avail(var/amount)
 	if(powernet)
@@ -37,6 +41,9 @@
 
 	if(!src.loc)
 		return 0
+
+	if(!use_power)
+		return 1
 
 	var/area/A = src.loc.loc		// make sure it's in an area
 	if(!A || !isarea(A) || !A.master)
@@ -92,7 +99,7 @@
 
 	for(var/obj/machinery/power/M in machines)
 		if(!M.powernet)	continue	// APCs have powernet=0 so they don't count as network nodes directly
-		M.powernet.nodes += M
+		M.powernet.nodes[M] = M
 
 
 // returns a list of all power-related objects (nodes, cable, junctions) in turf,
@@ -138,9 +145,12 @@
 
 
 /obj/machinery/power/proc/get_connections()
-	if(!directwired)	return get_indirect_connections()
 
 	. = list()
+
+	if(!directwired)
+		return get_indirect_connections()
+
 	var/cdir
 
 	for(var/card in cardinal)
@@ -171,7 +181,7 @@
 			C.powernet = PN
 			P = C.get_connections()
 
-		else if( istype(O,/obj/machinery/power) )
+		else if(O.anchored && istype(O,/obj/machinery/power))
 			var/obj/machinery/power/M = O
 			M.powernet = PN
 			P = M.get_connections()
@@ -188,6 +198,9 @@
 /datum/powernet/proc/cut_cable(var/obj/structure/cable/C)
 	var/turf/T1 = C.loc
 	if(!T1)	return
+	var/node = 0
+	if(C.d1 == 0)
+		node = 1
 
 	var/turf/T2
 	if(C.d2)	T2 = get_step(T1, C.d2)
@@ -222,11 +235,13 @@
 	i=1
 	while(i<=nodes.len)
 		var/obj/machinery/power/Node = nodes[i]
-		if(Node)	Node.powernet = null
+		if(Node)
+			Node.powernet = null
 		i++
 
 	// remove the cut cable from the network
 //	C.netnum = -1
+
 	C.loc = null
 
 	powernet_nextlink(P1[1], src)		// propagate network from 1st side of cable, using current netnum	//TODO?
@@ -269,10 +284,15 @@
 			if(Node && !Node.powernet)
 				Node.powernet = PN
 				nodes.Cut(i,i+1)
-				PN.nodes += Node
+				PN.nodes[Node] = Node
 				continue
 			i++
 
+	// Disconnect machines connected to nodes
+	if(node)
+		for(var/obj/machinery/power/P in T1)
+			if(P.powernet && !P.powernet.nodes[src])
+				P.disconnect_from_network()
 //		if(Debug)
 //			world.log << "Old PN#[number] : ([cables.len];[nodes.len])"
 //			world.log << "New PN#[PN.number] : ([PN.cables.len];[PN.nodes.len])"
@@ -298,7 +318,7 @@
 
 	var/numapc = 0
 
-	if(nodes) // Added to fix a bad list bug -- TLE
+	if(nodes && nodes.len) // Added to fix a bad list bug -- TLE
 		for(var/obj/machinery/power/terminal/term in nodes)
 			if( istype( term.master, /obj/machinery/power/apc ) )
 				numapc++
@@ -309,8 +329,13 @@
 	netexcess = avail - load
 
 	if( netexcess > 100)		// if there was excess power last cycle
-		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
-			S.restore()				// and restore some of the power that was used
+		if(nodes && nodes.len)
+			for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
+				if(S.powernet == src)
+					S.restore()				// and restore some of the power that was used
+				else
+					error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).")
+					nodes.Remove(S)
 
 /datum/powernet/proc/get_electrocute_damage()
 	switch(avail)/*
@@ -359,7 +384,7 @@
 		var/obj/machinery/power/Node = net2.nodes[i]
 		if(Node)
 			Node.powernet = net1
-			net1.nodes += Node
+			net1.nodes[Node] = Node
 
 	for(var/i=1,i<=net2.cables.len,i++)
 		var/obj/structure/cable/Cable = net2.cables[i]
@@ -374,15 +399,20 @@
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
 	var/obj/structure/cable/C = T.get_cable_node()
-	if(!C || !C.powernet)	return
+	if(!C || !C.powernet)	return 0
 //	makepowernets() //TODO: find fast way	//EWWWW what are you doing!?
 	powernet = C.powernet
-	powernet.nodes += src
+	powernet.nodes[src] = src
+	return 1
 
 /obj/machinery/power/proc/disconnect_from_network()
-	if(!powernet)	return
+	if(!powernet)
+		//world << " no powernet"
+		return 0
 	powernet.nodes -= src
 	powernet = null
+	//world << "powernet null"
+	return 1
 
 /turf/proc/get_cable_node()
 	if(!istype(src, /turf/simulated/floor))

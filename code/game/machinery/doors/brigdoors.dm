@@ -132,7 +132,7 @@
 			return
 		var/second = round(timeleft() % 60)
 		var/minute = round((timeleft() - second) / 60)
-		user.machine = src
+		user.set_machine(src)
 		var/dat = "<HTML><BODY><TT>"
 		dat += "<HR>Timer System:</hr>"
 		dat += "<b>Door [src.id] controls</b><br/>"
@@ -169,7 +169,7 @@
 		if(!src.allowed(usr))
 			return
 
-		usr.machine = src
+		usr.set_machine(src)
 		if(href_list["timing"])
 			src.timing = text2num(href_list["timing"])
 		else
@@ -219,7 +219,7 @@
 // Adds an icon in case the screen is broken/off, stolen from status_display.dm
 	proc/set_picture(var/state)
 		picture_state = state
-		overlays = null
+		overlays.Cut()
 		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
 
 
@@ -227,10 +227,10 @@
 // Stolen from status_display
 	proc/update_display(var/line1, var/line2)
 		if(line2 == null)		// single line display
-			overlays = null
+			overlays.Cut()
 			overlays += texticon(line1, 23, -13)
 		else					// dual line display
-			overlays = null
+			overlays.Cut()
 			overlays += texticon(line1, 23, -9)
 			overlays += texticon(line2, 23, -17)
 		// return an icon of a time text string (tn)

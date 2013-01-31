@@ -44,3 +44,6 @@
 	stun = 10
 	weaken = 10
 	stutter = 10
+
+/obj/item/projectile/bullet/a762
+	damage = 25

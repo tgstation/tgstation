@@ -16,13 +16,21 @@ obj/machinery/atmospherics/trinary/mixer
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
 	update_icon()
-		if(node2 && node3 && node1)
+		if(stat & NOPOWER)
+			icon_state = "intact_off"
+		else if(node2 && node3 && node1)
 			icon_state = "intact_[on?("on"):("off")]"
 		else
 			icon_state = "intact_off"
 			on = 0
 
 		return
+
+	power_change()
+		var/old_stat = stat
+		..()
+		if(old_stat != stat)
+			update_icon()
 
 	New()
 		..()
@@ -112,7 +120,7 @@ obj/machinery/atmospherics/trinary/mixer
 		if(!src.allowed(user))
 			user << "\red Access denied."
 			return
-		usr.machine = src
+		usr.set_machine(src)
 		var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 					<b>Desirable output pressure: </b>
 					[target_pressure]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>

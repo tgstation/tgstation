@@ -28,7 +28,9 @@
 /obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
 	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
-		if(H.mind.assigned_role)
+		if(H.mind.role_alt_title)
+			assignment = H.mind.role_alt_title
+		else if(H.mind.assigned_role)
 			assignment = H.mind.assigned_role
 		else if(H.job)
 			assignment = H.job

@@ -11,6 +11,24 @@
 /*
  * DATA CARDS - Used for the teleporter
  */
+/obj/item/weapon/card
+	name = "card"
+	desc = "Does card things."
+	icon = 'icons/obj/card.dmi'
+	w_class = 1.0
+	var/associated_account_number = 0
+
+	var/list/files = list(  )
+
+/obj/item/weapon/card/data
+	name = "data disk"
+	desc = "A disk of data."
+	icon_state = "data"
+	var/function = "storage"
+	var/data = "null"
+	var/special = null
+	item_state = "card-id"
+
 /obj/item/weapon/card/data/verb/label(t as text)
 	set name = "Label Disk"
 	set category = "Object"
@@ -23,21 +41,44 @@
 	src.add_fingerprint(usr)
 	return
 
+/obj/item/weapon/card/data/clown
+	name = "coordinates to clown planet"
+	icon_state = "data"
+	item_state = "card-id"
+	layer = 3
+	level = 2
+	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
+	function = "teleporter"
+	data = "Clown Land"
 
 /*
  * ID CARDS
  */
-/obj/item/weapon/card/id/examine()
-	..()
-	read()
+/obj/item/weapon/card/emag
+	desc = "It's a card with a magnetic strip attached to some circuitry."
+	name = "cryptographic sequencer"
+	icon_state = "emag"
+	item_state = "card-id"
+	origin_tech = "magnets=2;syndicate=2"
+	var/uses = 10
 
-/obj/item/weapon/card/id/New()
-	..()
-	spawn(30)
-	if(istype(loc, /mob/living/carbon/human))
-		blood_type = loc:dna:b_type
-		dna_hash = loc:dna:unique_enzymes
-		fingerprint_hash = md5(loc:dna:uni_identity)
+/obj/item/weapon/card/id
+	name = "identification card"
+	desc = "A card used to provide ID and determine access across the station."
+	icon_state = "id"
+	item_state = "card-id"
+	var/access = list()
+	var/registered_name = null // The name registered_name on the card
+	slot_flags = SLOT_ID
+
+	var/blood_type = "\[UNSET\]"
+	var/dna_hash = "\[UNSET\]"
+	var/fingerprint_hash = "\[UNSET\]"
+
+	//alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
+	var/assignment = null	//can be alt title or the actual job
+	var/rank = null			//actual job
+	var/dorm = 0		// determines if this ID has claimed a dorm already
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
@@ -46,13 +87,11 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/item/weapon/card/id/attack_hand(mob/user as mob)
-	var/obj/item/weapon/storage/wallet/WL
-	if( istype(loc, /obj/item/weapon/storage/wallet) )
-		WL = loc
-	..()
-	if(WL)
-		WL.update_icon()
+/obj/item/weapon/card/id/GetAccess()
+	return access
+
+/obj/item/weapon/card/id/GetID()
+	return src
 
 /obj/item/weapon/card/id/verb/read()
 	set name = "Read ID Card"
@@ -65,11 +104,38 @@
 	usr << "The fingerprint hash on the card is [fingerprint_hash]."
 	return
 
+
+/obj/item/weapon/card/id/silver
+	name = "identification card"
+	desc = "A silver card which shows honour and dedication."
+	icon_state = "silver"
+	item_state = "silver_id"
+
+/obj/item/weapon/card/id/gold
+	name = "identification card"
+	desc = "A golden card which shows power and might."
+	icon_state = "gold"
+	item_state = "gold_id"
+
+/obj/item/weapon/card/id/syndicate
+	name = "agent card"
+	access = list(access_maint_tunnels, access_syndicate)
+	origin_tech = "syndicate=3"
+
+/obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = O
+		src.access |= I.access
+		if(istype(user, /mob/living) && user.mind)
+			if(user.mind.special_role)
+				usr << "\blue The card's microscanners activate as you pass it over the ID, copying its access."
+
+
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered_name)
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
-		var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)),1,26)
-		if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
+		var t = reject_bad_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name))
+		if(!t) //Same as mob/new_player/prefrences.dm
 			alert("Invalid name.")
 			return
 		src.registered_name = t
@@ -85,166 +151,31 @@
 	else
 		..()
 
+/obj/item/weapon/card/id/syndicate_command
+	name = "syndicate ID card"
+	desc = "An ID straight from the Syndicate."
+	registered_name = "Syndicate"
+	assignment = "Syndicate Overlord"
+	access = list(access_syndicate)
 
-/*
- * FINGERPRINT HOLDER
- */
-/obj/item/weapon/fcardholder/attack_self(mob/user as mob)
-	var/dat = "<B>Clipboard</B><BR>"
-	for(var/obj/item/weapon/f_card/P in src)
-		dat += text("<A href='?src=\ref[];read=\ref[]'>[]</A> <A href='?src=\ref[];remove=\ref[]'>Remove</A><BR>", src, P, P.name, src, P)
-	user << browse(dat, "window=fcardholder")
-	onclose(user, "fcardholder")
-	return
+/obj/item/weapon/card/id/captains_spare
+	name = "captain's spare ID"
+	desc = "The spare ID of the High Lord himself."
+	icon_state = "gold"
+	item_state = "gold_id"
+	registered_name = "Captain"
+	assignment = "Captain"
+	New()
+		var/datum/job/captain/J = new/datum/job/captain
+		access = J.get_access()
+		..()
 
-/obj/item/weapon/fcardholder/Topic(href, href_list)
-	..()
-	if ((usr.stat || usr.restrained()))
-		return
-	if (usr.contents.Find(src))
-		usr.machine = src
-		if (href_list["remove"])
-			var/obj/item/P = locate(href_list["remove"])
-			if ((P && P.loc == src))
-				usr.put_in_hands(P)
-				src.add_fingerprint(usr)
-				P.add_fingerprint(usr)
-			src.update()
-		if (href_list["read"])
-			var/obj/item/weapon/f_card/P = locate(href_list["read"])
-			if ((P && P.loc == src))
-				if (!( istype(usr, /mob/living/carbon/human) ))
-					usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, P.display()), text("window=[]", P.name))
-					onclose(usr, "[P.name]")
-				else
-					usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, P.display()), text("window=[]", P.name))
-					onclose(usr, "[P.name]")
-			src.add_fingerprint(usr)
-		if (ismob(src.loc))
-			var/mob/M = src.loc
-			if (M.machine == src)
-				spawn( 0 )
-					src.attack_self(M)
-					return
-	return
-
-/obj/item/weapon/fcardholder/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/item/weapon/fcardholder/attack_hand(mob/user as mob)
-	if (user.contents.Find(src))
-		spawn( 0 )
-			src.attack_self(user)
-			return
-		src.add_fingerprint(user)
-	else
-		return ..()
-	return
-
-/obj/item/weapon/fcardholder/attackby(obj/item/weapon/P as obj, mob/user as mob)
-	..()
-	if (istype(P, /obj/item/weapon/f_card))
-		if (src.contents.len < 30)
-			user.drop_item()
-			P.loc = src
-			add_fingerprint(user)
-			src.add_fingerprint(user)
-		else
-			user << "\blue Not enough space!!!"
-	else
-		if (istype(P, /obj/item/weapon/pen))
-			var/t = input(user, "Holder Label:", text("[]", src.name), null)  as text
-			if (user.get_active_hand() != P)
-				return
-			if ((!in_range(src, usr) && src.loc != user))
-				return
-			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-			if (t)
-				src.name = text("FPCase- '[]'", t)
-			else
-				src.name = "Finger Print Case"
-		else
-			return
-	src.update()
-	spawn( 0 )
-		attack_self(user)
-		return
-	return
-
-/obj/item/weapon/fcardholder/proc/update()
-	var/i = 0
-	for(var/obj/item/weapon/f_card/F in src)
-		i = 1
-		break
-	src.icon_state = text("fcardholder[]", (i ? "1" : "0"))
-	return
-
-
-
-
-/*
- * FINGERPRINT CARD
- */
-/obj/item/weapon/f_card/examine()
-	set src in view(2)
-
-	..()
-	usr << text("\blue There are [] on the stack!", src.amount)
-	usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", src.name, display()), text("window=[]", src.name))
-	onclose(usr, "[src.name]")
-	return
-
-/obj/item/weapon/f_card/proc/display()
-	if(!fingerprints || !fingerprints.len)
-		return "<B>There are no fingerprints on this card.</B>"
-	else
-		var/dat = "<B>Fingerprints on Card</B><HR>"
-		for(var/name in fingerprints)
-			dat += "[name]<BR>"
-		return dat
-	return
-
-/obj/item/weapon/f_card/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/f_card))
-		if ((src.fingerprints || W.fingerprints))
-			return
-		if (src.amount == 10)
-			return
-		if (W:amount + src.amount > 10)
-			src.amount = 10
-			W:amount = W:amount + src.amount - 10
-		else
-			src.amount += W:amount
-			//W = null
-			del(W)
-		src.add_fingerprint(user)
-		if (W)
-			W.add_fingerprint(user)
-	else
-		if (istype(W, /obj/item/weapon/pen))
-			var/t = input(user, "Card Label:", text("[]", src.name), null)  as text
-			if (user.get_active_hand() != W)
-				return
-			if ((!in_range(src, usr) && src.loc != user))
-				return
-			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-			if (t)
-				src.name = text("FPrintC- '[]'", t)
-			else
-				src.name = "Finger Print Card"
-			W.add_fingerprint(user)
-			src.add_fingerprint(user)
-	return
-
-/obj/item/weapon/f_card/add_fingerprint()
-
-	..()
-	if (!istype(usr, /mob/living/silicon))
-		if (fingerprints)
-			if (src.amount > 1)
-				var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card(get_turf(src))
-				F.amount = --src.amount
-				amount = 1
-			icon_state = "fingerprint1"
-	return
+/obj/item/weapon/card/id/centcom
+	name = "\improper CentCom. ID"
+	desc = "An ID straight from Cent. Com."
+	icon_state = "centcom"
+	registered_name = "Central Command"
+	assignment = "General"
+	New()
+		access = get_all_centcom_access()
+		..()

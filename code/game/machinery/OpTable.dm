@@ -63,7 +63,7 @@
 	return
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
-	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
+	if (HULK in usr.mutations)
 		usr << text("\blue You destroy the table.")
 		visible_message("\red [usr] destroys the operating table!")
 		src.density = 0

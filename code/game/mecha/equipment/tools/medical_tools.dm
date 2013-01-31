@@ -48,9 +48,9 @@
 		if(occupant)
 			occupant_message("The sleeper is already occupied")
 			return
-		for(var/mob/living/carbon/metroid/M in range(1,target))
+		for(var/mob/living/carbon/slime/M in range(1,target))
 			if(M.Victim == target)
-				occupant_message("[target] will not fit into the sleeper because they have a Metroid latched onto their head.")
+				occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
 				return
 		occupant_message("You start putting [target] into [src].")
 		chassis.visible_message("[chassis] starts putting [target] into the [src].")
@@ -193,9 +193,9 @@
 			return 0
 		var/to_inject = min(R.volume, inject_amount)
 		if(to_inject && occupant.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
+			occupant_message("Injecting [occupant] with [to_inject] units of [R.name].")
+			log_message("Injecting [occupant] with [to_inject] units of [R.name].")
 			SG.reagents.trans_id_to(occupant,R.id,to_inject)
-			occupant_message("[occupant] injected with [to_inject] units of [R.name].")
-			log_message("[occupant] injected with [to_inject] units of [R.name].")
 			update_equip_info()
 		return
 

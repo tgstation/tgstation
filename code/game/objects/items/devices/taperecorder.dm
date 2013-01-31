@@ -124,8 +124,8 @@
 		usr << "<span class='notice'>You can't clear the memory while playing or recording!</span>"
 		return
 	else
-		storedinfo -= storedinfo
-		timestamp -= timestamp
+		if(storedinfo)	storedinfo.Cut()
+		if(timestamp)	timestamp.Cut()
 		timerecorded = 0
 		usr << "<span class='notice'>Memory cleared.</span>"
 		return

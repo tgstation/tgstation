@@ -25,7 +25,7 @@
 	attack_hand(var/mob/user as mob)
 		if(..())
 			return
-		user.machine = src
+		user.set_machine(src)
 		var/dat
 		dat += "<B>Prisoner Implant Manager System</B><BR>"
 		if(screen == 0)
@@ -52,6 +52,8 @@
 				if(M.z == 1 && !istype(M.loc, /turf/space))
 					var/turf/mob_loc = get_turf_loc(M)
 					loc_display = mob_loc.loc
+				if(T.malfunction)
+					loc_display = pick(teleportlocs)
 				dat += "ID: [T.id] | Location: [loc_display]<BR>"
 				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
 				dat += "********************************<BR>"
@@ -63,10 +65,8 @@
 
 
 	process()
-		if(stat & (NOPOWER|BROKEN))
-			return
-		use_power(500)
-		src.updateDialog()
+		if(!..())
+			src.updateDialog()
 		return
 
 
@@ -74,7 +74,7 @@
 		if(..())
 			return
 		if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-			usr.machine = src
+			usr.set_machine(src)
 
 			if(href_list["inject1"])
 				var/obj/item/weapon/implant/I = locate(href_list["inject1"])

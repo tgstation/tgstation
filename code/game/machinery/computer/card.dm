@@ -46,7 +46,7 @@
 	if(..())
 		return
 
-	user.machine = src
+	user.set_machine(src)
 	var/dat
 	if (!( ticker ))
 		return
@@ -100,7 +100,7 @@
 		var/jobs_all = ""
 		var/list/alljobs = (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
 		for(var/job in alljobs)
-			jobs_all += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[dd_replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
+			jobs_all += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
 
 
 		var/body
@@ -138,9 +138,9 @@
 				accesses += "<h5>Central Command:</h5>"
 				for(var/A in get_all_centcom_access())
 					if(A in modify.access)
-						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[dd_replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</font></a> "
+						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</font></a> "
 					else
-						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[dd_replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</a> "
+						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</a> "
 			else
 				accesses += "<div align='center'><b>Access</b></div>"
 				accesses += "<table style='width:100%'>"
@@ -152,9 +152,9 @@
 					accesses += "<td style='width:14%' valign='top'>"
 					for(var/A in get_region_accesses(i))
 						if(A in modify.access)
-							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[dd_replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
+							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
 						else
-							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[dd_replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
+							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
 						accesses += "<br>"
 					accesses += "</td>"
 				accesses += "</tr></table>"
@@ -171,7 +171,7 @@
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)
@@ -232,18 +232,34 @@
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
 					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_MESSAGE_LEN)
-					if(temp_t)
-						t1 = temp_t
+					//let custom jobs function as an impromptu alt title, mainly for sechuds
+					if(temp_t && modify)
+						modify.assignment = temp_t
 				else
-					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : get_access(t1) )
-				if (modify)
-					modify.assignment = t1
+					var/datum/job/jobdatum
+					for(var/jobtype in typesof(/datum/job))
+						var/datum/job/J = new jobtype
+						if(ckey(J.title) == ckey(t1))
+							jobdatum = J
+							break
+					if(!jobdatum)
+						usr << "\red No log exists for this job."
+						return
+
+					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
+					if (modify)
+						modify.assignment = t1
+						modify.rank = t1
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
 				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
-					modify.registered_name = href_list["reg"]
+					var/temp_name = reject_bad_name(href_list["reg"])
+					if(temp_name)
+						modify.registered_name = temp_name
+					else
+						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 		if ("print")

@@ -31,7 +31,9 @@ obj/machinery/atmospherics/binary/volume_pump
 		icon_state = "intact_on"
 
 	update_icon()
-		if(node1&&node2)
+		if(stat & NOPOWER)
+			icon_state = "intact_off"
+		else if(node1 && node2)
 			icon_state = "intact_[on?("on"):("off")]"
 		else
 			if(node1)
@@ -97,14 +99,14 @@ obj/machinery/atmospherics/binary/volume_pump
 
 			return 1
 
-		interact(mob/user as mob)
-			var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
-						<b>Desirable output flow: </b>
-						[round(transfer_rate,1)]l/s | <a href='?src=\ref[src];set_transfer_rate=1'>Change</a>
-						"}
+	interact(mob/user as mob)
+		var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
+					<b>Desirable output flow: </b>
+					[round(transfer_rate,1)]l/s | <a href='?src=\ref[src];set_transfer_rate=1'>Change</a>
+					"}
 
-			user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
-			onclose(user, "atmo_pump")
+		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
+		onclose(user, "atmo_pump")
 
 
 
@@ -147,7 +149,7 @@ obj/machinery/atmospherics/binary/volume_pump
 		if(!src.allowed(user))
 			user << "\red Access denied."
 			return
-		usr.machine = src
+		usr.set_machine(src)
 		interact(user)
 		return
 
@@ -158,7 +160,7 @@ obj/machinery/atmospherics/binary/volume_pump
 		if(href_list["set_transfer_rate"])
 			var/new_transfer_rate = input(usr,"Enter new output volume (0-200l/s)","Flow control",src.transfer_rate) as num
 			src.transfer_rate = max(0, min(200, new_transfer_rate))
-		usr.machine = src
+		usr.set_machine(src)
 		src.update_icon()
 		src.updateUsrDialog()
 		return

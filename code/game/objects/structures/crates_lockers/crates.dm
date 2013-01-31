@@ -1,8 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/structure/closet/crate
-	desc = "A crate."
-	name = "Crate"
+	name = "crate"
+	desc = "A rectangular steel crate."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
 	density = 1
@@ -12,6 +12,7 @@
 	opened = 0
 	flags = FPRINT
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
+	var/rigged = 0
 
 /obj/structure/closet/crate/internals
 	desc = "A internals crate."
@@ -144,6 +145,15 @@
 	icon_opened = "secgearcrateopen"
 	icon_closed = "secgearcrate"
 
+/obj/structure/closet/crate/secure/hydrosec
+	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
+	name = "secure hydroponics crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "hydrosecurecrate"
+	density = 1
+	icon_opened = "hydrosecurecrateopen"
+	icon_closed = "hydrosecurecrate"
+
 /obj/structure/closet/crate/secure/bin
 	desc = "A secure bin."
 	name = "Secure bin"
@@ -201,10 +211,10 @@
 /obj/structure/closet/crate/secure/New()
 	..()
 	if(locked)
-		overlays = null
+		overlays.Cut()
 		overlays += redlight
 	else
-		overlays = null
+		overlays.Cut()
 		overlays += greenlight
 
 /obj/structure/closet/crate/rcd/New()
@@ -242,7 +252,15 @@
 	for(var/obj/O in get_turf(src))
 		if(itemcount >= storage_capacity)
 			break
-		if(O.density || O.anchored || O == src) continue
+
+		if(O.density || O.anchored || istype(O,/obj/structure/closet))
+			continue
+
+		if(istype(O, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+			var/obj/structure/stool/bed/B = O
+			if(B.buckled_mob)
+				continue
+
 		O.loc = src
 		itemcount++
 
@@ -250,20 +268,30 @@
 	src.opened = 0
 
 /obj/structure/closet/crate/attack_hand(mob/user as mob)
-	if(opened) close()
-	else open()
+	if(opened)
+		close()
+	else
+		if(rigged && locate(/obj/item/device/radio/electropack) in src)
+			if(isliving(user))
+				var/mob/living/L = user
+				if(L.electrocute_act(17, src))
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(5, 1, src)
+					s.start()
+					return
+		open()
 	return
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
 	if(locked && !broken)
 		if (allowed(user))
-			user << "<span class='notice'>You unlock \the [src].</span>"
+			user << "<span class='notice'>You unlock [src].</span>"
 			src.locked = 0
-			overlays = null
+			overlays.Cut()
 			overlays += greenlight
 			return
 		else
-			user << "<span class='notice'>\The [src] is locked.</span>"
+			user << "<span class='notice'>[src] is locked.</span>"
 			return
 	else
 		..()
@@ -272,11 +300,11 @@
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
 		user << "<span class='notice'>You lock \the [src].</span>"
 		src.locked = 1
-		overlays = null
+		overlays.Cut()
 		overlays += redlight
 		return
 	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && locked &&!broken)
-		overlays = null
+		overlays.Cut()
 		overlays += emag
 		overlays += sparks
 		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
@@ -300,6 +328,27 @@
 			W.loc = src.loc
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
+	else if(istype(W, /obj/item/weapon/cable_coil))
+		if(rigged)
+			user << "<span class='notice'>[src] is already rigged!</span>"
+			return
+		user  << "<span class='notice'>You rig [src].</span>"
+		user.drop_item()
+		del(W)
+		rigged = 1
+		return
+	else if(istype(W, /obj/item/device/radio/electropack))
+		if(rigged)
+			user  << "<span class='notice'>You attach [W] to [src].</span>"
+			user.drop_item()
+			W.loc = src
+			return
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(rigged)
+			user  << "<span class='notice'>You cut away the wiring.</span>"
+			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			rigged = 0
+			return
 	else return attack_hand(user)
 
 /obj/structure/closet/crate/secure/emp_act(severity)
@@ -308,10 +357,10 @@
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1
-			overlays = null
+			overlays.Cut()
 			overlays += redlight
 		else
-			overlays = null
+			overlays.Cut()
 			overlays += emag
 			overlays += sparks
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*

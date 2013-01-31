@@ -26,12 +26,20 @@ obj/machinery/atmospherics/binary/pump
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	highcap
+		name = "High capacity gas pump"
+		desc = "A high capacity pump"
+
+		target_pressure = 15000000
+
 	on
 		on = 1
 		icon_state = "intact_on"
 
 	update_icon()
-		if(node1&&node2)
+		if(stat & NOPOWER)
+			icon_state = "intact_off"
+		else if(node1 && node2)
 			icon_state = "intact_[on?("on"):("off")]"
 		else
 			if(node1)
@@ -101,14 +109,14 @@ obj/machinery/atmospherics/binary/pump
 
 			return 1
 
-		interact(mob/user as mob)
-			var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
-						<b>Desirable output pressure: </b>
-						[round(target_pressure,0.1)]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
-						"}
+	interact(mob/user as mob)
+		var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
+					<b>Desirable output pressure: </b>
+					[round(target_pressure,0.1)]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
+					"}
 
-			user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
-			onclose(user, "atmo_pump")
+		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
+		onclose(user, "atmo_pump")
 
 	initialize()
 		..()
@@ -150,7 +158,7 @@ obj/machinery/atmospherics/binary/pump
 		if(!src.allowed(user))
 			user << "\red Access denied."
 			return
-		usr.machine = src
+		usr.set_machine(src)
 		interact(user)
 		return
 
@@ -161,7 +169,7 @@ obj/machinery/atmospherics/binary/pump
 		if(href_list["set_press"])
 			var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
 			src.target_pressure = max(0, min(4500, new_pressure))
-		usr.machine = src
+		usr.set_machine(src)
 		src.update_icon()
 		src.updateUsrDialog()
 		return

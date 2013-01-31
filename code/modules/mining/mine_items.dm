@@ -26,12 +26,12 @@
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_eng(src)
-	new /obj/item/device/radio/headset/headset_mine(src)
+	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/clothing/under/rank/miner(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/device/analyzer(src)
-	new /obj/item/weapon/storage/satchel(src)
+	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/device/flashlight/lantern(src)
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe(src)
@@ -53,10 +53,10 @@ proc/move_mining_shuttle()
 		if (mining_shuttle_location == 1)
 			fromArea = locate(/area/shuttle/mining/outpost)
 			toArea = locate(/area/shuttle/mining/station)
+
 		else
 			fromArea = locate(/area/shuttle/mining/station)
 			toArea = locate(/area/shuttle/mining/outpost)
-
 
 		var/list/dstturfs = list()
 		var/throwy = world.maxy
@@ -91,6 +91,18 @@ proc/move_mining_shuttle()
 			mining_shuttle_location = 0
 		else
 			mining_shuttle_location = 1
+
+		for(var/mob/M in toArea)
+			if(M.client)
+				spawn(0)
+					if(M.buckled)
+						shake_camera(M, 3, 1) // buckled, not a lot of shaking
+					else
+						shake_camera(M, 10, 1) // unbuckled, HOLY SHIT SHAKE THE ROOM
+			if(istype(M, /mob/living/carbon))
+				if(!M.buckled)
+					M.Weaken(3)
+
 		mining_shuttle_moving = 0
 	return
 
@@ -104,6 +116,8 @@ proc/move_mining_shuttle()
 	var/location = 0 //0 = station, 1 = mining base
 
 /obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
+	if(..(user))
+		return
 	src.add_fingerprint(usr)
 	var/dat
 	dat = text("<center>Mining shuttle:<br> <b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>")
@@ -112,7 +126,7 @@ proc/move_mining_shuttle()
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["move"])
 		if(ticker.mode.name == "blob")
@@ -287,7 +301,4 @@ proc/move_mining_shuttle()
 	density = 1
 	icon_opened = "miningcaropen"
 	icon_closed = "miningcar"
-
-
-
 

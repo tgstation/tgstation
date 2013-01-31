@@ -143,14 +143,8 @@
 
 /client/verb/attack_self()
 	set hidden = 1
-	if(mob.hand)
-		if(mob.l_hand)
-			mob.l_hand.attack_self(mob)
-			mob.update_inv_l_hand()
-	else
-		if(mob.r_hand)
-			mob.r_hand.attack_self(mob)
-			mob.update_inv_r_hand()
+	if(mob)
+		mob.mode()
 	return
 
 
@@ -256,6 +250,10 @@
 			return
 
 	if(Process_Grab())	return
+
+	if(mob.buckled)							//if we're buckled to something, tell it we moved.
+		return mob.buckled.relaymove(mob, direct)
+
 	if(!mob.canmove)	return
 
 

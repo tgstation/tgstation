@@ -4,8 +4,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mopbucket"
 	density = 1
-	flags = FPRINT
-	pressure_resistance = ONE_ATMOSPHERE
+	pressure_resistance = 5
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 

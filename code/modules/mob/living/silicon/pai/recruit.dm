@@ -201,7 +201,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				for(var/datum/paiCandidate/c in paiController.pai_candidates)
 					if(c.key == O.key)
 						hasSubmitted = 1
-				if(!hasSubmitted && O.client.be_pai)
+				if(!hasSubmitted && (O.client.prefs.be_special & BE_PAI))
 					question(O.client)
 
 	proc/question(var/client/C)
@@ -214,4 +214,8 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			if(response == "Yes")
 				recruitWindow(C.mob)
 			else if (response == "Never for this round")
-				C.be_pai = 0
+				var/warning = alert(C, "Are you sure? This action will be undoable and you will need to wait until next round.", "You sure?", "Yes", "No")
+				if(warning == "Yes")
+					asked[C.key] = INFINITY
+				else
+					question(C)

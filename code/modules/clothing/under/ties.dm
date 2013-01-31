@@ -65,25 +65,6 @@
 	return ..(M,user)
 
 
-/obj/item/clothing/tie/holster
-	name = "shoulder holster"
-	desc = "A handgun holster."
-	icon_state = "holster"
-	color = "holster"
-	var/obj/item/weapon/gun/holstered = null
-
-/obj/item/clothing/tie/holster/armpit
-	name = "shoulder holster"
-	desc = "A worn-out handgun holster. Perfect for concealed carry"
-	icon_state = "holster"
-	color = "holster"
-
-/obj/item/clothing/tie/holster/waist
-	name = "shoulder holster"
-	desc = "A handgun holster. Made of expensive leather."
-	icon_state = "holster"
-	color = "holster_low"
-
 //Medals
 /obj/item/clothing/tie/medal
 	name = "bronze medal"
@@ -131,3 +112,65 @@
 /obj/item/clothing/tie/medal/gold/heroism
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by CentComm. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
+
+//Armbands
+/obj/item/clothing/tie/armband
+	name = "red armband"
+	desc = "An fancy red armband!"
+	icon_state = "red"
+	color = "red"
+
+/obj/item/clothing/tie/armband/cargo
+	name = "cargo bay guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."
+	icon_state = "cargo"
+	color = "cargo"
+
+/obj/item/clothing/tie/armband/engine
+	name = "engineering guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is orange with a reflective strip!"
+	icon_state = "engie"
+	color = "engie"
+
+/obj/item/clothing/tie/armband/science
+	name = "science guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is purple."
+	icon_state = "rnd"
+	color = "rnd"
+
+/obj/item/clothing/tie/armband/hydro
+	name = "hydroponics guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is green and blue."
+	icon_state = "hydro"
+	color = "hydro"
+
+/obj/item/clothing/tie/armband/med
+	name = "medical guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
+	icon_state = "med"
+	color = "med"
+
+/obj/item/clothing/tie/armband/medgreen
+	name = "medical guard armband"
+	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and green."
+	icon_state = "medgreen"
+	color = "medgreen"
+
+/obj/item/clothing/tie/holster
+	name = "shoulder holster"
+	desc = "A handgun holster."
+	icon_state = "holster"
+	color = "holster"
+	var/obj/item/weapon/gun/holstered = null
+
+/obj/item/clothing/tie/holster/armpit
+	name = "shoulder holster"
+	desc = "A worn-out handgun holster. Perfect for concealed carry"
+	icon_state = "holster"
+	color = "holster"
+
+/obj/item/clothing/tie/holster/waist
+	name = "shoulder holster"
+	desc = "A handgun holster. Made of expensive leather."
+	icon_state = "holster"
+	color = "holster_low"

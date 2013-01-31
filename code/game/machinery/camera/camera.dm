@@ -8,7 +8,8 @@
 	active_power_usage = 10
 	layer = 5
 
-	var/network = "SS13"
+	var/list/network = list("SS13")
+	var/network_multi = "" //This is for when you want to place a camera on the map. Input them as a string seperated by commas "SS13,RD,SomeOtherNetwork"
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = 1.0
@@ -40,17 +41,22 @@
 	assembly.state = 4
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
-		if(C != src && C.c_tag == src.c_tag && C.network == src.network)
+		var/list/tempnetwork = C.network&src.network
+		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
 	..()
 
+/obj/machinery/camera/initialize() //Lists dont work in the map editor so we have to translate a string into a list when the map initializes
+	if(network_multi)
+		network = text2list(network_multi,",")
 
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
 		if(prob(100/severity))
 			icon_state = "[initial(icon_state)]emp"
-			network = null                   //Not the best way but it will do. I think.
+			for(var/i in network)
+				network.Remove(i)                  //Not the best way but it will do. I think.
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
@@ -66,7 +72,7 @@
 				if (istype(O.machine, /obj/machinery/computer/security))
 					var/obj/machinery/computer/security/S = O.machine
 					if (S.current == src)
-						O.machine = null
+						O.unset_machine()
 						O.reset_view(null)
 						O << "The screen bursts into static."
 			..()
@@ -95,9 +101,8 @@
 	if(!istype(user))
 		return
 	status = 0
-	for(var/mob/O in viewers(user, null))
-		O.show_message("<span class='warning'>\The [user] slashes at [src]!</span>", 1)
-		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
+	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	icon_state = "[initial(icon_state)]1"
 	add_hiddenprint(user)
 	deactivate(user,0)
@@ -169,9 +174,7 @@
 		spark_system.start()
 		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
 		playsound(loc, "sparks", 50, 1)
-
-		for(var/mob/O in viewers(user, 3))
-			O.show_message(text("\blue The camera has been sliced apart by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+		visible_message("\blue The camera has been sliced apart by [] with an energy blade!")
 		del(src)
 	else
 		..()
@@ -181,15 +184,13 @@
 	if(choice==1)
 		status = !( src.status )
 		if (!(src.status))
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] has deactivated []!", user, src), 1)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			visible_message("\red [user] has deactivated [src]!")
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = "[initial(icon_state)]1"
 			add_hiddenprint(user)
 		else
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] has reactivated []!", user, src), 1)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			visible_message("\red [user] has reactivated [src]!")
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			icon_state = initial(icon_state)
 			add_hiddenprint(user)
 	// now disconnect anyone using the camera
@@ -199,7 +200,7 @@
 		if (istype(O.machine, /obj/machinery/computer/security))
 			var/obj/machinery/computer/security/S = O.machine
 			if (S.current == src)
-				O.machine = null
+				O.unset_machine()
 				O.reset_view(null)
 				O << "The screen bursts into static."
 

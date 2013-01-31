@@ -32,7 +32,7 @@
 
 
 	attack_hand(mob/user as mob)
-		user.machine = src
+		user.set_machine(src)
 		var/health_text = ""
 		if(src.occupant)
 			if(src.occupant.health <= -100)
@@ -48,7 +48,7 @@
 		dat += "<B>Implants:</B> [src.implant_list.len ? "[implant_list.len]" : "<A href='?src=\ref[src];replenish=1'>Replenish</A>"]<BR>"
 		if(src.occupant)
 			dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>"
-		user.machine = src
+		user.set_machine(src)
 		user << browse(dat, "window=implant")
 		onclose(user, "implant")
 
@@ -78,9 +78,9 @@
 		if(istype(G, /obj/item/weapon/grab))
 			if(!ismob(G:affecting))
 				return
-			for(var/mob/living/carbon/metroid/M in range(1,G:affecting))
+			for(var/mob/living/carbon/slime/M in range(1,G:affecting))
 				if(M.Victim == G:affecting)
-					usr << "[G:affecting:name] will not fit into the [src.name] because they have a Metroid latched onto their head."
+					usr << "[G:affecting:name] will not fit into the [src.name] because they have a slime latched onto their head."
 					return
 			var/mob/M = G:affecting
 			if(put_mob(M))

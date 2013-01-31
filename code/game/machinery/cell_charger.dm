@@ -21,12 +21,12 @@
 
 				if(chargelevel != newlevel)
 
-					overlays = null
+					overlays.Cut()
 					overlays += "ccharger-o[newlevel]"
 
 					chargelevel = newlevel
 			else
-				overlays = null
+				overlays.Cut()
 	examine()
 		set src in oview(5)
 		..()
@@ -78,6 +78,14 @@
 
 	attack_ai(mob/user)
 		return
+
+	emp_act(severity)
+		if(stat & (BROKEN|NOPOWER))
+			return
+		if(charging)
+			charging.emp_act(severity)
+		..(severity)
+
 
 	process()
 		//world << "ccpt [charging] [stat]"

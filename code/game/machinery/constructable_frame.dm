@@ -35,18 +35,17 @@
 		switch(state)
 			if(1)
 				if(istype(P, /obj/item/weapon/cable_coil))
-					if(P:amount >= 5)
+					var/obj/item/weapon/cable_coil/C = P
+					if(C.amount >= 5)
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "\blue You start to add cables to the frame."
 						if(do_after(user, 20))
-							if(!P)
-								user << "\blue You realize the cable coil no longer exist."
-								return;
-							P:amount -= 5
-							if(!P:amount) del(P)
-							user << "\blue You add cables to the frame."
-							state = 2
-							icon_state = "box_1"
+							if(C)
+								C.amount -= 5
+								if(!C.amount) del(C)
+								user << "\blue You add cables to the frame."
+								state = 2
+								icon_state = "box_1"
 				else
 					if(istype(P, /obj/item/weapon/wrench))
 						playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -154,7 +153,7 @@
 									update_desc()
 									break
 							user << desc
-							if(P.loc != src && !istype(P, /obj/item/weapon/cable_coil))
+							if(P && P.loc != src && !istype(P, /obj/item/weapon/cable_coil))
 								user << "\red You cannot add that component to the machine!"
 
 

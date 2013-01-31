@@ -348,7 +348,7 @@ var/linenums = 0
 	src.icon_state = is
 
 	if(node1 && node2)
-		overlays = null
+		overlays.Cut()
 	else if(!node1 && !node2)
 		overlays += image('icons/obj/pipes.dmi', "discon", FLY_LAYER, dirs[1])
 		overlays += image('icons/obj/pipes.dmi', "discon", FLY_LAYER, dirs[2])

@@ -70,19 +70,19 @@
 	..()
 	//Ignore input if we are broken, !silicon guy cant touch us, or nonai controlling from super far away
 	if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon)) || (get_dist(src, usr) > 8 && !istype(usr, /mob/living/silicon/ai)))
-		usr.machine = null
+		usr.unset_machine()
 		usr << browse(null, "window=pacontrol")
 		return
 
 	if( href_list["close"] )
 		usr << browse(null, "window=pacontrol")
-		usr.machine = null
+		usr.unset_machine()
 		return
 	if(href_list["togglep"])
 		src.toggle_power()
 		investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr.key]","singulo")
 		if (active)
-			message_admins("PA Control Computer turned ON by [key_name(usr, usr.client)](<A HREF='?src=%holder_ref%;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <A HREF='?src=%holder_ref%;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			message_admins("PA Control Computer turned ON by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			log_game("PA Control Computer turned ON by [usr.ckey]([usr]) in ([x],[y],[z])")
 	else if(href_list["scan"])
 		src.part_scan()
@@ -91,7 +91,7 @@
 		if(strength > 2)
 			strength = 2
 		else
-			message_admins("PA Control Computer increased to [strength] by [key_name(usr, usr.client)](<A HREF='?src=%holder_ref%;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <A HREF='?src=%holder_ref%;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			message_admins("PA Control Computer increased to [strength] by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			log_game("PA Control Computer increased to [strength] by [usr.ckey]([usr]) in ([x],[y],[z])")
 			investigate_log("increased to <font color='red'>[strength]</font> by [usr.key]","singulo")
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
@@ -202,13 +202,13 @@
 	return 1
 
 
-/obj/machinery/particle_accelerator/control_box/proc/interact(mob/user)
+/obj/machinery/particle_accelerator/control_box/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
 		if(!istype(user, /mob/living/silicon))
-			user.machine = null
+			user.unset_machine()
 			user << browse(null, "window=pacontrol")
 			return
-	user.machine = src
+	user.set_machine(src)
 
 	var/dat = ""
 	dat += "Particle Accelerator Control Panel<BR>"

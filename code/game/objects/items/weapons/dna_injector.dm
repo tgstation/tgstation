@@ -55,7 +55,8 @@
 				trigger_side_effect(M)
 
 	spawn(0)//this prevents the collapse of space-time continuum
-		user.drop_from_inventory(src)
+		if (user)
+			user.drop_from_inventory(src)
 		del(src)
 	return uses
 
@@ -69,9 +70,6 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to inject [M.name] ([M.ckey])</font>")
 
 	log_attack("<font color='red'>[user.name] ([user.ckey]) used the [name] to inject [M.name] ([M.ckey])</font>")
-
-	log_admin("ATTACK: [user.name] ([user.ckey]) used the [name] to inject [M.name] ([M.ckey])")
-	msg_admin_attack("ATTACK: [user.name] ([user.ckey]) used the [name] to inject [M.name] ([M.ckey])") //BS12 EDIT ALG
 
 	if (user)
 		if (istype(M, /mob/living/carbon/human))

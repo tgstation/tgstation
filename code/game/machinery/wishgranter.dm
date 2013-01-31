@@ -4,6 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
+	use_power = 0
 	anchored = 1
 	density = 1
 
@@ -11,7 +12,7 @@
 	var/insisting = 0
 
 /obj/machinery/wish_granter/attack_hand(var/mob/user as mob)
-	usr.machine = src
+	usr.set_machine(src)
 
 	if(charges <= 0)
 		user << "The Wish Granter lies silent."
@@ -55,6 +56,8 @@
 
 		if(!(HEAL in user.mutations))
 			user.mutations.Add(HEAL)
+
+		user.update_mutations()
 
 		ticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"

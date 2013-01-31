@@ -35,7 +35,7 @@
 	var/screen				// Which screen our main window displays
 	var/subscreen			// Which specific function of the main screen is being displayed
 
-	var/obj/item/device/pda/pai/pda = null
+	var/obj/item/device/pda/ai/pai/pda = null
 
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
 	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
@@ -216,14 +216,14 @@
 /mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
 	usr:cameraFollow = null
 	if (!C)
-		src.machine = null
+		src.unset_machine()
 		src.reset_view(null)
 		return 0
-	if (stat == 2 || !C.status || C.network != src.network) return 0
+	if (stat == 2 || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
-	src.machine = src
+	src.set_machine(src)
 	src:current = C
 	src.reset_view(C)
 	return 1
@@ -233,7 +233,7 @@
 	set category = "pAI Commands"
 	set name = "Cancel Camera View"
 	src.reset_view(null)
-	src.machine = null
+	src.unset_machine()
 	src:cameraFollow = null
 
 //Addition by Mord_Sith to define AI's network change ability
@@ -242,7 +242,7 @@
 	set category = "pAI Commands"
 	set name = "Change Camera Network"
 	src.reset_view(null)
-	src.machine = null
+	src.unset_machine()
 	src:cameraFollow = null
 	var/cameralist[0]
 
@@ -254,7 +254,7 @@
 		if(!C.status)
 			continue
 		else
-			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison")
+			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison") COMPILE ERROR! This will have to be updated as camera.network is no longer a string, but a list instead
 				cameralist[C.network] = C.network
 
 	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist

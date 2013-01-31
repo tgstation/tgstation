@@ -28,7 +28,7 @@
 			if(!O)
 				O = new /obj/effect/mark(T)
 			else
-				O.overlays = null
+				O.overlays.Cut()
 
 			var/obj/move/OM = locate(/obj/move/, T)
 
@@ -137,7 +137,7 @@ Doing this because FindTurfs() isn't even used
 		if(!O)
 			O = new /obj/effect/mark(T)
 		else
-			O.overlays = null
+			O.overlays.Cut()
 
 
 		var/temp = round(T.temp-T0C, 0.1)
@@ -168,7 +168,7 @@ Doing this because FindTurfs() isn't even used
 				if(!O)
 					O = new /obj/effect/mark(T)
 				else
-					O.overlays = null
+					O.overlays.Cut()
 
 				if(istype(M, /obj/machinery/pipes))
 					var/obj/machinery/pipes/P = M
@@ -199,7 +199,7 @@ Doing this because FindTurfs() isn't even used
 			if(!O)
 				O = new /obj/effect/mark(T)
 			else
-				O.overlays = null
+				O.overlays.Cut()
 
 			var/marked = 0
 			for(var/obj/M in T)
@@ -242,7 +242,7 @@ Doing this because FindTurfs() isn't even used
 			if(!O)
 				O = new /obj/effect/mark(T)
 			else
-				O.overlays = null
+				O.overlays.Cut()
 
 
 			var/obj/machinery/power/solar/S

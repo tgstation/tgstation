@@ -43,28 +43,28 @@
 		var/obj/item/stack/sheet/O
 		O = locate(/obj/item/stack/sheet, input.loc)
 		if(O)
-			if (istype(O,/obj/item/stack/sheet/gold))
+			if (istype(O,/obj/item/stack/sheet/mineral/gold))
 				amt_gold += 100 * O.amount
 				del(O)
-			if (istype(O,/obj/item/stack/sheet/silver))
+			if (istype(O,/obj/item/stack/sheet/mineral/silver))
 				amt_silver += 100 * O.amount
 				del(O)
-			if (istype(O,/obj/item/stack/sheet/diamond))
+			if (istype(O,/obj/item/stack/sheet/mineral/diamond))
 				amt_diamond += 100 * O.amount
 				del(O)
-			if (istype(O,/obj/item/stack/sheet/plasma))
+			if (istype(O,/obj/item/stack/sheet/mineral/plasma))
 				amt_plasma += 100 * O.amount
 				del(O)
-			if (istype(O,/obj/item/stack/sheet/uranium))
+			if (istype(O,/obj/item/stack/sheet/mineral/uranium))
 				amt_uranium += 100 * O.amount
 				del(O)
 			if (istype(O,/obj/item/stack/sheet/metal))
 				amt_iron += 100 * O.amount
 				del(O)
-			if (istype(O,/obj/item/stack/sheet/clown))
+			if (istype(O,/obj/item/stack/sheet/mineral/clown))
 				amt_clown += 100 * O.amount
 				del(O)
-			if (istype(O,/obj/item/stack/sheet/adamantine))
+			if (istype(O,/obj/item/stack/sheet/mineral/adamantine))
 				amt_adamantine += 100 * O.amount
 				del(O) //Commented out for now. -Durandan
 
@@ -138,7 +138,7 @@
 /obj/machinery/mineral/mint/Topic(href, href_list)
 	if(..())
 		return
-	usr.machine = src
+	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(processing==1)
 		usr << "\blue The machine is processing."

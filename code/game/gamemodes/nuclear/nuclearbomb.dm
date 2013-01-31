@@ -1,3 +1,5 @@
+var/bomb_set
+
 /obj/machinery/nuclearbomb
 	name = "\improper Nuclear Fission Explosive"
 	desc = "Uh oh. RUN!!!!"
@@ -46,7 +48,7 @@
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user as mob)
 	if (src.extended)
-		user.machine = src
+		user.set_machine(src)
 		var/dat = text("<TT><B>Nuclear Fission Explosive</B><BR>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
 		if (src.auth)
 			if (src.yes_code)
@@ -91,7 +93,7 @@
 		usr << "\red You don't have the dexterity to do this!"
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+		usr.set_machine(src)
 		if (href_list["auth"])
 			if (src.auth)
 				src.auth.loc = src.loc
@@ -192,9 +194,11 @@
 	else
 		off_station = 2
 
-	if (ticker)
+	if(ticker)
 		if(ticker.mode && ticker.mode.name == "nuclear emergency")
-			ticker.mode:syndies_didnt_escape = syndicate_station_at_station
+			var/obj/machinery/computer/syndicate_station/syndie_location = locate(/obj/machinery/computer/syndicate_station)
+			if(syndie_location)
+				ticker.mode:syndies_didnt_escape = (syndie_location.z > 1 ? 0 : 1)	//muskets will make me change this, but it will do for now
 			ticker.mode:nuke_off_station = off_station
 		ticker.station_explosion_cinematic(off_station,null)
 		if(ticker.mode)

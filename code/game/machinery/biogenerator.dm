@@ -42,7 +42,7 @@
 			updateUsrDialog()
 	else if(processing)
 		user << "\red The biogenerator is currently processing."
-	else if(istype(O, /obj/item/weapon/plantbag))
+	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
@@ -74,10 +74,10 @@
 	update_icon()
 	return
 
-/obj/machinery/biogenerator/proc/interact(mob/user as mob)
+/obj/machinery/biogenerator/interact(mob/user as mob)
 	if(stat & BROKEN)
 		return
-	user.machine = src
+	user.set_machine(src)
 	var/dat = "<TITLE>Biogenerator</TITLE>Biogenerator:<BR>"
 	if (processing)
 		dat += "<FONT COLOR=red>Biogenerator is processing! Please wait...</FONT>"
@@ -206,7 +206,7 @@
 	if(usr.stat || usr.restrained()) return
 	if(!in_range(src, usr)) return
 
-	usr.machine = src
+	usr.set_machine(src)
 
 	switch(href_list["action"])
 		if("activate")

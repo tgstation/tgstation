@@ -45,7 +45,7 @@
 		if(stat & BROKEN || !I || !user)
 			return
 
-		if(isrobot(user) && !istype(I, /obj/item/weapon/trashbag))
+		if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
 			return
 		src.add_fingerprint(user)
 		if(mode<=0) // It's off
@@ -91,12 +91,12 @@
 			user << "You can't place that item inside the disposal unit."
 			return
 
-		if(istype(I, /obj/item/weapon/trashbag))
+		if(istype(I, /obj/item/weapon/storage/bag/trash))
+			var/obj/item/weapon/storage/bag/trash/T = I
 			user << "\blue You empty the bag."
-			for(var/obj/item/O in I.contents)
-				O.loc = src
-				I.contents -= O
-			I.update_icon()
+			for(var/obj/item/O in T.contents)
+				T.remove_from_storage(O,src)
+			T.update_icon()
 			update()
 			return
 
@@ -115,8 +115,6 @@
 						C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
 					del(G)
 					log_attack("<font color='red'>[usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.</font>")
-					log_admin("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
-					msg_admin_attack("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
 			return
 
 		if(!I)	return
@@ -139,6 +137,7 @@
 		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
 			return
 		src.add_fingerprint(user)
+		var/target_loc = target.loc
 		var/msg
 		for (var/mob/V in viewers(usr))
 			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
@@ -148,6 +147,8 @@
 				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
 		if(!do_after(usr, 20))
 			return
+		if(target_loc != target.loc)
+			return
 		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
 												// must be awake, not stunned or whatever
 			msg = "[user.name] climbs into the [src]."
@@ -155,6 +156,7 @@
 		else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 			msg = "[user.name] stuffs [target.name] into the [src]!"
 			user << "You stuff [target.name] into the [src]!"
+			log_attack("<font color='red'>[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.</font>")
 		else
 			return
 		if (target.client)
@@ -218,11 +220,11 @@
 		interact(user, 0)
 
 	// user interaction
-	proc/interact(mob/user, var/ai=0)
+	interact(mob/user, var/ai=0)
 
 		src.add_fingerprint(user)
 		if(stat & BROKEN)
-			user.machine = null
+			user.unset_machine()
 			return
 
 		var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
@@ -247,7 +249,7 @@
 		dat += "Pressure: [round(per, 1)]%<BR></body>"
 
 
-		user.machine = src
+		user.set_machine(src)
 		user << browse(dat, "window=disposal;size=360x170")
 		onclose(user, "disposal")
 
@@ -269,10 +271,10 @@
 			return
 
 		if (in_range(src, usr) && istype(src.loc, /turf))
-			usr.machine = src
+			usr.set_machine(src)
 
 			if(href_list["close"])
-				usr.machine = null
+				usr.unset_machine()
 				usr << browse(null, "window=disposal")
 				return
 
@@ -291,7 +293,7 @@
 				eject()
 		else
 			usr << browse(null, "window=disposal")
-			usr.machine = null
+			usr.unset_machine()
 			return
 		return
 
@@ -304,7 +306,7 @@
 
 	// update the icon & overlays to reflect mode & status
 	proc/update()
-		overlays = null
+		overlays.Cut()
 		if(stat & BROKEN)
 			icon_state = "disposal-broken"
 			mode = 0
@@ -397,7 +399,6 @@
 		if(wrapcheck == 1)
 			H.tomail = 1
 
-		H.init(src)	// copy the contents of disposer to holder
 
 		air_contents = new()		// new empty gas resv.
 
@@ -407,6 +408,8 @@
 			last_sound = world.time
 		sleep(5) // wait for animation to finish
 
+
+		H.init(src)	// copy the contents of disposer to holder
 
 		H.start(src) // start the holder processing movement
 		flushing = 0
@@ -1028,21 +1031,6 @@
 	var/posdir = 0
 	var/negdir = 0
 	var/sortdir = 0
-
-	New()
-		..()
-		posdir = dir
-		if(icon_state == "pipe-j1s")
-			sortdir = turn(posdir, -90)
-			negdir = turn(posdir, 180)
-		else
-			icon_state = "pipe-j2s"
-			sortdir = turn(posdir, 90)
-			negdir = turn(posdir, 180)
-		dpdir = sortdir | posdir | negdir
-
-		update()
-		return
 
 	New()
 		..()

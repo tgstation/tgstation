@@ -42,11 +42,24 @@
 				if(clear)
 					L+=T
 
-		var/attempt = 0
+		if(!L.len)
+			usr <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
+			return
+
+		if(target && target.buckled)
+			target.buckled.unbuckle()
+
+		var/list/tempL = L
+		var/attempt = null
 		var/success = 0
-		while(!success)
-			success = target.Move(pick(L))
-			if(attempt > 20) break	//Failsafe
+		while(tempL.len)
+			attempt = pick(tempL)
+			success = target.Move(attempt)
+			if(!success)
+				tempL.Remove(attempt)
+			else
+				break
+
 		if(!success)
 			target.loc = pick(L)
 
