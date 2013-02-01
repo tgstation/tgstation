@@ -1,3 +1,8 @@
+#define CHARS_PER_LINE 5
+#define FONT_SIZE "5pt"
+#define FONT_COLOR "#09f"
+#define FONT_STYLE "Arial Black"
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,6 +27,8 @@
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
 
+	maptext_height = 26
+	maptext_width = 32
 
 	New()
 		..()
@@ -206,18 +213,20 @@
 			set_picture("ai_bsod")
 			return
 		if(src.timing)
-			var/disp1 = uppertext(id)
+			var/disp1 = id
 			var/timeleft = timeleft()
 			var/disp2 = "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
-			spawn( 5 )
-				update_display(disp1, disp2)
+			if(length(disp2) > CHARS_PER_LINE)
+				disp2 = "Error"
+			update_display(disp1, disp2)
 		else
-			update_display("SET","TIME")
+			if(maptext)	maptext = ""
 		return
 
 
 // Adds an icon in case the screen is broken/off, stolen from status_display.dm
 	proc/set_picture(var/state)
+		if(maptext)	maptext = ""
 		picture_state = state
 		overlays.Cut()
 		overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
@@ -225,34 +234,10 @@
 
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
 // Stolen from status_display
-	proc/update_display(var/line1, var/line2)
-		if(line2 == null)		// single line display
-			overlays.Cut()
-			overlays += texticon(line1, 23, -13)
-		else					// dual line display
-			overlays.Cut()
-			overlays += texticon(line1, 23, -9)
-			overlays += texticon(line2, 23, -17)
-		// return an icon of a time text string (tn)
-		// valid characters are 0-9 and :
-		// px, py are pixel offsets
-
-
-//Actual string input to icon display for loop, with 5 pixel x offsets for each letter.
-//Stolen from status_display
-	proc/texticon(var/tn, var/px = 0, var/py = 0)
-		var/image/I = image('icons/obj/status_display.dmi', "blank")
-		var/len = lentext(tn)
-
-		for(var/d = 1 to len)
-			var/char = copytext(tn, len-d+1, len-d+2)
-			if(char == " ")
-				continue
-			var/image/ID = image('icons/obj/status_display.dmi', icon_state=char)
-			ID.pixel_x = -(d-1)*5 + px
-			ID.pixel_y = py
-			I.overlays += ID
-		return I
+	proc/update_display(line1, line2)
+		var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
+		if(maptext != new_text)
+			maptext = new_text
 
 
 /obj/machinery/door_timer/cell_1
@@ -295,3 +280,8 @@
 	id = "Cell 6"
 	dir = 4
 	pixel_x = 32
+
+#undef FONT_SIZE
+#undef FONT_COLOR
+#undef FONT_STYLE
+#undef CHARS_PER_LINE

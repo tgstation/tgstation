@@ -11,6 +11,7 @@
 	var/throw_range = 7
 	var/moved_recently = 0
 	var/mob/pulledby = null
+	glide_size = 8
 
 /atom/movable/Move()
 	var/atom/A = src.loc
