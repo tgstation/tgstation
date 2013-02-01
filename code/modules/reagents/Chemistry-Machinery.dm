@@ -38,7 +38,7 @@
 
 	if(recharged < 0)
 		recharge()
-		recharged = 15
+		recharged = 30
 	else
 		recharged -= 1
 
