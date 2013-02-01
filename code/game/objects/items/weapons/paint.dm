@@ -10,31 +10,32 @@ var/global/list/cached_icons = list()
 	color = "FFFFFF"
 	item_state = "paintcan"
 	w_class = 3.0
+	var/paintleft = 10
 
 /obj/item/weapon/paint/red
 	name = "Red paint"
-	color = "FF0000"
+	color = "C73232" //"FF0000"
 	icon_state = "paint_red"
 
 /obj/item/weapon/paint/green
 	name = "Green paint"
-	color = "00FF00"
+	color = "2A9C3B" //"00FF00"
 	icon_state = "paint_green"
 
 /obj/item/weapon/paint/blue
 	name = "Blue paint"
-	color = "0000FF"
+	color = "5998FF" //"0000FF"
 	icon_state = "paint_blue"
 
 /obj/item/weapon/paint/yellow
 	name = "Yellow paint"
-	color = "FFFF00"
+	color = "CFB52B" //"FFFF00"
 	icon_state = "paint_yellow"
 
-/obj/item/weapon/paint/violet //no icon
+/obj/item/weapon/paint/violet
 	name = "Violet paint"
-	color = "FF00FF"
-	icon_state = "paint_neutral"
+	color = "AE4CCD" //"FF00FF"
+	icon_state = "paint_violet"
 
 /obj/item/weapon/paint/black
 	name = "Black paint"
@@ -52,22 +53,20 @@ var/global/list/cached_icons = list()
 	icon_state = "paint_neutral"
 
 	attack_self(mob/user as mob)
-		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "black", "white")
+		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
 		if ((user.get_active_hand() != src || user.stat || user.restrained()))
 			return
 		switch(t1)
 			if("red")
-				color = "FF0000"
+				color = "C73232"
 			if("blue")
-				color = "0000FF"
+				color = "5998FF"
 			if("green")
-				color = "00FF00"
+				color = "2A9C3B"
 			if("yellow")
-				color = "FFFF00"
-	/*
+				color = "CFB52B"
 			if("violet")
-				color = "FF00FF"
-	*/
+				color = "AE4CCD"
 			if("white")
 				color = "FFFFFF"
 			if("black")
@@ -78,6 +77,9 @@ var/global/list/cached_icons = list()
 
 
 /obj/item/weapon/paint/afterattack(turf/target, mob/user as mob)
+	if(paintleft <= 0)
+		icon_state = "paint_empty"
+		return
 	if(!istype(target) || istype(target, /turf/space))
 		return
 	var/ind = "[initial(target.icon)][color]"
@@ -87,8 +89,10 @@ var/global/list/cached_icons = list()
 		overlay.SetIntensity(1.4)
 		target.icon = overlay
 		cached_icons[ind] = target.icon
+		paintleft--
 	else
 		target.icon = cached_icons[ind]
+		paintleft--
 	return
 
 /obj/item/weapon/paint/paint_remover
