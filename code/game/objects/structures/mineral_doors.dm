@@ -115,6 +115,14 @@
 			attack_hand(user)
 		return
 
+
+	bullet_act(var/obj/item/projectile/Proj)
+		hardness -= Proj.damage
+		..()
+		CheckHardness()
+		return
+
+
 	proc/CheckHardness()
 		if(hardness <= 0)
 			Dismantle(1)
@@ -296,7 +304,7 @@
 
 /obj/structure/mineral_door/resin
 	mineralType = "resin"
-	hardness = 1.5
+	hardness = 1
 	var/close_delay = 100
 
 	TryToSwitchState(atom/user)

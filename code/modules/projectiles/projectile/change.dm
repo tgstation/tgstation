@@ -51,13 +51,19 @@
 				else				new_mob = new /mob/living/carbon/slime(M.loc)
 				new_mob.universal_speak = 1
 			if("xeno")
-				var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
+				if(prob(50))
+					new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+				else
+					new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+				new_mob.universal_speak = 1
+
+				/*var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
 				switch(alien_caste)
 					if("Hunter")	new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 					if("Sentinel")	new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 					if("Drone")		new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
 					else			new_mob = new /mob/living/carbon/alien/larva(M.loc)
-				new_mob.universal_speak = 1
+				new_mob.universal_speak = 1*/
 			if("human")
 				new_mob = new /mob/living/carbon/human(M.loc)
 				if(M.gender == MALE)

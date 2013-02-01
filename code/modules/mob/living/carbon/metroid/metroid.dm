@@ -731,6 +731,20 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	throw_range = 6
 	origin_tech = "biotech=4"
 	var/Uses = 1 // uses before it goes inert
+	var/enhanced = 0 //has it been enhanced before?
+
+	attackby(obj/item/O as obj, mob/user as mob)
+		if(istype(O, /obj/item/weapon/slimesteroid2))
+			if(enhanced == 1)
+				user << "\red This extract has already been enhanced!"
+				return ..()
+			if(Uses == 0)
+				user << "\red You can't enhance a used extract!"
+				return ..()
+			user <<"You apply the enhancer. It now has triple the amount of uses."
+			Uses = 3
+			enhanced = 1
+			del (O)
 
 /obj/item/slime_extract/New()
 		..()
@@ -810,6 +824,17 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	name = "bluespace slime extract"
 	icon_state = "bluespace slime extract"
 
+/obj/item/slime_extract/pyrite
+	name = "pyrite slime extract"
+	icon_state = "pyrite slime extract"
+
+/obj/item/slime_extract/cerulean
+	name = "cerulean slime extract"
+	icon_state = "cerulean slime extract"
+
+/obj/item/slime_extract/sepia
+	name = "sepia slime extract"
+	icon_state = "sepia slime extract"
 
 
 ////Pet Slime Creation///
@@ -898,6 +923,24 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		M.cores = 3
 		del (src)
 
+/obj/item/weapon/slimesteroid2
+	name = "extract enhancer"
+	desc = "A potent chemical mix that will give a slime extract three uses."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle17"
+
+	/*afterattack(obj/target, mob/user , flag)
+		if(istype(target, /obj/item/slime_extract))
+			if(target.enhanced == 1)
+				user << "\red This extract has already been enhanced!"
+				return ..()
+			if(target.Uses == 0)
+				user << "\red You can't enhance a used extract!"
+				return ..()
+			user <<"You apply the enhancer. It now has triple the amount of uses."
+			target.Uses = 3
+			target.enahnced = 1
+			del (src)*/
 
 ////////Adamantine Golem stuff I dunno where else to put it
 

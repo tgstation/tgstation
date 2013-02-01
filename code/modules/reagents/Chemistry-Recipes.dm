@@ -1148,6 +1148,7 @@ datum
 			result_amount = 10
 			required_container = /obj/item/slime_extract/blue
 			required_other = 1
+
 //Dark Blue
 		slimefreeze
 			name = "Slime Freeze"
@@ -1163,7 +1164,7 @@ datum
 				sleep(50)
 				playsound(get_turf_loc(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 				for(var/mob/living/M in range (get_turf_loc(holder.my_atom), 7))
-					M.bodytemperature -= 140
+					M.bodytemperature -= 240
 					M << "\blue You feel a chill!"
 
 //Orange
@@ -1195,8 +1196,8 @@ datum
 
 					var/datum/gas_mixture/napalm = new
 
-					napalm.toxins = 25
-					napalm.temperature = 1400
+					napalm.toxins = 50
+					napalm.temperature = 2400
 
 					target_tile.assume_air(napalm)
 					spawn (0) target_tile.hotspot_expose(700, 400)
@@ -1253,8 +1254,6 @@ datum
 			on_reaction(var/datum/reagents/holder)
 				var/obj/item/weapon/slimesteroid/P = new /obj/item/weapon/slimesteroid
 				P.loc = get_turf_loc(holder.my_atom)
-
-
 
 		slimejam
 			name = "Slime Jam"
@@ -1431,6 +1430,63 @@ datum
 									sleep(20)
 									M.client.screen -= blueeffect
 									del(blueeffect)
+
+//Cerulean
+
+		slimepsteroid2
+			name = "Slime Steroid 2"
+			id = "m_steroid2"
+			result = null
+			required_reagents = list("plasma" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/cerulean
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/weapon/slimesteroid2/P = new /obj/item/weapon/slimesteroid2
+				P.loc = get_turf_loc(holder.my_atom)
+
+//Sepia
+		slimecamera
+			name = "Slime Camera"
+			id = "m_camera"
+			result = null
+			required_reagents = list("plasma" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/sepia
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/device/camera/P = new /obj/item/device/camera
+				P.loc = get_turf_loc(holder.my_atom)
+
+		slimefilm
+			name = "Slime Film"
+			id = "m_film"
+			result = null
+			required_reagents = list("blood" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/sepia
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/obj/item/device/camera_film/P = new /obj/item/device/camera_film
+				P.loc = get_turf_loc(holder.my_atom)
+
+
+//Pyrite
+
+		slimepaint
+			name = "Slime Paint"
+			id = "s_paint"
+			result = null
+			required_reagents = list("plasma" = 5)
+			result_amount = 1
+			required_container = /obj/item/slime_extract/pyrite
+			required_other = 1
+			on_reaction(var/datum/reagents/holder)
+				var/list/paints = typesof(/obj/item/weapon/paint) - /obj/item/weapon/paint
+				var/chosen = pick(paints)
+				var/obj/P = new chosen
+				if(P)
+					P.loc = get_turf_loc(holder.my_atom)
 
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
