@@ -1737,8 +1737,10 @@ datum
 						M.sleeping += 1
 					if(51 to INFINITY)
 						M.sleeping += 1
-						M.adjustToxLoss(data - 50)
-				..()
+						M.adjustToxLoss((data - 50) * REAGENTS_EFFECT_MULTIPLIER)
+
+				// Sleep toxins should always be consumed pretty fast
+				holder.remove_reagent(src.id, 0.4)				..()
 				return
 
 		beer2							//copypasta of chloral hydrate, disguised as normal beer for use by emagged brobots
@@ -1761,7 +1763,8 @@ datum
 						M.sleeping += 1
 						M.adjustToxLoss(data - 50)
 				data++
-				..()
+				// Sleep toxins should always be consumed pretty fast
+				holder.remove_reagent(src.id, 0.4)				..()
 				return
 
 
@@ -1855,6 +1858,7 @@ datum
 						M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature += rand(15,20)
+				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				data++
 				..()
 				return
@@ -1898,21 +1902,21 @@ datum
 							return
 						else if ( mouth_covered )	// Reduced effects if partially protected
 							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
-							victim.eye_blurry = max(M.eye_blurry, 3)
-							victim.eye_blind = max(M.eye_blind, 1)
+							victim.eye_blurry = max(M.eye_blurry, 15)
+							victim.eye_blind = max(M.eye_blind, 5)
 							victim.Paralyse(1)
 							victim.drop_item()
 							return
 						else if ( eyes_covered ) // Eye cover is better than mouth cover
 							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
 							victim.emote("scream")
-							victim.eye_blurry = max(M.eye_blurry, 1)
+							victim.eye_blurry = max(M.eye_blurry, 5)
 							return
 						else // Oh dear :D
 							victim.emote("scream")
 							victim << "\red You're sprayed directly in the eyes with pepperspray!"
-							victim.eye_blurry = max(M.eye_blurry, 5)
-							victim.eye_blind = max(M.eye_blind, 2)
+							victim.eye_blurry = max(M.eye_blurry, 25)
+							victim.eye_blind = max(M.eye_blind, 10)
 							victim.Paralyse(1)
 							victim.drop_item()
 
@@ -1943,6 +1947,7 @@ datum
 						if(istype(M, /mob/living/carbon/slime))
 							M.bodytemperature -= rand(15,20)
 				data++
+				holder.remove_reagent(src.id, FOOD_METABOLISM)
 				..()
 				return
 
@@ -2479,6 +2484,7 @@ datum
 			description = "No relation to a certain rap artist/ actor."
 			reagent_state = LIQUID
 			color = "#104038" // rgb: 16, 64, 56
+
 
 			on_mob_life(var/mob/living/M as mob)
 				..()
