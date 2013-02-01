@@ -47,6 +47,7 @@
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/elite
 	name = "advanced hardsuit helmet"
+	desc = "A special suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	icon_state = "rig0-white"
 	item_state = "ce_helm"
 	color = "white"
@@ -119,25 +120,17 @@
 	name = "medical hardsuit"
 	item_state = "medical_hardsuit"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
-
-
-//Security Rig (BS12)
+	//Security
 /obj/item/clothing/head/helmet/space/rig/security
 	name = "security hardsuit helmet"
-	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has additional layers of armour and ablative shielding in lieu of radiation shielding."
-	icon_state = "rig0-security"
-	item_state = "security_helm"
-	color = "security"
-	armor = list(melee = 45, bullet = 10, laser = 25,energy = 10, bomb = 40, bio = 100, rad = 5)
-
+	icon_state = "rig0-sec"
+	item_state = "sec_helm"
+	color = "sec"
 /obj/item/clothing/suit/space/rig/security
-	desc = "A special suit that protects against hazardous, low pressure environments. Has additional layers of armour and ablative shielding in lieu of radiation shielding."
-	icon_state = "rig-security"
+	icon_state = "rig-sec"
 	name = "security hardsuit"
-	item_state = "atmos_hardsuit"
-	armor = list(melee = 45, bullet = 10, laser = 25,energy = 10, bomb = 40, bio = 100, rad = 5)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/gun/energy)
-
+	item_state = "sec_hardsuit"
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos

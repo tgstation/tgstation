@@ -62,12 +62,12 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		return
 
 	spread = (cure_present?"Remissive":initial_spread)
-
 	if(stage > max_stages)
 		stage = max_stages
 
-	if(!cure_present && prob(stage_prob)) //now the disease shouldn't get back up to stage 4 in no time
+	if(!cure_present && prob(stage_prob) && age > stage_minimum_age) //now the disease shouldn't get back up to stage 4 in no time
 		stage = min(stage + 1, max_stages)
+		age = 0
 
 	else if(cure_present && prob(cure_chance))
 		stage = max(stage - 1, 1)

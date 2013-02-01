@@ -1013,7 +1013,8 @@ datum
 					/mob/living/simple_animal/hostile/syndicate/ranged,
 					/mob/living/simple_animal/hostile/syndicate/ranged/space,
 					/mob/living/simple_animal/hostile/alien/queen/large,
-					/mob/living/simple_animal/clown
+					/mob/living/simple_animal/hostile/retaliate,
+					/mob/living/simple_animal/hostile/retaliate/clown
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
@@ -1286,20 +1287,9 @@ datum
 			required_container = /obj/item/slime_extract/adamantine
 			required_other = 1
 			on_reaction(var/datum/reagents/holder)
-				var/mob/living/carbon/human/G = new /mob/living/carbon/human
-				G.dna.mutantrace = "adamantine"
-				G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
-				G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
-				G.equip_to_slot_or_del(new /obj/item/clothing/suit/golem(G), slot_wear_suit)
-				G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
-				G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
-				G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
-				G.loc = get_turf_loc(holder.my_atom)
-				var/list/candidates = get_alien_candidates()
-				var/candidate = pick(candidates)
-				G.key = candidate
-				G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve the one created you, and assist them in completing their goals at any cost."
-
+				var/obj/effect/golemrune/Z = new /obj/effect/golemrune
+				Z.loc = get_turf_loc(holder.my_atom)
+				Z.announce_to_ghosts()
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
 		tofu
@@ -1806,8 +1796,8 @@ datum
 			name = "Changeling Sting"
 			id = "changelingsting"
 			result = "changelingsting"
-			required_reagents = list("orangejuice" = 1, "limejuice" = 1, "lemonjuice" = 1, "vodka" = 1)
-			result_amount = 4
+			required_reagents = list("screwdrivercocktail" = 1, "limejuice" = 1, "lemonjuice" = 1)
+			result_amount = 5
 
 		aloe
 			name = "Aloe"

@@ -287,8 +287,10 @@
 			co2overloadtime = 0
 
 		if(Toxins_pp > safe_toxins_max) // Too much toxins
-			var/ratio = breath.toxins/safe_toxins_max
-			adjustToxLoss(min(ratio, MIN_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+			var/ratio = (breath.toxins/safe_toxins_max) * 10
+			//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+			if(reagents)
+				reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 			toxins_alert = max(toxins_alert, 1)
 		else
 			toxins_alert = 0

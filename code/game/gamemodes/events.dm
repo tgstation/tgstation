@@ -11,11 +11,9 @@
 			if(!event)
 				//CARN: checks to see if random events are enabled.
 				if(config.allow_random_events)
-					if(prob(eventchance))
-						event()
-						hadevent = 1
-					else
-						Holiday_Random_Event()
+					hadevent = event()
+				else
+					Holiday_Random_Event()
 			else
 				event = 0
 			sleep(2400)
@@ -75,10 +73,21 @@
 			base_chance = 1.1
 
 	// Trigger the event based on how likely it currently is.
-	if(!prob(chance * eventchance * base_chance / 100)) // "normal" event chance at 20 players
+	if(!prob(chance * eventchance * base_chance / 100))
 		return 0
 
 	switch(picked_event)
+		if("Meteor")
+			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
+			for(var/mob/M in player_list)
+				if(!istype(M,/mob/new_player))
+					M << sound('sound/AI/meteors.ogg')
+			spawn(100)
+				meteor_wave()
+				spawn_meteors()
+			spawn(700)
+				meteor_wave()
+				spawn_meteors()
 		if("Space Ninja")
 			//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
 			space_ninja_arrival()

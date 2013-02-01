@@ -2,6 +2,10 @@
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 
+	if(say_disabled)	//This is here to try to identify lag problems
+		usr << "\red Speech is currently admin-disabled."
+		return
+
 	if(!mob)	return
 	if(IsGuestKey(key))
 		src << "Guests may not use OOC."
@@ -43,6 +47,8 @@
 						//todo: other adminranks OOC
 					else if(holder.rights & R_MOD)
 						C << "<font color=#184880><b><span class='prefix'>OOC:</span> <EM>[key][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
+					else
+						C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>"
 
 				else
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span></font>"

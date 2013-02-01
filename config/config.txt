@@ -18,6 +18,16 @@ BAN_LEGACY_SYSTEM
 ## Add a # here if you wish to use the setup where jobs have more access. This is intended for servers with low populations - where there are not enough players to fill all roles, so players need to do more than just one job. Also for servers where they don't want people to hide in their own departments.
 JOBS_HAVE_MINIMAL_ACCESS
 
+## Unhash this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
+## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
+## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
+## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
+## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
+#USE_AGE_RESTRICTION_FOR_JOBS
+
+## Unhash this to use recursive explosions, keep it hashed to use circle explosions. Recursive explosions react to walls, airlocks and blast doors, making them look a lot cooler than the boring old circular explosions. They require more CPU and are (as of january 2013) experimental
+#USE_RECURSIVE_EXPLOSIONS
+
 ## log OOC channel
 LOG_OOC
 
@@ -200,3 +210,5 @@ NUDGE_SCRIPT_PATH nudge.py
 
 ## Comment this to unrestrict the number of alien players allowed in the round. The number represents the number of alien players for every human player.
 ALIEN_PLAYER_RATIO 0.2
+##Remove the # to let ghosts spin chairs
+#GHOST_INTERACTION

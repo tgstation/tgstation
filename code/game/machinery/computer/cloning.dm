@@ -289,11 +289,15 @@
 
 	else if (href_list["view_rec"])
 		src.active_record = locate(href_list["view_rec"])
-		if ((isnull(src.active_record.fields["ckey"])) || (src.active_record.fields["ckey"] == ""))
-			del(src.active_record)
-			src.temp = "ERROR: Record Corrupt"
+		if(istype(src.active_record,/datum/data/record))
+			if ((isnull(src.active_record.fields["ckey"])) || (src.active_record.fields["ckey"] == ""))
+				del(src.active_record)
+				src.temp = "ERROR: Record Corrupt"
+			else
+				src.menu = 3
 		else
-			src.menu = 3
+			src.active_record = null
+			src.temp = "Record missing."
 
 	else if (href_list["del_rec"])
 		if ((!src.active_record) || (src.menu < 3))
@@ -416,9 +420,9 @@
 	if (subject.suiciding == 1)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 		return
-//	if ((!subject.ckey) || (!subject.client))
-//		scantemp = "Error: Mental interface failure."
-//		return
+	if ((!subject.ckey) || (!subject.client))
+		scantemp = "Error: Mental interface failure."
+		return
 	if (NOCLONE in subject.mutations)
 		scantemp = "Error: Mental interface failure."
 		return

@@ -11,7 +11,6 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 3.0
-	pressure_resistance = 80
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	m_amt = 700
@@ -22,7 +21,7 @@
 	var/construction_time=100
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is licking the electrodes of the [src]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (FIRELOSS)
 
 /obj/item/weapon/cell/crap

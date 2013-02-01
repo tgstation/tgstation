@@ -35,16 +35,6 @@
 		return move_camera_by_click()
 	if(usr.stat || usr.restrained() || usr.lying)
 		return ..()
-
-	if(usr.hand && istype(usr.l_hand, /obj/item/weapon/flamethrower))
-		var/turflist = getline(usr,src)
-		var/obj/item/weapon/flamethrower/F = usr.l_hand
-		F.flame_turf(turflist)
-	else if(!usr.hand && istype(usr.r_hand, /obj/item/weapon/flamethrower))
-		var/turflist = getline(usr,src)
-		var/obj/item/weapon/flamethrower/F = usr.r_hand
-		F.flame_turf(turflist)
-
 	return ..()
 
 /turf/Click()
@@ -68,6 +58,9 @@
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+	if(movement_disabled && usr.ckey != movement_disabled_exception)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
 	if (!mover || !isturf(mover.loc))
 		return 1
 
@@ -108,6 +101,9 @@
 
 
 /turf/Entered(atom/atom as mob|obj)
+	if(movement_disabled)
+		usr << "\red Movement is admin-disabled." //This is to identify lag problems
+		return
 	..()
 //vvvvv Infared beam stuff vvvvv
 

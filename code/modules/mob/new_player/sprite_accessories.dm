@@ -468,6 +468,37 @@
 		icon_state = "hair_messy"
 		species_allowed = list("Tajaran")
 
+/datum/sprite_accessory/facial_hair
+
+	taj_sideburns
+		name = "Sideburns"
+		icon_state = "facial_mutton"
+		species_allowed = list("Tajaran")
+
+	taj_mutton
+		name = "Mutton"
+		icon_state = "facial_mutton"
+		species_allowed = list("Tajaran")
+
+	taj_pencilstache
+		name = "Pencilstache"
+		icon_state = "facial_pencilstache"
+		species_allowed = list("Tajaran")
+
+	taj_moustache
+		name = "Moustache"
+		icon_state = "facial_moustache"
+		species_allowed = list("Tajaran")
+
+	taj_goatee
+		name = "Goatee"
+		icon_state = "facial_goatee"
+		species_allowed = list("Tajaran")
+
+	taj_smallstache
+		name = "Smallsatche"
+		icon_state = "facial_smallstache"
+		species_allowed = list("Tajaran")
 //skin styles - WIP
 //going to have to re-integrate this with surgery
 //let the icon_state hold an icon preview for now

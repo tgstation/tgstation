@@ -1220,7 +1220,7 @@
 			force = round((5+potency/2.5), 1)
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is eating some of the [src]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "\red <b>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (BRUTELOSS|TOXLOSS)
 
 // *************************************
@@ -1291,7 +1291,7 @@
 	var/WeedKillStr = 2
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is huffing the [src]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (TOXLOSS)
 
 /obj/item/weapon/pestspray // -- Skie
@@ -1310,7 +1310,7 @@
 	var/PestKillStr = 2
 
 	suicide_act(mob/user)
-		viewers(user) << "\red <b>[user] is huffing the [src]! It looks like \he's trying to commit suicide.</b>"
+		viewers(user) << "\red <b>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</b>"
 		return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
