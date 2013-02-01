@@ -236,18 +236,24 @@ turf/proc/update_lumcount(amount)
 
 turf/proc/shift_to_subarea()
 	lighting_changed = 0
-
 	var/area/Area = loc
+
 	if(!istype(Area) || !Area.lighting_use_dynamic) return
 
 	// change the turf's area depending on its brightness
 	// restrict light to valid levels
 	var/light = min(max(round(lighting_lumcount,1),0),lighting_controller.lighting_states)
-	var/new_tag = "[Area.type]sd_L[light]"
+
+	var/find = findtextEx(Area.tag, "sd_L")
+	var/new_tag = copytext(Area.tag, 1, find)
+	new_tag += "sd_L[light]"
 
 	if(Area.tag!=new_tag)	//skip if already in this area
+
 		var/area/A = locate(new_tag)	// find an appropriate area
+
 		if(!A)
+
 			A = new Area.type()    // create area if it wasn't found
 			// replicate vars
 			for(var/V in Area.vars)
@@ -361,6 +367,7 @@ atom
 							brightness = I.brightness_on
 
 		return brightness
+
 
 #undef LIGHTING_MAX_LUMINOSITY
 #undef LIGHTING_MAX_LUMINOSITY_MOB

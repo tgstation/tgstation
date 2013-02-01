@@ -130,6 +130,12 @@ move an amendment</a> to the drawing.</p>
 	A.power_light = 0
 	A.power_environ = 0
 	move_turfs_to_area(turfs, A)
+
+	A.always_unpowered = 0
+	for(var/turf/T in A.contents)
+		T.lighting_changed = 1
+		lighting_controller.changed_turfs += T
+
 	spawn(5)
 		//ma = A.master ? "[A.master]" : "(null)"
 		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
