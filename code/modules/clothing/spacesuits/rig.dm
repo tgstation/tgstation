@@ -57,7 +57,6 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/satchel,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECITON_TEMPERATURE
-	slowdown = 1.0
 
 
 //Chief Engineer's rig
@@ -71,7 +70,6 @@
 	icon_state = "rig-white"
 	name = "advanced hardsuit"
 	item_state = "ce_hardsuit"
-	slowdown = 1.0
 
 
 //Mining rig
@@ -85,7 +83,6 @@
 	icon_state = "rig-mining"
 	name = "mining hardsuit"
 	item_state = "mining_hardsuit"
-	slowdown = 1.0
 
 
 //Syndicate rig
@@ -95,7 +92,6 @@
 	item_state = "syndie_helm"
 	color = "syndi"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 60)
-	slowdown = 1.0
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndi"
@@ -122,7 +118,6 @@
 	slowdown = 1
 	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/gun/energy/laser, /obj/item/weapon/gun/energy/pulse_rifle, /obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/gun/energy/taser, /obj/item/weapon/melee/baton)
-	slowdown = 1.0
 
 
 //Wizard Rig
@@ -143,7 +138,6 @@
 	unacidable = 1
 	armor = list(melee = 40, bullet = 20, laser = 20,energy = 20, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 1.0
 
 //Atmos Rig
 /obj/item/clothing/head/helmet/space/rig/atmos
@@ -158,4 +152,3 @@
 	name = "atmospherics pressure suit"
 	item_state = "atmos_hardsuit"
 	armor = list(melee = 40, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 0)
-	slowdown = 1.0
