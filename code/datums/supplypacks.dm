@@ -618,8 +618,7 @@
 	"/obj/item/weapon/reagent_containers/glass/paint/remover",
 	"/obj/item/weapon/wrapping_paper",
 	"/obj/item/weapon/wrapping_paper",
-	"/obj/item/weapon/wrapping_paper",
-	"/obj/item/weapon/contraband/poster")
+	"/obj/item/weapon/wrapping_paper")
 	cost = 5
 	containertype = "/obj/structure/closet/crate"
 	containername = "Arts and Crafts crate"
@@ -628,8 +627,9 @@
 /datum/supply_packs/randomised/contraband
 	num_contained = 5
 	contains = list("/obj/item/seeds/bloodtomatoseed",
-	"/obj/item/weapon/storage/pill_bottle/zoom",
-	"/obj/item/weapon/storage/pill_bottle/happy",
+	//"/obj/item/weapon/storage/pill_bottle/zoom",
+	//"/obj/item/weapon/storage/pill_bottle/happy",,
+	"/obj/item/weapon/contraband/poster",
 	"/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe")
 	name = "Contraband crate"
 	cost = 30
@@ -659,12 +659,12 @@
 					"/obj/item/weapon/surgicaldrill",
 					"/obj/item/clothing/mask/breath/medical",
 					"/obj/item/weapon/tank/anesthetic",
-					"/obj/item/weapon/FixOVein",
+					//"/obj/item/weapon/FixOVein",
 					"/obj/item/weapon/hemostat",
 					"/obj/item/weapon/scalpel",
-					"/obj/item/weapon/surgical_tool/bonegel",
+					//"/obj/item/weapon/surgical_tool/bonegel",
 					"/obj/item/weapon/retractor",
-					"/obj/item/weapon/surgical_tool/bonesetter",
+					//"/obj/item/weapon/surgical_tool/bonesetter",
 					"/obj/item/weapon/circular_saw")
 	cost = 25
 	containertype = "/obj/structure/closet/crate/secure"

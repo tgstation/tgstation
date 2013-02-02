@@ -213,12 +213,12 @@
 /turf/proc/ReplaceWithFloor(explode=0)
 	var/prior_icon = icon_old
 	var/old_dir = dir
-	var/aoxy = 0//Holders to assimilate air from nearby turfs
+	/*var/aoxy = 0//Holders to assimilate air from nearby turfs
 	var/anitro = 0
 	var/aco = 0
 	var/atox = 0
 	var/atemp = 0
-	var/turf_count = 0
+	var/turf_count = 0*/
 
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/turf/simulated/floor/W = new /turf/simulated/floor( locate(src.x, src.y, src.z) )
@@ -228,6 +228,7 @@
 		lighting_controller.changed_turfs += W
 
 //////Assimilate Air//////
+	/*
 	for(var/direction in cardinal)//Only use cardinals to cut down on lag
 		var/turf/T = get_step(src,direction)
 		if(istype(T,/turf/space))//Counted as no air
@@ -247,6 +248,7 @@
 	W.air.carbon_dioxide = (aco/max(turf_count,1))
 	W.air.toxins = (atox/max(turf_count,1))
 	W.air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
+	*/
 
 	W.RemoveLattice()
 	W.dir = old_dir
@@ -259,12 +261,12 @@
 /turf/proc/ReplaceWithPlating()
 	var/prior_icon = icon_old
 	var/old_dir = dir
-	var/aoxy = 0//Holders to assimilate air from nearby turfs
+	/*var/aoxy = 0//Holders to assimilate air from nearby turfs
 	var/anitro = 0
 	var/aco = 0
 	var/atox = 0
 	var/atemp = 0
-	var/turf_count = 0
+	var/turf_count = 0*/
 
 //////Assimilate Air//////
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
@@ -274,6 +276,7 @@
 		W.lighting_changed = 1
 		lighting_controller.changed_turfs += W
 
+	/*
 	for(var/direction in cardinal)
 		var/turf/T = get_step(src,direction)
 		if(istype(T,/turf/space))
@@ -293,6 +296,7 @@
 	W.air.carbon_dioxide = (aco/max(turf_count,1))
 	W.air.toxins = (atox/max(turf_count,1))
 	W.air.temperature = (atemp/max(turf_count,1))
+	*/
 
 	W.RemoveLattice()
 	W.dir = old_dir
@@ -321,12 +325,22 @@
 /turf/proc/ReplaceWithSpace()
 	var/old_dir = dir
 
+	var/zone/Z
+	if(src.zone)
+		Z = src.zone
+		Z.RemoveTurf(src)
+
 	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
 	S.lighting_lumcount += old_lumcount
 	if(old_lumcount != S.lighting_lumcount)
 		S.lighting_changed = 1
 		lighting_controller.changed_turfs += S
+
+	if(Z)
+		//Z.AddTurf(S)
+		for(var/turf/simulated/T in orange(src,1))
+			air_master.tiles_to_update.Add(T)
 
 	S.dir = old_dir
 	S.levelupdate()
