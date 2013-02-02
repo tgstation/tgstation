@@ -758,13 +758,12 @@ var/global/floorIsLava = 0
 	set category = "Server"
 	set desc="Delay the game start/end"
 	set name="Delay"
+
+	if(!check_rights(R_ADMIN))	return
 	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
-		if (src.rank in list("Badmin", "Game Admin", "Game Master"))
-			ticker.delay_end = !ticker.delay_end
-			log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-			message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
-		else
-			usr << "\red You are not a high enough rank."
+		ticker.delay_end = !ticker.delay_end
+		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
 		return //alert("Round end delayed", null, null, null, null, null)
 	going = !( going )
 	if (!( going ))
