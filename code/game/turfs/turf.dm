@@ -225,21 +225,35 @@
 		if (istype(W,/turf/simulated/floor))
 			W.RemoveLattice()
 
+		//if the old turf had a zone, connect the new turf to it as well - Cael
+		if(src.zone)
+			src.zone.RemoveTurf(src)
+			W.zone = src.zone
+			W.zone.AddTurf(W)
+
 		W.levelupdate()
 		return W
 	else
+
+		/*if(istype(src, /turf/simulated) && src.zone)
+			src.zone.rebuild = 1*/
+
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 		W.lighting_lumcount += old_lumcount
 		if(old_lumcount != W.lighting_lumcount)
 			W.lighting_changed = 1
 			lighting_controller.changed_turfs += W
 
+		if(src.zone)
+			src.zone.RemoveTurf(src)
+			W.zone = src.zone
+			W.zone.AddTurf(W)
+
 		W.levelupdate()
 		return W
 
 //////Assimilate Air//////
 /turf/simulated/proc/Assimilate_Air()
-	/*
 	var/aoxy = 0//Holders to assimilate air from nearby turfs
 	var/anitro = 0
 	var/aco = 0
@@ -266,7 +280,22 @@
 	air.carbon_dioxide = (aco/max(turf_count,1))
 	air.toxins = (atox/max(turf_count,1))
 	air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
-	*/
+	air.update_values()
+
+	//cael - duplicate the averaged values across adjacent turfs to enforce a seamless atmos change
+	for(var/direction in cardinal)//Only use cardinals to cut down on lag
+		var/turf/T = get_step(src,direction)
+		if(istype(T,/turf/space))//Counted as no air
+			continue
+		else if(istype(T,/turf/simulated/floor))
+			var/turf/simulated/S = T
+			if(S.air)//Add the air's contents to the holders
+				S.air.oxygen = air.oxygen
+				S.air.nitrogen = air.nitrogen
+				S.air.carbon_dioxide = air.carbon_dioxide
+				S.air.toxins = air.toxins
+				S.air.temperature = air.temperature
+				S.air.update_values()
 
 /turf/proc/ReplaceWithLattice()
 	src.ChangeTurf(/turf/space)

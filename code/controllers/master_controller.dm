@@ -116,12 +116,12 @@ datum/controller/game_controller/proc/process()
 				vote.process()
 
 				//AIR
+
 				if(!air_processing_killed)
 					timer = world.timeofday
 					last_thing_processed = air_master.type
 					air_master.tick()
-					air_cost = (world.timeofday - timer) / 10
-				// this might make atmos slower
+					air_cost = (world.timeofday - timer) / 10				// this might make atmos slower
 				//  1. atmos won't process if the game is generally lagged out(no deadlocks)
 				//  2. if the server frequently crashes during atmos processing we will knowif(!kill_air)
 					//src.set_debug_state("Air Master")
@@ -135,9 +135,7 @@ datum/controller/game_controller/proc/process()
 							world << "<font color='red'><b>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</font></b>"
 							kill_air = 1
 							air_master.failed_ticks = 0
-					/*else if (air_master.failed_ticks > 10)
-						air_master.failed_ticks = 0*/
-				//air_master_ready = 1
+				air_cost = (world.timeofday - timer) / 10
 
 				sleep(breather_ticks)
 

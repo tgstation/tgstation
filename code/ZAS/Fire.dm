@@ -41,9 +41,9 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		return 1
 	var/datum/gas/volatile_fuel/fuel = locate() in air_contents.trace_gases
 	var/obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in src
-	if(air_contents.calculate_firelevel(liquid) > vsc.IgnitionLevel && (fuel || liquid || air_contents.toxins > 0.5))
+	if(air_contents.calculate_firelevel(liquid) > vsc.IgnitionLevel && (fuel || liquid || air_contents.toxins > 0.1))
 		igniting = 1
-		if(air_contents.oxygen < 0.5)
+		if(air_contents.oxygen < 0.1)
 			return 0
 
 		if(! (locate(/obj/fire) in src))
@@ -97,7 +97,7 @@ obj
 				firelevel = air_contents.calculate_firelevel(liquid)
 
 				//Ensure that there is an appropriate amount of fuel and O2 here.
-				if(firelevel > 0.25 && flow.oxygen > 0.3 && (air_contents.toxins || fuel || liquid))
+				if(firelevel > 0.25 && flow.oxygen > 0.1 && (air_contents.toxins || fuel || liquid))
 
 					for(var/direction in cardinal)
 						if(S.air_check_directions&direction) //Grab all valid bordering tiles
@@ -119,7 +119,7 @@ obj
 				if(flow)
 
 					//Ensure adequate oxygen and fuel.
-					if(flow.oxygen > 0.3 && (flow.toxins || fuel || liquid))
+					if(flow.oxygen > 0.1 && (flow.toxins || fuel || liquid))
 
 						//Change icon depending on the fuel, and thus temperature.
 						if(firelevel > 6)
@@ -130,7 +130,7 @@ obj
 							icon_state = "1"
 
 						//Ensure flow temperature is higher than minimum fire temperatures.
-						flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
+						flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.2,flow.temperature)
 
 						//Burn the gas mixture.
 						if(!flow.zburn(liquid))
@@ -205,11 +205,11 @@ datum/gas_mixture/proc/zburn(obj/effect/decal/cleanable/liquid_fuel/liquid)
 				fuel_sources++
 
 			//Toxins
-		if(toxins > 0.3) fuel_sources++
+		if(toxins > 0.1) fuel_sources++
 
 		if(!fuel_sources) return 0 //If there's no fuel, there's no burn. Can't divide by zero anyway.
 
-		if(oxygen > 0.3)
+		if(oxygen > 0.1)
 
 				//Calculate the firelevel.
 			var/firelevel = calculate_firelevel(liquid)
